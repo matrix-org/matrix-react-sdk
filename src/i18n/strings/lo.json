@@ -711,8 +711,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
     "There was a problem communicating with the homeserver, please try again later.": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org.",
-    "Incorrect username and/or password.": "ຊື່ຜູ້ໃຊ້ ແລະ/ຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ.",
-    "This account has been deactivated.": "ບັນຊີນີ້ຖືກປິດການນຳໃຊ້ແລ້ວ.",
     "Please <a>contact your service administrator</a> to continue using this service.": "ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການນີ້.",
     "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ",
     "Identity server URL does not appear to be a valid identity server": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
@@ -1016,7 +1014,6 @@
     "Use an identity server to invite by email. Manage in Settings.": "ໃຊ້ເຊີເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ. ຈັດການໃນການຕັ້ງຄ່າ.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ.ກົດສືບຕໍ່ໃຊ້ເຊີບເວີລິບຸຕົວຕົນເລີ່ມຕົ້ນ (%(defaultIdentityServerName)s) ຫຼືຈັດການ ການຕັ້ງຄ່າ.",
     "Use an identity server": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນ",
-    "Light high contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
         "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
@@ -1446,10 +1443,6 @@
     "Please contact your homeserver administrator.": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີຂອງທ່ານ.",
     "Sorry, your homeserver is too old to participate here.": "ຂໍອະໄພ, homeserverຂອງທ່ານເກົ່າເກີນໄປທີ່ຈະເຂົ້າຮ່ວມທີ່ນີ້.",
     "There was an error joining.": "ເກີດຄວາມຜິດພາດໃນການເຂົ້າຮ່ວມ.",
-    "New version of %(brand)s is available": "ເວີຊັນໃໝ່ຂອງ %(brand)s ພ້ອມໃຊ້ງານ",
-    "Update %(brand)s": "ອັບເດດ %(brand)s",
-    "What's New": "ມີຫຍັງໃຫມ່",
-    "What's new?": "ມີຫຍັງໃຫມ່?",
     "%(deviceId)s from %(ip)s": "%(deviceId)s ຈາກ %(ip)s",
     "New login. Was this you?": "ເຂົ້າສູ່ລະບົບໃໝ່. ນີ້ແມ່ນທ່ານບໍ?",
     "Other users may not trust it": "ຜູ້ໃຊ້ອື່ນໆອາດຈະບໍ່ໄວ້ວາງໃຈ",
@@ -3270,7 +3263,9 @@
         "server_picker_intro": "ພວກເຮົາໂທຫາສະຖານที่ບ່ອນທີ່ທ່ານເປັນhostບັນຊີຂອງທ່ານ 'homeservers'.",
         "server_picker_custom": "homeserver ອື່ນ",
         "server_picker_explainer": "ໃຊ້ Matrix homeserver ທີ່ທ່ານຕ້ອງການ ຖ້າຫາກທ່ານມີ ຫຼື ເປັນເຈົ້າພາບເອງ.",
-        "server_picker_learn_more": "ກ່ຽວກັບ homeservers"
+        "server_picker_learn_more": "ກ່ຽວກັບ homeservers",
+        "account_deactivated": "ບັນຊີນີ້ຖືກປິດການນຳໃຊ້ແລ້ວ.",
+        "incorrect_credentials": "ຊື່ຜູ້ໃຊ້ ແລະ/ຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ."
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3467,5 +3462,14 @@
     "labs_mjolnir": {
         "room_name": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",
         "room_topic": "ນີ້ແມ່ນບັນຊີລາຍຊື່ຜູ້ໃຊ້ / ເຊີບເວີຂອງທ່ານທີ່ທ່ານໄດ້ບລັອກ - ຢ່າອອກຈາກຫ້ອງ!"
+    },
+    "theme": {
+        "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ"
+    },
+    "update": {
+        "see_changes_button": "ມີຫຍັງໃຫມ່?",
+        "release_notes_toast_title": "ມີຫຍັງໃຫມ່",
+        "toast_title": "ອັບເດດ %(brand)s",
+        "toast_description": "ເວີຊັນໃໝ່ຂອງ %(brand)s ພ້ອມໃຊ້ງານ"
     }
 }

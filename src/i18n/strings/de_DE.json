@@ -164,7 +164,6 @@
     "No media permissions": "Keine Medienberechtigungen",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst",
     "Default Device": "Standardgerät",
-    "Incorrect username and/or password.": "Inkorrekter Nutzername und/oder Passwort.",
     "Anyone": "Alle",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bist du sicher, dass du den Raum „%(roomName)s“ verlassen möchtest?",
     "Custom level": "Selbstdefiniertes Berechtigungslevel",
@@ -253,7 +252,6 @@
     "Notification targets": "Benachrichtigungsziele",
     "Today": "Heute",
     "Friday": "Freitag",
-    "What's New": "Was ist neu",
     "Changelog": "Änderungsprotokoll",
     "Failed to send logs: ": "Senden von Protokolldateien fehlgeschlagen: ",
     "This Room": "In diesem Raum",
@@ -269,7 +267,6 @@
     "Wednesday": "Mittwoch",
     "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
     "All messages": "Alle Nachrichten",
-    "What's new?": "Was ist neu?",
     "All Rooms": "In allen Räumen",
     "Thursday": "Donnerstag",
     "Search…": "Suchen…",
@@ -931,7 +928,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
     "Invalid base_url for m.identity_server": "Ungültige base_url für m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
-    "This account has been deactivated.": "Dieses Konto wurde deaktiviert.",
     "well formed": "wohlgeformt",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Wenn du <server /> nicht verwenden willst, um Kontakte zu finden und von anderen gefunden zu werden, trage unten einen anderen Identitäts-Server ein.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
@@ -1106,8 +1102,6 @@
     "Uzbekistan": "Usbekistan",
     "Don't miss a reply": "Verpasse keine Antwort",
     "Enable desktop notifications": "Aktiviere Desktopbenachrichtigungen",
-    "Update %(brand)s": "Aktualisiere %(brand)s",
-    "New version of %(brand)s is available": "Neue Version von %(brand)s verfügbar",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten von %(rooms)s Räumen zu speichern.",
         "one": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten vom Raum %(rooms)s zu speichern."
@@ -1780,7 +1774,6 @@
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
-    "Light high contrast": "Hell kontrastreich",
     "Reply in thread": "In Thread antworten",
     "Sidebar": "Seitenleiste",
     "Show all your rooms in Home, even if they're in a space.": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
@@ -2208,8 +2201,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s ist Ende-zu-Ende-verschlüsselt, allerdings noch auf eine geringere Anzahl Benutzer beschränkt.",
     "Enable %(brand)s as an additional calling option in this room": "Verwende %(brand)s als alternative Anrufoption in diesem Raum",
     "Sorry — this call is currently full": "Entschuldigung — dieser Anruf ist aktuell besetzt",
-    "pause voice broadcast": "Sprachübertragung pausieren",
-    "resume voice broadcast": "Sprachübertragung fortsetzen",
     "Sign in with QR code": "Mit QR-Code anmelden",
     "Browser": "Browser",
     "Completing set up of your new device": "Schließe Anmeldung deines neuen Gerätes ab",
@@ -2232,7 +2223,6 @@
     "Sign in new device": "Neues Gerät anmelden",
     "Show QR code": "QR-Code anzeigen",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Du kannst dieses Gerät verwenden, um ein neues Gerät per QR-Code anzumelden. Dazu musst du den auf diesem Gerät angezeigten QR-Code mit deinem nicht angemeldeten Gerät einlesen.",
-    "play voice broadcast": "Sprachübertragung wiedergeben",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Bist du sicher, dass du dich von %(count)s Sitzung abmelden möchtest?",
         "other": "Bist du sicher, dass du dich von %(count)s Sitzungen abmelden möchtest?"
@@ -2264,9 +2254,7 @@
     "Confirm new password": "Neues Passwort bestätigen",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
-    "Change input device": "Eingabegerät wechseln",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
-    "Buffering…": "Puffere …",
     "Error starting verification": "Verifizierungbeginn fehlgeschlagen",
     "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Experimentierfreudig? Probiere unsere neuesten, sich in Entwicklung befindlichen Ideen aus. Diese Funktionen sind nicht final; Sie könnten instabil sein, sich verändern oder sogar ganz entfernt werden. <a>Erfahre mehr</a>.",
@@ -2308,7 +2296,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Edit link": "Link bearbeiten",
     "Decrypted source unavailable": "Entschlüsselte Quelle nicht verfügbar",
-    "Connection error - Recording paused": "Verbindungsfehler − Aufnahme pausiert",
     "%(senderName)s started a voice broadcast": "%(senderName)s begann eine Sprachübertragung",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Registrierungstoken",
@@ -3773,7 +3760,8 @@
         "already_in_call": "Schon im Anruf",
         "already_in_call_person": "Du bist schon in einem Anruf mit dieser Person.",
         "unsupported": "Anrufe werden nicht unterstützt",
-        "unsupported_browser": "Sie können in diesem Browser keien Anrufe durchführen."
+        "unsupported_browser": "Sie können in diesem Browser keien Anrufe durchführen.",
+        "change_input_device": "Eingabegerät wechseln"
     },
     "Other": "Sonstiges",
     "Advanced": "Erweitert",
@@ -3933,7 +3921,9 @@
         "server_picker_intro": "Wir nennen die Orte, an denen du dein Benutzerkonto speichern kannst, „Heim-Server“.",
         "server_picker_custom": "Anderer Heim-Server",
         "server_picker_explainer": "Verwende einen Matrix-Heim-Server deiner Wahl oder betreibe deinen eigenen.",
-        "server_picker_learn_more": "Über Heim-Server"
+        "server_picker_learn_more": "Über Heim-Server",
+        "account_deactivated": "Dieses Konto wurde deaktiviert.",
+        "incorrect_credentials": "Inkorrekter Nutzername und/oder Passwort."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4150,10 +4140,24 @@
         "confirm_listen_affirm": "Ja, beende meine Aufzeichnung",
         "30s_backward": "30s zurückspulen",
         "30s_forward": "30s vorspulen",
-        "go_live": "Live schalten"
+        "go_live": "Live schalten",
+        "resume": "Sprachübertragung fortsetzen",
+        "pause": "Sprachübertragung pausieren",
+        "buffering": "Puffere …",
+        "play": "Sprachübertragung wiedergeben",
+        "connection_error": "Verbindungsfehler − Aufnahme pausiert"
     },
     "labs_mjolnir": {
         "room_name": "Meine Bannliste",
         "room_topic": "Dies ist die Liste von Benutzer und Servern, die du blockiert hast – verlasse diesen Raum nicht!"
+    },
+    "theme": {
+        "light_high_contrast": "Hell kontrastreich"
+    },
+    "update": {
+        "see_changes_button": "Was ist neu?",
+        "release_notes_toast_title": "Was ist neu",
+        "toast_title": "Aktualisiere %(brand)s",
+        "toast_description": "Neue Version von %(brand)s verfügbar"
     }
 }

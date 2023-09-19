@@ -24,12 +24,10 @@
     "Monday": "Pirmadienis",
     "Rooms": "Kambariai",
     "Failed to forget room %(errCode)s": "Nepavyko pamiršti kambario %(errCode)s",
-    "What's New": "Kas naujo",
     "Wednesday": "Trečiadienis",
     "Send": "Siųsti",
     "All messages": "Visos žinutės",
     "unknown error code": "nežinomas klaidos kodas",
-    "What's new?": "Kas naujo?",
     "Invite to this room": "Pakviesti į šį kambarį",
     "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
     "Thursday": "Ketvirtadienis",
@@ -147,7 +145,6 @@
     "A new password must be entered.": "Privalo būti įvestas naujas slaptažodis.",
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
-    "Incorrect username and/or password.": "Neteisingas vartotojo vardas ir/arba slaptažodis.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org.",
     "Commands": "Komandos",
     "Notify the whole room": "Pranešti visam kambariui",
@@ -881,8 +878,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nepavyksta prisijungti prie serverio - patikrinkite savo ryšį, įsitikinkite, kad jūsų <a>serverio SSL sertifikatas</a> yra patikimas ir, kad naršyklės plėtinys neužblokuoja užklausų.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Anksčiau šiame seanse naudojote naujesnę %(brand)s versiją. Norėdami vėl naudoti šią versiją su visapusiu šifravimu, turėsite atsijungti ir prisijungti iš naujo.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Tam, kad neprarastumėte savo pokalbių istorijos, prieš atsijungdami turite eksportuoti kambario raktus. Norėdami tai padaryti, turėsite grįžti į naujesnę %(brand)s versiją",
-    "New version of %(brand)s is available": "Yra nauja %(brand)s versija",
-    "Update %(brand)s": "Atnaujinti %(brand)s",
     "Someone is using an unknown session": "Kažkas naudoja nežinomą seansą",
     "Please review and accept the policies of this homeserver:": "Peržiūrėkite ir sutikite su šio serverio politika:",
     "Please review and accept all of the homeserver's policies": "Peržiūrėkite ir sutikite su visa serverio politika",
@@ -1597,10 +1592,6 @@
     "Unable to copy room link": "Nepavyko nukopijuoti kambario nurodos",
     "Copy room link": "Kopijuoti kambario nuorodą",
     "Manage & explore rooms": "Valdyti & tyrinėti kambarius",
-    "Light high contrast": "Šviesi didelio kontrasto",
-    "pause voice broadcast": "pristabdyti balso transliaciją",
-    "resume voice broadcast": "tęsti balso transliaciją",
-    "play voice broadcast": "paleisti balso transliaciją",
     "Live": "Gyvai",
     "common": {
         "about": "Apie",
@@ -2586,7 +2577,8 @@
         "server_picker_required": "Nurodykite namų serverį",
         "server_picker_custom": "Kitas namų serveris",
         "server_picker_explainer": "Naudokite pageidaujamą Matrix namų serverį, jei tokį turite, arba talpinkite savo.",
-        "server_picker_learn_more": "Apie namų serverius"
+        "server_picker_learn_more": "Apie namų serverius",
+        "incorrect_credentials": "Neteisingas vartotojo vardas ir/arba slaptažodis."
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2676,10 +2668,22 @@
     },
     "voice_broadcast": {
         "confirm_stop_title": "Sustabdyti transliaciją gyvai?",
-        "confirm_stop_affirm": "Taip, sustabdyti transliaciją"
+        "confirm_stop_affirm": "Taip, sustabdyti transliaciją",
+        "resume": "tęsti balso transliaciją",
+        "pause": "pristabdyti balso transliaciją",
+        "play": "paleisti balso transliaciją"
     },
     "labs_mjolnir": {
         "room_name": "Mano Draudimų Sąrašas",
         "room_topic": "Tai yra jūsų užblokuotų vartotojų/serverių sąrašas - neišeikite iš kambario!"
+    },
+    "theme": {
+        "light_high_contrast": "Šviesi didelio kontrasto"
+    },
+    "update": {
+        "see_changes_button": "Kas naujo?",
+        "release_notes_toast_title": "Kas naujo",
+        "toast_title": "Atnaujinti %(brand)s",
+        "toast_description": "Yra nauja %(brand)s versija"
     }
 }

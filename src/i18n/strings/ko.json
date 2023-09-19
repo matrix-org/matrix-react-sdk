@@ -61,7 +61,6 @@
     "Home": "홈",
     "Import E2E room keys": "종단간 암호화 방 키 불러오기",
     "Import room keys": "방 키 가져오기",
-    "Incorrect username and/or password.": "사용자 이름 혹은 비밀번호가 맞지 않습니다.",
     "Incorrect verification code": "맞지 않은 인증 코드",
     "Invalid Email Address": "잘못된 이메일 주소",
     "Invalid file%(extra)s": "잘못된 파일%(extra)s",
@@ -202,7 +201,6 @@
     "Notification targets": "알림 대상",
     "Today": "오늘",
     "Friday": "금요일",
-    "What's New": "새로운 점",
     "Changelog": "바뀐 점",
     "This Room": "방",
     "Unavailable": "이용할 수 없음",
@@ -216,7 +214,6 @@
     "Monday": "월요일",
     "All Rooms": "모든 방",
     "All messages": "모든 메시지",
-    "What's new?": "새로운 점은?",
     "Invite to this room": "이 방에 초대",
     "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
@@ -643,7 +640,6 @@
     "Invalid base_url for m.identity_server": "잘못된 m.identity_server 용 base_url",
     "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
     "General failure": "일반적인 실패",
-    "This account has been deactivated.": "이 계정은 비활성화되었습니다.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다.",
     "Create account": "계정 만들기",
     "Failed to re-authenticate due to a homeserver problem": "홈서버 문제로 다시 인증에 실패함",
@@ -1462,7 +1458,9 @@
         "soft_logout_intro_password": "로그인하고 계정에 다시 접근하려면 비밀번호를 입력하세요.",
         "soft_logout_intro_sso": "로그인하고 계정에 다시 접근하기.",
         "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요.",
-        "register_action": "계정 만들기"
+        "register_action": "계정 만들기",
+        "account_deactivated": "이 계정은 비활성화되었습니다.",
+        "incorrect_credentials": "사용자 이름 혹은 비밀번호가 맞지 않습니다."
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1520,5 +1518,9 @@
     "labs_mjolnir": {
         "room_name": "차단 목록",
         "room_topic": "차단한 사용자/서버 목록입니다 - 방을 떠나지 마세요!"
+    },
+    "update": {
+        "see_changes_button": "새로운 점은?",
+        "release_notes_toast_title": "새로운 점"
     }
 }

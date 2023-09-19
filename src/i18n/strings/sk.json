@@ -211,7 +211,6 @@
     "A new password must be entered.": "Musíte zadať nové heslo.",
     "New passwords must match each other.": "Obe nové heslá musia byť zhodné.",
     "Return to login screen": "Vrátiť sa na prihlasovaciu obrazovku",
-    "Incorrect username and/or password.": "Nesprávne meno používateľa a / alebo heslo.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "K domovskému serveru nie je možné pripojiť sa použitím protokolu HTTP keďže v adresnom riadku prehliadača máte HTTPS adresu. Použite protokol HTTPS alebo <a>povolte nezabezpečené skripty</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nie je možné pripojiť sa k domovskému serveru - skontrolujte prosím funkčnosť vášho pripojenia na internet. Uistite sa že <a>certifikát domovského servera</a> je dôveryhodný a že žiaden doplnok nainštalovaný v prehliadači nemôže blokovať požiadavky.",
     "Commands": "Príkazy",
@@ -266,7 +265,6 @@
     "All Rooms": "Vo všetkých miestnostiach",
     "Wednesday": "Streda",
     "All messages": "Všetky správy",
-    "What's new?": "Čo je nové?",
     "Invite to this room": "Pozvať do tejto miestnosti",
     "You cannot delete this message. (%(code)s)": "Nemôžete vymazať túto správu. (%(code)s)",
     "Thursday": "Štvrtok",
@@ -274,7 +272,6 @@
     "Yesterday": "Včera",
     "Error encountered (%(errorDetail)s).": "Vyskytla sa chyba (%(errorDetail)s).",
     "Low Priority": "Nízka priorita",
-    "What's New": "Čo Je Nové",
     "Thank you!": "Ďakujeme!",
     "Popout widget": "Otvoriť widget v novom okne",
     "Missing roomId.": "Chýba ID miestnosti.",
@@ -1165,7 +1162,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Táto miestnosť používa verziu miestnosti <roomVersion />, ktorú tento domovský server označil ako <i>nestabilnú</i>.",
     "Backup version:": "Verzia zálohy:",
-    "New version of %(brand)s is available": "K dispozícii je nová verzia %(brand)s",
     "Role in <RoomName/>": "Rola v <RoomName/>",
     "To publish an address, it needs to be set as a local address first.": "Ak chcete zverejniť adresu, je potrebné ju najprv nastaviť ako lokálnu adresu.",
     "Private space": "Súkromný priestor",
@@ -1510,7 +1506,6 @@
     "Dial pad": "Číselník",
     "Decline All": "Zamietnuť všetky",
     "Topic: %(topic)s ": "Téma: %(topic)s ",
-    "Update %(brand)s": "Aktualizovať %(brand)s",
     "Unknown App": "Neznáma aplikácia",
     "Security Key": "Bezpečnostný kľúč",
     "Security Phrase": "Bezpečnostná fráza",
@@ -1585,7 +1580,6 @@
     "<userName/> wants to chat": "<userName/> chce konverzovať",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Deactivate user": "Deaktivovať používateľa",
-    "This account has been deactivated.": "Tento účet bol deaktivovaný.",
     "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
     "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Povedzte nám prosím, čo sa pokazilo, alebo radšej vytvorte príspevok v službe GitHub, v ktorom problém popíšete.",
@@ -1920,7 +1914,6 @@
         "other": "Potvrďte odhlásenie týchto zariadení pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti.",
         "one": "Potvrďte odhlásenie tohto zariadenia pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti."
     },
-    "Light high contrast": "Ľahký vysoký kontrast",
     "Command Help": "Pomocník príkazov",
     "My live location": "Moja poloha v reálnom čase",
     "My current location": "Moja aktuálna poloha",
@@ -2208,8 +2201,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je end-to-end šifrovaný, ale v súčasnosti je obmedzený pre menší počet používateľov.",
     "Enable %(brand)s as an additional calling option in this room": "Zapnúť %(brand)s ako ďalšiu možnosť volania v tejto miestnosti",
     "Sorry — this call is currently full": "Prepáčte — tento hovor je momentálne obsadený",
-    "resume voice broadcast": "obnoviť hlasové vysielanie",
-    "pause voice broadcast": "pozastaviť hlasové vysielanie",
     "Completing set up of your new device": "Dokončenie nastavenia nového zariadenia",
     "Waiting for device to sign in": "Čaká sa na prihlásenie zariadenia",
     "Review and approve the sign in": "Skontrolujte a schváľte prihlásenie",
@@ -2232,7 +2223,6 @@
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Toto zariadenie môžete použiť na prihlásenie nového zariadenia pomocou QR kódu. QR kód zobrazený na tomto zariadení musíte naskenovať pomocou zariadenia, ktoré je odhlásené.",
     "Sign in with QR code": "Prihlásiť sa pomocou QR kódu",
     "Browser": "Prehliadač",
-    "play voice broadcast": "spustiť hlasové vysielanie",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Ste si istí, že sa chcete odhlásiť z %(count)s relácie?",
         "other": "Ste si istí, že sa chcete odhlásiť z %(count)s relácií?"
@@ -2265,10 +2255,8 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
-    "Change input device": "Zmeniť vstupné zariadenie",
     "We were unable to start a chat with the other user.": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom.",
     "Error starting verification": "Chyba pri spustení overovania",
-    "Buffering…": "Načítavanie do vyrovnávacej pamäte…",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Chcete experimentovať? Vyskúšajte naše najnovšie nápady vo vývojovom štádiu. Tieto funkcie nie sú dokončené; môžu byť nestabilné, môžu sa zmeniť alebo môžu byť úplne zrušené. <a>Zistiť viac</a>.",
     "Early previews": "Predbežné ukážky",
@@ -2308,7 +2296,6 @@
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "Edit link": "Upraviť odkaz",
     "Decrypted source unavailable": "Dešifrovaný zdroj nie je dostupný",
-    "Connection error - Recording paused": "Chyba pripojenia - nahrávanie pozastavené",
     "%(senderName)s started a voice broadcast": "%(senderName)s začal/a hlasové vysielanie",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Registračný token",
@@ -3768,7 +3755,8 @@
         "already_in_call": "Hovor už prebieha",
         "already_in_call_person": "S touto osobou už hovor prebieha.",
         "unsupported": "Volania nie sú podporované",
-        "unsupported_browser": "V tomto prehliadači nie je možné uskutočňovať hovory."
+        "unsupported_browser": "V tomto prehliadači nie je možné uskutočňovať hovory.",
+        "change_input_device": "Zmeniť vstupné zariadenie"
     },
     "Other": "Ďalšie",
     "Advanced": "Pokročilé",
@@ -3928,7 +3916,9 @@
         "server_picker_intro": "Miesta, kde môžete hosťovať svoj účet, nazývame \" domovské servery\".",
         "server_picker_custom": "Iný domovský server",
         "server_picker_explainer": "Použite preferovaný domovský server Matrixu, ak ho máte, alebo si vytvorte vlastný.",
-        "server_picker_learn_more": "O domovských serveroch"
+        "server_picker_learn_more": "O domovských serveroch",
+        "account_deactivated": "Tento účet bol deaktivovaný.",
+        "incorrect_credentials": "Nesprávne meno používateľa a / alebo heslo."
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -4145,10 +4135,24 @@
         "confirm_listen_affirm": "Áno, ukončiť moje nahrávanie",
         "30s_backward": "30s späť",
         "30s_forward": "30s dopredu",
-        "go_live": "Prejsť naživo"
+        "go_live": "Prejsť naživo",
+        "resume": "obnoviť hlasové vysielanie",
+        "pause": "pozastaviť hlasové vysielanie",
+        "buffering": "Načítavanie do vyrovnávacej pamäte…",
+        "play": "spustiť hlasové vysielanie",
+        "connection_error": "Chyba pripojenia - nahrávanie pozastavené"
     },
     "labs_mjolnir": {
         "room_name": "Môj zoznam zákazov",
         "room_topic": "Toto je zoznam používateľov / serverov, ktorých ste zablokovali - neopúšťajte miestnosť!"
+    },
+    "theme": {
+        "light_high_contrast": "Ľahký vysoký kontrast"
+    },
+    "update": {
+        "see_changes_button": "Čo je nové?",
+        "release_notes_toast_title": "Čo Je Nové",
+        "toast_title": "Aktualizovať %(brand)s",
+        "toast_description": "K dispozícii je nová verzia %(brand)s"
     }
 }

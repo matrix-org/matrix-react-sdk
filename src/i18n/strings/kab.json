@@ -30,7 +30,6 @@
     "Later": "Ticki",
     "Notifications": "Ilɣa",
     "Ok": "Ih",
-    "What's New": "D acu-t umaynut",
     "Cat": "Amcic",
     "Lion": "Izem",
     "Rabbit": "Awtul",
@@ -163,7 +162,6 @@
     "Ignored user": "Aseqdac yettunfen",
     "You are now ignoring %(userId)s": "Aql-ak tura tunfeḍ i %(userId)s",
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
-    "What's new?": "D acu-t umaynut?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
     "Unable to load! Check your network connectivity and try again.": "Yegguma ad d-yali! Senqed tuqqna-inek.inem ɣer uzeṭṭa syen tεerḍeḍ tikkelt-nniḍen.",
     "Failure to create room": "Timerna n texxamt ur teddi ara",
@@ -486,7 +484,6 @@
     "All settings": "Akk iɣewwaren",
     "A new password must be entered.": "Awal uffir amaynut ilaq ad yettusekcem.",
     "General failure": "Tuccḍa tamatut",
-    "This account has been deactivated.": "Amiḍan-a yettuḥbes.",
     "Command Autocomplete": "Asmad awurman n tiludna",
     "Emoji Autocomplete": "Asmad awurman n yimujit",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Seqdec aqeddac n timagit i uncad s yimayl. Sit, tkemmleḍ aseqdec n uqeddac n timagit amezwer (%(defaultIdentityServerName)s) neɣ sefrek deg yiɣewwaren.",
@@ -838,7 +835,6 @@
     "Could not load user profile": "Yegguma ad d-yali umaɣnu n useqdac",
     "New passwords must match each other.": "Awalen uffiren imaynuten ilaq ad mṣadan.",
     "Return to login screen": "Uɣal ɣer ugdil n tuqqna",
-    "Incorrect username and/or password.": "Isem n uqeddac d/neɣ awal uffir d arameɣtu.",
     "Save your Security Key": "Sekles tasarut-ik·im n tɣellist",
     "Unable to set up secret storage": "Asbadu n uklas uffir d awezɣi",
     "Paperclip": "Tamessakt n lkaɣeḍ",
@@ -2089,7 +2085,9 @@
         "sign_in_or_register": "Kcem ɣer neɣ rnu amiḍan",
         "sign_in_or_register_description": "Seqdec amiḍan-ik/im neɣ snulfu-d yiwen akken ad tkemmleḍ.",
         "register_action": "Rnu amiḍan",
-        "server_picker_invalid_url": "Yir URL"
+        "server_picker_invalid_url": "Yir URL",
+        "account_deactivated": "Amiḍan-a yettuḥbes.",
+        "incorrect_credentials": "Isem n uqeddac d/neɣ awal uffir d arameɣtu."
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2145,5 +2143,9 @@
     "labs_mjolnir": {
         "room_name": "Tabdart-inu n tigtin",
         "room_topic": "Tagi d tabdart-ik·im n yiseqdacen/yiqeddacen i tesweḥleḍ - ur teffeɣ ara seg texxamt!"
+    },
+    "update": {
+        "see_changes_button": "D acu-t umaynut?",
+        "release_notes_toast_title": "D acu-t umaynut"
     }
 }

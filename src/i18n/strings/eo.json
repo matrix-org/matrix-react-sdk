@@ -164,7 +164,6 @@
     "collapse": "maletendi",
     "expand": "etendi",
     "Custom level": "Propra nivelo",
-    "Incorrect username and/or password.": "Malĝusta uzantnomo kaj/aŭ pasvorto.",
     "And %(count)s more...": {
         "other": "Kaj %(count)s pliaj…"
     },
@@ -249,7 +248,6 @@
     "Notification targets": "Celoj de sciigoj",
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
-    "What's New": "Kio novas",
     "Changelog": "Protokolo de ŝanĝoj",
     "This Room": "Ĉi tiu ĉambro",
     "Unavailable": "Nedisponebla",
@@ -264,7 +262,6 @@
     "Wednesday": "Merkredo",
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
     "All messages": "Ĉiuj mesaĝoj",
-    "What's new?": "Kio novas?",
     "All Rooms": "Ĉiuj ĉambroj",
     "Thursday": "Ĵaŭdo",
     "Yesterday": "Hieraŭ",
@@ -629,7 +626,6 @@
     "Terms of Service": "Uzokondiĉoj",
     "Service": "Servo",
     "Summary": "Resumo",
-    "This account has been deactivated.": "Tiu ĉi konto malaktiviĝis.",
     "Call failed due to misconfigured server": "Voko malsukcesis pro misagordita servilo",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bonvolu peti la administranton de via hejmservilo (<code>%(homeserverDomain)s</code>) agordi TURN-servilon, por ke vokoj funkciu dependeble.",
     "Use an identity server": "Uzi identigan servilon",
@@ -1261,8 +1257,6 @@
     "Burkina Faso": "Burkino",
     "Bouvet Island": "Buvet-Insulo",
     "Anguilla": "Angvilo",
-    "New version of %(brand)s is available": "Nova versio de %(brand)s disponeblas",
-    "Update %(brand)s": "Ĝisdatigi %(brand)s",
     "Enable desktop notifications": "Ŝalti labortablajn sciigojn",
     "Zimbabwe": "Zimbabvo",
     "Zambia": "Zambio",
@@ -1731,7 +1725,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
     "Can't edit poll": "Ne povas redakti balotenketon",
     "Poll": "Balotenketo",
-    "Light high contrast": "Malpeza alta kontrasto",
     "Failed to read events": "Malsukcesis legi okazojn",
     "Failed to send event": "Malsukcesis sendi okazon",
     "You need to be able to kick users to do that.": "Vi devas povi piedbati uzantojn por fari tion.",
@@ -1759,10 +1752,6 @@
     "Upgrading room": "Altgradiga ĉambro",
     "Voice broadcast": "Voĉan elsendo",
     "Live": "Vivi",
-    "play voice broadcast": "ludu voĉan elsendon",
-    "Change input device": "Ŝanĝu enigan aparaton",
-    "pause voice broadcast": "paŭzi voĉan elsendon",
-    "resume voice broadcast": "rekomenci voĉan elsendon",
     "The user's homeserver does not support the version of the space.": "La hejmservilo de la uzanto ne subtenas la version de la aro.",
     "User may or may not exist": "Uzanto povas aŭ ne ekzisti",
     "User does not exist": "Uzanto ne ekzistas",
@@ -2795,7 +2784,8 @@
         "already_in_call": "Jam vokanta",
         "already_in_call_person": "Vi jam vokas ĉi tiun personon.",
         "unsupported": "Vokoj estas nesubtenataj",
-        "unsupported_browser": "Vi ne povas telefoni per ĉi tiu retumilo."
+        "unsupported_browser": "Vi ne povas telefoni per ĉi tiu retumilo.",
+        "change_input_device": "Ŝanĝu enigan aparaton"
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -2924,7 +2914,9 @@
         "server_picker_required": "Specifu hejmservilon",
         "server_picker_custom": "Alia hejmservilo",
         "server_picker_explainer": "Uzu vian preferatan hejmservilon de Matrix se vi havas iun, aŭ gastigu vian propran.",
-        "server_picker_learn_more": "Pri hejmserviloj"
+        "server_picker_learn_more": "Pri hejmserviloj",
+        "account_deactivated": "Tiu ĉi konto malaktiviĝis.",
+        "incorrect_credentials": "Malĝusta uzantnomo kaj/aŭ pasvorto."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3119,10 +3111,22 @@
         "confirm_listen_affirm": "Jes, ĉesigu mian registradon",
         "30s_backward": "30s. reen",
         "30s_forward": "30s. antaŭen",
-        "go_live": "Iru vivi"
+        "go_live": "Iru vivi",
+        "resume": "rekomenci voĉan elsendon",
+        "pause": "paŭzi voĉan elsendon",
+        "play": "ludu voĉan elsendon"
     },
     "labs_mjolnir": {
         "room_name": "Mia listo de forbaroj",
         "room_topic": "Ĉi tio estas la listo de uzantoj/serviloj, kiujn vi blokis – ne eliru el la ĉambro!"
+    },
+    "theme": {
+        "light_high_contrast": "Malpeza alta kontrasto"
+    },
+    "update": {
+        "see_changes_button": "Kio novas?",
+        "release_notes_toast_title": "Kio novas",
+        "toast_title": "Ĝisdatigi %(brand)s",
+        "toast_description": "Nova versio de %(brand)s disponeblas"
     }
 }

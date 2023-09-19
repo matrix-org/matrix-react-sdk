@@ -129,7 +129,6 @@
     "Custom level": "Специальные права",
     "Email address": "Электронная почта",
     "Error decrypting attachment": "Ошибка расшифровки вложения",
-    "Incorrect username and/or password.": "Неверное имя пользователя и/или пароль.",
     "Invalid file%(extra)s": "Недопустимый файл%(extra)s",
     "Invited": "Приглашены",
     "Jump to first unread message.": "Перейти к первому непрочитанному сообщению.",
@@ -252,7 +251,6 @@
     "Notification targets": "Устройства для уведомлений",
     "Today": "Сегодня",
     "Friday": "Пятница",
-    "What's New": "Что изменилось",
     "Changelog": "История изменений",
     "Failed to send logs: ": "Не удалось отправить журналы: ",
     "This Room": "В этой комнате",
@@ -267,7 +265,6 @@
     "Monday": "Понедельник",
     "Invite to this room": "Пригласить в комнату",
     "All messages": "Все сообщения",
-    "What's new?": "Что нового?",
     "All Rooms": "Везде",
     "You cannot delete this message. (%(code)s)": "Это сообщение нельзя удалить. (%(code)s)",
     "Thursday": "Четверг",
@@ -629,7 +626,6 @@
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Failed to re-authenticate due to a homeserver problem": "Ошибка повторной аутентификации из-за проблем на сервере",
     "Clear personal data": "Очистить персональные данные",
-    "This account has been deactivated.": "Эта учётная запись была деактивирована.",
     "Call failed due to misconfigured server": "Вызов не состоялся из-за неправильно настроенного сервера",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Попросите администратора вашего домашнего сервера (<code>%(homeserverDomain)s</code>) настроить сервер TURN для надежной работы звонков.",
     "Accept <policyLink /> to continue:": "Примите <policyLink /> для продолжения:",
@@ -1114,8 +1110,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
-    "New version of %(brand)s is available": "Доступна новая версия %(brand)s!",
-    "Update %(brand)s": "Обновление %(brand)s",
     "Enable desktop notifications": "Включить уведомления на рабочем столе",
     "Don't miss a reply": "Не пропустите ответ",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
@@ -1910,7 +1904,6 @@
     "Room members": "Участники комнаты",
     "Back to chat": "Назад в чат",
     "That's fine": "Всё в порядке",
-    "Light high contrast": "Контрастная светлая",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Неизвестная пара (пользователь, сеанс): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Нераспознанный адрес комнаты: %(roomAlias)s",
     "%(spaceName)s and %(count)s others": {
@@ -2183,9 +2176,6 @@
     },
     "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
-    "pause voice broadcast": "приостановить голосовую трансляцию",
-    "resume voice broadcast": "продолжить голосовую трансляцию",
-    "play voice broadcast": "проиграть голосовую трансляцию",
     "Verified sessions are anywhere you are using this account after entering your passphrase or confirming your identity with another verified session.": "Подтверждённые сеансы — это везде, где вы используете учётную запись после ввода кодовой фразы или идентификации через другой сеанс.",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Сочтите выйти из старых сеансов (%(inactiveAgeDays)s дней и более), которые вы более не используете.",
     "This session doesn't support encryption and thus can't be verified.": "Этот сеанс не поддерживает шифрование, потому и не может быть подтверждён.",
@@ -2209,7 +2199,6 @@
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
-    "Buffering…": "Буферизация…",
     "Improve your account security by following these recommendations.": "Усильте защиту учётной записи, следуя этим рекомендациям.",
     "Verify your current session for enhanced secure messaging.": "Заверьте текущий сеанс для усиления защиты переписки.",
     "Mark as read": "Отметить как прочитанное",
@@ -3631,7 +3620,9 @@
         "server_picker_intro": "Мы называем места, где вы можете разместить свою учётную запись, 'домашними серверами'.",
         "server_picker_custom": "Другой домашний сервер",
         "server_picker_explainer": "Если вы предпочитаете домашний сервер Matrix, используйте его. Вы также можете настроить свой собственный домашний сервер, если хотите.",
-        "server_picker_learn_more": "О домашних серверах"
+        "server_picker_learn_more": "О домашних серверах",
+        "account_deactivated": "Эта учётная запись была деактивирована.",
+        "incorrect_credentials": "Неверное имя пользователя и/или пароль."
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3833,10 +3824,23 @@
         "confirm_stop_affirm": "Да, остановить трансляцию",
         "30s_backward": "30 с назад",
         "30s_forward": "30 с вперёд",
-        "go_live": "Начать эфир"
+        "go_live": "Начать эфир",
+        "resume": "продолжить голосовую трансляцию",
+        "pause": "приостановить голосовую трансляцию",
+        "buffering": "Буферизация…",
+        "play": "проиграть голосовую трансляцию"
     },
     "labs_mjolnir": {
         "room_name": "Мой список блокировки",
         "room_topic": "Это список пользователей/серверов, которые вы заблокировали — не покидайте комнату!"
+    },
+    "theme": {
+        "light_high_contrast": "Контрастная светлая"
+    },
+    "update": {
+        "see_changes_button": "Что нового?",
+        "release_notes_toast_title": "Что изменилось",
+        "toast_title": "Обновление %(brand)s",
+        "toast_description": "Доступна новая версия %(brand)s!"
     }
 }

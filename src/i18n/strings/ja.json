@@ -47,10 +47,8 @@
     "Source URL": "ソースのURL",
     "Filter results": "結果を絞り込む",
     "Preparing to send logs": "ログを送信する準備をしています",
-    "What's new?": "新着",
     "Logs sent": "ログが送信されました",
     "Error encountered (%(errorDetail)s).": "エラーが発生しました（%(errorDetail)s）。",
-    "What's New": "新着",
     "Thank you!": "ありがとうございます！",
     "You cannot place a call with yourself.": "自分自身に通話を発信することはできません。",
     "Permission Required": "権限が必要です",
@@ -314,7 +312,6 @@
     "New passwords must match each other.": "新しいパスワードは互いに一致する必要があります。",
     "Return to login screen": "ログイン画面に戻る",
     "Please <a>contact your service administrator</a> to continue using this service.": "このサービスを引き続き使用するには、<a>サービス管理者にお問い合わせ</a>ください。",
-    "Incorrect username and/or password.": "ユーザー名とパスワードの一方あるいは両方が正しくありません。",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
@@ -575,7 +572,6 @@
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "あなたのメッセージは保護されています。メッセージのロックを解除するための固有の鍵は、あなたと受信者だけが持っています。",
     "%(name)s wants to verify": "%(name)sが認証を要求しています",
     "You sent a verification request": "認証リクエストを送信しました",
-    "This account has been deactivated.": "このアカウントは無効化されています。",
     "Forget Room": "ルームを消去",
     "Forget this room": "このルームを消去",
     "Recently Direct Messaged": "最近ダイレクトメッセージで会話したユーザー",
@@ -621,8 +617,6 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "セッションにアクセスできなくなる場合に備えて、アカウントデータと暗号鍵をバックアップしましょう。鍵は一意のセキュリティーキーで保護されます。",
     "New version available. <a>Update now.</a>": "新しいバージョンが利用可能です。<a>今すぐ更新</a>",
     "Explore rooms": "ルームを探す",
-    "Update %(brand)s": "%(brand)sの更新",
-    "New version of %(brand)s is available": "%(brand)sの新しいバージョンが利用可能です",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",
     "Confirm adding email": "メールアドレスの追加を承認",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、メールアドレスの追加を承認してください。",
@@ -1713,7 +1707,6 @@
         "other": "下のボタンをクリックして、端末からのログアウトを承認してください。"
     },
     "Waiting for you to verify on your other device…": "他の端末での認証を待機しています…",
-    "Light high contrast": "ライト（高コントラスト）",
     "Remove from %(roomName)s": "%(roomName)sから追放",
     "Wait!": "お待ちください！",
     "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "ここでコピーペーストを行うように伝えられた場合は、あなたが詐欺の対象となっている可能性が非常に高いです！",
@@ -2041,9 +2034,6 @@
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)sまたは%(copyButton)s",
     "Voice broadcast": "音声配信",
     "Live": "ライブ",
-    "pause voice broadcast": "音声配信を一時停止",
-    "resume voice broadcast": "音声配信を再開",
-    "play voice broadcast": "音声配信を再生",
     "Video call ended": "ビデオ通話が終了しました",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
     "To join, please enable video rooms in Labs first": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
@@ -2131,7 +2121,6 @@
         "other": "%(count)s個のセッションからサインアウトしてよろしいですか？"
     },
     "Bulk options": "一括オプション",
-    "Change input device": "入力端末を変更",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
     "%(senderName)s started a voice broadcast": "%(senderName)sが音声配信を開始しました",
     "Ongoing call": "通話中",
@@ -2145,12 +2134,10 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "このセッションでは、暗号化が有効になっているルームに参加することができません。",
-    "Buffering…": "バッファリングしています…",
     "Change layout": "レイアウトを変更",
     "Create a link": "リンクを作成",
     "Edit link": "リンクを編集",
     "Unable to decrypt message": "メッセージを復号化できません",
-    "Connection error - Recording paused": "接続エラー - 録音を停止しました",
     "This message could not be decrypted": "このメッセージを復号化できませんでした",
     "You have unverified sessions": "未認証のセッションがあります",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
@@ -3575,7 +3562,8 @@
         "already_in_call": "既に通話中です",
         "already_in_call_person": "既にこの人と通話中です。",
         "unsupported": "通話はサポートされていません",
-        "unsupported_browser": "このブラウザーで通話を発信することはできません。"
+        "unsupported_browser": "このブラウザーで通話を発信することはできません。",
+        "change_input_device": "入力端末を変更"
     },
     "Other": "その他",
     "Advanced": "詳細",
@@ -3733,7 +3721,9 @@
         "server_picker_intro": "Matrixでは、あなたが自分のアカウントを管理する場所を「ホームサーバー」と呼んでいます。",
         "server_picker_custom": "他のホームサーバー",
         "server_picker_explainer": "好みのホームサーバーがあるか、自分でホームサーバーを運営している場合は、そちらをお使いください。",
-        "server_picker_learn_more": "ホームサーバーについて（英語）"
+        "server_picker_learn_more": "ホームサーバーについて（英語）",
+        "account_deactivated": "このアカウントは無効化されています。",
+        "incorrect_credentials": "ユーザー名とパスワードの一方あるいは両方が正しくありません。"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3943,10 +3933,24 @@
         "confirm_listen_affirm": "はい、録音を終了してください",
         "30s_backward": "30秒戻す",
         "30s_forward": "30秒進める",
-        "go_live": "ライブ配信"
+        "go_live": "ライブ配信",
+        "resume": "音声配信を再開",
+        "pause": "音声配信を一時停止",
+        "buffering": "バッファリングしています…",
+        "play": "音声配信を再生",
+        "connection_error": "接続エラー - 録音を停止しました"
     },
     "labs_mjolnir": {
         "room_name": "マイブロックリスト",
         "room_topic": "あなたがブロックしたユーザーとサーバーのリストです。このルームから退出しないでください！"
+    },
+    "theme": {
+        "light_high_contrast": "ライト（高コントラスト）"
+    },
+    "update": {
+        "see_changes_button": "新着",
+        "release_notes_toast_title": "新着",
+        "toast_title": "%(brand)sの更新",
+        "toast_description": "%(brand)sの新しいバージョンが利用可能です"
     }
 }

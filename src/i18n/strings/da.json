@@ -81,7 +81,6 @@
     "Notification targets": "Meddelelsesmål",
     "Today": "I dag",
     "Friday": "Fredag",
-    "What's New": "Hvad er nyt",
     "Changelog": "Ændringslog",
     "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
@@ -95,7 +94,6 @@
     "Invite to this room": "Inviter til dette rum",
     "Send": "Send",
     "All messages": "Alle beskeder",
-    "What's new?": "Hvad er nyt?",
     "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
@@ -495,7 +493,6 @@
     "Unable to transfer call": "Kan ikke omstille opkald",
     "There was an error looking up the phone number": "Der opstod en fejl ved at slå telefonnummeret op",
     "Unable to look up phone number": "Kan ikke slå telefonnummer op",
-    "Incorrect username and/or password.": "Forkert brugernavn og/eller adgangskode.",
     "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
     "Your password was successfully changed.": "Din adgangskode blev ændret.",
     "New Password": "Ny adgangskode",
@@ -786,7 +783,8 @@
         "forgot_password_email_required": "Den emailadresse, der tilhører til din adgang, skal indtastes.",
         "sign_in_or_register": "Log ind eller Opret bruger",
         "sign_in_or_register_description": "Brug din konto eller opret en ny for at fortsætte.",
-        "register_action": "Opret brugerkonto"
+        "register_action": "Opret brugerkonto",
+        "incorrect_credentials": "Forkert brugernavn og/eller adgangskode."
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -806,5 +804,9 @@
     },
     "feedback": {
         "comment_label": "Kommentar"
+    },
+    "update": {
+        "see_changes_button": "Hvad er nyt?",
+        "release_notes_toast_title": "Hvad er nyt"
     }
 }

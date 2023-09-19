@@ -43,7 +43,6 @@
     "For security, this session has been signed out. Please sign in again.": "Για λόγους ασφαλείας, αυτή η συνεδρία έχει τερματιστεί. Παρακαλούμε συνδεθείτε ξανά.",
     "Historical": "Ιστορικό",
     "Import E2E room keys": "Εισαγωγή κλειδιών E2E",
-    "Incorrect username and/or password.": "Λανθασμένο όνομα χρήστη και/ή κωδικός.",
     "Incorrect verification code": "Λανθασμένος κωδικός επαλήθευσης",
     "Invalid Email Address": "Μη έγκυρη διεύθυνση ηλεκτρονικής αλληλογραφίας",
     "Invited": "Προσκλήθηκε",
@@ -215,7 +214,6 @@
     "All Rooms": "Όλα τα δωμάτια",
     "Wednesday": "Τετάρτη",
     "All messages": "Όλα τα μηνύματα",
-    "What's new?": "Τι νέο υπάρχει;",
     "Invite to this room": "Πρόσκληση σε αυτό το δωμάτιο",
     "You cannot delete this message. (%(code)s)": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
     "Thursday": "Πέμπτη",
@@ -223,7 +221,6 @@
     "Yesterday": "Χθές",
     "Error encountered (%(errorDetail)s).": "Παρουσιάστηκε σφάλμα (%(errorDetail)s).",
     "Low Priority": "Χαμηλή προτεραιότητα",
-    "What's New": "Τι νέο υπάρχει",
     "AM": "ΠΜ",
     "PM": "ΜΜ",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -721,8 +718,6 @@
     "Room information": "Πληροφορίες δωματίου",
     "Back to chat": "Επιστροφή στη συνομιλία",
     "Please contact your homeserver administrator.": "Επικοινωνήστε με τον διαχειριστή του κεντρικού σας διακομιστή.",
-    "New version of %(brand)s is available": "Διατίθεται νέα έκδοση του %(brand)s",
-    "Update %(brand)s": "Ενημέρωση %(brand)s",
     "%(deviceId)s from %(ip)s": "%(deviceId)s από %(ip)s",
     "New login. Was this you?": "Νέα σύνδεση. Ήσουν εσύ;",
     "Other users may not trust it": "Άλλοι χρήστες μπορεί να μην το εμπιστεύονται",
@@ -1122,7 +1117,6 @@
     "Clear cache and resync": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
-    "Light high contrast": "Ελαφριά υψηλή αντίθεση",
     "Show %(count)s other previews": {
         "other": "Εμφάνιση %(count)s άλλων προεπισκοπήσεων",
         "one": "Εμφάνιση%(count)s άλλων προεπισκοπήσεων"
@@ -1708,7 +1702,6 @@
     "Proceed with reset": "Προχωρήστε με την επαναφορά",
     "Create account": "Δημιουργία λογαριασμού",
     "There was a problem communicating with the homeserver, please try again later.": "Παρουσιάστηκε πρόβλημα κατά την επικοινωνία με τον κεντρικό διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-    "This account has been deactivated.": "Αυτός ο λογαριασμός έχει απενεργοποιηθεί.",
     "Please <a>contact your service administrator</a> to continue using this service.": "Παρακαλούμε να <a>επικοινωνήσετε με τον διαχειριστή της υπηρεσίας σας</a> για να συνεχίσετε να χρησιμοποιείτε την υπηρεσία.",
     "Your password has been reset.": "Ο κωδικός πρόσβασής σας επαναφέρθηκε.",
     "Skip verification for now": "Παράβλεψη επαλήθευσης προς το παρόν",
@@ -3256,7 +3249,9 @@
         "server_picker_intro": "Ονομάζουμε τα μέρη όπου μπορείτε να φιλοξενήσετε τον λογαριασμό σας 'κεντρικούς διακομιστές'.",
         "server_picker_custom": "Άλλος κεντρικός διακομιστής",
         "server_picker_explainer": "Χρησιμοποιήστε τον Matrix διακομιστή που προτιμάτε εάν έχετε, ή φιλοξενήστε τον δικό σας.",
-        "server_picker_learn_more": "Σχετικά με τους κεντρικούς διακομιστές"
+        "server_picker_learn_more": "Σχετικά με τους κεντρικούς διακομιστές",
+        "account_deactivated": "Αυτός ο λογαριασμός έχει απενεργοποιηθεί.",
+        "incorrect_credentials": "Λανθασμένο όνομα χρήστη και/ή κωδικός."
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3450,5 +3445,14 @@
     "labs_mjolnir": {
         "room_name": "Η λίστα απαγορεύσεων μου",
         "room_topic": "Αυτή είναι η λίστα με τους χρήστες/διακομιστές που έχετε αποκλείσει - μην φύγετε από το δωμάτιο!"
+    },
+    "theme": {
+        "light_high_contrast": "Ελαφριά υψηλή αντίθεση"
+    },
+    "update": {
+        "see_changes_button": "Τι νέο υπάρχει;",
+        "release_notes_toast_title": "Τι νέο υπάρχει",
+        "toast_title": "Ενημέρωση %(brand)s",
+        "toast_description": "Διατίθεται νέα έκδοση του %(brand)s"
     }
 }

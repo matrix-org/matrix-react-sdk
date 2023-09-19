@@ -71,7 +71,6 @@
     "Custom level": "自定义级别",
     "Enter passphrase": "输入口令词组",
     "Home": "主页",
-    "Incorrect username and/or password.": "用户名或密码错误。",
     "Invited": "已邀请",
     "Sign in with": "第三方登录",
     "Missing room_id in request": "请求中缺少room_id",
@@ -245,7 +244,6 @@
     "Notification targets": "通知目标",
     "Today": "今天",
     "Friday": "星期五",
-    "What's New": "更新内容",
     "Changelog": "更改日志",
     "Failed to send logs: ": "无法发送日志： ",
     "This Room": "此房间",
@@ -261,7 +259,6 @@
     "Wednesday": "星期三",
     "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
     "All messages": "全部消息",
-    "What's new?": "有何新变动？",
     "Invite to this room": "邀请到此房间",
     "Thursday": "星期四",
     "Search…": "搜索…",
@@ -1004,7 +1001,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
     "Invalid base_url for m.identity_server": "m.identity_server 的 base_url 无效",
     "Identity server URL does not appear to be a valid identity server": "身份服务器链接不像是有效的身份服务器",
-    "This account has been deactivated.": "此账户已被停用。",
     "Failed to re-authenticate due to a homeserver problem": "由于家服务器的问题，重新认证失败",
     "Clear personal data": "清除个人数据",
     "Command Autocomplete": "命令自动补全",
@@ -1292,7 +1288,6 @@
     "This is the start of <roomName/>.": "这里是 <roomName/> 的开始。",
     "Add a photo, so people can easily spot your room.": "添加图片，让人们一眼就能看到你的房间。",
     "You can change these anytime.": "你随时可以更改它们。",
-    "New version of %(brand)s is available": "%(brand)s 有新版本可用",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite to %(spaceName)s": "邀请至 %(spaceName)s",
@@ -1305,7 +1300,6 @@
     "Workspace: <networkLink/>": "工作空间：<networkLink/>",
     "Invite with email or username": "使用邮箱或者用户名邀请",
     "Invite people": "邀请人们",
-    "Update %(brand)s": "更新 %(brand)s",
     "Zimbabwe": "津巴布韦",
     "Zambia": "赞比亚",
     "Western Sahara": "西撒哈拉",
@@ -1747,7 +1741,6 @@
     "See room timeline (devtools)": "查看房间时间线（开发工具）",
     "Insert link": "插入链接",
     "Joined": "已加入",
-    "Light high contrast": "浅色高对比",
     "Joining": "加入中",
     "Select all": "全选",
     "Deselect all": "取消全选",
@@ -2165,9 +2158,6 @@
         "other": "正在邀请%(user)s和其他%(count)s人"
     },
     "Room info": "房间信息",
-    "pause voice broadcast": "暂停语音广播",
-    "resume voice broadcast": "恢复语音广播",
-    "play voice broadcast": "播放语音广播",
     "Upcoming features": "即将到来的功能",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "%(brand)s的下一步是什么？实验室是早期获得东西、测试新功能和在它们发布前帮助塑造的最好方式。",
     "Early previews": "早期预览",
@@ -2180,9 +2170,7 @@
     "Video settings": "视频设置",
     "Voice settings": "语音设置",
     "Unknown room": "未知房间",
-    "Buffering…": "正在缓冲……",
     "Live": "实时",
-    "Change input device": "变更输入设备",
     "Automatically adjust the microphone volume": "自动调整话筒音量",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "你确定要登出%(count)s个会话吗？",
@@ -3383,7 +3371,8 @@
         "already_in_call": "正在通话中",
         "already_in_call_person": "你正在与其通话。",
         "unsupported": "不支持通话",
-        "unsupported_browser": "你无法在此浏览器中进行呼叫。"
+        "unsupported_browser": "你无法在此浏览器中进行呼叫。",
+        "change_input_device": "变更输入设备"
     },
     "Other": "其他",
     "Advanced": "高级",
@@ -3527,7 +3516,9 @@
         "server_picker_intro": "我们将您可以托管账户的地方称为“家服务器”。",
         "server_picker_custom": "其他家服务器",
         "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
-        "server_picker_learn_more": "关于家服务器"
+        "server_picker_learn_more": "关于家服务器",
+        "account_deactivated": "此账户已被停用。",
+        "incorrect_credentials": "用户名或密码错误。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3729,10 +3720,23 @@
         "confirm_stop_affirm": "是的，停止广播",
         "30s_backward": "后退30秒",
         "30s_forward": "前进30秒",
-        "go_live": "开始直播"
+        "go_live": "开始直播",
+        "resume": "恢复语音广播",
+        "pause": "暂停语音广播",
+        "buffering": "正在缓冲……",
+        "play": "播放语音广播"
     },
     "labs_mjolnir": {
         "room_name": "我的封禁列表",
         "room_topic": "这是你屏蔽的用户/服务器的列表——不要离开此房间！"
+    },
+    "theme": {
+        "light_high_contrast": "浅色高对比"
+    },
+    "update": {
+        "see_changes_button": "有何新变动？",
+        "release_notes_toast_title": "更新内容",
+        "toast_title": "更新 %(brand)s",
+        "toast_description": "%(brand)s 有新版本可用"
     }
 }

@@ -16,8 +16,6 @@
     "Unavailable": "இல்லை",
     "unknown error code": "தெரியாத பிழை குறி",
     "Unnamed room": "பெயரிடப்படாத அறை",
-    "What's New": "புதிதாக வந்தவை",
-    "What's new?": "புதிதாக என்ன?",
     "You cannot delete this message. (%(code)s)": "இந்த செய்தியை நீங்கள் அழிக்க முடியாது. (%(code)s)",
     "Sunday": "ஞாயிறு",
     "Monday": "திங்கள்",
@@ -165,5 +163,9 @@
     "room_list": {
         "failed_remove_tag": "அறையில் இருந்து குறிச்சொல் %(tagName)s களை அகற்றுவது தோல்வியடைந்தது",
         "failed_add_tag": "%(tagName)s எனும் குறிச்சொல்லை அறையில் சேர்ப்பதில் தோல்வி"
+    },
+    "update": {
+        "see_changes_button": "புதிதாக என்ன?",
+        "release_notes_toast_title": "புதிதாக வந்தவை"
     }
 }

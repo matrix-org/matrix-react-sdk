@@ -56,7 +56,6 @@
     "Historical": "Tarihi",
     "Home": "Ev",
     "Import E2E room keys": "Uçtan uca Oda Anahtarlarını İçe Aktar",
-    "Incorrect username and/or password.": "Yanlış kullanıcı adı ve / veya şifre.",
     "Incorrect verification code": "Yanlış doğrulama kodu",
     "Invalid Email Address": "Geçersiz E-posta Adresi",
     "Invalid file%(extra)s": "Geçersiz dosya %(extra)s'ı",
@@ -201,7 +200,6 @@
     "Notification targets": "Bildirim hedefleri",
     "Today": "Bugün",
     "Friday": "Cuma",
-    "What's New": "Yenilikler",
     "Changelog": "Değişiklikler",
     "This Room": "Bu Oda",
     "Unavailable": "Kullanım dışı",
@@ -214,7 +212,6 @@
     "Wednesday": "Çarşamba",
     "Send": "Gönder",
     "All messages": "Tüm mesajlar",
-    "What's new?": "Yeni olan ne ?",
     "Invite to this room": "Bu odaya davet et",
     "You cannot delete this message. (%(code)s)": "Bu mesajı silemezsiniz (%(code)s)",
     "Thursday": "Perşembe",
@@ -328,7 +325,6 @@
     "Could not load user profile": "Kullanıcı profili yüklenemedi",
     "Your password has been reset.": "Parolanız sıfırlandı.",
     "General failure": "Genel başarısızlık",
-    "This account has been deactivated.": "Hesap devre dışı bırakıldı.",
     "Create account": "Yeni hesap",
     "You do not have permission to start a conference call in this room": "Bu odada bir konferans başlatmak için izniniz yok",
     "The file '%(fileName)s' failed to upload.": "%(fileName)s dosyası için yükleme başarısız.",
@@ -796,8 +792,6 @@
     "Contact your <a>server admin</a>.": "<a>Sunucu yöneticinize</a> başvurun.",
     "Ok": "Tamam",
     "New login. Was this you?": "Yeni giriş. Bu siz miydiniz?",
-    "New version of %(brand)s is available": "%(brand)s 'in yeni versiyonu hazır",
-    "Update %(brand)s": "%(brand)s 'i güncelle",
     "Safeguard against losing access to encrypted messages & data": "Şifrelenmiş mesajlara ve verilere erişimi kaybetmemek için koruma sağlayın",
     "Set up Secure Backup": "Güvenli Yedekleme kur",
     "Enable desktop notifications": "Masaüstü bildirimlerini etkinleştir",
@@ -1265,7 +1259,6 @@
     "Could not connect to identity server": "Kimlik Sunucusuna bağlanılamadı",
     "Not a valid identity server (status code %(code)s)": "Geçerli bir Kimlik Sunucu değil ( durum kodu %(code)s )",
     "Identity server URL must be HTTPS": "Kimlik Sunucu URL adresi HTTPS olmak zorunda",
-    "Light high contrast": "Yüksek ışık kontrastı",
     "Transfer Failed": "Aktarma Başarısız",
     "Unable to transfer call": "Arama Karşıdaki kişiye aktarılamıyor",
     "This homeserver has been blocked by its administrator.": "Bu sunucu yöneticisi tarafından bloke edildi.",
@@ -2064,7 +2057,9 @@
         "soft_logout_intro_unsupported_auth": "Hesabınıza giriş yapamazsınız. Lütfen daha fazla bilgi için ana sunucu yöneticiniz ile bağlantıya geçiniz.",
         "sign_in_or_register": "Oturum Açın veya Hesap Oluşturun",
         "sign_in_or_register_description": "Hesabınızı kullanın veya devam etmek için yeni bir tane oluşturun.",
-        "register_action": "Hesap Oluştur"
+        "register_action": "Hesap Oluştur",
+        "account_deactivated": "Hesap devre dışı bırakıldı.",
+        "incorrect_credentials": "Yanlış kullanıcı adı ve / veya şifre."
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2170,5 +2165,14 @@
     "labs_mjolnir": {
         "room_name": "Yasaklı Listem",
         "room_topic": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!"
+    },
+    "theme": {
+        "light_high_contrast": "Yüksek ışık kontrastı"
+    },
+    "update": {
+        "see_changes_button": "Yeni olan ne ?",
+        "release_notes_toast_title": "Yenilikler",
+        "toast_title": "%(brand)s 'i güncelle",
+        "toast_description": "%(brand)s 'in yeni versiyonu hazır"
     }
 }

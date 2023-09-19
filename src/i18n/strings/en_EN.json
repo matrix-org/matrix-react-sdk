@@ -11,6 +11,8 @@
         "sign_in_or_register_description": "Use your account or create a new one to continue.",
         "sign_in_description": "Use your account to continue.",
         "register_action": "Create Account",
+        "account_deactivated": "This account has been deactivated.",
+        "incorrect_credentials": "Incorrect username and/or password.",
         "continue_with_idp": "Continue with %(provider)s",
         "sign_in_with_sso": "Sign in with single sign-on",
         "server_picker_failed_validate_homeserver": "Unable to validate homeserver",
@@ -327,6 +329,7 @@
         "already_in_call_person": "You're already in a call with this person.",
         "unsupported": "Calls are unsupported",
         "unsupported_browser": "You cannot place calls in this browser.",
+        "change_input_device": "Change input device",
         "video_call_started": "Video call started",
         "unsilence": "Sound on",
         "silence": "Silence call",
@@ -837,7 +840,9 @@
             }
         }
     },
-    "Light high contrast": "Light high contrast",
+    "theme": {
+        "light_high_contrast": "Light high contrast"
+    },
     "widget": {
         "capability": {
             "always_on_screen_viewing_another_room": "Remain on your screen when viewing another room, when running",
@@ -924,7 +929,12 @@
         "confirm_listen_affirm": "Yes, end my recording",
         "30s_backward": "30s backward",
         "30s_forward": "30s forward",
-        "go_live": "Go live"
+        "go_live": "Go live",
+        "resume": "resume voice broadcast",
+        "pause": "pause voice broadcast",
+        "buffering": "Buffering…",
+        "play": "play voice broadcast",
+        "connection_error": "Connection error - Recording paused"
     },
     "Can’t start a call": "Can’t start a call",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.",
@@ -956,14 +966,8 @@
         },
         "m.sticker": "%(senderName)s: %(stickerName)s"
     },
-    "resume voice broadcast": "resume voice broadcast",
-    "pause voice broadcast": "pause voice broadcast",
-    "Change input device": "Change input device",
     "Live": "Live",
     "Voice broadcast": "Voice broadcast",
-    "Buffering…": "Buffering…",
-    "play voice broadcast": "play voice broadcast",
-    "Connection error - Recording paused": "Connection error - Recording paused",
     "Cannot reach homeserver": "Cannot reach homeserver",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Ensure you have a stable internet connection, or get in touch with the server admin",
     "Your %(brand)s is misconfigured": "Your %(brand)s is misconfigured",
@@ -981,8 +985,6 @@
     "This homeserver has exceeded one of its resource limits.": "This homeserver has exceeded one of its resource limits.",
     "Please <a>contact your service administrator</a> to continue using this service.": "Please <a>contact your service administrator</a> to continue using this service.",
     "Unable to connect to Homeserver. Retrying…": "Unable to connect to Homeserver. Retrying…",
-    "This account has been deactivated.": "This account has been deactivated.",
-    "Incorrect username and/or password.": "Incorrect username and/or password.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Please note you are logging into the %(hs)s server, not matrix.org.",
     "There was a problem communicating with the homeserver, please try again later.": "There was a problem communicating with the homeserver, please try again later.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
@@ -1167,10 +1169,12 @@
     "Other users may not trust it": "Other users may not trust it",
     "New login. Was this you?": "New login. Was this you?",
     "Yes, it was me": "Yes, it was me",
-    "What's new?": "What's new?",
-    "What's New": "What's New",
-    "Update %(brand)s": "Update %(brand)s",
-    "New version of %(brand)s is available": "New version of %(brand)s is available",
+    "update": {
+        "see_changes_button": "What's new?",
+        "release_notes_toast_title": "What's New",
+        "toast_title": "Update %(brand)s",
+        "toast_description": "New version of %(brand)s is available"
+    },
     "There was an error joining.": "There was an error joining.",
     "Sorry, your homeserver is too old to participate here.": "Sorry, your homeserver is too old to participate here.",
     "Please contact your homeserver administrator.": "Please contact your homeserver administrator.",

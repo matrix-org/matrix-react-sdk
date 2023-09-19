@@ -158,7 +158,6 @@
     "Drop file here to upload": "Arraste um arquivo aqui para enviar",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
-    "Incorrect username and/or password.": "Nome de usuário e/ou senha incorreto.",
     "Invited": "Convidada(o)",
     "Verified key": "Chave confirmada",
     "No Microphones detected": "Não foi detectado nenhum microfone",
@@ -251,7 +250,6 @@
     "Notification targets": "Aparelhos notificados",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "What's New": "Novidades",
     "Changelog": "Registro de alterações",
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
@@ -264,7 +262,6 @@
     "Monday": "Segunda-feira",
     "Invite to this room": "Convidar para esta sala",
     "All messages": "Todas as mensagens novas",
-    "What's new?": "O que há de novidades?",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
@@ -943,7 +940,6 @@
     "Your password has been reset.": "Sua senha foi alterada.",
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
-    "This account has been deactivated.": "Esta conta foi desativada.",
     "Success!": "Pronto!",
     "Change notification settings": "Alterar configuração de notificações",
     "Your server isn't responding to some <a>requests</a>.": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
@@ -1107,8 +1103,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, e-mail ou nome de usuário (por exemplo: <userId/>) ou <a>compartilhe esta sala</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Comece uma conversa, a partir do nome, e-mail ou nome de usuário de alguém (por exemplo: <userId/>).",
     "Invite by email": "Convidar por e-mail",
-    "New version of %(brand)s is available": "Uma nova versão do %(brand)s está disponível",
-    "Update %(brand)s": "Atualizar o %(brand)s",
     "Jordan": "Jordânia",
     "Japan": "Japão",
     "Jamaica": "Jamaica",
@@ -1601,7 +1595,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Export chat": "Exportar conversa",
-    "Light high contrast": "Claro (alto contraste)",
     "Space selection": "Seleção de Espaços",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
@@ -2919,7 +2912,9 @@
         "server_picker_required": "Digite um servidor local",
         "server_picker_custom": "Outro servidor local",
         "server_picker_explainer": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
-        "server_picker_learn_more": "Sobre os servidores locais"
+        "server_picker_learn_more": "Sobre os servidores locais",
+        "account_deactivated": "Esta conta foi desativada.",
+        "incorrect_credentials": "Nome de usuário e/ou senha incorreto."
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -3068,5 +3063,14 @@
     "labs_mjolnir": {
         "room_name": "Minha lista de banidos",
         "room_topic": "Esta é a sua lista de usuárias(os)/servidores que você bloqueou - não saia da sala!"
+    },
+    "theme": {
+        "light_high_contrast": "Claro (alto contraste)"
+    },
+    "update": {
+        "see_changes_button": "O que há de novidades?",
+        "release_notes_toast_title": "Novidades",
+        "toast_title": "Atualizar o %(brand)s",
+        "toast_description": "Uma nova versão do %(brand)s está disponível"
     }
 }

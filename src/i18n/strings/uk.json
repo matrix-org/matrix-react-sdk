@@ -37,7 +37,6 @@
     "Notification targets": "Цілі сповіщень",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
-    "What's New": "Що нового",
     "Changelog": "Журнал змін",
     "Failed to send logs: ": "Не вдалося надіслати журнали: ",
     "This Room": "Ця кімната",
@@ -55,7 +54,6 @@
     "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
     "All messages": "Усі повідомлення",
-    "What's new?": "Що нового?",
     "Invite to this room": "Запросити до цієї кімнати",
     "Thursday": "Четвер",
     "Search…": "Пошук…",
@@ -533,7 +531,6 @@
     "Old cryptography data detected": "Виявлено старі криптографічні дані",
     "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
-    "This account has been deactivated.": "Цей обліковий запис було деактивовано.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Unexpected server error trying to leave the room": "Під час спроби вийти з кімнати виникла неочікувана помилка сервера",
     "Unknown App": "Невідомий додаток",
@@ -930,8 +927,6 @@
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Verify this user by confirming the following number appears on their screen.": "Звірте справжність цього користувача, підтвердивши, що на екрані з'явилося таке число.",
     "Connecting": "З'єднання",
-    "New version of %(brand)s is available": "Доступна нова версія %(brand)s",
-    "Update %(brand)s": "Оновити %(brand)s",
     "%(deviceId)s from %(ip)s": "%(deviceId)s з %(ip)s",
     "Use app": "Використовувати застосунок",
     "Use app for a better experience": "Використовуйте застосунок для зручності",
@@ -1283,7 +1278,6 @@
     "Room version": "Версія кімнати",
     "Space information": "Відомості про простір",
     "View older messages in %(roomName)s.": "Перегляд давніших повідомлень у %(roomName)s.",
-    "Light high contrast": "Контрастна світла",
     "%(count)s people you know have already joined": {
         "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
         "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
@@ -1854,7 +1848,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Не вдалося надіслати повідомлення, бо домашній сервер перевищив свій ліміт активних користувачів за місяць. <a>Зв'яжіться з адміністратором сервісу,</a> щоб продовжити використання.",
     "Passphrase must not be empty": "Парольна фраза обов'язкова",
     "Passphrases must match": "Парольні фрази мають збігатися",
-    "Incorrect username and/or password.": "Хибне користувацьке ім'я й/або пароль.",
     "Sections to show": "Показувані розділи",
     "Recent changes that have not yet been received": "Останні зміни, котрі ще не отримано",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
@@ -2208,8 +2201,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s наскрізно зашифровано, але наразі обмежений меншою кількістю користувачів.",
     "Enable %(brand)s as an additional calling option in this room": "Увімкнути %(brand)s додатковою опцією викликів у цій кімнаті",
     "Sorry — this call is currently full": "Перепрошуємо, цей виклик заповнено",
-    "resume voice broadcast": "поновити голосову трансляцію",
-    "pause voice broadcast": "призупинити голосову трансляцію",
     "Sign in with QR code": "Увійти за допомогою QR-коду",
     "Browser": "Браузер",
     "Completing set up of your new device": "Завершення налаштування нового пристрою",
@@ -2232,7 +2223,6 @@
     "Sign in new device": "Увійти на новому пристрої",
     "Show QR code": "Показати QR-код",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ви можете використовувати цей пристрій для входу на новому пристрої за допомогою QR-коду. Вам потрібно буде сканувати QR-код, показаний на цьому пристрої, своїм пристроєм, на якому ви вийшли.",
-    "play voice broadcast": "відтворити голосову трансляцію",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
         "other": "Ви впевнені, що хочете вийти з %(count)s сеансів?"
@@ -2265,10 +2255,8 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Забагато спроб за короткий час. Повторіть спробу за %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу.",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
-    "Change input device": "Змінити пристрій вводу",
     "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
     "Error starting verification": "Помилка запуску перевірки",
-    "Buffering…": "Буферизація…",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Відчуваєте себе експериментатором? Спробуйте наші новітні задуми в розробці. Ці функції не остаточні; вони можуть бути нестабільними, можуть змінюватися або взагалі можуть бути відкинуті. <a>Докладніше</a>.",
     "Early previews": "Ранній огляд",
@@ -2308,7 +2296,6 @@
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "Edit link": "Змінити посилання",
     "Decrypted source unavailable": "Розшифроване джерело недоступне",
-    "Connection error - Recording paused": "Помилка з'єднання - Запис призупинено",
     "%(senderName)s started a voice broadcast": "%(senderName)s розпочинає голосову трансляцію",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Токен реєстрації",
@@ -3768,7 +3755,8 @@
         "already_in_call": "Вже у виклику",
         "already_in_call_person": "Ви вже спілкуєтесь із цією особою.",
         "unsupported": "Виклики не підтримуються",
-        "unsupported_browser": "Цей браузер не підтримує викликів."
+        "unsupported_browser": "Цей браузер не підтримує викликів.",
+        "change_input_device": "Змінити пристрій вводу"
     },
     "Other": "Інше",
     "Advanced": "Подробиці",
@@ -3928,7 +3916,9 @@
         "server_picker_intro": "Ми називаємо місця, де ви можете розмістити обліковий запис, \"домашніми серверами\".",
         "server_picker_custom": "Інший домашній сервер",
         "server_picker_explainer": "Оберіть домашній сервер Matrix на свій розсуд чи встановіть власний.",
-        "server_picker_learn_more": "Про домашні сервери"
+        "server_picker_learn_more": "Про домашні сервери",
+        "account_deactivated": "Цей обліковий запис було деактивовано.",
+        "incorrect_credentials": "Хибне користувацьке ім'я й/або пароль."
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4145,10 +4135,24 @@
         "confirm_listen_affirm": "Так, завершити мій запис",
         "30s_backward": "Назад на 30 с",
         "30s_forward": "Уперед на 30 с",
-        "go_live": "Слухати"
+        "go_live": "Слухати",
+        "resume": "поновити голосову трансляцію",
+        "pause": "призупинити голосову трансляцію",
+        "buffering": "Буферизація…",
+        "play": "відтворити голосову трансляцію",
+        "connection_error": "Помилка з'єднання - Запис призупинено"
     },
     "labs_mjolnir": {
         "room_name": "Мій список блокувань",
         "room_topic": "Це ваш список користувачів/серверів, які ви заблокували – не виходьте з кімнати!"
+    },
+    "theme": {
+        "light_high_contrast": "Контрастна світла"
+    },
+    "update": {
+        "see_changes_button": "Що нового?",
+        "release_notes_toast_title": "Що нового",
+        "toast_title": "Оновити %(brand)s",
+        "toast_description": "Доступна нова версія %(brand)s"
     }
 }

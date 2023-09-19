@@ -158,7 +158,6 @@
     "Drop file here to upload": "Arraste um arquivo aqui para enviar",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
-    "Incorrect username and/or password.": "Nome de utilizador e/ou palavra-passe incorreta.",
     "Invited": "Convidada(o)",
     "Verified key": "Chave verificada",
     "No Microphones detected": "Não foi detetado nenhum microfone",
@@ -217,7 +216,6 @@
     "Notification targets": "Alvos de notificação",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "What's New": "Novidades",
     "Changelog": "Histórico de alterações",
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
@@ -232,7 +230,6 @@
     "Invite to this room": "Convidar para esta sala",
     "Send": "Enviar",
     "All messages": "Todas as mensagens",
-    "What's new?": "O que há de novo?",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
@@ -815,7 +812,8 @@
         "sign_in_or_register": "Iniciar Sessão ou Criar Conta",
         "sign_in_or_register_description": "Use a sua conta ou crie uma nova conta para continuar.",
         "sign_in_description": "Use a sua conta para continuar.",
-        "register_action": "Criar conta"
+        "register_action": "Criar conta",
+        "incorrect_credentials": "Nome de utilizador e/ou palavra-passe incorreta."
     },
     "export_chat": {
         "messages": "Mensagens"
@@ -835,5 +833,9 @@
     },
     "create_space": {
         "invite_teammates_by_username": "Convidar por nome de utilizador"
+    },
+    "update": {
+        "see_changes_button": "O que há de novo?",
+        "release_notes_toast_title": "Novidades"
     }
 }

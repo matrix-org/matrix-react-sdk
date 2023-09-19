@@ -78,7 +78,6 @@
     "Forget room": "Ahaztu gela",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ezin da hasiera zerbitzarira konektatu, egiaztatu zure konexioa, ziurtatu zure <a>hasiera zerbitzariaren SSL ziurtagiria</a> fidagarritzat jotzen duela zure gailuak, eta nabigatzailearen pluginen batek ez dituela eskaerak blokeatzen.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Ezin zara hasiera zerbitzarira HTTP bidez konektatu zure nabigatzailearen barran dagoen URLa HTTS bada. Erabili HTTPS edo <a>gaitu script ez seguruak</a>.",
-    "Incorrect username and/or password.": "Erabiltzaile-izen edo pasahitz okerra.",
     "Incorrect verification code": "Egiaztaketa kode okerra",
     "Invalid Email Address": "E-mail helbide baliogabea",
     "Invalid file%(extra)s": "Fitxategi %(extra)s baliogabea",
@@ -253,7 +252,6 @@
     "Notification targets": "Jakinarazpenen helburuak",
     "Today": "Gaur",
     "Friday": "Ostirala",
-    "What's New": "Zer dago berri",
     "Changelog": "Aldaketa-egunkaria",
     "Failed to send logs: ": "Huts egin du egunkariak bidaltzean: ",
     "This Room": "Gela hau",
@@ -269,7 +267,6 @@
     "Wednesday": "Asteazkena",
     "You cannot delete this message. (%(code)s)": "Ezin duzu mezu hau ezabatu. (%(code)s)",
     "All messages": "Mezu guztiak",
-    "What's new?": "Zer dago berri?",
     "Invite to this room": "Gonbidatu gela honetara",
     "Thursday": "Osteguna",
     "Search…": "Bilatu…",
@@ -645,7 +642,6 @@
     "Discovery options will appear once you have added a phone number above.": "Aurkitze aukerak behin goian telefono zenbaki bat gehitu duzunean agertuko dira.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "SMS mezu bat bidali zaizu +%(msisdn)s zenbakira. Sartu hemen mezu horrek daukan egiaztatze-kodea.",
     "Command Help": "Aginduen laguntza",
-    "This account has been deactivated.": "Kontu hau desaktibatuta dago.",
     "Use an identity server": "Erabili identitate zerbitzari bat",
     "Accept <policyLink /> to continue:": "Onartu <policyLink /> jarraitzeko:",
     "Terms of service not accepted or the identity server is invalid.": "Ez dira erabilera baldintzak onartu edo identitate zerbitzari baliogabea da.",
@@ -1716,7 +1712,9 @@
         "soft_logout_intro_unsupported_auth": "Ezin duzu zure kontuan saioa hasi. Jarri kontaktuan zure hasiera zerbitzariko administratzailearekin informazio gehiagorako.",
         "sign_in_or_register": "Hasi saioa edo sortu kontua",
         "sign_in_or_register_description": "Erabili zure kontua edo sortu berri bat jarraitzeko.",
-        "register_action": "Sortu kontua"
+        "register_action": "Sortu kontua",
+        "account_deactivated": "Kontu hau desaktibatuta dago.",
+        "incorrect_credentials": "Erabiltzaile-izen edo pasahitz okerra."
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1760,5 +1758,9 @@
     "labs_mjolnir": {
         "room_name": "Nire debeku-zerrenda",
         "room_topic": "Hau blokeatu dituzun erabiltzaile edo zerbitzarien zerrenda da, ez atera gelatik!"
+    },
+    "update": {
+        "see_changes_button": "Zer dago berri?",
+        "release_notes_toast_title": "Zer dago berri"
     }
 }

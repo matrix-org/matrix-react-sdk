@@ -9,11 +9,9 @@
     "Unavailable": "غير متوفر",
     "All Rooms": "كل الغُرف",
     "All messages": "كل الرسائل",
-    "What's New": "آخِر المُستجدّات",
     "No update available.": "لا يوجد هناك أي تحديث.",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
-    "What's new?": "ما الجديد ؟",
     "Use Single Sign On to continue": "استعمل الولوج الموحّد للمواصلة",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "أكّد إضافتك لعنوان البريد هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
     "Confirm adding email": "أكّد إضافة البريد الإلكتروني",
@@ -519,8 +517,6 @@
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "Change notification settings": "تغيير إعدادات الإشعار",
     "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
-    "New version of %(brand)s is available": "يتوفر إصدار جديد من %(brand)s",
-    "Update %(brand)s": "حدّث: %(brand)s",
     "New login. Was this you?": "تسجيل دخول جديد. هل كان ذاك أنت؟",
     "Other users may not trust it": "قد لا يثق به المستخدمون الآخرون",
     "This event could not be displayed": "تعذر عرض هذا الحدث",
@@ -1468,5 +1464,11 @@
     "labs_mjolnir": {
         "room_name": "قائمة الحظر",
         "room_topic": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!"
+    },
+    "update": {
+        "see_changes_button": "ما الجديد ؟",
+        "release_notes_toast_title": "آخِر المُستجدّات",
+        "toast_title": "حدّث: %(brand)s",
+        "toast_description": "يتوفر إصدار جديد من %(brand)s"
     }
 }

@@ -10,7 +10,6 @@
     "Notification targets": "നോട്ടിഫിക്കേഷന്‍ ടാര്‍ഗെറ്റുകള്‍",
     "Today": "ഇന്ന്",
     "Friday": "വെള്ളി",
-    "What's New": "പുതിയ വിശേഷങ്ങള്‍",
     "Changelog": "മാറ്റങ്ങളുടെ നാള്‍വഴി",
     "This Room": "ഈ മുറി",
     "Unavailable": "ലഭ്യമല്ല",
@@ -25,7 +24,6 @@
     "You cannot delete this message. (%(code)s)": "നിങ്ങള്‍ക്ക് ഈ സന്ദേശം നീക്കം ചെയ്യാനാകില്ല. (%(code)s)",
     "Send": "അയയ്ക്കുക",
     "All messages": "എല്ലാ സന്ദേശങ്ങളും",
-    "What's new?": "എന്തൊക്കെ പുതിയ വിശേഷങ്ങള്‍ ?",
     "Invite to this room": "ഈ റൂമിലേക്ക് ക്ഷണിക്കുക",
     "Thursday": "വ്യാഴം",
     "Search…": "തിരയുക…",
@@ -87,5 +85,9 @@
     "room_list": {
         "failed_remove_tag": "റൂമില്‍ നിന്നും %(tagName)s ടാഗ് നീക്കം ചെയ്യുവാന്‍ സാധിച്ചില്ല",
         "failed_add_tag": "റൂമിന് %(tagName)s എന്ന ടാഗ് ആഡ് ചെയ്യുവാന്‍ സാധിച്ചില്ല"
+    },
+    "update": {
+        "see_changes_button": "എന്തൊക്കെ പുതിയ വിശേഷങ്ങള്‍ ?",
+        "release_notes_toast_title": "പുതിയ വിശേഷങ്ങള്‍"
     }
 }

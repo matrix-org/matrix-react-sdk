@@ -78,7 +78,6 @@
     "All messages": "Krejt mesazhet",
     "unknown error code": "kod gabimi të panjohur",
     "Thank you!": "Faleminderit!",
-    "What's new?": "Ç’ka të re?",
     "Invite to this room": "Ftojeni te kjo dhomë",
     "You cannot delete this message. (%(code)s)": "S’mund ta fshini këtë mesazh. (%(code)s)",
     "Thursday": "E enjte",
@@ -86,7 +85,6 @@
     "Yesterday": "Dje",
     "Error encountered (%(errorDetail)s).": "U has gabim (%(errorDetail)s).",
     "Low Priority": "Përparësi e Ulët",
-    "What's New": "Ç’ka të Re",
     "Rooms": "Dhoma",
     "PM": "PM",
     "AM": "AM",
@@ -184,7 +182,6 @@
     "Profile": "Profil",
     "Account": "Llogari",
     "Return to login screen": "Kthehuni te skena e hyrjeve",
-    "Incorrect username and/or password.": "Emër përdoruesi dhe/ose fjalëkalim i pasaktë.",
     "Commands": "Urdhra",
     "Notify the whole room": "Njofto krejt dhomën",
     "Room Notification": "Njoftim Dhome",
@@ -633,7 +630,6 @@
     "Terms of Service": "Kushte Shërbimi",
     "Service": "Shërbim",
     "Summary": "Përmbledhje",
-    "This account has been deactivated.": "Kjo llogari është çaktivizuar.",
     "Failed to re-authenticate due to a homeserver problem": "S’u arrit të ribëhej mirëfilltësimi, për shkak të një problemi me shërbyesin Home",
     "Clear personal data": "Spastro të dhëna personale",
     "Spanner": "Çelës",
@@ -1103,8 +1099,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij, adresën email ose emrin e përdoruesit (bie fjala, <userId/>).",
     "Invite by email": "Ftojeni me email",
-    "New version of %(brand)s is available": "Ka gati një version të ri të %(brand)s",
-    "Update %(brand)s": "Përditësoni %(brand)s",
     "Enable desktop notifications": "Aktivizoni njoftime desktopi",
     "Don't miss a reply": "Mos humbni asnjë përgjigje",
     "Paraguay": "Paraguai",
@@ -1743,7 +1737,6 @@
     "See room timeline (devtools)": "Shihni rrjedhë kohore të dhomës (mjete zhvilluesi)",
     "Joined": "Hyri",
     "Insert link": "Futni lidhje",
-    "Light high contrast": "Kontrast i fortë drite",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Depozitojeni Kyçin tuaj të Sigurisë diku të parrezik, bie fjala në një përgjegjës fjalëkalimesh, ose në një kasafortë, ngaqë përdoret për të mbrojtur të dhënat tuaja të fshehtëzuara.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Do të prodhojmë për ju një Kyç Sigurie që ta depozitoni diku në një vend të parrezik, bie fjala, në një përgjegjës fjalëkalimesh, ose në një kasafortë.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
@@ -2135,7 +2128,6 @@
         "other": "%(user)s dhe %(count)s të tjerë"
     },
     "%(user1)s and %(user2)s": "%(user1)s dhe %(user2)s",
-    "play voice broadcast": "luaj transmetim zanor",
     "Waiting for device to sign in": "Po pritet që të bëhet hyrja te pajisja",
     "Review and approve the sign in": "Shqyrtoni dhe miratojeni hyrjen",
     "Start at the sign in screen": "Filloja në skenën e hyrjes",
@@ -2218,8 +2210,6 @@
     "Unknown room": "Dhomë e panjohur",
     "Voice broadcast": "Transmetim zanor",
     "Live": "Drejtpërdrejt",
-    "pause voice broadcast": "ndal transmetim zanor",
-    "resume voice broadcast": "vazhdo transmetim zanor",
     "You need to be able to kick users to do that.": "Që ta bëni këtë, lypset të jeni në gjendje të përzini përdorues.",
     "Inviting %(user1)s and %(user2)s": "Po ftohen %(user1)s dhe %(user2)s",
     "View List": "Shihni Listën",
@@ -2265,7 +2255,6 @@
     "Voice settings": "Rregullime zëri",
     "We were unable to start a chat with the other user.": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër.",
     "Error starting verification": "Gabim në nisje verifikimi",
-    "Change input device": "Ndryshoni pajisje dhëniesh",
     "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Ndiheni eksperimentues? Provoni idetë tona më të reja në zhvillim. Këto veçori s’janë të përfunduara; mund të jenë të paqëndrueshme, mund të ndryshojnë, ose mund të braktisen faqe. <a>Mësoni më tepër</a>.",
     "Early previews": "Paraparje të hershme",
@@ -2304,7 +2293,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
     "Can't start voice message": "S’niset dot mesazh zanor",
     "Edit link": "Përpunoni lidhje",
-    "Connection error - Recording paused": "Gabim lidhjeje - Regjistrimi u ndal",
     "%(senderName)s started a voice broadcast": "%(senderName)s nisi një transmetim zanor",
     "Decrypted source unavailable": "Burim i shfshehtëzuar jo i passhëm",
     "Registration token": "Token regjistrimi",
@@ -3665,7 +3653,8 @@
         "already_in_call": "Tashmë në thirrje",
         "already_in_call_person": "Gjendeni tashmë në thirrje me këtë person.",
         "unsupported": "Nuk mbulohen t\thirrje",
-        "unsupported_browser": "S’mund të bëni thirrje që nga ky shfletues."
+        "unsupported_browser": "S’mund të bëni thirrje që nga ky shfletues.",
+        "change_input_device": "Ndryshoni pajisje dhëniesh"
     },
     "Other": "Tjetër",
     "Advanced": "Të mëtejshme",
@@ -3824,7 +3813,9 @@
         "server_picker_intro": "Vendet ku mund të strehoni llogarinë tuaj i quajmë ‘shërbyes Home’.",
         "server_picker_custom": "Tjetër shërbyes home",
         "server_picker_explainer": "Përdorni shërbyesin tuaj Home të parapëlqyer Matrix, nëse keni një të tillë, ose strehoni një tuajin.",
-        "server_picker_learn_more": "Mbi shërbyesit Home"
+        "server_picker_learn_more": "Mbi shërbyesit Home",
+        "account_deactivated": "Kjo llogari është çaktivizuar.",
+        "incorrect_credentials": "Emër përdoruesi dhe/ose fjalëkalim i pasaktë."
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -4038,10 +4029,23 @@
         "confirm_listen_description": "Nëse filloni të dëgjoni te ky transmetim i drejtpërdrejtë, regjistrimi juaj i tanishëm i një transmetimi të drejtpërdrejtë do të përfundojë.",
         "confirm_listen_affirm": "Po, përfundoje regjistrimin tim",
         "30s_backward": "30s mbrapsht",
-        "30s_forward": "30s përpara"
+        "30s_forward": "30s përpara",
+        "resume": "vazhdo transmetim zanor",
+        "pause": "ndal transmetim zanor",
+        "play": "luaj transmetim zanor",
+        "connection_error": "Gabim lidhjeje - Regjistrimi u ndal"
     },
     "labs_mjolnir": {
         "room_name": "Lista Ime e Dëbimeve",
         "room_topic": "Kjo është lista juaj e përdoruesve/shërbyesve që keni bllokuar - mos dilni nga dhoma!"
+    },
+    "theme": {
+        "light_high_contrast": "Kontrast i fortë drite"
+    },
+    "update": {
+        "see_changes_button": "Ç’ka të re?",
+        "release_notes_toast_title": "Ç’ka të Re",
+        "toast_title": "Përditësoni %(brand)s",
+        "toast_description": "Ka gati një version të ri të %(brand)s"
     }
 }

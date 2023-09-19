@@ -55,7 +55,6 @@
     "For security, this session has been signed out. Please sign in again.": "For security, this session has been signed out. Please sign in again.",
     "Historical": "Historical",
     "Import E2E room keys": "Import E2E room keys",
-    "Incorrect username and/or password.": "Incorrect username and/or password.",
     "Incorrect verification code": "Incorrect verification code",
     "Invalid Email Address": "Invalid Email Address",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
@@ -215,7 +214,6 @@
     "Notification targets": "Notification targets",
     "Today": "Today",
     "Friday": "Friday",
-    "What's New": "What's New",
     "Changelog": "Changelog",
     "This Room": "This Room",
     "Unavailable": "Unavailable",
@@ -230,7 +228,6 @@
     "Wednesday": "Wednesday",
     "Send": "Send",
     "All messages": "All messages",
-    "What's new?": "What's new?",
     "Invite to this room": "Invite to this room",
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
@@ -513,7 +510,8 @@
         "forgot_password_email_required": "The email address linked to your account must be entered.",
         "sign_in_or_register": "Sign In or Create Account",
         "sign_in_or_register_description": "Use your account or create a new one to continue.",
-        "register_action": "Create Account"
+        "register_action": "Create Account",
+        "incorrect_credentials": "Incorrect username and/or password."
     },
     "export_chat": {
         "messages": "Messages"
@@ -530,5 +528,9 @@
     "create_space": {
         "add_details_prompt": "Add some details to help people recognize it.",
         "personal_space_description": "A private space to organize your rooms"
+    },
+    "update": {
+        "see_changes_button": "What's new?",
+        "release_notes_toast_title": "What's New"
     }
 }

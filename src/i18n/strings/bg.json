@@ -226,7 +226,6 @@
     "A new password must be entered.": "Трябва да бъде въведена нова парола.",
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
     "Return to login screen": "Връщане към страницата за влизане в профила",
-    "Incorrect username and/or password.": "Неправилно потребителско име и/или парола.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Моля, обърнете внимание, че влизате в %(hs)s сървър, а не в matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не е възможно свързване към Home сървъра чрез HTTP, когато има HTTPS адрес в лентата на браузъра Ви. Или използвайте HTTPS или <a>включете функция небезопасни скриптове</a>.",
     "Commands": "Команди",
@@ -268,7 +267,6 @@
     "All Rooms": "Във всички стаи",
     "Wednesday": "Сряда",
     "All messages": "Всички съобщения",
-    "What's new?": "Какво ново?",
     "Invite to this room": "Покани в тази стая",
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
@@ -276,7 +274,6 @@
     "Yesterday": "Вчера",
     "Error encountered (%(errorDetail)s).": "Възникна грешка (%(errorDetail)s).",
     "Low Priority": "Нисък приоритет",
-    "What's New": "Какво ново",
     "Thank you!": "Благодарим!",
     "Missing roomId.": "Липсва идентификатор на стая.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
@@ -629,7 +626,6 @@
     "Terms of Service": "Условия за ползване",
     "Service": "Услуга",
     "Summary": "Обобщение",
-    "This account has been deactivated.": "Този акаунт е деактивиран.",
     "Call failed due to misconfigured server": "Неуспешен разговор поради неправилно конфигуриран сървър",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Попитайте администратора на сървъра ви (<code>%(homeserverDomain)s</code>) да конфигурира TURN сървър, за да може разговорите да работят надеждно.",
     "Checking server": "Проверка на сървъра",
@@ -1095,8 +1091,6 @@
     "Cross-signing is not set up.": "Кръстосаното-подписване не е настроено.",
     "Cross-signing is ready for use.": "Кръстосаното-подписване е готово за използване.",
     "Your server isn't responding to some <a>requests</a>.": "Сървърът ви не отговаря на някои <a>заявки</a>.",
-    "New version of %(brand)s is available": "Налична е нова версия на %(brand)s",
-    "Update %(brand)s": "Обнови %(brand)s",
     "Enable desktop notifications": "Включете уведомления на работния плот",
     "Don't miss a reply": "Не пропускайте отговор",
     "Save your Security Key": "Запази ключа за сигурност",
@@ -2198,7 +2192,9 @@
         "create_account_prompt": "Вие сте нов тук? <a>Създайте профил</a>",
         "sign_in_or_register": "Влезте или Създайте профил",
         "sign_in_or_register_description": "Използвайте профила си или създайте нов за да продължите.",
-        "register_action": "Създай профил"
+        "register_action": "Създай профил",
+        "account_deactivated": "Този акаунт е деактивиран.",
+        "incorrect_credentials": "Неправилно потребителско име и/или парола."
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2263,5 +2259,11 @@
     "labs_mjolnir": {
         "room_name": "Моя списък с блокирания",
         "room_topic": "Това е списък с хора/сървъри, които сте блокирали - не напускайте стаята!"
+    },
+    "update": {
+        "see_changes_button": "Какво ново?",
+        "release_notes_toast_title": "Какво ново",
+        "toast_title": "Обнови %(brand)s",
+        "toast_description": "Налична е нова версия на %(brand)s"
     }
 }

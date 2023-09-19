@@ -58,7 +58,6 @@
     "Custom level": "Nivel personalizado",
     "Enter passphrase": "Introducir frase de contraseña",
     "Home": "Inicio",
-    "Incorrect username and/or password.": "Nombre de usuario y/o contraseña incorrectos.",
     "Invited": "Invitado",
     "Jump to first unread message.": "Ir al primer mensaje no leído.",
     "Something went wrong!": "¡Algo ha fallado!",
@@ -184,7 +183,6 @@
     "Notification targets": "Destinos de notificaciones",
     "Today": "Hoy",
     "Friday": "Viernes",
-    "What's New": "Novedades",
     "Changelog": "Registro de cambios",
     "Failed to send logs: ": "Error al enviar registros: ",
     "This Room": "Esta sala",
@@ -202,7 +200,6 @@
     "Send": "Enviar",
     "All messages": "Todos los mensajes",
     "Thank you!": "¡Gracias!",
-    "What's new?": "Novedades",
     "All Rooms": "Todas las salas",
     "You cannot delete this message. (%(code)s)": "No puedes eliminar este mensaje. (%(code)s)",
     "Thursday": "Jueves",
@@ -948,7 +945,6 @@
     "Invalid base_url for m.identity_server": "URL_base no válida para m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
     "General failure": "Error no especificado",
-    "This account has been deactivated.": "Esta cuenta ha sido desactivada.",
     "Ok": "Ok",
     "Are you sure you want to cancel entering passphrase?": "¿Estas seguro que quieres cancelar el ingresar tu contraseña de recuperación?",
     "Unexpected server error trying to leave the room": "Error inesperado del servidor al abandonar esta sala",
@@ -1157,7 +1153,6 @@
     "Use email to optionally be discoverable by existing contacts.": "También puedes usarlo para que tus contactos te encuentren fácilmente.",
     "Add an email to be able to reset your password.": "Añade un correo para poder restablecer tu contraseña si te olvidas.",
     "Channel: <channelLink/>": "Canal: <channelLink/>",
-    "Update %(brand)s": "Actualizar %(brand)s",
     "Nigeria": "Nigeria",
     "Niger": "Níger",
     "Nicaragua": "Nicaragua",
@@ -1307,7 +1302,6 @@
     "Failed to save your profile": "No se ha podido guardar tu perfil",
     "not found in storage": "no se ha encontrado en la memoria",
     "Dial pad": "Teclado numérico",
-    "New version of %(brand)s is available": "Hay una nueva versión de %(brand)s disponible",
     "Safeguard against losing access to encrypted messages & data": "Evita perder acceso a datos y mensajes cifrados",
     "Use app": "Usar la aplicación",
     "Use app for a better experience": "Usa la aplicación para una experiencia mejor",
@@ -1762,7 +1756,6 @@
         "other": "Haz clic en el botón de abajo para confirmar y cerrar sesión en estos dispositivos.",
         "one": "Haz clic en el botón de abajo para confirmar que quieres cerrar la sesión de este dispositivo."
     },
-    "Light high contrast": "Claro con contraste alto",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
     "Joined": "Te has unido",
     "Someone already has that username. Try another or if it is you, sign in below.": "Ya hay alguien con ese nombre de usuario. Prueba con otro o, si eres tú, inicia sesión más abajo.",
@@ -2207,8 +2200,6 @@
     "Sorry — this call is currently full": "Lo sentimos — la llamada está llena",
     "Unknown room": "Sala desconocida",
     "Voice broadcast": "Retransmisión de voz",
-    "resume voice broadcast": "reanudar retransmisión de voz",
-    "pause voice broadcast": "pausar retransmisión de voz",
     "Live": "En directo",
     "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "Esto ayuda a otorgar la confianza de que realmente están hablando contigo, pero significa que podrán ver el nombre de la sesión que pongas aquí.",
     "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "La lista completa de tus sesiones podrá ser vista por otros usuarios en tus mensajes directos y salas en las que estés.",
@@ -2332,8 +2323,6 @@
     "Yes, it was me": "Sí, fui yo",
     "You have unverified sessions": "Tienes sesiones sin verificar",
     "Starting export process…": "Iniciando el proceso de exportación…",
-    "Connection error - Recording paused": "Error de conexión, grabación detenida",
-    "play voice broadcast": "reproducir difusión de voz",
     "WARNING: session already verified, but keys do NOT MATCH!": "ADVERTENCIA: la sesión ya está verificada, pero las claves NO COINCIDEN",
     "Database unexpectedly closed": "La base de datos se ha cerrado de forma inesperada",
     "Identity server not set": "Servidor de identidad no configurado",
@@ -2345,7 +2334,6 @@
     "This session is backing up your keys.": "",
     "Once everyone has joined, you’ll be able to chat": "Cuando la gente se una, podrás hablar",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
-    "Buffering…": "Cargando…",
     "Send email": "Enviar email",
     "Past polls": "Encuestas anteriores",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
@@ -2365,7 +2353,6 @@
     "Error changing password": "Error al cambiar la contraseña",
     "Set a new account password…": "Elige una contraseña para la cuenta…",
     "Message from %(user)s": "Mensaje de %(user)s",
-    "Change input device": "Cambiar dispositivo de entrada",
     "Enable MSC3946 (to support late-arriving room archives)": "",
     "Try using %(server)s": "Probar a usar %(server)s",
     "common": {
@@ -3590,7 +3577,8 @@
         "already_in_call": "Ya en una llamada",
         "already_in_call_person": "Ya estás en una llamada con esta persona.",
         "unsupported": "Las llamadas no son compatibles",
-        "unsupported_browser": "No puedes llamar usando este navegador de internet."
+        "unsupported_browser": "No puedes llamar usando este navegador de internet.",
+        "change_input_device": "Cambiar dispositivo de entrada"
     },
     "Other": "Otros",
     "Advanced": "Avanzado",
@@ -3743,7 +3731,9 @@
         "server_picker_intro": "Llamamos «servidores base» a los sitios donde puedes tener tu cuenta.",
         "server_picker_custom": "Otro servidor base",
         "server_picker_explainer": "Usa tu servidor base de Matrix de confianza o aloja el tuyo propio.",
-        "server_picker_learn_more": "Sobre los servidores base"
+        "server_picker_learn_more": "Sobre los servidores base",
+        "account_deactivated": "Esta cuenta ha sido desactivada.",
+        "incorrect_credentials": "Nombre de usuario y/o contraseña incorrectos."
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -3948,10 +3938,24 @@
         "confirm_listen_affirm": "Sí, terminar grabación",
         "30s_backward": "retroceder 30s",
         "30s_forward": "avanzar 30s",
-        "go_live": "Empezar directo"
+        "go_live": "Empezar directo",
+        "resume": "reanudar retransmisión de voz",
+        "pause": "pausar retransmisión de voz",
+        "buffering": "Cargando…",
+        "play": "reproducir difusión de voz",
+        "connection_error": "Error de conexión, grabación detenida"
     },
     "labs_mjolnir": {
         "room_name": "Mi lista de baneos",
         "room_topic": "Esta es la lista de usuarios y/o servidores que has bloqueado. ¡No te salgas de la sala!"
+    },
+    "theme": {
+        "light_high_contrast": "Claro con contraste alto"
+    },
+    "update": {
+        "see_changes_button": "Novedades",
+        "release_notes_toast_title": "Novedades",
+        "toast_title": "Actualizar %(brand)s",
+        "toast_description": "Hay una nueva versión de %(brand)s disponible"
     }
 }

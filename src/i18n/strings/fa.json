@@ -4,7 +4,6 @@
     "Today": "امروز",
     "Friday": "آدینه",
     "Notifications": "آگاهی‌ها",
-    "What's New": "چه خبر",
     "Changelog": "تغییراتِ به‌وجودآمده",
     "Operation failed": "عملیات انجام نشد",
     "This Room": "این گپ",
@@ -22,7 +21,6 @@
     "Send": "ارسال",
     "All messages": "همه‌ی پیام‌ها",
     "unknown error code": "کد خطای ناشناخته",
-    "What's new?": "چه خبر؟",
     "Invite to this room": "دعوت به این گپ",
     "You cannot delete this message. (%(code)s)": "شما نمی‌توانید این پیام را پاک کنید. (%(code)s)",
     "Thursday": "پنج‌شنبه",
@@ -82,7 +80,6 @@
     "No Microphones detected": "هیچ میکروفونی شناسایی نشد",
     "Account": "حساب کابری",
     "Incorrect verification code": "کد فعال‌سازی اشتباه است",
-    "Incorrect username and/or password.": "نام کاربری و یا گذرواژه اشتباه است.",
     "Home": "خانه",
     "For security, this session has been signed out. Please sign in again.": "برای امنیت، این نشست نامعتبر شده است. لطفاً دوباره وارد سیستم شوید.",
     "We couldn't log you in": "نتوانستیم شما را وارد کنیم",
@@ -587,7 +584,6 @@
     "General failure": "خطای عمومی",
     "Please <a>contact your service administrator</a> to continue using this service.": "لطفاً برای ادامه استفاده از این سرویس <a> با مدیر سرور خود تماس بگیرید </a>.",
     "Create a new room": "ایجاد اتاق جدید",
-    "This account has been deactivated.": "این حساب غیر فعال شده است.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "لطفا توجه کنید شما به سرور %(hs)s وارد شده‌اید، و نه سرور matrix.org.",
     "Want to add a new room instead?": "آیا می‌خواهید یک اتاق جدید را بیفزایید؟",
     "Add existing rooms": "افزودن اتاق‌های موجود",
@@ -1412,8 +1408,6 @@
     "Spaces": "محیط‌ها",
     "Change notification settings": "تنظیمات اعلان را تغییر دهید",
     "Please contact your homeserver administrator.": "لطفاً با مدیر سرور خود تماس بگیرید.",
-    "New version of %(brand)s is available": "نسخه‌ی جدید %(brand)s وجود است",
-    "Update %(brand)s": "%(brand)s را به‌روزرسانی کنید",
     "%(deviceId)s from %(ip)s": "%(deviceId)s از %(ip)s",
     "New login. Was this you?": "ورود جدید. آیا شما بودید؟",
     "Other users may not trust it": "ممکن است سایر کاربران به آن اعتماد نکنند",
@@ -1625,10 +1619,6 @@
     "You do not have permission to invite people to this space.": "شما دسترسی لازم برای دعوت از افراد به این فضا را ندارید.",
     "Voice broadcast": "صدای جمعی",
     "Live": "زنده",
-    "pause voice broadcast": "توقف صدای جمعی",
-    "resume voice broadcast": "بازگشت به صدای جمعی",
-    "play voice broadcast": "پخش صدای جمعی",
-    "Light high contrast": "بالاترین کنتراست قالب روشن",
     "Inviting %(user1)s and %(user2)s": "دعوت کردن %(user1)s و %(user2)s",
     "User is not logged in": "کاربر وارد نشده است",
     "Database unexpectedly closed": "پایگاه داده به طور غیرمنتظره ای بسته شد",
@@ -2618,7 +2608,9 @@
         "server_picker_required": "یک سرور مشخص کنید",
         "server_picker_custom": "سرور دیگر",
         "server_picker_explainer": "از یک سرور مبتنی بر پروتکل ماتریکس که ترجیح می‌دهید استفاده کرده، و یا از سرور شخصی خودتان استفاده کنید.",
-        "server_picker_learn_more": "درباره سرورها"
+        "server_picker_learn_more": "درباره سرورها",
+        "account_deactivated": "این حساب غیر فعال شده است.",
+        "incorrect_credentials": "نام کاربری و یا گذرواژه اشتباه است."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2789,10 +2781,22 @@
         "failed_others_already_recording_description": "شخص دیگری در حال ضبط صدا برای ارسال جمعی است. برای ارسال صدای جمعی باید منتظر بمانید تا کار ایشان به پایان برسد.",
         "confirm_stop_title": "آیا ارسال جمعی زنده متوقف شود؟",
         "confirm_stop_affirm": "بله، توقف ارسال جمعی",
-        "go_live": "برو به زنده"
+        "go_live": "برو به زنده",
+        "resume": "بازگشت به صدای جمعی",
+        "pause": "توقف صدای جمعی",
+        "play": "پخش صدای جمعی"
     },
     "labs_mjolnir": {
         "room_name": "لیست تحریم‌های من",
         "room_topic": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!"
+    },
+    "theme": {
+        "light_high_contrast": "بالاترین کنتراست قالب روشن"
+    },
+    "update": {
+        "see_changes_button": "چه خبر؟",
+        "release_notes_toast_title": "چه خبر",
+        "toast_title": "%(brand)s را به‌روزرسانی کنید",
+        "toast_description": "نسخه‌ی جدید %(brand)s وجود است"
     }
 }

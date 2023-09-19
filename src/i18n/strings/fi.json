@@ -55,7 +55,6 @@
     "Forget room": "Unohda huone",
     "For security, this session has been signed out. Please sign in again.": "Turvallisuussyistä tämä istunto on kirjattu ulos. Ole hyvä ja kirjaudu uudestaan.",
     "Import E2E room keys": "Tuo olemassaolevat osapuolten välisen salauksen huoneavaimet",
-    "Incorrect username and/or password.": "Virheellinen käyttäjätunnus ja/tai salasana.",
     "Incorrect verification code": "Virheellinen varmennuskoodi",
     "Invalid Email Address": "Virheellinen sähköpostiosoite",
     "Invited": "Kutsuttu",
@@ -244,7 +243,6 @@
     "Notification targets": "Ilmoituksen kohteet",
     "Today": "Tänään",
     "Friday": "Perjantai",
-    "What's New": "Mitä uutta",
     "Changelog": "Muutosloki",
     "This Room": "Tämä huone",
     "Unavailable": "Ei saatavilla",
@@ -257,7 +255,6 @@
     "Monday": "Maanantai",
     "All Rooms": "Kaikki huoneet",
     "All messages": "Kaikki viestit",
-    "What's new?": "Mitä uutta?",
     "Invite to this room": "Kutsu käyttäjiä",
     "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
@@ -647,7 +644,6 @@
     "Remove %(email)s?": "Poista %(email)s?",
     "Remove %(phone)s?": "Poista %(phone)s?",
     "Command Help": "Komento-ohje",
-    "This account has been deactivated.": "Tämä tili on poistettu.",
     "Use an identity server": "Käytä identiteettipalvelinta",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Ellet halua käyttää palvelinta <server /> löytääksesi tuntemiasi ihmisiä ja tullaksesi löydetyksi, syötä toinen identiteettipalvelin alle.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Identiteettipalvelimen käyttäminen on valinnaista. Jos päätät olla käyttämättä identiteettipalvelinta, muut käyttäjät eivät löydä sinua etkä voi kutsua muita sähköpostin tai puhelinnumeron perusteella.",
@@ -1020,8 +1016,6 @@
     "Algorithm:": "Algoritmi:",
     "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
     "Your server isn't responding to some <a>requests</a>.": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
-    "New version of %(brand)s is available": "%(brand)s-sovelluksesta on saatavilla uusi versio",
-    "Update %(brand)s": "Päivitä %(brand)s",
     "Enable desktop notifications": "Ota työpöytäilmoitukset käyttöön",
     "Enter email address": "Syötä sähköpostiosoite",
     "Enter phone number": "Syötä puhelinnumero",
@@ -1723,7 +1717,6 @@
     "Room members": "Huoneen jäsenet",
     "Back to chat": "Takaisin keskusteluun",
     "That's fine": "Sopii",
-    "Light high contrast": "Vaalea, suuri kontrasti",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "Results are only revealed when you end the poll": "Tulokset paljastetaan vasta kun päätät kyselyn",
     "Voters see results as soon as they have voted": "Äänestäjät näkevät tulokset heti äänestettyään",
@@ -2084,9 +2077,6 @@
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "For best security, sign out from any session that you don't recognize or use anymore.": "Parhaan turvallisuuden takaamiseksi kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä.",
     "Voice broadcast": "Äänen yleislähetys",
-    "pause voice broadcast": "keskeytä äänen yleislähetys",
-    "resume voice broadcast": "palaa äänen yleislähetykseen",
-    "play voice broadcast": "toista äänen yleislähetys",
     "You need to be able to kick users to do that.": "Sinun täytyy pystyä potkia käyttäjiä voidaksesi tehdä tuon.",
     "Error downloading image": "Virhe kuvaa ladatessa",
     "Unable to show image due to error": "Kuvan näyttäminen epäonnistui virheen vuoksi",
@@ -2132,8 +2122,6 @@
     "Upcoming features": "Tulevat ominaisuudet",
     "Search users in this room…": "Etsi käyttäjiä tästä huoneesta…",
     "You have unverified sessions": "Sinulla on vahvistamattomia istuntoja",
-    "Buffering…": "Puskuroidaan…",
-    "Change input device": "Vaihda sisääntulolaitetta",
     "Can’t start a call": "Puhelua ei voi aloittaa",
     "Failed to read events": "Tapahtumien lukeminen epäonnistui",
     "Failed to send event": "Tapahtuman lähettäminen epäonnistui",
@@ -3416,7 +3404,8 @@
         "already_in_call": "Olet jo puhelussa",
         "already_in_call_person": "Olet jo puhelussa tämän henkilön kanssa.",
         "unsupported": "Puhelut eivät ole tuettuja",
-        "unsupported_browser": "Et voi soittaa puheluja tässä selaimessa."
+        "unsupported_browser": "Et voi soittaa puheluja tässä selaimessa.",
+        "change_input_device": "Vaihda sisääntulolaitetta"
     },
     "Other": "Muut",
     "Advanced": "Lisäasetukset",
@@ -3571,7 +3560,9 @@
         "server_picker_intro": "Kutsumme \"kotipalvelimiksi\" paikkoja, missä voit isännöidä tiliäsi.",
         "server_picker_custom": "Muu kotipalvelin",
         "server_picker_explainer": "Käytä haluamaasi Matrix-kotipalvelinta, tai isännöi omaa palvelinta.",
-        "server_picker_learn_more": "Tietoa kotipalvelimista"
+        "server_picker_learn_more": "Tietoa kotipalvelimista",
+        "account_deactivated": "Tämä tili on poistettu.",
+        "incorrect_credentials": "Virheellinen käyttäjätunnus ja/tai salasana."
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3743,10 +3734,23 @@
         "confirm_stop_title": "Pysäytetäänkö liveyleislähetys?",
         "confirm_stop_affirm": "Kyllä, pysäytä yleislähetys",
         "30s_backward": "30 s taaksepäin",
-        "30s_forward": "30 s eteenpäin"
+        "30s_forward": "30 s eteenpäin",
+        "resume": "palaa äänen yleislähetykseen",
+        "pause": "keskeytä äänen yleislähetys",
+        "buffering": "Puskuroidaan…",
+        "play": "toista äänen yleislähetys"
     },
     "labs_mjolnir": {
         "room_name": "Tekemäni estot",
         "room_topic": "Tämä on luettelo käyttäjistä ja palvelimista, jotka olet estänyt - älä poistu huoneesta!"
+    },
+    "theme": {
+        "light_high_contrast": "Vaalea, suuri kontrasti"
+    },
+    "update": {
+        "see_changes_button": "Mitä uutta?",
+        "release_notes_toast_title": "Mitä uutta",
+        "toast_title": "Päivitä %(brand)s",
+        "toast_description": "%(brand)s-sovelluksesta on saatavilla uusi versio"
     }
 }

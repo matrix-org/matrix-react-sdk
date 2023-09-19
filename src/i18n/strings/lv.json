@@ -54,7 +54,6 @@
     "Historical": "Bijušie",
     "Home": "Mājup",
     "Import E2E room keys": "Importēt E2E istabas atslēgas",
-    "Incorrect username and/or password.": "Nepareizs lietotājvārds un/vai parole.",
     "Incorrect verification code": "Nepareizs verifikācijas kods",
     "Invalid Email Address": "Nepareiza epasta adrese",
     "Invalid file%(extra)s": "Nederīgs fails %(extra)s",
@@ -252,7 +251,6 @@
     "Notification targets": "Paziņojumu adresāti",
     "Today": "Šodien",
     "Friday": "Piektdiena",
-    "What's New": "Kas jauns",
     "Changelog": "Izmaiņu vēsture",
     "Failed to send logs: ": "Neizdevās nosūtīt logfailus: ",
     "This Room": "Šajā istabā",
@@ -269,7 +267,6 @@
     "Wednesday": "Trešdiena",
     "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
     "All messages": "Visas ziņas",
-    "What's new?": "Kas jauns?",
     "Invite to this room": "Uzaicināt uz šo istabu",
     "Thursday": "Ceturtdiena",
     "Logs sent": "Logfaili nosūtīti",
@@ -399,7 +396,6 @@
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Pašlaik jūs izmantojat <server></server>, lai atklātu esošos kontaktus un jūs būtu atklājams citiem. Jūs varat mainīt identitātes serveri zemāk.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Pašlaik jūs neizmantojat nevienu identitātes serveri. Lai atklātu esošos kontaktus un jūs būtu atklājams citiem, pievienojiet kādu identitātes serveri zemāk.",
     "Confirm your identity by entering your account password below.": "Apstipriniet savu identitāti, ievadot sava konta paroli.",
-    "This account has been deactivated.": "Šis konts ir deaktivizēts.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
     "Deactivate account": "Deaktivizēt kontu",
     "Language and region": "Valoda un reģions",
@@ -518,8 +514,6 @@
     "New version available. <a>Update now.</a>": "Pieejama jauna versija. <a>Atjaunināt.</a>",
     "Failed to save your profile": "Neizdevās salabāt jūsu profilu",
     "Passwords don't match": "Paroles nesakrīt",
-    "New version of %(brand)s is available": "Pieejama jauna %(brand)s versija",
-    "Update %(brand)s": "Atjaunināt %(brand)s",
     "New login. Was this you?": "Jauna pierakstīšanās. Vai tas bijāt jūs?",
     "Set up Secure Backup": "Iestatīt drošu rezerves dublēšanu",
     "Ok": "Labi",
@@ -1844,7 +1838,9 @@
         "sign_in_or_register": "Pierakstīties vai izveidot kontu",
         "sign_in_or_register_description": "Izmantojiet esošu kontu vai izveidojiet jaunu, lai turpinātu.",
         "register_action": "Izveidot kontu",
-        "server_picker_learn_more": "Par bāzes serveriem"
+        "server_picker_learn_more": "Par bāzes serveriem",
+        "account_deactivated": "Šis konts ir deaktivizēts.",
+        "incorrect_credentials": "Nepareizs lietotājvārds un/vai parole."
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -1974,5 +1970,11 @@
         "failed_unknown": "Nezināma kļūda, iegūstot atrašanās vietu. Lūdzu, mēģiniet vēlreiz vēlāk.",
         "expand_map": "Izvērst karti",
         "failed_load_map": "Nevar ielādēt karti"
+    },
+    "update": {
+        "see_changes_button": "Kas jauns?",
+        "release_notes_toast_title": "Kas jauns",
+        "toast_title": "Atjaunināt %(brand)s",
+        "toast_description": "Pieejama jauna %(brand)s versija"
     }
 }

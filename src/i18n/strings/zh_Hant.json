@@ -86,7 +86,6 @@
     "Enter passphrase": "輸入安全密語",
     "Failed to change power level": "無法變更權限等級",
     "Home": "首頁",
-    "Incorrect username and/or password.": "使用者名稱和／或密碼不正確。",
     "Invited": "已邀請",
     "Sign in with": "登入使用",
     "Low priority": "低優先度",
@@ -265,9 +264,7 @@
     "Saturday": "星期六",
     "Monday": "星期一",
     "All Rooms": "所有聊天室",
-    "What's New": "新鮮事",
     "All messages": "所有訊息",
-    "What's new?": "有何新變動嗎？",
     "Invite to this room": "邀請加入這個聊天室",
     "You cannot delete this message. (%(code)s)": "您無法刪除此訊息。(%(code)s)",
     "Thursday": "星期四",
@@ -628,7 +625,6 @@
     "Terms of Service": "服務條款",
     "Service": "服務",
     "Summary": "摘要",
-    "This account has been deactivated.": "此帳號已停用。",
     "Command Help": "指令說明",
     "Discovery": "探索",
     "Deactivate account": "停用帳號",
@@ -1106,8 +1102,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "使用某人的名字、電子郵件地址或使用者名稱（如 <userId/>）來與他們開始對話。",
     "Invite by email": "透過電子郵件邀請",
-    "New version of %(brand)s is available": "%(brand)s 的新版本已可使用",
-    "Update %(brand)s": "更新 %(brand)s",
     "Enable desktop notifications": "啟用桌面通知",
     "Don't miss a reply": "不要錯過回覆",
     "Zimbabwe": "辛巴威",
@@ -1748,7 +1742,6 @@
     "Joined": "已加入",
     "Insert link": "插入連結",
     "Joining": "正在加入",
-    "Light high contrast": "亮色高對比",
     "Select all": "全部選取",
     "Deselect all": "取消選取",
     "Sign out devices": {
@@ -2208,8 +2201,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s 提供端對端加密，但目前使用者數量較少。",
     "Enable %(brand)s as an additional calling option in this room": "啟用 %(brand)s 作為此聊天室的額外通話選項",
     "Sorry — this call is currently full": "抱歉 — 此通話目前已滿",
-    "resume voice broadcast": "恢復語音廣播",
-    "pause voice broadcast": "暫停語音廣播",
     "Completing set up of your new device": "完成您新裝置的設定",
     "Waiting for device to sign in": "正在等待裝置登入",
     "Review and approve the sign in": "審閱並批准登入",
@@ -2232,7 +2223,6 @@
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "您可以使用此裝置透過 QR Code 登入新裝置。您將需要使用已登出的裝置掃描此裝置上顯示的 QR Code。",
     "Sign in with QR code": "使用 QR Code 登入",
     "Browser": "瀏覽器",
-    "play voice broadcast": "播放語音廣播",
     "Show formatting": "顯示格式",
     "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "考慮登出您不再使用的舊工作階段（%(inactiveAgeDays)s天或更舊）。",
     "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "刪除不活躍的工作階段可以改善安全性與效能，並讓您可以輕鬆識別新的工作階段是否可疑。",
@@ -2265,7 +2255,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "短時間內嘗試太多次，請稍等 %(timeout)s 秒後再嘗試。",
     "Too many attempts in a short time. Wait some time before trying again.": "短時間內嘗試太多次，請稍待一段時間後再嘗試。",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
-    "Change input device": "變更輸入裝置",
     "<w>WARNING:</w> <description/>": "<w>警告：</w> <description/>",
     "We were unable to start a chat with the other user.": "我們無法與其他使用者開始聊天。",
     "Error starting verification": "開始驗證時發生錯誤",
@@ -2273,7 +2262,6 @@
     "Early previews": "提早預覽",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "%(brand)s 的下一步是什麼？實驗室是提早取得資訊、測試新功能，並在實際釋出前協助塑造它們的最佳方式。",
     "Upcoming features": "即將推出的功能",
-    "Buffering…": "正在緩衝…",
     "Change layout": "變更排列",
     "You have unverified sessions": "您有未驗證的工作階段",
     "This session doesn't support encryption and thus can't be verified.": "此工作階段不支援加密，因此無法驗證。",
@@ -2308,7 +2296,6 @@
     "Can't start voice message": "無法開始語音訊息",
     "Edit link": "編輯連結",
     "Decrypted source unavailable": "已解密的來源不可用",
-    "Connection error - Recording paused": "連線錯誤 - 已暫停錄音",
     "%(senderName)s started a voice broadcast": "%(senderName)s 開始了語音廣播",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "註冊權杖",
@@ -3768,7 +3755,8 @@
         "already_in_call": "已在通話中",
         "already_in_call_person": "您正在與此人通話。",
         "unsupported": "不支援通話",
-        "unsupported_browser": "您無法在此瀏覽器中通話。"
+        "unsupported_browser": "您無法在此瀏覽器中通話。",
+        "change_input_device": "變更輸入裝置"
     },
     "Other": "其他",
     "Advanced": "進階",
@@ -3928,7 +3916,9 @@
         "server_picker_intro": "我們將您可以託管帳號的地方稱為「家伺服器」。",
         "server_picker_custom": "其他家伺服器",
         "server_picker_explainer": "如果您有的話，可以使用您偏好的 Matrix 家伺服器，或是自己架一個。",
-        "server_picker_learn_more": "關於家伺服器"
+        "server_picker_learn_more": "關於家伺服器",
+        "account_deactivated": "此帳號已停用。",
+        "incorrect_credentials": "使用者名稱和／或密碼不正確。"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -4145,10 +4135,24 @@
         "confirm_listen_affirm": "是的，結束我的錄製",
         "30s_backward": "快退30秒",
         "30s_forward": "快轉30秒",
-        "go_live": "開始直播"
+        "go_live": "開始直播",
+        "resume": "恢復語音廣播",
+        "pause": "暫停語音廣播",
+        "buffering": "正在緩衝…",
+        "play": "播放語音廣播",
+        "connection_error": "連線錯誤 - 已暫停錄音"
     },
     "labs_mjolnir": {
         "room_name": "我的封鎖清單",
         "room_topic": "這是您已封鎖的的使用者／伺服器清單，不要離開聊天室！"
+    },
+    "theme": {
+        "light_high_contrast": "亮色高對比"
+    },
+    "update": {
+        "see_changes_button": "有何新變動嗎？",
+        "release_notes_toast_title": "新鮮事",
+        "toast_title": "更新 %(brand)s",
+        "toast_description": "%(brand)s 的新版本已可使用"
     }
 }

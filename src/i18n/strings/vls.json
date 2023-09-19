@@ -377,8 +377,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
     "Something went wrong!": "’t Es etwa misgegoan!",
-    "What's New": "Wuk es ’t er nieuw",
-    "What's new?": "Wuk es ’t er nieuw?",
     "Error encountered (%(errorDetail)s).": "’t Es e foute ipgetreedn (%(errorDetail)s).",
     "No update available.": "Geen update beschikboar.",
     "Delete Widget": "Widget verwydern",
@@ -564,7 +562,6 @@
     "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
     "General failure": "Algemene foute",
     "Please <a>contact your service administrator</a> to continue using this service.": "Gelieve <a>contact ip te neemn me je dienstbeheerder</a> vo deze dienst te bluuvn gebruukn.",
-    "Incorrect username and/or password.": "Verkeerde gebruukersnoame en/of paswoord.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
@@ -628,7 +625,6 @@
     "Terms of Service": "Gebruuksvoorwoardn",
     "Service": "Dienst",
     "Summary": "Soamnvattienge",
-    "This account has been deactivated.": "Deezn account is gedeactiveerd gewist.",
     "Clear personal data": "Persoonlike gegeevns wissn",
     "Checking server": "Server wor gecontroleerd",
     "Disconnect from the identity server <idserver />?": "Wil je de verbindienge me den identiteitsserver <idserver /> verbreekn?",
@@ -1102,7 +1098,9 @@
         "soft_logout_intro_password": "Voert je paswoord in vo jen an te meldn en den toegank tou jen account te herkrygn.",
         "soft_logout_intro_sso": "Meldt jen heran en herkrygt den toegank tou jen account.",
         "soft_logout_intro_unsupported_auth": "Je ku je nie anmeldn me jen account. Nimt contact ip me de beheerder van je thuusserver vo meer informoasje.",
-        "register_action": "Account anmoakn"
+        "register_action": "Account anmoakn",
+        "account_deactivated": "Deezn account is gedeactiveerd gewist.",
+        "incorrect_credentials": "Verkeerde gebruukersnoame en/of paswoord."
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1120,5 +1118,9 @@
     "room_list": {
         "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
         "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
+    },
+    "update": {
+        "see_changes_button": "Wuk es ’t er nieuw?",
+        "release_notes_toast_title": "Wuk es ’t er nieuw"
     }
 }

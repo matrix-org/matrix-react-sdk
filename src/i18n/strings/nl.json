@@ -96,7 +96,6 @@
     "Historical": "Historisch",
     "Home": "Home",
     "Import E2E room keys": "E2E-kamersleutels importeren",
-    "Incorrect username and/or password.": "Onjuiste inlognaam en/of wachtwoord.",
     "Incorrect verification code": "Onjuiste verificatiecode",
     "Invalid Email Address": "Ongeldig e-mailadres",
     "Invalid file%(extra)s": "Ongeldig bestand %(extra)s",
@@ -253,7 +252,6 @@
     "Notification targets": "Meldingsbestemmingen",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
-    "What's New": "Wat is er nieuw",
     "Changelog": "Wijzigingslogboek",
     "This Room": "Deze kamer",
     "Unavailable": "Niet beschikbaar",
@@ -266,7 +264,6 @@
     "Monday": "Maandag",
     "Invite to this room": "Uitnodigen voor deze kamer",
     "All messages": "Alle berichten",
-    "What's new?": "Wat is er nieuw?",
     "All Rooms": "Alle kamers",
     "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
@@ -629,7 +626,6 @@
     "Terms of Service": "Gebruiksvoorwaarden",
     "Service": "Dienst",
     "Summary": "Samenvatting",
-    "This account has been deactivated.": "Dit account is gesloten.",
     "Checking server": "Server wordt gecontroleerd",
     "Disconnect from the identity server <idserver />?": "Wil je de verbinding met de identiteitsserver <idserver /> verbreken?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Om bekenden te kunnen vinden en voor hen vindbaar te zijn gebruik je momenteel <server></server>. Je kan die identiteitsserver hieronder wijzigen.",
@@ -1222,8 +1218,6 @@
     "There was an error looking up the phone number": "Bij het zoeken naar het telefoonnummer is een fout opgetreden",
     "Unable to look up phone number": "Kan telefoonnummer niet opzoeken",
     "Change notification settings": "Meldingsinstellingen wijzigen",
-    "New version of %(brand)s is available": "Nieuwe versie van %(brand)s is beschikbaar",
-    "Update %(brand)s": "%(brand)s updaten",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
     "Server name": "Servernaam",
@@ -1748,7 +1742,6 @@
     "Joined": "Toegetreden",
     "Insert link": "Koppeling invoegen",
     "Joining": "Toetreden",
-    "Light high contrast": "Lichte hoog contrast",
     "Select all": "Allemaal selecteren",
     "Deselect all": "Allemaal deselecteren",
     "Sign out devices": {
@@ -2243,9 +2236,6 @@
     "Unknown room": "Onbekende kamer",
     "Voice broadcast": "Spraakuitzending",
     "Live": "Live",
-    "pause voice broadcast": "spraakuitzending pauzeren",
-    "resume voice broadcast": "hervat spraakuitzending",
-    "play voice broadcast": "spraakuitzending afspelen",
     "You need to be able to kick users to do that.": "U moet in staat zijn om gebruikers te verwijderen om dit te doen.",
     "common": {
         "about": "Over",
@@ -3547,7 +3537,9 @@
         "server_picker_intro": "Wij noemen de plaatsen waar je jouw account kunt hosten 'homeservers'.",
         "server_picker_custom": "Andere homeserver",
         "server_picker_explainer": "Gebruik de Matrix-homeserver van je voorkeur als je er een hebt, of host je eigen.",
-        "server_picker_learn_more": "Over homeservers"
+        "server_picker_learn_more": "Over homeservers",
+        "account_deactivated": "Dit account is gesloten.",
+        "incorrect_credentials": "Onjuiste inlognaam en/of wachtwoord."
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3745,10 +3737,22 @@
         "failed_insufficient_permission_description": "U heeft niet de vereiste rechten om een spraakuitzending in deze kamer te starten. Neem contact op met een kamer beheerder om uw machtiging aan te passen.",
         "failed_others_already_recording_description": "Iemand anders neemt al een spraakuitzending op. Wacht tot de spraakuitzending is afgelopen om een nieuwe te starten.",
         "confirm_stop_title": "Live uitzending stoppen?",
-        "confirm_stop_affirm": "Ja, stop uitzending"
+        "confirm_stop_affirm": "Ja, stop uitzending",
+        "resume": "hervat spraakuitzending",
+        "pause": "spraakuitzending pauzeren",
+        "play": "spraakuitzending afspelen"
     },
     "labs_mjolnir": {
         "room_name": "Mijn banlijst",
         "room_topic": "Dit is de lijst van door jou geblokkeerde servers/personen. Verlaat deze kamer niet!"
+    },
+    "theme": {
+        "light_high_contrast": "Lichte hoog contrast"
+    },
+    "update": {
+        "see_changes_button": "Wat is er nieuw?",
+        "release_notes_toast_title": "Wat is er nieuw",
+        "toast_title": "%(brand)s updaten",
+        "toast_description": "Nieuwe versie van %(brand)s is beschikbaar"
     }
 }

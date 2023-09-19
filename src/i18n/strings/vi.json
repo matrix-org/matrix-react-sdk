@@ -120,7 +120,6 @@
     "Please contact your homeserver administrator.": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
     "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
-    "This account has been deactivated.": "Tài khoản này đã bị vô hiệu hóa.",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Tin nhắn an toàn với người dùng này được mã hóa đầu cuối và không thể được các bên thứ ba đọc.",
     "Are you sure?": "Bạn có chắc không?",
     "Confirm Removal": "Xác nhận Loại bỏ",
@@ -208,7 +207,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Không thể kết nối với máy chủ thông qua HTTP khi URL HTTPS nằm trong thanh trình duyệt của bạn. Sử dụng HTTPS hoặc bật các tập lệnh không an toàn <a>enable unsafe scripts</a>.",
     "There was a problem communicating with the homeserver, please try again later.": "Đã xảy ra sự cố khi giao tiếp với máy chủ, vui lòng thử lại sau.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org.",
-    "Incorrect username and/or password.": "Tên người dùng và/hoặc mật khẩu không chính xác.",
     "Please <a>contact your service administrator</a> to continue using this service.": "Vui lòng liên hệ với quản trị viên dịch vụ của bạn <a>contact your service administrator</a> để tiếp tục sử dụng dịch vụ này.",
     "General failure": "Thất bại chung",
     "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
@@ -1314,8 +1312,6 @@
     "Privileged Users": "Người dùng đặc quyền",
     "No users have specific privileges in this room": "Không có người dùng nào có đặc quyền cụ thể trong phòng này",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
-    "What's New": "Có gì mới",
-    "What's new?": "Có gì mới?",
     "%(deviceId)s from %(ip)s": "%(deviceId)s từ %(ip)s",
     "New login. Was this you?": "Đăng nhập mới. Đây có phải là bạn không?",
     "Other users may not trust it": "Những người dùng khác có thể không tin tưởng nó",
@@ -1600,8 +1596,6 @@
     "Guyana": "Guyana",
     "Guinea-Bissau": "Guinea-Bissau",
     "Change notification settings": "Thay đổi cài đặt thông báo",
-    "New version of %(brand)s is available": "Đã có phiên bản mới của %(brand)s",
-    "Update %(brand)s": "Cập nhật %(brand)s",
     "Guinea": "Guinea",
     "Guernsey": "Guernsey",
     "Guatemala": "Guatemala",
@@ -1835,7 +1829,6 @@
     "Moderation": "Việc vận hành",
     "Messaging": "Tin nhắn",
     "That's fine": "Không sao cả",
-    "Light high contrast": "Độ tương phản ánh sáng cao",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Khóa đăng nhập bạn cung cấp khớp với khóa đăng nhập bạn nhận từ thiết bị %(deviceId)s của %(userId)s. Thiết bị được đánh dấu là đã được xác minh.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Sử dụng máy chủ định danh để mời qua thư điện tử. Bấm Tiếp tục để sử dụng máy chủ định danh mặc định (%(defaultIdentityServerName)s) hoặc quản lý trong Cài đặt.",
     "%(spaceName)s and %(count)s others": {
@@ -2014,19 +2007,13 @@
     "Give one or multiple users in this room more privileges": "Cho người trong phòng này nhiều quyền hơn",
     "Unsent": "Chưa gửi",
     "Unable to connect to Homeserver. Retrying…": "Không kết nối được với máy chủ nhà. Đang thử lại…",
-    "Connection error - Recording paused": "Lỗi kết nối - Đã tạm dừng ghi âm",
-    "pause voice broadcast": "Tạm dừng phát thanh",
-    "Buffering…": "Đang khởi tạo bộ đệm…",
     "Voice broadcast": "Phát thanh",
-    "Change input device": "Đổi thiết bị đầu vào",
-    "resume voice broadcast": "Tiếp tục phát thanh",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Mở ứng dụng trên nhiều thẻ hay xóa dữ liệu trình duyệt có thể là nguyên nhân.",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Muốn trải nghiệm? Thử các ý tưởng mới nhất còn đang được phát triển của chúng tôi. Các tính năng này chưa được hoàn thiện, chúng có thể không ổn định, có thể thay đổi, hay bị loại bỏ hoàn toàn. <a>Tìm hiểu thêm</a>.",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "Những gì sắp đến với %(brand)s? Phòng thí điểm là nơi tốt nhất để có mọi thứ sớm, thử nghiệm tính năng mới và giúp hoàn thiện trước khi chúng thực sự ra mắt.",
     "Upgrade this space to the recommended room version": "Nâng cấp phòng tới phiên bản được khuyến nghị",
     "View older version of %(spaceName)s.": "Xem phiên bản cũ của %(spaceName)s.",
-    "play voice broadcast": "nghe phát thanh",
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
     "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
@@ -3487,7 +3474,8 @@
         "already_in_call": "Đang trong cuộc gọi",
         "already_in_call_person": "Bạn đang trong cuộc gọi với người này rồi.",
         "unsupported": "Không hỗ trợ tính năng cuộc gọi",
-        "unsupported_browser": "Bạn không thể gọi trong trình duyệt này."
+        "unsupported_browser": "Bạn không thể gọi trong trình duyệt này.",
+        "change_input_device": "Đổi thiết bị đầu vào"
     },
     "Other": "Khác",
     "Advanced": "Nâng cao",
@@ -3641,7 +3629,9 @@
         "server_picker_intro": "Chúng tôi gọi những nơi bạn có thể lưu trữ tài khoản của bạn là 'homeserver'.",
         "server_picker_custom": "Máy chủ khác",
         "server_picker_explainer": "Sử dụng máy chủ Matrix ưa thích của bạn nếu bạn có, hoặc tự tạo máy chủ lưu trữ của riêng bạn.",
-        "server_picker_learn_more": "Giới thiệu về các máy chủ"
+        "server_picker_learn_more": "Giới thiệu về các máy chủ",
+        "account_deactivated": "Tài khoản này đã bị vô hiệu hóa.",
+        "incorrect_credentials": "Tên người dùng và/hoặc mật khẩu không chính xác."
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3848,10 +3838,24 @@
         "confirm_listen_affirm": "Vâng, ngừng ghi âm tôi",
         "30s_backward": "30 giây trước",
         "30s_forward": "30 giây kế tiếp",
-        "go_live": "Phát trực tiếp"
+        "go_live": "Phát trực tiếp",
+        "resume": "Tiếp tục phát thanh",
+        "pause": "Tạm dừng phát thanh",
+        "buffering": "Đang khởi tạo bộ đệm…",
+        "play": "nghe phát thanh",
+        "connection_error": "Lỗi kết nối - Đã tạm dừng ghi âm"
     },
     "labs_mjolnir": {
         "room_name": "Danh sách Cấm của tôi",
         "room_topic": "Đây là danh sách người dùng/máy chủ mà bạn đã chặn - đừng rời khỏi phòng!"
+    },
+    "theme": {
+        "light_high_contrast": "Độ tương phản ánh sáng cao"
+    },
+    "update": {
+        "see_changes_button": "Có gì mới?",
+        "release_notes_toast_title": "Có gì mới",
+        "toast_title": "Cập nhật %(brand)s",
+        "toast_description": "Đã có phiên bản mới của %(brand)s"
     }
 }

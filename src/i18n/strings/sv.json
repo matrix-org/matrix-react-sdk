@@ -56,7 +56,6 @@
     "Historical": "Historiska",
     "Home": "Hem",
     "Import E2E room keys": "Importera rumskrypteringsnycklar",
-    "Incorrect username and/or password.": "Fel användarnamn och/eller lösenord.",
     "Incorrect verification code": "Fel verifieringskod",
     "Invalid Email Address": "Ogiltig e-postadress",
     "Invalid file%(extra)s": "Felaktig fil%(extra)s",
@@ -141,7 +140,6 @@
     "Notification targets": "Aviseringsmål",
     "Today": "idag",
     "Friday": "fredag",
-    "What's New": "Vad är nytt",
     "Changelog": "Ändringslogg",
     "This Room": "Det här rummet",
     "Unavailable": "Otillgänglig",
@@ -157,7 +155,6 @@
     "You cannot delete this message. (%(code)s)": "Du kan inte radera det här meddelandet. (%(code)s)",
     "Send": "Skicka",
     "All messages": "Alla meddelanden",
-    "What's new?": "Vad är nytt?",
     "Invite to this room": "Bjud in till rummet",
     "Thursday": "torsdag",
     "Yesterday": "igår",
@@ -1013,7 +1010,6 @@
     "Invalid identity server discovery response": "Ogiltigt identitetsserverupptäcktssvar",
     "Invalid base_url for m.identity_server": "Ogiltig base_url för m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
-    "This account has been deactivated.": "Det här kontot har avaktiverats.",
     "Failed to re-authenticate due to a homeserver problem": "Misslyckades att återautentisera p.g.a. ett hemserverproblem",
     "Clear personal data": "Rensa personlig information",
     "Command Autocomplete": "Autokomplettering av kommandon",
@@ -1157,8 +1153,6 @@
     "Topic: %(topic)s (<a>edit</a>)": "Ämne: %(topic)s (<a>redigera</a>)",
     "This is the beginning of your direct message history with <displayName/>.": "Det här är början på din direktmeddelandehistorik med <displayName/>.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Bara ni två är med i den här konversationen, om inte någon av er bjuder in någon annan.",
-    "New version of %(brand)s is available": "Ny version av %(brand)s är tillgänglig",
-    "Update %(brand)s": "Uppdatera %(brand)s",
     "Enable desktop notifications": "Aktivera skrivbordsaviseringar",
     "Don't miss a reply": "Missa inte ett svar",
     "Zimbabwe": "Zimbabwe",
@@ -1748,7 +1742,6 @@
     "Joined": "Gick med",
     "Insert link": "Infoga länk",
     "Joining": "Går med",
-    "Light high contrast": "Ljust högkontrast",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Lagra din säkerhetsnyckel någonstans säkert, som en lösenordshanterare eller ett kassaskåp, eftersom den används för att säkra din krypterade data.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Vi kommer att generera en säkerhetsnyckel så du kan lagra någonstans säkert, som en lösenordshanterare eller ett kassaskåp.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
@@ -2135,11 +2128,7 @@
     "Unknown room": "Okänt rum",
     "Voice broadcast": "Röstsändning",
     "Live": "Sänder",
-    "pause voice broadcast": "pausa röstsändning",
-    "resume voice broadcast": "återuppta röstsändning",
-    "play voice broadcast": "spela röstsändning",
     "Sorry — this call is currently full": "Tyvärr - det här samtalet är för närvarande fullt",
-    "Change input device": "Byt ingångsenhet",
     "Connection": "Anslutning",
     "Voice processing": "Röstbearbetning",
     "Video settings": "Videoinställningar",
@@ -2161,7 +2150,6 @@
     "Give one or multiple users in this room more privileges": "Ge en eller flera användare i det här rummet fler privilegier",
     "Add privileged users": "Lägg till privilegierade användare",
     "You have unverified sessions": "Du har overifierade sessioner",
-    "Buffering…": "Buffrar…",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
     "Manually verify by text": "Verifiera manuellt med text",
@@ -2313,7 +2301,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Manage account": "Hantera konto",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Dina rumsdetaljer hanteras separat av <code>%(hostname)s</code>.",
-    "Connection error - Recording paused": "Anslutningsfel - Inspelning pausad",
     "%(senderName)s started a voice broadcast": "%(senderName)s startade en röstsändning",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alla meddelanden och inbjudningar från den här användaren kommer att döljas. Är du säker på att du vill ignorera denne?",
     "Ignore %(user)s": "Ignorera %(user)s",
@@ -3709,7 +3696,8 @@
         "already_in_call": "Redan i samtal",
         "already_in_call_person": "Du är redan i ett samtal med den här personen.",
         "unsupported": "Samtal stöds ej",
-        "unsupported_browser": "Du kan inte ringa samtal i den här webbläsaren."
+        "unsupported_browser": "Du kan inte ringa samtal i den här webbläsaren.",
+        "change_input_device": "Byt ingångsenhet"
     },
     "Other": "Annat",
     "Advanced": "Avancerat",
@@ -3868,7 +3856,9 @@
         "server_picker_intro": "Vi kallar platser du kan ha ditt konto på för 'hemservrar'.",
         "server_picker_custom": "Annan hemserver",
         "server_picker_explainer": "Använd din föredragna hemserver om du har en, eller driv din egen.",
-        "server_picker_learn_more": "Om hemservrar"
+        "server_picker_learn_more": "Om hemservrar",
+        "account_deactivated": "Det här kontot har avaktiverats.",
+        "incorrect_credentials": "Fel användarnamn och/eller lösenord."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4085,10 +4075,24 @@
         "confirm_listen_affirm": "Ja, avsluta min inspelning",
         "30s_backward": "30s bakåt",
         "30s_forward": "30s framåt",
-        "go_live": "Börja sända"
+        "go_live": "Börja sända",
+        "resume": "återuppta röstsändning",
+        "pause": "pausa röstsändning",
+        "buffering": "Buffrar…",
+        "play": "spela röstsändning",
+        "connection_error": "Anslutningsfel - Inspelning pausad"
     },
     "labs_mjolnir": {
         "room_name": "Min bannlista",
         "room_topic": "Det här är din lista med användare och server du har blockerat - lämna inte rummet!"
+    },
+    "theme": {
+        "light_high_contrast": "Ljust högkontrast"
+    },
+    "update": {
+        "see_changes_button": "Vad är nytt?",
+        "release_notes_toast_title": "Vad är nytt",
+        "toast_title": "Uppdatera %(brand)s",
+        "toast_description": "Ny version av %(brand)s är tillgänglig"
     }
 }

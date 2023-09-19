@@ -166,7 +166,6 @@
     "Cancelling…": ".i ca'o co'u co'e",
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
-    "What's New": "notci le du'u cnino",
     "Later": "nu ca na co'e",
     "Other users may not trust it": ".i la'a na pa na du be do cu lacri",
     "Sign Up": "nu co'a na'o jaspu",
@@ -490,5 +489,8 @@
         "sync_footer_subtitle": ".i gi na ja do pagbu so'i se zilbe'i gi la'a ze'u gunka",
         "incorrect_password": ".i le lerpoijaspu na drani",
         "register_action": "nu pa re'u co'a jaspu"
+    },
+    "update": {
+        "release_notes_toast_title": "notci le du'u cnino"
     }
 }

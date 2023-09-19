@@ -60,7 +60,6 @@
     "Historical": "Archív",
     "Home": "Kezdőlap",
     "Import E2E room keys": "E2E szobakulcsok importálása",
-    "Incorrect username and/or password.": "Helytelen felhasználónév vagy jelszó.",
     "Incorrect verification code": "Hibás azonosítási kód",
     "Invalid Email Address": "Érvénytelen e-mail-cím",
     "Invalid file%(extra)s": "Hibás fájl%(extra)s",
@@ -253,7 +252,6 @@
     "Notification targets": "Értesítések célpontja",
     "Today": "Ma",
     "Friday": "Péntek",
-    "What's New": "Újdonságok",
     "Changelog": "Változások",
     "Failed to send logs: ": "Hiba a napló küldésénél: ",
     "This Room": "Ebben a szobában",
@@ -267,7 +265,6 @@
     "Monday": "Hétfő",
     "Invite to this room": "Meghívás a szobába",
     "All messages": "Összes üzenet",
-    "What's new?": "Mik az újdonságok?",
     "All Rooms": "Minden szobában",
     "You cannot delete this message. (%(code)s)": "Nem törölheted ezt az üzenetet. (%(code)s)",
     "Thursday": "Csütörtök",
@@ -656,7 +653,6 @@
     "Remove %(phone)s?": "%(phone)s törlése?",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "A szöveges üzenetet elküldtük a +%(msisdn)s számra. Kérlek add meg az ellenőrző kódot amit tartalmazott.",
     "Command Help": "Parancsok súgója",
-    "This account has been deactivated.": "Ez a fiók zárolva van.",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Ha nem szeretné a(z) <server /> kiszolgálót használnia kapcsolatok kereséséhez, és hogy megtalálják az ismerősei, akkor adjon meg egy másik azonosítási kiszolgálót.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Az azonosítási kiszolgáló használata nem kötelező. Ha úgy dönt, hogy nem használ azonosítási kiszolgálót, akkor felhasználók nem találják meg Önt, és nem tud másokat meghívni e-mail-cím vagy telefonszám alapján.",
     "Do not use an identity server": "Az azonosítási kiszolgáló mellőzése",
@@ -1103,8 +1099,6 @@
     "Hide Widgets": "Kisalkalmazások elrejtése",
     "The call was answered on another device.": "A hívás másik eszközön lett fogadva.",
     "Answered Elsewhere": "Máshol lett felvéve",
-    "New version of %(brand)s is available": "Új %(brand)s verzió érhető el",
-    "Update %(brand)s": "A(z) %(brand)s frissítése",
     "Enable desktop notifications": "Asztali értesítések engedélyezése",
     "Don't miss a reply": "Ne szalasszon el egy választ se",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Hívj meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a szobát</a>.",
@@ -1748,7 +1742,6 @@
     "Joined": "Csatlakozott",
     "Insert link": "Link beillesztése",
     "Joining": "Belépés",
-    "Light high contrast": "Világos, nagy kontrasztú",
     "Click the button below to confirm signing out these devices.": {
         "other": "Ezeknek a eszközöknek törlésének a megerősítéséhez kattintson a gombra lent.",
         "one": "Az eszközből való kilépés megerősítéséhez kattintson a lenti gombra."
@@ -2192,8 +2185,6 @@
     "Live": "Élő közvetítés",
     "Sorry — this call is currently full": "Bocsánat — ez a hívás betelt",
     "Unknown room": "Ismeretlen szoba",
-    "resume voice broadcast": "hangközvetítés folytatása",
-    "pause voice broadcast": "hangközvetítés szüneteltetése",
     "Room info": "Szoba információ",
     "View chat timeline": "Beszélgetés idővonal megjelenítése",
     "Close call": "Hívás befejezése",
@@ -2232,7 +2223,6 @@
     "Browser": "Böngésző",
     "Review and approve the sign in": "Belépés áttekintése és engedélyezés",
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Ennek az eszköznek a felhasználásával és a QR kóddal beléptethet egy másik eszközt. Be kell olvasni a QR kódot azon az eszközön ami még nincs belépve.",
-    "play voice broadcast": "hangközvetítés lejátszása",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?",
         "other": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?"
@@ -2280,8 +2270,6 @@
     "Give one or multiple users in this room more privileges": "Több jog adása egy vagy több felhasználónak a szobában",
     "Add privileged users": "Privilegizált felhasználók hozzáadása",
     "You have unverified sessions": "Ellenőrizetlen bejelentkezései vannak",
-    "Buffering…": "Pufferelés…",
-    "Change input device": "Bemeneti eszköz megváltoztatása",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
     "Improve your account security by following these recommendations.": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat.",
@@ -2309,7 +2297,6 @@
     "Edit link": "Hivatkozás szerkesztése",
     "Decrypted source unavailable": "A visszafejtett forrás nem érhető el",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "Connection error - Recording paused": "Kapcsolódási hiba – Felvétel szüneteltetve",
     "%(senderName)s started a voice broadcast": "%(senderName)s hangos közvetítést indított",
     "Registration token": "Regisztrációs token",
     "Enter a registration token provided by the homeserver administrator.": "Adja meg a regisztrációs tokent, amelyet a Matrix-kiszolgáló rendszergazdája adott meg.",
@@ -3673,7 +3660,8 @@
         "already_in_call": "A hívás már folyamatban van",
         "already_in_call_person": "Már hívásban van ezzel a személlyel.",
         "unsupported": "A hívások nem támogatottak",
-        "unsupported_browser": "Nem indíthat hívást ebben a böngészőben."
+        "unsupported_browser": "Nem indíthat hívást ebben a böngészőben.",
+        "change_input_device": "Bemeneti eszköz megváltoztatása"
     },
     "Other": "Egyéb",
     "Advanced": "Speciális",
@@ -3832,7 +3820,9 @@
         "server_picker_intro": "Matrix-kiszolgálóknak nevezzük azokat a helyeket, ahol fiókot lehet létrehozni.",
         "server_picker_custom": "Másik Matrix-kiszolgáló",
         "server_picker_explainer": "Használja a választott Matrix-kiszolgálóját, ha van ilyenje, vagy üzemeltessen egy sajátot.",
-        "server_picker_learn_more": "A Matrix-kiszolgálókról"
+        "server_picker_learn_more": "A Matrix-kiszolgálókról",
+        "account_deactivated": "Ez a fiók zárolva van.",
+        "incorrect_credentials": "Helytelen felhasználónév vagy jelszó."
     },
     "room_list": {
         "sort_unread_first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",
@@ -4049,10 +4039,24 @@
         "confirm_listen_affirm": "Igen, a felvétel befejezése",
         "30s_backward": "vissza 30 másodperccel",
         "30s_forward": "előre 30 másodperccel",
-        "go_live": "Élő közvetítés indítása"
+        "go_live": "Élő közvetítés indítása",
+        "resume": "hangközvetítés folytatása",
+        "pause": "hangközvetítés szüneteltetése",
+        "buffering": "Pufferelés…",
+        "play": "hangközvetítés lejátszása",
+        "connection_error": "Kapcsolódási hiba – Felvétel szüneteltetve"
     },
     "labs_mjolnir": {
         "room_name": "Saját tiltólista",
         "room_topic": "Ez a saját, tiltott felhasználókat és kiszolgálókat tartalmazó listája – ne hagyja el ezt a szobát!"
+    },
+    "theme": {
+        "light_high_contrast": "Világos, nagy kontrasztú"
+    },
+    "update": {
+        "see_changes_button": "Mik az újdonságok?",
+        "release_notes_toast_title": "Újdonságok",
+        "toast_title": "A(z) %(brand)s frissítése",
+        "toast_description": "Új %(brand)s verzió érhető el"
     }
 }

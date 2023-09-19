@@ -88,7 +88,6 @@
     "For security, this session has been signed out. Please sign in again.": "Ze względów bezpieczeństwa ta sesja została wylogowana. Zaloguj się jeszcze raz.",
     "Home": "Strona główna",
     "Import E2E room keys": "Importuj klucze pokoju E2E",
-    "Incorrect username and/or password.": "Nieprawidłowa nazwa użytkownika i/lub hasło.",
     "Incorrect verification code": "Nieprawidłowy kod weryfikujący",
     "Invalid Email Address": "Nieprawidłowy adres e-mail",
     "Invalid file%(extra)s": "Nieprawidłowy plik %(extra)s",
@@ -217,7 +216,6 @@
     "Notification targets": "Cele powiadomień",
     "Today": "Dzisiaj",
     "Friday": "Piątek",
-    "What's New": "Co nowego",
     "Changelog": "Dziennik zmian",
     "Failed to send logs: ": "Nie udało się wysłać dzienników: ",
     "This Room": "Ten pokój",
@@ -233,7 +231,6 @@
     "Wednesday": "Środa",
     "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
     "All messages": "Wszystkie wiadomości",
-    "What's new?": "Co nowego?",
     "Invite to this room": "Zaproś do tego pokoju",
     "Thursday": "Czwartek",
     "Search…": "Szukaj…",
@@ -689,8 +686,6 @@
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
     "Use the <a>Desktop app</a> to search encrypted messages": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
     "Message search": "Wyszukiwanie wiadomości",
-    "New version of %(brand)s is available": "Dostępna jest nowa wersja %(brand)s",
-    "Update %(brand)s": "Aktualizuj %(brand)s",
     "Set up Secure Backup": "Skonfiguruj bezpieczną kopię zapasową",
     "Ok": "OK",
     "Unknown App": "Nieznana aplikacja",
@@ -1019,7 +1014,6 @@
     "Remove recent messages by %(user)s": "Usuń ostatnie wiadomości od %(user)s",
     "No recent messages by %(user)s found": "Nie znaleziono ostatnich wiadomości od %(user)s",
     "Clear personal data": "Wyczyść dane osobiste",
-    "This account has been deactivated.": "To konto zostało zdezaktywowane.",
     "Use bots, bridges, widgets and sticker packs": "Używaj botów, mostków, widżetów i zestawów naklejek",
     "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
     "Clear all data": "Wyczyść wszystkie dane",
@@ -1185,7 +1179,6 @@
     "Invite to %(spaceName)s": "Zaproś do %(spaceName)s",
     "Use a longer keyboard pattern with more turns": "Użyj wzoru z klawiatury z większą ilością zakrętów",
     "This homeserver has been blocked by its administrator.": "Ten serwer domowy został zablokowany przez jego administratora.",
-    "Light high contrast": "Jasny z wysokim kontrastem",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Dodaj użytkowników i serwery tutaj które chcesz ignorować. Użyj znaku gwiazdki (*) żeby %(brand)s zgadzał się z każdym znakiem. Na przykład, <code>@bot:*</code> może ignorować wszystkich użytkowników którzy mają nazwę 'bot' na każdym serwerze.",
     "Lock": "Zamek",
     "Empty room": "Pusty pokój",
@@ -1441,14 +1434,8 @@
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Nie można zaprosić poprzez e-mail bez serwera tożsamości. Przejdź do \"Ustawienia\", aby się połączyć.",
     "Unable to connect to Homeserver. Retrying…": "Nie można połączyć się z serwerem domowym. Ponawianie…",
-    "Connection error - Recording paused": "Błąd połączenia - Nagrywanie wstrzymane",
-    "play voice broadcast": "odtwórz transmisję głosową",
-    "Buffering…": "Buforowanie…",
     "Voice broadcast": "Transmisja głosowa",
     "Live": "Na żywo",
-    "Change input device": "Zmień urządzenie wejściowe",
-    "pause voice broadcast": "wstrzymaj transmisję głosową",
-    "resume voice broadcast": "wznów transmisję głosową",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Użytkownik (%(user)s) nie został zaproszony do %(roomId)s, lecz nie wystąpił błąd od narzędzia zapraszającego",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Może być to spowodowane przez aplikacje otwartą w wielu kartach lub po wyczyszczeniu danych przeglądarki.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie.",
@@ -3750,7 +3737,8 @@
         "already_in_call": "Już dzwoni",
         "already_in_call_person": "Prowadzisz już rozmowę z tą osobą.",
         "unsupported": "Rozmowy nie są obsługiwane",
-        "unsupported_browser": "Nie możesz wykonywać połączeń z tej przeglądarki."
+        "unsupported_browser": "Nie możesz wykonywać połączeń z tej przeglądarki.",
+        "change_input_device": "Zmień urządzenie wejściowe"
     },
     "Other": "Inne",
     "Advanced": "Zaawansowane",
@@ -3910,7 +3898,9 @@
         "server_picker_intro": "Kontaktujemy się z miejscami, gdzie możesz założyć swoje konto tzw. 'serwery domowe'.",
         "server_picker_custom": "Inne serwery domowe",
         "server_picker_explainer": "Korzystaj z wybranego przez Ciebie serwera domowego Matrix lub hostuj swój własny.",
-        "server_picker_learn_more": "O serwerach domowych"
+        "server_picker_learn_more": "O serwerach domowych",
+        "account_deactivated": "To konto zostało zdezaktywowane.",
+        "incorrect_credentials": "Nieprawidłowa nazwa użytkownika i/lub hasło."
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -4127,10 +4117,24 @@
         "confirm_listen_affirm": "Tak, zakończ moje nagranie",
         "30s_backward": "30s do tyłu",
         "30s_forward": "30s do przodu",
-        "go_live": "Rozpocznij transmisję"
+        "go_live": "Rozpocznij transmisję",
+        "resume": "wznów transmisję głosową",
+        "pause": "wstrzymaj transmisję głosową",
+        "buffering": "Buforowanie…",
+        "play": "odtwórz transmisję głosową",
+        "connection_error": "Błąd połączenia - Nagrywanie wstrzymane"
     },
     "labs_mjolnir": {
         "room_name": "Moja lista zablokowanych",
         "room_topic": "To jest Twoja lista zablokowanych użytkowników/serwerów – nie opuszczaj tego pokoju!"
+    },
+    "theme": {
+        "light_high_contrast": "Jasny z wysokim kontrastem"
+    },
+    "update": {
+        "see_changes_button": "Co nowego?",
+        "release_notes_toast_title": "Co nowego",
+        "toast_title": "Aktualizuj %(brand)s",
+        "toast_description": "Dostępna jest nowa wersja %(brand)s"
     }
 }

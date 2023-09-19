@@ -216,7 +216,6 @@
     "Uploading %(filename)s": "Pujant %(filename)s",
     "Import E2E room keys": "Importar claus E2E de sala",
     "Cryptography": "Criptografia",
-    "Incorrect username and/or password.": "Usuari i/o contrasenya incorrectes.",
     "Session ID": "ID de la sessió",
     "Export room keys": "Exporta les claus de la sala",
     "Confirm passphrase": "Introduïu una contrasenya",
@@ -226,7 +225,6 @@
     "Notification targets": "Objectius de les notificacions",
     "Today": "Avui",
     "Friday": "Divendres",
-    "What's New": "Novetats",
     "Changelog": "Registre de canvis",
     "Failed to send logs: ": "No s'han pogut enviar els logs: ",
     "This Room": "Aquesta sala",
@@ -242,7 +240,6 @@
     "All Rooms": "Totes les sales",
     "Wednesday": "Dimecres",
     "All messages": "Tots els missatges",
-    "What's new?": "Què hi ha de nou?",
     "Invite to this room": "Convida a aquesta sala",
     "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
@@ -727,7 +724,8 @@
         "incorrect_password": "Contrasenya incorrecta",
         "sign_in_or_register": "Inicia sessió o Crea un compte",
         "sign_in_or_register_description": "Utilitza el teu compte o crea'n un de nou per continuar.",
-        "register_action": "Crea un compte"
+        "register_action": "Crea un compte",
+        "incorrect_credentials": "Usuari i/o contrasenya incorrectes."
     },
     "export_chat": {
         "messages": "Missatges"
@@ -740,5 +738,9 @@
     "room_list": {
         "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
         "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
+    },
+    "update": {
+        "see_changes_button": "Què hi ha de nou?",
+        "release_notes_toast_title": "Novetats"
     }
 }

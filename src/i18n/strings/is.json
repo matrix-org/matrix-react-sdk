@@ -94,8 +94,6 @@
     "Copied!": "Afritað!",
     "Email address": "Tölvupóstfang",
     "Something went wrong!": "Eitthvað fór úrskeiðis!",
-    "What's New": "Nýtt á döfinni",
-    "What's new?": "Hvað er nýtt á döfinni?",
     "Error encountered (%(errorDetail)s).": "Villa fannst (%(errorDetail)s).",
     "No update available.": "Engin uppfærsla tiltæk.",
     "Home": "Forsíða",
@@ -138,7 +136,6 @@
     "A new password must be entered.": "Það verður að setja inn nýtt lykilorð.",
     "New passwords must match each other.": "Nýju lykilorðin verða að vera þau sömu.",
     "Return to login screen": "Fara aftur í innskráningargluggann",
-    "Incorrect username and/or password.": "Rangt notandanafn og/eða lykilorð.",
     "Commands": "Skipanir",
     "Users": "Notendur",
     "Session ID": "Auðkenni setu",
@@ -579,7 +576,6 @@
     "Later": "Seinna",
     "That's fine": "Það er í góðu",
     "Unknown App": "Óþekkt forrit",
-    "Light high contrast": "Ljóst með mikil birtuskil",
     "Use an identity server": "Nota auðkennisþjón",
     "Setting up keys": "Set upp dulritunarlykla",
     "%(spaceName)s and %(count)s others": {
@@ -961,7 +957,6 @@
     "View in room": "Skoða á spjallrás",
     "Set up": "Setja upp",
     "Back to chat": "Til baka í spjall",
-    "Update %(brand)s": "Uppfæra %(brand)s",
     "%(deviceId)s from %(ip)s": "%(deviceId)s frá %(ip)s",
     "New login. Was this you?": "Ný innskráning. Varst þetta þú?",
     "Other users may not trust it": "Aðrir notendur gætu ekki treyst því",
@@ -1366,7 +1361,6 @@
     "Unable to share phone number": "Ekki er hægt að deila símanúmeri",
     "Unable to revoke sharing for phone number": "Ekki er hægt að afturkalla að deila símanúmeri",
     "Verify the link in your inbox": "Athugaðu tengilinn í pósthólfinu þínu",
-    "New version of %(brand)s is available": "Ný útgáfa %(brand)s er tiltæk",
     "Set up Secure Backup": "Setja upp varið öryggisafrit",
     "Authentication check failed: incorrect password?": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
     "Your browser does not support the required cryptography extensions": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
@@ -1625,7 +1619,6 @@
     "Proceed with reset": "Halda áfram með endurstillingu",
     "There was a problem communicating with the homeserver, please try again later.": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
-    "This account has been deactivated.": "Þessi notandaaðgangur hefur verið gerður óvirkur.",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
     "Really reset verification keys?": "Viltu í alvörunni endurstilla sannvottunarlyklana?",
     "Use email to optionally be discoverable by existing contacts.": "Notaðu tölvupóstfang til að geta verið finnanleg/ur fyrir tengiliðina þína.",
@@ -1956,12 +1949,7 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
     "Select the roles required to change various parts of the room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar",
     "Unknown room": "Óþekkt spjallrás",
-    "Connection error - Recording paused": "Villa í tengingu - Upptaka í bið",
-    "play voice broadcast": "spila talútsendingu",
     "Voice broadcast": "Útvörpun tals",
-    "Change input device": "skipta um inntakstæki",
-    "pause voice broadcast": "setja talútsendingu í bið",
-    "resume voice broadcast": "halda áfram með talútsendingu",
     "Send email": "Senda tölvupóst",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Þú hefur verið skráður út úr öllum tækjum og munt ekki lengur fá ýti-tilkynningar. Til að endurvirkja tilkynningar, þarf að skrá sig aftur inn á hverju tæki fyrir sig.",
     "Sign out of all devices": "Skrá út af öllum tækjum",
@@ -1995,7 +1983,6 @@
     "Voice settings": "Raddstillingar",
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
     "You have unverified sessions": "Þú ert með óstaðfestar setur",
-    "Buffering…": "Hleð í biðminni…",
     "Can’t start a call": "Get ekki hafið símtal",
     "Failed to read events": "Mistókst að lesa atburði",
     "Failed to send event": "Mistókst að senda atburð",
@@ -3197,7 +3184,8 @@
         "already_in_call": "Nú þegar í símtali",
         "already_in_call_person": "Þú ert nú þegar í símtali við þennan aðila.",
         "unsupported": "Ekki er stuðningur við símtöl",
-        "unsupported_browser": "Þú getur ekki hringt símtöl í þessum vafra."
+        "unsupported_browser": "Þú getur ekki hringt símtöl í þessum vafra.",
+        "change_input_device": "skipta um inntakstæki"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -3344,7 +3332,9 @@
         "server_picker_required": "Tilgreindu heimaþjón",
         "server_picker_matrix.org": "Matrix.org is er heimsins stærsti opinberi heimaþjónninn, þannig að þar er góður staður fyrir marga.",
         "server_picker_custom": "Annar heimaþjónn",
-        "server_picker_learn_more": "Um heimaþjóna"
+        "server_picker_learn_more": "Um heimaþjóna",
+        "account_deactivated": "Þessi notandaaðgangur hefur verið gerður óvirkur.",
+        "incorrect_credentials": "Rangt notandanafn og/eða lykilorð."
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3532,10 +3522,24 @@
         "confirm_listen_affirm": "Já, stöðva upptökuna mína",
         "30s_backward": "30s afturábak",
         "30s_forward": "30s áfram",
-        "go_live": "Fara í beina útsendingu"
+        "go_live": "Fara í beina útsendingu",
+        "resume": "halda áfram með talútsendingu",
+        "pause": "setja talútsendingu í bið",
+        "buffering": "Hleð í biðminni…",
+        "play": "spila talútsendingu",
+        "connection_error": "Villa í tengingu - Upptaka í bið"
     },
     "labs_mjolnir": {
         "room_name": "Bannlistinn minn",
         "room_topic": "Þetta er listinn þinn yfir notendur/netþjóna sem þú hefur lokað á - ekki fara af spjallsvæðinu!"
+    },
+    "theme": {
+        "light_high_contrast": "Ljóst með mikil birtuskil"
+    },
+    "update": {
+        "see_changes_button": "Hvað er nýtt á döfinni?",
+        "release_notes_toast_title": "Nýtt á döfinni",
+        "toast_title": "Uppfæra %(brand)s",
+        "toast_description": "Ný útgáfa %(brand)s er tiltæk"
     }
 }

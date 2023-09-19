@@ -39,7 +39,6 @@
     "Notification targets": "יעדי התראה",
     "Today": "היום",
     "Friday": "שישי",
-    "What's New": "מה חדש",
     "Changelog": "דו\"ח שינויים",
     "Failed to send logs: ": "כשל במשלוח יומנים: ",
     "This Room": "החדר הזה",
@@ -54,7 +53,6 @@
     "All Rooms": "כל החדרים",
     "Wednesday": "רביעי",
     "All messages": "כל ההודעות",
-    "What's new?": "מה חדש?",
     "Invite to this room": "הזמן לחדר זה",
     "You cannot delete this message. (%(code)s)": "לא ניתן למחוק הודעה זו. (%(code)s)",
     "Thursday": "חמישי",
@@ -554,8 +552,6 @@
     "IRC display name width": "רוחב תצוגת השם של IRC",
     "Change notification settings": "שינוי הגדרת התרעות",
     "Please contact your homeserver administrator.": "אנא צרו קשר עם מנהל השרת שלכם.",
-    "New version of %(brand)s is available": "גרסה חדשה של %(brand)s קיימת",
-    "Update %(brand)s": "עדכן %(brand)s",
     "New login. Was this you?": "כניסה חדשה. האם זה אתם?",
     "Other users may not trust it": "יתכן משתמשים אחרים לא יבטחו בזה",
     "Safeguard against losing access to encrypted messages & data": "שמור מפני איבוד גישה אל הודעות ומידע מוצפן",
@@ -1339,8 +1335,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "לא ניתן להתחבר לשרת ביתי באמצעות HTTP כאשר כתובת HTTPS נמצאת בסרגל הדפדפן שלך. השתמש ב- HTTPS או <a> הפעל סקריפטים לא בטוחים </a>.",
     "There was a problem communicating with the homeserver, please try again later.": "הייתה תקשורת עם שרת הבית. נסה שוב מאוחר יותר.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org.",
-    "Incorrect username and/or password.": "שם משתמש ו / או סיסמה שגויים.",
-    "This account has been deactivated.": "חשבון זה הושבת.",
     "Please <a>contact your service administrator</a> to continue using this service.": "אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות זה.",
     "General failure": "שגיאה כללית",
     "Identity server URL does not appear to be a valid identity server": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
@@ -2764,7 +2758,9 @@
         "server_picker_required": "ציין שרת בית",
         "server_picker_custom": "שרת בית אחר",
         "server_picker_explainer": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
-        "server_picker_learn_more": "אודות שרתי בית"
+        "server_picker_learn_more": "אודות שרתי בית",
+        "account_deactivated": "חשבון זה הושבת.",
+        "incorrect_credentials": "שם משתמש ו / או סיסמה שגויים."
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2935,5 +2931,11 @@
     "labs_mjolnir": {
         "room_name": "רשימת החסומים שלי",
         "room_topic": "זוהי רשימת השרתים\\משתמשים אשר בחרתם לחסום - אל תצאו מחדר זה!"
+    },
+    "update": {
+        "see_changes_button": "מה חדש?",
+        "release_notes_toast_title": "מה חדש",
+        "toast_title": "עדכן %(brand)s",
+        "toast_description": "גרסה חדשה של %(brand)s קיימת"
     }
 }

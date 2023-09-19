@@ -76,7 +76,6 @@
     },
     "Failed to verify email address: make sure you clicked the link in the email": "E-mailovou adresu se nepodařilo ověřit. Přesvědčte se, že jste klepli na odkaz v e-mailové zprávě",
     "Import E2E room keys": "Importovat šifrovací klíče místností",
-    "Incorrect username and/or password.": "Nesprávné uživatelské jméno nebo heslo.",
     "Incorrect verification code": "Nesprávný ověřovací kód",
     "Invalid Email Address": "Neplatná e-mailová adresa",
     "Join Room": "Vstoupit do místnosti",
@@ -246,7 +245,6 @@
     "Notification targets": "Cíle oznámení",
     "Today": "Dnes",
     "Friday": "Pátek",
-    "What's New": "Co je nového",
     "Changelog": "Seznam změn",
     "This Room": "Tato místnost",
     "Unavailable": "Nedostupné",
@@ -258,7 +256,6 @@
     "Monday": "Pondělí",
     "Invite to this room": "Pozvat do této místnosti",
     "All messages": "Všechny zprávy",
-    "What's new?": "Co je nového?",
     "All Rooms": "Všechny místnosti",
     "You cannot delete this message. (%(code)s)": "Tuto zprávu nemůžete smazat. (%(code)s)",
     "Thursday": "Čtvrtek",
@@ -727,7 +724,6 @@
     "Explore rooms": "Procházet místnosti",
     "Jump to first unread room.": "Přejít na první nepřečtenou místnost.",
     "Jump to first invite.": "Přejít na první pozvánku.",
-    "This account has been deactivated.": "Tento účet byl deaktivován.",
     "Failed to re-authenticate due to a homeserver problem": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
     "Clear personal data": "Smazat osobní data",
     "Command Autocomplete": "Automatické doplňování příkazů",
@@ -1345,7 +1341,6 @@
     "Namibia": "Namibie",
     "Security Phrase": "Bezpečnostní fráze",
     "Unable to query secret storage status": "Nelze zjistit stav úložiště klíčů",
-    "Update %(brand)s": "Aktualizovat %(brand)s",
     "You can also set up Secure Backup & manage your keys in Settings.": "Zabezpečené zálohování a správu klíčů můžete také nastavit v Nastavení.",
     "Set a Security Phrase": "Nastavit bezpečnostní frázi",
     "Start a conversation with someone using their name or username (like <userId/>).": "Začněte konverzaci s někým pomocí jeho jména nebo uživatelského jména (například <userId />).",
@@ -1366,7 +1361,6 @@
     "Video conference started by %(senderName)s": "Videokonferenci byla zahájena uživatelem %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonference byla aktualizována uživatelem %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonference byla ukončena uživatelem %(senderName)s",
-    "New version of %(brand)s is available": "K dispozici je nová verze %(brand)s",
     "Error leaving room": "Při opouštění místnosti došlo k chybě",
     "A browser extension is preventing the request.": "Rozšíření prohlížeče brání požadavku.",
     "Your firewall or anti-virus is blocking the request.": "Váš firewall nebo antivirový program blokuje požadavek.",
@@ -1774,7 +1768,6 @@
         "one": "Potvrďte odhlášení tohoto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost.",
         "other": "Potvrďte odhlášení těchto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost."
     },
-    "Light high contrast": "Světlý vysoký kontrast",
     "Add option": "Přidat volbu",
     "Write an option": "Napište volbu",
     "Create options": "Vytvořit volby",
@@ -2208,8 +2201,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je koncově šifrovaný, ale v současné době je omezen na menší počet uživatelů.",
     "Enable %(brand)s as an additional calling option in this room": "Povolit %(brand)s jako další možnost volání v této místnosti",
     "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný",
-    "resume voice broadcast": "obnovit hlasové vysílání",
-    "pause voice broadcast": "pozastavit hlasové vysílání",
     "Completing set up of your new device": "Dokončování nastavení nového zařízení",
     "Waiting for device to sign in": "Čekání na přihlášení zařízení",
     "Review and approve the sign in": "Zkontrolovat a schválit přihlášení",
@@ -2232,7 +2223,6 @@
     "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.": "Toto zařízení můžete použít k přihlášení nového zařízení pomocí QR kódu. QR kód zobrazený na tomto zařízení musíte naskenovat pomocí odhlášeného zařízení.",
     "Sign in with QR code": "Přihlásit se pomocí QR kódu",
     "Browser": "Prohlížeč",
-    "play voice broadcast": "přehrát hlasové vysílání",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "other": "Opravdu se chcete odhlásit z %(count)s relací?",
         "one": "Opravdu se chcete odhlásit z %(count)s relace?"
@@ -2264,11 +2254,9 @@
     "Confirm new password": "Potvrďte nové heslo",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Příliš mnoho pokusů v krátkém čase. Zkuste to znovu po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Příliš mnoho pokusů v krátkém čase. Před dalším pokusem nějakou dobu počkejte.",
-    "Change input device": "Změnit vstupní zařízení",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
     "We were unable to start a chat with the other user.": "Nepodařilo se zahájit chat s druhým uživatelem.",
     "Error starting verification": "Chyba při zahájení ověření",
-    "Buffering…": "Ukládání do vyrovnávací paměti…",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "Rádi experimentujete? Vyzkoušejte naše nejnovější nápady ve vývoji. Tyto funkce nejsou dokončeny; mohou být nestabilní, mohou se změnit nebo mohou být zcela vypuštěny. <a>Zjistěte více</a>.",
     "Early previews": "Předběžné ukázky",
@@ -2308,7 +2296,6 @@
     "Can't start voice message": "Nelze spustit hlasovou zprávu",
     "Edit link": "Upravit odkaz",
     "Decrypted source unavailable": "Dešifrovaný zdroj není dostupný",
-    "Connection error - Recording paused": "Chyba připojení - nahrávání pozastaveno",
     "%(senderName)s started a voice broadcast": "%(senderName)s zahájil(a) hlasové vysílání",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Registrační token",
@@ -3773,7 +3760,8 @@
         "already_in_call": "Již máte hovor",
         "already_in_call_person": "S touto osobou již telefonujete.",
         "unsupported": "Hovory nejsou podporovány",
-        "unsupported_browser": "V tomto prohlížeči nelze uskutečňovat hovory."
+        "unsupported_browser": "V tomto prohlížeči nelze uskutečňovat hovory.",
+        "change_input_device": "Změnit vstupní zařízení"
     },
     "Other": "Další možnosti",
     "Advanced": "Rozšířené",
@@ -3933,7 +3921,9 @@
         "server_picker_intro": "Místa, kde můžete hostovat svůj účet, nazýváme \"domovské servery\".",
         "server_picker_custom": "Jiný domovský server",
         "server_picker_explainer": "Použijte svůj preferovaný domovský server Matrix, pokud ho máte, nebo hostujte svůj vlastní.",
-        "server_picker_learn_more": "O domovských serverech"
+        "server_picker_learn_more": "O domovských serverech",
+        "account_deactivated": "Tento účet byl deaktivován.",
+        "incorrect_credentials": "Nesprávné uživatelské jméno nebo heslo."
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -4150,10 +4140,24 @@
         "confirm_listen_affirm": "Ano, ukončit nahrávání",
         "30s_backward": "30s zpět",
         "30s_forward": "30s vpřed",
-        "go_live": "Přejít naživo"
+        "go_live": "Přejít naživo",
+        "resume": "obnovit hlasové vysílání",
+        "pause": "pozastavit hlasové vysílání",
+        "buffering": "Ukládání do vyrovnávací paměti…",
+        "play": "přehrát hlasové vysílání",
+        "connection_error": "Chyba připojení - nahrávání pozastaveno"
     },
     "labs_mjolnir": {
         "room_name": "Můj seznam zablokovaných",
         "room_topic": "Toto je váš seznam blokovaných uživatelů/serverů - neopouštějte tuto místnost!"
+    },
+    "theme": {
+        "light_high_contrast": "Světlý vysoký kontrast"
+    },
+    "update": {
+        "see_changes_button": "Co je nového?",
+        "release_notes_toast_title": "Co je nového",
+        "toast_title": "Aktualizovat %(brand)s",
+        "toast_description": "K dispozici je nová verze %(brand)s"
     }
 }
