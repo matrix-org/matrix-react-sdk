@@ -1792,10 +1792,6 @@
     "Loading new room": "Ŝarĝante novan ĉambron",
     "Upgrading room": "Altgradiga ĉambro",
     "Stop live broadcasting?": "Ĉu ĉesi rekta elsendo?",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s finis voĉan elsendon",
-    "You ended a voice broadcast": "Vi finis voĉan elsendon",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s finis <a>voĉan elsendon</a>",
-    "You ended a <a>voice broadcast</a>": "Vi finis <a>voĉan elsendon</a>",
     "Voice broadcast": "Voĉan elsendo",
     "Live": "Vivi",
     "play voice broadcast": "ludu voĉan elsendon",
@@ -1807,14 +1803,6 @@
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Se vi komencas aŭskulti ĉi tiun vivan elsendon, via nuna viva elsendo registrado estos finita.",
     "Listen to live broadcast?": "Aŭskulti vivan elsendon?",
     "Yes, stop broadcast": "Jes, ĉesu elsendon",
-    "Reset bearing to north": "Restarigu la lagron norden",
-    "Mapbox logo": "Mapbox-emblemo",
-    "Location not available": "Loko ne havebla",
-    "Find my location": "Trovu mian lokon",
-    "Exit fullscreen": "Eliru plenekrano",
-    "Enter fullscreen": "Plenekrano",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ĉi tiu hejmservilo ne estas agordita ĝuste por montri mapojn, aŭ la agordita mapservilo povas esti neatingebla.",
-    "This homeserver is not configured to display maps.": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
     "The user's homeserver does not support the version of the space.": "La hejmservilo de la uzanto ne subtenas la version de la aro.",
     "User may or may not exist": "Uzanto povas aŭ ne ekzisti",
     "User does not exist": "Uzanto ne ekzistas",
@@ -1841,8 +1829,6 @@
     "My current location": "Mia nuna loko",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
     "We couldn't send your location": "Ni ne povis sendi vian lokon",
-    "Timed out trying to fetch your location. Please try again later.": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste.",
-    "Failed to fetch your location. Please try again later.": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
     "Share location": "Kunhavigi lokon",
     "Could not fetch location": "Loko ne eblis akiri",
     "Location": "Loko",
@@ -1902,7 +1888,6 @@
     "Browser": "Retumilo",
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "That's fine": "Tio estas bone",
-    "Map feedback": "Sugestoj pri la mapo",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "The person who invited you has already left, or their server is offline.": "Aŭ la persono, kiu vin invitis, jam foriris, aŭ ĝia servilo estas eksterreta.",
@@ -2084,7 +2069,9 @@
         "refresh": "Aktualigi",
         "mention": "Mencio",
         "submit": "Sendi",
-        "send_report": "Sendi raporton"
+        "send_report": "Sendi raporton",
+        "enter_fullscreen": "Plenekrano",
+        "exit_fullscreeen": "Eliru plenekrano"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -2675,6 +2662,10 @@
             "changed_rule_rooms": "%(senderName)s ŝanĝis regulon forbarintan ĉambrojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
             "changed_rule_servers": "%(senderName)s ŝanĝis regulon forbarintan servilojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
             "changed_rule_glob": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s"
+        },
+        "io.element.voice_broadcast_info": {
+            "you": "Vi finis <a>voĉan elsendon</a>",
+            "user": "%(senderName)s finis <a>voĉan elsendon</a>"
         }
     },
     "slash_command": {
@@ -2770,7 +2761,11 @@
         },
         "m.emote": "* %(senderName)s %(emote)s",
         "m.text": "%(senderName)s: %(message)s",
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Vi finis voĉan elsendon",
+            "user": "%(senderName)s finis voĉan elsendon"
+        }
     },
     "voip": {
         "disable_microphone": "Silentigi la mikrofonon",
@@ -3099,5 +3094,16 @@
     },
     "space": {
         "landing_welcome": "Bonvenu al <name/>"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
+        "MapStyleUrlNotReachable": "Ĉi tiu hejmservilo ne estas agordita ĝuste por montri mapojn, aŭ la agordita mapservilo povas esti neatingebla.",
+        "map_feedback": "Sugestoj pri la mapo",
+        "find_my_location": "Trovu mian lokon",
+        "location_not_available": "Loko ne havebla",
+        "mapbox_logo": "Mapbox-emblemo",
+        "reset_bearing": "Restarigu la lagron norden",
+        "failed_generic": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
+        "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste."
     }
 }

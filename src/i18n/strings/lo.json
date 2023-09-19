@@ -1403,10 +1403,6 @@
     "%(displayName)s's live location": "ສະຖານທີ່ປັດຈຸບັນຂອງ %(displayName)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
     "We couldn't send your location": "ພວກເຮົາບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້",
-    "Unknown error fetching location. Please try again later.": "ການດຶງຂໍ້ມູນສະຖານທີ່ເກີດຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "Timed out trying to fetch your location. Please try again later.": "ໝົດເວລາດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "Failed to fetch your location. Please try again later.": "ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ຖືກປະຕິເສດການອະນຸຍາດໃຫ້ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງສະຖານທີ່ໃນການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານ.",
     "Share location": "ແບ່ງປັນສະຖານທີ່",
     "Click to drop a pin": "ກົດເພື່ອວາງປັກໝຸດ",
     "Click to move the pin": "ກົດເພື່ອຍ້າຍ PIN",
@@ -1499,8 +1495,6 @@
     "Later": "ຕໍ່ມາ",
     "Review to ensure your account is safe": "ກວດສອບໃຫ້ແນ່ໃຈວ່າບັນຊີຂອງທ່ານປອດໄພ",
     "That's fine": "ບໍ່ເປັນຫຍັງ",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "homeserver ນີ້ບໍ່ໄດ້ຖືກຕັ້ງຄ່າຢ່າງຖືກຕ້ອງເພື່ອສະແດງແຜນທີ່, ຫຼື ເຊີບເວີແຜນທີ່ ທີ່ຕັ້ງໄວ້ອາດຈະບໍ່ສາມາດຕິດຕໍ່ໄດ້.",
-    "This homeserver is not configured to display maps.": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
     "Unknown App": "ແອັບທີ່ບໍ່ຮູ້ຈັກ",
     "Share your public space": "ແບ່ງປັນພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
     "Invite to %(spaceName)s": "ຊີນໄປທີ່ %(spaceName)s",
@@ -3450,5 +3444,13 @@
         "empty_explainer": "ກະທູ້ຊ່ວຍໃຫ້ການສົນທະນາຂອງທ່ານຢູ່ໃນຫົວຂໍ້ ແລະ ງ່າຍຕໍ່ການຕິດຕາມ.",
         "empty_tip": "<b>ເຄັດລັບ:</b> ໃຊ້ “%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມ.",
         "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
+        "MapStyleUrlNotReachable": "homeserver ນີ້ບໍ່ໄດ້ຖືກຕັ້ງຄ່າຢ່າງຖືກຕ້ອງເພື່ອສະແດງແຜນທີ່, ຫຼື ເຊີບເວີແຜນທີ່ ທີ່ຕັ້ງໄວ້ອາດຈະບໍ່ສາມາດຕິດຕໍ່ໄດ້.",
+        "failed_permission": "%(brand)s ຖືກປະຕິເສດການອະນຸຍາດໃຫ້ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາອະນຸຍາດໃຫ້ເຂົ້າເຖິງສະຖານທີ່ໃນການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານ.",
+        "failed_generic": "ດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "failed_timeout": "ໝົດເວລາດຶງຂໍ້ມູນສະຖານທີ່ຂອງທ່ານ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "failed_unknown": "ການດຶງຂໍ້ມູນສະຖານທີ່ເກີດຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ."
     }
 }

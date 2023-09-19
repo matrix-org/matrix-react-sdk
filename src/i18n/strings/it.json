@@ -1922,9 +1922,6 @@
     "Back to chat": "Torna alla chat",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Coppia (utente, sessione) sconosciuta: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Indirizzo stanza non riconosciuto: %(roomAlias)s",
-    "Unknown error fetching location. Please try again later.": "Errore sconosciuto rilevando la posizione. Riprova più tardi.",
-    "Timed out trying to fetch your location. Please try again later.": "Tentativo di rilevare la tua posizione scaduto. Riprova più tardi.",
-    "Failed to fetch your location. Please try again later.": "Impossibile rilevare la tua posizione. Riprova più tardi.",
     "Could not fetch location": "Impossibile rilevare la posizione",
     "From a thread": "Da una conversazione",
     "Remove from room": "Rimuovi dalla stanza",
@@ -1982,8 +1979,6 @@
     "Click": "Click",
     "Expand quotes": "Espandi le citazioni",
     "Collapse quotes": "Riduci le citazioni",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Questo homeserver non è configurato correttamente per mostrare mappe, o il server di mappe configurato non è raggiungibile.",
-    "This homeserver is not configured to display maps.": "Questo homeserver non è configurato per mostrare mappe.",
     "Shared a location: ": "Ha condiviso una posizione: ",
     "Shared their location: ": "Ha condiviso la sua posizione: ",
     "Unable to load map": "Impossibile caricare la mappa",
@@ -2003,7 +1998,6 @@
     },
     "Unsent": "Non inviato",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s non ha l'autorizzazione per rilevare la tua posizione. Consenti l'accesso alla posizione nelle impostazioni del browser.",
     "Developer tools": "Strumenti per sviluppatori",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s è sperimentale su un browser web mobile. Per un'esperienza migliore e le ultime funzionalità, usa la nostra app nativa gratuita.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s si è verificato tentando di accedere alla stanza o spazio. Se pensi che tu stia vedendo questo messaggio per errore, <issueLink>invia una segnalazione</issueLink>.",
@@ -2145,14 +2139,6 @@
     "Explore public spaces in the new search dialog": "Esplora gli spazi pubblici nella nuova finestra di ricerca",
     "Stop and close": "Ferma e chiudi",
     "Join the room to participate": "Entra nella stanza per partecipare",
-    "Reset bearing to north": "Reimposta direzione a nord",
-    "Mapbox logo": "Logo di Mapbox",
-    "Location not available": "Posizione non disponibile",
-    "Find my location": "Trova la mia posizione",
-    "Exit fullscreen": "Esci da schermo intero",
-    "Enter fullscreen": "Attiva schermo intero",
-    "Map feedback": "Feedback mappa",
-    "Toggle attribution": "Attiva/disattiva attribuzione",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "In %(spaceName)s e in %(count)s altro spazio.",
         "other": "In %(spaceName)s e in altri %(count)s spazi."
@@ -2341,10 +2327,6 @@
     "Search users in this room…": "Cerca utenti in questa stanza…",
     "Give one or multiple users in this room more privileges": "Dai più privilegi a uno o più utenti in questa stanza",
     "Add privileged users": "Aggiungi utenti privilegiati",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ha terminato una <a>trasmissione vocale</a>",
-    "You ended a <a>voice broadcast</a>": "Hai terminato una <a>trasmissione vocale</a>",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s ha terminato una trasmissione vocale",
-    "You ended a voice broadcast": "Hai terminato una trasmissione vocale",
     "Unable to decrypt message": "Impossibile decifrare il messaggio",
     "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
     "Improve your account security by following these recommendations.": "Migliora la sicurezza del tuo account seguendo questi consigli.",
@@ -2485,7 +2467,6 @@
     "No identity access token found": "Nessun token di accesso d'identità trovato",
     "Identity server not set": "Server d'identità non impostato",
     "The add / bind with MSISDN flow is misconfigured": "L'aggiunta / bind con il flusso MSISDN è mal configurata",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL è necessario per mostrare mappe, attivalo nelle impostazioni del browser.",
     "Image view": "Vista immagine",
     "Search all rooms": "Cerca in tutte le stanze",
     "Search this room": "Cerca in questa stanza",
@@ -2756,7 +2737,9 @@
         "mention": "Cita",
         "submit": "Invia",
         "send_report": "Invia segnalazione",
-        "clear": "Svuota"
+        "clear": "Svuota",
+        "enter_fullscreen": "Attiva schermo intero",
+        "exit_fullscreeen": "Esci da schermo intero"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -3645,7 +3628,11 @@
         "no_permission_messages_before_invite": "Non hai l'autorizzazione per vedere i messaggi precedenti al tuo invito.",
         "no_permission_messages_before_join": "Non hai l'autorizzazione per vedere i messaggi precedenti alla tua entrata.",
         "encrypted_historical_messages_unavailable": "I messaggi cifrati prima di questo punto non sono disponibili.",
-        "historical_messages_unavailable": "Non puoi vedere i messaggi precedenti"
+        "historical_messages_unavailable": "Non puoi vedere i messaggi precedenti",
+        "io.element.voice_broadcast_info": {
+            "you": "Hai terminato una <a>trasmissione vocale</a>",
+            "user": "%(senderName)s ha terminato una <a>trasmissione vocale</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -3750,7 +3737,11 @@
             "you": "Hai reagito con %(reaction)s a %(message)s",
             "user": "%(sender)s ha reagito con %(reaction)s a %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Hai terminato una trasmissione vocale",
+            "user": "%(senderName)s ha terminato una trasmissione vocale"
+        }
     },
     "voip": {
         "disable_microphone": "Spegni il microfono",
@@ -4130,5 +4121,20 @@
         "empty_explainer": "Le conversazioni ti aiutano a tenere le tue discussioni in tema e rintracciabili.",
         "empty_tip": "<b>Consiglio:</b> usa \"%(replyInThread)s\" passando sopra un messaggio.",
         "empty_heading": "Tieni le discussioni organizzate in conversazioni"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
+        "WebGLNotEnabled": "WebGL è necessario per mostrare mappe, attivalo nelle impostazioni del browser.",
+        "MapStyleUrlNotReachable": "Questo homeserver non è configurato correttamente per mostrare mappe, o il server di mappe configurato non è raggiungibile.",
+        "toggle_attribution": "Attiva/disattiva attribuzione",
+        "map_feedback": "Feedback mappa",
+        "find_my_location": "Trova la mia posizione",
+        "location_not_available": "Posizione non disponibile",
+        "mapbox_logo": "Logo di Mapbox",
+        "reset_bearing": "Reimposta direzione a nord",
+        "failed_permission": "%(brand)s non ha l'autorizzazione per rilevare la tua posizione. Consenti l'accesso alla posizione nelle impostazioni del browser.",
+        "failed_generic": "Impossibile rilevare la tua posizione. Riprova più tardi.",
+        "failed_timeout": "Tentativo di rilevare la tua posizione scaduto. Riprova più tardi.",
+        "failed_unknown": "Errore sconosciuto rilevando la posizione. Riprova più tardi."
     }
 }

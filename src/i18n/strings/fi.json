@@ -1771,9 +1771,6 @@
     "Create poll": "Luo kysely",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
-    "Unknown error fetching location. Please try again later.": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen.",
-    "Timed out trying to fetch your location. Please try again later.": "Sijaintisi noutaminen aikakatkaistiin. Yritä myöhemmin uudelleen.",
-    "Failed to fetch your location. Please try again later.": "Sijaintisi noutaminen epäonnistui. Yritä myöhemmin uudelleen.",
     "Share location": "Jaa sijainti",
     "Could not fetch location": "Sijaintia ei voitu noutaa",
     "Results will be visible when the poll is ended": "Tulokset näkyvät, kun kysely on päättynyt",
@@ -1805,7 +1802,6 @@
     "Sorry, the poll you tried to create was not posted.": "Kyselyä, jota yritit luoda, ei valitettavasti julkaistu.",
     "Failed to post poll": "Kyselyn julkaiseminen epäonnistui",
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanut lupaa noutaa sijaintiasi. Salli sijainnin käyttäminen selaimen asetuksista.",
     "Unable to load map": "Kartan lataaminen ei onnistu",
     "Expand map": "Laajenna kartta",
     "Are you sure you're at the right place?": "Oletko varma, että olet oikeassa paikassa?",
@@ -1826,8 +1822,6 @@
     "The person who invited you has already left, or their server is offline.": "Henkilö, joka kutsui sinut on jo poistunut tai hänen palvelimensa on poissa verkosta.",
     "There was an error joining.": "Liittymisessä tapahtui virhe.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s on mobiiliselaimissa kokeellinen. Paremman kokemuksen ja uusimmat ominaisuudet saat ilmaisella mobiilisovelluksellamme.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tätä kotipalvelinta ei ole säädetty kunnolla näyttämään karttoja tai valittu karttapalvelin saattaa olla tavoittamattomissa.",
-    "This homeserver is not configured to display maps.": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
     "User may or may not exist": "Käyttäjä on tai ei ole olemassa",
     "User does not exist": "Käyttäjää ei ole olemassa",
     "User is already in the room": "Käyttäjä on jo huoneessa",
@@ -2087,11 +2081,6 @@
     "Spell check": "Oikeinkirjoituksen tarkistus",
     "Sorry — this call is currently full": "Pahoittelut — tämä puhelu on täynnä",
     "Unknown room": "Tuntematon huone",
-    "Mapbox logo": "Mapboxin logo",
-    "Location not available": "Sijainti ei ole saatavilla",
-    "Find my location": "Paikanna sijaintini",
-    "Exit fullscreen": "Poistu koko näytön tilasta",
-    "Enter fullscreen": "Siirry koko näytön tilaan",
     "In %(spaceName)s.": "Avaruudessa %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "Empty room (was %(oldName)s)": "Tyhjä huone (oli %(oldName)s)",
@@ -2121,7 +2110,6 @@
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
     "Home options": "Etusivun valinnat",
     "Internal room ID": "Sisäinen huoneen ID-tunniste",
-    "Reset bearing to north": "Aseta suunta pohjoiseen",
     "Show Labs settings": "Näytä laboratorion asetukset",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Toggle push notifications on this session.": "Push-ilmoitukset tälle istunnolle päälle/pois.",
@@ -2223,10 +2211,6 @@
     },
     "Your current session is ready for secure messaging.": "Nykyinen istuntosi on valmis turvalliseen viestintään.",
     "Sign out of all other sessions (%(otherSessionsCount)s)": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s lopetti äänen yleislähetyksen",
-    "You ended a voice broadcast": "Lopetit äänen yleislähetyksen",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>",
-    "You ended a <a>voice broadcast</a>": "Lopetit <a>äänen yleislähetyksen</a>",
     "Connection error": "Yhteysvirhe",
     "%(senderName)s started a voice broadcast": "%(senderName)s aloitti äänen yleislähetyksen",
     "Saving…": "Tallennetaan…",
@@ -2295,7 +2279,6 @@
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "If you know a room address, try joining through that instead.": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
     "Safeguard against losing access to encrypted messages & data": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Karttojen näyttäminen vaatii WebGL:n. Ota se käyttöön selaimen asetuksista.",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
     "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
     "Identity server not set": "Identiteettipalvelinta ei ole asetettu",
@@ -2496,7 +2479,9 @@
         "mention": "Mainitse",
         "submit": "Lähetä",
         "send_report": "Lähetä ilmoitus",
-        "clear": "Tyhjennä"
+        "clear": "Tyhjennä",
+        "enter_fullscreen": "Siirry koko näytön tilaan",
+        "exit_fullscreeen": "Poistu koko näytön tilasta"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -3287,7 +3272,11 @@
         "no_permission_messages_before_invite": "Sinulla ei ole oikeutta nähdä viestejä ajalta ennen kutsumistasi.",
         "no_permission_messages_before_join": "Sinulla ei ole oikeutta nähdä viestejä ajalta ennen liittymistäsi.",
         "encrypted_historical_messages_unavailable": "Tätä aiemmat salatut viestit eivät ole saatavilla.",
-        "historical_messages_unavailable": "Et voi nähdä aiempia viestejä"
+        "historical_messages_unavailable": "Et voi nähdä aiempia viestejä",
+        "io.element.voice_broadcast_info": {
+            "you": "Lopetit <a>äänen yleislähetyksen</a>",
+            "user": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3384,7 +3373,11 @@
         },
         "m.emote": "* %(senderName)s %(emote)s",
         "m.text": "%(senderName)s: %(message)s",
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Lopetit äänen yleislähetyksen",
+            "user": "%(senderName)s lopetti äänen yleislähetyksen"
+        }
     },
     "voip": {
         "disable_microphone": "Mykistä mikrofoni",
@@ -3723,5 +3716,18 @@
         "show_all_threads": "Näytä kaikki ketjut",
         "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
         "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
+        "WebGLNotEnabled": "Karttojen näyttäminen vaatii WebGL:n. Ota se käyttöön selaimen asetuksista.",
+        "MapStyleUrlNotReachable": "Tätä kotipalvelinta ei ole säädetty kunnolla näyttämään karttoja tai valittu karttapalvelin saattaa olla tavoittamattomissa.",
+        "find_my_location": "Paikanna sijaintini",
+        "location_not_available": "Sijainti ei ole saatavilla",
+        "mapbox_logo": "Mapboxin logo",
+        "reset_bearing": "Aseta suunta pohjoiseen",
+        "failed_permission": "%(brand)s ei saanut lupaa noutaa sijaintiasi. Salli sijainnin käyttäminen selaimen asetuksista.",
+        "failed_generic": "Sijaintisi noutaminen epäonnistui. Yritä myöhemmin uudelleen.",
+        "failed_timeout": "Sijaintisi noutaminen aikakatkaistiin. Yritä myöhemmin uudelleen.",
+        "failed_unknown": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen."
     }
 }

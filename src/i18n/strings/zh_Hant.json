@@ -1923,9 +1923,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "未知（使用者，工作階段）配對：(%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "無法識別的聊天室位址：%(roomAlias)s",
     "From a thread": "來自討論串",
-    "Unknown error fetching location. Please try again later.": "取得位置時發生未知錯誤。請稍後再試。",
-    "Timed out trying to fetch your location. Please try again later.": "嘗試取得您的位置時逾時。請稍後再試。",
-    "Failed to fetch your location. Please try again later.": "無法取得您的位置。請稍後再試。",
     "Could not fetch location": "無法取得位置",
     "Remove from room": "踢出此聊天室",
     "Failed to remove user": "無法移除使用者",
@@ -1982,8 +1979,6 @@
     "Click": "點擊",
     "Expand quotes": "展開引號",
     "Collapse quotes": "收折引號",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "此家伺服器未正確設定，無法顯示地圖，或是設定的地圖伺服器無法使用。",
-    "This homeserver is not configured to display maps.": "此家伺服器未設定來顯示地圖。",
     "Shared a location: ": "已分享了位置： ",
     "Shared their location: ": "已分享了他們的位置： ",
     "Unable to load map": "無法載入地圖",
@@ -2003,7 +1998,6 @@
     "Share for %(duration)s": "分享 %(duration)s",
     "Unsent": "未傳送",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s 沒有權限取得您的位置。請在您的瀏覽器設定中允許位置存取權限。",
     "Developer tools": "開發者工具",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s 的行動裝置的網頁版仍為實驗性質版本。為了有更好的使用體驗與最新功能，請使用我們的免費原生應用程式。",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "嘗試存取聊天室或聊天空間時發生錯誤 %(errcode)s。若您認為到這個訊息是個錯誤，請<issueLink>遞交錯誤回報</issueLink>。",
@@ -2144,14 +2138,6 @@
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
     "Join the room to participate": "加入聊天室以參與",
-    "Reset bearing to north": "將方位重設為北",
-    "Mapbox logo": "Mapbox 圖示",
-    "Location not available": "位置不可用",
-    "Find my location": "尋找我的位置",
-    "Exit fullscreen": "離開全螢幕",
-    "Enter fullscreen": "進入全螢幕",
-    "Map feedback": "地圖回饋",
-    "Toggle attribution": "切換屬性",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "在 %(spaceName)s 與 %(count)s 個其他空間。",
         "other": "在 %(spaceName)s 與 %(count)s 個其他空間。"
@@ -2341,12 +2327,8 @@
     "Search users in this room…": "搜尋此聊天室中的使用者…",
     "Give one or multiple users in this room more privileges": "給這個聊天室中的一個使用者或多個使用者更多的特殊權限",
     "Add privileged users": "新增特權使用者",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s 結束了<a>語音廣播</a>",
-    "You ended a <a>voice broadcast</a>": "您結束了<a>語音廣播</a>",
     "Unable to decrypt message": "無法解密訊息",
     "This message could not be decrypted": "此訊息無法解密",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s 已結束語音廣播",
-    "You ended a voice broadcast": "您結束了語音廣播",
     "Improve your account security by following these recommendations.": "透過以下的建議改善您的帳號安全性。",
     "%(count)s sessions selected": {
         "one": "已選取 %(count)s 個工作階段",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "新增/綁定 MSISDN 流程設定錯誤",
     "No identity access token found": "找不到身分存取權杖",
     "Identity server not set": "身分伺服器未設定",
-    "WebGL is required to display maps, please enable it in your browser settings.": "需要開啟 WebGL 功能才可以顯示地圖，請到瀏覽器設定中開啟。",
     "Image view": "影像檢視",
     "Upload custom sound": "上傳自訂音效",
     "Search all rooms": "搜尋所有聊天室",
@@ -2751,7 +2732,9 @@
         "mention": "提及",
         "submit": "送出",
         "send_report": "傳送回報",
-        "clear": "清除"
+        "clear": "清除",
+        "enter_fullscreen": "進入全螢幕",
+        "exit_fullscreeen": "離開全螢幕"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -3640,7 +3623,11 @@
         "no_permission_messages_before_invite": "您沒有權限檢視您被邀請前的訊息。",
         "no_permission_messages_before_join": "您沒有權限檢視加入前的訊息。",
         "encrypted_historical_messages_unavailable": "在此之前的加密訊息不可用。",
-        "historical_messages_unavailable": "您看不到更早的訊息"
+        "historical_messages_unavailable": "您看不到更早的訊息",
+        "io.element.voice_broadcast_info": {
+            "you": "您結束了<a>語音廣播</a>",
+            "user": "%(senderName)s 結束了<a>語音廣播</a>"
+        }
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3745,7 +3732,11 @@
             "you": "您已對「%(message)s」回應「%(reaction)s」",
             "user": "%(sender)s 已對「%(message)s」回應「%(reaction)s」"
         },
-        "m.sticker": "%(senderName)s：%(stickerName)s"
+        "m.sticker": "%(senderName)s：%(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "您結束了語音廣播",
+            "user": "%(senderName)s 已結束語音廣播"
+        }
     },
     "voip": {
         "disable_microphone": "麥克風靜音",
@@ -4125,5 +4116,20 @@
         "empty_explainer": "「討論串」功能可以協助您的對話不離題且易於追蹤。",
         "empty_tip": "<b>秘訣：</b>在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
         "empty_heading": "使用「討論串」功能，讓討論保持有條不紊"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
+        "WebGLNotEnabled": "需要開啟 WebGL 功能才可以顯示地圖，請到瀏覽器設定中開啟。",
+        "MapStyleUrlNotReachable": "此家伺服器未正確設定，無法顯示地圖，或是設定的地圖伺服器無法使用。",
+        "toggle_attribution": "切換屬性",
+        "map_feedback": "地圖回饋",
+        "find_my_location": "尋找我的位置",
+        "location_not_available": "位置不可用",
+        "mapbox_logo": "Mapbox 圖示",
+        "reset_bearing": "將方位重設為北",
+        "failed_permission": "%(brand)s 沒有權限取得您的位置。請在您的瀏覽器設定中允許位置存取權限。",
+        "failed_generic": "無法取得您的位置。請稍後再試。",
+        "failed_timeout": "嘗試取得您的位置時逾時。請稍後再試。",
+        "failed_unknown": "取得位置時發生未知錯誤。請稍後再試。"
     }
 }

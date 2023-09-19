@@ -1910,16 +1910,6 @@
     "Sorry, your homeserver is too old to participate here.": "抱歉，你的家服务器过旧，故无法参与其中。",
     "There was an error joining.": "加入时发生错误。",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "在移动网页浏览器中 %(brand)s 是实验性功能。为了获取更好的体验和最新功能，请使用我们的免费原生应用。",
-    "Reset bearing to north": "重置为向北方位",
-    "Mapbox logo": "Mapbox 图标",
-    "Location not available": "位置不可用",
-    "Find my location": "查找我的位置",
-    "Exit fullscreen": "退出全屏",
-    "Enter fullscreen": "进入全屏",
-    "Map feedback": "地图反馈",
-    "Toggle attribution": "切换属性",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "此家服务器未正确配置，故无法显示地图，亦或所配置的地图服务器无法使用。",
-    "This homeserver is not configured to display maps.": "此家服务器未配置显示地图。",
     "The user's homeserver does not support the version of the space.": "用户的家服务器版本不支持空间。",
     "User may or may not exist": "用户可能存在页可能不存在",
     "User does not exist": "用户不存在",
@@ -2029,9 +2019,6 @@
     "This address does not point at this room": "此地址不指向此房间",
     "Unable to check if username has been taken. Try again later.": "无法检查用户名是否已被使用。稍后再试。",
     "Space home": "空间首页",
-    "Unknown error fetching location. Please try again later.": "获取位置时发生错误。请之后再试。",
-    "Timed out trying to fetch your location. Please try again later.": "尝试获取你的位置超时。请之后再试。",
-    "Failed to fetch your location. Please try again later.": "获取你的位置失败。请之后再试。",
     "Could not fetch location": "无法获取位置",
     "Your new device is now verified. Other users will see it as trusted.": "你的新设备现已验证。其他用户将会视其为受信任的。",
     "Verify this device": "验证此设备",
@@ -2078,7 +2065,6 @@
     "%(displayName)s's live location": "%(displayName)s的实时位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s无法发送你的位置。请稍后再试。",
     "We couldn't send your location": "我们无法发送你的位置",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s was denied permission to fetch your location. 请在你的浏览器中允许位置访问。",
     "Click to drop a pin": "点击以放置图钉",
     "Click to move the pin": "点击以移动图钉",
     "Share for %(duration)s": "分享%(duration)s",
@@ -2458,7 +2444,9 @@
         "mention": "提及",
         "submit": "提交",
         "send_report": "发送报告",
-        "clear": "清除"
+        "clear": "清除",
+        "enter_fullscreen": "进入全屏",
+        "exit_fullscreeen": "退出全屏"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -3713,5 +3701,19 @@
         "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
         "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
         "empty_heading": "用消息列使讨论井然有序"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
+        "MapStyleUrlNotReachable": "此家服务器未正确配置，故无法显示地图，亦或所配置的地图服务器无法使用。",
+        "toggle_attribution": "切换属性",
+        "map_feedback": "地图反馈",
+        "find_my_location": "查找我的位置",
+        "location_not_available": "位置不可用",
+        "mapbox_logo": "Mapbox 图标",
+        "reset_bearing": "重置为向北方位",
+        "failed_permission": "%(brand)s was denied permission to fetch your location. 请在你的浏览器中允许位置访问。",
+        "failed_generic": "获取你的位置失败。请之后再试。",
+        "failed_timeout": "尝试获取你的位置超时。请之后再试。",
+        "failed_unknown": "获取位置时发生错误。请之后再试。"
     }
 }

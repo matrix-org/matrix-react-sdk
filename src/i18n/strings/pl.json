@@ -1272,12 +1272,6 @@
     "Sorry, your homeserver is too old to participate here.": "Przykro nam, twój serwer domowy jest zbyt stary, by uczestniczyć tu.",
     "There was an error joining.": "Wystąpił błąd podczas dołączania.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
-    "Location not available": "Lokalizacja niedostępna",
-    "Find my location": "Znajdź moją lokalizację",
-    "Exit fullscreen": "Wyjdź z trybu pełnoekranowego",
-    "Enter fullscreen": "Otwórz w trybie pełnoekranowym",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ten serwer domowy nie jest skonfigurowany poprawnie, by wyświetlać mapy, lub skonfigurowany serwer map może być nieosiągalny.",
-    "This homeserver is not configured to display maps.": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
     "The user's homeserver does not support the version of the space.": "Serwer domowy użytkownika nie wspiera tej wersji przestrzeni.",
     "User may or may not exist": "Użytkownik może istnieć lub nie",
     "User does not exist": "Użytkownik nie istnieje",
@@ -1293,8 +1287,6 @@
     "In %(spaceName)s.": "W przestrzeni %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "Failed to invite users to %(roomName)s": "Nie udało się zaprosić użytkowników do %(roomName)s",
-    "Mapbox logo": "Logo Mapbox",
-    "Map feedback": "Opinia o mapie",
     "Empty room (was %(oldName)s)": "Pusty pokój (poprzednio %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
         "one": "Zapraszanie %(user)s i 1 więcej",
@@ -1474,11 +1466,6 @@
     "Unknown room": "Nieznany pokój",
     "You have unverified sessions": "Masz niezweryfikowane sesje",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
-    "Unknown error fetching location. Please try again later.": "Wystąpił nieznany błąd podczas pobierania lokalizacji. Spróbuj ponownie później.",
-    "Timed out trying to fetch your location. Please try again later.": "Upłynął czas oczekiwania podczas pobierania lokalizacji. Spróbuj ponownie później.",
-    "Failed to fetch your location. Please try again later.": "Nie udało się pobrać Twojej lokalizacji. Spróbuj ponownie później.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s został odmówiony uprawnień do pobrania Twojej lokalizacji. Zezwól na dostęp do lokalizacji w ustawieniach przeglądarki.",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Aby wyświetlić mapy wymagany jest WebGL. Włącz go w ustawieniach swojej przeglądarki.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Nie można zaprosić poprzez e-mail bez serwera tożsamości. Przejdź do \"Ustawienia\", aby się połączyć.",
     "Unable to connect to Homeserver. Retrying…": "Nie można połączyć się z serwerem domowym. Ponawianie…",
     "Connection error - Recording paused": "Błąd połączenia - Nagrywanie wstrzymane",
@@ -1500,12 +1487,8 @@
     "Stop live broadcasting?": "Zakończyć transmisję na żywo?",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Użytkownik (%(user)s) nie został zaproszony do %(roomId)s, lecz nie wystąpił błąd od narzędzia zapraszającego",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Może być to spowodowane przez aplikacje otwartą w wielu kartach lub po wyczyszczeniu danych przeglądarki.",
-    "You ended a voice broadcast": "Zakończyłeś transmisje na żywo",
     "Unable to play this voice broadcast": "Nie można odtworzyć tej transmisji głosowej",
     "Unable to decrypt voice broadcast": "Nie można rozszyfrować transmisji głosowej",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s zakończył transmisję głosową",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s zakończył <a>transmisję głosową</a>",
-    "You ended a <a>voice broadcast</a>": "Zakończyłeś <a>transmisje głosową</a>",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie.",
     "Can’t start a call": "Nie można rozpocząć połączenia",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Niestety, nie jesteśmy w stanie rozpocząć nowego nagrania. Spróbuj ponownie później.",
@@ -1681,7 +1664,6 @@
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Udostępnij anonimowe dane, aby wesprzeć nas w identyfikowaniu problemów. Nic osobistego. Żadnych podmiotów zewnętrznych.",
     "Room ID or address of ban list": "ID pokoju lub adres listy banów",
     "If this isn't what you want, please use a different tool to ignore users.": "Jeśli to nie jest to czego chciałeś, użyj innego narzędzia do ignorowania użytkowników.",
-    "Toggle attribution": "Przełącz atrybucje",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Wiadomość tekstowa wysłana do %(msisdn)s. Wprowadź kod weryfikacyjny w niej zawarty.",
     "Failed to set pusher state": "Nie udało się ustawić stanu pushera",
     "Improve your account security by following these recommendations.": "Zwiększ bezpieczeństwo swojego konta kierując się tymi rekomendacjami.",
@@ -2413,7 +2395,6 @@
     "Incorrect Security Phrase": "Nieprawidłowe hasło bezpieczeństwa",
     "Sliding Sync configuration": "Konfiguracja synchronizacji przesuwanej",
     "Spotlight": "Centrum uwagi",
-    "Reset bearing to north": "Resetuj kierunek na północ",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jeśli nie usunąłeś metody odzyskiwania, atakujący może próbować dostać się na Twoje konto. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
     "Recovery Method Removed": "Usunięto metodę odzyskiwania",
@@ -2735,7 +2716,9 @@
         "mention": "Wzmianka",
         "submit": "Wyślij",
         "send_report": "Wyślij zgłoszenie",
-        "clear": "Wyczyść"
+        "clear": "Wyczyść",
+        "enter_fullscreen": "Otwórz w trybie pełnoekranowym",
+        "exit_fullscreeen": "Wyjdź z trybu pełnoekranowego"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -3622,7 +3605,11 @@
         "no_permission_messages_before_invite": "Nie posiadasz uprawnień, aby wyświetlić wiadomości, które wysłano zanim cię zaproszono.",
         "no_permission_messages_before_join": "Nie posiadasz uprawnień, aby wyświetlić wiadomości, które wysłano zanim dołączyłeś.",
         "encrypted_historical_messages_unavailable": "Wiadomości szyfrowane przed tym punktem są niedostępne.",
-        "historical_messages_unavailable": "Nie możesz widzieć poprzednich wiadomości"
+        "historical_messages_unavailable": "Nie możesz widzieć poprzednich wiadomości",
+        "io.element.voice_broadcast_info": {
+            "you": "Zakończyłeś <a>transmisje głosową</a>",
+            "user": "%(senderName)s zakończył <a>transmisję głosową</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -3727,7 +3714,11 @@
             "you": "Dodano reakcję %(reaction)s do %(message)s",
             "user": "%(sender)s dodał reakcję %(reaction)s do %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Zakończyłeś transmisje na żywo",
+            "user": "%(senderName)s zakończył transmisję głosową"
+        }
     },
     "voip": {
         "disable_microphone": "Wycisz mikrofon",
@@ -4107,5 +4098,20 @@
         "empty_explainer": "Dzięki wątkom Twoje rozmowy są zorganizowane i łatwe do śledzenia.",
         "empty_tip": "<b>Tip:</b> Użyj “%(replyInThread)s” najeżdżając na wiadomość.",
         "empty_heading": "Organizuj dyskusje za pomocą wątków"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
+        "WebGLNotEnabled": "Aby wyświetlić mapy wymagany jest WebGL. Włącz go w ustawieniach swojej przeglądarki.",
+        "MapStyleUrlNotReachable": "Ten serwer domowy nie jest skonfigurowany poprawnie, by wyświetlać mapy, lub skonfigurowany serwer map może być nieosiągalny.",
+        "toggle_attribution": "Przełącz atrybucje",
+        "map_feedback": "Opinia o mapie",
+        "find_my_location": "Znajdź moją lokalizację",
+        "location_not_available": "Lokalizacja niedostępna",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Resetuj kierunek na północ",
+        "failed_permission": "%(brand)s został odmówiony uprawnień do pobrania Twojej lokalizacji. Zezwól na dostęp do lokalizacji w ustawieniach przeglądarki.",
+        "failed_generic": "Nie udało się pobrać Twojej lokalizacji. Spróbuj ponownie później.",
+        "failed_timeout": "Upłynął czas oczekiwania podczas pobierania lokalizacji. Spróbuj ponownie później.",
+        "failed_unknown": "Wystąpił nieznany błąd podczas pobierania lokalizacji. Spróbuj ponownie później."
     }
 }

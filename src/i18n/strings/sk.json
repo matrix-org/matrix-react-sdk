@@ -1739,9 +1739,6 @@
     "Expand map": "Zväčšiť mapu",
     "Unrecognised room address: %(roomAlias)s": "Nerozpoznaná adresa miestnosti: %(roomAlias)s",
     "Could not fetch location": "Nepodarilo sa načítať polohu",
-    "Unknown error fetching location. Please try again later.": "Neznáma chyba pri načítavaní polohy. Skúste to prosím neskôr.",
-    "Failed to fetch your location. Please try again later.": "Nepodarilo sa načítať vašu polohu. Skúste to prosím neskôr.",
-    "Timed out trying to fetch your location. Please try again later.": "Pri pokuse o načítanie vašej polohy došlo k vypršaniu času. Skúste to prosím neskôr.",
     "Message pending moderation": "Správa čaká na moderovanie",
     "Internal room ID": "Interné ID miestnosti",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Priestory sú spôsoby zoskupovania miestností a ľudí. Popri priestoroch, v ktorých sa nachádzate, môžete použiť aj niektoré predpripravené priestory.",
@@ -1979,8 +1976,6 @@
     "Unable to load map": "Nie je možné načítať mapu",
     "Shared their location: ": "Zdieľali svoju polohu: ",
     "Shared a location: ": "Zdieľal/a polohu: ",
-    "This homeserver is not configured to display maps.": "Tento domovský server nie je nastavený na zobrazovanie máp.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tento domovský server nie je správne nastavený na zobrazovanie máp alebo nastavený mapový server môže byť nedostupný.",
     "Can't create a thread from an event with an existing relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
     "Match system": "Zhoda so systémom",
     "Joined": "Ste pripojený",
@@ -2003,7 +1998,6 @@
     "Share for %(duration)s": "Zdieľať na %(duration)s",
     "Unsent": "Neodoslané",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Môžete použiť nastavenia vlastného servera na prihlásenie sa na iné servery Matrix-u zadaním inej adresy URL domovského servera. To vám umožní používať %(brand)s s existujúcim účtom Matrix na inom domovskom serveri.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Aplikácii %(brand)s bolo zamietnuté povolenie na načítanie vašej polohy. Povoľte prístup k polohe v nastaveniach prehliadača.",
     "Developer tools": "Vývojárske nástroje",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je v mobilnej verzii experimentálny. Ak chcete získať lepší zážitok a najnovšie funkcie, použite našu bezplatnú natívnu aplikáciu.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Pri pokuse o prístup do miestnosti alebo priestoru bolo vrátené %(errcode)s. Ak si myslíte, že sa vám táto správa zobrazuje chybne, <issueLink>odošlite hlásenie o chybe</issueLink>.",
@@ -2144,14 +2138,6 @@
     "Show rooms": "Zobraziť miestnosti",
     "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania",
     "Join the room to participate": "Pripojte sa k miestnosti a zúčastnite sa",
-    "Reset bearing to north": "Obnoviť smer na sever",
-    "Mapbox logo": "Logo Mapbox",
-    "Location not available": "Poloha nie je k dispozícii",
-    "Find my location": "Nájsť moju polohu",
-    "Exit fullscreen": "Ukončiť režim celej obrazovky",
-    "Enter fullscreen": "Prejsť na celú obrazovku",
-    "Map feedback": "Spätná väzba k mape",
-    "Toggle attribution": "Prepínanie atribútu",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "V %(spaceName)s a v %(count)s ďalšom priestore.",
         "other": "V %(spaceName)s a %(count)s ďalších priestoroch."
@@ -2341,12 +2327,8 @@
     "This session doesn't support encryption and thus can't be verified.": "Táto relácia nepodporuje šifrovanie, a preto ju nemožno overiť.",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pre čo najlepšie zabezpečenie a ochranu súkromia sa odporúča používať klientov Matrix, ktorí podporujú šifrovanie.",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Pri používaní tejto relácie sa nebudete môcť zúčastňovať v miestnostiach, v ktorých je zapnuté šifrovanie.",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>",
-    "You ended a <a>voice broadcast</a>": "Ukončili ste <a>hlasové vysielanie</a>",
     "Unable to decrypt message": "Nie je možné dešifrovať správu",
     "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil/a hlasové vysielanie",
-    "You ended a voice broadcast": "Ukončili ste hlasové vysielanie",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor.",
     "Can’t start a call": "Nie je možné začať hovor",
     "Improve your account security by following these recommendations.": "Zlepšite zabezpečenie svojho účtu dodržiavaním týchto odporúčaní.",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "Pridanie / prepojenie s MSISDN je nesprávne nakonfigurované",
     "No identity access token found": "Nenašiel sa prístupový token totožnosti",
     "Identity server not set": "Server totožnosti nie je nastavený",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Na zobrazenie máp je potrebná technológia WebGL, povoľte ju prosím v nastaveniach prehliadača.",
     "Image view": "Prehľad obrázkov",
     "Upload custom sound": "Nahrať vlastný zvuk",
     "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
@@ -2751,7 +2732,9 @@
         "mention": "Zmieniť sa",
         "submit": "Odoslať",
         "send_report": "Odoslať hlásenie",
-        "clear": "Vyčistiť"
+        "clear": "Vyčistiť",
+        "enter_fullscreen": "Prejsť na celú obrazovku",
+        "exit_fullscreeen": "Ukončiť režim celej obrazovky"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -3640,7 +3623,11 @@
         "no_permission_messages_before_invite": "Nemáte povolenie na zobrazenie správ z obdobia pred vaším pozvaním.",
         "no_permission_messages_before_join": "Nemáte oprávnenie na zobrazenie správ z obdobia pred vaším vstupom.",
         "encrypted_historical_messages_unavailable": "Šifrované správy pred týmto bodom nie sú k dispozícii.",
-        "historical_messages_unavailable": "Nemôžete vidieť predchádzajúce správy"
+        "historical_messages_unavailable": "Nemôžete vidieť predchádzajúce správy",
+        "io.element.voice_broadcast_info": {
+            "you": "Ukončili ste <a>hlasové vysielanie</a>",
+            "user": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -3745,7 +3732,11 @@
             "you": "Reagovali ste %(reaction)s na %(message)s",
             "user": "%(sender)s reagoval/a %(reaction)s na %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Ukončili ste hlasové vysielanie",
+            "user": "%(senderName)s ukončil/a hlasové vysielanie"
+        }
     },
     "voip": {
         "disable_microphone": "Stlmiť mikrofón",
@@ -4125,5 +4116,20 @@
         "empty_explainer": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie.",
         "empty_tip": "<b>Tip:</b> Použite položku “%(replyInThread)s”, keď prejdete ponad správu.",
         "empty_heading": "Udržujte diskusie organizované pomocou vlákien"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
+        "WebGLNotEnabled": "Na zobrazenie máp je potrebná technológia WebGL, povoľte ju prosím v nastaveniach prehliadača.",
+        "MapStyleUrlNotReachable": "Tento domovský server nie je správne nastavený na zobrazovanie máp alebo nastavený mapový server môže byť nedostupný.",
+        "toggle_attribution": "Prepínanie atribútu",
+        "map_feedback": "Spätná väzba k mape",
+        "find_my_location": "Nájsť moju polohu",
+        "location_not_available": "Poloha nie je k dispozícii",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Obnoviť smer na sever",
+        "failed_permission": "Aplikácii %(brand)s bolo zamietnuté povolenie na načítanie vašej polohy. Povoľte prístup k polohe v nastaveniach prehliadača.",
+        "failed_generic": "Nepodarilo sa načítať vašu polohu. Skúste to prosím neskôr.",
+        "failed_timeout": "Pri pokuse o načítanie vašej polohy došlo k vypršaniu času. Skúste to prosím neskôr.",
+        "failed_unknown": "Neznáma chyba pri načítavaní polohy. Skúste to prosím neskôr."
     }
 }

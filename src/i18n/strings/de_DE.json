@@ -1908,8 +1908,6 @@
     "Back to chat": "Zurück zur Unterhaltung",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Unbekanntes Paar (Nutzer, Sitzung): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Nicht erkannte Raumadresse: %(roomAlias)s",
-    "Unknown error fetching location. Please try again later.": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
-    "Failed to fetch your location. Please try again later.": "Standort konnte nicht abgerufen werden. Bitte versuche es später erneut.",
     "Could not fetch location": "Standort konnte nicht abgerufen werden",
     "You cancelled verification on your other device.": "Verifizierung am anderen Gerät abgebrochen.",
     "Almost there! Is your other device showing the same shield?": "Fast geschafft! Zeigen beide Geräte das selbe Wappen an?",
@@ -1919,7 +1917,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s hat dich aus %(roomName)s entfernt",
     "From a thread": "Aus einem Thread",
     "Keyboard": "Tastatur",
-    "Timed out trying to fetch your location. Please try again later.": "Zeitüberschreitung beim Abrufen deines Standortes. Bitte versuche es später erneut.",
     "Remove them from specific things I'm able to": "Person aus gewählten, mir möglichen, Bereichen entfernen",
     "Remove them from everything I'm able to": "Person aus allen, mir möglichen Bereichen entfernen",
     "To proceed, please accept the verification request on your other device.": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
@@ -1970,7 +1967,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
     "Can't edit poll": "Umfrage kann nicht bearbeitet werden",
     "They won't be able to access whatever you're not an admin of.": "Die Person wird keinen Zutritt zu Bereichen haben, in denen du nicht administrierst.",
-    "This homeserver is not configured to display maps.": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
     "Click to drop a pin": "Klicke, um den Standort zu setzen",
     "Click to move the pin": "Klicke, um den Standort zu bewegen",
     "Shared a location: ": "Hat einen Standort geteilt: ",
@@ -1987,7 +1983,6 @@
     "My current location": "Mein Standort",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s konnte deinen Standort nicht senden. Bitte versuche es später erneut.",
     "We couldn't send your location": "Wir konnten deinen Standort nicht senden",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Dein Home-Server unterstützt das Anzeigen von Karten nicht oder der Kartenanbieter ist nicht erreichbar.",
     "You are sharing your live location": "Du teilst deinen Echtzeit-Standort",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Deaktivieren, wenn du auch Systemnachrichten bzgl. des Nutzers löschen willst (z. B. Mitglieds- und Profiländerungen …)",
     "Preserve system messages": "Systemnachrichten behalten",
@@ -2076,7 +2071,6 @@
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
     "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s wurde der Zugriff auf deinen Standort verweigert. Bitte erlaube den Zugriff in den Einstellungen deines Browsers.",
     "Enable live location sharing": "Aktiviere Echtzeit-Standortfreigabe",
     "To view %(roomName)s, you need an invite": "Um %(roomName)s zu betrachten, benötigst du eine Einladung",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s wurde während des Betretens zurückgegeben. Wenn du denkst, dass diese Meldung nicht korrekt ist, <issueLink>reiche bitte einen Fehlerbericht ein</issueLink>.",
@@ -2137,7 +2131,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Unterhaltung werden Ende-zu-Ende-verschlüsselt.",
     "Send your first message to invite <displayName/> to chat": "Schreibe deine erste Nachricht, um <displayName/> zur Unterhaltung einzuladen",
     "Deactivating your account is a permanent action — be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich — sei vorsichtig!",
-    "Toggle attribution": "Info ein-/ausblenden",
     "In spaces %(space1Name)s and %(space2Name)s.": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
@@ -2174,13 +2167,6 @@
         "other": "In %(spaceName)s und %(count)s weiteren Spaces."
     },
     "In %(spaceName)s.": "Im Space %(spaceName)s.",
-    "Reset bearing to north": "Ausrichtung nach Norden zurücksetzen",
-    "Mapbox logo": "Mapbox Logo",
-    "Location not available": "Standort nicht verfügbar",
-    "Find my location": "Zeige meinen Standort",
-    "Exit fullscreen": "Vollbild verlassen",
-    "Enter fullscreen": "Vollbild",
-    "Map feedback": "Rückmeldung zur Karte",
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Un-maximise": "Maximieren rückgängig machen",
@@ -2341,12 +2327,8 @@
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Aus Sicherheits- und Datenschutzgründen, wird die Nutzung von verschlüsselungsfähigen Matrix-Anwendungen empfohlen.",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Du wirst dich mit dieser Sitzung nicht an Unterhaltungen in Räumen mit aktivierter Verschlüsselung beteiligen können.",
     "This session doesn't support encryption and thus can't be verified.": "Diese Sitzung unterstützt keine Verschlüsselung und kann deshalb nicht verifiziert werden.",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s beendete eine <a>Sprachübertragung</a>",
-    "You ended a <a>voice broadcast</a>": "Du hast eine <a>Sprachübertragung</a> beendet",
     "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
     "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s beendete eine Sprachübertragung",
-    "You ended a voice broadcast": "Du hast eine Sprachübertragung beendet",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Can’t start a call": "Kann keinen Anruf beginnen",
     "Improve your account security by following these recommendations.": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst.",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "Das MSISDN-Verknüpfungsverfahren ist falsch konfiguriert",
     "No identity access token found": "Kein Identitäts-Zugangs-Token gefunden",
     "Identity server not set": "Kein Identitäts-Server festgelegt",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Für die Darstellung von Karten ist WebGL erforderlich, bitte aktiviere es in den Einstellungen deines Browsers.",
     "Image view": "Bildbetrachter",
     "Search all rooms": "Alle Räume durchsuchen",
     "Search this room": "Diesen Raum durchsuchen",
@@ -2756,7 +2737,9 @@
         "mention": "Erwähnen",
         "submit": "Absenden",
         "send_report": "Bericht senden",
-        "clear": "Löschen"
+        "clear": "Löschen",
+        "enter_fullscreen": "Vollbild",
+        "exit_fullscreeen": "Vollbild verlassen"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -3645,7 +3628,11 @@
         "no_permission_messages_before_invite": "Du kannst keine Nachrichten lesen, die gesendet wurden, bevor du eingeladen wurdest.",
         "no_permission_messages_before_join": "Du kannst keine Nachrichten lesen, die gesendet wurden, bevor du beigetreten bist.",
         "encrypted_historical_messages_unavailable": "Vor diesem Zeitpunkt sind keine verschlüsselten Nachrichten verfügbar.",
-        "historical_messages_unavailable": "Du kannst keine älteren Nachrichten lesen"
+        "historical_messages_unavailable": "Du kannst keine älteren Nachrichten lesen",
+        "io.element.voice_broadcast_info": {
+            "you": "Du hast eine <a>Sprachübertragung</a> beendet",
+            "user": "%(senderName)s beendete eine <a>Sprachübertragung</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3750,7 +3737,11 @@
             "you": "Du reagiertest mit %(reaction)s auf %(message)s",
             "user": "%(sender)s reagierte mit %(reaction)s auf %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Du hast eine Sprachübertragung beendet",
+            "user": "%(senderName)s beendete eine Sprachübertragung"
+        }
     },
     "voip": {
         "disable_microphone": "Mikrofon stummschalten",
@@ -4130,5 +4121,20 @@
         "empty_explainer": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
         "empty_tip": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
         "empty_heading": "Organisiere Diskussionen mit Threads"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
+        "WebGLNotEnabled": "Für die Darstellung von Karten ist WebGL erforderlich, bitte aktiviere es in den Einstellungen deines Browsers.",
+        "MapStyleUrlNotReachable": "Dein Home-Server unterstützt das Anzeigen von Karten nicht oder der Kartenanbieter ist nicht erreichbar.",
+        "toggle_attribution": "Info ein-/ausblenden",
+        "map_feedback": "Rückmeldung zur Karte",
+        "find_my_location": "Zeige meinen Standort",
+        "location_not_available": "Standort nicht verfügbar",
+        "mapbox_logo": "Mapbox Logo",
+        "reset_bearing": "Ausrichtung nach Norden zurücksetzen",
+        "failed_permission": "%(brand)s wurde der Zugriff auf deinen Standort verweigert. Bitte erlaube den Zugriff in den Einstellungen deines Browsers.",
+        "failed_generic": "Standort konnte nicht abgerufen werden. Bitte versuche es später erneut.",
+        "failed_timeout": "Zeitüberschreitung beim Abrufen deines Standortes. Bitte versuche es später erneut.",
+        "failed_unknown": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut."
     }
 }

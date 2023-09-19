@@ -1931,16 +1931,6 @@
     "Sorry, your homeserver is too old to participate here.": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
     "There was an error joining.": "Đã xảy ra lỗi khi tham gia.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
-    "Reset bearing to north": "Đặt lại trục theo phương Bắc",
-    "Mapbox logo": "Logo Mapbox",
-    "Location not available": "Vị trí không có",
-    "Find my location": "Tìm vị trí của tôi",
-    "Exit fullscreen": "Thoát toàn màn hình",
-    "Enter fullscreen": "Vào toàn màn hình",
-    "Map feedback": "Phản hồi bản đồ",
-    "Toggle attribution": "Chuyển đổi thuộc tính",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Homeserver này không được cấu hình để hiển thị bản đồ chính xác, hoặc máy chủ bản đồ được cấu hình không thể kết nối.",
-    "This homeserver is not configured to display maps.": "Homeserver này không được cấu hình để hiển thị bản đồ.",
     "The user's homeserver does not support the version of the space.": "Máy chủ nhà của người dùng không hỗ trợ phiên bản của space.",
     "User may or may not exist": "Người dùng có thể hoặc không tồn tại",
     "User does not exist": "Người dùng không tồn tại",
@@ -2026,16 +2016,12 @@
     "No identity access token found": "Không tìm thấy mã thông báo danh tính",
     "Unverified sessions are sessions that have logged in with your credentials but have not been cross-verified.": "Các phiên chưa được xác thực là các phiên đăng nhập bằng thông tin đăng nhập nhưng chưa được xác thực chéo.",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s đã kết thúc một <a>cuộc phát thanh</a>",
     "unknown": "không rõ",
     "Red": "Đỏ",
     "Grey": "Xám",
     "Yes, it was me": "Đó là tôi",
     "You have unverified sessions": "Bạn có các phiên chưa được xác thực",
     "Unable to decrypt voice broadcast": "Không thể giải mã cuộc phát thanh",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s đã kết thúc một cuộc phát thanh",
-    "You ended a voice broadcast": "Bạn đã kết thúc một cuộc phát thanh",
-    "You ended a <a>voice broadcast</a>": "Bạn đã kết thúc một <a>cuộc phát thanh</a>",
     "Can’t start a call": "Không thể bắt đầu cuộc gọi",
     "Can't start a new voice broadcast": "Không thể bắt đầu cuộc phát thanh mới",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "Bạn không có quyền để phát thanh trong phòng này. Hỏi một quản trị viên của phòng để nâng quyền của bạn.",
@@ -2069,10 +2055,6 @@
     "Search users in this room…": "Tìm người trong phòng…",
     "Give one or multiple users in this room more privileges": "Cho người trong phòng này nhiều quyền hơn",
     "Unsent": "Chưa gửi",
-    "Unknown error fetching location. Please try again later.": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau.",
-    "Timed out trying to fetch your location. Please try again later.": "Tìm vị trí của bạn mất quá lâu. Hãy thử lại sau.",
-    "Failed to fetch your location. Please try again later.": "Không tìm được vị trí của bạn. Hãy thử lại sau.",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Cần WebGL để hiển thị bản đồ, bạn hãy bật lên trong trình duyệt.",
     "Unable to connect to Homeserver. Retrying…": "Không kết nối được với máy chủ nhà. Đang thử lại…",
     "Connection error - Recording paused": "Lỗi kết nối - Đã tạm dừng ghi âm",
     "pause voice broadcast": "Tạm dừng phát thanh",
@@ -2249,7 +2231,6 @@
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "Nếu bạn bắt đầu nghe chương trình phát thanh trực tiếp này, quá trình ghi chương trình phát thanh trực tiếp hiện tại của bạn sẽ kết thúc.",
     "Live": "Trực tiếp",
     "Listen to live broadcast?": "Nghe phát thanh trực tiếp không?",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s không được cho phép để tìm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.": "<b>Cảnh báo</b>: nâng cấp một phòng sẽ <i>không tự động đưa thành viên sang phiên bản mới của phòng.</i> Chúng tôi đăng liên kết tới phòng mới trong phòng cũ - thành viên sẽ cần nhấp vào liên kết để tham gia phòng mới.",
@@ -2555,7 +2536,9 @@
         "mention": "Nhắc đến",
         "submit": "Xác nhận",
         "send_report": "Gửi báo cáo",
-        "clear": "Xoá"
+        "clear": "Xoá",
+        "enter_fullscreen": "Vào toàn màn hình",
+        "exit_fullscreeen": "Thoát toàn màn hình"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -3359,7 +3342,11 @@
         "no_permission_messages_before_invite": "Bạn không có quyền xem tin nhắn trước lúc bạn được mời.",
         "no_permission_messages_before_join": "Bạn không có quyền xem tin nhắn trước lúc bạn tham gia.",
         "encrypted_historical_messages_unavailable": "Các tin nhắn được mã hóa trước thời điểm này không có sẵn.",
-        "historical_messages_unavailable": "Bạn khồng thể thấy các tin nhắn trước"
+        "historical_messages_unavailable": "Bạn khồng thể thấy các tin nhắn trước",
+        "io.element.voice_broadcast_info": {
+            "you": "Bạn đã kết thúc một <a>cuộc phát thanh</a>",
+            "user": "%(senderName)s đã kết thúc một <a>cuộc phát thanh</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3464,7 +3451,11 @@
             "you": "Bạn phản ứng %(reaction)s với %(message)s",
             "user": "%(sender)s phản ứng %(reaction)s với %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Bạn đã kết thúc một cuộc phát thanh",
+            "user": "%(senderName)s đã kết thúc một cuộc phát thanh"
+        }
     },
     "voip": {
         "disable_microphone": "Tắt âm micrô",
@@ -3828,5 +3819,20 @@
         "show_thread_filter": "Hiển thị:",
         "show_all_threads": "Hiển thị tất cả chủ đề",
         "empty_heading": "Giữ các cuộc thảo luận được tổ chức với các chủ đề này"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
+        "WebGLNotEnabled": "Cần WebGL để hiển thị bản đồ, bạn hãy bật lên trong trình duyệt.",
+        "MapStyleUrlNotReachable": "Homeserver này không được cấu hình để hiển thị bản đồ chính xác, hoặc máy chủ bản đồ được cấu hình không thể kết nối.",
+        "toggle_attribution": "Chuyển đổi thuộc tính",
+        "map_feedback": "Phản hồi bản đồ",
+        "find_my_location": "Tìm vị trí của tôi",
+        "location_not_available": "Vị trí không có",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Đặt lại trục theo phương Bắc",
+        "failed_permission": "%(brand)s không được cho phép để tìm vị trí của bạn. Vui lòng cho phép truy cập vị trí trong cài đặt trình duyệt của bạn.",
+        "failed_generic": "Không tìm được vị trí của bạn. Hãy thử lại sau.",
+        "failed_timeout": "Tìm vị trí của bạn mất quá lâu. Hãy thử lại sau.",
+        "failed_unknown": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau."
     }
 }

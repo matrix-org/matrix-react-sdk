@@ -1922,9 +1922,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Çift (përdorues, sesion) i pavlefshëm: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Adresë e panjohur dhome: %(roomAlias)s",
     "From a thread": "Nga një rrjedhë",
-    "Unknown error fetching location. Please try again later.": "Gabim i panjohur në sjelljen e vendndodhjes. Ju lutemi, riprovoni më vonë.",
-    "Timed out trying to fetch your location. Please try again later.": "Mbaroi koha duke provuar të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
-    "Failed to fetch your location. Please try again later.": "S’u arrit të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "Remove from room": "Hiqeni prej dhome",
     "Failed to remove user": "S’u arrit të hiqej përdoruesi",
@@ -1978,8 +1975,6 @@
     "Expand quotes": "Zgjeroji thonjëzat",
     "Collapse quotes": "Tkurri thonjëzat",
     "Drop a Pin": "Lini një Piketë",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ky shërbyes Home s’është formësuar saktë për të shfaqur harta, ose shërbyesi i formësuar për harta mund të jetë i pakapshëm.",
-    "This homeserver is not configured to display maps.": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
     "Click to drop a pin": "Klikoni që të lihet një piketë",
     "Click to move the pin": "Klikoni që të lëvizet piketa",
     "Unable to load map": "S’arrihet të ngarkohet hartë",
@@ -2002,7 +1997,6 @@
     "Shared their location: ": "Dha vendndodhjen e vet: ",
     "Unsent": "Të padërguar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
     "Developer tools": "Mjete zhvilluesi",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s është eksperimental në një shfletues telefoni celular. Për punimin më të mirë dhe veçoritë më të reja, përdorni aplikacionin tonë falas.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s erdhi teksa provohej të hyhej në dhomë ose hapësirë. Nëse mendoni se po e shihni gabimisht këtë mesazh, ju lutemi, <issueLink>parashtroni një njoftim të mete</issueLink>.",
@@ -2152,11 +2146,6 @@
     "Send your first message to invite <displayName/> to chat": "Dërgoni mesazhin tuaj të parë për të ftuar në fjalosje <displayName/>",
     "Spell check": "Kontroll drejtshkrimi",
     "You were disconnected from the call. (Error: %(message)s)": "U shkëputët nga thirrja. (Gabim: %(message)s)",
-    "Mapbox logo": "Stemë Mapbox",
-    "Location not available": "S’ka vendndodhje",
-    "Find my location": "Gjej vendndodhjen time",
-    "Exit fullscreen": "Dil nga mënyra “Sa krejt ekrani”",
-    "Enter fullscreen": "Kalo në mënyrën “Sa krejt ekrani”",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Në %(spaceName)s dhe %(count)s hapësirë tjetër.",
         "other": "Në %(spaceName)s dhe %(count)s hapësira të tjera."
@@ -2172,7 +2161,6 @@
     "Filter devices": "Filtroni pajisje",
     "Toggle push notifications on this session.": "Aktivizo/çaktivizo njoftime push për këtë sesion.",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nuk rekomandohet të shtohet fshehtëzim në dhoma publike.</b>Dhomat publike mund t’i gjejë dhe hyjë në to kushdo, pra cilido të mund të lexojë mesazhet në to. S’do të përfitoni asnjë nga të mirat e fshehtëzimit dhe s’do të jeni në gjendje ta çaktivizoni më vonë. Fshehtëzimi i mesazheve në një dhomë publike do të ngadalësojë marrjen dhe dërgimin e mesazheve.",
-    "Toggle attribution": "Shfaq/fshih atribut",
     "Empty room (was %(oldName)s)": "Dhomë e zbrazët (qe %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
         "one": "Po ftohet %(user)s dhe 1 tjetër",
@@ -2335,12 +2323,8 @@
     "Search users in this room…": "Kërkoni për përdorues në këtë dhomë…",
     "Give one or multiple users in this room more privileges": "Jepini një ose disa përdoruesve më tepër privilegje në këtë dhomë",
     "Add privileged users": "Shtoni përdorues të privilegjuar",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s përfundoi një <a>transmetim zanor</a>",
-    "You ended a <a>voice broadcast</a>": "Përfunduat një <a>transmetim zanor</a>",
     "Unable to decrypt message": "S’arrihet të shfshehtëzohet mesazhi",
     "This message could not be decrypted": "Ky mesazh s’u shfshehtëzua dot",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s përfundoi një transmetim zanor",
-    "You ended a voice broadcast": "Përfunduat një transmetim zanor",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "S’mund të nisni një thirrje, ngaqë aktualisht jeni duke regjistruar një transmetim të drejtpërdrejtë. Që të mund të nisni një thirrje, ju lutemi, përfundoni transmetimin tuaj të drejtpërdrejtë.",
     "Can’t start a call": "S’fillohet dot thirrje",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
@@ -2484,7 +2468,6 @@
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (gjendje HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Gabim i panjohur ndryshimi fjalëkalimi (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Gabim teksa ndryshohej fjalëkalimi: %(error)s",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL është i domosdoshëm për shfaqje hartash, ju lutemi, aktivizojeni te rregullimet e shfletuesit tuaj.",
     "No identity access token found": "S’u gjet token hyrjeje identiteti",
     "Identity server not set": "Shërbyes identitetesh i paujdisur",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
@@ -2683,7 +2666,9 @@
         "mention": "Përmendje",
         "submit": "Parashtroje",
         "send_report": "Dërgoje njoftimin",
-        "clear": "Spastroje"
+        "clear": "Spastroje",
+        "enter_fullscreen": "Kalo në mënyrën “Sa krejt ekrani”",
+        "exit_fullscreeen": "Dil nga mënyra “Sa krejt ekrani”"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -3538,7 +3523,11 @@
         "no_permission_messages_before_invite": "S’keni leje të shihni mesazhe nga koha para se t’ju ftonin.",
         "no_permission_messages_before_join": "S’keni leje të shihni mesazhe nga koha para se të merrnit pjesë.",
         "encrypted_historical_messages_unavailable": "S’mund të kihen më mesazhe të fshehtëzuar para kësaj pike.",
-        "historical_messages_unavailable": "S’mund të shihni mesazhe më të hershëm"
+        "historical_messages_unavailable": "S’mund të shihni mesazhe më të hershëm",
+        "io.element.voice_broadcast_info": {
+            "you": "Përfunduat një <a>transmetim zanor</a>",
+            "user": "%(senderName)s përfundoi një <a>transmetim zanor</a>"
+        }
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3640,7 +3629,11 @@
             "you": "Reaguat me %(reaction)s ndaj %(message)s",
             "user": "%(sender)s reagoi me %(reaction)s ndaj %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Përfunduat një transmetim zanor",
+            "user": "%(senderName)s përfundoi një transmetim zanor"
+        }
     },
     "voip": {
         "disable_microphone": "Heshtoje mikrofonin",
@@ -4018,5 +4011,18 @@
         "empty_explainer": "Rrjedhat ndihmojnë që të mbahen bisedat tuaja brenda temës dhe të ndiqen kollaj.",
         "empty_tip": "<b>Ndihmëz:</b> Përdorni “%(replyInThread)s”, teksa kaloni kursorin sipër një mesazhi.",
         "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
+        "WebGLNotEnabled": "WebGL është i domosdoshëm për shfaqje hartash, ju lutemi, aktivizojeni te rregullimet e shfletuesit tuaj.",
+        "MapStyleUrlNotReachable": "Ky shërbyes Home s’është formësuar saktë për të shfaqur harta, ose shërbyesi i formësuar për harta mund të jetë i pakapshëm.",
+        "toggle_attribution": "Shfaq/fshih atribut",
+        "find_my_location": "Gjej vendndodhjen time",
+        "location_not_available": "S’ka vendndodhje",
+        "mapbox_logo": "Stemë Mapbox",
+        "failed_permission": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
+        "failed_generic": "S’u arrit të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
+        "failed_timeout": "Mbaroi koha duke provuar të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
+        "failed_unknown": "Gabim i panjohur në sjelljen e vendndodhjes. Ju lutemi, riprovoni më vonë."
     }
 }

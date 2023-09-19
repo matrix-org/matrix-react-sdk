@@ -1833,9 +1833,6 @@
     "Failed to post poll": "Не удалось отправить опрос",
     "Create Poll": "Создать опрос",
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
-    "Unknown error fetching location. Please try again later.": "Неизвестная ошибка при получении местоположения. Пожалуйста, повторите попытку позже.",
-    "Timed out trying to fetch your location. Please try again later.": "Попытка определить ваше местоположение завершилась. Пожалуйста, повторите попытку позже.",
-    "Failed to fetch your location. Please try again later.": "Не удалось определить ваше местоположение. Пожалуйста, повторите попытку позже.",
     "Share location": "Поделиться местоположением",
     "Could not fetch location": "Не удалось получить местоположение",
     "Location": "Местоположение",
@@ -1970,8 +1967,6 @@
     "My current location": "Моё текущее местоположение",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s не удаётся отправить ваше местоположение. Пожалуйста, повторите попытку позже.",
     "We couldn't send your location": "Мы не смогли отправить ваше местоположение",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Этот домашний сервер неправильно настроен для отображения карт, или настроенный сервер карт может быть недоступен.",
-    "This homeserver is not configured to display maps.": "Этот домашний сервер не настроен на отображение карт.",
     "Click to drop a pin": "Нажмите, чтобы закрепить маркер",
     "Click to move the pin": "Нажмите, чтобы переместить маркер",
     "Results will be visible when the poll is ended": "Результаты будут видны после завершения опроса",
@@ -2105,7 +2100,6 @@
     "Edit topic": "Редактировать тему",
     "Un-maximise": "Развернуть",
     "%(displayName)s's live location": "Местонахождение %(displayName)s в реальном времени",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s не получил доступа к вашему местонахождению. Разрешите доступ к местоположению в настройках браузера.",
     "Share for %(duration)s": "Поделиться на %(duration)s",
     "Live location sharing": "Отправка местонахождения в реальном времени",
     "Ban from room": "Заблокировать в комнате",
@@ -2147,16 +2141,10 @@
     "Friends and family": "Друзья и семья",
     "Messages in this chat will be end-to-end encrypted.": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
     "Spell check": "Проверка орфографии",
-    "Location not available": "Местоположение недоступно",
-    "Find my location": "Найти моё местоположение",
-    "Map feedback": "Карта отзывов",
     "In %(spaceName)s.": "В пространстве %(spaceName)s.",
     "Stop and close": "Остановить и закрыть",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
-    "Mapbox logo": "Логотип Mapbox",
-    "Enter fullscreen": "Перейти в полноэкранный режим",
-    "Exit fullscreen": "Выйти из полноэкранного режима",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "В %(spaceName)s и %(count)s другом пространстве.",
         "other": "В %(spaceName)s и %(count)s других пространствах."
@@ -2183,8 +2171,6 @@
     "Session details": "Сведения о сеансе",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
     "Verify or sign out from this session for best security and reliability.": "Заверьте или выйдите из этого сеанса для лучшей безопасности и надёжности.",
-    "Reset bearing to north": "Сбросить пеленг на север",
-    "Toggle attribution": "Переключить атрибуцию",
     "Security recommendations": "Рекомендации по безопасности",
     "Inactive sessions": "Неактивные сеансы",
     "Unverified sessions": "Незаверенные сеансы",
@@ -2265,10 +2251,6 @@
     },
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
-    "You ended a <a>voice broadcast</a>": "Вы завершили <a>голосовую трансляцию</a>",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s завершил(а) <a>голосовую трансляцию</a>",
-    "You ended a voice broadcast": "Вы завершили голосовую трансляцию",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s завершил(а) голосовую трансляцию",
     "Send email": "Отправить электронное письмо",
     "Buffering…": "Буферизация…",
     "Improve your account security by following these recommendations.": "Усильте защиту учётной записи, следуя этим рекомендациям.",
@@ -2538,7 +2520,9 @@
         "mention": "Упомянуть",
         "submit": "Отправить",
         "send_report": "Отослать отчёт",
-        "clear": "Очистить"
+        "clear": "Очистить",
+        "enter_fullscreen": "Перейти в полноэкранный режим",
+        "exit_fullscreeen": "Выйти из полноэкранного режима"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -3354,7 +3338,11 @@
         "no_permission_messages_before_invite": "У вас нет разрешения на просмотр сообщений, полученных до того, как вы были приглашены.",
         "no_permission_messages_before_join": "У вас нет разрешения на просмотр сообщений, полученных до вашего присоединения.",
         "encrypted_historical_messages_unavailable": "Зашифрованные сообщения до этого момента недоступны.",
-        "historical_messages_unavailable": "Вы не можете просматривать более старые сообщения"
+        "historical_messages_unavailable": "Вы не можете просматривать более старые сообщения",
+        "io.element.voice_broadcast_info": {
+            "you": "Вы завершили <a>голосовую трансляцию</a>",
+            "user": "%(senderName)s завершил(а) <a>голосовую трансляцию</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -3453,7 +3441,11 @@
         "m.reaction": {
             "user": "%(sender)s отреагировал(а) %(reaction)s на %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Вы завершили голосовую трансляцию",
+            "user": "%(senderName)s завершил(а) голосовую трансляцию"
+        }
     },
     "voip": {
         "disable_microphone": "Отключить микрофон",
@@ -3813,5 +3805,19 @@
         "empty_explainer": "Обсуждения помогают поддерживать и легко отслеживать тематику бесед.",
         "empty_tip": "<b>Совет:</b> Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
         "empty_heading": "Организуйте обсуждения с помощью обсуждений"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
+        "MapStyleUrlNotReachable": "Этот домашний сервер неправильно настроен для отображения карт, или настроенный сервер карт может быть недоступен.",
+        "toggle_attribution": "Переключить атрибуцию",
+        "map_feedback": "Карта отзывов",
+        "find_my_location": "Найти моё местоположение",
+        "location_not_available": "Местоположение недоступно",
+        "mapbox_logo": "Логотип Mapbox",
+        "reset_bearing": "Сбросить пеленг на север",
+        "failed_permission": "%(brand)s не получил доступа к вашему местонахождению. Разрешите доступ к местоположению в настройках браузера.",
+        "failed_generic": "Не удалось определить ваше местоположение. Пожалуйста, повторите попытку позже.",
+        "failed_timeout": "Попытка определить ваше местоположение завершилась. Пожалуйста, повторите попытку позже.",
+        "failed_unknown": "Неизвестная ошибка при получении местоположения. Пожалуйста, повторите попытку позже."
     }
 }

@@ -1922,9 +1922,6 @@
     "Expand map": "Buka peta",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Pasangan tidak diketahui (pengguna, sesi): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Alamat ruangan tidak dikenal: %(roomAlias)s",
-    "Unknown error fetching location. Please try again later.": "Kesalahan yang tidak ketahui terjadi saat mendapatkan lokasi. Silakan coba lagi nanti.",
-    "Timed out trying to fetch your location. Please try again later.": "Waktu habis dalam mendapatkan lokasi Anda. Silakan coba lagi nanti.",
-    "Failed to fetch your location. Please try again later.": "Gagal untuk mendapatkan lokasi Anda. Silakan coba lagi nanti.",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "From a thread": "Dari sebuah utasan",
     "Remove from %(roomName)s": "Keluarkan dari %(roomName)s",
@@ -1982,8 +1979,6 @@
     "Collapse quotes": "Tutup kutip",
     "Click to drop a pin": "Klik untuk menaruh pin",
     "Click to move the pin": "Klik untuk memindahkan pin",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Homeserver ini tidak diatur dengan benar untuk memuat peta, atau server peta yang diatur mungkin tidak tersedia.",
-    "This homeserver is not configured to display maps.": "Homeserver ini tidak diatur untuk menampilkan peta.",
     "Shared a location: ": "Membagikan sebuah lokasi: ",
     "Shared their location: ": "Membagikan lokasinya: ",
     "Unable to load map": "Tidak dapat memuat peta",
@@ -2002,7 +1997,6 @@
     },
     "Share for %(duration)s": "Bagikan selama %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Izin %(brand)s ditolak untuk mengakses lokasi Anda. Mohon izinkan akses lokasi di pengaturan peramban Anda.",
     "Developer tools": "Alat pengembang",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
     "Unsent": "Belum dikirim",
@@ -2144,14 +2138,6 @@
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
     "Join the room to participate": "Bergabung dengan ruangan ini untuk berpartisipasi",
-    "Reset bearing to north": "Atur ulang bantalan ke utara",
-    "Mapbox logo": "Logo Mapbox",
-    "Location not available": "Lokasi tidak tersedia",
-    "Find my location": "Temukan lokasi saya",
-    "Exit fullscreen": "Keluar dari layar penuh",
-    "Enter fullscreen": "Masuki layar penuh",
-    "Map feedback": "Masukan peta",
-    "Toggle attribution": "Alih atribusi",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Dalam %(spaceName)s dan %(count)s space lainnya.",
         "other": "Dalam %(spaceName)s dan %(count)s space lainnya."
@@ -2341,12 +2327,8 @@
     "Search users in this room…": "Cari pengguna di ruangan ini…",
     "Give one or multiple users in this room more privileges": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
     "Add privileged users": "Tambahkan pengguna yang diizinkan",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s mengakhiri sebuah <a>siaran suara</a>",
-    "You ended a <a>voice broadcast</a>": "Anda mengakhiri sebuah <a>siaran suara</a>",
     "Unable to decrypt message": "Tidak dapat mendekripsi pesan",
     "This message could not be decrypted": "Pesan ini tidak dapat didekripsi",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s mdngakhiri sebuah siaran suara",
-    "You ended a voice broadcast": "Anda mengakhiri sebuah siaran suara",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
     "Can’t start a call": "Tidak dapat memulai panggilan",
     "Improve your account security by following these recommendations.": "Tingkatkan keamanan akun Anda dengan mengikuti saran berikut.",
@@ -2493,7 +2475,6 @@
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Terjadi kesalahan perubahan kata sandi yang tidak diketahui (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Terjadi kesalahan mengubah kata sandi: %(error)s",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL diperlukam untuk menampilkan peta, silakan aktifkan di pengaturan peramban.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\".",
     "Failed to download source media, no source url was found": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
@@ -2756,7 +2737,9 @@
         "mention": "Sebutkan",
         "submit": "Kirim",
         "send_report": "Kirimkan laporan",
-        "clear": "Hapus"
+        "clear": "Hapus",
+        "enter_fullscreen": "Masuki layar penuh",
+        "exit_fullscreeen": "Keluar dari layar penuh"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -3645,7 +3628,11 @@
         "no_permission_messages_before_invite": "Anda tidak memiliki izin untuk melihat pesan-pesan sebelum Anda diundang.",
         "no_permission_messages_before_join": "Anda tidak memiliki izin untuk melihat pesan-pesan sebelum Anda bergabung.",
         "encrypted_historical_messages_unavailable": "Pesan-pesan terenkripsi sebelum titik ini tidak tersedia.",
-        "historical_messages_unavailable": "Anda tidak dapat melihat pesan-pesan awal"
+        "historical_messages_unavailable": "Anda tidak dapat melihat pesan-pesan awal",
+        "io.element.voice_broadcast_info": {
+            "you": "Anda mengakhiri sebuah <a>siaran suara</a>",
+            "user": "%(senderName)s mengakhiri sebuah <a>siaran suara</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -3750,7 +3737,11 @@
             "you": "Anda bereaksi %(reaction)s ke %(message)s",
             "user": "%(sender)s bereaksi %(reaction)s ke %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Anda mengakhiri sebuah siaran suara",
+            "user": "%(senderName)s mdngakhiri sebuah siaran suara"
+        }
     },
     "voip": {
         "disable_microphone": "Bisukan mikrofon",
@@ -4130,5 +4121,20 @@
         "empty_explainer": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
         "empty_tip": "<b>Tip:</b> Gunakan “%(replyInThread)s” ketika kursor di atas pesan.",
         "empty_heading": "Buat diskusi tetap teratur dengan utasan"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
+        "WebGLNotEnabled": "WebGL diperlukam untuk menampilkan peta, silakan aktifkan di pengaturan peramban.",
+        "MapStyleUrlNotReachable": "Homeserver ini tidak diatur dengan benar untuk memuat peta, atau server peta yang diatur mungkin tidak tersedia.",
+        "toggle_attribution": "Alih atribusi",
+        "map_feedback": "Masukan peta",
+        "find_my_location": "Temukan lokasi saya",
+        "location_not_available": "Lokasi tidak tersedia",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Atur ulang bantalan ke utara",
+        "failed_permission": "Izin %(brand)s ditolak untuk mengakses lokasi Anda. Mohon izinkan akses lokasi di pengaturan peramban Anda.",
+        "failed_generic": "Gagal untuk mendapatkan lokasi Anda. Silakan coba lagi nanti.",
+        "failed_timeout": "Waktu habis dalam mendapatkan lokasi Anda. Silakan coba lagi nanti.",
+        "failed_unknown": "Kesalahan yang tidak ketahui terjadi saat mendapatkan lokasi. Silakan coba lagi nanti."
     }
 }

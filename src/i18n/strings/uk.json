@@ -1923,9 +1923,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Невідома пара (користувач, сеанс): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Нерозпізнана адреса кімнати: %(roomAlias)s",
     "From a thread": "З гілки",
-    "Unknown error fetching location. Please try again later.": "Невідома помилка отримання місцеперебування. Повторіть спробу пізніше.",
-    "Timed out trying to fetch your location. Please try again later.": "Сплив час отримання місцеперебування. Повторіть спробу пізніше.",
-    "Failed to fetch your location. Please try again later.": "Не вдалося отримати ваше місцеперебування. Повторіть спробу пізніше.",
     "Could not fetch location": "Не вдалося отримати місцеперебування",
     "Remove from room": "Вилучити з кімнати",
     "Failed to remove user": "Не вдалося вилучити користувача",
@@ -1982,8 +1979,6 @@
     "Collapse quotes": "Згорнути цитати",
     "Click to drop a pin": "Натисніть, щоб створити маркер",
     "Click to move the pin": "Натисніть, щоб посунути маркер",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Цей домашній сервер налаштованно неправильно, щоб показати карти, або сконфігурований сервер карт може бути недосяжним.",
-    "This homeserver is not configured to display maps.": "Цей домашній сервер не налаштовано на показ карт.",
     "Shared a location: ": "Повідомляє місцеперебування: ",
     "Shared their location: ": "Повідомляє своє місцеперебування: ",
     "Unable to load map": "Неможливо завантажити карту",
@@ -2002,7 +1997,6 @@
     },
     "Share for %(duration)s": "Поділитися на %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s не отримав доступу до вашого місця перебування. Дозвольте доступ до місця перебування в налаштуваннях браузера.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
     "Developer tools": "Інструменти розробника",
     "Unsent": "Не надіслано",
@@ -2144,14 +2138,6 @@
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
     "Join the room to participate": "Приєднуйтеся до кімнати, щоб взяти участь",
-    "Reset bearing to north": "Повернути орієнтацію на північ",
-    "Mapbox logo": "Логотип Mapbox",
-    "Location not available": "Місце перебування недоступне",
-    "Find my location": "Знайти моє місце перебування",
-    "Exit fullscreen": "Вийти з повноекранного режиму",
-    "Enter fullscreen": "Перейти у повноекранний режим",
-    "Map feedback": "Карта відгуку",
-    "Toggle attribution": "Перемкнути атрибуцію",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "У %(spaceName)s та %(count)s іншому просторі.",
         "other": "У %(spaceName)s та %(count)s інших пристроях."
@@ -2341,12 +2327,8 @@
     "This session doesn't support encryption and thus can't be verified.": "Цей сеанс не підтримує шифрування, і його не можна звірити.",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Для найкращої безпеки та приватності радимо користуватися клієнтами Matrix, які підтримують шифрування.",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Під час користування цим сеансом ви не зможете брати участь у кімнатах, де ввімкнено шифрування.",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s завершує <a>голосову трансляцію</a>",
-    "You ended a <a>voice broadcast</a>": "Ви завершили <a>голосову трансляцію</a>",
     "Unable to decrypt message": "Не вдалося розшифрувати повідомлення",
     "This message could not be decrypted": "Не вдалося розшифрувати це повідомлення",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s завершує голосову трансляцію",
-    "You ended a voice broadcast": "Ви завершили голосову трансляцію",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик.",
     "Can’t start a call": "Не вдалося розпочати виклик",
     "Improve your account security by following these recommendations.": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад.",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "Неправильно налаштовано додавання / зв'язування з потоком MSISDN",
     "No identity access token found": "Токен доступу до ідентифікації не знайдено",
     "Identity server not set": "Сервер ідентифікації не налаштовано",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Для показу карт потрібен WebGL, увімкніть його в налаштуваннях браузера.",
     "Image view": "Перегляд зображення",
     "Upload custom sound": "Вивантажити власний звук",
     "Search all rooms": "Вибрати всі кімнати",
@@ -2751,7 +2732,9 @@
         "mention": "Згадати",
         "submit": "Надіслати",
         "send_report": "Надіслати звіт",
-        "clear": "Очистити"
+        "clear": "Очистити",
+        "enter_fullscreen": "Перейти у повноекранний режим",
+        "exit_fullscreeen": "Вийти з повноекранного режиму"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -3640,7 +3623,11 @@
         "no_permission_messages_before_invite": "Ви не маєте дозволу на перегляд повідомлень, давніших за ваше запрошення.",
         "no_permission_messages_before_join": "Ви не маєте дозволу на перегляд повідомлень, давніших за ваше приєднання.",
         "encrypted_historical_messages_unavailable": "Зашифровані повідомлення до цієї точки недоступні.",
-        "historical_messages_unavailable": "Ви не можете переглядати давніші повідомлення"
+        "historical_messages_unavailable": "Ви не можете переглядати давніші повідомлення",
+        "io.element.voice_broadcast_info": {
+            "you": "Ви завершили <a>голосову трансляцію</a>",
+            "user": "%(senderName)s завершує <a>голосову трансляцію</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -3745,7 +3732,11 @@
             "you": "Ви зреагували %(reaction)s на %(message)s",
             "user": "%(sender)s реагує з %(reaction)s на %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Ви завершили голосову трансляцію",
+            "user": "%(senderName)s завершує голосову трансляцію"
+        }
     },
     "voip": {
         "disable_microphone": "Вимкнути мікрофон",
@@ -4125,5 +4116,20 @@
         "empty_explainer": "Гілки допомагають підтримувати розмови за темою та за ними легко стежити.",
         "empty_tip": "<b>Порада:</b> Використовуйте «%(replyInThread)s» навівши вказівник на повідомлення.",
         "empty_heading": "Упорядкуйте обговорення за допомогою гілок"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
+        "WebGLNotEnabled": "Для показу карт потрібен WebGL, увімкніть його в налаштуваннях браузера.",
+        "MapStyleUrlNotReachable": "Цей домашній сервер налаштованно неправильно, щоб показати карти, або сконфігурований сервер карт може бути недосяжним.",
+        "toggle_attribution": "Перемкнути атрибуцію",
+        "map_feedback": "Карта відгуку",
+        "find_my_location": "Знайти моє місце перебування",
+        "location_not_available": "Місце перебування недоступне",
+        "mapbox_logo": "Логотип Mapbox",
+        "reset_bearing": "Повернути орієнтацію на північ",
+        "failed_permission": "%(brand)s не отримав доступу до вашого місця перебування. Дозвольте доступ до місця перебування в налаштуваннях браузера.",
+        "failed_generic": "Не вдалося отримати ваше місцеперебування. Повторіть спробу пізніше.",
+        "failed_timeout": "Сплив час отримання місцеперебування. Повторіть спробу пізніше.",
+        "failed_unknown": "Невідома помилка отримання місцеперебування. Повторіть спробу пізніше."
     }
 }

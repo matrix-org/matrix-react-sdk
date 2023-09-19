@@ -1923,9 +1923,6 @@
     "From a thread": "Jutulõngast",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Tundmatu kasutaja ja sessiooni kombinatsioon: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Jututoa tundmatu aadress: %(roomAlias)s",
-    "Unknown error fetching location. Please try again later.": "Asukoha tuvastamine ei õnnestunud teadmaata põhjusel. Palun proovi hiljem uuesti.",
-    "Timed out trying to fetch your location. Please try again later.": "Asukoha tuvastamine ei õnnestunud päringu aegumise tõttu. Palun proovi hiljem uuesti.",
-    "Failed to fetch your location. Please try again later.": "Asukoha tuvastamine ei õnnestunud. Palun proovi hiljem uuesti.",
     "Could not fetch location": "Asukoha tuvastamine ei õnnestunud",
     "Remove from room": "Eemalda jututoast",
     "Failed to remove user": "Kasutaja eemaldamine ebaõnnestus",
@@ -1985,8 +1982,6 @@
     "Unable to load map": "Kaardi laadimine ei õnnestu",
     "Shared their location: ": "Jagas oma asukohta: ",
     "Shared a location: ": "Jagatud asukoht: ",
-    "This homeserver is not configured to display maps.": "See koduserver pole seadistatud kuvama kaarte.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta.",
     "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
     "%(displayName)s's live location": "%(displayName)s asukoht reaalajas",
@@ -2004,7 +1999,6 @@
     "Unsent": "Saatmata",
     "Developer tools": "Arendusvahendid",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanud asukohta tuvastada. Palun luba vastavad õigused brauseri seadistustes.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Astumisel jututuppa või liitumisel kogukonnaga tekkis viga %(errcode)s. Kui sa arvad, et sellise põhjusega viga ei tohiks tekkida, siis palun <issueLink>koosta veateade</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Proovi hiljem uuesti või küsi jututoa või kogukonna haldurilt, kas sul on ligipääs olemas.",
@@ -2144,12 +2138,6 @@
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
     "Join the room to participate": "Osalemiseks liitu jututoaga",
-    "Reset bearing to north": "Kasuta põhjasuunda",
-    "Mapbox logo": "Mapbox'i logo",
-    "Location not available": "Asukoht pole leitav",
-    "Find my location": "Leia minu asukoht",
-    "Exit fullscreen": "Lülita täisekraanivaade välja",
-    "Enter fullscreen": "Lülita täisekraanivaade sisse",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Kogukonnas %(spaceName)s ja veel %(count)s's kogukonnas.",
         "other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas."
@@ -2212,8 +2200,6 @@
     },
     "%(user1)s and %(user2)s": "%(user1)s ja %(user2)s",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Me ei soovita avalikes jututubades krüptimise kasutamist.</b> Kuna kõik huvilised saavad vabalt leida avalikke jututube ning nendega liituda, siis saavad nad niikuinii ka neis leiduvaid sõnumeid lugeda. Olemuselt puuduvad sellises olukorras krüptimise eelised ning sa ei saa hiljem krüptimist välja lülitada. Avalike jututubade sõnumite krüptimine teeb ka sõnumite saatmise ja vastuvõtmise aeglasemaks.",
-    "Toggle attribution": "Lülita omistamine sisse või välja",
-    "Map feedback": "Tagasiside kaardi kohta",
     "We're creating a room with %(names)s": "Me loome jututoa järgnevaist: %(names)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s või %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
@@ -2341,12 +2327,8 @@
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Parima turvalisuse ja privaatsuse nimel palun kasuta selliseid Matrix'i kliente, mis toetavad krüptimist.",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Selle sessiooniga ei saa sa osaleda krüptitud jututubades.",
     "This session doesn't support encryption and thus can't be verified.": "Seda sessiooni ei saa verifitseerida, sest seal puudub krüptimise tugi.",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s lõpetas <a>ringhäälingukõne</a>",
-    "You ended a <a>voice broadcast</a>": "Sa lõpetasid <a>ringhäälingukõne</a>",
     "Unable to decrypt message": "Sõnumi dekrüptimine ei õnnestunud",
     "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s lõpetas ringhäälingukõne",
-    "You ended a voice broadcast": "Sa lõpetasid ringhäälingukõne",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne.",
     "Can’t start a call": "Kõne algatamine ei õnnestu",
     "Improve your account security by following these recommendations.": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust.",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
     "No identity access token found": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
     "Identity server not set": "Isikutuvastusserver on määramata",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Kaartide kuvamiseks on vajalik WebGL, seega palun luba WebGL'i kasutamine oma veebibrauseri seadistustes.",
     "Image view": "Pildivaade",
     "Upload custom sound": "Laadi üles oma helifail",
     "Search all rooms": "Otsi kõikidest jututubadest",
@@ -2751,7 +2732,9 @@
         "mention": "Maini",
         "submit": "Saada",
         "send_report": "Saada veateade",
-        "clear": "Eemalda"
+        "clear": "Eemalda",
+        "enter_fullscreen": "Lülita täisekraanivaade sisse",
+        "exit_fullscreeen": "Lülita täisekraanivaade välja"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -3640,7 +3623,11 @@
         "no_permission_messages_before_invite": "Sul pole õigusi vaadata enne kutse saatmist saadetud sõnumeid.",
         "no_permission_messages_before_join": "Sul pole õigusi vaadata enne liitumist saadetud sõnumeid.",
         "encrypted_historical_messages_unavailable": "Enne seda ajahetke saadetud krüptitud sõnumid pole saadaval.",
-        "historical_messages_unavailable": "Sa ei saa näha varasemaid sõnumeid"
+        "historical_messages_unavailable": "Sa ei saa näha varasemaid sõnumeid",
+        "io.element.voice_broadcast_info": {
+            "you": "Sa lõpetasid <a>ringhäälingukõne</a>",
+            "user": "%(senderName)s lõpetas <a>ringhäälingukõne</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -3745,7 +3732,11 @@
             "you": "Sa reageerisid %(message)s sõnumile %(reaction)s'ga",
             "user": "%(sender)s reageeris %(message)s sõnumile %(reaction)s'ga"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Sa lõpetasid ringhäälingukõne",
+            "user": "%(senderName)s lõpetas ringhäälingukõne"
+        }
     },
     "voip": {
         "disable_microphone": "Summuta mikrofon",
@@ -4125,5 +4116,20 @@
         "empty_explainer": "Jutulõngad aitavad hoida vestlused teemakohastena ning mugavalt loetavatena.",
         "empty_tip": "<b>Soovitus:</b> Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
         "empty_heading": "Halda vestlusi jutulõngadena"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
+        "WebGLNotEnabled": "Kaartide kuvamiseks on vajalik WebGL, seega palun luba WebGL'i kasutamine oma veebibrauseri seadistustes.",
+        "MapStyleUrlNotReachable": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta.",
+        "toggle_attribution": "Lülita omistamine sisse või välja",
+        "map_feedback": "Tagasiside kaardi kohta",
+        "find_my_location": "Leia minu asukoht",
+        "location_not_available": "Asukoht pole leitav",
+        "mapbox_logo": "Mapbox'i logo",
+        "reset_bearing": "Kasuta põhjasuunda",
+        "failed_permission": "%(brand)s ei saanud asukohta tuvastada. Palun luba vastavad õigused brauseri seadistustes.",
+        "failed_generic": "Asukoha tuvastamine ei õnnestunud. Palun proovi hiljem uuesti.",
+        "failed_timeout": "Asukoha tuvastamine ei õnnestunud päringu aegumise tõttu. Palun proovi hiljem uuesti.",
+        "failed_unknown": "Asukoha tuvastamine ei õnnestunud teadmaata põhjusel. Palun proovi hiljem uuesti."
     }
 }

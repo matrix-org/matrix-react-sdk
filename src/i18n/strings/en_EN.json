@@ -80,6 +80,8 @@
         "continue": "Continue",
         "leave_room": "Leave room",
         "no": "No",
+        "enter_fullscreen": "Enter fullscreen",
+        "exit_fullscreeen": "Exit fullscreen",
         "zoom_in": "Zoom in",
         "zoom_out": "Zoom out",
         "enable": "Enable",
@@ -651,6 +653,10 @@
             },
             "two_users": "%(names)s and %(lastPerson)s are typing …"
         },
+        "io.element.voice_broadcast_info": {
+            "you": "You ended a <a>voice broadcast</a>",
+            "user": "%(senderName)s ended a <a>voice broadcast</a>"
+        },
         "m.call.hangup": {
             "dm": "Call ended"
         },
@@ -874,10 +880,34 @@
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Unfortunately we're unable to start a recording right now. Please try again later.",
     "Can’t start a call": "Can’t start a call",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.",
-    "You ended a <a>voice broadcast</a>": "You ended a <a>voice broadcast</a>",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ended a <a>voice broadcast</a>",
-    "You ended a voice broadcast": "You ended a voice broadcast",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s ended a voice broadcast",
+    "event_preview": {
+        "io.element.voice_broadcast_info": {
+            "you": "You ended a voice broadcast",
+            "user": "%(senderName)s ended a voice broadcast"
+        },
+        "m.call.answer": {
+            "you": "You joined the call",
+            "user": "%(senderName)s joined the call",
+            "dm": "Call in progress"
+        },
+        "m.call.hangup": {
+            "you": "You ended the call",
+            "user": "%(senderName)s ended the call"
+        },
+        "m.call.invite": {
+            "you": "You started a call",
+            "user": "%(senderName)s started a call",
+            "dm_send": "Waiting for answer",
+            "dm_receive": "%(senderName)s is calling"
+        },
+        "m.emote": "* %(senderName)s %(emote)s",
+        "m.text": "%(senderName)s: %(message)s",
+        "m.reaction": {
+            "you": "You reacted %(reaction)s to %(message)s",
+            "user": "%(sender)s reacted %(reaction)s to %(message)s"
+        },
+        "m.sticker": "%(senderName)s: %(stickerName)s"
+    },
     "Unable to decrypt voice broadcast": "Unable to decrypt voice broadcast",
     "Unable to play this voice broadcast": "Unable to play this voice broadcast",
     "Stop live broadcasting?": "Stop live broadcasting?",
@@ -993,21 +1023,21 @@
     "Unknown App": "Unknown App",
     "No media permissions": "No media permissions",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "You may need to manually permit %(brand)s to access your microphone/webcam",
-    "This homeserver is not configured to display maps.": "This homeserver is not configured to display maps.",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL is required to display maps, please enable it in your browser settings.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.",
-    "Toggle attribution": "Toggle attribution",
-    "Map feedback": "Map feedback",
-    "Enter fullscreen": "Enter fullscreen",
-    "Exit fullscreen": "Exit fullscreen",
-    "Find my location": "Find my location",
-    "Location not available": "Location not available",
-    "Mapbox logo": "Mapbox logo",
-    "Reset bearing to north": "Reset bearing to north",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.",
-    "Failed to fetch your location. Please try again later.": "Failed to fetch your location. Please try again later.",
-    "Timed out trying to fetch your location. Please try again later.": "Timed out trying to fetch your location. Please try again later.",
-    "Unknown error fetching location. Please try again later.": "Unknown error fetching location. Please try again later.",
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "This homeserver is not configured to display maps.",
+        "WebGLNotEnabled": "WebGL is required to display maps, please enable it in your browser settings.",
+        "MapStyleUrlNotReachable": "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.",
+        "toggle_attribution": "Toggle attribution",
+        "map_feedback": "Map feedback",
+        "find_my_location": "Find my location",
+        "location_not_available": "Location not available",
+        "mapbox_logo": "Mapbox logo",
+        "reset_bearing": "Reset bearing to north",
+        "failed_permission": "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.",
+        "failed_generic": "Failed to fetch your location. Please try again later.",
+        "failed_timeout": "Timed out trying to fetch your location. Please try again later.",
+        "failed_unknown": "Unknown error fetching location. Please try again later."
+    },
     "export_chat": {
         "unload_confirm": "Are you sure you want to exit during this export?",
         "generating_zip": "Generating a ZIP",
@@ -1114,30 +1144,6 @@
     "Failed to cancel": "Failed to cancel",
     "Connection lost": "Connection lost",
     "You were disconnected from the call. (Error: %(message)s)": "You were disconnected from the call. (Error: %(message)s)",
-    "event_preview": {
-        "m.call.answer": {
-            "you": "You joined the call",
-            "user": "%(senderName)s joined the call",
-            "dm": "Call in progress"
-        },
-        "m.call.hangup": {
-            "you": "You ended the call",
-            "user": "%(senderName)s ended the call"
-        },
-        "m.call.invite": {
-            "you": "You started a call",
-            "user": "%(senderName)s started a call",
-            "dm_send": "Waiting for answer",
-            "dm_receive": "%(senderName)s is calling"
-        },
-        "m.emote": "* %(senderName)s %(emote)s",
-        "m.text": "%(senderName)s: %(message)s",
-        "m.reaction": {
-            "you": "You reacted %(reaction)s to %(message)s",
-            "user": "%(sender)s reacted %(reaction)s to %(message)s"
-        },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
-    },
     "Back to chat": "Back to chat",
     "Room information": "Room information",
     "Room members": "Room members",

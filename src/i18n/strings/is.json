@@ -1496,7 +1496,6 @@
     "Failed to upgrade room": "Mistókst að uppfæra spjallrás",
     "Error - Mixed content": "Villa - blandað efni",
     "Error loading Widget": "Villa við að hlaða inn viðmótshluta",
-    "Failed to fetch your location. Please try again later.": "Mistókst að sækja staðsetninguna þína. Reyndu aftur síðar.",
     "Error removing address": "Villa við að fjarlægja vistfang",
     "Error creating address": "Villa við að búa til vistfang",
     "Error updating main address": "Villa við uppfærslu á aðalvistfangi",
@@ -1684,7 +1683,6 @@
     "A connection error occurred while trying to contact the server.": "Villa kom upp þegar reynt var að tengjast þjóninum.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Öryggi dulritaðra skilaboða er tryggt með enda-í-enda dulritun. Einungis þú og viðtakendurnir hafa dulritunarlyklana til að lesa slík skilaboð.",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
-    "Unknown error fetching location. Please try again later.": "Óþekkt villa kom upp við að sækja staðsetningu. Reyndu aftur síðar.",
     "You cancelled verification on your other device.": "Þú hættir við sannvottun á hinu tækinu þínu.",
     "Start verification again from their profile.": "Hefja sannvottun aftur úr notandasniði viðkomandi.",
     "Start verification again from the notification.": "Hefja sannvottun aftur úr tilkynningunni.",
@@ -1780,8 +1778,6 @@
     "Widgets do not use message encryption.": "Viðmótshlutar nota ekki dulritun skilaboða.",
     "What location type do you want to share?": "Hvaða gerð staðsetningar vilt þú deila?",
     "We couldn't send your location": "Við gátum ekki sent staðsetninguna þína",
-    "Timed out trying to fetch your location. Please try again later.": "Rann út á tíma við að sækja staðsetninguna þína. Reyndu aftur síðar.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s hefur ekki heimildir til að ná í staðsetninguna þína. Leyfðu aðgang að staðsetningum í stillingum vafrans þíns.",
     "They won't be able to access whatever you're not an admin of.": "Viðkomandi munu ekki hafa aðgang að því sem þú ert ekki stjórnandi fyrir.",
     "They'll still be able to access whatever you're not an admin of.": "Viðkomandi munu eftir sem áður hafa aðgang að hverju því sem þú ert ekki stjórnandi fyrir.",
     "Ban them from specific things I'm able to": "Banna viðkomandi frá því að gera tiltekna hluti sem ég get gert",
@@ -1819,8 +1815,6 @@
     "Connect this session to Key Backup": "Tengja þessa setu við öryggisafrit af lykli",
     "This is your list of users/servers you have blocked - don't leave the room!": "Þetta er listinn þinn yfir notendur/netþjóna sem þú hefur lokað á - ekki fara af spjallsvæðinu!",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Heimaþjónninn er ekki rétt stilltur til að geta birt landakort, eða að uppsettur kortaþjónn er ekki aðgengilegur.",
-    "This homeserver is not configured to display maps.": "Heimaþjónninn er ekki stilltur til að birta landakort.",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
     "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
     "Verifies a user, session, and pubkey tuple": "Sannreynir auðkenni notanda, setu og dreifilykils",
@@ -1884,8 +1878,6 @@
     "a key signature": "Fingrafar lykils",
     "Spell check": "Stafsetningaryfirferð",
     "Saved Items": "Vistuð atriði",
-    "Exit fullscreen": "Fara úr fullskjásstillingu",
-    "Enter fullscreen": "Fara í fullskjásstillingu",
     "Show spaces": "Sýna svæði",
     "Check your email to continue": "Skoðaðu tölvupóstinn þinn til að halda áfram",
     "Stop and close": "Hætta og loka",
@@ -1923,9 +1915,6 @@
     "Sessions": "Setur",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
-    "Mapbox logo": "Mapbox-táknmerki",
-    "Location not available": "Staðsetning ekki tiltæk",
-    "Find my location": "Finna staðsetningu mína",
     "Live": "Beint",
     "You need to be able to kick users to do that.": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta.",
     "Empty room (was %(oldName)s)": "Tóm spjallrás (var %(oldName)s)",
@@ -1992,8 +1981,6 @@
     "Unpin this widget to view it in this panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "You were disconnected from the call. (Error: %(message)s)": "Þú varst aftengd/ur frá samtalinu. (Villa: %(message)s)",
-    "Reset bearing to north": "Frumstilla stefnu á norður",
-    "Toggle attribution": "Víxla tilvísun af/á",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Á %(spaceName)s og %(count)s svæði til viðbótar.",
         "other": "Á %(spaceName)s og %(count)s svæðum til viðbótar."
@@ -2014,10 +2001,6 @@
     "Listen to live broadcast?": "Hlusta á beina útsendingu?",
     "Yes, stop broadcast": "Já, stöðva útsendingu",
     "Stop live broadcasting?": "Stöðva beina útsendingu?",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s endaði talútsendingu",
-    "You ended a voice broadcast": "Þú endaðir talútsendingu",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s endaði <a>talútsendingu</a>",
-    "You ended a <a>voice broadcast</a>": "Þú endaðir <a>talútsendingu</a>",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "Því miður tókst ekki að setja aðra upptöku í gang. Reyndu aftur síðar.",
     "Can't start a new voice broadcast": "Get ekki byrjað nýja talútsendingu",
     "Send email": "Senda tölvupóst",
@@ -2304,7 +2287,9 @@
         "mention": "Minnst á",
         "submit": "Senda inn",
         "send_report": "Senda kæru",
-        "clear": "Hreinsa"
+        "clear": "Hreinsa",
+        "enter_fullscreen": "Fara í fullskjásstillingu",
+        "exit_fullscreeen": "Fara úr fullskjásstillingu"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -3071,7 +3056,11 @@
         },
         "no_permission_messages_before_invite": "Þú hefur ekki heimildir til að skoða skilaboð frá því áður en þér var boðið.",
         "no_permission_messages_before_join": "Þú hefur ekki heimildir til að skoða skilaboð frá því áður en þú fórst að taka þátt.",
-        "historical_messages_unavailable": "Þú getur ekki séð eldri skilaboð"
+        "historical_messages_unavailable": "Þú getur ekki séð eldri skilaboð",
+        "io.element.voice_broadcast_info": {
+            "you": "Þú endaðir <a>talútsendingu</a>",
+            "user": "%(senderName)s endaði <a>talútsendingu</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -3165,7 +3154,11 @@
         },
         "m.emote": "* %(senderName)s %(emote)s",
         "m.text": "%(senderName)s: %(message)s",
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Þú endaðir talútsendingu",
+            "user": "%(senderName)s endaði talútsendingu"
+        }
     },
     "voip": {
         "disable_microphone": "Þagga niður í hljóðnema",
@@ -3512,5 +3505,18 @@
         "show_all_threads": "Birta alla spjallþræði",
         "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
         "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
+        "MapStyleUrlNotReachable": "Heimaþjónninn er ekki rétt stilltur til að geta birt landakort, eða að uppsettur kortaþjónn er ekki aðgengilegur.",
+        "toggle_attribution": "Víxla tilvísun af/á",
+        "find_my_location": "Finna staðsetningu mína",
+        "location_not_available": "Staðsetning ekki tiltæk",
+        "mapbox_logo": "Mapbox-táknmerki",
+        "reset_bearing": "Frumstilla stefnu á norður",
+        "failed_permission": "%(brand)s hefur ekki heimildir til að ná í staðsetninguna þína. Leyfðu aðgang að staðsetningum í stillingum vafrans þíns.",
+        "failed_generic": "Mistókst að sækja staðsetninguna þína. Reyndu aftur síðar.",
+        "failed_timeout": "Rann út á tíma við að sækja staðsetninguna þína. Reyndu aftur síðar.",
+        "failed_unknown": "Óþekkt villa kom upp við að sækja staðsetningu. Reyndu aftur síðar."
     }
 }

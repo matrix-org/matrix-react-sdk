@@ -1640,16 +1640,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
     "Unknown room": "اتاق ناشناس",
     "That's fine": "بسیارعالی",
-    "Reset bearing to north": "بازنشانی جهت شمال",
-    "Mapbox logo": "لوگوی جعبه نقشه",
-    "Location not available": "مکان در دسترس نیست",
-    "Find my location": "پیدا کردن مکان",
-    "Exit fullscreen": "خروج از نمایش تمام صفحه",
-    "Enter fullscreen": "نمایش تمام صفحه",
-    "Map feedback": "بازخورد نقشه",
-    "Toggle attribution": "تغییر دادن اسناد",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "این سرور خانگی برای نمایش نقشه بدرستی تنظیم نشده، یا سایت مرجع نقشه در دسترس نیست.",
-    "This homeserver is not configured to display maps.": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
     "The user's homeserver does not support the version of the space.": "نسخه فضای شما با سرور خانگی کاربر سازگاری ندارد.",
     "User may or may not exist": "ممکن است کاربر وجود نداشته باشد",
     "User does not exist": "کاربر وجود ندارد",
@@ -1845,7 +1835,9 @@
         "refresh": "رفرش",
         "mention": "اشاره",
         "submit": "ارسال",
-        "send_report": "ارسال گزارش"
+        "send_report": "ارسال گزارش",
+        "enter_fullscreen": "نمایش تمام صفحه",
+        "exit_fullscreeen": "خروج از نمایش تمام صفحه"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -2775,5 +2767,15 @@
     },
     "space": {
         "landing_welcome": "به <name/> خوش‌آمدید"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
+        "MapStyleUrlNotReachable": "این سرور خانگی برای نمایش نقشه بدرستی تنظیم نشده، یا سایت مرجع نقشه در دسترس نیست.",
+        "toggle_attribution": "تغییر دادن اسناد",
+        "map_feedback": "بازخورد نقشه",
+        "find_my_location": "پیدا کردن مکان",
+        "location_not_available": "مکان در دسترس نیست",
+        "mapbox_logo": "لوگوی جعبه نقشه",
+        "reset_bearing": "بازنشانی جهت شمال"
     }
 }

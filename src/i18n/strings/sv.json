@@ -1892,9 +1892,6 @@
     "Sorry, the poll you tried to create was not posted.": "Tyvärr så lades omröstningen du försökte skapa inte upp.",
     "Failed to post poll": "Misslyckades att lägga upp omröstning",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
-    "Unknown error fetching location. Please try again later.": "Ökänt fel när plats hämtades. Pröva igen senare.",
-    "Timed out trying to fetch your location. Please try again later.": "Tidsgränsen överskreds vid försök att hämta din plats. Pröva igen senare.",
-    "Failed to fetch your location. Please try again later.": "Misslyckades att hämta din plats. Pröva igen senare.",
     "Share location": "Dela plats",
     "Could not fetch location": "Kunde inte hämta plats",
     "Location": "Plats",
@@ -1973,8 +1970,6 @@
     "Match system": "Matcha systemet",
     "Developer tools": "Utvecklarverktyg",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s är experimentell i mobila webbläsare. För en bättre upplevelse och de senaste funktionerna använd våran nativa app.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Den här hemservern är inte korrekt konfigurerad för att visa kartor, eller så kanske den konfigurerade kartserven inte är nåbar.",
-    "This homeserver is not configured to display maps.": "Den här hemservern har inte konfigurerats för att visa kartor.",
     "This invite was sent to %(email)s": "Denna inbjudan skickades till %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Denna inbjudan skickades till %(email)s vilken inte är associerad med ditt konto",
     "You can still join here.": "Du kan fortfarande gå med här.",
@@ -2061,7 +2056,6 @@
     "%(displayName)s's live location": "Realtidsposition för %(displayName)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s kunde inte skicka din position. Försök igen senare.",
     "We couldn't send your location": "Vi kunde inte skicka din positoin",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s nekades behörighet för att komma åt din position. Du behöver godkänna platsåtkomst i dina webbläsarinställningar.",
     "Click to drop a pin": "Klicka för att sätta ut en nål",
     "Click to move the pin": "Klicka för att flytta nålen",
     "Share for %(duration)s": "Dela under %(duration)s",
@@ -2162,14 +2156,6 @@
     "Join the room to participate": "Gå med i rummet för att delta",
     "Saved Items": "Sparade föremål",
     "Send your first message to invite <displayName/> to chat": "Skicka ditt första meddelande för att bjuda in <displayName/> att chatta",
-    "Reset bearing to north": "Återställ bäring till norr",
-    "Mapbox logo": "Mapbox-logga",
-    "Location not available": "Plats inte tillgänglig",
-    "Find my location": "Hitta min plats",
-    "Exit fullscreen": "Gå ur fullskärm",
-    "Enter fullscreen": "Gå till fullskärm",
-    "Map feedback": "Kartuåterkoppling",
-    "Toggle attribution": "Växla tillskrivning",
     "Can't start a new voice broadcast": "Kan inte starta en ny röstsändning",
     "You need to be able to kick users to do that.": "Du behöver kunna kicka användare för att göra det.",
     "Empty room (was %(oldName)s)": "Tomt rum (var %(oldName)s)",
@@ -2221,8 +2207,6 @@
     "Add privileged users": "Lägg till privilegierade användare",
     "You have unverified sessions": "Du har overifierade sessioner",
     "Buffering…": "Buffrar…",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s avslutade en <a>röstsändning</a>",
-    "You ended a <a>voice broadcast</a>": "Du avslutade en <a>röstsändning</a>",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
     "Manually verify by text": "Verifiera manuellt med text",
@@ -2339,8 +2323,6 @@
     "Sign in new device": "Logga in ny enhet",
     "Unable to decrypt message": "Kunde inte avkryptera meddelande",
     "This message could not be decrypted": "Det här meddelandet kunde inte avkrypteras",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s avslutade en röstsändning",
-    "You ended a voice broadcast": "Du avslutade en röstsändning",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eller %(copyButton)s",
     "Send email": "Skicka e-brev",
     "Sign out of all devices": "Logga ut ur alla enheter",
@@ -2468,7 +2450,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Okänt fel vid lösenordsändring (%(stringifiedError)s)",
     "Error while changing password: %(error)s": "Fel vid ändring av lösenord: %(error)s",
     "Failed to download source media, no source url was found": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL krävs för att visa kartor, aktivera det i dina webbläsarinställningar.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kan inte bjuda in användare via e-post utan en identitetsserver. Du kan ansluta till en under \"Inställningar\".",
     "The add / bind with MSISDN flow is misconfigured": "Flöde för tilläggning/bindning med MSISDN är felkonfigurerat",
     "No identity access token found": "Ingen identitetsåtkomsttoken hittades",
@@ -2707,7 +2688,9 @@
         "mention": "Nämn",
         "submit": "Skicka in",
         "send_report": "Skicka rapport",
-        "clear": "Rensa"
+        "clear": "Rensa",
+        "enter_fullscreen": "Gå till fullskärm",
+        "exit_fullscreeen": "Gå ur fullskärm"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -3582,7 +3565,11 @@
         "no_permission_messages_before_invite": "Du är inte behörig att se meddelanden från innan du bjöds in.",
         "no_permission_messages_before_join": "Du är inte behörig att se meddelanden från innan du gick med.",
         "encrypted_historical_messages_unavailable": "Krypterade meddelanden innan den här tidpunkten är otillgängliga.",
-        "historical_messages_unavailable": "Du kan inte se tidigare meddelanden"
+        "historical_messages_unavailable": "Du kan inte se tidigare meddelanden",
+        "io.element.voice_broadcast_info": {
+            "you": "Du avslutade en <a>röstsändning</a>",
+            "user": "%(senderName)s avslutade en <a>röstsändning</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -3686,7 +3673,11 @@
             "you": "Du reagerade med %(reaction)s till %(message)s",
             "user": "%(sender)s reagerade med %(reaction)s till %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Du avslutade en röstsändning",
+            "user": "%(senderName)s avslutade en röstsändning"
+        }
     },
     "voip": {
         "disable_microphone": "Slå av mikrofonen",
@@ -4065,5 +4056,20 @@
         "empty_explainer": "Trådar underlättar för att hålla konversationer till ämnet och gör dem lättare att följa.",
         "empty_tip": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
         "empty_heading": "Håll diskussioner organiserade med trådar"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
+        "WebGLNotEnabled": "WebGL krävs för att visa kartor, aktivera det i dina webbläsarinställningar.",
+        "MapStyleUrlNotReachable": "Den här hemservern är inte korrekt konfigurerad för att visa kartor, eller så kanske den konfigurerade kartserven inte är nåbar.",
+        "toggle_attribution": "Växla tillskrivning",
+        "map_feedback": "Kartuåterkoppling",
+        "find_my_location": "Hitta min plats",
+        "location_not_available": "Plats inte tillgänglig",
+        "mapbox_logo": "Mapbox-logga",
+        "reset_bearing": "Återställ bäring till norr",
+        "failed_permission": "%(brand)s nekades behörighet för att komma åt din position. Du behöver godkänna platsåtkomst i dina webbläsarinställningar.",
+        "failed_generic": "Misslyckades att hämta din plats. Pröva igen senare.",
+        "failed_timeout": "Tidsgränsen överskreds vid försök att hämta din plats. Pröva igen senare.",
+        "failed_unknown": "Ökänt fel när plats hämtades. Pröva igen senare."
     }
 }

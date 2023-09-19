@@ -1907,8 +1907,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Aquí encontrarás tus conversaciones con los miembros del espacio. Si lo desactivas, estas no aparecerán mientras veas el espacio %(spaceName)s.",
     "This address had invalid server or is already in use": "Esta dirección tiene un servidor no válido o ya está siendo usada",
     "Sections to show": "Secciones que mostrar",
-    "Unknown error fetching location. Please try again later.": "Error desconocido al conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde.",
-    "Failed to fetch your location. Please try again later.": "No se ha podido conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde.",
     "Could not fetch location": "No se ha podido conseguir la ubicación",
     "toggle event": "activar o desactivar el evento",
     "You cancelled verification on your other device.": "Has cancelado la verificación en tu otro dispositivo.",
@@ -1946,7 +1944,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s y %(space2Name)s",
     "This address does not point at this room": "La dirección no apunta a esta sala",
     "Missing room name or separator e.g. (my-room:domain.org)": "Falta el nombre de la sala o el separador (ej.: mi-sala:dominio.org)",
-    "Timed out trying to fetch your location. Please try again later.": "Tras un tiempo intentándolo, no hemos podido obtener tu ubicación. Por favor, inténtalo de nuevo más tarde.",
     "Pinned": "Fijado",
     "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Si sabes de estos temas, Element es de código abierto. ¡Echa un vistazo a nuestro GitHub (https://github.com/vector-im/element-web/) y colabora!",
     "Unable to check if username has been taken. Try again later.": "No ha sido posible comprobar si el nombre de usuario está libre. Inténtalo de nuevo más tarde.",
@@ -1979,7 +1976,6 @@
     "Match system": "Usar el del sistema",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
-    "This homeserver is not configured to display maps.": "Este servidor base no está configurado para mostrar mapas.",
     "Click to drop a pin": "Haz clic para colocar un marcador",
     "Click to move the pin": "Haz clic para mover el marcador",
     "Shared a location: ": "Compartió una ubicación: ",
@@ -1988,7 +1984,6 @@
     "Click": "Clic",
     "Expand quotes": "Expandir citas",
     "Collapse quotes": "Plegar citas",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Este servidor base no está configurado apropiadamente para mostrar mapas, o el servidor de mapas no responde.",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
         "other": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?",
         "one": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?"
@@ -2004,7 +1999,6 @@
     "Unsent": "No enviado",
     "Developer tools": "Herramientas de desarrollo",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s en navegadores para móviles está en prueba. Para una mejor experiencia y para poder usar las últimas funcionalidades, usa nuestra aplicación nativa gratuita.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Se le han denegado a %(brand)s los permisos para acceder a tu ubicación. Por favor, permite acceso a tu ubicación en los ajustes de tu navegador.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
     "%(featureName)s Beta feedback": "Danos tu opinión sobre la beta de %(featureName)s",
     "%(count)s participants": {
@@ -2143,7 +2137,6 @@
     "Explore public spaces in the new search dialog": "Explora espacios públicos con la nueva ventana de búsqueda",
     "Show spaces": "Ver espacios",
     "Show rooms": "Ver salas",
-    "Toggle attribution": "Mostrar/ocultar fuente",
     "You need to have the right permissions in order to share locations in this room.": "Debes tener el permiso correspondiente para compartir ubicaciones en esta sala.",
     "Stop and close": "Parar y cerrar",
     "Online community members": "Miembros de comunidades online",
@@ -2154,13 +2147,6 @@
     "You're in": "Estás en",
     "You don't have permission to share locations": "No tienes permiso para compartir ubicaciones",
     "Join the room to participate": "Únete a la sala para participar",
-    "Reset bearing to north": "Orientar hacia el norte",
-    "Mapbox logo": "Logo de Mapbox",
-    "Location not available": "Ubicación no disponible",
-    "Find my location": "Encontrar mi ubicación",
-    "Exit fullscreen": "Salir de pantalla completa",
-    "Enter fullscreen": "Pantalla completa",
-    "Map feedback": "Danos tu opinión sobre el mapa",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "En %(spaceName)s y %(count)s espacio más.",
         "other": "En %(spaceName)s y otros %(count)s espacios"
@@ -2385,7 +2371,6 @@
     "Yes, it was me": "Sí, fui yo",
     "You have unverified sessions": "Tienes sesiones sin verificar",
     "Starting export process…": "Iniciando el proceso de exportación…",
-    "WebGL is required to display maps, please enable it in your browser settings.": "WebGL es necesario para mostrar mapas. Por favor, actívalo en los ajustes de tu navegador.",
     "Connection error - Recording paused": "Error de conexión, grabación detenida",
     "play voice broadcast": "reproducir difusión de voz",
     "30s backward": "retroceder 30s",
@@ -2618,7 +2603,9 @@
         "mention": "Mencionar",
         "submit": "Enviar",
         "send_report": "Enviar denuncia",
-        "clear": "Borrar"
+        "clear": "Borrar",
+        "enter_fullscreen": "Pantalla completa",
+        "exit_fullscreeen": "Salir de pantalla completa"
     },
     "a11y": {
         "user_menu": "Menú del Usuario",
@@ -3932,5 +3919,20 @@
         "empty_explainer": "Los hilos ayudan a mantener tus conversaciones centradas y a que sean fáciles de seguir.",
         "empty_tip": "<b>Consejo:</b> Usa «%(replyInThread)s» mientras pasas el ratón sobre un mensaje.",
         "empty_heading": "Organiza los temas de conversación en hilos"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Este servidor base no está configurado para mostrar mapas.",
+        "WebGLNotEnabled": "WebGL es necesario para mostrar mapas. Por favor, actívalo en los ajustes de tu navegador.",
+        "MapStyleUrlNotReachable": "Este servidor base no está configurado apropiadamente para mostrar mapas, o el servidor de mapas no responde.",
+        "toggle_attribution": "Mostrar/ocultar fuente",
+        "map_feedback": "Danos tu opinión sobre el mapa",
+        "find_my_location": "Encontrar mi ubicación",
+        "location_not_available": "Ubicación no disponible",
+        "mapbox_logo": "Logo de Mapbox",
+        "reset_bearing": "Orientar hacia el norte",
+        "failed_permission": "Se le han denegado a %(brand)s los permisos para acceder a tu ubicación. Por favor, permite acceso a tu ubicación en los ajustes de tu navegador.",
+        "failed_generic": "No se ha podido conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde.",
+        "failed_timeout": "Tras un tiempo intentándolo, no hemos podido obtener tu ubicación. Por favor, inténtalo de nuevo más tarde.",
+        "failed_unknown": "Error desconocido al conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde."
     }
 }

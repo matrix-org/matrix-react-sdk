@@ -1745,9 +1745,6 @@
     },
     "Waiting for you to verify on your other device…": "他の端末での認証を待機しています…",
     "Light high contrast": "ライト（高コントラスト）",
-    "Failed to fetch your location. Please try again later.": "位置情報の取得に失敗しました。後でもう一度やり直してください。",
-    "Timed out trying to fetch your location. Please try again later.": "位置情報を取得する際にタイムアウトしました。後でもう一度やり直してください。",
-    "Unknown error fetching location. Please try again later.": "位置情報を取得する際に不明なエラーが発生しました。後でもう一度やり直してください。",
     "Remove from %(roomName)s": "%(roomName)sから追放",
     "Wait!": "お待ちください！",
     "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "ここでコピーペーストを行うように伝えられた場合は、あなたが詐欺の対象となっている可能性が非常に高いです！",
@@ -1909,8 +1906,6 @@
     "Click to drop a pin": "クリックして位置情報を共有",
     "Click to move the pin": "クリックしてピンを移動",
     "Shared a location: ": "位置情報を共有しました： ",
-    "This homeserver is not configured to display maps.": "このホームサーバーは地図を表示するように設定されていません。",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "このホームサーバーが地図を表示するよう正しく設定されていないか、地図のサーバーに接続できません。",
     "Unable to load map": "地図を読み込めません",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
@@ -1975,7 +1970,6 @@
         "one": "現在1個のスペースがアクセスできます"
     },
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)sは携帯端末のウェブブラウザーでは実験的です。よりよい使用経験や最新機能を求める場合は、フリーのネイティブアプリをご利用ください。",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)sは位置情報を取得できませんでした。ブラウザーの設定画面から位置情報の取得を許可してください。",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
     "Upgrade this space to the recommended room version": "このスペースを推奨のバージョンにアップグレード",
     "View older version of %(spaceName)s.": "%(spaceName)sの以前のバージョンを表示。",
@@ -2006,10 +2000,6 @@
         "other": "%(user)sと%(count)s人"
     },
     "Unknown room": "不明のルーム",
-    "Mapbox logo": "Mapboxのロゴ",
-    "Location not available": "位置情報は利用できません",
-    "Find my location": "位置を発見",
-    "Map feedback": "地図のフィードバック",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "%(spaceName)sと他%(count)s個のスペース。",
         "other": "スペース %(spaceName)s と他%(count)s個のスペース内。"
@@ -2093,7 +2083,6 @@
     "Stop live broadcasting?": "ライブ配信を停止しますか？",
     "Someone else is already recording a voice broadcast. Wait for their voice broadcast to end to start a new one.": "他の人が既に音声配信を録音しています。新しく始めるには音声配信が終わるまで待機してください。",
     "Can't start a new voice broadcast": "新しい音声配信を開始できません",
-    "Exit fullscreen": "フルスクリーンを解除",
     "Video call ended": "ビデオ通話が終了しました",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
     "To join, please enable video rooms in Labs first": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
@@ -2104,7 +2093,6 @@
     "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
     "Filter devices": "端末を絞り込む",
     "Sorry — this call is currently full": "すみません ― この通話は現在満員です",
-    "Enter fullscreen": "フルスクリーンにする",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
     "Reset event store?": "イベントストアをリセットしますか？",
@@ -2124,7 +2112,6 @@
     "Renaming sessions": "セッション名の変更",
     "Call type": "通話の種類",
     "You do not have sufficient permissions to change this.": "この変更に必要な権限がありません。",
-    "Reset bearing to north": "北向きにリセット",
     "Saved Items": "保存済み項目",
     "Video rooms are a beta feature": "ビデオ通話ルームはベータ版の機能です",
     "View chat timeline": "チャットのタイムラインを表示",
@@ -2188,10 +2175,6 @@
     "Yes, end my recording": "はい、録音を終了してください",
     "If you start listening to this live broadcast, your current live broadcast recording will be ended.": "このライブ配信の視聴を開始すると、現在のライブ配信の録音は終了します。",
     "Listen to live broadcast?": "ライブ配信を視聴しますか？",
-    "%(senderName)s ended a voice broadcast": "%(senderName)sが音声配信を終了しました",
-    "You ended a voice broadcast": "音声配信を終了しました",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)sが<a>音声配信</a>を終了しました",
-    "You ended a <a>voice broadcast</a>": "<a>音声配信</a>を終了しました",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
     "Unfortunately we're unable to start a recording right now. Please try again later.": "録音を開始できません。後でもう一度やり直してください。",
     "You don't have the required permissions to start a voice broadcast in this room. Contact a room administrator to upgrade your permissions.": "このルームで音声配信を開始する権限がありません。ルームの管理者に連絡して権限の付与を依頼してください。",
@@ -2208,7 +2191,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "このセッションでは、暗号化が有効になっているルームに参加することができません。",
-    "Toggle attribution": "属性を切り替える",
     "Buffering…": "バッファリングしています…",
     "Go live": "ライブ配信",
     "30s forward": "30秒進める",
@@ -2615,7 +2597,9 @@
         "mention": "メンション",
         "submit": "送信",
         "send_report": "報告を送信",
-        "clear": "消去"
+        "clear": "消去",
+        "enter_fullscreen": "フルスクリーンにする",
+        "exit_fullscreeen": "フルスクリーンを解除"
     },
     "a11y": {
         "user_menu": "ユーザーメニュー",
@@ -3455,7 +3439,11 @@
         "no_permission_messages_before_invite": "招待される前のメッセージを表示する権限がありません。",
         "no_permission_messages_before_join": "参加する前のメッセージを表示する権限がありません。",
         "encrypted_historical_messages_unavailable": "これ以前の暗号化されたメッセージは利用できません。",
-        "historical_messages_unavailable": "以前のメッセージは表示できません"
+        "historical_messages_unavailable": "以前のメッセージは表示できません",
+        "io.element.voice_broadcast_info": {
+            "you": "<a>音声配信</a>を終了しました",
+            "user": "%(senderName)sが<a>音声配信</a>を終了しました"
+        }
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3551,7 +3539,11 @@
         },
         "m.emote": "* %(senderName)s %(emote)s",
         "m.text": "%(senderName)s：%(message)s",
-        "m.sticker": "%(senderName)s：%(stickerName)s"
+        "m.sticker": "%(senderName)s：%(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "音声配信を終了しました",
+            "user": "%(senderName)sが音声配信を終了しました"
+        }
     },
     "voip": {
         "disable_microphone": "マイクをミュート",
@@ -3923,5 +3915,19 @@
         "empty_explainer": "スレッド機能を使うと、会話のテーマを維持したり、会話を簡単に追跡したりすることができます。",
         "empty_tip": "<b>ヒント：</b>メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
         "empty_heading": "スレッド機能を使って、会話をまとめましょう"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",
+        "MapStyleUrlNotReachable": "このホームサーバーが地図を表示するよう正しく設定されていないか、地図のサーバーに接続できません。",
+        "toggle_attribution": "属性を切り替える",
+        "map_feedback": "地図のフィードバック",
+        "find_my_location": "位置を発見",
+        "location_not_available": "位置情報は利用できません",
+        "mapbox_logo": "Mapboxのロゴ",
+        "reset_bearing": "北向きにリセット",
+        "failed_permission": "%(brand)sは位置情報を取得できませんでした。ブラウザーの設定画面から位置情報の取得を許可してください。",
+        "failed_generic": "位置情報の取得に失敗しました。後でもう一度やり直してください。",
+        "failed_timeout": "位置情報を取得する際にタイムアウトしました。後でもう一度やり直してください。",
+        "failed_unknown": "位置情報を取得する際に不明なエラーが発生しました。後でもう一度やり直してください。"
     }
 }

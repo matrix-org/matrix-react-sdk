@@ -1923,9 +1923,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Onbekend paar (persoon, sessie): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Niet herkend kameradres: %(roomAlias)s",
     "Space home": "Space home",
-    "Unknown error fetching location. Please try again later.": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw.",
-    "Timed out trying to fetch your location. Please try again later.": "Er is een time-out opgetreden bij het ophalen van jouw locatie. Probeer het later opnieuw.",
-    "Failed to fetch your location. Please try again later.": "Kan jouw locatie niet ophalen. Probeer het later opnieuw.",
     "Could not fetch location": "Kan locatie niet ophalen",
     "Message pending moderation": "Bericht in afwachting van moderatie",
     "Message pending moderation: %(reason)s": "Bericht in afwachting van moderatie: %(reason)s",
@@ -1983,7 +1980,6 @@
     "%(displayName)s's live location": "De live locatie van %(displayName)s",
     "We couldn't send your location": "We kunnen jouw locatie niet versturen",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s kan jouw locatie niet versturen. Probeer het later opnieuw.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s heeft geen toestemming gekregen om jouw locatie op te halen. Sta locatietoegang toe in je browserinstellingen.",
     "Click to drop a pin": "Klik om een pin neer te zetten",
     "Click to move the pin": "Klik om de pin te verplaatsen",
     "Share for %(duration)s": "Delen voor %(duration)s",
@@ -2034,9 +2030,7 @@
     "Sorry, your homeserver is too old to participate here.": "Sorry, je server is te oud om hier aan deel te nemen.",
     "There was an error joining.": "Er is een fout opgetreden bij het deelnemen.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s is experimenteel in een mobiele webbrowser. Gebruik onze gratis native app voor een betere ervaring en de nieuwste functies.",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Deze server is niet correct geconfigureerd om kaarten weer te geven, of de geconfigureerde kaartserver is mogelijk onbereikbaar.",
     "The user's homeserver does not support the version of the space.": "De server van de persoon ondersteunt de versie van de ruimte niet.",
-    "This homeserver is not configured to display maps.": "Deze server is niet geconfigureerd om kaarten weer te geven.",
     "User may or may not exist": "Persoon kan wel of niet bestaan",
     "User does not exist": "Persoon bestaat niet",
     "User is already invited to the room": "Persoon is al uitgenodigd voor de kamer",
@@ -2153,14 +2147,6 @@
     "You need to have the right permissions in order to share locations in this room.": "Je dient de juiste rechten te hebben om locaties in deze ruimte te delen.",
     "You don't have permission to share locations": "Je bent niet gemachtigd om locaties te delen",
     "Join the room to participate": "Doe mee met de kamer om deel te nemen",
-    "Reset bearing to north": "Indicatie naar het noorden resetten",
-    "Mapbox logo": "Mapbox logo",
-    "Location not available": "Locatie niet beschikbaar",
-    "Find my location": "Vind mijn locatie",
-    "Exit fullscreen": "Volledig scherm verlaten",
-    "Enter fullscreen": "Volledig scherm openen",
-    "Map feedback": "Kaart feedback",
-    "Toggle attribution": "Attributie in-/uitschakelen",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "In %(spaceName)s en %(count)s andere space.",
         "other": "In %(spaceName)s en %(count)s andere spaces."
@@ -2490,7 +2476,9 @@
         "mention": "Vermelden",
         "submit": "Bevestigen",
         "send_report": "Rapport versturen",
-        "clear": "Wis"
+        "clear": "Wis",
+        "enter_fullscreen": "Volledig scherm openen",
+        "exit_fullscreeen": "Volledig scherm verlaten"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -3729,5 +3717,19 @@
         "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
         "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "empty_heading": "Houd threads georganiseerd"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
+        "MapStyleUrlNotReachable": "Deze server is niet correct geconfigureerd om kaarten weer te geven, of de geconfigureerde kaartserver is mogelijk onbereikbaar.",
+        "toggle_attribution": "Attributie in-/uitschakelen",
+        "map_feedback": "Kaart feedback",
+        "find_my_location": "Vind mijn locatie",
+        "location_not_available": "Locatie niet beschikbaar",
+        "mapbox_logo": "Mapbox logo",
+        "reset_bearing": "Indicatie naar het noorden resetten",
+        "failed_permission": "%(brand)s heeft geen toestemming gekregen om jouw locatie op te halen. Sta locatietoegang toe in je browserinstellingen.",
+        "failed_generic": "Kan jouw locatie niet ophalen. Probeer het later opnieuw.",
+        "failed_timeout": "Er is een time-out opgetreden bij het ophalen van jouw locatie. Probeer het later opnieuw.",
+        "failed_unknown": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw."
     }
 }

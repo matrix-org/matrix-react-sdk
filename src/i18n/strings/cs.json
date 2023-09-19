@@ -1923,9 +1923,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Neznámý pár (uživatel, relace): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Nerozpoznaná adresa místnosti: %(roomAlias)s",
     "From a thread": "Z vlákna",
-    "Unknown error fetching location. Please try again later.": "Neznámá chyba při zjištění polohy. Zkuste to prosím později.",
-    "Timed out trying to fetch your location. Please try again later.": "Pokus o zjištění vaší polohy vypršel. Zkuste to prosím později.",
-    "Failed to fetch your location. Please try again later.": "Nepodařilo se zjistit vaši polohu. Zkuste to prosím později.",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "Remove from room": "Odebrat z místnosti",
     "Failed to remove user": "Nepodařilo se odebrat uživatele",
@@ -1982,8 +1979,6 @@
     "Collapse quotes": "Sbalit citace",
     "Click to drop a pin": "Kliknutím umístíte špendlík",
     "Click to move the pin": "Kliknutím přesunete špendlík",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tento domovský server není správně nakonfigurován pro zobrazování map nebo je mapový server nedostupný.",
-    "This homeserver is not configured to display maps.": "Tento domovský server není nakonfigurován pro zobrazování map.",
     "Shared a location: ": "Sdílel(a) polohu: ",
     "Shared their location: ": "Sdíleli svou polohu: ",
     "Unable to load map": "Nelze načíst mapu",
@@ -2003,7 +1998,6 @@
     "Share for %(duration)s": "Sdílet na %(duration)s",
     "Unsent": "Neodeslané",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Aplikaci %(brand)s bylo odepřeno oprávnění ke zjištění vaší polohy. Povolte prosím přístup k poloze v nastavení prohlížeče.",
     "Developer tools": "Nástroje pro vývojáře",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Při pokusu o přístup do místnosti nebo prostoru bylo vráceno %(errcode)s. Pokud si myslíte, že se vám tato zpráva zobrazuje chybně, pošlete prosím <issueLink>hlášení o chybě</issueLink>.",
@@ -2144,14 +2138,6 @@
     "Show rooms": "Zobrazit místnosti",
     "Explore public spaces in the new search dialog": "Prozkoumejte veřejné prostory v novém dialogu vyhledávání",
     "Join the room to participate": "Připojte se k místnosti a zúčastněte se",
-    "Reset bearing to north": "Obnovení směru na sever",
-    "Mapbox logo": "Logo mapy",
-    "Location not available": "Poloha není dostupná",
-    "Find my location": "Najít mou polohu",
-    "Exit fullscreen": "Ukončení režimu celé obrazovky",
-    "Enter fullscreen": "Vstup do režimu celé obrazovky",
-    "Map feedback": "Zpětná vazba k mapě",
-    "Toggle attribution": "Přepnout atribut",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "V %(spaceName)s a %(count)s dalším prostoru.",
         "other": "V %(spaceName)s a %(count)s ostatních prostorech."
@@ -2341,12 +2327,8 @@
     "You won't be able to participate in rooms where encryption is enabled when using this session.": "Při použití této relace se nebudete moci účastnit místností, kde je povoleno šifrování.",
     "This session doesn't support encryption and thus can't be verified.": "Tato relace nepodporuje šifrování, a proto ji nelze ověřit.",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Pro co nejlepší zabezpečení a ochranu soukromí je doporučeno používat Matrix klienty, které podporují šifrování.",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s ukončil(a) <a>hlasové vysílání</a>",
-    "You ended a <a>voice broadcast</a>": "Ukončili jste <a>hlasové vysílání</a>",
     "Unable to decrypt message": "Nepodařilo se dešifrovat zprávu",
     "This message could not be decrypted": "Tuto zprávu se nepodařilo dešifrovat",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s ukončil(a) hlasové vysílání",
-    "You ended a voice broadcast": "Ukončili jste hlasové vysílání",
     "Improve your account security by following these recommendations.": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení.",
     "%(count)s sessions selected": {
         "one": "%(count)s vybraná relace",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
     "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
     "Identity server not set": "Server identit není nastaven",
-    "WebGL is required to display maps, please enable it in your browser settings.": "Pro zobrazení map je vyžadována technologie WebGL, povolte ji v nastavení prohlížeče.",
     "Upload custom sound": "Nahrát vlastní zvuk",
     "Error changing password": "Chyba při změně hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
@@ -2756,7 +2737,9 @@
         "mention": "Zmínit",
         "submit": "Odeslat",
         "send_report": "Nahlásit",
-        "clear": "Smazat"
+        "clear": "Smazat",
+        "enter_fullscreen": "Vstup do režimu celé obrazovky",
+        "exit_fullscreeen": "Ukončení režimu celé obrazovky"
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka",
@@ -3645,7 +3628,11 @@
         "no_permission_messages_before_invite": "Nemáte oprávnění zobrazovat zprávy z doby před pozváním.",
         "no_permission_messages_before_join": "Nemáte oprávnění zobrazovat zprávy z doby, než jste se připojili.",
         "encrypted_historical_messages_unavailable": "Šifrované zprávy před tímto bodem nejsou k dispozici.",
-        "historical_messages_unavailable": "Dřívější zprávy nelze zobrazit"
+        "historical_messages_unavailable": "Dřívější zprávy nelze zobrazit",
+        "io.element.voice_broadcast_info": {
+            "you": "Ukončili jste <a>hlasové vysílání</a>",
+            "user": "%(senderName)s ukončil(a) <a>hlasové vysílání</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Odešle danou zprávu jako spoiler",
@@ -3750,7 +3737,11 @@
             "you": "Reagovali jste %(reaction)s na %(message)s",
             "user": "%(sender)s reagoval(a) %(reaction)s na %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "Ukončili jste hlasové vysílání",
+            "user": "%(senderName)s ukončil(a) hlasové vysílání"
+        }
     },
     "voip": {
         "disable_microphone": "Ztlumit mikrofon",
@@ -4130,5 +4121,20 @@
         "empty_explainer": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat.",
         "empty_tip": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
         "empty_heading": "Udržujte diskuse organizované pomocí vláken"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
+        "WebGLNotEnabled": "Pro zobrazení map je vyžadována technologie WebGL, povolte ji v nastavení prohlížeče.",
+        "MapStyleUrlNotReachable": "Tento domovský server není správně nakonfigurován pro zobrazování map nebo je mapový server nedostupný.",
+        "toggle_attribution": "Přepnout atribut",
+        "map_feedback": "Zpětná vazba k mapě",
+        "find_my_location": "Najít mou polohu",
+        "location_not_available": "Poloha není dostupná",
+        "mapbox_logo": "Logo mapy",
+        "reset_bearing": "Obnovení směru na sever",
+        "failed_permission": "Aplikaci %(brand)s bylo odepřeno oprávnění ke zjištění vaší polohy. Povolte prosím přístup k poloze v nastavení prohlížeče.",
+        "failed_generic": "Nepodařilo se zjistit vaši polohu. Zkuste to prosím později.",
+        "failed_timeout": "Pokus o zjištění vaší polohy vypršel. Zkuste to prosím později.",
+        "failed_unknown": "Neznámá chyba při zjištění polohy. Zkuste to prosím později."
     }
 }

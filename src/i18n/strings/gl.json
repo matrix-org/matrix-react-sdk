@@ -1945,9 +1945,6 @@
     "This address does not point at this room": "Este enderezo non dirixe a esta sala",
     "Missing room name or separator e.g. (my-room:domain.org)": "Falta o nome da sala ou separador ex. (sala:dominio.org)",
     "Missing domain separator e.g. (:domain.org)": "Falta o separador do cominio ex. (:dominio.org)",
-    "Unknown error fetching location. Please try again later.": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
-    "Timed out trying to fetch your location. Please try again later.": "Caducou o intento de obter a localización, inténtao máis tarde.",
-    "Failed to fetch your location. Please try again later.": "Non se obtivo a localización, inténtao máis tarde.",
     "Your new device is now verified. Other users will see it as trusted.": "O dispositivo xa está verificado. Outras persoas verano como confiable.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "O novo dispositivo xa está verificado. Ten acceso a tódalas túas mensaxes cifradas, e outra usuarias verano como confiable.",
     "Verify with another device": "Verifica usando outro dispositivo",
@@ -1988,8 +1985,6 @@
         "other": "Vas a eliminar %(count)s mensaxes de %(user)s. Así eliminaralos de xeito permanente para todas na conversa. Tes a certeza de facelo?"
     },
     "%(displayName)s's live location": "Localización en directo de %(displayName)s",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Este servidor non está correctamente configurado para mostrar mapas, ou o servidor de mapas configurado non é accesible.",
-    "This homeserver is not configured to display maps.": "Este servidor non está configurado para mostrar mapas.",
     "Click to drop a pin": "Click para soltar un marcador",
     "Click to move the pin": "Click para mover marcador",
     "Share for %(duration)s": "Compartida durante %(duration)s",
@@ -2003,7 +1998,6 @@
     },
     "Unsent": "Sen enviar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
     "Developer tools": "Ferramentas desenvolvemento",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
     "User may or may not exist": "A usuaria podería non existir",
@@ -2144,14 +2138,6 @@
     "Show rooms": "Mostrar salas",
     "Join the room to participate": "Únete á sala para participar",
     "Explore public spaces in the new search dialog": "Explorar espazos públicos no novo diálogo de busca",
-    "Reset bearing to north": "Restablecer apuntando ao norte",
-    "Mapbox logo": "Logo Mapbox",
-    "Location not available": "Localización non dispoñible",
-    "Find my location": "Onde estou",
-    "Exit fullscreen": "Saír de pantalla completa",
-    "Enter fullscreen": "Ir a pantalla completa",
-    "Map feedback": "Opinión sobre Mapa",
-    "Toggle attribution": "Cambiar atribución",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "No %(spaceName)s e %(count)s outro espazo.",
         "other": "No espazo %(spaceName)s e %(count)s outros espazos."
@@ -2414,7 +2400,9 @@
         "mention": "Mención",
         "submit": "Enviar",
         "send_report": "Enviar denuncia",
-        "clear": "Limpar"
+        "clear": "Limpar",
+        "enter_fullscreen": "Ir a pantalla completa",
+        "exit_fullscreeen": "Saír de pantalla completa"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -3646,5 +3634,19 @@
         "empty_explainer": "Os fíos axúdanche a manter as conversas no tema e facilitan o seguimento.",
         "empty_tip": "<b>Truco:</b> Usa \"%(replyInThread)s\" ao poñerte enriba dunha mensaxe.",
         "empty_heading": "Manter as conversas organizadas con fíos"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
+        "MapStyleUrlNotReachable": "Este servidor non está correctamente configurado para mostrar mapas, ou o servidor de mapas configurado non é accesible.",
+        "toggle_attribution": "Cambiar atribución",
+        "map_feedback": "Opinión sobre Mapa",
+        "find_my_location": "Onde estou",
+        "location_not_available": "Localización non dispoñible",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Restablecer apuntando ao norte",
+        "failed_permission": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
+        "failed_generic": "Non se obtivo a localización, inténtao máis tarde.",
+        "failed_timeout": "Caducou o intento de obter a localización, inténtao máis tarde.",
+        "failed_unknown": "Erro descoñecido ao obter a localización, inténtao máis tarde."
     }
 }

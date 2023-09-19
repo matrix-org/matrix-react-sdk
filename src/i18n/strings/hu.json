@@ -1923,9 +1923,6 @@
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Ismeretlen (felhasználó, munkamenet) páros: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Ismeretlen szoba cím: %(roomAlias)s",
     "Space home": "Kezdő tér",
-    "Unknown error fetching location. Please try again later.": "Ismeretlen hiba a földrajzi helyzetének lekérésekor. Próbálja újra később.",
-    "Timed out trying to fetch your location. Please try again later.": "Időtúllépés történt a földrajzi helyzetének lekérésekor. Próbálja újra később.",
-    "Failed to fetch your location. Please try again later.": "Nem sikerült a földrajzi helyzetének lekérése. Próbálja újra később.",
     "Could not fetch location": "Nem lehet elérni a földrajzi helyzetét",
     "Message pending moderation": "Üzenet moderálásra vár",
     "Message pending moderation: %(reason)s": "Az üzenet moderálásra vár, ok: %(reason)s",
@@ -1977,8 +1974,6 @@
     "My current location": "Jelenlegi saját földrajzi helyzet",
     "%(brand)s could not send your location. Please try again later.": "Az %(brand)s nem tudja elküldeni a földrajzi helyzetét. Próbálja újra később.",
     "We couldn't send your location": "A földrajzi helyzetet nem sikerült elküldeni",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ez a Matrix-kiszolgáló nincs megfelelően beállítva a térképek megjelenítéséhez, vagy a beállított térképkiszolgáló nem érhető el.",
-    "This homeserver is not configured to display maps.": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
     "Click to move the pin": "Kattintson a jelölő mozgatásához",
     "Click to drop a pin": "Kattintson a hely megjelöléséhez",
     "Shared a location: ": "Megosztott egy földrajzi helyzetet: ",
@@ -2002,7 +1997,6 @@
         "other": "%(count)s üzenetet készül törölni az alábbi felhasználótól: %(user)s. A művelet mindenki számára visszavonhatatlanul eltávolítja ezeket a beszélgetésekből. Biztos, hogy folytatja?"
     },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Használhatja a más szerver opciót, hogy egy másik matrix szerverre jelentkezz be amihez megadod a szerver url címét. Ezzel használhatja a(z) %(brand)s klienst egy már létező Matrix fiókkal egy másik matrix szerveren.",
-    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "A(z) %(brand)s alkalmazásnak nincs jogosultsága a földrajzi helyzetének lekérdezéséhez. Engedélyezze a hely hozzáférését a böngészőbeállításokban.",
     "Share for %(duration)s": "Megosztás eddig: %(duration)s",
     "Developer tools": "Fejlesztői eszközök",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "A(z) %(brand)s kísérleti állapotban van a mobilos webböngészőkben. A jobb élmény és a legújabb funkciók használatához használja az ingyenes natív alkalmazásunkat.",
@@ -2153,14 +2147,6 @@
     "You need to have the right permissions in order to share locations in this room.": "Az ebben a szobában történő helymegosztáshoz a megfelelő jogosultságokra van szüksége.",
     "You don't have permission to share locations": "Nincs jogosultsága a helymegosztáshoz",
     "Join the room to participate": "Csatlakozz a szobához, hogy részt vehess",
-    "Reset bearing to north": "Északi irányba állítás",
-    "Mapbox logo": "Mapbox logó",
-    "Location not available": "A földrajzi helyzet nem érhető el",
-    "Find my location": "Saját hely megkeresése",
-    "Exit fullscreen": "Kilépés a teljes képernyőből",
-    "Enter fullscreen": "Teljes képernyőre váltás",
-    "Map feedback": "Visszajelzés a térképről",
-    "Toggle attribution": "Forrásmegjelölés be/ki",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "Itt: %(spaceName)s és %(count)s másik térben.",
         "other": "Itt: %(spaceName)s és %(count)s másik térben."
@@ -2341,12 +2327,8 @@
     "You have unverified sessions": "Ellenőrizetlen bejelentkezései vannak",
     "Buffering…": "Pufferelés…",
     "Change input device": "Bemeneti eszköz megváltoztatása",
-    "%(senderName)s ended a <a>voice broadcast</a>": "%(senderName)s befejezte a <a>hangközvetítést</a>",
-    "You ended a <a>voice broadcast</a>": "Befejezte a <a>hangközvetítést</a>",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
-    "%(senderName)s ended a voice broadcast": "%(senderName)s befejezte a hangközvetítést",
-    "You ended a voice broadcast": "A hangközvetítés befejeződött",
     "Improve your account security by following these recommendations.": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat.",
     "%(count)s sessions selected": {
         "one": "%(count)s munkamenet kiválasztva",
@@ -2485,7 +2467,6 @@
     "The add / bind with MSISDN flow is misconfigured": "Az MSISDN folyamattal történő hozzáadás / kötés hibásan van beállítva",
     "No identity access token found": "Nem található személyazonosság-hozzáférési kulcs",
     "Identity server not set": "Az azonosítási kiszolgáló nincs megadva",
-    "WebGL is required to display maps, please enable it in your browser settings.": "A WebGL szükséges a térképek megjelenítéséhez, engedélyezze a böngészőbeállításokban.",
     "Image view": "Képnézet",
     "Search all rooms": "Keresés az összes szobában",
     "Search this room": "Keresés ebben a szobában",
@@ -2687,7 +2668,9 @@
         "mention": "Megemlítés",
         "submit": "Elküldés",
         "send_report": "Jelentés küldése",
-        "clear": "Törlés"
+        "clear": "Törlés",
+        "enter_fullscreen": "Teljes képernyőre váltás",
+        "exit_fullscreeen": "Kilépés a teljes képernyőből"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -3548,7 +3531,11 @@
         "no_permission_messages_before_invite": "A meghívás előtti üzenetek megtekintéséhez nincs engedélye.",
         "no_permission_messages_before_join": "A belépés előtti üzenetek megtekintése nincs engedélyezve számodra.",
         "encrypted_historical_messages_unavailable": "A régebbi titkosított üzenetek elérhetetlenek.",
-        "historical_messages_unavailable": "Nem tekintheted meg a régebbi üzeneteket"
+        "historical_messages_unavailable": "Nem tekintheted meg a régebbi üzeneteket",
+        "io.element.voice_broadcast_info": {
+            "you": "Befejezte a <a>hangközvetítést</a>",
+            "user": "%(senderName)s befejezte a <a>hangközvetítést</a>"
+        }
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -3650,7 +3637,11 @@
             "you": "Ezzel a reagált: %(reaction)s, a következőre: %(message)s",
             "user": "%(sender)s ezzel a reagált: %(reaction)s, a következőre: %(message)s"
         },
-        "m.sticker": "%(senderName)s: %(stickerName)s"
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "io.element.voice_broadcast_info": {
+            "you": "A hangközvetítés befejeződött",
+            "user": "%(senderName)s befejezte a hangközvetítést"
+        }
     },
     "voip": {
         "disable_microphone": "Mikrofon némítása",
@@ -4029,5 +4020,20 @@
         "empty_explainer": "Az üzenetszálak segítenek a különböző témájú beszélgetések figyelemmel kísérésében.",
         "empty_tip": "<b>Tipp:</b> Használja a „%(replyInThread)s” lehetőséget a szöveg fölé navigálva.",
         "empty_heading": "Beszélgetések üzenetszálakba rendezése"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
+        "WebGLNotEnabled": "A WebGL szükséges a térképek megjelenítéséhez, engedélyezze a böngészőbeállításokban.",
+        "MapStyleUrlNotReachable": "Ez a Matrix-kiszolgáló nincs megfelelően beállítva a térképek megjelenítéséhez, vagy a beállított térképkiszolgáló nem érhető el.",
+        "toggle_attribution": "Forrásmegjelölés be/ki",
+        "map_feedback": "Visszajelzés a térképről",
+        "find_my_location": "Saját hely megkeresése",
+        "location_not_available": "A földrajzi helyzet nem érhető el",
+        "mapbox_logo": "Mapbox logó",
+        "reset_bearing": "Északi irányba állítás",
+        "failed_permission": "A(z) %(brand)s alkalmazásnak nincs jogosultsága a földrajzi helyzetének lekérdezéséhez. Engedélyezze a hely hozzáférését a böngészőbeállításokban.",
+        "failed_generic": "Nem sikerült a földrajzi helyzetének lekérése. Próbálja újra később.",
+        "failed_timeout": "Időtúllépés történt a földrajzi helyzetének lekérésekor. Próbálja újra később.",
+        "failed_unknown": "Ismeretlen hiba a földrajzi helyzetének lekérésekor. Próbálja újra később."
     }
 }
