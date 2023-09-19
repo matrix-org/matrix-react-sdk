@@ -145,17 +145,6 @@
     "User Busy": "Người dùng bận",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Xác nhận việc thêm địa chỉ thư điện tử này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
     "Use Single Sign On to continue": "Sử dụng Đăng Nhập Một Lần để tiếp tục",
-    "Failed to add tag %(tagName)s to room": "Không thêm được thẻ %(tagName)s vào phòng",
-    "Failed to remove tag %(tagName)s from room": "Không xóa được thẻ %(tagName)s khỏi phòng",
-    "Message downloading sleep time(ms)": "Thời gian ngủ tải xuống tin nhắn (mili giây)",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s trong số %(totalRooms)s",
-    "Indexed rooms:": "Các phòng được lập chỉ mục:",
-    "Indexed messages:": "Tin nhắn được lập chỉ mục:",
-    "Space used:": "Space đã sử dụng:",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s đang lưu trữ cục bộ an toàn các tin nhắn được mã hóa để chúng xuất hiện trong kết quả tìm kiếm:",
-    "Currently indexing: %(currentRoom)s": "Hiện đang lập chỉ mục: %(currentRoom)s",
-    "Not currently indexing messages for any room.": "Hiện không lập chỉ mục tin nhắn cho bất kỳ phòng nào.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Nếu bị tắt, tin nhắn từ các phòng được mã hóa sẽ không xuất hiện trong kết quả tìm kiếm.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nếu bạn không xóa phương pháp khôi phục, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nếu bạn vô tình làm điều này, bạn có thể Cài đặt Tin nhắn được bảo toàn trên phiên này. Tính năng này sẽ mã hóa lại lịch sử tin nhắn của phiên này bằng một phương pháp khôi phục mới.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
@@ -1009,15 +998,6 @@
     "Bulk options": "Tùy chọn hàng loạt",
     "You have no ignored users.": "Bạn không có người dùng bị bỏ qua.",
     "Unignore": "Hủy bỏ qua",
-    "Read Marker off-screen lifetime (ms)": "Đọc thời gian tồn tại ngoài màn hình của Marker (mili giây)",
-    "Read Marker lifetime (ms)": "Đọc thời gian Marker (mili giây)",
-    "Autocomplete delay (ms)": "Độ trễ tự động hoàn thành (mili giây)",
-    "Images, GIFs and videos": "Hình ảnh, GIF và video",
-    "Code blocks": "Khối mã",
-    "Composer": "Soạn thảo",
-    "Displaying time": "Thời gian hiển thị",
-    "Keyboard shortcuts": "Các phím tắt bàn phím",
-    "Room list": "Danh sách phòng",
     "Always show the window menu bar": "Luôn hiển thị thanh menu cửa sổ",
     "Room ID or address of ban list": "ID phòng hoặc địa chỉ của danh sách cấm",
     "If this isn't what you want, please use a different tool to ignore users.": "Nếu đây không phải là điều bạn muốn, vui lòng sử dụng một công cụ khác để bỏ qua người dùng.",
@@ -1195,20 +1175,12 @@
     "Copied!": "Đã sao chép!",
     "Click to copy": "Bấm để sao chép",
     "Spaces": "Không gian",
-    "All rooms": "Tất cả các phòng",
     "Show all rooms": "Hiển thị tất cả các phòng",
     "Home": "Nhà",
     "You can change these anytime.": "Bạn có thể thay đổi những điều này bất cứ lúc nào.",
-    "Add some details to help people recognise it.": "Thêm một số chi tiết để giúp mọi người nhận ra nó.",
-    "Your private space": "Space riêng tư của bạn",
-    "Your public space": "Space công cộng của bạn",
     "To join a space you'll need an invite.": "Để tham gia vào một space, bạn sẽ cần một lời mời.",
-    "Invite only, best for yourself or teams": "Chỉ mời, tốt nhất cho bản thân hoặc các đội",
-    "Open space for anyone, best for communities": "Tạo space cho mọi người, tốt nhất cho cộng đồng",
     "Create a space": "Tạo một Space",
     "Address": "Địa chỉ",
-    "e.g. my-space": "ví dụ như my-space",
-    "Please enter a name for the space": "Vui lòng nhập tên cho Space",
     "Search %(spaceName)s": "Tìm kiếm %(spaceName)s",
     "Upload avatar": "Tải lên hình đại diện",
     "Delete avatar": "Xoá ảnh đại diện",
@@ -1912,7 +1884,6 @@
     "Spaces to show": "Space để hiển thị",
     "Sidebar": "Thanh bên",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba.",
-    "To view all keyboard shortcuts, <a>click here</a>.": "Để xem tất cả các phím tắt, <a>nhấn vào đây</a>.",
     "Show tray icon and minimise window to it on close": "Hiển thị biểu tượng khay và thu nhỏ cửa sổ vào nó khi đóng",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
     "Large": "Lớn",
@@ -1939,7 +1910,6 @@
     "Themes": "Chủ đề",
     "Moderation": "Việc vận hành",
     "Messaging": "Tin nhắn",
-    "Other rooms": "Các phòng khác",
     "That's fine": "Không sao cả",
     "Light high contrast": "Độ tương phản ánh sáng cao",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Khóa đăng nhập bạn cung cấp khớp với khóa đăng nhập bạn nhận từ thiết bị %(deviceId)s của %(userId)s. Thiết bị được đánh dấu là đã được xác minh.",
@@ -2079,7 +2049,6 @@
         "other": "Bạn có muốn đăng xuất %(count)s phiên?"
     },
     "Sessions": "Các phiên",
-    "Share your activity and status with others.": "Chia sẻ hoạt động và trạng thái với người khác.",
     "Early previews": "Thử trước tính năng mới",
     "Upcoming features": "Tính năng sắp tới",
     "Deactivating your account is a permanent action — be careful!": "Vô hiệu hóa tài khoản của bạn là vĩnh viễn — hãy cẩn trọng!",
@@ -2186,7 +2155,6 @@
     "Automatically send debug logs on decryption errors": "Tự động gửi nhật ký gỡ lỗi mỗi lúc gặp lỗi khi giải mã",
     "Verify Session": "Xác thực phiên",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Space là một cách mới để nhóm các phòng và mọi người. Loại space nào bạn muốn tạo? Bạn có thể thay đổi sau.",
     "For best security and privacy, it is recommended to use Matrix clients that support encryption.": "Để có bảo mật và quyền riêng tư tốt nhất, nên dùng các phần mềm máy khách Matrix có hỗ trợ mã hóa.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
@@ -2307,7 +2275,6 @@
     "URL": "Đường dẫn URL",
     "Show QR code": "Hiện mã QR",
     "Sign in with QR code": "Đăng nhập bằng mã QR",
-    "Room directory": "Thư mục phòng",
     "Receive push notifications on this session.": "Nhận thông báo đẩy trong phiên này.",
     "Improve your account security by following these recommendations.": "Tăng cường bảo mật cho tài khoản bằng cách làm theo các đề xuất này.",
     "Ready for secure messaging": "Sẵn sàng nhắn tin bảo mật",
@@ -2550,7 +2517,9 @@
         "identity_server": "Máy chủ định danh",
         "integration_manager": "Quản lý tích hợp",
         "qr_code": "Mã QR",
-        "feedback": "Phản hồi"
+        "feedback": "Phản hồi",
+        "all_rooms": "Tất cả các phòng",
+        "orphan_rooms": "Các phòng khác"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2986,7 +2955,32 @@
             "timeline_image_size_large": "Lớn"
         },
         "inline_url_previews_room_account": "Bật xem trước nội dung liên kết trong phòng này (chỉ với bạn)",
-        "inline_url_previews_room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này"
+        "inline_url_previews_room": "Bật xem trước nội dung liên kết cho mọi người trong phòng này",
+        "security": {
+            "message_search_disable_warning": "Nếu bị tắt, tin nhắn từ các phòng được mã hóa sẽ không xuất hiện trong kết quả tìm kiếm.",
+            "message_search_indexing_idle": "Hiện không lập chỉ mục tin nhắn cho bất kỳ phòng nào.",
+            "message_search_indexing": "Hiện đang lập chỉ mục: %(currentRoom)s",
+            "message_search_intro": "%(brand)s đang lưu trữ cục bộ an toàn các tin nhắn được mã hóa để chúng xuất hiện trong kết quả tìm kiếm:",
+            "message_search_space_used": "Space đã sử dụng:",
+            "message_search_indexed_messages": "Tin nhắn được lập chỉ mục:",
+            "message_search_indexed_rooms": "Các phòng được lập chỉ mục:",
+            "message_search_room_progress": "%(doneRooms)s trong số %(totalRooms)s",
+            "message_search_sleep_time": "Thời gian ngủ tải xuống tin nhắn (mili giây)"
+        },
+        "preferences": {
+            "room_list_heading": "Danh sách phòng",
+            "keyboard_heading": "Các phím tắt bàn phím",
+            "keyboard_view_shortcuts_button": "Để xem tất cả các phím tắt, <a>nhấn vào đây</a>.",
+            "time_heading": "Thời gian hiển thị",
+            "presence_description": "Chia sẻ hoạt động và trạng thái với người khác.",
+            "composer_heading": "Soạn thảo",
+            "code_blocks_heading": "Khối mã",
+            "media_heading": "Hình ảnh, GIF và video",
+            "room_directory_heading": "Thư mục phòng",
+            "autocomplete_delay": "Độ trễ tự động hoàn thành (mili giây)",
+            "rm_lifetime": "Đọc thời gian Marker (mili giây)",
+            "rm_lifetime_offscreen": "Đọc thời gian tồn tại ngoài màn hình của Marker (mili giây)"
+        }
     },
     "devtools": {
         "send_custom_account_data_event": "Gửi sự kiện tài khoản tùy chỉnh",
@@ -3705,7 +3699,9 @@
             "other": "Hiển thị %(count)s thêm"
         },
         "show_less": "Hiện ít hơn",
-        "notification_options": "Tùy chọn thông báo"
+        "notification_options": "Tùy chọn thông báo",
+        "failed_remove_tag": "Không xóa được thẻ %(tagName)s khỏi phòng",
+        "failed_add_tag": "Không thêm được thẻ %(tagName)s vào phòng"
     },
     "report_content": {
         "missing_reason": "Vui lòng điền lý do bạn đang báo cáo.",
@@ -3815,5 +3811,15 @@
         "pro_type": "MẸO NHỎ: Nếu bạn là người đầu tiên gặp lỗi, vui lòng gửi <debugLogsLink>nhật ký gỡ lỗi</debugLogsLink> để giúp chúng tôi xử lý vấn đề.",
         "existing_issue_link": "Hãy xem các <existingIssuesLink>lỗi đã được phát hiện trên GitHub</existingIssuesLink> trước. Chưa ai từng gặp lỗi này? <newIssueLink>Báo lỗi mới</newIssueLink>.",
         "send_feedback_action": "Gửi phản hồi"
+    },
+    "create_space": {
+        "name_required": "Vui lòng nhập tên cho Space",
+        "name_placeholder": "ví dụ như my-space",
+        "explainer": "Space là một cách mới để nhóm các phòng và mọi người. Loại space nào bạn muốn tạo? Bạn có thể thay đổi sau.",
+        "public_description": "Tạo space cho mọi người, tốt nhất cho cộng đồng",
+        "private_description": "Chỉ mời, tốt nhất cho bản thân hoặc các đội",
+        "public_heading": "Space công cộng của bạn",
+        "private_heading": "Space riêng tư của bạn",
+        "add_details_prompt": "Thêm một số chi tiết để giúp mọi người nhận ra nó."
     }
 }

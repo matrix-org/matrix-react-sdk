@@ -231,9 +231,6 @@
     "General": "Algemeen",
     "Check for update": "Controleern ip updates",
     "Notifications": "Meldiengn",
-    "Composer": "Ipsteller",
-    "Room list": "Gesprekslyste",
-    "Autocomplete delay (ms)": "Vertroagienge vo ’t automatisch anvulln (ms)",
     "Unignore": "Nie mi negeern",
     "<not supported>": "<nie oundersteund>",
     "Import E2E room keys": "E2E-gesprekssleuters importeern",
@@ -617,8 +614,6 @@
     "Set up Secure Messages": "Beveiligde berichtn instelln",
     "Recovery Method Removed": "Herstelmethode verwyderd",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "A je de herstelmethode nie è verwyderd, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn.",
-    "Failed to remove tag %(tagName)s from room": "Verwydern van %(tagName)s-label van gesprek is mislukt",
-    "Failed to add tag %(tagName)s to room": "Toevoegn van %(tagName)s-label an gesprek is mislukt",
     "Uploaded sound": "Ipgeloadn-geluud",
     "Sounds": "Geluudn",
     "Notification sound": "Meldiengsgeluud",
@@ -840,7 +835,12 @@
             "timeline_image_size_default": "Standoard"
         },
         "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
-        "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln"
+        "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
+        "preferences": {
+            "room_list_heading": "Gesprekslyste",
+            "composer_heading": "Ipsteller",
+            "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)"
+        }
     },
     "devtools": {
         "event_type": "Gebeurtenistype",
@@ -1105,5 +1105,9 @@
             "title": "Hulp & Info",
             "versions": "Versies"
         }
+    },
+    "room_list": {
+        "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
+        "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
     }
 }

@@ -254,8 +254,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org.",
     "Notify the whole room": "Notifica a sala inteira",
     "Room Notification": "Notificação da sala",
-    "Failed to remove tag %(tagName)s from room": "Falha ao remover a tag %(tagName)s da sala",
-    "Failed to add tag %(tagName)s to room": "Falha ao adicionar a tag %(tagName)s para a sala",
     "Sunday": "Domingo",
     "Notification targets": "Aparelhos notificados",
     "Today": "Hoje",
@@ -494,9 +492,6 @@
     "Language and region": "Idioma e região",
     "Account management": "Gerenciamento da Conta",
     "General": "Geral",
-    "Composer": "Campo de texto",
-    "Room list": "Lista de salas",
-    "Autocomplete delay (ms)": "Atraso no preenchimento automático (ms)",
     "Ignored users": "Usuários bloqueados",
     "Bulk options": "Opções em massa",
     "Accept all %(invitedRooms)s invites": "Aceite todos os convites de %(invitedRooms)s",
@@ -680,9 +675,6 @@
     "Create key backup": "Criar backup de chave",
     "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Se desativado, as mensagens de salas criptografadas não aparecerão em resultados de buscas.",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s está armazenando de forma segura as mensagens criptografadas localmente, para que possam aparecer nos resultados das buscas:",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s de %(totalRooms)s",
     "Click the button below to confirm adding this phone number.": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
     "Forget Room": "Esquecer Sala",
     "Favourited": "Favoritado",
@@ -720,7 +712,6 @@
     "This address is already in use": "Este endereço já está em uso",
     "Enter a server name": "Digite um nome de servidor",
     "Can't find this server or its room list": "Não foi possível encontrar este servidor ou sua lista de salas",
-    "All rooms": "Todas as salas",
     "Your server": "Seu servidor",
     "Add a new server": "Adicionar um novo servidor",
     "Server name": "Nome do servidor",
@@ -805,8 +796,6 @@
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Always show the window menu bar": "Mostrar a barra de menu na janela",
-    "Read Marker lifetime (ms)": "Duração do marcador de leitura (ms)",
-    "Read Marker off-screen lifetime (ms)": "Vida útil do marcador de leitura fora da tela (ms)",
     "Send %(eventType)s events": "Enviar eventos de %(eventType)s",
     "Roles & Permissions": "Cargos e permissões",
     "Select the roles required to change various parts of the room": "Selecione os cargos necessários para alterar várias partes da sala",
@@ -992,7 +981,6 @@
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
     "This account has been deactivated.": "Esta conta foi desativada.",
     "Success!": "Pronto!",
-    "Space used:": "Espaço usado:",
     "Change notification settings": "Alterar configuração de notificações",
     "Your server isn't responding to some <a>requests</a>.": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
     "Ban list rules - %(roomName)s": "Regras da lista de banidos - %(roomName)s",
@@ -1137,11 +1125,6 @@
     "Confirm Security Phrase": "Confirme a frase de segurança",
     "Unable to set up secret storage": "Não foi possível definir o armazenamento secreto",
     "Recovery Method Removed": "Opção de recuperação removida",
-    "Not currently indexing messages for any room.": "Atualmente, mensagens de nenhuma sala estão sendo armazenadas.",
-    "Currently indexing: %(currentRoom)s": "Armazenando no momento: %(currentRoom)s",
-    "Indexed messages:": "Mensagens armazenadas:",
-    "Indexed rooms:": "Salas armazenadas:",
-    "Message downloading sleep time(ms)": "Tempo de espera entre o download de mensagens (ms)",
     "The call could not be established": "Não foi possível iniciar a chamada",
     "You can only pin up to %(count)s widgets": {
         "other": "Você pode fixar até %(count)s widgets"
@@ -1513,9 +1496,6 @@
     "Share your public space": "Compartilhar o seu espaço público",
     "Share invite link": "Compartilhar link de convite",
     "Click to copy": "Clique para copiar",
-    "Your private space": "O seu espaço privado",
-    "Your public space": "O seu espaço público",
-    "Open space for anyone, best for communities": "Abra espaços para todos, especialmente para comunidades",
     "Create a space": "Criar um espaço",
     "Decrypted event source": "Fonte de evento descriptografada",
     "Invite by username": "Convidar por nome de usuário",
@@ -1556,9 +1536,6 @@
     "Private (invite only)": "Privado (convite apenas)",
     "You have no ignored users.": "Você não tem usuários ignorados.",
     "Space information": "Informações do espaço",
-    "Images, GIFs and videos": "Imagens, GIFs e vídeos",
-    "Code blocks": "Blocos de código",
-    "Keyboard shortcuts": "Teclas de atalho do teclado",
     "Mentions & keywords": "Menções e palavras-chave",
     "Global": "Global",
     "New keyword": "Nova palavra-chave",
@@ -1572,8 +1549,6 @@
     "Show all rooms": "Mostrar todas as salas",
     "You can change these anytime.": "Você pode mudá-los a qualquer instante.",
     "Address": "Endereço",
-    "e.g. my-space": "e.g. meu-espaco",
-    "Please enter a name for the space": "Por favor entre o nome do espaço",
     "Connecting": "Conectando",
     "unknown person": "pessoa desconhecida",
     "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
@@ -1587,9 +1562,7 @@
     "Guests can join a space without having an account.": "Convidados podem se juntar a um espaço sem ter uma conta.",
     "Failed to update the history visibility of this space": "Falha ao atualizar a visibilidade do histórico deste espaço",
     "Failed to update the guest access of this space": "Falha ao atualizar o acesso de convidados a este espaço",
-    "Add some details to help people recognise it.": "Adicione alguns detalhes para ajudar as pessoas a reconhecê-lo.",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
-    "Invite only, best for yourself or teams": "Somente convite, melhor para si mesmo(a) ou para equipes",
     "Delete avatar": "Remover foto de perfil",
     "More": "Mais",
     "Show sidebar": "Exibir a barra lateral",
@@ -1684,7 +1657,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "Other rooms": "Outras salas",
     "That's fine": "Isso é bom",
     "You cannot place calls without a connection to the server.": "Você não pode fazer chamadas sem uma conexão com o servidor.",
     "Connectivity to the server has been lost": "A conectividade com o servidor foi perdida",
@@ -1790,8 +1762,6 @@
     "Spaces to show": "Espaços para mostrar",
     "Sidebar": "Barra lateral",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros.",
-    "Displaying time": "Exibindo tempo",
-    "To view all keyboard shortcuts, <a>click here</a>.": "Para ver todos os atalhos do teclado, <a>clique aqui</a>.",
     "Show tray icon and minimise window to it on close": "Mostrar o ícone da bandeja e minimizar a janela ao fechar",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atualizando espaço...",
@@ -2017,7 +1987,9 @@
         "identity_server": "Servidor de identidade",
         "integration_manager": "Gerenciador de integrações",
         "qr_code": "Código QR",
-        "feedback": "Fale conosco"
+        "feedback": "Fale conosco",
+        "all_rooms": "Todas as salas",
+        "orphan_rooms": "Outras salas"
     },
     "action": {
         "continue": "Continuar",
@@ -2345,7 +2317,30 @@
             "timeline_image_size_large": "Grande"
         },
         "inline_url_previews_room_account": "Ativar, para esta sala, a visualização de links (só afeta você)",
-        "inline_url_previews_room": "Ativar, para todos os participantes desta sala, a visualização de links"
+        "inline_url_previews_room": "Ativar, para todos os participantes desta sala, a visualização de links",
+        "security": {
+            "message_search_disable_warning": "Se desativado, as mensagens de salas criptografadas não aparecerão em resultados de buscas.",
+            "message_search_indexing_idle": "Atualmente, mensagens de nenhuma sala estão sendo armazenadas.",
+            "message_search_indexing": "Armazenando no momento: %(currentRoom)s",
+            "message_search_intro": "%(brand)s está armazenando de forma segura as mensagens criptografadas localmente, para que possam aparecer nos resultados das buscas:",
+            "message_search_space_used": "Espaço usado:",
+            "message_search_indexed_messages": "Mensagens armazenadas:",
+            "message_search_indexed_rooms": "Salas armazenadas:",
+            "message_search_room_progress": "%(doneRooms)s de %(totalRooms)s",
+            "message_search_sleep_time": "Tempo de espera entre o download de mensagens (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Lista de salas",
+            "keyboard_heading": "Teclas de atalho do teclado",
+            "keyboard_view_shortcuts_button": "Para ver todos os atalhos do teclado, <a>clique aqui</a>.",
+            "time_heading": "Exibindo tempo",
+            "composer_heading": "Campo de texto",
+            "code_blocks_heading": "Blocos de código",
+            "media_heading": "Imagens, GIFs e vídeos",
+            "autocomplete_delay": "Atraso no preenchimento automático (ms)",
+            "rm_lifetime": "Duração do marcador de leitura (ms)",
+            "rm_lifetime_offscreen": "Vida útil do marcador de leitura fora da tela (ms)"
+        }
     },
     "devtools": {
         "event_type": "Tipo do Evento",
@@ -2937,7 +2932,9 @@
             "one": "Mostrar %(count)s a mais"
         },
         "show_less": "Mostrar menos",
-        "notification_options": "Alterar notificações"
+        "notification_options": "Alterar notificações",
+        "failed_remove_tag": "Falha ao remover a tag %(tagName)s da sala",
+        "failed_add_tag": "Falha ao adicionar a tag %(tagName)s para a sala"
     },
     "report_content": {
         "missing_reason": "Por favor, descreva porque você está reportando.",
@@ -3030,5 +3027,14 @@
         "pro_type": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
         "existing_issue_link": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
         "send_feedback_action": "Enviar comentário"
+    },
+    "create_space": {
+        "name_required": "Por favor entre o nome do espaço",
+        "name_placeholder": "e.g. meu-espaco",
+        "public_description": "Abra espaços para todos, especialmente para comunidades",
+        "private_description": "Somente convite, melhor para si mesmo(a) ou para equipes",
+        "public_heading": "O seu espaço público",
+        "private_heading": "O seu espaço privado",
+        "add_details_prompt": "Adicione alguns detalhes para ajudar as pessoas a reconhecê-lo."
     }
 }

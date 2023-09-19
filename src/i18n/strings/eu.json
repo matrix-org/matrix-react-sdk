@@ -255,8 +255,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s(e)ko %(monthName)sk %(day)sa",
     "This room is not public. You will not be able to rejoin without an invite.": "Gela hau ez da publikoa. Ezin izango zara berriro elkartu gonbidapenik gabe.",
     "<a>In reply to</a> <pill>": "<a>honi erantzunez:</a> <pill>",
-    "Failed to remove tag %(tagName)s from room": "Huts egin du %(tagName)s etiketa gelatik kentzean",
-    "Failed to add tag %(tagName)s to room": "Huts egin du %(tagName)s etiketa gelara gehitzean",
     "You don't currently have any stickerpacks enabled": "Ez duzu eranskailu multzorik aktibatuta",
     "Sunday": "Igandea",
     "Notification targets": "Jakinarazpenen helburuak",
@@ -469,8 +467,6 @@
     "Phone numbers": "Telefono zenbakiak",
     "Language and region": "Hizkuntza eta eskualdea",
     "Account management": "Kontuen kudeaketa",
-    "Room list": "Gelen zerrenda",
-    "Autocomplete delay (ms)": "Automatikoki osatzeko atzerapena (ms)",
     "Roles & Permissions": "Rolak eta baimenak",
     "Security & Privacy": "Segurtasuna eta pribatutasuna",
     "Encryption": "Zifratzea",
@@ -519,7 +515,6 @@
     "Room information": "Gelako informazioa",
     "Room version": "Gela bertsioa",
     "Room version:": "Gela bertsioa:",
-    "Composer": "Idazlekua",
     "Changes to who can read history will only apply to future messages in this room. The visibility of existing history will be unchanged.": "Historiala nork irakurri dezakeen aldatzea gelak honetara aurrerantzean bidalitako mezuei besterik ez zaie aplikatuko. Badagoen historialaren ikusgaitasuna ez da aldatuko.",
     "Bulk options": "Aukera masiboak",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Egiaztatu erabiltzaile hau fidagarritzat markatzeko. Honek bakea ematen dizu muturretik muturrerako zifratutako mezuak erabiltzean.",
@@ -696,8 +691,6 @@
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Ez baduzu <server /> erabili nahi jendea aurkitzeko eta zure kontaktuek zu aurkitzeko, idatzi beste identitate-zerbitzari bat behean.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Identitate-zerbitzari bat erabiltzea aukerazkoa da. Identitate-zerbitzari bat ez erabiltzea erabakitzen baduzu, ezin izango zaituztete e-mail edo telefonoa erabilita aurkitu eta ezin izango dituzu besteak e-mail edo telefonoa erabiliz gonbidatu.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Onartu %(serverName)s identitate-zerbitzariaren erabilera baldintzak besteek zu e-mail helbidea edo telefonoa erabiliz aurkitzea ahalbidetzeko.",
-    "Read Marker lifetime (ms)": "Orri-markagailuaren biziraupena (ms)",
-    "Read Marker off-screen lifetime (ms)": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)",
     "Error changing power level requirement": "Errorea botere-maila eskaria aldatzean",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Errore bat gertatu da gelaren botere-maila eskariak aldatzean. Baieztatu baimen bahikoa duzula eta saiatu berriro.",
     "Error changing power level": "Errorea botere-maila aldatzean",
@@ -938,16 +931,8 @@
     "Create key backup": "Sortu gakoen babes-kopia",
     "This session is encrypting history using the new recovery method.": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Desgaituz gero, zifratutako geletako mezuak ez dira bilaketen emaitzetan agertuko.",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s-ek zifratutako mezuak cache lokalean gordetzen ditu modu seguruan bilaketen emaitzen ager daitezen:",
-    "Space used:": "Erabilitako espazioa:",
-    "Indexed messages:": "Indexatutako mezuak:",
-    "Indexed rooms:": "Indexatutako gelak:",
-    "Message downloading sleep time(ms)": "Mezuen deskargaren itxarote tartea (ms)",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
     "Mark all as read": "Markatu denak irakurrita gisa",
-    "Not currently indexing messages for any room.": "Orain ez da inolako gelako mezurik indexatzen.",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s / %(totalRooms)s",
     "Scroll to most recent messages": "Korritu azken mezuetara",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Errore bat gertatu da gelaren ordezko helbideak eguneratzean. Agian zerbitzariak ez du onartzen edo une bateko akatsa izan da.",
     "Local address": "Helbide lokala",
@@ -960,7 +945,6 @@
     "Enter a server name": "Sartu zerbitzari-izena",
     "Looks good": "Itxura ona du",
     "Can't find this server or its room list": "Ezin da zerbitzaria aurkitu edo honen gelen zerrenda",
-    "All rooms": "Gela guztiak",
     "Your server": "Zure zerbitzaria",
     "Add a new server": "Gehitu zerbitzari berria",
     "Enter the name of a new server you want to explore.": "Sartu arakatu nahi duzun zerbitzari berriaren izena.",
@@ -1014,7 +998,6 @@
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
     "Unable to upload": "Ezin izan da igo",
     "Unable to query secret storage status": "Ezin izan da biltegi sekretuaren egoera kontsultatu",
-    "Currently indexing: %(currentRoom)s": "Orain indexatzen: %(currentRoom)s",
     "New login. Was this you?": "Saio berria. Zu izan zara?",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
@@ -1130,7 +1113,8 @@
         "identity_server": "Identitate zerbitzaria",
         "integration_manager": "Integrazio-kudeatzailea",
         "qr_code": "QR kodea",
-        "feedback": "Iruzkinak"
+        "feedback": "Iruzkinak",
+        "all_rooms": "Gela guztiak"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1356,7 +1340,25 @@
             "timeline_image_size_default": "Lehenetsia"
         },
         "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
-        "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat"
+        "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
+        "security": {
+            "message_search_disable_warning": "Desgaituz gero, zifratutako geletako mezuak ez dira bilaketen emaitzetan agertuko.",
+            "message_search_indexing_idle": "Orain ez da inolako gelako mezurik indexatzen.",
+            "message_search_indexing": "Orain indexatzen: %(currentRoom)s",
+            "message_search_intro": "%(brand)s-ek zifratutako mezuak cache lokalean gordetzen ditu modu seguruan bilaketen emaitzen ager daitezen:",
+            "message_search_space_used": "Erabilitako espazioa:",
+            "message_search_indexed_messages": "Indexatutako mezuak:",
+            "message_search_indexed_rooms": "Indexatutako gelak:",
+            "message_search_room_progress": "%(doneRooms)s / %(totalRooms)s",
+            "message_search_sleep_time": "Mezuen deskargaren itxarote tartea (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Gelen zerrenda",
+            "composer_heading": "Idazlekua",
+            "autocomplete_delay": "Automatikoki osatzeko atzerapena (ms)",
+            "rm_lifetime": "Orri-markagailuaren biziraupena (ms)",
+            "rm_lifetime_offscreen": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)"
+        }
     },
     "devtools": {
         "event_type": "Gertaera mota",
@@ -1721,7 +1723,9 @@
             "one": "Erakutsi %(count)s gehiago"
         },
         "show_less": "Erakutsi gutxiago",
-        "notification_options": "Jakinarazpen ezarpenak"
+        "notification_options": "Jakinarazpen ezarpenak",
+        "failed_remove_tag": "Huts egin du %(tagName)s etiketa gelatik kentzean",
+        "failed_add_tag": "Huts egin du %(tagName)s etiketa gelara gehitzean"
     },
     "report_content": {
         "missing_reason": "Idatzi zergatik salatzen duzun.",

@@ -36,7 +36,6 @@
     "Notifications": "התראות",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
-    "Failed to add tag %(tagName)s to room": "נכשל בעת הוספת תג %(tagName)s לחדר",
     "Notification targets": "יעדי התראה",
     "Today": "היום",
     "Friday": "שישי",
@@ -68,7 +67,6 @@
     "Error encountered (%(errorDetail)s).": "ארעה שגיעה %(errorDetail)s .",
     "Low Priority": "עדיפות נמוכה",
     "Off": "ללא",
-    "Failed to remove tag %(tagName)s from room": "נכשל בעת נסיון הסרת תג %(tagName)s מהחדר",
     "Thank you!": "רב תודות!",
     "Your %(brand)s is misconfigured": "ה %(brand)s שלך מוגדר באופן שגוי",
     "Add Phone Number": "הוסף מספר טלפון",
@@ -650,7 +648,6 @@
     "Enter the name of a new server you want to explore.": "הזן את שם השרת החדש שתרצה לחקור.",
     "Add a new server": "הוסף שרת חדש",
     "Your server": "השרת שלכם",
-    "All rooms": "כל החדרים",
     "Can't find this server or its room list": "לא ניתן למצוא שרת זה או את רשימת החדרים שלו",
     "Looks good": "נראה טוב",
     "Enter a server name": "הכנס שם שרת",
@@ -1001,11 +998,6 @@
     "Import E2E room keys": "ייבא מפתחות לחדר E2E",
     "<not supported>": "<לא נתמך>",
     "Unignore": "הסר התעלמות",
-    "Read Marker off-screen lifetime (ms)": "חיי סמן קריאה מחוץ למסך (ms)",
-    "Read Marker lifetime (ms)": "חיי סמן קריאה (ms)",
-    "Autocomplete delay (ms)": "עיכוב השלמה אוטומטית (ms)",
-    "Composer": "כתבן",
-    "Room list": "רשימת חדרים",
     "Always show the window menu bar": "הראה תמיד את שורת תפריט החלונות",
     "Room ID or address of ban list": "זהות החדר או כתובת של רשימת החסומים",
     "If this isn't what you want, please use a different tool to ignore users.": "אם זה לא מה שאתה רוצה, השתמש בכלי אחר כדי להתעלם ממשתמשים.",
@@ -1324,15 +1316,6 @@
     "Transfer": "לְהַעֲבִיר",
     "Failed to transfer call": "העברת השיחה נכשלה",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
-    "Message downloading sleep time(ms)": "הורדת זמן שינה (ms)",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s מתוך %(totalRooms)s",
-    "Indexed rooms:": "חדרים רשומים:",
-    "Indexed messages:": "הודעות באינדקס:",
-    "Space used:": "שטח משומש:",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s מאחסן באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש:",
-    "Currently indexing: %(currentRoom)s": "אינדקס כרגע: %(currentRoom)s",
-    "Not currently indexing messages for any room.": "כרגע לא מוסיף לאינדקס הודעות עבור אף חדר.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "אם מושבת, הודעות מחדרים מוצפנים לא יופיעו בתוצאות החיפוש.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "אם לא הסרת את שיטת השחזור, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
     "Recovery Method Removed": "שיטת השחזור הוסרה",
@@ -1515,7 +1498,6 @@
     "Copy link to thread": "העתק קישור לשרשור",
     "Unknown failure": "כשל לא ידוע",
     "You have no ignored users.": "אין לך משתמשים שהתעלמו מהם.",
-    "Displaying time": "מציג זמן",
     "Keyboard": "מקלדת",
     "Global": "כללי",
     "Loading new room": "טוען חדר חדש",
@@ -1551,7 +1533,6 @@
     "unknown person": "אדם לא ידוע",
     "Waiting for you to verify on your other device…": "ממתין לאישור שלך במכשיר השני…",
     "Confirm the emoji below are displayed on both devices, in the same order:": "ודא ואשר שהסמלים הבאים מופיעים בשני המכשירים ובאותו הסדר:",
-    "Other rooms": "חדרים אחרים",
     "This homeserver has been blocked by its administrator.": "שרת זה נחסם על ידי מנהלו.",
     "The user you called is busy.": "המשתמש עסוק כרגע.",
     "User Busy": "המשתמש עסוק",
@@ -1596,7 +1577,6 @@
     },
     "Verification requested": "התבקש אימות",
     "Your server doesn't support disabling sending read receipts.": "השרת שלכם לא תומך בביטול שליחת אישורי קריאה.",
-    "Share your activity and status with others.": "שתפו את הפעילות והסטטוס שלכם עם אחרים.",
     "Send your first message to invite <displayName/> to chat": "שילחו את ההודעה הראשונה שלכם להזמין את <displayName/> לצ'אט",
     "User Directory": "ספריית משתמשים",
     "Space Autocomplete": "השלמה אוטומטית של חלל העבודה",
@@ -1693,11 +1673,8 @@
     "Home is useful for getting an overview of everything.": "מסך הבית עוזר לסקירה כללית.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "מרחבי עבודה הם דרך לקבץ חדרים ואנשים. במקביל למרחבי העבודה בהם אתם נמצאים ניתן להשתמש גם בכאלה שנבנו מראש.",
     "Spaces to show": "מרחבי עבודה להצגה",
-    "Images, GIFs and videos": "תמונות, GIF ווידאו",
-    "Code blocks": "מקטעי קוד",
     "Show polls button": "הצג את כפתור הסקרים",
     "Surround selected text when typing special characters": "סמן טקסט כאשר מקלידים סמלים מיוחדים",
-    "To view all keyboard shortcuts, <a>click here</a>.": "כדי לצפות בכל קיצורי המקלדת , <a>לחצו כאן</a>.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "@mentions & keywords": "אזכורים ומילות מפתח",
     "Mentions & keywords": "אזכורים ומילות מפתח",
@@ -1754,13 +1731,7 @@
     "Failed to update the guest access of this space": "עדכון גישת האורח של מרחב העבודה הזה נכשל",
     "Edit settings relating to your space.": "שינוי הגדרות הנוגעות למרחב העבודה שלכם.",
     "Failed to save space settings.": "כישלון בשמירת הגדרות מרחב העבודה.",
-    "Your private space": "מרחב העבודה הפרטי שלך",
-    "Your public space": "מרחב העבודה הציבורי שלך",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
-    "Open space for anyone, best for communities": "מרחב עבודה פתוח לכולם, מיועד לקהילות",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "מרחבי עבודה הם דרך חדשה לקבץ חדרים ואנשים. איזה סוג של מרחב עבודה אתם רוצים ליצור? תוכלו לשנות זאת מאוחר יותר.",
-    "e.g. my-space": "לדוגמא מרחב העבודה שלי",
-    "Please enter a name for the space": "נא הגדירו שם עבור מרחב העבודה",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
     "The user's homeserver does not support the version of the space.": "השרת של המשתמש אינו תומך בגירסא זו של מרחבי עבודה.",
@@ -1781,7 +1752,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
-    "Keyboard shortcuts": "קיצורי מקלדת",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
     "New keyword": "מילת מפתח חדשה",
     "Keyword": "מילת מפתח",
@@ -1824,7 +1794,6 @@
     "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה.",
     "Set a new account password…": "הגדרת סיסמה חדשה לחשבונך…",
     "Send email": "שלח אימייל",
-    "Room directory": "רשימת חדרים",
     "New room": "חדר חדש",
     "common": {
         "about": "אודות",
@@ -1900,7 +1869,9 @@
         "identity_server": "שרת הזדהות",
         "integration_manager": "מנהל אינטגרציה",
         "qr_code": "קוד QR",
-        "feedback": "משוב"
+        "feedback": "משוב",
+        "all_rooms": "כל החדרים",
+        "orphan_rooms": "חדרים אחרים"
     },
     "action": {
         "continue": "המשך",
@@ -2220,7 +2191,32 @@
             "timeline_image_size_large": "גדול"
         },
         "inline_url_previews_room_account": "הראה תצוגה מקדימה של קישורים בחדר זה (משפיע רק עליכם)",
-        "inline_url_previews_room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים"
+        "inline_url_previews_room": "אפשר לחברים בחדר זה לצפות בתצוגת קישורים",
+        "security": {
+            "message_search_disable_warning": "אם מושבת, הודעות מחדרים מוצפנים לא יופיעו בתוצאות החיפוש.",
+            "message_search_indexing_idle": "כרגע לא מוסיף לאינדקס הודעות עבור אף חדר.",
+            "message_search_indexing": "אינדקס כרגע: %(currentRoom)s",
+            "message_search_intro": "%(brand)s מאחסן באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש:",
+            "message_search_space_used": "שטח משומש:",
+            "message_search_indexed_messages": "הודעות באינדקס:",
+            "message_search_indexed_rooms": "חדרים רשומים:",
+            "message_search_room_progress": "%(doneRooms)s מתוך %(totalRooms)s",
+            "message_search_sleep_time": "הורדת זמן שינה (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "רשימת חדרים",
+            "keyboard_heading": "קיצורי מקלדת",
+            "keyboard_view_shortcuts_button": "כדי לצפות בכל קיצורי המקלדת , <a>לחצו כאן</a>.",
+            "time_heading": "מציג זמן",
+            "presence_description": "שתפו את הפעילות והסטטוס שלכם עם אחרים.",
+            "composer_heading": "כתבן",
+            "code_blocks_heading": "מקטעי קוד",
+            "media_heading": "תמונות, GIF ווידאו",
+            "room_directory_heading": "רשימת חדרים",
+            "autocomplete_delay": "עיכוב השלמה אוטומטית (ms)",
+            "rm_lifetime": "חיי סמן קריאה (ms)",
+            "rm_lifetime_offscreen": "חיי סמן קריאה מחוץ למסך (ms)"
+        }
     },
     "devtools": {
         "event_type": "סוג ארוע",
@@ -2810,7 +2806,9 @@
             "other": "הצג עוד %(count)s"
         },
         "show_less": "הצג פחות",
-        "notification_options": "אפשרויות התרעות"
+        "notification_options": "אפשרויות התרעות",
+        "failed_remove_tag": "נכשל בעת נסיון הסרת תג %(tagName)s מהחדר",
+        "failed_add_tag": "נכשל בעת הוספת תג %(tagName)s לחדר"
     },
     "report_content": {
         "missing_reason": "אנא מלאו מדוע אתם מדווחים.",
@@ -2905,5 +2903,13 @@
         "pro_type": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
         "existing_issue_link": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
         "send_feedback_action": "שלח משוב"
+    },
+    "create_space": {
+        "name_required": "נא הגדירו שם עבור מרחב העבודה",
+        "name_placeholder": "לדוגמא מרחב העבודה שלי",
+        "explainer": "מרחבי עבודה הם דרך חדשה לקבץ חדרים ואנשים. איזה סוג של מרחב עבודה אתם רוצים ליצור? תוכלו לשנות זאת מאוחר יותר.",
+        "public_description": "מרחב עבודה פתוח לכולם, מיועד לקהילות",
+        "public_heading": "מרחב העבודה הציבורי שלך",
+        "private_heading": "מרחב העבודה הפרטי שלך"
     }
 }

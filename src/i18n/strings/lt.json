@@ -625,11 +625,6 @@
     "This is your list of users/servers you have blocked - don't leave the room!": "Tai yra jūsų užblokuotų vartotojų/serverių sąrašas - neišeikite iš kambario!",
     "Verify this user by confirming the following emoji appear on their screen.": "Patvirtinkite šį vartotoją, įsitikindami, kad jo ekrane rodomas toliau esantis jaustukas.",
     "⚠ These settings are meant for advanced users.": "⚠ Šie nustatymai yra skirti pažengusiems vartotojams.",
-    "Room list": "Kambarių sąrašas",
-    "Composer": "Rašymas",
-    "Autocomplete delay (ms)": "Automatinio užbaigimo vėlinimas (ms)",
-    "Read Marker lifetime (ms)": "Skaitymo žymeklio veikimo laikas (ms)",
-    "Read Marker off-screen lifetime (ms)": "Skaitymo žymeklio ne ekraninis veikimo laikas (ms)",
     "You can use <code>/help</code> to list available commands. Did you mean to send this as a message?": "Jūs galite naudoti <code>/help</code>, kad pamatytumėte galimų komandų sąrašą. Ar norėjote siųsti tai kaip žinutę?",
     "Room avatar": "Kambario pseudoportretas",
     "Verify by comparing unique emoji.": "Patvirtinti palyginant unikalius jaustukus.",
@@ -816,7 +811,6 @@
     "Unexpected server error trying to leave the room": "Netikėta serverio klaida bandant išeiti iš kambario",
     "Not Trusted": "Nepatikimas",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
-    "Failed to remove tag %(tagName)s from room": "Nepavyko pašalinti žymos %(tagName)s iš kambario",
     "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
     "Remove %(count)s messages": {
         "one": "Pašalinti 1 žinutę",
@@ -1429,13 +1423,7 @@
     "Sessions": "Sesijos",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bendrinti anoniminius duomenis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių.",
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
-    "Images, GIFs and videos": "Paveikslėliai, GIF ir vaizdo įrašai",
-    "Code blocks": "Kodo blokai",
     "Your server doesn't support disabling sending read receipts.": "Jūsų serveris nepalaiko skaitymo kvitų siuntimo išjungimo.",
-    "Share your activity and status with others.": "Dalinkitės savo veikla ir būkle su kitais.",
-    "Displaying time": "Rodomas laikas",
-    "To view all keyboard shortcuts, <a>click here</a>.": "Norint peržiūrėti visus sparčiuosius klavišus, <a>paspauskite čia</a>.",
-    "Keyboard shortcuts": "Spartieji klavišai",
     "Keyboard": "Klaviatūra",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Spell check": "Rašybos tikrinimas",
@@ -1482,8 +1470,6 @@
     "Back to thread": "Grįžti prie temos",
     "Room members": "Kambario nariai",
     "Back to chat": "Grįžti į pokalbį",
-    "Other rooms": "Kiti kambariai",
-    "All rooms": "Visi kambariai",
     "You were disconnected from the call. (Error: %(message)s)": "Jūsų skambutis buvo nutrauktas. (Klaida: %(message)s)",
     "Connection lost": "Ryšys prarastas",
     "Failed to join": "Nepavyko prisijungti",
@@ -1514,16 +1500,8 @@
     "Click to copy": "Spustelėkite kad nukopijuoti",
     "Show all rooms": "Rodyti visus kambarius",
     "You can change these anytime.": "Jūs tai galite pakeisti bet kada.",
-    "Add some details to help people recognise it.": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti.",
-    "Your private space": "Jūsų privati erdvė",
-    "Your public space": "Jūsų vieša erdvė",
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
-    "Invite only, best for yourself or teams": "Tik pakviestiems, geriausia sau arba komandoms",
-    "Open space for anyone, best for communities": "Atvira erdvė visiems, geriausia bendruomenėms",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Erdvės - tai naujas kambarių ir žmonių grupavimo būdas. Kokią erdvę norite sukurti? Vėliau tai galėsite pakeisti.",
     "Create a space": "Sukurti erdvę",
-    "e.g. my-space": "pvz., mano-erdvė",
-    "Please enter a name for the space": "Prašome įvesti pavadinimą šiai erdvei",
     "Space selection": "Erdvės pasirinkimas",
     "Match system": "Atitikti sistemą",
     "Pin to sidebar": "Prisegti prie šoninės juostos",
@@ -1747,7 +1725,9 @@
         "cross_signing": "Kryžminis pasirašymas",
         "identity_server": "Tapatybės serveris",
         "integration_manager": "Integracijų tvarkyklė",
-        "feedback": "Atsiliepimai"
+        "feedback": "Atsiliepimai",
+        "all_rooms": "Visi kambariai",
+        "orphan_rooms": "Kiti kambariai"
     },
     "action": {
         "continue": "Tęsti",
@@ -2081,7 +2061,20 @@
             "timeline_image_size_large": "Didelis"
         },
         "inline_url_previews_room_account": "Įjungti URL nuorodų peržiūras šiame kambaryje (įtakoja tik jus)",
-        "inline_url_previews_room": "Įjungti URL nuorodų peržiūras kaip numatytasias šiame kambaryje esantiems dalyviams"
+        "inline_url_previews_room": "Įjungti URL nuorodų peržiūras kaip numatytasias šiame kambaryje esantiems dalyviams",
+        "preferences": {
+            "room_list_heading": "Kambarių sąrašas",
+            "keyboard_heading": "Spartieji klavišai",
+            "keyboard_view_shortcuts_button": "Norint peržiūrėti visus sparčiuosius klavišus, <a>paspauskite čia</a>.",
+            "time_heading": "Rodomas laikas",
+            "presence_description": "Dalinkitės savo veikla ir būkle su kitais.",
+            "composer_heading": "Rašymas",
+            "code_blocks_heading": "Kodo blokai",
+            "media_heading": "Paveikslėliai, GIF ir vaizdo įrašai",
+            "autocomplete_delay": "Automatinio užbaigimo vėlinimas (ms)",
+            "rm_lifetime": "Skaitymo žymeklio veikimo laikas (ms)",
+            "rm_lifetime_offscreen": "Skaitymo žymeklio ne ekraninis veikimo laikas (ms)"
+        }
     },
     "devtools": {
         "event_type": "Įvykio tipas",
@@ -2592,7 +2585,8 @@
             "other": "Rodyti dar %(count)s"
         },
         "show_less": "Rodyti mažiau",
-        "notification_options": "Pranešimų parinktys"
+        "notification_options": "Pranešimų parinktys",
+        "failed_remove_tag": "Nepavyko pašalinti žymos %(tagName)s iš kambario"
     },
     "report_content": {
         "missing_reason": "Įrašykite kodėl pranešate.",
@@ -2654,5 +2648,15 @@
         "pro_type": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
         "existing_issue_link": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
         "send_feedback_action": "Siųsti atsiliepimą"
+    },
+    "create_space": {
+        "name_required": "Prašome įvesti pavadinimą šiai erdvei",
+        "name_placeholder": "pvz., mano-erdvė",
+        "explainer": "Erdvės - tai naujas kambarių ir žmonių grupavimo būdas. Kokią erdvę norite sukurti? Vėliau tai galėsite pakeisti.",
+        "public_description": "Atvira erdvė visiems, geriausia bendruomenėms",
+        "private_description": "Tik pakviestiems, geriausia sau arba komandoms",
+        "public_heading": "Jūsų vieša erdvė",
+        "private_heading": "Jūsų privati erdvė",
+        "add_details_prompt": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti."
     }
 }

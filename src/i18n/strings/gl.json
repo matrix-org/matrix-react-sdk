@@ -255,8 +255,6 @@
     "File to import": "Ficheiro a importar",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala non é pública. Non poderá volver a ela sen un convite.",
-    "Failed to remove tag %(tagName)s from room": "Fallo ao eliminar a etiqueta %(tagName)s da sala",
-    "Failed to add tag %(tagName)s to room": "Fallo ao engadir a etiqueta %(tagName)s a sala",
     "You don't currently have any stickerpacks enabled": "Non ten paquetes de iconas activados",
     "Sunday": "Domingo",
     "Notification targets": "Obxectivos das notificacións",
@@ -639,11 +637,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Se esto non é o que queres, usa unha ferramenta diferente para ignorar usuarias.",
     "Room ID or address of ban list": "ID da sala ou enderezo da listaxe de bloqueo",
     "Always show the window menu bar": "Mostrar sempre a barra de menú da ventá",
-    "Room list": "Listaxe de Salas",
-    "Composer": "Editor",
-    "Autocomplete delay (ms)": "Retraso no autocompletado (ms)",
-    "Read Marker lifetime (ms)": "Duración do marcador de lectura (ms)",
-    "Read Marker off-screen lifetime (ms)": "Duración do marcador de lectura fóra de pantall (ms)",
     "Session ID:": "ID da sesión:",
     "Session key:": "Chave da sesión:",
     "Bulk options": "Opcións agrupadas",
@@ -855,7 +848,6 @@
     "Enter a server name": "Escribe un nome de servidor",
     "Looks good": "Pinta ben",
     "Can't find this server or its room list": "Non se atopa o servidor ou a súa lista de salas",
-    "All rooms": "Todas as salas",
     "Your server": "O teu servidor",
     "Add a new server": "Engadir novo servidor",
     "Server name": "Nome do servidor",
@@ -1055,15 +1047,6 @@
     "Recovery Method Removed": "Método de Recuperación eliminado",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se fixeches esto sen querer, podes configurar Mensaxes Seguras nesta sesión e volverá a cifrar as mensaxes da sesión cun novo método de recuperación.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non eliminaches o método de recuperación, un atacante podería estar a intentar acceder á túa conta. Cambia inmediatamente o contrasinal da conta e establece un novo método de recuperación nos Axustes.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Se está desactivado, as mensaxes das salas cifradas non aparecerán nos resultados das buscas.",
-    "Not currently indexing messages for any room.": "Non se están indexando as mensaxes de ningunha sala.",
-    "Currently indexing: %(currentRoom)s": "Indexando actualmente: %(currentRoom)s",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s está gardando de xeito seguro na caché local mensaxes cifradas para que aparezan nos resultados das buscas:",
-    "Space used:": "Espazo utilizado:",
-    "Indexed messages:": "Mensaxes indexadas:",
-    "Indexed rooms:": "Salas indexadas:",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s de %(totalRooms)s",
-    "Message downloading sleep time(ms)": "Tempo de espera da mensaxe de descarga(ms)",
     "Message deleted on %(date)s": "Mensaxe eliminada o %(date)s",
     "Wrong file type": "Tipo de ficheiro erróneo",
     "Looks good!": "Pinta ben!",
@@ -1527,10 +1510,6 @@
     "Share your public space": "Comparte o teu espazo público",
     "Share invite link": "Compartir ligazón do convite",
     "Click to copy": "Click para copiar",
-    "Your private space": "O teu espazo privado",
-    "Your public space": "O teu espazo público",
-    "Invite only, best for yourself or teams": "Só con convite, mellor para ti ou para equipos",
-    "Open space for anyone, best for communities": "Espazo aberto para calquera, mellor para comunidades",
     "Create a space": "Crear un espazo",
     "This homeserver has been blocked by its administrator.": "O servidor de inicio foi bloqueado pola súa administración.",
     "Make sure the right people have access. You can invite more later.": "Asegúrate de que as persoas axeitadas teñen acceso. Podes convidar a outras máis tarde.",
@@ -1560,7 +1539,6 @@
     "Edit devices": "Editar dispositivos",
     "Invite with email or username": "Convida con email ou nome de usuaria",
     "You can change these anytime.": "Poderás cambialo en calquera momento.",
-    "Add some details to help people recognise it.": "Engade algún detalle para que sexa recoñecible.",
     "Review to ensure your account is safe": "Revisa para asegurarte de que a túa conta está protexida",
     "Invite to just this room": "Convida só a esta sala",
     "We couldn't create your DM.": "Non puidemos crear o teu MD.",
@@ -1618,7 +1596,6 @@
     "No microphone found": "Non atopamos ningún micrófono",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
     "Unable to access your microphone": "Non se puido acceder ao micrófono",
-    "Please enter a name for the space": "Escribe un nome para o espazo",
     "Connecting": "Conectando",
     "Search names and descriptions": "Buscar nome e descricións",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
@@ -1667,10 +1644,6 @@
         "other": "Mostrar outras %(count)s vistas previas"
     },
     "Space information": "Información do Espazo",
-    "Images, GIFs and videos": "Imaxes, GIFs e vídeos",
-    "Code blocks": "Bloques de código",
-    "Displaying time": "Mostrar hora",
-    "Keyboard shortcuts": "Atallos de teclado",
     "There was an error loading your notification settings.": "Houbo un erro ao cargar os axustes de notificación.",
     "Mentions & keywords": "Mencións e palabras chave",
     "Global": "Global",
@@ -1688,7 +1661,6 @@
     "Failed to update the guest access of this space": "Fallou a actualización do acceso de convidadas ao espazo",
     "Failed to update the visibility of this space": "Fallou a actualización da visibilidade do espazo",
     "Address": "Enderezo",
-    "e.g. my-space": "ex. o-meu-espazo",
     "Some invites couldn't be sent": "Non se puideron enviar algúns convites",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Convidamos as outras, pero as persoas de aquí embaixo non foron convidadas a <RoomName/>",
     "Transfer Failed": "Fallou a transferencia",
@@ -1890,7 +1862,6 @@
         "one": "Confirma a desconexión deste dispositivo usando Single Sign On para probar a túa identidade.",
         "other": "Confirma a desconexión destos dispositivos usando Single Sign On para probar a túa identidade."
     },
-    "Other rooms": "Outras salas",
     "Automatically send debug logs on any error": "Enviar automáticamente rexistros de depuración para calquera fallo",
     "Use a more compact 'Modern' layout": "Usar unha disposición 'Moderna' máis compacta",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
@@ -1946,7 +1917,6 @@
     "No votes cast": "Sen votos",
     "Share location": "Compartir localización",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
-    "To view all keyboard shortcuts, <a>click here</a>.": "Para ver tódolos atallos de teclado, <a>preme aquí</a>.",
     "That's fine": "Iso está ben",
     "You cannot place calls without a connection to the server.": "Non podes facer chamadas se non tes conexión ao servidor.",
     "Connectivity to the server has been lost": "Perdeuse a conexión ao servidor",
@@ -2060,7 +2030,6 @@
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
     "Show polls button": "Mostrar botón de enquisas",
     "You are sharing your live location": "Vas compartir en directo a túa localización",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Desmarcar se tamén queres eliminar as mensaxes do sistema acerca da usuaria (ex. cambios na membresía, cambios no perfil...)",
@@ -2199,7 +2168,6 @@
         "one": "uníuse %(count)s persoa",
         "other": "%(count)s persoas uníronse"
     },
-    "Failed to set direct message tag": "Non se estableceu a etiqueta de mensaxe directa",
     "Read receipts": "Resgados de lectura",
     "You were disconnected from the call. (Error: %(message)s)": "Desconectouse a chamada. (Erro: %(message)s)",
     "Connection lost": "Perdeuse a conexión",
@@ -2260,7 +2228,6 @@
     "Spell check": "Corrección",
     "We're creating a room with %(names)s": "Estamos creando unha sala con %(names)s",
     "Your server doesn't support disabling sending read receipts.": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
-    "Share your activity and status with others.": "Comparte a túa actividade e estado con outras persoas.",
     "Inactive for %(inactiveAgeDays)s+ days": "Inactiva durante %(inactiveAgeDays)s+ días",
     "Session details": "Detalles da sesión",
     "IP address": "Enderezo IP",
@@ -2404,7 +2371,9 @@
         "identity_server": "Servidor de identidade",
         "integration_manager": "Xestor de Integracións",
         "qr_code": "Código QR",
-        "feedback": "Comenta"
+        "feedback": "Comenta",
+        "all_rooms": "Todas as salas",
+        "orphan_rooms": "Outras salas"
     },
     "action": {
         "continue": "Continuar",
@@ -2821,7 +2790,31 @@
             "timeline_image_size_large": "Grande"
         },
         "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
-        "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala"
+        "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
+        "security": {
+            "message_search_disable_warning": "Se está desactivado, as mensaxes das salas cifradas non aparecerán nos resultados das buscas.",
+            "message_search_indexing_idle": "Non se están indexando as mensaxes de ningunha sala.",
+            "message_search_indexing": "Indexando actualmente: %(currentRoom)s",
+            "message_search_intro": "%(brand)s está gardando de xeito seguro na caché local mensaxes cifradas para que aparezan nos resultados das buscas:",
+            "message_search_space_used": "Espazo utilizado:",
+            "message_search_indexed_messages": "Mensaxes indexadas:",
+            "message_search_indexed_rooms": "Salas indexadas:",
+            "message_search_room_progress": "%(doneRooms)s de %(totalRooms)s",
+            "message_search_sleep_time": "Tempo de espera da mensaxe de descarga(ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Listaxe de Salas",
+            "keyboard_heading": "Atallos de teclado",
+            "keyboard_view_shortcuts_button": "Para ver tódolos atallos de teclado, <a>preme aquí</a>.",
+            "time_heading": "Mostrar hora",
+            "presence_description": "Comparte a túa actividade e estado con outras persoas.",
+            "composer_heading": "Editor",
+            "code_blocks_heading": "Bloques de código",
+            "media_heading": "Imaxes, GIFs e vídeos",
+            "autocomplete_delay": "Retraso no autocompletado (ms)",
+            "rm_lifetime": "Duración do marcador de lectura (ms)",
+            "rm_lifetime_offscreen": "Duración do marcador de lectura fóra de pantall (ms)"
+        }
     },
     "devtools": {
         "send_custom_account_data_event": "Enviar evento de datos da conta personalizado",
@@ -3525,7 +3518,10 @@
             "one": "Mostrar %(count)s máis"
         },
         "show_less": "Mostrar menos",
-        "notification_options": "Opcións de notificación"
+        "notification_options": "Opcións de notificación",
+        "failed_set_dm_tag": "Non se estableceu a etiqueta de mensaxe directa",
+        "failed_remove_tag": "Fallo ao eliminar a etiqueta %(tagName)s da sala",
+        "failed_add_tag": "Fallo ao engadir a etiqueta %(tagName)s a sala"
     },
     "report_content": {
         "missing_reason": "Escribe a razón do informe.",
@@ -3633,5 +3629,15 @@
         "pro_type": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
         "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
         "send_feedback_action": "Enviar comentario"
+    },
+    "create_space": {
+        "name_required": "Escribe un nome para o espazo",
+        "name_placeholder": "ex. o-meu-espazo",
+        "explainer": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
+        "public_description": "Espazo aberto para calquera, mellor para comunidades",
+        "private_description": "Só con convite, mellor para ti ou para equipos",
+        "public_heading": "O teu espazo público",
+        "private_heading": "O teu espazo privado",
+        "add_details_prompt": "Engade algún detalle para que sexa recoñecible."
     }
 }

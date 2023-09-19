@@ -230,7 +230,6 @@
     "Import room keys": "Importa les claus de la sala",
     "Email": "Correu electrònic",
     "Sunday": "Diumenge",
-    "Failed to add tag %(tagName)s to room": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala",
     "Notification targets": "Objectius de les notificacions",
     "Today": "Avui",
     "Friday": "Divendres",
@@ -262,7 +261,6 @@
     "Error encountered (%(errorDetail)s).": "S'ha trobat un error (%(errorDetail)s).",
     "Low Priority": "Baixa prioritat",
     "Off": "Apagat",
-    "Failed to remove tag %(tagName)s from room": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
     "You do not have permission to start a conference call in this room": "No tens permís per iniciar una conferència telefònica en aquesta sala",
@@ -731,5 +729,9 @@
         "help_about": {
             "brand_version": "Versió de %(brand)s:"
         }
+    },
+    "room_list": {
+        "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
+        "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
     }
 }

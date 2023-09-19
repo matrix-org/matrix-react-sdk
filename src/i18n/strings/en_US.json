@@ -229,7 +229,6 @@
     "Noisy": "Noisy",
     "Unavailable": "Unavailable",
     "Source URL": "Source URL",
-    "Failed to add tag %(tagName)s to room": "Failed to add tag %(tagName)s to room",
     "No update available.": "No update available.",
     "Tuesday": "Tuesday",
     "Search…": "Search…",
@@ -248,7 +247,6 @@
     "Error encountered (%(errorDetail)s).": "Error encountered (%(errorDetail)s).",
     "Low Priority": "Low Priority",
     "Off": "Off",
-    "Failed to remove tag %(tagName)s from room": "Failed to remove tag %(tagName)s from room",
     "Permission Required": "Permission Required",
     "You do not have permission to start a conference call in this room": "You do not have permission to start a conference call in this room",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -287,7 +285,6 @@
     "Use Single Sign On to continue": "Use Single Sign On to continue",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "Unrecognised command: %(commandText)s": "Unrecognized command: %(commandText)s",
-    "Add some details to help people recognise it.": "Add some details to help people recognize it.",
     "A private space to organise your rooms": "A private space to organize your rooms",
     "Message search initialisation failed": "Message search initialization failed",
     "The call was answered on another device.": "The call was answered on another device.",
@@ -523,5 +520,12 @@
         "help_about": {
             "brand_version": "%(brand)s version:"
         }
+    },
+    "room_list": {
+        "failed_remove_tag": "Failed to remove tag %(tagName)s from room",
+        "failed_add_tag": "Failed to add tag %(tagName)s to room"
+    },
+    "create_space": {
+        "add_details_prompt": "Add some details to help people recognize it."
     }
 }

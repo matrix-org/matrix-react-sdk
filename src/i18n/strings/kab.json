@@ -61,7 +61,6 @@
     "Account": "Amiḍan",
     "General": "Amatu",
     "None": "Ula yiwen",
-    "Composer": "Imsuddes",
     "Sounds": "Imesla",
     "Browse": "Inig",
     "Permissions": "Tisirag",
@@ -189,12 +188,6 @@
     "New Recovery Method": "Tarrayt tamaynut n ujebber",
     "Go to Settings": "Ddu ɣer yiɣewwaren",
     "Set up Secure Messages": "Sbadu iznan iɣelsanen",
-    "Not currently indexing messages for any room.": "Ulac asmiter amiran n yiznan i yal taxxamt.",
-    "Currently indexing: %(currentRoom)s": "Asmiter amiran: %(currentRoom)s",
-    "Space used:": "Tallunt yettwasqedcen:",
-    "Indexed messages:": "Iznan s umatar:",
-    "Indexed rooms:": "Tixxamin s umatar:",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s beṛṛa n %(totalRooms)s",
     "Operation failed": "Tamhelt ur teddi ara",
     "Unable to create widget.": "Timerna n uwiǧit ulamek.",
     "Missing roomId.": "Ixuṣ usulay n texxamt.",
@@ -253,8 +246,6 @@
     "Set a Security Phrase": "Sbadu tafyirt taɣelsant",
     "Confirm Security Phrase": "Sentem tafyirt tuffirt",
     "Recovery Method Removed": "Tarrayt n ujebber tettwakkes",
-    "Failed to remove tag %(tagName)s from room": "Tukksa n tebzimt %(tagName)s seg texxamt ur yeddi ara",
-    "Failed to add tag %(tagName)s to room": "Timerna n tebzimt %(tagName)s ɣer texxamt ur yeddi ara",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Not a valid %(brand)s keyfile": "Afaylu n tsarut %(brand)s d arameɣtu",
     "Unknown server error": "Tuccḍa n uqeddac d tarussint",
@@ -342,8 +333,6 @@
     "Personal ban list": "Tabdart n tigtin tudmawant",
     "Server or user ID to ignore": "Asulay n uqeddac neɣ n useqdac ara yuɣalen deg rrif",
     "eg: @bot:* or example.org": "eg: @bot:* neɣ amedya.org",
-    "Room list": "Tabdart n texxamt",
-    "Autocomplete delay (ms)": "Tanzagt n usmad awurman (ms)",
     "<not supported>": "<not supported>",
     "Session ID:": "Asulay n tɣimit:",
     "Message search": "Anadi n yizen",
@@ -579,7 +568,6 @@
     "This address is already in use": "Tansa-a ha-tt-an yakan deg useqdec",
     "Looks good": "Ayagi yettban yelha",
     "Can't find this server or its room list": "D awezɣi ad d-naf aqeddac-a neɣ tabdart-is n texxamt",
-    "All rooms": "Akk tixxamin",
     "Your server": "Aqeddac-ik·im",
     "Add a new server": "Rnu aqeddac amaynut",
     "Enter the name of a new server you want to explore.": "Sekcem isem n uqeddac amaynut i tebɣiḍ ad tesnirmeḍ.",
@@ -600,9 +588,6 @@
     "Create key backup": "Rnu aḥraz n tsarut",
     "Unable to create key backup": "Yegguma ad yernu uḥraz n tsarut",
     "This session is encrypting history using the new recovery method.": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Ma yella tensa, iznan n texxamin tiwgelhanin ur d-ttbanen ara deg yigmaḍ n unadi.",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s iteffer iznan iwgelhanen idiganen s wudem aɣelsan i wakken ad d-banen deg yigmaḍ n unadi:",
-    "Message downloading sleep time(ms)": "Akud n usgunfu n usali n yiznan (ms)",
     "This is your list of users/servers you have blocked - don't leave the room!": "Tagi d tabdart-ik·im n yiseqdacen/yiqeddacen i tesweḥleḍ - ur teffeɣ ara seg texxamt!",
     "in secret storage": "deg uklas uffir",
     "Master private key:": "Tasarut tusligt tagejdant:",
@@ -900,8 +885,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Ma yella ayagi mačči d ayen i tebɣiḍ, ttxil-k·m seqdec afecku-nniḍen i wakken ad tzegleḍ iseqdacen.",
     "Room ID or address of ban list": "Asulay n texxamt neɣ tansa n tebdart n tegtin",
     "Always show the window menu bar": "Afeggag n wumuɣ n usfaylu eǧǧ-it yettban",
-    "Read Marker lifetime (ms)": "Ɣer tanzagt n tudert n tecreḍt (ms)",
-    "Read Marker off-screen lifetime (ms)": "Ɣer tanzagt n tudert n tecreḍt beṛṛa n ugdil (ms)",
     "Unignore": "Ur yettwazgel ara",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Anedbal-ik·im n uqeddac issens awgelhen seg yixef ɣer yixef s wudem amezwer deg texxamin tusligin & yiznan usriden.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tzegleḍ useqdac-a, ihi iznan-ines ffren. <a>Ɣas akken sken-iten-id.</a>",
@@ -1451,7 +1434,8 @@
         "identity_server": "Aqeddac n timagit",
         "integration_manager": "Amsefrak n umsidef",
         "qr_code": "Tangalt QR",
-        "feedback": "Takti"
+        "feedback": "Takti",
+        "all_rooms": "Akk tixxamin"
     },
     "action": {
         "continue": "Kemmel",
@@ -1690,7 +1674,25 @@
             "timeline_image_size_default": "Amezwer"
         },
         "inline_url_previews_room_account": "Rmed tiskanin n URL i texxamt-a (i ak·akem-yeɛnan kan)",
-        "inline_url_previews_room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a"
+        "inline_url_previews_room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a",
+        "security": {
+            "message_search_disable_warning": "Ma yella tensa, iznan n texxamin tiwgelhanin ur d-ttbanen ara deg yigmaḍ n unadi.",
+            "message_search_indexing_idle": "Ulac asmiter amiran n yiznan i yal taxxamt.",
+            "message_search_indexing": "Asmiter amiran: %(currentRoom)s",
+            "message_search_intro": "%(brand)s iteffer iznan iwgelhanen idiganen s wudem aɣelsan i wakken ad d-banen deg yigmaḍ n unadi:",
+            "message_search_space_used": "Tallunt yettwasqedcen:",
+            "message_search_indexed_messages": "Iznan s umatar:",
+            "message_search_indexed_rooms": "Tixxamin s umatar:",
+            "message_search_room_progress": "%(doneRooms)s beṛṛa n %(totalRooms)s",
+            "message_search_sleep_time": "Akud n usgunfu n usali n yiznan (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Tabdart n texxamt",
+            "composer_heading": "Imsuddes",
+            "autocomplete_delay": "Tanzagt n usmad awurman (ms)",
+            "rm_lifetime": "Ɣer tanzagt n tudert n tecreḍt (ms)",
+            "rm_lifetime_offscreen": "Ɣer tanzagt n tudert n tecreḍt beṛṛa n ugdil (ms)"
+        }
     },
     "devtools": {
         "event_type": "Anaw n tedyant",
@@ -2094,7 +2096,9 @@
             "one": "Sken %(count)s ugar"
         },
         "show_less": "Sken-d drus",
-        "notification_options": "Tixtiṛiyin n wulɣu"
+        "notification_options": "Tixtiṛiyin n wulɣu",
+        "failed_remove_tag": "Tukksa n tebzimt %(tagName)s seg texxamt ur yeddi ara",
+        "failed_add_tag": "Timerna n tebzimt %(tagName)s ɣer texxamt ur yeddi ara"
     },
     "report_content": {
         "missing_reason": "Ttxil-k·m ini-aɣ-d ayɣer i d-tettazneḍ alɣu.",

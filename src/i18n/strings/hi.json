@@ -257,8 +257,6 @@
     "Check for update": "अपडेट के लिये जांचें",
     "Notifications": "सूचनाएं",
     "Scissors": "कैंची",
-    "Room list": "कक्ष सूचि",
-    "Autocomplete delay (ms)": "स्वत: पूर्ण विलंब (ms)",
     "<not supported>": "<समर्थित नहीं>",
     "Import E2E room keys": "E2E कक्ष की चाबियां आयात करें",
     "Cryptography": "क्रिप्टोग्राफी",
@@ -567,7 +565,11 @@
             "timeline_image_size_default": "डिफ़ॉल्ट"
         },
         "inline_url_previews_room_account": "इस रूम के लिए यूआरएल पूर्वावलोकन सक्षम करें (केवल आपको प्रभावित करता है)",
-        "inline_url_previews_room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें"
+        "inline_url_previews_room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें",
+        "preferences": {
+            "room_list_heading": "कक्ष सूचि",
+            "autocomplete_delay": "स्वत: पूर्ण विलंब (ms)"
+        }
     },
     "timeline": {
         "m.room.topic": "%(senderDisplayName)s ने विषय को \"%(topic)s\" में बदल दिया।",

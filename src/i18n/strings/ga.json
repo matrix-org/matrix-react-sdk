@@ -293,7 +293,6 @@
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
     "Cryptography": "Cripteagrafaíocht",
-    "Composer": "Eagarthóir",
     "Notifications": "Fógraí",
     "General": "Ginearálta",
     "Account": "Cuntas",
@@ -668,6 +667,9 @@
         },
         "appearance": {
             "timeline_image_size_default": "Réamhshocrú"
+        },
+        "preferences": {
+            "composer_heading": "Eagarthóir"
         }
     },
     "devtools": {

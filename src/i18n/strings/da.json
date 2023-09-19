@@ -89,7 +89,6 @@
     "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
     "Source URL": "Kilde URL",
-    "Failed to add tag %(tagName)s to room": "Kunne ikke tilføje tag(s): %(tagName)s til rummet",
     "Filter results": "Filtrér resultater",
     "No update available.": "Ingen opdatering tilgængelig.",
     "Noisy": "Støjende",
@@ -107,7 +106,6 @@
     "Yesterday": "I går",
     "Error encountered (%(errorDetail)s).": "En fejl er opstået (%(errorDetail)s).",
     "Low Priority": "Lav prioritet",
-    "Failed to remove tag %(tagName)s from room": "Kunne ikke fjerne tag(s): %(tagName)s fra rummet",
     "Wednesday": "Onsdag",
     "Thank you!": "Tak!",
     "Logs sent": "Logfiler sendt",
@@ -791,7 +789,9 @@
         "messages": "Beskeder"
     },
     "room_list": {
-        "show_less": "Vis mindre"
+        "show_less": "Vis mindre",
+        "failed_remove_tag": "Kunne ikke fjerne tag(s): %(tagName)s fra rummet",
+        "failed_add_tag": "Kunne ikke tilføje tag(s): %(tagName)s til rummet"
     },
     "onboarding": {
         "send_dm": "Send en Direkte Besked",

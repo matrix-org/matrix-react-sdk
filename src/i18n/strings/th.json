@@ -154,7 +154,6 @@
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
     "Error decrypting video": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ",
     "Sunday": "วันอาทิตย์",
-    "Failed to add tag %(tagName)s to room": "การเพิ่มแท็ก %(tagName)s ของห้องนี้ล้มเหลว",
     "Notification targets": "เป้าหมายการแจ้งเตือน",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
@@ -184,7 +183,6 @@
     "Error encountered (%(errorDetail)s).": "เกิดข้อผิดพลาด (%(errorDetail)s)",
     "Low Priority": "ความสำคัญต่ำ",
     "Off": "ปิด",
-    "Failed to remove tag %(tagName)s from room": "การลบแท็ก %(tagName)s จากห้องล้มเหลว",
     "Explore rooms": "สำรวจห้อง",
     "Add Email Address": "เพิ่มที่อยู่อีเมล",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "โปรดสอบถามผู้ดูแลระบบของโฮมเซิร์ฟเวอร์ของคุณ (<code>%(homeserverDomain)s</code>) เพื่อกำหนดคอนฟิกเซิร์ฟเวอร์ TURN เพื่อให้การเรียกทำงานได้อย่างน่าเชื่อถือ.",
@@ -535,5 +533,9 @@
     },
     "create_room": {
         "encryption_forced": "เซิร์ฟเวอร์ของคุณกำหนดให้เปิดใช้งานการเข้ารหัสในห้องส่วนตัว."
+    },
+    "room_list": {
+        "failed_remove_tag": "การลบแท็ก %(tagName)s จากห้องล้มเหลว",
+        "failed_add_tag": "การเพิ่มแท็ก %(tagName)s ของห้องนี้ล้มเหลว"
     }
 }

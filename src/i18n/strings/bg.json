@@ -25,14 +25,12 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(day)s %(monthName)s %(fullYear)s, %(weekDayName)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Failed to remove tag %(tagName)s from room": "Неуспешно премахване на %(tagName)s етикет от стаята",
     "unknown error code": "неизвестен код за грешка",
     "Failed to forget room %(errCode)s": "Неуспешно забравяне на стаята %(errCode)s",
     "Favourite": "Любим",
     "Notifications": "Известия",
     "Rooms": "Стаи",
     "Unnamed room": "Стая без име",
-    "Failed to add tag %(tagName)s to room": "Неуспешно добавяне на %(tagName)s етикет в стаята",
     "This email address is already in use": "Този имейл адрес е вече зает",
     "This phone number is already in use": "Този телефонен номер е вече зает",
     "Failed to verify email address: make sure you clicked the link in the email": "Неуспешно потвърждаване на имейл адреса: уверете се, че сте кликнали върху връзката в имейла",
@@ -429,9 +427,6 @@
     "Phone numbers": "Телефонни номера",
     "Language and region": "Език и регион",
     "Account management": "Управление на акаунта",
-    "Composer": "Въвеждане на съобщения",
-    "Room list": "Списък със стаи",
-    "Autocomplete delay (ms)": "Забавяне преди подсказки (милисекунди)",
     "Roles & Permissions": "Роли и привилегии",
     "Changes to who can read history will only apply to future messages in this room. The visibility of existing history will be unchanged.": "Промени в настройките за четене на историята касаят само за нови съобщения. Видимостта на съществуващата история не се променя.",
     "Security & Privacy": "Сигурност и поверителност",
@@ -718,8 +713,6 @@
     "Italics": "Наклонено",
     "Explore rooms": "Открий стаи",
     "Verify the link in your inbox": "Потвърдете линка във вашата пощенска кутия",
-    "Read Marker lifetime (ms)": "Живот на маркера за прочитане (мсек)",
-    "Read Marker off-screen lifetime (ms)": "Живот на маркера за прочитане извън екрана (мсек)",
     "e.g. my-room": "например my-room",
     "Hide advanced": "Скрий разширени настройки",
     "Show advanced": "Покажи разширени настройки",
@@ -961,7 +954,6 @@
     "Enter a server name": "Въведете име на сървър",
     "Looks good": "Изглежда добре",
     "Can't find this server or its room list": "Сървърът или списъка със стаи не може да бъде намерен",
-    "All rooms": "Всички стаи",
     "Your server": "Вашият сървър",
     "Add a new server": "Добави нов сървър",
     "Enter the name of a new server you want to explore.": "Въведете името на новия сървър, който искате да прегледате.",
@@ -1050,15 +1042,6 @@
     "Create key backup": "Създай резервно копие на ключовете",
     "This session is encrypting history using the new recovery method.": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Ако е изключено, съобщения от шифровани стаи няма да се показват в резултатите от търсения.",
-    "Not currently indexing messages for any room.": "В момента не се индексират съобщения в нито една стая.",
-    "Currently indexing: %(currentRoom)s": "В момента се индексира: %(currentRoom)s",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s кешира шифровани съобщения локално по сигурен начин, за да може те да се появяват в резултати от търсения:",
-    "Space used:": "Използвано пространство:",
-    "Indexed messages:": "Индексирани съобщения:",
-    "Indexed rooms:": "Индексирани стаи:",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s от %(totalRooms)s",
-    "Message downloading sleep time(ms)": "Период на пауза между свалянията на съобщения (ms)",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
     "Use custom size": "Използвай собствен размер",
     "Hey you. You're the best!": "Хей, ти. Върхът си!",
@@ -1425,19 +1408,13 @@
     "Space options": "Опции на пространството",
     "Workspace: <networkLink/>": "Работна област: <networkLink/>",
     "Channel: <channelLink/>": "Канал: <channelLink/>",
-    "Open space for anyone, best for communities": "Открийте пространство за всеки, най-добро за общности",
     "Add existing room": "Добави съществуваща стая",
     "Leave space": "Напусни пространство",
     "Invite with email or username": "Покани чрез имейл или потребителско име",
     "Invite people": "Покани хора",
     "Share invite link": "Сподели връзка с покана",
     "Click to copy": "Натиснете за копиране",
-    "Please enter a name for the space": "Моля, въведете име на пространството",
     "Create a space": "Създаване на пространство",
-    "Add some details to help people recognise it.": "Добавете някои подробности, за да помогнете на хората да го разпознаят.",
-    "Invite only, best for yourself or teams": "Само с покана, най-добро за вас самият или отбори",
-    "Your public space": "Вашето публично пространство",
-    "Your private space": "Вашето лично пространство",
     "You can change these anytime.": "Можете да ги промените по всяко време.",
     "unknown person": "",
     "Spaces": "Пространства",
@@ -1542,7 +1519,8 @@
         "identity_server": "Сървър за самоличност",
         "integration_manager": "Мениджър на интеграции",
         "qr_code": "QR код",
-        "feedback": "Обратна връзка"
+        "feedback": "Обратна връзка",
+        "all_rooms": "Всички стаи"
     },
     "action": {
         "continue": "Продължи",
@@ -1791,7 +1769,25 @@
             "timeline_image_size_default": "По подразбиране"
         },
         "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
-        "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая"
+        "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая",
+        "security": {
+            "message_search_disable_warning": "Ако е изключено, съобщения от шифровани стаи няма да се показват в резултатите от търсения.",
+            "message_search_indexing_idle": "В момента не се индексират съобщения в нито една стая.",
+            "message_search_indexing": "В момента се индексира: %(currentRoom)s",
+            "message_search_intro": "%(brand)s кешира шифровани съобщения локално по сигурен начин, за да може те да се появяват в резултати от търсения:",
+            "message_search_space_used": "Използвано пространство:",
+            "message_search_indexed_messages": "Индексирани съобщения:",
+            "message_search_indexed_rooms": "Индексирани стаи:",
+            "message_search_room_progress": "%(doneRooms)s от %(totalRooms)s",
+            "message_search_sleep_time": "Период на пауза между свалянията на съобщения (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Списък със стаи",
+            "composer_heading": "Въвеждане на съобщения",
+            "autocomplete_delay": "Забавяне преди подсказки (милисекунди)",
+            "rm_lifetime": "Живот на маркера за прочитане (мсек)",
+            "rm_lifetime_offscreen": "Живот на маркера за прочитане извън екрана (мсек)"
+        }
     },
     "devtools": {
         "event_type": "Вид на събитие",
@@ -2209,7 +2205,9 @@
             "one": "Покажи още %(count)s"
         },
         "show_less": "Покажи по-малко",
-        "notification_options": "Настройки за уведомление"
+        "notification_options": "Настройки за уведомление",
+        "failed_remove_tag": "Неуспешно премахване на %(tagName)s етикет от стаята",
+        "failed_add_tag": "Неуспешно добавяне на %(tagName)s етикет в стаята"
     },
     "report_content": {
         "missing_reason": "Въведете защо докладвате.",
@@ -2243,5 +2241,13 @@
         "pro_type": "ПРОФЕСИОНАЛЕН СЪВЕТ: Ако ще съобщавате за проблем, изпратете и <debugLogsLink>логове за разработчици</debugLogsLink> за да ни помогнете да открием проблема.",
         "existing_issue_link": "Първо прегледайте <existingIssuesLink>съществуващите проблеми в Github</existingIssuesLink>. Няма подобни? <newIssueLink>Създайте нов</newIssueLink>.",
         "send_feedback_action": "Изпрати обратна връзка"
+    },
+    "create_space": {
+        "name_required": "Моля, въведете име на пространството",
+        "public_description": "Открийте пространство за всеки, най-добро за общности",
+        "private_description": "Само с покана, най-добро за вас самият или отбори",
+        "public_heading": "Вашето публично пространство",
+        "private_heading": "Вашето лично пространство",
+        "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят."
     }
 }

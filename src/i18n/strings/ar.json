@@ -650,9 +650,6 @@
     "Cryptography": "التشفير",
     "Import E2E room keys": "تعبئة مفاتيح E2E للغرف",
     "<not supported>": "<غير معتمد>",
-    "Autocomplete delay (ms)": "تأخير الإكمال التلقائي (مللي ثانية)",
-    "Composer": "الكاتب",
-    "Room list": "قائمة الغرفة",
     "Always show the window menu bar": "أظهر شريط قائمة النافذة دائمًا",
     "Room ID or address of ban list": "معرف الغرفة أو عنوان قائمة الحظر",
     "If this isn't what you want, please use a different tool to ignore users.": "إذا لم يكن هذا ما تريده ، فيرجى استخدام أداة مختلفة لتجاهل المستخدمين.",
@@ -1088,7 +1085,12 @@
             "timeline_image_size_default": "المبدئي"
         },
         "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
-        "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة"
+        "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
+        "preferences": {
+            "room_list_heading": "قائمة الغرفة",
+            "composer_heading": "الكاتب",
+            "autocomplete_delay": "تأخير الإكمال التلقائي (مللي ثانية)"
+        }
     },
     "devtools": {
         "state_key": "مفتاح الحالة",

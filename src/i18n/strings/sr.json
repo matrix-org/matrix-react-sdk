@@ -198,8 +198,6 @@
     "Signed Out": "Одјављен",
     "For security, this session has been signed out. Please sign in again.": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново.",
     "Old cryptography data detected": "Нађени су стари криптографски подаци",
-    "Failed to remove tag %(tagName)s from room": "Нисам успео да скинем ознаку %(tagName)s са собе",
-    "Failed to add tag %(tagName)s to room": "Нисам успео да додам ознаку %(tagName)s на собу",
     "<a>In reply to</a> <pill>": "<a>Као одговор за</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Ова соба није јавна. Нећете моћи да поново приступите без позивнице.",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
@@ -688,7 +686,6 @@
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Ако је искључено, поруке из шифрованих соба неће се приказивати у резултатима.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ако нисте ви уклонили начин опоравка, нападач можда покушава да приступи вашем налогу. Промените своју лозинку и поставите нови начин опоравка у поставкама, одмах.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте то случајно учинили, безбедне поруке можете подесити у овој сесији, која ће поново шифровати историју порука сесије помоћу новог начина опоравка.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Сесија је открила да су ваша безбедносна фраза и кључ за безбедне поруке уклоњени.",
@@ -768,7 +765,6 @@
     "Cat": "мачка",
     "Dog": "Пас",
     "Cancelling…": "Отказујем…",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:",
     "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Cancel search": "Откажи претрагу",
@@ -838,7 +834,6 @@
     "Enter the name of a new server you want to explore.": "Унесите име новог сервера који желите да истражите.",
     "Add a new server": "Додајте нови сервер",
     "Your server": "Ваш сервер",
-    "All rooms": "Све собе",
     "Who are you working with?": "Са ким радите?",
     "This room is public": "Ова соба је јавна",
     "Browse": "Прегледајте",
@@ -909,7 +904,8 @@
         "not_trusted": "није поуздан",
         "unnamed_room": "Неименована соба",
         "stickerpack": "Паковање са налепницама",
-        "feedback": "Повратни подаци"
+        "feedback": "Повратни подаци",
+        "all_rooms": "Све собе"
     },
     "action": {
         "continue": "Настави",
@@ -1056,7 +1052,11 @@
             "timeline_image_size_default": "Подразумевано"
         },
         "inline_url_previews_room_account": "Укључи УРЛ прегледе у овој соби (утиче само на вас)",
-        "inline_url_previews_room": "Подразумевано омогући прегледе адреса за чланове ове собе"
+        "inline_url_previews_room": "Подразумевано омогући прегледе адреса за чланове ове собе",
+        "security": {
+            "message_search_disable_warning": "Ако је искључено, поруке из шифрованих соба неће се приказивати у резултатима.",
+            "message_search_intro": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:"
+        }
     },
     "devtools": {
         "event_type": "Врста догађаја",
@@ -1367,7 +1367,9 @@
         "sort_by_activity": "Активности",
         "sort_by_alphabet": "А-Ш",
         "sublist_options": "Прикажи опције",
-        "notification_options": "Опције обавештавања"
+        "notification_options": "Опције обавештавања",
+        "failed_remove_tag": "Нисам успео да скинем ознаку %(tagName)s са собе",
+        "failed_add_tag": "Нисам успео да додам ознаку %(tagName)s на собу"
     },
     "report_content": {
         "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"

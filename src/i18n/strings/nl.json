@@ -255,8 +255,6 @@
     "Room Notification": "Kamermelding",
     "<a>In reply to</a> <pill>": "<a>Als antwoord op</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit is geen publieke kamer. Slechts op uitnodiging zal je opnieuw kunnen toetreden.",
-    "Failed to remove tag %(tagName)s from room": "Verwijderen van %(tagName)s-label van kamer is mislukt",
-    "Failed to add tag %(tagName)s to room": "Toevoegen van %(tagName)s-label aan kamer is mislukt",
     "You don't currently have any stickerpacks enabled": "Je hebt momenteel geen stickerpakketten ingeschakeld",
     "Sunday": "Zondag",
     "Notification targets": "Meldingsbestemmingen",
@@ -448,9 +446,6 @@
     "Language and region": "Taal en regio",
     "Account management": "Accountbeheer",
     "General": "Algemeen",
-    "Composer": "Opsteller",
-    "Room list": "Kamerslijst",
-    "Autocomplete delay (ms)": "Vertraging voor autoaanvullen (ms)",
     "Accept all %(invitedRooms)s invites": "Alle %(invitedRooms)s de uitnodigingen aannemen",
     "Security & Privacy": "Veiligheid & privacy",
     "Missing media permissions, click the button below to request.": "Mediatoestemmingen ontbreken, klik op de knop hieronder om deze aan te vragen.",
@@ -692,8 +687,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Een identiteitsserver is niet verplicht, maar zonder identiteitsserver zal je geen bekenden op e-mailadres of telefoonnummer kunnen zoeken, noch door hen vindbaar zijn.",
     "Do not use an identity server": "Geen identiteitsserver gebruiken",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Aanvaard de gebruiksvoorwaarden van de identiteitsserver (%(serverName)s) om vindbaar te zijn op e-mailadres of telefoonnummer.",
-    "Read Marker lifetime (ms)": "Levensduur van leesbevestigingen (ms)",
-    "Read Marker off-screen lifetime (ms)": "Levensduur van levensbevestigingen, niet op scherm (ms)",
     "Error changing power level requirement": "Fout bij wijzigen van machtsniveauvereiste",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Er is een fout opgetreden bij het wijzigen van de machtsniveauvereisten van de kamer. Zorg ervoor dat je over voldoende machtigingen beschikt en probeer het opnieuw.",
     "Error changing power level": "Fout bij wijzigen van machtsniveau",
@@ -810,8 +803,6 @@
     "This room is end-to-end encrypted": "Deze kamer is eind-tot-eind-versleuteld",
     "Everyone in this room is verified": "Iedereen in deze kamer is geverifieerd",
     "Direct Messages": "Direct gesprek",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "Dit moet aan staan om te kunnen zoeken in versleutelde kamers.",
-    "Indexed rooms:": "Geïndexeerde kamers:",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Jouw account heeft een identiteit voor kruiselings ondertekenen in de sleutelopslag, maar die wordt nog niet vertrouwd door de huidige sessie.",
     "Cross-signing public keys:": "Publieke sleutels voor kruiselings ondertekenen:",
     "Cross-signing private keys:": "Privésleutels voor kruiselings ondertekenen:",
@@ -943,14 +934,8 @@
     "Create key backup": "Sleutelback-up aanmaken",
     "This session is encrypting history using the new recovery method.": "Deze sessie versleutelt je geschiedenis aan de hand van de nieuwe herstelmethode.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s bewaart versleutelde berichten veilig in het lokale cachegeheugen om ze in je zoekresultaten te laten verschijnen:",
-    "Space used:": "Gebruikte Space:",
-    "Indexed messages:": "Geïndexeerde berichten:",
-    "Message downloading sleep time(ms)": "Wachttijd voor downloaden van berichten (ms)",
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
-    "Not currently indexing messages for any room.": "Er worden momenteel voor geen enkele kamer berichten geïndexeerd.",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s van %(totalRooms)s",
     "Use Single Sign On to continue": "Ga verder met eenmalige aanmelding",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Bevestig je identiteit met je eenmalige aanmelding om dit e-mailadres toe te voegen.",
     "Confirm adding email": "Bevestig toevoegen van het e-mailadres",
@@ -1354,7 +1339,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Workspace: <networkLink/>": "Werkplaats: <networkLink/>",
     "Your firewall or anti-virus is blocking the request.": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
-    "Currently indexing: %(currentRoom)s": "Momenteel indexeren: %(currentRoom)s",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Deze sessie heeft ontdekt dat je veiligheidswachtwoord en -sleutel voor versleutelde berichten zijn verwijderd.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Er is een nieuwe veiligheidswachtwoord en -sleutel voor versleutelde berichten gedetecteerd.",
     "Save your Security Key": "Jouw veiligheidssleutel opslaan",
@@ -1444,7 +1428,6 @@
     "Upload completed": "Upload voltooid",
     "Preparing to download logs": "Klaarmaken om logs te downloaden",
     "Enter the name of a new server you want to explore.": "Voer de naam in van een nieuwe server die je wilt ontdekken.",
-    "All rooms": "Alle kamers",
     "Submit logs": "Logs versturen",
     "Verify all users in a room to ensure it's secure.": "Controleer alle personen in een kamer om er zeker van te zijn dat het veilig is.",
     "Add widgets, bridges & bots": "Widgets, bruggen & bots toevoegen",
@@ -1526,10 +1509,6 @@
     "Share your public space": "Deel jouw publieke space",
     "Share invite link": "Deel uitnodigingskoppeling",
     "Click to copy": "Klik om te kopiëren",
-    "Your private space": "Jouw privé space",
-    "Your public space": "Jouw publieke space",
-    "Invite only, best for yourself or teams": "Alleen op uitnodiging, geschikt voor jezelf of teams",
-    "Open space for anyone, best for communities": "Publieke space voor iedereen, geschikt voor gemeenschappen",
     "Create a space": "Space maken",
     "This homeserver has been blocked by its administrator.": "Deze homeserver is geblokkeerd door jouw beheerder.",
     "Make sure the right people have access. You can invite more later.": "Controleer of de juiste personen toegang hebben. Je kan later meer personen uitnodigen.",
@@ -1559,7 +1538,6 @@
     "Edit devices": "Apparaten bewerken",
     "Invite with email or username": "Uitnodigen per e-mail of inlognaam",
     "You can change these anytime.": "Je kan dit elk moment nog aanpassen.",
-    "Add some details to help people recognise it.": "Voeg details toe zodat personen het herkennen.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifeer je identiteit om toegang te krijgen tot je versleutelde berichten en om je identiteit te bewijzen voor anderen.",
     "You can add more later too, including already existing ones.": "Je kan er later nog meer toevoegen, inclusief al bestaande kamers.",
     "Let's create a room for each of them.": "Laten we voor elk een los kamer maken.",
@@ -1617,7 +1595,6 @@
     "No microphone found": "Geen microfoon gevonden",
     "We were unable to access your microphone. Please check your browser settings and try again.": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
     "Unable to access your microphone": "Geen toegang tot je microfoon",
-    "Please enter a name for the space": "Vul een naam in voor deze space",
     "Connecting": "Verbinden",
     "Message search initialisation failed": "Zoeken in berichten opstarten is mislukt",
     "Search names and descriptions": "In namen en omschrijvingen zoeken",
@@ -1669,7 +1646,6 @@
     "Failed to update the guest access of this space": "Het bijwerken van de gastentoegang van deze space is niet gelukt",
     "Failed to update the visibility of this space": "Het bijwerken van de zichtbaarheid van deze space is mislukt",
     "Address": "Adres",
-    "e.g. my-space": "v.b. mijn-Space",
     "Some invites couldn't be sent": "Sommige uitnodigingen konden niet verstuurd worden",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "De anderen zijn verstuurd, maar de volgende personen konden niet worden uitgenodigd voor <RoomName/>",
     "Unnamed audio": "Naamloze audio",
@@ -1678,10 +1654,6 @@
         "one": "%(count)s andere preview weergeven",
         "other": "%(count)s andere previews weergeven"
     },
-    "Images, GIFs and videos": "Afbeeldingen, GIF's en video's",
-    "Code blocks": "Codeblokken",
-    "Displaying time": "Tijdsweergave",
-    "Keyboard shortcuts": "Sneltoetsen",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Met het gebruik van deze widget deel je mogelijk gegevens <helpIcon /> met %(widgetDomain)s & je integratiebeheerder.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integratiebeheerders ontvangen configuratie-informatie en kunnen widgets aanpassen, kameruitnodigingen versturen en machtsniveau’s namens jou aanpassen.",
@@ -1861,7 +1833,6 @@
         "other": "Bevestig je identiteit met eenmalig inloggen om deze apparaten uit te loggen."
     },
     "Use a more compact 'Modern' layout": "Compacte 'Moderne'-indeling gebruiken",
-    "Other rooms": "Andere kamers",
     "Automatically send debug logs on any error": "Automatisch foutenlogboek versturen bij een fout",
     "Show all threads": "Threads weergeven",
     "Keep discussions organised with threads": "Houd threads georganiseerd",
@@ -1945,7 +1916,6 @@
     },
     "No votes cast": "Geen stemmen uitgebracht",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Deel anonieme gedragsdata om ons te helpen problemen te identificeren. Geen persoonsgegevens. Geen derde partijen.",
-    "To view all keyboard shortcuts, <a>click here</a>.": "Om alle sneltoetsen te bekijken, <a>klik hier</a>.",
     "That's fine": "Dat is prima",
     "Share location": "Locatie delen",
     "You cannot place calls without a connection to the server.": "Je kan geen oproepen plaatsen zonder een verbinding met de server.",
@@ -2104,7 +2074,6 @@
     "New room": "Nieuwe kamer",
     "View older version of %(spaceName)s.": "Bekijk oudere versie van %(spaceName)s.",
     "Upgrade this space to the recommended room version": "Upgrade deze ruimte naar de aanbevolen kamerversie",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Spaces zijn een nieuwe manier om kamers en mensen te groeperen. Wat voor ruimte wil je aanmaken? Je kan dit later wijzigen.",
     "Match system": "Match systeem",
     "Developer tools": "Ontwikkelaarstools",
     "Show polls button": "Toon polls-knop",
@@ -2200,7 +2169,6 @@
         "one": "%(count)s persoon toegetreden",
         "other": "%(count)s mensen toegetreden"
     },
-    "Failed to set direct message tag": "Kan tag voor direct bericht niet instellen",
     "You were disconnected from the call. (Error: %(message)s)": "De verbinding is verbroken van uw oproep. (Error: %(message)s)",
     "Connection lost": "Verbinding verloren",
     "Un-maximise": "Maximaliseren ongedaan maken",
@@ -2291,7 +2259,6 @@
     "Other sessions": "Andere sessies",
     "Sessions": "Sessies",
     "Your server doesn't support disabling sending read receipts.": "Jouw server biedt geen ondersteuning voor het uitschakelen van het verzenden van leesbevestigingen.",
-    "Share your activity and status with others.": "Deel je activiteit en status met anderen.",
     "Show shortcut to welcome checklist above the room list": "Toon snelkoppeling naar welkomstchecklist boven de kamer gids",
     "Empty room (was %(oldName)s)": "Lege ruimte (was %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
@@ -2481,7 +2448,9 @@
         "identity_server": "Identiteitsserver",
         "integration_manager": "Integratiebeheerder",
         "qr_code": "QR-code",
-        "feedback": "Feedback"
+        "feedback": "Feedback",
+        "all_rooms": "Alle kamers",
+        "orphan_rooms": "Andere kamers"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2899,7 +2868,31 @@
             "timeline_image_size_large": "Groot"
         },
         "inline_url_previews_room_account": "URL-voorvertoning in dit kamer inschakelen (geldt alleen voor jou)",
-        "inline_url_previews_room": "URL-voorvertoning voor alle deelnemers aan deze kamer standaard inschakelen"
+        "inline_url_previews_room": "URL-voorvertoning voor alle deelnemers aan deze kamer standaard inschakelen",
+        "security": {
+            "message_search_disable_warning": "Dit moet aan staan om te kunnen zoeken in versleutelde kamers.",
+            "message_search_indexing_idle": "Er worden momenteel voor geen enkele kamer berichten geïndexeerd.",
+            "message_search_indexing": "Momenteel indexeren: %(currentRoom)s",
+            "message_search_intro": "%(brand)s bewaart versleutelde berichten veilig in het lokale cachegeheugen om ze in je zoekresultaten te laten verschijnen:",
+            "message_search_space_used": "Gebruikte Space:",
+            "message_search_indexed_messages": "Geïndexeerde berichten:",
+            "message_search_indexed_rooms": "Geïndexeerde kamers:",
+            "message_search_room_progress": "%(doneRooms)s van %(totalRooms)s",
+            "message_search_sleep_time": "Wachttijd voor downloaden van berichten (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "Kamerslijst",
+            "keyboard_heading": "Sneltoetsen",
+            "keyboard_view_shortcuts_button": "Om alle sneltoetsen te bekijken, <a>klik hier</a>.",
+            "time_heading": "Tijdsweergave",
+            "presence_description": "Deel je activiteit en status met anderen.",
+            "composer_heading": "Opsteller",
+            "code_blocks_heading": "Codeblokken",
+            "media_heading": "Afbeeldingen, GIF's en video's",
+            "autocomplete_delay": "Vertraging voor autoaanvullen (ms)",
+            "rm_lifetime": "Levensduur van leesbevestigingen (ms)",
+            "rm_lifetime_offscreen": "Levensduur van levensbevestigingen, niet op scherm (ms)"
+        }
     },
     "devtools": {
         "send_custom_account_data_event": "Aangepaste accountgegevens gebeurtenis versturen",
@@ -3608,7 +3601,10 @@
             "other": "Toon %(count)s meer"
         },
         "show_less": "Minder tonen",
-        "notification_options": "Meldingsinstellingen"
+        "notification_options": "Meldingsinstellingen",
+        "failed_set_dm_tag": "Kan tag voor direct bericht niet instellen",
+        "failed_remove_tag": "Verwijderen van %(tagName)s-label van kamer is mislukt",
+        "failed_add_tag": "Toevoegen van %(tagName)s-label aan kamer is mislukt"
     },
     "report_content": {
         "missing_reason": "Geef aan waarom je deze melding indient.",
@@ -3716,5 +3712,15 @@
         "pro_type": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
         "existing_issue_link": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
         "send_feedback_action": "Feedback versturen"
+    },
+    "create_space": {
+        "name_required": "Vul een naam in voor deze space",
+        "name_placeholder": "v.b. mijn-Space",
+        "explainer": "Spaces zijn een nieuwe manier om kamers en mensen te groeperen. Wat voor ruimte wil je aanmaken? Je kan dit later wijzigen.",
+        "public_description": "Publieke space voor iedereen, geschikt voor gemeenschappen",
+        "private_description": "Alleen op uitnodiging, geschikt voor jezelf of teams",
+        "public_heading": "Jouw publieke space",
+        "private_heading": "Jouw privé space",
+        "add_details_prompt": "Voeg details toe zodat personen het herkennen."
     }
 }

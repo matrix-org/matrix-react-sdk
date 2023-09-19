@@ -215,7 +215,6 @@
     "Noisy": "Gürültülü",
     "Unavailable": "Kullanım dışı",
     "Source URL": "Kaynak URL",
-    "Failed to add tag %(tagName)s to room": "%(tagName)s etiketi odaya eklenemedi",
     "Tuesday": "Salı",
     "Unnamed room": "İsimsiz oda",
     "Saturday": "Cumartesi",
@@ -232,7 +231,6 @@
     "Yesterday": "Dün",
     "Low Priority": "Düşük Öncelikli",
     "Off": "Kapalı",
-    "Failed to remove tag %(tagName)s from room": "Odadan %(tagName)s etiketi kaldırılamadı",
     "Add Email Address": "Eposta Adresi Ekle",
     "Add Phone Number": "Telefon Numarası Ekle",
     "Call failed due to misconfigured server": "Hatalı yapılandırılmış sunucu nedeniyle arama başarısız",
@@ -457,8 +455,6 @@
     "Server rules": "Sunucu kuralları",
     "User rules": "Kullanıcı kuralları",
     "View rules": "Kuralları görüntüle",
-    "Room list": "Oda listesi",
-    "Autocomplete delay (ms)": "Oto tamamlama gecikmesi (ms)",
     "Security & Privacy": "Güvenlik & Gizlilik",
     "No Audio Outputs detected": "Ses çıkışları tespit edilemedi",
     "Audio Output": "Ses Çıkışı",
@@ -681,8 +677,6 @@
     "Upgrade your encryption": "Şifrelemenizi güncelleyin",
     "Create key backup": "Anahtar yedeği oluştur",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
-    "Space used:": "Kullanılan alan:",
-    "Indexed messages:": "İndekslenmiş mesajlar:",
     "Waiting for %(displayName)s to verify…": "%(displayName)s ın doğrulaması için bekleniyor…",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
     "Later": "Sonra",
@@ -705,7 +699,6 @@
         "one": "%(count)s dosyayı sağla"
     },
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
-    "Indexed rooms:": "İndekslenmiş odalar:",
     "Bridges": "Köprüler",
     "Direct Messages": "Doğrudan Mesajlar",
     "Unknown Command": "Bilinmeyen Komut",
@@ -791,7 +784,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Bu dosyalar yükleme için <b>çok büyük</b>. Dosya boyut limiti %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Bazı dosyalar yükleme için <b>çok büyük</b>. Dosya boyutu limiti %(limit)s.",
     "Failed to re-authenticate due to a homeserver problem": "Anasunucu problemi yüzünden yeniden kimlik doğrulama başarısız",
-    "Not currently indexing messages for any room.": "Şu an hiç bir odada mesaj indeksleme yapılmıyor.",
     "PM": "24:00",
     "AM": "12:00",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Bu eylem, bir e-posta adresini veya telefon numarasını doğrulamak için varsayılan kimlik sunucusuna <server /> erişilmesini gerektirir, ancak sunucunun herhangi bir hizmet şartı yoktur.",
@@ -1187,7 +1179,6 @@
     "Submit logs": "Günlükleri kaydet",
     "Server name": "Sunucu adı",
     "Your server": "Senin sunucun",
-    "All rooms": "Tüm odalar",
     "Looks good": "İyi görünüyor",
     "Transfer": "Aktar",
     "Hold": "Beklet",
@@ -1255,9 +1246,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Odanın güç düzeyi gereksinimlerini değiştirirken bir hata ile karşılaşıldı. Yeterince yetkiniz olduğunuzdan emin olup yeniden deyin.",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Bu oda, iletileri sözü edilen platformlara köprülüyor. <a>Daha fazla bilgi için.</a>",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Sunucu yönetinciniz varsayılan olarak odalarda ve doğrudandan iletilerde uçtan uca şifrelemeyi kapadı.",
-    "Read Marker lifetime (ms)": "Okundu iminin gösterim süresi (ms)",
-    "Read Marker off-screen lifetime (ms)": "Okundu iminin ekran dışındaki gösterim süresi (ms)",
-    "Composer": "Yazan",
     "Room ID or address of ban list": "Engelleme listesinin oda kimliği ya da adresi",
     "Ignoring people is done through ban lists which contain rules for who to ban. Subscribing to a ban list means the users/servers blocked by that list will be hidden from you.": "Kullanıcıları engelleme, hangi kullanıcıları engelleyeceğini belirleyen kurallar bulunduran bir engelleme listesi kullanılarak gerçekleşir. Bir engelleme listesine abone olmak, o listeden engellenen kullanıcıların veya sunucuların sizden gizlenmesi demektir.",
     "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "Görmezden gelmek istediğiniz kullanıcıları ya da sunucuları buraya ekleyin. %(brand)s uygulamasının herhangi bir karakteri eşleştirmesini istiyorsanız yıldız imi kullanın. Örneğin <code>@fobar:*</code>, \"foobar\" adlı kullanıcıların hepsini bütün sunucularda görmezden gelir.",
@@ -1300,9 +1288,6 @@
     "View message": "Mesajı görüntüle",
     "Invite to just this room": "Sadece bu odaya davet et",
     "Your message was sent": "Mesajınız gönderildi",
-    "Code blocks": "Kod blokları",
-    "Displaying time": "Zamanı görüntüle",
-    "Keyboard shortcuts": "Klavye kısayolları",
     "Visibility": "Görünürlük",
     "Save Changes": "Değişiklikleri Kaydet",
     "Invite with email or username": "E-posta veya kullanıcı adı ile davet et",
@@ -1408,7 +1393,8 @@
         "identity_server": "Kimlik sunucusu",
         "integration_manager": "Bütünleştirme Yöneticisi",
         "qr_code": "Kare kod (QR)",
-        "feedback": "Geri bildirim"
+        "feedback": "Geri bildirim",
+        "all_rooms": "Tüm odalar"
     },
     "action": {
         "continue": "Devam Et",
@@ -1637,7 +1623,23 @@
             "timeline_image_size_default": "Varsayılan"
         },
         "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
-        "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir"
+        "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
+        "security": {
+            "message_search_indexing_idle": "Şu an hiç bir odada mesaj indeksleme yapılmıyor.",
+            "message_search_space_used": "Kullanılan alan:",
+            "message_search_indexed_messages": "İndekslenmiş mesajlar:",
+            "message_search_indexed_rooms": "İndekslenmiş odalar:"
+        },
+        "preferences": {
+            "room_list_heading": "Oda listesi",
+            "keyboard_heading": "Klavye kısayolları",
+            "time_heading": "Zamanı görüntüle",
+            "composer_heading": "Yazan",
+            "code_blocks_heading": "Kod blokları",
+            "autocomplete_delay": "Oto tamamlama gecikmesi (ms)",
+            "rm_lifetime": "Okundu iminin gösterim süresi (ms)",
+            "rm_lifetime_offscreen": "Okundu iminin ekran dışındaki gösterim süresi (ms)"
+        }
     },
     "devtools": {
         "event_type": "Olay Tipi",
@@ -2067,7 +2069,9 @@
             "other": "%(count)s adet daha fazla göster"
         },
         "show_less": "Daha az göster",
-        "notification_options": "Bildirim ayarları"
+        "notification_options": "Bildirim ayarları",
+        "failed_remove_tag": "Odadan %(tagName)s etiketi kaldırılamadı",
+        "failed_add_tag": "%(tagName)s etiketi odaya eklenemedi"
     },
     "report_content": {
         "missing_reason": "Lütfen neden raporlama yaptığınızı belirtin.",

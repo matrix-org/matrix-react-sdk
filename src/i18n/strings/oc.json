@@ -82,7 +82,6 @@
     "Profile": "Perfil",
     "Account": "Compte",
     "General": "General",
-    "Composer": "Compositor",
     "Unignore": "Ignorar pas",
     "Security & Privacy": "Seguretat e vida privada",
     "Audio Output": "Sortida àudio",
@@ -332,6 +331,9 @@
         "appearance": {
             "font_size": "Talha de poliça",
             "timeline_image_size_default": "Predefinit"
+        },
+        "preferences": {
+            "composer_heading": "Compositor"
         }
     },
     "auth": {

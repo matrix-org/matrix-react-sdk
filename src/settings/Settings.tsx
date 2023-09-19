@@ -223,9 +223,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
                     </>
                 ),
             feedbackLabel: "video-room-feedback",
-            feedbackSubheading: _td(
-                "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
-            ),
+            feedbackSubheading: _td("labs|video_rooms_feedbackSubheading"),
             image: require("../../res/img/betas/video_rooms.png"),
             requiresRefresh: true,
         },
@@ -241,12 +239,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             caption: () => (
                 <>
                     <p>
-                        {_t(
-                            "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
-                            {
-                                brand: SdkConfig.get().brand,
-                            },
-                        )}
+                        {_t("labs|notification_settings_beta_caption", {
+                            brand: SdkConfig.get().brand,
+                        })}
                     </p>
                 </>
             ),
@@ -265,9 +260,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
         displayName: _td("labs|report_to_moderators"),
-        description: _td(
-            "In rooms that support moderation, the “Report” button will let you report abuse to room moderators.",
-        ),
+        description: _td("labs|report_to_moderators_description"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },

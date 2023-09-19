@@ -230,7 +230,6 @@
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
     "Source URL": "URL fonte",
-    "Failed to add tag %(tagName)s to room": "Falha ao adicionar %(tagName)s à sala",
     "Filter results": "Filtrar resultados",
     "No update available.": "Nenhuma atualização disponível.",
     "Noisy": "Barulhento",
@@ -250,7 +249,6 @@
     "Error encountered (%(errorDetail)s).": "Erro encontrado (%(errorDetail)s).",
     "Low Priority": "Baixa prioridade",
     "Off": "Desativado",
-    "Failed to remove tag %(tagName)s from room": "Não foi possível remover a marcação %(tagName)s desta sala",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Add Email Address": "Adicione adresso de e-mail",
@@ -828,5 +826,9 @@
     "feedback": {
         "comment_label": "Comente",
         "platform_username": "A sua plataforma e o seu nome de utilizador serão anotados para nos ajudar a utilizar o seu feedback da melhor forma possível."
+    },
+    "room_list": {
+        "failed_remove_tag": "Não foi possível remover a marcação %(tagName)s desta sala",
+        "failed_add_tag": "Falha ao adicionar %(tagName)s à sala"
     }
 }

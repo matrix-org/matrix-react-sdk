@@ -462,16 +462,6 @@
     "Bulk options": "ຕົວເລືອກຈຳນວນຫຼາຍ",
     "You have no ignored users.": "ທ່ານບໍ່ມີຜູ້ໃຊ້ທີ່ຖືກລະເລີຍ.",
     "Unignore": "ບໍ່ສົນໃຈ",
-    "Read Marker off-screen lifetime (ms)": "ອ່ານອາຍຸການໃຊ້ງານຂອງໜ້າຈໍ (ມິລິວິນາທີ)",
-    "Read Marker lifetime (ms)": "ອ່ານອາຍຸ ການໃຊ້ງານຂອງເຄື່ອງຫມາຍ. (ມິນລິວິນາທີ)",
-    "Autocomplete delay (ms)": "ການຕື່ມຂໍ້ມູນອັດຕະໂນມັດຊັກຊ້າ (ms)",
-    "Images, GIFs and videos": "ຮູບພາບ, GIF ແລະ ວິດີໂອ",
-    "Code blocks": "ບລັອກລະຫັດ",
-    "Composer": "ນັກປະພັນ",
-    "Displaying time": "ສະແດງເວລາ",
-    "To view all keyboard shortcuts, <a>click here</a>.": "ເພື່ອເບິ່ງປຸ່ມລັດທັງໝົດ, <a>ຄລິກທີ່ນີ້</a>.",
-    "Keyboard shortcuts": "ປຸ່ມລັດ",
-    "Room list": "ລາຍຊື່ຫ້ອງ",
     "Show tray icon and minimise window to it on close": "ສະແດງໄອຄອນ ແລະ ຫຍໍ້ຫນ້າຕ່າງໃຫ້ມັນຢູ່ໃກ້",
     "Always show the window menu bar": "ສະແດງແຖບເມນູໜ້າຕ່າງສະເໝີ",
     "Room ID or address of ban list": "IDຫ້ອງ ຫຼື ທີ່ຢູ່ຂອງລາຍການຫ້າມ",
@@ -552,17 +542,9 @@
     "Click to copy": "ກົດເພື່ອສຳເນົາ",
     "Show all rooms": "ສະແດງຫ້ອງທັງໝົດ",
     "You can change these anytime.": "ທ່ານສາມາດປ່ຽນສິ່ງເຫຼົ່ານີ້ໄດ້ທຸກເວລາ.",
-    "Add some details to help people recognise it.": "ເພີ່ມລາຍລະອຽດບາງຢ່າງເພື່ອຊ່ວຍໃຫ້ຄົນຮັບຮູ້.",
-    "Your private space": "ພື້ນທີ່ສ່ວນຕົວຂອງທ່ານ",
-    "Your public space": "ພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
-    "Invite only, best for yourself or teams": "ເຊີນເທົ່ານັ້ນ, ດີທີ່ສຸດສຳລັບຕົວທ່ານເອງ ຫຼື ທີມງານ",
-    "Open space for anyone, best for communities": "ເປີດພື້ນທີ່ສໍາລັບທຸກຄົນ, ດີທີ່ສຸດສໍາລັບຊຸມຊົນ",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Spaces ເປັນວິທີໃໝ່ໃນການຈັດກຸ່ມຫ້ອງ ແລະ ຄົນ. ທ່ານຕ້ອງການສ້າງ Space ປະເພດໃດ? ທ່ານສາມາດປ່ຽນອັນນີ້ໃນພາຍຫຼັງ.",
     "Create a space": "ສ້າງພື້ນທີ່",
     "Address": "ທີ່ຢູ່",
-    "e.g. my-space": "ຕົວຢ່າງ: ພື້ນທີ່ຂອງຂ້ອຍ",
-    "Please enter a name for the space": "ກະລຸນາໃສ່ຊື່ສໍາລັບຊ່ອງຫວ່າງ",
     "Search %(spaceName)s": "ຊອກຫາ %(spaceName)s",
     "Upload avatar": "ອັບໂຫຼດອາວາຕ້າ",
     "Delete avatar": "ລືບອາວາຕ້າ",
@@ -979,17 +961,6 @@
     "Forget Room": "ລືມຫ້ອງ",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s ຖືກສົ່ງຄືນໃນຂະນະທີ່ພະຍາຍາມເຂົ້າເຖິງຫ້ອງ ຫຼື ພື້ນທີ່. ຖ້າຫາກທ່ານຄິດວ່າທ່ານກໍາລັງເຫັນຂໍ້ຄວາມນີ້ຜິດພາດ, ກະລຸນາ <issueLink>ສົ່ງບົດລາຍງານ bug</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "ລອງໃໝ່ໃນພາຍຫຼັງ, ຫຼື ຂໍໃຫ້ຜູ້ຄຸ້ມຄອງຫ້ອງ ຫຼື ຜູ້ຄຸ້ມຄອງພື້ນທີ່ກວດເບິ່ງວ່າທ່ານມີການເຂົ້າເຖິງ ຫຼື ບໍ່.",
-    "Failed to add tag %(tagName)s to room": "ເພີ່ມແທັກ %(tagName)s ໃສ່ຫ້ອງບໍ່ສຳເລັດ",
-    "Failed to remove tag %(tagName)s from room": "ລຶບແທັກ %(tagName)s ອອກຈາກຫ້ອງບໍ່ສຳເລັດ",
-    "Message downloading sleep time(ms)": "ຂໍ້ຄວາມດາວໂຫຼດເວລາພັກເຄື່ອງ(ms)",
-    "%(doneRooms)s out of %(totalRooms)s": "%(doneRooms)s ຈາກທັງໝົດ %(totalRooms)s",
-    "Indexed rooms:": "ຫ້ອງທີ່ຈັດດັດສະນີ:",
-    "Indexed messages:": "ດັດສະນີຂໍ້ຄວາມ:",
-    "Space used:": "ພື້ນທີ່ໃຊ້ແລ້ວ:",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s ກໍາລັງເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ພວກເຂົາປາກົດໃນຜົນການຄົ້ນຫາ:",
-    "Currently indexing: %(currentRoom)s": "ປະຈຸບັນກໍາລັງສ້າງດັດສະນີ: %(currentRoom)s",
-    "Not currently indexing messages for any room.": "ຕອນນີ້ບໍ່ໄດ້ຈັດດັດສະນີຂໍ້ຄວາມສໍາລັບຫ້ອງໃດ.",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "ຖ້າປິດໃຊ້ງານ, ຂໍ້ຄວາມຈາກຫ້ອງທີ່ເຂົ້າລະຫັດຈະບໍ່ປາກົດຢູ່ໃນຜົນການຄົ້ນຫາ.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "ຖ້າທ່ານບໍ່ໄດ້ລືບຂະບວນການກູ້ຄືນ, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະ ກຳນົດຂະບວນການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "ຖ້າທ່ານດຳເນີນການສິ່ງນີ້ໂດຍບໍ່ໄດ້ຕັ້ງໃຈ, ທ່ານສາມາດຕັ້ງຄ່າຄວາມປອດໄພຂອງຂໍ້ຄວາມ ໃນລະບົບນີ້ ເຊິ່ງຈະມີການເຂົ້າລະຫັດປະຫວັດຂໍ້ຄວາມຂອງລະບົບນີ້ຄືນໃໝ່ດ້ວຍຂະບວນການກູ້ຂໍ້ມູນໃໝ່.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "ລະບົບນີ້ໄດ້ກວດພົບປະໂຫຍກຄວາມປອດໄພ ແລະ ກະແຈຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານໄດ້ຖືກເອົາອອກແລ້ວ.",
@@ -1460,7 +1431,6 @@
     "Room members": "ສະມາຊິກຫ້ອງ",
     "Room information": "ຂໍ້ມູນຫ້ອງ",
     "Back to chat": "ກັບໄປທີ່ການສົນທະນາ",
-    "Other rooms": "ຫ້ອງອື່ນໆ",
     "Replying": "ກຳລັງຕອບກັບ",
     "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
     "Seen by %(count)s people": {
@@ -1552,7 +1522,6 @@
     "You cancelled": "ທ່ານໄດ້ຍົກເລີກ",
     "You declined": "ທ່ານປະຕິເສດ",
     "Home": "ໜ້າຫຼັກ",
-    "All rooms": "ຫ້ອງທັງໝົດ",
     "Failed to join": "ການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
     "The person who invited you has already left, or their server is offline.": "ບຸກຄົນທີ່ເຊີນທ່ານໄດ້ອອກໄປແລ້ວ, ຫຼືເຊີບເວີຂອງເຂົາເຈົ້າອອບລາຍຢູ່.",
     "The person who invited you has already left.": "ຄົນທີ່ເຊີນເຈົ້າໄດ້ອອກໄປແລ້ວ.",
@@ -2277,7 +2246,9 @@
         "identity_server": "ຕົວເຊີບເວີ",
         "integration_manager": "ຜູ້ຈັດການປະສົມປະສານ",
         "qr_code": "ລະຫັດ QR",
-        "feedback": "ຄໍາຕິຊົມ"
+        "feedback": "ຄໍາຕິຊົມ",
+        "all_rooms": "ຫ້ອງທັງໝົດ",
+        "orphan_rooms": "ຫ້ອງອື່ນໆ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2622,7 +2593,30 @@
             "timeline_image_size_large": "ຂະຫນາດໃຫຍ່"
         },
         "inline_url_previews_room_account": "ເປີດໃຊ້ຕົວຢ່າງ URL ສໍາລັບຫ້ອງນີ້ (ມີຜົນຕໍ່ທ່ານເທົ່ານັ້ນ)",
-        "inline_url_previews_room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້"
+        "inline_url_previews_room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",
+        "security": {
+            "message_search_disable_warning": "ຖ້າປິດໃຊ້ງານ, ຂໍ້ຄວາມຈາກຫ້ອງທີ່ເຂົ້າລະຫັດຈະບໍ່ປາກົດຢູ່ໃນຜົນການຄົ້ນຫາ.",
+            "message_search_indexing_idle": "ຕອນນີ້ບໍ່ໄດ້ຈັດດັດສະນີຂໍ້ຄວາມສໍາລັບຫ້ອງໃດ.",
+            "message_search_indexing": "ປະຈຸບັນກໍາລັງສ້າງດັດສະນີ: %(currentRoom)s",
+            "message_search_intro": "%(brand)s ກໍາລັງເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ພວກເຂົາປາກົດໃນຜົນການຄົ້ນຫາ:",
+            "message_search_space_used": "ພື້ນທີ່ໃຊ້ແລ້ວ:",
+            "message_search_indexed_messages": "ດັດສະນີຂໍ້ຄວາມ:",
+            "message_search_indexed_rooms": "ຫ້ອງທີ່ຈັດດັດສະນີ:",
+            "message_search_room_progress": "%(doneRooms)s ຈາກທັງໝົດ %(totalRooms)s",
+            "message_search_sleep_time": "ຂໍ້ຄວາມດາວໂຫຼດເວລາພັກເຄື່ອງ(ms)"
+        },
+        "preferences": {
+            "room_list_heading": "ລາຍຊື່ຫ້ອງ",
+            "keyboard_heading": "ປຸ່ມລັດ",
+            "keyboard_view_shortcuts_button": "ເພື່ອເບິ່ງປຸ່ມລັດທັງໝົດ, <a>ຄລິກທີ່ນີ້</a>.",
+            "time_heading": "ສະແດງເວລາ",
+            "composer_heading": "ນັກປະພັນ",
+            "code_blocks_heading": "ບລັອກລະຫັດ",
+            "media_heading": "ຮູບພາບ, GIF ແລະ ວິດີໂອ",
+            "autocomplete_delay": "ການຕື່ມຂໍ້ມູນອັດຕະໂນມັດຊັກຊ້າ (ms)",
+            "rm_lifetime": "ອ່ານອາຍຸ ການໃຊ້ງານຂອງເຄື່ອງຫມາຍ. (ມິນລິວິນາທີ)",
+            "rm_lifetime_offscreen": "ອ່ານອາຍຸການໃຊ້ງານຂອງໜ້າຈໍ (ມິລິວິນາທີ)"
+        }
     },
     "devtools": {
         "send_custom_account_data_event": "ສົ່ງຂໍ້ມູນບັນຊີແບບກຳນົດເອງທຸກເຫດການ",
@@ -3318,7 +3312,9 @@
             "other": "ສະແດງ %(count)s ເພີ່ມເຕີມ"
         },
         "show_less": "ສະແດງໜ້ອຍລົງ",
-        "notification_options": "ຕົວເລືອກການແຈ້ງເຕືອນ"
+        "notification_options": "ຕົວເລືອກການແຈ້ງເຕືອນ",
+        "failed_remove_tag": "ລຶບແທັກ %(tagName)s ອອກຈາກຫ້ອງບໍ່ສຳເລັດ",
+        "failed_add_tag": "ເພີ່ມແທັກ %(tagName)s ໃສ່ຫ້ອງບໍ່ສຳເລັດ"
     },
     "report_content": {
         "missing_reason": "ກະລຸນາຕື່ມຂໍ້ມູນວ່າເປັນຫຍັງທ່ານກໍາລັງລາຍງານ.",
@@ -3437,5 +3433,15 @@
         "pro_type": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
         "existing_issue_link": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
         "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ"
+    },
+    "create_space": {
+        "name_required": "ກະລຸນາໃສ່ຊື່ສໍາລັບຊ່ອງຫວ່າງ",
+        "name_placeholder": "ຕົວຢ່າງ: ພື້ນທີ່ຂອງຂ້ອຍ",
+        "explainer": "Spaces ເປັນວິທີໃໝ່ໃນການຈັດກຸ່ມຫ້ອງ ແລະ ຄົນ. ທ່ານຕ້ອງການສ້າງ Space ປະເພດໃດ? ທ່ານສາມາດປ່ຽນອັນນີ້ໃນພາຍຫຼັງ.",
+        "public_description": "ເປີດພື້ນທີ່ສໍາລັບທຸກຄົນ, ດີທີ່ສຸດສໍາລັບຊຸມຊົນ",
+        "private_description": "ເຊີນເທົ່ານັ້ນ, ດີທີ່ສຸດສຳລັບຕົວທ່ານເອງ ຫຼື ທີມງານ",
+        "public_heading": "ພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
+        "private_heading": "ພື້ນທີ່ສ່ວນຕົວຂອງທ່ານ",
+        "add_details_prompt": "ເພີ່ມລາຍລະອຽດບາງຢ່າງເພື່ອຊ່ວຍໃຫ້ຄົນຮັບຮູ້."
     }
 }

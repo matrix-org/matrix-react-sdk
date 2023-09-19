@@ -71,7 +71,6 @@
     "Changelog": "మార్పు వివరణ",
     "Source URL": "మూల URL",
     "Noisy": "శబ్దం",
-    "Failed to add tag %(tagName)s to room": "%(tagName)s ను బొందు జోడించడంలో విఫలమైంది",
     "No update available.": "ఏ నవీకరణ అందుబాటులో లేదు.",
     "Tuesday": "మంగళవారం",
     "Monday": "సోమవారం",
@@ -86,7 +85,6 @@
     "Error encountered (%(errorDetail)s).": "లోపం సంభవించింది (%(errorDetail)s).",
     "Low Priority": "తక్కువ ప్రాధాన్యత",
     "Off": "ఆపు",
-    "Failed to remove tag %(tagName)s from room": "గది నుండి బొందు %(tagName)s తొలగించడంలో విఫలమైంది",
     "Saturday": "శనివారం",
     "This email address is already in use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
     "This phone number is already in use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
@@ -156,5 +154,9 @@
     "auth": {
         "sso": "సింగిల్ సైన్ ఆన్",
         "unsupported_auth_msisdn": "ఈ సర్వర్ ఫోన్ నంబర్తో ప్రామాణీకరణకు మద్దతు ఇవ్వదు."
+    },
+    "room_list": {
+        "failed_remove_tag": "గది నుండి బొందు %(tagName)s తొలగించడంలో విఫలమైంది",
+        "failed_add_tag": "%(tagName)s ను బొందు జోడించడంలో విఫలమైంది"
     }
 }

@@ -10,7 +10,6 @@
     "On": "På",
     "Source URL": "Kilde URL",
     "Favourite": "Favoritt",
-    "Failed to add tag %(tagName)s to room": "Kunne ikke legge til tagg %(tagName)s til rom",
     "Noisy": "Bråkete",
     "Tuesday": "Tirsdag",
     "Unnamed room": "Rom uten navn",
@@ -25,7 +24,6 @@
     "Yesterday": "I går",
     "Low Priority": "Lav Prioritet",
     "Off": "Av",
-    "Failed to remove tag %(tagName)s from room": "Kunne ikke fjerne tagg %(tagName)s fra rommet",
     "Saturday": "Lørdag",
     "You cannot place a call with yourself.": "Du kan ikke ringe deg selv.",
     "Permission Required": "Tillatelse kreves",
@@ -138,7 +136,6 @@
     "Language and region": "Språk og område",
     "General": "Generelt",
     "None": "Ingen",
-    "Composer": "Komposør",
     "Security & Privacy": "Sikkerhet og personvern",
     "Browse": "Bla",
     "Unban": "Opphev utestengelse",
@@ -166,7 +163,6 @@
     "More options": "Flere alternativer",
     "collapse": "skjul",
     "expand": "utvid",
-    "All rooms": "Alle rom",
     "Close dialog": "Lukk dialog",
     "Notes": "Merknader",
     "Unavailable": "Ikke tilgjengelig",
@@ -244,8 +240,6 @@
     "View rules": "Vis reglene",
     "Ignored users": "Ignorerte brukere",
     "⚠ These settings are meant for advanced users.": "⚠ Disse innstillingene er ment for avanserte brukere.",
-    "Room list": "Romliste",
-    "Autocomplete delay (ms)": "Autofullføringsforsinkelse (ms)",
     "Unignore": "Opphev ignorering",
     "Cryptography": "Kryptografi",
     "Session ID:": "Økt-ID:",
@@ -347,8 +341,6 @@
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
     "File to import": "Filen som skal importeres",
     "Upgrade your encryption": "Oppgrader krypteringen din",
-    "Space used:": "Plass brukt:",
-    "Indexed rooms:": "Indekserte rom:",
     "Verify this session": "Verifiser denne økten",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(count)s others": {
@@ -432,7 +424,6 @@
     "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
-    "Indexed messages:": "Indekserte meldinger:",
     "Enter passphrase": "Skriv inn passordfrase",
     "Avoid sequences": "Unngå sekvenser",
     "Avoid recent years": "Unngå nylige år",
@@ -476,8 +467,6 @@
     "User signing private key:": "Brukersignert privat nøkkel:",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
     "Homeserver feature support:": "Hjemmetjener-funksjonsstøtte:",
-    "Read Marker lifetime (ms)": "Lesemarkørens visningstid (ms)",
-    "Read Marker off-screen lifetime (ms)": "Lesemarkørens visningstid utenfor skjermen (ms)",
     "URL previews are enabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd på som standard for deltakerene i dette rommet.",
     "URL previews are disabled by default for participants in this room.": "URL-forhåndsvisninger er skrudd av som standard for deltakerene i dette rommet.",
     "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.": "I krypterte rom som denne, er URL-forhåndsvisninger skrudd av som standard for å sikre at hjemmetjeneren din (der forhåndsvisningene blir generert) ikke kan samle inn informasjon om lenkene som du ser i dette rommet.",
@@ -654,7 +643,6 @@
     "Add a photo, so people can easily spot your room.": "Legg til et bilde så folk lettere kan finne rommet ditt.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Legg til et tema</a> for hjelpe folk å forstå hva dette handler om.",
     "Invite people": "Inviter personer",
-    "Add some details to help people recognise it.": "Legg til mer detaljer for å gjøre det letter å gjenkjenne.",
     "You do not have permission to invite people to this room.": "Du har ikke tilgang til å invitere personer til dette rommet.",
     "Click the button below to confirm adding this email address.": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen.",
     "Hey you. You're the best!": "Hei der. Du er fantastisk!",
@@ -731,8 +719,6 @@
         "one": "%(count)s rom"
     },
     "Invite by username": "Inviter etter brukernavn",
-    "Your public space": "Ditt offentlige område",
-    "Your private space": "Ditt private område",
     "Invite to %(spaceName)s": "Inviter til %(spaceName)s",
     "unknown person": "ukjent person",
     "Click to copy": "Klikk for å kopiere",
@@ -1035,7 +1021,6 @@
     "Add reaction": "Legg til reaksjon",
     "Downloading": "Laster ned",
     "Connection failed": "Tilkobling mislyktes",
-    "Keyboard shortcuts": "Tastatursnarveier",
     "Global": "Globalt",
     "Keyword": "Nøkkelord",
     "Visibility": "Synlighet",
@@ -1119,7 +1104,8 @@
         "identity_server": "Identitetstjener",
         "integration_manager": "Integreringsbehandler",
         "qr_code": "QR-kode",
-        "feedback": "Tilbakemelding"
+        "feedback": "Tilbakemelding",
+        "all_rooms": "Alle rom"
     },
     "action": {
         "continue": "Fortsett",
@@ -1343,7 +1329,20 @@
             "timeline_image_size_default": "Standard"
         },
         "inline_url_previews_room_account": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
-        "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet"
+        "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet",
+        "security": {
+            "message_search_space_used": "Plass brukt:",
+            "message_search_indexed_messages": "Indekserte meldinger:",
+            "message_search_indexed_rooms": "Indekserte rom:"
+        },
+        "preferences": {
+            "room_list_heading": "Romliste",
+            "keyboard_heading": "Tastatursnarveier",
+            "composer_heading": "Komposør",
+            "autocomplete_delay": "Autofullføringsforsinkelse (ms)",
+            "rm_lifetime": "Lesemarkørens visningstid (ms)",
+            "rm_lifetime_offscreen": "Lesemarkørens visningstid utenfor skjermen (ms)"
+        }
     },
     "devtools": {
         "event_type": "Hendelsestype",
@@ -1667,7 +1666,9 @@
             "one": "Vis %(count)s til"
         },
         "show_less": "Vis mindre",
-        "notification_options": "Varselsinnstillinger"
+        "notification_options": "Varselsinnstillinger",
+        "failed_remove_tag": "Kunne ikke fjerne tagg %(tagName)s fra rommet",
+        "failed_add_tag": "Kunne ikke legge til tagg %(tagName)s til rom"
     },
     "onboarding": {
         "has_avatar_label": "Flott, det vil hjelp folk å ha tillit til at det er deg",
@@ -1697,5 +1698,10 @@
     },
     "feedback": {
         "comment_label": "Kommentar"
+    },
+    "create_space": {
+        "public_heading": "Ditt offentlige område",
+        "private_heading": "Ditt private område",
+        "add_details_prompt": "Legg til mer detaljer for å gjøre det letter å gjenkjenne."
     }
 }

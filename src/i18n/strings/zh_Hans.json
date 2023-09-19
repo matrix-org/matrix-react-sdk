@@ -218,8 +218,6 @@
     "Members only (since the point in time of selecting this option)": "仅成员（从选中此选项时开始）",
     "Members only (since they were invited)": "只有成员（从他们被邀请开始）",
     "Members only (since they joined)": "只有成员（从他们加入开始）",
-    "Failed to remove tag %(tagName)s from room": "移除房间标签 %(tagName)s 失败",
-    "Failed to add tag %(tagName)s to room": "无法为房间新增标签 %(tagName)s",
     "Restricted": "受限",
     "You don't currently have any stickerpacks enabled": "你目前未启用任何贴纸包",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "如果你是房间中最后一位拥有权限的用户，在你降低自己的权限等级后将无法撤销此修改，你将无法重新获得权限。",
@@ -470,9 +468,6 @@
     "Language and region": "语言与地区",
     "Account management": "账户管理",
     "General": "通用",
-    "Composer": "编辑器",
-    "Room list": "房间列表",
-    "Autocomplete delay (ms)": "自动完成延迟（毫秒）",
     "Ignored users": "已忽略的用户",
     "Bulk options": "批量选择",
     "Security & Privacy": "隐私安全",
@@ -904,7 +899,6 @@
     "Enter a server name": "请输入服务器名",
     "Looks good": "看着不错",
     "Can't find this server or its room list": "找不到此服务器或其房间列表",
-    "All rooms": "所有房间",
     "Your server": "你的服务器",
     "Add a new server": "添加新服务器",
     "Enter the name of a new server you want to explore.": "输入你想探索的新服务器的服务器名。",
@@ -1075,14 +1069,6 @@
     "Create key backup": "创建密钥备份",
     "This session is encrypting history using the new recovery method.": "此会话正在使用新的恢复方法加密历史。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
-    "If disabled, messages from encrypted rooms won't appear in search results.": "如果被禁用，加密房间内的消息不会显示在搜索结果中。",
-    "Not currently indexing messages for any room.": "现在没有为任何房间索引消息。",
-    "Currently indexing: %(currentRoom)s": "正在索引：%(currentRoom)s",
-    "%(brand)s is securely caching encrypted messages locally for them to appear in search results:": "%(brand)s 正在安全地在本地缓存加密消息以使其出现在搜索结果中：",
-    "Space used:": "已使用空间：",
-    "Indexed messages:": "已索引的消息：",
-    "Indexed rooms:": "已索引的房间：",
-    "%(doneRooms)s out of %(totalRooms)s": "%(totalRooms)s 中之 %(doneRooms)s",
     "How fast should messages be downloaded.": "消息下载速度。",
     "IRC display name width": "IRC 显示名称宽度",
     "Unexpected server error trying to leave the room": "试图离开房间时发生意外服务器错误",
@@ -1093,8 +1079,6 @@
     "Self signing private key:": "自签名私钥：",
     "User signing private key:": "用户签名私钥：",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
-    "Read Marker lifetime (ms)": "已读标记生存期（毫秒）",
-    "Read Marker off-screen lifetime (ms)": "已读标记屏幕外生存期（毫秒）",
     "Unable to revoke sharing for email address": "无法撤消电子邮件地址共享",
     "Unable to revoke sharing for phone number": "无法撤销电话号码共享",
     "Explore public rooms": "探索公共房间",
@@ -1104,7 +1088,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Country Dropdown": "国家下拉菜单",
     "Attach files from chat or just drag and drop them anywhere in a room.": "从聊天中附加文件或将文件拖放到房间的任何地方。",
-    "Message downloading sleep time(ms)": "消息下载休眠时间 (ms)",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Unknown App": "未知应用",
     "Cross-signing is ready for use.": "交叉签名已可用。",
@@ -1186,9 +1169,6 @@
     "Room settings": "房间设置",
     "Share invite link": "分享邀请链接",
     "Click to copy": "点击复制",
-    "Your private space": "你的私有空间",
-    "Your public space": "你的公共空间",
-    "Invite only, best for yourself or teams": "仅邀请，适合你自己或团队",
     "Dial pad": "拨号盘",
     "There was an error looking up the phone number": "查询电话号码时发生错误",
     "Unable to look up phone number": "无法查询电话号码",
@@ -1348,8 +1328,6 @@
     "This is the start of <roomName/>.": "这里是 <roomName/> 的开始。",
     "Add a photo, so people can easily spot your room.": "添加图片，让人们一眼就能看到你的房间。",
     "You can change these anytime.": "你随时可以更改它们。",
-    "Add some details to help people recognise it.": "添加一些细节，以便人们辨识你的社群。",
-    "Open space for anyone, best for communities": "适合每一个人的开放空间，社群的理想选择",
     "New version of %(brand)s is available": "%(brand)s 有新版本可用",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
@@ -1599,7 +1577,6 @@
         "other": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。"
     },
     "Manage & explore rooms": "管理并探索房间",
-    "Please enter a name for the space": "请输入空间名称",
     "Connecting": "连接中",
     "unknown person": "陌生人",
     "%(deviceId)s from %(ip)s": "来自 %(ip)s 的 %(deviceId)s",
@@ -1669,7 +1646,6 @@
     "Failed to update the guest access of this space": "更新此空间的游客访问权限失败",
     "Failed to update the visibility of this space": "更新此空间的可见性失败",
     "Address": "地址",
-    "e.g. my-space": "例如：my-space",
     "Some invites couldn't be sent": "部分邀请无法发送",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "我们已向其他人发送邀请，但无法邀请以下人员至<RoomName/>",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
@@ -1684,10 +1660,6 @@
     "Only invited people can join.": "只有受邀的人才能加入。",
     "Private (invite only)": "私有（仅邀请）",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "此升级将允许选定的空间成员无需邀请即可访问此房间。",
-    "Images, GIFs and videos": "图片、GIF 和视频",
-    "Code blocks": "代码块",
-    "Displaying time": "显示的时间戳",
-    "Keyboard shortcuts": "键盘快捷键",
     "There was an error loading your notification settings.": "加载你的通知设置时出错。",
     "Mentions & keywords": "提及&关键词",
     "Global": "全局",
@@ -1890,7 +1862,6 @@
     "Reply in thread": "在消息列中回复",
     "Spaces to show": "要显示的空间",
     "Sidebar": "侧边栏",
-    "Other rooms": "其他房间",
     "Show all threads": "显示所有消息列",
     "Keep discussions organised with threads": "用消息列使讨论井然有序",
     "Rooms outside of a space": "空间之外的房间",
@@ -1939,7 +1910,6 @@
     "Invite to space": "邀请到空间",
     "Start new chat": "开始新的聊天",
     "Recently viewed": "最近查看",
-    "To view all keyboard shortcuts, <a>click here</a>.": "要查看所有的键盘快捷键，<a>点击此处</a>。",
     "%(count)s votes cast. Vote to see the results": {
         "one": "票数已达 %(count)s 票。要查看结果请亲自投票",
         "other": "票数已达 %(count)s 票。要查看结果请亲自投票"
@@ -2082,7 +2052,6 @@
         "one": "确认登出此设备",
         "other": "确认登出这些设备"
     },
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
     "Match system": "匹配系统",
     "Developer tools": "开发者工具",
     "Waiting for you to verify on your other device…": "正等待你在其它设备上验证……",
@@ -2201,7 +2170,6 @@
     "Closed poll": "封闭式投票",
     "Open poll": "开放式投票",
     "Poll type": "投票类型",
-    "Share your activity and status with others.": "与别人分享你的活动和状态。",
     "Your server doesn't support disabling sending read receipts.": "你的服务器不支持禁用发送已读回执。",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
     "Sessions": "会话",
@@ -2248,7 +2216,6 @@
     "An error occurred whilst sharing your live location": "分享实时位置时出错",
     "An error occurred while stopping your live location": "停止实时位置时出错",
     "Close sidebar": "关闭侧边栏",
-    "Failed to set direct message tag": "设置私聊标签失败",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "你已登出全部设备，并将不再收到推送通知。要重新启用通知，请在每台设备上再次登入。",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "若想保留对加密房间的聊天历史的访问权，请设置密钥备份或从其他设备导出消息密钥，然后再继续。",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "登出你的设备会删除存储在其上的消息加密密钥，使加密的聊天历史不可读。",
@@ -2454,7 +2421,9 @@
         "identity_server": "身份服务器",
         "integration_manager": "集成管理器",
         "qr_code": "二维码",
-        "feedback": "反馈"
+        "feedback": "反馈",
+        "all_rooms": "所有房间",
+        "orphan_rooms": "其他房间"
     },
     "action": {
         "continue": "继续",
@@ -2886,7 +2855,31 @@
             "timeline_image_size_large": "大"
         },
         "inline_url_previews_room_account": "对此房间启用URL预览（仅影响你）",
-        "inline_url_previews_room": "对此房间的所有参与者默认启用URL预览"
+        "inline_url_previews_room": "对此房间的所有参与者默认启用URL预览",
+        "security": {
+            "message_search_disable_warning": "如果被禁用，加密房间内的消息不会显示在搜索结果中。",
+            "message_search_indexing_idle": "现在没有为任何房间索引消息。",
+            "message_search_indexing": "正在索引：%(currentRoom)s",
+            "message_search_intro": "%(brand)s 正在安全地在本地缓存加密消息以使其出现在搜索结果中：",
+            "message_search_space_used": "已使用空间：",
+            "message_search_indexed_messages": "已索引的消息：",
+            "message_search_indexed_rooms": "已索引的房间：",
+            "message_search_room_progress": "%(totalRooms)s 中之 %(doneRooms)s",
+            "message_search_sleep_time": "消息下载休眠时间 (ms)"
+        },
+        "preferences": {
+            "room_list_heading": "房间列表",
+            "keyboard_heading": "键盘快捷键",
+            "keyboard_view_shortcuts_button": "要查看所有的键盘快捷键，<a>点击此处</a>。",
+            "time_heading": "显示的时间戳",
+            "presence_description": "与别人分享你的活动和状态。",
+            "composer_heading": "编辑器",
+            "code_blocks_heading": "代码块",
+            "media_heading": "图片、GIF 和视频",
+            "autocomplete_delay": "自动完成延迟（毫秒）",
+            "rm_lifetime": "已读标记生存期（毫秒）",
+            "rm_lifetime_offscreen": "已读标记屏幕外生存期（毫秒）"
+        }
     },
     "devtools": {
         "send_custom_account_data_event": "发送自定义账户数据事件",
@@ -3592,7 +3585,10 @@
             "one": "多显示 %(count)s 个"
         },
         "show_less": "显示更少",
-        "notification_options": "通知选项"
+        "notification_options": "通知选项",
+        "failed_set_dm_tag": "设置私聊标签失败",
+        "failed_remove_tag": "移除房间标签 %(tagName)s 失败",
+        "failed_add_tag": "无法为房间新增标签 %(tagName)s"
     },
     "report_content": {
         "missing_reason": "请填写你为何做此报告。",
@@ -3700,5 +3696,15 @@
         "pro_type": "专业建议：如果你要发起新问题，请一并提交<debugLogsLink>调试日志</debugLogsLink>，以便我们找出问题根源。",
         "existing_issue_link": "请先查找一下 <existingIssuesLink>Github 上已有的问题</existingIssuesLink>，以免重复。找不到重复问题？<newIssueLink>发起一个吧</newIssueLink>。",
         "send_feedback_action": "发送反馈"
+    },
+    "create_space": {
+        "name_required": "请输入空间名称",
+        "name_placeholder": "例如：my-space",
+        "explainer": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
+        "public_description": "适合每一个人的开放空间，社群的理想选择",
+        "private_description": "仅邀请，适合你自己或团队",
+        "public_heading": "你的公共空间",
+        "private_heading": "你的私有空间",
+        "add_details_prompt": "添加一些细节，以便人们辨识你的社群。"
     }
 }
