@@ -1,5 +1,4 @@
 {
-    "Create Account": "senflul amiḍan",
     "Dec": "Duj",
     "Nov": "Nuw",
     "Oct": "Kṭu",
@@ -44,7 +43,6 @@
     "Andorra": "Andura",
     "Algeria": "Dzayer",
     "Albania": "Albanya",
-    "Calls": "Iɣuṛiten",
     "Afghanistan": "Afɣanistan",
     "Phone": "Atilifun",
     "Email": "Imayl",
@@ -138,7 +136,8 @@
         "escape": "Esc",
         "end": "End",
         "control": "Ctrl",
-        "shift": "Shift"
+        "shift": "Shift",
+        "category_calls": "Iɣuṛiten"
     },
     "timeline": {
         "m.image": "yuzen %(senderDisplayName)s yat twelaft."
@@ -164,5 +163,8 @@
     },
     "room_list": {
         "sort_by_alphabet": "A-Ẓ"
+    },
+    "auth": {
+        "register_action": "senflul amiḍan"
     }
 }

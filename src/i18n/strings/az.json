@@ -1,5 +1,4 @@
 {
-    "Waiting for response from server": "Serverdən cavabın gözlənməsi",
     "Operation failed": "Əməliyyatın nasazlığı",
     "Failed to verify email address: make sure you clicked the link in the email": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
     "You cannot place a call with yourself.": "Siz özünə zəng vura bilmirsiniz.",
@@ -41,8 +40,6 @@
     "You are now ignoring %(userId)s": "Siz %(userId)s blokladınız",
     "Unignored user": "İstifadəçi blokun siyahısından götürülmüşdür",
     "You are no longer ignoring %(userId)s": "Siz %(userId)s blokdan çıxardınız",
-    "Deops user with given id": "Verilmiş ID-lə istifadəçidən operatorun səlahiyyətlərini çıxardır",
-    "Displays action": "Hərəkətlərin nümayişi",
     "Reason": "Səbəb",
     "Incorrect verification code": "Təsdiq etmənin səhv kodu",
     "Phone": "Telefon",
@@ -56,7 +53,6 @@
     "Authentication": "Müəyyənləşdirilmə",
     "Failed to set display name": "Görünüş adını təyin etmək bacarmadı",
     "Notification targets": "Xəbərdarlıqlar üçün qurğular",
-    "On": "Qoşmaq",
     "not specified": "qeyd edilmədi",
     "Unban": "Blokdan çıxarmaq",
     "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
@@ -67,7 +63,6 @@
     "Invited": "Dəvət edilmişdir",
     "Filter room members": "İştirakçılara görə axtarış",
     "You do not have permission to post to this room": "Siz bu otağa yaza bilmirsiniz",
-    "Command error": "Komandanın səhvi",
     "Join Room": "Otağa girmək",
     "Upload avatar": "Avatar-ı yükləmək",
     "Forget room": "Otağı unutmaq",
@@ -88,7 +83,6 @@
     "Decrypt %(text)s": "Şifrini açmaq %(text)s",
     "Download %(text)s": "Yükləmək %(text)s",
     "Sign in with": "Seçmək",
-    "What's New": "Nə dəyişdi",
     "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
@@ -120,7 +114,6 @@
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
-    "This server does not support authentication with a phone number.": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
     "Commands": "Komandalar",
     "Users": "İstifadəçilər",
     "Confirm passphrase": "Şifrəni təsdiqləyin",
@@ -144,8 +137,6 @@
     "This room is not recognised.": "Bu otaq tanınmır.",
     "You are not in this room.": "Sən bu otaqda deyilsən.",
     "You do not have permission to do that in this room.": "Bu otaqda bunu etməyə icazəniz yoxdur.",
-    "Define the power level of a user": "Bir istifadəçinin güc səviyyəsini müəyyənləşdirin",
-    "You cannot modify widgets in this room.": "Bu otaqda vidjetləri dəyişdirə bilməzsiniz.",
     "Verified key": "Təsdiqlənmiş açar",
     "Add Email Address": "Emal ünvan əlavə etmək",
     "Add Phone Number": "Telefon nömrəsi əlavə etmək",
@@ -163,10 +154,6 @@
     "Use an identity server": "Şəxsiyyət serverindən istifadə edin",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Defolt şəxsiyyət serverini (%(defaultIdentityServerName)s) istifadə etməyə və ya Parametrlərdə idarə etməyə davam edin.",
     "Use an identity server to invite by email. Manage in Settings.": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Parametrlərdə idarə edin.",
-    "Please supply a https:// or http:// widget URL": "Zəhmət olmasa https:// və ya http:// widget URL təmin edin",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Şifrəli bir otaqda mövcud qrup sessiyasını ləğv etməyə məcbur edir",
-    "powered by Matrix": "Matrix tərəfindən təchiz edilmişdir",
-    "Create Account": "Hesab Aç",
     "Explore rooms": "Otaqları kəşf edin",
     "common": {
         "analytics": "Analitik",
@@ -181,7 +168,8 @@
         "attachment": "Əlavə",
         "emoji": "Smaylar",
         "unnamed_room": "Adı açıqlanmayan otaq",
-        "identity_server": "Eyniləşdirmənin serveri"
+        "identity_server": "Eyniləşdirmənin serveri",
+        "on": "Qoşmaq"
     },
     "action": {
         "continue": "Davam etmək",
@@ -221,7 +209,8 @@
             "rule_suppress_notices": "Botla göndərilmiş mesajlar"
         },
         "appearance": {
-            "timeline_image_size_default": "Varsayılan olaraq"
+            "timeline_image_size_default": "Varsayılan olaraq",
+            "image_size_default": "Varsayılan olaraq"
         }
     },
     "timeline": {
@@ -279,11 +268,19 @@
         "category_actions": "Tədbirlər",
         "category_admin": "Administrator",
         "category_advanced": "Təfərrüatlar",
-        "category_other": "Digər"
+        "category_other": "Digər",
+        "addwidget_invalid_protocol": "Zəhmət olmasa https:// və ya http:// widget URL təmin edin",
+        "addwidget_no_permissions": "Bu otaqda vidjetləri dəyişdirə bilməzsiniz.",
+        "discardsession": "Şifrəli bir otaqda mövcud qrup sessiyasını ləğv etməyə məcbur edir",
+        "me": "Hərəkətlərin nümayişi",
+        "op": "Bir istifadəçinin güc səviyyəsini müəyyənləşdirin",
+        "deop": "Verilmiş ID-lə istifadəçidən operatorun səlahiyyətlərini çıxardır",
+        "command_error": "Komandanın səhvi"
     },
     "bug_reporting": {
         "collecting_information": "Proqramın versiyası haqqında məlumatın yığılması",
-        "collecting_logs": "Jurnalların bir yığım"
+        "collecting_logs": "Jurnalların bir yığım",
+        "waiting_for_server": "Serverdən cavabın gözlənməsi"
     },
     "voip": {
         "hangup": "Bitirmək",
@@ -301,5 +298,13 @@
     },
     "export_chat": {
         "messages": "Mesajlar"
+    },
+    "auth": {
+        "footer_powered_by_matrix": "Matrix tərəfindən təchiz edilmişdir",
+        "unsupported_auth_msisdn": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
+        "register_action": "Hesab Aç"
+    },
+    "update": {
+        "release_notes_toast_title": "Nə dəyişdi"
     }
 }

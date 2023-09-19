@@ -20,7 +20,6 @@
     "This Room": "Aquesta sala",
     "All Rooms": "Totas les salas",
     "Search…": "Cercar…",
-    "Server error": "Error servidor",
     "Sun": "Dg",
     "Mon": "Dl",
     "Tue": "Dm",
@@ -77,13 +76,10 @@
     "exists": "existís",
     "Authentication": "Autentificacion",
     "Restore from Backup": "Restablir a partir de l'archiu",
-    "Off": "Atudat",
     "Display Name": "Nom d'afichatge",
     "Profile": "Perfil",
     "Account": "Compte",
     "General": "General",
-    "Versions": "Versions",
-    "Composer": "Compositor",
     "Unignore": "Ignorar pas",
     "Security & Privacy": "Seguretat e vida privada",
     "Audio Output": "Sortida àudio",
@@ -139,15 +135,10 @@
     "Passwords don't match": "Los senhals correspondon pas",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
-    "Feedback": "Comentaris",
-    "Incorrect password": "Senhal incorrècte",
     "Commands": "Comandas",
     "Users": "Utilizaires",
     "Success!": "Capitada !",
-    "Navigation": "Navigacion",
-    "Upload a file": "Actualizar un fichièr",
     "Explore rooms": "Percórrer las salas",
-    "Create Account": "Crear un compte",
     "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
     "Confirm adding email": "Confirmar l'adicion de l'adressa e-mail",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat.",
@@ -189,7 +180,9 @@
         "matrix": "Matritz",
         "trusted": "Fisable",
         "not_trusted": "Pas securizat",
-        "system_alerts": "Alèrtas sistèma"
+        "system_alerts": "Alèrtas sistèma",
+        "feedback": "Comentaris",
+        "off": "Atudat"
     },
     "action": {
         "continue": "Contunhar",
@@ -265,7 +258,9 @@
         "end": "Fin",
         "alt": "Alt",
         "control": "Ctrl",
-        "shift": "Descalatge"
+        "shift": "Descalatge",
+        "category_navigation": "Navigacion",
+        "upload_file": "Actualizar un fichièr"
     },
     "composer": {
         "format_bold": "Gras",
@@ -306,7 +301,8 @@
         "category_actions": "Accions",
         "category_admin": "Admin",
         "category_advanced": "Avançat",
-        "category_other": "Autre"
+        "category_other": "Autre",
+        "server_error": "Error servidor"
     },
     "voip": {
         "hangup": "Penjar",
@@ -334,11 +330,17 @@
     "settings": {
         "appearance": {
             "font_size": "Talha de poliça",
-            "timeline_image_size_default": "Predefinit"
+            "timeline_image_size_default": "Predefinit",
+            "image_size_default": "Predefinit"
+        },
+        "preferences": {
+            "composer_heading": "Compositor"
         }
     },
     "auth": {
-        "sso": "Autentificacion unica"
+        "sso": "Autentificacion unica",
+        "incorrect_password": "Senhal incorrècte",
+        "register_action": "Crear un compte"
     },
     "export_chat": {
         "messages": "Messatges"
@@ -349,5 +351,10 @@
         "sort_by_alphabet": "A-Z",
         "sublist_options": "Opcions de lista",
         "show_less": "Ne veire mens"
+    },
+    "setting": {
+        "help_about": {
+            "versions": "Versions"
+        }
     }
 }

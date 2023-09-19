@@ -5,10 +5,7 @@
     "Historical": "Historisk",
     "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
     "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
-    "The email address linked to your account must be entered.": "Den emailadresse, der tilhører til din adgang, skal indtastes.",
     "Session ID": "Sessions ID",
-    "Displays action": "Viser handling",
-    "Deops user with given id": "Fjerner OP af bruger med givet id",
     "Commands": "Kommandoer",
     "Warning!": "Advarsel!",
     "Account": "Konto",
@@ -24,7 +21,6 @@
     "Favourite": "Favorit",
     "Notifications": "Notifikationer",
     "unknown error code": "Ukendt fejlkode",
-    "powered by Matrix": "Drevet af Matrix",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
     "This email address is already in use": "Denne email adresse er allerede i brug",
@@ -85,18 +81,12 @@
     "Notification targets": "Meddelelsesmål",
     "Today": "I dag",
     "Friday": "Fredag",
-    "What's New": "Hvad er nyt",
-    "On": "Tændt",
     "Changelog": "Ændringslog",
-    "Waiting for response from server": "Venter på svar fra server",
-    "Off": "Slukket",
     "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
     "Source URL": "Kilde URL",
-    "Failed to add tag %(tagName)s to room": "Kunne ikke tilføje tag(s): %(tagName)s til rummet",
     "Filter results": "Filtrér resultater",
     "No update available.": "Ingen opdatering tilgængelig.",
-    "Noisy": "Støjende",
     "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
@@ -104,14 +94,12 @@
     "Invite to this room": "Inviter til dette rum",
     "Send": "Send",
     "All messages": "Alle beskeder",
-    "What's new?": "Hvad er nyt?",
     "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Error encountered (%(errorDetail)s).": "En fejl er opstået (%(errorDetail)s).",
     "Low Priority": "Lav prioritet",
-    "Failed to remove tag %(tagName)s from room": "Kunne ikke fjerne tag(s): %(tagName)s fra rummet",
     "Wednesday": "Onsdag",
     "Thank you!": "Tak!",
     "Logs sent": "Logfiler sendt",
@@ -132,10 +120,6 @@
     "Use an identity server": "Brug en identitetsserver",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Brug en identitetsserver for at invitere pr. mail. Tryk på Fortsæt for at bruge den almindelige identitetsserver (%(defaultIdentityServerName)s) eller indtast en anden under Indstillinger.",
     "Use an identity server to invite by email. Manage in Settings.": "Brug en identitetsserver for at invitere pr. mail. Administrer dette under Indstillinger.",
-    "Define the power level of a user": "Indstil rettighedsniveau for en bruger",
-    "Please supply a https:// or http:// widget URL": "Oplys venligst en https:// eller http:// widget URL",
-    "You cannot modify widgets in this room.": "Du kan ikke ændre widgets i dette rum.",
-    "Forces the current outbound group session in an encrypted room to be discarded": "Tvinger den nuværende udgående gruppe-session i et krypteret rum til at blive kasseret",
     "Cannot reach homeserver": "Homeserveren kan ikke kontaktes",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Vær sikker at du har en stabil internetforbindelse, eller kontakt serveradministratoren",
     "Your %(brand)s is misconfigured": "Din %(brand)s er konfigureret forkert",
@@ -162,33 +146,6 @@
     "The user must be unbanned before they can be invited.": "Brugerens ban skal ophæves inden de kan blive inviteret.",
     "The user's homeserver does not support the version of the room.": "Brugerens homeserver understøtter ikke versionen af dette rum.",
     "Unknown server error": "Ukendt serverfejl",
-    "Use a few words, avoid common phrases": "Brug nogle få ord, undgå hyppige udtryk",
-    "No need for symbols, digits, or uppercase letters": "Symboler, tal eller store bogstaver behøves ikke",
-    "Use a longer keyboard pattern with more turns": "Brug et længere tastaturmønster med flere skift",
-    "Avoid repeated words and characters": "Undgå gentagne ord og tegn",
-    "Avoid sequences": "Undgå tegn i række",
-    "Avoid recent years": "Undgå nylige år",
-    "Avoid years that are associated with you": "Undgå årstal med forbindelse til dig",
-    "Avoid dates and years that are associated with you": "Undgå datoer og årstal med forbindelse til dig",
-    "Capitalization doesn't help very much": "Store bogstaver hjælper ikke specielt meget",
-    "All-uppercase is almost as easy to guess as all-lowercase": "\"Alt med store bogstaver\" er næsten lige så nemt at gætte som alt med små bogstaver",
-    "Reversed words aren't much harder to guess": "Omvendt stavede ord er ikke meget sværere at gætte sig til",
-    "Predictable substitutions like '@' instead of 'a' don't help very much": "Forudsigelige erstatninger som '@' i stedet for 'a' hjælper ikke specielt meget",
-    "Add another word or two. Uncommon words are better.": "Tilføj et ekstra ord eller to. Ualmindelige ord er bedre.",
-    "Repeats like \"aaa\" are easy to guess": "Gentagelser som \"aaa\" er nemme at gætte",
-    "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\"": "Gentagelser som \"abcabcabc\" er kun ubetydeligt sværere at gætte end \"abc\"",
-    "Sequences like abc or 6543 are easy to guess": "Sekvenser som abc eller 6543 er nemme at gætte",
-    "Recent years are easy to guess": "Nylige årstal er nemme at gætte",
-    "Dates are often easy to guess": "Datoer er often nemme at gætte",
-    "This is a top-10 common password": "Dette er et af de 10 mest almindelige kodeord",
-    "This is a top-100 common password": "Dette er et af de 100 mest almindelige kodeord",
-    "This is a very common password": "Dette er et meget almindeligt kodeord",
-    "This is similar to a commonly used password": "Dette ligner et ofte brugt kodeord",
-    "A word by itself is easy to guess": "Et enkelt ord er nem at gætte",
-    "Names and surnames by themselves are easy to guess": "Enkelte navne og efternavne er nemme at gætte",
-    "Common names and surnames are easy to guess": "Almindelige navne og efternavne er nemme at gætte",
-    "Straight rows of keys are easy to guess": "Bogstaver i en række på tastaturet er nemme at gætte",
-    "Short keyboard patterns are easy to guess": "Korte tastaturmønstre er nemme at gætte",
     "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
     "Add Email Address": "Tilføj e-mail adresse",
     "Add Phone Number": "Tilføj telefonnummer",
@@ -208,12 +165,8 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handling kræver adgang til default identitets serveren <server /> for at validere en email adresse eller et telefonnummer, men serveren har ingen terms of service.",
     "Only continue if you trust the owner of the server.": "Fortsæt kun hvis du stoler på ejeren af denne server.",
     "%(name)s is requesting verification": "%(name)s beder om verifikation",
-    "Sign In or Create Account": "Log ind eller Opret bruger",
-    "Use your account or create a new one to continue.": "Brug din konto eller opret en ny for at fortsætte.",
-    "Create Account": "Opret brugerkonto",
     "Error upgrading room": "Fejl under opgradering af rum",
     "Double check that your server supports the room version chosen and try again.": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen.",
-    "Could not find user in room": "Kunne ikke finde bruger i rum",
     "Verifies a user, session, and pubkey tuple": "Verificerer en bruger, session og pubkey tuple",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ADVARSEL: NØGLEVERIFIKATIONEN FEJLEDE! Underskriftsnøglen for %(userId)s og session %(deviceId)s er %(fprint)s som ikke matcher den supplerede nøgle \"%(fingerprint)s\". Dette kunne betyde at jeres kommunikation er infiltreret!",
     "Session already verified!": "Sessionen er allerede verificeret!",
@@ -224,9 +177,6 @@
     "Security & Privacy": "Sikkerhed & Privatliv",
     "Who can read history?": "Hvem kan læse historikken?",
     "Enable encryption?": "Aktiver kryptering?",
-    "Create a Group Chat": "Opret en gruppechat",
-    "Explore Public Rooms": "Udforsk offentlige rum",
-    "Send a Direct Message": "Send en Direkte Besked",
     "Permissions": "Tilladelser",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
@@ -237,16 +187,12 @@
     "Change notification settings": "Skift notifikations indstillinger",
     "Profile picture": "Profil billede",
     "Checking server": "Tjekker server",
-    "You're signed out": "Du er logget ud",
     "Change Password": "Skift adgangskode",
     "Current password": "Nuværende adgangskode",
-    "Comment": "Kommentar",
-    "Please enter a name for the room": "Indtast et navn for rummet",
     "Profile": "Profil",
     "Local address": "Lokal adresse",
     "This room has no local addresses": "Dette rum har ingen lokal adresse",
     "The conversation continues here.": "Samtalen fortsætter her.",
-    "Message deleted on %(date)s": "Besked slettet d. %(date)s",
     "France": "Frankrig",
     "Finland": "Finland",
     "Egypt": "Egypten",
@@ -295,8 +241,6 @@
     "The call was answered on another device.": "Opkaldet var svaret på en anden enhed.",
     "The user you called is busy.": "Brugeren du ringede til er optaget.",
     "User Busy": "Bruger optaget",
-    "Command error: Unable to find rendering type (%(renderingType)s)": "Kommandofejl: Kan ikke finde renderingstype (%(renderingType)s)",
-    "Command error: Unable to handle slash command.": "Kommandofejl: Kan ikke håndtere skråstregskommando.",
     "Are you sure you want to cancel entering passphrase?": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s og %(count)s andre",
@@ -522,8 +466,6 @@
     "Unable to transfer call": "Kan ikke omstille opkald",
     "There was an error looking up the phone number": "Der opstod en fejl ved at slå telefonnummeret op",
     "Unable to look up phone number": "Kan ikke slå telefonnummer op",
-    "Incorrect password": "Forkert adgangskode",
-    "Incorrect username and/or password.": "Forkert brugernavn og/eller adgangskode.",
     "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
     "Your password was successfully changed.": "Din adgangskode blev ændret.",
     "New Password": "Ny adgangskode",
@@ -546,7 +488,9 @@
         "someone": "Nogen",
         "encrypted": "Krypteret",
         "matrix": "Matrix",
-        "unnamed_room": "Unavngivet rum"
+        "unnamed_room": "Unavngivet rum",
+        "on": "Tændt",
+        "off": "Slukket"
     },
     "action": {
         "continue": "Fortsæt",
@@ -598,7 +542,8 @@
         "submit_debug_logs": "Indsend debug-logfiler",
         "send_logs": "Send logs",
         "collecting_information": "Indsamler app versionsoplysninger",
-        "collecting_logs": "Indsamler logfiler"
+        "collecting_logs": "Indsamler logfiler",
+        "waiting_for_server": "Venter på svar fra server"
     },
     "time": {
         "date_at_time": "%(date)s om %(time)s"
@@ -613,11 +558,13 @@
             "rule_invite_for_me": "Når jeg bliver inviteret til et rum",
             "rule_call": "Opkalds invitation",
             "rule_suppress_notices": "Beskeder sendt af en bot",
-            "show_message_desktop_notification": "Vis besked i skrivebordsnotifikation"
+            "show_message_desktop_notification": "Vis besked i skrivebordsnotifikation",
+            "noisy": "Støjende"
         },
         "appearance": {
             "custom_theme_success": "Tema tilføjet!",
-            "timeline_image_size_default": "Standard"
+            "timeline_image_size_default": "Standard",
+            "image_size_default": "Standard"
         }
     },
     "devtools": {
@@ -712,6 +659,9 @@
             "updated_rule_rooms": "%(senderName)s opdaterede den regel der banner rum som matcher %(glob)s på grund af %(reason)s",
             "updated_rule_servers": "%(senderName)s opdaterede den regel der banner servere der matcher %(glob)s på grund af %(reason)s",
             "updated_rule": "%(senderName)s opdaterede en ban-regel der matcher %(glob)s på grund af %(reason)s"
+        },
+        "redacted": {
+            "tooltip": "Besked slettet d. %(date)s"
         }
     },
     "slash_command": {
@@ -744,7 +694,16 @@
         "category_admin": "Administrator",
         "category_advanced": "Avanceret",
         "category_effects": "Effekter",
-        "category_other": "Andre"
+        "category_other": "Andre",
+        "addwidget_invalid_protocol": "Oplys venligst en https:// eller http:// widget URL",
+        "addwidget_no_permissions": "Du kan ikke ændre widgets i dette rum.",
+        "discardsession": "Tvinger den nuværende udgående gruppe-session i et krypteret rum til at blive kasseret",
+        "me": "Viser handling",
+        "error_invalid_runfn": "Kommandofejl: Kan ikke håndtere skråstregskommando.",
+        "error_invalid_rendering_type": "Kommandofejl: Kan ikke finde renderingstype (%(renderingType)s)",
+        "failed_find_user": "Kunne ikke finde bruger i rum",
+        "op": "Indstil rettighedsniveau for en bruger",
+        "deop": "Fjerner OP af bruger med givet id"
     },
     "presence": {
         "online": "Online"
@@ -790,12 +749,70 @@
         "categories": "Kategorier"
     },
     "auth": {
-        "sso": "Engangs login"
+        "sso": "Engangs login",
+        "footer_powered_by_matrix": "Drevet af Matrix",
+        "incorrect_password": "Forkert adgangskode",
+        "soft_logout_heading": "Du er logget ud",
+        "forgot_password_email_required": "Den emailadresse, der tilhører til din adgang, skal indtastes.",
+        "sign_in_or_register": "Log ind eller Opret bruger",
+        "sign_in_or_register_description": "Brug din konto eller opret en ny for at fortsætte.",
+        "register_action": "Opret brugerkonto",
+        "incorrect_credentials": "Forkert brugernavn og/eller adgangskode."
     },
     "export_chat": {
         "messages": "Beskeder"
     },
     "room_list": {
-        "show_less": "Vis mindre"
+        "show_less": "Vis mindre",
+        "failed_remove_tag": "Kunne ikke fjerne tag(s): %(tagName)s fra rummet",
+        "failed_add_tag": "Kunne ikke tilføje tag(s): %(tagName)s til rummet"
+    },
+    "onboarding": {
+        "send_dm": "Send en Direkte Besked",
+        "explore_rooms": "Udforsk offentlige rum",
+        "create_room": "Opret en gruppechat"
+    },
+    "create_room": {
+        "name_validation_required": "Indtast et navn for rummet"
+    },
+    "feedback": {
+        "comment_label": "Kommentar"
+    },
+    "zxcvbn": {
+        "suggestions": {
+            "useWords": "Brug nogle få ord, undgå hyppige udtryk",
+            "noNeed": "Symboler, tal eller store bogstaver behøves ikke",
+            "longerKeyboardPattern": "Brug et længere tastaturmønster med flere skift",
+            "repeated": "Undgå gentagne ord og tegn",
+            "sequences": "Undgå tegn i række",
+            "recentYears": "Undgå nylige år",
+            "associatedYears": "Undgå årstal med forbindelse til dig",
+            "dates": "Undgå datoer og årstal med forbindelse til dig",
+            "capitalization": "Store bogstaver hjælper ikke specielt meget",
+            "allUppercase": "\"Alt med store bogstaver\" er næsten lige så nemt at gætte som alt med små bogstaver",
+            "reverseWords": "Omvendt stavede ord er ikke meget sværere at gætte sig til",
+            "l33t": "Forudsigelige erstatninger som '@' i stedet for 'a' hjælper ikke specielt meget",
+            "anotherWord": "Tilføj et ekstra ord eller to. Ualmindelige ord er bedre."
+        },
+        "warnings": {
+            "simpleRepeat": "Gentagelser som \"aaa\" er nemme at gætte",
+            "extendedRepeat": "Gentagelser som \"abcabcabc\" er kun ubetydeligt sværere at gætte end \"abc\"",
+            "sequences": "Sekvenser som abc eller 6543 er nemme at gætte",
+            "recentYears": "Nylige årstal er nemme at gætte",
+            "dates": "Datoer er often nemme at gætte",
+            "topTen": "Dette er et af de 10 mest almindelige kodeord",
+            "topHundred": "Dette er et af de 100 mest almindelige kodeord",
+            "common": "Dette er et meget almindeligt kodeord",
+            "similarToCommon": "Dette ligner et ofte brugt kodeord",
+            "wordByItself": "Et enkelt ord er nem at gætte",
+            "namesByThemselves": "Enkelte navne og efternavne er nemme at gætte",
+            "commonNames": "Almindelige navne og efternavne er nemme at gætte",
+            "straightRow": "Bogstaver i en række på tastaturet er nemme at gætte",
+            "keyPattern": "Korte tastaturmønstre er nemme at gætte"
+        }
+    },
+    "update": {
+        "see_changes_button": "Hvad er nyt?",
+        "release_notes_toast_title": "Hvad er nyt"
     }
 }
