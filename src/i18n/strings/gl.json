@@ -2232,11 +2232,11 @@
         "integration_manager": "Xestor de Integracións",
         "qr_code": "Código QR",
         "feedback": "Comenta",
-        "all_rooms": "Todas as salas",
-        "orphan_rooms": "Outras salas",
         "preview_message": "Ei ti. Es grande!",
+        "orphan_rooms": "Outras salas",
         "on": "On",
-        "off": "Off"
+        "off": "Off",
+        "all_rooms": "Todas as salas"
     },
     "action": {
         "continue": "Continuar",
@@ -2334,8 +2334,8 @@
         "submit": "Enviar",
         "send_report": "Enviar denuncia",
         "clear": "Limpar",
-        "enter_fullscreen": "Ir a pantalla completa",
-        "exit_fullscreeen": "Saír de pantalla completa"
+        "exit_fullscreeen": "Saír de pantalla completa",
+        "enter_fullscreen": "Ir a pantalla completa"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -2386,9 +2386,9 @@
         "join_beta_reload": "Ao unirte á beta recargaremos %(brand)s.",
         "leave_beta": "Saír da beta",
         "join_beta": "Unirse á beta",
-        "automatic_debug_logs": "Enviar automáticamente rexistros de depuración para calquera fallo",
+        "automatic_debug_logs_key_backup": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione",
         "automatic_debug_logs_decryption": "Envía automáticamente rexistro de depuración se hai erros no cifrado",
-        "automatic_debug_logs_key_backup": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione"
+        "automatic_debug_logs": "Enviar automáticamente rexistros de depuración para calquera fallo"
     },
     "keyboard": {
         "home": "Inicio",
@@ -2658,15 +2658,19 @@
             "timeline_image_size": "Tamaño de imaxe na cronoloxía",
             "timeline_image_size_default": "Por defecto",
             "timeline_image_size_large": "Grande",
-            "custom_font_size": "Usar tamaño personalizado",
+            "image_size_large": "Grande",
+            "image_size_default": "Por defecto",
+            "font_size_valid": "Usa entre %(min)s pt e %(max)s pt",
             "font_size_nan": "O tamaño ten que ser un número",
             "font_size_limit": "O tamaño da fonte só pode estar entre %(min)s pt e %(max)s pt",
-            "font_size_valid": "Usa entre %(min)s pt e %(max)s pt",
-            "image_size_default": "Por defecto",
-            "image_size_large": "Grande"
+            "custom_font_size": "Usar tamaño personalizado"
         },
         "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
         "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
+        "voip": {
+            "mirror_local_feed": "Replicar a fonte de vídeo local"
+        },
+        "send_read_receipts_unsupported": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
         "security": {
             "message_search_disable_warning": "Se está desactivado, as mensaxes das salas cifradas non aparecerán nos resultados das buscas.",
             "message_search_indexing_idle": "Non se están indexando as mensaxes de ningunha sala.",
@@ -2701,10 +2705,6 @@
             "always_show_menu_bar": "Mostrar sempre a barra de menú da ventá",
             "enable_tray_icon": "Mostra icona na bandexa do sistema e minimiza ventá ao pechar",
             "enable_hardware_acceleration": "Activar aceleración por hardware"
-        },
-        "send_read_receipts_unsupported": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
-        "voip": {
-            "mirror_local_feed": "Replicar a fonte de vídeo local"
         },
         "keyboard": {
             "title": "Teclado"
@@ -2777,9 +2777,9 @@
         "category_room": "Sala",
         "category_other": "Outro",
         "widget_screenshots": "Activar as capturas de trebellos para aqueles que as permiten",
+        "title": "Ferramentas desenvolvemento",
         "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
-        "developer_mode": "Modo desenvolvemento",
-        "title": "Ferramentas desenvolvemento"
+        "developer_mode": "Modo desenvolvemento"
     },
     "export_chat": {
         "html": "HTML",
@@ -3140,12 +3140,12 @@
         "no_permission_messages_before_join": "Non tes permiso para ver mensaxes anteriores a que te unises.",
         "encrypted_historical_messages_unavailable": "Non están dispoñibles as mensaxes cifradas anteriores a este punto.",
         "historical_messages_unavailable": "Non podes ver mensaxes anteriores",
+        "redacted": {
+            "tooltip": "Mensaxe eliminada o %(date)s"
+        },
         "reactions": {
             "label": "%(reactors)s reaccionou con %(content)s",
             "tooltip": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>"
-        },
-        "redacted": {
-            "tooltip": "Mensaxe eliminada o %(date)s"
         },
         "m.room.create": {
             "continuation": "Esta sala é continuación doutra conversa.",
@@ -3214,14 +3214,14 @@
         "failed_find_user": "Non se atopa a usuaria na sala",
         "op": "Define o nivel de permisos de unha usuaria",
         "deop": "Degrada usuaria co id proporcionado",
-        "server_error": "Fallo no servidor",
-        "command_error": "Erro na orde",
-        "server_error_detail": "Servidor non dispoñible, sobrecargado, ou outra cousa puido fallar.",
-        "unknown_command": "Comando descoñecido",
-        "unknown_command_detail": "Comando non recoñecido: %(commandText)s",
-        "unknown_command_help": "Podes usar <code>axuda</code> para ver os comandos dispoñibles. ¿Querías mellor enviar esto como unha mensaxe?",
         "unknown_command_hint": "Truco: Comeza a mensaxe con <code>//</code> para comezar cun trazo.",
-        "unknown_command_button": "Enviar como mensaxe"
+        "unknown_command_help": "Podes usar <code>axuda</code> para ver os comandos dispoñibles. ¿Querías mellor enviar esto como unha mensaxe?",
+        "unknown_command_detail": "Comando non recoñecido: %(commandText)s",
+        "unknown_command_button": "Enviar como mensaxe",
+        "unknown_command": "Comando descoñecido",
+        "server_error_detail": "Servidor non dispoñible, sobrecargado, ou outra cousa puido fallar.",
+        "server_error": "Fallo no servidor",
+        "command_error": "Erro na orde"
     },
     "presence": {
         "busy": "Ocupado",
@@ -3437,8 +3437,8 @@
         "server_picker_custom": "Outro servidor de inicio",
         "server_picker_explainer": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
         "server_picker_learn_more": "Acerca dos servidores de inicio",
-        "account_deactivated": "Esta conta foi desactivada.",
-        "incorrect_credentials": "Nome de usuaria ou contrasinal non válidos."
+        "incorrect_credentials": "Nome de usuaria ou contrasinal non válidos.",
+        "account_deactivated": "Esta conta foi desactivada."
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3564,83 +3564,6 @@
         "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
         "send_feedback_action": "Enviar comentario"
     },
-    "create_space": {
-        "name_required": "Escribe un nome para o espazo",
-        "name_placeholder": "ex. o-meu-espazo",
-        "explainer": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
-        "public_description": "Espazo aberto para calquera, mellor para comunidades",
-        "private_description": "Só con convite, mellor para ti ou para equipos",
-        "public_heading": "O teu espazo público",
-        "private_heading": "O teu espazo privado",
-        "add_details_prompt": "Engade algún detalle para que sexa recoñecible.",
-        "failed_create_initial_rooms": "Fallou a creación inicial das salas do espazo",
-        "skip_action": "Omitir por agora",
-        "add_existing_rooms_heading": "Que queres organizar?",
-        "add_existing_rooms_description": "Elixe salas ou conversas para engadilas. Este é un espazo para ti, ninguén será notificado. Podes engadir máis posteriormente.",
-        "share_heading": "Compartir %(name)s",
-        "share_description": "Por agora só estás ti, será incluso mellor con outras persoas.",
-        "done_action_first_room": "Ir á miña primeira sala",
-        "done_action": "Ir ao meu espazo",
-        "private_personal_heading": "Con quen estás a traballar?",
-        "private_personal_description": "Asegúrate de que as persoas axeitadas teñen acceso a %(name)s",
-        "personal_space": "Só eu",
-        "personal_space_description": "Un espazo privado para organizar as túas salas",
-        "private_space": "Eu máis o meu equipo",
-        "private_space_description": "Un espazo privado para ti e o teu equipo",
-        "failed_invite_users": "Fallou o convite ao teu espazo para as seguintes usuarias: %(csvUsers)s",
-        "invite_teammates_heading": "Convida ao teu equipo",
-        "invite_teammates_description": "Asegúrate de que as persoas axeitadas teñen acceso. Podes convidar a outras máis tarde.",
-        "invite_teammates_by_username": "Convidar por nome de usuaria",
-        "setup_rooms_community_heading": "Sobre que temas queres conversar en %(spaceName)s?",
-        "setup_rooms_community_description": "Crea unha sala para cada un deles.",
-        "setup_rooms_description": "Podes engadir máis posteriormente, incluíndo os xa existentes.",
-        "setup_rooms_private_heading": "En que proxectos está a traballar o teu equipo?",
-        "setup_rooms_private_description": "Imos crear salas para cada un deles."
-    },
-    "space": {
-        "landing_welcome": "Benvida a <name/>"
-    },
-    "threads": {
-        "all_threads": "Tódalas conversas",
-        "all_threads_description": "Mostra tódalas conversas da sala actual",
-        "my_threads": "As miñas conversas",
-        "my_threads_description": "Mostra tódalas conversas nas que participaches",
-        "show_thread_filter": "Mostrar:",
-        "empty_has_threads_tip": "Responde a unha conversa en curso ou usa \"%(replyInThread)s\" cando pasas por enriba dunha mensaxe co rato para iniciar unha nova.",
-        "show_all_threads": "Mostra tódolos temas",
-        "empty_explainer": "Os fíos axúdanche a manter as conversas no tema e facilitan o seguimento.",
-        "empty_tip": "<b>Truco:</b> Usa \"%(replyInThread)s\" ao poñerte enriba dunha mensaxe.",
-        "empty_heading": "Manter as conversas organizadas con fíos"
-    },
-    "location_sharing": {
-        "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
-        "MapStyleUrlNotReachable": "Este servidor non está correctamente configurado para mostrar mapas, ou o servidor de mapas configurado non é accesible.",
-        "toggle_attribution": "Cambiar atribución",
-        "map_feedback": "Opinión sobre Mapa",
-        "find_my_location": "Onde estou",
-        "location_not_available": "Localización non dispoñible",
-        "mapbox_logo": "Logo Mapbox",
-        "reset_bearing": "Restablecer apuntando ao norte",
-        "failed_permission": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
-        "failed_generic": "Non se obtivo a localización, inténtao máis tarde.",
-        "failed_timeout": "Caducou o intento de obter a localización, inténtao máis tarde.",
-        "failed_unknown": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
-        "expand_map": "Despregar mapa",
-        "failed_load_map": "Non se cargou o mapa"
-    },
-    "labs_mjolnir": {
-        "room_name": "Listaxe de bloqueo",
-        "room_topic": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!"
-    },
-    "theme": {
-        "light_high_contrast": "Alto contraste claro"
-    },
-    "update": {
-        "see_changes_button": "Que hai de novo?",
-        "release_notes_toast_title": "Que hai de novo",
-        "toast_title": "Actualizar %(brand)s",
-        "toast_description": "Hai unha nova versión de %(brand)s dispoñible"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Usa unhas poucas palabras, evita frases comúns",
@@ -3673,5 +3596,82 @@
             "straightRow": "Palabras de letras contiguas son doadas de adiviñar",
             "keyPattern": "Patróns curtos de teclas son doados de adiviñar"
         }
+    },
+    "update": {
+        "see_changes_button": "Que hai de novo?",
+        "release_notes_toast_title": "Que hai de novo",
+        "toast_title": "Actualizar %(brand)s",
+        "toast_description": "Hai unha nova versión de %(brand)s dispoñible"
+    },
+    "threads": {
+        "all_threads": "Tódalas conversas",
+        "all_threads_description": "Mostra tódalas conversas da sala actual",
+        "my_threads": "As miñas conversas",
+        "my_threads_description": "Mostra tódalas conversas nas que participaches",
+        "show_thread_filter": "Mostrar:",
+        "empty_has_threads_tip": "Responde a unha conversa en curso ou usa \"%(replyInThread)s\" cando pasas por enriba dunha mensaxe co rato para iniciar unha nova.",
+        "show_all_threads": "Mostra tódolos temas",
+        "empty_explainer": "Os fíos axúdanche a manter as conversas no tema e facilitan o seguimento.",
+        "empty_tip": "<b>Truco:</b> Usa \"%(replyInThread)s\" ao poñerte enriba dunha mensaxe.",
+        "empty_heading": "Manter as conversas organizadas con fíos"
+    },
+    "theme": {
+        "light_high_contrast": "Alto contraste claro"
+    },
+    "space": {
+        "landing_welcome": "Benvida a <name/>"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
+        "MapStyleUrlNotReachable": "Este servidor non está correctamente configurado para mostrar mapas, ou o servidor de mapas configurado non é accesible.",
+        "toggle_attribution": "Cambiar atribución",
+        "map_feedback": "Opinión sobre Mapa",
+        "find_my_location": "Onde estou",
+        "location_not_available": "Localización non dispoñible",
+        "mapbox_logo": "Logo Mapbox",
+        "reset_bearing": "Restablecer apuntando ao norte",
+        "failed_permission": "%(brand)s non ten permiso para obter a túa localización. Concede acceso á localización nos axustes do navegador.",
+        "failed_generic": "Non se obtivo a localización, inténtao máis tarde.",
+        "failed_timeout": "Caducou o intento de obter a localización, inténtao máis tarde.",
+        "failed_unknown": "Erro descoñecido ao obter a localización, inténtao máis tarde.",
+        "expand_map": "Despregar mapa",
+        "failed_load_map": "Non se cargou o mapa"
+    },
+    "labs_mjolnir": {
+        "room_name": "Listaxe de bloqueo",
+        "room_topic": "Esta é a listaxe de usuarias/servidores que ti bloqueaches - non deixes a sala!"
+    },
+    "create_space": {
+        "name_required": "Escribe un nome para o espazo",
+        "name_placeholder": "ex. o-meu-espazo",
+        "explainer": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
+        "public_description": "Espazo aberto para calquera, mellor para comunidades",
+        "private_description": "Só con convite, mellor para ti ou para equipos",
+        "public_heading": "O teu espazo público",
+        "private_heading": "O teu espazo privado",
+        "add_details_prompt": "Engade algún detalle para que sexa recoñecible.",
+        "failed_create_initial_rooms": "Fallou a creación inicial das salas do espazo",
+        "skip_action": "Omitir por agora",
+        "add_existing_rooms_heading": "Que queres organizar?",
+        "add_existing_rooms_description": "Elixe salas ou conversas para engadilas. Este é un espazo para ti, ninguén será notificado. Podes engadir máis posteriormente.",
+        "share_heading": "Compartir %(name)s",
+        "share_description": "Por agora só estás ti, será incluso mellor con outras persoas.",
+        "done_action_first_room": "Ir á miña primeira sala",
+        "done_action": "Ir ao meu espazo",
+        "private_personal_heading": "Con quen estás a traballar?",
+        "private_personal_description": "Asegúrate de que as persoas axeitadas teñen acceso a %(name)s",
+        "personal_space": "Só eu",
+        "personal_space_description": "Un espazo privado para organizar as túas salas",
+        "private_space": "Eu máis o meu equipo",
+        "private_space_description": "Un espazo privado para ti e o teu equipo",
+        "failed_invite_users": "Fallou o convite ao teu espazo para as seguintes usuarias: %(csvUsers)s",
+        "invite_teammates_heading": "Convida ao teu equipo",
+        "invite_teammates_description": "Asegúrate de que as persoas axeitadas teñen acceso. Podes convidar a outras máis tarde.",
+        "invite_teammates_by_username": "Convidar por nome de usuaria",
+        "setup_rooms_community_heading": "Sobre que temas queres conversar en %(spaceName)s?",
+        "setup_rooms_community_description": "Crea unha sala para cada un deles.",
+        "setup_rooms_description": "Podes engadir máis posteriormente, incluíndo os xa existentes.",
+        "setup_rooms_private_heading": "En que proxectos está a traballar o teu equipo?",
+        "setup_rooms_private_description": "Imos crear salas para cada un deles."
     }
 }

@@ -1451,10 +1451,10 @@
         "integration_manager": "Мениджър на интеграции",
         "qr_code": "QR код",
         "feedback": "Обратна връзка",
-        "all_rooms": "Всички стаи",
         "preview_message": "Хей, ти. Върхът си!",
         "on": "Вкл.",
-        "off": "Изкл."
+        "off": "Изкл.",
+        "all_rooms": "Всички стаи"
     },
     "action": {
         "continue": "Продължи",
@@ -1703,14 +1703,17 @@
             "font_size": "Размер на шрифта",
             "custom_font_description": "Настройте името на шрифт инсталиран в системата и %(brand)s ще се опита да го използва.",
             "timeline_image_size_default": "По подразбиране",
-            "custom_font_size": "Използвай собствен размер",
+            "image_size_default": "По подразбиране",
+            "font_size_valid": "Изберете между %(min)s pt и %(max)s pt",
             "font_size_nan": "Размера трябва да е число",
             "font_size_limit": "Собствения размер на шрифта може да бъде единствено между %(min)s pt и %(max)s pt",
-            "font_size_valid": "Изберете между %(min)s pt и %(max)s pt",
-            "image_size_default": "По подразбиране"
+            "custom_font_size": "Използвай собствен размер"
         },
         "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
         "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая",
+        "voip": {
+            "mirror_local_feed": "Показвай ми огледално моя видео образ"
+        },
         "security": {
             "message_search_disable_warning": "Ако е изключено, съобщения от шифровани стаи няма да се показват в резултатите от търсения.",
             "message_search_indexing_idle": "В момента не се индексират съобщения в нито една стая.",
@@ -1733,9 +1736,6 @@
             "rm_lifetime": "Живот на маркера за прочитане (мсек)",
             "rm_lifetime_offscreen": "Живот на маркера за прочитане извън екрана (мсек)",
             "always_show_menu_bar": "Винаги показвай менютата на прозореца"
-        },
-        "voip": {
-            "mirror_local_feed": "Показвай ми огледално моя видео образ"
         }
     },
     "devtools": {
@@ -1952,20 +1952,20 @@
             "changed_rule_servers": "%(senderName)s промени правило блокиращо достъпа до сървъри отговарящи на %(oldGlob)s към отговарящи на %(newGlob)s поради %(reason)s",
             "changed_rule_glob": "%(senderName)s промени правило блокиращо достъпа до неща отговарящи на %(oldGlob)s към отговарящи на %(newGlob)s поради %(reason)s"
         },
+        "redacted": {
+            "tooltip": "Съобщението изтрито на %(date)s"
+        },
         "reactions": {
             "tooltip": "<reactors/><reactedWith>реагира с %(shortName)s</reactedWith>"
         },
-        "redacted": {
-            "tooltip": "Съобщението изтрито на %(date)s"
+        "m.room.create": {
+            "continuation": "Тази стая е продължение на предишен разговор.",
+            "see_older_messages": "Кликнете тук за да видите предишните съобщения."
         },
         "m.room.avatar": {
             "lightbox_title": "%(senderDisplayName)s промени аватара на %(roomName)s",
             "removed": "%(senderDisplayName)s премахна аватара на стаята.",
             "changed_img": "%(senderDisplayName)s промени аватара на стаята на <img/>"
-        },
-        "m.room.create": {
-            "continuation": "Тази стая е продължение на предишен разговор.",
-            "see_older_messages": "Кликнете тук за да видите предишните съобщения."
         }
     },
     "slash_command": {
@@ -2018,14 +2018,14 @@
         "failed_find_user": "Неуспешно намиране на потребител в стаята",
         "op": "Променя нивото на достъп на потребителя",
         "deop": "Отнема правата на потребител с даден идентификатор",
-        "server_error": "Сървърна грешка",
-        "command_error": "Грешка в командата",
-        "server_error_detail": "Сървърът е недостъпен, претоварен или нещо друго се обърка.",
-        "unknown_command": "Непозната команда",
-        "unknown_command_detail": "Неразпозната команда: %(commandText)s",
-        "unknown_command_help": "Може да използвате <code>/help</code> за да видите наличните команди. Или пък искахте да изпратите това като съобщение?",
         "unknown_command_hint": "Съвет: Започнете съобщението си с <code>//</code> за да изпратите съобщение започващо с наклонена черта.",
-        "unknown_command_button": "Изпрати като съобщение"
+        "unknown_command_help": "Може да използвате <code>/help</code> за да видите наличните команди. Или пък искахте да изпратите това като съобщение?",
+        "unknown_command_detail": "Неразпозната команда: %(commandText)s",
+        "unknown_command_button": "Изпрати като съобщение",
+        "unknown_command": "Непозната команда",
+        "server_error_detail": "Сървърът е недостъпен, претоварен или нещо друго се обърка.",
+        "server_error": "Сървърна грешка",
+        "command_error": "Грешка в командата"
     },
     "presence": {
         "online_for": "Онлайн от %(duration)s",
@@ -2166,8 +2166,8 @@
         "sign_in_or_register": "Влезте или Създайте профил",
         "sign_in_or_register_description": "Използвайте профила си или създайте нов за да продължите.",
         "register_action": "Създай профил",
-        "account_deactivated": "Този акаунт е деактивиран.",
-        "incorrect_credentials": "Неправилно потребителско име и/или парола."
+        "incorrect_credentials": "Неправилно потребителско име и/или парола.",
+        "account_deactivated": "Този акаунт е деактивиран."
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2221,24 +2221,6 @@
         "existing_issue_link": "Първо прегледайте <existingIssuesLink>съществуващите проблеми в Github</existingIssuesLink>. Няма подобни? <newIssueLink>Създайте нов</newIssueLink>.",
         "send_feedback_action": "Изпрати обратна връзка"
     },
-    "create_space": {
-        "name_required": "Моля, въведете име на пространството",
-        "public_description": "Открийте пространство за всеки, най-добро за общности",
-        "private_description": "Само с покана, най-добро за вас самият или отбори",
-        "public_heading": "Вашето публично пространство",
-        "private_heading": "Вашето лично пространство",
-        "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят."
-    },
-    "labs_mjolnir": {
-        "room_name": "Моя списък с блокирания",
-        "room_topic": "Това е списък с хора/сървъри, които сте блокирали - не напускайте стаята!"
-    },
-    "update": {
-        "see_changes_button": "Какво ново?",
-        "release_notes_toast_title": "Какво ново",
-        "toast_title": "Обнови %(brand)s",
-        "toast_description": "Налична е нова версия на %(brand)s"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Използвайте няколко думи, избягвайте общи фрази",
@@ -2271,5 +2253,23 @@
             "straightRow": "Клавиши от прави редици са лесни за отгатване",
             "keyPattern": "Къси клавиатурни последователности са лесни за отгатване"
         }
+    },
+    "update": {
+        "see_changes_button": "Какво ново?",
+        "release_notes_toast_title": "Какво ново",
+        "toast_title": "Обнови %(brand)s",
+        "toast_description": "Налична е нова версия на %(brand)s"
+    },
+    "labs_mjolnir": {
+        "room_name": "Моя списък с блокирания",
+        "room_topic": "Това е списък с хора/сървъри, които сте блокирали - не напускайте стаята!"
+    },
+    "create_space": {
+        "name_required": "Моля, въведете име на пространството",
+        "public_description": "Открийте пространство за всеки, най-добро за общности",
+        "private_description": "Само с покана, най-добро за вас самият или отбори",
+        "public_heading": "Вашето публично пространство",
+        "private_heading": "Вашето лично пространство",
+        "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят."
     }
 }

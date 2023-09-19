@@ -657,9 +657,9 @@
         "join": "S'uneix a la sala amb l'adreça indicada",
         "op": "Defineix el nivell d'autoritat d'un usuari",
         "deop": "Degrada l'usuari amb l'id donat",
+        "server_error_detail": "El servidor no està disponible, està sobrecarregat o alguna altra cosa no ha funcionat correctament.",
         "server_error": "Error de servidor",
-        "command_error": "Error en l'ordre",
-        "server_error_detail": "El servidor no està disponible, està sobrecarregat o alguna altra cosa no ha funcionat correctament."
+        "command_error": "Error en l'ordre"
     },
     "presence": {
         "online_for": "En línia durant %(duration)s",
@@ -709,14 +709,6 @@
             "brand_version": "Versió de %(brand)s:"
         }
     },
-    "room_list": {
-        "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
-        "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
-    },
-    "update": {
-        "see_changes_button": "Què hi ha de nou?",
-        "release_notes_toast_title": "Novetats"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Feu servir unes quantes paraules, eviteu frases comunes",
@@ -748,5 +740,13 @@
             "straightRow": "Fileres seguides de tecles són fàcils d'esbrinar",
             "keyPattern": "Patrons curts de teclat són fàcils d'esbrinar"
         }
+    },
+    "update": {
+        "see_changes_button": "Què hi ha de nou?",
+        "release_notes_toast_title": "Novetats"
+    },
+    "room_list": {
+        "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
+        "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
     }
 }

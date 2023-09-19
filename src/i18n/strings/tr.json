@@ -1325,10 +1325,10 @@
         "integration_manager": "Bütünleştirme Yöneticisi",
         "qr_code": "Kare kod (QR)",
         "feedback": "Geri bildirim",
-        "all_rooms": "Tüm odalar",
         "preview_message": "Hey sen. Sen en iyisisin!",
         "on": "Açık",
-        "off": "Kapalı"
+        "off": "Kapalı",
+        "all_rooms": "Tüm odalar"
     },
     "action": {
         "continue": "Devam Et",
@@ -1557,14 +1557,17 @@
             "font_size": "Yazı boyutu",
             "custom_font_description": "Sisteminizde bulunan bir font adı belirtiniz. %(brand)s sizin için onu kullanmaya çalışacak.",
             "timeline_image_size_default": "Varsayılan",
-            "custom_font_size": "Özel büyüklük kullan",
+            "image_size_default": "Varsayılan",
+            "font_size_valid": "%(min)s ile %(max)s arasında girin",
             "font_size_nan": "Boyut bir sayı olmalıdır",
             "font_size_limit": "Özel yazı tipi boyutu %(min)s ile %(max)s arasında olmalı",
-            "font_size_valid": "%(min)s ile %(max)s arasında girin",
-            "image_size_default": "Varsayılan"
+            "custom_font_size": "Özel büyüklük kullan"
         },
         "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
         "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
+        "voip": {
+            "mirror_local_feed": "Yerel video beslemesi yansısı"
+        },
         "security": {
             "message_search_indexing_idle": "Şu an hiç bir odada mesaj indeksleme yapılmıyor.",
             "message_search_space_used": "Kullanılan alan:",
@@ -1586,9 +1589,6 @@
             "rm_lifetime": "Okundu iminin gösterim süresi (ms)",
             "rm_lifetime_offscreen": "Okundu iminin ekran dışındaki gösterim süresi (ms)",
             "always_show_menu_bar": "Pencerenin menü çubuğunu her zaman göster"
-        },
-        "voip": {
-            "mirror_local_feed": "Yerel video beslemesi yansısı"
         }
     },
     "devtools": {
@@ -1827,14 +1827,14 @@
         "redacted": {
             "tooltip": "Mesaj %(date)s tarihinde silindi"
         },
+        "m.room.create": {
+            "continuation": "Bu oda başka bir görüşmenin devamıdır.",
+            "see_older_messages": "Daha eski mesajları görmek için buraya tıklayın."
+        },
         "m.room.avatar": {
             "lightbox_title": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
             "removed": "%(senderDisplayName)s odanın avatarını kaldırdı.",
             "changed_img": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi"
-        },
-        "m.room.create": {
-            "continuation": "Bu oda başka bir görüşmenin devamıdır.",
-            "see_older_messages": "Daha eski mesajları görmek için buraya tıklayın."
         }
     },
     "slash_command": {
@@ -1887,14 +1887,14 @@
         "failed_find_user": "Kullanıcı odada bulunamadı",
         "op": "Bir kullanıcının güç düzeyini tanımla",
         "deop": "ID'leriyle birlikte , düşürülmüş kullanıcılar",
-        "server_error": "Sunucu Hatası",
-        "command_error": "Komut Hatası",
-        "server_error_detail": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
-        "unknown_command": "Bilinmeyen Komut",
-        "unknown_command_detail": "Tanınmayan komut: %(commandText)s",
-        "unknown_command_help": "<code>/help</code> yazarak var olan komutları listeleyebilirsiniz. Yoksa bunu bir ileti olarak mı göndermek istemiştiniz?",
         "unknown_command_hint": "İpucu: İletilerinizi eğik çizgi ile başlatmak için <code>//</code> ile başlayın.",
-        "unknown_command_button": "Mesaj olarak gönder"
+        "unknown_command_help": "<code>/help</code> yazarak var olan komutları listeleyebilirsiniz. Yoksa bunu bir ileti olarak mı göndermek istemiştiniz?",
+        "unknown_command_detail": "Tanınmayan komut: %(commandText)s",
+        "unknown_command_button": "Mesaj olarak gönder",
+        "unknown_command": "Bilinmeyen Komut",
+        "server_error_detail": "Sunucu kullanılamıyor , aşırı yüklenmiş veya başka bir şey ters gitmiş olabilir.",
+        "server_error": "Sunucu Hatası",
+        "command_error": "Komut Hatası"
     },
     "presence": {
         "online_for": "%(duration)s süresince çevrimiçi",
@@ -2031,8 +2031,8 @@
         "sign_in_or_register": "Oturum Açın veya Hesap Oluşturun",
         "sign_in_or_register_description": "Hesabınızı kullanın veya devam etmek için yeni bir tane oluşturun.",
         "register_action": "Hesap Oluştur",
-        "account_deactivated": "Hesap devre dışı bırakıldı.",
-        "incorrect_credentials": "Yanlış kullanıcı adı ve / veya şifre."
+        "incorrect_credentials": "Yanlış kullanıcı adı ve / veya şifre.",
+        "account_deactivated": "Hesap devre dışı bırakıldı."
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2135,19 +2135,6 @@
             "see_msgtype_sent_active_room": "Aktif odanıza gönderilen <b>%(msgtype)s</b> mesajları görün"
         }
     },
-    "labs_mjolnir": {
-        "room_name": "Yasaklı Listem",
-        "room_topic": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!"
-    },
-    "theme": {
-        "light_high_contrast": "Yüksek ışık kontrastı"
-    },
-    "update": {
-        "see_changes_button": "Yeni olan ne ?",
-        "release_notes_toast_title": "Yenilikler",
-        "toast_title": "%(brand)s 'i güncelle",
-        "toast_description": "%(brand)s 'in yeni versiyonu hazır"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Bir kaç kelime kullanın ve genel ifadelerden kaçının",
@@ -2180,5 +2167,18 @@
             "straightRow": "Aynı klavye satırındaki ardışık tuşlar kolay tahmin edilir",
             "keyPattern": "Kısa klavye desenleri kolay tahmin edilir"
         }
+    },
+    "update": {
+        "see_changes_button": "Yeni olan ne ?",
+        "release_notes_toast_title": "Yenilikler",
+        "toast_title": "%(brand)s 'i güncelle",
+        "toast_description": "%(brand)s 'in yeni versiyonu hazır"
+    },
+    "theme": {
+        "light_high_contrast": "Yüksek ışık kontrastı"
+    },
+    "labs_mjolnir": {
+        "room_name": "Yasaklı Listem",
+        "room_topic": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!"
     }
 }

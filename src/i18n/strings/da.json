@@ -778,10 +778,6 @@
     "feedback": {
         "comment_label": "Kommentar"
     },
-    "update": {
-        "see_changes_button": "Hvad er nyt?",
-        "release_notes_toast_title": "Hvad er nyt"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Brug nogle få ord, undgå hyppige udtryk",
@@ -814,5 +810,9 @@
             "straightRow": "Bogstaver i en række på tastaturet er nemme at gætte",
             "keyPattern": "Korte tastaturmønstre er nemme at gætte"
         }
+    },
+    "update": {
+        "see_changes_button": "Hvad er nyt?",
+        "release_notes_toast_title": "Hvad er nyt"
     }
 }

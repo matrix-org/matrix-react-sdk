@@ -2258,11 +2258,11 @@
         "integration_manager": "集成管理器",
         "qr_code": "二维码",
         "feedback": "反馈",
-        "all_rooms": "所有房间",
-        "orphan_rooms": "其他房间",
         "preview_message": "嘿。你是最棒的！",
+        "orphan_rooms": "其他房间",
         "on": "打开",
-        "off": "关闭"
+        "off": "关闭",
+        "all_rooms": "所有房间"
     },
     "action": {
         "continue": "继续",
@@ -2362,8 +2362,8 @@
         "submit": "提交",
         "send_report": "发送报告",
         "clear": "清除",
-        "enter_fullscreen": "进入全屏",
-        "exit_fullscreeen": "退出全屏"
+        "exit_fullscreeen": "退出全屏",
+        "enter_fullscreen": "进入全屏"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -2426,9 +2426,9 @@
         "join_beta_reload": "加入beta会重载%(brand)s。",
         "leave_beta": "离开beta",
         "join_beta": "加入beta",
-        "automatic_debug_logs": "遇到任何错误自动发送调试日志",
+        "automatic_debug_logs_key_backup": "当密钥备份无法运作时自动发送debug日志",
         "automatic_debug_logs_decryption": "自动发送有关解密错误的debug日志",
-        "automatic_debug_logs_key_backup": "当密钥备份无法运作时自动发送debug日志"
+        "automatic_debug_logs": "遇到任何错误自动发送调试日志"
     },
     "keyboard": {
         "home": "主页",
@@ -2699,15 +2699,25 @@
             "timeline_image_size": "时间线中的图像大小",
             "timeline_image_size_default": "默认",
             "timeline_image_size_large": "大",
-            "custom_font_size": "使用自定义大小",
+            "image_size_large": "大",
+            "image_size_default": "默认",
+            "font_size_valid": "请使用介于 %(min)s pt 和 %(max)s pt 之间的大小",
             "font_size_nan": "大小必须是数字",
             "font_size_limit": "自定义字体大小只能介于 %(min)s pt 和 %(max)s pt 之间",
-            "font_size_valid": "请使用介于 %(min)s pt 和 %(max)s pt 之间的大小",
-            "image_size_default": "默认",
-            "image_size_large": "大"
+            "custom_font_size": "使用自定义大小"
         },
         "inline_url_previews_room_account": "对此房间启用URL预览（仅影响你）",
         "inline_url_previews_room": "对此房间的所有参与者默认启用URL预览",
+        "voip": {
+            "mirror_local_feed": "镜像本地视频源",
+            "allow_p2p": "允许1:1通话的点对点",
+            "allow_p2p_description": "启用后，对方可能能看到你的IP地址",
+            "auto_gain_control": "自动获得控制权",
+            "echo_cancellation": "回声消除",
+            "noise_suppression": "噪音抑制",
+            "enable_fallback_ice_server_description": "仅当你的家服务器不提供时才适用。你的IP地址在通话期间会被分享。"
+        },
+        "send_read_receipts_unsupported": "你的服务器不支持禁用发送已读回执。",
         "security": {
             "message_search_disable_warning": "如果被禁用，加密房间内的消息不会显示在搜索结果中。",
             "message_search_indexing_idle": "现在没有为任何房间索引消息。",
@@ -2743,16 +2753,6 @@
             "always_show_menu_bar": "总是显示窗口菜单栏",
             "enable_tray_icon": "显示托盘图标并在关闭时最小化窗口至托盘",
             "enable_hardware_acceleration": "启用硬件加速"
-        },
-        "send_read_receipts_unsupported": "你的服务器不支持禁用发送已读回执。",
-        "voip": {
-            "mirror_local_feed": "镜像本地视频源",
-            "allow_p2p": "允许1:1通话的点对点",
-            "allow_p2p_description": "启用后，对方可能能看到你的IP地址",
-            "auto_gain_control": "自动获得控制权",
-            "echo_cancellation": "回声消除",
-            "noise_suppression": "噪音抑制",
-            "enable_fallback_ice_server_description": "仅当你的家服务器不提供时才适用。你的IP地址在通话期间会被分享。"
         },
         "keyboard": {
             "title": "键盘"
@@ -2819,11 +2819,11 @@
         "category_room": "房间",
         "category_other": "其他",
         "widget_screenshots": "对支持的挂件启用挂件截图",
+        "title": "开发者工具",
         "show_hidden_events": "显示时间线中的隐藏事件",
-        "low_bandwidth_mode": "低带宽模式",
         "low_bandwidth_mode_description": "需要兼容的家服务器。",
-        "developer_mode": "开发者模式",
-        "title": "开发者工具"
+        "low_bandwidth_mode": "低带宽模式",
+        "developer_mode": "开发者模式"
     },
     "export_chat": {
         "html": "HTML",
@@ -3185,12 +3185,12 @@
         "no_permission_messages_before_join": "你没有权限查看你加入前的消息。",
         "encrypted_historical_messages_unavailable": "在此之前的加密消息不可用。",
         "historical_messages_unavailable": "你不能查看更早的消息",
+        "redacted": {
+            "tooltip": "消息于 %(date)s 被删除"
+        },
         "reactions": {
             "label": "%(reactors)s做出了%(content)s的反应",
             "tooltip": "<reactors/><reactedWith>回应了 %(shortName)s</reactedWith>"
-        },
-        "redacted": {
-            "tooltip": "消息于 %(date)s 被删除"
         },
         "m.room.create": {
             "continuation": "此房间是另一个对话的延续之处。",
@@ -3261,14 +3261,14 @@
         "failed_find_user": "房间中无用户",
         "op": "定义一名用户的权力级别",
         "deop": "按照 ID 取消特定用户的管理员权限",
-        "server_error": "服务器错误",
-        "command_error": "命令错误",
-        "server_error_detail": "服务器不可用、超载或其他东西出错了。",
-        "unknown_command": "未知命令",
-        "unknown_command_detail": "未识别的命令：%(commandText)s",
-        "unknown_command_help": "你可以使用 <code>/help</code> 列出可用命令。你是否要将其作为消息发送？",
         "unknown_command_hint": "提示：以 <code>//</code> 开始你的消息来使其以一个斜杠开始。",
-        "unknown_command_button": "作为消息发送"
+        "unknown_command_help": "你可以使用 <code>/help</code> 列出可用命令。你是否要将其作为消息发送？",
+        "unknown_command_detail": "未识别的命令：%(commandText)s",
+        "unknown_command_button": "作为消息发送",
+        "unknown_command": "未知命令",
+        "server_error_detail": "服务器不可用、超载或其他东西出错了。",
+        "server_error": "服务器错误",
+        "command_error": "命令错误"
     },
     "presence": {
         "busy": "忙",
@@ -3490,8 +3490,8 @@
         "server_picker_custom": "其他家服务器",
         "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
         "server_picker_learn_more": "关于家服务器",
-        "account_deactivated": "此账户已被停用。",
-        "incorrect_credentials": "用户名或密码错误。"
+        "incorrect_credentials": "用户名或密码错误。",
+        "account_deactivated": "此账户已被停用。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3617,101 +3617,6 @@
         "existing_issue_link": "请先查找一下 <existingIssuesLink>Github 上已有的问题</existingIssuesLink>，以免重复。找不到重复问题？<newIssueLink>发起一个吧</newIssueLink>。",
         "send_feedback_action": "发送反馈"
     },
-    "create_space": {
-        "name_required": "请输入空间名称",
-        "name_placeholder": "例如：my-space",
-        "explainer": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
-        "public_description": "适合每一个人的开放空间，社群的理想选择",
-        "private_description": "仅邀请，适合你自己或团队",
-        "public_heading": "你的公共空间",
-        "private_heading": "你的私有空间",
-        "add_details_prompt": "添加一些细节，以便人们辨识你的社群。",
-        "failed_create_initial_rooms": "创建初始空间房间失败",
-        "skip_action": "暂时跳过",
-        "add_existing_rooms_heading": "你想要组织什么？",
-        "add_existing_rooms_description": "选择要添加的房间或对话。这是专属于你的空间，不会有人被通知。你稍后可以再增加更多。",
-        "share_heading": "分享 %(name)s",
-        "share_description": "当前仅有你一人，与人同道而行会更好。",
-        "done_action_first_room": "前往我的第一个房间",
-        "done_action": "前往我的空间",
-        "private_personal_heading": "你与谁一同工作？",
-        "private_personal_description": "确保对的人有权访问 %(name)s",
-        "personal_space": "仅有我",
-        "personal_space_description": "用于整理你房间的私有空间",
-        "private_space": "我和我的伙伴",
-        "private_space_description": "供你和你的伙伴使用的私有空间",
-        "failed_invite_users": "邀请以下用户加入你的空间失败：%(csvUsers)s",
-        "invite_teammates_heading": "邀请你的伙伴",
-        "invite_teammates_description": "确保对的人可以访问。稍后你可以邀请更多人。",
-        "invite_teammates_by_username": "按照用户名邀请",
-        "setup_rooms_community_heading": "你想在 %(spaceName)s 中讨论什么？",
-        "setup_rooms_community_description": "让我们为每个主题都创建一个房间吧。",
-        "setup_rooms_description": "稍后你可以添加更多房间，包括现有的。",
-        "setup_rooms_private_heading": "你的团队正在进行什么项目?"
-    },
-    "space": {
-        "landing_welcome": "欢迎来到 <name/>"
-    },
-    "threads": {
-        "all_threads": "所有消息列",
-        "all_threads_description": "显示当前房间的所有消息列",
-        "my_threads": "我的消息列",
-        "my_threads_description": "显示您参与的所有消息列",
-        "show_thread_filter": "显示：",
-        "empty_has_threads_tip": "回复进行中的消息列或当悬停在消息上时使用%(replyInThread)s来发起新的消息列。",
-        "show_all_threads": "显示所有消息列",
-        "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
-        "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
-        "empty_heading": "用消息列使讨论井然有序"
-    },
-    "location_sharing": {
-        "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
-        "MapStyleUrlNotReachable": "此家服务器未正确配置，故无法显示地图，亦或所配置的地图服务器无法使用。",
-        "toggle_attribution": "切换属性",
-        "map_feedback": "地图反馈",
-        "find_my_location": "查找我的位置",
-        "location_not_available": "位置不可用",
-        "mapbox_logo": "Mapbox 图标",
-        "reset_bearing": "重置为向北方位",
-        "failed_permission": "%(brand)s was denied permission to fetch your location. 请在你的浏览器中允许位置访问。",
-        "failed_generic": "获取你的位置失败。请之后再试。",
-        "failed_timeout": "尝试获取你的位置超时。请之后再试。",
-        "failed_unknown": "获取位置时发生错误。请之后再试。",
-        "expand_map": "展开地图",
-        "failed_load_map": "无法加载地图"
-    },
-    "voice_broadcast": {
-        "failed_already_recording_title": "无法开始新的语音广播",
-        "failed_insufficient_permission_title": "无法开始新的语音广播",
-        "failed_others_already_recording_title": "无法开始新的语音广播",
-        "failed_already_recording_description": "你已经在录制一个语音广播。请结束你当前的语音广播以开始新的语音广播。",
-        "failed_insufficient_permission_description": "你没有必要的权限在这个房间开始语音广播。请联系房间管理员以提升你的权限。",
-        "failed_others_already_recording_description": "别人已经在录制语音广播了。等到他们的语音广播结束后再开始新的广播。",
-        "failed_no_connection_title": "连接错误",
-        "failed_no_connection_description": "很遗憾，我们现在无法开始录音。请稍后再试。",
-        "confirm_stop_title": "停止直播吗？",
-        "confirm_stop_affirm": "是的，停止广播",
-        "30s_backward": "后退30秒",
-        "30s_forward": "前进30秒",
-        "go_live": "开始直播",
-        "resume": "恢复语音广播",
-        "pause": "暂停语音广播",
-        "buffering": "正在缓冲……",
-        "play": "播放语音广播"
-    },
-    "labs_mjolnir": {
-        "room_name": "我的封禁列表",
-        "room_topic": "这是你屏蔽的用户/服务器的列表——不要离开此房间！"
-    },
-    "theme": {
-        "light_high_contrast": "浅色高对比"
-    },
-    "update": {
-        "see_changes_button": "有何新变动？",
-        "release_notes_toast_title": "更新内容",
-        "toast_title": "更新 %(brand)s",
-        "toast_description": "%(brand)s 有新版本可用"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "用一些字符，避免常用短语",
@@ -3744,5 +3649,100 @@
             "straightRow": "键位在一条直线上的组合很容易被猜到",
             "keyPattern": "键位短序列很容易被猜到"
         }
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "无法开始新的语音广播",
+        "failed_insufficient_permission_title": "无法开始新的语音广播",
+        "failed_others_already_recording_title": "无法开始新的语音广播",
+        "failed_already_recording_description": "你已经在录制一个语音广播。请结束你当前的语音广播以开始新的语音广播。",
+        "failed_insufficient_permission_description": "你没有必要的权限在这个房间开始语音广播。请联系房间管理员以提升你的权限。",
+        "failed_others_already_recording_description": "别人已经在录制语音广播了。等到他们的语音广播结束后再开始新的广播。",
+        "failed_no_connection_title": "连接错误",
+        "failed_no_connection_description": "很遗憾，我们现在无法开始录音。请稍后再试。",
+        "confirm_stop_title": "停止直播吗？",
+        "confirm_stop_affirm": "是的，停止广播",
+        "30s_backward": "后退30秒",
+        "30s_forward": "前进30秒",
+        "go_live": "开始直播",
+        "resume": "恢复语音广播",
+        "pause": "暂停语音广播",
+        "buffering": "正在缓冲……",
+        "play": "播放语音广播"
+    },
+    "update": {
+        "see_changes_button": "有何新变动？",
+        "release_notes_toast_title": "更新内容",
+        "toast_title": "更新 %(brand)s",
+        "toast_description": "%(brand)s 有新版本可用"
+    },
+    "threads": {
+        "all_threads": "所有消息列",
+        "all_threads_description": "显示当前房间的所有消息列",
+        "my_threads": "我的消息列",
+        "my_threads_description": "显示您参与的所有消息列",
+        "show_thread_filter": "显示：",
+        "empty_has_threads_tip": "回复进行中的消息列或当悬停在消息上时使用%(replyInThread)s来发起新的消息列。",
+        "show_all_threads": "显示所有消息列",
+        "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
+        "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
+        "empty_heading": "用消息列使讨论井然有序"
+    },
+    "theme": {
+        "light_high_contrast": "浅色高对比"
+    },
+    "space": {
+        "landing_welcome": "欢迎来到 <name/>"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
+        "MapStyleUrlNotReachable": "此家服务器未正确配置，故无法显示地图，亦或所配置的地图服务器无法使用。",
+        "toggle_attribution": "切换属性",
+        "map_feedback": "地图反馈",
+        "find_my_location": "查找我的位置",
+        "location_not_available": "位置不可用",
+        "mapbox_logo": "Mapbox 图标",
+        "reset_bearing": "重置为向北方位",
+        "failed_permission": "%(brand)s was denied permission to fetch your location. 请在你的浏览器中允许位置访问。",
+        "failed_generic": "获取你的位置失败。请之后再试。",
+        "failed_timeout": "尝试获取你的位置超时。请之后再试。",
+        "failed_unknown": "获取位置时发生错误。请之后再试。",
+        "expand_map": "展开地图",
+        "failed_load_map": "无法加载地图"
+    },
+    "labs_mjolnir": {
+        "room_name": "我的封禁列表",
+        "room_topic": "这是你屏蔽的用户/服务器的列表——不要离开此房间！"
+    },
+    "create_space": {
+        "name_required": "请输入空间名称",
+        "name_placeholder": "例如：my-space",
+        "explainer": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
+        "public_description": "适合每一个人的开放空间，社群的理想选择",
+        "private_description": "仅邀请，适合你自己或团队",
+        "public_heading": "你的公共空间",
+        "private_heading": "你的私有空间",
+        "add_details_prompt": "添加一些细节，以便人们辨识你的社群。",
+        "failed_create_initial_rooms": "创建初始空间房间失败",
+        "skip_action": "暂时跳过",
+        "add_existing_rooms_heading": "你想要组织什么？",
+        "add_existing_rooms_description": "选择要添加的房间或对话。这是专属于你的空间，不会有人被通知。你稍后可以再增加更多。",
+        "share_heading": "分享 %(name)s",
+        "share_description": "当前仅有你一人，与人同道而行会更好。",
+        "done_action_first_room": "前往我的第一个房间",
+        "done_action": "前往我的空间",
+        "private_personal_heading": "你与谁一同工作？",
+        "private_personal_description": "确保对的人有权访问 %(name)s",
+        "personal_space": "仅有我",
+        "personal_space_description": "用于整理你房间的私有空间",
+        "private_space": "我和我的伙伴",
+        "private_space_description": "供你和你的伙伴使用的私有空间",
+        "failed_invite_users": "邀请以下用户加入你的空间失败：%(csvUsers)s",
+        "invite_teammates_heading": "邀请你的伙伴",
+        "invite_teammates_description": "确保对的人可以访问。稍后你可以邀请更多人。",
+        "invite_teammates_by_username": "按照用户名邀请",
+        "setup_rooms_community_heading": "你想在 %(spaceName)s 中讨论什么？",
+        "setup_rooms_community_description": "让我们为每个主题都创建一个房间吧。",
+        "setup_rooms_description": "稍后你可以添加更多房间，包括现有的。",
+        "setup_rooms_private_heading": "你的团队正在进行什么项目?"
     }
 }

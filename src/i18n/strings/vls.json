@@ -792,17 +792,17 @@
         },
         "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
         "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
-        "preferences": {
-            "room_list_heading": "Gesprekslyste",
-            "composer_heading": "Ipsteller",
-            "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)",
-            "always_show_menu_bar": "De veinstermenubalk alsan toogn"
-        },
         "voip": {
             "mirror_local_feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)"
         },
         "security": {
             "send_analytics": "Statistische gegeevns (analytics) verstuurn"
+        },
+        "preferences": {
+            "room_list_heading": "Gesprekslyste",
+            "composer_heading": "Ipsteller",
+            "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)",
+            "always_show_menu_bar": "De veinstermenubalk alsan toogn"
         }
     },
     "devtools": {
@@ -964,14 +964,14 @@
         "reactions": {
             "tooltip": "<reactors/><reactedWith>èt gereageerd me %(shortName)s</reactedWith>"
         },
+        "m.room.create": {
+            "continuation": "Dit gesprek es e voortzettienge van een ander gesprek.",
+            "see_older_messages": "Klikt hier voor oudere berichtn te bekykn."
+        },
         "m.room.avatar": {
             "lightbox_title": "%(senderDisplayName)s èt den avatar van %(roomName)s veranderd",
             "removed": "%(senderDisplayName)s èt de gespreksavatar verwyderd.",
             "changed_img": "%(senderDisplayName)s èt de gespreksavatar angepast noa <img/>"
-        },
-        "m.room.create": {
-            "continuation": "Dit gesprek es e voortzettienge van een ander gesprek.",
-            "see_older_messages": "Klikt hier voor oudere berichtn te bekykn."
         }
     },
     "slash_command": {
@@ -1004,9 +1004,9 @@
         "me": "Toogt actie",
         "op": "Bepoal ’t machtsniveau van e gebruuker",
         "deop": "Ountmachtigt de gebruuker me de gegeevn ID",
+        "server_error_detail": "De server is ounbereikboar of overbelast, of der is etwat anders foutgegoan.",
         "server_error": "Serverfoute",
-        "command_error": "Ipdrachtfoute",
-        "server_error_detail": "De server is ounbereikboar of overbelast, of der is etwat anders foutgegoan."
+        "command_error": "Ipdrachtfoute"
     },
     "presence": {
         "online_for": "Online vo %(duration)s",
@@ -1072,8 +1072,8 @@
         "soft_logout_intro_sso": "Meldt jen heran en herkrygt den toegank tou jen account.",
         "soft_logout_intro_unsupported_auth": "Je ku je nie anmeldn me jen account. Nimt contact ip me de beheerder van je thuusserver vo meer informoasje.",
         "register_action": "Account anmoakn",
-        "account_deactivated": "Deezn account is gedeactiveerd gewist.",
-        "incorrect_credentials": "Verkeerde gebruukersnoame en/of paswoord."
+        "incorrect_credentials": "Verkeerde gebruukersnoame en/of paswoord.",
+        "account_deactivated": "Deezn account is gedeactiveerd gewist."
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1087,14 +1087,6 @@
             "title": "Hulp & Info",
             "versions": "Versies"
         }
-    },
-    "room_list": {
-        "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
-        "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
-    },
-    "update": {
-        "see_changes_button": "Wuk es ’t er nieuw?",
-        "release_notes_toast_title": "Wuk es ’t er nieuw"
     },
     "zxcvbn": {
         "suggestions": {
@@ -1128,5 +1120,13 @@
             "straightRow": "Zulk’n aneengeslootn riksje toetsn es gemakkelik te roadn",
             "keyPattern": "Korte patroonn ip ’t toetsenbord wordn gemakkelik geroadn"
         }
+    },
+    "update": {
+        "see_changes_button": "Wuk es ’t er nieuw?",
+        "release_notes_toast_title": "Wuk es ’t er nieuw"
+    },
+    "room_list": {
+        "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
+        "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
     }
 }

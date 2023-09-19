@@ -1679,11 +1679,11 @@
         "integration_manager": "مدیر یکپارچگی",
         "qr_code": "کد QR",
         "feedback": "بازخورد",
-        "all_rooms": "همه اتاق‌ها",
-        "orphan_rooms": "دیگر اتاق ها",
         "preview_message": "سلام. حال شما خوبه؟",
+        "orphan_rooms": "دیگر اتاق ها",
         "on": "روشن",
-        "off": "خاموش"
+        "off": "خاموش",
+        "all_rooms": "همه اتاق‌ها"
     },
     "action": {
         "continue": "ادامه",
@@ -1770,8 +1770,8 @@
         "mention": "اشاره",
         "submit": "ارسال",
         "send_report": "ارسال گزارش",
-        "enter_fullscreen": "نمایش تمام صفحه",
-        "exit_fullscreeen": "خروج از نمایش تمام صفحه"
+        "exit_fullscreeen": "خروج از نمایش تمام صفحه",
+        "enter_fullscreen": "نمایش تمام صفحه"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -1994,14 +1994,17 @@
             "font_size": "اندازه فونت",
             "custom_font_description": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
             "timeline_image_size_default": "پیشفرض",
-            "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید",
+            "image_size_default": "پیشفرض",
+            "font_size_valid": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
             "font_size_nan": "سایز باید یک عدد باشد",
             "font_size_limit": "اندازه فونت دلخواه تنها می‌تواند عددی بین %(min)s pt و %(max)s pt باشد",
-            "font_size_valid": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
-            "image_size_default": "پیشفرض"
+            "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید"
         },
         "inline_url_previews_room_account": "فعال‌سازی پیش‌نمایش URL برای این اتاق (تنها شما را تحت تاثیر قرار می‌دهد)",
         "inline_url_previews_room": "امکان پیش‌نمایش URL را به صورت پیش‌فرض برای اعضای این اتاق فعال کن",
+        "voip": {
+            "mirror_local_feed": "تصویر خودتان را هنگام تماس تصویری برعکس (مثل آینه) نمایش بده"
+        },
         "security": {
             "message_search_disable_warning": "اگر غیر فعال شود، پیام‌های اتاق‌های رمزشده در نتایج جستجوها نمایش داده نمی‌شوند.",
             "message_search_indexing_idle": "در حال حاضر ایندکس پیام ها برای هیچ اتاقی انجام نمی‌شود.",
@@ -2028,9 +2031,6 @@
             "rm_lifetime": "مدت‌زمان نشانه‌ی خوانده‌شده (ms)",
             "rm_lifetime_offscreen": "خواندن نشانگر طول عمر خارج از صفحه نمایش (میلی ثانیه)",
             "always_show_menu_bar": "همیشه نوار فهرست پنجره را نشان بده"
-        },
-        "voip": {
-            "mirror_local_feed": "تصویر خودتان را هنگام تماس تصویری برعکس (مثل آینه) نمایش بده"
         }
     },
     "devtools": {
@@ -2329,11 +2329,11 @@
             "changed_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
             "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد"
         },
-        "reactions": {
-            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
-        },
         "redacted": {
             "tooltip": "پیام در %(date)s حذف شد"
+        },
+        "reactions": {
+            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
         },
         "m.room.create": {
             "continuation": "این اتاق ادامه گفتگوی دیگر است.",
@@ -2402,14 +2402,14 @@
         "failed_find_user": "کاربر در اتاق پیدا نشد",
         "op": "سطح قدرت یک کاربر را تعریف کنید",
         "deop": "کاربر را با شناسه داده شده از بین می برد",
-        "server_error": "خطای سرور",
-        "command_error": "خطای فرمان",
-        "server_error_detail": "سرور در دسترس نیست، یا حجم بار روی آن زیاد شده و یا خطای دیگری رخ داده است.",
-        "unknown_command": "دستور ناشناس",
-        "unknown_command_detail": "دستور نامفهوم: %(commandText)s",
-        "unknown_command_help": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
         "unknown_command_hint": "نکته: پیام خود را با <code>//</code> شروع کنید تا با یک اسلش شروع شود.",
-        "unknown_command_button": "ارسال به عنوان پیام"
+        "unknown_command_help": "برای لیست کردن دستورات موجود می توانید از <code>/help</code> استفاده کنید. آیا قصد داشتید این پیام را به عنوان متم ارسال کنید؟",
+        "unknown_command_detail": "دستور نامفهوم: %(commandText)s",
+        "unknown_command_button": "ارسال به عنوان پیام",
+        "unknown_command": "دستور ناشناس",
+        "server_error_detail": "سرور در دسترس نیست، یا حجم بار روی آن زیاد شده و یا خطای دیگری رخ داده است.",
+        "server_error": "خطای سرور",
+        "command_error": "خطای فرمان"
     },
     "presence": {
         "online_for": "آنلاین برای مدت %(duration)s",
@@ -2582,8 +2582,8 @@
         "server_picker_custom": "سرور دیگر",
         "server_picker_explainer": "از یک سرور مبتنی بر پروتکل ماتریکس که ترجیح می‌دهید استفاده کرده، و یا از سرور شخصی خودتان استفاده کنید.",
         "server_picker_learn_more": "درباره سرورها",
-        "account_deactivated": "این حساب غیر فعال شده است.",
-        "incorrect_credentials": "نام کاربری و یا گذرواژه اشتباه است."
+        "incorrect_credentials": "نام کاربری و یا گذرواژه اشتباه است.",
+        "account_deactivated": "این حساب غیر فعال شده است."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2703,75 +2703,6 @@
         "existing_issue_link": "لطفاً ابتدا اشکالات موجود را در <existingIssuesLink>گیتهاب برنامه</existingIssuesLink> را مشاهده کنید. با اشکال شما مطابقتی وجود ندارد؟<newIssueLink> مورد جدیدی را ثبت کنید</newIssueLink>.",
         "send_feedback_action": "ارسال بازخورد"
     },
-    "create_space": {
-        "name_required": "لطفا یک نام برای محیط وارد کنید",
-        "public_description": "محیط باز برای همه، مناسب برای جمع عمومی",
-        "private_description": "فقط با دعوتنامه، مناسب برای خودتان یا تیم‌ها یا جمع‌های خصوصی",
-        "public_heading": "محیط عمومی شما",
-        "private_heading": "محیط خصوصی شما",
-        "add_details_prompt": "برای کمک به کاربران جهت شناخت محیط، مقداری جزئیات اضافه کنید.",
-        "failed_create_initial_rooms": "ایجاد اتاق‌های اولیه در فضای کاری موفق نبود",
-        "skip_action": "فعلا بیخیال",
-        "add_existing_rooms_heading": "چه چیزی را می‌خواهید سازماندهی کنید؟",
-        "add_existing_rooms_description": "گفتگوهای خصوصی یا اتاق‌هایی را برای افزودن انتخاب کنید. این فقط یک فضای کاری برای شماست، هیچ کس از وجود آن مطلع نخواهد شد. می‌توانید موارد بیشتری را بعدا اضافه کنید.",
-        "share_heading": "به اشتراک‌گذاری %(name)s",
-        "share_description": "در حال حاضر فقط شما حضور دارید ، با دیگران حتی بهتر هم خواهد بود.",
-        "done_action_first_room": "برو به اتاق اول من",
-        "done_action": "برو به محیط کاری من",
-        "private_personal_heading": "با چه کسانی کار می‌کنید؟",
-        "private_personal_description": "اطمینان حاصل کنید که افراد مناسب به %(name)s دسترسی دارند",
-        "personal_space": "فقط من",
-        "personal_space_description": "یک فضای کار خصوصی برای منظم‌کردن اتاق‌هایتان",
-        "private_space": "من و هم‌تیمی‌هایم",
-        "private_space_description": "یک فضای کار خصوصی برای شما و هم تیمی‌هایتان",
-        "failed_invite_users": "امکان دعوت کاربرانی که در ادامه آمده‌اند به فضای کاری شما میسر نیست: %(csvUsers)s",
-        "invite_teammates_heading": "هم‌تیمی‌های خود را دعوت کنید",
-        "invite_teammates_description": "اطمینان حاصل کنید که افراد مناسب دسترسی دارند. بعداً می توانید افراد بیشتری دعوت کنید.",
-        "invite_teammates_by_username": "دعوت به نام کاربری",
-        "setup_rooms_community_heading": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
-        "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
-        "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود."
-    },
-    "space": {
-        "landing_welcome": "به <name/> خوش‌آمدید"
-    },
-    "location_sharing": {
-        "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
-        "MapStyleUrlNotReachable": "این سرور خانگی برای نمایش نقشه بدرستی تنظیم نشده، یا سایت مرجع نقشه در دسترس نیست.",
-        "toggle_attribution": "تغییر دادن اسناد",
-        "map_feedback": "بازخورد نقشه",
-        "find_my_location": "پیدا کردن مکان",
-        "location_not_available": "مکان در دسترس نیست",
-        "mapbox_logo": "لوگوی جعبه نقشه",
-        "reset_bearing": "بازنشانی جهت شمال"
-    },
-    "voice_broadcast": {
-        "failed_already_recording_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
-        "failed_insufficient_permission_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
-        "failed_others_already_recording_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
-        "failed_already_recording_description": "شما در حال ضبط یک صدا برای ارسال جمعی هستید. برای تولید یک صدای جمعی دیگر ضبط فعلی را متوقف نمایید.",
-        "failed_insufficient_permission_description": "شما دسترسی لازم برای ارسال صدای جمعی در این اتاق را ندارید. لطفا با مدیر اتاق تماس بگیرید.",
-        "failed_others_already_recording_description": "شخص دیگری در حال ضبط صدا برای ارسال جمعی است. برای ارسال صدای جمعی باید منتظر بمانید تا کار ایشان به پایان برسد.",
-        "confirm_stop_title": "آیا ارسال جمعی زنده متوقف شود؟",
-        "confirm_stop_affirm": "بله، توقف ارسال جمعی",
-        "go_live": "برو به زنده",
-        "resume": "بازگشت به صدای جمعی",
-        "pause": "توقف صدای جمعی",
-        "play": "پخش صدای جمعی"
-    },
-    "labs_mjolnir": {
-        "room_name": "لیست تحریم‌های من",
-        "room_topic": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!"
-    },
-    "theme": {
-        "light_high_contrast": "بالاترین کنتراست قالب روشن"
-    },
-    "update": {
-        "see_changes_button": "چه خبر؟",
-        "release_notes_toast_title": "چه خبر",
-        "toast_title": "%(brand)s را به‌روزرسانی کنید",
-        "toast_description": "نسخه‌ی جدید %(brand)s وجود است"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "از چند کلمه استفاده کنید ، از عبارات معمول خودداری نمائید",
@@ -2804,5 +2735,74 @@
             "straightRow": "ردیف کلیدهای مستقیم به راحتی قابل حدس هستند",
             "keyPattern": "الگوهای کوتاه صفحه کلید به راحتی قابل حدس هستند"
         }
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
+        "failed_insufficient_permission_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
+        "failed_others_already_recording_title": "امکان ارسال یک صدای جدید به صورت جمعی نیست",
+        "failed_already_recording_description": "شما در حال ضبط یک صدا برای ارسال جمعی هستید. برای تولید یک صدای جمعی دیگر ضبط فعلی را متوقف نمایید.",
+        "failed_insufficient_permission_description": "شما دسترسی لازم برای ارسال صدای جمعی در این اتاق را ندارید. لطفا با مدیر اتاق تماس بگیرید.",
+        "failed_others_already_recording_description": "شخص دیگری در حال ضبط صدا برای ارسال جمعی است. برای ارسال صدای جمعی باید منتظر بمانید تا کار ایشان به پایان برسد.",
+        "confirm_stop_title": "آیا ارسال جمعی زنده متوقف شود؟",
+        "confirm_stop_affirm": "بله، توقف ارسال جمعی",
+        "go_live": "برو به زنده",
+        "resume": "بازگشت به صدای جمعی",
+        "pause": "توقف صدای جمعی",
+        "play": "پخش صدای جمعی"
+    },
+    "update": {
+        "see_changes_button": "چه خبر؟",
+        "release_notes_toast_title": "چه خبر",
+        "toast_title": "%(brand)s را به‌روزرسانی کنید",
+        "toast_description": "نسخه‌ی جدید %(brand)s وجود است"
+    },
+    "theme": {
+        "light_high_contrast": "بالاترین کنتراست قالب روشن"
+    },
+    "space": {
+        "landing_welcome": "به <name/> خوش‌آمدید"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
+        "MapStyleUrlNotReachable": "این سرور خانگی برای نمایش نقشه بدرستی تنظیم نشده، یا سایت مرجع نقشه در دسترس نیست.",
+        "toggle_attribution": "تغییر دادن اسناد",
+        "map_feedback": "بازخورد نقشه",
+        "find_my_location": "پیدا کردن مکان",
+        "location_not_available": "مکان در دسترس نیست",
+        "mapbox_logo": "لوگوی جعبه نقشه",
+        "reset_bearing": "بازنشانی جهت شمال"
+    },
+    "labs_mjolnir": {
+        "room_name": "لیست تحریم‌های من",
+        "room_topic": "این لیست کاربران/اتاق‌هایی است که شما آن‌ها را بلاک کرده‌اید - اتاق را ترک نکنید!"
+    },
+    "create_space": {
+        "name_required": "لطفا یک نام برای محیط وارد کنید",
+        "public_description": "محیط باز برای همه، مناسب برای جمع عمومی",
+        "private_description": "فقط با دعوتنامه، مناسب برای خودتان یا تیم‌ها یا جمع‌های خصوصی",
+        "public_heading": "محیط عمومی شما",
+        "private_heading": "محیط خصوصی شما",
+        "add_details_prompt": "برای کمک به کاربران جهت شناخت محیط، مقداری جزئیات اضافه کنید.",
+        "failed_create_initial_rooms": "ایجاد اتاق‌های اولیه در فضای کاری موفق نبود",
+        "skip_action": "فعلا بیخیال",
+        "add_existing_rooms_heading": "چه چیزی را می‌خواهید سازماندهی کنید؟",
+        "add_existing_rooms_description": "گفتگوهای خصوصی یا اتاق‌هایی را برای افزودن انتخاب کنید. این فقط یک فضای کاری برای شماست، هیچ کس از وجود آن مطلع نخواهد شد. می‌توانید موارد بیشتری را بعدا اضافه کنید.",
+        "share_heading": "به اشتراک‌گذاری %(name)s",
+        "share_description": "در حال حاضر فقط شما حضور دارید ، با دیگران حتی بهتر هم خواهد بود.",
+        "done_action_first_room": "برو به اتاق اول من",
+        "done_action": "برو به محیط کاری من",
+        "private_personal_heading": "با چه کسانی کار می‌کنید؟",
+        "private_personal_description": "اطمینان حاصل کنید که افراد مناسب به %(name)s دسترسی دارند",
+        "personal_space": "فقط من",
+        "personal_space_description": "یک فضای کار خصوصی برای منظم‌کردن اتاق‌هایتان",
+        "private_space": "من و هم‌تیمی‌هایم",
+        "private_space_description": "یک فضای کار خصوصی برای شما و هم تیمی‌هایتان",
+        "failed_invite_users": "امکان دعوت کاربرانی که در ادامه آمده‌اند به فضای کاری شما میسر نیست: %(csvUsers)s",
+        "invite_teammates_heading": "هم‌تیمی‌های خود را دعوت کنید",
+        "invite_teammates_description": "اطمینان حاصل کنید که افراد مناسب دسترسی دارند. بعداً می توانید افراد بیشتری دعوت کنید.",
+        "invite_teammates_by_username": "دعوت به نام کاربری",
+        "setup_rooms_community_heading": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
+        "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
+        "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود."
     }
 }

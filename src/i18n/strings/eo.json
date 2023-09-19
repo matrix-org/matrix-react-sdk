@@ -1892,11 +1892,11 @@
         "integration_manager": "Kunigilo",
         "qr_code": "Rapidresponda kodo",
         "feedback": "Prikomenti",
-        "all_rooms": "Ĉiuj ĉambroj",
-        "orphan_rooms": "Aliaj ĉambroj",
         "preview_message": "He, vi. Vi bonegas!",
+        "orphan_rooms": "Aliaj ĉambroj",
         "on": "Jes",
-        "off": "Ne"
+        "off": "Ne",
+        "all_rooms": "Ĉiuj ĉambroj"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1986,8 +1986,8 @@
         "mention": "Mencio",
         "submit": "Sendi",
         "send_report": "Sendi raporton",
-        "enter_fullscreen": "Plenekrano",
-        "exit_fullscreeen": "Eliru plenekrano"
+        "exit_fullscreeen": "Eliru plenekrano",
+        "enter_fullscreen": "Plenekrano"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -2222,14 +2222,17 @@
             "font_size": "Grando de tiparo",
             "custom_font_description": "Agordu la nomon de tiparo instalita en via sistemo kaj %(brand)s provos ĝin uzi.",
             "timeline_image_size_default": "Ordinara",
-            "custom_font_size": "Uzi propran grandon",
+            "image_size_default": "Ordinara",
+            "font_size_valid": "Uzi inter %(min)s punktoj kaj %(max)s punktoj",
             "font_size_nan": "Grando devas esti nombro",
             "font_size_limit": "Propra grando de tiparo povas interi nur %(min)s punktojn kaj %(max)s punktojn",
-            "font_size_valid": "Uzi inter %(min)s punktoj kaj %(max)s punktoj",
-            "image_size_default": "Ordinara"
+            "custom_font_size": "Uzi propran grandon"
         },
         "inline_url_previews_room_account": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
         "inline_url_previews_room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro",
+        "voip": {
+            "mirror_local_feed": "Speguli lokan filmon"
+        },
         "security": {
             "message_search_disable_warning": "Post malŝalto, mesaĝoj el ĉifritaj ĉambroj ne aperos en serĉorezultoj.",
             "message_search_indexing_idle": "Mesaĝoj estas indeksataj en neniu ĉambro.",
@@ -2257,9 +2260,6 @@
             "rm_lifetime_offscreen": "Vivodaŭro de eksterekrana legomarko (ms)",
             "surround_text": "Ĉirkaŭi elektitan tekston dum tajpado de specialaj signoj",
             "always_show_menu_bar": "Ĉiam montri la fenestran menubreton"
-        },
-        "voip": {
-            "mirror_local_feed": "Speguli lokan filmon"
         },
         "keyboard": {
             "title": "Klavaro"
@@ -2597,20 +2597,20 @@
             "changed_rule_servers": "%(senderName)s ŝanĝis regulon forbarintan servilojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
             "changed_rule_glob": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s"
         },
-        "io.element.voice_broadcast_info": {
-            "you": "Vi finis <a>voĉan elsendon</a>",
-            "user": "%(senderName)s finis <a>voĉan elsendon</a>"
+        "redacted": {
+            "tooltip": "Mesaĝo forigita je %(date)s"
         },
         "reactions": {
             "label": "%(reactors)s reagis per %(content)s",
             "tooltip": "<reactors/><reactedWith>reagis per %(shortName)s</reactedWith>"
         },
-        "redacted": {
-            "tooltip": "Mesaĝo forigita je %(date)s"
-        },
         "m.room.create": {
             "continuation": "Ĉi tiu ĉambro estas daŭrigo de alia interparolo.",
             "see_older_messages": "Klaku ĉi tien por vidi pli malnovajn mesaĝojn."
+        },
+        "io.element.voice_broadcast_info": {
+            "you": "Vi finis <a>voĉan elsendon</a>",
+            "user": "%(senderName)s finis <a>voĉan elsendon</a>"
         }
     },
     "slash_command": {
@@ -2675,14 +2675,14 @@
         "failed_find_user": "Ne povis trovi uzanton en ĉambro",
         "op": "Difini la povnivelon de uzanto",
         "deop": "Senestrigas uzanton kun donita identigilo",
-        "server_error": "Servila eraro",
-        "command_error": "Komanda eraro",
-        "server_error_detail": "Servilo estas neatingebla, troŝarĝita, aŭ io alia misokazis.",
-        "unknown_command": "Nekonata komando",
-        "unknown_command_detail": "Nerekonita komando: %(commandText)s",
-        "unknown_command_help": "Vi povas komandi <code>/help</code> por listigi uzeblajn komandojn. Ĉu vi intencis sendi ĉi tion kiel mesaĝon?",
         "unknown_command_hint": "Helpeto: Komencu vian mesaĝon per <code>//</code> por komenci ĝin per suprenstreko.",
-        "unknown_command_button": "Sendi mesaĝon"
+        "unknown_command_help": "Vi povas komandi <code>/help</code> por listigi uzeblajn komandojn. Ĉu vi intencis sendi ĉi tion kiel mesaĝon?",
+        "unknown_command_detail": "Nerekonita komando: %(commandText)s",
+        "unknown_command_button": "Sendi mesaĝon",
+        "unknown_command": "Nekonata komando",
+        "server_error_detail": "Servilo estas neatingebla, troŝarĝita, aŭ io alia misokazis.",
+        "server_error": "Servila eraro",
+        "command_error": "Komanda eraro"
     },
     "presence": {
         "online_for": "Enreta jam je %(duration)s",
@@ -2888,8 +2888,8 @@
         "server_picker_custom": "Alia hejmservilo",
         "server_picker_explainer": "Uzu vian preferatan hejmservilon de Matrix se vi havas iun, aŭ gastigu vian propran.",
         "server_picker_learn_more": "Pri hejmserviloj",
-        "account_deactivated": "Tiu ĉi konto malaktiviĝis.",
-        "incorrect_credentials": "Malĝusta uzantnomo kaj/aŭ pasvorto."
+        "incorrect_credentials": "Malĝusta uzantnomo kaj/aŭ pasvorto.",
+        "account_deactivated": "Tiu ĉi konto malaktiviĝis."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3021,87 +3021,6 @@
         "existing_issue_link": "Bonvolu unue vidi <existingIssuesLink>jamajn erarojn en GitHub</existingIssuesLink>. Ĉu neniu akordas la vian? <newIssueLink>Raportu novan</newIssueLink>.",
         "send_feedback_action": "Prikomenti"
     },
-    "create_space": {
-        "name_required": "Bonvolu enigi nomon por la aro",
-        "name_placeholder": "ekz. mia-aro",
-        "public_description": "Malferma aro por ĉiu ajn, ideala por komunumoj",
-        "private_description": "Nur invita, ideala por vi mem aŭ por skipoj",
-        "public_heading": "Via publika aro",
-        "private_heading": "Via privata aro",
-        "add_details_prompt": "Aldonu kelkajn detalojn, por ke ĝi estu rekonebla.",
-        "failed_create_initial_rooms": "Malsukcesis krei komencajn ĉambrojn de aro",
-        "skip_action": "Preterpasi ĉi-foje",
-        "add_existing_rooms_heading": "Kion vi volas organizi?",
-        "add_existing_rooms_description": "Elektu aldonotajn ĉambrojn aŭ interparolojn. Ĉi tiu aro estas nur por vi, neniu estos informita. Vi povas aldoni pliajn pli poste.",
-        "share_heading": "Diskonigi %(name)s",
-        "share_description": "Nun estas sole vi; estos eĉ pli bone kun aliuloj.",
-        "done_action_first_room": "Eniri mian unuan ĉambron",
-        "done_action": "Iri al mia aro",
-        "private_personal_heading": "Kun kiu vi laboras?",
-        "private_personal_description": "Certigu, ke la ĝustaj personoj povas aliri al %(name)s",
-        "personal_space": "Nur mi",
-        "personal_space_description": "Privata aro por organizado de viaj ĉambroj",
-        "private_space": "Mi kaj miaj kunuloj",
-        "private_space_description": "Privata aro por vi kaj viaj kunuloj",
-        "failed_invite_users": "Malsukcesis inviti la jenajn uzantojn al via aro: %(csvUsers)s",
-        "invite_teammates_heading": "Invitu viajn kunulojn",
-        "invite_teammates_description": "Certigu, ke la ĝustaj personoj povas aliri. Vi povas inviti pliajn pli poste.",
-        "invite_teammates_by_username": "Inviti per uzantonomo",
-        "setup_rooms_community_heading": "Pri kio volus vi diskuti en %(spaceName)s?",
-        "setup_rooms_community_description": "Kreu ni ĉambron por ĉiu el ili.",
-        "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas."
-    },
-    "space": {
-        "landing_welcome": "Bonvenu al <name/>"
-    },
-    "location_sharing": {
-        "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
-        "MapStyleUrlNotReachable": "Ĉi tiu hejmservilo ne estas agordita ĝuste por montri mapojn, aŭ la agordita mapservilo povas esti neatingebla.",
-        "map_feedback": "Sugestoj pri la mapo",
-        "find_my_location": "Trovu mian lokon",
-        "location_not_available": "Loko ne havebla",
-        "mapbox_logo": "Mapbox-emblemo",
-        "reset_bearing": "Restarigu la lagron norden",
-        "failed_generic": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
-        "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste."
-    },
-    "voice_broadcast": {
-        "failed_already_recording_title": "Ne povas komenci novan voĉan elsendon",
-        "failed_insufficient_permission_title": "Ne povas komenci novan voĉan elsendon",
-        "failed_others_already_recording_title": "Ne povas komenci novan voĉan elsendon",
-        "failed_already_recording_description": "Vi jam registras voĉan elsendon. Bonvolu fini vian nunan voĉelsendon por komenci novan.",
-        "failed_insufficient_permission_description": "Vi ne havas la bezonatajn permesojn por komenci voĉan elsendon en ĉi tiu ĉambro. Kontaktu ĉambran administranton por ĝisdatigi viajn permesojn.",
-        "failed_others_already_recording_description": "Iu alia jam registras voĉan elsendon. Atendu, ke ilia voĉa elsendo finiĝos por komenci novan.",
-        "failed_no_connection_title": "eraro de konekto",
-        "failed_no_connection_description": "Bedaŭrinde ni ne povas komenci registradon nun. Bonvolu reprovi poste.",
-        "failed_decrypt": "Ne eblas deĉifri voĉan elsendon",
-        "failed_generic": "Ne eblas ludi ĉi tiun voĉan elsendon",
-        "confirm_stop_title": "Ĉu ĉesi rekta elsendo?",
-        "confirm_stop_description": "Ĉu vi certas, ke vi volas fini la elsendon? Ĉi tio finos la transdonon kaj provizos la plenan registradon en la ĉambro.",
-        "confirm_stop_affirm": "Jes, ĉesu elsendon",
-        "confirm_listen_title": "Aŭskulti vivan elsendon?",
-        "confirm_listen_description": "Se vi komencas aŭskulti ĉi tiun vivan elsendon, via nuna viva elsendo registrado estos finita.",
-        "confirm_listen_affirm": "Jes, ĉesigu mian registradon",
-        "30s_backward": "30s. reen",
-        "30s_forward": "30s. antaŭen",
-        "go_live": "Iru vivi",
-        "resume": "rekomenci voĉan elsendon",
-        "pause": "paŭzi voĉan elsendon",
-        "play": "ludu voĉan elsendon"
-    },
-    "labs_mjolnir": {
-        "room_name": "Mia listo de forbaroj",
-        "room_topic": "Ĉi tio estas la listo de uzantoj/serviloj, kiujn vi blokis – ne eliru el la ĉambro!"
-    },
-    "theme": {
-        "light_high_contrast": "Malpeza alta kontrasto"
-    },
-    "update": {
-        "see_changes_button": "Kio novas?",
-        "release_notes_toast_title": "Kio novas",
-        "toast_title": "Ĝisdatigi %(brand)s",
-        "toast_description": "Nova versio de %(brand)s disponeblas"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "Uzu malmultajn vortojn, kaj evitu oftajn frazojn",
@@ -3134,5 +3053,86 @@
             "straightRow": "Rektaj vicoj de klavoj estas facile diveneblaj",
             "keyPattern": "Mallongaj ripetoj de klavoj estas facile diveneblaj"
         }
+    },
+    "voice_broadcast": {
+        "failed_already_recording_title": "Ne povas komenci novan voĉan elsendon",
+        "failed_insufficient_permission_title": "Ne povas komenci novan voĉan elsendon",
+        "failed_others_already_recording_title": "Ne povas komenci novan voĉan elsendon",
+        "failed_already_recording_description": "Vi jam registras voĉan elsendon. Bonvolu fini vian nunan voĉelsendon por komenci novan.",
+        "failed_insufficient_permission_description": "Vi ne havas la bezonatajn permesojn por komenci voĉan elsendon en ĉi tiu ĉambro. Kontaktu ĉambran administranton por ĝisdatigi viajn permesojn.",
+        "failed_others_already_recording_description": "Iu alia jam registras voĉan elsendon. Atendu, ke ilia voĉa elsendo finiĝos por komenci novan.",
+        "failed_no_connection_title": "eraro de konekto",
+        "failed_no_connection_description": "Bedaŭrinde ni ne povas komenci registradon nun. Bonvolu reprovi poste.",
+        "failed_decrypt": "Ne eblas deĉifri voĉan elsendon",
+        "failed_generic": "Ne eblas ludi ĉi tiun voĉan elsendon",
+        "confirm_stop_title": "Ĉu ĉesi rekta elsendo?",
+        "confirm_stop_description": "Ĉu vi certas, ke vi volas fini la elsendon? Ĉi tio finos la transdonon kaj provizos la plenan registradon en la ĉambro.",
+        "confirm_stop_affirm": "Jes, ĉesu elsendon",
+        "confirm_listen_title": "Aŭskulti vivan elsendon?",
+        "confirm_listen_description": "Se vi komencas aŭskulti ĉi tiun vivan elsendon, via nuna viva elsendo registrado estos finita.",
+        "confirm_listen_affirm": "Jes, ĉesigu mian registradon",
+        "30s_backward": "30s. reen",
+        "30s_forward": "30s. antaŭen",
+        "go_live": "Iru vivi",
+        "resume": "rekomenci voĉan elsendon",
+        "pause": "paŭzi voĉan elsendon",
+        "play": "ludu voĉan elsendon"
+    },
+    "update": {
+        "see_changes_button": "Kio novas?",
+        "release_notes_toast_title": "Kio novas",
+        "toast_title": "Ĝisdatigi %(brand)s",
+        "toast_description": "Nova versio de %(brand)s disponeblas"
+    },
+    "theme": {
+        "light_high_contrast": "Malpeza alta kontrasto"
+    },
+    "space": {
+        "landing_welcome": "Bonvenu al <name/>"
+    },
+    "location_sharing": {
+        "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
+        "MapStyleUrlNotReachable": "Ĉi tiu hejmservilo ne estas agordita ĝuste por montri mapojn, aŭ la agordita mapservilo povas esti neatingebla.",
+        "map_feedback": "Sugestoj pri la mapo",
+        "find_my_location": "Trovu mian lokon",
+        "location_not_available": "Loko ne havebla",
+        "mapbox_logo": "Mapbox-emblemo",
+        "reset_bearing": "Restarigu la lagron norden",
+        "failed_generic": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
+        "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste."
+    },
+    "labs_mjolnir": {
+        "room_name": "Mia listo de forbaroj",
+        "room_topic": "Ĉi tio estas la listo de uzantoj/serviloj, kiujn vi blokis – ne eliru el la ĉambro!"
+    },
+    "create_space": {
+        "name_required": "Bonvolu enigi nomon por la aro",
+        "name_placeholder": "ekz. mia-aro",
+        "public_description": "Malferma aro por ĉiu ajn, ideala por komunumoj",
+        "private_description": "Nur invita, ideala por vi mem aŭ por skipoj",
+        "public_heading": "Via publika aro",
+        "private_heading": "Via privata aro",
+        "add_details_prompt": "Aldonu kelkajn detalojn, por ke ĝi estu rekonebla.",
+        "failed_create_initial_rooms": "Malsukcesis krei komencajn ĉambrojn de aro",
+        "skip_action": "Preterpasi ĉi-foje",
+        "add_existing_rooms_heading": "Kion vi volas organizi?",
+        "add_existing_rooms_description": "Elektu aldonotajn ĉambrojn aŭ interparolojn. Ĉi tiu aro estas nur por vi, neniu estos informita. Vi povas aldoni pliajn pli poste.",
+        "share_heading": "Diskonigi %(name)s",
+        "share_description": "Nun estas sole vi; estos eĉ pli bone kun aliuloj.",
+        "done_action_first_room": "Eniri mian unuan ĉambron",
+        "done_action": "Iri al mia aro",
+        "private_personal_heading": "Kun kiu vi laboras?",
+        "private_personal_description": "Certigu, ke la ĝustaj personoj povas aliri al %(name)s",
+        "personal_space": "Nur mi",
+        "personal_space_description": "Privata aro por organizado de viaj ĉambroj",
+        "private_space": "Mi kaj miaj kunuloj",
+        "private_space_description": "Privata aro por vi kaj viaj kunuloj",
+        "failed_invite_users": "Malsukcesis inviti la jenajn uzantojn al via aro: %(csvUsers)s",
+        "invite_teammates_heading": "Invitu viajn kunulojn",
+        "invite_teammates_description": "Certigu, ke la ĝustaj personoj povas aliri. Vi povas inviti pliajn pli poste.",
+        "invite_teammates_by_username": "Inviti per uzantonomo",
+        "setup_rooms_community_heading": "Pri kio volus vi diskuti en %(spaceName)s?",
+        "setup_rooms_community_description": "Kreu ni ĉambron por ĉiu el ili.",
+        "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas."
     }
 }

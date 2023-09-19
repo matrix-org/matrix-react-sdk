@@ -932,10 +932,10 @@
         "identity_server": "ID 서버",
         "integration_manager": "통합 관리자",
         "feedback": "피드백",
-        "all_rooms": "모든 방 목록",
         "orphan_rooms": "다른 방 목록",
         "on": "켜기",
-        "off": "끄기"
+        "off": "끄기",
+        "all_rooms": "모든 방 목록"
     },
     "action": {
         "continue": "계속하기",
@@ -1092,6 +1092,12 @@
         },
         "inline_url_previews_room_account": "이 방에서 URL 미리보기 사용하기 (오직 나만 영향을 받음)",
         "inline_url_previews_room": "이 방에 참여한 모두에게 기본으로 URL 미리보기 사용하기",
+        "voip": {
+            "mirror_local_feed": "보고 있는 비디오 전송 상태 비추기"
+        },
+        "security": {
+            "send_analytics": "정보 분석 데이터 보내기"
+        },
         "preferences": {
             "room_list_heading": "방 목록",
             "composer_heading": "작성기",
@@ -1099,12 +1105,6 @@
             "rm_lifetime": "이전 대화 경계선 표시 시간 (ms)",
             "rm_lifetime_offscreen": "이전 대화 경계선 사라지는 시간 (ms)",
             "always_show_menu_bar": "항상 윈도우 메뉴 막대에 보이기"
-        },
-        "voip": {
-            "mirror_local_feed": "보고 있는 비디오 전송 상태 비추기"
-        },
-        "security": {
-            "send_analytics": "정보 분석 데이터 보내기"
         },
         "keyboard": {
             "title": "키보드 (단축키)"
@@ -1121,8 +1121,8 @@
         "category_room": "방",
         "category_other": "기타",
         "widget_screenshots": "지원되는 위젯에 대해 위젯 스크린샷 사용하기",
-        "show_hidden_events": "타임라인에서 숨겨진 이벤트 보이기",
-        "title": "개발자 도구"
+        "title": "개발자 도구",
+        "show_hidden_events": "타임라인에서 숨겨진 이벤트 보이기"
     },
     "create_room": {
         "title_public_room": "공개 방 만들기",
@@ -1292,14 +1292,14 @@
         "reactions": {
             "tooltip": "<reactors/><reactedWith>%(shortName)s으로 리액션함</reactedWith>"
         },
+        "m.room.create": {
+            "continuation": "이 방은 다른 대화방의 연장선입니다.",
+            "see_older_messages": "여길 눌러 오래된 메시지를 보세요."
+        },
         "m.room.avatar": {
             "lightbox_title": "%(senderDisplayName)s님이 %(roomName)s 방의 아바타를 바꿈",
             "removed": "%(senderDisplayName)s님이 방 아바타를 제거했습니다.",
             "changed_img": "%(senderDisplayName)s님이 방 아바타를 <img/>(으)로 바꿈"
-        },
-        "m.room.create": {
-            "continuation": "이 방은 다른 대화방의 연장선입니다.",
-            "see_older_messages": "여길 눌러 오래된 메시지를 보세요."
         }
     },
     "slash_command": {
@@ -1341,9 +1341,9 @@
         "me": "활동 표시하기",
         "op": "사용자의 권한 등급 정의하기",
         "deop": "받은 ID로 사용자의 등급을 낮추기",
+        "server_error_detail": "서버를 쓸 수 없거나 과부하거나, 다른 문제가 있습니다.",
         "server_error": "서버 오류",
-        "command_error": "명령어 오류",
-        "server_error_detail": "서버를 쓸 수 없거나 과부하거나, 다른 문제가 있습니다."
+        "command_error": "명령어 오류"
     },
     "presence": {
         "online_for": "%(duration)s 동안 온라인",
@@ -1432,8 +1432,8 @@
         "soft_logout_intro_sso": "로그인하고 계정에 다시 접근하기.",
         "soft_logout_intro_unsupported_auth": "계정에 로그인할 수 없습니다. 자세한 정보는 홈서버 관리자에게 연락하세요.",
         "register_action": "계정 만들기",
-        "account_deactivated": "이 계정은 비활성화되었습니다.",
-        "incorrect_credentials": "사용자 이름 혹은 비밀번호가 맞지 않습니다."
+        "incorrect_credentials": "사용자 이름 혹은 비밀번호가 맞지 않습니다.",
+        "account_deactivated": "이 계정은 비활성화되었습니다."
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1484,18 +1484,6 @@
         "sent": "피드백 보내기",
         "send_feedback_action": "피드백 보내기"
     },
-    "create_space": {
-        "public_heading": "당신의 공개 스페이스",
-        "private_heading": "당신의 비공개 스페이스"
-    },
-    "labs_mjolnir": {
-        "room_name": "차단 목록",
-        "room_topic": "차단한 사용자/서버 목록입니다 - 방을 떠나지 마세요!"
-    },
-    "update": {
-        "see_changes_button": "새로운 점은?",
-        "release_notes_toast_title": "새로운 점"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "몇 단어를 사용하되, 흔한 단어는 피하세요",
@@ -1528,5 +1516,17 @@
             "straightRow": "키의 한 줄은 추측하기 쉽습니다",
             "keyPattern": "짧은 키보드 패턴은 추측하기 쉽습니다"
         }
+    },
+    "update": {
+        "see_changes_button": "새로운 점은?",
+        "release_notes_toast_title": "새로운 점"
+    },
+    "labs_mjolnir": {
+        "room_name": "차단 목록",
+        "room_topic": "차단한 사용자/서버 목록입니다 - 방을 떠나지 마세요!"
+    },
+    "create_space": {
+        "public_heading": "당신의 공개 스페이스",
+        "private_heading": "당신의 비공개 스페이스"
     }
 }

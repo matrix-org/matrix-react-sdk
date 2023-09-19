@@ -1023,20 +1023,14 @@
             "font_size": "حجم الخط",
             "custom_font_description": "قم بتعيين اسم الخط المثبت على نظامك وسيحاول %(brand)s استخدامه.",
             "timeline_image_size_default": "المبدئي",
-            "custom_font_size": "استخدام حجم مخصص",
+            "image_size_default": "المبدئي",
+            "font_size_valid": "استعمل ما بين %(min)spt و %(max)sps",
             "font_size_nan": "الحجم يجب أن يكون رقمًا",
             "font_size_limit": "الحجم المخصص للخط يجب أن ينحصر بين %(min)spt و %(max)spt",
-            "font_size_valid": "استعمل ما بين %(min)spt و %(max)sps",
-            "image_size_default": "المبدئي"
+            "custom_font_size": "استخدام حجم مخصص"
         },
         "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
         "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
-        "preferences": {
-            "room_list_heading": "قائمة الغرفة",
-            "composer_heading": "الكاتب",
-            "autocomplete_delay": "تأخير الإكمال التلقائي (مللي ثانية)",
-            "always_show_menu_bar": "أظهر شريط قائمة النافذة دائمًا"
-        },
         "voip": {
             "mirror_local_feed": "محاكاة تغذية الفيديو المحلية"
         },
@@ -1046,6 +1040,12 @@
             "enable_message_search": "تمكين البحث عن الرسائل في الغرف المشفرة",
             "message_search_sleep_time": "ما مدى سرعة تنزيل الرسائل.",
             "manually_verify_all_sessions": "تحقق يدويًا من جميع الاتصالات البعيدة"
+        },
+        "preferences": {
+            "room_list_heading": "قائمة الغرفة",
+            "composer_heading": "الكاتب",
+            "autocomplete_delay": "تأخير الإكمال التلقائي (مللي ثانية)",
+            "always_show_menu_bar": "أظهر شريط قائمة النافذة دائمًا"
         }
     },
     "devtools": {
@@ -1169,20 +1169,20 @@
             "changed_rule_servers": "%(senderName)s قاعدة متغيرة التي تحظر سيرفرات مطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
             "changed_rule_glob": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s"
         },
+        "redacted": {
+            "tooltip": "حذفت الرسالة في %(date)s"
+        },
         "reactions": {
             "tooltip": "<reactors/><reactedWith>تفاعلو ب%(shortName)s</reactedWith>"
         },
-        "redacted": {
-            "tooltip": "حذفت الرسالة في %(date)s"
+        "m.room.create": {
+            "continuation": "هذه الغرفة هي استمرار لمحادثة أخرى.",
+            "see_older_messages": "انقر هنا لترى رسائل أقدم."
         },
         "m.room.avatar": {
             "lightbox_title": "%(senderDisplayName)s غير صورة الغرفة %(roomName)s",
             "removed": "%(senderDisplayName)s حذف صورة الغرفة.",
             "changed_img": "%(senderDisplayName)s غير صورة الغرفة إلى <img/>"
-        },
-        "m.room.create": {
-            "continuation": "هذه الغرفة هي استمرار لمحادثة أخرى.",
-            "see_older_messages": "انقر هنا لترى رسائل أقدم."
         }
     },
     "slash_command": {
@@ -1231,14 +1231,14 @@
         "failed_find_user": "لم يستطع ايجاد مستخدم في غرفة",
         "op": "قم بتعريف مستوى الطاقة للمستخدم",
         "deop": "يُلغي إدارية المستخدم حسب المعرّف المعطى",
-        "server_error": "خطأ في الخادم",
-        "command_error": "خطأ في الأمر",
-        "server_error_detail": "الخادم غير متوفر أو محمّل فوق طاقته أو وقع خطأ غير ذلك.",
-        "unknown_command": "أمر غير معروف",
-        "unknown_command_detail": "أمر غير معروف: %(commandText)s",
-        "unknown_command_help": "يمكنك استخدام <code>المساعدة</code> لسرد الأوامر المتاحة. هل قصدت إرسال هذا كرسالة؟",
         "unknown_command_hint": "تلميح: ابدأ رسالتك ب<code>//</code> لتبدأها بشرطة مائلة.",
-        "unknown_command_button": "أرسل كرسالة"
+        "unknown_command_help": "يمكنك استخدام <code>المساعدة</code> لسرد الأوامر المتاحة. هل قصدت إرسال هذا كرسالة؟",
+        "unknown_command_detail": "أمر غير معروف: %(commandText)s",
+        "unknown_command_button": "أرسل كرسالة",
+        "unknown_command": "أمر غير معروف",
+        "server_error_detail": "الخادم غير متوفر أو محمّل فوق طاقته أو وقع خطأ غير ذلك.",
+        "server_error": "خطأ في الخادم",
+        "command_error": "خطأ في الأمر"
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",
@@ -1435,16 +1435,6 @@
             "see_videos_sent_active_room": "أظهر الفيديوهات المرسلة إلى هذه غرفتك النشطة"
         }
     },
-    "labs_mjolnir": {
-        "room_name": "قائمة الحظر",
-        "room_topic": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!"
-    },
-    "update": {
-        "see_changes_button": "ما الجديد ؟",
-        "release_notes_toast_title": "آخِر المُستجدّات",
-        "toast_title": "حدّث: %(brand)s",
-        "toast_description": "يتوفر إصدار جديد من %(brand)s"
-    },
     "zxcvbn": {
         "suggestions": {
             "useWords": "استخدم بضع كلمات ، وتجنب العبارات الشائعة",
@@ -1476,5 +1466,15 @@
             "straightRow": "سهلٌ تخمين صفوف من المفاتيح",
             "keyPattern": "من السهل تخمين أنماط قصيرة من لوحة المفاتيح"
         }
+    },
+    "update": {
+        "see_changes_button": "ما الجديد ؟",
+        "release_notes_toast_title": "آخِر المُستجدّات",
+        "toast_title": "حدّث: %(brand)s",
+        "toast_description": "يتوفر إصدار جديد من %(brand)s"
+    },
+    "labs_mjolnir": {
+        "room_name": "قائمة الحظر",
+        "room_topic": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!"
     }
 }
