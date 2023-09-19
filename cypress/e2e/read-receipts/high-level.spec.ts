@@ -431,6 +431,11 @@ describe("Read receipts", () => {
 
     function openThreadList() {
         cy.log("Open threads list");
+
+        // If we've just entered the room, the threads panel takes a while to decide
+        // whether it's open or not - wait here to give it a chance to settle.
+        cy.wait(200);
+
         cy.findByTestId("threadsButton", { log: false }).then(($button) => {
             if ($button?.attr("aria-current") !== "true") {
                 cy.findByTestId("threadsButton", { log: false }).click();
@@ -441,7 +446,8 @@ describe("Read receipts", () => {
             .should("exist")
             .then(($panel) => {
                 const $button = $panel.find('.mx_BaseCard_back[title="Threads"]');
-                // If the Threads back button is present then click it, the threads button can open either threads list or thread panel
+                // If the Threads back button is present then click it - the
+                // threads button can open either threads list or thread panel
                 if ($button.length) {
                     $button.trigger("click");
                 }
@@ -454,6 +460,7 @@ describe("Read receipts", () => {
     }
 
     function assertReadThread(rootMessage: string) {
+        cy.log("Assert thread read", rootMessage);
         return getThreadListTile(rootMessage).within(() => {
             cy.get(".mx_NotificationBadge", { log: false }).should("not.exist");
         });
