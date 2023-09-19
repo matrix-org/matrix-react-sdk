@@ -69,7 +69,6 @@ export function getEffectiveMembership(membership: string): EffectiveMembership 
     if (membership === "invite") {
         return EffectiveMembership.Invite;
     } else if (membership === "join" || (SettingsStore.getValue("feature_ask_to_join") && membership === "knock")) {
-        // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
         return EffectiveMembership.Join;
     } else {
         // Probably a leave, kick, or ban

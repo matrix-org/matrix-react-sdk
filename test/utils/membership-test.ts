@@ -21,8 +21,7 @@ import { isKnockDenied, waitForMember } from "../../src/utils/membership";
 import { createTestClient, mkRoomMember, stubClient } from "../test-utils";
 
 describe("isKnockDenied", () => {
-    // const userId = MatrixClientPeg.get()!.getSafeUserId() //TODO: MA
-    const userId = "some";
+    const userId = "alice";
     let client: jest.Mocked<MatrixClient>;
     let room: Room;
 
