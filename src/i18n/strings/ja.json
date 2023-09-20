@@ -1256,10 +1256,6 @@
     "Enter a server name": "サーバー名を入力",
     "Add existing space": "既存のスペースを追加",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
-    "Sign out devices": {
-        "one": "端末からサインアウト",
-        "other": "端末からサインアウト"
-    },
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。",
     "Hide sidebar": "サイドバーを表示しない",
     "Failed to transfer call": "通話の転送に失敗しました",
@@ -1668,14 +1664,6 @@
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、アカウントの無効化を承認してください。",
     "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
     "The poll has ended. No votes were cast.": "アンケートが終了しました。投票はありませんでした。",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。",
-        "other": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "下のボタンをクリックして、端末からのログアウトを承認してください。",
-        "other": "下のボタンをクリックして、端末からのログアウトを承認してください。"
-    },
     "Waiting for you to verify on your other device…": "他の端末での認証を待機しています…",
     "Remove from %(roomName)s": "%(roomName)sから追放",
     "Wait!": "お待ちください！",
@@ -1856,10 +1844,6 @@
     "Ban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック",
     "Ban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック",
     "Live location error": "位置情報（ライブ）のエラー",
-    "Confirm signing out these devices": {
-        "other": "端末からのサインアウトを承認",
-        "one": "端末からのサインアウトを承認"
-    },
     "View live location": "位置情報（ライブ）を表示",
     "Failed to join": "参加に失敗しました",
     "The person who invited you has already left, or their server is offline.": "招待した人が既に退出したか、サーバーがオフラインです。",
@@ -1943,7 +1927,6 @@
     "You were disconnected from the call. (Error: %(message)s)": "通話から切断されました。（エラー：%(message)s）",
     "Connection lost": "接続が切断されました",
     "Room info": "ルームの情報",
-    "Current session": "現在のセッション",
     "Video room": "ビデオ通話ルーム",
     "Sessions": "セッション",
     "Spell check": "スペルチェック",
@@ -2046,10 +2029,8 @@
     "Can’t start a call": "通話を開始できません",
     "Failed to read events": "イベントの受信に失敗しました",
     "Failed to send event": "イベントの送信に失敗しました",
-    "Security recommendations": "セキュリティーに関する勧告",
     "Text": "テキスト",
     "Freedom": "自由",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "他のすべてのセッションからサインアウト（%(otherSessionsCount)s）",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)sではエンドツーエンド暗号化が設定されていますが、より少ないユーザー数に限定されています。",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>公開ルームを暗号化することは推奨されません。</b>公開ルームは誰でも検索、参加でき、メッセージを読むことができます。暗号化の利益を得ることはできず、後で暗号化を無効にすることもできません。また、公開ルームでメッセージを暗号化すると、メッセージの送受信が遅くなります。",
     "Connection": "接続",
@@ -2116,7 +2097,6 @@
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "実験に参加したいですか？開発中のアイディアを試してください。これらの機能は完成していません。不安定な可能性や変更される可能性、また、開発が中止される可能性もあります。<a>詳細を確認</a>。",
     "Upcoming features": "今後の機能",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "%(brand)sのラボでは、最新の機能をいち早く使用したり、テストしたりできるほか、機能が実際にリリースされる前の改善作業を支援することができます。",
-    "Improve your account security by following these recommendations.": "以下の勧告に従い、アカウントのセキュリティーを改善しましょう。",
     "Deactivating your account is a permanent action — be careful!": "アカウントを無効化すると取り消せません。ご注意ください！",
     "Registration token": "登録用トークン",
     "Enter a registration token provided by the homeserver administrator.": "ホームサーバーの管理者から提供された登録用トークンを入力してください。",
@@ -2919,7 +2899,27 @@
                 "other": "%(count)s件のセッションからサインアウト",
                 "one": "%(count)s件のセッションからサインアウト"
             },
-            "other_sessions_heading": "その他のセッション"
+            "other_sessions_heading": "その他のセッション",
+            "sign_out_all_other_sessions": "他のすべてのセッションからサインアウト（%(otherSessionsCount)s）",
+            "current_session": "現在のセッション",
+            "confirm_sign_out_sso": {
+                "one": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。",
+                "other": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。"
+            },
+            "confirm_sign_out": {
+                "other": "端末からのサインアウトを承認",
+                "one": "端末からのサインアウトを承認"
+            },
+            "confirm_sign_out_body": {
+                "one": "下のボタンをクリックして、端末からのログアウトを承認してください。",
+                "other": "下のボタンをクリックして、端末からのログアウトを承認してください。"
+            },
+            "confirm_sign_out_continue": {
+                "one": "端末からサインアウト",
+                "other": "端末からサインアウト"
+            },
+            "security_recommendations": "セキュリティーに関する勧告",
+            "security_recommendations_description": "以下の勧告に従い、アカウントのセキュリティーを改善しましょう。"
         }
     },
     "devtools": {

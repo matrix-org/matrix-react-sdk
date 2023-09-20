@@ -1722,18 +1722,6 @@
     "The homeserver the user you're verifying is connected to": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Kjo dhomë gjendet në disa hapësira për të cilat nuk jeni një nga përgjegjësit. Në këto hapësira, dhoma e vjetër prapë do të shfaqet, por njerëzve do t’u kërkohet të marrin pjesë te e reja.",
-    "Sign out devices": {
-        "one": "Dil nga pajisje",
-        "other": "Dil nga pajisje"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Që të ripohoni daljen nga kjo pajisje, klikoni butonin më poshtë.",
-        "other": "Që të ripohoni daljen nga këto pajisje, klikoni butonin më poshtë."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Ripohoni daljen nga kjo pajisje duke përdorur Hyrje Njëshe për të dëshmuar identitetin tuaj.",
-        "other": "Ripohoni daljen nga këto pajisje duke përdorur Hyrje Njëshe për të dëshmuar identitetin tuaj."
-    },
     "Add option": "Shtoni mundësi",
     "Write an option": "Shkruani një mundësi",
     "Option %(number)s": "Mundësia %(number)s",
@@ -2035,10 +2023,6 @@
     "%(members)s and more": "%(members)s dhe më tepër",
     "Deactivating your account is a permanent action — be careful!": "Çaktivizimi i llogarisë tuaj është një veprim i pakthyeshëm - hapni sytë!",
     "Your password was successfully changed.": "Fjalëkalimi juaj u ndryshua me sukses.",
-    "Confirm signing out these devices": {
-        "one": "Ripohoni daljen nga kjo pajisje",
-        "other": "Ripohoni daljen nga këto pajisje"
-    },
     "%(count)s people joined": {
         "one": "Hyri %(count)s person",
         "other": "Hynë %(count)s vetë"
@@ -2125,8 +2109,6 @@
     "Ongoing call": "Thirrje në kryerje e sipër",
     "Video call (Jitsi)": "Thirrje me video (Jitsi)",
     "Show formatting": "Shfaq formatim",
-    "Security recommendations": "Rekomandime sigurie",
-    "Current session": "Sesioni i tanishëm",
     "Call type": "Lloj thirrjeje",
     "You do not have sufficient permissions to change this.": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Për sigurinë më të mirë, verifikoni sesionet tuaja dhe dilni nga çfarëdo sesioni që s’e njihni, ose s’e përdorni më.",
@@ -2188,13 +2170,11 @@
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "S’mund të nisni një thirrje, ngaqë aktualisht jeni duke regjistruar një transmetim të drejtpërdrejtë. Që të mund të nisni një thirrje, ju lutemi, përfundoni transmetimin tuaj të drejtpërdrejtë.",
     "Can’t start a call": "S’fillohet dot thirrje",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
-    "Improve your account security by following these recommendations.": "Përmirësoni sigurinë e llogarisë tuaj duke ndjekur këto rekomandime.",
     "Failed to read events": "S’u arrit të lexohen akte",
     "Failed to send event": "S’u arrit të dërgohet akt",
     "Mark as read": "Vëri shenjë si të lexuar",
     "Text": "Tekst",
     "Create a link": "Krijoni një lidhje",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Dil nga krejt sesionet e tjerë (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
     "Can't start voice message": "S’niset dot mesazh zanor",
     "Edit link": "Përpunoni lidhje",
@@ -2998,7 +2978,27 @@
                 "one": "Dilni nga %(count)s sesion",
                 "other": "Dilni nga %(count)s sesione"
             },
-            "other_sessions_heading": "Sesione të tjerë"
+            "other_sessions_heading": "Sesione të tjerë",
+            "sign_out_all_other_sessions": "Dil nga krejt sesionet e tjerë (%(otherSessionsCount)s)",
+            "current_session": "Sesioni i tanishëm",
+            "confirm_sign_out_sso": {
+                "one": "Ripohoni daljen nga kjo pajisje duke përdorur Hyrje Njëshe për të dëshmuar identitetin tuaj.",
+                "other": "Ripohoni daljen nga këto pajisje duke përdorur Hyrje Njëshe për të dëshmuar identitetin tuaj."
+            },
+            "confirm_sign_out": {
+                "one": "Ripohoni daljen nga kjo pajisje",
+                "other": "Ripohoni daljen nga këto pajisje"
+            },
+            "confirm_sign_out_body": {
+                "one": "Që të ripohoni daljen nga kjo pajisje, klikoni butonin më poshtë.",
+                "other": "Që të ripohoni daljen nga këto pajisje, klikoni butonin më poshtë."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Dil nga pajisje",
+                "other": "Dil nga pajisje"
+            },
+            "security_recommendations": "Rekomandime sigurie",
+            "security_recommendations_description": "Përmirësoni sigurinë e llogarisë tuaj duke ndjekur këto rekomandime."
         }
     },
     "devtools": {

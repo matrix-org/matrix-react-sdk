@@ -1736,18 +1736,6 @@
     "You do not have permission to start polls in this room.": "Du får inte starta omröstningar i det här rummet.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Det här rummet bryggar inte meddelanden till några platformar. <a>Läs mer.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Det här rummet är med i några utrymmen du inte är admin för. I de utrymmena så kommer det gamla rummet fortfarande visas, men folk kommer uppmanas att gå med i det nya.",
-    "Sign out devices": {
-        "one": "Logga ut enhet",
-        "other": "Logga ut enheter"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Klicka på knappen nedan för att bekräfta utloggning av denna enhet.",
-        "other": "Klicka på knappen nedan för att bekräfta utloggning av dessa enheter."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Bekräfta utloggning av denna enhet genom att använda samlad inloggning för att bevisa din identitet.",
-        "other": "Bekräfta utloggning av dessa enheter genom att använda samlad inloggning för att bevisa din identitet."
-    },
     "Someone already has that username. Try another or if it is you, sign in below.": "Någon annan har redan det användarnamnet. Pröva ett annat, eller om det är ditt, logga in nedan.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
@@ -1945,10 +1933,6 @@
     "Expand quotes": "Expandera citat",
     "Collapse quotes": "Kollapsa citat",
     "Can't create a thread from an event with an existing relation": "Kan inte skapa tråd från en händelse med en existerande relation",
-    "Confirm signing out these devices": {
-        "one": "Bekräfta utloggning av denna enhet",
-        "other": "Bekräfta utloggning av dessa enheter"
-    },
     "Unban from room": "Avbanna i rum",
     "Ban from space": "Banna från utrymme",
     "Unban from space": "Avbanna i utrymme",
@@ -2152,8 +2136,6 @@
     "Show formatting": "Visa formatering",
     "Hide formatting": "Dölj formatering",
     "Failed to set pusher state": "Misslyckades att sätta pusharläge",
-    "Security recommendations": "Säkerhetsrekommendationer",
-    "Current session": "Nuvarande session",
     "Call type": "Samtalstyp",
     "You do not have sufficient permissions to change this.": "Du är inte behörig att ändra detta.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s är totalsträckskrypterad, men är för närvarande begränsad till ett lägre antal användare.",
@@ -2194,8 +2176,6 @@
     "Create a link": "Skapa en länk",
     "Edit link": "Redigera länk",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
-    "Improve your account security by following these recommendations.": "Förbättra din kontosäkerhet genom att följa dessa rekommendationer.",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Logga ut ur alla andra sessioner (%(otherSessionsCount)s)",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Du kan inte starta ett samtal eftersom att du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta ett samtal.",
     "Can’t start a call": "Kunde inte starta ett samtal",
     "Failed to read events": "Misslyckades att läsa händelser",
@@ -3031,7 +3011,27 @@
                 "one": "Logga ut ur %(count)s session",
                 "other": "Logga ut ur %(count)s sessioner"
             },
-            "other_sessions_heading": "Andra sessioner"
+            "other_sessions_heading": "Andra sessioner",
+            "sign_out_all_other_sessions": "Logga ut ur alla andra sessioner (%(otherSessionsCount)s)",
+            "current_session": "Nuvarande session",
+            "confirm_sign_out_sso": {
+                "one": "Bekräfta utloggning av denna enhet genom att använda samlad inloggning för att bevisa din identitet.",
+                "other": "Bekräfta utloggning av dessa enheter genom att använda samlad inloggning för att bevisa din identitet."
+            },
+            "confirm_sign_out": {
+                "one": "Bekräfta utloggning av denna enhet",
+                "other": "Bekräfta utloggning av dessa enheter"
+            },
+            "confirm_sign_out_body": {
+                "one": "Klicka på knappen nedan för att bekräfta utloggning av denna enhet.",
+                "other": "Klicka på knappen nedan för att bekräfta utloggning av dessa enheter."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Logga ut enhet",
+                "other": "Logga ut enheter"
+            },
+            "security_recommendations": "Säkerhetsrekommendationer",
+            "security_recommendations_description": "Förbättra din kontosäkerhet genom att följa dessa rekommendationer."
         }
     },
     "devtools": {

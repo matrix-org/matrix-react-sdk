@@ -1570,10 +1570,6 @@
         "one": "Päivitetään avaruutta...",
         "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
     },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Napsauta alla olevaa painiketta vahvistaaksesi tämän laitteen uloskirjauksen.",
-        "other": "Napsauta alla olevaa painiketta vahvistaaksesi näiden laitteiden uloskirjauksen."
-    },
     "Pin to sidebar": "Kiinnitä sivupalkkiin",
     "Quick settings": "Pika-asetukset",
     "Experimental": "Kokeellinen",
@@ -1716,10 +1712,6 @@
     "Chat": "Keskustelu",
     "Add people": "Lisää ihmisiä",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tämä huone ei siltaa viestejä millekään alustalle. <a>Lue lisää.</a>",
-    "Sign out devices": {
-        "one": "Kirjaa laite ulos",
-        "other": "Kirjaa laitteet ulos"
-    },
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -1863,10 +1855,6 @@
     "Group all your favourite rooms and people in one place.": "Ryhmitä kaikki suosimasi huoneet ja henkilöt yhteen paikkaan.",
     "Home is useful for getting an overview of everything.": "Koti on hyödyllinen, sillä sieltä näet yleisnäkymän kaikkeen.",
     "Deactivating your account is a permanent action — be careful!": "Tilin deaktivointi on peruuttamaton toiminto — ole varovainen!",
-    "Confirm signing out these devices": {
-        "one": "Vahvista uloskirjautuminen tältä laitteelta",
-        "other": "Vahvista uloskirjautuminen näiltä laitteilta"
-    },
     "Cross-signing is ready but keys are not backed up.": "Ristiinvarmennus on valmis, mutta avaimia ei ole varmuuskopioitu.",
     "Search %(spaceName)s": "Etsi %(spaceName)s",
     "Messaging": "Viestintä",
@@ -1898,10 +1886,6 @@
     "To proceed, please accept the verification request on your other device.": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
     "Something went wrong in confirming your identity. Cancel and try again.": "Jokin meni pieleen henkilöllisyyttä vahvistaessa. Peruuta ja yritä uudelleen.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Vahvista tilin deaktivointi todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Vahvista tämän laitteen uloskirjaaminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-        "other": "Vahvista näiden laitteiden uloskirjaaminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen."
-    },
     "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Jos joku pyysi kopioimaan ja liittämään jotakin tänne, on mahdollista että sinua yritetään huijata!",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Luo tili avaamalla osoitteeseen %(emailAddress)s lähetetyssä viestissä oleva linkki.",
     "Thread options": "Ketjun valinnat",
@@ -1965,8 +1949,6 @@
     "Ongoing call": "Käynnissä oleva puhelu",
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
-    "Security recommendations": "Turvallisuussuositukset",
-    "Current session": "Nykyinen istunto",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
     "Group all your people in one place.": "Ryhmitä kaikki ihmiset yhteen paikkaan.",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Parhaan turvallisuuden varmistamiseksi vahvista istuntosi ja kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä.",
@@ -2041,7 +2023,6 @@
     "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
     "Change layout": "Vaihda asettelua",
     "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
-    "Improve your account security by following these recommendations.": "Paranna tilisi tietoturvaa seuraamalla näitä suosituksia.",
     "Upcoming features": "Tulevat ominaisuudet",
     "Search users in this room…": "Etsi käyttäjiä tästä huoneesta…",
     "You have unverified sessions": "Sinulla on vahvistamattomia istuntoja",
@@ -2072,7 +2053,6 @@
     "Text": "Teksti",
     "Create a link": "Luo linkki",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
     "%(senderName)s started a voice broadcast": "%(senderName)s aloitti äänen yleislähetyksen",
     "Saving…": "Tallennetaan…",
     "Creating…": "Luodaan…",
@@ -2802,7 +2782,27 @@
                 "one": "Kirjaudu ulos %(count)s istunnosta",
                 "other": "Kirjaudu ulos %(count)s istunnosta"
             },
-            "other_sessions_heading": "Muut istunnot"
+            "other_sessions_heading": "Muut istunnot",
+            "sign_out_all_other_sessions": "Kirjaudu ulos kaikista muista istunnoista (%(otherSessionsCount)s)",
+            "current_session": "Nykyinen istunto",
+            "confirm_sign_out_sso": {
+                "one": "Vahvista tämän laitteen uloskirjaaminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
+                "other": "Vahvista näiden laitteiden uloskirjaaminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen."
+            },
+            "confirm_sign_out": {
+                "one": "Vahvista uloskirjautuminen tältä laitteelta",
+                "other": "Vahvista uloskirjautuminen näiltä laitteilta"
+            },
+            "confirm_sign_out_body": {
+                "one": "Napsauta alla olevaa painiketta vahvistaaksesi tämän laitteen uloskirjauksen.",
+                "other": "Napsauta alla olevaa painiketta vahvistaaksesi näiden laitteiden uloskirjauksen."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Kirjaa laite ulos",
+                "other": "Kirjaa laitteet ulos"
+            },
+            "security_recommendations": "Turvallisuussuositukset",
+            "security_recommendations_description": "Paranna tilisi tietoturvaa seuraamalla näitä suosituksia."
         }
     },
     "devtools": {

@@ -1516,10 +1516,6 @@
     "Cannot reach homeserver": "ບໍ່ສາມາດຕິດຕໍ່ homeserver ໄດ້",
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "other": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້ໂດຍໃຊ້ລະບົບປະຕູດຽວ( SSO) ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
-        "one": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້ໂດຍໃຊ້ ລະບົບຈັດການປະຕູດຽວ (SSO) ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ."
-    },
     "Session key:": "ກະແຈລະບົບ:",
     "Session ID:": "ID ລະບົບ:",
     "Cryptography": "ການເຂົ້າລະຫັດລັບ",
@@ -1586,18 +1582,6 @@
     "Remove from %(roomName)s": "ລຶບອອກຈາກ %(roomName)s",
     "Disinvite from %(roomName)s": "ຍົກເລີກເຊີນຈາກ %(roomName)s",
     "Authentication": "ການຢືນຢັນ",
-    "Sign out devices": {
-        "one": "ອອກຈາກລະບົບອຸປະກອນ",
-        "other": "ອອກຈາກລະບົບອຸປະກອນ"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້.",
-        "other": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້."
-    },
-    "Confirm signing out these devices": {
-        "one": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້",
-        "other": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້"
-    },
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "ການລຶບລ້າງຂໍ້ມູນທັງໝົດຈາກລະບົບນີ້ຖາວອນ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດຈະສູນເສຍເວັ້ນເສຍແຕ່ກະແຈຂອງເຂົາເຈົ້າໄດ້ຮັບການສໍາຮອງຂໍ້ມູນ.",
     "%(duration)sd": "%(duration)sd",
     "Topic: %(topic)s (<a>edit</a>)": "ຫົວຂໍ້: %(topic)s (<a>ແກ້ໄຂ</a>)",
@@ -2518,7 +2502,23 @@
         },
         "sessions": {
             "session_id": "ID ລະບົບ",
-            "verify_session": "ຢືນຢັນລະບົບ"
+            "verify_session": "ຢືນຢັນລະບົບ",
+            "confirm_sign_out_sso": {
+                "other": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້ໂດຍໃຊ້ລະບົບປະຕູດຽວ( SSO) ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
+                "one": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້ໂດຍໃຊ້ ລະບົບຈັດການປະຕູດຽວ (SSO) ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ."
+            },
+            "confirm_sign_out": {
+                "one": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້",
+                "other": "ຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້"
+            },
+            "confirm_sign_out_body": {
+                "one": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການອອກຈາກລະບົບອຸປະກອນນີ້.",
+                "other": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການອອກຈາກລະບົບອຸປະກອນເຫຼົ່ານີ້."
+            },
+            "confirm_sign_out_continue": {
+                "one": "ອອກຈາກລະບົບອຸປະກອນ",
+                "other": "ອອກຈາກລະບົບອຸປະກອນ"
+            }
         }
     },
     "devtools": {

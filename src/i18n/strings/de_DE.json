@@ -1727,18 +1727,6 @@
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
-    "Sign out devices": {
-        "one": "Gerät abmelden",
-        "other": "Geräte abmelden"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Klicke unten auf den Knopf, um dieses Gerät abzumelden.",
-        "other": "Klicke unten auf den Knopf, um diese Geräte abzumelden."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Abmelden dieses Geräts durch Beweisen deiner Identität mit Single Sign-On bestätigen.",
-        "other": "Bestätige das Abmelden dieser Geräte, indem du dich erneut anmeldest."
-    },
     "You're all caught up": "Du bist auf dem neuesten Stand",
     "Someone already has that username. Try another or if it is you, sign in below.": "Jemand anderes nutzt diesen Benutzernamen schon. Probier einen anderen oder wenn du es bist, melde dich unten an.",
     "Could not connect media": "Konnte Medien nicht verbinden",
@@ -1977,10 +1965,6 @@
     "View older version of %(spaceName)s.": "Alte Version von %(spaceName)s anzeigen.",
     "Upgrade this space to the recommended room version": "Space auf die empfohlene Version aktualisieren",
     "Your password was successfully changed.": "Dein Passwort wurde erfolgreich geändert.",
-    "Confirm signing out these devices": {
-        "one": "Abmelden des Geräts bestätigen",
-        "other": "Abmelden dieser Geräte bestätigen"
-    },
     "View List": "Liste Anzeigen",
     "View list": "Liste anzeigen",
     "Cameras": "Kameras",
@@ -2062,8 +2046,6 @@
     "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
-    "Security recommendations": "Sicherheitsempfehlungen",
-    "Current session": "Aktuelle Sitzung",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Für bestmögliche Sicherheit verifiziere deine Sitzungen und melde dich von allen ab, die du nicht erkennst oder nutzt.",
     "Sessions": "Sitzungen",
     "Spell check": "Rechtschreibprüfung",
@@ -2189,14 +2171,12 @@
     "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Can’t start a call": "Kann keinen Anruf beginnen",
-    "Improve your account security by following these recommendations.": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst.",
     "Failed to read events": "Lesen der Ereignisse fehlgeschlagen",
     "Failed to send event": "Übertragung des Ereignisses fehlgeschlagen",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Mark as read": "Als gelesen markieren",
     "Text": "Text",
     "Create a link": "Link erstellen",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Von allen anderen Sitzungen abmelden (%(otherSessionsCount)s)",
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Edit link": "Link bearbeiten",
@@ -3080,7 +3060,27 @@
                 "one": "Von %(count)s Sitzung abmelden",
                 "other": "Von %(count)s Sitzungen abmelden"
             },
-            "other_sessions_heading": "Andere Sitzungen"
+            "other_sessions_heading": "Andere Sitzungen",
+            "sign_out_all_other_sessions": "Von allen anderen Sitzungen abmelden (%(otherSessionsCount)s)",
+            "current_session": "Aktuelle Sitzung",
+            "confirm_sign_out_sso": {
+                "one": "Abmelden dieses Geräts durch Beweisen deiner Identität mit Single Sign-On bestätigen.",
+                "other": "Bestätige das Abmelden dieser Geräte, indem du dich erneut anmeldest."
+            },
+            "confirm_sign_out": {
+                "one": "Abmelden des Geräts bestätigen",
+                "other": "Abmelden dieser Geräte bestätigen"
+            },
+            "confirm_sign_out_body": {
+                "one": "Klicke unten auf den Knopf, um dieses Gerät abzumelden.",
+                "other": "Klicke unten auf den Knopf, um diese Geräte abzumelden."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Gerät abmelden",
+                "other": "Geräte abmelden"
+            },
+            "security_recommendations": "Sicherheitsempfehlungen",
+            "security_recommendations_description": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst."
         }
     },
     "devtools": {

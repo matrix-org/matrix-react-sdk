@@ -1718,14 +1718,6 @@
     "Yours, or the other users' session": "Tu sesión o la de la otra persona",
     "Yours, or the other users' internet connection": "Tu conexión a internet o la de la otra persona",
     "The homeserver the user you're verifying is connected to": "El servidor base del usuario al que estás invitando",
-    "Sign out devices": {
-        "one": "Cerrar sesión en el dispositivo",
-        "other": "Cerrar sesión en los dispositivos"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Haz clic en el botón de abajo para confirmar y cerrar sesión en estos dispositivos.",
-        "one": "Haz clic en el botón de abajo para confirmar que quieres cerrar la sesión de este dispositivo."
-    },
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
     "Joined": "Te has unido",
     "Someone already has that username. Try another or if it is you, sign in below.": "Ya hay alguien con ese nombre de usuario. Prueba con otro o, si eres tú, inicia sesión más abajo.",
@@ -1900,10 +1892,6 @@
     "Group all your people in one place.": "Agrupa a toda tu gente en un mismo sitio.",
     "Group all your favourite rooms and people in one place.": "Agrupa en un mismo sitio todas tus salas y personas favoritas.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Los espacios permiten agrupar salas y personas. Además de los espacios de los que ya formes parte, puedes usar algunos que vienen incluidos.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Confirma que quieres cerrar sesión en este dispositivo usando Single Sign On para probar tu identidad.",
-        "other": "Confirma que quieres cerrar sesión de estos dispositivos usando Single Sign On para probar tu identidad."
-    },
     "Match system": "Usar el del sistema",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
@@ -1968,10 +1956,6 @@
     "Disinvite from room": "Retirar la invitación a la sala",
     "Remove from space": "Quitar del espacio",
     "Disinvite from space": "Retirar la invitación al espacio",
-    "Confirm signing out these devices": {
-        "other": "Confirma el cierre de sesión en estos dispositivos",
-        "one": "Confirmar cerrar sesión de este dispositivo"
-    },
     "Failed to join": "No ha sido posible unirse",
     "You do not have permission to invite people to this space.": "No tienes permiso para invitar gente a este espacio.",
     "An error occurred while stopping your live location, please try again": "Ha ocurrido un error al dejar de compartir tu ubicación en tiempo real. Por favor, inténtalo de nuevo",
@@ -2085,12 +2069,10 @@
     "Messages in this chat will be end-to-end encrypted.": "Los mensajes en esta conversación serán cifrados de extremo a extremo.",
     "Choose a locale": "Elige un idioma",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Para más seguridad, verifica tus sesiones y cierra cualquiera que no reconozcas o hayas dejado de usar.",
-    "Current session": "Sesión actual",
     "Sessions": "Sesiones",
     "Spell check": "Corrector ortográfico",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
-    "Security recommendations": "Consejos de seguridad",
     "Inviting %(user)s and %(count)s others": {
         "one": "Invitando a %(user)s y 1 más",
         "other": "Invitando a %(user)s y %(count)s más"
@@ -2180,8 +2162,6 @@
     "Change layout": "Cambiar disposición",
     "This message could not be decrypted": "No se ha podido descifrar este mensaje",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
-    "Improve your account security by following these recommendations.": "Mejora la seguridad de tu cuenta siguiendo estas recomendaciones.",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Cerrar el resto de sesiones (%(otherSessionsCount)s)",
     "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.": "¿Te apetece probar cosas experimentales? Aquí encontrarás nuestras ideas en desarrollo. No están terminadas, pueden ser inestables, cambiar o dejar de estar disponibles. <a>Más información</a>.",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "¿Qué novedades se esperan en %(brand)s? La sección de experimentos es la mejor manera de ver las cosas antes de que se publiquen, probar nuevas funcionalidades y ayudar a mejorarlas antes de su lanzamiento.",
     "Upcoming features": "Funcionalidades futuras",
@@ -2943,7 +2923,27 @@
                 "one": "Cerrar %(count)s sesión",
                 "other": "Cerrar %(count)s sesiones"
             },
-            "other_sessions_heading": "Otras sesiones"
+            "other_sessions_heading": "Otras sesiones",
+            "sign_out_all_other_sessions": "Cerrar el resto de sesiones (%(otherSessionsCount)s)",
+            "current_session": "Sesión actual",
+            "confirm_sign_out_sso": {
+                "one": "Confirma que quieres cerrar sesión en este dispositivo usando Single Sign On para probar tu identidad.",
+                "other": "Confirma que quieres cerrar sesión de estos dispositivos usando Single Sign On para probar tu identidad."
+            },
+            "confirm_sign_out": {
+                "other": "Confirma el cierre de sesión en estos dispositivos",
+                "one": "Confirmar cerrar sesión de este dispositivo"
+            },
+            "confirm_sign_out_body": {
+                "other": "Haz clic en el botón de abajo para confirmar y cerrar sesión en estos dispositivos.",
+                "one": "Haz clic en el botón de abajo para confirmar que quieres cerrar la sesión de este dispositivo."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Cerrar sesión en el dispositivo",
+                "other": "Cerrar sesión en los dispositivos"
+            },
+            "security_recommendations": "Consejos de seguridad",
+            "security_recommendations_description": "Mejora la seguridad de tu cuenta siguiendo estas recomendaciones."
         }
     },
     "devtools": {

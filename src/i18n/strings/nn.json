@@ -579,15 +579,6 @@
     "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Enter a new identity server": "Skriv inn ein ny identitetstenar",
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Trykk på knappen under for å stadfesta utlogging frå denne eininga."
-    },
-    "Confirm signing out these devices": {
-        "one": "Stadfest utlogging frå denne eininga"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Stadfest utlogging av denne eininga ved å nytta Single-sign-on for å bevise identiteten din."
-    },
     "Verify this device by confirming the following number appears on its screen.": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen.",
     "Quick settings": "Hurtigval",
     "More options": "Fleire val",
@@ -854,7 +845,16 @@
             "title": "Tastatur"
         },
         "sessions": {
-            "session_id": "Økt-ID"
+            "session_id": "Økt-ID",
+            "confirm_sign_out_sso": {
+                "one": "Stadfest utlogging av denne eininga ved å nytta Single-sign-on for å bevise identiteten din."
+            },
+            "confirm_sign_out": {
+                "one": "Stadfest utlogging frå denne eininga"
+            },
+            "confirm_sign_out_body": {
+                "one": "Trykk på knappen under for å stadfesta utlogging frå denne eininga."
+            }
         }
     },
     "devtools": {

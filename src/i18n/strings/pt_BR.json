@@ -1584,14 +1584,6 @@
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
     "Pin to sidebar": "Fixar na barra lateral",
     "Quick settings": "Configurações rápidas",
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Clique no botão abaixo para confirmar a desconexão deste dispositivo.",
-        "other": "Clique no botão abaixo para confirmar a desconexão de outros dispositivos."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Confirme o logout deste dispositivo usando o logon único para provar sua identidade.",
-        "other": "Confirme o logout desses dispositivos usando o logon único para provar sua identidade."
-    },
     "Error - Mixed content": "Erro - Conteúdo misto",
     "Error loading Widget": "Erro ao carregar o Widget",
     "Show %(count)s other previews": {
@@ -1690,10 +1682,6 @@
     "Loading new room": "Carregando nova sala",
     "Upgrading room": "Atualizando sala",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está em alguns espaços dos quais você não é administrador. Nesses espaços, a sala antiga ainda será exibida, mas as pessoas serão solicitadas a ingressar na nova.",
-    "Sign out devices": {
-        "one": "Desconectar dispositivo",
-        "other": "Desconectar dispositivos"
-    },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
@@ -1719,7 +1707,6 @@
         "one": "Visto por %(count)s pessoa",
         "other": "Visto por %(count)s pessoas"
     },
-    "Security recommendations": "Recomendações de segurança",
     "Sessions": "Sessões",
     "User is already in the space": "O usuário já está no espaço",
     "User is already in the room": "O usuário já está na sala",
@@ -1764,11 +1751,6 @@
     "In %(spaceName)s.": "No espaço %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "Empty room (was %(oldName)s)": "Sala vazia (era %(oldName)s)",
-    "Confirm signing out these devices": {
-        "other": "Confirme a saída destes dispositivos",
-        "one": "Confirme a saída deste dispositivo"
-    },
-    "Current session": "Sessão atual",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
     "Can’t start a call": "Não é possível iniciar uma chamada",
     "Failed to read events": "Falha ao ler evento",
@@ -2265,7 +2247,25 @@
             "verified_session": "Sessão verificada",
             "verify_session": "Confirmar sessão",
             "filter_label": "Filtrar dispositivos",
-            "other_sessions_heading": "Outras sessões"
+            "other_sessions_heading": "Outras sessões",
+            "current_session": "Sessão atual",
+            "confirm_sign_out_sso": {
+                "one": "Confirme o logout deste dispositivo usando o logon único para provar sua identidade.",
+                "other": "Confirme o logout desses dispositivos usando o logon único para provar sua identidade."
+            },
+            "confirm_sign_out": {
+                "other": "Confirme a saída destes dispositivos",
+                "one": "Confirme a saída deste dispositivo"
+            },
+            "confirm_sign_out_body": {
+                "one": "Clique no botão abaixo para confirmar a desconexão deste dispositivo.",
+                "other": "Clique no botão abaixo para confirmar a desconexão de outros dispositivos."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Desconectar dispositivo",
+                "other": "Desconectar dispositivos"
+            },
+            "security_recommendations": "Recomendações de segurança"
         }
     },
     "devtools": {

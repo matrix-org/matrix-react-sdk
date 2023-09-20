@@ -1742,18 +1742,6 @@
     "Spaces to show": "Espazos a mostrar",
     "Sidebar": "Barra lateral",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
-    "Sign out devices": {
-        "one": "Desconectar dispositivo",
-        "other": "Desconectar dispositivos"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Preme no botón inferior para confirmar a desconexión deste dispositivo.",
-        "other": "Preme no botón inferior para confirmar a desconexión destos dispositivos."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Confirma a desconexión deste dispositivo usando Single Sign On para probar a túa identidade.",
-        "other": "Confirma a desconexión destos dispositivos usando Single Sign On para probar a túa identidade."
-    },
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
@@ -1966,10 +1954,6 @@
     "Sorry, your homeserver is too old to participate here.": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
     "There was an error joining.": "Houbo un erro ao unirte.",
     "The user's homeserver does not support the version of the space.": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
-    "Confirm signing out these devices": {
-        "one": "Confirma a desconexión deste dispositivo",
-        "other": "Confirma a desconexión destos dispositivos"
-    },
     "Live location ended": "Rematou a localización en directo",
     "View live location": "Ver localización en directo",
     "Live location enabled": "Activada a localización en directo",
@@ -2087,11 +2071,9 @@
     "Spell check": "Corrección",
     "We're creating a room with %(names)s": "Estamos creando unha sala con %(names)s",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Para maior seguridade, verifica as túas sesións e pecha calquera sesión que non recoñezas como propia.",
-    "Current session": "Sesión actual",
     "Sessions": "Sesións",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
     "Manually verify by text": "Verificar manualmente con texto",
-    "Security recommendations": "Recomendacións de seguridade",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non é recomendable engadir o cifrado a salas públicas.</b> Calquera pode atopar salas públicas, e pode ler as mensaxes nela. Non terás ningún destos beneficios se activas o cifrado, e non poderás retiralo posteriormente. Ademáis ao cifrar as mensaxes dunha sala pública fará que se envíen e reciban máis lentamente.",
     "Empty room (was %(oldName)s)": "Sala baleira (era %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
@@ -2710,7 +2692,25 @@
             "filter_inactive": "Inactiva",
             "filter_inactive_description": "Inactiva desde hai %(inactiveAgeDays)s días ou máis",
             "filter_label": "Filtrar dispositivos",
-            "other_sessions_heading": "Outras sesións"
+            "other_sessions_heading": "Outras sesións",
+            "current_session": "Sesión actual",
+            "confirm_sign_out_sso": {
+                "one": "Confirma a desconexión deste dispositivo usando Single Sign On para probar a túa identidade.",
+                "other": "Confirma a desconexión destos dispositivos usando Single Sign On para probar a túa identidade."
+            },
+            "confirm_sign_out": {
+                "one": "Confirma a desconexión deste dispositivo",
+                "other": "Confirma a desconexión destos dispositivos"
+            },
+            "confirm_sign_out_body": {
+                "one": "Preme no botón inferior para confirmar a desconexión deste dispositivo.",
+                "other": "Preme no botón inferior para confirmar a desconexión destos dispositivos."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Desconectar dispositivo",
+                "other": "Desconectar dispositivos"
+            },
+            "security_recommendations": "Recomendacións de seguridade"
         }
     },
     "devtools": {

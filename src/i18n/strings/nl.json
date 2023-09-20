@@ -1714,18 +1714,6 @@
     "Joined": "Toegetreden",
     "Insert link": "Koppeling invoegen",
     "Joining": "Toetreden",
-    "Sign out devices": {
-        "one": "Apparaat uitloggen",
-        "other": "Apparaten uitloggen"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Klik op onderstaande knop om het uitloggen van dit apparaat te bevestigen.",
-        "other": "Klik op onderstaande knop om het uitloggen van deze apparaten te bevestigen."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Bevestig je identiteit met eenmalig inloggen om dit apparaat uit te loggen.",
-        "other": "Bevestig je identiteit met eenmalig inloggen om deze apparaten uit te loggen."
-    },
     "You're all caught up": "Je bent helemaal bij",
     "Someone already has that username. Try another or if it is you, sign in below.": "Iemand heeft die inlognaam al. Probeer een andere of als je het bent, log dan hieronder in.",
     "Copy link to thread": "Kopieer link naar draad",
@@ -1978,10 +1966,6 @@
     "Disinvite from room": "Uitnodiging van kamer afwijzen",
     "Remove from space": "Verwijder van space",
     "Disinvite from space": "Uitnodiging van space afwijzen",
-    "Confirm signing out these devices": {
-        "one": "Uitloggen van dit apparaat bevestigen",
-        "other": "Uitloggen van deze apparaten bevestigen"
-    },
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Je bent afgemeld op al je apparaten en zal geen pushmeldingen meer ontvangen. Meld je op elk apparaat opnieuw aan om weer meldingen te ontvangen.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Als je toegang tot je berichten wilt behouden, stel dan sleutelback-up in of exporteer je sleutels vanaf een van je andere apparaten voordat je verder gaat.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Jouw apparaten uitloggen zal de ertoe behorende encryptiesleutels verwijderen, wat versleutelde berichten onleesbaar zal maken.",
@@ -2088,8 +2072,6 @@
     "Spell check": "Spellingscontrole",
     "Interactively verify by emoji": "Interactief verifiëren door emoji",
     "Manually verify by text": "Handmatig verifiëren via tekst",
-    "Security recommendations": "Beveiligingsaanbevelingen",
-    "Current session": "Huidige sessie",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Het wordt niet aanbevolen om versleuteling toe te voegen aan openbare ruimten.</b> Iedereen kan openbare ruimten vinden en er lid van worden, dus iedereen kan berichten erin lezen. Je profiteert niet van de voordelen van versleuteling en kunt deze later niet uitschakelen. Het versleutelen van berichten in een openbare ruimte zal het ontvangen en verzenden van berichten langzamer maken.",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Voor de beste beveiliging verifieer je jouw sessies en meldt je jezelf af bij elke sessie die je niet meer herkent of gebruikt.",
     "Sessions": "Sessies",
@@ -2779,7 +2761,25 @@
             "sign_in_with_qr": "Log in met QR-code",
             "sign_in_with_qr_description": "U kunt dit apparaat gebruiken om in te loggen op een nieuw apparaat met een QR-code. U moet de QR-code die op dit apparaat wordt weergegeven, scannen met uw apparaat dat is uitgelogd.",
             "sign_in_with_qr_button": "QR-code tonen",
-            "other_sessions_heading": "Andere sessies"
+            "other_sessions_heading": "Andere sessies",
+            "current_session": "Huidige sessie",
+            "confirm_sign_out_sso": {
+                "one": "Bevestig je identiteit met eenmalig inloggen om dit apparaat uit te loggen.",
+                "other": "Bevestig je identiteit met eenmalig inloggen om deze apparaten uit te loggen."
+            },
+            "confirm_sign_out": {
+                "one": "Uitloggen van dit apparaat bevestigen",
+                "other": "Uitloggen van deze apparaten bevestigen"
+            },
+            "confirm_sign_out_body": {
+                "one": "Klik op onderstaande knop om het uitloggen van dit apparaat te bevestigen.",
+                "other": "Klik op onderstaande knop om het uitloggen van deze apparaten te bevestigen."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Apparaat uitloggen",
+                "other": "Apparaten uitloggen"
+            },
+            "security_recommendations": "Beveiligingsaanbevelingen"
         }
     },
     "devtools": {

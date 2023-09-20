@@ -1240,7 +1240,6 @@
     "Spell check": "Sprawdzanie pisowni",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "Sessions": "Sesje",
-    "Current session": "Bieżąca sesja",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
     "Channel: <channelLink/>": "Kanał: <channelLink/>",
@@ -1465,23 +1464,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
     "You have no ignored users.": "Nie posiadasz ignorowanych użytkowników.",
     "Subscribed lists": "Listy subskrybowanych",
-    "Sign out devices": {
-        "one": "Wyloguj urządzenie",
-        "other": "Wyloguj urządzenia"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Kliknij przycisk poniżej, aby potwierdzić wylogowanie tego urządzenia.",
-        "other": "Kliknij przycisk poniżej, aby potwierdzić wylogowanie tych urządzeń."
-    },
-    "Confirm signing out these devices": {
-        "one": "Potwierdź wylogowanie z tego urządzenia",
-        "other": "Potwierdź wylogowanie z tych urządzeń"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Potwierdź wylogowanie z tego urządzenia, udowadniając swoją tożsamość za pomocą pojedynczego logowania.",
-        "other": "Potwierdź wylogowanie z tych urządzeń, udowadniając swoją tożsamość za pomocą pojedynczego logowania."
-    },
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Wyloguj się z wszystkich pozostałych sesji (%(otherSessionsCount)s)",
     "Unable to revoke sharing for phone number": "Nie można odwołać udostępniania numeru telefonu",
     "Verify the link in your inbox": "Zweryfikuj link w swojej skrzynce odbiorczej",
     "Click the link in the email you received to verify and then click continue again.": "Kliknij link w wiadomości e-mail, którą otrzymałeś, aby zweryfikować i kliknij kontynuuj ponownie.",
@@ -1531,8 +1513,6 @@
     "If this isn't what you want, please use a different tool to ignore users.": "Jeśli to nie jest to czego chciałeś, użyj innego narzędzia do ignorowania użytkowników.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Wiadomość tekstowa wysłana do %(msisdn)s. Wprowadź kod weryfikacyjny w niej zawarty.",
     "Failed to set pusher state": "Nie udało się ustawić stanu pushera",
-    "Improve your account security by following these recommendations.": "Zwiększ bezpieczeństwo swojego konta kierując się tymi rekomendacjami.",
-    "Security recommendations": "Rekomendacje bezpieczeństwa",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
     "Sign out of all devices": "Wyloguj się z wszystkich urządzeń",
     "The add / bind with MSISDN flow is misconfigured": "Dodaj / binduj za pomocą MSISDN flow zostało nieprawidłowo skonfigurowane",
@@ -3059,7 +3039,27 @@
                 "one": "Wyloguj się z %(count)s sesji",
                 "other": "Wyloguj się z %(count)s sesji"
             },
-            "other_sessions_heading": "Inne sesje"
+            "other_sessions_heading": "Inne sesje",
+            "sign_out_all_other_sessions": "Wyloguj się z wszystkich pozostałych sesji (%(otherSessionsCount)s)",
+            "current_session": "Bieżąca sesja",
+            "confirm_sign_out_sso": {
+                "one": "Potwierdź wylogowanie z tego urządzenia, udowadniając swoją tożsamość za pomocą pojedynczego logowania.",
+                "other": "Potwierdź wylogowanie z tych urządzeń, udowadniając swoją tożsamość za pomocą pojedynczego logowania."
+            },
+            "confirm_sign_out": {
+                "one": "Potwierdź wylogowanie z tego urządzenia",
+                "other": "Potwierdź wylogowanie z tych urządzeń"
+            },
+            "confirm_sign_out_body": {
+                "one": "Kliknij przycisk poniżej, aby potwierdzić wylogowanie tego urządzenia.",
+                "other": "Kliknij przycisk poniżej, aby potwierdzić wylogowanie tych urządzeń."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Wyloguj urządzenie",
+                "other": "Wyloguj urządzenia"
+            },
+            "security_recommendations": "Rekomendacje bezpieczeństwa",
+            "security_recommendations_description": "Zwiększ bezpieczeństwo swojego konta kierując się tymi rekomendacjami."
         }
     },
     "devtools": {

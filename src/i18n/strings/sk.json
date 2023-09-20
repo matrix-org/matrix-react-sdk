@@ -1013,10 +1013,6 @@
     "Messages in this room are end-to-end encrypted.": "Správy v tejto miestnosti sú šifrované od vás až k príjemcovi.",
     "Show all your rooms in Home, even if they're in a space.": "Zobrazte všetky miestnosti v časti Domov, aj keď sú v priestore.",
     "Sign out and remove encryption keys?": "Odhlásiť sa a odstrániť šifrovacie kľúče?",
-    "Sign out devices": {
-        "one": "Odhlásiť zariadenie",
-        "other": "Odhlásené zariadenia"
-    },
     "Unable to copy a link to the room to the clipboard.": "Nie je možné skopírovať odkaz na miestnosť do schránky.",
     "Unable to copy room link": "Nie je možné skopírovať odkaz na miestnosť",
     "Remove recent messages": "Odstrániť posledné správy",
@@ -1750,10 +1746,6 @@
         "one": "V súčasnosti má priestor prístup",
         "other": "V súčasnosti má prístup %(count)s priestorov"
     },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Kliknutím na tlačidlo nižšie potvrdíte odhlásenie tohto zariadenia.",
-        "other": "Kliknutím na tlačidlo nižšie potvrdíte odhlásenie týchto zariadení."
-    },
     "not found in storage": "sa nenašiel v úložisku",
     "Failed to update the visibility of this space": "Nepodarilo sa aktualizovať viditeľnosť tohto priestoru",
     "Guests can join a space without having an account.": "Hostia sa môžu pripojiť k priestoru bez toho, aby mali konto.",
@@ -1880,10 +1872,6 @@
     "Pinned": "Pripnuté",
     "Open thread": "Otvoriť vlákno",
     "Failed to update the join rules": "Nepodarilo sa aktualizovať pravidlá pripojenia",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "other": "Potvrďte odhlásenie týchto zariadení pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti.",
-        "one": "Potvrďte odhlásenie tohto zariadenia pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti."
-    },
     "Command Help": "Pomocník príkazov",
     "My live location": "Moja poloha v reálnom čase",
     "My current location": "Moja aktuálna poloha",
@@ -1966,10 +1954,6 @@
     "New video room": "Nová video miestnosť",
     "New room": "Nová miestnosť",
     "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
-    "Confirm signing out these devices": {
-        "one": "Potvrďte odhlásenie z tohto zariadenia",
-        "other": "Potvrdiť odhlásenie týchto zariadení"
-    },
     "Live location ended": "Ukončenie polohy v reálnom čase",
     "View live location": "Zobraziť polohu v reálnom čase",
     "Live until %(expiryTime)s": "Poloha v reálnom čase do %(expiryTime)s",
@@ -2087,9 +2071,7 @@
     "Spell check": "Kontrola pravopisu",
     "We're creating a room with %(names)s": "Vytvárame miestnosť s %(names)s",
     "Sessions": "Relácie",
-    "Current session": "Aktuálna relácia",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "V záujme čo najlepšieho zabezpečenia, overte svoje relácie a odhláste sa z každej relácie, ktorú už nepoznáte alebo nepoužívate.",
-    "Security recommendations": "Bezpečnostné odporúčania",
     "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
     "Manually verify by text": "Manuálne overte pomocou textu",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Neodporúča sa pridávať šifrovanie do verejných miestností.</b> Verejné miestnosti môže nájsť a pripojiť sa k nim ktokoľvek, takže si v nich môže ktokoľvek prečítať správy. Nebudete mať žiadne výhody šifrovania a neskôr ho nebudete môcť vypnúť. Šifrovanie správ vo verejnej miestnosti spomalí prijímanie a odosielanie správ.",
@@ -2189,14 +2171,12 @@
     "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor.",
     "Can’t start a call": "Nie je možné začať hovor",
-    "Improve your account security by following these recommendations.": "Zlepšite zabezpečenie svojho účtu dodržiavaním týchto odporúčaní.",
     "Failed to read events": "Nepodarilo sa prečítať udalosť",
     "Failed to send event": "Nepodarilo sa odoslať udalosť",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "Mark as read": "Označiť ako prečítané",
     "Text": "Text",
     "Create a link": "Vytvoriť odkaz",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásiť sa zo všetkých ostatných relácií (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "Edit link": "Upraviť odkaz",
@@ -3075,7 +3055,27 @@
                 "one": "Odhlásiť sa z %(count)s relácie",
                 "other": "Odhlásiť sa z %(count)s relácií"
             },
-            "other_sessions_heading": "Iné relácie"
+            "other_sessions_heading": "Iné relácie",
+            "sign_out_all_other_sessions": "Odhlásiť sa zo všetkých ostatných relácií (%(otherSessionsCount)s)",
+            "current_session": "Aktuálna relácia",
+            "confirm_sign_out_sso": {
+                "other": "Potvrďte odhlásenie týchto zariadení pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti.",
+                "one": "Potvrďte odhlásenie tohto zariadenia pomocou jednotného prihlásenia (SSO) na preukázanie svojej totožnosti."
+            },
+            "confirm_sign_out": {
+                "one": "Potvrďte odhlásenie z tohto zariadenia",
+                "other": "Potvrdiť odhlásenie týchto zariadení"
+            },
+            "confirm_sign_out_body": {
+                "one": "Kliknutím na tlačidlo nižšie potvrdíte odhlásenie tohto zariadenia.",
+                "other": "Kliknutím na tlačidlo nižšie potvrdíte odhlásenie týchto zariadení."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Odhlásiť zariadenie",
+                "other": "Odhlásené zariadenia"
+            },
+            "security_recommendations": "Bezpečnostné odporúčania",
+            "security_recommendations_description": "Zlepšite zabezpečenie svojho účtu dodržiavaním týchto odporúčaní."
         }
     },
     "devtools": {

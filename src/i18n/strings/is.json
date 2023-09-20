@@ -932,10 +932,6 @@
     "New login. Was this you?": "Ný innskráning. Varst þetta þú?",
     "Other users may not trust it": "Aðrir notendur gætu ekki treyst því",
     "Failed to set display name": "Mistókst að stilla birtingarnafn",
-    "Sign out devices": {
-        "one": "Skrá út tæki",
-        "other": "Skrá út tæki"
-    },
     "Show advanced": "Birta ítarlegt",
     "Hide advanced": "Fela ítarlegt",
     "Edit settings relating to your space.": "Breyta stillingum viðkomandi svæðinu þínu.",
@@ -1402,10 +1398,6 @@
     "Decide who can join %(roomName)s.": "Veldu hverjir geta tekið þátt í %(roomName)s.",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Aftengjast frá auðkennisþjóninum <current /> og tengjast í staðinn við <new />?",
     "Checking server": "Athuga með þjón",
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Smelltu á hnappinn hér að neðan til að staðfesta útskráningu þessa tækis.",
-        "other": "Smelltu á hnappinn hér að neðan til að staðfesta útskráningu þessara tækja."
-    },
     "Do you want to set an email address?": "Viltu skrá tölvupóstfang?",
     "Decide who can view and join %(spaceName)s.": "Veldu hverjir geta skoðað og tekið þátt í %(spaceName)s.",
     "Verification Request": "Beiðni um sannvottun",
@@ -1555,10 +1547,6 @@
     "Please review and accept the policies of this homeserver:": "Yfirfarðu og samþykktu reglur þessa heimaþjóns:",
     "Please review and accept all of the homeserver's policies": "Yfirfarðu og samþykktu allar reglur þessa heimaþjóns",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Staðfestu útskráningu af þessu tæki með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-        "other": "Staðfestu útskráningu af þessum tækjum með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt."
-    },
     "Homeserver feature support:": "Heimaþjónninn styður eftirfarandi eiginleika:",
     "Waiting for you to verify on your other device…": "Bíð eftir að þú staðfestir á hinu tækinu…",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "Bíð eftir að þú staðfestir á hinu tækinu, %(deviceName)s (%(deviceId)s)…",
@@ -1752,10 +1740,6 @@
     "Double check that your server supports the room version chosen and try again.": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd.",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "AÐVÖRUN: SANNVOTTUN LYKILS MISTÓKST! Undirritunarlykillinn fyrir %(userId)s og setuna %(deviceId)s er \"%(fprint)s\" sem samsvarar ekki uppgefna lyklinum \"%(fingerprint)s\". Þetta gæti þýtt að einhver hafi komist inn í samskiptin þín!",
-    "Confirm signing out these devices": {
-        "one": "Staðfestu útskráningu þessa tækis",
-        "other": "Staðfestu útskráningu þessara tækja"
-    },
     "%(count)s people joined": {
         "one": "%(count)s aðili hefur tekið þátt",
         "other": "%(count)s aðilar hafa tekið þátt"
@@ -1823,7 +1807,6 @@
     "Click to read topic": "Smelltu til að lesa umfjöllunarefni",
     "Edit topic": "Breyta umfjöllunarefni",
     "Video call ended": "Mynddsímtali lauk",
-    "Current session": "Núverandi seta",
     "Sessions": "Setur",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
@@ -1865,7 +1848,6 @@
         "other": "Séð af %(count)s aðilum"
     },
     "Send your first message to invite <displayName/> to chat": "Sendu fyrstu skilaboðin þín til að bjóða <displayName/> að spjalla",
-    "Security recommendations": "Ráðleggingar varðandi öryggi",
     "Start a conversation with someone using their name or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í <settings>stillingunum</settings>.",
@@ -1949,7 +1931,6 @@
     "Hide formatting": "Fela sniðmótun",
     "This message could not be decrypted": "Þessi skilaboð er ekki hægt að afkóða",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Skrá út úr öllum öðrum setum (%(otherSessionsCount)s)",
     "Call type": "Tegund samtals",
     "Failed to update the join rules": "Mistókst að uppfæra reglur fyrir þátttöku",
     "Select the roles required to change various parts of the space": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum svæðisins",
@@ -2594,7 +2575,26 @@
                 "one": "Skrá út úr %(count)s setu",
                 "other": "Skrá út úr %(count)s setum"
             },
-            "other_sessions_heading": "Aðrar setur"
+            "other_sessions_heading": "Aðrar setur",
+            "sign_out_all_other_sessions": "Skrá út úr öllum öðrum setum (%(otherSessionsCount)s)",
+            "current_session": "Núverandi seta",
+            "confirm_sign_out_sso": {
+                "one": "Staðfestu útskráningu af þessu tæki með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
+                "other": "Staðfestu útskráningu af þessum tækjum með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt."
+            },
+            "confirm_sign_out": {
+                "one": "Staðfestu útskráningu þessa tækis",
+                "other": "Staðfestu útskráningu þessara tækja"
+            },
+            "confirm_sign_out_body": {
+                "one": "Smelltu á hnappinn hér að neðan til að staðfesta útskráningu þessa tækis.",
+                "other": "Smelltu á hnappinn hér að neðan til að staðfesta útskráningu þessara tækja."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Skrá út tæki",
+                "other": "Skrá út tæki"
+            },
+            "security_recommendations": "Ráðleggingar varðandi öryggi"
         }
     },
     "devtools": {

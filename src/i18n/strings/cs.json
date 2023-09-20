@@ -1726,18 +1726,6 @@
     "The homeserver the user you're verifying is connected to": "Domovský server, ke kterému je ověřovaný uživatel připojen",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tato místnost nepropojuje zprávy s žádnou platformou. <a>Zjistit více.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Tato místnost se nachází v některých prostorech, jejichž nejste správcem. V těchto prostorech bude stará místnost stále zobrazena, ale lidé budou vyzváni, aby se připojili k nové místnosti.",
-    "Sign out devices": {
-        "one": "Odhlášení zařízení",
-        "other": "Odhlášení zařízení"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Kliknutím na tlačítko níže potvrdíte odhlášení těchto zařízení.",
-        "one": "Kliknutím na tlačítko níže potvrdíte odhlášení tohoto zařízení."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Potvrďte odhlášení tohoto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost.",
-        "other": "Potvrďte odhlášení těchto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost."
-    },
     "Add option": "Přidat volbu",
     "Write an option": "Napište volbu",
     "Create options": "Vytvořit volby",
@@ -1966,10 +1954,6 @@
     "New video room": "Nová video místnost",
     "New room": "Nová místnost",
     "%(featureName)s Beta feedback": "Zpětná vazba beta funkce %(featureName)s",
-    "Confirm signing out these devices": {
-        "one": "Potvrďte odhlášení z tohoto zařízení",
-        "other": "Potvrďte odhlášení z těchto zařízení"
-    },
     "Live location ended": "Sdílení polohy živě skončilo",
     "View live location": "Zobrazit polohu živě",
     "Live location enabled": "Poloha živě povolena",
@@ -2087,9 +2071,7 @@
     "Spell check": "Kontrola pravopisu",
     "We're creating a room with %(names)s": "Vytváříme místnost s %(names)s",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "V zájmu co nejlepšího zabezpečení ověřujte své relace a odhlašujte se ze všech relací, které již nepoznáváte nebo nepoužíváte.",
-    "Current session": "Aktuální relace",
     "Sessions": "Relace",
-    "Security recommendations": "Bezpečnostní doporučení",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nedoporučuje se šifrovat veřejné místnosti.</b>Veřejné místnosti může najít a připojit se k nim kdokoli, takže si v nich může číst zprávy kdokoli. Nezískáte tak žádnou z výhod šifrování a nebudete ho moci později vypnout. Šifrování zpráv ve veřejné místnosti zpomalí příjem a odesílání zpráv.",
@@ -2187,7 +2169,6 @@
     "Add privileged users": "Přidat oprávněné uživatele",
     "Unable to decrypt message": "Nepodařilo se dešifrovat zprávu",
     "This message could not be decrypted": "Tuto zprávu se nepodařilo dešifrovat",
-    "Improve your account security by following these recommendations.": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nemůžete zahájit hovor, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli zahájit hovor.",
     "Can’t start a call": "Nelze zahájit hovor",
     "Failed to read events": "Nepodařilo se načíst události",
@@ -2196,7 +2177,6 @@
     "Mark as read": "Označit jako přečtené",
     "Text": "Text",
     "Create a link": "Vytvořit odkaz",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Odhlásit se ze všech ostatních relací (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Hlasovou zprávu nelze spustit, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli začít nahrávat hlasovou zprávu.",
     "Can't start voice message": "Nelze spustit hlasovou zprávu",
     "Edit link": "Upravit odkaz",
@@ -3080,7 +3060,27 @@
                 "one": "Odhlásit se z %(count)s relace",
                 "other": "Odhlásit se z %(count)s relací"
             },
-            "other_sessions_heading": "Ostatní relace"
+            "other_sessions_heading": "Ostatní relace",
+            "sign_out_all_other_sessions": "Odhlásit se ze všech ostatních relací (%(otherSessionsCount)s)",
+            "current_session": "Aktuální relace",
+            "confirm_sign_out_sso": {
+                "one": "Potvrďte odhlášení tohoto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost.",
+                "other": "Potvrďte odhlášení těchto zařízení pomocí Jednotného přihlášení, abyste prokázali svou totožnost."
+            },
+            "confirm_sign_out": {
+                "one": "Potvrďte odhlášení z tohoto zařízení",
+                "other": "Potvrďte odhlášení z těchto zařízení"
+            },
+            "confirm_sign_out_body": {
+                "other": "Kliknutím na tlačítko níže potvrdíte odhlášení těchto zařízení.",
+                "one": "Kliknutím na tlačítko níže potvrdíte odhlášení tohoto zařízení."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Odhlášení zařízení",
+                "other": "Odhlášení zařízení"
+            },
+            "security_recommendations": "Bezpečnostní doporučení",
+            "security_recommendations_description": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení."
         }
     },
     "devtools": {

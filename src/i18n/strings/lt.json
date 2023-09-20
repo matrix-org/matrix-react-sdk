@@ -1146,14 +1146,6 @@
         "other": "& %(count)s daugiau"
     },
     "Upgrade required": "Reikalingas atnaujinimas",
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Spustelėkite mygtuką žemiau kad patvirtinti šių įrenginių atjungimą.",
-        "one": "Spustelėkite mygtuką žemiau kad patvirtinti šio įrenginio atjungimą."
-    },
-    "Sign out devices": {
-        "other": "Atjungti įrenginius",
-        "one": "Atjungti įrenginį"
-    },
     "Decide who can view and join %(spaceName)s.": "Nuspręskite kas gali peržiūrėti ir prisijungti prie %(spaceName)s.",
     "Channel: <channelLink/>": "Kanalas: <channelLink/>",
     "Visibility": "Matomumas",
@@ -1280,15 +1272,6 @@
     "Something went wrong with your invite to %(roomName)s": "Kažkas nepavyko su jūsų kvietimu į %(roomName)s",
     "You were banned by %(memberName)s": "Jus užblokavo %(memberName)s",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s uždraudė jums lankytis %(roomName)s",
-    "Confirm signing out these devices": {
-        "one": "Patvirtinkite šio įrenginio atjungimą",
-        "other": "Patvirtinkite šių įrenginių atjungimą"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Patvirtinkite atsijungimą iš šio prietaiso naudodami vienkartinį prisijungimą, kad įrodytumėte savo tapatybę.",
-        "other": "Patvirtinkite atsijungimą iš šių įrenginių naudodami vienkartinį prisijungimą, kad įrodytumėte savo tapatybę."
-    },
-    "Current session": "Dabartinė sesija",
     "Unable to revoke sharing for email address": "Nepavyksta atšaukti el. pašto adreso bendrinimo",
     "People with supported clients will be able to join the room without having a registered account.": "Žmonės su palaikomais klientais galės prisijungti prie kambario neturėdami registruotos paskyros.",
     "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "Kad išvengtumėte šių problemų, sukurkite <a>naują viešą kambarį</a> planuojamam pokalbiui.",
@@ -1512,7 +1495,6 @@
     "View in room": "Peržiūrėti kambaryje",
     "From a thread": "Iš temos",
     "Edit message": "Redaguoti žinutę",
-    "Security recommendations": "Saugumo rekomendacijos",
     "Latvia": "Latvija",
     "Japan": "Japonija",
     "Italy": "Italija",
@@ -2020,7 +2002,25 @@
             "filter_inactive": "Neaktyvus",
             "filter_inactive_description": "Neaktyvus %(inactiveAgeDays)s dienas ar ilgiau",
             "filter_label": "Filtruoti įrenginius",
-            "other_sessions_heading": "Kitos sesijos"
+            "other_sessions_heading": "Kitos sesijos",
+            "current_session": "Dabartinė sesija",
+            "confirm_sign_out_sso": {
+                "one": "Patvirtinkite atsijungimą iš šio prietaiso naudodami vienkartinį prisijungimą, kad įrodytumėte savo tapatybę.",
+                "other": "Patvirtinkite atsijungimą iš šių įrenginių naudodami vienkartinį prisijungimą, kad įrodytumėte savo tapatybę."
+            },
+            "confirm_sign_out": {
+                "one": "Patvirtinkite šio įrenginio atjungimą",
+                "other": "Patvirtinkite šių įrenginių atjungimą"
+            },
+            "confirm_sign_out_body": {
+                "other": "Spustelėkite mygtuką žemiau kad patvirtinti šių įrenginių atjungimą.",
+                "one": "Spustelėkite mygtuką žemiau kad patvirtinti šio įrenginio atjungimą."
+            },
+            "confirm_sign_out_continue": {
+                "other": "Atjungti įrenginius",
+                "one": "Atjungti įrenginį"
+            },
+            "security_recommendations": "Saugumo rekomendacijos"
         }
     },
     "devtools": {

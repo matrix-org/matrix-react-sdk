@@ -1277,18 +1277,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ви раніше використовували новішу версію %(brand)s для цього сеансу. Щоб знову використовувати цю версію із наскрізним шифруванням, вам потрібно буде вийти та знову ввійти.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Налаштуйте цьому сеансу резервне копіювання, інакше при виході втратите ключі, доступні лише в цьому сеансі.",
     "Signed Out": "Виконано вихід",
-    "Sign out devices": {
-        "one": "Вийти з пристрою",
-        "other": "Вийти з пристроїв"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Клацніть кнопку внизу, щоб підтвердити вихід із цих пристроїв.",
-        "one": "Натисніть кнопку внизу, щоб підтвердити вихід із цього пристрою."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "other": "Підтвердьте вихід із цих пристроїв за допомогою єдиного входу, щоб довести вашу справжність.",
-        "one": "Підтвердьте вихід із цього пристрою за допомогою єдиного входу, щоб підтвердити вашу особу."
-    },
     "To continue, use Single Sign On to prove your identity.": "Щоб продовжити, скористайтеся єдиним входом для підтвердження особи.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Ваші приватні повідомлення, зазвичай, зашифровані, але ця кімната — ні. Зазвичай це пов'язано з непідтримуваним пристроєм або використаним методом, наприклад, запрошення електронною поштою.",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для додаткової безпеки перевірте цього користувача, звіривши одноразовий код на обох своїх пристроях.",
@@ -1966,10 +1954,6 @@
     "New video room": "Нова відеокімната",
     "New room": "Нова кімната",
     "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
-    "Confirm signing out these devices": {
-        "one": "Підтвердьте вихід із цього пристрою",
-        "other": "Підтвердьте вихід із цих пристроїв"
-    },
     "Live location ended": "Показ місцеперебування наживо завершено",
     "View live location": "Показувати місцеперебування наживо",
     "Live location enabled": "Показ місцеперебування наживо ввімкнено",
@@ -2087,9 +2071,7 @@
     "Spell check": "Перевірка правопису",
     "We're creating a room with %(names)s": "Ми створюємо кімнату з %(names)s",
     "Sessions": "Сеанси",
-    "Current session": "Поточний сеанс",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для кращої безпеки звірте свої сеанси та вийдіть з усіх невикористовуваних або нерозпізнаних сеансів.",
-    "Security recommendations": "Поради щодо безпеки",
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Не варто додавати шифрування загальнодоступним кімнатам.</b> Будь-хто може знаходити загальнодоступні кімнати, приєднатись і читати повідомлення в них. Ви не отримаєте переваг від шифрування й не зможете вимкнути його пізніше. Зашифровані повідомлення в загальнодоступній кімнаті отримуватимуться й надсилатимуться повільніше.",
@@ -2189,14 +2171,12 @@
     "This message could not be decrypted": "Не вдалося розшифрувати це повідомлення",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик.",
     "Can’t start a call": "Не вдалося розпочати виклик",
-    "Improve your account security by following these recommendations.": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад.",
     "Failed to read events": "Не вдалося прочитати події",
     "Failed to send event": "Не вдалося надіслати подію",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "Mark as read": "Позначити прочитаним",
     "Text": "Текст",
     "Create a link": "Створити посилання",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "Edit link": "Змінити посилання",
@@ -3075,7 +3055,27 @@
                 "one": "Вийти з %(count)s сеансу",
                 "other": "Вийти з %(count)s сеансів"
             },
-            "other_sessions_heading": "Інші сеанси"
+            "other_sessions_heading": "Інші сеанси",
+            "sign_out_all_other_sessions": "Вийти з усіх інших сеансів (%(otherSessionsCount)s)",
+            "current_session": "Поточний сеанс",
+            "confirm_sign_out_sso": {
+                "other": "Підтвердьте вихід із цих пристроїв за допомогою єдиного входу, щоб довести вашу справжність.",
+                "one": "Підтвердьте вихід із цього пристрою за допомогою єдиного входу, щоб підтвердити вашу особу."
+            },
+            "confirm_sign_out": {
+                "one": "Підтвердьте вихід із цього пристрою",
+                "other": "Підтвердьте вихід із цих пристроїв"
+            },
+            "confirm_sign_out_body": {
+                "other": "Клацніть кнопку внизу, щоб підтвердити вихід із цих пристроїв.",
+                "one": "Натисніть кнопку внизу, щоб підтвердити вихід із цього пристрою."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Вийти з пристрою",
+                "other": "Вийти з пристроїв"
+            },
+            "security_recommendations": "Поради щодо безпеки",
+            "security_recommendations_description": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад."
         }
     },
     "devtools": {

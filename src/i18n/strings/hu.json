@@ -1714,21 +1714,9 @@
     "Joined": "Csatlakozott",
     "Insert link": "Link beillesztése",
     "Joining": "Belépés",
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Ezeknek a eszközöknek törlésének a megerősítéséhez kattintson a gombra lent.",
-        "one": "Az eszközből való kilépés megerősítéséhez kattintson a lenti gombra."
-    },
     "You do not have permission to start polls in this room.": "Nincs joga szavazást kezdeményezni ebben a szobában.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ez a szoba egy platformra sem hidalja át az üzeneteket. <a>Tudjon meg többet.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ez a szoba olyan terekben is benne van, amelynek nem Ön az adminisztrátora. Ezekben a terekben továbbra is a régi szoba jelenik meg, de az emberek jelzést kapnak, hogy lépjenek be az újba.",
-    "Sign out devices": {
-        "one": "Eszközből való kijelentkezés",
-        "other": "Eszközökből való kijelentkezés"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Az eszközből való kijelentkezéshez erősítse meg a személyazonosságát az egyszeri bejelentkezés használatával.",
-        "other": "Az eszközökből való kijelentkezéshez erősítse meg a személyazonosságát az egyszeri bejelentkezés használatával."
-    },
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "A biztonsági kulcsot tárolja biztonságos helyen, például egy jelszókezelőben vagy egy széfben, mivel ez tartja biztonságban a titkosított adatait.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "A biztonsági kulcsodat elkészül, ezt tárolja valamilyen biztonságos helyen, például egy jelszókezelőben vagy egy széfben.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
@@ -1980,10 +1968,6 @@
     "New room": "Új szoba",
     "View older version of %(spaceName)s.": "A(z) %(spaceName)s tér régebbi verziójának megtekintése.",
     "Upgrade this space to the recommended room version": "A tér frissítése a javasolt szobaverzióra",
-    "Confirm signing out these devices": {
-        "one": "Megerősítés ebből az eszközből való kijelentkezéshez",
-        "other": "Megerősítés ezekből az eszközökből való kijelentkezéshez"
-    },
     "Failed to join": "Csatlakozás sikertelen",
     "The person who invited you has already left, or their server is offline.": "Aki meghívta a szobába már távozott, vagy a kiszolgálója nem érhető el.",
     "The person who invited you has already left.": "A személy, aki meghívta, már távozott.",
@@ -2085,11 +2069,9 @@
     "We're creating a room with %(names)s": "Szobát készítünk: %(names)s",
     "Choose a locale": "Válasszon nyelvet",
     "Saved Items": "Mentett elemek",
-    "Current session": "Jelenlegi munkamenet",
     "Sessions": "Munkamenetek",
     "Spell check": "Helyesírás-ellenőrzés",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "A legjobb biztonság érdekében ellenőrizze a munkameneteit, és jelentkezzen ki azokból, amelyeket nem ismer fel, vagy már nem használ.",
-    "Security recommendations": "Biztonsági javaslatok",
     "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
     "Manually verify by text": "Kézi szöveges ellenőrzés",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Nyilvános szobához nem javasolt a titkosítás beállítása.</b>Bárki megtalálhatja és csatlakozhat nyilvános szobákhoz, így bárki elolvashatja az üzeneteket bennük. A titkosítás előnyeit így nem jelentkeznek és később ezt nem lehet kikapcsolni. Nyilvános szobákban a titkosított üzenetek az üzenetküldést és fogadást csak lassítják.",
@@ -2187,7 +2169,6 @@
     "You have unverified sessions": "Ellenőrizetlen bejelentkezései vannak",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
-    "Improve your account security by following these recommendations.": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Nem lehet hívást kezdeményezni élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hívás indításához.",
     "Can’t start a call": "Nem sikerült hívást indítani",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
@@ -2196,7 +2177,6 @@
     "Mark as read": "Megjelölés olvasottként",
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Kijelentkezés minden munkamenetből (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nem lehet hang üzenetet indítani élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hang üzenet indításához.",
     "Can't start voice message": "Hang üzenetet nem lehet elindítani",
     "Edit link": "Hivatkozás szerkesztése",
@@ -3001,7 +2981,27 @@
                 "one": "Kijelentkezés %(count)s munkamenetből",
                 "other": "Kijelentkezés %(count)s munkamenetből"
             },
-            "other_sessions_heading": "Más munkamenetek"
+            "other_sessions_heading": "Más munkamenetek",
+            "sign_out_all_other_sessions": "Kijelentkezés minden munkamenetből (%(otherSessionsCount)s)",
+            "current_session": "Jelenlegi munkamenet",
+            "confirm_sign_out_sso": {
+                "one": "Az eszközből való kijelentkezéshez erősítse meg a személyazonosságát az egyszeri bejelentkezés használatával.",
+                "other": "Az eszközökből való kijelentkezéshez erősítse meg a személyazonosságát az egyszeri bejelentkezés használatával."
+            },
+            "confirm_sign_out": {
+                "one": "Megerősítés ebből az eszközből való kijelentkezéshez",
+                "other": "Megerősítés ezekből az eszközökből való kijelentkezéshez"
+            },
+            "confirm_sign_out_body": {
+                "other": "Ezeknek a eszközöknek törlésének a megerősítéséhez kattintson a gombra lent.",
+                "one": "Az eszközből való kilépés megerősítéséhez kattintson a lenti gombra."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Eszközből való kijelentkezés",
+                "other": "Eszközökből való kijelentkezés"
+            },
+            "security_recommendations": "Biztonsági javaslatok",
+            "security_recommendations_description": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat."
         }
     },
     "devtools": {

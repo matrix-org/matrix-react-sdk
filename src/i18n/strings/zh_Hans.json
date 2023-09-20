@@ -1714,18 +1714,6 @@
     "Insert link": "插入链接",
     "Joined": "已加入",
     "Joining": "加入中",
-    "Sign out devices": {
-        "one": "注销设备",
-        "other": "注销设备"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "单击下面的按钮以确认登出此设备。",
-        "other": "单击下面的按钮以确认登出这些设备。"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "确认注销此设备需要使用单点登录来证明您的身份。",
-        "other": "确认注销这些设备需要使用单点登录来证明你的身份。"
-    },
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "将您的安全密钥存放在安全的地方，例如密码管理器或保险箱，因为它用于保护您的加密数据。",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "我们将为您生成一个安全密钥，将其存储在安全的地方，例如密码管理器或保险箱。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
@@ -1924,10 +1912,6 @@
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "空间是将房间和人分组的方式。除了你所在的空间，你也可以使用预建的空间。",
     "Deactivating your account is a permanent action — be careful!": "停用你的账户是永久性动作——小心！",
     "Your password was successfully changed.": "你的密码已成功更改。",
-    "Confirm signing out these devices": {
-        "one": "确认登出此设备",
-        "other": "确认登出这些设备"
-    },
     "Match system": "匹配系统",
     "Waiting for you to verify on your other device…": "正等待你在其它设备上验证……",
     "Waiting for you to verify on your other device, %(deviceName)s (%(deviceId)s)…": "正等待你在其它设备上验证，%(deviceName)s（%(deviceId)s）……",
@@ -2032,10 +2016,8 @@
     "Poll type": "投票类型",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
     "Sessions": "会话",
-    "Current session": "当前会话",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。",
     "Remove them from everything I'm able to": "",
-    "Security recommendations": "安全建议",
     "Remove server “%(roomServer)s”": "移除服务器“%(roomServer)s”",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
     "Unsent": "未发送",
@@ -2758,7 +2740,25 @@
             "filter_inactive": "不活跃",
             "filter_inactive_description": "%(inactiveAgeDays)s天或更久不活跃",
             "filter_label": "筛选设备",
-            "other_sessions_heading": "其他会话"
+            "other_sessions_heading": "其他会话",
+            "current_session": "当前会话",
+            "confirm_sign_out_sso": {
+                "one": "确认注销此设备需要使用单点登录来证明您的身份。",
+                "other": "确认注销这些设备需要使用单点登录来证明你的身份。"
+            },
+            "confirm_sign_out": {
+                "one": "确认登出此设备",
+                "other": "确认登出这些设备"
+            },
+            "confirm_sign_out_body": {
+                "one": "单击下面的按钮以确认登出此设备。",
+                "other": "单击下面的按钮以确认登出这些设备。"
+            },
+            "confirm_sign_out_continue": {
+                "one": "注销设备",
+                "other": "注销设备"
+            },
+            "security_recommendations": "安全建议"
         }
     },
     "devtools": {

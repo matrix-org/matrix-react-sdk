@@ -1726,18 +1726,6 @@
     "Insert link": "Insérer un lien",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ce salon ne transmet les messages à aucune plateforme. <a>En savoir plus.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ce salon se trouve dans certains espaces pour lesquels vous n’êtes pas administrateur. Dans ces espaces, l’ancien salon sera toujours disponible, mais un message sera affiché pour inciter les personnes à rejoindre le nouveau salon.",
-    "Sign out devices": {
-        "one": "Déconnecter l’appareil",
-        "other": "Déconnecter les appareils"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Cliquer sur le bouton ci-dessous pour confirmer la déconnexion de cet appareil.",
-        "other": "Cliquer sur le bouton ci-dessous pour confirmer la déconnexion de ces appareils."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Confirmez la déconnexion de cet appareil en utilisant l’authentification unique pour prouver votre identité.",
-        "other": "Confirmez la déconnexion de ces appareils en utilisant l’authentification unique pour prouver votre identité."
-    },
     "Someone already has that username. Try another or if it is you, sign in below.": "Quelqu’un d’autre a déjà ce nom d’utilisateur. Essayez-en un autre ou bien, si c’est vous, connecter vous ci-dessous.",
     "Copy link to thread": "Copier le lien du fil de discussion",
     "Thread options": "Options des fils de discussion",
@@ -1970,10 +1958,6 @@
     "Ban from room": "Bannir du salon",
     "Unban from room": "Révoquer le bannissement du salon",
     "Ban from space": "Bannir de l'espace",
-    "Confirm signing out these devices": {
-        "one": "Confirmer la déconnexion de cet appareil",
-        "other": "Confirmer la déconnexion de ces appareils"
-    },
     "Live location enabled": "Position en temps réel activée",
     "Live location error": "Erreur de positionnement en temps réel",
     "Live location ended": "Position en temps réel terminée",
@@ -2086,11 +2070,9 @@
     "Choose a locale": "Choisir une langue",
     "Spell check": "Vérificateur orthographique",
     "We're creating a room with %(names)s": "Nous créons un salon avec %(names)s",
-    "Current session": "Cette session",
     "Sessions": "Sessions",
     "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
     "Manually verify by text": "Vérifier manuellement avec un texte",
-    "Security recommendations": "Recommandations de sécurité",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Pour une meilleure sécurité, vérifiez vos sessions et déconnectez toutes les sessions que vous ne connaissez pas ou que vous n’utilisez plus.",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Il n'est pas recommandé d’ajouter le chiffrement aux salons publics.</b> Tout le monde peut trouver et rejoindre les salons publics, donc tout le monde peut lire les messages qui s’y trouvent. Vous n’aurez aucun des avantages du chiffrement, et vous ne pourrez pas le désactiver plus tard. Chiffrer les messages dans un salon public ralentira la réception et l’envoi de messages.",
     "Empty room (was %(oldName)s)": "Salon vide (précédemment %(oldName)s)",
@@ -2187,7 +2169,6 @@
     "Add privileged users": "Ajouter des utilisateurs privilégiés",
     "Unable to decrypt message": "Impossible de déchiffrer le message",
     "This message could not be decrypted": "Ce message n’a pas pu être déchiffré",
-    "Improve your account security by following these recommendations.": "Améliorez la sécurité de votre compte à l’aide de ces recommandations.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Vous ne pouvez pas démarrer un appel car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour démarrer un appel.",
     "Can’t start a call": "Impossible de démarrer un appel",
     "Failed to read events": "Échec de la lecture des évènements",
@@ -2196,7 +2177,6 @@
     "Mark as read": "Marquer comme lu",
     "Text": "Texte",
     "Create a link": "Crée un lien",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Déconnecter toutes les autres sessions (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
     "Can't start voice message": "Impossible de commencer un message vocal",
     "Edit link": "Éditer le lien",
@@ -3075,7 +3055,27 @@
                 "one": "Déconnecter %(count)s session",
                 "other": "Déconnecter %(count)s sessions"
             },
-            "other_sessions_heading": "Autres sessions"
+            "other_sessions_heading": "Autres sessions",
+            "sign_out_all_other_sessions": "Déconnecter toutes les autres sessions (%(otherSessionsCount)s)",
+            "current_session": "Cette session",
+            "confirm_sign_out_sso": {
+                "one": "Confirmez la déconnexion de cet appareil en utilisant l’authentification unique pour prouver votre identité.",
+                "other": "Confirmez la déconnexion de ces appareils en utilisant l’authentification unique pour prouver votre identité."
+            },
+            "confirm_sign_out": {
+                "one": "Confirmer la déconnexion de cet appareil",
+                "other": "Confirmer la déconnexion de ces appareils"
+            },
+            "confirm_sign_out_body": {
+                "one": "Cliquer sur le bouton ci-dessous pour confirmer la déconnexion de cet appareil.",
+                "other": "Cliquer sur le bouton ci-dessous pour confirmer la déconnexion de ces appareils."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Déconnecter l’appareil",
+                "other": "Déconnecter les appareils"
+            },
+            "security_recommendations": "Recommandations de sécurité",
+            "security_recommendations_description": "Améliorez la sécurité de votre compte à l’aide de ces recommandations."
         }
     },
     "devtools": {

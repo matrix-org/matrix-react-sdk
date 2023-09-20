@@ -1714,18 +1714,6 @@
     "Joined": "已加入",
     "Insert link": "插入連結",
     "Joining": "正在加入",
-    "Sign out devices": {
-        "one": "登出裝置",
-        "other": "登出裝置"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "點下方按鈕，確認登出這台裝置。",
-        "other": "點下方按鈕，確認登出這些裝置。"
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "請使用「單一登入」功能證明身分，確認登出這台裝置。",
-        "other": "請使用「單一登入」功能證明身分，確認登出這些裝置。"
-    },
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "由於安全金鑰是用來保護您的加密資料，請將其儲存在安全的地方，例如密碼管理員或保險箱等。",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "我們將為您產生一把安全金鑰。請將其儲存在安全的地方，例如密碼管理員或保險箱。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
@@ -1968,10 +1956,6 @@
     "New room": "新聊天室",
     "Live location ended": "即時位置已結束",
     "View live location": "檢視即時位置",
-    "Confirm signing out these devices": {
-        "one": "確認登出此裝置",
-        "other": "確認登出這些裝置"
-    },
     "Live location enabled": "即時位置已啟用",
     "Live location error": "即時位置錯誤",
     "Live until %(expiryTime)s": "即時分享直到 %(expiryTime)s",
@@ -2087,9 +2071,7 @@
     "Spell check": "拼字檢查",
     "We're creating a room with %(names)s": "正在建立包含 %(names)s 的聊天室",
     "Sessions": "工作階段",
-    "Current session": "目前的工作階段",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "為了最佳的安全性，請驗證您的工作階段並登出任何您無法識別或不再使用的工作階段。",
-    "Security recommendations": "安全建議",
     "Interactively verify by emoji": "透過表情符號互動來驗證",
     "Manually verify by text": "透過文字手動驗證",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>不建議為公開聊天室新增加密。</b>任何人都可以找到並加入公開聊天室，所以任何人都可以閱讀其中的訊息。您將無法享受加密帶來的任何好處，且您將無法在稍後將其關閉。在公開聊天室中加密訊息將會讓接收與傳送訊息變慢。",
@@ -2187,7 +2169,6 @@
     "Add privileged users": "新增特權使用者",
     "Unable to decrypt message": "無法解密訊息",
     "This message could not be decrypted": "此訊息無法解密",
-    "Improve your account security by following these recommendations.": "透過以下的建議改善您的帳號安全性。",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。",
     "Can’t start a call": "無法開始通話",
     "Failed to read events": "讀取事件失敗",
@@ -2196,7 +2177,6 @@
     "Mark as read": "標示為已讀",
     "Text": "文字",
     "Create a link": "建立連結",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "登出所有其他工作階段（%(otherSessionsCount)s）",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。",
     "Can't start voice message": "無法開始語音訊息",
     "Edit link": "編輯連結",
@@ -3075,7 +3055,27 @@
                 "one": "登出 %(count)s 個工作階段",
                 "other": "登出 %(count)s 個工作階段"
             },
-            "other_sessions_heading": "其他工作階段"
+            "other_sessions_heading": "其他工作階段",
+            "sign_out_all_other_sessions": "登出所有其他工作階段（%(otherSessionsCount)s）",
+            "current_session": "目前的工作階段",
+            "confirm_sign_out_sso": {
+                "one": "請使用「單一登入」功能證明身分，確認登出這台裝置。",
+                "other": "請使用「單一登入」功能證明身分，確認登出這些裝置。"
+            },
+            "confirm_sign_out": {
+                "one": "確認登出此裝置",
+                "other": "確認登出這些裝置"
+            },
+            "confirm_sign_out_body": {
+                "one": "點下方按鈕，確認登出這台裝置。",
+                "other": "點下方按鈕，確認登出這些裝置。"
+            },
+            "confirm_sign_out_continue": {
+                "one": "登出裝置",
+                "other": "登出裝置"
+            },
+            "security_recommendations": "安全建議",
+            "security_recommendations_description": "透過以下的建議改善您的帳號安全性。"
         }
     },
     "devtools": {

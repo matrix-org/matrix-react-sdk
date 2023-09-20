@@ -1726,18 +1726,6 @@
     "Yours, or the other users' internet connection": "Sinu või teise kasutaja internetiühendus",
     "The homeserver the user you're verifying is connected to": "Sinu poolt verifitseeritava kasutaja koduserver",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "See jututuba ei kasuta sõnumisildasid liidestamiseks muude süsteemidega. <a>Lisateave.</a>",
-    "Sign out devices": {
-        "other": "Logi seadmed võrgust välja",
-        "one": "Logi seade võrgust välja"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Kinnitamaks selle seadme väljalogimine klõpsi järgnevat nuppu.",
-        "other": "Kinnitamaks nende seadmete väljalogimine klõpsi järgnevat nuppu."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Kasutades ühekordse sisselogimisega oma isiku tõestamist kinnita selle seadme väljalogimine.",
-        "other": "Kasutades ühekordse sisselogimisega oma isiku tõestamist kinnita nende seadmete väljalogimine."
-    },
     "Add option": "Lisa valik",
     "Write an option": "Sisesta valik",
     "Option %(number)s": "Valik %(number)s",
@@ -1968,10 +1956,6 @@
     "%(featureName)s Beta feedback": "%(featureName)s beetaversiooni tagasiside",
     "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
     "View live location": "Vaata asukohta reaalajas",
-    "Confirm signing out these devices": {
-        "one": "Kinnita selle seadme väljalogimine",
-        "other": "Kinnita nende seadmete väljalogimine"
-    },
     "Live location enabled": "Reaalajas asukoha jagamine on kasutusel",
     "Live location error": "Viga asukoha jagamisel reaalajas",
     "Live until %(expiryTime)s": "Kuvamine toimib kuni %(expiryTime)s",
@@ -2086,9 +2070,7 @@
     "Spell check": "Õigekirja kontroll",
     "You're in": "Kõik on tehtud",
     "Sessions": "Sessioonid",
-    "Current session": "Praegune sessioon",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Parima turvalisuse nimel verifitseeri kõik oma sessioonid ning logi välja neist, mida sa enam ei kasuta.",
-    "Security recommendations": "Turvalisusega seotud soovitused",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
     "Empty room (was %(oldName)s)": "Tühi jututuba (varasema nimega %(oldName)s)",
@@ -2189,14 +2171,12 @@
     "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne.",
     "Can’t start a call": "Kõne algatamine ei õnnestu",
-    "Improve your account security by following these recommendations.": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust.",
     "Failed to read events": "Päringu või sündmuse lugemine ei õnnestunud",
     "Failed to send event": "Päringu või sündmuse saatmine ei õnnestunud",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "Mark as read": "Märgi loetuks",
     "Text": "Tekst",
     "Create a link": "Tee link",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Logi kõikidest ülejäänud sessioonidest välja: %(otherSessionsCount)s sessioon(i)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
     "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
     "Edit link": "Muuda linki",
@@ -3075,7 +3055,27 @@
                 "one": "Logi %(count)s'st sessioonist välja",
                 "other": "Logi %(count)s'st sessioonist välja"
             },
-            "other_sessions_heading": "Muud sessioonid"
+            "other_sessions_heading": "Muud sessioonid",
+            "sign_out_all_other_sessions": "Logi kõikidest ülejäänud sessioonidest välja: %(otherSessionsCount)s sessioon(i)",
+            "current_session": "Praegune sessioon",
+            "confirm_sign_out_sso": {
+                "one": "Kasutades ühekordse sisselogimisega oma isiku tõestamist kinnita selle seadme väljalogimine.",
+                "other": "Kasutades ühekordse sisselogimisega oma isiku tõestamist kinnita nende seadmete väljalogimine."
+            },
+            "confirm_sign_out": {
+                "one": "Kinnita selle seadme väljalogimine",
+                "other": "Kinnita nende seadmete väljalogimine"
+            },
+            "confirm_sign_out_body": {
+                "one": "Kinnitamaks selle seadme väljalogimine klõpsi järgnevat nuppu.",
+                "other": "Kinnitamaks nende seadmete väljalogimine klõpsi järgnevat nuppu."
+            },
+            "confirm_sign_out_continue": {
+                "other": "Logi seadmed võrgust välja",
+                "one": "Logi seade võrgust välja"
+            },
+            "security_recommendations": "Turvalisusega seotud soovitused",
+            "security_recommendations_description": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust."
         }
     },
     "devtools": {

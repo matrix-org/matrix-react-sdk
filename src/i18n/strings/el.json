@@ -833,14 +833,6 @@
     "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "Your keys are <b>not being backed up from this session</b>.": "<b>Δεν δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας από αυτήν την συνεδρία</b>.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
-    "Click the button below to confirm signing out these devices.": {
-        "other": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε αποσύνδεση αυτών των συσκευών.",
-        "one": "Κάντε κλικ στο κουμπί παρακάτω για επιβεβαίωση αποσύνδεση αυτής της συσκευής."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Επιβεβαιώστε ότι αποσυνδέεστε από αυτήν τη συσκευή χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
-        "other": "Επιβεβαιώστε την αποσύνδεση από αυτές τις συσκευές χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας."
-    },
     "Session key:": "Κλειδί συνεδρίας:",
     "Session ID:": "Αναγνωριστικό συνεδρίας:",
     "exists": "υπάρχει",
@@ -855,10 +847,6 @@
     },
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Επαληθεύστε μεμονωμένα κάθε συνεδρία που χρησιμοποιείται από έναν χρήστη για να την επισημάνετε ως αξιόπιστη, χωρίς να εμπιστεύεστε συσκευές με διασταυρούμενη υπογραφή.",
     "Display Name": "Εμφανιζόμενο όνομα",
-    "Sign out devices": {
-        "one": "Αποσύνδεση συσκευής",
-        "other": "Αποσύνδεση συσκευών"
-    },
     "Account management": "Διαχείριση λογαριασμών",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Αποδεχτείτε τους Όρους χρήσης του διακομιστή ταυτότητας (%(serverName)s), ώστε να μπορείτε να είστε ανιχνεύσιμοι μέσω της διεύθυνσης ηλεκτρονικού ταχυδρομείου ή του αριθμού τηλεφώνου.",
     "Language and region": "Γλώσσα και περιοχή",
@@ -1969,10 +1957,6 @@
     "New room": "Νέο δωμάτιο",
     "Private room": "Ιδιωτικό δωμάτιο",
     "Your password was successfully changed.": "Ο κωδικός πρόσβασης σας άλλαξε με επιτυχία.",
-    "Confirm signing out these devices": {
-        "one": "Επιβεβαιώστε την αποσύνδεση αυτής της συσκευής",
-        "other": "Επιβεβαιώστε την αποσύνδεση αυτών των συσκευών"
-    },
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
     "Check your email to continue": "Ελέγξτε το email σας για να συνεχίσετε",
     "Start a group chat": "Ξεκινήστε μια ομαδική συνομιλία",
@@ -2506,7 +2490,23 @@
         },
         "sessions": {
             "session_id": "Αναγνωριστικό συνεδρίας",
-            "verify_session": "Επαλήθευση συνεδρίας"
+            "verify_session": "Επαλήθευση συνεδρίας",
+            "confirm_sign_out_sso": {
+                "one": "Επιβεβαιώστε ότι αποσυνδέεστε από αυτήν τη συσκευή χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
+                "other": "Επιβεβαιώστε την αποσύνδεση από αυτές τις συσκευές χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας."
+            },
+            "confirm_sign_out": {
+                "one": "Επιβεβαιώστε την αποσύνδεση αυτής της συσκευής",
+                "other": "Επιβεβαιώστε την αποσύνδεση αυτών των συσκευών"
+            },
+            "confirm_sign_out_body": {
+                "other": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε αποσύνδεση αυτών των συσκευών.",
+                "one": "Κάντε κλικ στο κουμπί παρακάτω για επιβεβαίωση αποσύνδεση αυτής της συσκευής."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Αποσύνδεση συσκευής",
+                "other": "Αποσύνδεση συσκευών"
+            }
         }
     },
     "devtools": {

@@ -1848,18 +1848,6 @@
     "Sidebar": "Боковая панель",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Поделитесь анонимными данными, чтобы помочь нам выявить проблемы. Никаких личных данных. Никаких третьих лиц.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
-    "Sign out devices": {
-        "one": "Выйти из устройства",
-        "other": "Выйти из устройств"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Нажмите кнопку ниже, чтобы подтвердить выход из этого устройства.",
-        "other": "Нажмите кнопку ниже, чтобы подтвердить выход из этих устройств."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Подтвердите выход из этого устройства с помощью единого входа, чтобы подтвердить свою личность.",
-        "other": "Подтвердите выход из этих устройств с помощью единого входа, чтобы подтвердить свою личность."
-    },
     "Pin to sidebar": "Закрепить на боковой панели",
     "Quick settings": "Быстрые настройки",
     "Waiting for you to verify on your other device…": "Ожидает проверки на другом устройстве…",
@@ -1948,10 +1936,6 @@
     "View older version of %(spaceName)s.": "Посмотреть предыдущую версию %(spaceName)s.",
     "Deactivating your account is a permanent action — be careful!": "Деактивация вашей учётной записи является необратимым действием — будьте осторожны!",
     "Your password was successfully changed.": "Ваш пароль успешно изменён.",
-    "Confirm signing out these devices": {
-        "one": "Подтвердите выход из этого устройства",
-        "other": "Подтвердите выход из этих устройств"
-    },
     "%(count)s people joined": {
         "one": "%(count)s человек присоединился",
         "other": "%(count)s человек(а) присоединились"
@@ -2077,7 +2061,6 @@
         "other": "В %(spaceName)s и %(count)s других пространствах."
     },
     "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
-    "Current session": "Текущий сеанс",
     "Sessions": "Сеансы",
     "We'll help you get connected.": "Мы поможем вам подключиться.",
     "Join the room to participate": "Присоединяйтесь к комнате для участия",
@@ -2089,7 +2072,6 @@
     "You don't have permission to share locations": "У вас недостаточно прав для публикации местоположений",
     "Send your first message to invite <displayName/> to chat": "Отправьте свое первое сообщение, чтобы пригласить <displayName/> в чат",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
-    "Security recommendations": "Рекомендации по безопасности",
     "Empty room (was %(oldName)s)": "Пустая комната (без %(oldName)s)",
     "%(user1)s and %(user2)s": "%(user1)s и %(user2)s",
     "%(user)s and %(count)s others": {
@@ -2122,7 +2104,6 @@
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
-    "Improve your account security by following these recommendations.": "Усильте защиту учётной записи, следуя этим рекомендациям.",
     "Mark as read": "Отметить как прочитанное",
     "The homeserver doesn't support signing in another device.": "Домашний сервер не поддерживает вход с другого устройства.",
     "What's next for %(brand)s? Labs are the best way to get things early, test out new features and help shape them before they actually launch.": "Что нового в %(brand)s? Labs — это лучший способ получить и испытать новые функции, помогая сформировать их перед выходом в свет.",
@@ -2155,7 +2136,6 @@
     "Hide formatting": "Скрыть форматирование",
     "This message could not be decrypted": "Это сообщение не удалось расшифровать",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Выйти из всех остальных сеансов (%(otherSessionsCount)s)",
     "Call type": "Тип звонка",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Не рекомендуется добавлять шифрование в публичные комнаты.</b> Кто угодно может найти и присоединиться к ним, тем самым позволяя читать сообщения. Вы не получите преимуществ шифрования и при этом не сможете его отключить. Шифрование сообщений в публичной комнате лишь замедлит их получение и отправку.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Вы не можете начать звонок, так как вы производите живое вещание. Пожалуйста, остановите вещание, чтобы начать звонок.",
@@ -2844,7 +2824,27 @@
                 "one": "Выйти из %(count)s сеанса",
                 "other": "Выйти из сеансов: %(count)s"
             },
-            "other_sessions_heading": "Другие сеансы"
+            "other_sessions_heading": "Другие сеансы",
+            "sign_out_all_other_sessions": "Выйти из всех остальных сеансов (%(otherSessionsCount)s)",
+            "current_session": "Текущий сеанс",
+            "confirm_sign_out_sso": {
+                "one": "Подтвердите выход из этого устройства с помощью единого входа, чтобы подтвердить свою личность.",
+                "other": "Подтвердите выход из этих устройств с помощью единого входа, чтобы подтвердить свою личность."
+            },
+            "confirm_sign_out": {
+                "one": "Подтвердите выход из этого устройства",
+                "other": "Подтвердите выход из этих устройств"
+            },
+            "confirm_sign_out_body": {
+                "one": "Нажмите кнопку ниже, чтобы подтвердить выход из этого устройства.",
+                "other": "Нажмите кнопку ниже, чтобы подтвердить выход из этих устройств."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Выйти из устройства",
+                "other": "Выйти из устройств"
+            },
+            "security_recommendations": "Рекомендации по безопасности",
+            "security_recommendations_description": "Усильте защиту учётной записи, следуя этим рекомендациям."
         }
     },
     "devtools": {

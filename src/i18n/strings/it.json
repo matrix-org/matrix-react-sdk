@@ -1726,18 +1726,6 @@
     "The homeserver the user you're verifying is connected to": "L'homeserver al quale è connesso l'utente che stai verificando",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Questa stanza non fa un bridge dei messaggi con alcuna piattaforma. <a>Maggiori informazioni.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Questa stanza è in alcuni spazi di cui non sei amministratore. In quegli spazi, la vecchia stanza verrà ancora mostrata, ma alla gente verrà chiesto di entrare in quella nuova.",
-    "Sign out devices": {
-        "one": "Disconnetti dispositivo",
-        "other": "Disconnetti dispositivi"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Clicca il pulsante sottostante per confermare la disconnessione da questo dispositivo.",
-        "other": "Clicca il pulsante sottostante per confermare la disconnessione da questi dispositivi."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Conferma la disconnessione da questo dispositivo usando Single Sign On per dare prova della tua identità.",
-        "other": "Conferma la disconnessione da questi dispositivi usando Single Sign On per dare prova della tua identità."
-    },
     "Add option": "Aggiungi opzione",
     "Write an option": "Scrivi un'opzione",
     "Option %(number)s": "Opzione %(number)s",
@@ -1982,10 +1970,6 @@
     "Disinvite from room": "Disinvita dalla stanza",
     "Remove from space": "Rimuovi dallo spazio",
     "Disinvite from space": "Disinvita dallo spazio",
-    "Confirm signing out these devices": {
-        "one": "Conferma la disconnessione da questo dispositivo",
-        "other": "Conferma la disconnessione da questi dispositivi"
-    },
     "Updated %(humanizedUpdateTime)s": "Aggiornato %(humanizedUpdateTime)s",
     "Hide my messages from new joiners": "Nascondi i miei messaggi ai nuovi membri",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "I tuoi vecchi messaggi saranno ancora visibili alle persone che li hanno ricevuti, proprio come le email che hai inviato in passato. Vuoi nascondere i tuoi messaggi inviati alle persone che entreranno nelle stanze in futuro?",
@@ -2086,12 +2070,10 @@
     "Choose a locale": "Scegli una lingua",
     "Spell check": "Controllo ortografico",
     "We're creating a room with %(names)s": "Stiamo creando una stanza con %(names)s",
-    "Current session": "Sessione attuale",
     "Sessions": "Sessioni",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Per una maggiore sicurezza, verifica le tue sessioni e disconnetti quelle che non riconosci o che non usi più.",
     "Interactively verify by emoji": "Verifica interattivamente con emoji",
     "Manually verify by text": "Verifica manualmente con testo",
-    "Security recommendations": "Consigli di sicurezza",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Non è consigliabile aggiungere la crittografia alle stanze pubbliche.</b>Chiunque può trovare ed entrare in stanze pubbliche, quindi chiunque può leggere i messaggi. Non avrai alcun beneficio dalla crittografia e non potrai disattivarla in seguito. Cifrare i messaggi in una stanza pubblica renderà più lenti l'invio e la ricezione dei messaggi.",
     "Empty room (was %(oldName)s)": "Stanza vuota (era %(oldName)s)",
     "Inviting %(user)s and %(count)s others": {
@@ -2187,7 +2169,6 @@
     "Add privileged users": "Aggiungi utenti privilegiati",
     "Unable to decrypt message": "Impossibile decifrare il messaggio",
     "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
-    "Improve your account security by following these recommendations.": "Migliora la sicurezza del tuo account seguendo questi consigli.",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Non puoi avviare una chiamata perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare una chiamata.",
     "Can’t start a call": "Impossibile avviare una chiamata",
     "Failed to read events": "Lettura degli eventi fallita",
@@ -2196,7 +2177,6 @@
     "Text": "Testo",
     "Create a link": "Crea un collegamento",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Disconnetti tutte le altre sessioni (%(otherSessionsCount)s)",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale.",
     "Can't start voice message": "Impossibile iniziare il messaggio vocale",
     "Edit link": "Modifica collegamento",
@@ -3080,7 +3060,27 @@
                 "one": "Disconnetti %(count)s sessione",
                 "other": "Disconnetti %(count)s sessioni"
             },
-            "other_sessions_heading": "Altre sessioni"
+            "other_sessions_heading": "Altre sessioni",
+            "sign_out_all_other_sessions": "Disconnetti tutte le altre sessioni (%(otherSessionsCount)s)",
+            "current_session": "Sessione attuale",
+            "confirm_sign_out_sso": {
+                "one": "Conferma la disconnessione da questo dispositivo usando Single Sign On per dare prova della tua identità.",
+                "other": "Conferma la disconnessione da questi dispositivi usando Single Sign On per dare prova della tua identità."
+            },
+            "confirm_sign_out": {
+                "one": "Conferma la disconnessione da questo dispositivo",
+                "other": "Conferma la disconnessione da questi dispositivi"
+            },
+            "confirm_sign_out_body": {
+                "one": "Clicca il pulsante sottostante per confermare la disconnessione da questo dispositivo.",
+                "other": "Clicca il pulsante sottostante per confermare la disconnessione da questi dispositivi."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Disconnetti dispositivo",
+                "other": "Disconnetti dispositivi"
+            },
+            "security_recommendations": "Consigli di sicurezza",
+            "security_recommendations_description": "Migliora la sicurezza del tuo account seguendo questi consigli."
         }
     },
     "devtools": {

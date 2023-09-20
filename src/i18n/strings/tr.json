@@ -1235,16 +1235,6 @@
     "Unable to transfer call": "Arama Karşıdaki kişiye aktarılamıyor",
     "This homeserver has been blocked by its administrator.": "Bu sunucu yöneticisi tarafından bloke edildi.",
     "Failed to transfer call": "Arama aktarılırken hata oluştu",
-    "Security recommendations": "Güvenlik önerileri",
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Bu cihazın oturumunu kapatmak için aşağıdaki butona tıkla.",
-        "other": "Bu cihazların oturumunu kapatmak için aşağıdaki butona tıkla."
-    },
-    "Confirm signing out these devices": {
-        "one": "Bu cihazın oturumunu kapatmayı onayla",
-        "other": "Şu cihazlardan oturumu kapatmayı onayla"
-    },
-    "Current session": "Şimdiki oturum",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1591,7 +1581,17 @@
             "filter_all": "Hepsi",
             "filter_verified_description": "Güvenli mesajlaşma için hazır",
             "filter_unverified_description": "Güvenli mesajlaşma için hazır değil",
-            "filter_label": "Cihazları filtrele"
+            "filter_label": "Cihazları filtrele",
+            "current_session": "Şimdiki oturum",
+            "confirm_sign_out": {
+                "one": "Bu cihazın oturumunu kapatmayı onayla",
+                "other": "Şu cihazlardan oturumu kapatmayı onayla"
+            },
+            "confirm_sign_out_body": {
+                "one": "Bu cihazın oturumunu kapatmak için aşağıdaki butona tıkla.",
+                "other": "Bu cihazların oturumunu kapatmak için aşağıdaki butona tıkla."
+            },
+            "security_recommendations": "Güvenlik önerileri"
         }
     },
     "devtools": {

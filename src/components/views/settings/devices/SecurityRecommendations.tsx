@@ -52,8 +52,8 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
 
     return (
         <SettingsSubsection
-            heading={_t("Security recommendations")}
-            description={_t("Improve your account security by following these recommendations.")}
+            heading={_t("settings|sessions|security_recommendations")}
+            description={_t("settings|sessions|security_recommendations_description")}
             data-testid="security-recommendations-section"
         >
             {!!unverifiedDevicesCount && (

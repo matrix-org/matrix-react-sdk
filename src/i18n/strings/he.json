@@ -1432,10 +1432,6 @@
         "one": "שולח הזמנה..."
     },
     "Upgrade required": "נדרש שדרוג",
-    "Sign out devices": {
-        "one": "צא מהמכשיר",
-        "other": "צא ממכשירים"
-    },
     "Visibility": "רְאוּת",
     "Share invite link": "שתף קישור להזמנה",
     "Invite people": "הזמן אנשים",
@@ -2123,7 +2119,11 @@
             "session_id": "זהות מושב",
             "last_activity": "פעילות אחרונה",
             "verify_session": "אמת מושב",
-            "no_unverified_sessions": "לא נמצאו הפעלות לא מאומתות."
+            "no_unverified_sessions": "לא נמצאו הפעלות לא מאומתות.",
+            "confirm_sign_out_continue": {
+                "one": "צא מהמכשיר",
+                "other": "צא ממכשירים"
+            }
         }
     },
     "devtools": {

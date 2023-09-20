@@ -1779,18 +1779,6 @@
     "Sidebar": "Thanh bên",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
-    "Sign out devices": {
-        "one": "Đăng xuất thiết bị",
-        "other": "Đăng xuất các thiết bị"
-    },
-    "Click the button below to confirm signing out these devices.": {
-        "one": "Nhấn nút bên dưới để xác nhận đăng xuất thiết bị này.",
-        "other": "Nhấn nút bên dưới để xác nhận đăng xuất các thiết bị này."
-    },
-    "Confirm logging out these devices by using Single Sign On to prove your identity.": {
-        "one": "Xác nhận đăng xuất thiết bị này bằng cách sử dụng Single Sign On để xác thực danh tính của bạn.",
-        "other": "Xác nhận đăng xuất các thiết bị này bằng cách sử dụng Single Sign On để xác thực danh tính."
-    },
     "Pin to sidebar": "Ghim vào sidebar",
     "Quick settings": "Cài đặt nhanh",
     "Developer": "Nhà phát triển",
@@ -1898,12 +1886,6 @@
     "%(user1)s and %(user2)s": "%(user1)s và %(user2)s",
     "Database unexpectedly closed": "Cơ sở dữ liệu đột nhiên bị đóng",
     "Identity server not set": "Máy chủ định danh chưa được đặt",
-    "Confirm signing out these devices": {
-        "one": "Xác nhận đăng xuất khỏi thiết bị này",
-        "other": "Xác nhận đăng xuất khỏi các thiết bị này"
-    },
-    "Current session": "Phiên hiện tại",
-    "Sign out of all other sessions (%(otherSessionsCount)s)": "Đăng xuất khỏi mọi phiên khác (%(otherSessionsCount)s)",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Không nên bật mã hóa cho các phòng công cộng.</b> Bất kỳ ai cũng có thể tìm và tham gia các phòng công cộng, nên họ có thể đọc các tin nhắn. Bạn sẽ không có được lợi ích của mã hóa, và bạn không thể tắt mã hóa sau này. Mã hóa tin nhắn ở phòng công cộng khiến cho nhận gửi tin nhắn chậm hơn.",
     "Connection": "Kết nối",
@@ -2053,12 +2035,10 @@
     "Create a link": "Tạo liên kết",
     "Text": "Chữ",
     "Error starting verification": "Lỗi khi bắt đầu xác thực",
-    "Security recommendations": "Đề xuất bảo mật",
     "Video call (Jitsi)": "Cuộc gọi truyền hình (Jitsi)",
     "Encrypting your message…": "Đang mã hóa tin nhắn…",
     "Sending your message…": "Đang gửi tin nhắn…",
     "This message could not be decrypted": "Không giải mã được tin nhắn",
-    "Improve your account security by following these recommendations.": "Tăng cường bảo mật cho tài khoản bằng cách làm theo các đề xuất này.",
     "Video call (%(brand)s)": "Cuộc gọi truyền hình (%(brand)s)",
     "Something went wrong with your invite.": "Đã xảy ra sự cố với lời mời của bạn.",
     "Remove from space": "Loại bỏ khỏi space",
@@ -2852,7 +2832,27 @@
                 "other": "Đăng xuất khỏi %(count)s phiên",
                 "one": "Đăng xuất khỏi %(count)s phiên"
             },
-            "other_sessions_heading": "Các phiên khác"
+            "other_sessions_heading": "Các phiên khác",
+            "sign_out_all_other_sessions": "Đăng xuất khỏi mọi phiên khác (%(otherSessionsCount)s)",
+            "current_session": "Phiên hiện tại",
+            "confirm_sign_out_sso": {
+                "one": "Xác nhận đăng xuất thiết bị này bằng cách sử dụng Single Sign On để xác thực danh tính của bạn.",
+                "other": "Xác nhận đăng xuất các thiết bị này bằng cách sử dụng Single Sign On để xác thực danh tính."
+            },
+            "confirm_sign_out": {
+                "one": "Xác nhận đăng xuất khỏi thiết bị này",
+                "other": "Xác nhận đăng xuất khỏi các thiết bị này"
+            },
+            "confirm_sign_out_body": {
+                "one": "Nhấn nút bên dưới để xác nhận đăng xuất thiết bị này.",
+                "other": "Nhấn nút bên dưới để xác nhận đăng xuất các thiết bị này."
+            },
+            "confirm_sign_out_continue": {
+                "one": "Đăng xuất thiết bị",
+                "other": "Đăng xuất các thiết bị"
+            },
+            "security_recommendations": "Đề xuất bảo mật",
+            "security_recommendations_description": "Tăng cường bảo mật cho tài khoản bằng cách làm theo các đề xuất này."
         }
     },
     "devtools": {
