@@ -17,13 +17,13 @@ limitations under the License.
 import { render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { MockedObject } from "jest-mock";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { mocked, MockedObject } from "jest-mock";
+import { CryptoApi, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { defer, IDeferred, sleep } from "matrix-js-sdk/src/utils";
-import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
+import { BackupTrustInfo, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import {
+    filterConsole,
     flushPromises,
     getMockClientWithEventEmitter,
     mockClientMethodsCrypto,
@@ -35,6 +35,7 @@ import RestoreKeyBackupDialog from "../../../../../src/components/views/dialogs/
 
 describe("CreateSecretStorageDialog", () => {
     let mockClient: MockedObject<MatrixClient>;
+    let mockCrypto: MockedObject<CryptoApi>;
 
     beforeEach(() => {
         mockClient = getMockClientWithEventEmitter({
@@ -44,6 +45,10 @@ describe("CreateSecretStorageDialog", () => {
                 await sleep(0); // CreateSecretStorageDialog doesn't expect this to resolve immediately
                 throw new MatrixError({ flows: [] });
             }),
+        });
+
+        mockCrypto = mocked(mockClient.getCrypto()!);
+        Object.assign(mockCrypto, {
             isKeyBackupTrusted: jest.fn(),
             bootstrapCrossSigning: jest.fn(),
             bootstrapSecretStorage: jest.fn(),
@@ -69,6 +74,8 @@ describe("CreateSecretStorageDialog", () => {
     });
 
     describe("when there is an error fetching the backup version", () => {
+        filterConsole("Error fetching backup data from server");
+
         it("shows an error", async () => {
             mockClient.getKeyBackupVersion.mockImplementation(async () => {
                 throw new Error("bleh bleh");
@@ -146,19 +153,21 @@ describe("CreateSecretStorageDialog", () => {
             expect(modalSpy).toHaveBeenCalled();
 
             // While we restore the key backup, its signature becomes accepted
-            mockClient.isKeyBackupTrusted.mockResolvedValue({ usable: true } as TrustInfo);
+            mockCrypto.isKeyBackupTrusted.mockResolvedValue({ trusted: true } as BackupTrustInfo);
 
             restoreDialogFinishedDefer.resolve([]);
             await flushPromises();
 
             // XXX no idea why this is a sensible thing to do. I just work here.
-            expect(mockClient.bootstrapCrossSigning).toHaveBeenCalled();
-            expect(mockClient.bootstrapSecretStorage).toHaveBeenCalled();
+            expect(mockCrypto.bootstrapCrossSigning).toHaveBeenCalled();
+            expect(mockCrypto.bootstrapSecretStorage).toHaveBeenCalled();
 
             await result.findByText("Your keys are now being backed up from this device.");
         });
 
         describe("when there is an error fetching the backup version after RestoreKeyBackupDialog", () => {
+            filterConsole("Error fetching backup data from server");
+
             it("handles the error sensibly", async () => {
                 const result = renderComponent();
                 await result.findByText(/Enter your account password to confirm the upgrade/);
