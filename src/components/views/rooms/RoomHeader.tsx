@@ -23,7 +23,6 @@ import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/ico
 import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 
 import { useRoomName } from "../../../hooks/useRoomName";
@@ -35,13 +34,12 @@ import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMember
 import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
-import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
+import { useRoomCall } from "../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
-import { placeCall } from "../../../utils/room/placeCall";
 import { useEncryptionStatus } from "../../../hooks/useEncryptionStatus";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import FacePile from "../elements/FacePile";
@@ -49,6 +47,7 @@ import { useRoomState } from "../../../hooks/useRoomState";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { formatCount } from "../../../utils/FormattingUtils";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -74,7 +73,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
-    const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
+    const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
@@ -101,6 +100,11 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const e2eStatus = useEncryptionStatus(client, room);
 
     const notificationsEnabled = useFeatureEnabled("feature_notifications");
+
+    const roomTopicBody = useMemo(
+        () => topicToHtml(roomTopic?.text, roomTopic?.html),
+        [roomTopic?.html, roomTopic?.text],
+    );
 
     return (
         <Flex
@@ -161,7 +165,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 </BodyText>
                 {roomTopic && (
                     <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
-                        {roomTopic.text}
+                        <Linkify>{roomTopicBody}</Linkify>
                     </BodyText>
                 )}
             </Box>
@@ -170,11 +174,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                         <IconButton
                             disabled={!!voiceCallDisabledReason}
-                            title={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
-                            onClick={(evt) => {
-                                evt.stopPropagation();
-                                placeCall(room, CallType.Voice, voiceCallType);
-                            }}
+                            aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
+                            onClick={voiceCallClick}
                         >
                             <VoiceCallIcon />
                         </IconButton>
@@ -183,11 +184,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
                     <IconButton
                         disabled={!!videoCallDisabledReason}
-                        title={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
-                        onClick={(evt) => {
-                            evt.stopPropagation();
-                            placeCall(room, CallType.Video, videoCallType);
-                        }}
+                        aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                        onClick={videoCallClick}
                     >
                         <VideoCallIcon />
                     </IconButton>
@@ -199,7 +197,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                             evt.stopPropagation();
                             RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
                         }}
-                        title={_t("common|threads")}
+                        aria-label={_t("common|threads")}
                     >
                         <ThreadsIcon />
                     </IconButton>
@@ -212,7 +210,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                                 evt.stopPropagation();
                                 RightPanelStore.instance.showOrHidePanel(RightPanelPhases.NotificationPanel);
                             }}
-                            title={_t("Notifications")}
+                            aria-label={_t("Notifications")}
                         >
                             <NotificationsIcon />
                         </IconButton>
