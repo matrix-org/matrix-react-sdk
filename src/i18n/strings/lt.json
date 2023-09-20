@@ -2528,6 +2528,7 @@
     },
     "auth": {
         "sso": "Vienas Prisijungimas",
+        "server_picker_title_registration": "Kurti paskyrą serveryje",
         "sign_in_instead_prompt": "Jau turite paskyrą? <a>Prisijunkite čia</a>",
         "log_in_new_account": "<a>Prisijunkite</a> prie naujos paskyros.",
         "registration_successful": "Registracija sėkminga",
@@ -2552,7 +2553,6 @@
         "server_picker_explainer": "Naudokite pageidaujamą Matrix namų serverį, jei tokį turite, arba talpinkite savo.",
         "server_picker_learn_more": "Apie namų serverius",
         "incorrect_credentials": "Neteisingas vartotojo vardas ir/arba slaptažodis."
-        "server_picker_title_registration": "Kurti paskyrą serveryje",
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
