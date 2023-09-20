@@ -73,33 +73,6 @@ const getFilteredSortedDevices = (devices: DevicesDictionary, filter?: FilterVar
 const ALL_FILTER_ID = "ALL";
 type DeviceFilterKey = FilterVariation | typeof ALL_FILTER_ID;
 
-const securityCardContent: Record<
-    DeviceSecurityVariation,
-    {
-        title: string;
-        description: string;
-    }
-> = {
-    [DeviceSecurityVariation.Verified]: {
-        title: _t("settings|sessions|verified_sessions"),
-        description: _t("settings|sessions|verified_sessions_list_description"),
-    },
-    [DeviceSecurityVariation.Unverified]: {
-        title: _t("settings|sessions|unverified_sessions"),
-        description: _t("settings|sessions|unverified_sessions_list_description"),
-    },
-    [DeviceSecurityVariation.Unverifiable]: {
-        title: _t("settings|sessions|unverified_session"),
-        description: _t("settings|sessions|unverified_session_explainer_1"),
-    },
-    [DeviceSecurityVariation.Inactive]: {
-        title: _t("settings|sessions|inactive_sessions"),
-        description: _t("settings|sessions|inactive_sessions_list_description", {
-            inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS,
-        }),
-    },
-};
-
 const isSecurityVariation = (filter?: DeviceFilterKey): filter is FilterVariation =>
     !!filter &&
     (
@@ -112,6 +85,33 @@ const isSecurityVariation = (filter?: DeviceFilterKey): filter is FilterVariatio
 
 const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) => {
     if (isSecurityVariation(filter)) {
+        const securityCardContent: Record<
+            DeviceSecurityVariation,
+            {
+                title: string;
+                description: string;
+            }
+        > = {
+            [DeviceSecurityVariation.Verified]: {
+                title: _t("settings|sessions|verified_sessions"),
+                description: _t("settings|sessions|verified_sessions_list_description"),
+            },
+            [DeviceSecurityVariation.Unverified]: {
+                title: _t("settings|sessions|unverified_sessions"),
+                description: _t("settings|sessions|unverified_sessions_list_description"),
+            },
+            [DeviceSecurityVariation.Unverifiable]: {
+                title: _t("settings|sessions|unverified_session"),
+                description: _t("settings|sessions|unverified_session_explainer_1"),
+            },
+            [DeviceSecurityVariation.Inactive]: {
+                title: _t("settings|sessions|inactive_sessions"),
+                description: _t("settings|sessions|inactive_sessions_list_description", {
+                    inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS,
+                }),
+            },
+        };
+
         const { title, description } = securityCardContent[filter];
         return (
             <div className="mx_FilteredDeviceList_securityCard">
