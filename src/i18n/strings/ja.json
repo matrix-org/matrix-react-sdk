@@ -3646,6 +3646,7 @@
         "reset_password_title": "パスワードを再設定",
         "continue_with_sso": "以下のサービスにより続行%(ssoButtons)s",
         "sso_or_username_password": "%(ssoButtons)sあるいは、以下に入力して登録%(usernamePassword)s",
+        "server_picker_title_registration": "アカウントを以下のホームサーバーでホスト",
         "sign_in_instead_prompt": "サインイン",
         "sign_in_instead": "サインイン",
         "account_clash": "新しいアカウント（%(newAccountId)s）が登録されましたが、あなたは別のアカウント（%(loggedInUserId)s）でログインしています。",
@@ -3698,7 +3699,6 @@
         "server_picker_learn_more": "ホームサーバーについて（英語）",
         "incorrect_credentials": "ユーザー名とパスワードの一方あるいは両方が正しくありません。",
         "account_deactivated": "このアカウントは無効化されています。"
-        "server_picker_title_registration": "アカウントを以下のホームサーバーでホスト",
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
