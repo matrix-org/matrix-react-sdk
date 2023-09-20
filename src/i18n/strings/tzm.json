@@ -165,6 +165,7 @@
         "sort_by_alphabet": "A-Ẓ"
     },
     "auth": {
-        "register_action": "senflul amiḍan"
+        "register_action": "senflul amiḍan",
+        "phone_label": "Atilifun"
     }
 }

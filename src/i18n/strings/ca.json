@@ -85,7 +85,6 @@
     "Change Password": "Canvia la contrasenya",
     "Authentication": "Autenticació",
     "Failed to set display name": "No s'ha pogut establir el nom visible",
-    "Drop file here to upload": "Deixa anar el fitxer aquí per pujar-lo",
     "Unban": "Retira l'expulsió",
     "This room is not public. You will not be able to rejoin without an invite.": "Aquesta sala no és pública. No podreu tronar a entrar sense invitació.",
     "Failed to ban user": "No s'ha pogut expulsar l'usuari",
@@ -188,8 +187,6 @@
     "Unable to verify email address.": "No s'ha pogut verificar el correu electrònic.",
     "This will allow you to reset your password and receive notifications.": "Això us permetrà restablir la vostra contrasenya i rebre notificacions.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si anteriorment heu utilitzat un versió de %(brand)s més recent, la vostra sessió podría ser incompatible amb aquesta versió. Tanqueu aquesta finestra i torneu a la versió més recent.",
-    "You must <a>register</a> to use this functionality": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
-    "You must join the room to see its files": "Per poder veure els fitxers de la sala t'hi has d'unir",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estàs a punt de ser redirigit a una web de tercers per autenticar el teu compte i poder ser utilitzat amb %(integrationsUrl)s. Vols continuar?",
     "Reject invitation": "Rebutja la invitació",
     "Are you sure you want to reject the invitation?": "Esteu segur que voleu rebutjar la invitació?",
@@ -702,7 +699,8 @@
         "sign_in_or_register": "Inicia sessió o Crea un compte",
         "sign_in_or_register_description": "Utilitza el teu compte o crea'n un de nou per continuar.",
         "register_action": "Crea un compte",
-        "incorrect_credentials": "Usuari i/o contrasenya incorrectes."
+        "incorrect_credentials": "Usuari i/o contrasenya incorrectes.",
+        "phone_label": "Telèfon"
     },
     "export_chat": {
         "messages": "Missatges"
@@ -751,5 +749,17 @@
     "room_list": {
         "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
         "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
+    },
+    "room": {
+        "drop_file_prompt": "Deixa anar el fitxer aquí per pujar-lo"
+    },
+    "file_panel": {
+        "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
+        "peek_note": "Per poder veure els fitxers de la sala t'hi has d'unir"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Explora sales"
+        }
     }
 }

@@ -71,7 +71,6 @@
     "Error decrypting video": "解密影片出錯",
     "Add an Integration": "新增整合器",
     "URL Previews": "網址預覽",
-    "Drop file here to upload": "把文件放在這裡上傳",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "您即將被帶到第三方網站，以便您可以驗證帳戶來使用 %(integrationsUrl)s。請問您要繼續嗎？",
     "Create new room": "建立新聊天室",
     "Admin Tools": "管理員工具",
@@ -134,7 +133,6 @@
     "You do not have permission to post to this room": "您沒有權限在此聊天室貼文",
     "You have <a>disabled</a> URL previews by default.": "您已預設<a>停用</a>網址預覽。",
     "You have <a>enabled</a> URL previews by default.": "您已預設<a>停用</a>網址預覽。",
-    "You must <a>register</a> to use this functionality": "您必須<a>註冊</a>以使用此功能",
     "You need to be able to invite users to do that.": "您需要擁有邀請使用者的權限才能做這件事。",
     "You need to be logged in.": "您需要登入。",
     "You seem to be in a call, are you sure you want to quit?": "您似乎尚在通話中，您確定您想要結束通話嗎？",
@@ -175,7 +173,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "這個過程讓您可以匯出您在加密聊天室裡收到訊息的金鑰到一個本機檔案。您將可以在未來匯入檔案到其他的 Matrix 客戶端，這樣客戶端就可以解密此訊息。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
-    "You must join the room to see its files": "您必須加入聊天室來檢視它的檔案",
     "Reject all %(invitedRooms)s invites": "拒絕所有 %(invitedRooms)s 邀請",
     "Failed to invite": "無法邀請",
     "Confirm Removal": "確認刪除",
@@ -394,7 +391,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "驗證此工作階段，並標記為可受信任。由您將工作階段標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Incoming Verification Request": "收到的驗證請求",
     "Email (optional)": "電子郵件（選擇性）",
-    "Phone (optional)": "電話（選擇性）",
     "Join millions for free on the largest public server": "在最大的公開伺服器上，免費與數百萬人一起交流",
     "Create account": "建立帳號",
     "Recovery Method Removed": "已移除復原方法",
@@ -572,7 +568,6 @@
     "Your %(brand)s is misconfigured": "您的 %(brand)s 沒有設定好",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "請要求您的 %(brand)s 管理員檢查<a>您的設定</a>是否有不正確或重覆的項目。",
     "Unexpected error resolving identity server configuration": "解析身分伺服器設定時發生未預期的錯誤",
-    "Use lowercase letters, numbers, dashes and underscores only": "僅能使用小寫字母、數字、破折號與底線",
     "Cannot reach identity server": "無法連線至身分伺服器",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "您可以註冊，但有些功能在身分伺服器重新上線前會沒辦法運作。如果您一直看到這個警告，請檢查您的設定或聯絡伺服器管理員。",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "您可以重設密碼，但有些功能在身分伺服器重新上線前會沒辦法運作。如果您一直看到這個警告，請檢查您的設定或聯絡伺服器管理員。",
@@ -590,10 +585,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "請告訴我們發生了什麼錯誤，或更好的是，在 GitHub 上建立描述問題的議題。",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
-    "Use bots, bridges, widgets and sticker packs": "使用聊天機器人、橋接、小工具與貼圖包",
-    "Terms of Service": "服務條款",
-    "Service": "服務",
-    "Summary": "摘要",
     "Command Help": "指令說明",
     "Discovery": "探索",
     "Deactivate account": "停用帳號",
@@ -663,15 +654,12 @@
     "Hide advanced": "隱藏進階設定",
     "Show advanced": "顯示進階設定",
     "Close dialog": "關閉對話框",
-    "To continue you need to accept the terms of this service.": "要繼續，您必須同意本服務條款。",
-    "Document": "文件",
     "Show image": "顯示圖片",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "未於家伺服器設定中指定 Captcha 公鑰。請將此問題回報給您的家伺服器管理員。",
     "Your email address hasn't been verified yet": "您的電子郵件地址尚未被驗證",
     "Click the link in the email you received to verify and then click continue again.": "點擊您收到的電子郵件中的連結以驗證然後再次點擊繼續。",
     "Add Email Address": "新增電子郵件地址",
     "Add Phone Number": "新增電話號碼",
-    "%(creator)s created and configured the room.": "%(creator)s 建立並設定了聊天室。",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "您應該從身分伺服器<idserver /><b>移除個人資料</b>後再中斷連線。但可惜的是，身分伺服器<idserver /> 目前離線或無法連線。",
     "You should:": "您應該：",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "檢查您的瀏覽器，看有沒有任何可能阻擋身分伺服器的外掛程式（如 Privacy Badger）",
@@ -963,8 +951,6 @@
     "Ok": "確定",
     "New version available. <a>Update now.</a>": "有可用的新版本。<a>立刻更新。</a>",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "您的伺服器管理員已停用在私密聊天室與私人訊息中預設的端對端加密。",
-    "Switch to light mode": "切換至淺色模式",
-    "Switch to dark mode": "切換至深色模式",
     "Switch theme": "切換佈景主題",
     "All settings": "所有設定",
     "No recently visited rooms": "沒有最近造訪過的聊天室",
@@ -1007,8 +993,6 @@
     "A connection error occurred while trying to contact the server.": "在試圖與伺服器溝通時遇到連線錯誤。",
     "The server is not configured to indicate what the problem is (CORS).": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
     "Recent changes that have not yet been received": "尚未收到最新變更",
-    "No files visible in this room": "此聊天室中沒有可見的檔案",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "從聊天中附加檔案，或將其拖放到聊天室的任何地方。",
     "Master private key:": "主控私鑰：",
     "Explore public rooms": "探索公開聊天室",
     "Preparing to download logs": "正在準備下載紀錄檔",
@@ -1316,7 +1300,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美國",
     "United Kingdom": "英國",
-    "%(creator)s created this DM.": "%(creator)s 建立了此私人訊息。",
     "This is the start of <roomName/>.": "這是 <roomName/> 的開頭。",
     "Add a photo, so people can easily spot your room.": "新增圖片，這樣人們就可以輕鬆發現您的聊天室。",
     "%(displayName)s created this room.": "%(displayName)s 建立了此聊天室。",
@@ -1336,9 +1319,6 @@
     "Enter phone number": "輸入電話號碼",
     "Enter email address": "輸入電子郵件地址",
     "There was a problem communicating with the homeserver, please try again later.": "與家伺服器通訊時出現問題，請再試一次。",
-    "Use email to optionally be discoverable by existing contacts.": "設定電子郵件地址後，即可選擇性被已有的聯絡人新增為好友。",
-    "Use email or phone to optionally be discoverable by existing contacts.": "使用電子郵件或電話以選擇性地被既有的聯絡人探索。",
-    "Add an email to be able to reset your password.": "新增電子郵件以重設您的密碼。",
     "That phone number doesn't look quite right, please check and try again": "電話號碼看起來不太對，請檢查並再試一次",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
     "Continuing without email": "不使用電子郵件來繼續",
@@ -1348,7 +1328,6 @@
     "Resume": "繼續",
     "You've reached the maximum number of simultaneous calls.": "您已達到同時通話的最大數量。",
     "Too Many Calls": "太多通話",
-    "You have no visible notifications.": "您沒有可見的通知。",
     "Transfer": "轉接",
     "Failed to transfer call": "無法轉接通話",
     "A call can only be transferred to a single user.": "一個通話只能轉接給ㄧ個使用者。",
@@ -1389,12 +1368,10 @@
     "We couldn't log you in": "我們無法讓您登入",
     "Recently visited rooms": "最近造訪過的聊天室",
     "Original event source": "原始活動來源",
-    "Decrypted event source": "解密活動來源",
     "%(count)s members": {
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
     },
-    "Your server does not support showing space hierarchies.": "您的伺服器不支援顯示空間的層次結構。",
     "Are you sure you want to leave the space '%(spaceName)s'?": "您確定您要離開聊天空間「%(spaceName)s」？",
     "This space is not public. You will not be able to rejoin without an invite.": "此聊天空間並非公開。在無邀請的情況下，您將無法重新加入。",
     "Start audio stream": "開始音訊串流",
@@ -1429,11 +1406,6 @@
     "<inviter/> invites you": "<inviter/> 邀請您",
     "You may want to try a different search or check for typos.": "您可能要嘗試其他搜尋或檢查是否有拼字錯誤。",
     "No results found": "找不到結果",
-    "Mark as suggested": "標記為建議",
-    "Mark as not suggested": "標記為不建議",
-    "Failed to remove some rooms. Try again later": "無法移除某些聊天室。稍後再試",
-    "Suggested": "建議",
-    "This room is suggested as a good one to join": "推薦加入這個聊天室",
     "%(count)s rooms": {
         "one": "%(count)s 個聊天室",
         "other": "%(count)s 個聊天室"
@@ -1449,7 +1421,6 @@
     "Verify your identity to access encrypted messages and prove your identity to others.": "驗證您的身分來存取已加密的訊息並對其他人證明您的身分。",
     "Review to ensure your account is safe": "請確認您的帳號安全",
     "%(deviceId)s from %(ip)s": "從 %(ip)s 來的 %(deviceId)s",
-    "Manage & explore rooms": "管理與探索聊天室",
     "%(count)s people you know have already joined": {
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
@@ -1483,7 +1454,6 @@
     "Failed to send": "傳送失敗",
     "Enter your Security Phrase a second time to confirm it.": "再次輸入您的安全密語以確認。",
     "You have no ignored users.": "您沒有忽略的使用者。",
-    "Select a room below first": "首先選取一個聊天室",
     "Want to add a new room instead?": "想要新增新聊天室嗎？",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "正在新增聊天室…",
@@ -1523,7 +1493,6 @@
     "Collapse reply thread": "收折回覆討論串",
     "Show preview": "顯示預覽",
     "View source": "檢視原始碼",
-    "Settings - %(spaceName)s": "設定 - %(spaceName)s",
     "Please provide an address": "請提供位址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "設定此聊天空間的位址，這樣使用者就能透過您的家伺服器找到此空間（%(localDomain)s）",
@@ -1700,7 +1669,6 @@
     },
     "View in room": "在聊天室中檢視",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "輸入您的安全密語或<button>使用您的安全金鑰</button>以繼續。",
-    "See room timeline (devtools)": "檢視聊天室時間軸（開發者工具）",
     "Joined": "已加入",
     "Insert link": "插入連結",
     "Joining": "正在加入",
@@ -1708,7 +1676,6 @@
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "我們將為您產生一把安全金鑰。請將其儲存在安全的地方，例如密碼管理員或保險箱。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "如果不進行驗證，您將無法存取您的所有訊息，且可能會被其他人視為不信任。",
-    "You're all caught up": "您已完成",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，請將您的邀請連結傳送給他們。",
     "In encrypted rooms, verify all users to ensure it's secure.": "在加密的聊天適中，驗證所有使用者以確保其安全。",
     "Yours, or the other users' session": "您或其他使用者的工作階段",
@@ -1726,7 +1693,6 @@
     "What is your poll question or topic?": "您的投票問題或主題是什麼？",
     "Create Poll": "建立投票",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
-    "Someone already has that username. Try another or if it is you, sign in below.": "某人已使用該使用者名稱。請改用其他名稱。但如果是您，請在下方登入。",
     "Reply in thread": "在討論串中回覆",
     "Rooms outside of a space": "聊天空間外的聊天室",
     "Show all your rooms in Home, even if they're in a space.": "將您所有的聊天室顯示在首頁，即便它們位於同一個聊天空間。",
@@ -1805,7 +1771,6 @@
     "Spaces you're in": "您所在的聊天空間",
     "Including you, %(commaSeparatedMembers)s": "包含您，%(commaSeparatedMembers)s",
     "Copy room link": "複製聊天室連結",
-    "Failed to load list of rooms.": "無法載入聊天室清單。",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
     "Sections to show": "要顯示的部份",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
@@ -1842,18 +1807,14 @@
     "You were removed from %(roomName)s by %(memberName)s": "您已被 %(memberName)s 從 %(roomName)s 中移除",
     "Message pending moderation": "待審核的訊息",
     "Message pending moderation: %(reason)s": "待審核的訊息：%(reason)s",
-    "Space home": "聊天空間首頁",
     "Internal room ID": "內部聊天室 ID",
     "Group all your rooms that aren't part of a space in one place.": "將所有不屬於某個聊天空間的聊天室集中在同一個地方。",
     "Group all your people in one place.": "將您所有的夥伴集中在同一個地方。",
     "Group all your favourite rooms and people in one place.": "將所有您最喜愛的聊天室與夥伴集中在同一個地方。",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "聊天空間是將聊天室與夥伴們分組的方式。除了您所在的聊天空間之外，還可以使用一些預設分類。",
-    "Unable to check if username has been taken. Try again later.": "無法檢查使用者名稱是否已被使用。請稍後再試。",
     "Pick a date to jump to": "挑選要跳至的日期",
     "Jump to date": "跳至日期",
     "The beginning of the room": "聊天室開頭",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "如果您知道您在做些什麼，Element 為開放原始碼，請看看我們的 GitHub (https://github.com/vector-im/element-web/) 並貢獻！",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "若某人告訴您在此處複製／貼上一些東西，那麼您很有可能被騙了！",
     "Wait!": "等等！",
     "This address does not point at this room": "此位址並未指向此聊天室",
     "Location": "位置",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s 與 %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s 或 %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
-    "Proxy URL": "代理伺服器網址",
-    "Proxy URL (optional)": "代理伺服器網址（選填）",
-    "To disable you will need to log out and back in, use with caution!": "要停用，您必須登出並重新登入，請小心使用！",
-    "Sliding Sync configuration": "滑動同步設定",
-    "Your server lacks native support, you must specify a proxy": "您的伺服器缺乏原生支援，您必須指定代理",
-    "Your server lacks native support": "您的伺服器缺乏原生支援",
-    "Your server has native support": "您的伺服器有原生支援",
     "You need to be able to kick users to do that.": "您必須可以踢除使用者才能作到這件事。",
     "Voice broadcast": "語音廣播",
     "You do not have permission to start voice calls": "您無權限開始語音通話",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。",
     "Can't start voice message": "無法開始語音訊息",
     "Edit link": "編輯連結",
-    "Decrypted source unavailable": "已解密的來源不可用",
     "%(senderName)s started a voice broadcast": "%(senderName)s 開始了語音廣播",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "註冊權杖",
@@ -2627,7 +2580,14 @@
         "rust_crypto_disabled_notice": "目前僅能透過 config.json 啟用",
         "automatic_debug_logs_key_backup": "金鑰備份無法運作時，自動傳送除錯紀錄檔",
         "automatic_debug_logs_decryption": "自動傳送關於解密錯誤的除錯紀錄檔",
-        "automatic_debug_logs": "自動在發生錯誤時傳送除錯日誌"
+        "automatic_debug_logs": "自動在發生錯誤時傳送除錯日誌",
+        "sliding_sync_server_support": "您的伺服器有原生支援",
+        "sliding_sync_server_no_support": "您的伺服器缺乏原生支援",
+        "sliding_sync_server_specify_proxy": "您的伺服器缺乏原生支援，您必須指定代理",
+        "sliding_sync_configuration": "滑動同步設定",
+        "sliding_sync_disable_warning": "要停用，您必須登出並重新登入，請小心使用！",
+        "sliding_sync_proxy_url_optional_label": "代理伺服器網址（選填）",
+        "sliding_sync_proxy_url_label": "代理伺服器網址"
     },
     "keyboard": {
         "home": "首頁",
@@ -3177,7 +3137,9 @@
         "show_hidden_events": "顯示時間軸中隱藏的活動",
         "low_bandwidth_mode_description": "需要相容的家伺服器。",
         "low_bandwidth_mode": "低頻寬模式",
-        "developer_mode": "開發者模式"
+        "developer_mode": "開發者模式",
+        "view_source_decrypted_event_source": "解密活動來源",
+        "view_source_decrypted_event_source_unavailable": "已解密的來源不可用"
     },
     "export_chat": {
         "html": "HTML",
@@ -3573,7 +3535,9 @@
         "io.element.voice_broadcast_info": {
             "you": "您結束了<a>語音廣播</a>",
             "user": "%(senderName)s 結束了<a>語音廣播</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s 建立了此私人訊息。",
+        "creation_summary_room": "%(creator)s 建立並設定了聊天室。"
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3896,7 +3860,15 @@
         "server_picker_explainer": "如果您有的話，可以使用您偏好的 Matrix 家伺服器，或是自己架一個。",
         "server_picker_learn_more": "關於家伺服器",
         "incorrect_credentials": "使用者名稱和／或密碼不正確。",
-        "account_deactivated": "此帳號已停用。"
+        "account_deactivated": "此帳號已停用。",
+        "registration_username_validation": "僅能使用小寫字母、數字、破折號與底線",
+        "registration_username_unable_check": "無法檢查使用者名稱是否已被使用。請稍後再試。",
+        "registration_username_in_use": "某人已使用該使用者名稱。請改用其他名稱。但如果是您，請在下方登入。",
+        "phone_label": "電話",
+        "phone_optional_label": "電話（選擇性）",
+        "email_help_text": "新增電子郵件以重設您的密碼。",
+        "email_phone_discovery_text": "使用電子郵件或電話以選擇性地被既有的聯絡人探索。",
+        "email_discovery_text": "設定電子郵件地址後，即可選擇性被已有的聯絡人新增為好友。"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -4108,7 +4080,21 @@
         "light_high_contrast": "亮色高對比"
     },
     "space": {
-        "landing_welcome": "歡迎加入 <name/>"
+        "landing_welcome": "歡迎加入 <name/>",
+        "suggested_tooltip": "推薦加入這個聊天室",
+        "suggested": "建議",
+        "select_room_below": "首先選取一個聊天室",
+        "unmark_suggested": "標記為不建議",
+        "mark_suggested": "標記為建議",
+        "failed_remove_rooms": "無法移除某些聊天室。稍後再試",
+        "failed_load_rooms": "無法載入聊天室清單。",
+        "incompatible_server_hierarchy": "您的伺服器不支援顯示空間的層次結構。",
+        "context_menu": {
+            "devtools_open_timeline": "檢視聊天室時間軸（開發者工具）",
+            "home": "聊天空間首頁",
+            "explore": "探索聊天室",
+            "manage_and_explore": "管理與探索聊天室"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -4165,5 +4151,35 @@
         "setup_rooms_description": "您稍後可以新增更多內容，包含既有的。",
         "setup_rooms_private_heading": "您的團隊正在從事哪些專案？",
         "setup_rooms_private_description": "我們將為每個主題建立聊天室。"
+    },
+    "user_menu": {
+        "switch_theme_light": "切換至淺色模式",
+        "switch_theme_dark": "切換至深色模式"
+    },
+    "notif_panel": {
+        "empty_heading": "您已完成",
+        "empty_description": "您沒有可見的通知。"
+    },
+    "console_scam_warning": "若某人告訴您在此處複製／貼上一些東西，那麼您很有可能被騙了！",
+    "console_dev_note": "如果您知道您在做些什麼，Element 為開放原始碼，請看看我們的 GitHub (https://github.com/vector-im/element-web/) 並貢獻！",
+    "room": {
+        "drop_file_prompt": "把文件放在這裡上傳"
+    },
+    "file_panel": {
+        "guest_note": "您必須<a>註冊</a>以使用此功能",
+        "peek_note": "您必須加入聊天室來檢視它的檔案",
+        "empty_heading": "此聊天室中沒有可見的檔案",
+        "empty_description": "從聊天中附加檔案，或將其拖放到聊天室的任何地方。"
+    },
+    "terms": {
+        "integration_manager": "使用聊天機器人、橋接、小工具與貼圖包",
+        "tos": "服務條款",
+        "intro": "要繼續，您必須同意本服務條款。",
+        "column_service": "服務",
+        "column_summary": "摘要",
+        "column_document": "文件"
+    },
+    "space_settings": {
+        "title": "設定 - %(spaceName)s"
     }
 }

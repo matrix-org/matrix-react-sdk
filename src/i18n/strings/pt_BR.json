@@ -140,7 +140,6 @@
     "File to import": "Arquivo para importar",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O arquivo exportado será protegido com uma senha. Você deverá inserir a senha aqui para poder descriptografar o arquivo futuramente.",
-    "You must join the room to see its files": "Você precisa ingressar na sala para ver seus arquivos",
     "Reject all %(invitedRooms)s invites": "Recusar todos os %(invitedRooms)s convites",
     "Failed to invite": "Falha ao enviar o convite",
     "Confirm Removal": "Confirmar a remoção",
@@ -153,7 +152,6 @@
     "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
     "URL Previews": "Pré-visualização de links",
-    "Drop file here to upload": "Arraste um arquivo aqui para enviar",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
     "Invited": "Convidada(o)",
@@ -174,7 +172,6 @@
         "one": "Enviando o arquivo %(filename)s e %(count)s outros arquivos",
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
     },
-    "You must <a>register</a> to use this functionality": "Você deve <a>se registrar</a> para usar este recurso",
     "Create new room": "Criar nova sala",
     "New Password": "Nova senha",
     "Something went wrong!": "Não foi possível carregar!",
@@ -600,7 +597,6 @@
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Está faltando a chave pública do captcha no Servidor (homeserver). Por favor, reporte isso aos(às) administradores(as) do servidor.",
     "Explore rooms": "Explorar salas",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
-    "%(creator)s created and configured the room.": "%(creator)s criou e configurou esta sala.",
     "Create account": "Criar conta",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
@@ -695,10 +691,8 @@
     "Passwords don't match": "As senhas não correspondem",
     "Other users can invite you to rooms using your contact details": "Outros usuários podem convidá-lo para salas usando seus detalhes de contato",
     "Enter phone number (required on this homeserver)": "Digite o número de celular (necessário neste servidor)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Use apenas letras minúsculas, números, traços e sublinhados",
     "Enter username": "Digite o nome de usuário",
     "Email (optional)": "E-mail (opcional)",
-    "Phone (optional)": "Número de celular (opcional)",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirme a adição deste número de telefone usando o Login Único para provar sua identidade.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Use um servidor de identidade para convidar por e-mail. Clique em continuar para usar o servidor de identidade padrão (%(defaultIdentityServerName)s) ou gerencie nas Configurações.",
     "Display Name": "Nome e sobrenome",
@@ -758,8 +752,6 @@
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s não pode ser visualizado. Deseja participar?",
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
-    "Switch to light mode": "Alternar para o modo claro",
-    "Switch to dark mode": "Alternar para o modo escuro",
     "All settings": "Todas as configurações",
     "Clear personal data": "Limpar dados pessoais",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
@@ -870,12 +862,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Para nos ajudar a evitar isso no futuro, <a>envie-nos os relatórios</a>.",
     "Your browser likely removed this data when running low on disk space.": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente.",
     "Find others by phone or email": "Encontre outras pessoas por telefone ou e-mail",
-    "Use bots, bridges, widgets and sticker packs": "Use bots, integrações, widgets e pacotes de figurinhas",
-    "Terms of Service": "Termos de serviço",
-    "To continue you need to accept the terms of this service.": "Para continuar, você precisa aceitar os termos deste serviço.",
-    "Service": "Serviço",
-    "Summary": "Resumo",
-    "Document": "Documento",
     "Upload files (%(current)s of %(total)s)": "Enviar arquivos (%(current)s de %(total)s)",
     "Upload files": "Enviar arquivos",
     "Upload all": "Enviar tudo",
@@ -975,8 +961,6 @@
     "Message edits": "Edições na mensagem",
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
-    "No files visible in this room": "Nenhum arquivo nesta sala",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Anexe arquivos na conversa, ou simplesmente arraste e solte arquivos em qualquer lugar na sala.",
     "Failed to re-authenticate due to a homeserver problem": "Falha em autenticar novamente devido à um problema no servidor local",
     "Enter a Security Phrase": "Digite uma frase de segurança",
     "Enter your account password to confirm the upgrade:": "Digite a senha da sua conta para confirmar a atualização:",
@@ -1309,7 +1293,6 @@
     "Christmas Island": "Ilha Christmas",
     "Central African Republic": "República Centro-Africana",
     "Cayman Islands": "Ilhas Cayman",
-    "%(creator)s created this DM.": "%(creator)s criou esta conversa.",
     "This is the start of <roomName/>.": "Este é o início de <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Adicione uma imagem para que as pessoas possam identificar facilmente sua sala.",
     "%(displayName)s created this room.": "%(displayName)s criou esta sala.",
@@ -1335,9 +1318,6 @@
     "This widget would like to:": "Este widget gostaria de:",
     "Approve widget permissions": "Autorizar as permissões do widget",
     "There was a problem communicating with the homeserver, please try again later.": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
-    "Use email to optionally be discoverable by existing contacts.": "Seja encontrado por seus contatos a partir de um e-mail.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Seja encontrado por seus contatos a partir de um e-mail ou número de telefone.",
-    "Add an email to be able to reset your password.": "Adicione um e-mail para depois poder redefinir sua senha.",
     "That phone number doesn't look quite right, please check and try again": "Esse número de telefone não é válido, verifique e tente novamente",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
@@ -1347,7 +1327,6 @@
     "Resume": "Retomar",
     "You've reached the maximum number of simultaneous calls.": "Você atingiu o número máximo de chamadas simultâneas.",
     "Too Many Calls": "Muitas chamadas",
-    "You have no visible notifications.": "Não há notificações.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sessão detectou que a sua Frase de Segurança e a chave para mensagens seguras foram removidas.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Uma nova Frase de Segurança e uma nova chave para mensagens seguras foram detectadas.",
     "Confirm your Security Phrase": "Confirmar com a sua Frase de Segurança",
@@ -1415,7 +1394,6 @@
     "Share invite link": "Compartilhar link de convite",
     "Click to copy": "Clique para copiar",
     "Create a space": "Criar um espaço",
-    "Decrypted event source": "Fonte de evento descriptografada",
     "Original event source": "Fonte do evento original",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Se você usar esse widget, os dados poderão ser compartilhados <helpIcon /> com %(widgetDomain)s & seu gerenciador de integrações.",
@@ -2302,7 +2280,8 @@
         "widget_screenshots": "Ativar capturas de tela do widget em widgets suportados",
         "title": "Ferramentas de desenvolvimento",
         "show_hidden_events": "Mostrar eventos ocultos nas conversas",
-        "developer_mode": "Modo desenvolvedor"
+        "developer_mode": "Modo desenvolvedor",
+        "view_source_decrypted_event_source": "Fonte de evento descriptografada"
     },
     "export_chat": {
         "html": "HTML",
@@ -2618,7 +2597,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Você encerrou uma <a>transmissão de voz</a>",
             "user": "%(senderName)s encerrou uma <a>transmissão de voz</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s criou esta conversa.",
+        "creation_summary_room": "%(creator)s criou e configurou esta sala."
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2892,7 +2873,13 @@
         "server_picker_explainer": "Use o seu servidor local Matrix preferido, ou hospede o seu próprio servidor.",
         "server_picker_learn_more": "Sobre os servidores locais",
         "incorrect_credentials": "Nome de usuário e/ou senha incorreto.",
-        "account_deactivated": "Esta conta foi desativada."
+        "account_deactivated": "Esta conta foi desativada.",
+        "registration_username_validation": "Use apenas letras minúsculas, números, traços e sublinhados",
+        "phone_label": "Telefone",
+        "phone_optional_label": "Número de celular (opcional)",
+        "email_help_text": "Adicione um e-mail para depois poder redefinir sua senha.",
+        "email_phone_discovery_text": "Seja encontrado por seus contatos a partir de um e-mail ou número de telefone.",
+        "email_discovery_text": "Seja encontrado por seus contatos a partir de um e-mail."
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -3062,7 +3049,10 @@
         "light_high_contrast": "Claro (alto contraste)"
     },
     "space": {
-        "landing_welcome": "Boas-vindas ao <name/>"
+        "landing_welcome": "Boas-vindas ao <name/>",
+        "context_menu": {
+            "explore": "Explorar salas"
+        }
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -3083,5 +3073,29 @@
         "failed_create_initial_rooms": "Falha ao criar salas de espaço iniciais",
         "skip_action": "Ignorar por enquanto",
         "invite_teammates_by_username": "Convidar por nome de usuário"
+    },
+    "user_menu": {
+        "switch_theme_light": "Alternar para o modo claro",
+        "switch_theme_dark": "Alternar para o modo escuro"
+    },
+    "notif_panel": {
+        "empty_description": "Não há notificações."
+    },
+    "room": {
+        "drop_file_prompt": "Arraste um arquivo aqui para enviar"
+    },
+    "file_panel": {
+        "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
+        "peek_note": "Você precisa ingressar na sala para ver seus arquivos",
+        "empty_heading": "Nenhum arquivo nesta sala",
+        "empty_description": "Anexe arquivos na conversa, ou simplesmente arraste e solte arquivos em qualquer lugar na sala."
+    },
+    "terms": {
+        "integration_manager": "Use bots, integrações, widgets e pacotes de figurinhas",
+        "tos": "Termos de serviço",
+        "intro": "Para continuar, você precisa aceitar os termos deste serviço.",
+        "column_service": "Serviço",
+        "column_summary": "Resumo",
+        "column_document": "Documento"
     }
 }

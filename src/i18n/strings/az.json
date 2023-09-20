@@ -300,7 +300,8 @@
     "auth": {
         "footer_powered_by_matrix": "Matrix tərəfindən təchiz edilmişdir",
         "unsupported_auth_msisdn": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
-        "register_action": "Hesab Aç"
+        "register_action": "Hesab Aç",
+        "phone_label": "Telefon"
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"
@@ -309,6 +310,11 @@
         "autocomplete": {
             "command_description": "Komandalar",
             "user_description": "İstifadəçilər"
+        }
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Otaqları kəşf edin"
         }
     }
 }

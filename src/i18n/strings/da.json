@@ -819,5 +819,10 @@
     "update": {
         "see_changes_button": "Hvad er nyt?",
         "release_notes_toast_title": "Hvad er nyt"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Udforsk rum"
+        }
     }
 }

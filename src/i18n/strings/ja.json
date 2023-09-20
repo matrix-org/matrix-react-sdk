@@ -124,7 +124,6 @@
     "Confirm password": "パスワードを確認",
     "Authentication": "認証",
     "Failed to set display name": "表示名の設定に失敗しました",
-    "Drop file here to upload": "アップロードするファイルをここにドロップしてください",
     "This event could not be displayed": "このイベントは表示できませんでした",
     "Demote yourself?": "自身を降格しますか？",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "あなたは自分自身を降格させようとしています。この変更は取り消せません。あなたがルームの中で最後の特権ユーザーである場合、特権を再取得することはできなくなります。",
@@ -261,8 +260,6 @@
     "Link to selected message": "選択したメッセージにリンク",
     "Reject invitation": "招待を辞退",
     "Are you sure you want to reject the invitation?": "招待を辞退してよろしいですか？",
-    "You must <a>register</a> to use this functionality": "この機能を使用するには<a>登録</a>する必要があります",
-    "You must join the room to see its files": "ルームのファイルを表示するには、ルームに参加する必要があります",
     "Failed to reject invitation": "招待を辞退できませんでした",
     "This room is not public. You will not be able to rejoin without an invite.": "このルームは公開されていません。再度参加するには、招待が必要です。",
     "Are you sure you want to leave the room '%(roomName)s'?": "このルーム「%(roomName)s」から退出してよろしいですか？",
@@ -378,7 +375,6 @@
     "Restore from Backup": "バックアップから復元",
     "Voice & Video": "音声とビデオ",
     "Remove recent messages": "最近のメッセージを削除",
-    "%(creator)s created and configured the room.": "%(creator)sがルームを作成し設定しました。",
     "Add room": "ルームを追加",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "本当によろしいですか？ もし鍵が正常にバックアップされていない場合、暗号化されたメッセージにアクセスできなくなります。",
     "not stored": "保存されていません",
@@ -416,15 +412,12 @@
     "Clear all data": "全てのデータを消去",
     "Message edits": "メッセージの編集履歴",
     "Sign out and remove encryption keys?": "サインアウトして、暗号鍵を削除しますか？",
-    "Terms of Service": "利用規約",
-    "To continue you need to accept the terms of this service.": "続行するには、このサービスの利用規約に同意する必要があります。",
     "Italics": "斜字体",
     "Local address": "ローカルアドレス",
     "Enable encryption?": "暗号化を有効にしますか？",
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "一度有効にしたルームの暗号化は無効にすることはできません。暗号化されたルームで送信されたメッセージは、サーバーからは閲覧できず、そのルームのメンバーだけが閲覧できます。暗号化を有効にすると、多くのボットやブリッジが正常に動作しなくなる可能性があります。<a>暗号化についての詳細はこちらをご覧ください。</a>",
     "Enter username": "ユーザー名を入力",
     "Email (optional)": "電子メール（任意）",
-    "Phone (optional)": "電話番号（任意）",
     "Verify this session": "このセッションを認証",
     "Encryption upgrade available": "暗号化のアップグレードが利用できます",
     "Not Trusted": "信頼されていません",
@@ -473,10 +466,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
-    "Use bots, bridges, widgets and sticker packs": "ボット、ブリッジ、ウィジェット、ステッカーパックを使用",
-    "Service": "サービス",
-    "Summary": "概要",
-    "Document": "ドキュメント",
     "Other users may not trust it": "他のユーザーはこのセッションを信頼しない可能性があります",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "あなたのアカウントではクロス署名の認証情報が機密ストレージに保存されていますが、このセッションでは信頼されていません。",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "このセッションでは<b>鍵をバックアップしていません</b>が、復元に使用したり、今後鍵を追加したりできるバックアップがあります。",
@@ -491,8 +480,6 @@
     "Your homeserver": "あなたのホームサーバー",
     "%(displayName)s cancelled verification.": "%(displayName)sが認証をキャンセルしました。",
     "You cancelled verification.": "認証をキャンセルしました。",
-    "Switch to light mode": "ライトテーマに切り替える",
-    "Switch to dark mode": "ダークテーマに切り替える",
     "Switch theme": "テーマを切り替える",
     "All settings": "全ての設定",
     "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
@@ -517,8 +504,6 @@
     "Upload files (%(current)s of %(total)s)": "ファイルのアップロード（%(current)s/%(total)s）",
     "Upload files": "ファイルのアップロード",
     "Upload all": "全てアップロード",
-    "No files visible in this room": "このルームにファイルはありません",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "チャットで添付するか、ルームにドラッグ＆ドロップすると、ファイルを追加できます。",
     "Add widgets, bridges & bots": "ウィジェット、ブリッジ、ボットの追加",
     "Widgets": "ウィジェット",
     "Cross-signing is ready for use.": "クロス署名の使用準備が完了しました。",
@@ -558,7 +543,6 @@
     "Topic: %(topic)s ": "トピック：%(topic)s ",
     "%(displayName)s created this room.": "%(displayName)sがこのルームを作成しました。",
     "You created this room.": "このルームを作成しました。",
-    "%(creator)s created this DM.": "%(creator)sがこのダイレクトメッセージを作成しました。",
     "e.g. my-room": "例：my-room",
     "Room address": "ルームのアドレス",
     "New published address (e.g. #alias:server)": "新しい公開アドレス（例：#alias:server）",
@@ -1170,8 +1154,6 @@
     "Invite to just this room": "このルームにのみ招待",
     "Invite to %(spaceName)s": "%(spaceName)sに招待",
     "Invite to %(roomName)s": "%(roomName)sに招待",
-    "Manage & explore rooms": "ルームの管理および探索",
-    "Select a room below first": "以下からルームを選択してください",
     "Private space": "非公開スペース",
     "Leave Space": "スペースから退出",
     "Are you sure you want to leave the space '%(spaceName)s'?": "このスペース「%(spaceName)s」から退出してよろしいですか？",
@@ -1205,10 +1187,6 @@
     "Rooms and spaces": "ルームとスペース",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
     "Add space": "スペースを追加",
-    "This room is suggested as a good one to join": "このルームは、参加を推奨するルームとしておすすめされています",
-    "Mark as suggested": "おすすめに追加",
-    "Mark as not suggested": "おすすめから除外",
-    "Suggested": "おすすめ",
     "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "Group all your rooms that aren't part of a space in one place.": "スペースに含まれない全てのルームを一箇所にまとめる。",
@@ -1241,7 +1219,6 @@
     "Insert link": "リンクを挿入",
     "Reason (optional)": "理由（任意）",
     "Copy link to thread": "スレッドへのリンクをコピー",
-    "You're all caught up": "未読はありません",
     "Connecting": "接続しています",
     "You cannot place calls without a connection to the server.": "サーバーに接続していないため、通話を発信できません。",
     "Connectivity to the server has been lost": "サーバーとの接続が失われました",
@@ -1284,7 +1261,6 @@
     "Command Help": "コマンドヘルプ",
     "Link to room": "ルームへのリンク",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "このスペースのメンバーとの会話をまとめます。無効にすると、それらの会話は%(spaceName)sの表示画面に表示されなくなります。",
-    "Space home": "スペースのホーム",
     "%(count)s votes": {
         "one": "%(count)s個の投票",
         "other": "%(count)s個の投票"
@@ -1353,11 +1329,7 @@
     "Wrong Security Key": "正しくないセキュリティーキー",
     "a key signature": "鍵の署名",
     "Cross-signing is ready but keys are not backed up.": "クロス署名は準備できましたが、鍵はバックアップされていません。",
-    "Someone already has that username. Try another or if it is you, sign in below.": "そのユーザー名は既に使用されています。別のユーザー名を試すか、あなたのユーザー名なら、以下でサインインしてください。",
     "Sign in with SSO": "シングルサインオンでサインイン",
-    "Use email or phone to optionally be discoverable by existing contacts.": "後ほど、このメールアドレスまたは電話番号で連絡先に見つけてもらうことができるようになります。",
-    "Use email to optionally be discoverable by existing contacts.": "後ほど、このメールアドレスで連絡先に見つけてもらうことができるようになります。",
-    "Add an email to be able to reset your password.": "アカウント復旧用のメールアドレスを追加。",
     "Join millions for free on the largest public server": "最大の公開サーバーで、数百万人に無料で参加",
     "This homeserver would like to make sure you are not a robot.": "このホームサーバーは、あなたがロボットではないことの確認を求めています。",
     "Doesn't look like a valid email address": "メールアドレスの形式が正しくありません",
@@ -1404,7 +1376,6 @@
     "Invite anyway": "招待",
     "Invite anyway and never warn me again": "招待し、再び警告しない",
     "Recovery Method Removed": "復元方法を削除しました",
-    "Failed to remove some rooms. Try again later": "いくつかのルームの削除に失敗しました。後でもう一度やり直してください",
     "Remove from room": "ルームから追放",
     "Failed to remove user": "ユーザーの追放に失敗しました",
     "Success!": "成功しました！",
@@ -1517,7 +1488,6 @@
     "Go back to set it again.": "戻って、改めて設定してください。",
     "That doesn't match.": "合致しません。",
     "Continue With Encryption Disabled": "暗号化を無効にして続行",
-    "You have no visible notifications.": "未読の通知はありません。",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "メンションと、<a>設定</a>したキーワードのみを通知",
     "@mentions & keywords": "メンションとキーワード",
     "Get notified for every message": "全てのメッセージを通知",
@@ -1624,7 +1594,6 @@
         "one": "%(count)s件の返信"
     },
     "Call declined": "拒否しました",
-    "Unable to check if username has been taken. Try again later.": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "認証を行わないと、あなたの全てのメッセージにアクセスできず、他のユーザーに信頼済として表示されない可能性があります。",
     "I'll verify later": "後で認証",
     "To proceed, please accept the verification request on your other device.": "続行するには、他の端末で認証リクエストを承認してください。",
@@ -1661,7 +1630,6 @@
     "Waiting for you to verify on your other device…": "他の端末での認証を待機しています…",
     "Remove from %(roomName)s": "%(roomName)sから追放",
     "Wait!": "お待ちください！",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "ここでコピーペーストを行うように伝えられた場合は、あなたが詐欺の対象となっている可能性が非常に高いです！",
     "Error processing audio message": "音声メッセージを処理する際にエラーが発生しました",
     "The beginning of the room": "ルームの先頭",
     "Jump to date": "日付に移動",
@@ -1676,7 +1644,6 @@
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます",
     "Wrong file type": "正しくないファイルの種類",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "機密ストレージにアクセスできません。正しいセキュリティーフレーズを入力したことを確認してください。",
-    "Settings - %(spaceName)s": "設定 - %(spaceName)s",
     "The server has denied your request.": "サーバーがリクエストを拒否しました。",
     "Server isn't responding": "サーバーが応答していません",
     "You're all caught up.": "未読はありません。",
@@ -1700,7 +1667,6 @@
     "There was an error loading your notification settings.": "通知設定を読み込む際にエラーが発生しました。",
     "Message search initialisation failed": "メッセージの検索機能の初期化に失敗しました",
     "Failed to update the visibility of this space": "このスペースの見え方の更新に失敗しました",
-    "Failed to load list of rooms.": "ルームの一覧を読み込むのに失敗しました。",
     "Unable to set up secret storage": "機密ストレージを設定できません",
     "Save your Security Key": "セキュリティーキーを保存",
     "Confirm Security Phrase": "セキュリティーフレーズを確認",
@@ -1710,7 +1676,6 @@
     "Error loading Widget": "ウィジェットを読み込む際にエラーが発生しました",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "セキュリティーキーもしくは認証可能な端末が設定されていません。この端末では、以前暗号化されたメッセージにアクセスすることができません。この端末で本人確認を行うには、認証用の鍵を再設定する必要があります。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
-    "Decrypted event source": "復号化したイベントのソースコード",
     "Signature upload failed": "署名のアップロードに失敗しました",
     "Remove for everyone": "全員から削除",
     "toggle event": "イベントを切り替える",
@@ -1734,7 +1699,6 @@
     "Unable to verify this device": "この端末を認証できません",
     "Other users can invite you to rooms using your contact details": "他のユーザーはあなたの連絡先の情報を用いてルームに招待することができます",
     "Something went wrong in confirming your identity. Cancel and try again.": "本人確認を行う際に問題が発生しました。キャンセルして、もう一度やり直してください。",
-    "See room timeline (devtools)": "ルームのタイムラインを表示（開発者ツール）",
     "Other spaces or rooms you might not know": "知らないかもしれない他のスペースやルーム",
     "You're removing all spaces. Access will default to invite only": "全てのスペースを削除しようとしています。招待者しかアクセスできなくなります",
     "To continue, use Single Sign On to prove your identity.": "続行するには、シングルサインオンを使用して、本人確認を行ってください。",
@@ -1804,7 +1768,6 @@
     "Expand quotes": "引用を展開",
     "Click": "クリック",
     "Pick a date to jump to": "日付を選択して移動",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "もし開発者の方であれば、Elementはオープンソースですので、ぜひ私たちのGitHub（https://github.com/vector-im/element-web/）をご覧いただき、開発にご参加ください！",
     "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
     "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
     "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
@@ -1938,8 +1901,6 @@
     "Private room": "非公開ルーム",
     "Video call (Jitsi)": "ビデオ通話（Jitsi）",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
-    "Proxy URL (optional)": "プロクシーのURL（任意）",
-    "Proxy URL": "プロクシーのURL",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
         "one": "%(count)s人の参加者"
@@ -1959,8 +1920,6 @@
     "An unexpected error occurred.": "予期しないエラーが発生しました。",
     "Devices connected": "接続中の端末",
     "Check that the code below matches with your other device:": "以下のコードが他の端末と一致していることを確認してください：",
-    "Use lowercase letters, numbers, dashes and underscores only": "小文字、数字、ダッシュ、アンダースコアのみを使ってください",
-    "Your server does not support showing space hierarchies.": "あなたのサーバーはスペースの階層表示をサポートしていません。",
     "Great! This Security Phrase looks strong enough.": "すばらしい！ このセキュリティーフレーズは十分に強力なようです。",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)sまたは%(copyButton)s",
     "Voice broadcast": "音声配信",
@@ -2094,7 +2053,6 @@
     "Scan the QR code below with your device that's signed out.": "サインアウトした端末で以下のQRコードをスキャンしてください。",
     "We were unable to start a chat with the other user.": "他のユーザーをチャットを開始できませんでした。",
     "Error starting verification": "認証を開始する際にエラーが発生しました",
-    "Decrypted source unavailable": "復号化したソースコードが利用できません",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Sign out of all devices": "全ての端末からサインアウト",
     "Confirm new password": "新しいパスワードを確認",
@@ -2162,7 +2120,6 @@
     "Allow this widget to verify your identity": "このウィジェットに本人確認を許可",
     "This widget would like to:": "ウィジェットによる要求：",
     "To help us prevent this in future, please <a>send us logs</a>.": "今後これが起こらないようにするために、<a>ログを送信</a>してください。",
-    "Sliding Sync configuration": "スライド式同期の設定",
     "Remove search filter for %(filter)s": "%(filter)sの検索フィルターを削除",
     "Some results may be hidden": "いくつかの結果が表示されていない可能性があります",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
@@ -2170,14 +2127,10 @@
     "In spaces %(space1Name)s and %(space2Name)s.": "スペース %(space1Name)sと%(space2Name)s内。",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "発生した問題を教えてください。または、問題を説明するGitHub issueを作成してください。",
     "You're in": "始めましょう",
-    "To disable you will need to log out and back in, use with caution!": "無効にするにはログアウトして、再度ログインする必要があります。注意して使用してください！",
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。",
-    "Your server lacks native support, you must specify a proxy": "あなたのサーバーはネイティブでサポートしていません。プロクシーを指定してください",
-    "Your server lacks native support": "あなたのサーバーはネイティブでサポートしていません",
-    "Your server has native support": "あなたのサーバーはネイティブでサポートしています",
     "Declining…": "拒否しています…",
     "Enable %(brand)s as an additional calling option in this room": "%(brand)sをこのルームの追加の通話手段として有効にする",
     "This session is backing up your keys.": "このセッションは鍵をバックアップしています。",
@@ -2482,7 +2435,14 @@
         "voice_broadcast_force_small_chunks": "音声配信のチャンク長を15秒に強制",
         "automatic_debug_logs_key_backup": "鍵のバックアップが機能していない際に、自動的にデバッグログを送信",
         "automatic_debug_logs_decryption": "復号化エラーが生じた際に、自動的にデバッグログを送信",
-        "automatic_debug_logs": "エラーが生じた際に、自動的にデバッグログを送信"
+        "automatic_debug_logs": "エラーが生じた際に、自動的にデバッグログを送信",
+        "sliding_sync_server_support": "あなたのサーバーはネイティブでサポートしています",
+        "sliding_sync_server_no_support": "あなたのサーバーはネイティブでサポートしていません",
+        "sliding_sync_server_specify_proxy": "あなたのサーバーはネイティブでサポートしていません。プロクシーを指定してください",
+        "sliding_sync_configuration": "スライド式同期の設定",
+        "sliding_sync_disable_warning": "無効にするにはログアウトして、再度ログインする必要があります。注意して使用してください！",
+        "sliding_sync_proxy_url_optional_label": "プロクシーのURL（任意）",
+        "sliding_sync_proxy_url_label": "プロクシーのURL"
     },
     "keyboard": {
         "home": "ホーム",
@@ -3009,7 +2969,9 @@
         "show_hidden_events": "タイムラインで非表示のイベントを表示",
         "low_bandwidth_mode_description": "対応するホームサーバーが必要。",
         "low_bandwidth_mode": "低速モード",
-        "developer_mode": "開発者モード"
+        "developer_mode": "開発者モード",
+        "view_source_decrypted_event_source": "復号化したイベントのソースコード",
+        "view_source_decrypted_event_source_unavailable": "復号化したソースコードが利用できません"
     },
     "export_chat": {
         "html": "HTML",
@@ -3389,7 +3351,9 @@
         "io.element.voice_broadcast_info": {
             "you": "<a>音声配信</a>を終了しました",
             "user": "%(senderName)sが<a>音声配信</a>を終了しました"
-        }
+        },
+        "creation_summary_dm": "%(creator)sがこのダイレクトメッセージを作成しました。",
+        "creation_summary_room": "%(creator)sがルームを作成し設定しました。"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3701,7 +3665,15 @@
         "server_picker_explainer": "好みのホームサーバーがあるか、自分でホームサーバーを運営している場合は、そちらをお使いください。",
         "server_picker_learn_more": "ホームサーバーについて（英語）",
         "incorrect_credentials": "ユーザー名とパスワードの一方あるいは両方が正しくありません。",
-        "account_deactivated": "このアカウントは無効化されています。"
+        "account_deactivated": "このアカウントは無効化されています。",
+        "registration_username_validation": "小文字、数字、ダッシュ、アンダースコアのみを使ってください",
+        "registration_username_unable_check": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。",
+        "registration_username_in_use": "そのユーザー名は既に使用されています。別のユーザー名を試すか、あなたのユーザー名なら、以下でサインインしてください。",
+        "phone_label": "電話",
+        "phone_optional_label": "電話番号（任意）",
+        "email_help_text": "アカウント復旧用のメールアドレスを追加。",
+        "email_phone_discovery_text": "後ほど、このメールアドレスまたは電話番号で連絡先に見つけてもらうことができるようになります。",
+        "email_discovery_text": "後ほど、このメールアドレスで連絡先に見つけてもらうことができるようになります。"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3907,7 +3879,21 @@
         "light_high_contrast": "ライト（高コントラスト）"
     },
     "space": {
-        "landing_welcome": "<name/>にようこそ"
+        "landing_welcome": "<name/>にようこそ",
+        "suggested_tooltip": "このルームは、参加を推奨するルームとしておすすめされています",
+        "suggested": "おすすめ",
+        "select_room_below": "以下からルームを選択してください",
+        "unmark_suggested": "おすすめから除外",
+        "mark_suggested": "おすすめに追加",
+        "failed_remove_rooms": "いくつかのルームの削除に失敗しました。後でもう一度やり直してください",
+        "failed_load_rooms": "ルームの一覧を読み込むのに失敗しました。",
+        "incompatible_server_hierarchy": "あなたのサーバーはスペースの階層表示をサポートしていません。",
+        "context_menu": {
+            "devtools_open_timeline": "ルームのタイムラインを表示（開発者ツール）",
+            "home": "スペースのホーム",
+            "explore": "ルームを探す",
+            "manage_and_explore": "ルームの管理および探索"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",
@@ -3963,5 +3949,35 @@
         "setup_rooms_description": "ルームは後からも追加できます。",
         "setup_rooms_private_heading": "あなたのチームはどのようなプロジェクトに取り組みますか？",
         "setup_rooms_private_description": "それぞれのプロジェクトにルームを作りましょう。"
+    },
+    "user_menu": {
+        "switch_theme_light": "ライトテーマに切り替える",
+        "switch_theme_dark": "ダークテーマに切り替える"
+    },
+    "notif_panel": {
+        "empty_heading": "未読はありません",
+        "empty_description": "未読の通知はありません。"
+    },
+    "console_scam_warning": "ここでコピーペーストを行うように伝えられた場合は、あなたが詐欺の対象となっている可能性が非常に高いです！",
+    "console_dev_note": "もし開発者の方であれば、Elementはオープンソースですので、ぜひ私たちのGitHub（https://github.com/vector-im/element-web/）をご覧いただき、開発にご参加ください！",
+    "room": {
+        "drop_file_prompt": "アップロードするファイルをここにドロップしてください"
+    },
+    "file_panel": {
+        "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
+        "peek_note": "ルームのファイルを表示するには、ルームに参加する必要があります",
+        "empty_heading": "このルームにファイルはありません",
+        "empty_description": "チャットで添付するか、ルームにドラッグ＆ドロップすると、ファイルを追加できます。"
+    },
+    "terms": {
+        "integration_manager": "ボット、ブリッジ、ウィジェット、ステッカーパックを使用",
+        "tos": "利用規約",
+        "intro": "続行するには、このサービスの利用規約に同意する必要があります。",
+        "column_service": "サービス",
+        "column_summary": "概要",
+        "column_document": "ドキュメント"
+    },
+    "space_settings": {
+        "title": "設定 - %(spaceName)s"
     }
 }

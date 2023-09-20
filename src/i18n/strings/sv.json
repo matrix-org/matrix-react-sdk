@@ -203,8 +203,6 @@
     "Verification Pending": "Avvaktar verifiering",
     "Unable to add email address": "Kunde inte lägga till e-postadress",
     "Unable to verify email address.": "Kunde inte verifiera e-postadressen.",
-    "You must <a>register</a> to use this functionality": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
-    "You must join the room to see its files": "Du måste gå med i rummet för att se tillhörande filer",
     "This will allow you to reset your password and receive notifications.": "Det här låter dig återställa lösenordet och ta emot aviseringar.",
     "New Password": "Nytt lösenord",
     "Do you want to set an email address?": "Vill du ange en e-postadress?",
@@ -230,7 +228,6 @@
     "Export room keys": "Exportera rumsnycklar",
     "Import room keys": "Importera rumsnycklar",
     "File to import": "Fil att importera",
-    "Drop file here to upload": "Släpp en fil här för att ladda upp",
     "Replying": "Svarar",
     "Banned by %(displayName)s": "Bannad av %(displayName)s",
     "Muted Users": "Dämpade användare",
@@ -408,7 +405,6 @@
     "Room Addresses": "Rumsadresser",
     "This homeserver would like to make sure you are not a robot.": "Denna hemserver vill se till att du inte är en robot.",
     "Email (optional)": "E-post (valfritt)",
-    "Phone (optional)": "Telefon (valfritt)",
     "Join millions for free on the largest public server": "Gå med miljontals användare gratis på den största publika servern",
     "Your password has been reset.": "Ditt lösenord har återställts.",
     "General failure": "Allmänt fel",
@@ -620,11 +616,6 @@
     "Message edits": "Meddelanderedigeringar",
     "Find others by phone or email": "Hitta andra via telefon eller e-post",
     "Be found by phone or email": "Bli hittad via telefon eller e-post",
-    "Terms of Service": "Användarvillkor",
-    "To continue you need to accept the terms of this service.": "För att fortsätta måste du acceptera villkoren för denna tjänst.",
-    "Service": "Tjänst",
-    "Summary": "Sammanfattning",
-    "Document": "Dokument",
     "Cancel entering passphrase?": "Avbryta inmatning av lösenfras?",
     "Setting up keys": "Sätter upp nycklar",
     "Verify this session": "Verifiera denna session",
@@ -660,7 +651,6 @@
     "%(name)s is requesting verification": "%(name)s begär verifiering",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VARNING: NYCKELVERIFIERING MISSLYCKADES! Den signerade nyckeln för %(userId)s och sessionen %(deviceId)s är \"%(fprint)s\" vilket inte matchar den givna nyckeln \"%(fingerprint)s\". Detta kan betyda att kommunikationen är övervakad!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Signeringsnyckeln du gav matchar signeringsnyckeln du fick av %(userId)ss session %(deviceId)s. Sessionen markerades som verifierad.",
-    "Use bots, bridges, widgets and sticker packs": "Använd bottar, bryggor, widgets och dekalpaket",
     "You signed in to a new session without verifying it:": "Du loggade in i en ny session utan att verifiera den:",
     "Verify your other session using one of the options below.": "Verifiera din andra session med ett av alternativen nedan.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) loggade in i en ny session utan att verifiera den:",
@@ -956,20 +946,14 @@
     "Passwords don't match": "Lösenorden matchar inte",
     "Other users can invite you to rooms using your contact details": "Andra användare kan bjuda in dig till rum med dina kontaktuppgifter",
     "Enter phone number (required on this homeserver)": "Skriv in telefonnummer (krävs på den här hemservern)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Använd endast små bokstäver, siffror, bindestreck och understreck",
     "Enter username": "Skriv in användarnamn",
     "Sign in with SSO": "Logga in med SSO",
-    "No files visible in this room": "Inga filer synliga i det här rummet",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Bifoga filer från chatten eller dra och släpp dem vart som helst i rummet.",
     "Explore rooms": "Utforska rum",
-    "%(creator)s created and configured the room.": "%(creator)s skapade och konfigurerade rummet.",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "other": "Du har %(count)s olästa aviseringar i en tidigare version av det här rummet.",
         "one": "Du har %(count)s oläst avisering i en tidigare version av det här rummet."
     },
     "All settings": "Alla inställningar",
-    "Switch to light mode": "Byt till ljust läge",
-    "Switch to dark mode": "Byt till mörkt läge",
     "Switch theme": "Byt tema",
     "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
     "Failed to get autodiscovery configuration from server": "Misslyckades att få konfiguration för autoupptäckt från servern",
@@ -1103,7 +1087,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United States": "USA",
-    "%(creator)s created this DM.": "%(creator)s skapade den här DM:en.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Starta en konversation med någon med deras namn, e-postadress eller användarnamn (som <userId/>).",
     "Invite by email": "Bjud in via e-post",
@@ -1334,9 +1317,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
     "Continuing without email": "Fortsätter utan e-post",
     "There was a problem communicating with the homeserver, please try again later.": "Ett problem inträffade vi kommunikation med hemservern, vänligen försök igen senare.",
-    "Use email to optionally be discoverable by existing contacts.": "Använd e-post för att valfritt kunna upptäckas av existerande kontakter.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Använd e-post eller telefon för att valfritt kunna upptäckas av existerande kontakter.",
-    "Add an email to be able to reset your password.": "Lägg till en e-postadress för att kunna återställa ditt lösenord.",
     "That phone number doesn't look quite right, please check and try again": "Det telefonnumret ser inte korrekt ut, vänligen kolla det och försök igen",
     "Enter phone number": "Ange telefonnummer",
     "Enter email address": "Ange e-postadress",
@@ -1347,7 +1327,6 @@
     "Approve widget permissions": "Godta widgetbehörigheter",
     "You've reached the maximum number of simultaneous calls.": "Du har nått det maximala antalet samtidiga samtal.",
     "Too Many Calls": "För många samtal",
-    "You have no visible notifications.": "Du har inga synliga aviseringar.",
     "Transfer": "Överlåt",
     "Failed to transfer call": "Misslyckades att överlåta samtal",
     "A call can only be transferred to a single user.": "Ett samtal kan bara överlåtas till en enskild användare.",
@@ -1388,12 +1367,10 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi bad webbläsaren att komma ihåg vilken hemserver du använder för att logga in, men tyvärr har din webbläsare glömt det. Gå till inloggningssidan och försök igen.",
     "We couldn't log you in": "Vi kunde inte logga in dig",
     "Original event source": "Ursprunglig händelsekällkod",
-    "Decrypted event source": "Avkrypterad händelsekällkod",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
     },
-    "Your server does not support showing space hierarchies.": "Din server stöder inte att visa utrymmeshierarkier.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Är du säker på att du vill lämna utrymmet '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Det här utrymmet är inte offentligt. Du kommer inte kunna gå med igen utan en inbjudan.",
     "Start audio stream": "Starta ljudström",
@@ -1428,11 +1405,6 @@
     "<inviter/> invites you": "<inviter/> bjuder in dig",
     "You may want to try a different search or check for typos.": "Du kanske vill pröva en annan söksträng eller kolla efter felstavningar.",
     "No results found": "Inga resultat funna",
-    "Mark as suggested": "Markera som föreslaget",
-    "Mark as not suggested": "Markera som inte föreslaget",
-    "Failed to remove some rooms. Try again later": "Misslyckades att ta bort vissa rum. Försök igen senare",
-    "Suggested": "Föreslaget",
-    "This room is suggested as a good one to join": "Det här rummet föreslås som ett bra att gå med i",
     "%(count)s rooms": {
         "one": "%(count)s rum",
         "other": "%(count)s rum"
@@ -1460,7 +1432,6 @@
     "Consult first": "Tillfråga först",
     "Avatar": "Avatar",
     "Verification requested": "Verifiering begärd",
-    "Manage & explore rooms": "Hantera och utforska rum",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifiera din identitet för att komma åt krypterade meddelanden och bevisa din identitet för andra.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Du är den enda personen här. Om du lämnar så kommer ingen kunna gå med igen, inklusive du.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Om du återställer allt så kommer du att börja om utan betrodda sessioner eller betrodda användare, och kommer kanske inte kunna se gamla meddelanden.",
@@ -1484,7 +1455,6 @@
     "You have no ignored users.": "Du har inga ignorerade användare.",
     "Message search initialisation failed": "Initialisering av meddelandesökning misslyckades",
     "Search names and descriptions": "Sök namn och beskrivningar",
-    "Select a room below first": "Välj ett rum nedan först",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
     "Want to add a new room instead?": "Vill du lägga till ett nytt rum istället?",
@@ -1615,7 +1585,6 @@
     "Collapse reply thread": "Kollapsa svarstråd",
     "Show preview": "Visa förhandsgranskning",
     "View source": "Visa källkod",
-    "Settings - %(spaceName)s": "Inställningar - %(spaceName)s",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
     "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
     "These are likely ones other room admins are a part of.": "Dessa är troligen såna andra rumsadmins är med i.",
@@ -1689,7 +1658,6 @@
     },
     "Loading new room": "Laddar nytt rum",
     "Upgrading room": "Uppgraderar rum",
-    "See room timeline (devtools)": "Se rummets tidslinje (utvecklingsverktyg)",
     "View in room": "Visa i rum",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
     "MB": "MB",
@@ -1708,7 +1676,6 @@
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Vi kommer att generera en säkerhetsnyckel så du kan lagra någonstans säkert, som en lösenordshanterare eller ett kassaskåp.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Om du inte verifierar så kommer du inte komma åt alla dina meddelanden och visas kanske som ej betrodd för andra.",
-    "You're all caught up": "Du är ikapp",
     "Copy link to thread": "Kopiera länk till tråd",
     "Thread options": "Trådalternativ",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
@@ -1726,7 +1693,6 @@
     "You do not have permission to start polls in this room.": "Du får inte starta omröstningar i det här rummet.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Det här rummet bryggar inte meddelanden till några platformar. <a>Läs mer.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Det här rummet är med i några utrymmen du inte är admin för. I de utrymmena så kommer det gamla rummet fortfarande visas, men folk kommer uppmanas att gå med i det nya.",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Någon annan har redan det användarnamnet. Pröva ett annat, eller om det är ditt, logga in nedan.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -1843,12 +1809,7 @@
     "Device verified": "Enhet verifierad",
     "Verify this device": "Verifiera den här enheten",
     "Unable to verify this device": "Kunde inte verifiera den här enheten",
-    "Failed to load list of rooms.": "Misslyckades att ladda lista över rum.",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Ifall du vet vad du gör: Element är öppen källkod, kolla gärna våran GitHub (https://github.com/vector-im/element-web/) och bidra!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Om någon sa åt dig att kopiera/klistra något när, så är det troligt att du blir lurad!",
     "Wait!": "Vänta!",
-    "Unable to check if username has been taken. Try again later.": "Kunde inte kolla om användarnamnet var upptaget. Pröva igen senare.",
-    "Space home": "Utrymmeshem",
     "Mentions only": "Endast omnämnanden",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
@@ -2096,13 +2057,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
     "Manually verify by text": "Verifiera manuellt med text",
-    "Proxy URL": "Proxy-URL",
-    "Proxy URL (optional)": "Proxy-URL (valfritt)",
-    "To disable you will need to log out and back in, use with caution!": "För att inaktivera det här så behöver du logga ut och logga in igen, använd varsamt!",
-    "Sliding Sync configuration": "Glidande synk-läge",
-    "Your server lacks native support, you must specify a proxy": "Din server saknar nativt stöd, du måste ange en proxy",
-    "Your server lacks native support": "Din server saknar nativt stöd",
-    "Your server has native support": "Din server har nativt stöd",
     "Choose a locale": "Välj en lokalisering",
     "<w>WARNING:</w> <description/>": "<w>VARNING:</w> <description/>",
     "Error downloading image": "Fel vid nedladdning av bild",
@@ -2170,7 +2124,6 @@
     "Can’t start a call": "Kunde inte starta ett samtal",
     "Failed to read events": "Misslyckades att läsa händelser",
     "Failed to send event": "Misslyckades att skicka händelse",
-    "Decrypted source unavailable": "Avkrypterad källa otillgänglig",
     "Registration token": "Registreringstoken",
     "Enter a registration token provided by the homeserver administrator.": "Ange en registreringstoken försedd av hemserveradministratören.",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
@@ -2583,7 +2536,14 @@
         "rust_crypto_disabled_notice": "Kan för närvarande endast aktiveras via config.json",
         "automatic_debug_logs_key_backup": "Skicka automatiskt felsökningsloggar när nyckelsäkerhetskopiering inte funkar",
         "automatic_debug_logs_decryption": "Skicka automatiskt avbuggningsloggar vid avkrypteringsfel",
-        "automatic_debug_logs": "Skicka automatiskt felsökningsloggar vid fel"
+        "automatic_debug_logs": "Skicka automatiskt felsökningsloggar vid fel",
+        "sliding_sync_server_support": "Din server har nativt stöd",
+        "sliding_sync_server_no_support": "Din server saknar nativt stöd",
+        "sliding_sync_server_specify_proxy": "Din server saknar nativt stöd, du måste ange en proxy",
+        "sliding_sync_configuration": "Glidande synk-läge",
+        "sliding_sync_disable_warning": "För att inaktivera det här så behöver du logga ut och logga in igen, använd varsamt!",
+        "sliding_sync_proxy_url_optional_label": "Proxy-URL (valfritt)",
+        "sliding_sync_proxy_url_label": "Proxy-URL"
     },
     "keyboard": {
         "home": "Hem",
@@ -3128,7 +3088,9 @@
         "show_hidden_events": "Visa dolda händelser i tidslinjen",
         "low_bandwidth_mode_description": "Kräver kompatibel hemserver.",
         "low_bandwidth_mode": "Lågt bandbreddsläge",
-        "developer_mode": "Utvecklarläge"
+        "developer_mode": "Utvecklarläge",
+        "view_source_decrypted_event_source": "Avkrypterad händelsekällkod",
+        "view_source_decrypted_event_source_unavailable": "Avkrypterad källa otillgänglig"
     },
     "export_chat": {
         "html": "HTML",
@@ -3515,7 +3477,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Du avslutade en <a>röstsändning</a>",
             "user": "%(senderName)s avslutade en <a>röstsändning</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s skapade den här DM:en.",
+        "creation_summary_room": "%(creator)s skapade och konfigurerade rummet."
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -3836,7 +3800,15 @@
         "server_picker_explainer": "Använd din föredragna hemserver om du har en, eller driv din egen.",
         "server_picker_learn_more": "Om hemservrar",
         "incorrect_credentials": "Fel användarnamn och/eller lösenord.",
-        "account_deactivated": "Det här kontot har avaktiverats."
+        "account_deactivated": "Det här kontot har avaktiverats.",
+        "registration_username_validation": "Använd endast små bokstäver, siffror, bindestreck och understreck",
+        "registration_username_unable_check": "Kunde inte kolla om användarnamnet var upptaget. Pröva igen senare.",
+        "registration_username_in_use": "Någon annan har redan det användarnamnet. Pröva ett annat, eller om det är ditt, logga in nedan.",
+        "phone_label": "Telefon",
+        "phone_optional_label": "Telefon (valfritt)",
+        "email_help_text": "Lägg till en e-postadress för att kunna återställa ditt lösenord.",
+        "email_phone_discovery_text": "Använd e-post eller telefon för att valfritt kunna upptäckas av existerande kontakter.",
+        "email_discovery_text": "Använd e-post för att valfritt kunna upptäckas av existerande kontakter."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4048,7 +4020,21 @@
         "light_high_contrast": "Ljust högkontrast"
     },
     "space": {
-        "landing_welcome": "Välkommen till <name/>"
+        "landing_welcome": "Välkommen till <name/>",
+        "suggested_tooltip": "Det här rummet föreslås som ett bra att gå med i",
+        "suggested": "Föreslaget",
+        "select_room_below": "Välj ett rum nedan först",
+        "unmark_suggested": "Markera som inte föreslaget",
+        "mark_suggested": "Markera som föreslaget",
+        "failed_remove_rooms": "Misslyckades att ta bort vissa rum. Försök igen senare",
+        "failed_load_rooms": "Misslyckades att ladda lista över rum.",
+        "incompatible_server_hierarchy": "Din server stöder inte att visa utrymmeshierarkier.",
+        "context_menu": {
+            "devtools_open_timeline": "Se rummets tidslinje (utvecklingsverktyg)",
+            "home": "Utrymmeshem",
+            "explore": "Utforska rum",
+            "manage_and_explore": "Hantera och utforska rum"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -4105,5 +4091,35 @@
         "setup_rooms_description": "Du kan lägga till flera senare också, inklusive redan existerande.",
         "setup_rooms_private_heading": "Vilka projekt jobbar ditt team på?",
         "setup_rooms_private_description": "Vi kommer skapa rum för var och en av dem."
+    },
+    "user_menu": {
+        "switch_theme_light": "Byt till ljust läge",
+        "switch_theme_dark": "Byt till mörkt läge"
+    },
+    "notif_panel": {
+        "empty_heading": "Du är ikapp",
+        "empty_description": "Du har inga synliga aviseringar."
+    },
+    "console_scam_warning": "Om någon sa åt dig att kopiera/klistra något när, så är det troligt att du blir lurad!",
+    "console_dev_note": "Ifall du vet vad du gör: Element är öppen källkod, kolla gärna våran GitHub (https://github.com/vector-im/element-web/) och bidra!",
+    "room": {
+        "drop_file_prompt": "Släpp en fil här för att ladda upp"
+    },
+    "file_panel": {
+        "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
+        "peek_note": "Du måste gå med i rummet för att se tillhörande filer",
+        "empty_heading": "Inga filer synliga i det här rummet",
+        "empty_description": "Bifoga filer från chatten eller dra och släpp dem vart som helst i rummet."
+    },
+    "terms": {
+        "integration_manager": "Använd bottar, bryggor, widgets och dekalpaket",
+        "tos": "Användarvillkor",
+        "intro": "För att fortsätta måste du acceptera villkoren för denna tjänst.",
+        "column_service": "Tjänst",
+        "column_summary": "Sammanfattning",
+        "column_document": "Dokument"
+    },
+    "space_settings": {
+        "title": "Inställningar - %(spaceName)s"
     }
 }

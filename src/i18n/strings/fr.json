@@ -141,7 +141,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ce processus vous permet d’exporter dans un fichier local les clés pour les messages que vous avez reçus dans des salons chiffrés. Il sera ensuite possible d’importer ce fichier dans un autre client Matrix, afin de permettre à ce client de pouvoir déchiffrer ces messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
-    "You must join the room to see its files": "Vous devez rejoindre le salon pour voir ses fichiers",
     "Reject all %(invitedRooms)s invites": "Rejeter la totalité des %(invitedRooms)s invitations",
     "Failed to invite": "Échec de l’invitation",
     "Confirm Removal": "Confirmer la suppression",
@@ -154,7 +153,6 @@
     "Error decrypting video": "Erreur lors du déchiffrement de la vidéo",
     "Add an Integration": "Ajouter une intégration",
     "URL Previews": "Aperçus des liens",
-    "Drop file here to upload": "Glisser le fichier ici pour l’envoyer",
     "Jump to first unread message.": "Aller au premier message non lu.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "Verified key": "Clé vérifiée",
@@ -173,7 +171,6 @@
         "one": "Envoi de %(filename)s et %(count)s autre",
         "other": "Envoi de %(filename)s et %(count)s autres"
     },
-    "You must <a>register</a> to use this functionality": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
     "Create new room": "Créer un nouveau salon",
     "New Password": "Nouveau mot de passe",
     "Something went wrong!": "Quelque chose s’est mal déroulé !",
@@ -395,7 +392,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet utilisateur pour le marquer comme fiable. Faire confiance aux utilisateurs vous permet d’être tranquille lorsque vous utilisez des messages chiffrés de bout en bout.",
     "Incoming Verification Request": "Demande de vérification entrante",
     "Email (optional)": "E-mail (facultatif)",
-    "Phone (optional)": "Téléphone (facultatif)",
     "Join millions for free on the largest public server": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
     "Create account": "Créer un compte",
     "Recovery Method Removed": "Méthode de récupération supprimée",
@@ -573,7 +569,6 @@
     "Your %(brand)s is misconfigured": "Votre %(brand)s est mal configuré",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Demandez à votre administrateur %(brand)s de vérifier que <a>votre configuration</a> ne contient pas d’entrées incorrectes ou en double.",
     "Unexpected error resolving identity server configuration": "Une erreur inattendue est survenue pendant la résolution de la configuration du serveur d’identité",
-    "Use lowercase letters, numbers, dashes and underscores only": "Utiliser uniquement des lettres minuscules, chiffres, traits d’union et tirets bas",
     "Cannot reach identity server": "Impossible de joindre le serveur d’identité",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Vous pouvez vous inscrire, mais certaines fonctionnalités ne seront pas disponibles jusqu’au retour du serveur d’identité. Si vous continuez à voir cet avertissement, vérifiez votre configuration ou contactez un administrateur du serveur.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Vous pouvez réinitialiser votre mot de passe, mais certaines fonctionnalités ne seront pas disponibles jusqu’au retour du serveur d’identité. Si vous continuez à voir cet avertissement, vérifiez votre configuration ou contactez un administrateur du serveur.",
@@ -591,10 +586,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Dites-nous ce qui s’est mal passé ou, encore mieux, créez un rapport d’erreur sur GitHub qui décrit le problème.",
     "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
     "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
-    "Use bots, bridges, widgets and sticker packs": "Utiliser des robots, des passerelles, des widgets ou des jeux d’autocollants",
-    "Terms of Service": "Conditions de service",
-    "Service": "Service",
-    "Summary": "Résumé",
     "Discovery": "Découverte",
     "Deactivate account": "Désactiver le compte",
     "Unable to revoke sharing for email address": "Impossible de révoquer le partage pour l’adresse e-mail",
@@ -664,15 +655,12 @@
     "Close dialog": "Fermer la boîte de dialogue",
     "Hide advanced": "Masquer les paramètres avancés",
     "Show advanced": "Afficher les paramètres avancés",
-    "To continue you need to accept the terms of this service.": "Pour continuer vous devez accepter les conditions de ce service.",
-    "Document": "Document",
     "Show image": "Afficher l’image",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Clé public du captcha manquante dans la configuration du serveur d’accueil. Veuillez le signaler à l’administrateur de votre serveur d’accueil.",
     "Your email address hasn't been verified yet": "Votre adresse e-mail n’a pas encore été vérifiée",
     "Click the link in the email you received to verify and then click continue again.": "Cliquez sur le lien dans l’e-mail que vous avez reçu pour la vérifier et cliquez encore sur continuer.",
     "Add Email Address": "Ajouter une adresse e-mail",
     "Add Phone Number": "Ajouter un numéro de téléphone",
-    "%(creator)s created and configured the room.": "%(creator)s a créé et configuré le salon.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vous devriez <b>supprimer vos données personnelles</b> du serveur d’identité <idserver /> avant de vous déconnecter. Malheureusement, le serveur d’identité <idserver /> est actuellement hors ligne ou injoignable.",
     "You should:": "Vous devriez :",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "vérifier qu’aucune des extensions de votre navigateur ne bloque le serveur d’identité (comme Privacy Badger)",
@@ -963,8 +951,6 @@
     "Ok": "OK",
     "New version available. <a>Update now.</a>": "Nouvelle version disponible. <a>Faire la mise à niveau maintenant.</a>",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "L’administrateur de votre serveur a désactivé le chiffrement de bout en bout par défaut dans les salons privés et les conversations privées.",
-    "Switch to light mode": "Passer au mode clair",
-    "Switch to dark mode": "Passer au mode sombre",
     "Switch theme": "Changer le thème",
     "All settings": "Tous les paramètres",
     "No recently visited rooms": "Aucun salon visité récemment",
@@ -1039,8 +1025,6 @@
     "Hide Widgets": "Masquer les widgets",
     "Algorithm:": "Algorithme :",
     "Set up Secure Backup": "Configurer la sauvegarde sécurisée",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Envoyez des fichiers depuis la discussion ou glissez et déposez-les n’importe où dans le salon.",
-    "No files visible in this room": "Aucun fichier visible dans ce salon",
     "Move right": "Aller à droite",
     "Move left": "Aller à gauche",
     "Revoke permissions": "Révoquer les permissions",
@@ -1062,7 +1046,6 @@
     "Modal Widget": "Fenêtre de widget",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invitez quelqu’un à partir de son nom, pseudo (comme <userId/>) ou <a>partagez ce salon</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Commencer une conversation privée avec quelqu’un en utilisant son nom ou son pseudo (comme <userId/>).",
-    "%(creator)s created this DM.": "%(creator)s a créé cette conversation privée.",
     "There was a problem communicating with the homeserver, please try again later.": "Il y a eu un problème lors de la communication avec le serveur d’accueil, veuillez réessayer ultérieurement.",
     "Algeria": "Algérie",
     "Albania": "Albanie",
@@ -1340,10 +1323,6 @@
     "A new Security Phrase and key for Secure Messages have been detected.": "Une nouvelle phrase secrète et clé de sécurité pour les messages sécurisés ont été détectées.",
     "Confirm your Security Phrase": "Confirmez votre phrase secrète",
     "Great! This Security Phrase looks strong enough.": "Super ! Cette phrase secrète a l’air assez solide.",
-    "You have no visible notifications.": "Vous n’avez aucune notification visible.",
-    "Use email to optionally be discoverable by existing contacts.": "Utiliser une adresse e-mail pour pouvoir être découvert par des contacts existants.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Utiliser une adresse e-mail ou un numéro de téléphone pour pouvoir être découvert par des contacts existants.",
-    "Add an email to be able to reset your password.": "Ajouter une adresse e-mail pour pouvoir réinitialiser votre mot de passe.",
     "That phone number doesn't look quite right, please check and try again": "Ce numéro de téléphone ne semble pas correct, merci de vérifier et réessayer",
     "Enter email address": "Saisir l’adresse e-mail",
     "Enter phone number": "Saisir le numéro de téléphone",
@@ -1391,12 +1370,10 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Original event source": "Évènement source original",
-    "Decrypted event source": "Évènement source déchiffré",
     "%(count)s members": {
         "one": "%(count)s membre",
         "other": "%(count)s membres"
     },
-    "Your server does not support showing space hierarchies.": "Votre serveur ne prend pas en charge l’affichage des hiérarchies d’espaces.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Êtes-vous sûr de vouloir quitter l’espace « %(spaceName)s » ?",
     "This space is not public. You will not be able to rejoin without an invite.": "Cet espace n’est pas public. Vous ne pourrez pas le rejoindre sans invitation.",
     "Start audio stream": "Démarrer une diffusion audio",
@@ -1424,16 +1401,11 @@
     "Create a space": "Créer un espace",
     "This homeserver has been blocked by its administrator.": "Ce serveur d’accueil a été bloqué par son administrateur.",
     "Space selection": "Sélection d’un espace",
-    "Mark as suggested": "Marquer comme recommandé",
-    "Mark as not suggested": "Marquer comme non recommandé",
-    "Suggested": "Recommandé",
-    "This room is suggested as a good one to join": "Ce salon recommandé peut être intéressant à rejoindre",
     "Private space": "Espace privé",
     "Public space": "Espace public",
     "<inviter/> invites you": "<inviter/> vous a invité",
     "You may want to try a different search or check for typos.": "Essayez une requête différente, ou vérifiez que vous n’avez pas fait de faute de frappe.",
     "No results found": "Aucun résultat",
-    "Failed to remove some rooms. Try again later": "Échec de la suppression de certains salons. Veuillez réessayez plus tard",
     "%(count)s rooms": {
         "one": "%(count)s salon",
         "other": "%(count)s salons"
@@ -1459,7 +1431,6 @@
         "other": "%(count)s personnes que vous connaissez en font déjà partie"
     },
     "Invite to just this room": "Inviter seulement dans ce salon",
-    "Manage & explore rooms": "Gérer et découvrir les salons",
     "unknown person": "personne inconnue",
     "%(deviceId)s from %(ip)s": "%(deviceId)s depuis %(ip)s",
     "Review to ensure your account is safe": "Vérifiez pour assurer la sécurité de votre compte",
@@ -1483,7 +1454,6 @@
     "Failed to send": "Échec de l’envoi",
     "Enter your Security Phrase a second time to confirm it.": "Saisissez à nouveau votre phrase secrète pour la confirmer.",
     "You have no ignored users.": "Vous n’avez ignoré personne.",
-    "Select a room below first": "Sélectionnez un salon ci-dessous d’abord",
     "Want to add a new room instead?": "Voulez-vous plutôt ajouter un nouveau salon ?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Ajout du salon…",
@@ -1523,7 +1493,6 @@
     "Collapse reply thread": "Masquer le fil de discussion",
     "Show preview": "Afficher l’aperçu",
     "View source": "Afficher la source",
-    "Settings - %(spaceName)s": "Paramètres - %(spaceName)s",
     "Please provide an address": "Veuillez fournir une adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Définissez les adresses de cet espace pour que les utilisateurs puissent le trouver avec votre serveur d’accueil (%(localDomain)s)",
@@ -1694,7 +1663,6 @@
     },
     "Loading new room": "Chargement du nouveau salon",
     "Upgrading room": "Mise-à-jour du salon",
-    "See room timeline (devtools)": "Voir l’historique du salon (outils développeurs)",
     "View in room": "Voir dans le salon",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
@@ -1707,7 +1675,6 @@
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Sans vérification, vous n’aurez pas accès à tous vos messages et vous n’apparaîtrez pas comme de confiance aux autres.",
     "Joined": "Rejoint",
     "Joining": "En train de rejoindre",
-    "You're all caught up": "Vous êtes à jour",
     "If you can't see who you're looking for, send them your invite link below.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation ci-dessous.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Dans les salons chiffrés, vérifiez tous les utilisateurs pour vous assurer qu’il est sécurisé.",
     "Yours, or the other users' session": "Votre session ou celle de l’autre utilisateur",
@@ -1716,7 +1683,6 @@
     "Insert link": "Insérer un lien",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ce salon ne transmet les messages à aucune plateforme. <a>En savoir plus.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ce salon se trouve dans certains espaces pour lesquels vous n’êtes pas administrateur. Dans ces espaces, l’ancien salon sera toujours disponible, mais un message sera affiché pour inciter les personnes à rejoindre le nouveau salon.",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Quelqu’un d’autre a déjà ce nom d’utilisateur. Essayez-en un autre ou bien, si c’est vous, connecter vous ci-dessous.",
     "Copy link to thread": "Copier le lien du fil de discussion",
     "Thread options": "Options des fils de discussion",
     "Add option": "Ajouter un choix",
@@ -1805,7 +1771,6 @@
     "Spaces you're in": "Espaces où vous êtes",
     "Including you, %(commaSeparatedMembers)s": "Dont vous, %(commaSeparatedMembers)s",
     "Copy room link": "Copier le lien du salon",
-    "Failed to load list of rooms.": "Impossible de charger la liste des salons.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
     "Sections to show": "Sections à afficher",
     "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
@@ -1833,7 +1798,6 @@
     "Back to chat": "Retour à la conversation",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Paire (utilisateur, session) inconnue : (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Adresse de salon non reconnue : %(roomAlias)s",
-    "Space home": "Accueil de l’espace",
     "Could not fetch location": "Impossible de récupérer la position",
     "Message pending moderation": "Message en attente de modération",
     "Message pending moderation: %(reason)s": "Message en attente de modération : %(reason)s",
@@ -1848,12 +1812,9 @@
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Les espaces permettent de regrouper des salons et des personnes. En plus de ceux auxquels vous participez, vous pouvez également utiliser des espaces prédéfinis.",
     "Internal room ID": "Identifiant interne du salon",
     "Group all your rooms that aren't part of a space in one place.": "Regroupe tous les salons n’appartenant pas à un espace au même endroit.",
-    "Unable to check if username has been taken. Try again later.": "Impossible de vérifier si le nom d’utilisateur est déjà utilisé. Veuillez réessayer plus tard.",
     "Pick a date to jump to": "Choisissez vers quelle date aller",
     "Jump to date": "Aller à la date",
     "The beginning of the room": "Le début de ce salon",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Si vous savez ce que vous faites, Element est un logiciel libre, n'hésitez pas à consulter notre GitHub (https://github.com/vector-im/element-web/) et à contribuer !",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Si quelqu'un vous a dit de copier/coller quelque chose ici, il y a de fortes chances que vous soyez victime d'une escroquerie !",
     "Wait!": "Attendez !",
     "This address does not point at this room": "Cette adresse ne pointe pas vers ce salon",
     "Location": "Position",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s et %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
-    "Proxy URL": "URL du serveur mandataire (proxy)",
-    "Proxy URL (optional)": "URL du serveur mandataire (proxy – facultatif)",
-    "To disable you will need to log out and back in, use with caution!": "Pour la désactiver, vous devrez vous déconnecter et vous reconnecter, faites attention !",
-    "Sliding Sync configuration": "Configuration de la synchronisation progressive",
-    "Your server lacks native support, you must specify a proxy": "Votre serveur manque d’un support natif, vous devez spécifier un serveur mandataire (proxy)",
-    "Your server lacks native support": "Votre serveur manque d’un support natif",
-    "Your server has native support": "Votre serveur a un support natif",
     "You need to be able to kick users to do that.": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci.",
     "Voice broadcast": "Diffusion audio",
     "You do not have permission to start voice calls": "Vous n’avez pas la permission de démarrer un appel audio",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
     "Can't start voice message": "Impossible de commencer un message vocal",
     "Edit link": "Éditer le lien",
-    "Decrypted source unavailable": "Source déchiffrée non disponible",
     "%(senderName)s started a voice broadcast": "%(senderName)s a démarré une diffusion audio",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Jeton d’enregistrement",
@@ -2627,7 +2580,14 @@
         "rust_crypto_disabled_notice": "Ne peut pour l’instant être activé que dans config.json",
         "automatic_debug_logs_key_backup": "Envoyer automatiquement les journaux de débogage lorsque la sauvegarde des clés ne fonctionne pas",
         "automatic_debug_logs_decryption": "Envoyer automatiquement les journaux de débogage en cas d’erreurs de déchiffrement",
-        "automatic_debug_logs": "Envoyer automatiquement les journaux de débogage en cas d’erreur"
+        "automatic_debug_logs": "Envoyer automatiquement les journaux de débogage en cas d’erreur",
+        "sliding_sync_server_support": "Votre serveur a un support natif",
+        "sliding_sync_server_no_support": "Votre serveur manque d’un support natif",
+        "sliding_sync_server_specify_proxy": "Votre serveur manque d’un support natif, vous devez spécifier un serveur mandataire (proxy)",
+        "sliding_sync_configuration": "Configuration de la synchronisation progressive",
+        "sliding_sync_disable_warning": "Pour la désactiver, vous devrez vous déconnecter et vous reconnecter, faites attention !",
+        "sliding_sync_proxy_url_optional_label": "URL du serveur mandataire (proxy – facultatif)",
+        "sliding_sync_proxy_url_label": "URL du serveur mandataire (proxy)"
     },
     "keyboard": {
         "home": "Accueil",
@@ -3177,7 +3137,9 @@
         "show_hidden_events": "Afficher les évènements cachés dans le fil de discussion",
         "low_bandwidth_mode_description": "Nécessite un serveur d’accueil compatible.",
         "low_bandwidth_mode": "Mode faible bande passante",
-        "developer_mode": "Mode développeur"
+        "developer_mode": "Mode développeur",
+        "view_source_decrypted_event_source": "Évènement source déchiffré",
+        "view_source_decrypted_event_source_unavailable": "Source déchiffrée non disponible"
     },
     "export_chat": {
         "html": "HTML",
@@ -3573,7 +3535,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Vous avez terminé une <a>diffusion audio</a>",
             "user": "%(senderName)s a terminé une <a>diffusion audio</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s a créé cette conversation privée.",
+        "creation_summary_room": "%(creator)s a créé et configuré le salon."
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -3896,7 +3860,15 @@
         "server_picker_explainer": "Utilisez votre serveur d’accueil Matrix préféré si vous en avez un, ou hébergez le vôtre.",
         "server_picker_learn_more": "À propos des serveurs d’accueil",
         "incorrect_credentials": "Nom d’utilisateur et/ou mot de passe incorrect.",
-        "account_deactivated": "Ce compte a été désactivé."
+        "account_deactivated": "Ce compte a été désactivé.",
+        "registration_username_validation": "Utiliser uniquement des lettres minuscules, chiffres, traits d’union et tirets bas",
+        "registration_username_unable_check": "Impossible de vérifier si le nom d’utilisateur est déjà utilisé. Veuillez réessayer plus tard.",
+        "registration_username_in_use": "Quelqu’un d’autre a déjà ce nom d’utilisateur. Essayez-en un autre ou bien, si c’est vous, connecter vous ci-dessous.",
+        "phone_label": "Numéro de téléphone",
+        "phone_optional_label": "Téléphone (facultatif)",
+        "email_help_text": "Ajouter une adresse e-mail pour pouvoir réinitialiser votre mot de passe.",
+        "email_phone_discovery_text": "Utiliser une adresse e-mail ou un numéro de téléphone pour pouvoir être découvert par des contacts existants.",
+        "email_discovery_text": "Utiliser une adresse e-mail pour pouvoir être découvert par des contacts existants."
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -4108,7 +4080,21 @@
         "light_high_contrast": "Contraste élevé clair"
     },
     "space": {
-        "landing_welcome": "Bienvenue dans <name/>"
+        "landing_welcome": "Bienvenue dans <name/>",
+        "suggested_tooltip": "Ce salon recommandé peut être intéressant à rejoindre",
+        "suggested": "Recommandé",
+        "select_room_below": "Sélectionnez un salon ci-dessous d’abord",
+        "unmark_suggested": "Marquer comme non recommandé",
+        "mark_suggested": "Marquer comme recommandé",
+        "failed_remove_rooms": "Échec de la suppression de certains salons. Veuillez réessayez plus tard",
+        "failed_load_rooms": "Impossible de charger la liste des salons.",
+        "incompatible_server_hierarchy": "Votre serveur ne prend pas en charge l’affichage des hiérarchies d’espaces.",
+        "context_menu": {
+            "devtools_open_timeline": "Voir l’historique du salon (outils développeurs)",
+            "home": "Accueil de l’espace",
+            "explore": "Parcourir les salons",
+            "manage_and_explore": "Gérer et découvrir les salons"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -4165,5 +4151,35 @@
         "setup_rooms_description": "Vous pourrez en ajouter plus tard, y compris certains déjà existant.",
         "setup_rooms_private_heading": "Sur quels projets travaille votre équipe ?",
         "setup_rooms_private_description": "Nous allons créer un salon pour chacun d’entre eux."
+    },
+    "user_menu": {
+        "switch_theme_light": "Passer au mode clair",
+        "switch_theme_dark": "Passer au mode sombre"
+    },
+    "notif_panel": {
+        "empty_heading": "Vous êtes à jour",
+        "empty_description": "Vous n’avez aucune notification visible."
+    },
+    "console_scam_warning": "Si quelqu'un vous a dit de copier/coller quelque chose ici, il y a de fortes chances que vous soyez victime d'une escroquerie !",
+    "console_dev_note": "Si vous savez ce que vous faites, Element est un logiciel libre, n'hésitez pas à consulter notre GitHub (https://github.com/vector-im/element-web/) et à contribuer !",
+    "room": {
+        "drop_file_prompt": "Glisser le fichier ici pour l’envoyer"
+    },
+    "file_panel": {
+        "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
+        "peek_note": "Vous devez rejoindre le salon pour voir ses fichiers",
+        "empty_heading": "Aucun fichier visible dans ce salon",
+        "empty_description": "Envoyez des fichiers depuis la discussion ou glissez et déposez-les n’importe où dans le salon."
+    },
+    "terms": {
+        "integration_manager": "Utiliser des robots, des passerelles, des widgets ou des jeux d’autocollants",
+        "tos": "Conditions de service",
+        "intro": "Pour continuer vous devez accepter les conditions de ce service.",
+        "column_service": "Service",
+        "column_summary": "Résumé",
+        "column_document": "Document"
+    },
+    "space_settings": {
+        "title": "Paramètres - %(spaceName)s"
     }
 }

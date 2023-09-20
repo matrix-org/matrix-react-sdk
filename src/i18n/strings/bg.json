@@ -82,7 +82,6 @@
     "Change Password": "Смяна на парола",
     "Authentication": "Автентикация",
     "Failed to set display name": "Неуспешно задаване на име",
-    "Drop file here to upload": "Пуснете файла тук, за да се качи",
     "Unban": "Отблокирай",
     "Failed to ban user": "Неуспешно блокиране на потребителя",
     "Failed to mute user": "Неуспешно заглушаване на потребителя",
@@ -185,8 +184,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Беше направен опит да се зареди конкретна точка в хронологията на тази стая, но не я намери.",
     "Unable to remove contact information": "Неуспешно премахване на информацията за контакти",
     "This will allow you to reset your password and receive notifications.": "Това ще Ви позволи да възстановите Вашата парола и да получавате известия.",
-    "You must <a>register</a> to use this functionality": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
-    "You must join the room to see its files": "Трябва да се присъедините към стаята, за да видите файловете, които съдържа",
     "Reject invitation": "Отхвърли поканата",
     "Are you sure you want to reject the invitation?": "Сигурни ли сте, че искате да отхвърлите поканата?",
     "Failed to reject invitation": "Неуспешно отхвърляне на поканата",
@@ -395,7 +392,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
     "Incoming Verification Request": "Входяща заявка за потвърждение",
     "Email (optional)": "Имейл (незадължително)",
-    "Phone (optional)": "Телефон (незадължително)",
     "Join millions for free on the largest public server": "Присъединете се безплатно към милиони други на най-големия публичен сървър",
     "Create account": "Създай акаунт",
     "Recovery Method Removed": "Методът за възстановяване беше премахнат",
@@ -577,7 +573,6 @@
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Може да възстановите паролата си, но някои функции няма да са достъпни докато сървъра за самоличност е офлайн. Ако продължавате да виждате това предупреждение, проверете конфигурацията или се свържете с администратора на сървъра.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Може да влезете в профила си, но някои функции няма да са достъпни докато сървъра за самоличност е офлайн. Ако продължавате да виждате това предупреждение, проверете конфигурацията или се свържете с администратора на сървъра.",
     "Unexpected error resolving identity server configuration": "Неочаквана грешка при откриване на конфигурацията на сървъра за самоличност",
-    "Use lowercase letters, numbers, dashes and underscores only": "Използвайте само малки букви, цифри, тирета и подчерта",
     "Upload all": "Качи всички",
     "Edited at %(date)s. Click to view edits.": "Редактирано на %(date)s. Кликнете за да видите редакциите.",
     "Message edits": "Редакции на съобщение",
@@ -591,10 +586,6 @@
     "Clear personal data": "Изчисти личните данни",
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
-    "Use bots, bridges, widgets and sticker packs": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",
-    "Terms of Service": "Условия за ползване",
-    "Service": "Услуга",
-    "Summary": "Обобщение",
     "Call failed due to misconfigured server": "Неуспешен разговор поради неправилно конфигуриран сървър",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Попитайте администратора на сървъра ви (<code>%(homeserverDomain)s</code>) да конфигурира TURN сървър, за да може разговорите да работят надеждно.",
     "Checking server": "Проверка на сървъра",
@@ -681,10 +672,7 @@
     "Message Actions": "Действия със съобщението",
     "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
-    "To continue you need to accept the terms of this service.": "За да продължите, трябва да приемете условията за ползване.",
-    "Document": "Документ",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Липсва публичния ключ за catcha в конфигурацията на сървъра. Съобщете това на администратора на сървъра.",
-    "%(creator)s created and configured the room.": "%(creator)s създаде и настрой стаята.",
     "Jump to first unread room.": "Отиди до първата непрочетена стая.",
     "Jump to first invite.": "Отиди до първата покана.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -952,8 +940,6 @@
     "Confirm your identity by entering your account password below.": "Потвърдете самоличността си чрез въвеждане на паролата за профила по-долу.",
     "Sign in with SSO": "Влезте със SSO",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администраторът на сървъра е изключил шифроване от край-до-край по подразбиране за лични стаи и за директни съобщения.",
-    "Switch to light mode": "Смени на светъл режим",
-    "Switch to dark mode": "Смени на тъмен режим",
     "Switch theme": "Смени темата",
     "All settings": "Всички настройки",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
@@ -1065,10 +1051,6 @@
     "Enter a Security Phrase": "Въведете фраза за сигурност",
     "Generate a Security Key": "Генерирай ключ за сигурност",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Предпазете се от загуба на достъп до шифрованите съобщения и данни като направите резервно копие на ключовете за шифроване върху сървъра.",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Прикачете файлове от чата или ги издърпайте и пуснете в стаята.",
-    "No files visible in this room": "Няма видими файлове в тази стая",
-    "%(creator)s created this DM.": "%(creator)s създаде този директен чат.",
-    "You have no visible notifications.": "Нямате видими уведомления.",
     "There was a problem communicating with the homeserver, please try again later.": "Възникна проблем при комуникацията със Home сървъра, моля опитайте отново по-късно.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Тази сесия откри, че вашата фраза за сигурност и ключ за защитени съобщения бяха премахнати.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Новa фраза за сигурност и ключ за защитени съобщения бяха открити.",
@@ -1325,7 +1307,6 @@
     "Afghanistan": "Афганистан",
     "United States": "Съединените щати",
     "United Kingdom": "Обединеното кралство",
-    "Manage & explore rooms": "Управление и откриване на стаи",
     "Space options": "Опции на пространството",
     "Workspace: <networkLink/>": "Работна област: <networkLink/>",
     "Channel: <channelLink/>": "Канал: <channelLink/>",
@@ -1971,7 +1952,9 @@
             "lightbox_title": "%(senderDisplayName)s промени аватара на %(roomName)s",
             "removed": "%(senderDisplayName)s премахна аватара на стаята.",
             "changed_img": "%(senderDisplayName)s промени аватара на стаята на <img/>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s създаде този директен чат.",
+        "creation_summary_room": "%(creator)s създаде и настрой стаята."
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",
@@ -2172,7 +2155,10 @@
         "sign_in_or_register_description": "Използвайте профила си или създайте нов за да продължите.",
         "register_action": "Създай профил",
         "incorrect_credentials": "Неправилно потребителско име и/или парола.",
-        "account_deactivated": "Този акаунт е деактивиран."
+        "account_deactivated": "Този акаунт е деактивиран.",
+        "registration_username_validation": "Използвайте само малки букви, цифри, тирета и подчерта",
+        "phone_label": "Телефон",
+        "phone_optional_label": "Телефон (незадължително)"
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2276,5 +2262,35 @@
         "public_heading": "Вашето публично пространство",
         "private_heading": "Вашето лично пространство",
         "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят."
+    },
+    "user_menu": {
+        "switch_theme_light": "Смени на светъл режим",
+        "switch_theme_dark": "Смени на тъмен режим"
+    },
+    "notif_panel": {
+        "empty_description": "Нямате видими уведомления."
+    },
+    "room": {
+        "drop_file_prompt": "Пуснете файла тук, за да се качи"
+    },
+    "file_panel": {
+        "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
+        "peek_note": "Трябва да се присъедините към стаята, за да видите файловете, които съдържа",
+        "empty_heading": "Няма видими файлове в тази стая",
+        "empty_description": "Прикачете файлове от чата или ги издърпайте и пуснете в стаята."
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Открий стаи",
+            "manage_and_explore": "Управление и откриване на стаи"
+        }
+    },
+    "terms": {
+        "integration_manager": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",
+        "tos": "Условия за ползване",
+        "intro": "За да продължите, трябва да приемете условията за ползване.",
+        "column_service": "Услуга",
+        "column_summary": "Обобщение",
+        "column_document": "Документ"
     }
 }

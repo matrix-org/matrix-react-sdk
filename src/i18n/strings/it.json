@@ -88,7 +88,6 @@
     "Confirm password": "Conferma password",
     "Change Password": "Modifica password",
     "Failed to set display name": "Impostazione nome visibile fallita",
-    "Drop file here to upload": "Trascina un file qui per l'invio",
     "Unban": "Togli ban",
     "Failed to ban user": "Ban utente fallito",
     "Failed to mute user": "Impossibile silenziare l'utente",
@@ -189,8 +188,6 @@
     "Unable to add email address": "Impossibile aggiungere l'indirizzo email",
     "Unable to verify email address.": "Impossibile verificare l'indirizzo email.",
     "This will allow you to reset your password and receive notifications.": "Ciò ti permetterà di reimpostare la tua password e ricevere notifiche.",
-    "You must <a>register</a> to use this functionality": "Devi <a>registrarti</a> per usare questa funzionalità",
-    "You must join the room to see its files": "Devi entrare nella stanza per vederne i file",
     "Reject invitation": "Rifiuta l'invito",
     "Are you sure you want to reject the invitation?": "Sei sicuro di volere rifiutare l'invito?",
     "Failed to reject invitation": "Rifiuto dell'invito fallito",
@@ -481,7 +478,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "This homeserver would like to make sure you are not a robot.": "Questo homeserver vorrebbe assicurarsi che non sei un robot.",
     "Email (optional)": "Email (facoltativa)",
-    "Phone (optional)": "Telefono (facoltativo)",
     "Join millions for free on the largest public server": "Unisciti gratis a milioni nel più grande server pubblico",
     "Couldn't load page": "Caricamento pagina fallito",
     "Could not load user profile": "Impossibile caricare il profilo utente",
@@ -577,7 +573,6 @@
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Puoi ripristinare la password, ma alcune funzioni non saranno disponibili finchè il server identità non sarà tornato online. Se continui a vedere questo avviso, controlla la tua configurazione o contatta un amministratore del server.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Puoi accedere, ma alcune funzioni non saranno disponibili finchè il server identità non sarà tornato online. Se continui a vedere questo avviso, controlla la tua configurazione o contatta un amministratore del server.",
     "Unexpected error resolving identity server configuration": "Errore inaspettato risolvendo la configurazione del server identità",
-    "Use lowercase letters, numbers, dashes and underscores only": "Usa solo minuscole, numeri, trattini e trattini bassi",
     "Upload all": "Invia tutto",
     "Edited at %(date)s. Click to view edits.": "Modificato alle %(date)s. Clicca per vedere le modifiche.",
     "Message edits": "Modifiche del messaggio",
@@ -591,10 +586,6 @@
     "Clear personal data": "Elimina dati personali",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
-    "Use bots, bridges, widgets and sticker packs": "Usa bot, bridge, widget e pacchetti di adesivi",
-    "Terms of Service": "Condizioni di servizio",
-    "Service": "Servizio",
-    "Summary": "Riepilogo",
     "Call failed due to misconfigured server": "Chiamata non riuscita a causa di un server non configurato correttamente",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Chiedi all'amministratore del tuo homeserver(<code>%(homeserverDomain)s</code>) per configurare un server TURN affinché le chiamate funzionino in modo affidabile.",
     "Checking server": "Controllo del server",
@@ -665,14 +656,11 @@
     "Show advanced": "Mostra avanzate",
     "Explore rooms": "Esplora stanze",
     "Show image": "Mostra immagine",
-    "To continue you need to accept the terms of this service.": "Per continuare devi accettare le condizioni di servizio.",
-    "Document": "Documento",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Chiave pubblica di Captcha mancante nella configurazione dell'homeserver. Segnalalo all'amministratore dell'homeserver.",
     "Add Email Address": "Aggiungi indirizzo email",
     "Add Phone Number": "Aggiungi numero di telefono",
     "Your email address hasn't been verified yet": "Il tuo indirizzo email non è ancora stato verificato",
     "Click the link in the email you received to verify and then click continue again.": "Clicca il link nell'email che hai ricevuto per verificare e poi clicca di nuovo Continua.",
-    "%(creator)s created and configured the room.": "%(creator)s ha creato e configurato la stanza.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Dovresti <b>rimuovere i tuoi dati personali</b> dal server di identità <idserver /> prima di disconnetterti. Sfortunatamente, il server di identità <idserver /> attualmente è offline o non raggiungibile.",
     "You should:": "Dovresti:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "cercare tra i plugin del browser se qualcosa potrebbe bloccare il server di identità (come Privacy Badger)",
@@ -964,8 +952,6 @@
     "Ok": "Ok",
     "New version available. <a>Update now.</a>": "Nuova versione disponibile. <a>Aggiorna ora.</a>",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "L'amministratore del server ha disattivato la crittografia end-to-end in modo predefinito nelle stanze private e nei messaggi diretti.",
-    "Switch to light mode": "Passa alla modalità chiara",
-    "Switch to dark mode": "Passa alla modalità scura",
     "Switch theme": "Cambia tema",
     "All settings": "Tutte le impostazioni",
     "No recently visited rooms": "Nessuna stanza visitata di recente",
@@ -1008,8 +994,6 @@
     "A connection error occurred while trying to contact the server.": "Si è verificato un errore di connessione tentando di contattare il server.",
     "The server is not configured to indicate what the problem is (CORS).": "Il server non è configurato per indicare qual è il problema (CORS).",
     "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
-    "No files visible in this room": "Nessun file visibile in questa stanza",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Allega file dalla chat o trascinali in qualsiasi punto in una stanza.",
     "Explore public rooms": "Esplora stanze pubbliche",
     "Preparing to download logs": "Preparazione al download dei log",
     "Unexpected server error trying to leave the room": "Errore inaspettato del server tentando di abbandonare la stanza",
@@ -1067,7 +1051,6 @@
     "Enable desktop notifications": "Attiva le notifiche desktop",
     "Don't miss a reply": "Non perdere una risposta",
     "Modal Widget": "Widget modale",
-    "%(creator)s created this DM.": "%(creator)s ha creato questo MD.",
     "This is the start of <roomName/>.": "Questo è l'inizio di <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Aggiungi una foto, in modo che le persone notino facilmente la stanza.",
     "%(displayName)s created this room.": "%(displayName)s ha creato questa stanza.",
@@ -1331,9 +1314,6 @@
         "other": "Salva in cache i messaggi cifrati localmente in modo che appaiano nei risultati di ricerca, usando %(size)s per salvarli da %(rooms)s stanze."
     },
     "There was a problem communicating with the homeserver, please try again later.": "C'è stato un problema nella comunicazione con l'homeserver, riprova più tardi.",
-    "Use email to optionally be discoverable by existing contacts.": "Usa l'email per essere facoltativamente trovabile dai contatti esistenti.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Usa l'email o il telefono per essere facoltativamente trovabile dai contatti esistenti.",
-    "Add an email to be able to reset your password.": "Aggiungi un'email per poter reimpostare la password.",
     "That phone number doesn't look quite right, please check and try again": "Quel numero di telefono non sembra corretto, controlla e riprova",
     "Enter phone number": "Inserisci numero di telefono",
     "Enter email address": "Inserisci indirizzo email",
@@ -1348,7 +1328,6 @@
     "Resume": "Riprendi",
     "You've reached the maximum number of simultaneous calls.": "Hai raggiungo il numero massimo di chiamate simultanee.",
     "Too Many Calls": "Troppe chiamate",
-    "You have no visible notifications.": "Non hai notifiche visibili.",
     "Transfer": "Trasferisci",
     "Failed to transfer call": "Trasferimento chiamata fallito",
     "A call can only be transferred to a single user.": "Una chiamata può essere trasferita solo ad un singolo utente.",
@@ -1389,12 +1368,10 @@
     "We couldn't log you in": "Non abbiamo potuto farti accedere",
     "Recently visited rooms": "Stanze visitate di recente",
     "Original event source": "Sorgente dell'evento originale",
-    "Decrypted event source": "Sorgente dell'evento decifrato",
     "%(count)s members": {
         "one": "%(count)s membro",
         "other": "%(count)s membri"
     },
-    "Your server does not support showing space hierarchies.": "Il tuo server non supporta la visualizzazione di gerarchie di spazi.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Vuoi veramente uscire dallo spazio '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Questo spazio non è pubblico. Non potrai rientrare senza un invito.",
     "Start audio stream": "Avvia stream audio",
@@ -1429,11 +1406,6 @@
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
     "You may want to try a different search or check for typos.": "Prova a fare una ricerca diversa o controllare errori di battitura.",
     "No results found": "Nessun risultato trovato",
-    "Mark as suggested": "Segna come consigliato",
-    "Mark as not suggested": "Segna come non consigliato",
-    "Failed to remove some rooms. Try again later": "Rimozione di alcune stanze fallita. Riprova più tardi",
-    "Suggested": "Consigliato",
-    "This room is suggested as a good one to join": "Questa è una buona stanza in cui entrare",
     "%(count)s rooms": {
         "one": "%(count)s stanza",
         "other": "%(count)s stanze"
@@ -1447,7 +1419,6 @@
     "unknown person": "persona sconosciuta",
     "Review to ensure your account is safe": "Controlla per assicurarti che l'account sia sicuro",
     "%(deviceId)s from %(ip)s": "%(deviceId)s da %(ip)s",
-    "Manage & explore rooms": "Gestisci ed esplora le stanze",
     "Invite to just this room": "Invita solo in questa stanza",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persone che conosci sono già entrate",
@@ -1483,7 +1454,6 @@
     "Failed to send": "Invio fallito",
     "Enter your Security Phrase a second time to confirm it.": "Inserisci di nuovo la password di sicurezza per confermarla.",
     "You have no ignored users.": "Non hai utenti ignorati.",
-    "Select a room below first": "Prima seleziona una stanza sotto",
     "Want to add a new room instead?": "Vuoi invece aggiungere una nuova stanza?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Aggiunta stanza...",
@@ -1522,7 +1492,6 @@
     "Report": "Segnala",
     "Show preview": "Mostra anteprima",
     "View source": "Visualizza sorgente",
-    "Settings - %(spaceName)s": "Impostazioni - %(spaceName)s",
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
     "Space information": "Informazioni spazio",
@@ -1700,7 +1669,6 @@
     "They won't be able to access whatever you're not an admin of.": "Non potrà più accedere anche dove non sei amministratore.",
     "Ban them from specific things I'm able to": "Bandiscilo da cose specifiche dove posso farlo",
     "Unban them from specific things I'm able to": "Riammettilo in cose specifiche dove posso farlo",
-    "See room timeline (devtools)": "Mostra linea temporale della stanza (strumenti per sviluppatori)",
     "Joined": "Entrato/a",
     "Insert link": "Inserisci collegamento",
     "Joining": "Entrata in corso",
@@ -1708,7 +1676,6 @@
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Genereremo per te una chiave di sicurezza da conservare in un posto sicuro, come un in gestore di password o in una cassaforte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Riprendi l'accesso al tuo account e recupera le chiavi di crittografia memorizzate in questa sessione. Senza di esse, non sarai in grado di leggere tutti i tuoi messaggi sicuri in qualsiasi sessione.",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Senza la verifica, non avrai accesso a tutti i tuoi messaggi e potresti apparire agli altri come non fidato.",
-    "You're all caught up": "Non hai nulla di nuovo da vedere",
     "If you can't see who you're looking for, send them your invite link below.": "Se non vedi chi stai cercando, mandagli il collegamento di invito sottostante.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Nelle stanze cifrate, verifica tutti gli utenti per confermare che siano sicure.",
     "Yours, or the other users' session": "La tua sessione o quella degli altri utenti",
@@ -1726,7 +1693,6 @@
     "You do not have permission to start polls in this room.": "Non hai i permessi per creare sondaggi in questa stanza.",
     "Copy link to thread": "Copia link nella conversazione",
     "Thread options": "Opzioni conversazione",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Qualcuno ha già quel nome utente. Provane un altro o se sei tu, accedi qui sotto.",
     "Rooms outside of a space": "Stanze fuori da uno spazio",
     "Show all your rooms in Home, even if they're in a space.": "Mostra tutte le tue stanze nella pagina principale, anche se sono in uno spazio.",
     "Home is useful for getting an overview of everything.": "La pagina principale è utile per avere una panoramica generale.",
@@ -1805,7 +1771,6 @@
     "Link to room": "Collegamento alla stanza",
     "Including you, %(commaSeparatedMembers)s": "Incluso te, %(commaSeparatedMembers)s",
     "Copy room link": "Copia collegamento stanza",
-    "Failed to load list of rooms.": "Caricamento dell'elenco di stanze fallito.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s.",
     "Sections to show": "Sezioni da mostrare",
     "Open in OpenStreetMap": "Apri in OpenStreetMap",
@@ -1842,18 +1807,14 @@
     "You were removed from %(roomName)s by %(memberName)s": "Sei stato rimosso da %(roomName)s da %(memberName)s",
     "Message pending moderation": "Messaggio in attesa di moderazione",
     "Message pending moderation: %(reason)s": "Messaggio in attesa di moderazione: %(reason)s",
-    "Space home": "Pagina iniziale dello spazio",
     "Internal room ID": "ID interno stanza",
     "Group all your rooms that aren't part of a space in one place.": "Raggruppa tutte le tue stanze che non fanno parte di uno spazio in un unico posto.",
     "Group all your people in one place.": "Raggruppa tutte le tue persone in un unico posto.",
     "Group all your favourite rooms and people in one place.": "Raggruppa tutte le tue stanze e persone preferite in un unico posto.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Gli spazi sono modi per raggruppare stanze e persone. Oltre agli spazi in cui sei, puoi usarne anche altri di preimpostati.",
-    "Unable to check if username has been taken. Try again later.": "Impossibile controllare se il nome utente è già in uso. Riprova più tardi.",
     "Pick a date to jump to": "Scegli una data in cui saltare",
     "Jump to date": "Salta alla data",
     "The beginning of the room": "L'inizio della stanza",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Se sai quello che stai facendo, Element è open source, assicurati di controllare il nostro GitHub (https://github.com/vector-im/element-web/) e contribuisci!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Se qualcuno ti ha detto di copiare/incollare qualcosa qui, è molto probabile che ti stia truffando!",
     "Wait!": "Aspetta!",
     "This address does not point at this room": "Questo indirizzo non punta a questa stanza",
     "Location": "Posizione",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s o %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
-    "Proxy URL": "URL proxy",
-    "Proxy URL (optional)": "URL proxy (facoltativo)",
-    "To disable you will need to log out and back in, use with caution!": "Per disattivarlo dovrai disconnetterti e riaccedere, usare con cautela!",
-    "Sliding Sync configuration": "Configurazione sincr. Sliding",
-    "Your server lacks native support, you must specify a proxy": "Il tuo server non ha il supporto nativo, devi specificare un proxy",
-    "Your server lacks native support": "Il tuo server non ha il supporto nativo",
-    "Your server has native support": "Il tuo server ha il supporto nativo",
     "You need to be able to kick users to do that.": "Devi poter cacciare via utenti per completare l'azione.",
     "Voice broadcast": "Trasmissione vocale",
     "You do not have permission to start voice calls": "Non hai il permesso di avviare chiamate",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale.",
     "Can't start voice message": "Impossibile iniziare il messaggio vocale",
     "Edit link": "Modifica collegamento",
-    "Decrypted source unavailable": "Sorgente decifrata non disponibile",
     "%(senderName)s started a voice broadcast": "%(senderName)s ha iniziato una trasmissione vocale",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Token di registrazione",
@@ -2632,7 +2585,14 @@
         "rust_crypto_disabled_notice": "Attualmente può essere attivato solo via config.json",
         "automatic_debug_logs_key_backup": "Invia automaticamente log di debug quando il backup delle chiavi non funziona",
         "automatic_debug_logs_decryption": "Invia automaticamente log di debug per errori di decifrazione",
-        "automatic_debug_logs": "Invia automaticamente log di debug per qualsiasi errore"
+        "automatic_debug_logs": "Invia automaticamente log di debug per qualsiasi errore",
+        "sliding_sync_server_support": "Il tuo server ha il supporto nativo",
+        "sliding_sync_server_no_support": "Il tuo server non ha il supporto nativo",
+        "sliding_sync_server_specify_proxy": "Il tuo server non ha il supporto nativo, devi specificare un proxy",
+        "sliding_sync_configuration": "Configurazione sincr. Sliding",
+        "sliding_sync_disable_warning": "Per disattivarlo dovrai disconnetterti e riaccedere, usare con cautela!",
+        "sliding_sync_proxy_url_optional_label": "URL proxy (facoltativo)",
+        "sliding_sync_proxy_url_label": "URL proxy"
     },
     "keyboard": {
         "home": "Pagina iniziale",
@@ -3182,7 +3142,9 @@
         "show_hidden_events": "Mostra eventi nascosti nella linea temporale",
         "low_bandwidth_mode_description": "Richiede un homeserver compatibile.",
         "low_bandwidth_mode": "Modalità larghezza di banda bassa",
-        "developer_mode": "Modalità sviluppatore"
+        "developer_mode": "Modalità sviluppatore",
+        "view_source_decrypted_event_source": "Sorgente dell'evento decifrato",
+        "view_source_decrypted_event_source_unavailable": "Sorgente decifrata non disponibile"
     },
     "export_chat": {
         "html": "HTML",
@@ -3578,7 +3540,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Hai terminato una <a>trasmissione vocale</a>",
             "user": "%(senderName)s ha terminato una <a>trasmissione vocale</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s ha creato questo MD.",
+        "creation_summary_room": "%(creator)s ha creato e configurato la stanza."
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -3901,7 +3865,15 @@
         "server_picker_explainer": "Usa il tuo homeserver Matrix preferito se ne hai uno, o ospitane uno tuo.",
         "server_picker_learn_more": "Riguardo gli homeserver",
         "incorrect_credentials": "Nome utente e/o password sbagliati.",
-        "account_deactivated": "Questo account è stato disattivato."
+        "account_deactivated": "Questo account è stato disattivato.",
+        "registration_username_validation": "Usa solo minuscole, numeri, trattini e trattini bassi",
+        "registration_username_unable_check": "Impossibile controllare se il nome utente è già in uso. Riprova più tardi.",
+        "registration_username_in_use": "Qualcuno ha già quel nome utente. Provane un altro o se sei tu, accedi qui sotto.",
+        "phone_label": "Telefono",
+        "phone_optional_label": "Telefono (facoltativo)",
+        "email_help_text": "Aggiungi un'email per poter reimpostare la password.",
+        "email_phone_discovery_text": "Usa l'email o il telefono per essere facoltativamente trovabile dai contatti esistenti.",
+        "email_discovery_text": "Usa l'email per essere facoltativamente trovabile dai contatti esistenti."
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -4113,7 +4085,21 @@
         "light_high_contrast": "Alto contrasto chiaro"
     },
     "space": {
-        "landing_welcome": "Ti diamo il benvenuto in <name/>"
+        "landing_welcome": "Ti diamo il benvenuto in <name/>",
+        "suggested_tooltip": "Questa è una buona stanza in cui entrare",
+        "suggested": "Consigliato",
+        "select_room_below": "Prima seleziona una stanza sotto",
+        "unmark_suggested": "Segna come non consigliato",
+        "mark_suggested": "Segna come consigliato",
+        "failed_remove_rooms": "Rimozione di alcune stanze fallita. Riprova più tardi",
+        "failed_load_rooms": "Caricamento dell'elenco di stanze fallito.",
+        "incompatible_server_hierarchy": "Il tuo server non supporta la visualizzazione di gerarchie di spazi.",
+        "context_menu": {
+            "devtools_open_timeline": "Mostra linea temporale della stanza (strumenti per sviluppatori)",
+            "home": "Pagina iniziale dello spazio",
+            "explore": "Esplora stanze",
+            "manage_and_explore": "Gestisci ed esplora le stanze"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -4170,5 +4156,35 @@
         "setup_rooms_description": "Puoi aggiungerne anche altri in seguito, inclusi quelli già esistenti.",
         "setup_rooms_private_heading": "Su quali progetti sta lavorando la tua squadra?",
         "setup_rooms_private_description": "Creeremo stanze per ognuno di essi."
+    },
+    "user_menu": {
+        "switch_theme_light": "Passa alla modalità chiara",
+        "switch_theme_dark": "Passa alla modalità scura"
+    },
+    "notif_panel": {
+        "empty_heading": "Non hai nulla di nuovo da vedere",
+        "empty_description": "Non hai notifiche visibili."
+    },
+    "console_scam_warning": "Se qualcuno ti ha detto di copiare/incollare qualcosa qui, è molto probabile che ti stia truffando!",
+    "console_dev_note": "Se sai quello che stai facendo, Element è open source, assicurati di controllare il nostro GitHub (https://github.com/vector-im/element-web/) e contribuisci!",
+    "room": {
+        "drop_file_prompt": "Trascina un file qui per l'invio"
+    },
+    "file_panel": {
+        "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",
+        "peek_note": "Devi entrare nella stanza per vederne i file",
+        "empty_heading": "Nessun file visibile in questa stanza",
+        "empty_description": "Allega file dalla chat o trascinali in qualsiasi punto in una stanza."
+    },
+    "terms": {
+        "integration_manager": "Usa bot, bridge, widget e pacchetti di adesivi",
+        "tos": "Condizioni di servizio",
+        "intro": "Per continuare devi accettare le condizioni di servizio.",
+        "column_service": "Servizio",
+        "column_summary": "Riepilogo",
+        "column_document": "Documento"
+    },
+    "space_settings": {
+        "title": "Impostazioni - %(spaceName)s"
     }
 }

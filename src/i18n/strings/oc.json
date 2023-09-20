@@ -123,10 +123,6 @@
     "An error has occurred.": "Una error s'es producha.",
     "Session name": "Nom de session",
     "Email address": "Adreça de corrièl",
-    "Terms of Service": "Terms of Service",
-    "Service": "Servici",
-    "Summary": "Resumit",
-    "Document": "Document",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
     "Enter password": "Sasissètz lo senhal",
@@ -342,7 +338,8 @@
     "auth": {
         "sso": "Autentificacion unica",
         "incorrect_password": "Senhal incorrècte",
-        "register_action": "Crear un compte"
+        "register_action": "Crear un compte",
+        "phone_label": "Telefòn"
     },
     "export_chat": {
         "messages": "Messatges"
@@ -358,5 +355,16 @@
         "help_about": {
             "versions": "Versions"
         }
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Percórrer las salas"
+        }
+    },
+    "terms": {
+        "tos": "Terms of Service",
+        "column_service": "Servici",
+        "column_summary": "Resumit",
+        "column_document": "Document"
     }
 }

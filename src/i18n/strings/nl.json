@@ -151,7 +151,6 @@
     "You do not have permission to post to this room": "Je hebt geen toestemming actief aan deze kamer deel te nemen",
     "You have <a>disabled</a> URL previews by default.": "Je hebt URL-voorvertoningen standaard <a>uitgeschakeld</a>.",
     "You have <a>enabled</a> URL previews by default.": "Je hebt URL-voorvertoningen standaard <a>ingeschakeld</a>.",
-    "You must <a>register</a> to use this functionality": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
     "You need to be able to invite users to do that.": "Dit vereist de bevoegdheid om personen uit te nodigen.",
     "You need to be logged in.": "Hiervoor dien je ingelogd te zijn.",
     "You seem to be in a call, are you sure you want to quit?": "Het ziet er naar uit dat je in gesprek bent, weet je zeker dat je wil afsluiten?",
@@ -173,7 +172,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Hiermee kan je de sleutels van je ontvangen berichten in versleutelde kamers naar een lokaal bestand wegschrijven. Als je dat bestand dan in een andere Matrix-cliënt inleest kan het ook die berichten ontcijferen.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee kan je vanuit een andere Matrix-cliënt weggeschreven versleutelingssleutels inlezen, zodat je alle berichten die de andere cliënt kon ontcijferen ook hier kan lezen.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Het weggeschreven bestand is beveiligd met een wachtwoord. Voer dat wachtwoord hier in om het bestand te ontsleutelen.",
-    "You must join the room to see its files": "Pas na toetreding tot de kamer zal je de bestanden kunnen zien",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s de uitnodigingen weigeren",
     "Failed to invite": "Uitnodigen is mislukt",
     "Confirm Removal": "Verwijdering bevestigen",
@@ -187,7 +185,6 @@
     "Add an Integration": "Voeg een integratie toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "URL Previews": "URL-voorvertoningen",
-    "Drop file here to upload": "Versleep het bestand naar hier om het te uploaden",
     "Check for update": "Controleren op updates",
     "Something went wrong!": "Er is iets misgegaan!",
     "Your browser does not support the required cryptography extensions": "Jouw browser ondersteunt de benodigde cryptografie-extensies niet",
@@ -466,7 +463,6 @@
     "Please review and accept all of the homeserver's policies": "Gelieve het beleid van de homeserver door te nemen en te aanvaarden",
     "Please review and accept the policies of this homeserver:": "Gelieve het beleid van deze homeserver door te nemen en te aanvaarden:",
     "Email (optional)": "E-mailadres (optioneel)",
-    "Phone (optional)": "Telefoonnummer (optioneel)",
     "Join millions for free on the largest public server": "Neem deel aan de grootste publieke server samen met miljoenen anderen",
     "Couldn't load page": "Kon pagina niet laden",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is niet verstuurd omdat deze homeserver zijn limiet voor maandelijks actieve personen heeft bereikt. <a>Neem contact op met je beheerder</a> om de dienst te blijven gebruiken.",
@@ -573,7 +569,6 @@
     "Your %(brand)s is misconfigured": "Je %(brand)s is onjuist geconfigureerd",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Vraag jouw %(brand)s-beheerder <a>je configuratie</a> na te kijken op onjuiste of dubbele items.",
     "Unexpected error resolving identity server configuration": "Onverwachte fout bij het oplossen van de identiteitsserverconfiguratie",
-    "Use lowercase letters, numbers, dashes and underscores only": "Gebruik enkel letters, cijfers, streepjes en underscores",
     "Cannot reach identity server": "Kan identiteitsserver niet bereiken",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je kan jezelf registreren, maar sommige functies zullen pas beschikbaar zijn wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je kan jouw wachtwoord opnieuw instellen, maar sommige functies zullen pas beschikbaar komen wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
@@ -591,10 +586,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Laat ons weten wat er verkeerd is gegaan, of nog beter, maak een foutrapport aan op GitHub, waarin je het probleem beschrijft.",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
-    "Use bots, bridges, widgets and sticker packs": "Gebruik robots, bruggen, widgets en stickerpakketten",
-    "Terms of Service": "Gebruiksvoorwaarden",
-    "Service": "Dienst",
-    "Summary": "Samenvatting",
     "Checking server": "Server wordt gecontroleerd",
     "Disconnect from the identity server <idserver />?": "Wil je de verbinding met de identiteitsserver <idserver /> verbreken?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Om bekenden te kunnen vinden en voor hen vindbaar te zijn gebruik je momenteel <server></server>. Je kan die identiteitsserver hieronder wijzigen.",
@@ -665,14 +656,11 @@
     "Close dialog": "Dialoog sluiten",
     "Hide advanced": "Geavanceerde info verbergen",
     "Show advanced": "Geavanceerde info tonen",
-    "To continue you need to accept the terms of this service.": "Om door te gaan dien je de dienstvoorwaarden te aanvaarden.",
-    "Document": "Document",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Publieke sleutel van captcha ontbreekt in homeserverconfiguratie. Meld dit aan de beheerder van je homeserver.",
     "Add Email Address": "E-mailadres toevoegen",
     "Add Phone Number": "Telefoonnummer toevoegen",
     "Your email address hasn't been verified yet": "Jouw e-mailadres is nog niet geverifieerd",
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
-    "%(creator)s created and configured the room.": "Kamer gestart en ingesteld door %(creator)s.",
     "Setting up keys": "Sleutelconfiguratie",
     "Verify this session": "Verifieer deze sessie",
     "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
@@ -1142,9 +1130,6 @@
     "Explore public rooms": "Publieke kamers ontdekken",
     "Room options": "Kameropties",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Start een kamer met iemand door hun naam, e-mailadres of inlognaam (zoals <userId/>) te typen.",
-    "%(creator)s created this DM.": "%(creator)s maakte deze directe chat.",
-    "Switch to dark mode": "Naar donkere modus wisselen",
-    "Switch to light mode": "Naar lichte modus wisselen",
     "All settings": "Instellingen",
     "Error removing address": "Fout bij verwijderen van adres",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Er is een fout opgetreden bij het verwijderen van dit adres. Deze bestaat mogelijk niet meer, of er is een tijdelijke fout opgetreden.",
@@ -1279,13 +1264,7 @@
     "Enter a Security Phrase": "Veiligheidswachtwoord invoeren",
     "There was a problem communicating with the homeserver, please try again later.": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
     "Switch theme": "Thema wisselen",
-    "You have no visible notifications.": "Je hebt geen zichtbare meldingen.",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Voeg bestanden toe of sleep ze in de kamer.",
-    "No files visible in this room": "Geen bestanden zichtbaar in deze kamer",
     "Sign in with SSO": "Inloggen met SSO",
-    "Use email to optionally be discoverable by existing contacts.": "Optioneel kan je jouw e-mail ook gebruiken om ontdekt te worden door al bestaande contacten.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Gebruik e-mail of telefoon om optioneel ontdekt te kunnen worden door bestaande contacten.",
-    "Add an email to be able to reset your password.": "Voeg een e-mail toe om je wachtwoord te kunnen resetten.",
     "That phone number doesn't look quite right, please check and try again": "Dat telefoonnummer ziet er niet goed uit, controleer het en probeer het opnieuw",
     "Enter phone number": "Telefoonnummer invoeren",
     "Enter email address": "E-mailadres invoeren",
@@ -1388,12 +1367,10 @@
     "To continue, use Single Sign On to prove your identity.": "Om verder te gaan, gebruik je eenmalige aanmelding om je identiteit te bewijzen.",
     "<a>Add a topic</a> to help people know what it is about.": "<a>Stel een kameronderwerp in</a> zodat de personen weten waar het over gaat.",
     "Original event source": "Originele gebeurtenisbron",
-    "Decrypted event source": "Ontsleutel de gebeurtenisbron",
     "%(count)s members": {
         "other": "%(count)s personen",
         "one": "%(count)s persoon"
     },
-    "Your server does not support showing space hierarchies.": "Jouw server heeft geen ondersteuning voor het weergeven van Space-indelingen.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Weet je zeker dat je de Space '%(spaceName)s' wilt verlaten?",
     "This space is not public. You will not be able to rejoin without an invite.": "Deze Space is niet publiek. Zonder uitnodiging zal je niet opnieuw kunnen toetreden.",
     "Start audio stream": "Audiostream starten",
@@ -1428,11 +1405,6 @@
     "<inviter/> invites you": "<inviter/> nodigt je uit",
     "You may want to try a different search or check for typos.": "Je kan een andere zoekterm proberen of controleren op een typefout.",
     "No results found": "Geen resultaten gevonden",
-    "Mark as suggested": "Markeer als aanbeveling",
-    "Mark as not suggested": "Markeer als geen aanbeveling",
-    "Failed to remove some rooms. Try again later": "Het verwijderen van sommige kamers is mislukt. Probeer het opnieuw",
-    "Suggested": "Aanbevolen",
-    "This room is suggested as a good one to join": "Dit is een aanbevolen kamer om aan deel te nemen",
     "%(count)s rooms": {
         "one": "%(count)s kamer",
         "other": "%(count)s kamers"
@@ -1458,7 +1430,6 @@
         "other": "%(count)s personen die je kent hebben zich al geregistreerd"
     },
     "Invite to just this room": "Uitnodigen voor alleen deze kamer",
-    "Manage & explore rooms": "Beheer & ontdek kamers",
     "unknown person": "onbekend persoon",
     "%(deviceId)s from %(ip)s": "%(deviceId)s van %(ip)s",
     "Review to ensure your account is safe": "Controleer ze zodat jouw account veilig is",
@@ -1482,7 +1453,6 @@
     "Failed to send": "Versturen is mislukt",
     "Enter your Security Phrase a second time to confirm it.": "Voer je veiligheidswachtwoord een tweede keer in om het te bevestigen.",
     "You have no ignored users.": "Je hebt geen persoon genegeerd.",
-    "Select a room below first": "Start met selecteren van een kamer hieronder",
     "Want to add a new room instead?": "Wil je anders een nieuwe kamer toevoegen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Kamer toevoegen...",
@@ -1523,7 +1493,6 @@
     "Collapse reply thread": "Antwoorddraad invouwen",
     "Show preview": "Preview weergeven",
     "View source": "Bron bekijken",
-    "Settings - %(spaceName)s": "Instellingen - %(spaceName)s",
     "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stel adressen in voor deze Space zodat personen deze Space kunnen vinden via jouw homeserver (%(localDomain)s)",
@@ -1665,7 +1634,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "In antwoord op <a>dit bericht</a>",
     "Export chat": "Chat exporteren",
-    "See room timeline (devtools)": "Kamer tijdlijn bekijken (dev tools)",
     "View in room": "In kamer bekijken",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "Downloading": "Downloaden",
@@ -1704,8 +1672,6 @@
     "Joined": "Toegetreden",
     "Insert link": "Koppeling invoegen",
     "Joining": "Toetreden",
-    "You're all caught up": "Je bent helemaal bij",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Iemand heeft die inlognaam al. Probeer een andere of als je het bent, log dan hieronder in.",
     "Copy link to thread": "Kopieer link naar draad",
     "Thread options": "Draad opties",
     "Mentions only": "Alleen vermeldingen",
@@ -1795,7 +1761,6 @@
         "one": "Einduitslag gebaseerd op %(count)s stem",
         "other": "Einduitslag gebaseerd op %(count)s stemmen"
     },
-    "Failed to load list of rooms.": "Het laden van de kamerslijst is mislukt.",
     "Open in OpenStreetMap": "In OpenStreetMap openen",
     "Recent searches": "Recente zoekopdrachten",
     "To search messages, look for this icon at the top of a room <icon/>": "Om berichten te zoeken, zoek naar dit icoon bovenaan een kamer <icon/>",
@@ -1832,7 +1797,6 @@
     "Back to chat": "Terug naar chat",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Onbekend paar (persoon, sessie): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Niet herkend kameradres: %(roomAlias)s",
-    "Space home": "Space home",
     "Could not fetch location": "Kan locatie niet ophalen",
     "Message pending moderation": "Bericht in afwachting van moderatie",
     "Message pending moderation: %(reason)s": "Bericht in afwachting van moderatie: %(reason)s",
@@ -1844,10 +1808,7 @@
     "You were removed from %(roomName)s by %(memberName)s": "Je bent verwijderd uit %(roomName)s door %(memberName)s",
     "From a thread": "Uit een conversatie",
     "Internal room ID": "Interne ruimte ID",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Als je weet wat je doet, Element is open-source, bekijk dan zeker onze GitHub (https://github.com/vector-im/element-web/) en draag bij!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Als iemand je heeft gezegd iets hier te kopiëren/plakken, is de kans groot dat je wordt opgelicht!",
     "Wait!": "Wacht!",
-    "Unable to check if username has been taken. Try again later.": "Kan niet controleren of inlognaam is gebruikt. Probeer het later nog eens.",
     "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
     "Pick a date to jump to": "Kies een datum om naar toe te springen",
     "Jump to date": "Spring naar datum",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s en %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s of %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s of %(recoveryFile)s",
-    "Proxy URL": "Proxy URL",
-    "Proxy URL (optional)": "Proxy-URL (optioneel)",
-    "To disable you will need to log out and back in, use with caution!": "Om uit te schakelen moet je uitloggen en weer inloggen, wees voorzichtig!",
-    "Sliding Sync configuration": "Scrollende Synchronisatie-configuratie",
-    "Your server lacks native support, you must specify a proxy": "Jouw server heeft geen native ondersteuning, je moet een proxy opgeven",
-    "Your server lacks native support": "Jouw server heeft geen native ondersteuning",
-    "Your server has native support": "Jouw server heeft native ondersteuning",
     "Completing set up of your new device": "De configuratie van je nieuwe apparaat voltooien",
     "Waiting for device to sign in": "Wachten op apparaat om in te loggen",
     "Review and approve the sign in": "Controleer en keur de aanmelding goed",
@@ -2379,7 +2333,14 @@
         "join_beta": "Beta inschakelen",
         "automatic_debug_logs_key_backup": "Automatisch foutopsporingslogboeken versturen wanneer de sleutelback-up niet werkt",
         "automatic_debug_logs_decryption": "Automatisch foutopsporingslogboeken versturen bij decoderingsfouten",
-        "automatic_debug_logs": "Automatisch foutenlogboek versturen bij een fout"
+        "automatic_debug_logs": "Automatisch foutenlogboek versturen bij een fout",
+        "sliding_sync_server_support": "Jouw server heeft native ondersteuning",
+        "sliding_sync_server_no_support": "Jouw server heeft geen native ondersteuning",
+        "sliding_sync_server_specify_proxy": "Jouw server heeft geen native ondersteuning, je moet een proxy opgeven",
+        "sliding_sync_configuration": "Scrollende Synchronisatie-configuratie",
+        "sliding_sync_disable_warning": "Om uit te schakelen moet je uitloggen en weer inloggen, wees voorzichtig!",
+        "sliding_sync_proxy_url_optional_label": "Proxy-URL (optioneel)",
+        "sliding_sync_proxy_url_label": "Proxy URL"
     },
     "keyboard": {
         "home": "Home",
@@ -2853,7 +2814,8 @@
         "widget_screenshots": "Widget-schermafbeeldingen inschakelen op ondersteunde widgets",
         "title": "Ontwikkelaarstools",
         "show_hidden_events": "Verborgen gebeurtenissen op de tijdslijn weergeven",
-        "developer_mode": "Ontwikkelaar mode"
+        "developer_mode": "Ontwikkelaar mode",
+        "view_source_decrypted_event_source": "Ontsleutel de gebeurtenisbron"
     },
     "export_chat": {
         "html": "HTML",
@@ -3224,7 +3186,9 @@
         "m.room.create": {
             "continuation": "Deze kamer is een voortzetting van een ander gesprek.",
             "see_older_messages": "Klik hier om oudere berichten te bekijken."
-        }
+        },
+        "creation_summary_dm": "%(creator)s maakte deze directe chat.",
+        "creation_summary_room": "Kamer gestart en ingesteld door %(creator)s."
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3517,7 +3481,15 @@
         "server_picker_explainer": "Gebruik de Matrix-homeserver van je voorkeur als je er een hebt, of host je eigen.",
         "server_picker_learn_more": "Over homeservers",
         "incorrect_credentials": "Onjuiste inlognaam en/of wachtwoord.",
-        "account_deactivated": "Dit account is gesloten."
+        "account_deactivated": "Dit account is gesloten.",
+        "registration_username_validation": "Gebruik enkel letters, cijfers, streepjes en underscores",
+        "registration_username_unable_check": "Kan niet controleren of inlognaam is gebruikt. Probeer het later nog eens.",
+        "registration_username_in_use": "Iemand heeft die inlognaam al. Probeer een andere of als je het bent, log dan hieronder in.",
+        "phone_label": "Telefoonnummer",
+        "phone_optional_label": "Telefoonnummer (optioneel)",
+        "email_help_text": "Voeg een e-mail toe om je wachtwoord te kunnen resetten.",
+        "email_phone_discovery_text": "Gebruik e-mail of telefoon om optioneel ontdekt te kunnen worden door bestaande contacten.",
+        "email_discovery_text": "Optioneel kan je jouw e-mail ook gebruiken om ontdekt te worden door al bestaande contacten."
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3711,7 +3683,21 @@
         "light_high_contrast": "Lichte hoog contrast"
     },
     "space": {
-        "landing_welcome": "Welkom in <name/>"
+        "landing_welcome": "Welkom in <name/>",
+        "suggested_tooltip": "Dit is een aanbevolen kamer om aan deel te nemen",
+        "suggested": "Aanbevolen",
+        "select_room_below": "Start met selecteren van een kamer hieronder",
+        "unmark_suggested": "Markeer als geen aanbeveling",
+        "mark_suggested": "Markeer als aanbeveling",
+        "failed_remove_rooms": "Het verwijderen van sommige kamers is mislukt. Probeer het opnieuw",
+        "failed_load_rooms": "Het laden van de kamerslijst is mislukt.",
+        "incompatible_server_hierarchy": "Jouw server heeft geen ondersteuning voor het weergeven van Space-indelingen.",
+        "context_menu": {
+            "devtools_open_timeline": "Kamer tijdlijn bekijken (dev tools)",
+            "home": "Space home",
+            "explore": "Kamers ontdekken",
+            "manage_and_explore": "Beheer & ontdek kamers"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3765,5 +3751,35 @@
         "setup_rooms_description": "Je kan er later nog meer toevoegen, inclusief al bestaande kamers.",
         "setup_rooms_private_heading": "Aan welke projecten werkt jouw team?",
         "setup_rooms_private_description": "We zullen kamers voor elk van hen maken."
+    },
+    "user_menu": {
+        "switch_theme_light": "Naar lichte modus wisselen",
+        "switch_theme_dark": "Naar donkere modus wisselen"
+    },
+    "notif_panel": {
+        "empty_heading": "Je bent helemaal bij",
+        "empty_description": "Je hebt geen zichtbare meldingen."
+    },
+    "console_scam_warning": "Als iemand je heeft gezegd iets hier te kopiëren/plakken, is de kans groot dat je wordt opgelicht!",
+    "console_dev_note": "Als je weet wat je doet, Element is open-source, bekijk dan zeker onze GitHub (https://github.com/vector-im/element-web/) en draag bij!",
+    "room": {
+        "drop_file_prompt": "Versleep het bestand naar hier om het te uploaden"
+    },
+    "file_panel": {
+        "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
+        "peek_note": "Pas na toetreding tot de kamer zal je de bestanden kunnen zien",
+        "empty_heading": "Geen bestanden zichtbaar in deze kamer",
+        "empty_description": "Voeg bestanden toe of sleep ze in de kamer."
+    },
+    "terms": {
+        "integration_manager": "Gebruik robots, bruggen, widgets en stickerpakketten",
+        "tos": "Gebruiksvoorwaarden",
+        "intro": "Om door te gaan dien je de dienstvoorwaarden te aanvaarden.",
+        "column_service": "Dienst",
+        "column_summary": "Samenvatting",
+        "column_document": "Document"
+    },
+    "space_settings": {
+        "title": "Instellingen - %(spaceName)s"
     }
 }

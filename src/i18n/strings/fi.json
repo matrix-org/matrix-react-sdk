@@ -106,7 +106,6 @@
     "You do not have permission to post to this room": "Sinulla ei ole oikeutta kirjoittaa tässä huoneessa",
     "You have <a>disabled</a> URL previews by default.": "Olet oletusarvoisesti ottanut URL-esikatselut <a>pois käytöstä</a>.",
     "You have <a>enabled</a> URL previews by default.": "Olet oletusarvoisesti ottanut URL-esikatselut <a>käyttöön</a>.",
-    "You must <a>register</a> to use this functionality": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
     "You need to be able to invite users to do that.": "Sinun pitää pystyä kutsua käyttäjiä voidaksesi tehdä tuon.",
     "You need to be logged in.": "Sinun pitää olla kirjautunut.",
     "Sun": "su",
@@ -131,7 +130,6 @@
     "Confirm passphrase": "Varmista salasana",
     "Import room keys": "Tuo huoneen avaimet",
     "File to import": "Tuotava tiedosto",
-    "You must join the room to see its files": "Sinun pitää liittyä huoneeseen voidaksesi nähdä sen sisältämät tiedostot",
     "Reject all %(invitedRooms)s invites": "Hylkää kaikki %(invitedRooms)s kutsua",
     "Failed to invite": "Kutsu epäonnistui",
     "Confirm Removal": "Varmista poistaminen",
@@ -181,7 +179,6 @@
     "Error decrypting video": "Virhe purettaessa videon salausta",
     "Add an Integration": "Lisää integraatio",
     "URL Previews": "URL-esikatselut",
-    "Drop file here to upload": "Pudota tiedosto tähän lähettääksesi sen palvelimelle",
     "Check for update": "Tarkista päivitykset",
     "Something went wrong!": "Jokin meni vikaan!",
     "Your browser does not support the required cryptography extensions": "Selaimesi ei tue vaadittuja kryptografisia laajennuksia",
@@ -359,7 +356,6 @@
     "Terms and Conditions": "Käyttöehdot",
     "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
-    "Phone (optional)": "Puhelin (valinnainen)",
     "This homeserver would like to make sure you are not a robot.": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
     "No backup found!": "Varmuuskopiota ei löytynyt!",
     "Unable to restore backup": "Varmuuskopion palauttaminen ei onnistu",
@@ -574,7 +570,6 @@
     "Notification sound": "Ilmoitusääni",
     "Set a new custom sound": "Aseta uusi mukautettu ääni",
     "Browse": "Selaa",
-    "Use lowercase letters, numbers, dashes and underscores only": "Käytä ainoastaan pieniä kirjaimia, numeroita, yhdysviivoja ja alaviivoja",
     "Edited at %(date)s. Click to view edits.": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset.",
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
@@ -588,10 +583,6 @@
     "Clear personal data": "Poista henkilökohtaiset tiedot",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
     "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
-    "Use bots, bridges, widgets and sticker packs": "Käytä botteja, siltoja, sovelmia ja tarrapaketteja",
-    "Terms of Service": "Käyttöehdot",
-    "Service": "Palvelu",
-    "Summary": "Yhteenveto",
     "Unable to revoke sharing for email address": "Sähköpostiosoitteen jakamista ei voi perua",
     "Unable to share email address": "Sähköpostiosoitetta ei voi jakaa",
     "Unable to share phone number": "Puhelinnumeroa ei voi jakaa",
@@ -650,7 +641,6 @@
     "e.g. my-room": "esim. oma-huone",
     "Show image": "Näytä kuva",
     "Close dialog": "Sulje dialogi",
-    "To continue you need to accept the terms of this service.": "Sinun täytyy hyväksyä palvelun käyttöehdot jatkaaksesi.",
     "Add Email Address": "Lisää sähköpostiosoite",
     "Add Phone Number": "Lisää puhelinnumero",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Suosittelemme <b>poistamaan henkilökohtaiset tietosi</b> identiteettipalvelimelta <idserver /> ennen yhteyden katkaisemista. Valitettavasti identiteettipalvelin <idserver /> on parhaillaan poissa verkosta tai siihen ei saada yhteyttä.",
@@ -660,14 +650,12 @@
     "wait and try again later": "odottaa ja yrittää uudelleen myöhemmin",
     "Room %(name)s": "Huone %(name)s",
     "Cancel search": "Peruuta haku",
-    "%(creator)s created and configured the room.": "%(creator)s loi ja määritti huoneen.",
     "Jump to first unread room.": "Siirry ensimmäiseen lukemattomaan huoneeseen.",
     "Jump to first invite.": "Siirry ensimmäiseen kutsuun.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Tekstiviesti on lähetetty numeroon +%(msisdn)s. Syötä siinä oleva varmistuskoodi.",
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
     "Hide advanced": "Piilota lisäasetukset",
     "Show advanced": "Näytä lisäasetukset",
-    "Document": "Asiakirja",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Captchan julkinen avain puuttuu kotipalvelimen asetuksista. Ilmoita tämä kotipalvelimesi ylläpitäjälle.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -933,8 +921,6 @@
     "This address is available to use": "Tämä osoite on käytettävissä",
     "This address is already in use": "Tämä osoite on jo käytössä",
     "No recently visited rooms": "Ei hiljattain vierailtuja huoneita",
-    "Switch to light mode": "Vaihda vaaleaan teemaan",
-    "Switch to dark mode": "Vaihda tummaan teemaan",
     "Switch theme": "Vaihda teemaa",
     "All settings": "Kaikki asetukset",
     "Looks good!": "Hyvältä näyttää!",
@@ -958,8 +944,6 @@
     "The call was answered on another device.": "Puheluun vastattiin toisessa laitteessa.",
     "Answered Elsewhere": "Vastattu muualla",
     "The call could not be established": "Puhelua ei voitu muodostaa",
-    "%(creator)s created this DM.": "%(creator)s loi tämän yksityisviestin.",
-    "No files visible in this room": "Tässä huoneessa ei näy tiedostoja",
     "Take a picture": "Ota kuva",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
@@ -1260,10 +1244,6 @@
     "Monaco": "Monaco",
     "not found in storage": "ei löytynyt muistista",
     "Not encrypted": "Ei salattu",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Liitä tiedostoja alalaidan klemmarilla, tai raahaa ja pudota ne mihin tahansa huoneen kohtaan.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Käytä sähköpostiosoitetta tai puhelinnumeroa, jos haluat olla löydettävissä nykyisille yhteystiedoille.",
-    "Use email to optionally be discoverable by existing contacts.": "Käytä sähköpostiosoitetta, jos haluat olla löydettävissä nykyisille yhteystiedoille.",
-    "Add an email to be able to reset your password.": "Lisää sähköpostiosoite, jotta voit palauttaa salasanasi.",
     "That phone number doesn't look quite right, please check and try again": "Tämä puhelinnumero ei näytä oikealta, tarkista se ja yritä uudelleen",
     "Move right": "Siirry oikealle",
     "Move left": "Siirry vasemmalle",
@@ -1327,8 +1307,6 @@
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
     "You may want to try a different search or check for typos.": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
     "No results found": "Tuloksia ei löytynyt",
-    "Mark as not suggested": "Merkitse ei-ehdotetuksi",
-    "Mark as suggested": "Merkitse ehdotetuksi",
     "%(count)s rooms": {
         "one": "%(count)s huone",
         "other": "%(count)s huonetta"
@@ -1353,8 +1331,6 @@
     "You can change these anytime.": "Voit muuttaa näitä koska tahansa.",
     "This homeserver has been blocked by its administrator.": "Tämä kotipalvelin on ylläpitäjänsä estämä.",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
-    "Failed to remove some rooms. Try again later": "Joitakin huoneita ei voitu poistaa. Yritä myöhemmin uudelleen",
-    "Select a room below first": "Valitse ensin huone alta",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
     "Sending": "Lähetetään",
     "Retry all": "Yritä kaikkia uudelleen",
@@ -1389,7 +1365,6 @@
     "Unable to access your microphone": "Mikrofonia ei voi käyttää",
     "Failed to send": "Lähettäminen epäonnistui",
     "You have no ignored users.": "Et ole sivuuttanut käyttäjiä.",
-    "Manage & explore rooms": "Hallitse ja selaa huoneita",
     "Connecting": "Yhdistetään",
     "unknown person": "tuntematon henkilö",
     "%(deviceId)s from %(ip)s": "%(deviceId)s osoitteesta %(ip)s",
@@ -1411,7 +1386,6 @@
     "Avatar": "Avatar",
     "Show preview": "Näytä esikatselu",
     "View source": "Näytä lähde",
-    "Settings - %(spaceName)s": "Asetukset - %(spaceName)s",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
     "Search for rooms or people": "Etsi huoneita tai ihmisiä",
@@ -1478,7 +1452,6 @@
     "Enable encryption in settings.": "Ota salaus käyttöön asetuksissa.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Yksityiset viestisi salataan normaalisti, mutta tämä huone ei ole salattu. Yleensä tämä johtuu laitteesta, jota ei tueta, tai käytetystä tavasta, kuten sähköpostikutsuista.",
     "End-to-end encryption isn't enabled": "Päästä päähän -salaus ei ole käytössä",
-    "You have no visible notifications.": "Sinulla ei ole näkyviä ilmoituksia.",
     "Add space": "Lisää avaruus",
     "Want to add an existing space instead?": "Haluatko sen sijaan lisätä olemassa olevan avaruuden?",
     "Add a space to a space you manage.": "Lisää avaruus hallitsemaasi avaruuteen.",
@@ -1507,7 +1480,6 @@
     "I'll verify later": "Vahvistan myöhemmin",
     "Skip verification for now": "Ohita vahvistus toistaiseksi",
     "Results": "Tulokset",
-    "Suggested": "Ehdotettu",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "User Directory": "Käyttäjähakemisto",
     "MB": "Mt",
@@ -1521,7 +1493,6 @@
     "This may be useful for public spaces.": "Tämä voi olla hyödyllinen julkisille avaruuksille.",
     "Invite with email or username": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
     "Don't miss a reply": "Älä jätä vastauksia huomiotta",
-    "This room is suggested as a good one to join": "Tähän huoneeseen liittymistä suositellaan",
     "View in room": "Näytä huoneessa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
@@ -1568,7 +1539,6 @@
     "You cannot place calls without a connection to the server.": "Et voi soittaa puheluja ilman yhteyttä palvelimeen.",
     "Connectivity to the server has been lost": "Yhteys palvelimeen on katkennut",
     "Files": "Tiedostot",
-    "Your server does not support showing space hierarchies.": "Palvelimesi ei tue avaruushierarkioiden esittämistä.",
     "This space is not public. You will not be able to rejoin without an invite.": "Tämä avaruus ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
     "Other rooms in %(spaceName)s": "Muut huoneet avaruudessa %(spaceName)s",
     "Spaces you're in": "Avaruudet, joissa olet",
@@ -1746,7 +1716,6 @@
     "Device verified": "Laite vahvistettu",
     "Verify this device": "Vahvista tämä laite",
     "Unable to verify this device": "Tätä laitetta ei voitu vahvistaa",
-    "Failed to load list of rooms.": "Huoneluettelon lataaminen epäonnistui.",
     "Joined": "Liitytty",
     "Joining": "Liitytään",
     "Wait!": "Odota!",
@@ -1809,15 +1778,11 @@
     "Connection lost": "Yhteys menetettiin",
     "Sorry, your homeserver is too old to participate here.": "Kotipalvelimesi on liian vanha osallistumaan tänne.",
     "Verification requested": "Vahvistus pyydetty",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Jollakin on jo kyseinen käyttäjätunnus. Valitse eri käyttäjätunnus, tai jos kyseessä on tilisi, kirjaudu alta.",
-    "Unable to check if username has been taken. Try again later.": "Ei voitu tarkistaa, onko käyttäjätunnus jo käytössä. Yritä myöhemmin uudelleen.",
     "Resent!": "Lähetetty uudelleen!",
     "Did not receive it? <a>Resend it</a>": "Etkö saanut sitä? <a>Lähetä uudelleen</a>",
     "Check your email to continue": "Tarkista sähköpostisi jatkaaksesi",
     "Close sidebar": "Sulje sivupalkki",
     "Updated %(humanizedUpdateTime)s": "Päivitetty %(humanizedUpdateTime)s",
-    "Space home": "Avaruuden koti",
-    "See room timeline (devtools)": "Näytä huoneen aikajana (devtools)",
     "Mentions only": "Vain maininnat",
     "Cameras": "Kamerat",
     "Output devices": "Ulostulolaitteet",
@@ -1876,7 +1841,6 @@
     "To proceed, please accept the verification request on your other device.": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
     "Something went wrong in confirming your identity. Cancel and try again.": "Jokin meni pieleen henkilöllisyyttä vahvistaessa. Peruuta ja yritä uudelleen.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Vahvista tilin deaktivointi todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Jos joku pyysi kopioimaan ja liittämään jotakin tänne, on mahdollista että sinua yritetään huijata!",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Luo tili avaamalla osoitteeseen %(emailAddress)s lähetetyssä viestissä oleva linkki.",
     "Thread options": "Ketjun valinnat",
     "Start a group chat": "Aloita ryhmäkeskustelu",
@@ -1916,8 +1880,6 @@
     "The linking wasn't completed in the required time.": "Linkitystä ei suoritettu vaaditussa ajassa.",
     "Stop and close": "Pysäytä ja sulje",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s tai %(recoveryFile)s",
-    "Your server lacks native support": "Palvelimellasi ei ole natiivitukea",
-    "Your server has native support": "Palvelimellasi on natiivituki",
     "Online community members": "Verkkoyhteisöjen jäsenet",
     "Coworkers and teams": "Työkaverit ja tiimit",
     "Friends and family": "Kaverit ja perhe",
@@ -2021,11 +1983,7 @@
     "Failed to send event": "Tapahtuman lähettäminen epäonnistui",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
-    "You're all caught up": "Olet ajan tasalla",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
-    "Proxy URL": "Välityspalvelimen URL-osoite",
-    "Proxy URL (optional)": "Välityspalvelimen URL-osoite (valinnainen)",
-    "Sliding Sync configuration": "Liukuvan synkronoinnin asetukset",
     "Ban them from everything I'm able to": "Anna porttikielto kaikkeen, mihin pystyn",
     "Unban them from everything I'm able to": "Poista porttikielto kaikesta, mihin pystyn",
     "This invite was sent to %(email)s which is not associated with your account": "Tämä kutsu lähetettiin sähköpostiosoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
@@ -2376,7 +2334,12 @@
         "join_beta": "Liity beetaan",
         "sliding_sync_disabled_notice": "Poista käytöstä kirjautumalla ulos ja takaisin sisään",
         "automatic_debug_logs_decryption": "Lähetä vianjäljityslokit automaattisesti salauksen purkuun liittyvien virheiden tapahtuessa",
-        "automatic_debug_logs": "Lähetä vianjäljityslokit automaattisesti minkä tahansa virheen tapahtuessa"
+        "automatic_debug_logs": "Lähetä vianjäljityslokit automaattisesti minkä tahansa virheen tapahtuessa",
+        "sliding_sync_server_support": "Palvelimellasi on natiivituki",
+        "sliding_sync_server_no_support": "Palvelimellasi ei ole natiivitukea",
+        "sliding_sync_configuration": "Liukuvan synkronoinnin asetukset",
+        "sliding_sync_proxy_url_optional_label": "Välityspalvelimen URL-osoite (valinnainen)",
+        "sliding_sync_proxy_url_label": "Välityspalvelimen URL-osoite"
     },
     "keyboard": {
         "home": "Etusivu",
@@ -3232,7 +3195,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Lopetit <a>äänen yleislähetyksen</a>",
             "user": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s loi tämän yksityisviestin.",
+        "creation_summary_room": "%(creator)s loi ja määritti huoneen."
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3540,7 +3505,15 @@
         "server_picker_explainer": "Käytä haluamaasi Matrix-kotipalvelinta, tai isännöi omaa palvelinta.",
         "server_picker_learn_more": "Tietoa kotipalvelimista",
         "incorrect_credentials": "Virheellinen käyttäjätunnus ja/tai salasana.",
-        "account_deactivated": "Tämä tili on poistettu."
+        "account_deactivated": "Tämä tili on poistettu.",
+        "registration_username_validation": "Käytä ainoastaan pieniä kirjaimia, numeroita, yhdysviivoja ja alaviivoja",
+        "registration_username_unable_check": "Ei voitu tarkistaa, onko käyttäjätunnus jo käytössä. Yritä myöhemmin uudelleen.",
+        "registration_username_in_use": "Jollakin on jo kyseinen käyttäjätunnus. Valitse eri käyttäjätunnus, tai jos kyseessä on tilisi, kirjaudu alta.",
+        "phone_label": "Puhelin",
+        "phone_optional_label": "Puhelin (valinnainen)",
+        "email_help_text": "Lisää sähköpostiosoite, jotta voit palauttaa salasanasi.",
+        "email_phone_discovery_text": "Käytä sähköpostiosoitetta tai puhelinnumeroa, jos haluat olla löydettävissä nykyisille yhteystiedoille.",
+        "email_discovery_text": "Käytä sähköpostiosoitetta, jos haluat olla löydettävissä nykyisille yhteystiedoille."
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3711,7 +3684,21 @@
         "light_high_contrast": "Vaalea, suuri kontrasti"
     },
     "space": {
-        "landing_welcome": "Tervetuloa, tämä on <name/>"
+        "landing_welcome": "Tervetuloa, tämä on <name/>",
+        "suggested_tooltip": "Tähän huoneeseen liittymistä suositellaan",
+        "suggested": "Ehdotettu",
+        "select_room_below": "Valitse ensin huone alta",
+        "unmark_suggested": "Merkitse ei-ehdotetuksi",
+        "mark_suggested": "Merkitse ehdotetuksi",
+        "failed_remove_rooms": "Joitakin huoneita ei voitu poistaa. Yritä myöhemmin uudelleen",
+        "failed_load_rooms": "Huoneluettelon lataaminen epäonnistui.",
+        "incompatible_server_hierarchy": "Palvelimesi ei tue avaruushierarkioiden esittämistä.",
+        "context_menu": {
+            "devtools_open_timeline": "Näytä huoneen aikajana (devtools)",
+            "home": "Avaruuden koti",
+            "explore": "Selaa huoneita",
+            "manage_and_explore": "Hallitse ja selaa huoneita"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3763,5 +3750,34 @@
         "setup_rooms_description": "Voit lisätä niitä myöhemmin, mukaan lukien olemassa olevia.",
         "setup_rooms_private_heading": "Minkä projektien parissa tiimisi työskentelee?",
         "setup_rooms_private_description": "Luomme huoneet jokaiselle niistä."
+    },
+    "user_menu": {
+        "switch_theme_light": "Vaihda vaaleaan teemaan",
+        "switch_theme_dark": "Vaihda tummaan teemaan"
+    },
+    "notif_panel": {
+        "empty_heading": "Olet ajan tasalla",
+        "empty_description": "Sinulla ei ole näkyviä ilmoituksia."
+    },
+    "console_scam_warning": "Jos joku pyysi kopioimaan ja liittämään jotakin tänne, on mahdollista että sinua yritetään huijata!",
+    "room": {
+        "drop_file_prompt": "Pudota tiedosto tähän lähettääksesi sen palvelimelle"
+    },
+    "file_panel": {
+        "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
+        "peek_note": "Sinun pitää liittyä huoneeseen voidaksesi nähdä sen sisältämät tiedostot",
+        "empty_heading": "Tässä huoneessa ei näy tiedostoja",
+        "empty_description": "Liitä tiedostoja alalaidan klemmarilla, tai raahaa ja pudota ne mihin tahansa huoneen kohtaan."
+    },
+    "terms": {
+        "integration_manager": "Käytä botteja, siltoja, sovelmia ja tarrapaketteja",
+        "tos": "Käyttöehdot",
+        "intro": "Sinun täytyy hyväksyä palvelun käyttöehdot jatkaaksesi.",
+        "column_service": "Palvelu",
+        "column_summary": "Yhteenveto",
+        "column_document": "Asiakirja"
+    },
+    "space_settings": {
+        "title": "Asetukset - %(spaceName)s"
     }
 }

@@ -130,7 +130,6 @@
     "You cannot place a call with yourself.": "Ezin diozu zure buruari deitu.",
     "You have <a>disabled</a> URL previews by default.": "Lehenetsita URLak aurreikustea <a>desgaitu</a> duzu.",
     "You have <a>enabled</a> URL previews by default.": "Lehenetsita URLak aurreikustea <a>gaitu</a> duzu.",
-    "You must <a>register</a> to use this functionality": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
     "You need to be able to invite users to do that.": "Erabiltzaileak gonbidatzeko baimena behar duzu hori egiteko.",
     "You need to be logged in.": "Saioa hasi duzu.",
     "You seem to be in a call, are you sure you want to quit?": "Badirudi dei batean zaudela, ziur irten nahi duzula?",
@@ -170,7 +169,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Prozesu honek zifratutako gelatan jaso dituzun mezuentzako gakoak tokiko fitxategi batera esportatzea ahalbidetzen dizu. Fitxategia beste Matrix bezero batean inportatu dezakezu, bezero hori ere mezuak deszifratzeko gai izan dadin.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Prozesu honek aurretik beste Matrix bezero batetik esportatu dituzun zifratze gakoak inportatzea ahalbidetzen dizu. Gero beste bezeroak deszifratu zitzakeen mezuak deszifratu ahal izango dituzu.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Esportatutako fitxategia pasaesaldi batez babestuko da. Pasaesaldia bertan idatzi behar duzu, fitxategia deszifratzeko.",
-    "You must join the room to see its files": "Gelara elkartu behar zara bertako fitxategiak ikusteko",
     "Failed to invite": "Huts egin du ganbidapenak",
     "Confirm Removal": "Berretsi kentzea",
     "Unknown error": "Errore ezezaguna",
@@ -182,7 +180,6 @@
     "Error decrypting video": "Errorea bideoa deszifratzean",
     "Add an Integration": "Gehitu integrazioa",
     "URL Previews": "URL-en aurrebistak",
-    "Drop file here to upload": "Jaregin fitxategia hona igotzeko",
     "Check for update": "Bilatu ekuneraketa",
     "Something went wrong!": "Zerk edo zerk huts egin du!",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
@@ -409,7 +406,6 @@
     "Room Topic": "Gelaren mintzagaia",
     "This homeserver would like to make sure you are not a robot.": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du.",
     "Email (optional)": "E-mail (aukerakoa)",
-    "Phone (optional)": "Telefonoa (aukerakoa)",
     "Join millions for free on the largest public server": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
     "Couldn't load page": "Ezin izan da orria kargatu",
     "General": "Orokorra",
@@ -557,7 +553,6 @@
     "Passwords don't match": "Pasahitzak ez datoz bat",
     "Other users can invite you to rooms using your contact details": "Beste erabiltzaileek geletara gonbidatu zaitzakete zure kontaktu-xehetasunak erabiliz",
     "Enter phone number (required on this homeserver)": "Sartu telefono zenbakia (hasiera zerbitzari honetan beharrezkoa)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Erabili letra xeheak, zenbakiak, gidoiak eta azpimarrak, besterik ez",
     "Enter username": "Sartu erabiltzaile-izena",
     "Some characters not allowed": "Karaktere batzuk ez dira onartzen",
     "Add room": "Gehitu gela",
@@ -589,10 +584,6 @@
     "Failed to re-authenticate due to a homeserver problem": "Berriro autentifikatzean huts egin du hasiera-zerbitzariaren arazo bat dela eta",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
-    "Use bots, bridges, widgets and sticker packs": "Erabili botak, zubiak, trepetak eta eranskailu multzoak",
-    "Terms of Service": "Erabilera baldintzak",
-    "Service": "Zerbitzua",
-    "Summary": "Laburpena",
     "Call failed due to misconfigured server": "Deiak huts egin du zerbitzaria gaizki konfiguratuta dagoelako",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Eskatu zure hasiera-zerbitzariaren administratzaileari (<code>%(homeserverDomain)s</code>) TURN zerbitzari bat konfiguratu dezala deiek ondo funtzionatzeko.",
     "Checking server": "Zerbitzaria egiaztatzen",
@@ -666,10 +657,7 @@
     "Close dialog": "Itxi elkarrizketa-koadroa",
     "Hide advanced": "Ezkutatu aurreratua",
     "Show advanced": "Erakutsi aurreratua",
-    "To continue you need to accept the terms of this service.": "Jarraitzeko erabilera baldintzak onartu behar dituzu.",
-    "Document": "Dokumentua",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Captcha-ren gako publikoa falta da hasiera-zerbitzariaren konfigurazioan. Eman honen berri hasiera-zerbitzariaren administratzaileari.",
-    "%(creator)s created and configured the room.": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du.",
     "Explore rooms": "Arakatu gelak",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Zure <b>datu pribatuak kendu</b> beharko zenituzke <idserver /> identitate-zerbitzaritik deskonektatu aurretik. Zoritxarrez <idserver /> identitate-zerbitzaria lineaz kanpo dago eta ezin da atzitu.",
     "You should:": "Hau egin beharko zenuke:",
@@ -962,8 +950,6 @@
     "This address is available to use": "Gelaren helbide hau erabilgarri dago",
     "This address is already in use": "Gelaren helbide hau erabilita dago",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
-    "Switch to light mode": "Aldatu modu argira",
-    "Switch to dark mode": "Aldatu modu ilunera",
     "Switch theme": "Aldatu azala",
     "All settings": "Ezarpen guztiak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
@@ -1533,7 +1519,8 @@
             "lightbox_title": "%(senderDisplayName)s erabiltzaileak %(roomName)s gelaren abatarra aldatu du",
             "removed": "%(senderDisplayName)s erabiltzaileak gelaren abatarra ezabatu du.",
             "changed_img": "%(senderDisplayName)s erabiltzaileak gelaren abatarra aldatu du beste honetara: <img/>"
-        }
+        },
+        "creation_summary_room": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du."
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1692,7 +1679,10 @@
         "sign_in_or_register_description": "Erabili zure kontua edo sortu berri bat jarraitzeko.",
         "register_action": "Sortu kontua",
         "incorrect_credentials": "Erabiltzaile-izen edo pasahitz okerra.",
-        "account_deactivated": "Kontu hau desaktibatuta dago."
+        "account_deactivated": "Kontu hau desaktibatuta dago.",
+        "registration_username_validation": "Erabili letra xeheak, zenbakiak, gidoiak eta azpimarrak, besterik ez",
+        "phone_label": "Telefonoa",
+        "phone_optional_label": "Telefonoa (aukerakoa)"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1773,5 +1763,29 @@
     "labs_mjolnir": {
         "room_name": "Nire debeku-zerrenda",
         "room_topic": "Hau blokeatu dituzun erabiltzaile edo zerbitzarien zerrenda da, ez atera gelatik!"
+    },
+    "user_menu": {
+        "switch_theme_light": "Aldatu modu argira",
+        "switch_theme_dark": "Aldatu modu ilunera"
+    },
+    "room": {
+        "drop_file_prompt": "Jaregin fitxategia hona igotzeko"
+    },
+    "file_panel": {
+        "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
+        "peek_note": "Gelara elkartu behar zara bertako fitxategiak ikusteko"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Arakatu gelak"
+        }
+    },
+    "terms": {
+        "integration_manager": "Erabili botak, zubiak, trepetak eta eranskailu multzoak",
+        "tos": "Erabilera baldintzak",
+        "intro": "Jarraitzeko erabilera baldintzak onartu behar dituzu.",
+        "column_service": "Zerbitzua",
+        "column_summary": "Laburpena",
+        "column_document": "Dokumentua"
     }
 }

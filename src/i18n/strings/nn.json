@@ -78,7 +78,6 @@
     "Authentication": "Authentisering",
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
     "Notification targets": "Varselmål",
-    "Drop file here to upload": "Slipp ein fil her for å lasta opp",
     "This event could not be displayed": "Denne hendingen kunne ikkje visast",
     "Unban": "Slepp inn att",
     "Failed to ban user": "Fekk ikkje til å stenge ute brukaren",
@@ -223,8 +222,6 @@
     "Source URL": "Kjelde-URL",
     "All messages": "Alle meldingar",
     "Low Priority": "Lågrett",
-    "You must <a>register</a> to use this functionality": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
-    "You must join the room to see its files": "Du må fare inn i rommet for å sjå filene dets",
     "Failed to reject invitation": "Fekk ikkje til å seia nei til innbyding",
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
@@ -470,7 +467,6 @@
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
-    "%(creator)s created and configured the room.": "%(creator)s oppretta og konfiguerte dette rommet.",
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
@@ -1038,7 +1034,8 @@
             "lightbox_title": "%(senderDisplayName)s endra avataren til %(roomName)s",
             "removed": "%(senderDisplayName)s fjerna romavataren.",
             "changed_img": "%(senderDisplayName)s endra romavataren til <img/>"
-        }
+        },
+        "creation_summary_room": "%(creator)s oppretta og konfiguerte dette rommet."
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",
@@ -1166,7 +1163,8 @@
         "sign_in_or_register_description": "Bruk kontoen din eller opprett ein ny for å halda fram.",
         "register_action": "Opprett konto",
         "incorrect_credentials": "Feil brukarnamn og/eller passord.",
-        "account_deactivated": "Denne kontoen har blitt deaktivert."
+        "account_deactivated": "Denne kontoen har blitt deaktivert.",
+        "phone_label": "Telefon"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1217,5 +1215,17 @@
     "labs_mjolnir": {
         "room_name": "Mi blokkeringsliste",
         "room_topic": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!"
+    },
+    "room": {
+        "drop_file_prompt": "Slipp ein fil her for å lasta opp"
+    },
+    "file_panel": {
+        "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
+        "peek_note": "Du må fare inn i rommet for å sjå filene dets"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Utforsk romma"
+        }
     }
 }

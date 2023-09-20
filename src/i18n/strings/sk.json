@@ -72,7 +72,6 @@
     "Change Password": "Zmeniť heslo",
     "Failed to set display name": "Nepodarilo sa nastaviť zobrazované meno",
     "Authentication": "Overenie",
-    "Drop file here to upload": "Pretiahnutím sem nahráte súbor",
     "Unban": "Povoliť vstup",
     "Failed to ban user": "Nepodarilo sa zakázať používateľa",
     "Failed to mute user": "Nepodarilo sa umlčať používateľa",
@@ -168,8 +167,6 @@
     "Unable to add email address": "Nie je možné pridať emailovú adresu",
     "Unable to verify email address.": "Nie je možné overiť emailovú adresu.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnoviť si heslo a prijímať oznámenia emailom.",
-    "You must <a>register</a> to use this functionality": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
-    "You must join the room to see its files": "Aby ste si mohli zobraziť zoznam súborov, musíte vstúpiť do miestnosti",
     "Reject invitation": "Odmietnuť pozvanie",
     "Are you sure you want to reject the invitation?": "Ste si istí, že chcete odmietnuť toto pozvanie?",
     "Failed to reject invitation": "Nepodarilo sa odmietnuť pozvanie",
@@ -479,7 +476,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varovanie</b>: zálohovanie šifrovacích kľúčov by ste mali nastavovať na dôveryhodnom počítači.",
     "This homeserver would like to make sure you are not a robot.": "Tento domovský server by sa rád uistil, že nie ste robot.",
     "Email (optional)": "Email (nepovinné)",
-    "Phone (optional)": "Telefón (nepovinné)",
     "Join millions for free on the largest public server": "Pripojte sa k mnohým používateľom najväčšieho verejného domovského servera zdarma",
     "Couldn't load page": "Nie je možné načítať stránku",
     "Could not load user profile": "Nie je možné načítať profil používateľa",
@@ -966,7 +962,6 @@
     "Encryption not enabled": "Šifrovanie nie je zapnuté",
     "End-to-end encryption isn't enabled": "End-to-end šifrovanie nie je zapnuté",
     "Unencrypted": "Nešifrované",
-    "%(creator)s created this DM.": "%(creator)s vytvoril/a túto priamu správu.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "V tejto konverzácii ste len vy dvaja, pokiaľ niektorý z vás nepozve niekoho iného, aby sa pripojil.",
     "This is the beginning of your direct message history with <displayName/>.": "Toto je začiatok histórie vašich priamych správ s používateľom <displayName/>.",
     "The user you called is busy.": "Volaný používateľ má obsadené.",
@@ -1029,9 +1024,7 @@
     "Cross-signing is ready for use.": "Krížové podpisovanie je pripravené na použitie.",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Zálohujte si šifrovacie kľúče s údajmi o účte pre prípad, že stratíte prístup k reláciám. Vaše kľúče budú zabezpečené jedinečným bezpečnostným kľúčom.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
-    "You're all caught up": "Všetko ste už stihli",
     "You're all caught up.": "Všetko ste už stihli.",
-    "You have no visible notifications.": "Nemáte žiadne viditeľné oznámenia.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Overte svoju totožnosť, aby ste mali prístup k zašifrovaným správam a potvrdili svoju totožnosť ostatným.",
     "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných miestnostiach overte všetkých používateľov, aby ste zaistili ich bezpečnosť.",
     "Verify all users in a room to ensure it's secure.": "Overte všetkých používateľov v miestnosti, aby ste sa uistili, že je zabezpečená.",
@@ -1092,12 +1085,8 @@
     "Connecting": "Pripájanie",
     "Sending": "Odosielanie",
     "Avatar": "Obrázok",
-    "Suggested": "Navrhované",
     "Accepting…": "Akceptovanie…",
-    "Document": "Dokument",
-    "Summary": "Zhrnutie",
     "Notes": "Poznámky",
-    "Service": "Služba",
     "Enter email address (required on this homeserver)": "Zadajte e-mailovú adresu (vyžaduje sa na tomto domovskom serveri)",
     "Use an email address to recover your account": "Použite e-mailovú adresu na obnovenie svojho konta",
     "Doesn't look like a valid email address": "Nevyzerá to ako platná e-mailová adresa",
@@ -1108,7 +1097,6 @@
     "New published address (e.g. #alias:server)": "Nová zverejnená adresa (napr. #alias:server)",
     "Local address": "Lokálna adresa",
     "Address": "Adresa",
-    "Manage & explore rooms": "Spravovať a preskúmať miestnosti",
     "Enter the name of a new server you want to explore.": "Zadajte názov nového servera, ktorý chcete preskúmať.",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "one": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítané oznámenie.",
@@ -1139,7 +1127,6 @@
     "Favourited": "Obľúbené",
     "Error processing voice message": "Chyba pri spracovaní hlasovej správy",
     "Send voice message": "Odoslať hlasovú správu",
-    "%(creator)s created and configured the room.": "%(creator)s vytvoril a nastavil miestnosť.",
     "Invited people will be able to read old messages.": "Pozvaní ľudia si budú môcť prečítať staré správy.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Pozvite niekoho pomocou jeho mena, používateľského mena (napríklad <userId/>) alebo <a>zdieľate túto miestnosť</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pozvite niekoho pomocou jeho mena, e-mailovej adresy, používateľského mena (napríklad <userId/>) alebo <a>zdieľajte túto miestnosť</a>.",
@@ -1160,7 +1147,6 @@
         "other": "%(count)s relácie"
     },
     "<a>Add a topic</a> to help people know what it is about.": "<a>Pridajte tému</a>, aby ľudia vedeli, o čo ide.",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Pripojte súbory z konverzácie alebo ich jednoducho pretiahnite kamkoľvek do miestnosti.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
     "Information": "Informácie",
     "Space information": "Informácie o priestore",
@@ -1187,14 +1173,12 @@
     "Export chat": "Exportovať konverzáciu",
     "Copy link to thread": "Kopírovať odkaz na vlákno",
     "Copy room link": "Kopírovať odkaz na miestnosť",
-    "Use bots, bridges, widgets and sticker packs": "Použiť boty, premostenia, widgety a balíčky s nálepkami",
     "Widgets do not use message encryption.": "Widgety nepoužívajú šifrovanie správ.",
     "Add widgets, bridges & bots": "Pridať widgety, premostenia a boty",
     "Edit widgets, bridges & bots": "Upraviť widgety, premostenia a boty",
     "Show Widgets": "Zobraziť widgety",
     "Hide Widgets": "Skryť widgety",
     "Widgets": "Widgety",
-    "No files visible in this room": "V tejto miestnosti nie sú viditeľné žiadne súbory",
     "Upload %(count)s other files": {
         "one": "Nahrať %(count)s ďalší súbor",
         "other": "Nahrať %(count)s ďalších súborov"
@@ -1243,7 +1227,6 @@
     "Your user ID": "Vaše ID používateľa",
     "Your display name": "Vaše zobrazované meno",
     "You verified %(name)s": "Overili ste používateľa %(name)s",
-    "Terms of Service": "Podmienky poskytovania služby",
     "Clear all data": "Vymazať všetky údaje",
     "Passwords don't match": "Heslá sa nezhodujú",
     "Nice, strong password!": "Pekné, silné heslo!",
@@ -1257,8 +1240,6 @@
     "Click to view edits": "Kliknutím zobrazíte úpravy",
     "Topic: %(topic)s (<a>edit</a>)": "Téma: %(topic)s (<a>upraviť</a>)",
     "Switch theme": "Prepnúť motív",
-    "Switch to dark mode": "Prepnúť na tmavý režim",
-    "Switch to light mode": "Prepnúť na svetlý režim",
     "You may contact me if you have any follow up questions": "V prípade ďalších otázok ma môžete kontaktovať",
     "Search names and descriptions": "Vyhľadávanie názvov a popisov",
     "You may want to try a different search or check for typos.": "Možno by ste mali vyskúšať iné vyhľadávanie alebo skontrolovať preklepy.",
@@ -1296,7 +1277,6 @@
     "Add a photo, so people can easily spot your room.": "Pridajte fotografiu, aby si ľudia mohli ľahko všimnúť vašu miestnosť.",
     "Enable encryption in settings.": "Zapnúť šifrovanie v nastaveniach.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Vaše súkromné správy sú bežne šifrované, ale táto miestnosť nie je. Zvyčajne je to spôsobené nepodporovaným zariadením alebo použitou metódou, ako napríklad e-mailové pozvánky.",
-    "See room timeline (devtools)": "Pozrite si časovú os miestnosti (devtools)",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
     "Upgrade required": "Vyžaduje sa aktualizácia",
     "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
@@ -1362,7 +1342,6 @@
     "Add a space to a space you manage.": "Pridať priestor do priestoru, ktorý spravujete.",
     "Add a new server": "Pridať nový server",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Ste tu jediný človek. Ak odídete, nikto sa už v budúcnosti nebude môcť pripojiť do tejto miestnosti, vrátane vás.",
-    "Use lowercase letters, numbers, dashes and underscores only": "Použite len malé písmená, číslice, pomlčky a podčiarkovníky",
     "Some characters not allowed": "Niektoré znaky nie sú povolené",
     "Enter phone number (required on this homeserver)": "Zadajte telefónne číslo (povinné na tomto domovskom serveri)",
     "Password is allowed, but unsafe": "Heslo je povolené, ale nie je bezpečné",
@@ -1404,7 +1383,6 @@
     "Start new chat": "Spustiť novú konverzáciu",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "Original event source": "Pôvodný zdroj udalosti",
-    "Decrypted event source": "Zdroj dešifrovanej udalosti",
     "Question or topic": "Otázka alebo téma",
     "View in room": "Zobraziť v miestnosti",
     "Loading new room": "Načítanie novej miestnosti",
@@ -1414,7 +1392,6 @@
     },
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
     "Collapse reply thread": "Zbaliť vlákno odpovedí",
-    "Settings - %(spaceName)s": "Nastavenia - %(spaceName)s",
     "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
     "Start audio stream": "Spustiť zvukový prenos",
     "Recently visited rooms": "Nedávno navštívené miestnosti",
@@ -1490,8 +1467,6 @@
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "<inviter/> invites you": "<inviter/> vás pozýva",
     "No results found": "Nenašli sa žiadne výsledky",
-    "Mark as suggested": "Označiť ako odporúčanú",
-    "This room is suggested as a good one to join": "Táto miestnosť sa odporúča ako vhodná na pripojenie",
     "%(count)s rooms": {
         "one": "%(count)s miestnosť",
         "other": "%(count)s miestností"
@@ -1624,7 +1599,6 @@
     "This client does not support end-to-end encryption.": "Tento klient nepodporuje end-to-end šifrovanie.",
     "Failed to deactivate user": "Nepodarilo sa deaktivovať používateľa",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Chýbajúci verejný kľúč captcha v konfigurácii domovského servera. Nahláste to, prosím, správcovi domovského servera.",
-    "To continue you need to accept the terms of this service.": "Ak chcete pokračovať, musíte prijať podmienky tejto služby.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pri veľkom množstve správ to môže trvať určitý čas. Medzitým prosím neobnovujte svojho klienta.",
     "No recent messages by %(user)s found": "Nenašli sa žiadne nedávne správy od používateľa %(user)s",
     "This invite to %(roomName)s was sent to %(email)s": "Táto pozvánka do %(roomName)s bola odoslaná na %(email)s",
@@ -1665,12 +1639,10 @@
     "Group all your favourite rooms and people in one place.": "Zoskupte všetky vaše obľúbené miestnosti a ľudí na jednom mieste.",
     "Group all your people in one place.": "Zoskupte všetkých ľudí na jednom mieste.",
     "Group all your rooms that aren't part of a space in one place.": "Zoskupte všetky miestnosti, ktoré nie sú súčasťou priestoru, na jednom mieste.",
-    "Unable to check if username has been taken. Try again later.": "Nie je možné skontrolovať, či je používateľské meno obsadené. Skúste to neskôr.",
     "The beginning of the room": "Začiatok miestnosti",
     "Jump to date": "Prejsť na dátum",
     "Pick a date to jump to": "Vyberte dátum, na ktorý chcete prejsť",
     "Message pending moderation: %(reason)s": "Správa čaká na moderáciu: %(reason)s",
-    "Space home": "Domov priestoru",
     "Missing session data": "Chýbajú údaje relácie",
     "Only people invited will be able to find and join this space.": "Tento priestor budú môcť nájsť a pripojiť sa k nemu len pozvaní ľudia.",
     "Want to add an existing space instead?": "Chcete radšej pridať už existujúci priestor?",
@@ -1686,10 +1658,6 @@
     "There was a problem communicating with the homeserver, please try again later.": "Nastal problém pri komunikácii s domovským serverom. Skúste to prosím znova.",
     "Error downloading audio": "Chyba pri sťahovaní zvuku",
     "Unnamed audio": "Nepomenovaný zvukový záznam",
-    "Use email to optionally be discoverable by existing contacts.": "Použite e-mail, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Použite e-mail alebo telefón, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi.",
-    "Add an email to be able to reset your password.": "Pridajte e-mail, aby ste mohli obnoviť svoje heslo.",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Toto používateľské meno už niekto má. Skúste iné, alebo ak ste to vy, prihláste sa nižšie.",
     "That phone number doesn't look quite right, please check and try again": "Toto telefónne číslo nevyzerá úplne správne, skontrolujte ho a skúste to znova",
     "Something went wrong in confirming your identity. Cancel and try again.": "Pri potvrdzovaní vašej totožnosti sa niečo pokazilo. Zrušte to a skúste to znova.",
     "Hold": "Podržať",
@@ -1781,11 +1749,8 @@
     "Error - Mixed content": "Chyba - Zmiešaný obsah",
     "Failed to get autodiscovery configuration from server": "Nepodarilo sa získať nastavenie automatického zisťovania zo servera",
     "Sections to show": "Sekcie na zobrazenie",
-    "Failed to load list of rooms.": "Nepodarilo sa načítať zoznam miestností.",
     "This address does not point at this room": "Táto adresa nesmeruje do tejto miestnosti",
     "Wait!": "Počkajte!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Ak vám niekto povedal, aby ste sem niečo skopírovali/vložili, je veľká pravdepodobnosť, že vás niekto snaží podviesť!",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Ak viete, čo robíte, Element je open-source, určite si pozrite náš GitHub (https://github.com/vector-im/element-web/) a zapojte sa!",
     "Hide stickers": "Skryť nálepky",
     "Voice Message": "Hlasová správa",
     "Poll": "Anketa",
@@ -1811,9 +1776,6 @@
     "A browser extension is preventing the request.": "Požiadavke bráni rozšírenie prehliadača.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
-    "Your server does not support showing space hierarchies.": "Váš server nepodporuje zobrazovanie hierarchií priestoru.",
-    "Failed to remove some rooms. Try again later": "Nepodarilo sa odstrániť niektoré miestnosti. Skúste to neskôr",
-    "Mark as not suggested": "Označiť ako neodporúčaný",
     "The poll has ended. Top answer: %(topAnswer)s": "Anketa sa skončila. Najčastejšia odpoveď: %(topAnswer)s",
     "Failed to end poll": "Nepodarilo sa ukončiť anketu",
     "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
@@ -1831,7 +1793,6 @@
     "Move left": "Presun doľava",
     "Unban from %(roomName)s": "Zrušiť zákaz vstup do %(roomName)s",
     "Ban from %(roomName)s": "Zakázať vstup do %(roomName)s",
-    "Select a room below first": "Najskôr vyberte miestnosť nižšie",
     "Proceed with reset": "Pokračovať v obnovení",
     "Joining": "Pripájanie sa",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s a %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s alebo %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
-    "Proxy URL": "URL adresa proxy servera",
-    "Proxy URL (optional)": "URL adresa proxy servera (voliteľná)",
-    "To disable you will need to log out and back in, use with caution!": "Pre vypnutie sa musíte odhlásiť a znova prihlásiť, používajte opatrne!",
-    "Sliding Sync configuration": "Konfigurácia kĺzavej synchronizácie",
-    "Your server lacks native support, you must specify a proxy": "Váš server nemá natívnu podporu, musíte zadať proxy server",
-    "Your server lacks native support": "Váš server nemá natívnu podporu",
-    "Your server has native support": "Váš server má natívnu podporu",
     "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
     "Voice broadcast": "Hlasové vysielanie",
     "You do not have permission to start voice calls": "Nemáte povolenie na spustenie hlasových hovorov",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "Edit link": "Upraviť odkaz",
-    "Decrypted source unavailable": "Dešifrovaný zdroj nie je dostupný",
     "%(senderName)s started a voice broadcast": "%(senderName)s začal/a hlasové vysielanie",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Registračný token",
@@ -2627,7 +2580,14 @@
         "rust_crypto_disabled_notice": "V súčasnosti sa dá povoliť len prostredníctvom súboru config.json",
         "automatic_debug_logs_key_backup": "Automaticky odosielať záznamy o ladení, ak zálohovanie kľúčov nefunguje",
         "automatic_debug_logs_decryption": "Automatické odosielanie záznamov ladenia pri chybe dešifrovania",
-        "automatic_debug_logs": "Automatické odosielanie záznamov ladenia pri akejkoľvek chybe"
+        "automatic_debug_logs": "Automatické odosielanie záznamov ladenia pri akejkoľvek chybe",
+        "sliding_sync_server_support": "Váš server má natívnu podporu",
+        "sliding_sync_server_no_support": "Váš server nemá natívnu podporu",
+        "sliding_sync_server_specify_proxy": "Váš server nemá natívnu podporu, musíte zadať proxy server",
+        "sliding_sync_configuration": "Konfigurácia kĺzavej synchronizácie",
+        "sliding_sync_disable_warning": "Pre vypnutie sa musíte odhlásiť a znova prihlásiť, používajte opatrne!",
+        "sliding_sync_proxy_url_optional_label": "URL adresa proxy servera (voliteľná)",
+        "sliding_sync_proxy_url_label": "URL adresa proxy servera"
     },
     "keyboard": {
         "home": "Domov",
@@ -3177,7 +3137,9 @@
         "show_hidden_events": "Zobrazovať skryté udalosti v histórii obsahu miestností",
         "low_bandwidth_mode_description": "Vyžaduje kompatibilný domovský server.",
         "low_bandwidth_mode": "Režim nízkej šírky pásma",
-        "developer_mode": "Režim pre vývojárov"
+        "developer_mode": "Režim pre vývojárov",
+        "view_source_decrypted_event_source": "Zdroj dešifrovanej udalosti",
+        "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj nie je dostupný"
     },
     "export_chat": {
         "html": "HTML",
@@ -3573,7 +3535,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Ukončili ste <a>hlasové vysielanie</a>",
             "user": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s vytvoril/a túto priamu správu.",
+        "creation_summary_room": "%(creator)s vytvoril a nastavil miestnosť."
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -3896,7 +3860,15 @@
         "server_picker_explainer": "Použite preferovaný domovský server Matrixu, ak ho máte, alebo si vytvorte vlastný.",
         "server_picker_learn_more": "O domovských serveroch",
         "incorrect_credentials": "Nesprávne meno používateľa a / alebo heslo.",
-        "account_deactivated": "Tento účet bol deaktivovaný."
+        "account_deactivated": "Tento účet bol deaktivovaný.",
+        "registration_username_validation": "Použite len malé písmená, číslice, pomlčky a podčiarkovníky",
+        "registration_username_unable_check": "Nie je možné skontrolovať, či je používateľské meno obsadené. Skúste to neskôr.",
+        "registration_username_in_use": "Toto používateľské meno už niekto má. Skúste iné, alebo ak ste to vy, prihláste sa nižšie.",
+        "phone_label": "Telefón",
+        "phone_optional_label": "Telefón (nepovinné)",
+        "email_help_text": "Pridajte e-mail, aby ste mohli obnoviť svoje heslo.",
+        "email_phone_discovery_text": "Použite e-mail alebo telefón, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi.",
+        "email_discovery_text": "Použite e-mail, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi."
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -4108,7 +4080,21 @@
         "light_high_contrast": "Ľahký vysoký kontrast"
     },
     "space": {
-        "landing_welcome": "Vitajte v <name/>"
+        "landing_welcome": "Vitajte v <name/>",
+        "suggested_tooltip": "Táto miestnosť sa odporúča ako vhodná na pripojenie",
+        "suggested": "Navrhované",
+        "select_room_below": "Najskôr vyberte miestnosť nižšie",
+        "unmark_suggested": "Označiť ako neodporúčaný",
+        "mark_suggested": "Označiť ako odporúčanú",
+        "failed_remove_rooms": "Nepodarilo sa odstrániť niektoré miestnosti. Skúste to neskôr",
+        "failed_load_rooms": "Nepodarilo sa načítať zoznam miestností.",
+        "incompatible_server_hierarchy": "Váš server nepodporuje zobrazovanie hierarchií priestoru.",
+        "context_menu": {
+            "devtools_open_timeline": "Pozrite si časovú os miestnosti (devtools)",
+            "home": "Domov priestoru",
+            "explore": "Preskúmať miestnosti",
+            "manage_and_explore": "Spravovať a preskúmať miestnosti"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -4165,5 +4151,35 @@
         "setup_rooms_description": "Neskôr môžete pridať aj ďalšie, vrátane už existujúcich.",
         "setup_rooms_private_heading": "Na akých projektoch pracuje váš tím?",
         "setup_rooms_private_description": "Pre každú z nich vytvoríme miestnosti."
+    },
+    "user_menu": {
+        "switch_theme_light": "Prepnúť na svetlý režim",
+        "switch_theme_dark": "Prepnúť na tmavý režim"
+    },
+    "notif_panel": {
+        "empty_heading": "Všetko ste už stihli",
+        "empty_description": "Nemáte žiadne viditeľné oznámenia."
+    },
+    "console_scam_warning": "Ak vám niekto povedal, aby ste sem niečo skopírovali/vložili, je veľká pravdepodobnosť, že vás niekto snaží podviesť!",
+    "console_dev_note": "Ak viete, čo robíte, Element je open-source, určite si pozrite náš GitHub (https://github.com/vector-im/element-web/) a zapojte sa!",
+    "room": {
+        "drop_file_prompt": "Pretiahnutím sem nahráte súbor"
+    },
+    "file_panel": {
+        "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
+        "peek_note": "Aby ste si mohli zobraziť zoznam súborov, musíte vstúpiť do miestnosti",
+        "empty_heading": "V tejto miestnosti nie sú viditeľné žiadne súbory",
+        "empty_description": "Pripojte súbory z konverzácie alebo ich jednoducho pretiahnite kamkoľvek do miestnosti."
+    },
+    "terms": {
+        "integration_manager": "Použiť boty, premostenia, widgety a balíčky s nálepkami",
+        "tos": "Podmienky poskytovania služby",
+        "intro": "Ak chcete pokračovať, musíte prijať podmienky tejto služby.",
+        "column_service": "Služba",
+        "column_summary": "Zhrnutie",
+        "column_document": "Dokument"
+    },
+    "space_settings": {
+        "title": "Nastavenia - %(spaceName)s"
     }
 }

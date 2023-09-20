@@ -94,7 +94,6 @@
     "Upload avatar": "Αποστολή προσωπικής εικόνας",
     "Upload Failed": "Απέτυχε η αποστολή",
     "Warning!": "Προειδοποίηση!",
-    "You must <a>register</a> to use this functionality": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
     "You need to be logged in.": "Πρέπει να είστε συνδεδεμένος.",
     "Sun": "Κυρ",
     "Mon": "Δευ",
@@ -137,7 +136,6 @@
     "Error decrypting video": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο",
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "URL Previews": "Προεπισκόπηση συνδέσμων",
-    "Drop file here to upload": "Αποθέστε εδώ για αποστολή",
     "Something went wrong!": "Κάτι πήγε στραβά!",
     "Failed to ban user": "Δεν ήταν δυνατό ο αποκλεισμός του χρήστη",
     "Failed to change power level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
@@ -177,7 +175,6 @@
     "You have <a>enabled</a> URL previews by default.": "Έχετε <a>ενεργοποιημένη</a> από προεπιλογή την προεπισκόπηση συνδέσμων.",
     "You need to be able to invite users to do that.": "Για να το κάνετε αυτό πρέπει να έχετε τη δυνατότητα να προσκαλέσετε χρήστες.",
     "You seem to be uploading files, are you sure you want to quit?": "Φαίνεται ότι αποστέλετε αρχεία, είστε βέβαιοι ότι θέλετε να αποχωρήσετε;",
-    "You must join the room to see its files": "Πρέπει να συνδεθείτε στο δωμάτιο για να δείτε τα αρχεία του",
     "Reject all %(invitedRooms)s invites": "Απόρριψη όλων των προσκλήσεων %(invitedRooms)s",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Δεν θα μπορέσετε να αναιρέσετε αυτήν την αλλαγή καθώς προωθείτε τον χρήστη να έχει το ίδιο επίπεδο δύναμης με τον εαυτό σας.",
     "Sent messages will be stored until your connection has returned.": "Τα απεσταλμένα μηνύματα θα αποθηκευτούν μέχρι να αακτηθεί η σύνδεσή σας.",
@@ -1135,18 +1132,10 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Αυτό το δωμάτιο δεν είναι δημόσιο. Δε θα μπορείτε να ξανασυμμετάσχετε χωρίς πρόσκληση.",
     "This space is not public. You will not be able to rejoin without an invite.": "Αυτός ο χώρος δεν είναι δημόσιος. Δε θα μπορείτε να ξανασυμμετάσχετε χωρίς πρόσκληση.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Είστε το μόνο άτομο εδώ μέσα. Εάν φύγετε, κανείς δε θα μπορεί αργότερα να συμμετάσχει, συμπεριλαμβανομένου και εσάς.",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Εάν κάποιος σας είπε να κάνετε αντιγραφή και επικόλληση κάτι εδώ, υπάρχει μεγάλη πιθανότητα να σας έχουν εξαπατήσει!",
     "Wait!": "Μια στιγμή!",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Επισυνάψτε αρχεία από τη συνομιλία ή απλώς σύρετε και αποθέστε τα οπουδήποτε μέσα σε ένα δωμάτιο.",
-    "No files visible in this room": "Δεν υπάρχουν αρχεία ορατά σε αυτό το δωμάτιο",
     "Couldn't load page": "Δεν ήταν δυνατή η φόρτωση της σελίδας",
     "Error downloading audio": "Σφάλμα λήψης ήχου",
     "Sign in with SSO": "Συνδεθείτε με SSO",
-    "Add an email to be able to reset your password.": "Προσθέστε ένα email για να μπορείτε να κάνετε επαναφορά του κωδικού πρόσβασης σας.",
-    "Phone (optional)": "Τηλέφωνο (προαιρετικό)",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Κάποιος έχει ήδη αυτό το όνομα χρήστη. Δοκιμάστε άλλο ή εάν είστε εσείς, συνδεθείτε παρακάτω.",
-    "Unable to check if username has been taken. Try again later.": "Δεν είναι δυνατός ο έλεγχος εάν το όνομα χρήστη είναι διαθέσιμο. Δοκιμάστε ξανά αργότερα.",
-    "Use lowercase letters, numbers, dashes and underscores only": "Χρησιμοποιήστε μόνο πεζά γράμματα, αριθμούς, παύλες και κάτω παύλες",
     "Use an email address to recover your account": "Χρησιμοποιήστε μια διεύθυνση email για να ανακτήσετε τον λογαριασμό σας",
     "That phone number doesn't look quite right, please check and try again": "Αυτός ο αριθμός τηλεφώνου δε φαίνεται σωστός, ελέγξτε και δοκιμάστε ξανά",
     "Enter phone number": "Εισάγετε αριθμό τηλεφώνου",
@@ -1218,10 +1207,6 @@
     "Upload all": "Μεταφόρτωση όλων",
     "Upload files": "Μεταφόρτωση αρχείων",
     "Upload files (%(current)s of %(total)s)": "Μεταφόρτωση αρχείων %(current)s από %(total)s",
-    "Document": "Έγγραφο",
-    "Summary": "Περίληψη",
-    "Service": "Υπηρεσία",
-    "To continue you need to accept the terms of this service.": "Για να συνεχίσετε, πρέπει να αποδεχτείτε τους όρους αυτής της υπηρεσίας.",
     "Find others by phone or email": "Βρείτε άλλους μέσω τηλεφώνου ή email",
     "Your browser likely removed this data when running low on disk space.": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε.",
     "Missing session data": "Λείπουν δεδομένα της συνεδρίας (session)",
@@ -1233,7 +1218,6 @@
     "Join %(roomAddress)s": "Συμμετοχή στο %(roomAddress)s",
     "Other rooms in %(spaceName)s": "Άλλα δωμάτιο στο %(spaceName)s",
     "Spaces you're in": "Χώροι που ανήκετε",
-    "Settings - %(spaceName)s": "Ρυθμίσεις - %(spaceName)s",
     "Sections to show": "Ενότητες προς εμφάνιση",
     "Command Help": "Βοήθεια Εντολών",
     "Link to room": "Σύνδεσμος στο δωμάτιο",
@@ -1660,26 +1644,19 @@
     "Verify this device": "Επαληθεύστε αυτήν τη συσκευή",
     "Unable to verify this device": "Αδυναμία επαλήθευσης αυτής της συσκευής",
     "Original event source": "Αρχική πηγή συμβάντος",
-    "Decrypted event source": "Αποκρυπτογραφημένη πηγή συμβάντος",
     "Could not load user profile": "Αδυναμία φόρτωσης του προφίλ χρήστη",
     "Switch theme": "Αλλαγή θέματος",
-    "Switch to dark mode": "Αλλαγή σε σκοτεινό",
-    "Switch to light mode": "Αλλαγή σε φωτεινό",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
     "Private space": "Ιδιωτικός χώρος",
     "Search names and descriptions": "Αναζήτηση ονομάτων και περιγραφών",
     "Rooms and spaces": "Δωμάτια και Χώροι",
     "Results": "Αποτελέσματα",
     "You may want to try a different search or check for typos.": "Μπορεί να θέλετε να δοκιμάσετε μια διαφορετική αναζήτηση ή να ελέγξετε για ορθογραφικά λάθη.",
-    "Your server does not support showing space hierarchies.": "Ο διακομιστής σας δεν υποστηρίζει την εμφάνιση ιεραρχιών χώρου.",
     "Review terms and conditions": "Ελέγξτε τους όρους και τις προϋποθέσεις",
     "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Για να συνεχίσετε να χρησιμοποιείτε τον κεντρικό διακομιστή %(homeserverDomain)s πρέπει να διαβάσετε και να συμφωνήσετε με τους όρους και τις προϋποθέσεις μας.",
     "Terms and Conditions": "Οροι και Προϋποθέσεις",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Εάν ξέρετε τι κάνετε, το Element είναι ανοιχτού κώδικα, ανατρέξετε στο GitHub (https://github.com/vector-im/element-web/) και συνεισφέρετε!",
     "Open dial pad": "Άνοιγμα πληκτρολογίου κλήσης",
     "Unnamed audio": "Ήχος χωρίς όνομα",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Χρησιμοποιήστε email ή τηλέφωνο για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές.",
-    "Use email to optionally be discoverable by existing contacts.": "Χρησιμοποιήστε email για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές.",
     "Enter phone number (required on this homeserver)": "Εισαγάγετε τον αριθμό τηλεφώνου (απαιτείται σε αυτόν τον κεντρικό διακομιστή)",
     "Other users can invite you to rooms using your contact details": "Άλλοι χρήστες μπορούν να σας προσκαλέσουν σε δωμάτια χρησιμοποιώντας τα στοιχεία επικοινωνίας σας",
     "Enter email address (required on this homeserver)": "Εισαγάγετε τη διεύθυνση email (απαιτείται σε αυτόν τον κεντρικό διακομιστή)",
@@ -1688,13 +1665,6 @@
     "Country Dropdown": "Αναπτυσσόμενο μενού Χώρας",
     "This homeserver would like to make sure you are not a robot.": "Αυτός ο κεντρικός διακομιστής θα ήθελε να βεβαιωθεί ότι δεν είστε ρομπότ.",
     "You are sharing your live location": "Μοιράζεστε την τρέχουσα τοποθεσία σας",
-    "Failed to load list of rooms.": "Αποτυχία φόρτωσης λίστας δωματίων.",
-    "Mark as suggested": "Επισήμανση ως προτεινόμενο",
-    "Mark as not suggested": "Επισήμανση ως μη προτεινόμενο",
-    "Failed to remove some rooms. Try again later": "Αποτυχία κατάργησης ορισμένων δωματίων. Δοκιμάστε ξανά αργότερα",
-    "Select a room below first": "Επιλέξτε πρώτα ένα δωμάτιο παρακάτω",
-    "Suggested": "Προτεινόμενα",
-    "This room is suggested as a good one to join": "Αυτό το δωμάτιο προτείνεται ως ένα καλό δωμάτιο για συμμετοχή",
     "You don't have permission": "Δεν έχετε άδεια",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "one": "Έχετε %(count)s μη αναγνωσμένη ειδοποιήση σε προηγούμενη έκδοση αυτού του δωματίου.",
@@ -1704,7 +1674,6 @@
     "Retry all": "Επανάληψη όλων",
     "Delete all": "Διαγραφή όλων",
     "Some of your messages have not been sent": "Μερικά από τα μηνύματα σας δεν έχουν αποσταλεί",
-    "You have no visible notifications.": "Δεν έχετε ορατές ειδοποιήσεις.",
     "Verification requested": "Ζητήθηκε επαλήθευση",
     "Search spaces": "Αναζήτηση χώρων",
     "Updating %(brand)s": "Ενημέρωση %(brand)s",
@@ -1750,7 +1719,6 @@
     "Add a space to a space you manage.": "Προσθέστε έναν χώρο σε ένα χώρο που διαχειρίζεστε.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Η εκκαθάριση όλων των δεδομένων από αυτήν τη συνεδρία είναι μόνιμη. Τα κρυπτογραφημένα μηνύματα θα χαθούν εκτός εάν έχουν δημιουργηθεί αντίγραφα ασφαλείας των κλειδιών τους.",
     "Unable to load commit detail: %(msg)s": "Δεν είναι δυνατή η φόρτωση των λεπτομερειών δέσμευσης: %(msg)s",
-    "Use bots, bridges, widgets and sticker packs": "Χρησιμοποιήστε bots, γέφυρες, μικροεφαρμογές και πακέτα αυτοκόλλητων",
     "Data on this screen is shared with %(widgetDomain)s": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Η χρήση αυτής της μικροεφαρμογής μπορεί να μοιραστεί δεδομένα <helpIcon /> με το %(widgetDomain)s και τον διαχειριστή πρόσθετων.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Οι διαχειριστές πρόσθετων λαμβάνουν δεδομένα διαμόρφωσης και μπορούν να τροποποιούν μικροεφαρμογές, να στέλνουν προσκλήσεις για δωμάτια και να ορίζουν δικαιώματα πρόσβασης για λογαριασμό σας.",
@@ -1771,10 +1739,7 @@
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Φαίνεται ότι δε διαθέτετε Κλειδί Ασφαλείας ή άλλες συσκευές με τις οποίες μπορείτε να επαληθεύσετε. Αυτή η συσκευή δε θα έχει πρόσβαση σε παλιά κρυπτογραφημένα μηνύματα. Για να επαληθεύσετε την ταυτότητά σας σε αυτήν τη συσκευή, θα πρέπει να επαναφέρετε τα κλειδιά επαλήθευσης.",
     "General failure": "Γενική αποτυχία",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
-    "%(creator)s created and configured the room.": "Ο/η %(creator)s δημιούργησε και διαμόρφωσε το δωμάτιο.",
-    "%(creator)s created this DM.": "Ο/η %(creator)s δημιούργησε αυτό το απευθείας μήνυμα.",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
-    "Manage & explore rooms": "Διαχειριστείτε και εξερευνήστε δωμάτια",
     "Mentions only": "Αναφορές μόνο",
     "Unsent": "Μη απεσταλμένα",
     "No results found": "Δε βρέθηκαν αποτελέσματα",
@@ -1816,7 +1781,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτήν τη συσκευή για να την επισημάνετε ως αξιόπιστη. Η εμπιστοσύνη αυτής της συσκευής προσφέρει σε εσάς και σε άλλους χρήστες επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Η επαλήθευση αυτού του χρήστη θα επισημάνει τη συνεδρία του ως αξιόπιστη και θα επισημάνει επίσης τη συνεδρία σας ως αξιόπιστη σε αυτόν.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτόν τον χρήστη για να τον επισημάνετε ως αξιόπιστο. Η εμπιστοσύνη των χρηστών σάς προσφέρει επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
-    "Terms of Service": "Όροι Χρήσης",
     "You may contact me if you have any follow up questions": "Μπορείτε να επικοινωνήσετε μαζί μου εάν έχετε περαιτέρω ερωτήσεις",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Search for rooms or people": "Αναζήτηση δωματίων ή ατόμων",
@@ -1880,10 +1844,8 @@
     "Failed to invite users to %(roomName)s": "Αποτυχία πρόσκλησης χρηστών στο %(roomName)s",
     "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
-    "You're all caught up": "Είστε πλήρως ενημερωμένοι",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
     "Avatar": "Avatar",
-    "See room timeline (devtools)": "Εμφάνιση χρονοδιαγράμματος δωματίου (develtools)",
     "Forget": "Ξεχάστε",
     "Resend %(unsentCount)s reaction(s)": "Επανάληψη αποστολής %(unsentCount)s αντιδράσεων",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Εάν έχετε ξεχάσει το κλειδί ασφαλείας σας, μπορείτε να <button>ρυθμίσετε νέες επιλογές ανάκτησης</button>",
@@ -1930,7 +1892,6 @@
     "Generate a Security Key": "Δημιουργήστε ένα κλειδί ασφαλείας",
     "Unable to create key backup": "Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας κλειδιού",
     "Create key backup": "Δημιουργία αντιγράφου ασφαλείας κλειδιού",
-    "Space home": "Αρχική σελίδα χώρου",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
     "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
@@ -2580,7 +2541,8 @@
         "widget_screenshots": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
         "title": "Εργαλεία προγραμματιστή",
         "show_hidden_events": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
-        "developer_mode": "Λειτουργία για προγραμματιστές"
+        "developer_mode": "Λειτουργία για προγραμματιστές",
+        "view_source_decrypted_event_source": "Αποκρυπτογραφημένη πηγή συμβάντος"
     },
     "export_chat": {
         "html": "HTML",
@@ -2946,7 +2908,9 @@
         "m.room.create": {
             "continuation": "Αυτό το δωμάτιο είναι η συνέχεια μιας άλλης συνομιλίας.",
             "see_older_messages": "Κάντε κλικ εδώ για να δείτε παλαιότερα μηνύματα."
-        }
+        },
+        "creation_summary_dm": "Ο/η %(creator)s δημιούργησε αυτό το απευθείας μήνυμα.",
+        "creation_summary_room": "Ο/η %(creator)s δημιούργησε και διαμόρφωσε το δωμάτιο."
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3229,7 +3193,15 @@
         "server_picker_explainer": "Χρησιμοποιήστε τον Matrix διακομιστή που προτιμάτε εάν έχετε, ή φιλοξενήστε τον δικό σας.",
         "server_picker_learn_more": "Σχετικά με τους κεντρικούς διακομιστές",
         "incorrect_credentials": "Λανθασμένο όνομα χρήστη και/ή κωδικός.",
-        "account_deactivated": "Αυτός ο λογαριασμός έχει απενεργοποιηθεί."
+        "account_deactivated": "Αυτός ο λογαριασμός έχει απενεργοποιηθεί.",
+        "registration_username_validation": "Χρησιμοποιήστε μόνο πεζά γράμματα, αριθμούς, παύλες και κάτω παύλες",
+        "registration_username_unable_check": "Δεν είναι δυνατός ο έλεγχος εάν το όνομα χρήστη είναι διαθέσιμο. Δοκιμάστε ξανά αργότερα.",
+        "registration_username_in_use": "Κάποιος έχει ήδη αυτό το όνομα χρήστη. Δοκιμάστε άλλο ή εάν είστε εσείς, συνδεθείτε παρακάτω.",
+        "phone_label": "Τηλέφωνο",
+        "phone_optional_label": "Τηλέφωνο (προαιρετικό)",
+        "email_help_text": "Προσθέστε ένα email για να μπορείτε να κάνετε επαναφορά του κωδικού πρόσβασης σας.",
+        "email_phone_discovery_text": "Χρησιμοποιήστε email ή τηλέφωνο για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές.",
+        "email_discovery_text": "Χρησιμοποιήστε email για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές."
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3417,7 +3389,21 @@
         "light_high_contrast": "Ελαφριά υψηλή αντίθεση"
     },
     "space": {
-        "landing_welcome": "Καλώς ήρθατε στο <name/>"
+        "landing_welcome": "Καλώς ήρθατε στο <name/>",
+        "suggested_tooltip": "Αυτό το δωμάτιο προτείνεται ως ένα καλό δωμάτιο για συμμετοχή",
+        "suggested": "Προτεινόμενα",
+        "select_room_below": "Επιλέξτε πρώτα ένα δωμάτιο παρακάτω",
+        "unmark_suggested": "Επισήμανση ως μη προτεινόμενο",
+        "mark_suggested": "Επισήμανση ως προτεινόμενο",
+        "failed_remove_rooms": "Αποτυχία κατάργησης ορισμένων δωματίων. Δοκιμάστε ξανά αργότερα",
+        "failed_load_rooms": "Αποτυχία φόρτωσης λίστας δωματίων.",
+        "incompatible_server_hierarchy": "Ο διακομιστής σας δεν υποστηρίζει την εμφάνιση ιεραρχιών χώρου.",
+        "context_menu": {
+            "devtools_open_timeline": "Εμφάνιση χρονοδιαγράμματος δωματίου (develtools)",
+            "home": "Αρχική σελίδα χώρου",
+            "explore": "Εξερευνήστε δωμάτια",
+            "manage_and_explore": "Διαχειριστείτε και εξερευνήστε δωμάτια"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3465,5 +3451,35 @@
         "setup_rooms_description": "Μπορείτε επίσης να προσθέσετε περισσότερα αργότερα, συμπεριλαμβανομένων των ήδη υπαρχόντων.",
         "setup_rooms_private_heading": "Σε ποια έργα εργάζεται η ομάδα σας;",
         "setup_rooms_private_description": "Θα δημιουργήσουμε δωμάτια για καθένα από αυτά."
+    },
+    "user_menu": {
+        "switch_theme_light": "Αλλαγή σε φωτεινό",
+        "switch_theme_dark": "Αλλαγή σε σκοτεινό"
+    },
+    "notif_panel": {
+        "empty_heading": "Είστε πλήρως ενημερωμένοι",
+        "empty_description": "Δεν έχετε ορατές ειδοποιήσεις."
+    },
+    "console_scam_warning": "Εάν κάποιος σας είπε να κάνετε αντιγραφή και επικόλληση κάτι εδώ, υπάρχει μεγάλη πιθανότητα να σας έχουν εξαπατήσει!",
+    "console_dev_note": "Εάν ξέρετε τι κάνετε, το Element είναι ανοιχτού κώδικα, ανατρέξετε στο GitHub (https://github.com/vector-im/element-web/) και συνεισφέρετε!",
+    "room": {
+        "drop_file_prompt": "Αποθέστε εδώ για αποστολή"
+    },
+    "file_panel": {
+        "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
+        "peek_note": "Πρέπει να συνδεθείτε στο δωμάτιο για να δείτε τα αρχεία του",
+        "empty_heading": "Δεν υπάρχουν αρχεία ορατά σε αυτό το δωμάτιο",
+        "empty_description": "Επισυνάψτε αρχεία από τη συνομιλία ή απλώς σύρετε και αποθέστε τα οπουδήποτε μέσα σε ένα δωμάτιο."
+    },
+    "terms": {
+        "integration_manager": "Χρησιμοποιήστε bots, γέφυρες, μικροεφαρμογές και πακέτα αυτοκόλλητων",
+        "tos": "Όροι Χρήσης",
+        "intro": "Για να συνεχίσετε, πρέπει να αποδεχτείτε τους όρους αυτής της υπηρεσίας.",
+        "column_service": "Υπηρεσία",
+        "column_summary": "Περίληψη",
+        "column_document": "Έγγραφο"
+    },
+    "space_settings": {
+        "title": "Ρυθμίσεις - %(spaceName)s"
     }
 }

@@ -136,7 +136,6 @@
     "You cannot place a call with yourself.": "Nav iespējams piezvanīt sev.",
     "You do not have permission to post to this room": "Tev nav vajadzīgo atļauju, lai rakstītu ziņas šajā istabā",
     "You have <a>disabled</a> URL previews by default.": "URL priekšskatījumi pēc noklusējuma jums ir <a>atspējoti</a>.",
-    "You must <a>register</a> to use this functionality": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",
     "You need to be able to invite users to do that.": "Lai to darītu, Tev ir jāspēj uzaicināt lietotājus.",
     "You need to be logged in.": "Tev ir jāpierakstās.",
     "You seem to be in a call, are you sure you want to quit?": "Izskatās, ka atrodies zvana režīmā. Vai tiešām vēlies iziet?",
@@ -172,7 +171,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Šī darbība ļauj Tev uz lokālo failu eksportēt atslēgas priekš tām ziņām, kuras Tu saņēmi šifrētās istabās. Tu varēsi importēt šo failu citā Matrix klientā, lai tajā būtu iespējams lasīt šīs ziņas atšifrētas.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
-    "You must join the room to see its files": "Tev ir jāpievienojas istabai, lai redzētu tās failus",
     "Failed to invite": "Neizdevās uzaicināt",
     "Confirm Removal": "Apstipriniet dzēšanu",
     "Unknown error": "Nezināma kļūda",
@@ -184,7 +182,6 @@
     "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
     "URL Previews": "URL priekšskatījumi",
-    "Drop file here to upload": "Ievelc šeit failu augšupielādei",
     "Check for update": "Pārbaudīt atjauninājumus",
     "Something went wrong!": "Kaut kas nogāja greizi!",
     "Your browser does not support the required cryptography extensions": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
@@ -304,14 +301,11 @@
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "Tikai jūs abi esat šajā sarakstē, ja vien kāds no jums neuzaicina citus pievienoties.",
     "This is the beginning of your direct message history with <displayName/>.": "Šis ir sākums jūsu tiešās sarakstes vēsturei ar <displayName/>.",
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
-    "%(creator)s created this DM.": "%(creator)s uzsāka šo tiešo saraksti.",
     "None": "Neviena",
     "Room options": "Istabas opcijas",
     "All settings": "Visi iestatījumi",
     "Security & Privacy": "Drošība un konfidencialitāte",
     "Change notification settings": "Mainīt paziņojumu iestatījumus",
-    "Switch to dark mode": "Pārslēgt tumšo režīmu",
-    "Switch to light mode": "Pārslēgt gaišo režīmu",
     "Favourited": "Izlasē",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Saziņa ar šo lietotāju ir nodrošināta ar pilnīgu šifrēšanu un nav nolasāma trešajām pusēm.",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
@@ -435,7 +429,6 @@
     "Topic: %(topic)s ": "Temats: %(topic)s ",
     "This is the start of <roomName/>.": "Šis ir <roomName/> istabas pats sākums.",
     "You created this room.": "Jūs izveidojāt šo istabu.",
-    "%(creator)s created and configured the room.": "%(creator)s izveidoja un nokonfigurēja istabu.",
     "e.g. my-room": "piem., mana-istaba",
     "Room address": "Istabas adrese",
     "Show advanced": "Rādīt papildu iestatījumus",
@@ -483,11 +476,6 @@
     },
     "Couldn't load page": "Neizdevās ielādēt lapu",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
-    "Use email to optionally be discoverable by existing contacts.": "Izmantojiet epasta adresi, lai pēc izvēles jūs varētu atrast esošie kontakti.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Izmantojiet epasta adresi vai tālruņa numuru, lai pēc izvēles jūs varētu atrast esošie kontakti.",
-    "Add an email to be able to reset your password.": "Pievienojiet epasta adresi, lai varētu atiestatīt paroli.",
-    "Phone (optional)": "Tālruņa numurs (izvēles)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Izmantojiet tikai mazos burtus, ciparus, domuzīmes un pasvītrojumus",
     "Enter phone number (required on this homeserver)": "Ievadiet tālruņa numuru (obligāts šajā bāzes serverī)",
     "Other users can invite you to rooms using your contact details": "Citi lietotāji var jūs uzaicināt uz istabām, izmantojot jūsu kontaktinformāciju",
     "Enter email address (required on this homeserver)": "Ievadiet epasta adresi (obligāta šajā bāzes serverī)",
@@ -580,10 +568,7 @@
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
     "Original event source": "Oriģinālais notikuma pirmkods",
-    "Decrypted event source": "Atšifrēt notikuma pirmkods",
     "You don't have permission": "Jums nav atļaujas",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Pievienojiet failus no čata vai vienkārši velciet un nometiet tos jebkur istabā.",
-    "No files visible in this room": "Šajā istabā nav redzamu failu",
     "Remove for everyone": "Dzēst visiem",
     "Share User": "Dalīties ar lietotāja kontaktdatiem",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
@@ -958,7 +943,6 @@
         "other": "Pamatojoties uz %(count)s balsīm"
     },
     "No votes cast": "Nav balsojumu",
-    "Proxy URL (optional)": "Proxy URL (izvēles)",
     "Write an option": "Uzrakstiet variantu",
     "Add option": "Pievienot variantu",
     "Option %(number)s": "Variants %(number)s",
@@ -1227,7 +1211,8 @@
         "video_rooms_faq1_question": "Kā izveidot video istabu?",
         "group_profile": "Profils",
         "group_rooms": "Istabas",
-        "group_encryption": "Šifrēšana"
+        "group_encryption": "Šifrēšana",
+        "sliding_sync_proxy_url_optional_label": "Proxy URL (izvēles)"
     },
     "keyboard": {
         "home": "Mājup",
@@ -1388,7 +1373,8 @@
         "developer_tools": "Izstrādātāja rīki",
         "category_room": "Istaba",
         "category_other": "Citi",
-        "show_hidden_events": "Rādīt slēptos notikumus laika skalā"
+        "show_hidden_events": "Rādīt slēptos notikumus laika skalā",
+        "view_source_decrypted_event_source": "Atšifrēt notikuma pirmkods"
     },
     "export_chat": {
         "creator_summary": "%(creatorName)s izveidoja šo istabu.",
@@ -1657,7 +1643,9 @@
             "lightbox_title": "%(senderDisplayName)s nomainīja %(roomName)s istabas avataru",
             "removed": "%(senderDisplayName)s dzēsa istabas avataru.",
             "changed_img": "%(senderDisplayName)s nomainīja istabas avataru uz <img/>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s uzsāka šo tiešo saraksti.",
+        "creation_summary_room": "%(creator)s izveidoja un nokonfigurēja istabu."
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
@@ -1841,7 +1829,13 @@
         "register_action": "Izveidot kontu",
         "server_picker_learn_more": "Par bāzes serveriem",
         "incorrect_credentials": "Nepareizs lietotājvārds un/vai parole.",
-        "account_deactivated": "Šis konts ir deaktivizēts."
+        "account_deactivated": "Šis konts ir deaktivizēts.",
+        "registration_username_validation": "Izmantojiet tikai mazos burtus, ciparus, domuzīmes un pasvītrojumus",
+        "phone_label": "Telefons",
+        "phone_optional_label": "Tālruņa numurs (izvēles)",
+        "email_help_text": "Pievienojiet epasta adresi, lai varētu atiestatīt paroli.",
+        "email_phone_discovery_text": "Izmantojiet epasta adresi vai tālruņa numuru, lai pēc izvēles jūs varētu atrast esošie kontakti.",
+        "email_discovery_text": "Izmantojiet epasta adresi, lai pēc izvēles jūs varētu atrast esošie kontakti."
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -1960,7 +1954,10 @@
         "show_thread_filter": "Rādīt:"
     },
     "space": {
-        "landing_welcome": "Laipni lūdzam uz <name/>"
+        "landing_welcome": "Laipni lūdzam uz <name/>",
+        "context_menu": {
+            "explore": "Pārlūkot istabas"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",
@@ -1987,5 +1984,18 @@
         "private_space_description": "Privāta vieta jums un jūsu komandas dalībniekiem",
         "setup_rooms_community_description": "Izveidojam katram no tiem savu istabu!",
         "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem."
+    },
+    "user_menu": {
+        "switch_theme_light": "Pārslēgt gaišo režīmu",
+        "switch_theme_dark": "Pārslēgt tumšo režīmu"
+    },
+    "room": {
+        "drop_file_prompt": "Ievelc šeit failu augšupielādei"
+    },
+    "file_panel": {
+        "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",
+        "peek_note": "Tev ir jāpievienojas istabai, lai redzētu tās failus",
+        "empty_heading": "Šajā istabā nav redzamu failu",
+        "empty_description": "Pievienojiet failus no čata vai vienkārši velciet un nometiet tos jebkur istabā."
     }
 }

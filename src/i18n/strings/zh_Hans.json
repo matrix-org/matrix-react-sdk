@@ -94,7 +94,6 @@
     "Reject invitation": "拒绝邀请",
     "Verified key": "已验证的密钥",
     "Warning!": "警告！",
-    "You must <a>register</a> to use this functionality": "你必须 <a>注册</a> 以使用此功能",
     "You need to be logged in.": "你需要登录。",
     "Connectivity to the server has been lost.": "到服务器的连接已经丢失。",
     "New Password": "新密码",
@@ -109,7 +108,6 @@
     "Unable to restore session": "无法恢复会话",
     "Token incorrect": "令牌错误",
     "URL Previews": "URL预览",
-    "Drop file here to upload": "把文件拖到这里以上传",
     "Delete widget": "删除挂件",
     "Failed to change power level": "权力级别修改失败",
     "New passwords must match each other.": "新密码必须互相匹配。",
@@ -178,7 +176,6 @@
     "Oct": "十月",
     "Nov": "十一月",
     "Dec": "十二月",
-    "You must join the room to see its files": "你必须加入房间以看到它的文件",
     "Confirm Removal": "确认移除",
     "Unable to remove contact information": "无法移除联系人信息",
     "Add an Integration": "添加集成",
@@ -462,7 +459,6 @@
     "Please review and accept all of the homeserver's policies": "请阅读并接受此家服务器的所有政策",
     "Please review and accept the policies of this homeserver:": "请阅读并接受此家服务器的政策：",
     "Email (optional)": "电子邮箱（可选）",
-    "Phone (optional)": "电话号码（可选）",
     "Join millions for free on the largest public server": "免费加入最大的公共服务器，成为数百万用户中的一员",
     "Couldn't load page": "无法加载页面",
     "Could not load user profile": "无法加载用户资料",
@@ -913,12 +909,6 @@
     "Your browser likely removed this data when running low on disk space.": "你的浏览器可能在磁盘空间不足时删除了此数据。",
     "Find others by phone or email": "通过电话或邮箱寻找别人",
     "Be found by phone or email": "通过电话或邮箱被寻找",
-    "Use bots, bridges, widgets and sticker packs": "使用机器人、桥接、挂件和贴纸包",
-    "Terms of Service": "服务协议",
-    "To continue you need to accept the terms of this service.": "要继续，你需要接受此服务协议。",
-    "Service": "服务",
-    "Summary": "总结",
-    "Document": "文档",
     "Upload files (%(current)s of %(total)s)": "上传文件（%(total)s 中之 %(current)s）",
     "Upload files": "上传文件",
     "Upload all": "全部上传",
@@ -954,14 +944,9 @@
     "Passwords don't match": "密码不匹配",
     "Other users can invite you to rooms using your contact details": "别的用户可以使用你的联系人详情邀请你加入房间",
     "Enter phone number (required on this homeserver)": "输入电话号码（此家服务器上必须）",
-    "Use lowercase letters, numbers, dashes and underscores only": "仅使用小写字母，数字，横杠和下划线",
     "Enter username": "输入用户名",
     "Sign in with SSO": "使用单点登录",
-    "No files visible in this room": "此房间中没有文件可见",
     "Explore rooms": "探索房间",
-    "%(creator)s created and configured the room.": "%(creator)s 创建并配置了此房间。",
-    "Switch to light mode": "切换到浅色模式",
-    "Switch to dark mode": "切换到深色模式",
     "Switch theme": "切换主题",
     "All settings": "所有设置",
     "Failed to get autodiscovery configuration from server": "从服务器获取自动发现配置时失败",
@@ -1010,7 +995,6 @@
     "Preparing to download logs": "正在准备下载日志",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Country Dropdown": "国家下拉菜单",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "从聊天中附加文件或将文件拖放到房间的任何地方。",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Unknown App": "未知应用",
     "Cross-signing is ready for use.": "交叉签名已可用。",
@@ -1132,7 +1116,6 @@
     "Leave space": "离开空间",
     "Share your public space": "分享你的公共空间",
     "Create a space": "创建空间",
-    "Your server does not support showing space hierarchies.": "你的服务器不支持显示空间层次结构。",
     "This version of %(brand)s does not support searching encrypted messages": "当前版本的 %(brand)s 不支持搜索加密消息",
     "This version of %(brand)s does not support viewing some encrypted files": "当前版本的 %(brand)s 不支持查看某些加密文件",
     "Pakistan": "巴基斯坦",
@@ -1216,10 +1199,6 @@
     "Costa Rica": "哥斯达黎加",
     "<inviter/> invites you": "<inviter/> 邀请了你",
     "No results found": "找不到结果",
-    "Mark as suggested": "标记为建议",
-    "Mark as not suggested": "标记为不建议",
-    "Failed to remove some rooms. Try again later": "无法移除某些房间。请稍后再试",
-    "Suggested": "建议",
     "%(count)s rooms": {
         "one": "%(count)s 个房间",
         "other": "%(count)s 个房间"
@@ -1343,7 +1322,6 @@
     "Ignored attempt to disable encryption": "已忽略禁用加密的尝试",
     "Confirm your Security Phrase": "确认你的安全短语",
     "There was a problem communicating with the homeserver, please try again later.": "与家服务器通讯时出现问题，请稍后再试。",
-    "Decrypted event source": "解密的事件源码",
     "Original event source": "原始事件源码",
     "<a>Add a topic</a> to help people know what it is about.": "<a>添加话题</a>，让大家知道这里是讨论什么的。",
     "Topic: %(topic)s (<a>edit</a>)": "话题：%(topic)s（<a>编辑</a>）",
@@ -1391,14 +1369,10 @@
     "Enter your Security Phrase a second time to confirm it.": "再次输入你的安全短语进行确认。",
     "Great! This Security Phrase looks strong enough.": "棒！这个安全短语看着够强。",
     "Verify your identity to access encrypted messages and prove your identity to others.": "验证你的身份来获取已加密的消息并向其他人证明你的身份。",
-    "Select a room below first": "首先选择一个房间",
-    "This room is suggested as a good one to join": "此房间很适合加入",
     "You can select all or individual messages to retry or delete": "你可以选择全部或单独的消息来重试或删除",
     "Sending": "正在发送",
     "Delete all": "删除全部",
     "Some of your messages have not been sent": "你的部分消息未被发送",
-    "You have no visible notifications.": "你没有可见的通知。",
-    "%(creator)s created this DM.": "%(creator)s 创建了此私聊。",
     "Verification requested": "已请求验证",
     "Security Key mismatch": "安全密钥不符",
     "Unable to set up keys": "无法设置密钥",
@@ -1474,7 +1448,6 @@
         "one": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。",
         "other": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。"
     },
-    "Manage & explore rooms": "管理并探索房间",
     "Connecting": "连接中",
     "unknown person": "陌生人",
     "%(deviceId)s from %(ip)s": "来自 %(ip)s 的 %(deviceId)s",
@@ -1482,9 +1455,6 @@
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
-    "Use email to optionally be discoverable by existing contacts.": "使用电子邮箱以选择性地被现有联系人搜索。",
-    "Use email or phone to optionally be discoverable by existing contacts.": "使用电子邮箱或电话以选择性地被现有联系人搜索。",
-    "Add an email to be able to reset your password.": "添加电子邮箱以重置你的密码。",
     "That phone number doesn't look quite right, please check and try again": "电话号码看起来不太对，请检查并重试",
     "Something went wrong in confirming your identity. Cancel and try again.": "确认你的身份时出了一点问题。取消并重试。",
     "Avatar": "头像",
@@ -1523,7 +1493,6 @@
     "Collapse reply thread": "折叠回复消息列",
     "Show preview": "显示预览",
     "View source": "查看源代码",
-    "Settings - %(spaceName)s": "设置 - %(spaceName)s",
     "Please provide an address": "请提供地址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "设置此空间的地址，这样用户就能通过你的家服务器找到此空间（%(localDomain)s）",
@@ -1700,7 +1669,6 @@
     },
     "View in room": "在房间内查看",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
-    "See room timeline (devtools)": "查看房间时间线（开发工具）",
     "Insert link": "插入链接",
     "Joined": "已加入",
     "Joining": "加入中",
@@ -1708,7 +1676,6 @@
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "我们将为您生成一个安全密钥，将其存储在安全的地方，例如密码管理器或保险箱。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "如果不进行验证，您将无法访问您的所有消息，并且在其他人看来可能不受信任。",
-    "You're all caught up": "一切完毕",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，请将您的邀请链接发送给他们。",
     "In encrypted rooms, verify all users to ensure it's secure.": "在加密房间中，验证所有用户以确保其安全。",
     "Yours, or the other users' session": "你或其他用户的会话",
@@ -1726,7 +1693,6 @@
     "You do not have permission to start polls in this room.": "你无权在此房间启动投票。",
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
-    "Someone already has that username. Try another or if it is you, sign in below.": "该名称已被占用。 尝试另一个，或者如果是您，请在下面登录。",
     "Reply in thread": "在消息列中回复",
     "Spaces to show": "要显示的空间",
     "Sidebar": "侧边栏",
@@ -1807,7 +1773,6 @@
     "Copy room link": "复制房间链接",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
-    "Failed to load list of rooms.": "加载房间列表失败。",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
     "Failed to invite users to %(roomName)s": "未能邀请用户加入 %(roomName)s",
     "Back to thread": "返回消息列",
@@ -1918,12 +1883,8 @@
     "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
     "Location": "位置",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "若你知道你正在做什么，Element是开源的，请务必看看我们的GitHub（https://github.com/vector-im/element-web/）并贡献！",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "若某人告诉你在这里复制/粘贴某物，那你极有可能正被欺骗！",
     "Wait!": "等等！",
     "This address does not point at this room": "此地址不指向此房间",
-    "Unable to check if username has been taken. Try again later.": "无法检查用户名是否已被使用。稍后再试。",
-    "Space home": "空间首页",
     "Could not fetch location": "无法获取位置",
     "Your new device is now verified. Other users will see it as trusted.": "你的新设备现已验证。其他用户将会视其为受信任的。",
     "Verify this device": "验证此设备",
@@ -2052,12 +2013,6 @@
     "Empty room (was %(oldName)s)": "空房间（曾是%(oldName)s）",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s或%(copyButton)s",
-    "Your server has native support": "你的服务器有原生支持",
-    "Your server lacks native support": "你的服务器缺少原生支持",
-    "Your server lacks native support, you must specify a proxy": "你的服务器缺少原生支持，你必须指定代理",
-    "To disable you will need to log out and back in, use with caution!": "要停用，你必须登出并重新登录，请小心！",
-    "Proxy URL (optional)": "代理URL（可选）",
-    "Proxy URL": "代理URL",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
     "Inviting %(user1)s and %(user2)s": "正在邀请 %(user1)s 与 %(user2)s",
     "%(user)s and %(count)s others": {
@@ -2374,7 +2329,13 @@
         "join_beta": "加入beta",
         "automatic_debug_logs_key_backup": "当密钥备份无法运作时自动发送debug日志",
         "automatic_debug_logs_decryption": "自动发送有关解密错误的debug日志",
-        "automatic_debug_logs": "遇到任何错误自动发送调试日志"
+        "automatic_debug_logs": "遇到任何错误自动发送调试日志",
+        "sliding_sync_server_support": "你的服务器有原生支持",
+        "sliding_sync_server_no_support": "你的服务器缺少原生支持",
+        "sliding_sync_server_specify_proxy": "你的服务器缺少原生支持，你必须指定代理",
+        "sliding_sync_disable_warning": "要停用，你必须登出并重新登录，请小心！",
+        "sliding_sync_proxy_url_optional_label": "代理URL（可选）",
+        "sliding_sync_proxy_url_label": "代理URL"
     },
     "keyboard": {
         "home": "主页",
@@ -2828,7 +2789,8 @@
         "show_hidden_events": "显示时间线中的隐藏事件",
         "low_bandwidth_mode_description": "需要兼容的家服务器。",
         "low_bandwidth_mode": "低带宽模式",
-        "developer_mode": "开发者模式"
+        "developer_mode": "开发者模式",
+        "view_source_decrypted_event_source": "解密的事件源码"
     },
     "export_chat": {
         "html": "HTML",
@@ -3200,7 +3162,9 @@
         "m.room.create": {
             "continuation": "此房间是另一个对话的延续之处。",
             "see_older_messages": "点击这里以查看更早的消息。"
-        }
+        },
+        "creation_summary_dm": "%(creator)s 创建了此私聊。",
+        "creation_summary_room": "%(creator)s 创建并配置了此房间。"
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -3496,7 +3460,15 @@
         "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
         "server_picker_learn_more": "关于家服务器",
         "incorrect_credentials": "用户名或密码错误。",
-        "account_deactivated": "此账户已被停用。"
+        "account_deactivated": "此账户已被停用。",
+        "registration_username_validation": "仅使用小写字母，数字，横杠和下划线",
+        "registration_username_unable_check": "无法检查用户名是否已被使用。稍后再试。",
+        "registration_username_in_use": "该名称已被占用。 尝试另一个，或者如果是您，请在下面登录。",
+        "phone_label": "电话",
+        "phone_optional_label": "电话号码（可选）",
+        "email_help_text": "添加电子邮箱以重置你的密码。",
+        "email_phone_discovery_text": "使用电子邮箱或电话以选择性地被现有联系人搜索。",
+        "email_discovery_text": "使用电子邮箱以选择性地被现有联系人搜索。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3696,7 +3668,21 @@
         "light_high_contrast": "浅色高对比"
     },
     "space": {
-        "landing_welcome": "欢迎来到 <name/>"
+        "landing_welcome": "欢迎来到 <name/>",
+        "suggested_tooltip": "此房间很适合加入",
+        "suggested": "建议",
+        "select_room_below": "首先选择一个房间",
+        "unmark_suggested": "标记为不建议",
+        "mark_suggested": "标记为建议",
+        "failed_remove_rooms": "无法移除某些房间。请稍后再试",
+        "failed_load_rooms": "加载房间列表失败。",
+        "incompatible_server_hierarchy": "你的服务器不支持显示空间层次结构。",
+        "context_menu": {
+            "devtools_open_timeline": "查看房间时间线（开发工具）",
+            "home": "空间首页",
+            "explore": "探索房间",
+            "manage_and_explore": "管理并探索房间"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3749,5 +3735,35 @@
         "setup_rooms_community_description": "让我们为每个主题都创建一个房间吧。",
         "setup_rooms_description": "稍后你可以添加更多房间，包括现有的。",
         "setup_rooms_private_heading": "你的团队正在进行什么项目?"
+    },
+    "user_menu": {
+        "switch_theme_light": "切换到浅色模式",
+        "switch_theme_dark": "切换到深色模式"
+    },
+    "notif_panel": {
+        "empty_heading": "一切完毕",
+        "empty_description": "你没有可见的通知。"
+    },
+    "console_scam_warning": "若某人告诉你在这里复制/粘贴某物，那你极有可能正被欺骗！",
+    "console_dev_note": "若你知道你正在做什么，Element是开源的，请务必看看我们的GitHub（https://github.com/vector-im/element-web/）并贡献！",
+    "room": {
+        "drop_file_prompt": "把文件拖到这里以上传"
+    },
+    "file_panel": {
+        "guest_note": "你必须 <a>注册</a> 以使用此功能",
+        "peek_note": "你必须加入房间以看到它的文件",
+        "empty_heading": "此房间中没有文件可见",
+        "empty_description": "从聊天中附加文件或将文件拖放到房间的任何地方。"
+    },
+    "terms": {
+        "integration_manager": "使用机器人、桥接、挂件和贴纸包",
+        "tos": "服务协议",
+        "intro": "要继续，你需要接受此服务协议。",
+        "column_service": "服务",
+        "column_summary": "总结",
+        "column_document": "文档"
+    },
+    "space_settings": {
+        "title": "设置 - %(spaceName)s"
     }
 }

@@ -153,7 +153,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Этот процесс позволяет вам экспортировать ключи для сообщений, которые вы получили в комнатах с шифрованием, в локальный файл. Вы сможете импортировать эти ключи в другой клиент Matrix чтобы расшифровать эти сообщения.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
-    "You must join the room to see its files": "Вы должны войти в комнату, чтобы просмотреть файлы",
     "Reject all %(invitedRooms)s invites": "Отклонить все %(invitedRooms)s приглашения",
     "Failed to invite": "Пригласить не удалось",
     "Confirm Removal": "Подтвердите удаление",
@@ -167,14 +166,12 @@
     "Add an Integration": "Добавить интеграцию",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
     "URL Previews": "Предпросмотр содержимого ссылок",
-    "Drop file here to upload": "Перетащите файл сюда для отправки",
     "Create new room": "Создать комнату",
     "Uploading %(filename)s": "Отправка %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Отправка %(filename)s и %(count)s другой",
         "other": "Отправка %(filename)s и %(count)s других"
     },
-    "You must <a>register</a> to use this functionality": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
     "New Password": "Новый пароль",
     "Something went wrong!": "Что-то пошло не так!",
     "Home": "Главная",
@@ -361,7 +358,6 @@
     "Unable to restore backup": "Невозможно восстановить резервную копию",
     "No backup found!": "Резервных копий не найдено!",
     "Email (optional)": "Адрес электронной почты (не обязательно)",
-    "Phone (optional)": "Телефон (не обязательно)",
     "Go to Settings": "Перейти в настройки",
     "Set up Secure Messages": "Настроить безопасные сообщения",
     "Recovery Method Removed": "Метод восстановления удален",
@@ -573,7 +569,6 @@
     "Your %(brand)s is misconfigured": "Ваш %(brand)s неправильно настроен",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Попросите администратора %(brand)s проверить <a>конфигурационный файл</a > на наличие неправильных или повторяющихся записей.",
     "Unexpected error resolving identity server configuration": "Неопределённая ошибка при разборе параметра сервера идентификации",
-    "Use lowercase letters, numbers, dashes and underscores only": "Используйте только строчные буквы, цифры, тире и подчеркивания",
     "Cannot reach identity server": "Не удаётся связаться с сервером идентификации",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Вы можете зарегистрироваться, но некоторые возможности не будет доступны, пока сервер идентификации не станет доступным. Если вы продолжаете видеть это предупреждение, проверьте вашу конфигурацию или свяжитесь с администратором сервера.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Вы можете сбросить пароль, но некоторые возможности не будет доступны, пока сервер идентификации не станет доступным. Если вы продолжаете видеть это предупреждение, проверьте вашу конфигурацию или свяжитесь с администратором сервера.",
@@ -587,10 +582,6 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Модернизация этой комнаты требует закрытие комнаты в текущем состояние и создания новой комнаты вместо неё. Чтобы упростить процесс для участников, будет сделано:",
     "Find others by phone or email": "Найти других по номеру телефона или email",
     "Be found by phone or email": "Будут найдены по номеру телефона или email",
-    "Use bots, bridges, widgets and sticker packs": "Использовать боты, мосты, виджеты и наборы стикеров",
-    "Terms of Service": "Условия использования",
-    "Service": "Сервис",
-    "Summary": "Сводка",
     "Upload all": "Загрузить всё",
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Failed to re-authenticate due to a homeserver problem": "Ошибка повторной аутентификации из-за проблем на сервере",
@@ -665,8 +656,6 @@
     "Hide advanced": "Скрыть дополнительные настройки",
     "Show advanced": "Показать дополнительные настройки",
     "Command Help": "Помощь команды",
-    "To continue you need to accept the terms of this service.": "Для продолжения Вам необходимо принять условия данного сервиса.",
-    "Document": "Документ",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивация этого пользователя приведет к его выходу из системы и запрету повторного входа. Кроме того, они оставит все комнаты, в которых он участник. Это действие безповоротно. Вы уверены, что хотите деактивировать этого пользователя?",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Приглашение в %(roomName)s было отправлено на %(email)s, но этот адрес не связан с вашей учётной записью",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Свяжите этот адрес с вашей учетной записью в настройках, чтобы получать приглашения непосредственно в %(brand)s.",
@@ -679,7 +668,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Отсутствует Капча открытого ключа в конфигурации домашнего сервера. Пожалуйста, сообщите об этом администратору вашего домашнего сервера.",
-    "%(creator)s created and configured the room.": "%(creator)s создал(а) и настроил(а) комнату.",
     "Explore rooms": "Обзор комнат",
     "Cancel search": "Отменить поиск",
     "Room %(name)s": "Комната %(name)s",
@@ -913,8 +901,6 @@
     "This address is already in use": "Этот адрес уже используется",
     "Enter the name of a new server you want to explore.": "Введите имя нового сервера для просмотра.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
-    "Switch to light mode": "Переключить в светлый режим",
-    "Switch to dark mode": "Переключить в тёмный режим",
     "Change notification settings": "Изменить настройки уведомлений",
     "IRC display name width": "Ширина отображаемого имени IRC",
     "Your server isn't responding to some <a>requests</a>.": "Ваш сервер не отвечает на некоторые <a>запросы</a>.",
@@ -1006,8 +992,6 @@
     "Create key backup": "Создать резервную копию ключа",
     "This session is encrypting history using the new recovery method.": "Этот сеанс шифрует историю с помощью нового метода восстановления.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
-    "No files visible in this room": "Нет видимых файлов в этой комнате",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Прикрепите файлы из чата или просто перетащите их в комнату.",
     "Master private key:": "Приватный мастер-ключ:",
     "Explore public rooms": "Просмотреть публичные комнаты",
     "Preparing to download logs": "Подготовка к загрузке журналов",
@@ -1079,7 +1063,6 @@
         "one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
         "other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s)."
     },
-    "%(creator)s created this DM.": "%(creator)s начал(а) этот чат.",
     "Continuing without email": "Продолжить без электронной почты",
     "Enter phone number": "Введите номер телефона",
     "Enter email address": "Введите адрес электронной почты",
@@ -1339,15 +1322,11 @@
     "This widget would like to:": "Этому виджету хотелось бы:",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Предупреждаем: если вы не добавите адрес электронной почты и забудете пароль, вы можете <b>навсегда потерять доступ к своей учётной записи</b>.",
     "That phone number doesn't look quite right, please check and try again": "Этот номер телефона неправильный, проверьте его и повторите попытку",
-    "Add an email to be able to reset your password.": "Чтобы иметь возможность изменить свой пароль в случае необходимости, добавьте свой адрес электронной почты.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты или номер телефона.",
-    "Use email to optionally be discoverable by existing contacts.": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты.",
     "There was a problem communicating with the homeserver, please try again later.": "Возникла проблема при обмене данными с домашним сервером. Повторите попытку позже.",
     "Hold": "Удерживать",
     "Resume": "Возобновить",
     "You've reached the maximum number of simultaneous calls.": "Вы достигли максимального количества одновременных звонков.",
     "Too Many Calls": "Слишком много звонков",
-    "You have no visible notifications.": "У вас нет видимых уведомлений.",
     "Transfer": "Перевод",
     "Failed to transfer call": "Не удалось перевести звонок",
     "A call can only be transferred to a single user.": "Вызов может быть передан только одному пользователю.",
@@ -1387,8 +1366,6 @@
     "Use app for a better experience": "Используйте приложение для лучшего опыта",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Мы попросили браузер запомнить, какой домашний сервер вы используете для входа в систему, но, к сожалению, ваш браузер забыл об этом. Перейдите на страницу входа и попробуйте ещё раз.",
     "We couldn't log you in": "Нам не удалось войти в систему",
-    "Suggested": "Рекомендуется",
-    "This room is suggested as a good one to join": "Эта комната рекомендуется, чтобы присоединиться",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -1433,16 +1410,11 @@
     "Create a space": "Создать пространство",
     "This homeserver has been blocked by its administrator.": "Доступ к этому домашнему серверу заблокирован вашим администратором.",
     "Original event source": "Оригинальный исходный код",
-    "Decrypted event source": "Расшифрованный исходный код",
-    "Your server does not support showing space hierarchies.": "Ваш сервер не поддерживает отображение пространственных иерархий.",
     "Private space": "Приватное пространство",
     "Public space": "Публичное пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
     "You may want to try a different search or check for typos.": "Вы можете попробовать другой поиск или проверить опечатки.",
     "No results found": "Результаты не найдены",
-    "Mark as suggested": "Отметить как рекомендуется",
-    "Mark as not suggested": "Отметить как не рекомендуется",
-    "Failed to remove some rooms. Try again later": "Не удалось удалить несколько комнат. Попробуйте позже",
     "Connecting": "Подключение",
     "%(deviceId)s from %(ip)s": "%(deviceId)s с %(ip)s",
     "The user you called is busy.": "Вызываемый пользователь занят.",
@@ -1463,7 +1435,6 @@
         "other": "Сейчас вы состоите в %(count)s комнатах"
     },
     "Search names and descriptions": "Искать имена и описания",
-    "Select a room below first": "Сначала выберите комнату ниже",
     "You can select all or individual messages to retry or delete": "Вы можете выбрать все или отдельные сообщения для повторной попытки или удаления",
     "Retry all": "Повторить все",
     "Delete all": "Удалить все",
@@ -1475,7 +1446,6 @@
     "Error downloading audio": "Ошибка загрузки аудио",
     "Unnamed audio": "Безымянное аудио",
     "Avatar": "Аватар",
-    "Manage & explore rooms": "Управление и список комнат",
     "Add space": "Добавить пространство",
     "Report": "Сообщить",
     "Collapse reply thread": "Свернуть ответы обсуждения",
@@ -1485,7 +1455,6 @@
     "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
     "Reset everything": "Сбросить всё",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забыли или потеряли все варианты восстановления? <a>Сбросить всё</a>",
-    "Settings - %(spaceName)s": "Настройки — %(spaceName)s",
     "Reset event store": "Сброс хранилища событий",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Если вы это сделаете, обратите внимание, что ни одно из ваших сообщений не будет удалено, но работа поиска может быть ухудшена на несколько мгновений, пока индекс не будет воссоздан",
     "You most likely do not want to reset your event index store": "Скорее всего, вы не захотите сбрасывать индексное хранилище событий",
@@ -1713,17 +1682,9 @@
     "Device verified": "Сеанс заверен",
     "Verify this device": "Заверьте этот сеанс",
     "Unable to verify this device": "Невозможно заверить этот сеанс",
-    "Failed to load list of rooms.": "Не удалось загрузить список комнат.",
     "Joining": "Присоединение",
-    "You're all caught up": "Вы в курсе всего",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Если вы знаете, что делаете, Element с открытым исходным кодом, обязательно зайдите на наш GitHub (https://github.com/vector-im/element-web/) и внесите свой вклад!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Если кто-то сказал вам скопировать/вставить что-то здесь, велика вероятность, что вас пытаются обмануть!",
     "Wait!": "Подождите!",
-    "Someone already has that username. Try another or if it is you, sign in below.": "У кого-то уже есть такое имя пользователя. Попробуйте другое или, если это вы, войдите ниже.",
-    "Unable to check if username has been taken. Try again later.": "Не удалось проверить, занято ли имя пользователя. Повторите попытку позже.",
     "Thread options": "Параметры обсуждения",
-    "Space home": "Пространство — Главная",
-    "See room timeline (devtools)": "Просмотреть шкалу времени комнаты (инструменты разработчика)",
     "Mentions only": "Только упоминания",
     "Forget": "Забыть",
     "Open in OpenStreetMap": "Открыть в OpenStreetMap",
@@ -2922,7 +2883,8 @@
         "title": "Инструменты разработчика",
         "show_hidden_events": "Показывать скрытые события в ленте сообщений",
         "low_bandwidth_mode_description": "Требуется совместимый сервер.",
-        "developer_mode": "Режим разработчика"
+        "developer_mode": "Режим разработчика",
+        "view_source_decrypted_event_source": "Расшифрованный исходный код"
     },
     "export_chat": {
         "html": "HTML",
@@ -3298,7 +3260,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Вы завершили <a>голосовую трансляцию</a>",
             "user": "%(senderName)s завершил(а) <a>голосовую трансляцию</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s начал(а) этот чат.",
+        "creation_summary_room": "%(creator)s создал(а) и настроил(а) комнату."
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -3600,7 +3564,15 @@
         "server_picker_explainer": "Если вы предпочитаете домашний сервер Matrix, используйте его. Вы также можете настроить свой собственный домашний сервер, если хотите.",
         "server_picker_learn_more": "О домашних серверах",
         "incorrect_credentials": "Неверное имя пользователя и/или пароль.",
-        "account_deactivated": "Эта учётная запись была деактивирована."
+        "account_deactivated": "Эта учётная запись была деактивирована.",
+        "registration_username_validation": "Используйте только строчные буквы, цифры, тире и подчеркивания",
+        "registration_username_unable_check": "Не удалось проверить, занято ли имя пользователя. Повторите попытку позже.",
+        "registration_username_in_use": "У кого-то уже есть такое имя пользователя. Попробуйте другое или, если это вы, войдите ниже.",
+        "phone_label": "Телефон",
+        "phone_optional_label": "Телефон (не обязательно)",
+        "email_help_text": "Чтобы иметь возможность изменить свой пароль в случае необходимости, добавьте свой адрес электронной почты.",
+        "email_phone_discovery_text": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты или номер телефона.",
+        "email_discovery_text": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты."
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3798,7 +3770,21 @@
         "light_high_contrast": "Контрастная светлая"
     },
     "space": {
-        "landing_welcome": "Добро пожаловать в <name/>"
+        "landing_welcome": "Добро пожаловать в <name/>",
+        "suggested_tooltip": "Эта комната рекомендуется, чтобы присоединиться",
+        "suggested": "Рекомендуется",
+        "select_room_below": "Сначала выберите комнату ниже",
+        "unmark_suggested": "Отметить как не рекомендуется",
+        "mark_suggested": "Отметить как рекомендуется",
+        "failed_remove_rooms": "Не удалось удалить несколько комнат. Попробуйте позже",
+        "failed_load_rooms": "Не удалось загрузить список комнат.",
+        "incompatible_server_hierarchy": "Ваш сервер не поддерживает отображение пространственных иерархий.",
+        "context_menu": {
+            "devtools_open_timeline": "Просмотреть шкалу времени комнаты (инструменты разработчика)",
+            "home": "Пространство — Главная",
+            "explore": "Обзор комнат",
+            "manage_and_explore": "Управление и список комнат"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3853,5 +3839,35 @@
         "setup_rooms_description": "Позже можно добавить и другие, в том числе уже существующие.",
         "setup_rooms_private_heading": "Над какими проектами ваша команда работает?",
         "setup_rooms_private_description": "Мы создадим комнаты для каждого из них."
+    },
+    "user_menu": {
+        "switch_theme_light": "Переключить в светлый режим",
+        "switch_theme_dark": "Переключить в тёмный режим"
+    },
+    "notif_panel": {
+        "empty_heading": "Вы в курсе всего",
+        "empty_description": "У вас нет видимых уведомлений."
+    },
+    "console_scam_warning": "Если кто-то сказал вам скопировать/вставить что-то здесь, велика вероятность, что вас пытаются обмануть!",
+    "console_dev_note": "Если вы знаете, что делаете, Element с открытым исходным кодом, обязательно зайдите на наш GitHub (https://github.com/vector-im/element-web/) и внесите свой вклад!",
+    "room": {
+        "drop_file_prompt": "Перетащите файл сюда для отправки"
+    },
+    "file_panel": {
+        "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
+        "peek_note": "Вы должны войти в комнату, чтобы просмотреть файлы",
+        "empty_heading": "Нет видимых файлов в этой комнате",
+        "empty_description": "Прикрепите файлы из чата или просто перетащите их в комнату."
+    },
+    "terms": {
+        "integration_manager": "Использовать боты, мосты, виджеты и наборы стикеров",
+        "tos": "Условия использования",
+        "intro": "Для продолжения Вам необходимо принять условия данного сервиса.",
+        "column_service": "Сервис",
+        "column_summary": "Сводка",
+        "column_document": "Документ"
+    },
+    "space_settings": {
+        "title": "Настройки — %(spaceName)s"
     }
 }

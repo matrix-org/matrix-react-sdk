@@ -608,8 +608,6 @@
     "Failed to start livestream": "ການຖ່າຍທອດສົດບໍ່ສຳເລັດ",
     "Unable to start audio streaming.": "ບໍ່ສາມາດເລີ່ມການຖ່າຍທອດສຽງໄດ້.",
     "Thread options": "ຕົວເລືອກກະທູ້",
-    "Manage & explore rooms": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ",
-    "See room timeline (devtools)": "ເບິ່ງທາມລາຍຫ້ອງ (devtools)",
     "Mentions only": "ກ່າວເຖິງເທົ່ານັ້ນ",
     "Forget": "ລືມ",
     "Report": "ລາຍງານ",
@@ -733,11 +731,8 @@
     "Verify this device": "ຢັ້ງຢືນອຸປະກອນນີ້",
     "Unable to verify this device": "ບໍ່ສາມາດຢັ້ງຢືນອຸປະກອນນີ້ໄດ້",
     "Original event source": "ແຫຼ່ງຕົ້ນສະບັບ",
-    "Decrypted event source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້",
     "Could not load user profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
-    "Switch to dark mode": "ສະຫຼັບໄປໂໝດມືດ",
-    "Switch to light mode": "ສະຫຼັບໄປໂໝດແສງ",
     "Uploading %(filename)s and %(count)s others": {
         "one": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ",
         "other": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ"
@@ -752,14 +747,6 @@
     "Rooms and spaces": "ຫ້ອງ ແລະ ພຶ້ນທີ່",
     "Results": "ຜົນຮັບ",
     "You may want to try a different search or check for typos.": "ເຈົ້າອາດຈະຕ້ອງລອງຊອກຫາແບບອື່ນ ຫຼື ກວດເບິ່ງວ່າພິມຜິດ.",
-    "Your server does not support showing space hierarchies.": "ເຊີບເວີຂອງທ່ານບໍ່ຮອງຮັບການສະແດງລໍາດັບຊັ້ນຂອງພື້ນທີ່.",
-    "Failed to load list of rooms.": "ໂຫຼດລາຍຊື່ຫ້ອງບໍ່ສຳເລັດ.",
-    "Mark as suggested": "ເຄື່ອງໝາຍທີ່ ແນະນຳ",
-    "Mark as not suggested": "ເຮັດເຄຶ່ອງໝາຍໄວ້ວ່າ ບໍ່ໄດ້ແນະນຳ",
-    "Failed to remove some rooms. Try again later": "ລຶບບາງຫ້ອງອອກບໍ່ສຳເລັດ. ລອງໃໝ່ໃນພາຍຫຼັງ",
-    "Select a room below first": "ເລືອກຫ້ອງຂ້າງລຸ່ມນີ້ກ່ອນ",
-    "Suggested": "ແນະນຳແລ້ວ",
-    "This room is suggested as a good one to join": "ຫ້ອງນີ້ຖືກແນະນໍາວ່າເປັນຫ້ອງທີ່ດີທີ່ຈະເຂົ້າຮ່ວມ",
     "Joined": "ເຂົ້າຮ່ວມແລ້ວ",
     "You don't have permission": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ",
     "Joining": "ເຂົ້າຮ່ວມ",
@@ -783,10 +770,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ຖືກສົ່ງເນື່ອງຈາກ homeserver ນີ້ຮອດຂີດຈຳກັດສູງສູດຜູ້ໃຊ້ລາຍເດືອນແລ້ວ. ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ເບິ່ງຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການ.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "ທ່ານບໍ່ສາມາດສົ່ງຂໍ້ຄວາມໄດ້ຈົນກ່ວາທ່ານຈະທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບ <consentLink>ຂໍ້ກໍານົດແລະເງື່ອນໄຂຂອງພວກເຮົາ</consentLink>.",
     "Create new room": "ສ້າງຫ້ອງໃຫມ່",
-    "You have no visible notifications.": "ທ່ານບໍ່ເຫັນການເເຈ້ງເຕືອນ.",
-    "You're all caught up": "ໝົດແລ້ວໝົດເລີຍ",
-    "%(creator)s created and configured the room.": "%(creator)s ສ້າງ ແລະ ກຳນົດຄ່າຫ້ອງ.",
-    "%(creator)s created this DM.": "%(creator)s ສ້າງ DM ນີ້.",
     "Verification requested": "ຂໍການຢັ້ງຢືນ",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
     "Old cryptography data detected": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
@@ -805,8 +788,6 @@
     "Failed to reject invitation": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
     "Are you sure you want to reject the invitation?": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປະຕິເສດຄຳເຊີນ?",
     "Reject invitation": "ປະຕິເສດຄຳເຊີນ",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "ຖ້າທ່ານຮູ້ວ່າທ່ານກໍາລັງເຮັດຫຍັງ, Element ແມ່ນແຫຼ່ງເປີດ, ກວດເບິ່ງໃຫ້ແນ່ໃຈວ່າ GitHub ຂອງພວກເຮົາ (https://github.com/vector-im/element-web/) ແລະ ປະກອບສ່ວນ!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "ຖ້າມີຄົນບອກທ່ານໃຫ້ສຳເນົາ/ວາງບາງອັນຢູ່ບ່ອນນີ້, ມີໂອກາດສູງທີ່ທ່ານຈະຖືກຫລອກລວງ!",
     "Wait!": "ລໍຖ້າ!",
     "Open dial pad": "ເປີດແຜ່ນປັດ",
     "Remove from room": "ຍ້າຍອອກຈາກຫ້ອງ",
@@ -1048,22 +1029,10 @@
     "You most likely do not want to reset your event index store": "ສ່ວນຫຼາຍແລ້ວທ່ານບໍ່ຢາກຈະກູ້ຄືນດັດສະນີຂອງທ່ານ",
     "Reset event store?": "ກູ້ຄືນການຕັ້ງຄ່າບໍ?",
     "For security, this session has been signed out. Please sign in again.": "ເພື່ອຄວາມປອດໄພ, ລະບົບນີ້ໄດ້ຖືກອອກຈາກລະບົບແລ້ວ. ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງ.",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "ແນບໄຟລ໌ຈາກການສົນທະນາ ຫຼື ພຽງແຕ່ລາກແລ້ວວາງມັນໄວ້ບ່ອນໃດກໍໄດ້ໃນຫ້ອງ.",
-    "No files visible in this room": "ບໍ່ມີໄຟລ໌ທີ່ເບິ່ງເຫັນຢູ່ໃນຫ້ອງນີ້",
-    "You must join the room to see its files": "ທ່ານຕ້ອງເຂົ້າຮ່ວມຫ້ອງເພື່ອເບິ່ງໄຟລ໌",
-    "You must <a>register</a> to use this functionality": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
-    "Drop file here to upload": "ວາງໄຟລ໌ໄວ້ບ່ອນນີ້ເພື່ອອັບໂຫລດ",
     "Couldn't load page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້",
     "Error downloading audio": "ເກີດຄວາມຜິດພາດໃນການດາວໂຫຼດສຽງ",
     "Unnamed audio": "ສຽງບໍ່ມີຊື່",
     "Sign in with SSO": "ເຂົ້າສູ່ລະບົບດ້ວຍປະຕຸດຽວ ( SSO)",
-    "Use email to optionally be discoverable by existing contacts.": "ໃຊ້ອີເມລ໌ເພື່ອເປັນທາງເລືອກໃຫ້ຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວສາມາດຄົ້ນຫາໄດ້.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "ໃຊ້ອີເມລ໌ ຫຼື ໂທລະສັບເພື່ອຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວຄົ້ນຫາໄດ້.",
-    "Add an email to be able to reset your password.": "ເພີ່ມອີເມວເພື່ອສາມາດກູ້ຄືນລະຫັດຜ່ານຂອງທ່ານໄດ້.",
-    "Phone (optional)": "ໂທລະສັບ (ທາງເລືອກ)",
-    "Someone already has that username. Try another or if it is you, sign in below.": "ບາງຄົນມີຊື່ຜູ້ໃຊ້ນັ້ນແລ້ວ. ລອງທາງອື່ນ ຫຼື ຖ້າມັນແມ່ນຕົວເຈົ້າ, ເຂົ້າສູ່ລະບົບຂ້າງລຸ່ມນີ້.",
-    "Unable to check if username has been taken. Try again later.": "ບໍ່ສາມາດກວດສອບໄດ້ວ່າຊື່ຜູ້ໃຊ້ໄດ້ຖືກນຳໄປໃຊ້. ລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "Use lowercase letters, numbers, dashes and underscores only": "ໃຊ້ຕົວພິມນ້ອຍ, ຕົວເລກ, ຂີດຕໍ່ ແລະ ຂີດກ້ອງເທົ່ານັ້ນ",
     "Enter phone number (required on this homeserver)": "ໃສ່ເບີໂທລະສັບ (ຕ້ອງການຢູ່ໃນ homeserver ນີ້)",
     "Other users can invite you to rooms using your contact details": "ຜູ້ໃຊ້ອື່ນສາມາດເຊີນທ່ານເຂົ້າຫ້ອງໄດ້ໂດຍການໃຊ້ລາຍລະອຽດຕິດຕໍ່ຂອງທ່ານ",
     "Enter email address (required on this homeserver)": "ໃສ່ທີ່ຢູ່ອີເມວ (ຕ້ອງຢູ່ໃນ homeserver ນີ້)",
@@ -1095,7 +1064,6 @@
     "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
     "Live until %(expiryTime)s": "ຢູ່ຈົນກ່ວາ %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "ອັບເດດ %(humanizedUpdateTime)s",
-    "Space home": "ພຶ້ນທີ່ home",
     "Resend %(unsentCount)s reaction(s)": "ສົ່ງການໂຕ້ຕອບ %(unsentCount)s ຄືນໃໝ່",
     "No results found": "ບໍ່ພົບຜົນການຊອກຫາ",
     "Filter results": "ການກັ່ນຕອງຜົນຮັບ",
@@ -1165,11 +1133,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
     "Verify your other session using one of the options below.": "ຢືນຢັນລະບົບອື່ນຂອງທ່ານໂດຍໃຊ້ໜຶ່ງໃນຕົວເລືອກຂ້າງລຸ່ມນີ້.",
     "You signed in to a new session without verifying it:": "ທ່ານເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
-    "Document": "ເອກະສານ",
-    "Summary": "ສະຫຼຸບ",
-    "Service": "ບໍລິການ",
-    "To continue you need to accept the terms of this service.": "ເພື່ອສືບຕໍ່, ທ່ານຈະຕ້ອງຍອມຮັບເງື່ອນໄຂຂອງການບໍລິການນີ້.",
-    "Use bots, bridges, widgets and sticker packs": "ໃຊ້ໂປແກລມອັດຕະໂນມັດ, ຂົວ, ວິດເຈັດ ແລະ ຊຸດສະຕິກເກີ",
     "Be found by phone or email": "ພົບເຫັນທາງໂທລະສັບ ຫຼື ອີເມລ໌",
     "Find others by phone or email": "ຊອກຫາຄົນອື່ນທາງໂທລະສັບ ຫຼື ອີເມລ໌",
     "Your browser likely removed this data when running low on disk space.": "ບຣາວເຊີຂອງທ່ານອາດຈະລຶບຂໍ້ມູນນີ້ອອກເມື່ອພື້ນທີ່ດິສກ໌ເຫຼືອໜ້ອຍ.",
@@ -1186,7 +1149,6 @@
     "Join %(roomAddress)s": "ເຂົ້າຮ່ວມ %(roomAddress)s",
     "Other rooms in %(spaceName)s": "ຫ້ອງອື່ນໆ%(spaceName)s",
     "Spaces you're in": "ຊ່ອງທີ່ທ່ານຢູ່",
-    "Settings - %(spaceName)s": "ການຕັ້ງຄ່າ - %(spaceName)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "ຈັດກຸ່ມການສົນທະນາຂອງທ່ານກັບສະມາຊິກຂອງຊ່ອງນີ້. ການປິດອັນນີ້ຈະເຊື່ອງການສົນທະນາເຫຼົ່ານັ້ນຈາກການເບິ່ງເຫັນ %(spaceName)s ຂອງທ່ານ.",
     "Sections to show": "ພາກສ່ວນທີ່ຈະສະແດງ",
     "Command Help": "ຄໍາສັ່ງຊ່ວຍເຫຼືອ",
@@ -1228,7 +1190,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນອຸປະກອນນີ້ເພື່ອເປັນເຄື່ອງໝາຍ ໜ້າເຊື່ອຖືໄດ້. ການໄວ້ໃຈໃນອຸປະກອນນີ້ເຮັດໃຫ້ທ່ານ ແລະ ຜູ້ໃຊ້ອື່ນໆມີຄວາມອູ່ນໃນຈິດໃຈຫຼາຍຂຶ້ນເມື່ອເຂົ້າລະຫັດຂໍ້ຄວາມເເຕ່ຕົ້ນທາງຫາປາຍທາງ.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "ການຢືນຢັນຜູ້ໃຊ້ນີ້ຈະເປັນເຄື່ອງໝາຍໃນລະບົບຂອງເຂົາເຈົ້າໜ້າເຊື່ອຖືໄດ້ ແລະ ເປັນເຄື່ອງໝາຍເຖິງລະບົບຂອງທ່ານ ເປັນທີ່ເຊື່ອຖືໄດ້ຕໍ່ກັບເຂົາເຈົ້າ.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ເພື່ອສ້າງເຄື່ອງທີ່ເຊື່ອຖືໄດ້. ຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ເຮັດໃຫ້ທ່ານອຸ່ນໃຈຂື້ນເມື່ຶຶອເຂົ້າລະຫັດຂໍ້ຄວາມແຕ່ຕົ້ນທາງເຖິງປາຍທາງ.",
-    "Terms of Service": "ເງື່ອນໄຂການໃຫ້ບໍລິການ",
     "You may contact me if you have any follow up questions": "ທ່ານສາມາດຕິດຕໍ່ຂ້ອຍໄດ້ ຖ້າທ່ານມີຄໍາຖາມເພີ່ມເຕີມ",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
     "Search for rooms or people": "ຊອກຫາຫ້ອງ ຫຼື ຄົນ",
@@ -2592,7 +2553,8 @@
         "widget_screenshots": "ເປີດໃຊ້ widget ຖ່າຍໜ້າຈໍໃນ widget ທີ່ຮອງຮັບ",
         "title": "ເຄື່ອງມືພັດທະນາ",
         "show_hidden_events": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
-        "developer_mode": "ຮູບແບບນັກພັດທະນາ"
+        "developer_mode": "ຮູບແບບນັກພັດທະນາ",
+        "view_source_decrypted_event_source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້"
     },
     "export_chat": {
         "html": "HTML",
@@ -2958,7 +2920,9 @@
         "m.room.create": {
             "continuation": "ຫ້ອງນີ້ແມ່ນສືບຕໍ່ການສົນທະນາອື່ນ.",
             "see_older_messages": "ກົດທີ່ນີ້ເພື່ອເບິ່ງຂໍ້ຄວາມເກົ່າ."
-        }
+        },
+        "creation_summary_dm": "%(creator)s ສ້າງ DM ນີ້.",
+        "creation_summary_room": "%(creator)s ສ້າງ ແລະ ກຳນົດຄ່າຫ້ອງ."
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3243,7 +3207,15 @@
         "server_picker_explainer": "ໃຊ້ Matrix homeserver ທີ່ທ່ານຕ້ອງການ ຖ້າຫາກທ່ານມີ ຫຼື ເປັນເຈົ້າພາບເອງ.",
         "server_picker_learn_more": "ກ່ຽວກັບ homeservers",
         "incorrect_credentials": "ຊື່ຜູ້ໃຊ້ ແລະ/ຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ.",
-        "account_deactivated": "ບັນຊີນີ້ຖືກປິດການນຳໃຊ້ແລ້ວ."
+        "account_deactivated": "ບັນຊີນີ້ຖືກປິດການນຳໃຊ້ແລ້ວ.",
+        "registration_username_validation": "ໃຊ້ຕົວພິມນ້ອຍ, ຕົວເລກ, ຂີດຕໍ່ ແລະ ຂີດກ້ອງເທົ່ານັ້ນ",
+        "registration_username_unable_check": "ບໍ່ສາມາດກວດສອບໄດ້ວ່າຊື່ຜູ້ໃຊ້ໄດ້ຖືກນຳໄປໃຊ້. ລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "registration_username_in_use": "ບາງຄົນມີຊື່ຜູ້ໃຊ້ນັ້ນແລ້ວ. ລອງທາງອື່ນ ຫຼື ຖ້າມັນແມ່ນຕົວເຈົ້າ, ເຂົ້າສູ່ລະບົບຂ້າງລຸ່ມນີ້.",
+        "phone_label": "ໂທລະສັບ",
+        "phone_optional_label": "ໂທລະສັບ (ທາງເລືອກ)",
+        "email_help_text": "ເພີ່ມອີເມວເພື່ອສາມາດກູ້ຄືນລະຫັດຜ່ານຂອງທ່ານໄດ້.",
+        "email_phone_discovery_text": "ໃຊ້ອີເມລ໌ ຫຼື ໂທລະສັບເພື່ອຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວຄົ້ນຫາໄດ້.",
+        "email_discovery_text": "ໃຊ້ອີເມລ໌ເພື່ອເປັນທາງເລືອກໃຫ້ຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວສາມາດຄົ້ນຫາໄດ້."
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3434,7 +3406,21 @@
         "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ"
     },
     "space": {
-        "landing_welcome": "ຍິນດີຕ້ອນຮັບສູ່ <name/>"
+        "landing_welcome": "ຍິນດີຕ້ອນຮັບສູ່ <name/>",
+        "suggested_tooltip": "ຫ້ອງນີ້ຖືກແນະນໍາວ່າເປັນຫ້ອງທີ່ດີທີ່ຈະເຂົ້າຮ່ວມ",
+        "suggested": "ແນະນຳແລ້ວ",
+        "select_room_below": "ເລືອກຫ້ອງຂ້າງລຸ່ມນີ້ກ່ອນ",
+        "unmark_suggested": "ເຮັດເຄຶ່ອງໝາຍໄວ້ວ່າ ບໍ່ໄດ້ແນະນຳ",
+        "mark_suggested": "ເຄື່ອງໝາຍທີ່ ແນະນຳ",
+        "failed_remove_rooms": "ລຶບບາງຫ້ອງອອກບໍ່ສຳເລັດ. ລອງໃໝ່ໃນພາຍຫຼັງ",
+        "failed_load_rooms": "ໂຫຼດລາຍຊື່ຫ້ອງບໍ່ສຳເລັດ.",
+        "incompatible_server_hierarchy": "ເຊີບເວີຂອງທ່ານບໍ່ຮອງຮັບການສະແດງລໍາດັບຊັ້ນຂອງພື້ນທີ່.",
+        "context_menu": {
+            "devtools_open_timeline": "ເບິ່ງທາມລາຍຫ້ອງ (devtools)",
+            "home": "ພຶ້ນທີ່ home",
+            "explore": "ການສຳຫຼວດຫ້ອງ",
+            "manage_and_explore": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3482,5 +3468,35 @@
         "setup_rooms_description": "ທ່ານສາມາດເພີ່ມເຕີມໃນພາຍຫຼັງ, ລວມທັງອັນທີ່ມີຢູ່ແລ້ວ.",
         "setup_rooms_private_heading": "ທີມງານຂອງທ່ານເຮັດວຽກຢູ່ໃນໂຄງການໃດ?",
         "setup_rooms_private_description": "ພວກເຮົາຈະສ້າງແຕ່ລະຫ້ອງ."
+    },
+    "user_menu": {
+        "switch_theme_light": "ສະຫຼັບໄປໂໝດແສງ",
+        "switch_theme_dark": "ສະຫຼັບໄປໂໝດມືດ"
+    },
+    "notif_panel": {
+        "empty_heading": "ໝົດແລ້ວໝົດເລີຍ",
+        "empty_description": "ທ່ານບໍ່ເຫັນການເເຈ້ງເຕືອນ."
+    },
+    "console_scam_warning": "ຖ້າມີຄົນບອກທ່ານໃຫ້ສຳເນົາ/ວາງບາງອັນຢູ່ບ່ອນນີ້, ມີໂອກາດສູງທີ່ທ່ານຈະຖືກຫລອກລວງ!",
+    "console_dev_note": "ຖ້າທ່ານຮູ້ວ່າທ່ານກໍາລັງເຮັດຫຍັງ, Element ແມ່ນແຫຼ່ງເປີດ, ກວດເບິ່ງໃຫ້ແນ່ໃຈວ່າ GitHub ຂອງພວກເຮົາ (https://github.com/vector-im/element-web/) ແລະ ປະກອບສ່ວນ!",
+    "room": {
+        "drop_file_prompt": "ວາງໄຟລ໌ໄວ້ບ່ອນນີ້ເພື່ອອັບໂຫລດ"
+    },
+    "file_panel": {
+        "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
+        "peek_note": "ທ່ານຕ້ອງເຂົ້າຮ່ວມຫ້ອງເພື່ອເບິ່ງໄຟລ໌",
+        "empty_heading": "ບໍ່ມີໄຟລ໌ທີ່ເບິ່ງເຫັນຢູ່ໃນຫ້ອງນີ້",
+        "empty_description": "ແນບໄຟລ໌ຈາກການສົນທະນາ ຫຼື ພຽງແຕ່ລາກແລ້ວວາງມັນໄວ້ບ່ອນໃດກໍໄດ້ໃນຫ້ອງ."
+    },
+    "terms": {
+        "integration_manager": "ໃຊ້ໂປແກລມອັດຕະໂນມັດ, ຂົວ, ວິດເຈັດ ແລະ ຊຸດສະຕິກເກີ",
+        "tos": "ເງື່ອນໄຂການໃຫ້ບໍລິການ",
+        "intro": "ເພື່ອສືບຕໍ່, ທ່ານຈະຕ້ອງຍອມຮັບເງື່ອນໄຂຂອງການບໍລິການນີ້.",
+        "column_service": "ບໍລິການ",
+        "column_summary": "ສະຫຼຸບ",
+        "column_document": "ເອກະສານ"
+    },
+    "space_settings": {
+        "title": "ການຕັ້ງຄ່າ - %(spaceName)s"
     }
 }

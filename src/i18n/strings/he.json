@@ -826,7 +826,6 @@
     "You have verified this user. This user has verified all of their sessions.": "אימתת משתמש זה. משתמש זה אימת את כל ההפעלות שלו.",
     "You have not verified this user.": "לא אימתת משתמש זה.",
     "This user has not verified all of their sessions.": "משתמש זה לא אימת את כל ההפעלות שלו.",
-    "Drop file here to upload": "גרור קובץ לכאן בכדי להעלות",
     "Phone Number": "מספר טלפון",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "הודעת טקסט נשלחה אל %(msisdn)s. אנא הזן את קוד האימות שהוא מכיל.",
     "Remove %(phone)s?": "הסר מספרי %(phone)s ?",
@@ -1045,17 +1044,8 @@
     "Failed to reject invitation": "דחיית ההזמנה נכשלה",
     "Explore rooms": "גלה חדרים",
     "Upload avatar": "העלה אוואטר",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "צרף קבצים מצ'ט או פשוט גרור ושחרר אותם לכל מקום בחדר.",
-    "No files visible in this room": "אין קבצים גלויים בחדר זה",
-    "You must join the room to see its files": "עליך להצטרף לחדר כדי לראות את הקבצים שלו",
-    "You must <a>register</a> to use this functionality": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
     "Couldn't load page": "לא ניתן לטעון את הדף",
     "Sign in with SSO": "היכנס באמצעות SSO",
-    "Use email to optionally be discoverable by existing contacts.": "השתמש באימייל כדי שאפשר יהיה למצוא אותו על ידי אנשי קשר קיימים.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "השתמש בדוא\"ל או בטלפון בכדי שאפשר יהיה לגלות אותם על ידי אנשי קשר קיימים.",
-    "Add an email to be able to reset your password.": "הוסף דוא\"ל כדי שתוכל לאפס את הסיסמה שלך.",
-    "Phone (optional)": "טלפון (לא חובה)",
-    "Use lowercase letters, numbers, dashes and underscores only": "השתמש באותיות קטנות, מספרים, מקפים וקווים תחתונים בלבד",
     "Enter phone number (required on this homeserver)": "הזן מספר טלפון (חובה בשרת בית זה)",
     "Other users can invite you to rooms using your contact details": "משתמשים אחרים יכולים להזמין אותך לחדרים באמצעות פרטי יצירת הקשר שלך",
     "Enter email address (required on this homeserver)": "הזן כתובת דוא\"ל (חובה בשרת הבית הזה)",
@@ -1131,12 +1121,6 @@
     "Upload all": "מעלה הכל",
     "Upload files (%(current)s of %(total)s)": "מעלה קבצים (%(current)s מ %(total)s)",
     "Upload files": "מעלה קבצים",
-    "Document": "מסמך",
-    "Summary": "תקציר",
-    "Service": "שֵׁרוּת",
-    "To continue you need to accept the terms of this service.": "כדי להמשיך עליך לקבל את תנאי השירות הזה.",
-    "Terms of Service": "תנאי שימוש בשירות",
-    "Use bots, bridges, widgets and sticker packs": "השתמש בבוטים, גשרים, ווידג'טים וחבילות מדבקות",
     "Be found by phone or email": "להימצא בטלפון או בדוא\"ל",
     "Find others by phone or email": "מצא אחרים בטלפון או בדוא\"ל",
     "Your browser likely removed this data when running low on disk space.": "סביר להניח שהדפדפן שלך הסיר נתונים אלה כאשר שטח הדיסק שלהם נמוך.",
@@ -1314,8 +1298,6 @@
     "A new password must be entered.": "יש להזין סיסמה חדשה.",
     "Could not load user profile": "לא ניתן לטעון את פרופיל המשתמש",
     "Switch theme": "שנה ערכת נושא",
-    "Switch to dark mode": "שנה למצב כהה",
-    "Switch to light mode": "שנה למצב בהיר",
     "All settings": "כל ההגדרות",
     "Uploading %(filename)s and %(count)s others": {
         "one": "מעלה %(filename)s ו-%(count)s אחרים",
@@ -1340,9 +1322,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבית הזה חרג ממגבלת המשאבים. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
-    "You have no visible notifications.": "אין לך התראות גלויות.",
-    "%(creator)s created and configured the room.": "%(creator)s יצר/ה והגדיר/ה את החדר.",
-    "%(creator)s created this DM.": "%(creator)s יצר את DM הזה.",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
     "Old cryptography data detected": "נתגלו נתוני הצפנה ישנים",
     "Terms and Conditions": "תנאים והגבלות",
@@ -1394,7 +1373,6 @@
     "Your new device is now verified. Other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Device verified": "המכשיר אומת",
-    "Failed to load list of rooms.": "טעינת רשימת החדרים נכשלה.",
     "Message search initialisation failed, check <a>your settings</a> for more information": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
     "Connection failed": "החיבור נכשל",
     "Failed to remove user": "הסרת המשתמש נכשלה",
@@ -1499,7 +1477,6 @@
     "Rooms and spaces": "חדרים וחללי עבודה",
     "Results": "תוצאות",
     "You may want to try a different search or check for typos.": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה.",
-    "Your server does not support showing space hierarchies.": "השרת שלכם אינו תומך בהצגת היררכית חללי עבודה.",
     "We're creating a room with %(names)s": "יצרנו חדר עם %(names)s",
     "Thread options": "אפשרויות שרשור",
     "Collapse reply thread": "אחד שרשור של התשובות",
@@ -1637,7 +1614,6 @@
     "Sidebar": "סרגל צד",
     "Deactivating your account is a permanent action — be careful!": "סגירת החשבון הינה פעולה שלא ניתנת לביטול - שים לב!",
     "Room info": "מידע על החדר",
-    "You're all caught up": "אתם כבר מעודכנים בהכל",
     "Search users in this room…": "חיפוש משתמשים בחדר זה…",
     "Give one or multiple users in this room more privileges": "הענק למשתמש או מספר משתמשים בחדר זה הרשאות נוספות",
     "Add privileged users": "הוספת משתמשים מורשים",
@@ -2470,7 +2446,9 @@
         "m.room.create": {
             "continuation": "החדר הזה הוא המשך לשיחה אחרת.",
             "see_older_messages": "לחץ כאן לראות הודעות ישנות."
-        }
+        },
+        "creation_summary_dm": "%(creator)s יצר את DM הזה.",
+        "creation_summary_room": "%(creator)s יצר/ה והגדיר/ה את החדר."
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2738,7 +2716,13 @@
         "server_picker_explainer": "השתמש בשרת הבית המועדף על מטריקס אם יש לך כזה, או מארח משלך.",
         "server_picker_learn_more": "אודות שרתי בית",
         "incorrect_credentials": "שם משתמש ו / או סיסמה שגויים.",
-        "account_deactivated": "חשבון זה הושבת."
+        "account_deactivated": "חשבון זה הושבת.",
+        "registration_username_validation": "השתמש באותיות קטנות, מספרים, מקפים וקווים תחתונים בלבד",
+        "phone_label": "טלפון",
+        "phone_optional_label": "טלפון (לא חובה)",
+        "email_help_text": "הוסף דוא\"ל כדי שתוכל לאפס את הסיסמה שלך.",
+        "email_phone_discovery_text": "השתמש בדוא\"ל או בטלפון בכדי שאפשר יהיה לגלות אותם על ידי אנשי קשר קיימים.",
+        "email_discovery_text": "השתמש באימייל כדי שאפשר יהיה למצוא אותו על ידי אנשי קשר קיימים."
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2902,7 +2886,12 @@
         "empty_heading": "שימרו על דיונים מאורגנים בשרשורים"
     },
     "space": {
-        "landing_welcome": "ברוכים הבאים אל <name/>"
+        "landing_welcome": "ברוכים הבאים אל <name/>",
+        "failed_load_rooms": "טעינת רשימת החדרים נכשלה.",
+        "incompatible_server_hierarchy": "השרת שלכם אינו תומך בהצגת היררכית חללי עבודה.",
+        "context_menu": {
+            "explore": "גלה חדרים"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotReachable": "שרת בית זה אינו מוגדר כהלכה להצגת מפות, או ששרת המפות המוגדר אינו ניתן לגישה.",
@@ -2948,5 +2937,30 @@
         "setup_rooms_description": "אתם יכולים להוסיף עוד מאוחר יותר, כולל אלה שכבר קיימים.",
         "setup_rooms_private_heading": "על אילו פרויקטים הצוות שלכם עובד?",
         "setup_rooms_private_description": "ניצור חדרים לכל אחד מהם."
+    },
+    "user_menu": {
+        "switch_theme_light": "שנה למצב בהיר",
+        "switch_theme_dark": "שנה למצב כהה"
+    },
+    "notif_panel": {
+        "empty_heading": "אתם כבר מעודכנים בהכל",
+        "empty_description": "אין לך התראות גלויות."
+    },
+    "room": {
+        "drop_file_prompt": "גרור קובץ לכאן בכדי להעלות"
+    },
+    "file_panel": {
+        "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
+        "peek_note": "עליך להצטרף לחדר כדי לראות את הקבצים שלו",
+        "empty_heading": "אין קבצים גלויים בחדר זה",
+        "empty_description": "צרף קבצים מצ'ט או פשוט גרור ושחרר אותם לכל מקום בחדר."
+    },
+    "terms": {
+        "integration_manager": "השתמש בבוטים, גשרים, ווידג'טים וחבילות מדבקות",
+        "tos": "תנאי שימוש בשירות",
+        "intro": "כדי להמשיך עליך לקבל את תנאי השירות הזה.",
+        "column_service": "שֵׁרוּת",
+        "column_summary": "תקציר",
+        "column_document": "מסמך"
     }
 }

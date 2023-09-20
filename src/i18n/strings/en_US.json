@@ -163,7 +163,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
-    "You must join the room to see its files": "You must join the room to see its files",
     "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
     "Failed to invite": "Failed to invite",
     "Confirm Removal": "Confirm Removal",
@@ -177,7 +176,6 @@
     "Add an Integration": "Add an Integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
     "URL Previews": "URL Previews",
-    "Drop file here to upload": "Drop file here to upload",
     "Admin Tools": "Admin Tools",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
     "Create new room": "Create new room",
@@ -192,7 +190,6 @@
         "other": "Uploading %(filename)s and %(count)s others"
     },
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
-    "You must <a>register</a> to use this functionality": "You must <a>register</a> to use this functionality",
     "(~%(count)s results)": {
         "one": "(~%(count)s result)",
         "other": "(~%(count)s results)"
@@ -512,7 +509,8 @@
         "sign_in_or_register": "Sign In or Create Account",
         "sign_in_or_register_description": "Use your account or create a new one to continue.",
         "register_action": "Create Account",
-        "incorrect_credentials": "Incorrect username and/or password."
+        "incorrect_credentials": "Incorrect username and/or password.",
+        "phone_label": "Phone"
     },
     "export_chat": {
         "messages": "Messages"
@@ -538,6 +536,18 @@
         "autocomplete": {
             "command_description": "Commands",
             "user_description": "Users"
+        }
+    },
+    "room": {
+        "drop_file_prompt": "Drop file here to upload"
+    },
+    "file_panel": {
+        "guest_note": "You must <a>register</a> to use this functionality",
+        "peek_note": "You must join the room to see its files"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Explore rooms"
         }
     }
 }

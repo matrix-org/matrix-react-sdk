@@ -245,7 +245,6 @@
     "Encryption": "Versleuterienge",
     "Once enabled, encryption cannot be disabled.": "Eenmoal ingeschoakeld ku versleuterienge nie mi wordn uutgeschoakeld.",
     "Who can read history?": "Wien kut de geschiedenisse leezn?",
-    "Drop file here to upload": "Versleep ’t bestand noar hier vo ’t ip te loaden",
     "This event could not be displayed": "Deze gebeurtenisse kostege nie weergegeevn wordn",
     "Failed to ban user": "Verbann van gebruuker es mislukt",
     "Demote yourself?": "Jen eigen degradeern?",
@@ -479,11 +478,8 @@
     "Enter username": "Gift de gebruukersnoame in",
     "Some characters not allowed": "Sommige tekens zyn nie toegeloatn",
     "Email (optional)": "E-mailadresse (optioneel)",
-    "Phone (optional)": "Telefongnumero (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
     "Couldn't load page": "Kostege ’t blad nie loadn",
-    "You must <a>register</a> to use this functionality": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
-    "You must join the room to see its files": "Je moe tout ’t gesprek toetreedn vo de bestandn te kunn zien",
     "Upload avatar": "Avatar iploadn",
     "Failed to reject invitation": "Weigern van d’uutnodigienge is mislukt",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
@@ -573,7 +569,6 @@
     "Your %(brand)s is misconfigured": "Je %(brand)s is verkeerd geconfigureerd gewist",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Vroagt an je %(brand)s-beheerder van <a>je configuroasje</a> noa te kykn ip verkeerde of duplicoate items.",
     "Unexpected error resolving identity server configuration": "Ounverwachte foute by ’t iplossn van d’identiteitsserverconfiguroasje",
-    "Use lowercase letters, numbers, dashes and underscores only": "Gebruukt alleene moa letters, cyfers, streeptjes en underscores",
     "Cannot reach identity server": "Kostege den identiteitsserver nie bereikn",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je ku je registreern, moa sommige functies goan pas beschikboar zyn wanneer da den identiteitsserver were online is. A je deze woarschuwienge te zien bluft krygn, controleert tan je configuroasje of nimt contact ip met e serverbeheerder.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je ku je paswoord herinstelln, moa sommige functies goan pas beschikboar zyn wanneer da den identiteitsserver were online is. A je deze woarschuwienge te zien bluft krygn, controleert tan je configuroasje of nimt contact ip met e serverbeheerder.",
@@ -590,10 +585,6 @@
     "Failed to re-authenticate due to a homeserver problem": "’t Heranmeldn is mislukt omwille van e probleem me de thuusserver",
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
     "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
-    "Use bots, bridges, widgets and sticker packs": "Gebruukt robottn, bruggn, widgets en stickerpakkettn",
-    "Terms of Service": "Gebruuksvoorwoardn",
-    "Service": "Dienst",
-    "Summary": "Soamnvattienge",
     "Clear personal data": "Persoonlike gegeevns wissn",
     "Checking server": "Server wor gecontroleerd",
     "Disconnect from the identity server <idserver />?": "Wil je de verbindienge me den identiteitsserver <idserver /> verbreekn?",
@@ -1078,7 +1069,10 @@
         "soft_logout_intro_unsupported_auth": "Je ku je nie anmeldn me jen account. Nimt contact ip me de beheerder van je thuusserver vo meer informoasje.",
         "register_action": "Account anmoakn",
         "incorrect_credentials": "Verkeerde gebruukersnoame en/of paswoord.",
-        "account_deactivated": "Deezn account is gedeactiveerd gewist."
+        "account_deactivated": "Deezn account is gedeactiveerd gewist.",
+        "registration_username_validation": "Gebruukt alleene moa letters, cyfers, streeptjes en underscores",
+        "phone_label": "Telefongnumero",
+        "phone_optional_label": "Telefongnumero (optioneel)"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1133,5 +1127,23 @@
     "room_list": {
         "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
         "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
+    },
+    "room": {
+        "drop_file_prompt": "Versleep ’t bestand noar hier vo ’t ip te loaden"
+    },
+    "file_panel": {
+        "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
+        "peek_note": "Je moe tout ’t gesprek toetreedn vo de bestandn te kunn zien"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Gesprekkn ountdekkn"
+        }
+    },
+    "terms": {
+        "integration_manager": "Gebruukt robottn, bruggn, widgets en stickerpakkettn",
+        "tos": "Gebruuksvoorwoardn",
+        "column_service": "Dienst",
+        "column_summary": "Soamnvattienge"
     }
 }

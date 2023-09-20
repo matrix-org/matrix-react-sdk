@@ -75,7 +75,6 @@
     "Authentication": "Autenticación",
     "Failed to set display name": "Fallo ao establecer o nome público",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Drop file here to upload": "Solte aquí o ficheiro para subilo",
     "Unban": "Non bloquear",
     "Failed to ban user": "Fallo ao bloquear usuaria",
     "Failed to mute user": "Fallo ó silenciar usuaria",
@@ -182,8 +181,6 @@
     "Unable to add email address": "Non se puido engadir enderezo de correo",
     "Unable to verify email address.": "Non se puido verificar enderezo de correo electrónico.",
     "This will allow you to reset your password and receive notifications.": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións.",
-    "You must <a>register</a> to use this functionality": "Debe <a>rexistrarse</a> para utilizar esta función",
-    "You must join the room to see its files": "Debes unirte a sala para ver os seus ficheiros",
     "Reject invitation": "Rexeitar convite",
     "Are you sure you want to reject the invitation?": "Seguro que desexa rexeitar o convite?",
     "Failed to reject invitation": "Fallo ao rexeitar o convite",
@@ -358,7 +355,6 @@
     "Enter the name of a new server you want to explore.": "Escribe o nome do novo servidor que queres explorar.",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
-    "%(creator)s created and configured the room.": "%(creator)s creou e configurou a sala.",
     "Explore rooms": "Explorar salas",
     "General failure": "Fallo xeral",
     "Room Addresses": "Enderezos da sala",
@@ -874,12 +870,6 @@
     "Your browser likely removed this data when running low on disk space.": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco.",
     "Find others by phone or email": "Atopa a outras por teléfono ou email",
     "Be found by phone or email": "Permite ser atopada polo email ou teléfono",
-    "Use bots, bridges, widgets and sticker packs": "Usa bots, pontes, widgets e paquetes de adhesivos",
-    "Terms of Service": "Termos do Servizo",
-    "To continue you need to accept the terms of this service.": "Para continuar tes que aceptar os termos deste servizo.",
-    "Service": "Servizo",
-    "Summary": "Resumo",
-    "Document": "Documento",
     "Upload files (%(current)s of %(total)s)": "Subir ficheiros (%(current)s de %(total)s)",
     "Upload files": "Subir ficheiros",
     "Upload all": "Subir todo",
@@ -920,10 +910,8 @@
     "Passwords don't match": "Non concordan os contrasinais",
     "Other users can invite you to rooms using your contact details": "Outras usuarias poden convidarte ás salas usando os teus detalles de contacto",
     "Enter phone number (required on this homeserver)": "Escribe un número de teléfono (requerido neste servidor)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Usa só minúsculas, números, trazos e trazos baixos",
     "Enter username": "Escribe nome de usuaria",
     "Email (optional)": "Email (optativo)",
-    "Phone (optional)": "Teléfono (optativo)",
     "Couldn't load page": "Non se puido cargar a páxina",
     "Jump to first unread room.": "Vaite a primeira sala non lida.",
     "Jump to first invite.": "Vai ó primeiro convite.",
@@ -931,8 +919,6 @@
         "other": "Tes %(count)s notificacións non lidas nunha versión previa desta sala.",
         "one": "Tes %(count)s notificacións non lidas nunha versión previa desta sala."
     },
-    "Switch to light mode": "Cambiar a decorado claro",
-    "Switch to dark mode": "Cambiar a decorado escuro",
     "Switch theme": "Cambiar decorado",
     "All settings": "Todos os axustes",
     "Could not load user profile": "Non se cargou o perfil da usuaria",
@@ -1007,8 +993,6 @@
     "A connection error occurred while trying to contact the server.": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
     "The server is not configured to indicate what the problem is (CORS).": "O servidor non está configurado para sinalar cal é o problema (CORS).",
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
-    "No files visible in this room": "Non hai ficheiros visibles na sala",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Anexa filecheiros desde a conversa ou arrastra e sóltaos onde queiras nunha sala.",
     "Master private key:": "Chave mestra principal:",
     "Explore public rooms": "Explorar salas públicas",
     "Preparing to download logs": "Preparándose para descargar rexistro",
@@ -1135,7 +1119,6 @@
     "Belize": "Belice",
     "Belgium": "Bélxica",
     "Belarus": "Belarús",
-    "%(creator)s created this DM.": "%(creator)s creou esta MD.",
     "This is the start of <roomName/>.": "Este é o comezo de <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Engade unha foto para que se poida identificar a sala facilmente.",
     "%(displayName)s created this room.": "%(displayName)s creou esta sala.",
@@ -1336,9 +1319,6 @@
     "Enter phone number": "Escribe número de teléfono",
     "Enter email address": "Escribe enderezo email",
     "There was a problem communicating with the homeserver, please try again later.": "Houbo un problema de comunicación co servidor de inicio, inténtao máis tarde.",
-    "Use email to optionally be discoverable by existing contacts.": "Usa o email para ser opcionalmente descubrible para os contactos existentes.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Usa un email ou teléfono para ser (opcionalmente) descubrible polos contactos existentes.",
-    "Add an email to be able to reset your password.": "Engade un email para poder restablecer o contrasinal.",
     "That phone number doesn't look quite right, please check and try again": "Non semella correcto este número, compróbao e inténtao outra vez",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
     "Continuing without email": "Continuando sen email",
@@ -1348,7 +1328,6 @@
     "Resume": "Retomar",
     "You've reached the maximum number of simultaneous calls.": "Acadaches o número máximo de chamadas simultáneas.",
     "Too Many Calls": "Demasiadas chamadas",
-    "You have no visible notifications.": "Non tes notificacións visibles.",
     "Transfer": "Transferir",
     "Failed to transfer call": "Fallou a transferencia da chamada",
     "A call can only be transferred to a single user.": "Unha chamada só se pode transferir a unha única usuaria.",
@@ -1389,12 +1368,10 @@
     "We couldn't log you in": "Non puidemos conectarte",
     "Recently visited rooms": "Salas visitadas recentemente",
     "Original event source": "Fonte orixinal do evento",
-    "Decrypted event source": "Fonte descifrada do evento",
     "%(count)s members": {
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
     },
-    "Your server does not support showing space hierarchies.": "O teu servidor non soporta amosar xerarquías dos espazos.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Tes a certeza de querer deixar o espazo '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Este espazo non é público. Non poderás volver a unirte sen un convite.",
     "Start audio stream": "Iniciar fluxo de audio",
@@ -1429,11 +1406,6 @@
     "<inviter/> invites you": "<inviter/> convídate",
     "You may want to try a different search or check for typos.": "Podes intentar unha busca diferente ou comprobar o escrito.",
     "No results found": "Sen resultados",
-    "Mark as suggested": "Marcar como suxerida",
-    "Mark as not suggested": "Marcar como non suxerida",
-    "Failed to remove some rooms. Try again later": "Fallou a eliminación de algunhas salas. Inténtao máis tarde",
-    "Suggested": "Recomendada",
-    "This room is suggested as a good one to join": "Esta sala é recomendada como apropiada para unirse",
     "%(count)s rooms": {
         "one": "%(count)s sala",
         "other": "%(count)s salas"
@@ -1454,7 +1426,6 @@
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifica a túa identidade para acceder a mensaxes cifradas e acreditar a túa identidade ante outras.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s desde %(ip)s",
     "unknown person": "persoa descoñecida",
-    "Manage & explore rooms": "Xestionar e explorar salas",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persoas que coñeces xa se uniron",
         "one": "%(count)s persoa que coñeces xa se uniu"
@@ -1483,7 +1454,6 @@
     "Failed to send": "Fallou o envío",
     "Enter your Security Phrase a second time to confirm it.": "Escribe a túa Frase de Seguridade por segunda vez para confirmala.",
     "You have no ignored users.": "Non tes usuarias ignoradas.",
-    "Select a room below first": "Primeiro elixe embaixo unha sala",
     "Want to add a new room instead?": "Queres engadir unha nova sala?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Engadindo sala...",
@@ -1570,7 +1540,6 @@
     "Collapse reply thread": "Contraer fío de resposta",
     "Show preview": "Ver vista previa",
     "View source": "Ver fonte",
-    "Settings - %(spaceName)s": "Axustes - %(spaceName)s",
     "The call is in an unknown state!": "Esta chamada ten un estado descoñecido!",
     "Call back": "Devolver a chamada",
     "No answer": "Sen resposta",
@@ -1700,7 +1669,6 @@
     "Upgrading room": "Actualizando sala",
     "View in room": "Ver na sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
-    "See room timeline (devtools)": "Ver cronoloxía da sala (devtools)",
     "Insert link": "Escribir ligazón",
     "Joined": "Unícheste",
     "Joining": "Uníndote",
@@ -1736,8 +1704,6 @@
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Sen verificación non poderás acceder a tódalas túas mensaxes e poderían aparecer como non confiables ante outras persoas.",
-    "You're all caught up": "Xa remataches",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Ese nome de usuaria xa está pillado. Inténtao con outro, ou se es ti, conéctate.",
     "Copy link to thread": "Copiar ligazón da conversa",
     "Thread options": "Opcións da conversa",
     "Mentions only": "Só mencións",
@@ -1840,12 +1806,7 @@
     "Back to thread": "Volver ao fío",
     "Room members": "Membros da sala",
     "Back to chat": "Volver ao chat",
-    "Failed to load list of rooms.": "Fallou a carga da lista de salas.",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Se sabes o que estás a facer, o código de Element é aberto, podes comprobalo en GitHub (https://github.com/vector-im/element-web/) e colaborar!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Se alguén che dixo que copies/pegues algo aquí, entón probablemente están intentando estafarte!",
     "Wait!": "Agarda!",
-    "Unable to check if username has been taken. Try again later.": "Non se puido comprobar se o nome de usuaria xa está en uso. Inténtao máis tarde.",
-    "Space home": "Inicio do espazo",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s.",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
-    "Proxy URL": "URL do Proxy",
-    "Proxy URL (optional)": "URL do proxy (optativo)",
-    "To disable you will need to log out and back in, use with caution!": "Para desactivalo tes que saír e volver a acceder, usa con precaución!",
-    "Sliding Sync configuration": "Configuración Sliding Sync",
-    "Your server lacks native support, you must specify a proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
-    "Your server lacks native support": "O teu servidor non ten soporte nativo",
-    "Your server has native support": "O teu servidor ten soporte nativo",
     "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
     "Voice broadcast": "Emisión de voz",
     "Failed to read events": "Fallou a lectura de eventos",
@@ -2333,7 +2287,14 @@
         "join_beta": "Unirse á beta",
         "automatic_debug_logs_key_backup": "Enviar automáticamente rexistros de depuración cando a chave da copia de apoio non funcione",
         "automatic_debug_logs_decryption": "Envía automáticamente rexistro de depuración se hai erros no cifrado",
-        "automatic_debug_logs": "Enviar automáticamente rexistros de depuración para calquera fallo"
+        "automatic_debug_logs": "Enviar automáticamente rexistros de depuración para calquera fallo",
+        "sliding_sync_server_support": "O teu servidor ten soporte nativo",
+        "sliding_sync_server_no_support": "O teu servidor non ten soporte nativo",
+        "sliding_sync_server_specify_proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
+        "sliding_sync_configuration": "Configuración Sliding Sync",
+        "sliding_sync_disable_warning": "Para desactivalo tes que saír e volver a acceder, usa con precaución!",
+        "sliding_sync_proxy_url_optional_label": "URL do proxy (optativo)",
+        "sliding_sync_proxy_url_label": "URL do Proxy"
     },
     "keyboard": {
         "home": "Inicio",
@@ -2784,7 +2745,8 @@
         "widget_screenshots": "Activar as capturas de trebellos para aqueles que as permiten",
         "title": "Ferramentas desenvolvemento",
         "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
-        "developer_mode": "Modo desenvolvemento"
+        "developer_mode": "Modo desenvolvemento",
+        "view_source_decrypted_event_source": "Fonte descifrada do evento"
     },
     "export_chat": {
         "html": "HTML",
@@ -3155,7 +3117,9 @@
         "m.room.create": {
             "continuation": "Esta sala é continuación doutra conversa.",
             "see_older_messages": "Preme aquí para ver mensaxes antigas."
-        }
+        },
+        "creation_summary_dm": "%(creator)s creou esta MD.",
+        "creation_summary_room": "%(creator)s creou e configurou a sala."
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -3443,7 +3407,15 @@
         "server_picker_explainer": "Usa o teu servidor de inicio Matrix preferido, ou usa o teu propio.",
         "server_picker_learn_more": "Acerca dos servidores de inicio",
         "incorrect_credentials": "Nome de usuaria ou contrasinal non válidos.",
-        "account_deactivated": "Esta conta foi desactivada."
+        "account_deactivated": "Esta conta foi desactivada.",
+        "registration_username_validation": "Usa só minúsculas, números, trazos e trazos baixos",
+        "registration_username_unable_check": "Non se puido comprobar se o nome de usuaria xa está en uso. Inténtao máis tarde.",
+        "registration_username_in_use": "Ese nome de usuaria xa está pillado. Inténtao con outro, ou se es ti, conéctate.",
+        "phone_label": "Teléfono",
+        "phone_optional_label": "Teléfono (optativo)",
+        "email_help_text": "Engade un email para poder restablecer o contrasinal.",
+        "email_phone_discovery_text": "Usa un email ou teléfono para ser (opcionalmente) descubrible polos contactos existentes.",
+        "email_discovery_text": "Usa o email para ser opcionalmente descubrible para os contactos existentes."
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3624,7 +3596,21 @@
         "light_high_contrast": "Alto contraste claro"
     },
     "space": {
-        "landing_welcome": "Benvida a <name/>"
+        "landing_welcome": "Benvida a <name/>",
+        "suggested_tooltip": "Esta sala é recomendada como apropiada para unirse",
+        "suggested": "Recomendada",
+        "select_room_below": "Primeiro elixe embaixo unha sala",
+        "unmark_suggested": "Marcar como non suxerida",
+        "mark_suggested": "Marcar como suxerida",
+        "failed_remove_rooms": "Fallou a eliminación de algunhas salas. Inténtao máis tarde",
+        "failed_load_rooms": "Fallou a carga da lista de salas.",
+        "incompatible_server_hierarchy": "O teu servidor non soporta amosar xerarquías dos espazos.",
+        "context_menu": {
+            "devtools_open_timeline": "Ver cronoloxía da sala (devtools)",
+            "home": "Inicio do espazo",
+            "explore": "Explorar salas",
+            "manage_and_explore": "Xestionar e explorar salas"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3678,5 +3664,35 @@
         "setup_rooms_description": "Podes engadir máis posteriormente, incluíndo os xa existentes.",
         "setup_rooms_private_heading": "En que proxectos está a traballar o teu equipo?",
         "setup_rooms_private_description": "Imos crear salas para cada un deles."
+    },
+    "user_menu": {
+        "switch_theme_light": "Cambiar a decorado claro",
+        "switch_theme_dark": "Cambiar a decorado escuro"
+    },
+    "notif_panel": {
+        "empty_heading": "Xa remataches",
+        "empty_description": "Non tes notificacións visibles."
+    },
+    "console_scam_warning": "Se alguén che dixo que copies/pegues algo aquí, entón probablemente están intentando estafarte!",
+    "console_dev_note": "Se sabes o que estás a facer, o código de Element é aberto, podes comprobalo en GitHub (https://github.com/vector-im/element-web/) e colaborar!",
+    "room": {
+        "drop_file_prompt": "Solte aquí o ficheiro para subilo"
+    },
+    "file_panel": {
+        "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
+        "peek_note": "Debes unirte a sala para ver os seus ficheiros",
+        "empty_heading": "Non hai ficheiros visibles na sala",
+        "empty_description": "Anexa filecheiros desde a conversa ou arrastra e sóltaos onde queiras nunha sala."
+    },
+    "terms": {
+        "integration_manager": "Usa bots, pontes, widgets e paquetes de adhesivos",
+        "tos": "Termos do Servizo",
+        "intro": "Para continuar tes que aceptar os termos deste servizo.",
+        "column_service": "Servizo",
+        "column_summary": "Resumo",
+        "column_document": "Documento"
+    },
+    "space_settings": {
+        "title": "Axustes - %(spaceName)s"
     }
 }

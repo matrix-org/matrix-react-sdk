@@ -128,7 +128,6 @@
     "You do not have permission to post to this room": "Bu odaya göndermeye izniniz yok",
     "You have <a>disabled</a> URL previews by default.": "URL önizlemelerini varsayılan olarak <a> devre dışı </a> bıraktınız.",
     "You have <a>enabled</a> URL previews by default.": "URL önizlemelerini varsayılan olarak <a>etkinleştirdiniz</a>.",
-    "You must <a>register</a> to use this functionality": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
     "You need to be able to invite users to do that.": "Bunu yapmak için kullanıcıları davet etmeye ihtiyacınız var.",
     "You need to be logged in.": "Oturum açmanız gerekiyor.",
     "You seem to be in a call, are you sure you want to quit?": "Bir çağrıda gözüküyorsunuz , çıkmak istediğinizden emin misiniz ?",
@@ -173,7 +172,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Bu işlem şifreli odalarda aldığınız iletilerin anahtarlarını yerel dosyaya vermenizi sağlar . Bundan sonra dosyayı ileride başka bir Matrix istemcisine de aktarabilirsiniz , böylece istemci bu mesajların şifresini çözebilir (decryption).",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
-    "You must join the room to see its files": "Dosyalarını görmek için odaya katılmalısınız",
     "Reject all %(invitedRooms)s invites": "Tüm %(invitedRooms)s davetlerini reddet",
     "Failed to invite": "Davet edilemedi",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
@@ -187,7 +185,6 @@
     "Add an Integration": "Entegrasyon ekleyin",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "URL Previews": "URL önizlemeleri",
-    "Drop file here to upload": "Yüklemek için dosyaları buraya bırakın",
     "Something went wrong!": "Bir şeyler yanlış gitti!",
     "Your browser does not support the required cryptography extensions": "Tarayıcınız gerekli şifreleme uzantılarını desteklemiyor",
     "Not a valid %(brand)s keyfile": "Geçersiz bir %(brand)s anahtar dosyası",
@@ -289,10 +286,6 @@
     "Missing session data": "Kayıp oturum verisi",
     "Find others by phone or email": "Kişileri telefon yada e-posta ile bul",
     "Be found by phone or email": "Telefon veya e-posta ile bulunun",
-    "Terms of Service": "Hizmet Şartları",
-    "Service": "Hizmet",
-    "Summary": "Özet",
-    "Document": "Belge",
     "Upload files": "Dosyaları yükle",
     "Upload all": "Hepsini yükle",
     "Cancel All": "Hepsi İptal",
@@ -313,7 +306,6 @@
     "Enter phone number (required on this homeserver)": "Telefon numarası gir ( bu ana sunucuda gerekli)",
     "Enter username": "Kullanıcı adı gir",
     "Email (optional)": "E-posta (opsiyonel)",
-    "Phone (optional)": "Telefon (opsiyonel)",
     "Couldn't load page": "Sayfa yüklenemiyor",
     "Old cryptography data detected": "Eski kriptolama verisi tespit edildi",
     "Verification Request": "Doğrulama Talebi",
@@ -693,7 +685,6 @@
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
     "Mark all as read": "Tümünü okunmuş olarak işaretle",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
-    "Use bots, bridges, widgets and sticker packs": "Botları, köprüleri, görsel bileşenleri ve çıkartma paketlerini kullan",
     "Explore rooms": "Odaları keşfet",
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
@@ -709,15 +700,12 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
     "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
-    "To continue you need to accept the terms of this service.": "Devam etmek için bu servisi kullanma şartlarını kabul etmeniz gerekiyor.",
     "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
     "Confirm your identity by entering your account password below.": "Hesabınızın şifresini aşağıya girerek kimliğinizi teyit edin.",
     "A text message has been sent to %(msisdn)s": "%(msisdn)s ye bir metin mesajı gönderildi",
-    "Use lowercase letters, numbers, dashes and underscores only": "Sadece küçük harfler, numara, tire ve alt tire kullanın",
     "Join millions for free on the largest public server": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın",
     "This room is not public. You will not be able to rejoin without an invite.": "Bu oda açık bir oda değil. Davet almadan tekrar katılamayacaksınız.",
-    "%(creator)s created and configured the room.": "%(creator)s odayı oluşturdu ve yapılandırdı.",
     "Something went wrong trying to invite the users.": "Kullanıcıların davet edilmesinde bir şeyler yanlış gitti.",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
@@ -1840,7 +1828,8 @@
             "lightbox_title": "%(senderDisplayName)s %(roomName)s için avatarı değiştirdi",
             "removed": "%(senderDisplayName)s odanın avatarını kaldırdı.",
             "changed_img": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi"
-        }
+        },
+        "creation_summary_room": "%(creator)s odayı oluşturdu ve yapılandırdı."
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",
@@ -2037,7 +2026,10 @@
         "sign_in_or_register_description": "Hesabınızı kullanın veya devam etmek için yeni bir tane oluşturun.",
         "register_action": "Hesap Oluştur",
         "incorrect_credentials": "Yanlış kullanıcı adı ve / veya şifre.",
-        "account_deactivated": "Hesap devre dışı bırakıldı."
+        "account_deactivated": "Hesap devre dışı bırakıldı.",
+        "registration_username_validation": "Sadece küçük harfler, numara, tire ve alt tire kullanın",
+        "phone_label": "Telefon",
+        "phone_optional_label": "Telefon (opsiyonel)"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2185,5 +2177,25 @@
     "labs_mjolnir": {
         "room_name": "Yasaklı Listem",
         "room_topic": "Bu sizin engellediğiniz kullanıcılar/sunucular listeniz - odadan ayrılmayın!"
+    },
+    "room": {
+        "drop_file_prompt": "Yüklemek için dosyaları buraya bırakın"
+    },
+    "file_panel": {
+        "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
+        "peek_note": "Dosyalarını görmek için odaya katılmalısınız"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Odaları keşfet"
+        }
+    },
+    "terms": {
+        "integration_manager": "Botları, köprüleri, görsel bileşenleri ve çıkartma paketlerini kullan",
+        "tos": "Hizmet Şartları",
+        "intro": "Devam etmek için bu servisi kullanma şartlarını kabul etmeniz gerekiyor.",
+        "column_service": "Hizmet",
+        "column_summary": "Özet",
+        "column_document": "Belge"
     }
 }

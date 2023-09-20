@@ -419,7 +419,6 @@
     "Cannot reach homeserver": "دسترسی به سرور میسر نیست",
     "The server has denied your request.": "سرور درخواست شما را رد کرده است.",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
-    "%(creator)s created and configured the room.": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
     "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
@@ -440,7 +439,6 @@
     "Unable to load backup status": "بارگیری و نمایش وضعیت نسخه‌ی پشتیبان امکان‌پذیر نیست",
     "Link to most recent message": "پیوند به آخرین پیام",
     "Clear Storage and Sign Out": "فضای ذخیره‌سازی را پاک کرده و از حساب کاربری خارج شوید",
-    "%(creator)s created this DM.": "%(creator)s این گفتگو را ایجاد کرد.",
     "The server is offline.": "سرور آفلاین است.",
     "You're all caught up.": "همه‌ی کارها را انجام دادید.",
     "Successfully restored %(sessionCount)s keys": "کلیدهای %(sessionCount)s با موفقیت بازیابی شدند",
@@ -510,7 +508,6 @@
     "Upload Error": "خطای بارگذاری",
     "Cancel All": "لغو همه",
     "Upload files": "بارگذاری فایل‌ها",
-    "Phone (optional)": "شماره تلفن (اختیاری)",
     "Email (optional)": "ایمیل (اختیاری)",
     "Share User": "به اشتراک‌گذاری کاربر",
     "Share Room": "به اشتراک‌گذاری اتاق",
@@ -534,7 +531,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "این دستگاه را تأیید کنید تا به عنوان مورد اعتماد علامت‌گذاری شود. اعتماد به این دستگاه در هنگام استفاده از رمزنگاری سرتاسر آرامش و اطمینان بیشتری را برای شما به ارمغان می‌آورد.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "این کاربر را تأیید کنید تا به عنوان کاربر مورد اعتماد علامت‌گذاری شود. اعتماد به کاربران آرامش و اطمینان بیشتری به شما در استفاده از رمزنگاری سرتاسر می‌دهد.",
-    "Terms of Service": "شرایط استفاده از خدمات",
     "Search names and descriptions": "جستجوی نام‌ها و توضیحات",
     "Clear all data": "پاک کردن همه داده ها",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "پاک کردن همه داده های این جلسه غیرقابل بازگشت است. پیامهای رمزگذاری شده از بین می‌روند مگر اینکه از کلیدهای آنها پشتیبان تهیه شده باشد.",
@@ -660,13 +656,6 @@
         "other": "%(count)s اتاق",
         "one": "%(count)s اتاق"
     },
-    "This room is suggested as a good one to join": "این اتاق به عنوان یک گزینه‌ی خوب برای عضویت پیشنهاد می شود",
-    "Suggested": "پیشنهادی",
-    "Your server does not support showing space hierarchies.": "سرور شما از نمایش سلسله مراتبی فضاهای کاری پشتیبانی نمی کند.",
-    "Select a room below first": "ابتدا یک اتاق از لیست زیر انتخاب کنید",
-    "Failed to remove some rooms. Try again later": "حذف برخی اتاق‌ها با مشکل همراه بود. لطفا بعدا تلاش فرمائید",
-    "Mark as not suggested": "علامت‌گذاری به عنوان پیشنهاد‌نشده",
-    "Mark as suggested": "علامت‌گذاری به عنوان پیشنهاد‌شده",
     "You may want to try a different search or check for typos.": "ممکن است بخواهید یک جستجوی دیگر انجام دهید یا غلط‌های املایی را بررسی کنید.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "برای در امان ماندن در برابر از دست‌دادن پیام‌ها و داده‌های رمزشده‌ی خود، از کلید‌های رمزنگاری خود یک نسخه‌ی پشتیبان بر روی سرور قرار دهید.",
     "Enter your account password to confirm the upgrade:": "گذرواژه‌ی خود را جهت تائيد عملیات ارتقاء وارد کنید:",
@@ -1213,18 +1202,14 @@
     "New Password": "گذرواژه جدید",
     "New passwords must match each other.": "گذرواژه‌ی جدید باید مطابقت داشته باشند.",
     "Original event source": "منبع اصلی رخداد",
-    "Decrypted event source": "رمزگشایی منبع رخداد",
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
     "Switch theme": "تعویض پوسته",
-    "Switch to dark mode": "انتخاب حالت تاریک",
-    "Switch to light mode": "انتخاب حالت روشن",
     "All settings": "همه تنظیمات",
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
     "Private space": "محیط خصوصی",
     "Public space": "محیط عمومی",
     "No results found": "نتیجه‌ای یافت نشد",
     "You don't have permission": "شما دسترسی ندارید",
-    "Drop file here to upload": "برای بارگذاری فایل آن را کشیده و در این‌جا رها کنید",
     "Failed to reject invite": "رد دعوتنامه با شکست همراه شد",
     "No more results": "نتایج بیشتری یافن نشد",
     "Search failed": "جستجو موفیت‌آمیز نبود",
@@ -1234,7 +1219,6 @@
     "Sending": "در حال ارسال",
     "Retry all": "همه را دوباره امتحان کنید",
     "Delete all": "حذف همه",
-    "You have no visible notifications.": "اعلان قابل مشاهده‌ای ندارید.",
     "Verification requested": "درخواست تائید",
     "Old cryptography data detected": "داده‌های رمزنگاری قدیمی شناسایی شد",
     "Review terms and conditions": "مرور شرایط و ضوابط",
@@ -1261,7 +1245,6 @@
     "This bridge is managed by <user />.": "این پل ارتباطی توسط <user /> مدیریت می‌شود.",
     "This bridge was provisioned by <user />.": "این پل ارتباطی توسط <user /> ارائه شده‌است.",
     "Space options": "گزینه‌های انتخابی محیط",
-    "Manage & explore rooms": "مدیریت و جستجوی اتاق‌ها",
     "Add existing room": "اضافه‌کردن اتاق موجود",
     "Create new room": "ایجاد اتاق جدید",
     "Leave space": "ترک محیط",
@@ -1273,12 +1256,8 @@
     "Click to copy": "برای گرفتن رونوشت کلیک کنید",
     "You can change these anytime.": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید.",
     "Upload avatar": "بارگذاری نمایه",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "فایل‌ها را از محیط چت ضمیمه کرده و یا آن‌ها را کشیده و در محیط اتاق رها کنید.",
-    "No files visible in this room": "هیچ فایلی در این اتاق قابل مشاهده نیست",
-    "You must join the room to see its files": "برای دیدن فایل‌های یک اتاق، باید عضو آن باشید",
     "Couldn't load page": "نمایش صفحه امکان‌پذیر نبود",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
-    "Add an email to be able to reset your password.": "برای داشتن امکان تغییر گذرواژه در صورت فراموش‌کردن آن، لطفا یک آدرس ایمیل وارد نمائید.",
     "Sign in with": "نحوه ورود",
     "Phone": "شماره تلفن",
     "That phone number doesn't look quite right, please check and try again": "به نظر شماره تلفن صحیح نمی‌باشد، لطفا بررسی کرده و مجددا تلاش فرمائید",
@@ -1431,12 +1410,7 @@
     "You signed in to a new session without verifying it:": "شما وارد یک نشست جدید شده‌اید بدون اینکه آن را تائید کنید:",
     "Please review and accept all of the homeserver's policies": "لطفاً کلیه خط مشی‌های سرور را مرور و قبول کنید",
     "Please review and accept the policies of this homeserver:": "لطفاً خط مشی‌های این سرور را مرور و قبول کنید:",
-    "Document": "سند",
-    "Summary": "خلاصه",
-    "Service": "سرویس",
     "Token incorrect": "کد نامعتبر است",
-    "To continue you need to accept the terms of this service.": "برای ادامه باید شرایط این سرویس را بپذیرید.",
-    "Use bots, bridges, widgets and sticker packs": "از بات‌ها، پل‌ها ارتباطی، ابزارک‌ها و بسته‌های استیکر استفاده کنید",
     "A text message has been sent to %(msisdn)s": "کد فعال‌سازی به %(msisdn)s ارسال شد",
     "Your browser likely removed this data when running low on disk space.": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند.",
     "Use an email address to recover your account": "برای بازیابی حساب خود از آدرس ایمیل استفاده کنید",
@@ -1444,11 +1418,7 @@
     "Enter email address (required on this homeserver)": "آدرس ایمیل را وارد کنید (در این سرور اجباری است)",
     "Other users can invite you to rooms using your contact details": "سایر کاربران می توانند شما را با استفاده از اطلاعات تماستان به اتاق ها دعوت کنند",
     "Enter phone number (required on this homeserver)": "شماره تلفن را وارد کنید (در این سرور اجباری است)",
-    "Use lowercase letters, numbers, dashes and underscores only": "فقط از حروف کوچک، اعداد، خط تیره و زیر خط استفاده کنید",
-    "Use email to optionally be discoverable by existing contacts.": "از ایمیل استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "از ایمیل یا تلفن استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید.",
     "To help us prevent this in future, please <a>send us logs</a>.": "برای کمک به ما در جلوگیری از این امر در آینده ، لطفا <a>لاگ‌ها را برای ما ارسال کنید</a>.",
-    "You must <a>register</a> to use this functionality": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
     "Edit settings relating to your space.": "تنظیمات مربوط به فضای کاری خود را ویرایش کنید.",
     "This will allow you to reset your password and receive notifications.": "با این کار می‌توانید گذرواژه خود را تغییر داده و اعلان‌ها را دریافت کنید.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "لطفاً ایمیل خود را بررسی کرده و روی لینکی که برایتان ارسال شده، کلیک کنید. پس از انجام این کار، روی ادامه کلیک کنید.",
@@ -2067,7 +2037,8 @@
         "category_room": "اتاق",
         "category_other": "دیگر",
         "widget_screenshots": "فعال‌سازی امکان اسکرین‌شات برای ویجت‌های پشتیبانی‌شده",
-        "show_hidden_events": "نمایش رخدادهای مخفی در گفتگو‌ها"
+        "show_hidden_events": "نمایش رخدادهای مخفی در گفتگو‌ها",
+        "view_source_decrypted_event_source": "رمزگشایی منبع رخداد"
     },
     "export_chat": {
         "html": "HTML",
@@ -2343,7 +2314,9 @@
         "m.room.create": {
             "continuation": "این اتاق ادامه گفتگوی دیگر است.",
             "see_older_messages": "برای دیدن پیام های قدیمی اینجا کلیک کنید."
-        }
+        },
+        "creation_summary_dm": "%(creator)s این گفتگو را ایجاد کرد.",
+        "creation_summary_room": "%(creator)s اتاق را ایجاد و پیکربندی کرد."
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -2588,7 +2561,13 @@
         "server_picker_explainer": "از یک سرور مبتنی بر پروتکل ماتریکس که ترجیح می‌دهید استفاده کرده، و یا از سرور شخصی خودتان استفاده کنید.",
         "server_picker_learn_more": "درباره سرورها",
         "incorrect_credentials": "نام کاربری و یا گذرواژه اشتباه است.",
-        "account_deactivated": "این حساب غیر فعال شده است."
+        "account_deactivated": "این حساب غیر فعال شده است.",
+        "registration_username_validation": "فقط از حروف کوچک، اعداد، خط تیره و زیر خط استفاده کنید",
+        "phone_label": "شماره تلفن",
+        "phone_optional_label": "شماره تلفن (اختیاری)",
+        "email_help_text": "برای داشتن امکان تغییر گذرواژه در صورت فراموش‌کردن آن، لطفا یک آدرس ایمیل وارد نمائید.",
+        "email_phone_discovery_text": "از ایمیل یا تلفن استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید.",
+        "email_discovery_text": "از ایمیل استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2765,7 +2744,18 @@
         "light_high_contrast": "بالاترین کنتراست قالب روشن"
     },
     "space": {
-        "landing_welcome": "به <name/> خوش‌آمدید"
+        "landing_welcome": "به <name/> خوش‌آمدید",
+        "suggested_tooltip": "این اتاق به عنوان یک گزینه‌ی خوب برای عضویت پیشنهاد می شود",
+        "suggested": "پیشنهادی",
+        "select_room_below": "ابتدا یک اتاق از لیست زیر انتخاب کنید",
+        "unmark_suggested": "علامت‌گذاری به عنوان پیشنهاد‌نشده",
+        "mark_suggested": "علامت‌گذاری به عنوان پیشنهاد‌شده",
+        "failed_remove_rooms": "حذف برخی اتاق‌ها با مشکل همراه بود. لطفا بعدا تلاش فرمائید",
+        "incompatible_server_hierarchy": "سرور شما از نمایش سلسله مراتبی فضاهای کاری پشتیبانی نمی کند.",
+        "context_menu": {
+            "explore": "جستجو در اتاق ها",
+            "manage_and_explore": "مدیریت و جستجوی اتاق‌ها"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
@@ -2809,5 +2799,29 @@
         "setup_rooms_community_heading": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
         "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
         "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود."
+    },
+    "user_menu": {
+        "switch_theme_light": "انتخاب حالت روشن",
+        "switch_theme_dark": "انتخاب حالت تاریک"
+    },
+    "notif_panel": {
+        "empty_description": "اعلان قابل مشاهده‌ای ندارید."
+    },
+    "room": {
+        "drop_file_prompt": "برای بارگذاری فایل آن را کشیده و در این‌جا رها کنید"
+    },
+    "file_panel": {
+        "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
+        "peek_note": "برای دیدن فایل‌های یک اتاق، باید عضو آن باشید",
+        "empty_heading": "هیچ فایلی در این اتاق قابل مشاهده نیست",
+        "empty_description": "فایل‌ها را از محیط چت ضمیمه کرده و یا آن‌ها را کشیده و در محیط اتاق رها کنید."
+    },
+    "terms": {
+        "integration_manager": "از بات‌ها، پل‌ها ارتباطی، ابزارک‌ها و بسته‌های استیکر استفاده کنید",
+        "tos": "شرایط استفاده از خدمات",
+        "intro": "برای ادامه باید شرایط این سرویس را بپذیرید.",
+        "column_service": "سرویس",
+        "column_summary": "خلاصه",
+        "column_document": "سند"
     }
 }

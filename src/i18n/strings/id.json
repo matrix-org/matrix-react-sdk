@@ -444,7 +444,6 @@
     "Unban": "Hilangkan Cekalan",
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
-    "Suggested": "Disarankan",
     "Resume": "Lanjutkan",
     "Information": "Informasi",
     "Widgets": "Widget",
@@ -456,7 +455,6 @@
     "exists": "sudah ada",
     "Lock": "Gembok",
     "Later": "Nanti",
-    "Document": "Dokumen",
     "Accepting…": "Menerima…",
     "Italics": "Miring",
     "None": "Tidak Ada",
@@ -467,8 +465,6 @@
     "Cancelling…": "Membatalkan…",
     "Ok": "Ok",
     "Success!": "Berhasil!",
-    "Summary": "Kesimpulan",
-    "Service": "Layanan",
     "Notes": "Nota",
     "edited": "diedit",
     "Re-join": "Bergabung Ulang",
@@ -537,7 +533,6 @@
     "Encryption": "Enkripsi",
     "General": "Umum",
     "Deactivate user?": "Nonaktifkan pengguna?",
-    "Phone (optional)": "Nomor telepon (opsional)",
     "Remove %(phone)s?": "Hapus %(phone)s?",
     "Remove %(email)s?": "Hapus %(email)s?",
     "Deactivate account": "Nonaktifkan akun",
@@ -1369,7 +1364,6 @@
     "Failed to upgrade room": "Gagal untuk meningkatkan ruangan",
     "Room Settings - %(roomName)s": "Pengaturan Ruangan — %(roomName)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
-    "Terms of Service": "Persyaratan Layanan",
     "You may contact me if you have any follow up questions": "Anda mungkin menghubungi saya jika Anda mempunyai pertanyaan lanjutan",
     "Search for rooms or people": "Cari ruangan atau orang",
     "Message preview": "Tampilan pesan",
@@ -1390,15 +1384,12 @@
     "Skip verification for now": "Lewatkan verifikasi untuk sementara",
     "Really reset verification keys?": "Benar-benar ingin mengatur ulang kunci-kunci verifikasi?",
     "Original event source": "Sumber peristiwa asli",
-    "Decrypted event source": "Sumber peristiwa terdekripsi",
     "Could not load user profile": "Tidak dapat memuat profil pengguna",
     "Currently joining %(count)s rooms": {
         "one": "Saat ini bergabung dengan %(count)s ruangan",
         "other": "Saat ini bergabung dengan %(count)s ruangan"
     },
     "Switch theme": "Ubah tema",
-    "Switch to dark mode": "Ubah ke mode gelap",
-    "Switch to light mode": "Ubah ke mode terang",
     "All settings": "Semua pengaturan",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Mengunggah %(filename)s dan %(count)s lainnya",
@@ -1413,18 +1404,11 @@
     "Rooms and spaces": "Ruangan dan space",
     "You may want to try a different search or check for typos.": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
     "No results found": "Tidak ada hasil yang ditemukan",
-    "Your server does not support showing space hierarchies.": "Server Anda tidak mendukung penampilan hierarki space.",
-    "Mark as suggested": "Tandai sebagai disarankan",
-    "Mark as not suggested": "Tandai sebagai tidak disarankan",
-    "Failed to remove some rooms. Try again later": "Gagal untuk menghapus beberapa ruangan. Coba lagi nanti",
-    "Select a room below first": "Pilih sebuah ruangan di bawah dahulu",
-    "This room is suggested as a good one to join": "Ruangan ini disarankan sebagai ruangan yang baik untuk bergabung",
     "You don't have permission": "Anda tidak memiliki izin",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "one": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini.",
         "other": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini."
     },
-    "Drop file here to upload": "Lepaskan file di sini untuk mengunggah",
     "Failed to reject invite": "Gagal untuk menolak undangan",
     "No more results": "Tidak ada hasil lagi",
     "Server may be unavailable, overloaded, or search timed out :(": "Server mungkin tidak tersedia, terlalu penuh, atau waktu pencarian habis :(",
@@ -1439,10 +1423,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homeserver ini melebihi sebuah batas sumber daya. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homesever ini telah mencapat batas Pengguna Aktif Bulanan. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Anda tidak dapat mengirimkan pesan apa saja sampai Anda lihat dan terima <consentLink>syarat dan ketentuan kami</consentLink>.",
-    "You have no visible notifications.": "Anda tidak memiliki notifikasi.",
-    "You're all caught up": "Anda selesai",
-    "%(creator)s created and configured the room.": "%(creator)s membuat dan mengatur ruangan ini.",
-    "%(creator)s created this DM.": "%(creator)s membuat pesan langsung ini.",
     "Verification requested": "Verifikasi diminta",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
     "Old cryptography data detected": "Data kriptografi lama terdeteksi",
@@ -1457,19 +1437,10 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Space ini tidak publik. Anda tidak dapat bergabung lagi tanpa sebuah undangan.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Anda adalah satu-satunya di sini. Jika Anda keluar, tidak ada siapa saja dapat bergabung di masa mendatang, termasuk Anda.",
     "Open dial pad": "Buka tombol penyetel",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Gunakan email atau nomor telepon untuk dapat ditemukan oleh kontak yang sudah ada secara opsional.",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Lampirkan file dari komposer atau tarik dan lepaskan di mana saja di sebuah ruangan.",
-    "No files visible in this room": "Tidak ada file di ruangan ini",
-    "You must join the room to see its files": "Anda harus bergabung ruangannya untuk melihat file-filenya",
-    "You must <a>register</a> to use this functionality": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
     "Couldn't load page": "Tidak dapat memuat halaman",
     "Error downloading audio": "Terjadi kesalahan mengunduh audio",
     "Unnamed audio": "Audio tidak dinamai",
     "Sign in with SSO": "Masuk dengan SSO",
-    "Use email to optionally be discoverable by existing contacts.": "Gunakan email untuk dapat ditemukan oleh kontak yang sudah ada secara opsional.",
-    "Add an email to be able to reset your password.": "Tambahkan sebuah email untuk dapat mengatur ulang kata sandi Anda.",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Seseorang sudah memiliki nama pengguna itu. Coba yang lain atau jika itu Anda, masuk di bawah.",
-    "Use lowercase letters, numbers, dashes and underscores only": "Gunakan huruf kecil, angka, tanda hubung, dan garis bawah saja",
     "Enter phone number (required on this homeserver)": "Masukkan nomor telepon (diperlukan di homeserver ini)",
     "Other users can invite you to rooms using your contact details": "Pengguna lain dapat mengundang Anda ke ruangan menggunakan detail kontak Anda",
     "Enter email address (required on this homeserver)": "Masukkan alamat email (diperlukan di homeserver ini)",
@@ -1501,9 +1472,7 @@
     "Failed to start livestream": "Gagal untuk memulai siaran langsung",
     "Copy link to thread": "Salin tautan ke utasan",
     "Thread options": "Opsi utasan",
-    "Manage & explore rooms": "Kelola & jelajahi ruangan",
     "Add space": "Tambahkan space",
-    "See room timeline (devtools)": "Lihat lini masa ruangan (alat pengembang)",
     "Mentions only": "Sebutan saja",
     "Forget": "Lupakan",
     "View in room": "Tampilkan di ruangan",
@@ -1602,15 +1571,12 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) masuk ke sesi yang baru tanpa memverifikasinya:",
     "Verify your other session using one of the options below.": "Verifikasi sesi Anda lainnya dengan menggunakan salah satu pilihan di bawah.",
     "You signed in to a new session without verifying it:": "Anda masuk ke sesi baru tanpa memverifikasinya:",
-    "To continue you need to accept the terms of this service.": "Untuk melanjutkan Anda harus menerima persyaratan layanan ini.",
-    "Use bots, bridges, widgets and sticker packs": "Gunakan bot, jembatan, widget, dan paket stiker",
     "Be found by phone or email": "Temukan oleh lainnya melalui ponsel atau email",
     "Find others by phone or email": "Temukan lainnya melalui ponsel atau email",
     "Your browser likely removed this data when running low on disk space.": "Kemungkinan browser Anda menghapus datanya ketika ruang disk rendah.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Beberapa data sesi, termasuk kunci pesan terenkripsi, hilang. Keluar dan masuk lagi untuk memperbaikinya, memulihkan kunci-kunci dari cadangan.",
     "Missing session data": "Data sesi hilang",
     "To help us prevent this in future, please <a>send us logs</a>.": "Untuk membantu kami mencegahnya di masa mendatang, silakan <a>kirimkan kami catatan</a>.",
-    "Settings - %(spaceName)s": "Pengaturan — %(spaceName)s",
     "Command Help": "Bantuan Perintah",
     "Link to selected message": "Tautan ke pesan yang dipilih",
     "Share Room Message": "Bagikan Pesan Ruangan",
@@ -1807,7 +1773,6 @@
     "Copy room link": "Salin tautan ruangan",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda.",
     "Sections to show": "Bagian untuk ditampilkan",
-    "Failed to load list of rooms.": "Gagal untuk memuat daftar ruangan.",
     "Open in OpenStreetMap": "Buka di OpenStreetMap",
     "toggle event": "alih peristiwa",
     "Missing room name or separator e.g. (my-room:domain.org)": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
@@ -1842,18 +1807,14 @@
     "Remove them from everything I'm able to": "Keluarkan dari semuanya yang saya bisa",
     "Message pending moderation: %(reason)s": "Pesan akan dimoderasikan: %(reason)s",
     "Message pending moderation": "Pesan akan dimoderasikan",
-    "Space home": "Beranda space",
     "Internal room ID": "ID ruangan internal",
     "Group all your people in one place.": "Kelompokkan semua orang di satu tempat.",
     "Group all your rooms that aren't part of a space in one place.": "Kelompokkan semua ruangan yang tidak ada di sebuah space di satu tempat.",
-    "Unable to check if username has been taken. Try again later.": "Tidak dapat memeriksa jika nama pengguna telah dipakai. Coba lagi nanti.",
     "Group all your favourite rooms and people in one place.": "Kelompokkan semua ruangan dan orang favorit Anda di satu tempat.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Space adalah cara untuk mengelompokkan ruangan dan orang. Di sampingnya space yang Anda berada, Anda dapat menggunakan space yang sudah dibuat.",
     "Pick a date to jump to": "Pilih sebuah tanggal untuk pergi ke tanggalnya",
     "Jump to date": "Pergi ke tanggal",
     "The beginning of the room": "Awalan ruangan",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Jika Anda tahu apa yang Anda lakukan, Element itu sumber-terbuka, pastikan untuk mengunjungi GitHub kami (https://github.com/vector-im/element-web/) dan berkontribusi!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Jika seseorang membilangi Anda untuk salin/tempel sesuatu di sini, mungkin saja Anda sedang ditipu!",
     "Wait!": "Tunggu!",
     "This address does not point at this room": "Alamat ini tidak mengarah ke ruangan ini",
     "Location": "Lokasi",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s dan %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "-%(downloadButton)s atau %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
-    "Proxy URL": "URL Proksi",
-    "Proxy URL (optional)": "URL Proksi (opsional)",
-    "To disable you will need to log out and back in, use with caution!": "Untuk menonaktifkan Anda harus keluar dan masuk kembali, gunakan dengan hati-hati!",
-    "Sliding Sync configuration": "Konfigurasi Penyinkronan Bergeser",
-    "Your server lacks native support, you must specify a proxy": "Server Anda belum mendukungnya, Anda harus menetapkan sebuah proksi",
-    "Your server lacks native support": "Server Anda belum mendukungnya",
-    "Your server has native support": "Server Anda mendukungnya",
     "You need to be able to kick users to do that.": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
     "Voice broadcast": "Siaran suara",
     "You do not have permission to start voice calls": "Anda tidak memiliki izin untuk memulai panggilan suara",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
     "Can't start voice message": "Tidak dapat memulai pesan suara",
     "Edit link": "Sunting tautan",
-    "Decrypted source unavailable": "Sumber terdekripsi tidak tersedia",
     "%(senderName)s started a voice broadcast": "%(senderName)s memulai sebuah siaran suara",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Token pendaftaran",
@@ -2632,7 +2585,14 @@
         "rust_crypto_disabled_notice": "Saat ini hanya dapat diaktifkan melalui config.json",
         "automatic_debug_logs_key_backup": "Kirim catatan pengawakutu secara otomatis ketika pencadangan kunci tidak berfungsi",
         "automatic_debug_logs_decryption": "Kirim catatan pengawakutu secara otomatis ketika terjadi kesalahan pendekripsian",
-        "automatic_debug_logs": "Kirim catatan pengawakutu secara otomatis saat ada kesalahan"
+        "automatic_debug_logs": "Kirim catatan pengawakutu secara otomatis saat ada kesalahan",
+        "sliding_sync_server_support": "Server Anda mendukungnya",
+        "sliding_sync_server_no_support": "Server Anda belum mendukungnya",
+        "sliding_sync_server_specify_proxy": "Server Anda belum mendukungnya, Anda harus menetapkan sebuah proksi",
+        "sliding_sync_configuration": "Konfigurasi Penyinkronan Bergeser",
+        "sliding_sync_disable_warning": "Untuk menonaktifkan Anda harus keluar dan masuk kembali, gunakan dengan hati-hati!",
+        "sliding_sync_proxy_url_optional_label": "URL Proksi (opsional)",
+        "sliding_sync_proxy_url_label": "URL Proksi"
     },
     "keyboard": {
         "home": "Beranda",
@@ -3182,7 +3142,9 @@
         "show_hidden_events": "Tampilkan peristiwa tersembunyi di lini masa",
         "low_bandwidth_mode_description": "Membutuhkan homeserver yang kompatibel.",
         "low_bandwidth_mode": "Mode bandwidth rendah",
-        "developer_mode": "Mode pengembang"
+        "developer_mode": "Mode pengembang",
+        "view_source_decrypted_event_source": "Sumber peristiwa terdekripsi",
+        "view_source_decrypted_event_source_unavailable": "Sumber terdekripsi tidak tersedia"
     },
     "export_chat": {
         "html": "HTML",
@@ -3578,7 +3540,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Anda mengakhiri sebuah <a>siaran suara</a>",
             "user": "%(senderName)s mengakhiri sebuah <a>siaran suara</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s membuat pesan langsung ini.",
+        "creation_summary_room": "%(creator)s membuat dan mengatur ruangan ini."
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -3901,7 +3865,15 @@
         "server_picker_explainer": "Gunakan homeserver Matrix yang Anda inginkan jika Anda punya satu, atau host sendiri.",
         "server_picker_learn_more": "Tentang homeserver",
         "incorrect_credentials": "Username dan/atau kata sandi salah.",
-        "account_deactivated": "Akun ini telah dinonaktifkan."
+        "account_deactivated": "Akun ini telah dinonaktifkan.",
+        "registration_username_validation": "Gunakan huruf kecil, angka, tanda hubung, dan garis bawah saja",
+        "registration_username_unable_check": "Tidak dapat memeriksa jika nama pengguna telah dipakai. Coba lagi nanti.",
+        "registration_username_in_use": "Seseorang sudah memiliki nama pengguna itu. Coba yang lain atau jika itu Anda, masuk di bawah.",
+        "phone_label": "Ponsel",
+        "phone_optional_label": "Nomor telepon (opsional)",
+        "email_help_text": "Tambahkan sebuah email untuk dapat mengatur ulang kata sandi Anda.",
+        "email_phone_discovery_text": "Gunakan email atau nomor telepon untuk dapat ditemukan oleh kontak yang sudah ada secara opsional.",
+        "email_discovery_text": "Gunakan email untuk dapat ditemukan oleh kontak yang sudah ada secara opsional."
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -4113,7 +4085,21 @@
         "light_high_contrast": "Kontras tinggi terang"
     },
     "space": {
-        "landing_welcome": "Selamat datang di <name/>"
+        "landing_welcome": "Selamat datang di <name/>",
+        "suggested_tooltip": "Ruangan ini disarankan sebagai ruangan yang baik untuk bergabung",
+        "suggested": "Disarankan",
+        "select_room_below": "Pilih sebuah ruangan di bawah dahulu",
+        "unmark_suggested": "Tandai sebagai tidak disarankan",
+        "mark_suggested": "Tandai sebagai disarankan",
+        "failed_remove_rooms": "Gagal untuk menghapus beberapa ruangan. Coba lagi nanti",
+        "failed_load_rooms": "Gagal untuk memuat daftar ruangan.",
+        "incompatible_server_hierarchy": "Server Anda tidak mendukung penampilan hierarki space.",
+        "context_menu": {
+            "devtools_open_timeline": "Lihat lini masa ruangan (alat pengembang)",
+            "home": "Beranda space",
+            "explore": "Jelajahi ruangan",
+            "manage_and_explore": "Kelola & jelajahi ruangan"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -4170,5 +4156,35 @@
         "setup_rooms_description": "Anda juga dapat menambahkan lebih banyak nanti, termasuk yang sudah ada.",
         "setup_rooms_private_heading": "Proyek apa yang sedang dikerjakan tim Anda?",
         "setup_rooms_private_description": "Kami akan membuat ruangan untuk masing-masing."
+    },
+    "user_menu": {
+        "switch_theme_light": "Ubah ke mode terang",
+        "switch_theme_dark": "Ubah ke mode gelap"
+    },
+    "notif_panel": {
+        "empty_heading": "Anda selesai",
+        "empty_description": "Anda tidak memiliki notifikasi."
+    },
+    "console_scam_warning": "Jika seseorang membilangi Anda untuk salin/tempel sesuatu di sini, mungkin saja Anda sedang ditipu!",
+    "console_dev_note": "Jika Anda tahu apa yang Anda lakukan, Element itu sumber-terbuka, pastikan untuk mengunjungi GitHub kami (https://github.com/vector-im/element-web/) dan berkontribusi!",
+    "room": {
+        "drop_file_prompt": "Lepaskan file di sini untuk mengunggah"
+    },
+    "file_panel": {
+        "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
+        "peek_note": "Anda harus bergabung ruangannya untuk melihat file-filenya",
+        "empty_heading": "Tidak ada file di ruangan ini",
+        "empty_description": "Lampirkan file dari komposer atau tarik dan lepaskan di mana saja di sebuah ruangan."
+    },
+    "terms": {
+        "integration_manager": "Gunakan bot, jembatan, widget, dan paket stiker",
+        "tos": "Persyaratan Layanan",
+        "intro": "Untuk melanjutkan Anda harus menerima persyaratan layanan ini.",
+        "column_service": "Layanan",
+        "column_summary": "Kesimpulan",
+        "column_document": "Dokumen"
+    },
+    "space_settings": {
+        "title": "Pengaturan — %(spaceName)s"
     }
 }

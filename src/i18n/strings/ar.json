@@ -527,7 +527,6 @@
     "You have verified this user. This user has verified all of their sessions.": "لقد تحققت من هذا المستخدم. لقد تحقق هذا المستخدم من جميع اتصالاته.",
     "You have not verified this user.": "أنت لم تتحقق من هذا المستخدم.",
     "This user has not verified all of their sessions.": "هذا المستخدم لم يتحقق من جميع اتصالاته.",
-    "Drop file here to upload": "قم بإسقاط الملف هنا ليُرفَع",
     "Phone Number": "رقم الهاتف",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "تم إرسال رسالة نصية إلى +%(msisdn)s. الرجاء إدخال رمز التحقق الذي فيها.",
     "Remove %(phone)s?": "حذف %(phone)s؟",
@@ -1476,5 +1475,13 @@
     "labs_mjolnir": {
         "room_name": "قائمة الحظر",
         "room_topic": "هذه قائمتك للمستخدمين / الخوادم التي حظرت - لا تغادر الغرفة!"
+    },
+    "room": {
+        "drop_file_prompt": "قم بإسقاط الملف هنا ليُرفَع"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "استكشِف الغرف"
+        }
     }
 }

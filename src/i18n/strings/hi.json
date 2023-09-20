@@ -86,7 +86,6 @@
     "Notification targets": "अधिसूचना के लक्ष्य",
     "You do not have permission to invite people to this room.": "आपको इस कमरे में लोगों को आमंत्रित करने की अनुमति नहीं है।",
     "Unknown server error": "अज्ञात सर्वर त्रुटि",
-    "Drop file here to upload": "अपलोड करने के लिए यहां फ़ाइल ड्रॉप करें",
     "This event could not be displayed": "यह घटना प्रदर्शित नहीं की जा सकी",
     "Unban": "अप्रतिबंधित करें",
     "Failed to ban user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
@@ -669,7 +668,8 @@
     "auth": {
         "sso": "केवल हस्ताक्षर के ऊपर",
         "footer_powered_by_matrix": "मैट्रिक्स द्वारा संचालित",
-        "register_action": "खाता बनाएं"
+        "register_action": "खाता बनाएं",
+        "phone_label": "फ़ोन"
     },
     "setting": {
         "help_about": {
@@ -712,5 +712,13 @@
     },
     "devtools": {
         "widget_screenshots": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें"
+    },
+    "room": {
+        "drop_file_prompt": "अपलोड करने के लिए यहां फ़ाइल ड्रॉप करें"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "रूम का अन्वेषण करें"
+        }
     }
 }

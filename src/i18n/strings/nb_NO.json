@@ -169,10 +169,6 @@
     "An error has occurred.": "En feil har oppstått.",
     "Email address": "E-postadresse",
     "Share Room Message": "Del rommelding",
-    "Terms of Service": "Vilkår for bruk",
-    "Service": "Tjeneste",
-    "Summary": "Oppsummering",
-    "Document": "Dokument",
     "Cancel All": "Avbryt alt",
     "Home": "Hjem",
     "Email": "E-post",
@@ -254,7 +250,6 @@
     "Banned by %(displayName)s": "Bannlyst av %(displayName)s",
     "Roles & Permissions": "Roller og tillatelser",
     "Enable encryption?": "Vil du skru på kryptering?",
-    "Drop file here to upload": "Slipp ned en fil her for å laste opp",
     "Edit message": "Rediger meldingen",
     "Unencrypted": "Ukryptert",
     "Deactivate user?": "Vil du deaktivere brukeren?",
@@ -319,7 +314,6 @@
     "Sign in with": "Logg inn med",
     "Passwords don't match": "Passordene samsvarer ikke",
     "Email (optional)": "E-post (valgfritt)",
-    "Phone (optional)": "Telefonnummer (valgfritt)",
     "Upload avatar": "Last opp en avatar",
     "Terms and Conditions": "Betingelser og vilkår",
     "Add room": "Legg til et rom",
@@ -393,17 +387,13 @@
     "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "To continue you need to accept the terms of this service.": "For å gå videre må du akseptere brukervilkårene til denne tjenesten.",
     "Confirm your identity by entering your account password below.": "Bekreft identiteten din ved å skrive inn kontopassordet ditt nedenfor.",
     "Use an email address to recover your account": "Bruk en E-postadresse til å gjenopprette kontoen din",
     "Enter email address (required on this homeserver)": "Skriv inn en E-postadresse (Påkrevd på denne hjemmetjeneren)",
     "Doesn't look like a valid email address": "Det ser ikke ut som en gyldig E-postadresse",
     "Password is allowed, but unsafe": "Passordet er tillatt, men er ikke trygt",
     "Nice, strong password!": "Strålende, passordet er sterkt!",
-    "Use lowercase letters, numbers, dashes and underscores only": "Bruk kun småbokstaver, numre, streker og understreker",
-    "You must join the room to see its files": "Du må bli med i rommet for å se filene dens",
     "Signed Out": "Avlogget",
-    "%(creator)s created and configured the room.": "%(creator)s opprettet og satte opp rommet.",
     "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
@@ -564,8 +554,6 @@
     "Review terms and conditions": "Gå gjennom betingelser og vilkår",
     "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
-    "Switch to light mode": "Bytt til lys modus",
-    "Switch to dark mode": "Bytt til mørk modus",
     "Switch theme": "Bytt tema",
     "All settings": "Alle innstillinger",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
@@ -673,7 +661,6 @@
     "No results found": "Ingen resultater ble funnet",
     "Public space": "Offentlig område",
     "Private space": "Privat område",
-    "Suggested": "Anbefalte",
     "%(deviceId)s from %(ip)s": "%(deviceId)s fra %(ip)s",
     "Leave Space": "Forlat området",
     "Save Changes": "Lagre endringer",
@@ -1498,7 +1485,8 @@
         },
         "m.room.create": {
             "see_older_messages": "Klikk for å se eldre meldinger."
-        }
+        },
+        "creation_summary_room": "%(creator)s opprettet og satte opp rommet."
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1647,7 +1635,10 @@
         "server_picker_invalid_url": "Ugyldig URL",
         "server_picker_learn_more": "Om hjemmetjenere",
         "incorrect_credentials": "Feil brukernavn og/eller passord.",
-        "account_deactivated": "Denne kontoen har blitt deaktivert."
+        "account_deactivated": "Denne kontoen har blitt deaktivert.",
+        "registration_username_validation": "Bruk kun småbokstaver, numre, streker og understreker",
+        "phone_label": "Telefon",
+        "phone_optional_label": "Telefonnummer (valgfritt)"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1733,5 +1724,28 @@
         "share_heading": "Del %(name)s",
         "personal_space": "Bare meg selv",
         "invite_teammates_by_username": "Inviter etter brukernavn"
+    },
+    "user_menu": {
+        "switch_theme_light": "Bytt til lys modus",
+        "switch_theme_dark": "Bytt til mørk modus"
+    },
+    "space": {
+        "suggested": "Anbefalte",
+        "context_menu": {
+            "explore": "Se alle rom"
+        }
+    },
+    "room": {
+        "drop_file_prompt": "Slipp ned en fil her for å laste opp"
+    },
+    "file_panel": {
+        "peek_note": "Du må bli med i rommet for å se filene dens"
+    },
+    "terms": {
+        "tos": "Vilkår for bruk",
+        "intro": "For å gå videre må du akseptere brukervilkårene til denne tjenesten.",
+        "column_service": "Tjeneste",
+        "column_summary": "Oppsummering",
+        "column_document": "Dokument"
     }
 }

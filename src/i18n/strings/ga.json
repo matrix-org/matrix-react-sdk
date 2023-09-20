@@ -1,8 +1,6 @@
 {
     "Sign in with": "Sínigh isteach le",
     "Show more": "Taispeáin níos mó",
-    "Switch to dark mode": "Athraigh go mód dorcha",
-    "Switch to light mode": "Athraigh go mód geal",
     "All settings": "Gach Socrú",
     "Security & Privacy": "Slándáil ⁊ Príobháideachas",
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
@@ -235,7 +233,6 @@
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
     "None": "Níl aon cheann",
-    "Document": "Cáipéis",
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
@@ -243,8 +240,6 @@
     "Email": "Ríomhphost",
     "Home": "Tús",
     "Favourite": "Cuir mar ceanán",
-    "Summary": "Achoimre",
-    "Service": "Seirbhís",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
     "Unavailable": "Níl sé ar fáil",
@@ -420,7 +415,6 @@
     "Connecting": "Ag Ceangal",
     "Sending": "Ag Seoladh",
     "Avatar": "Abhatár",
-    "Suggested": "Moltaí",
     "The file '%(fileName)s' failed to upload.": "Níor éirigh leis an gcomhad '%(fileName)s' a uaslódáil.",
     "You do not have permission to start a conference call in this room": "Níl cead agat glao comhdhála a thosú sa seomra seo",
     "You cannot place a call with yourself.": "Ní féidir leat glaoch ort féin.",
@@ -799,7 +793,8 @@
         "forgot_password_prompt": "An nDearna tú dearmad ar do fhocal faire?",
         "create_account_prompt": "Céaduaire? <a>Cruthaigh cuntas</a>",
         "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
-        "register_action": "Déan cuntas a chruthú"
+        "register_action": "Déan cuntas a chruthú",
+        "phone_label": "Guthán"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"
@@ -831,5 +826,20 @@
     },
     "update": {
         "see_changes_button": "Cad é nua?"
+    },
+    "user_menu": {
+        "switch_theme_light": "Athraigh go mód geal",
+        "switch_theme_dark": "Athraigh go mód dorcha"
+    },
+    "space": {
+        "suggested": "Moltaí",
+        "context_menu": {
+            "explore": "Breathnaigh thart ar na seomraí"
+        }
+    },
+    "terms": {
+        "column_service": "Seirbhís",
+        "column_summary": "Achoimre",
+        "column_document": "Cáipéis"
     }
 }

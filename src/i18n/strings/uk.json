@@ -142,7 +142,6 @@
     "New Password": "Новий пароль",
     "Confirm password": "Підтвердження пароля",
     "Failed to set display name": "Не вдалося налаштувати псевдонім",
-    "Drop file here to upload": "Перетягніть сюди файл, щоб вивантажити",
     "This event could not be displayed": "Неможливо показати цю подію",
     "Unban": "Розблокувати",
     "Failed to ban user": "Не вдалося заблокувати користувача",
@@ -450,8 +449,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "Something went wrong!": "Щось пішло не так!",
     "expand": "розгорнути",
-    "Switch to light mode": "Світла тема",
-    "Switch to dark mode": "Темна тема",
     "New Recovery Method": "Новий метод відновлення",
     "This session is encrypting history using the new recovery method.": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
     "Set up Secure Messages": "Налаштувати захищені повідомлення",
@@ -785,7 +782,6 @@
     "This client does not support end-to-end encryption.": "Цей клієнт не підтримує наскрізного шифрування.",
     "Enable encryption?": "Увімкнути шифрування?",
     "Encryption": "Шифрування",
-    "%(creator)s created this DM.": "%(creator)s створює цю приватну розмову.",
     "Share Link to User": "Поділитися посиланням на користувача",
     "<a>In reply to</a> <pill>": "<a>У відповідь на</a> <pill>",
     "The user you called is busy.": "Користувач, якого ви викликаєте, зайнятий.",
@@ -809,11 +805,6 @@
     "Share Room": "Поділитись кімнатою",
     "Share room": "Поділитись кімнатою",
     "Invite people": "Запросити людей",
-    "Document": "Документ",
-    "Summary": "Опис",
-    "Service": "Служба",
-    "To continue you need to accept the terms of this service.": "Погодьтесь з Умовами надання послуг, щоб продовжити.",
-    "Terms of Service": "Умови надання послуг",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Погодьтесь з Умовами надання послуг сервера ідентифікації (%(serverName)s), щоб дозволити знаходити вас за адресою електронної пошти або за номером телефону.",
     "The identity server you have chosen does not have any terms of service.": "Вибраний вами сервер ідентифікації не містить жодних умов користування.",
     "Terms of service not accepted or the identity server is invalid.": "Умови користування не прийнято або сервер ідентифікації недійсний.",
@@ -913,7 +904,6 @@
     "Start chatting": "Почати спілкування",
     "This is the start of <roomName/>.": "Це початок <roomName/>.",
     "Couldn't load page": "Не вдалося завантажити сторінку",
-    "Phone (optional)": "Телефон (не обов'язково)",
     "That phone number doesn't look quite right, please check and try again": "Цей номер телефону не правильний. Перевірте та повторіть спробу",
     "Enter phone number": "Введіть телефонний номер",
     "Enter email address": "Введіть адресу е-пошти",
@@ -935,7 +925,6 @@
     "Remove for everyone": "Прибрати для всіх",
     "Delete widget": "Видалити віджет",
     "Delete Widget": "Видалити віджет",
-    "Manage & explore rooms": "Керування і перегляд кімнат",
     "Add space": "Додати простір",
     "Collapse reply thread": "Згорнути відповіді",
     "Public space": "Загальнодоступний простір",
@@ -1001,13 +990,6 @@
     "Results": "Результати",
     "You may want to try a different search or check for typos.": "Ви можете спробувати інший пошуковий запит або перевірити помилки.",
     "No results found": "Нічого не знайдено",
-    "Your server does not support showing space hierarchies.": "Ваш сервер не підтримує показ ієрархій простору.",
-    "Mark as suggested": "Позначити рекомендованим",
-    "Mark as not suggested": "Позначити не рекомендованим",
-    "Failed to remove some rooms. Try again later": "Не вдалося вилучити кілька кімнат. Повторіть спробу пізніше",
-    "Select a room below first": "Спочатку виберіть кімнату внизу",
-    "Suggested": "Пропоновано",
-    "This room is suggested as a good one to join": "Ця кімната пропонується як хороша для приєднання",
     "You don't have permission": "Ви не маєте дозволу",
     "You can select all or individual messages to retry or delete": "Ви можете вибрати всі або окремі повідомлення, щоб повторити спробу або видалити",
     "Retry all": "Повторити надсилання всіх",
@@ -1101,7 +1083,6 @@
     "Delete avatar": "Видалити аватар",
     "Your server isn't responding to some <a>requests</a>.": "Ваш сервер не відповідає на деякі <a>запити</a>.",
     "Cancel All": "Скасувати все",
-    "Settings - %(spaceName)s": "Налаштування — %(spaceName)s",
     "Send Logs": "Надіслати журнали",
     "Email (optional)": "Е-пошта (необов'язково)",
     "Search spaces": "Пошук просторів",
@@ -1319,7 +1300,6 @@
     "Option %(number)s": "Варіант %(number)s",
     "Write an option": "Вписати варіант",
     "Add option": "Додати варіант",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Хтось уже має це користувацьке ім'я. Спробуйте інше або, якщо це ви, зайдіть нижче.",
     "You won't get any notifications": "Ви не отримуватимете жодних сповіщень",
     "Unpin this widget to view it in this panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
     "Vote not registered": "Голос не зареєстрований",
@@ -1343,7 +1323,6 @@
     "End Poll": "Завершити опитування",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Точно завершити опитування? Буде показано підсумки опитування, і більше ніхто не зможе голосувати.",
     "Link to room": "Посилання на кімнату",
-    "You're all caught up": "Ви в курсі всього",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Ми створимо ключ безпеки. Зберігайте його в надійному місці, скажімо в менеджері паролів чи сейфі.",
     "Command Help": "Допомога команди",
     "Unnamed audio": "Аудіо без назви",
@@ -1465,7 +1444,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Поліпшення цієї кімнати припинить роботу наявного її примірника й створить поліпшену кімнату з такою ж назвою.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ця кімната — версії <roomVersion />, позначена цим домашнім сервером <i>нестабільною</i>.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s зараз офлайн.",
-    "%(creator)s created and configured the room.": "%(creator)s створює й налаштовує кімнату.",
     "Jump to read receipt": "Перейти до останнього прочитаного",
     "Jump to first unread message.": "Перейти до першого непрочитаного повідомлення.",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
@@ -1481,20 +1459,11 @@
     "Doesn't look like a valid email address": "Адреса е-пошти виглядає хибною",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "У параметрах домашнього сервера бракує відкритого ключа капчі. Будь ласка, повідомте про це адміністратора домашнього сервера.",
     "Something went wrong in confirming your identity. Cancel and try again.": "Щось пішло не так при підтвердженні вашої особи. Скасуйте й повторіть спробу.",
-    "Use lowercase letters, numbers, dashes and underscores only": "Використовуйте лише малі літери, цифри, дефіс і підкреслення",
     "Enter phone number (required on this homeserver)": "Введіть номер телефону (обов'язково на цьому домашньому сервері)",
     "Other users can invite you to rooms using your contact details": "Інші користувачі можуть запрошувати вас до кімнат за вашими контактними даними",
     "Enter email address (required on this homeserver)": "Введіть е-пошту (обов'язково на цьому домашньому сервері)",
     "Use an email address to recover your account": "Введіть е-пошту, щоб могти відновити обліковий запис",
-    "Use email to optionally be discoverable by existing contacts.": "Можете ввести е-пошту, щоб наявні контакти знаходили вас за нею.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Можете ввести е-пошту чи телефон, щоб наявні контакти знаходили вас за ними.",
-    "Add an email to be able to reset your password.": "Додайте е-пошту, щоб могти скинути пароль.",
-    "You must join the room to see its files": "Приєднайтесь до кімнати, щоб бачити її файли",
-    "You must <a>register</a> to use this functionality": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Перешліть файли з бесіди чи просто потягніть їх до кімнати.",
-    "No files visible in this room": "У цій кімнаті нема видимих файлів",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Можете зареєструватись, але деякі можливості будуть недоступні, поки сервер ідентифікації не відновить роботу. Якщо часто бачите це застереження, перевірте свої параметри чи зв'яжіться з адміністратором сервера.",
-    "Decrypted event source": "Розшифрований початковий код події",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
     "Import room keys": "Імпортувати ключі кімнат",
     "Confirm passphrase": "Підтвердьте парольну фразу",
@@ -1678,7 +1647,6 @@
     "That matches!": "Збіг!",
     "Great! This Security Phrase looks strong enough.": "Чудово! Фраза безпеки досить надійна.",
     "Enter a Security Phrase": "Ввести фразу безпеки",
-    "You have no visible notifications.": "У вас нема видимих сповіщень.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо <a>повідомити нас про ваду</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Поліпшення кімнати — серйозна операція. Її зазвичай радять, коли кімната нестабільна через вади, брак функціоналу чи вразливості безпеки.",
@@ -1746,7 +1714,6 @@
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
     "Start audio stream": "Почати аудіотрансляцію",
     "Failed to start livestream": "Не вдалося почати живу трансляцію",
-    "See room timeline (devtools)": "Переглянути стрічку кімнати (розробка)",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Тут лише ви. Якщо ви вийдете, ніхто більше не зможе приєднатися, навіть ви самі.",
     "You don't have permission to do this": "У вас немає на це дозволу",
     "Message preview": "Попередній перегляд повідомлення",
@@ -1791,7 +1758,6 @@
     "Invalid homeserver discovery response": "Хибна відповідь самоналаштування домашнього сервера",
     "Failed to get autodiscovery configuration from server": "Не вдалося отримати параметри самоналаштування від сервера",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Не вдалося надіслати повідомлення, бо домашній сервер перевищив ліміт ресурсів. <a>Зв'яжіться з адміністратором сервісу,</a> щоб продовжити використання.",
-    "Use bots, bridges, widgets and sticker packs": "Використовувати ботів, мости, віджети й пакунки наліпок",
     "Failed to find the following users": "Не вдалося знайти таких користувачів",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Не вдалося надіслати повідомлення, бо домашній сервер перевищив свій ліміт активних користувачів за місяць. <a>Зв'яжіться з адміністратором сервісу,</a> щоб продовжити використання.",
     "Passphrase must not be empty": "Парольна фраза обов'язкова",
@@ -1806,7 +1772,6 @@
     "Recent Conversations": "Недавні бесіди",
     "A call can only be transferred to a single user.": "Виклик можна переадресувати лише на одного користувача.",
     "Search for rooms or people": "Пошук кімнат або людей",
-    "Failed to load list of rooms.": "Не вдалося отримати список кімнат.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
@@ -1842,19 +1807,15 @@
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s вилучає вас із %(roomName)s",
     "Message pending moderation": "Повідомлення очікує модерування",
     "Message pending moderation: %(reason)s": "Повідомлення очікує модерування: %(reason)s",
-    "Space home": "Домівка простору",
     "Internal room ID": "Внутрішній ID кімнати",
     "Group all your rooms that aren't part of a space in one place.": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці.",
     "Group all your people in one place.": "Групуйте всіх своїх людей в одному місці.",
     "Group all your favourite rooms and people in one place.": "Групуйте всі свої улюблені кімнати та людей в одному місці.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Простори — це спосіб групування кімнат і людей. Окрім просторів, до яких ви приєдналися, ви також можете використовувати деякі вбудовані.",
-    "Unable to check if username has been taken. Try again later.": "Неможливо перевірити, чи зайняте ім'я користувача. Спробуйте ще раз пізніше.",
     "Pick a date to jump to": "Виберіть до якої дати перейти",
     "Jump to date": "Перейти до дати",
     "The beginning of the room": "Початок кімнати",
     "This address does not point at this room": "Ця адреса не вказує на цю кімнату",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Якщо ви знаєте, що ви робите, Element — це відкрите програмне забезпечення, обов'язково перегляньте наш GitHub (https://github.com/vector-im/element-web/) та зробіть внесок!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Якщо хтось сказав вам скопіювати/вставити щось сюди, є велика ймовірність, що вас обманюють!",
     "Wait!": "Заждіть!",
     "Location": "Місцеперебування",
     "Poll": "Опитування",
@@ -2078,13 +2039,6 @@
     "%(user1)s and %(user2)s": "%(user1)s і %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s або %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
-    "Proxy URL": "URL-адреса проксі-сервера",
-    "Proxy URL (optional)": "URL-адреса проксі-сервера (необов'язково)",
-    "To disable you will need to log out and back in, use with caution!": "Для вимкнення потрібно буде вийти з системи та зайти знову, користуйтеся з обережністю!",
-    "Sliding Sync configuration": "Конфігурація ковзної синхронізації",
-    "Your server lacks native support, you must specify a proxy": "На вашому сервері немає вбудованої підтримки, ви повинні вказати проксі",
-    "Your server lacks native support": "На вашому сервері немає вбудованої підтримки",
-    "Your server has native support": "Ваш сервер має вбудовану підтримку",
     "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів.",
     "Voice broadcast": "Голосові трансляції",
     "You do not have permission to start voice calls": "У вас немає дозволу розпочинати голосові виклики",
@@ -2170,7 +2124,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "Edit link": "Змінити посилання",
-    "Decrypted source unavailable": "Розшифроване джерело недоступне",
     "%(senderName)s started a voice broadcast": "%(senderName)s розпочинає голосову трансляцію",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Токен реєстрації",
@@ -2627,7 +2580,14 @@
         "rust_crypto_disabled_notice": "Наразі можна ввімкнути лише через config.json",
         "automatic_debug_logs_key_backup": "Автоматично надсилати журнали зневадження при збоях резервного копіювання ключів",
         "automatic_debug_logs_decryption": "Автоматично надсилати журнали зневадження при збоях розшифрування",
-        "automatic_debug_logs": "Автоматично надсилати журнал зневадження про всі помилки"
+        "automatic_debug_logs": "Автоматично надсилати журнал зневадження про всі помилки",
+        "sliding_sync_server_support": "Ваш сервер має вбудовану підтримку",
+        "sliding_sync_server_no_support": "На вашому сервері немає вбудованої підтримки",
+        "sliding_sync_server_specify_proxy": "На вашому сервері немає вбудованої підтримки, ви повинні вказати проксі",
+        "sliding_sync_configuration": "Конфігурація ковзної синхронізації",
+        "sliding_sync_disable_warning": "Для вимкнення потрібно буде вийти з системи та зайти знову, користуйтеся з обережністю!",
+        "sliding_sync_proxy_url_optional_label": "URL-адреса проксі-сервера (необов'язково)",
+        "sliding_sync_proxy_url_label": "URL-адреса проксі-сервера"
     },
     "keyboard": {
         "home": "Домівка",
@@ -3177,7 +3137,9 @@
         "show_hidden_events": "Показувати приховані події у часоряді",
         "low_bandwidth_mode_description": "Потрібен сумісний домашній сервер.",
         "low_bandwidth_mode": "Режим низької пропускної спроможності",
-        "developer_mode": "Режим розробника"
+        "developer_mode": "Режим розробника",
+        "view_source_decrypted_event_source": "Розшифрований початковий код події",
+        "view_source_decrypted_event_source_unavailable": "Розшифроване джерело недоступне"
     },
     "export_chat": {
         "html": "HTML",
@@ -3573,7 +3535,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Ви завершили <a>голосову трансляцію</a>",
             "user": "%(senderName)s завершує <a>голосову трансляцію</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s створює цю приватну розмову.",
+        "creation_summary_room": "%(creator)s створює й налаштовує кімнату."
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -3896,7 +3860,15 @@
         "server_picker_explainer": "Оберіть домашній сервер Matrix на свій розсуд чи встановіть власний.",
         "server_picker_learn_more": "Про домашні сервери",
         "incorrect_credentials": "Хибне користувацьке ім'я й/або пароль.",
-        "account_deactivated": "Цей обліковий запис було деактивовано."
+        "account_deactivated": "Цей обліковий запис було деактивовано.",
+        "registration_username_validation": "Використовуйте лише малі літери, цифри, дефіс і підкреслення",
+        "registration_username_unable_check": "Неможливо перевірити, чи зайняте ім'я користувача. Спробуйте ще раз пізніше.",
+        "registration_username_in_use": "Хтось уже має це користувацьке ім'я. Спробуйте інше або, якщо це ви, зайдіть нижче.",
+        "phone_label": "Телефон",
+        "phone_optional_label": "Телефон (не обов'язково)",
+        "email_help_text": "Додайте е-пошту, щоб могти скинути пароль.",
+        "email_phone_discovery_text": "Можете ввести е-пошту чи телефон, щоб наявні контакти знаходили вас за ними.",
+        "email_discovery_text": "Можете ввести е-пошту, щоб наявні контакти знаходили вас за нею."
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4108,7 +4080,21 @@
         "light_high_contrast": "Контрастна світла"
     },
     "space": {
-        "landing_welcome": "Вітаємо у <name/>"
+        "landing_welcome": "Вітаємо у <name/>",
+        "suggested_tooltip": "Ця кімната пропонується як хороша для приєднання",
+        "suggested": "Пропоновано",
+        "select_room_below": "Спочатку виберіть кімнату внизу",
+        "unmark_suggested": "Позначити не рекомендованим",
+        "mark_suggested": "Позначити рекомендованим",
+        "failed_remove_rooms": "Не вдалося вилучити кілька кімнат. Повторіть спробу пізніше",
+        "failed_load_rooms": "Не вдалося отримати список кімнат.",
+        "incompatible_server_hierarchy": "Ваш сервер не підтримує показ ієрархій простору.",
+        "context_menu": {
+            "devtools_open_timeline": "Переглянути стрічку кімнати (розробка)",
+            "home": "Домівка простору",
+            "explore": "Каталог кімнат",
+            "manage_and_explore": "Керування і перегляд кімнат"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -4165,5 +4151,35 @@
         "setup_rooms_description": "Згодом ви зможете додати більше, зокрема вже наявні.",
         "setup_rooms_private_heading": "Над якими проєктами працює ваша команда?",
         "setup_rooms_private_description": "Ми створимо кімнати для кожного з них."
+    },
+    "user_menu": {
+        "switch_theme_light": "Світла тема",
+        "switch_theme_dark": "Темна тема"
+    },
+    "notif_panel": {
+        "empty_heading": "Ви в курсі всього",
+        "empty_description": "У вас нема видимих сповіщень."
+    },
+    "console_scam_warning": "Якщо хтось сказав вам скопіювати/вставити щось сюди, є велика ймовірність, що вас обманюють!",
+    "console_dev_note": "Якщо ви знаєте, що ви робите, Element — це відкрите програмне забезпечення, обов'язково перегляньте наш GitHub (https://github.com/vector-im/element-web/) та зробіть внесок!",
+    "room": {
+        "drop_file_prompt": "Перетягніть сюди файл, щоб вивантажити"
+    },
+    "file_panel": {
+        "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
+        "peek_note": "Приєднайтесь до кімнати, щоб бачити її файли",
+        "empty_heading": "У цій кімнаті нема видимих файлів",
+        "empty_description": "Перешліть файли з бесіди чи просто потягніть їх до кімнати."
+    },
+    "terms": {
+        "integration_manager": "Використовувати ботів, мости, віджети й пакунки наліпок",
+        "tos": "Умови надання послуг",
+        "intro": "Погодьтесь з Умовами надання послуг, щоб продовжити.",
+        "column_service": "Служба",
+        "column_summary": "Опис",
+        "column_document": "Документ"
+    },
+    "space_settings": {
+        "title": "Налаштування — %(spaceName)s"
     }
 }

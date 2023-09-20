@@ -76,7 +76,6 @@
     "Change Password": "Ŝanĝi pasvorton",
     "Authentication": "Aŭtentikigo",
     "Failed to set display name": "Malsukcesis agordi vidigan nomon",
-    "Drop file here to upload": "Demetu dosieron tien ĉi por ĝin alŝuti",
     "Unban": "Malforbari",
     "Failed to ban user": "Malsukcesis forbari uzanton",
     "Failed to mute user": "Malsukcesis silentigi uzanton",
@@ -180,8 +179,6 @@
     "Unable to add email address": "Ne povas aldoni retpoŝtadreson",
     "Unable to verify email address.": "Retpoŝtadreso ne kontroleblas.",
     "This will allow you to reset your password and receive notifications.": "Tio ĉi permesos al vi restarigi vian pasvorton kaj ricevi sciigojn.",
-    "You must <a>register</a> to use this functionality": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
-    "You must join the room to see its files": "Vi devas aliĝi al la ĉambro por vidi tie dosierojn",
     "Reject invitation": "Rifuzi inviton",
     "Are you sure you want to reject the invitation?": "Ĉu vi certe volas rifuzi la inviton?",
     "Failed to reject invitation": "Malsukcesis rifuzi la inviton",
@@ -371,7 +368,6 @@
     "Share User": "Kunhavigi uzanton",
     "Share Room Message": "Kunhavigi ĉambran mesaĝon",
     "Email (optional)": "Retpoŝto (malnepra)",
-    "Phone (optional)": "Telefono (malnepra)",
     "Couldn't load page": "Ne povis enlegi paĝon",
     "Could not load user profile": "Ne povis enlegi profilon de uzanto",
     "Your password has been reset.": "Vi reagordis vian pasvorton.",
@@ -556,7 +552,6 @@
     "Passwords don't match": "Pasvortoj ne akordas",
     "Other users can invite you to rooms using your contact details": "Aliaj uzantoj povas inviti vin al ĉambroj per viaj kontaktaj detaloj",
     "Enter phone number (required on this homeserver)": "Enigu telefonnumeron (bezonata sur ĉi tiu hejmservilo)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Uzu nur malgrandajn leterojn, numerojn, streketojn kaj substrekojn",
     "Enter username": "Enigu uzantonomon",
     "Some characters not allowed": "Iuj signoj ne estas permesitaj",
     "Terms and Conditions": "Uzokondiĉoj",
@@ -591,10 +586,6 @@
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
-    "Use bots, bridges, widgets and sticker packs": "Uzu robotojn, pontojn, fenestraĵojn, kaj glumarkarojn",
-    "Terms of Service": "Uzokondiĉoj",
-    "Service": "Servo",
-    "Summary": "Resumo",
     "Call failed due to misconfigured server": "Voko malsukcesis pro misagordita servilo",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bonvolu peti la administranton de via hejmservilo (<code>%(homeserverDomain)s</code>) agordi TURN-servilon, por ke vokoj funkciu dependeble.",
     "Use an identity server": "Uzi identigan servilon",
@@ -691,9 +682,6 @@
     "Hide advanced": "Kaŝi specialajn",
     "Show advanced": "Montri specialajn",
     "Command Help": "Helpo pri komando",
-    "To continue you need to accept the terms of this service.": "Por pluigi, vi devas akcepti la uzokondiĉojn de ĉi tiu servo.",
-    "Document": "Dokumento",
-    "%(creator)s created and configured the room.": "%(creator)s kreis kaj agordis la ĉambron.",
     "Jump to first unread room.": "Salti al unua nelegita ĉambro.",
     "Jump to first invite.": "Salti al unua invito.",
     "Error subscribing to list": "Eraris abono al listo",
@@ -976,8 +964,6 @@
     "Security Phrase": "Sekureca frazo",
     "Security Key": "Sekureca ŝlosilo",
     "Use your Security Key to continue.": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
-    "Switch to light mode": "Ŝalti helan reĝimon",
-    "Switch to dark mode": "Ŝalti malhelan reĝimon",
     "Switch theme": "Ŝalti haŭton",
     "All settings": "Ĉiuj agordoj",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj per savkopiado de ĉifraj ŝlosiloj al via servilo.",
@@ -1006,8 +992,6 @@
     "A connection error occurred while trying to contact the server.": "Eraris konekto dum provo kontakti la servilon.",
     "The server is not configured to indicate what the problem is (CORS).": "La servilo ne estas agordita por indiki la problemon (CORS).",
     "Recent changes that have not yet been received": "Freŝaj ŝanĝoj ankoraŭ ne ricevitaj",
-    "No files visible in this room": "Neniuj dosieroj videblas en ĉi tiu ĉambro",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Kunsendu dosierojn per la babilujo, aŭ trenu ilin kien ajn en ĉambro vi volas.",
     "Move right": "Movi dekstren",
     "Move left": "Movi maldekstren",
     "Revoke permissions": "Nuligi permesojn",
@@ -1326,10 +1310,6 @@
     "Confirm your Security Phrase": "Konfirmu vian Sekurecan frazon",
     "Great! This Security Phrase looks strong enough.": "Bonege! La Sekureca frazo ŝajnas sufiĉe forta.",
     "There was a problem communicating with the homeserver, please try again later.": "Eraris komunikado kun la hejmservilo, bonvolu reprovi poste.",
-    "You have no visible notifications.": "Vi havas neniujn videblajn sciigojn.",
-    "Use email to optionally be discoverable by existing contacts.": "Uzu retpoŝtadreson por laŭplaĉe esti trovebla de jamaj kontaktoj.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Uzu retpoŝtadreson aŭ telefonnumeron por laŭplaĉe esti trovebla de jamaj kontaktoj.",
-    "Add an email to be able to reset your password.": "Aldonu retpoŝtadreson por ebligi rehavon de via pasvorto.",
     "That phone number doesn't look quite right, please check and try again": "Tiu telefonnumero ne ŝajnas ĝusta, bonvolu kontroli kaj reprovi",
     "Enter phone number": "Enigu telefonnumeron",
     "Enter email address": "Enigu retpoŝtadreson",
@@ -1374,7 +1354,6 @@
     "Don't miss a reply": "Ne preterpasu respondon",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu.",
     "We couldn't log you in": "Ni ne povis salutigi vin",
-    "%(creator)s created this DM.": "%(creator)s kreis ĉi tiun individuan ĉambron.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
@@ -1387,17 +1366,11 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Savkopiu viajn čifrajn šlosilojn kune kun la datumoj de via konto, okaze ke vi perdos aliron al viaj salutaĵoj. Viaj ŝlosiloj sekuriĝos per unika Sekureca ŝlosilo.",
     "Dial pad": "Ciferplato",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ĉi tiu kutime influas nur traktadon de la ĉambro servil-flanke. Se vi spertas problemojn pri via %(brand)s, bonvolu raporti eraron.",
-    "Mark as suggested": "Marki rekomendata",
-    "Mark as not suggested": "Marki nerekomendata",
-    "Suggested": "Rekomendata",
-    "This room is suggested as a good one to join": "Ĉi tiu ĉambro estas rekomendata kiel aliĝinda",
     "Suggested Rooms": "Rekomendataj ĉambroj",
-    "Your server does not support showing space hierarchies.": "Via servilo ne subtenas montradon de hierarĥioj de aroj.",
     "Private space": "Privata aro",
     "Public space": "Publika aro",
     "<inviter/> invites you": "<inviter/> invitas vin",
     "No results found": "Neniuj rezultoj troviĝis",
-    "Failed to remove some rooms. Try again later": "Malsukcesis forigi iujn arojn. Reprovu poste",
     "%(count)s rooms": {
         "one": "%(count)s ĉambro",
         "other": "%(count)s ĉambroj"
@@ -1437,7 +1410,6 @@
     "You can change these anytime.": "Vi povas ŝanĝi ĉi tiujn kiam ajn vi volas.",
     "Create a space": "Krei aron",
     "Original event source": "Originala fonto de okazo",
-    "Decrypted event source": "Malĉifrita fonto de okazo",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
     "You don't have permission": "Vi ne rajtas",
     "Space options": "Agordoj de aro",
@@ -1456,7 +1428,6 @@
     "Invite to just this room": "Inviti nur al ĉi tiu ĉambro",
     "Failed to send": "Malsukcesis sendi",
     "Workspace: <networkLink/>": "Laborspaco: <networkLink/>",
-    "Manage & explore rooms": "Administri kaj esplori ĉambrojn",
     "unknown person": "nekonata persono",
     "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
     "Review to ensure your account is safe": "Kontrolu por certigi sekurecon de via konto",
@@ -1485,7 +1456,6 @@
     "Enter your Security Phrase a second time to confirm it.": "Enigu vian Sekurecan frazon duafoje por ĝin konfirmi.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Kontrolu vian identecon por aliri ĉifritajn mesaĝojn kaj pruvi vian identecon al aliuloj.",
     "Search names and descriptions": "Serĉi nomojn kaj priskribojn",
-    "Select a room below first": "Unue elektu ĉambron de sube",
     "You can select all or individual messages to retry or delete": "Vi povas elekti ĉiujn aŭ unuopajn mesaĝojn, por reprovi aŭ forigi",
     "Sending": "Sendante",
     "Retry all": "Reprovi ĉiujn",
@@ -1581,7 +1551,6 @@
     "Collapse reply thread": "Maletendi respondan fadenon",
     "Show preview": "Antaŭrigardi",
     "View source": "Montri fonton",
-    "Settings - %(spaceName)s": "Agordoj – %(spaceName)s",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Sciu, ke gradaltigo kreos novan version de la ĉambro</b>. Ĉiuj nunaj mesaĝoj restos en ĉi tiu arĥivita ĉambro.",
     "Automatically invite members from this room to the new one": "Memage inviti anojn de ĉi tiu ĉambro al la nova",
     "Other spaces or rooms you might not know": "Aliaj aroj aŭ ĉambroj, kiujn vi eble ne konas",
@@ -2300,7 +2269,8 @@
         "category_room": "Ĉambro",
         "category_other": "Alia",
         "widget_screenshots": "Ŝalti bildojn de fenestraĵoj por subtenataj fenestraĵoj",
-        "show_hidden_events": "Montri kaŝitajn okazojn en historio"
+        "show_hidden_events": "Montri kaŝitajn okazojn en historio",
+        "view_source_decrypted_event_source": "Malĉifrita fonto de okazo"
     },
     "export_chat": {
         "html": "HTML",
@@ -2616,7 +2586,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Vi finis <a>voĉan elsendon</a>",
             "user": "%(senderName)s finis <a>voĉan elsendon</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s kreis ĉi tiun individuan ĉambron.",
+        "creation_summary_room": "%(creator)s kreis kaj agordis la ĉambron."
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",
@@ -2894,7 +2866,13 @@
         "server_picker_explainer": "Uzu vian preferatan hejmservilon de Matrix se vi havas iun, aŭ gastigu vian propran.",
         "server_picker_learn_more": "Pri hejmserviloj",
         "incorrect_credentials": "Malĝusta uzantnomo kaj/aŭ pasvorto.",
-        "account_deactivated": "Tiu ĉi konto malaktiviĝis."
+        "account_deactivated": "Tiu ĉi konto malaktiviĝis.",
+        "registration_username_validation": "Uzu nur malgrandajn leterojn, numerojn, streketojn kaj substrekojn",
+        "phone_label": "Telefono",
+        "phone_optional_label": "Telefono (malnepra)",
+        "email_help_text": "Aldonu retpoŝtadreson por ebligi rehavon de via pasvorto.",
+        "email_phone_discovery_text": "Uzu retpoŝtadreson aŭ telefonnumeron por laŭplaĉe esti trovebla de jamaj kontaktoj.",
+        "email_discovery_text": "Uzu retpoŝtadreson por laŭplaĉe esti trovebla de jamaj kontaktoj."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3093,7 +3071,18 @@
         "light_high_contrast": "Malpeza alta kontrasto"
     },
     "space": {
-        "landing_welcome": "Bonvenu al <name/>"
+        "landing_welcome": "Bonvenu al <name/>",
+        "suggested_tooltip": "Ĉi tiu ĉambro estas rekomendata kiel aliĝinda",
+        "suggested": "Rekomendata",
+        "select_room_below": "Unue elektu ĉambron de sube",
+        "unmark_suggested": "Marki nerekomendata",
+        "mark_suggested": "Marki rekomendata",
+        "failed_remove_rooms": "Malsukcesis forigi iujn arojn. Reprovu poste",
+        "incompatible_server_hierarchy": "Via servilo ne subtenas montradon de hierarĥioj de aroj.",
+        "context_menu": {
+            "explore": "Esplori ĉambrojn",
+            "manage_and_explore": "Administri kaj esplori ĉambrojn"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -3139,5 +3128,32 @@
         "setup_rooms_community_heading": "Pri kio volus vi diskuti en %(spaceName)s?",
         "setup_rooms_community_description": "Kreu ni ĉambron por ĉiu el ili.",
         "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas."
+    },
+    "user_menu": {
+        "switch_theme_light": "Ŝalti helan reĝimon",
+        "switch_theme_dark": "Ŝalti malhelan reĝimon"
+    },
+    "notif_panel": {
+        "empty_description": "Vi havas neniujn videblajn sciigojn."
+    },
+    "room": {
+        "drop_file_prompt": "Demetu dosieron tien ĉi por ĝin alŝuti"
+    },
+    "file_panel": {
+        "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
+        "peek_note": "Vi devas aliĝi al la ĉambro por vidi tie dosierojn",
+        "empty_heading": "Neniuj dosieroj videblas en ĉi tiu ĉambro",
+        "empty_description": "Kunsendu dosierojn per la babilujo, aŭ trenu ilin kien ajn en ĉambro vi volas."
+    },
+    "terms": {
+        "integration_manager": "Uzu robotojn, pontojn, fenestraĵojn, kaj glumarkarojn",
+        "tos": "Uzokondiĉoj",
+        "intro": "Por pluigi, vi devas akcepti la uzokondiĉojn de ĉi tiu servo.",
+        "column_service": "Servo",
+        "column_summary": "Resumo",
+        "column_document": "Dokumento"
+    },
+    "space_settings": {
+        "title": "Agordoj – %(spaceName)s"
     }
 }

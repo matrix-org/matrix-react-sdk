@@ -98,7 +98,6 @@
     "Who can read history?": "ใครสามารถอ่านประวัติแชทได้?",
     "You have <a>disabled</a> URL previews by default.": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
     "You have <a>enabled</a> URL previews by default.": "ค่าเริ่มต้นของคุณ<a>เปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
-    "You must <a>register</a> to use this functionality": "คุณต้อง<a>ลงทะเบียน</a>เพื่อใช้ฟังก์ชันนี้",
     "You need to be logged in.": "คุณต้องเข้าสู่ระบบก่อน",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -528,7 +527,8 @@
         "server_picker_custom": "โฮมเซิร์ฟเวอร์อื่น ๆ",
         "server_picker_explainer": "ใช้ Matrix โฮมเซิร์ฟเวอร์ที่คุณต้องการหากคุณมี หรือโฮสต์ของคุณเอง",
         "server_picker_learn_more": "เกี่ยวกับโฮมเซิร์ฟเวอร์",
-        "incorrect_credentials": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง"
+        "incorrect_credentials": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง",
+        "phone_label": "โทรศัพท์"
     },
     "setting": {
         "help_about": {
@@ -545,5 +545,13 @@
     "update": {
         "see_changes_button": "มีอะไรใหม่?",
         "release_notes_toast_title": "มีอะไรใหม่"
+    },
+    "file_panel": {
+        "guest_note": "คุณต้อง<a>ลงทะเบียน</a>เพื่อใช้ฟังก์ชันนี้"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "สำรวจห้อง"
+        }
     }
 }

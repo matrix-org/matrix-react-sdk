@@ -75,7 +75,6 @@
     "Change Password": "Промени лозинку",
     "Authentication": "Идентификација",
     "Failed to set display name": "Нисам успео да поставим приказно име",
-    "Drop file here to upload": "Превуци датотеку овде да би је отпремио",
     "Unban": "Скини забрану",
     "Failed to ban user": "Неуспех при забрањивању приступа кориснику",
     "Failed to mute user": "Неуспех при пригушивању корисника",
@@ -182,8 +181,6 @@
     "Unable to add email address": "Не могу да додам мејл адресу",
     "Unable to verify email address.": "Не могу да проверим мејл адресу.",
     "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
-    "You must <a>register</a> to use this functionality": "Морате се <a>регистровати</a> да бисте користили ову могућност",
-    "You must join the room to see its files": "Морате приступити соби да бисте видели њене датотеке",
     "Reject invitation": "Одбиј позивницу",
     "Are you sure you want to reject the invitation?": "Да ли сте сигурни да желите одбити позивницу?",
     "Failed to reject invitation": "Нисам успео да одбијем позивницу",
@@ -354,15 +351,7 @@
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
-    "Terms of Service": "Услови коришћења",
-    "To continue you need to accept the terms of this service.": "За наставак, морате прихватити услове коришћења ове услуге.",
-    "Service": "Услуга",
-    "Summary": "Сажетак",
-    "Document": "Документ",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
-    "%(creator)s created and configured the room.": "Корисник %(creator)s је направио и подесио собу.",
-    "Switch to light mode": "Пребаци на светлу тему",
-    "Switch to dark mode": "Пребаци на тамну тему",
     "All settings": "Сва подешавања",
     "General failure": "Општа грешка",
     "Got It": "Разумем",
@@ -775,11 +764,6 @@
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Уверите се да имате стабилну интернет везу или контактирајте администратора сервера",
     "Couldn't load page": "Учитавање странице није успело",
     "Sign in with SSO": "Пријавите се помоћу SSO",
-    "Use email to optionally be discoverable by existing contacts.": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Користите е-пошту или телефон да би вас постојећи контакти опционално могли открити.",
-    "Add an email to be able to reset your password.": "Додајте е-пошту да бисте могли да ресетујете лозинку.",
-    "Phone (optional)": "Телефон (необавезно)",
-    "Use lowercase letters, numbers, dashes and underscores only": "Користите само мала слова, бројеве, цртице и доње црте",
     "Enter phone number (required on this homeserver)": "Унесите број телефона (захтева на овом кућном серверу)",
     "Other users can invite you to rooms using your contact details": "Други корисници могу да вас позову у собе користећи ваше контакт податке",
     "Enter email address (required on this homeserver)": "Унесите адресу е-поште (захтева на овом кућном серверу)",
@@ -1248,7 +1232,8 @@
             "lightbox_title": "%(senderDisplayName)s измени аватар собе %(roomName)s",
             "removed": "%(senderDisplayName)s уклони аватар собе.",
             "changed_img": "%(senderDisplayName)s промени аватар собе у <img/>"
-        }
+        },
+        "creation_summary_room": "Корисник %(creator)s је направио и подесио собу."
     },
     "slash_command": {
         "shrug": "Придодаје ¯\\_(ツ)_/¯ обичној поруци",
@@ -1362,7 +1347,13 @@
         "sign_in_or_register": "Пријавите се или направите налог",
         "sign_in_or_register_description": "Користите постојећи или направите нови да наставите.",
         "register_action": "Направи налог",
-        "incorrect_credentials": "Нетачно корисничко име и/или лозинка."
+        "incorrect_credentials": "Нетачно корисничко име и/или лозинка.",
+        "registration_username_validation": "Користите само мала слова, бројеве, цртице и доње црте",
+        "phone_label": "Телефон",
+        "phone_optional_label": "Телефон (необавезно)",
+        "email_help_text": "Додајте е-пошту да бисте могли да ресетујете лозинку.",
+        "email_phone_discovery_text": "Користите е-пошту или телефон да би вас постојећи контакти опционално могли открити.",
+        "email_discovery_text": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти."
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1463,5 +1454,28 @@
         "release_notes_toast_title": "Шта је ново",
         "toast_title": "Ажурирај %(brand)s",
         "toast_description": "Доступна је нова верзија %(brand)s"
+    },
+    "user_menu": {
+        "switch_theme_light": "Пребаци на светлу тему",
+        "switch_theme_dark": "Пребаци на тамну тему"
+    },
+    "room": {
+        "drop_file_prompt": "Превуци датотеку овде да би је отпремио"
+    },
+    "file_panel": {
+        "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
+        "peek_note": "Морате приступити соби да бисте видели њене датотеке"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Истражи собе"
+        }
+    },
+    "terms": {
+        "tos": "Услови коришћења",
+        "intro": "За наставак, морате прихватити услове коришћења ове услуге.",
+        "column_service": "Услуга",
+        "column_summary": "Сажетак",
+        "column_document": "Документ"
     }
 }

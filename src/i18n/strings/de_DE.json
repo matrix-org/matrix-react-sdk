@@ -136,7 +136,6 @@
     "Enter passphrase": "Passphrase eingeben",
     "Confirm passphrase": "Passphrase bestätigen",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Die exportierte Datei ist mit einer Passphrase geschützt. Du kannst die Passphrase hier eingeben, um die Datei zu entschlüsseln.",
-    "You must join the room to see its files": "Du musst den Raum betreten, um die verknüpften Dateien sehen zu können",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s Einladungen ablehnen",
     "Failed to invite": "Einladen fehlgeschlagen",
     "Confirm Removal": "Entfernen bestätigen",
@@ -153,7 +152,6 @@
     "URL Previews": "URL-Vorschau",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dieser Prozess erlaubt es dir, die zuvor von einer anderen Matrix-Anwendung exportierten Verschlüsselungs-Schlüssel zu importieren. Danach kannst du alle Nachrichten entschlüsseln, die auch bereits auf der anderen Anwendung entschlüsselt werden konnten.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
-    "Drop file here to upload": "Datei hier loslassen zum hochladen",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
     "Jump to first unread message.": "Zur ersten ungelesenen Nachricht springen.",
     "Invited": "Eingeladen",
@@ -174,7 +172,6 @@
         "one": "%(filename)s und %(count)s weitere Dateien werden hochgeladen",
         "other": "%(filename)s und %(count)s weitere Dateien werden hochgeladen"
     },
-    "You must <a>register</a> to use this functionality": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
     "Create new room": "Neuer Raum",
     "New Password": "Neues Passwort",
     "Something went wrong!": "Etwas ist schiefgelaufen!",
@@ -470,7 +467,6 @@
     "You'll lose access to your encrypted messages": "Du wirst den Zugang zu deinen verschlüsselten Nachrichten verlieren",
     "This homeserver would like to make sure you are not a robot.": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist.",
     "Email (optional)": "E-Mail-Adresse (optional)",
-    "Phone (optional)": "Telefon (optional)",
     "Couldn't load page": "Konnte Seite nicht laden",
     "Your password has been reset.": "Dein Passwort wurde zurückgesetzt.",
     "Create account": "Konto anlegen",
@@ -626,7 +622,6 @@
     "Your display name": "Dein Anzeigename",
     "Hide advanced": "Erweiterte Einstellungen ausblenden",
     "Session name": "Sitzungsname",
-    "Use bots, bridges, widgets and sticker packs": "Nutze Bots, Brücken, Widgets und Sticker-Pakete",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Aktualisiere diese Sitzung, um mit ihr andere Sitzungen verifizieren zu können, damit sie Zugang zu verschlüsselten Nachrichten erhalten und für andere als vertrauenswürdig markiert werden.",
     "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
     "Discovery": "Kontakte",
@@ -638,11 +633,6 @@
     "Widget added by": "Widget hinzugefügt von",
     "This widget may use cookies.": "Dieses Widget kann Cookies verwenden.",
     "More options": "Weitere Optionen",
-    "Terms of Service": "Nutzungsbedingungen",
-    "To continue you need to accept the terms of this service.": "Um fortzufahren, musst du die Bedingungen dieses Dienstes akzeptieren.",
-    "Service": "Dienst",
-    "Summary": "Zusammenfassung",
-    "Document": "Dokument",
     "Explore rooms": "Räume erkunden",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Dein bereitgestellter Signaturschlüssel passt zum von der Sitzung %(deviceId)s von %(userId)s empfangendem Schlüssel. Sitzung wurde als verifiziert markiert.",
     "Connect this session to Key Backup": "Verbinde diese Sitzung mit einer Schlüsselsicherung",
@@ -680,7 +670,6 @@
     "Show advanced": "Erweiterte Einstellungen",
     "Session key": "Sitzungsschlüssel",
     "Recent Conversations": "Letzte Unterhaltungen",
-    "%(creator)s created and configured the room.": "%(creator)s hat den Raum erstellt und konfiguriert.",
     "Use Single Sign On to continue": "Einmalanmeldung zum Fortfahren nutzen",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Bestätige die neue E-Mail-Adresse mit Single-Sign-On, um deine Identität nachzuweisen.",
     "Confirm adding email": "Hinzugefügte E-Mail-Addresse bestätigen",
@@ -887,7 +876,6 @@
     "Doesn't look like a valid email address": "Das sieht nicht nach einer gültigen E-Mail-Adresse aus",
     "Enter phone number (required on this homeserver)": "Telefonnummer eingeben (auf diesem Heim-Server erforderlich)",
     "Sign in with SSO": "Einmalanmeldung verwenden",
-    "Use lowercase letters, numbers, dashes and underscores only": "Verwende nur Kleinbuchstaben, Zahlen, Bindestriche und Unterstriche",
     "Jump to first unread room.": "Zum ersten ungelesenen Raum springen.",
     "Jump to first invite.": "Zur ersten Einladung springen.",
     "Failed to get autodiscovery configuration from server": "Abrufen der Autodiscovery-Konfiguration vom Server fehlgeschlagen",
@@ -962,8 +950,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Deine Server-Administration hat die Ende-zu-Ende-Verschlüsselung für private Räume und Direktnachrichten standardmäßig deaktiviert.",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Beim Entfernen dieser Adresse ist ein Fehler aufgetreten. Vielleicht existiert sie nicht mehr oder es kam zu einem temporären Fehler.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du hast für diese Sitzung zuvor eine neuere Version von %(brand)s verwendet. Um diese Version mit Ende-zu-Ende-Verschlüsselung wieder zu benutzen, musst du dich erst ab- und dann wieder anmelden.",
-    "Switch to light mode": "Zum hellen Thema wechseln",
-    "Switch to dark mode": "Zum dunklen Thema wechseln",
     "Switch theme": "Design wechseln",
     "All settings": "Alle Einstellungen",
     "Room ID or address of ban list": "Raum-ID oder Adresse der Verbotsliste",
@@ -1002,8 +988,6 @@
     "Security Phrase": "Sicherheitsphrase",
     "Security Key": "Sicherheitsschlüssel",
     "Use your Security Key to continue.": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
-    "No files visible in this room": "Keine Dateien in diesem Raum",
-    "Attach files from chat or just drag and drop them anywhere in a room.": "Hänge Dateien aus der Unterhaltung an oder ziehe sie einfach an eine beliebige Stelle im Raum.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Verhindere, den Zugriff auf verschlüsselte Nachrichten und Daten zu verlieren, indem du die Verschlüsselungs-Schlüssel auf deinem Server sicherst.",
     "Generate a Security Key": "Sicherheitsschlüssel generieren",
     "Enter a Security Phrase": "Sicherheitsphrase eingeben",
@@ -1084,7 +1068,6 @@
     "Approve widget permissions": "Rechte für das Widget genehmigen",
     "This widget would like to:": "Dieses Widget würde gerne:",
     "Decline All": "Alles ablehnen",
-    "%(creator)s created this DM.": "%(creator)s hat diese Direktnachricht erstellt.",
     "Enter phone number": "Telefonnummer eingeben",
     "Enter email address": "E-Mail-Adresse eingeben",
     "Zimbabwe": "Simbabwe",
@@ -1336,9 +1319,6 @@
     "United States": "Vereinigte Staaten",
     "United Kingdom": "Großbritannien",
     "There was a problem communicating with the homeserver, please try again later.": "Es gab ein Problem bei der Kommunikation mit dem Heim-Server. Bitte versuche es später erneut.",
-    "Use email to optionally be discoverable by existing contacts.": "Nutze optional eine E-Mail-Adresse, um von Nutzern gefunden werden zu können.",
-    "Use email or phone to optionally be discoverable by existing contacts.": "Nutze optional eine E-Mail-Adresse oder Telefonnummer, um von Nutzern gefunden werden zu können.",
-    "Add an email to be able to reset your password.": "Füge eine E-Mail-Adresse hinzu, um dein Passwort zurücksetzen zu können.",
     "That phone number doesn't look quite right, please check and try again": "Diese Telefonummer sieht nicht ganz richtig aus. Bitte überprüfe deine Eingabe und versuche es erneut",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
     "Continuing without email": "Ohne E-Mail fortfahren",
@@ -1348,7 +1328,6 @@
     "Resume": "Fortsetzen",
     "You've reached the maximum number of simultaneous calls.": "Du hast die maximale Anzahl gleichzeitig möglicher Anrufe erreicht.",
     "Too Many Calls": "Zu viele Anrufe",
-    "You have no visible notifications.": "Du hast keine sichtbaren Benachrichtigungen.",
     "Transfer": "Übertragen",
     "Failed to transfer call": "Anruf-Übertragung fehlgeschlagen",
     "A call can only be transferred to a single user.": "Ein Anruf kann nur auf einen einzelnen Nutzer übertragen werden.",
@@ -1410,8 +1389,6 @@
     "Public space": "Öffentlicher Space",
     "<inviter/> invites you": "Du wirst von <inviter/> eingeladen",
     "No results found": "Keine Ergebnisse",
-    "Failed to remove some rooms. Try again later": "Einige Räume konnten nicht entfernt werden. Versuche es bitte später nocheinmal",
-    "Suggested": "Vorgeschlagen",
     "%(count)s rooms": {
         "one": "%(count)s Raum",
         "other": "%(count)s Räume"
@@ -1429,10 +1406,7 @@
     "Spaces": "Spaces",
     "Invite with email or username": "Personen mit E-Mail oder Benutzernamen einladen",
     "You can change these anytime.": "Du kannst diese jederzeit ändern.",
-    "Your server does not support showing space hierarchies.": "Dein Home-Server unterstützt hierarchische Spaces nicht.",
     "You may want to try a different search or check for typos.": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
-    "Mark as not suggested": "Als nicht vorgeschlagen markieren",
-    "Mark as suggested": "Als vorgeschlagen markieren",
     "You don't have permission": "Du hast dazu keine Berechtigung",
     "This space is not public. You will not be able to rejoin without an invite.": "Du wirst diesen privaten Space nur mit einer Einladung wieder betreten können.",
     "Failed to save space settings.": "Spaceeinstellungen konnten nicht gespeichert werden.",
@@ -1446,11 +1420,9 @@
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
     },
     "Space options": "Space-Optionen",
-    "Manage & explore rooms": "Räume erkunden und verwalten",
     "unknown person": "unbekannte Person",
     "%(deviceId)s from %(ip)s": "%(deviceId)s von %(ip)s",
     "Review to ensure your account is safe": "Überprüfe sie, um ein sicheres Konto gewährleisten zu können",
-    "This room is suggested as a good one to join": "Dieser Raum wird vorgeschlagen",
     "Verification requested": "Verifizierung angefragt",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
@@ -1473,7 +1445,6 @@
     },
     "Some of your messages have not been sent": "Einige Nachrichten konnten nicht gesendet werden",
     "Original event source": "Ursprüngliche Rohdaten",
-    "Decrypted event source": "Entschlüsselte Rohdaten",
     "Sending": "Senden",
     "You can select all or individual messages to retry or delete": "Du kannst einzelne oder alle Nachrichten erneut senden oder löschen",
     "Delete all": "Alle löschen",
@@ -1484,7 +1455,6 @@
     "Enter your Security Phrase a second time to confirm it.": "Gib dein Kennwort ein zweites Mal zur Bestätigung ein.",
     "You have no ignored users.": "Du ignorierst keine Benutzer.",
     "Error processing voice message": "Fehler beim Verarbeiten der Sprachnachricht",
-    "Select a room below first": "Wähle vorher einen Raum aus",
     "Want to add a new room instead?": "Willst du einen neuen Raum hinzufügen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Raum hinzufügen …",
@@ -1523,7 +1493,6 @@
     "Report": "Melden",
     "Collapse reply thread": "Antworten verbergen",
     "Show preview": "Vorschau zeigen",
-    "Settings - %(spaceName)s": "Einstellungen - %(spaceName)s",
     "Please provide an address": "Bitte gib eine Adresse an",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Füge Adressen für diesen Space hinzu, damit andere Leute ihn über deinen Heim-Server (%(localDomain)s) finden können",
     "To publish an address, it needs to be set as a local address first.": "Damit du die Adresse veröffentlichen kannst, musst du sie zuerst als lokale Adresse hinzufügen.",
@@ -1665,7 +1634,6 @@
     "Skip verification for now": "Verifizierung vorläufig überspringen",
     "Really reset verification keys?": "Willst du deine Verifizierungsschlüssel wirklich zurücksetzen?",
     "Joined": "Beigetreten",
-    "See room timeline (devtools)": "Nachrichtenverlauf anzeigen (Entwicklungswerkzeuge)",
     "View in room": "Im Raum anzeigen",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Would you like to leave the rooms in this space?": "Willst du die Räume in diesem Space verlassen?",
@@ -1717,8 +1685,6 @@
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
-    "You're all caught up": "Du bist auf dem neuesten Stand",
-    "Someone already has that username. Try another or if it is you, sign in below.": "Jemand anderes nutzt diesen Benutzernamen schon. Probier einen anderen oder wenn du es bist, melde dich unten an.",
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
@@ -1761,7 +1727,6 @@
     "You cannot place calls without a connection to the server.": "Sie können keine Anrufe starten ohne Verbindung zum Server.",
     "Connectivity to the server has been lost": "Verbindung zum Server unterbrochen",
     "Spaces you know that contain this space": "Spaces, die diesen Space enthalten und in denen du Mitglied bist",
-    "Failed to load list of rooms.": "Fehler beim Laden der Raumliste.",
     "Open in OpenStreetMap": "In OpenStreetMap öffnen",
     "Recent searches": "Kürzliche Gesucht",
     "To search messages, look for this icon at the top of a room <icon/>": "Wenn du Nachrichten durchsuchen willst, klicke auf das <icon/> Icon oberhalb des Raumes",
@@ -1834,7 +1799,6 @@
     "Verify with another device": "Mit anderem Gerät verifizieren",
     "Verify this device": "Dieses Gerät verifizieren",
     "Unable to verify this device": "Gerät konnte nicht verifiziert werden",
-    "Space home": "Space-Übersicht",
     "Verify other device": "Anderes Gerät verifizieren",
     "Missing room name or separator e.g. (my-room:domain.org)": "Fehlender Raumname oder Doppelpunkt (z. B. dein-raum:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Fehlender Doppelpunkt vor Server (z. B. :domain.org)",
@@ -1842,14 +1806,11 @@
     "Message pending moderation": "Nachricht erwartet Moderation",
     "toggle event": "Event umschalten",
     "This address had invalid server or is already in use": "Diese Adresse hat einen ungültigen Server oder wird bereits verwendet",
-    "Unable to check if username has been taken. Try again later.": "Es kann nicht überprüft werden, ob der Nutzername bereits vergeben ist. Bitte versuche es später erneut.",
     "Internal room ID": "Interne Raum-ID",
     "Group all your rooms that aren't part of a space in one place.": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort.",
     "Group all your people in one place.": "Gruppiere all deine Direktnachrichten an einem Ort.",
     "Group all your favourite rooms and people in one place.": "Gruppiere all deine favorisierten Unterhaltungen an einem Ort.",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Mit Spaces kannst du deine Unterhaltungen organisieren. Neben Spaces, in denen du dich befindest, kannst du dir auch dynamische anzeigen lassen.",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "Falls du weißt, was du machst: Element ist Open Source! Checke unser GitHub aus (https://github.com/vector-im/element-web/) und hilf mit!",
-    "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!": "Wenn dir jemand gesagt hat, dass du hier etwas einfügen sollst, ist die Wahrscheinlichkeit sehr groß, dass du von der Person betrogen wirst!",
     "Wait!": "Warte!",
     "This address does not point at this room": "Diese Adresse verweist nicht auf diesen Raum",
     "Pick a date to jump to": "Wähle eine Datum aus",
@@ -2076,15 +2037,8 @@
         "other": "%(user)s und %(count)s andere"
     },
     "%(user1)s and %(user2)s": "%(user1)s und %(user2)s",
-    "Sliding Sync configuration": "Sliding-Sync-Konfiguration",
-    "Your server has native support": "Dein Server unterstützt dies nativ",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s oder %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
-    "Proxy URL": "Proxy-URL",
-    "Proxy URL (optional)": "Proxy-URL (optional)",
-    "Your server lacks native support, you must specify a proxy": "Dein Server unterstützt dies nicht nativ, du musst einen Proxy angeben",
-    "Your server lacks native support": "Dein Server unterstützt dies nicht nativ",
-    "To disable you will need to log out and back in, use with caution!": "Zum Deaktivieren musst du dich neu anmelden. Mit Vorsicht verwenden!",
     "Voice broadcast": "Sprachübertragung",
     "You need to be able to kick users to do that.": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
     "There's no one here to call": "Hier ist niemand zum Anrufen",
@@ -2170,7 +2124,6 @@
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Edit link": "Link bearbeiten",
-    "Decrypted source unavailable": "Entschlüsselte Quelle nicht verfügbar",
     "%(senderName)s started a voice broadcast": "%(senderName)s begann eine Sprachübertragung",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Registration token": "Registrierungstoken",
@@ -2632,7 +2585,14 @@
         "rust_crypto_disabled_notice": "Dies kann aktuell nur per config.json aktiviert werden",
         "automatic_debug_logs_key_backup": "Sende automatisch Protokolle zur Fehlerkorrektur, wenn die Schlüsselsicherung nicht funktioniert",
         "automatic_debug_logs_decryption": "Sende bei Entschlüsselungsfehlern automatisch Protokolle zur Fehlerkorrektur",
-        "automatic_debug_logs": "Sende bei Fehlern automatisch Protokolle zur Fehlerkorrektur"
+        "automatic_debug_logs": "Sende bei Fehlern automatisch Protokolle zur Fehlerkorrektur",
+        "sliding_sync_server_support": "Dein Server unterstützt dies nativ",
+        "sliding_sync_server_no_support": "Dein Server unterstützt dies nicht nativ",
+        "sliding_sync_server_specify_proxy": "Dein Server unterstützt dies nicht nativ, du musst einen Proxy angeben",
+        "sliding_sync_configuration": "Sliding-Sync-Konfiguration",
+        "sliding_sync_disable_warning": "Zum Deaktivieren musst du dich neu anmelden. Mit Vorsicht verwenden!",
+        "sliding_sync_proxy_url_optional_label": "Proxy-URL (optional)",
+        "sliding_sync_proxy_url_label": "Proxy-URL"
     },
     "keyboard": {
         "home": "Startseite",
@@ -3182,7 +3142,9 @@
         "show_hidden_events": "Versteckte Ereignisse im Verlauf anzeigen",
         "low_bandwidth_mode_description": "Benötigt kompatiblen Heim-Server.",
         "low_bandwidth_mode": "Modus für geringe Bandbreite",
-        "developer_mode": "Entwicklungsmodus"
+        "developer_mode": "Entwicklungsmodus",
+        "view_source_decrypted_event_source": "Entschlüsselte Rohdaten",
+        "view_source_decrypted_event_source_unavailable": "Entschlüsselte Quelle nicht verfügbar"
     },
     "export_chat": {
         "html": "HTML",
@@ -3578,7 +3540,9 @@
         "io.element.voice_broadcast_info": {
             "you": "Du hast eine <a>Sprachübertragung</a> beendet",
             "user": "%(senderName)s beendete eine <a>Sprachübertragung</a>"
-        }
+        },
+        "creation_summary_dm": "%(creator)s hat diese Direktnachricht erstellt.",
+        "creation_summary_room": "%(creator)s hat den Raum erstellt und konfiguriert."
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3901,7 +3865,15 @@
         "server_picker_explainer": "Verwende einen Matrix-Heim-Server deiner Wahl oder betreibe deinen eigenen.",
         "server_picker_learn_more": "Über Heim-Server",
         "incorrect_credentials": "Inkorrekter Nutzername und/oder Passwort.",
-        "account_deactivated": "Dieses Konto wurde deaktiviert."
+        "account_deactivated": "Dieses Konto wurde deaktiviert.",
+        "registration_username_validation": "Verwende nur Kleinbuchstaben, Zahlen, Bindestriche und Unterstriche",
+        "registration_username_unable_check": "Es kann nicht überprüft werden, ob der Nutzername bereits vergeben ist. Bitte versuche es später erneut.",
+        "registration_username_in_use": "Jemand anderes nutzt diesen Benutzernamen schon. Probier einen anderen oder wenn du es bist, melde dich unten an.",
+        "phone_label": "Telefon",
+        "phone_optional_label": "Telefon (optional)",
+        "email_help_text": "Füge eine E-Mail-Adresse hinzu, um dein Passwort zurücksetzen zu können.",
+        "email_phone_discovery_text": "Nutze optional eine E-Mail-Adresse oder Telefonnummer, um von Nutzern gefunden werden zu können.",
+        "email_discovery_text": "Nutze optional eine E-Mail-Adresse, um von Nutzern gefunden werden zu können."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4113,7 +4085,21 @@
         "light_high_contrast": "Hell kontrastreich"
     },
     "space": {
-        "landing_welcome": "Willkommen bei <name/>"
+        "landing_welcome": "Willkommen bei <name/>",
+        "suggested_tooltip": "Dieser Raum wird vorgeschlagen",
+        "suggested": "Vorgeschlagen",
+        "select_room_below": "Wähle vorher einen Raum aus",
+        "unmark_suggested": "Als nicht vorgeschlagen markieren",
+        "mark_suggested": "Als vorgeschlagen markieren",
+        "failed_remove_rooms": "Einige Räume konnten nicht entfernt werden. Versuche es bitte später nocheinmal",
+        "failed_load_rooms": "Fehler beim Laden der Raumliste.",
+        "incompatible_server_hierarchy": "Dein Home-Server unterstützt hierarchische Spaces nicht.",
+        "context_menu": {
+            "devtools_open_timeline": "Nachrichtenverlauf anzeigen (Entwicklungswerkzeuge)",
+            "home": "Space-Übersicht",
+            "explore": "Räume erkunden",
+            "manage_and_explore": "Räume erkunden und verwalten"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -4170,5 +4156,35 @@
         "setup_rooms_description": "Du kannst später weitere hinzufügen, auch bereits bestehende.",
         "setup_rooms_private_heading": "Welche Projekte bearbeitet euer Team?",
         "setup_rooms_private_description": "Wir werden für jedes einen Raum erstellen."
+    },
+    "user_menu": {
+        "switch_theme_light": "Zum hellen Thema wechseln",
+        "switch_theme_dark": "Zum dunklen Thema wechseln"
+    },
+    "notif_panel": {
+        "empty_heading": "Du bist auf dem neuesten Stand",
+        "empty_description": "Du hast keine sichtbaren Benachrichtigungen."
+    },
+    "console_scam_warning": "Wenn dir jemand gesagt hat, dass du hier etwas einfügen sollst, ist die Wahrscheinlichkeit sehr groß, dass du von der Person betrogen wirst!",
+    "console_dev_note": "Falls du weißt, was du machst: Element ist Open Source! Checke unser GitHub aus (https://github.com/vector-im/element-web/) und hilf mit!",
+    "room": {
+        "drop_file_prompt": "Datei hier loslassen zum hochladen"
+    },
+    "file_panel": {
+        "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
+        "peek_note": "Du musst den Raum betreten, um die verknüpften Dateien sehen zu können",
+        "empty_heading": "Keine Dateien in diesem Raum",
+        "empty_description": "Hänge Dateien aus der Unterhaltung an oder ziehe sie einfach an eine beliebige Stelle im Raum."
+    },
+    "terms": {
+        "integration_manager": "Nutze Bots, Brücken, Widgets und Sticker-Pakete",
+        "tos": "Nutzungsbedingungen",
+        "intro": "Um fortzufahren, musst du die Bedingungen dieses Dienstes akzeptieren.",
+        "column_service": "Dienst",
+        "column_summary": "Zusammenfassung",
+        "column_document": "Dokument"
+    },
+    "space_settings": {
+        "title": "Einstellungen - %(spaceName)s"
     }
 }
