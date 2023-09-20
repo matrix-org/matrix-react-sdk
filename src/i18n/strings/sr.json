@@ -1044,6 +1044,9 @@
         },
         "voip": {
             "mirror_local_feed": "Копирај довод локалног видеа"
+        },
+        "sessions": {
+            "session_id": "ИД сесије"
         }
     },
     "devtools": {

@@ -849,7 +849,6 @@
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
     "Clear all data in this session?": "Ĉu vakigi ĉiujn datumojn en ĉi tiu salutaĵo?",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vakigo de ĉiuj datumoj el ĉi tiu salutaĵo estas porĉiama. Ĉifritaj mesaĝoj perdiĝos, malse iliaj ŝlosiloj savkopiiĝis.",
-    "Verify session": "Kontroli salutaĵon",
     "Session name": "Nomo de salutaĵo",
     "Session key": "Ŝlosilo de salutaĵo",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Kontrolo de tiu ĉi uzanto markos ĝian salutaĵon fidata, kaj ankaŭ markos vian salutaĵon fidata por ĝi.",
@@ -1770,38 +1769,10 @@
     "You have unverified sessions": "Vi havas nekontrolitajn salutaĵojn",
     "Export chat": "Eksporti babilejon",
     "Files": "Dosieroj",
-    "Other sessions": "Aliaj salutaĵoj",
-    "Verified sessions": "Kontrolitaj salutaĵoj",
-    "Renaming sessions": "Renomi salutaĵojn",
     "Sessions": "Salutaĵoj",
     "Close sidebar": "Fermu la flanka kolumno",
     "Sidebar": "Flanka kolumno",
-    "Sign out of %(count)s sessions": {
-        "one": "Elsaluti el %(count)s salutaĵo",
-        "other": "Elsaluti el %(count)s salutaĵoj"
-    },
-    "%(count)s sessions selected": {
-        "one": "%(count)s salutaĵo elektita",
-        "other": "%(count)s salutaĵoj elektitaj"
-    },
-    "No sessions found.": "Neniuj salutaĵoj trovitaj.",
-    "No inactive sessions found.": "Neniuj neaktivaj salutaĵoj trovitaj.",
-    "No unverified sessions found.": "Neniuj nekontrolitaj salutaĵoj trovitaj.",
-    "No verified sessions found.": "Neniuj kontrolitaj salutaĵoj trovitaj.",
-    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.": "Konsideru elsaluti de malnovaj salutaĵoj (%(inactiveAgeDays)s tagoj aŭ pli malnovaj), kiujn vi ne plu uzas.",
-    "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.": "Por plia sekura komunikado, kontrolu viajn salutaĵojn aŭ elsalutu el ili se vi ne plu rekonas ilin.",
-    "Removing inactive sessions improves security and performance, and makes it easier for you to identify if a new session is suspicious.": "Forigi neaktivajn salutaĵojn plibonigas sekurecon, rendimenton kaj detekton de dubindaj novaj salutaĵoj.",
-    "Inactive sessions are sessions you have not used in some time, but they continue to receive encryption keys.": "Neaktivaj salutaĵoj estas salutaĵoj, kiujn vi ne uzis dum kelka tempo, sed ili daŭre ricevas ĉifrajn ŝlosilojn.",
-    "Inactive sessions": "Neaktivaj salutaĵoj",
-    "Unverified sessions": "Nekontrolitaj salutaĵoj",
     "Public rooms": "Publikajn ĉambrojn",
-    "Show details": "Montri detalojn",
-    "Hide details": "Kaŝi detalojn",
-    "Sign out of this session": "Eliri el ĉi tiu salutaĵo",
-    "Receive push notifications on this session.": "Ricevi puŝajn sciigojn pri ĉi tiu sesio.",
-    "Push notifications": "Puŝaj sciigoj",
-    "IP address": "IP-adreso",
-    "Browser": "Retumilo",
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "That's fine": "Tio estas bone",
     "Developer": "Programisto",
@@ -2263,6 +2234,38 @@
         },
         "keyboard": {
             "title": "Klavaro"
+        },
+        "sessions": {
+            "rename_form_learn_more": "Renomi salutaĵojn",
+            "session_id": "Identigilo de salutaĵo",
+            "browser": "Retumilo",
+            "ip": "IP-adreso",
+            "push_heading": "Puŝaj sciigoj",
+            "push_subheading": "Ricevi puŝajn sciigojn pri ĉi tiu sesio.",
+            "sign_out": "Eliri el ĉi tiu salutaĵo",
+            "hide_details": "Kaŝi detalojn",
+            "show_details": "Montri detalojn",
+            "verified_sessions": "Kontrolitaj salutaĵoj",
+            "unverified_sessions": "Nekontrolitaj salutaĵoj",
+            "inactive_sessions": "Neaktivaj salutaĵoj",
+            "inactive_sessions_explainer_1": "Neaktivaj salutaĵoj estas salutaĵoj, kiujn vi ne uzis dum kelka tempo, sed ili daŭre ricevas ĉifrajn ŝlosilojn.",
+            "inactive_sessions_explainer_2": "Forigi neaktivajn salutaĵojn plibonigas sekurecon, rendimenton kaj detekton de dubindaj novaj salutaĵoj.",
+            "verify_session": "Kontroli salutaĵon",
+            "unverified_sessions_list_description": "Por plia sekura komunikado, kontrolu viajn salutaĵojn aŭ elsalutu el ili se vi ne plu rekonas ilin.",
+            "inactive_sessions_list_description": "Konsideru elsaluti de malnovaj salutaĵoj (%(inactiveAgeDays)s tagoj aŭ pli malnovaj), kiujn vi ne plu uzas.",
+            "no_verified_sessions": "Neniuj kontrolitaj salutaĵoj trovitaj.",
+            "no_unverified_sessions": "Neniuj nekontrolitaj salutaĵoj trovitaj.",
+            "no_inactive_sessions": "Neniuj neaktivaj salutaĵoj trovitaj.",
+            "no_sessions": "Neniuj salutaĵoj trovitaj.",
+            "n_sessions_selected": {
+                "one": "%(count)s salutaĵo elektita",
+                "other": "%(count)s salutaĵoj elektitaj"
+            },
+            "sign_out_n_sessions": {
+                "one": "Elsaluti el %(count)s salutaĵo",
+                "other": "Elsaluti el %(count)s salutaĵoj"
+            },
+            "other_sessions_heading": "Aliaj salutaĵoj"
         }
     },
     "devtools": {

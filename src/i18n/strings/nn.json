@@ -852,6 +852,9 @@
         },
         "keyboard": {
             "title": "Tastatur"
+        },
+        "sessions": {
+            "session_id": "Økt-ID"
         }
     },
     "devtools": {

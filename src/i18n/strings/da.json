@@ -565,6 +565,9 @@
             "custom_theme_success": "Tema tilføjet!",
             "timeline_image_size_default": "Standard",
             "image_size_default": "Standard"
+        },
+        "sessions": {
+            "session_id": "Sessions ID"
         }
     },
     "devtools": {

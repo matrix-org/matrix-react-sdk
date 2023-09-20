@@ -803,6 +803,9 @@
             "composer_heading": "Ipsteller",
             "autocomplete_delay": "Vertroagienge vo ’t automatisch anvulln (ms)",
             "always_show_menu_bar": "De veinstermenubalk alsan toogn"
+        },
+        "sessions": {
+            "session_id": "Sessie-ID"
         }
     },
     "devtools": {

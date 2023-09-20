@@ -911,7 +911,6 @@
     "Are you sure you want to deactivate your account? This is irreversible.": "Сигурни ли сте, че искате да деактивирате профила си? Това е необратимо.",
     "Confirm account deactivation": "Потвърдете деактивирането на профила",
     "There was a problem communicating with the server. Please try again.": "Имаше проблем при комуникацията със сървъра. Опитайте пак.",
-    "Verify session": "Потвърди сесията",
     "Session name": "Име на сесията",
     "Session key": "Ключ за сесията",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Верифицирането на този потребител ще маркира сесията им като доверена при вас, както и вашата като доверена при тях.",
@@ -1736,6 +1735,10 @@
             "rm_lifetime": "Живот на маркера за прочитане (мсек)",
             "rm_lifetime_offscreen": "Живот на маркера за прочитане извън екрана (мсек)",
             "always_show_menu_bar": "Винаги показвай менютата на прозореца"
+        },
+        "sessions": {
+            "session_id": "Идентификатор на сесията",
+            "verify_session": "Потвърди сесията"
         }
     },
     "devtools": {

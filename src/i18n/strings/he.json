@@ -1194,7 +1194,6 @@
     "Modal Widget": "יישומון מודאלי",
     "Message edits": "עריכת הודעות",
     "Your homeserver doesn't seem to support this feature.": "נראה ששרת הבית שלך אינו תומך בתכונה זו.",
-    "Verify session": "אמת מושב",
     "If they don't match, the security of your communication may be compromised.": "אם הם לא תואמים, אבטחת התקשורת שלך עלולה להיפגע.",
     "Session key": "מפתח מושב",
     "Session ID": "זהות מושב",
@@ -1433,8 +1432,6 @@
         "one": "שולח הזמנה..."
     },
     "Upgrade required": "נדרש שדרוג",
-    "Select all": "בחר הכל",
-    "Deselect all": "הסר סימון מהכל",
     "Sign out devices": {
         "one": "צא מהמכשיר",
         "other": "צא ממכשירים"
@@ -1483,7 +1480,6 @@
     "Poll": "סקר",
     "You do not have permission to start polls in this room.": "אין לכם הרשאה להתחיל סקר בחדר זה.",
     "Preserve system messages": "שמור את הודעות המערכת",
-    "No unverified sessions found.": "לא נמצאו הפעלות לא מאומתות.",
     "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "%(count)s Members": {
@@ -1647,7 +1643,6 @@
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Copy room link": "העתק קישור לחדר",
     "Match system": "בהתאם למערכת",
-    "Last activity": "פעילות אחרונה",
     "Voice processing": "עיבוד קול",
     "Video settings": "הגדרות וידאו",
     "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
@@ -1747,7 +1742,9 @@
         "orphan_rooms": "חדרים אחרים",
         "on": "התראה",
         "off": "ללא",
-        "all_rooms": "כל החדרים"
+        "all_rooms": "כל החדרים",
+        "deselect_all": "הסר סימון מהכל",
+        "select_all": "בחר הכל"
     },
     "action": {
         "continue": "המשך",
@@ -2121,6 +2118,12 @@
         },
         "keyboard": {
             "title": "מקלדת"
+        },
+        "sessions": {
+            "session_id": "זהות מושב",
+            "last_activity": "פעילות אחרונה",
+            "verify_session": "אמת מושב",
+            "no_unverified_sessions": "לא נמצאו הפעלות לא מאומתות."
         }
     },
     "devtools": {

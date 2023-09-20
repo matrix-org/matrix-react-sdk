@@ -838,7 +838,6 @@
     "The encryption used by this room isn't supported.": "Gela honetan erabilitako zifratzea ez da onartzen.",
     "Clear all data in this session?": "Garbitu saio honetako datu guztiak?",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Saio honetako datuak garbitzea behin betirako da. Zifratutako mezuak galdu egingo dira gakoen babes-kopia egin ez bada.",
-    "Verify session": "Egiaztatu saioa",
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
@@ -1310,6 +1309,10 @@
             "rm_lifetime": "Orri-markagailuaren biziraupena (ms)",
             "rm_lifetime_offscreen": "Orri-markagailuaren biziraupena pantailaz kanpo (ms)",
             "always_show_menu_bar": "Erakutsi beti leihoaren menu barra"
+        },
+        "sessions": {
+            "session_id": "Saioaren IDa",
+            "verify_session": "Egiaztatu saioa"
         }
     },
     "devtools": {

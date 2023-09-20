@@ -864,19 +864,13 @@
     "United States": "미국",
     "The call was answered on another device.": "이 전화는 다른 기기에서 응답했습니다.",
     "Answered Elsewhere": "다른 기기에서 응답함",
-    "Your current session is ready for secure messaging.": "현재 세션에서 보안 메세지를 사용할 수 있습니다.",
-    "Last activity": "최근 활동",
     "Mark all as read": "모두 읽음으로 표시",
     "Deactivating your account is a permanent action — be careful!": "계정을 비활성화 하는 것은 취소할 수 없습니다. 조심하세요!",
     "Current session": "현재 세션",
-    "Verified sessions": "검증된 세션들",
-    "Verified session": "검증된 세션",
     "Room info": "방 정보",
     "Match system": "시스템 테마",
     "Spell check": "맞춤법 검사",
-    "Unverified sessions": "검증되지 않은 세션들",
     "Sessions": "세션목록",
-    "Unverified session": "검증되지 않은 세션",
     "Favourited": "즐겨찾기 됨",
     "common": {
         "analytics": "정보 분석",
@@ -1108,6 +1102,15 @@
         },
         "keyboard": {
             "title": "키보드 (단축키)"
+        },
+        "sessions": {
+            "session_id": "세션 ID",
+            "last_activity": "최근 활동",
+            "verified_sessions": "검증된 세션들",
+            "unverified_sessions": "검증되지 않은 세션들",
+            "unverified_session": "검증되지 않은 세션",
+            "device_verified_description_current": "현재 세션에서 보안 메세지를 사용할 수 있습니다.",
+            "verified_session": "검증된 세션"
         }
     },
     "devtools": {

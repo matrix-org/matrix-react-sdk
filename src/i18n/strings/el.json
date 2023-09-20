@@ -855,8 +855,6 @@
     },
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Επαληθεύστε μεμονωμένα κάθε συνεδρία που χρησιμοποιείται από έναν χρήστη για να την επισημάνετε ως αξιόπιστη, χωρίς να εμπιστεύεστε συσκευές με διασταυρούμενη υπογραφή.",
     "Display Name": "Εμφανιζόμενο όνομα",
-    "Select all": "Επιλογή όλων",
-    "Deselect all": "Αποεπιλογή όλων",
     "Sign out devices": {
         "one": "Αποσύνδεση συσκευής",
         "other": "Αποσύνδεση συσκευών"
@@ -1059,7 +1057,6 @@
     "You have no ignored users.": "Δεν έχετε χρήστες που έχετε αγνοήσει.",
     "User signing private key:": "Ιδιωτικό κλειδί για υπογραφή χρήστη:",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
-    "Verify session": "Επαλήθευση συνεδρίας",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
     "Session key": "Κλειδί συνεδρίας",
     "Session name": "Όνομα συνεδρίας",
@@ -2102,7 +2099,9 @@
         "orphan_rooms": "Άλλα δωμάτια",
         "on": "Ενεργό",
         "off": "Ανενεργό",
-        "all_rooms": "Όλα τα δωμάτια"
+        "all_rooms": "Όλα τα δωμάτια",
+        "deselect_all": "Αποεπιλογή όλων",
+        "select_all": "Επιλογή όλων"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2504,6 +2503,10 @@
         },
         "keyboard": {
             "title": "Πληκτρολόγιο"
+        },
+        "sessions": {
+            "session_id": "Αναγνωριστικό συνεδρίας",
+            "verify_session": "Επαλήθευση συνεδρίας"
         }
     },
     "devtools": {

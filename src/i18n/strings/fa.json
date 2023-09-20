@@ -503,7 +503,6 @@
     "Not Trusted": "قابل اعتماد نیست",
     "Session key": "کلید نشست",
     "Session name": "نام نشست",
-    "Verify session": "تائید نشست",
     "Country Dropdown": "لیست کشور",
     "Verification Request": "درخواست تأیید",
     "Command Help": "راهنمای دستور",
@@ -2031,6 +2030,10 @@
             "rm_lifetime": "مدت‌زمان نشانه‌ی خوانده‌شده (ms)",
             "rm_lifetime_offscreen": "خواندن نشانگر طول عمر خارج از صفحه نمایش (میلی ثانیه)",
             "always_show_menu_bar": "همیشه نوار فهرست پنجره را نشان بده"
+        },
+        "sessions": {
+            "session_id": "شناسه‌ی نشست",
+            "verify_session": "تائید نشست"
         }
     },
     "devtools": {

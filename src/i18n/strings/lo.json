@@ -1585,8 +1585,6 @@
     "Remove them from everything I'm able to": "ລຶບອອກຈາກທຸກສິ່ງທີ່ຂ້ອຍສາມາດເຮັດໄດ້",
     "Remove from %(roomName)s": "ລຶບອອກຈາກ %(roomName)s",
     "Disinvite from %(roomName)s": "ຍົກເລີກເຊີນຈາກ %(roomName)s",
-    "Select all": "ເລືອກທັງຫມົດ",
-    "Deselect all": "ຍົກເລີກການເລືອກທັງໝົດ",
     "Authentication": "ການຢືນຢັນ",
     "Sign out devices": {
         "one": "ອອກຈາກລະບົບອຸປະກອນ",
@@ -1677,7 +1675,6 @@
     "Modal Widget": "ຕົວຊ່ວຍ Widget",
     "Message edits": "ແກ້ໄຂຂໍ້ຄວາມ",
     "Your homeserver doesn't seem to support this feature.": "ເບິ່ງຄືວ່າ homeserver ຂອງທ່ານບໍ່ຮອງຮັບຄຸນສົມບັດນີ້.",
-    "Verify session": "ຢືນຢັນລະບົບ",
     "If they don't match, the security of your communication may be compromised.": "ຖ້າລະຫັດບໍ່ກົງກັນ, ຄວາມປອດໄພຂອງການສື່ສານຂອງທ່ານອາດຈະຖືກທໍາລາຍ.",
     "Session key": "ລະຫັດລະບົບ",
     "Session ID": "ID ລະບົບ",
@@ -2122,7 +2119,9 @@
         "orphan_rooms": "ຫ້ອງອື່ນໆ",
         "on": "ເທິງ",
         "off": "ປິດ",
-        "all_rooms": "ຫ້ອງທັງໝົດ"
+        "all_rooms": "ຫ້ອງທັງໝົດ",
+        "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
+        "select_all": "ເລືອກທັງຫມົດ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2516,6 +2515,10 @@
         },
         "keyboard": {
             "title": "ແປ້ນພິມ"
+        },
+        "sessions": {
+            "session_id": "ID ລະບົບ",
+            "verify_session": "ຢືນຢັນລະບົບ"
         }
     },
     "devtools": {

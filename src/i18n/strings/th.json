@@ -214,23 +214,7 @@
     "Too Many Calls": "โทรมากเกินไป",
     "You cannot place calls without a connection to the server.": "คุณไม่สามารถโทรออกได้หากไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์.",
     "Connectivity to the server has been lost": "ขาดการเชื่อมต่อกับเซิร์ฟเวอร์",
-    "Show details": "แสดงรายละเอียด",
-    "Hide details": "ซ่อนรายละเอียด",
-    "Sign out of this session": "ออกจากระบบเซสชันนี้.",
-    "Receive push notifications on this session.": "รับการแจ้งเตือนแบบพุชในเซสชันนี้.",
-    "Push notifications": "การแจ้งเตือนแบบพุช",
-    "Toggle push notifications on this session.": "สลับการแจ้งเตือนแบบพุชในเซสชันนี้.",
-    "Session details": "รายละเอียดเซสชัน",
-    "IP address": "ที่อยู่ IP",
-    "Browser": "เบราว์เซอร์",
-    "Operating system": "ระบบปฏิบัติการ",
-    "Last activity": "กิจกรรมสุดท้าย",
     "Session ID": "รหัสเซสชัน",
-    "This provides them with confidence that they are really speaking to you, but it also means they can see the session name you enter here.": "สิ่งนี้ทำให้พวกเขามั่นใจว่าพวกเขากำลังพูดกับคุณจริงๆ แต่ก็หมายความว่าพวกเขาสามารถเห็นชื่อเซสชันที่คุณป้อนที่นี่.",
-    "Other users in direct messages and rooms that you join are able to view a full list of your sessions.": "ผู้ใช้รายอื่นในข้อความส่วนตัวและห้องแชทที่คุณเข้าร่วมจะดูรายการเซสชันทั้งหมดของคุณได้.",
-    "Renaming sessions": "การเปลี่ยนชื่อเซสชัน",
-    "Please be aware that session names are also visible to people you communicate with.": "โปรดทราบว่าชื่อเซสชันจะปรากฏแก่บุคคลที่คุณสื่อสารด้วย.",
-    "Rename session": "เปลี่ยนชื่อเซสชัน",
     "Sign out devices": {
         "one": "ออกจากระบบอุปกรณ์",
         "other": "ออกจากระบบอุปกรณ์"
@@ -250,7 +234,6 @@
     "Current session": "เซสชันปัจจุบัน",
     "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
     "End-to-end encryption isn't enabled": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง",
-    "You won't be able to participate in rooms where encryption is enabled when using this session.": "คุณจะไม่สามารถเข้าร่วมในห้องที่เปิดใช้งานการเข้ารหัสเมื่อใช้เซสชันนี้.",
     "Once enabled, encryption cannot be disabled.": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสได้.",
     "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสสำหรับห้องได้ เซิร์ฟเวอร์ไม่สามารถเห็นข้อความที่ส่งในห้องที่เข้ารหัสได้ เฉพาะผู้เข้าร่วมในห้องเท่านั้น การเปิดใช้งานการเข้ารหัสอาจทำให้บอทและบริดจ์จำนวนมากทำงานไม่ถูกต้อง. <a>เรียนรู้เพิ่มเติมเกี่ยวกับการเข้ารหัส.</a>",
     "Deactivate user": "ปิดใช้งานผู้ใช้",
@@ -453,6 +436,26 @@
         "appearance": {
             "timeline_image_size_default": "ค่าเริ่มต้น",
             "image_size_default": "ค่าเริ่มต้น"
+        },
+        "sessions": {
+            "rename_form_heading": "เปลี่ยนชื่อเซสชัน",
+            "rename_form_caption": "โปรดทราบว่าชื่อเซสชันจะปรากฏแก่บุคคลที่คุณสื่อสารด้วย.",
+            "rename_form_learn_more": "การเปลี่ยนชื่อเซสชัน",
+            "rename_form_learn_more_description_1": "ผู้ใช้รายอื่นในข้อความส่วนตัวและห้องแชทที่คุณเข้าร่วมจะดูรายการเซสชันทั้งหมดของคุณได้.",
+            "rename_form_learn_more_description_2": "สิ่งนี้ทำให้พวกเขามั่นใจว่าพวกเขากำลังพูดกับคุณจริงๆ แต่ก็หมายความว่าพวกเขาสามารถเห็นชื่อเซสชันที่คุณป้อนที่นี่.",
+            "session_id": "รหัสเซสชัน",
+            "last_activity": "กิจกรรมสุดท้าย",
+            "os": "ระบบปฏิบัติการ",
+            "browser": "เบราว์เซอร์",
+            "ip": "ที่อยู่ IP",
+            "details_heading": "รายละเอียดเซสชัน",
+            "push_toggle": "สลับการแจ้งเตือนแบบพุชในเซสชันนี้.",
+            "push_heading": "การแจ้งเตือนแบบพุช",
+            "push_subheading": "รับการแจ้งเตือนแบบพุชในเซสชันนี้.",
+            "sign_out": "ออกจากระบบเซสชันนี้.",
+            "hide_details": "ซ่อนรายละเอียด",
+            "show_details": "แสดงรายละเอียด",
+            "unverified_session_explainer_2": "คุณจะไม่สามารถเข้าร่วมในห้องที่เปิดใช้งานการเข้ารหัสเมื่อใช้เซสชันนี้."
         }
     },
     "timeline": {

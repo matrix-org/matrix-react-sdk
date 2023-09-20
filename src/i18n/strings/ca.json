@@ -471,6 +471,9 @@
         },
         "security": {
             "send_analytics": "Envia dades d'anàlisi"
+        },
+        "sessions": {
+            "session_id": "ID de la sessió"
         }
     },
     "devtools": {

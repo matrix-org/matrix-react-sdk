@@ -175,7 +175,6 @@
     "Restricted": "Yesεa tilas",
     "Set up": "Sbadu",
     "Pencil": "Akeryun",
-    "Verify session": "Asenqed n tɣimit",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
     "New Recovery Method": "Tarrayt tamaynut n ujebber",
@@ -1643,6 +1642,10 @@
             "rm_lifetime": "Ɣer tanzagt n tudert n tecreḍt (ms)",
             "rm_lifetime_offscreen": "Ɣer tanzagt n tudert n tecreḍt beṛṛa n ugdil (ms)",
             "always_show_menu_bar": "Afeggag n wumuɣ n usfaylu eǧǧ-it yettban"
+        },
+        "sessions": {
+            "session_id": "Asulay n tqimit",
+            "verify_session": "Asenqed n tɣimit"
         }
     },
     "devtools": {

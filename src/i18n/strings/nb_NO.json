@@ -438,7 +438,6 @@
     "Failed to copy": "Mislyktes i å kopiere",
     "Submit logs": "Send inn loggføringer",
     "Clear all data": "Tøm alle data",
-    "Verify session": "Verifiser økten",
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
@@ -1308,6 +1307,10 @@
             "autocomplete_delay": "Autofullføringsforsinkelse (ms)",
             "rm_lifetime": "Lesemarkørens visningstid (ms)",
             "rm_lifetime_offscreen": "Lesemarkørens visningstid utenfor skjermen (ms)"
+        },
+        "sessions": {
+            "session_id": "Økt-ID",
+            "verify_session": "Verifiser økten"
         }
     },
     "devtools": {

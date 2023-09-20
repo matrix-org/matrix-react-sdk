@@ -40,10 +40,10 @@ const deviceTypeIcon: Record<DeviceType, React.FC<React.SVGProps<SVGSVGElement>>
     [DeviceType.Unknown]: UnknownDeviceIcon,
 };
 const deviceTypeLabel: Record<DeviceType, string> = {
-    [DeviceType.Desktop]: _t("Desktop session"),
-    [DeviceType.Mobile]: _t("Mobile session"),
-    [DeviceType.Web]: _t("Web session"),
-    [DeviceType.Unknown]: _t("Unknown session type"),
+    [DeviceType.Desktop]: _t("settings|sessions|desktop_session"),
+    [DeviceType.Mobile]: _t("settings|sessions|mobile_session"),
+    [DeviceType.Web]: _t("settings|sessions|web_session"),
+    [DeviceType.Unknown]: _t("settings|sessions|unknown_session"),
 };
 
 export const DeviceTypeIcon: React.FC<Props> = ({ isVerified, isSelected, deviceType }) => {

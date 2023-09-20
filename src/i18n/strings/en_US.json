@@ -379,6 +379,9 @@
             "heading": "Customize your appearance",
             "timeline_image_size_default": "Default",
             "image_size_default": "Default"
+        },
+        "sessions": {
+            "session_id": "Session ID"
         }
     },
     "timeline": {

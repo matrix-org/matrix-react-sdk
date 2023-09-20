@@ -596,7 +596,6 @@
     "I don't want my encrypted messages": "Não quero minhas mensagens criptografadas",
     "You'll lose access to your encrypted messages": "Você perderá acesso às suas mensagens criptografadas",
     "Session key": "Chave da sessão",
-    "Verify session": "Confirmar sessão",
     "Sign out and remove encryption keys?": "Fazer logout e remover as chaves de criptografia?",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
     "Security Key": "Chave de Segurança",
@@ -1691,8 +1690,6 @@
     "Loading new room": "Carregando nova sala",
     "Upgrading room": "Atualizando sala",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está em alguns espaços dos quais você não é administrador. Nesses espaços, a sala antiga ainda será exibida, mas as pessoas serão solicitadas a ingressar na nova.",
-    "Deselect all": "Desmarcar todos",
-    "Select all": "Selecionar tudo",
     "Sign out devices": {
         "one": "Desconectar dispositivo",
         "other": "Desconectar dispositivos"
@@ -1723,16 +1720,6 @@
         "other": "Visto por %(count)s pessoas"
     },
     "Security recommendations": "Recomendações de segurança",
-    "Filter devices": "Filtrar dispositivos",
-    "Inactive sessions": "Sessões inativas",
-    "Unverified sessions": "Sessões não verificadas",
-    "Verified sessions": "Sessões verificadas",
-    "Unverified session": "Sessão não verificada",
-    "Verified session": "Sessão verificada",
-    "Session details": "Detalhes da sessão",
-    "IP address": "Endereço de IP",
-    "Rename session": "Renomear sessão",
-    "Other sessions": "Outras sessões",
     "Sessions": "Sessões",
     "User is already in the space": "O usuário já está no espaço",
     "User is already in the room": "O usuário já está na sala",
@@ -1777,14 +1764,6 @@
     "In %(spaceName)s.": "No espaço %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "Empty room (was %(oldName)s)": "Sala vazia (era %(oldName)s)",
-    "Unknown session type": "Tipo de sessão desconhecido",
-    "Mobile session": "Sessão móvel",
-    "Desktop session": "Sessão desktop",
-    "Web session": "Sessão web",
-    "Sign out of this session": "Sair desta sessão",
-    "Operating system": "Sistema operacional",
-    "URL": "URL",
-    "Last activity": "Última atividade",
     "Confirm signing out these devices": {
         "other": "Confirme a saída destes dispositivos",
         "one": "Confirme a saída deste dispositivo"
@@ -1886,7 +1865,9 @@
         "orphan_rooms": "Outras salas",
         "on": "Ativado",
         "off": "Desativado",
-        "all_rooms": "Todas as salas"
+        "all_rooms": "Todas as salas",
+        "deselect_all": "Desmarcar todos",
+        "select_all": "Selecionar tudo"
     },
     "action": {
         "continue": "Continuar",
@@ -2263,6 +2244,28 @@
         },
         "keyboard": {
             "title": "Teclado"
+        },
+        "sessions": {
+            "rename_form_heading": "Renomear sessão",
+            "session_id": "Identificador de sessão",
+            "last_activity": "Última atividade",
+            "url": "URL",
+            "os": "Sistema operacional",
+            "ip": "Endereço de IP",
+            "details_heading": "Detalhes da sessão",
+            "sign_out": "Sair desta sessão",
+            "verified_sessions": "Sessões verificadas",
+            "unverified_sessions": "Sessões não verificadas",
+            "unverified_session": "Sessão não verificada",
+            "inactive_sessions": "Sessões inativas",
+            "desktop_session": "Sessão desktop",
+            "mobile_session": "Sessão móvel",
+            "web_session": "Sessão web",
+            "unknown_session": "Tipo de sessão desconhecido",
+            "verified_session": "Sessão verificada",
+            "verify_session": "Confirmar sessão",
+            "filter_label": "Filtrar dispositivos",
+            "other_sessions_heading": "Outras sessões"
         }
     },
     "devtools": {

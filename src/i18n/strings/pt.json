@@ -698,6 +698,9 @@
         "appearance": {
             "timeline_image_size_default": "Padrão",
             "image_size_default": "Padrão"
+        },
+        "sessions": {
+            "session_id": "Identificador de sessão"
         }
     },
     "devtools": {
