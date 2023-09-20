@@ -81,13 +81,11 @@
     "Account": "Compte",
     "General": "General",
     "Unignore": "Ignorar pas",
-    "Security & Privacy": "Seguretat e vida privada",
     "Audio Output": "Sortida àudio",
     "Bridges": "Bridges",
     "Sounds": "Sons",
     "Browse": "Percórrer",
     "Unban": "Reabilitar",
-    "Permissions": "Permissions",
     "Encryption": "Chiframent",
     "Phone Number": "Numèro de telefòn",
     "Unencrypted": "Pas chifrat",
@@ -366,5 +364,13 @@
         "column_service": "Servici",
         "column_summary": "Resumit",
         "column_document": "Document"
+    },
+    "room_settings": {
+        "permissions": {
+            "permissions_section": "Permissions"
+        },
+        "security": {
+            "title": "Seguretat e vida privada"
+        }
     }
 }

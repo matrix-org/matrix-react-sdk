@@ -67,7 +67,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
             ),
             new Tab(
                 SpaceSettingsTab.Roles,
-                _td("Roles & Permissions"),
+                _td("room_settings|permissions|title"),
                 "mx_RoomSettingsDialog_rolesIcon",
                 <RolesRoomSettingsTab room={space} />,
             ),

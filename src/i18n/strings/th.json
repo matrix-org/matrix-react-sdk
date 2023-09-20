@@ -24,11 +24,9 @@
         "other": "และอีก %(count)s ผู้ใช้..."
     },
     "An error has occurred.": "เกิดข้อผิดพลาด",
-    "Anyone": "ทุกคน",
     "Are you sure?": "คุณแน่ใจหรือไม่?",
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
-    "Banned users": "ผู้ใช้ที่ถูกแบน",
     "Confirm password": "ยืนยันรหัสผ่าน",
     "Cryptography": "วิทยาการเข้ารหัส",
     "Current password": "รหัสผ่านปัจจุบัน",
@@ -63,10 +61,8 @@
     "<not supported>": "<ไม่รองรับ>",
     "No more results": "ไม่มีผลลัพธ์อื่น",
     "Passwords can't be empty": "รหัสผ่านต้องไม่ว่าง",
-    "Permissions": "สิทธิ์",
     "Phone": "โทรศัพท์",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
-    "Privileged Users": "ผู้ใช้ที่มีสิทธิพิเศษ",
     "Reject invitation": "ปฏิเสธคำเชิญ",
     "Return to login screen": "กลับไปยังหน้าลงชื่อเข้าใช้",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s ไม่มีสิทธิ์ส่งการแจ้งเตือน - กรุณาตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณ",
@@ -95,9 +91,6 @@
     },
     "Upload Failed": "การอัปโหลดล้มเหลว",
     "Warning!": "คำเตือน!",
-    "Who can read history?": "ใครสามารถอ่านประวัติแชทได้?",
-    "You have <a>disabled</a> URL previews by default.": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
-    "You have <a>enabled</a> URL previews by default.": "ค่าเริ่มต้นของคุณ<a>เปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
     "You need to be logged in.": "คุณต้องเข้าสู่ระบบก่อน",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -213,9 +206,6 @@
     "Connectivity to the server has been lost": "ขาดการเชื่อมต่อกับเซิร์ฟเวอร์",
     "Session ID": "รหัสเซสชัน",
     "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
-    "End-to-end encryption isn't enabled": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง",
-    "Once enabled, encryption cannot be disabled.": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสได้.",
-    "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted room cannot be seen by the server, only by the participants of the room. Enabling encryption may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสสำหรับห้องได้ เซิร์ฟเวอร์ไม่สามารถเห็นข้อความที่ส่งในห้องที่เข้ารหัสได้ เฉพาะผู้เข้าร่วมในห้องเท่านั้น การเปิดใช้งานการเข้ารหัสอาจทำให้บอทและบริดจ์จำนวนมากทำงานไม่ถูกต้อง. <a>เรียนรู้เพิ่มเติมเกี่ยวกับการเข้ารหัส.</a>",
     "Deactivate user": "ปิดใช้งานผู้ใช้",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "การปิดใช้งานผู้ใช้รายนี้จะออกจากระบบและป้องกันไม่ให้กลับเข้าสู่ระบบ นอกจากนี้ ผู้ใช้จะออกจากห้องทั้งหมดที่พวกเขาอยู่ การดำเนินการนี้ไม่สามารถย้อนกลับได้ คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานผู้ใช้รายนี้?",
     "Deactivate user?": "ปิดการใช้งานผู้ใช้?",
@@ -552,6 +542,28 @@
     "space": {
         "context_menu": {
             "explore": "สำรวจห้อง"
+        }
+    },
+    "room_settings": {
+        "permissions": {
+            "privileged_users_section": "ผู้ใช้ที่มีสิทธิพิเศษ",
+            "banned_users_section": "ผู้ใช้ที่ถูกแบน",
+            "permissions_section": "สิทธิ์"
+        },
+        "security": {
+            "enable_encryption_confirm_description": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสสำหรับห้องได้ เซิร์ฟเวอร์ไม่สามารถเห็นข้อความที่ส่งในห้องที่เข้ารหัสได้ เฉพาะผู้เข้าร่วมในห้องเท่านั้น การเปิดใช้งานการเข้ารหัสอาจทำให้บอทและบริดจ์จำนวนมากทำงานไม่ถูกต้อง. <a>เรียนรู้เพิ่มเติมเกี่ยวกับการเข้ารหัส.</a>",
+            "history_visibility_legend": "ใครสามารถอ่านประวัติแชทได้?",
+            "encryption_permanent": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสได้.",
+            "history_visibility_world_readable": "ทุกคน"
+        },
+        "general": {
+            "user_url_previews_default_on": "ค่าเริ่มต้นของคุณ<a>เปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
+            "user_url_previews_default_off": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้"
+        }
+    },
+    "room": {
+        "intro": {
+            "unencrypted_warning": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง"
         }
     }
 }

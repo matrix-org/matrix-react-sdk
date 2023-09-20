@@ -3,7 +3,6 @@
     "New passwords don't match": "As novas palavras-passe não coincidem",
     "A new password must be entered.": "Deve ser introduzida uma nova palavra-passe.",
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
-    "Banned users": "Usuárias/os banidas/os",
     "Confirm password": "Confirmar palavra-passe",
     "Cryptography": "Criptografia",
     "Current password": "Palavra-passe atual",
@@ -26,12 +25,9 @@
     "New passwords must match each other.": "Novas palavras-passe devem coincidir.",
     "Notifications": "Notificações",
     "<not supported>": "<não suportado>",
-    "No users have specific privileges in this room": "Nenhum/a usuário/a possui privilégios específicos nesta sala",
     "Passwords can't be empty": "As palavras-passe não podem estar vazias",
-    "Permissions": "Permissões",
     "Phone": "Telefone",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
-    "Privileged Users": "Usuárias/os privilegiadas/os",
     "Profile": "Perfil",
     "Reject invitation": "Rejeitar convite",
     "Return to login screen": "Retornar à tela de login",
@@ -48,7 +44,6 @@
     "unknown error code": "código de erro desconhecido",
     "Upload avatar": "Enviar icone de perfil de usuário",
     "Verification Pending": "Verificação pendente",
-    "Who can read history?": "Quem pode ler o histórico da sala?",
     "You do not have permission to post to this room": "Você não tem permissão de postar nesta sala",
     "Sun": "Dom",
     "Mon": "Seg",
@@ -151,7 +146,6 @@
     "Error decrypting image": "Erro ao descriptografar a imagem",
     "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
-    "URL Previews": "Pré-visualização de links",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Invited": "Convidada(o)",
@@ -161,11 +155,8 @@
     "No media permissions": "Não há permissões para o uso de vídeo/áudio no seu navegador",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam",
     "Default Device": "Dispositivo padrão",
-    "Anyone": "Qualquer pessoa",
     "Are you sure you want to leave the room '%(roomName)s'?": "Você tem certeza que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
-    "You have <a>disabled</a> URL previews by default.": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
-    "You have <a>enabled</a> URL previews by default.": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
     "Create new room": "Criar nova sala",
     "No display name": "Sem nome público de usuária(o)",
     "Uploading %(filename)s and %(count)s others": {
@@ -187,7 +178,6 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (nível de permissão %(powerLevelNumber)s)",
     "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
     "Delete widget": "Apagar widget",
-    "Publish this room to the public in %(domain)s's room directory?": "Publicar esta sala ao público no diretório de salas de %(domain)s's?",
     "AM": "AM",
     "PM": "PM",
     "Unable to create widget.": "Não foi possível criar o widget.",
@@ -853,6 +843,24 @@
     "space": {
         "context_menu": {
             "explore": "Explorar rooms"
+        }
+    },
+    "room_settings": {
+        "permissions": {
+            "no_privileged_users": "Nenhum/a usuário/a possui privilégios específicos nesta sala",
+            "privileged_users_section": "Usuárias/os privilegiadas/os",
+            "banned_users_section": "Usuárias/os banidas/os",
+            "permissions_section": "Permissões"
+        },
+        "security": {
+            "history_visibility_legend": "Quem pode ler o histórico da sala?",
+            "history_visibility_world_readable": "Qualquer pessoa"
+        },
+        "general": {
+            "publish_toggle": "Publicar esta sala ao público no diretório de salas de %(domain)s's?",
+            "user_url_previews_default_on": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
+            "user_url_previews_default_off": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
+            "url_previews_section": "Pré-visualização de links"
         }
     }
 }

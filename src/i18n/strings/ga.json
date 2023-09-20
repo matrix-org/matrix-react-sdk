@@ -2,7 +2,6 @@
     "Sign in with": "Sínigh isteach le",
     "Show more": "Taispeáin níos mó",
     "All settings": "Gach Socrú",
-    "Security & Privacy": "Slándáil ⁊ Príobháideachas",
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
     "Are you sure you want to leave the room '%(roomName)s'?": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?",
     "Are you sure?": "An bhfuil tú cinnte?",
@@ -278,8 +277,6 @@
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
     "Encryption": "Criptiúchán",
-    "Anyone": "Aon duine",
-    "Permissions": "Ceadanna",
     "Unban": "Bain an cosc",
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
@@ -425,13 +422,8 @@
     "Unnamed room": "Seomra gan ainm",
     "Admin Tools": "Uirlisí Riaracháin",
     "Demote yourself?": "Tabhair ísliú céime duit féin?",
-    "Enable encryption?": "Cumasaigh criptiú?",
-    "Banned users": "Úsáideoirí toirmiscthe",
-    "Muted Users": "Úsáideoirí Fuaim",
-    "Privileged Users": "Úsáideoirí Pribhléideacha",
     "Notification sound": "Fuaim fógra",
     "Uploaded sound": "Fuaim uaslódáilte",
-    "URL Previews": "Réamhamhairc URL",
     "Room Addresses": "Seoltaí Seomra",
     "Room version:": "Leagan seomra:",
     "Room version": "Leagan seomra",
@@ -455,7 +447,6 @@
     },
     "No answer": "Gan freagair",
     "Unknown failure: %(reason)s": "Teip anaithnid: %(reason)s",
-    "Enable encryption in settings.": "Tosaigh criptiú sna socruithe.",
     "Cross-signing is ready but keys are not backed up.": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha.",
     "Failed to reject invitation": "Níorbh fhéidir an cuireadh a dhiúltú",
     "Failed to reject invite": "Níorbh fhéidir an cuireadh a dhiúltú",
@@ -768,7 +759,19 @@
             "invite": "Tabhair cuirí d'úsáideoirí",
             "state_default": "Athraigh socruithe",
             "ban": "Toirmisc úsáideoirí",
-            "notifications.room": "Tabhair fógraí do gach duine"
+            "notifications.room": "Tabhair fógraí do gach duine",
+            "privileged_users_section": "Úsáideoirí Pribhléideacha",
+            "muted_users_section": "Úsáideoirí Fuaim",
+            "banned_users_section": "Úsáideoirí toirmiscthe",
+            "permissions_section": "Ceadanna"
+        },
+        "security": {
+            "enable_encryption_confirm_title": "Cumasaigh criptiú?",
+            "title": "Slándáil ⁊ Príobháideachas",
+            "history_visibility_world_readable": "Aon duine"
+        },
+        "general": {
+            "url_previews_section": "Réamhamhairc URL"
         }
     },
     "encryption": {
@@ -841,5 +844,10 @@
         "column_service": "Seirbhís",
         "column_summary": "Achoimre",
         "column_document": "Cáipéis"
+    },
+    "room": {
+        "intro": {
+            "enable_encryption_prompt": "Tosaigh criptiú sna socruithe."
+        }
     }
 }

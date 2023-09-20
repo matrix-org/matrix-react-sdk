@@ -9,7 +9,6 @@
     "Warning!": "Advarsel!",
     "Account": "Konto",
     "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
-    "Banned users": "Bortviste brugere",
     "Cryptography": "Kryptografi",
     "Deactivate Account": "Deaktiver brugerkonto",
     "Default": "Standard",
@@ -172,11 +171,6 @@
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Underskriftsnøglen du supplerede matcher den underskriftsnøgle du modtog fra %(userId)s's session %(deviceId)s. Sessionen er markeret som verificeret.",
     "Explore rooms": "Udforsk rum",
     "Verification code": "Verifikationskode",
-    "Once enabled, encryption cannot be disabled.": "Efter aktivering er det ikke muligt at slå kryptering fra.",
-    "Security & Privacy": "Sikkerhed & Privatliv",
-    "Who can read history?": "Hvem kan læse historikken?",
-    "Enable encryption?": "Aktiver kryptering?",
-    "Permissions": "Tilladelser",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
     "Passwords don't match": "Adgangskoderne matcher ikke",
@@ -823,6 +817,18 @@
     "space": {
         "context_menu": {
             "explore": "Udforsk rum"
+        }
+    },
+    "room_settings": {
+        "permissions": {
+            "banned_users_section": "Bortviste brugere",
+            "permissions_section": "Tilladelser"
+        },
+        "security": {
+            "enable_encryption_confirm_title": "Aktiver kryptering?",
+            "history_visibility_legend": "Hvem kan læse historikken?",
+            "title": "Sikkerhed & Privatliv",
+            "encryption_permanent": "Efter aktivering er det ikke muligt at slå kryptering fra."
         }
     }
 }
