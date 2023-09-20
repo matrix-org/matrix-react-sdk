@@ -25,6 +25,7 @@ import {
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
 import SettingsSubsection from "../shared/SettingsSubsection";
+import SdkConfig from "../../../../SdkConfig";
 
 interface IProps {
     onShowQr: () => void;
@@ -43,7 +44,9 @@ export default class LoginWithQRSection extends React.Component<IProps> {
         const capability = UNSTABLE_MSC3882_CAPABILITY.findIn<IMSC3882GetLoginTokenCapability>(this.props.capabilities);
         const msc3882Supported =
             !!this.props.versions?.unstable_features?.["org.matrix.msc3882"] || !!capability?.enabled;
-        const msc3886Supported = !!this.props.versions?.unstable_features?.["org.matrix.msc3886"];
+        const msc3886Supported =
+            !!this.props.versions?.unstable_features?.["org.matrix.msc3886"] ||
+            !!SdkConfig.get().login_with_qr?.default_rz_server;
         const offerShowQr = msc3882Supported && msc3886Supported;
 
         // don't show anything if no method is available

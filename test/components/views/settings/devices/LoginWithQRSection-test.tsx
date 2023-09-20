@@ -21,6 +21,7 @@ import React from "react";
 
 import LoginWithQRSection from "../../../../../src/components/views/settings/devices/LoginWithQRSection";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
+import SdkConfig from "../../../../../src/SdkConfig";
 
 function makeClient() {
     return mocked({
@@ -107,6 +108,19 @@ describe("<LoginWithQRSection />", () => {
                     versions: makeVersions({
                         "org.matrix.msc3886": true,
                     }),
+                    capabilities: {
+                        [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true },
+                    },
+                }),
+            );
+            expect(container).toMatchSnapshot();
+        });
+
+        it("MSC3882 r1 + default_rz_server", async () => {
+            jest.spyOn(SdkConfig, "get").mockReturnValue({ login_with_qr: { default_rz_server: "https://rz.local" } });
+            const { container } = render(
+                getComponent({
+                    versions: makeVersions({}),
                     capabilities: {
                         [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true },
                     },

@@ -24,6 +24,7 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
 import LoginWithQRFlow from "./LoginWithQRFlow";
+import SdkConfig from "../../../SdkConfig";
 
 /**
  * The intention of this enum is to have a mode that scans a QR code instead of generating one.
@@ -153,9 +154,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateCode = async (): Promise<void> => {
         let rendezvous: MSC3906Rendezvous;
         try {
+            const fallbackRzServer = SdkConfig.get().login_with_qr?.default_rz_server;
+
             const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
                 onFailure: this.onFailure,
                 client: this.props.client,
+                fallbackRzServer,
             });
 
             const channel = new MSC3903ECDHv2RendezvousChannel<MSC3906RendezvousPayload>(
