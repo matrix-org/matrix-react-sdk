@@ -29,7 +29,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
     "Banned users": "ผู้ใช้ที่ถูกแบน",
-    "Commands": "คำสั่ง",
     "Confirm password": "ยืนยันรหัสผ่าน",
     "Cryptography": "วิทยาการเข้ารหัส",
     "Current password": "รหัสผ่านปัจจุบัน",
@@ -144,7 +143,6 @@
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
     "Enter passphrase": "กรอกรหัสผ่าน",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
-    "Users": "ผู้ใช้",
     "Verification Pending": "รอการตรวจสอบ",
     "You cannot place a call with yourself.": "คุณไม่สามารถโทรหาตัวเองได้",
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
@@ -383,7 +381,11 @@
         "format_italic": "ตัวเอียง",
         "format_underline": "ขีดเส้นใต้",
         "format_inline_code": "โค้ด",
-        "format_link": "ลิงค์"
+        "format_link": "ลิงค์",
+        "autocomplete": {
+            "command_description": "คำสั่ง",
+            "user_description": "ผู้ใช้"
+        }
     },
     "Link": "ลิงค์",
     "Code": "โค้ด",

@@ -6,7 +6,6 @@
     "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
     "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
     "Session ID": "Sessions ID",
-    "Commands": "Kommandoer",
     "Warning!": "Advarsel!",
     "Account": "Konto",
     "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
@@ -727,7 +726,10 @@
     "composer": {
         "placeholder_reply": "Besvar…",
         "placeholder_encrypted": "Send en krypteret besked…",
-        "placeholder": "Send en besked…"
+        "placeholder": "Send en besked…",
+        "autocomplete": {
+            "command_description": "Kommandoer"
+        }
     },
     "voip": {
         "call_failed": "Opkald mislykkedes",

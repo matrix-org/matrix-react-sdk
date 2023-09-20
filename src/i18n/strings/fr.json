@@ -19,7 +19,6 @@
     "Banned users": "Utilisateurs bannis",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Impossible de se connecter au serveur d'accueil en HTTP si l’URL dans la barre de votre explorateur est en HTTPS. Utilisez HTTPS ou <a>activez la prise en charge des scripts non-vérifiés</a>.",
     "Change Password": "Changer le mot de passe",
-    "Commands": "Commandes",
     "Confirm password": "Confirmer le mot de passe",
     "Cryptography": "Chiffrement",
     "Current password": "Mot de passe actuel",
@@ -98,7 +97,6 @@
     "Unable to enable Notifications": "Impossible d’activer les notifications",
     "Upload avatar": "Envoyer un avatar",
     "Upload Failed": "Échec de l’envoi",
-    "Users": "Utilisateurs",
     "Verification Pending": "Vérification en attente",
     "Warning!": "Attention !",
     "Who can read history?": "Qui peut lire l’historique ?",
@@ -227,8 +225,6 @@
     "And %(count)s more...": {
         "other": "Et %(count)s autres…"
     },
-    "Notify the whole room": "Notifier tout le salon",
-    "Room Notification": "Notification du salon",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org.",
     "Restricted": "Restreint",
     "URL previews are enabled by default for participants in this room.": "Les aperçus d'URL sont activés par défaut pour les participants de ce salon.",
@@ -670,10 +666,6 @@
     "Show advanced": "Afficher les paramètres avancés",
     "To continue you need to accept the terms of this service.": "Pour continuer vous devez accepter les conditions de ce service.",
     "Document": "Document",
-    "Emoji Autocomplete": "Autocomplétion d’émoji",
-    "Notification Autocomplete": "Autocomplétion de notification",
-    "Room Autocomplete": "Autocomplétion de salon",
-    "User Autocomplete": "Autocomplétion d’utilisateur",
     "Show image": "Afficher l’image",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Clé public du captcha manquante dans la configuration du serveur d’accueil. Veuillez le signaler à l’administrateur de votre serveur d’accueil.",
     "Your email address hasn't been verified yet": "Votre adresse e-mail n’a pas encore été vérifiée",
@@ -686,7 +678,6 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "vérifier qu’aucune des extensions de votre navigateur ne bloque le serveur d’identité (comme Privacy Badger)",
     "contact the administrators of identity server <idserver />": "contacter les administrateurs du serveur d’identité <idserver />",
     "wait and try again later": "attendre et réessayer plus tard",
-    "Command Autocomplete": "Autocomplétion de commande",
     "Cancel search": "Annuler la recherche",
     "Failed to deactivate user": "Échec de la désactivation de l’utilisateur",
     "This client does not support end-to-end encryption.": "Ce client ne prend pas en charge le chiffrement de bout en bout.",
@@ -1511,7 +1502,6 @@
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Add reaction": "Ajouter une réaction",
-    "Space Autocomplete": "Autocomplétion d’espace",
     "Currently joining %(count)s rooms": {
         "one": "Vous êtes en train de rejoindre %(count)s salon",
         "other": "Vous êtes en train de rejoindre %(count)s salons"
@@ -2732,7 +2722,19 @@
         "placeholder_reply_encrypted": "Envoyer une réponse chiffrée…",
         "placeholder_reply": "Envoyer une réponse…",
         "placeholder_encrypted": "Envoyer un message chiffré…",
-        "placeholder": "Envoyer un message…"
+        "placeholder": "Envoyer un message…",
+        "autocomplete": {
+            "command_description": "Commandes",
+            "command_a11y": "Autocomplétion de commande",
+            "emoji_a11y": "Autocomplétion d’émoji",
+            "@room_description": "Notifier tout le salon",
+            "notification_description": "Notification du salon",
+            "notification_a11y": "Autocomplétion de notification",
+            "room_a11y": "Autocomplétion de salon",
+            "space_a11y": "Autocomplétion d’espace",
+            "user_description": "Utilisateurs",
+            "user_a11y": "Autocomplétion d’utilisateur"
+        }
     },
     "Bold": "Gras",
     "Link": "Lien",

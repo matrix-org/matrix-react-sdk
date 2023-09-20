@@ -114,8 +114,6 @@
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
-    "Commands": "Komandalar",
-    "Users": "İstifadəçilər",
     "Confirm passphrase": "Şifrəni təsdiqləyin",
     "This email address is already in use": "Bu e-mail ünvanı istifadə olunur",
     "This phone number is already in use": "Bu telefon nömrəsi artıq istifadə olunur",
@@ -306,5 +304,11 @@
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"
+    },
+    "composer": {
+        "autocomplete": {
+            "command_description": "Komandalar",
+            "user_description": "İstifadəçilər"
+        }
     }
 }

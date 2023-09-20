@@ -182,10 +182,6 @@
     "Profile": "Profil",
     "Account": "Llogari",
     "Return to login screen": "Kthehuni te skena e hyrjeve",
-    "Commands": "Urdhra",
-    "Notify the whole room": "Njofto krejt dhomën",
-    "Room Notification": "Njoftim Dhome",
-    "Users": "Përdorues",
     "Session ID": "ID sesioni",
     "Passphrases must match": "Frazëkalimet duhet të përputhen",
     "Passphrase must not be empty": "Frazëkalimi s’mund të jetë i zbrazët",
@@ -681,11 +677,6 @@
     "Show image": "Shfaq figurë",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Mungon kyç publik captcha-je te formësimi i shërbyesit Home. Ju lutemi, njoftojani këtë përgjegjësit të shërbyesit tuaj Home.",
     "%(creator)s created and configured the room.": "%(creator)s krijoi dhe formësoi dhomën.",
-    "Command Autocomplete": "Vetëplotësim Urdhrash",
-    "Emoji Autocomplete": "Vetëplotësim Emoji-sh",
-    "Notification Autocomplete": "Vetëplotësim NJoftimesh",
-    "Room Autocomplete": "Vetëplotësim Dhomash",
-    "User Autocomplete": "Vetëplotësim Përdoruesish",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Room %(name)s": "Dhoma %(name)s",
@@ -1506,7 +1497,6 @@
     "Unable to access your microphone": "S’arrihet të përdoret mikrofoni juaj",
     "Connecting": "Po lidhet",
     "Message search initialisation failed": "Dështoi gatitje kërkimi mesazhesh",
-    "Space Autocomplete": "Vetëplotësim Hapësire",
     "Currently joining %(count)s rooms": {
         "one": "Aktualisht duke hyrë në %(count)s dhomë",
         "other": "Aktualisht duke hyrë në %(count)s dhoma"
@@ -2658,7 +2648,19 @@
         "placeholder_reply_encrypted": "Dërgoni një përgjigje të fshehtëzuar…",
         "placeholder_reply": "Dërgoni një përgjigje…",
         "placeholder_encrypted": "Dërgoni një mesazh të fshehtëzuar…",
-        "placeholder": "Dërgoni një mesazh…"
+        "placeholder": "Dërgoni një mesazh…",
+        "autocomplete": {
+            "command_description": "Urdhra",
+            "command_a11y": "Vetëplotësim Urdhrash",
+            "emoji_a11y": "Vetëplotësim Emoji-sh",
+            "@room_description": "Njofto krejt dhomën",
+            "notification_description": "Njoftim Dhome",
+            "notification_a11y": "Vetëplotësim NJoftimesh",
+            "room_a11y": "Vetëplotësim Dhomash",
+            "space_a11y": "Vetëplotësim Hapësire",
+            "user_description": "Përdorues",
+            "user_a11y": "Vetëplotësim Përdoruesish"
+        }
     },
     "Bold": "Të trasha",
     "Link": "Lidhje",

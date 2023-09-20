@@ -7,7 +7,6 @@
     "A new password must be entered.": "Es muss ein neues Passwort eingegeben werden.",
     "Session ID": "Sitzungs-ID",
     "Change Password": "Passwort ändern",
-    "Commands": "Befehle",
     "Warning!": "Warnung!",
     "Are you sure you want to reject the invitation?": "Bist du sicher, dass du die Einladung ablehnen willst?",
     "Banned users": "Verbannte Benutzer",
@@ -46,7 +45,6 @@
     "Unban": "Verbannung aufheben",
     "unknown error code": "Unbekannter Fehlercode",
     "Upload avatar": "Profilbild hochladen",
-    "Users": "Benutzer",
     "Verification Pending": "Verifizierung ausstehend",
     "Who can read history?": "Wer kann den bisherigen Verlauf lesen?",
     "You do not have permission to post to this room": "Du hast keine Berechtigung, etwas in diesen Raum zu senden",
@@ -227,8 +225,6 @@
         "other": "%(items)s und %(count)s andere",
         "one": "%(items)s und ein weiteres Raummitglied"
     },
-    "Notify the whole room": "Alle im Raum benachrichtigen",
-    "Room Notification": "Raum-Benachrichtigung",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org.",
     "URL previews are disabled by default for participants in this room.": "URL-Vorschau ist für Mitglieder des Raumes standardmäßig deaktiviert.",
     "URL previews are enabled by default for participants in this room.": "URL-Vorschau ist für Mitglieder des Raumes standardmäßig aktiviert.",
@@ -604,7 +600,6 @@
         "one": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raumes.",
         "other": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raums."
     },
-    "Notification Autocomplete": "Benachrichtigung Autovervollständigen",
     "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
     "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
     "Room %(name)s": "Raum %(name)s",
@@ -933,10 +928,6 @@
     "Nice, strong password!": "Super, ein starkes Passwort!",
     "Other users can invite you to rooms using your contact details": "Andere Personen können dich mit deinen Kontaktdaten in Räume einladen",
     "Failed to re-authenticate due to a homeserver problem": "Erneute Authentifizierung aufgrund eines Problems des Heim-Servers fehlgeschlagen",
-    "Command Autocomplete": "Autovervollständigung aktivieren",
-    "Emoji Autocomplete": "Emoji-Auto-Vervollständigung",
-    "Room Autocomplete": "Raum-Auto-Vervollständigung",
-    "User Autocomplete": "Nutzer-Auto-Vervollständigung",
     "Restore your key backup to upgrade your encryption": "Schlüsselsicherung wiederherstellen, um deine Verschlüsselung zu aktualisieren",
     "Upgrade your encryption": "Aktualisiere deine Verschlüsselung",
     "Unable to set up secret storage": "Sicherer Speicher kann nicht eingerichtet werden",
@@ -1511,7 +1502,6 @@
     "Add reaction": "Reaktion hinzufügen",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
-    "Space Autocomplete": "Spaces automatisch vervollständigen",
     "Currently joining %(count)s rooms": {
         "one": "Betrete %(count)s Raum",
         "other": "Betrete %(count)s Räume"
@@ -2737,7 +2727,19 @@
         "placeholder_reply_encrypted": "Verschlüsselte Antwort senden …",
         "placeholder_reply": "Antwort senden …",
         "placeholder_encrypted": "Verschlüsselte Nachricht senden …",
-        "placeholder": "Nachricht senden …"
+        "placeholder": "Nachricht senden …",
+        "autocomplete": {
+            "command_description": "Befehle",
+            "command_a11y": "Autovervollständigung aktivieren",
+            "emoji_a11y": "Emoji-Auto-Vervollständigung",
+            "@room_description": "Alle im Raum benachrichtigen",
+            "notification_description": "Raum-Benachrichtigung",
+            "notification_a11y": "Benachrichtigung Autovervollständigen",
+            "room_a11y": "Raum-Auto-Vervollständigung",
+            "space_a11y": "Spaces automatisch vervollständigen",
+            "user_description": "Benutzer",
+            "user_a11y": "Nutzer-Auto-Vervollständigung"
+        }
     },
     "Bold": "Fett",
     "Link": "Link",

@@ -4,7 +4,6 @@
     "A new password must be entered.": "Deve ser introduzida uma nova palavra-passe.",
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
     "Banned users": "Usuárias/os banidas/os",
-    "Commands": "Comandos",
     "Confirm password": "Confirmar palavra-passe",
     "Cryptography": "Criptografia",
     "Current password": "Palavra-passe atual",
@@ -48,7 +47,6 @@
     "Unban": "Desfazer banimento",
     "unknown error code": "código de erro desconhecido",
     "Upload avatar": "Enviar icone de perfil de usuário",
-    "Users": "Usuários",
     "Verification Pending": "Verificação pendente",
     "Who can read history?": "Quem pode ler o histórico da sala?",
     "You do not have permission to post to this room": "Você não tem permissão de postar nesta sala",
@@ -840,5 +838,11 @@
     "update": {
         "see_changes_button": "O que há de novo?",
         "release_notes_toast_title": "Novidades"
+    },
+    "composer": {
+        "autocomplete": {
+            "command_description": "Comandos",
+            "user_description": "Usuários"
+        }
     }
 }

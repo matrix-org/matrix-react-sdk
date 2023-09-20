@@ -197,7 +197,6 @@
     "No more results": "Rohkem otsingutulemusi pole",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s'il puudub luba sulle teavituste kuvamiseks - palun kontrolli oma brauseri seadistusi",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ei saanud luba teavituste kuvamiseks - palun proovi uuesti",
-    "Room Notification": "Jututoa teavitus",
     "This homeserver has hit its Monthly Active User limit.": "See koduserver on saavutanud igakuise aktiivsete kasutajate piiri.",
     "Are you sure?": "Kas sa oled kindel?",
     "Jump to read receipt": "Hüppa lugemisteatise juurde",
@@ -392,9 +391,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ei sa ühendust koduserveriga. Palun kontrolli, et sinu <a>koduserveri SSL sertifikaat</a> oleks usaldusväärne ning mõni brauseri lisamoodul ei blokeeri päringuid.",
     "Create account": "Loo kasutajakonto",
     "Clear personal data": "Kustuta privaatsed andmed",
-    "Commands": "Käsud",
-    "Notify the whole room": "Teavita kogu jututuba",
-    "Users": "Kasutajad",
     "Terms and Conditions": "Kasutustingimused",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Sa ei saa saata ühtego sõnumit enne, kui oled läbi lugenud ja nõustunud <consentLink>meie kasutustingimustega</consentLink>.",
     "Couldn't load page": "Lehe laadimine ei õnnestunud",
@@ -580,11 +576,6 @@
     "Identity server URL does not appear to be a valid identity server": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
     "Looks good!": "Tundub õige!",
     "Failed to re-authenticate due to a homeserver problem": "Uuesti autentimine ei õnnestunud koduserveri vea tõttu",
-    "Command Autocomplete": "Käskude automaatne lõpetamine",
-    "Emoji Autocomplete": "Emoji'de automaatne lõpetamine",
-    "Notification Autocomplete": "Teavituste automaatne lõpetamine",
-    "Room Autocomplete": "Jututubade nimede automaatne lõpetamine",
-    "User Autocomplete": "Kasutajanimede automaatne lõpetamine",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Palu, et sinu %(brand)s'u haldur kontrolliks <a>sinu seadistusi</a> võimalike vigaste või topeltkirjete osas.",
     "Cannot reach identity server": "Isikutuvastusserverit ei õnnestu leida",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Sa võid registreeruda, kuid mõned funktsionaalsused pole kasutatavad seni, kuni isikutuvastusserver pole uuesti võrgus. Kui see teade tekib järjepanu, siis palun kontrolli oma seadistusi või võta ühendust serveri haldajaga.",
@@ -1683,7 +1674,6 @@
     "Skip verification for now": "Jäta verifitseerimine praegu vahele",
     "Really reset verification keys?": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
     "Create poll": "Loo selline küsitlus",
-    "Space Autocomplete": "Kogukonnakeskuste dünaamiline otsing",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Uuendan kogukonnakeskust...",
         "other": "Uuendan kogukonnakeskuseid... (%(progress)s / %(count)s)"
@@ -2732,7 +2722,19 @@
         "placeholder_reply_encrypted": "Saada krüptitud vastus…",
         "placeholder_reply": "Saada vastus…",
         "placeholder_encrypted": "Saada krüptitud sõnum…",
-        "placeholder": "Saada sõnum…"
+        "placeholder": "Saada sõnum…",
+        "autocomplete": {
+            "command_description": "Käsud",
+            "command_a11y": "Käskude automaatne lõpetamine",
+            "emoji_a11y": "Emoji'de automaatne lõpetamine",
+            "@room_description": "Teavita kogu jututuba",
+            "notification_description": "Jututoa teavitus",
+            "notification_a11y": "Teavituste automaatne lõpetamine",
+            "room_a11y": "Jututubade nimede automaatne lõpetamine",
+            "space_a11y": "Kogukonnakeskuste dünaamiline otsing",
+            "user_description": "Kasutajad",
+            "user_a11y": "Kasutajanimede automaatne lõpetamine"
+        }
     },
     "Bold": "Paks kiri",
     "Link": "Link",

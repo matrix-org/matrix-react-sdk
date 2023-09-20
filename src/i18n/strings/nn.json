@@ -276,10 +276,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Merk deg at du loggar inn på %(hs)s-tenaren, ikkje matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Kan ikkje kobla til heimetenaren via HTTP fordi URL-adressa i nettlesaren er HTTPS. Bruk HTTPS, eller <a>aktiver usikre skript</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader.",
-    "Commands": "Kommandoar",
-    "Notify the whole room": "Varsle heile rommet",
-    "Room Notification": "Romvarsel",
-    "Users": "Brukarar",
     "Session ID": "Økt-ID",
     "Passphrases must match": "Passfrasane må vere identiske",
     "Passphrase must not be empty": "Passfrasefeltet kan ikkje stå tomt",
@@ -723,7 +719,13 @@
         "placeholder_reply_encrypted": "Send eit kryptert svar…",
         "placeholder_reply": "Send eit svar…",
         "placeholder_encrypted": "Send ei kryptert melding…",
-        "placeholder": "Send melding…"
+        "placeholder": "Send melding…",
+        "autocomplete": {
+            "command_description": "Kommandoar",
+            "@room_description": "Varsle heile rommet",
+            "notification_description": "Romvarsel",
+            "user_description": "Brukarar"
+        }
     },
     "Bold": "Feit",
     "Code": "Kode",

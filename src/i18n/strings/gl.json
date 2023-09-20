@@ -230,10 +230,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Non se pode conectar ao servidor vía HTTP cando na barra de enderezos do navegador está HTTPS. Utiliza HTTPS ou <a>active scripts non seguros</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións.",
-    "Commands": "Comandos",
-    "Notify the whole room": "Notificar a toda a sala",
-    "Room Notification": "Notificación da sala",
-    "Users": "Usuarias",
     "Session ID": "ID de sesión",
     "Passphrases must match": "As frases de paso deben coincidir",
     "Passphrase must not be empty": "A frase de paso non pode quedar baldeira",
@@ -950,11 +946,6 @@
     "Create account": "Crea unha conta",
     "Failed to re-authenticate due to a homeserver problem": "Fallo ó reautenticar debido a un problema no servidor",
     "Clear personal data": "Baleirar datos personais",
-    "Command Autocomplete": "Autocompletado de comandos",
-    "Emoji Autocomplete": "Autocompletado emoticonas",
-    "Notification Autocomplete": "Autocompletado de notificacións",
-    "Room Autocomplete": "Autocompletado de Salas",
-    "User Autocomplete": "Autocompletados de Usuaria",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
     "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
     "Enter your account password to confirm the upgrade:": "Escribe o contrasinal para confirmar a actualización:",
@@ -1511,7 +1502,6 @@
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Add reaction": "Engadir reacción",
     "Message search initialisation failed": "Fallou a inicialización da busca de mensaxes",
-    "Space Autocomplete": "Autocompletado do espazo",
     "Currently joining %(count)s rooms": {
         "one": "Neste intre estás en %(count)s sala",
         "other": "Neste intre estás en %(count)s salas"
@@ -2426,7 +2416,19 @@
         "placeholder_reply_encrypted": "Enviar unha resposta cifrada…",
         "placeholder_reply": "Responder…",
         "placeholder_encrypted": "Enviar unha mensaxe cifrada…",
-        "placeholder": "Enviar mensaxe…"
+        "placeholder": "Enviar mensaxe…",
+        "autocomplete": {
+            "command_description": "Comandos",
+            "command_a11y": "Autocompletado de comandos",
+            "emoji_a11y": "Autocompletado emoticonas",
+            "@room_description": "Notificar a toda a sala",
+            "notification_description": "Notificación da sala",
+            "notification_a11y": "Autocompletado de notificacións",
+            "room_a11y": "Autocompletado de Salas",
+            "space_a11y": "Autocompletado do espazo",
+            "user_description": "Usuarias",
+            "user_a11y": "Autocompletados de Usuaria"
+        }
     },
     "Bold": "Resaltado",
     "Code": "Código",

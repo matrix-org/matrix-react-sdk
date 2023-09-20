@@ -231,10 +231,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Nota che stai accedendo nel server %(hs)s , non matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Impossibile connettersi all'homeserver via HTTP quando c'è un URL HTTPS nella barra del tuo browser. Usa HTTPS o <a>attiva gli script non sicuri</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Impossibile connettersi all'homeserver - controlla la tua connessione, assicurati che il <a>certificato SSL dell'homeserver</a> sia fidato e che un'estensione del browser non stia bloccando le richieste.",
-    "Commands": "Comandi",
-    "Notify the whole room": "Notifica l'intera stanza",
-    "Room Notification": "Notifica della stanza",
-    "Users": "Utenti",
     "Session ID": "ID sessione",
     "Passphrases must match": "Le password devono coincidere",
     "Passphrase must not be empty": "La password non può essere vuota",
@@ -671,10 +667,6 @@
     "Show image": "Mostra immagine",
     "To continue you need to accept the terms of this service.": "Per continuare devi accettare le condizioni di servizio.",
     "Document": "Documento",
-    "Emoji Autocomplete": "Autocompletamento emoji",
-    "Notification Autocomplete": "Autocompletamento notifiche",
-    "Room Autocomplete": "Autocompletamento stanze",
-    "User Autocomplete": "Autocompletamento utenti",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Chiave pubblica di Captcha mancante nella configurazione dell'homeserver. Segnalalo all'amministratore dell'homeserver.",
     "Add Email Address": "Aggiungi indirizzo email",
     "Add Phone Number": "Aggiungi numero di telefono",
@@ -692,7 +684,6 @@
     "Cancel search": "Annulla ricerca",
     "Jump to first unread room.": "Salta alla prima stanza non letta.",
     "Jump to first invite.": "Salta al primo invito.",
-    "Command Autocomplete": "Autocompletamento comando",
     "Room %(name)s": "Stanza %(name)s",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Questa azione richiede l'accesso al server di identità predefinito <server /> per verificare un indirizzo email o numero di telefono, ma il server non ha termini di servizio.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -1511,7 +1502,6 @@
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
     "Add reaction": "Aggiungi reazione",
     "Message search initialisation failed": "Inizializzazione ricerca messaggi fallita",
-    "Space Autocomplete": "Autocompletamento spazio",
     "Currently joining %(count)s rooms": {
         "one": "Stai entrando in %(count)s stanza",
         "other": "Stai entrando in %(count)s stanze"
@@ -2737,7 +2727,19 @@
         "placeholder_reply_encrypted": "Invia una risposta criptata…",
         "placeholder_reply": "Invia risposta…",
         "placeholder_encrypted": "Invia un messaggio criptato…",
-        "placeholder": "Invia un messaggio…"
+        "placeholder": "Invia un messaggio…",
+        "autocomplete": {
+            "command_description": "Comandi",
+            "command_a11y": "Autocompletamento comando",
+            "emoji_a11y": "Autocompletamento emoji",
+            "@room_description": "Notifica l'intera stanza",
+            "notification_description": "Notifica della stanza",
+            "notification_a11y": "Autocompletamento notifiche",
+            "room_a11y": "Autocompletamento stanze",
+            "space_a11y": "Autocompletamento spazio",
+            "user_description": "Utenti",
+            "user_a11y": "Autocompletamento utenti"
+        }
     },
     "Bold": "Grassetto",
     "Link": "Collegamento",

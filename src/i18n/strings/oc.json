@@ -135,8 +135,6 @@
     "Passwords don't match": "Los senhals correspondon pas",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
-    "Commands": "Comandas",
-    "Users": "Utilizaires",
     "Success!": "Capitada !",
     "Explore rooms": "Percórrer las salas",
     "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
@@ -268,7 +266,11 @@
         "placeholder_reply_encrypted": "Enviar una responsa chifrada …",
         "placeholder_reply": "Enviar una responsa…",
         "placeholder_encrypted": "Enviar un messatge chifrat…",
-        "placeholder": "Enviar un messatge…"
+        "placeholder": "Enviar un messatge…",
+        "autocomplete": {
+            "command_description": "Comandas",
+            "user_description": "Utilizaires"
+        }
     },
     "Bold": "Gras",
     "power_level": {

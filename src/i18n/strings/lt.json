@@ -146,9 +146,6 @@
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org.",
-    "Commands": "Komandos",
-    "Notify the whole room": "Pranešti visam kambariui",
-    "Users": "Naudotojai",
     "Session ID": "Seanso ID",
     "Passphrases must match": "Slaptafrazės privalo sutapti",
     "Passphrase must not be empty": "Slaptafrazė negali būti tuščia",
@@ -582,7 +579,6 @@
     "Create a new room with the same name, description and avatar": "Sukurti naują kambarį su tuo pačiu pavadinimu, aprašymu ir pseudoportretu",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
-    "Emoji Autocomplete": "Jaustukų automatinis užbaigimas",
     "Failed to reject invitation": "Nepavyko atmesti pakvietimo",
     "Can't leave Server Notices room": "Negalima išeiti iš Serverio Pranešimų kambario",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Šis kambarys yra naudojamas svarbioms žinutėms iš serverio, tad jūs negalite iš jo išeiti.",
@@ -812,8 +808,6 @@
     "You are currently ignoring:": "Šiuo metu ignoruojate:",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Ar tikrai? Jūs prarasite savo šifruotas žinutes, jei jūsų raktams nebus tinkamai sukurtos atsarginės kopijos.",
     "Your keys are <b>not being backed up from this session</b>.": "Jūsų raktams <b>nėra daromos atsarginės kopijos iš šio seanso</b>.",
-    "Notification Autocomplete": "Pranešimo Automatinis Užbaigimas",
-    "Room Notification": "Kambario Pranešimas",
     "You have %(count)s unread notifications in a prior version of this room.": {
         "one": "Jūs turite %(count)s neperskaitytą pranešimą ankstesnėje šio kambario versijoje.",
         "other": "Jūs turite %(count)s neperskaitytus(-ų) pranešimus(-ų) ankstesnėje šio kambario versijoje."
@@ -1763,7 +1757,15 @@
         "placeholder_reply_encrypted": "Siųsti šifruotą atsakymą…",
         "placeholder_reply": "Siųsti atsakymą…",
         "placeholder_encrypted": "Siųsti šifruotą žinutę…",
-        "placeholder": "Siųsti žinutę…"
+        "placeholder": "Siųsti žinutę…",
+        "autocomplete": {
+            "command_description": "Komandos",
+            "emoji_a11y": "Jaustukų automatinis užbaigimas",
+            "@room_description": "Pranešti visam kambariui",
+            "notification_description": "Kambario Pranešimas",
+            "notification_a11y": "Pranešimo Automatinis Užbaigimas",
+            "user_description": "Naudotojai"
+        }
     },
     "Bold": "Pusjuodis",
     "Code": "Kodas",

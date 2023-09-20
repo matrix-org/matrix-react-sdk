@@ -182,8 +182,6 @@
     "Explore rooms": "Se alle rom",
     "Your password has been reset.": "Passordet ditt har blitt tilbakestilt.",
     "Create account": "Opprett konto",
-    "Commands": "Kommandoer",
-    "Users": "Brukere",
     "Success!": "Suksess!",
     "Set up": "Sett opp",
     "Identity server has no terms of service": "Identitetstjeneren har ingen brukervilkår",
@@ -570,7 +568,6 @@
     "Switch to dark mode": "Bytt til mørk modus",
     "Switch theme": "Bytt tema",
     "All settings": "Alle innstillinger",
-    "Emoji Autocomplete": "Auto-fullfør emojier",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "Create key backup": "Opprett nøkkelsikkerhetskopi",
     "Set up Secure Messages": "Sett opp sikre meldinger",
@@ -704,7 +701,6 @@
     "Uruguay": "Uruguay",
     "Remember this": "Husk dette",
     "Move right": "Gå til høyre",
-    "Notify the whole room": "Varsle hele rommet",
     "You created this room.": "Du opprettet dette rommet.",
     "Security Phrase": "Sikkerhetsfrase",
     "Open dial pad": "Åpne nummerpanelet",
@@ -1201,7 +1197,13 @@
         "placeholder_reply_encrypted": "Send et kryptert svar …",
         "placeholder_reply": "Send et svar …",
         "placeholder_encrypted": "Send en kryptert beskjed …",
-        "placeholder": "Send en melding …"
+        "placeholder": "Send en melding …",
+        "autocomplete": {
+            "command_description": "Kommandoer",
+            "emoji_a11y": "Auto-fullfør emojier",
+            "@room_description": "Varsle hele rommet",
+            "user_description": "Brukere"
+        }
     },
     "Bold": "Fet",
     "Code": "Kode",

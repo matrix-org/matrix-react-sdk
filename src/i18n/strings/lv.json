@@ -18,7 +18,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Neizdodas savienoties ar bāzes serveri izmantojot HTTP protokolu, kad pārlūka adreses laukā norādīts HTTPS protokols. Tā vietā izmanto HTTPS vai <a>iespējo nedrošos skriptus</a>.",
     "Change Password": "Nomainīt paroli",
-    "Commands": "Komandas",
     "Confirm password": "Apstipriniet paroli",
     "Cryptography": "Kriptogrāfija",
     "Current password": "Pašreizējā parole",
@@ -130,7 +129,6 @@
     "You have <a>enabled</a> URL previews by default.": "URL priekšskatījumi pēc noklusējuma jums ir<a>iespējoti</a> .",
     "Upload avatar": "Augšupielādēt avataru",
     "Upload Failed": "Augšupielāde (nosūtīšana) neizdevās",
-    "Users": "Lietotāji",
     "Verification Pending": "Gaida verifikāciju",
     "Verified key": "Verificēta atslēga",
     "Warning!": "Brīdinājums!",
@@ -241,8 +239,6 @@
     "Old cryptography data detected": "Tika uzieti novecojuši šifrēšanas dati",
     "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Lūdzu ņem vērā, ka Tu pieraksties %(hs)s serverī, nevis matrix.org serverī.",
-    "Notify the whole room": "Paziņot visai istabai",
-    "Room Notification": "Istabas paziņojums",
     "%(items)s and %(count)s others": {
         "one": "%(items)s un viens cits",
         "other": "%(items)s un %(count)s citus"
@@ -476,11 +472,6 @@
     "Go back to set it again.": "Atgriezties, lai iestatītu atkārtoti.",
     "That doesn't match.": "Nesakrīt.",
     "That matches!": "Sakrīt!",
-    "User Autocomplete": "Lietotāju automātiska pabeigšana",
-    "Room Autocomplete": "Istabu automātiska pabeigšana",
-    "Notification Autocomplete": "Paziņojumu automātiska pabeigšana",
-    "Emoji Autocomplete": "Emocijzīmju automātiska pabeigšana",
-    "Command Autocomplete": "Komandu automātiska pabeigšana",
     "Clear personal data": "Dzēst personas datus",
     "Failed to re-authenticate due to a homeserver problem": "Bāzes servera problēmas dēļ atkārtoti autentificēties neizdevās",
     "Create account": "Izveidot kontu",
@@ -1251,7 +1242,18 @@
         "placeholder_reply_encrypted": "Sūtīt šifrētu atbildi…",
         "placeholder_reply": "Nosūtīt atbildi…",
         "placeholder_encrypted": "Sūtīt šifrētu ziņu…",
-        "placeholder": "Nosūtīt ziņu…"
+        "placeholder": "Nosūtīt ziņu…",
+        "autocomplete": {
+            "command_description": "Komandas",
+            "command_a11y": "Komandu automātiska pabeigšana",
+            "emoji_a11y": "Emocijzīmju automātiska pabeigšana",
+            "@room_description": "Paziņot visai istabai",
+            "notification_description": "Istabas paziņojums",
+            "notification_a11y": "Paziņojumu automātiska pabeigšana",
+            "room_a11y": "Istabu automātiska pabeigšana",
+            "user_description": "Lietotāji",
+            "user_a11y": "Lietotāju automātiska pabeigšana"
+        }
     },
     "Code": "Kods",
     "power_level": {

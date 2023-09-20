@@ -20,7 +20,6 @@
     "Banned users": "Bannade användare",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Kan inte ansluta till en hemserver via HTTP då adressen i webbläsaren är HTTPS. Använd HTTPS, eller <a>aktivera osäkra skript</a>.",
     "Change Password": "Byt lösenord",
-    "Commands": "Kommandon",
     "Confirm password": "Bekräfta lösenord",
     "Cryptography": "Kryptografi",
     "Current password": "Nuvarande lösenord",
@@ -228,9 +227,6 @@
     "Delete Widget": "Radera widget",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Att radera en widget tar bort den för alla användare i rummet. Är du säker på att du vill radera den?",
     "This room is not public. You will not be able to rejoin without an invite.": "Det här rummet är inte offentligt. Du kommer inte kunna gå med igen utan en inbjudan.",
-    "Notify the whole room": "Meddela hela rummet",
-    "Room Notification": "Rumsavisering",
-    "Users": "Användare",
     "Export room keys": "Exportera rumsnycklar",
     "Import room keys": "Importera rumsnycklar",
     "File to import": "Fil att importera",
@@ -984,11 +980,6 @@
     "Identity server URL does not appear to be a valid identity server": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
     "Failed to re-authenticate due to a homeserver problem": "Misslyckades att återautentisera p.g.a. ett hemserverproblem",
     "Clear personal data": "Rensa personlig information",
-    "Command Autocomplete": "Autokomplettering av kommandon",
-    "Emoji Autocomplete": "Autokomplettering av emoji",
-    "Notification Autocomplete": "Autokomplettering av aviseringar",
-    "Room Autocomplete": "Autokomplettering av rum",
-    "User Autocomplete": "Autokomplettering av användare",
     "Confirm encryption setup": "Bekräfta krypteringsinställning",
     "Click the button below to confirm setting up encryption.": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Skydda mot att förlora åtkomst till krypterade meddelanden och data genom att säkerhetskopiera krypteringsnycklar på din server.",
@@ -1510,7 +1501,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Vi kunde inte komma åt din mikrofon. Vänligen kolla dina webbläsarinställningar och försök igen.",
     "Unable to access your microphone": "Kan inte komma åt din mikrofon",
     "Connecting": "Ansluter",
-    "Space Autocomplete": "Utrymmesautokomplettering",
     "Currently joining %(count)s rooms": {
         "one": "Går just nu med i %(count)s rum",
         "other": "Går just nu med i %(count)s rum"
@@ -2688,7 +2678,19 @@
         "placeholder_reply_encrypted": "Skicka ett krypterat svar…",
         "placeholder_reply": "Skicka ett svar…",
         "placeholder_encrypted": "Skicka ett krypterat meddelande…",
-        "placeholder": "Skicka ett meddelande…"
+        "placeholder": "Skicka ett meddelande…",
+        "autocomplete": {
+            "command_description": "Kommandon",
+            "command_a11y": "Autokomplettering av kommandon",
+            "emoji_a11y": "Autokomplettering av emoji",
+            "@room_description": "Meddela hela rummet",
+            "notification_description": "Rumsavisering",
+            "notification_a11y": "Autokomplettering av aviseringar",
+            "room_a11y": "Autokomplettering av rum",
+            "space_a11y": "Utrymmesautokomplettering",
+            "user_description": "Användare",
+            "user_a11y": "Autokomplettering av användare"
+        }
     },
     "Bold": "Fet",
     "Link": "Länk",

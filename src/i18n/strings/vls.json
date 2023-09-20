@@ -539,10 +539,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
     "Create account": "Account anmoakn",
-    "Commands": "Ipdrachtn",
-    "Notify the whole room": "Loat dit an gans ’t groepsgesprek weetn",
-    "Room Notification": "Groepsgespreksmeldienge",
-    "Users": "Gebruukers",
     "Session ID": "Sessie-ID",
     "Passphrases must match": "Paswoordn moetn overeenkommn",
     "Passphrase must not be empty": "Paswoord meug nie leeg zyn",
@@ -737,7 +733,13 @@
     "composer": {
         "format_inline_code": "Code",
         "placeholder_reply_encrypted": "Verstuurt e versleuterd antwoord…",
-        "placeholder_encrypted": "Verstuurt e versleuterd bericht…"
+        "placeholder_encrypted": "Verstuurt e versleuterd bericht…",
+        "autocomplete": {
+            "command_description": "Ipdrachtn",
+            "@room_description": "Loat dit an gans ’t groepsgesprek weetn",
+            "notification_description": "Groepsgespreksmeldienge",
+            "user_description": "Gebruukers"
+        }
     },
     "Code": "Code",
     "power_level": {

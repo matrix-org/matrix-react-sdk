@@ -239,8 +239,6 @@
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
-    "Users": "Úsáideoirí",
-    "Commands": "Ordú",
     "Phone": "Guthán",
     "Email": "Ríomhphost",
     "Home": "Tús",
@@ -644,7 +642,11 @@
     "composer": {
         "format_bold": "Trom",
         "format_strikethrough": "Líne a chur trí",
-        "format_inline_code": "Cód"
+        "format_inline_code": "Cód",
+        "autocomplete": {
+            "command_description": "Ordú",
+            "user_description": "Úsáideoirí"
+        }
     },
     "Bold": "Trom",
     "Code": "Cód",

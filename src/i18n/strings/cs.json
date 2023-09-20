@@ -45,7 +45,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci.",
     "Banned users": "Vykázaní uživatelé",
     "Change Password": "Změnit heslo",
-    "Commands": "Příkazy",
     "Confirm password": "Potvrďte heslo",
     "Cryptography": "Šifrování",
     "Current password": "Současné heslo",
@@ -134,7 +133,6 @@
         "other": "Nahrávání souboru %(filename)s a %(count)s dalších"
     },
     "Upload Failed": "Nahrávání selhalo",
-    "Users": "Uživatelé",
     "Verification Pending": "Čeká na ověření",
     "Verified key": "Ověřený klíč",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -233,8 +231,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Je možné, že budete potřebovat manuálně povolit %(brand)s přístup k mikrofonu/webkameře",
     "Profile": "Profil",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org.",
-    "Notify the whole room": "Oznámení pro celou místnost",
-    "Room Notification": "Oznámení místnosti",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
     "Send": "Odeslat",
@@ -699,11 +695,6 @@
     "Jump to first invite.": "Přejít na první pozvánku.",
     "Failed to re-authenticate due to a homeserver problem": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
     "Clear personal data": "Smazat osobní data",
-    "Command Autocomplete": "Automatické doplňování příkazů",
-    "Emoji Autocomplete": "Automatické doplňování emoji",
-    "Notification Autocomplete": "Automatické doplňování oznámení",
-    "Room Autocomplete": "Automatické doplňování místností",
-    "User Autocomplete": "Automatické doplňování uživatelů",
     "Error upgrading room": "Chyba při aktualizaci místnosti",
     "Double check that your server supports the room version chosen and try again.": "Zkontrolujte, že váš server opravdu podporuje zvolenou verzi místnosti.",
     "Cannot connect to integration manager": "Nepovedlo se připojení ke správci integrací",
@@ -1510,7 +1501,6 @@
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
     "Add reaction": "Přidat reakci",
-    "Space Autocomplete": "Automatické dokončení prostoru",
     "Currently joining %(count)s rooms": {
         "one": "Momentálně se připojuje %(count)s místnost",
         "other": "Momentálně se připojuje %(count)s místností"
@@ -2737,7 +2727,19 @@
         "placeholder_reply_encrypted": "Odeslat šifrovanou odpověď…",
         "placeholder_reply": "Odpovědět…",
         "placeholder_encrypted": "Odeslat šifrovanou zprávu…",
-        "placeholder": "Odeslat zprávu…"
+        "placeholder": "Odeslat zprávu…",
+        "autocomplete": {
+            "command_description": "Příkazy",
+            "command_a11y": "Automatické doplňování příkazů",
+            "emoji_a11y": "Automatické doplňování emoji",
+            "@room_description": "Oznámení pro celou místnost",
+            "notification_description": "Oznámení místnosti",
+            "notification_a11y": "Automatické doplňování oznámení",
+            "room_a11y": "Automatické doplňování místností",
+            "space_a11y": "Automatické dokončení prostoru",
+            "user_description": "Uživatelé",
+            "user_a11y": "Automatické doplňování uživatelů"
+        }
     },
     "Bold": "Tučně",
     "Link": "Odkaz",

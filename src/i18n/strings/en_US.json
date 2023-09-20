@@ -22,7 +22,6 @@
     "Banned users": "Banned users",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
     "Change Password": "Change Password",
-    "Commands": "Commands",
     "Confirm password": "Confirm password",
     "Cryptography": "Cryptography",
     "Current password": "Current password",
@@ -116,7 +115,6 @@
     "unknown error code": "unknown error code",
     "Upload avatar": "Upload avatar",
     "Upload Failed": "Upload Failed",
-    "Users": "Users",
     "Verification Pending": "Verification Pending",
     "Verified key": "Verified key",
     "Warning!": "Warning!",
@@ -535,5 +533,11 @@
     "update": {
         "see_changes_button": "What's new?",
         "release_notes_toast_title": "What's New"
+    },
+    "composer": {
+        "autocomplete": {
+            "command_description": "Commands",
+            "user_description": "Users"
+        }
     }
 }
