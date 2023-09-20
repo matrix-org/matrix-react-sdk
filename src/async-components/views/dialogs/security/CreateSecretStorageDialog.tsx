@@ -585,6 +585,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     <div>{_t("Enter your account password to confirm the upgrade:")}</div>
                     <div>
                         <Field
+                            id="mx_CreateSecretStorageDialog_password"
                             type="password"
                             label={_t("common|password")}
                             value={this.state.accountPassword}
