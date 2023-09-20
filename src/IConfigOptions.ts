@@ -207,6 +207,13 @@ export interface IConfigOptions {
             client_id: string;
         }
     >;
+
+    login_with_qr?: {
+        /**
+         * Default rendezvous server to use even if the Homeserver doesn't provide one.
+         */
+        default_rz_server?: string;
+    };
 }
 
 export interface ISsoRedirectOptions {
