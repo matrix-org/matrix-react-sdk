@@ -218,12 +218,7 @@ describe("MessageComposerButtons", () => {
                 false,
             );
 
-            expect(getButtonLabels()).toEqual([
-                "Emoji",
-                "Attachment",
-                "More options",
-                ["Sticker", "Poll", "Location"],
-            ]);
+            expect(getButtonLabels()).toEqual(["Emoji", "Attachment", "More options", ["Sticker", "Poll", "Location"]]);
         });
     });
 });
