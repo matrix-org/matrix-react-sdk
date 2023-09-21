@@ -38,7 +38,6 @@ describe("<SecureBackupPanel />", () => {
         ...mockClientMethodsCrypto(),
         getKeyBackupEnabled: jest.fn(),
         getKeyBackupVersion: jest.fn().mockReturnValue("1"),
-        isKeyBackupTrusted: jest.fn().mockResolvedValue(true),
         getClientWellKnown: jest.fn(),
         deleteKeyBackupVersion: jest.fn(),
     });
@@ -53,15 +52,16 @@ describe("<SecureBackupPanel />", () => {
                 public_key: "1234",
             },
         });
-        client.isKeyBackupTrusted.mockResolvedValue({
-            usable: false,
-            sigs: [],
+        Object.assign(client.getCrypto()!, {
+            isKeyBackupTrusted: jest.fn().mockResolvedValue({
+                trusted: false,
+                matchesDecryptionKey: false,
+            }),
         });
 
         mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
         client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
 
         mocked(accessSecretStorage).mockClear().mockResolvedValue();
     });
@@ -169,7 +169,7 @@ describe("<SecureBackupPanel />", () => {
         await flushPromises();
 
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
+        mocked(client.getCrypto()!).isKeyBackupTrusted.mockClear();
 
         fireEvent.click(screen.getByText("Reset"));
 
@@ -179,6 +179,6 @@ describe("<SecureBackupPanel />", () => {
 
         // backup status refreshed
         expect(client.getKeyBackupVersion).toHaveBeenCalled();
-        expect(client.isKeyBackupTrusted).toHaveBeenCalled();
+        expect(client.getCrypto()!.isKeyBackupTrusted).toHaveBeenCalled();
     });
 });

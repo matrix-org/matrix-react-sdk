@@ -16,10 +16,9 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { logger } from "matrix-js-sdk/src/logger";
+import { BackupTrustInfo, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import type CreateKeyBackupDialog from "../../../async-components/views/dialogs/security/CreateKeyBackupDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -41,8 +40,25 @@ interface IState {
     backupKeyWellFormed: boolean | null;
     secretStorageKeyInAccount: boolean | null;
     secretStorageReady: boolean | null;
-    backupInfo: IKeyBackupInfo | null;
-    backupSigStatus: TrustInfo | null;
+
+    /** Information on the current key backup version, as returned by the server.
+     *
+     * `null` could mean any of:
+     *    * we haven't yet requested the data from the server.
+     *    * we were unable to reach the server.
+     *    * the server returned key backup version data we didn't understand or was malformed.
+     *    * there is actually no backup on the server.
+     */
+    backupInfo: KeyBackupInfo | null;
+
+    /**
+     * Information on whether the backup in `backupInfo` is correctly signed, and whether we have the right key to
+     * decrypt it.
+     *
+     * `undefined` if `backupInfo` is null, or if crypto is not enabled in the client.
+     */
+    backupTrustInfo: BackupTrustInfo | undefined;
+
     sessionsRemaining: number;
 }
 
@@ -61,7 +77,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             secretStorageKeyInAccount: null,
             secretStorageReady: null,
             backupInfo: null,
-            backupSigStatus: null,
+            backupTrustInfo: undefined,
             sessionsRemaining: 0,
         };
     }
@@ -101,14 +117,15 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.setState({ loading: true });
         this.getUpdatedDiagnostics();
         try {
-            const backupInfo = await MatrixClientPeg.safeGet().getKeyBackupVersion();
-            const backupSigStatus = backupInfo ? await MatrixClientPeg.safeGet().isKeyBackupTrusted(backupInfo) : null;
+            const cli = MatrixClientPeg.safeGet();
+            const backupInfo = await cli.getKeyBackupVersion();
+            const backupTrustInfo = backupInfo ? await cli.getCrypto()?.isKeyBackupTrusted(backupInfo) : undefined;
             if (this.unmounted) return;
             this.setState({
                 loading: false,
                 error: false,
                 backupInfo,
-                backupSigStatus,
+                backupTrustInfo,
             });
         } catch (e) {
             logger.log("Unable to fetch key backup status", e);
@@ -117,7 +134,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 loading: false,
                 error: true,
                 backupInfo: null,
-                backupSigStatus: null,
+                backupTrustInfo: undefined,
             });
         }
     }
@@ -209,7 +226,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             secretStorageKeyInAccount,
             secretStorageReady,
             backupInfo,
-            backupSigStatus,
+            backupTrustInfo,
             sessionsRemaining,
         } = this.state;
 
@@ -271,8 +288,8 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             }
 
             let trustedLocally: string | undefined;
-            if (backupSigStatus?.trusted_locally) {
-                trustedLocally = _t("This backup is trusted because it has been restored on this session");
+            if (backupTrustInfo?.matchesDecryptionKey) {
+                trustedLocally = _t("This backup can be restored on this session");
             }
 
             extraDetailsTableRows = (
