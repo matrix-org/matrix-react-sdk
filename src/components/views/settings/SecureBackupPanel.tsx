@@ -311,12 +311,14 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             extraDetailsTableRows = (
                 <>
                     <tr>
-                        <th scope="row">{_t("Backup version:")}</th>
-                        <td>{backupInfo.version}</td>
+                        <th scope="row">{_t("Latest backup version on server:")}</th>
+                        <td>
+                            {backupInfo.version} ({_t("Algorithm:")} <code>{backupInfo.algorithm}</code>)
+                        </td>
                     </tr>
                     <tr>
-                        <th scope="row">{_t("Algorithm:")}</th>
-                        <td>{backupInfo.algorithm}</td>
+                        <th scope="row">{_t("Active backup version:")}</th>
+                        <td>{this.state.activeBackupVersion === null ? _t("None") : this.state.activeBackupVersion}</td>
                     </tr>
                 </>
             );
