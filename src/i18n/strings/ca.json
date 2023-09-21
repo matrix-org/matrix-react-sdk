@@ -1,5 +1,4 @@
 {
-    "Account": "Compte",
     "No Microphones detected": "No s'ha detectat cap micròfon",
     "No Webcams detected": "No s'ha detectat cap càmera web",
     "Create new room": "Crea una sala nova",
@@ -75,14 +74,6 @@
     "Incorrect verification code": "El codi de verificació és incorrecte",
     "Phone": "Telèfon",
     "No display name": "Sense nom visible",
-    "New passwords don't match": "Les noves contrasenyes no coincideixen",
-    "Passwords can't be empty": "Les contrasenyes no poden estar buides",
-    "Export E2E room keys": "Exporta les claus E2E de la sala",
-    "Do you want to set an email address?": "Voleu establir una adreça de correu electrònic?",
-    "Current password": "Contrasenya actual",
-    "New Password": "Nova contrasenya",
-    "Confirm password": "Confirma la contrasenya",
-    "Change Password": "Canvia la contrasenya",
     "Authentication": "Autenticació",
     "Failed to set display name": "No s'ha pogut establir el nom visible",
     "Unban": "Retira l'expulsió",
@@ -192,8 +183,6 @@
         "other": "Pujant %(filename)s i %(count)s més"
     },
     "Uploading %(filename)s": "Pujant %(filename)s",
-    "Import E2E room keys": "Importar claus E2E de sala",
-    "Cryptography": "Criptografia",
     "Session ID": "ID de la sessió",
     "Export room keys": "Exporta les claus de la sala",
     "Confirm passphrase": "Introduïu una contrasenya",
@@ -209,7 +198,6 @@
     "Unavailable": "No disponible",
     "Source URL": "URL origen",
     "Filter results": "Resultats del filtre",
-    "No update available.": "No hi ha cap actualització disponible.",
     "Search…": "Cerca…",
     "Tuesday": "Dimarts",
     "Preparing to send logs": "Preparant l'enviament de logs",
@@ -223,7 +211,6 @@
     "Thursday": "Dijous",
     "Logs sent": "Logs enviats",
     "Yesterday": "Ahir",
-    "Error encountered (%(errorDetail)s).": "S'ha trobat un error (%(errorDetail)s).",
     "Low Priority": "Baixa prioritat",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
@@ -242,7 +229,6 @@
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
     "Email addresses": "Adreces de correu electrònic",
     "Phone numbers": "Números de telèfon",
-    "Language and region": "Idioma i regió",
     "Phone Number": "Número de telèfon",
     "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
     "Upload Error": "Error de pujada",
@@ -448,10 +434,17 @@
             "mirror_local_feed": "Remet el flux de vídeo local"
         },
         "security": {
-            "send_analytics": "Envia dades d'anàlisi"
+            "send_analytics": "Envia dades d'anàlisi",
+            "export_megolm_keys": "Exporta les claus E2E de la sala",
+            "import_megolm_keys": "Importar claus E2E de sala",
+            "cryptography_section": "Criptografia"
         },
         "sessions": {
             "session_id": "ID de la sessió"
+        },
+        "general": {
+            "account_section": "Compte",
+            "language_section": "Idioma i regió"
         }
     },
     "devtools": {
@@ -703,7 +696,14 @@
         "incorrect_credentials": "Usuari i/o contrasenya incorrectes.",
         "phone_label": "Telèfon",
         "session_logged_out_title": "Sessió tancada",
-        "session_logged_out_description": "Per seguretat, aquesta sessió s'ha tancat. Torna a iniciar la sessió."
+        "session_logged_out_description": "Per seguretat, aquesta sessió s'ha tancat. Torna a iniciar la sessió.",
+        "change_password_mismatch": "Les noves contrasenyes no coincideixen",
+        "change_password_empty": "Les contrasenyes no poden estar buides",
+        "set_email_prompt": "Voleu establir una adreça de correu electrònic?",
+        "change_password_confirm_label": "Confirma la contrasenya",
+        "change_password_current_label": "Contrasenya actual",
+        "change_password_new_label": "Nova contrasenya",
+        "change_password_action": "Canvia la contrasenya"
     },
     "export_chat": {
         "messages": "Missatges"
@@ -747,7 +747,9 @@
     },
     "update": {
         "see_changes_button": "Què hi ha de nou?",
-        "release_notes_toast_title": "Novetats"
+        "release_notes_toast_title": "Novetats",
+        "error_encountered": "S'ha trobat un error (%(errorDetail)s).",
+        "no_update": "No hi ha cap actualització disponible."
     },
     "room_list": {
         "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",

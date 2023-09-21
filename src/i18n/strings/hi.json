@@ -70,15 +70,7 @@
     "Incorrect verification code": "गलत सत्यापन कोड",
     "Phone": "फ़ोन",
     "No display name": "कोई प्रदर्शन नाम नहीं",
-    "New passwords don't match": "नए पासवर्ड मेल नहीं खाते हैं",
-    "Passwords can't be empty": "पासवर्ड खाली नहीं हो सकते हैं",
     "Warning!": "चेतावनी!",
-    "Export E2E room keys": "E2E रूम कुंजी निर्यात करें",
-    "Do you want to set an email address?": "क्या आप एक ईमेल पता सेट करना चाहते हैं?",
-    "Current password": "वर्तमान पासवर्ड",
-    "New Password": "नया पासवर्ड",
-    "Confirm password": "पासवर्ड की पुष्टि कीजिये",
-    "Change Password": "पासवर्ड बदलें",
     "Authentication": "प्रमाणीकरण",
     "Failed to set display name": "प्रदर्शन नाम सेट करने में विफल",
     "Delete Backup": "बैकअप हटाएं",
@@ -208,18 +200,13 @@
     "Room Addresses": "रूम का पता",
     "Failed to change password. Is your password correct?": "पासवर्ड बदलने में विफल। क्या आपका पासवर्ड सही है?",
     "Profile": "प्रोफाइल",
-    "Account": "अकाउंट",
     "Email addresses": "ईमेल पता",
     "Phone numbers": "फोन नंबर",
-    "Language and region": "भाषा और क्षेत्र",
     "Account management": "खाता प्रबंधन",
     "Deactivate Account": "खाता निष्क्रिय करें",
-    "Check for update": "अपडेट के लिये जांचें",
     "Notifications": "सूचनाएं",
     "Scissors": "कैंची",
     "<not supported>": "<समर्थित नहीं>",
-    "Import E2E room keys": "E2E कक्ष की चाबियां आयात करें",
-    "Cryptography": "क्रिप्टोग्राफी",
     "Ignored users": "अनदेखी उपयोगकर्ताओं",
     "Bulk options": "थोक विकल्प",
     "Reject all %(invitedRooms)s invites": "सभी %(invitedRooms)s की आमंत्रण को अस्वीकार करें",
@@ -533,11 +520,18 @@
             "mirror_local_feed": "स्थानीय वीडियो फ़ीड को आईना करें"
         },
         "security": {
-            "send_analytics": "विश्लेषण डेटा भेजें"
+            "send_analytics": "विश्लेषण डेटा भेजें",
+            "export_megolm_keys": "E2E रूम कुंजी निर्यात करें",
+            "import_megolm_keys": "E2E कक्ष की चाबियां आयात करें",
+            "cryptography_section": "क्रिप्टोग्राफी"
         },
         "preferences": {
             "room_list_heading": "कक्ष सूचि",
             "autocomplete_delay": "स्वत: पूर्ण विलंब (ms)"
+        },
+        "general": {
+            "account_section": "अकाउंट",
+            "language_section": "भाषा और क्षेत्र"
         }
     },
     "timeline": {
@@ -665,7 +659,14 @@
         "sso": "केवल हस्ताक्षर के ऊपर",
         "footer_powered_by_matrix": "मैट्रिक्स द्वारा संचालित",
         "register_action": "खाता बनाएं",
-        "phone_label": "फ़ोन"
+        "phone_label": "फ़ोन",
+        "change_password_mismatch": "नए पासवर्ड मेल नहीं खाते हैं",
+        "change_password_empty": "पासवर्ड खाली नहीं हो सकते हैं",
+        "set_email_prompt": "क्या आप एक ईमेल पता सेट करना चाहते हैं?",
+        "change_password_confirm_label": "पासवर्ड की पुष्टि कीजिये",
+        "change_password_current_label": "वर्तमान पासवर्ड",
+        "change_password_new_label": "नया पासवर्ड",
+        "change_password_action": "पासवर्ड बदलें"
     },
     "setting": {
         "help_about": {
@@ -728,5 +729,8 @@
             "publish_toggle": "इस कमरे को %(domain)s के कमरे की निर्देशिका में जनता के लिए प्रकाशित करें?",
             "url_previews_section": "URL पूर्वावलोकन"
         }
+    },
+    "update": {
+        "check_action": "अपडेट के लिये जांचें"
     }
 }

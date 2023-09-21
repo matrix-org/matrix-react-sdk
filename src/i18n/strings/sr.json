@@ -65,14 +65,6 @@
     "Incorrect verification code": "Нетачни потврдни код",
     "Phone": "Телефон",
     "No display name": "Нема приказног имена",
-    "New passwords don't match": "Нове лозинке се не подударају",
-    "Passwords can't be empty": "Лозинке не могу бити празне",
-    "Export E2E room keys": "Извези E2E кључеве собе",
-    "Do you want to set an email address?": "Да ли желите да поставите мејл адресу?",
-    "Current password": "Тренутна лозинка",
-    "New Password": "Нова лозинка",
-    "Confirm password": "Потврди лозинку",
-    "Change Password": "Промени лозинку",
     "Authentication": "Идентификација",
     "Failed to set display name": "Нисам успео да поставим приказно име",
     "Unban": "Скини забрану",
@@ -191,9 +183,6 @@
     "Failed to change password. Is your password correct?": "Нисам успео да променим лозинку. Да ли је ваша лозинка тачна?",
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
     "<not supported>": "<није подржано>",
-    "Import E2E room keys": "Увези E2E кључеве собе",
-    "Cryptography": "Криптографија",
-    "Check for update": "Провери да ли има ажурирања",
     "Reject all %(invitedRooms)s invites": "Одбиј све позивнице за собе %(invitedRooms)s",
     "No media permissions": "Нема овлашћења за медије",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери",
@@ -203,7 +192,6 @@
     "Email": "Мејл",
     "Notifications": "Обавештења",
     "Profile": "Профил",
-    "Account": "Налог",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
@@ -230,7 +218,6 @@
     "Unavailable": "Недоступан",
     "Source URL": "Адреса извора",
     "Filter results": "Филтрирај резултате",
-    "No update available.": "Нема нових ажурирања.",
     "Search…": "Претрага…",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
@@ -242,7 +229,6 @@
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
-    "Error encountered (%(errorDetail)s).": "Догодила се грешка (%(errorDetail)s).",
     "Low Priority": "Најмања важност",
     "Thank you!": "Хвала вам!",
     "Popout widget": "Виџет за искакање",
@@ -292,11 +278,9 @@
     "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
     "Email addresses": "Мејл адресе",
     "Phone numbers": "Бројеви телефона",
-    "Language and region": "Језик и област",
     "General": "Опште",
     "Discovery": "Откриће",
     "None": "Ништа",
-    "Encryption": "Шифровање",
     "Discovery options will appear once you have added an email above.": "Опције откривања појавиће се након што додате мејл адресу изнад.",
     "Discovery options will appear once you have added a phone number above.": "Опције откривања појавиће се након што додате број телефона изнад.",
     "Email Address": "Е-адреса",
@@ -775,7 +759,6 @@
     "%(brand)s URL": "%(brand)s УРЛ",
     "Your user ID": "Ваша корисничка ИД",
     "Your display name": "Ваше име за приказ",
-    "exists": "постоји",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
@@ -999,13 +982,22 @@
             "message_search_disable_warning": "Ако је искључено, поруке из шифрованих соба неће се приказивати у резултатима.",
             "message_search_intro": "%(brand)s је локално сигурно кешира шифроване поруке да би се појавиле у резултатима претраге:",
             "send_analytics": "Пошаљи аналитичке податке",
-            "enable_message_search": "Омогућите претрагу порука у шифрованим собама"
+            "enable_message_search": "Омогућите претрагу порука у шифрованим собама",
+            "cross_signing_homeserver_support_exists": "постоји",
+            "export_megolm_keys": "Извези E2E кључеве собе",
+            "import_megolm_keys": "Увези E2E кључеве собе",
+            "cryptography_section": "Криптографија",
+            "encryption_section": "Шифровање"
         },
         "voip": {
             "mirror_local_feed": "Копирај довод локалног видеа"
         },
         "sessions": {
             "session_id": "ИД сесије"
+        },
+        "general": {
+            "account_section": "Налог",
+            "language_section": "Језик и област"
         }
     },
     "devtools": {
@@ -1355,7 +1347,14 @@
         "email_phone_discovery_text": "Користите е-пошту или телефон да би вас постојећи контакти опционално могли открити.",
         "email_discovery_text": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти.",
         "session_logged_out_title": "Одјављен",
-        "session_logged_out_description": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново."
+        "session_logged_out_description": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново.",
+        "change_password_mismatch": "Нове лозинке се не подударају",
+        "change_password_empty": "Лозинке не могу бити празне",
+        "set_email_prompt": "Да ли желите да поставите мејл адресу?",
+        "change_password_confirm_label": "Потврди лозинку",
+        "change_password_current_label": "Тренутна лозинка",
+        "change_password_new_label": "Нова лозинка",
+        "change_password_action": "Промени лозинку"
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1455,7 +1454,10 @@
         "see_changes_button": "Шта је ново?",
         "release_notes_toast_title": "Шта је ново",
         "toast_title": "Ажурирај %(brand)s",
-        "toast_description": "Доступна је нова верзија %(brand)s"
+        "toast_description": "Доступна је нова верзија %(brand)s",
+        "error_encountered": "Догодила се грешка (%(errorDetail)s).",
+        "no_update": "Нема нових ажурирања.",
+        "check_action": "Провери да ли има ажурирања"
     },
     "user_menu": {
         "switch_theme_light": "Пребаци на светлу тему",

@@ -226,7 +226,6 @@
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
     "Cancelling…": "ag Cealú…",
-    "exists": "a bheith ann",
     "Bridges": "Droichid",
     "Later": "Níos deireanaí",
     "Lock": "Glasáil",
@@ -267,23 +266,16 @@
     "%(duration)ss": "%(duration)ss",
     "Delete Backup": "Scrios cúltaca",
     "Email Address": "Seoladh Ríomhphoist",
-    "Change Password": "Athraigh focal faire",
-    "Confirm password": "Deimhnigh focal faire",
-    "New Password": "Focal Faire Nua",
-    "Current password": "Focal faire reatha",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
     "Got It": "Tuigthe",
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
-    "Encryption": "Criptiúchán",
     "Unban": "Bain an cosc",
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
-    "Cryptography": "Cripteagrafaíocht",
     "Notifications": "Fógraí",
     "General": "Ginearálta",
-    "Account": "Cuntas",
     "Profile": "Próifíl",
     "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
@@ -455,7 +447,6 @@
     "Failed to change power level": "Níor éiríodh leis an leibhéal cumhachta a hathrú",
     "Failed to change password. Is your password correct?": "Níor éiríodh leis do phasfhocal a hathrú. An bhfuil do phasfhocal ceart?",
     "Failed to ban user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
-    "Export E2E room keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
     "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
     "Enter passphrase": "Iontráil pasfrása",
     "Email address": "Seoladh ríomhphoist",
@@ -653,6 +644,15 @@
         },
         "preferences": {
             "composer_heading": "Eagarthóir"
+        },
+        "security": {
+            "cross_signing_homeserver_support_exists": "a bheith ann",
+            "export_megolm_keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
+            "cryptography_section": "Cripteagrafaíocht",
+            "encryption_section": "Criptiúchán"
+        },
+        "general": {
+            "account_section": "Cuntas"
         }
     },
     "devtools": {
@@ -799,7 +799,11 @@
         "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
         "register_action": "Déan cuntas a chruthú",
         "phone_label": "Guthán",
-        "session_logged_out_title": "Sínithe Amach"
+        "session_logged_out_title": "Sínithe Amach",
+        "change_password_confirm_label": "Deimhnigh focal faire",
+        "change_password_current_label": "Focal faire reatha",
+        "change_password_new_label": "Focal Faire Nua",
+        "change_password_action": "Athraigh focal faire"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

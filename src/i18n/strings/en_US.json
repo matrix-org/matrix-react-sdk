@@ -1,7 +1,6 @@
 {
     "AM": "AM",
     "PM": "PM",
-    "Account": "Account",
     "No Microphones detected": "No Microphones detected",
     "No Webcams detected": "No Webcams detected",
     "No media permissions": "No media permissions",
@@ -19,10 +18,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Are you sure you want to leave the room '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "Are you sure you want to reject the invitation?",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
-    "Change Password": "Change Password",
-    "Confirm password": "Confirm password",
-    "Cryptography": "Cryptography",
-    "Current password": "Current password",
     "Custom level": "Custom level",
     "Deactivate Account": "Deactivate Account",
     "Decrypt %(text)s": "Decrypt %(text)s",
@@ -32,7 +27,6 @@
     "Email": "Email",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
-    "Export E2E room keys": "Export E2E room keys",
     "Failed to ban user": "Failed to ban user",
     "Failed to change password. Is your password correct?": "Failed to change password. Is your password correct?",
     "Failed to change power level": "Failed to change power level",
@@ -50,7 +44,6 @@
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
     "Historical": "Historical",
-    "Import E2E room keys": "Import E2E room keys",
     "Incorrect verification code": "Incorrect verification code",
     "Invalid Email Address": "Invalid Email Address",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
@@ -67,14 +60,12 @@
     "Missing room_id in request": "Missing room_id in request",
     "Missing user_id in request": "Missing user_id in request",
     "Moderator": "Moderator",
-    "New passwords don't match": "New passwords don't match",
     "New passwords must match each other.": "New passwords must match each other.",
     "not specified": "not specified",
     "Notifications": "Notifications",
     "<not supported>": "<not supported>",
     "No more results": "No more results",
     "Operation failed": "Operation failed",
-    "Passwords can't be empty": "Passwords can't be empty",
     "Phone": "Phone",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "Power level must be positive integer.": "Power level must be positive integer.",
@@ -182,14 +173,11 @@
         "one": "(~%(count)s result)",
         "other": "(~%(count)s results)"
     },
-    "New Password": "New Password",
     "Something went wrong!": "Something went wrong!",
     "Your browser does not support the required cryptography extensions": "Your browser does not support the required cryptography extensions",
     "Not a valid %(brand)s keyfile": "Not a valid %(brand)s keyfile",
     "Authentication check failed: incorrect password?": "Authentication check failed: incorrect password?",
-    "Do you want to set an email address?": "Do you want to set an email address?",
     "This will allow you to reset your password and receive notifications.": "This will allow you to reset your password and receive notifications.",
-    "Check for update": "Check for update",
     "Unable to create widget.": "Unable to create widget.",
     "You are not in this room.": "You are not in this room.",
     "You do not have permission to do that in this room.": "You do not have permission to do that in this room.",
@@ -201,7 +189,6 @@
     "This Room": "This Room",
     "Unavailable": "Unavailable",
     "Source URL": "Source URL",
-    "No update available.": "No update available.",
     "Tuesday": "Tuesday",
     "Search…": "Search…",
     "Unnamed room": "Unnamed room",
@@ -215,7 +202,6 @@
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
     "Yesterday": "Yesterday",
-    "Error encountered (%(errorDetail)s).": "Error encountered (%(errorDetail)s).",
     "Low Priority": "Low Priority",
     "Permission Required": "Permission Required",
     "You do not have permission to start a conference call in this room": "You do not have permission to start a conference call in this room",
@@ -365,6 +351,14 @@
         },
         "sessions": {
             "session_id": "Session ID"
+        },
+        "security": {
+            "export_megolm_keys": "Export E2E room keys",
+            "import_megolm_keys": "Import E2E room keys",
+            "cryptography_section": "Cryptography"
+        },
+        "general": {
+            "account_section": "Account"
         }
     },
     "timeline": {
@@ -500,7 +494,14 @@
         "incorrect_credentials": "Incorrect username and/or password.",
         "phone_label": "Phone",
         "session_logged_out_title": "Signed Out",
-        "session_logged_out_description": "For security, this session has been signed out. Please sign in again."
+        "session_logged_out_description": "For security, this session has been signed out. Please sign in again.",
+        "change_password_mismatch": "New passwords don't match",
+        "change_password_empty": "Passwords can't be empty",
+        "set_email_prompt": "Do you want to set an email address?",
+        "change_password_confirm_label": "Confirm password",
+        "change_password_current_label": "Current password",
+        "change_password_new_label": "New Password",
+        "change_password_action": "Change Password"
     },
     "export_chat": {
         "messages": "Messages"
@@ -520,7 +521,10 @@
     },
     "update": {
         "see_changes_button": "What's new?",
-        "release_notes_toast_title": "What's New"
+        "release_notes_toast_title": "What's New",
+        "error_encountered": "Error encountered (%(errorDetail)s).",
+        "no_update": "No update available.",
+        "check_action": "Check for update"
     },
     "composer": {
         "autocomplete": {

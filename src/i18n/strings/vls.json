@@ -151,15 +151,7 @@
     "Headphones": "Koptelefong",
     "Folder": "Mappe",
     "No display name": "Geen weergavenoame",
-    "New passwords don't match": "Nieuwe paswoordn kommn nie overeen",
-    "Passwords can't be empty": "Paswoordn kunn nie leeg zyn",
     "Warning!": "Let ip!",
-    "Export E2E room keys": "E2E-gesprekssleuters exporteern",
-    "Do you want to set an email address?": "Wil je een e-mailadresse instelln?",
-    "Current password": "Huudig paswoord",
-    "New Password": "Nieuw paswoord",
-    "Confirm password": "Bevestig ’t paswoord",
-    "Change Password": "Paswoord verandern",
     "Authentication": "Authenticoasje",
     "Failed to set display name": "Instelln van weergavenoame es mislukt",
     "Unable to remove contact information": "Kan contactinformoasje nie verwydern",
@@ -187,19 +179,14 @@
     "Display Name": "Weergavenoame",
     "Failed to change password. Is your password correct?": "Wyzign van ’t paswoord es mislukt. Es je paswoord wel juste?",
     "Profile": "Profiel",
-    "Account": "Account",
     "Email addresses": "E-mailadressn",
     "Phone numbers": "Telefongnumero’s",
-    "Language and region": "Toale en regio",
     "Account management": "Accountbeheer",
     "Deactivate Account": "Account deactiveern",
     "General": "Algemeen",
-    "Check for update": "Controleern ip updates",
     "Notifications": "Meldiengn",
     "Unignore": "Nie mi negeern",
     "<not supported>": "<nie oundersteund>",
-    "Import E2E room keys": "E2E-gesprekssleuters importeern",
-    "Cryptography": "Cryptografie",
     "Ignored users": "Genegeerde gebruukers",
     "Bulk options": "Bulkopties",
     "Accept all %(invitedRooms)s invites": "Alle %(invitedRooms)s-uutnodigiengn anveirdn",
@@ -224,7 +211,6 @@
     "Failed to unban": "Ountbann mislukt",
     "Unban": "Ountbann",
     "Banned by %(displayName)s": "Verbann deur %(displayName)s",
-    "Encryption": "Versleuterienge",
     "This event could not be displayed": "Deze gebeurtenisse kostege nie weergegeevn wordn",
     "Failed to ban user": "Verbann van gebruuker es mislukt",
     "Demote yourself?": "Jen eigen degradeern?",
@@ -323,8 +309,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
     "Something went wrong!": "’t Es etwa misgegoan!",
-    "Error encountered (%(errorDetail)s).": "’t Es e foute ipgetreedn (%(errorDetail)s).",
-    "No update available.": "Geen update beschikboar.",
     "Delete Widget": "Widget verwydern",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "E widget verwydern doet da voor alle gebruukers in dit gesprek. Zy je zeker da je deze widget wil verwydern?",
     "Delete widget": "Widget verwydern",
@@ -446,7 +430,6 @@
     "Enter password": "Gif ’t paswoord in",
     "Password is allowed, but unsafe": "Paswoord is toegeloatn, moar ounveilig",
     "Nice, strong password!": "Dit is e sterk paswoord!",
-    "Passwords don't match": "Paswoordn kommn nie overeen",
     "Other users can invite you to rooms using your contact details": "Andere gebruukers kunn jen in gesprekkn uutnodign ip basis van je contactgegeevns",
     "Enter phone number (required on this homeserver)": "Gift den telefongnumero in (vereist ip deze thuusserver)",
     "Enter username": "Gift de gebruukersnoame in",
@@ -752,7 +735,11 @@
             "mirror_local_feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)"
         },
         "security": {
-            "send_analytics": "Statistische gegeevns (analytics) verstuurn"
+            "send_analytics": "Statistische gegeevns (analytics) verstuurn",
+            "export_megolm_keys": "E2E-gesprekssleuters exporteern",
+            "import_megolm_keys": "E2E-gesprekssleuters importeern",
+            "cryptography_section": "Cryptografie",
+            "encryption_section": "Versleuterienge"
         },
         "preferences": {
             "room_list_heading": "Gesprekslyste",
@@ -762,6 +749,10 @@
         },
         "sessions": {
             "session_id": "Sessie-ID"
+        },
+        "general": {
+            "account_section": "Account",
+            "language_section": "Toale en regio"
         }
     },
     "devtools": {
@@ -1070,7 +1061,15 @@
         "phone_label": "Telefongnumero",
         "phone_optional_label": "Telefongnumero (optioneel)",
         "session_logged_out_title": "Afgemeld",
-        "session_logged_out_description": "Wegens veiligheidsredenn is deze sessie afgemeld. Gelieve jen heran te meldn."
+        "session_logged_out_description": "Wegens veiligheidsredenn is deze sessie afgemeld. Gelieve jen heran te meldn.",
+        "change_password_mismatch": "Nieuwe paswoordn kommn nie overeen",
+        "change_password_empty": "Paswoordn kunn nie leeg zyn",
+        "set_email_prompt": "Wil je een e-mailadresse instelln?",
+        "change_password_confirm_label": "Bevestig ’t paswoord",
+        "change_password_confirm_invalid": "Paswoordn kommn nie overeen",
+        "change_password_current_label": "Huudig paswoord",
+        "change_password_new_label": "Nieuw paswoord",
+        "change_password_action": "Paswoord verandern"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1120,7 +1119,10 @@
     },
     "update": {
         "see_changes_button": "Wuk es ’t er nieuw?",
-        "release_notes_toast_title": "Wuk es ’t er nieuw"
+        "release_notes_toast_title": "Wuk es ’t er nieuw",
+        "error_encountered": "’t Es e foute ipgetreedn (%(errorDetail)s).",
+        "no_update": "Geen update beschikboar.",
+        "check_action": "Controleern ip updates"
     },
     "room_list": {
         "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",

@@ -43,13 +43,6 @@
     "Reason": "Səbəb",
     "Incorrect verification code": "Təsdiq etmənin səhv kodu",
     "Phone": "Telefon",
-    "New passwords don't match": "Yeni şifrlər uyğun gəlmir",
-    "Passwords can't be empty": "Şifrələr boş ola bilməz",
-    "Export E2E room keys": "Şifrləmənin açarlarının ixracı",
-    "Current password": "Cari şifrə",
-    "New Password": "Yeni şifrə",
-    "Confirm password": "Yeni şifrə təsdiq edin",
-    "Change Password": "Şifrəni dəyişdirin",
     "Authentication": "Müəyyənləşdirilmə",
     "Failed to set display name": "Görünüş adını təyin etmək bacarmadı",
     "Notification targets": "Xəbərdarlıqlar üçün qurğular",
@@ -101,11 +94,8 @@
     "Failed to load timeline position": "Xronologiyadan nişanı yükləməyi bacarmadı",
     "Unable to remove contact information": "Əlaqə məlumatlarının silməyi bacarmadı",
     "<not supported>": "<dəstəklənmir>",
-    "Import E2E room keys": "Şifrləmənin açarlarının idxalı",
-    "Cryptography": "Kriptoqrafiya",
     "Email": "E-poçt",
     "Profile": "Profil",
-    "Account": "Hesab",
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
@@ -204,6 +194,14 @@
         "appearance": {
             "timeline_image_size_default": "Varsayılan olaraq",
             "image_size_default": "Varsayılan olaraq"
+        },
+        "security": {
+            "export_megolm_keys": "Şifrləmənin açarlarının ixracı",
+            "import_megolm_keys": "Şifrləmənin açarlarının idxalı",
+            "cryptography_section": "Kriptoqrafiya"
+        },
+        "general": {
+            "account_section": "Hesab"
         }
     },
     "timeline": {
@@ -297,7 +295,13 @@
         "unsupported_auth_msisdn": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
         "register_action": "Hesab Aç",
         "phone_label": "Telefon",
-        "session_logged_out_description": "Təhlükəsizliyin təmin olunması üçün sizin sessiyanız başa çatmışdır idi. Zəhmət olmasa, yenidən girin."
+        "session_logged_out_description": "Təhlükəsizliyin təmin olunması üçün sizin sessiyanız başa çatmışdır idi. Zəhmət olmasa, yenidən girin.",
+        "change_password_mismatch": "Yeni şifrlər uyğun gəlmir",
+        "change_password_empty": "Şifrələr boş ola bilməz",
+        "change_password_confirm_label": "Yeni şifrə təsdiq edin",
+        "change_password_current_label": "Cari şifrə",
+        "change_password_new_label": "Yeni şifrə",
+        "change_password_action": "Şifrəni dəyişdirin"
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"

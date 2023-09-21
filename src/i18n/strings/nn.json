@@ -67,14 +67,7 @@
     "Incorrect verification code": "Urett stadfestingskode",
     "Phone": "Telefon",
     "No display name": "Ingen visningsnamn",
-    "New passwords don't match": "Dei nye passorda samsvarar ikkje",
-    "Passwords can't be empty": "Passordsfelta kan ikkje vera tomme",
     "Warning!": "Åtvaring!",
-    "Do you want to set an email address?": "Vil du setja ei epostadresse?",
-    "Current password": "Gjeldande passord",
-    "New Password": "Nytt passord",
-    "Confirm password": "Stadfest passord",
-    "Change Password": "Endra passord",
     "Authentication": "Authentisering",
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
     "Notification targets": "Varselmål",
@@ -151,8 +144,6 @@
     "Sign in with": "Logg inn med",
     "Email address": "Epostadresse",
     "Something went wrong!": "Noko gjekk gale!",
-    "Error encountered (%(errorDetail)s).": "Noko gjekk gale (%(errorDetail)s).",
-    "No update available.": "Inga oppdatering er tilgjengeleg.",
     "Delete Widget": "Slett Widgeten",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Å sletta ein widget fjernar den for alle brukarane i rommet. Er du sikker på at du vil sletta denne widgeten?",
     "Delete widget": "Slett widgeten",
@@ -230,9 +221,6 @@
     "Uploading %(filename)s": "Lastar opp %(filename)s",
     "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
     "<not supported>": "<ikkje støtta>",
-    "Import E2E room keys": "Hent E2E-romnøklar inn",
-    "Cryptography": "Kryptografi",
-    "Check for update": "Sjå etter oppdateringar",
     "Reject all %(invitedRooms)s invites": "Kanseller alle invitasjonar frå %(invitedRooms)s",
     "No media permissions": "Ingen mediatilgang",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Det kan henda at du må gje %(brand)s tilgang til mikrofonen/nettkameraet for hand",
@@ -242,7 +230,6 @@
     "Default Device": "Eininga som brukast i utgangspunktet",
     "Audio Output": "Ljodavspeling",
     "Email": "Epost",
-    "Account": "Brukar",
     "A new password must be entered.": "Du må skriva eit nytt passord inn.",
     "New passwords must match each other.": "Dei nye passorda må vera like.",
     "Return to login screen": "Gå attende til innlogging",
@@ -254,7 +241,6 @@
     "Passphrase must not be empty": "Passfrasefeltet kan ikkje stå tomt",
     "Enter passphrase": "Skriv inn passfrase",
     "Confirm passphrase": "Stadfest passfrase",
-    "Export E2E room keys": "Hent E2E-romnøklar ut",
     "Jump to read receipt": "Hopp til lesen-lappen",
     "Filter room members": "Filtrer rommedlemmar",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du held på å verta teken til ei tredje-partisside so du kan godkjenna brukaren din til bruk med %(integrationsUrl)s. Vil du gå fram?",
@@ -408,7 +394,6 @@
     "Show more": "Vis meir",
     "Display Name": "Visningsnamn",
     "Invalid theme schema.": "",
-    "Language and region": "Språk og region",
     "General": "Generelt",
     "Room information": "Rominformasjon",
     "Room Addresses": "Romadresser",
@@ -425,7 +410,6 @@
     "Use Single Sign On to continue": "Bruk Single-sign-on for å fortsette",
     "Confirm adding this email address by using Single Sign On to prove your identity.": "Stadfest at du legger til denne e-postadressa, ved å bruka Single-sign-on for å stadfeste identiteten din.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Kontoen din har ein kryss-signert identitet det hemmelege lageret, økta di stolar ikkje på denne enno.",
-    "in secret storage": "i hemmeleg lager",
     "Secret storage public key:": "Public-nøkkel for hemmeleg lager:",
     "Ignored users": "Ignorerte brukarar",
     "Server or user ID to ignore": "Tenar eller brukar-ID for å ignorere",
@@ -467,7 +451,6 @@
     "All settings": "Alle innstillingar",
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
-    "Encryption": "Kryptografi",
     "Change notification settings": "Endra varslingsinnstillingar",
     "Enable desktop notifications": "Aktiver skrivebordsvarsel",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
@@ -787,7 +770,12 @@
             "send_analytics": "Send statistikkdata",
             "strict_encryption": "Aldri send krypterte meldingar til ikkje-verifiserte sesjonar frå denne sesjonen",
             "enable_message_search": "Aktiver søk etter meldingar i krypterte rom",
-            "manually_verify_all_sessions": "Manuelt verifiser alle eksterne økter"
+            "manually_verify_all_sessions": "Manuelt verifiser alle eksterne økter",
+            "cross_signing_in_4s": "i hemmeleg lager",
+            "export_megolm_keys": "Hent E2E-romnøklar ut",
+            "import_megolm_keys": "Hent E2E-romnøklar inn",
+            "cryptography_section": "Kryptografi",
+            "encryption_section": "Kryptografi"
         },
         "preferences": {
             "room_list_heading": "Romkatalog",
@@ -811,6 +799,10 @@
             "confirm_sign_out_body": {
                 "one": "Trykk på knappen under for å stadfesta utlogging frå denne eininga."
             }
+        },
+        "general": {
+            "account_section": "Brukar",
+            "language_section": "Språk og region"
         }
     },
     "devtools": {
@@ -1151,7 +1143,14 @@
         "account_deactivated": "Denne kontoen har blitt deaktivert.",
         "phone_label": "Telefon",
         "session_logged_out_title": "Logga Ut",
-        "session_logged_out_description": "Av sikkerheitsgrunnar har denne øykta vorte logga ut. Ver venleg og logg inn att."
+        "session_logged_out_description": "Av sikkerheitsgrunnar har denne øykta vorte logga ut. Ver venleg og logg inn att.",
+        "change_password_mismatch": "Dei nye passorda samsvarar ikkje",
+        "change_password_empty": "Passordsfelta kan ikkje vera tomme",
+        "set_email_prompt": "Vil du setja ei epostadresse?",
+        "change_password_confirm_label": "Stadfest passord",
+        "change_password_current_label": "Gjeldande passord",
+        "change_password_new_label": "Nytt passord",
+        "change_password_action": "Endra passord"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1194,7 +1193,10 @@
     },
     "update": {
         "see_changes_button": "Kva er nytt?",
-        "release_notes_toast_title": "Kva er nytt"
+        "release_notes_toast_title": "Kva er nytt",
+        "error_encountered": "Noko gjekk gale (%(errorDetail)s).",
+        "no_update": "Inga oppdatering er tilgjengeleg.",
+        "check_action": "Sjå etter oppdateringar"
     },
     "location_sharing": {
         "expand_map": "Utvid kart"
