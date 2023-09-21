@@ -94,7 +94,6 @@
     "Failed to load timeline position": "Xronologiyadan nişanı yükləməyi bacarmadı",
     "Unable to remove contact information": "Əlaqə məlumatlarının silməyi bacarmadı",
     "<not supported>": "<dəstəklənmir>",
-    "Email": "E-poçt",
     "Profile": "Profil",
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
@@ -301,7 +300,8 @@
         "change_password_confirm_label": "Yeni şifrə təsdiq edin",
         "change_password_current_label": "Cari şifrə",
         "change_password_new_label": "Yeni şifrə",
-        "change_password_action": "Şifrəni dəyişdirin"
+        "change_password_action": "Şifrəni dəyişdirin",
+        "email_field_label": "E-poçt"
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"

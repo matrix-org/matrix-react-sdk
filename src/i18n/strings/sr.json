@@ -107,7 +107,6 @@
     "Banned by %(displayName)s": "Приступ забранио %(displayName)s",
     "unknown error code": "непознати код грешке",
     "Failed to forget room %(errCode)s": "Нисам успео да заборавим собу %(errCode)s",
-    "This room is not accessible by remote Matrix servers": "Ова соба није доступна са удаљених Матрикс сервера",
     "Favourite": "Омиљено",
     "Jump to first unread message.": "Скочи на прву непрочитану поруку.",
     "not specified": "није наведено",
@@ -122,10 +121,6 @@
     "Failed to copy": "Нисам успео да ископирам",
     "Add an Integration": "Додај уградњу",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
-    "Token incorrect": "Жетон је нетачан",
-    "A text message has been sent to %(msisdn)s": "Текстуална порука је послата на %(msisdn)s",
-    "Please enter the code it contains:": "Унесите код који се налази у њој:",
-    "Start authentication": "Започните идентификацију",
     "Sign in with": "Пријавите се преко",
     "Email address": "Мејл адреса",
     "Something went wrong!": "Нешто је пошло наопако!",
@@ -189,7 +184,6 @@
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
     "Default Device": "Подразумевани уређај",
-    "Email": "Мејл",
     "Notifications": "Обавештења",
     "Profile": "Профил",
     "A new password must be entered.": "Морате унети нову лозинку.",
@@ -311,7 +305,6 @@
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "All settings": "Сва подешавања",
     "General failure": "Општа грешка",
-    "Got It": "Разумем",
     "Light bulb": "сијалица",
     "Voice & Video": "Глас и видео",
     "Unable to revoke sharing for email address": "Не могу да опозовем дељење ове мејл адресе",
@@ -685,7 +678,6 @@
     "Lion": "лав",
     "Cat": "мачка",
     "Dog": "Пас",
-    "Cancelling…": "Отказујем…",
     "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Cancel search": "Откажи претрагу",
@@ -726,17 +718,11 @@
     "Use an email address to recover your account": "Користите адресу е-поште за опоравак налога",
     "That phone number doesn't look quite right, please check and try again": "Тај телефонски број не изгледа сасвим у реду, проверите и покушајте поново",
     "Enter phone number": "Унесите број телефона",
-    "Enter email address": "Унесите адресу е-поште",
     "Enter username": "Унесите корисничко име",
     "Password is allowed, but unsafe": "Лозинка је дозвољена, али небезбедна",
     "Nice, strong password!": "Лепа, јака лозинка!",
     "Enter password": "Унесите лозинку",
-    "Something went wrong in confirming your identity. Cancel and try again.": "Нешто је пошло по наопако у потврђивању вашег идентитета. Откажите и покушајте поново.",
     "Kosovo": "/",
-    "Please review and accept the policies of this homeserver:": "Молимо вас да прегледате и прихватите смернице овог кућног сервера:",
-    "Please review and accept all of the homeserver's policies": "Молимо вас да прегледате и прихватите све смернице кућног сервера",
-    "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Недостаје јавни кључ captcha-е у конфигурацији матичног сервера. Молимо пријавите ово администратору кућног сервера.",
-    "Confirm your identity by entering your account password below.": "Потврдите свој идентитет уносом лозинке за налог испод.",
     "Country Dropdown": "Падајући списак земаља",
     "This homeserver would like to make sure you are not a robot.": "Овај кућни сервер жели да се увери да нисте робот.",
     "End": "",
@@ -1312,13 +1298,18 @@
             "default_url_previews_on": "УРЛ прегледи су подразумевано укључени за чланове ове собе.",
             "default_url_previews_off": "УРЛ прегледи су подразумевано искључени за чланове ове собе.",
             "url_previews_section": "УРЛ прегледи"
+        },
+        "advanced": {
+            "unfederated": "Ова соба није доступна са удаљених Матрикс сервера"
         }
     },
     "encryption": {
         "verification": {
             "sas_no_match": "Не поклапају се",
             "sas_match": "Поклапају се",
-            "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације."
+            "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације.",
+            "complete_action": "Разумем",
+            "cancelling": "Отказујем…"
         },
         "old_version_detected_title": "Нађени су стари криптографски подаци",
         "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве."
@@ -1352,7 +1343,20 @@
         "change_password_confirm_label": "Потврди лозинку",
         "change_password_current_label": "Тренутна лозинка",
         "change_password_new_label": "Нова лозинка",
-        "change_password_action": "Промени лозинку"
+        "change_password_action": "Промени лозинку",
+        "email_field_label": "Мејл",
+        "email_field_label_required": "Унесите адресу е-поште",
+        "uia": {
+            "password_prompt": "Потврдите свој идентитет уносом лозинке за налог испод.",
+            "recaptcha_missing_params": "Недостаје јавни кључ captcha-е у конфигурацији матичног сервера. Молимо пријавите ово администратору кућног сервера.",
+            "terms_invalid": "Молимо вас да прегледате и прихватите све смернице кућног сервера",
+            "terms": "Молимо вас да прегледате и прихватите смернице овог кућног сервера:",
+            "msisdn_token_incorrect": "Жетон је нетачан",
+            "msisdn": "Текстуална порука је послата на %(msisdn)s",
+            "msisdn_token_prompt": "Унесите код који се налази у њој:",
+            "sso_failed": "Нешто је пошло по наопако у потврђивању вашег идентитета. Откажите и покушајте поново.",
+            "fallback_button": "Започните идентификацију"
+        }
     },
     "export_chat": {
         "messages": "Поруке"

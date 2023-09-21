@@ -160,7 +160,6 @@
     "Share Room Message": "Del rommelding",
     "Cancel All": "Avbryt alt",
     "Home": "Hjem",
-    "Email": "E-post",
     "Phone": "Telefon",
     "Enter password": "Skriv inn passord",
     "Enter username": "Skriv inn brukernavn",
@@ -170,7 +169,6 @@
     "Success!": "Suksess!",
     "Set up": "Sett opp",
     "Identity server has no terms of service": "Identitetstjeneren har ingen brukervilkår",
-    "Got It": "Skjønner",
     "Lion": "Løve",
     "Pig": "Gris",
     "Rabbit": "Kanin",
@@ -220,8 +218,6 @@
     "Audio Output": "Lydutdata",
     "Voice & Video": "Stemme og video",
     "Room information": "Rominformasjon",
-    "Room version": "Romversjon",
-    "Room version:": "Romversjon:",
     "Room Addresses": "Rom-adresser",
     "Sounds": "Lyder",
     "Notification sound": "Varslingslyd",
@@ -344,17 +340,14 @@
     "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "Confirm your identity by entering your account password below.": "Bekreft identiteten din ved å skrive inn kontopassordet ditt nedenfor.",
     "Use an email address to recover your account": "Bruk en E-postadresse til å gjenopprette kontoen din",
     "Enter email address (required on this homeserver)": "Skriv inn en E-postadresse (Påkrevd på denne hjemmetjeneren)",
-    "Doesn't look like a valid email address": "Det ser ikke ut som en gyldig E-postadresse",
     "Password is allowed, but unsafe": "Passordet er tillatt, men er ikke trygt",
     "Nice, strong password!": "Strålende, passordet er sterkt!",
     "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
     "Enter passphrase": "Skriv inn passordfrase",
-    "Cancelling…": "Avbryter …",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
     "Remove %(email)s?": "Vil du fjerne %(email)s?",
@@ -488,7 +481,6 @@
     },
     "Keys restored": "Nøklene ble gjenopprettet",
     "Reject invitation": "Avslå invitasjonen",
-    "Start authentication": "Begynn autentisering",
     "Couldn't load page": "Klarte ikke å laste inn siden",
     "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
@@ -624,11 +616,7 @@
     "Move right": "Gå til høyre",
     "Security Phrase": "Sikkerhetsfrase",
     "Open dial pad": "Åpne nummerpanelet",
-    "Enter email address": "Legg inn e-postadresse",
     "Enter phone number": "Skriv inn telefonnummer",
-    "Please enter the code it contains:": "Vennligst skriv inn koden den inneholder:",
-    "Token incorrect": "Sjetongen er feil",
-    "A text message has been sent to %(msisdn)s": "En SMS har blitt sendt til %(msisdn)s",
     "This room is public": "Dette rommet er offentlig",
     "Move left": "Gå til venstre",
     "Take a picture": "Ta et bilde",
@@ -1567,6 +1555,10 @@
             "url_preview_encryption_warning": "I krypterte rom som denne, er URL-forhåndsvisninger skrudd av som standard for å sikre at hjemmetjeneren din (der forhåndsvisningene blir generert) ikke kan samle inn informasjon om lenkene som du ser i dette rommet.",
             "url_preview_explainer": "Når noen legger til en URL i meldingene deres, kan en URL-forhåndsvisning bli vist for å gi mere informasjonen om den lenken, f.eks. tittelen, beskrivelsen, og et bilde fra nettstedet.",
             "url_previews_section": "URL-forhåndsvisninger"
+        },
+        "advanced": {
+            "room_version_section": "Romversjon",
+            "room_version": "Romversjon:"
         }
     },
     "encryption": {
@@ -1575,7 +1567,9 @@
             "sas_match": "De samsvarer",
             "complete_title": "Verifisert!",
             "complete_description": "Du har vellykket verifisert denne brukeren.",
-            "qr_prompt": "Skann denne unike koden"
+            "qr_prompt": "Skann denne unike koden",
+            "complete_action": "Skjønner",
+            "cancelling": "Avbryter …"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt"
     },
@@ -1626,7 +1620,17 @@
         "change_password_confirm_invalid": "Passordene samsvarer ikke",
         "change_password_current_label": "Nåværende passord",
         "change_password_new_label": "Nytt passord",
-        "change_password_action": "Endre passordet"
+        "change_password_action": "Endre passordet",
+        "email_field_label": "E-post",
+        "email_field_label_required": "Legg inn e-postadresse",
+        "email_field_label_invalid": "Det ser ikke ut som en gyldig E-postadresse",
+        "uia": {
+            "password_prompt": "Bekreft identiteten din ved å skrive inn kontopassordet ditt nedenfor.",
+            "msisdn_token_incorrect": "Sjetongen er feil",
+            "msisdn": "En SMS har blitt sendt til %(msisdn)s",
+            "msisdn_token_prompt": "Vennligst skriv inn koden den inneholder:",
+            "fallback_button": "Begynn autentisering"
+        }
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",

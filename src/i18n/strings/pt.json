@@ -26,7 +26,6 @@
     "Server may be unavailable, overloaded, or you hit a bug.": "O servidor pode estar indisponível ou sobrecarregado, ou então você encontrou uma falha no sistema.",
     "Session ID": "Identificador de sessão",
     "This doesn't appear to be a valid email address": "Este não aparenta ser um endereço de email válido",
-    "This room is not accessible by remote Matrix servers": "Esta sala não é acessível para servidores Matrix remotos",
     "Unable to add email address": "Não foi possível adicionar endereço de email",
     "Unable to remove contact information": "Não foi possível remover informação de contato",
     "Unable to verify email address.": "Não foi possível verificar o endereço de email.",
@@ -109,7 +108,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Você não poderá desfazer esta mudança, pois estará dando a este(a) usuário(a) o mesmo nível de permissões que você.",
     "Authentication": "Autenticação",
     "An error has occurred.": "Ocorreu um erro.",
-    "Email": "Email",
     "Email address": "Endereço de email",
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
     "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
@@ -130,8 +128,6 @@
     "Unknown error": "Erro desconhecido",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
-    "Token incorrect": "Token incorreto",
-    "Please enter the code it contains:": "Por favor, entre com o código que está na mensagem:",
     "Error decrypting image": "Erro ao descriptografar a imagem",
     "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
@@ -159,7 +155,6 @@
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
-    "Start authentication": "Iniciar autenticação",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
     "Home": "Início",
     "Something went wrong!": "Algo deu errado!",
@@ -408,7 +403,6 @@
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Enviámos-lhe um email para confirmar o seu endereço. Por favor siga as instruções no email e depois clique no botão abaixo.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Create account": "Criar conta",
-    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Para criar a sua conta, abra a ligação no email que acabámos de enviar para %(emailAddress)s.",
     "Invite with email or username": "Convidar com email ou nome de utilizador",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de email, nome de utilizador (como <userId/>) ou <a>partilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, email ou nome de utilizador (como <userId/>) ou <a>partilhe esta sala</a>.",
@@ -805,7 +799,14 @@
         "change_password_confirm_label": "Confirmar palavra-passe",
         "change_password_current_label": "Palavra-passe atual",
         "change_password_new_label": "Nova Palavra-Passe",
-        "change_password_action": "Alterar Palavra-Passe"
+        "change_password_action": "Alterar Palavra-Passe",
+        "email_field_label": "Email",
+        "uia": {
+            "email": "Para criar a sua conta, abra a ligação no email que acabámos de enviar para %(emailAddress)s.",
+            "msisdn_token_incorrect": "Token incorreto",
+            "msisdn_token_prompt": "Por favor, entre com o código que está na mensagem:",
+            "fallback_button": "Iniciar autenticação"
+        }
     },
     "export_chat": {
         "messages": "Mensagens"
@@ -867,6 +868,9 @@
             "user_url_previews_default_on": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
             "user_url_previews_default_off": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
             "url_previews_section": "Pré-visualização de links"
+        },
+        "advanced": {
+            "unfederated": "Esta sala não é acessível para servidores Matrix remotos"
         }
     }
 }

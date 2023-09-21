@@ -444,13 +444,6 @@
     "Accept <policyLink /> to continue:": "قبول <policyLink /> للمتابعة:",
     "Your server isn't responding to some <a>requests</a>.": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
     "Dog": "كلب",
-    "Cancelling…": "جارٍ الإلغاء…",
-    "Waiting for %(displayName)s to verify…": "بانتظار %(displayName)s للتحقق…",
-    "Unable to find a supported verification method.": "تعذر العثور على أحد طرق التحقق الممكنة.",
-    "Verify this user by confirming the following number appears on their screen.": "تحقق من هذا المستخدم من خلال التأكد من ظهور الرقم التالي على شاشته.",
-    "Verify this user by confirming the following emoji appear on their screen.": "تحقق من هذا المستخدم من خلال التأكيد من ظهور الرموز التعبيرية التالية على شاشته.",
-    "Got It": "فهمت",
-    "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "الرسائل الآمنة مع هذا المستخدم مشفرة من طرفك إلى طرفه ولا يمكن قراءتها من قبل جهات خارجية.",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "Change notification settings": "تغيير إعدادات الإشعار",
     "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
@@ -503,12 +496,7 @@
     "Room Addresses": "عناوين الغرف",
     "Bridges": "الجسور",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "تعمل هذه الغرفة على توصيل الرسائل بالمنصات التالية. <a> اعرف المزيد. </a>",
-    "Room version:": "إصدار الغرفة:",
-    "Room version": "إصدار الغرفة",
     "Room information": "معلومات الغرفة",
-    "View older messages in %(roomName)s.": "عرض رسائل أقدم في %(roomName)s.",
-    "Upgrade this room to the recommended room version": "قم بترقية هذه الغرفة إلى إصدار الغرفة الموصى به",
-    "This room is not accessible by remote Matrix servers": "لا يمكن الوصول إلى هذه الغرفة بواسطة خوادم Matrix البعيدة",
     "Voice & Video": "الصوت والفيديو",
     "Audio Output": "مخرج الصوت",
     "No Webcams detected": "لم يتم الكشف عن كاميرات الويب",
@@ -1267,6 +1255,13 @@
             "url_preview_encryption_warning": "في الغرف المشفرة ، مثل هذه الغرفة ، يتم تعطيل معاينات URL أصلاً للتأكد من أن خادمك الوسيط (حيث يتم إنشاء المعاينات) لا يمكنه جمع معلومات حول الروابط التي تراها في هذه الغرفة.",
             "url_preview_explainer": "عندما يضع شخص ما عنوان URL في رسالته ، يمكن عرض معاينة عنوان URL لإعطاء مزيد من المعلومات حول هذا الرابط مثل العنوان والوصف وصورة من موقع الويب.",
             "url_previews_section": "معاينة الروابط"
+        },
+        "advanced": {
+            "unfederated": "لا يمكن الوصول إلى هذه الغرفة بواسطة خوادم Matrix البعيدة",
+            "room_upgrade_button": "قم بترقية هذه الغرفة إلى إصدار الغرفة الموصى به",
+            "room_predecessor": "عرض رسائل أقدم في %(roomName)s.",
+            "room_version_section": "إصدار الغرفة",
+            "room_version": "إصدار الغرفة:"
         }
     },
     "encryption": {
@@ -1279,7 +1274,14 @@
             "complete_description": "لقد نجحت في التحقق من هذا المستخدم.",
             "qr_prompt": "امسح هذا الرمز الفريد",
             "sas_prompt": "قارن رمزاً تعبيريًّا فريداً",
-            "sas_description": "قارن مجموعة فريدة من الرموز التعبيرية إذا لم يكن لديك كاميرا على أي من الجهازين"
+            "sas_description": "قارن مجموعة فريدة من الرموز التعبيرية إذا لم يكن لديك كاميرا على أي من الجهازين",
+            "explainer": "الرسائل الآمنة مع هذا المستخدم مشفرة من طرفك إلى طرفه ولا يمكن قراءتها من قبل جهات خارجية.",
+            "complete_action": "فهمت",
+            "sas_emoji_caption_user": "تحقق من هذا المستخدم من خلال التأكيد من ظهور الرموز التعبيرية التالية على شاشته.",
+            "sas_caption_user": "تحقق من هذا المستخدم من خلال التأكد من ظهور الرقم التالي على شاشته.",
+            "unsupported_method": "تعذر العثور على أحد طرق التحقق الممكنة.",
+            "waiting_other_user": "بانتظار %(displayName)s للتحقق…",
+            "cancelling": "جارٍ الإلغاء…"
         }
     },
     "emoji": {

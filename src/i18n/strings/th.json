@@ -26,7 +26,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
     "Deactivate Account": "ปิดการใช้งานบัญชี",
-    "Email": "อีเมล",
     "Email address": "ที่อยู่อีเมล",
     "Error decrypting attachment": "การถอดรหัสไฟล์แนบผิดพลาด",
     "Failed to ban user": "การแบนผู้ใช้ล้มเหลว",
@@ -520,7 +519,8 @@
         "change_password_confirm_label": "ยืนยันรหัสผ่าน",
         "change_password_current_label": "รหัสผ่านปัจจุบัน",
         "change_password_new_label": "รหัสผ่านใหม่",
-        "change_password_action": "เปลี่ยนรหัสผ่าน"
+        "change_password_action": "เปลี่ยนรหัสผ่าน",
+        "email_field_label": "อีเมล"
     },
     "setting": {
         "help_about": {

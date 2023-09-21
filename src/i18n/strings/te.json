@@ -47,7 +47,6 @@
     "Failed to forget room %(errCode)s": "గది మర్చిపోవడం విఫలమైంది %(errCode)s",
     "Incorrect verification code": "ధృవీకరణ కోడ్ సరిగా లెదు",
     "unknown error code": "తెలియని కోడ్ లోపం",
-    "Please enter the code it contains:": "దయచేసి దాన్ని కలిగి ఉన్న కోడ్ను నమోదు చేయండి:",
     "Unable to restore session": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు",
     "Create new room": "క్రొత్త గది సృష్టించండి",
     "Favourite": "గుర్తుంచు",
@@ -153,7 +152,10 @@
         "change_password_mismatch": "కొత్త పాస్వర్డ్లు సరిపోలడం లేదు",
         "change_password_confirm_label": "పాస్వర్డ్ని నిర్ధారించండి",
         "change_password_current_label": "ప్రస్తుత పాస్వర్డ్",
-        "change_password_action": "పాస్వర్డ్ మార్చండి"
+        "change_password_action": "పాస్వర్డ్ మార్చండి",
+        "uia": {
+            "msisdn_token_prompt": "దయచేసి దాన్ని కలిగి ఉన్న కోడ్ను నమోదు చేయండి:"
+        }
     },
     "room_list": {
         "failed_remove_tag": "గది నుండి బొందు %(tagName)s తొలగించడంలో విఫలమైంది",

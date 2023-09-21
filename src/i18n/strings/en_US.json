@@ -24,7 +24,6 @@
     "Default": "Default",
     "Delete widget": "Delete widget",
     "Download %(text)s": "Download %(text)s",
-    "Email": "Email",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
     "Failed to ban user": "Failed to ban user",
@@ -87,7 +86,6 @@
     "This room is not recognised.": "This room is not recognized.",
     "This doesn't appear to be a valid email address": "This doesn't appear to be a valid email address",
     "This phone number is already in use": "This phone number is already in use",
-    "This room is not accessible by remote Matrix servers": "This room is not accessible by remote Matrix servers",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tried to load a specific point in this room's timeline, but was unable to find it.",
     "Unable to add email address": "Unable to add email address",
@@ -149,8 +147,6 @@
     "Unknown error": "Unknown error",
     "Unable to restore session": "Unable to restore session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
-    "Token incorrect": "Token incorrect",
-    "Please enter the code it contains:": "Please enter the code it contains:",
     "Error decrypting image": "Error decrypting image",
     "Error decrypting video": "Error decrypting video",
     "Add an Integration": "Add an Integration",
@@ -162,7 +158,6 @@
     "No display name": "No display name",
     "%(roomName)s does not exist.": "%(roomName)s does not exist.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is not accessible at this time.",
-    "Start authentication": "Start authentication",
     "Uploading %(filename)s": "Uploading %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Uploading %(filename)s and %(count)s other",
@@ -501,7 +496,13 @@
         "change_password_confirm_label": "Confirm password",
         "change_password_current_label": "Current password",
         "change_password_new_label": "New Password",
-        "change_password_action": "Change Password"
+        "change_password_action": "Change Password",
+        "email_field_label": "Email",
+        "uia": {
+            "msisdn_token_incorrect": "Token incorrect",
+            "msisdn_token_prompt": "Please enter the code it contains:",
+            "fallback_button": "Start authentication"
+        }
     },
     "export_chat": {
         "messages": "Messages"
@@ -560,6 +561,9 @@
             "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
             "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
             "url_previews_section": "URL Previews"
+        },
+        "advanced": {
+            "unfederated": "This room is not accessible by remote Matrix servers"
         }
     }
 }

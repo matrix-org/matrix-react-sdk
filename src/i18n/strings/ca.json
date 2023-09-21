@@ -114,7 +114,6 @@
     "%(roomName)s is not accessible at this time.": "La sala %(roomName)s no és accessible en aquest moment.",
     "Failed to unban": "No s'ha pogut expulsar",
     "Banned by %(displayName)s": "Expulsat per %(displayName)s",
-    "This room is not accessible by remote Matrix servers": "Aquesta sala no és accessible per a servidors de Matrix remots",
     "Jump to first unread message.": "Salta al primer missatge no llegit.",
     "not specified": "sense especificar",
     "This room has no local addresses": "Aquesta sala no té adreces locals",
@@ -127,10 +126,6 @@
     "Copied!": "Copiat!",
     "Failed to copy": "No s'ha pogut copiar",
     "Add an Integration": "Afegeix una integració",
-    "Token incorrect": "Token incorrecte",
-    "A text message has been sent to %(msisdn)s": "S'ha enviat un missatge de text a %(msisdn)s",
-    "Please enter the code it contains:": "Introdueix el codi que conté:",
-    "Start authentication": "Inicia l'autenticació",
     "Sign in with": "Inicieu sessió amb",
     "Email address": "Correu electrònic",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
@@ -187,7 +182,6 @@
     "Export room keys": "Exporta les claus de la sala",
     "Confirm passphrase": "Introduïu una contrasenya",
     "Import room keys": "Importa les claus de la sala",
-    "Email": "Correu electrònic",
     "Sunday": "Diumenge",
     "Notification targets": "Objectius de les notificacions",
     "Today": "Avui",
@@ -678,6 +672,9 @@
             "default_url_previews_on": "Les previsualitzacions dels URL estan habilitades per defecte per als membres d'aquesta sala.",
             "default_url_previews_off": "Les previsualitzacions dels URL estan inhabilitades per defecte per als membres d'aquesta sala.",
             "url_previews_section": "Previsualitzacions dels URL"
+        },
+        "advanced": {
+            "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
         }
     },
     "auth": {
@@ -698,7 +695,14 @@
         "change_password_confirm_label": "Confirma la contrasenya",
         "change_password_current_label": "Contrasenya actual",
         "change_password_new_label": "Nova contrasenya",
-        "change_password_action": "Canvia la contrasenya"
+        "change_password_action": "Canvia la contrasenya",
+        "email_field_label": "Correu electrònic",
+        "uia": {
+            "msisdn_token_incorrect": "Token incorrecte",
+            "msisdn": "S'ha enviat un missatge de text a %(msisdn)s",
+            "msisdn_token_prompt": "Introdueix el codi que conté:",
+            "fallback_button": "Inicia l'autenticació"
+        }
     },
     "export_chat": {
         "messages": "Missatges"

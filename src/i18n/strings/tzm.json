@@ -43,7 +43,6 @@
     "Albania": "Albanya",
     "Afghanistan": "Afɣanistan",
     "Phone": "Atilifun",
-    "Email": "Imayl",
     "Send": "Azen",
     "edited": "infel",
     "Copied!": "inɣel!",
@@ -163,7 +162,8 @@
     },
     "auth": {
         "register_action": "senflul amiḍan",
-        "phone_label": "Atilifun"
+        "phone_label": "Atilifun",
+        "email_field_label": "Imayl"
     },
     "room_settings": {
         "permissions": {

@@ -280,7 +280,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             {
                 key: "email",
                 test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t("Doesn't look like a valid email address"),
+                invalid: () => _t("auth|email_field_label_invalid"),
             },
         ],
     });
@@ -451,7 +451,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showEmail()) {
             return null;
         }
-        const emailLabel = this.authStepIsRequired("m.login.email.identity") ? _td("Email") : _td("Email (optional)");
+        const emailLabel = this.authStepIsRequired("m.login.email.identity")
+            ? _td("auth|email_field_label")
+            : _td("Email (optional)");
         return (
             <EmailField
                 fieldRef={(field) => (this[RegistrationField.Email] = field)}

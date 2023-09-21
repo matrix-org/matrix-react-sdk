@@ -150,9 +150,6 @@
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
-    "Got It": "je'e",
-    "Waiting for %(displayName)s to verify…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
-    "Cancelling…": ".i ca'o co'u co'e",
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
     "Later": "nu ca na co'e",
@@ -455,7 +452,10 @@
             "in_person": ".i lo nu marji penmi vau ja pilno pa se lacri lo nu tavla cu sarcu lo nu snura",
             "other_party_cancelled": ".i le na du be do co'u troci le ka co'a lacri",
             "complete_title": ".i mo'u co'a lacri",
-            "complete_description": ".i mo'u co'a lacri le pilno"
+            "complete_description": ".i mo'u co'a lacri le pilno",
+            "complete_action": "je'e",
+            "waiting_other_user": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
+            "cancelling": ".i ca'o co'u co'e"
         }
     },
     "export_chat": {

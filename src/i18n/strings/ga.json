@@ -224,7 +224,6 @@
     "Favourited": "Roghnaithe",
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
-    "Cancelling…": "ag Cealú…",
     "Bridges": "Droichid",
     "Later": "Níos deireanaí",
     "Lock": "Glasáil",
@@ -234,7 +233,6 @@
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
     "Phone": "Guthán",
-    "Email": "Ríomhphost",
     "Home": "Tús",
     "Favourite": "Cuir mar ceanán",
     "Removing…": "ag Baint…",
@@ -267,7 +265,6 @@
     "Email Address": "Seoladh Ríomhphoist",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
-    "Got It": "Tuigthe",
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
     "Unban": "Bain an cosc",
@@ -415,8 +412,6 @@
     "Notification sound": "Fuaim fógra",
     "Uploaded sound": "Fuaim uaslódáilte",
     "Room Addresses": "Seoltaí Seomra",
-    "Room version:": "Leagan seomra:",
-    "Room version": "Leagan seomra",
     "Too Many Calls": "Barraíocht Glaonna",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -770,11 +765,17 @@
         },
         "general": {
             "url_previews_section": "Réamhamhairc URL"
+        },
+        "advanced": {
+            "room_version_section": "Leagan seomra",
+            "room_version": "Leagan seomra:"
         }
     },
     "encryption": {
         "verification": {
-            "complete_title": "Deimhnithe!"
+            "complete_title": "Deimhnithe!",
+            "complete_action": "Tuigthe",
+            "cancelling": "ag Cealú…"
         }
     },
     "emoji": {
@@ -802,7 +803,8 @@
         "change_password_confirm_label": "Deimhnigh focal faire",
         "change_password_current_label": "Focal faire reatha",
         "change_password_new_label": "Focal Faire Nua",
-        "change_password_action": "Athraigh focal faire"
+        "change_password_action": "Athraigh focal faire",
+        "email_field_label": "Ríomhphost"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

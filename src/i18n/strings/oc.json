@@ -49,7 +49,6 @@
     "Notifications": "Notificacions",
     "Ok": "Validar",
     "Set up": "Parametrar",
-    "Cancelling…": "Anullacion…",
     "Fish": "Pes",
     "Butterfly": "Parpalhòl",
     "Tree": "Arborescéncia",
@@ -116,7 +115,6 @@
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
     "Enter password": "Sasissètz lo senhal",
-    "Email": "Corrièl",
     "Phone": "Telefòn",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
@@ -341,7 +339,8 @@
         "change_password_confirm_invalid": "Los senhals correspondon pas",
         "change_password_current_label": "Senhal actual",
         "change_password_new_label": "Senhal novèl",
-        "change_password_action": "Modificar senhal"
+        "change_password_action": "Modificar senhal",
+        "email_field_label": "Corrièl"
     },
     "export_chat": {
         "messages": "Messatges"
@@ -375,6 +374,11 @@
         },
         "security": {
             "title": "Seguretat e vida privada"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "cancelling": "Anullacion…"
         }
     }
 }

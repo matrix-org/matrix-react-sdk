@@ -83,11 +83,6 @@
     "The user's homeserver does not support the version of the room.": "Den thuusserver van de gebruuker biedt geen oundersteunienge vo de gespreksversie.",
     "Unknown server error": "Ounbekende serverfoute",
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
-    "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Beveiligde berichtn me deze gebruuker zyn eind-tout-eind-versleuterd en kunn nie door derdn wordn geleezn.",
-    "Got It": "’k Snappen ’t",
-    "Verify this user by confirming the following emoji appear on their screen.": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm de volgende emoji toogt.",
-    "Verify this user by confirming the following number appears on their screen.": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm ’t volgend getal toogt.",
-    "Unable to find a supported verification method.": "Kan geen oundersteunde verificoasjemethode viendn.",
     "Dog": "Hound",
     "Cat": "Katte",
     "Lion": "Leeuw",
@@ -201,12 +196,7 @@
     "Default Device": "Standoardtoestel",
     "Audio Output": "Geluudsuutgang",
     "Voice & Video": "Sproak & video",
-    "This room is not accessible by remote Matrix servers": "Dit gesprek es nie toegankelik voor externe Matrix-servers",
-    "Upgrade this room to the recommended room version": "Actualiseert dit gesprek noar d’anbevooln gespreksversie",
-    "View older messages in %(roomName)s.": "Bekykt oudere berichtn in %(roomName)s.",
     "Room information": "Gespreksinformoasje",
-    "Room version": "Gespreksversie",
-    "Room version:": "Gespreksversie:",
     "Room Addresses": "Gespreksadressn",
     "Failed to unban": "Ountbann mislukt",
     "Unban": "Ountbann",
@@ -415,18 +405,10 @@
     "Low Priority": "Leige prioriteit",
     "Home": "Thuus",
     "This homeserver would like to make sure you are not a robot.": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
-    "Please review and accept all of the homeserver's policies": "Gelieve ’t beleid van de thuusserver te leezn en ’anveirdn",
-    "Please review and accept the policies of this homeserver:": "Gelieve ’t beleid van deze thuusserver te leezn en t’anveirdn:",
-    "Token incorrect": "Verkeerd bewys",
-    "A text message has been sent to %(msisdn)s": "’t Is een smse noa %(msisdn)s verstuurd gewist",
-    "Please enter the code it contains:": "Gift de code in da ’t er in stoat:",
-    "Start authentication": "Authenticoasje beginn",
-    "Email": "E-mailadresse",
     "Phone": "Telefongnumero",
     "Sign in with": "Anmeldn me",
     "Use an email address to recover your account": "Gebruukt een e-mailadresse vo jen account t’herstelln",
     "Enter email address (required on this homeserver)": "Gift een e-mailadresse in (vereist ip deze thuusserver)",
-    "Doesn't look like a valid email address": "Dit ziet der nie uut lik e geldig e-mailadresse",
     "Enter password": "Gif ’t paswoord in",
     "Password is allowed, but unsafe": "Paswoord is toegeloatn, moar ounveilig",
     "Nice, strong password!": "Dit is e sterk paswoord!",
@@ -1023,13 +1005,25 @@
             "url_preview_encryption_warning": "In versleuterde gesprekkn lyk dat hier zyn URL-voorvertoniengn standoard uutgeschoakeld, vo te voorkommn da je thuusserver (woa da de voorvertoniengn wordn gemakt) informoasje ku verzoameln over de koppeliengn da j’hiere ziet.",
             "url_preview_explainer": "A ’t er etwien een URL in e bericht invoegt, kut er een URL-voorvertonienge getoogd wordn me meer informoasje over de koppelienge, gelyk den titel, omschryvienge en e fotootje van de website.",
             "url_previews_section": "URL-voorvertoniengn"
+        },
+        "advanced": {
+            "unfederated": "Dit gesprek es nie toegankelik voor externe Matrix-servers",
+            "room_upgrade_button": "Actualiseert dit gesprek noar d’anbevooln gespreksversie",
+            "room_predecessor": "Bekykt oudere berichtn in %(roomName)s.",
+            "room_version_section": "Gespreksversie",
+            "room_version": "Gespreksversie:"
         }
     },
     "encryption": {
         "verification": {
             "other_party_cancelled": "De tegenparty èt de verificoasje geannuleerd.",
             "complete_title": "Geverifieerd!",
-            "complete_description": "J’èt deze gebruuker geverifieerd."
+            "complete_description": "J’èt deze gebruuker geverifieerd.",
+            "explainer": "Beveiligde berichtn me deze gebruuker zyn eind-tout-eind-versleuterd en kunn nie door derdn wordn geleezn.",
+            "complete_action": "’k Snappen ’t",
+            "sas_emoji_caption_user": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm de volgende emoji toogt.",
+            "sas_caption_user": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm ’t volgend getal toogt.",
+            "unsupported_method": "Kan geen oundersteunde verificoasjemethode viendn."
         },
         "old_version_detected_title": "Oude cryptografiegegeevns gedetecteerd",
         "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn."
@@ -1069,7 +1063,17 @@
         "change_password_confirm_invalid": "Paswoordn kommn nie overeen",
         "change_password_current_label": "Huudig paswoord",
         "change_password_new_label": "Nieuw paswoord",
-        "change_password_action": "Paswoord verandern"
+        "change_password_action": "Paswoord verandern",
+        "email_field_label": "E-mailadresse",
+        "email_field_label_invalid": "Dit ziet der nie uut lik e geldig e-mailadresse",
+        "uia": {
+            "terms_invalid": "Gelieve ’t beleid van de thuusserver te leezn en ’anveirdn",
+            "terms": "Gelieve ’t beleid van deze thuusserver te leezn en t’anveirdn:",
+            "msisdn_token_incorrect": "Verkeerd bewys",
+            "msisdn": "’t Is een smse noa %(msisdn)s verstuurd gewist",
+            "msisdn_token_prompt": "Gift de code in da ’t er in stoat:",
+            "fallback_button": "Authenticoasje beginn"
+        }
     },
     "export_chat": {
         "messages": "Berichtn"
