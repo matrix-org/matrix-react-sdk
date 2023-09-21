@@ -368,13 +368,11 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ei sa ühendust koduserveriga. Palun kontrolli, et sinu <a>koduserveri SSL sertifikaat</a> oleks usaldusväärne ning mõni brauseri lisamoodul ei blokeeri päringuid.",
     "Create account": "Loo kasutajakonto",
     "Clear personal data": "Kustuta privaatsed andmed",
-    "Terms and Conditions": "Kasutustingimused",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Sa ei saa saata ühtego sõnumit enne, kui oled läbi lugenud ja nõustunud <consentLink>meie kasutustingimustega</consentLink>.",
     "Couldn't load page": "Lehe laadimine ei õnnestunud",
     "Upload avatar": "Laadi üles profiilipilt ehk avatar",
     "Are you sure you want to leave the room '%(roomName)s'?": "Kas oled kindel, et soovid lahkuda jututoast „%(roomName)s“?",
     "Unknown error": "Teadmata viga",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Selleks et jätkata koduserveri %(homeserverDomain)s kasutamist sa pead üle vaatama ja nõustuma meie kasutustingimustega.",
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "You don't currently have any stickerpacks enabled": "Sul pole ühtegi kleepsupakki kasutusel",
     "Add some now": "Lisa nüüd mõned",
@@ -488,10 +486,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver on ületanud on ületanud ressursipiirangu. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
     "Connectivity to the server has been lost.": "Ühendus sinu serveriga on katkenud.",
     "Sent messages will be stored until your connection has returned.": "Saadetud sõnumid salvestatakse seniks, kuni võrguühendus on taastunud.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitust.",
-        "one": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitus."
-    },
     "Your password has been reset.": "Sinu salasõna on muudetud.",
     "Unignore": "Lõpeta eiramine",
     "<not supported>": "<ei ole toetatud>",
@@ -627,12 +621,8 @@
     "This room is not public. You will not be able to rejoin without an invite.": "See ei ole avalik jututuba. Ilma kutseta sa ei saa uuesti liituda.",
     "Can't leave Server Notices room": "Serveriteadete jututoast ei saa lahkuda",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Seda jututuba kasutatakse sinu koduserveri oluliste teadete jaoks ja seega sa ei saa sealt lahkuda.",
-    "Signed Out": "Välja logitud",
     "Upload all": "Laadi kõik üles",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
-    "For security, this session has been signed out. Please sign in again.": "Turvalisusega seotud põhjustel on see sessioon välja logitud. Palun logi uuesti sisse.",
-    "Review terms and conditions": "Vaata üle kasutustingimused",
-    "Old cryptography data detected": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
     "Switch theme": "Vaheta teemat",
     "All settings": "Kõik seadistused",
     "Use Single Sign On to continue": "Jätkamiseks kasuta ühekordset sisselogimist",
@@ -967,7 +957,6 @@
     "Explore public rooms": "Sirvi avalikke jututubasid",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
     "Unexpected server error trying to leave the room": "Jututoast lahkumisel tekkis serveris ootamatu viga",
     "Error leaving room": "Viga jututoast lahkumisel",
@@ -1374,7 +1363,6 @@
         "other": "%(count)s jututuba",
         "one": "%(count)s jututuba"
     },
-    "Original event source": "Sündmuse töötlemata lähtekood",
     "No results found": "Tulemusi ei ole",
     "You may want to try a different search or check for typos.": "Aga proovi muuta otsingusõna või kontrolli ega neis trükivigu polnud.",
     "<inviter/> invites you": "<inviter/> saatis sulle kutse",
@@ -1394,7 +1382,6 @@
     "Reset event store?": "Kas lähtestame sündmuste andmekogu?",
     "Reset event store": "Lähtesta sündmuste andmekogu",
     "Avatar": "Tunnuspilt",
-    "Verification requested": "Verifitseerimistaotlus on saadetud",
     "You most likely do not want to reset your event index store": "Pigem sa siiski ei taha lähtestada sündmuste andmekogu ja selle indeksit",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Tagamaks ligipääsu oma krüptitud sõnumitele ja tõestamaks oma isikut teistele kasutajatale, verifitseeri end.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Sa oled siin viimane osaleja. Kui sa nüüd lahkud, siis mitte keegi, kaasa arvatud sa ise, ei saa hiljem enam liituda.",
@@ -1594,7 +1581,6 @@
     "Verify with Security Key or Phrase": "Verifitseeri turvavõtme või turvafraasiga",
     "Skip verification for now": "Jäta verifitseerimine praegu vahele",
     "Really reset verification keys?": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
-    "Create poll": "Loo selline küsitlus",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Uuendan kogukonnakeskust...",
         "other": "Uuendan kogukonnakeskuseid... (%(progress)s / %(count)s)"
@@ -1635,13 +1621,6 @@
     "Yours, or the other users' internet connection": "Sinu või teise kasutaja internetiühendus",
     "The homeserver the user you're verifying is connected to": "Sinu poolt verifitseeritava kasutaja koduserver",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "See jututuba ei kasuta sõnumisildasid liidestamiseks muude süsteemidega. <a>Lisateave.</a>",
-    "Add option": "Lisa valik",
-    "Write an option": "Sisesta valik",
-    "Option %(number)s": "Valik %(number)s",
-    "Create options": "Koosta valikud",
-    "Question or topic": "Küsimus või teema",
-    "What is your poll question or topic?": "Mis on küsitluse teema?",
-    "Create Poll": "Loo selline küsitlus",
     "You do not have permission to start polls in this room.": "Sul ei ole õigusi küsitluste korraldamiseks siin jututoas.",
     "Copy link to thread": "Kopeeri jutulõnga link",
     "Thread options": "Jutulõnga valikud",
@@ -1673,8 +1652,6 @@
         "one": "%(count)s hääl",
         "other": "%(count)s häält"
     },
-    "Sorry, the poll you tried to create was not posted.": "Vabandust, aga sinu loodud küsitlus jäi üleslaadimata.",
-    "Failed to post poll": "Küsitluse üleslaadimine ei õnnestunud",
     "Sorry, your vote was not registered. Please try again.": "Vabandust, aga sinu valik jäi salvestamata. Palun proovi uuesti.",
     "Vote not registered": "Hääl ei salvestunud",
     "Developer": "Arendajad",
@@ -1778,14 +1755,8 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Can't edit poll": "Küsimustikku ei saa muuta",
     "Sorry, you can't edit a poll after votes have been cast.": "Vabandust, aga küsimustikku ei saa enam peale hääletamise lõppu muuta.",
-    "Edit poll": "Muuda küsitlust",
     "Join %(roomAddress)s": "Liitu %(roomAddress)s jututoaga",
     "Results will be visible when the poll is ended": "Tulemused on näha siis, kui küsitlus on lõppenud",
-    "Poll type": "Küsitluse tüüp",
-    "Open poll": "Avatud valikutega küsitlus",
-    "Closed poll": "Suletud valikutega küsitlus",
-    "Voters see results as soon as they have voted": "Osalejad näevad tulemusi kohe peale oma valiku tegemist",
-    "Results are only revealed when you end the poll": "Tulemused on näha vaid siis, kui küsitlus in lõppenud",
     "Search Dialog": "Otsinguvaade",
     "Open thread": "Ava jutulõng",
     "What location type do you want to share?": "Missugust asukohta sa soovid jagada?",
@@ -1915,8 +1886,6 @@
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Kasutajakonto loomiseks ava link e-kirjast, mille just saatsime %(emailAddress)s aadressile.",
     "Unread email icon": "Lugemata e-kirja ikoon",
     "Check your email to continue": "Jätkamaks vaata oma e-kirju",
-    "Click to read topic": "Teema lugemiseks klõpsi",
-    "Edit topic": "Muuda teemat",
     "Joining…": "Liitun…",
     "%(count)s people joined": {
         "other": "%(count)s osalejat liitus",
@@ -2106,7 +2075,6 @@
     "Checking…": "Kontrollin…",
     "Waiting for partner to confirm…": "Ootan teise osapoole kinnitust…",
     "Adding…": "Lisan…",
-    "Write something…": "Kirjuta midagi…",
     "Rejecting invite…": "Hülgan kutset…",
     "Joining room…": "Liitun jututoaga…",
     "Joining space…": "Liitun kogukonnaga…",
@@ -3087,7 +3055,8 @@
         "low_bandwidth_mode": "Vähese ribalaiusega režiim",
         "developer_mode": "Arendusrežiim",
         "view_source_decrypted_event_source": "Sündmuse dekrüptitud lähtekood",
-        "view_source_decrypted_event_source_unavailable": "Dekrüptitud lähteandmed pole saadaval"
+        "view_source_decrypted_event_source_unavailable": "Dekrüptitud lähteandmed pole saadaval",
+        "original_event_source": "Sündmuse töötlemata lähtekood"
     },
     "export_chat": {
         "html": "HTML",
@@ -3743,7 +3712,10 @@
             "sas_description": "Kui sul mõlemas seadmes pole kaamerat, siis võrdle unikaalset emoji'de komplekti",
             "qr_or_sas": "%(qrCode)s või %(emojiCompare)s",
             "qr_or_sas_header": "Verifitseeri see seade täites ühe alljärgnevatest:"
-        }
+        },
+        "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
+        "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
+        "verification_requested_toast_title": "Verifitseerimistaotlus on saadetud"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3858,7 +3830,9 @@
         "phone_optional_label": "Telefoninumber (kui soovid)",
         "email_help_text": "Selleks et saaksid vajadusel oma salasõna muuta, palun lisa oma e-posti aadress.",
         "email_phone_discovery_text": "Kui soovid, et teised kasutajad saaksid sind leida, siis palun lisa oma e-posti aadress või telefoninumber.",
-        "email_discovery_text": "Kui soovid, et teised kasutajad saaksid sind leida, siis palun lisa oma e-posti aadress."
+        "email_discovery_text": "Kui soovid, et teised kasutajad saaksid sind leida, siis palun lisa oma e-posti aadress.",
+        "session_logged_out_title": "Välja logitud",
+        "session_logged_out_description": "Turvalisusega seotud põhjustel on see sessioon välja logitud. Palun logi uuesti sisse."
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -4170,6 +4144,12 @@
             "private_unencrypted_warning": "Sinu isiklikud sõnumid on tavaliselt läbivalt krüptitud, aga see jututuba ei ole. Tavaliselt on põhjuseks, et kasutusel on mõni seade või meetod nagu e-posti põhised kutsed, mis krüptimist veel ei toeta.",
             "enable_encryption_prompt": "Võta seadistustes krüptimine kasutusele.",
             "unencrypted_warning": "Läbiv krüptimine pole kasutusel"
+        },
+        "edit_topic": "Muuda teemat",
+        "read_topic": "Teema lugemiseks klõpsi",
+        "unread_notifications_predecessor": {
+            "other": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitust.",
+            "one": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitus."
         }
     },
     "file_panel": {
@@ -4184,9 +4164,31 @@
         "intro": "Jätkamaks pead nõustuma kasutustingimustega.",
         "column_service": "Teenus",
         "column_summary": "Kokkuvõte",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Kasutustingimused",
+        "tac_description": "Selleks et jätkata koduserveri %(homeserverDomain)s kasutamist sa pead üle vaatama ja nõustuma meie kasutustingimustega.",
+        "tac_button": "Vaata üle kasutustingimused"
     },
     "space_settings": {
         "title": "Seadistused - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Loo selline küsitlus",
+        "create_poll_action": "Loo selline küsitlus",
+        "edit_poll_title": "Muuda küsitlust",
+        "failed_send_poll_title": "Küsitluse üleslaadimine ei õnnestunud",
+        "failed_send_poll_description": "Vabandust, aga sinu loodud küsitlus jäi üleslaadimata.",
+        "type_heading": "Küsitluse tüüp",
+        "type_open": "Avatud valikutega küsitlus",
+        "type_closed": "Suletud valikutega küsitlus",
+        "topic_heading": "Mis on küsitluse teema?",
+        "topic_label": "Küsimus või teema",
+        "topic_placeholder": "Kirjuta midagi…",
+        "options_heading": "Koosta valikud",
+        "options_label": "Valik %(number)s",
+        "options_placeholder": "Sisesta valik",
+        "options_add_button": "Lisa valik",
+        "disclosed_notes": "Osalejad näevad tulemusi kohe peale oma valiku tegemist",
+        "notes": "Tulemused on näha vaid siis, kui küsitlus in lõppenud"
     }
 }

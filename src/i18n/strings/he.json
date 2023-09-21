@@ -1271,10 +1271,6 @@
     "Failed to load timeline position": "טעינת מיקום ציר הזמן נכשלה",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "ניסה לטעון נקודה מסוימת בציר הזמן של החדר הזה, אך לא הצליח למצוא אותה.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "ניסיתי לטעון נקודה ספציפית בציר הזמן של החדר הזה, אך אין לך הרשאה להציג את ההודעה המדוברת.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "יש לך %(count)s הודעה שלא נקראה בגירסה קודמת של חדר זה.",
-        "other": "יש לך %(count)s הודעות שלא נקראו בגרסה קודמת של חדר זה."
-    },
     "Failed to reject invite": "דחיית הזמנה נכשלה",
     "No more results": "אין יותר תוצאות",
     "Server may be unavailable, overloaded, or search timed out :(": "יתכן שהשרת לא יהיה זמין, עמוס יתר על המידה או שתם הזמן הקצוב לחיפוש :(",
@@ -1286,13 +1282,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבית הזה חרג ממגבלת המשאבים. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
-    "Old cryptography data detected": "נתגלו נתוני הצפנה ישנים",
-    "Terms and Conditions": "תנאים והגבלות",
-    "Review terms and conditions": "עיין בתנאים ובהגבלות",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "כדי להמשיך להשתמש בשרת הבית (%(homeserverDomain)s), עליך לבדוק ולהסכים לתנאים ולהגבלות שלנו.",
-    "For security, this session has been signed out. Please sign in again.": "למען ביטחון, הפגישה הזו נותקה. אנא היכנסו שוב.",
-    "Signed Out": "יציאה",
     "Channel: <channelLink/>": "ערוץ: <channelLink/>",
     "Dial pad": "לוח חיוג",
     "There was an error looking up the phone number": "אירעה שגיאה בחיפוש מספר הטלפון",
@@ -1391,18 +1380,8 @@
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
-    "Failed to post poll": "תקלה בפרסום הסקר",
     "Confirm your Security Phrase": "אשר את ביטוי האבטחה שלך",
     "Application window": "חלון אפליקציה",
-    "Results are only revealed when you end the poll": "תוצאות יהיה זמינות להצגה רק עם סגירת הסקר",
-    "What is your poll question or topic?": "מה השאלה או הנושא שלכם בסקר?",
-    "Closed poll": "סגר סקר",
-    "Open poll": "פתח סקר",
-    "Poll type": "סוג סקר",
-    "Sorry, the poll you tried to create was not posted.": "סליחה, הסקר שיצרתם לא פורסם.",
-    "Edit poll": "ערוך סקר",
-    "Create Poll": "צרו סקר",
-    "Create poll": "צרו סקר",
     "Results will be visible when the poll is ended": "תוצאות יהיו זמינות כאשר הסקר יסתיים",
     "Sorry, you can't edit a poll after votes have been cast.": "סליחה, אתם לא יכולים לערוך את שאלות הסקר לאחר שבוצעו הצבעות.",
     "Can't edit poll": "לא ניתן לערוךסקר",
@@ -1424,7 +1403,6 @@
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s.קולות הצביעו כדי לראות את התוצאות"
     },
-    "Verification requested": "התבקש אימות",
     "User Directory": "ספריית משתמשים",
     "Recommended for public spaces.": "מומלץ למרחבי עבודה ציבוריים.",
     "Allow people to preview your space before they join.": "אפשרו לאנשים תצוגה מקדימה של מרחב העבודה שלכם לפני שהם מצטרפים.",
@@ -2628,7 +2606,10 @@
             "sas_prompt": "השווה סמלים מסויימים",
             "sas_description": "השווה קבוצה של סמלים אם אין ברשותכם מצלמה על שום מכשיר",
             "qr_or_sas_header": "אמתו מכשיר זה על ידי מילוי אחת מהפעולות הבאות:"
-        }
+        },
+        "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
+        "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
+        "verification_requested_toast_title": "התבקש אימות"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2717,7 +2698,9 @@
         "phone_optional_label": "טלפון (לא חובה)",
         "email_help_text": "הוסף דוא\"ל כדי שתוכל לאפס את הסיסמה שלך.",
         "email_phone_discovery_text": "השתמש בדוא\"ל או בטלפון בכדי שאפשר יהיה לגלות אותם על ידי אנשי קשר קיימים.",
-        "email_discovery_text": "השתמש באימייל כדי שאפשר יהיה למצוא אותו על ידי אנשי קשר קיימים."
+        "email_discovery_text": "השתמש באימייל כדי שאפשר יהיה למצוא אותו על ידי אנשי קשר קיימים.",
+        "session_logged_out_title": "יציאה",
+        "session_logged_out_description": "למען ביטחון, הפגישה הזו נותקה. אנא היכנסו שוב."
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2954,6 +2937,10 @@
             "user_created": "%(displayName)s יצר את החדר הזה.",
             "no_avatar_label": "הוסף תמונה, כך שאנשים יוכלו לזהות את החדר שלך בקלות.",
             "start_of_room": "זוהי התחלת השיחה בחדר <roomName/>."
+        },
+        "unread_notifications_predecessor": {
+            "one": "יש לך %(count)s הודעה שלא נקראה בגירסה קודמת של חדר זה.",
+            "other": "יש לך %(count)s הודעות שלא נקראו בגרסה קודמת של חדר זה."
         }
     },
     "file_panel": {
@@ -2968,6 +2955,21 @@
         "intro": "כדי להמשיך עליך לקבל את תנאי השירות הזה.",
         "column_service": "שֵׁרוּת",
         "column_summary": "תקציר",
-        "column_document": "מסמך"
+        "column_document": "מסמך",
+        "tac_title": "תנאים והגבלות",
+        "tac_description": "כדי להמשיך להשתמש בשרת הבית (%(homeserverDomain)s), עליך לבדוק ולהסכים לתנאים ולהגבלות שלנו.",
+        "tac_button": "עיין בתנאים ובהגבלות"
+    },
+    "poll": {
+        "create_poll_title": "צרו סקר",
+        "create_poll_action": "צרו סקר",
+        "edit_poll_title": "ערוך סקר",
+        "failed_send_poll_title": "תקלה בפרסום הסקר",
+        "failed_send_poll_description": "סליחה, הסקר שיצרתם לא פורסם.",
+        "type_heading": "סוג סקר",
+        "type_open": "פתח סקר",
+        "type_closed": "סגר סקר",
+        "topic_heading": "מה השאלה או הנושא שלכם בסקר?",
+        "notes": "תוצאות יהיה זמינות להצגה רק עם סגירת הסקר"
     }
 }

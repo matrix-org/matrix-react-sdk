@@ -49,7 +49,6 @@
     "Failure to create room": "Misslyckades att skapa rummet",
     "Filter room members": "Filtrera rumsmedlemmar",
     "Forget room": "Glöm bort rum",
-    "For security, this session has been signed out. Please sign in again.": "Av säkerhetsskäl har den här sessionen loggats ut. Vänligen logga in igen.",
     "Historical": "Historiska",
     "Home": "Hem",
     "Import E2E room keys": "Importera rumskrypteringsnycklar",
@@ -90,7 +89,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Servern kan vara otillgänglig eller överbelastad, eller så tog sökningen för lång tid :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Servern kan vara otillgänglig eller överbelastad, eller så stötte du på en bugg.",
     "Session ID": "Sessions-ID",
-    "Signed Out": "Loggade ut",
     "Start authentication": "Starta autentisering",
     "Create new room": "Skapa nytt rum",
     "unknown error code": "okänd felkod",
@@ -229,10 +227,6 @@
     "We encountered an error trying to restore your previous session.": "Ett fel uppstod vid återställning av din tidigare session.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Om du nyligen har använt en senare version av %(brand)s kan din session vara inkompatibel med den här versionen. Stäng det här fönstret och använd senare versionen istället.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Att rensa webbläsarens lagring kan lösa problemet, men då loggas du ut och krypterad chatthistorik blir oläslig.",
-    "Terms and Conditions": "Villkor",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "För att fortsätta använda hemservern %(homeserverDomain)s måste du granska och godkänna våra villkor.",
-    "Review terms and conditions": "Granska villkoren",
-    "Old cryptography data detected": "Gammal kryptografidata upptäckt",
     "Missing roomId.": "Rums-ID saknas.",
     "This room is not recognised.": "Detta rum känns inte igen.",
     "Verified key": "Verifierade nyckeln",
@@ -240,7 +234,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Denna process låter dig exportera nycklarna för meddelanden som du har fått i krypterade rum till en lokal fil. Du kommer sedan att kunna importera filen i en annan Matrix-klient i framtiden, så att den klienten också kan avkryptera meddelandena.",
     "Can't leave Server Notices room": "Kan inte lämna serveraviseringsrummet",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Detta rum används för viktiga meddelanden från hemservern, så du kan inte lämna det.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
     "Confirm Removal": "Bekräfta borttagning",
     "Reject all %(invitedRooms)s invites": "Avböj alla %(invitedRooms)s inbjudningar",
     "%(items)s and %(count)s others": {
@@ -922,10 +915,6 @@
     "Enter username": "Skriv in användarnamn",
     "Sign in with SSO": "Logga in med SSO",
     "Explore rooms": "Utforska rum",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Du har %(count)s olästa aviseringar i en tidigare version av det här rummet.",
-        "one": "Du har %(count)s oläst avisering i en tidigare version av det här rummet."
-    },
     "All settings": "Alla inställningar",
     "Switch theme": "Byt tema",
     "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
@@ -1330,7 +1319,6 @@
     "Recently visited rooms": "Nyligen besökta rum",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi bad webbläsaren att komma ihåg vilken hemserver du använder för att logga in, men tyvärr har din webbläsare glömt det. Gå till inloggningssidan och försök igen.",
     "We couldn't log you in": "Vi kunde inte logga in dig",
-    "Original event source": "Ursprunglig händelsekällkod",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
@@ -1394,7 +1382,6 @@
     "You most likely do not want to reset your event index store": "Du vill troligen inte återställa din händelseregisterlagring",
     "Consult first": "Tillfråga först",
     "Avatar": "Avatar",
-    "Verification requested": "Verifiering begärd",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifiera din identitet för att komma åt krypterade meddelanden och bevisa din identitet för andra.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Du är den enda personen här. Om du lämnar så kommer ingen kunna gå med igen, inklusive du.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Om du återställer allt så kommer du att börja om utan betrodda sessioner eller betrodda användare, och kommer kanske inte kunna se gamla meddelanden.",
@@ -1595,7 +1582,6 @@
     "They'll still be able to access whatever you're not an admin of.": "De kommer fortfarande kunna komma åt saker du inte är admin för.",
     "Disinvite from %(roomName)s": "Häv inbjudan från %(roomName)s",
     "Export chat": "Exportera chatt",
-    "Create poll": "Skapa omröstning",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svar"
@@ -1631,13 +1617,6 @@
     "Copy link to thread": "Kopiera länk till tråd",
     "Thread options": "Trådalternativ",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
-    "Add option": "Lägg till alternativ",
-    "Write an option": "Skriv ett alternativ",
-    "Option %(number)s": "Alternativ %(number)s",
-    "Create options": "Skapa alternativ",
-    "Question or topic": "Fråga eller ämne",
-    "What is your poll question or topic?": "Vad är din omröstnings fråga eller ämne?",
-    "Create Poll": "Skapa omröstning",
     "In encrypted rooms, verify all users to ensure it's secure.": "I krypterade rum, verifiera alla användare för att försäkra att det är säkert.",
     "Yours, or the other users' session": "Din eller den andra användarens session",
     "Yours, or the other users' internet connection": "Din eller den andra användarens internetuppkoppling",
@@ -1716,8 +1695,6 @@
     "Poll": "Omröstning",
     "Voice Message": "Röstmeddelanden",
     "Hide stickers": "Göm dekaler",
-    "Sorry, the poll you tried to create was not posted.": "Tyvärr så lades omröstningen du försökte skapa inte upp.",
-    "Failed to post poll": "Misslyckades att lägga upp omröstning",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Share location": "Dela plats",
     "Could not fetch location": "Kunde inte hämta plats",
@@ -1777,15 +1754,9 @@
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
     "Join %(roomAddress)s": "Gå med i %(roomAddress)s",
-    "Edit poll": "Redigera omröstning",
     "Sorry, you can't edit a poll after votes have been cast.": "Tyvärr kan du inte redigera en omröstning efter att röster har avgivits.",
     "Can't edit poll": "Kan inte redigera omröstning",
     "Search Dialog": "Sökdialog",
-    "Results are only revealed when you end the poll": "Resultat avslöjas inte förrän du avslutar omröstningen",
-    "Voters see results as soon as they have voted": "Röstare ser resultatet så fort de har röstat",
-    "Closed poll": "Sluten omröstning",
-    "Open poll": "Öppen omröstning",
-    "Poll type": "Omröstningstyp",
     "Results will be visible when the poll is ended": "Resultat kommer att visas när omröstningen avslutas",
     "Pinned": "Fäst",
     "Open thread": "Öppna tråd",
@@ -1915,8 +1886,6 @@
     "Check your email to continue": "Kolla din e-post för att fortsätta",
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
-    "Click to read topic": "Klicka för att läsa ämne",
-    "Edit topic": "Redigera ämne",
     "Joining…": "Går med…",
     "%(count)s people joined": {
         "other": "%(count)s personer gick med",
@@ -2109,7 +2078,6 @@
     "Checking…": "Kontrollerar …",
     "Waiting for partner to confirm…": "Väntar på att andra parten ska bekräfta …",
     "Adding…": "Lägger till …",
-    "Write something…": "Skriv nånting …",
     "Rejecting invite…": "Nekar inbjudan …",
     "Joining room…": "Går med i rum …",
     "Joining space…": "Går med i utrymme …",
@@ -3038,7 +3006,8 @@
         "low_bandwidth_mode": "Lågt bandbreddsläge",
         "developer_mode": "Utvecklarläge",
         "view_source_decrypted_event_source": "Avkrypterad händelsekällkod",
-        "view_source_decrypted_event_source_unavailable": "Avkrypterad källa otillgänglig"
+        "view_source_decrypted_event_source_unavailable": "Avkrypterad källa otillgänglig",
+        "original_event_source": "Ursprunglig händelsekällkod"
     },
     "export_chat": {
         "html": "HTML",
@@ -3684,7 +3653,10 @@
             "sas_description": "Jämför en unik uppsättning emojier om du inte har en kamera på någon av enheterna",
             "qr_or_sas": "%(qrCode)s eller %(emojiCompare)s",
             "qr_or_sas_header": "Verifiera den här enheten genom att slutföra ett av följande:"
-        }
+        },
+        "old_version_detected_title": "Gammal kryptografidata upptäckt",
+        "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
+        "verification_requested_toast_title": "Verifiering begärd"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3798,7 +3770,9 @@
         "phone_optional_label": "Telefon (valfritt)",
         "email_help_text": "Lägg till en e-postadress för att kunna återställa ditt lösenord.",
         "email_phone_discovery_text": "Använd e-post eller telefon för att valfritt kunna upptäckas av existerande kontakter.",
-        "email_discovery_text": "Använd e-post för att valfritt kunna upptäckas av existerande kontakter."
+        "email_discovery_text": "Använd e-post för att valfritt kunna upptäckas av existerande kontakter.",
+        "session_logged_out_title": "Loggade ut",
+        "session_logged_out_description": "Av säkerhetsskäl har den här sessionen loggats ut. Vänligen logga in igen."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4110,6 +4084,12 @@
             "private_unencrypted_warning": "Dina privata meddelanden är normalt krypterade, men det här rummet är inte det. Detta beror oftast på att en ostödd enhet eller metod används, som e-postinbjudningar.",
             "enable_encryption_prompt": "Aktivera kryptering i inställningarna.",
             "unencrypted_warning": "Totalsträckskryptering är inte aktiverat"
+        },
+        "edit_topic": "Redigera ämne",
+        "read_topic": "Klicka för att läsa ämne",
+        "unread_notifications_predecessor": {
+            "other": "Du har %(count)s olästa aviseringar i en tidigare version av det här rummet.",
+            "one": "Du har %(count)s oläst avisering i en tidigare version av det här rummet."
         }
     },
     "file_panel": {
@@ -4124,9 +4104,31 @@
         "intro": "För att fortsätta måste du acceptera villkoren för denna tjänst.",
         "column_service": "Tjänst",
         "column_summary": "Sammanfattning",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Villkor",
+        "tac_description": "För att fortsätta använda hemservern %(homeserverDomain)s måste du granska och godkänna våra villkor.",
+        "tac_button": "Granska villkoren"
     },
     "space_settings": {
         "title": "Inställningar - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Skapa omröstning",
+        "create_poll_action": "Skapa omröstning",
+        "edit_poll_title": "Redigera omröstning",
+        "failed_send_poll_title": "Misslyckades att lägga upp omröstning",
+        "failed_send_poll_description": "Tyvärr så lades omröstningen du försökte skapa inte upp.",
+        "type_heading": "Omröstningstyp",
+        "type_open": "Öppen omröstning",
+        "type_closed": "Sluten omröstning",
+        "topic_heading": "Vad är din omröstnings fråga eller ämne?",
+        "topic_label": "Fråga eller ämne",
+        "topic_placeholder": "Skriv nånting …",
+        "options_heading": "Skapa alternativ",
+        "options_label": "Alternativ %(number)s",
+        "options_placeholder": "Skriv ett alternativ",
+        "options_add_button": "Lägg till alternativ",
+        "disclosed_notes": "Röstare ser resultatet så fort de har röstat",
+        "notes": "Resultat avslöjas inte förrän du avslutar omröstningen"
     }
 }

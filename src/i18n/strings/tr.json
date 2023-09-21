@@ -49,7 +49,6 @@
     "Favourite": "Favori",
     "Filter room members": "Oda üyelerini Filtrele",
     "Forget room": "Odayı Unut",
-    "For security, this session has been signed out. Please sign in again.": "Güvenlik için , bu oturuma çıkış yapıldı . Lütfen tekrar oturum açın.",
     "Historical": "Tarihi",
     "Home": "Ev",
     "Import E2E room keys": "Uçtan uca Oda Anahtarlarını İçe Aktar",
@@ -90,7 +89,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
     "Session ID": "Oturum ID",
-    "Signed Out": "Oturum Kapatıldı",
     "Start authentication": "Kimlik Doğrulamayı başlatın",
     "This email address is already in use": "Bu e-posta adresi zaten kullanımda",
     "This email address was not found": "Bu e-posta adresi bulunamadı",
@@ -298,7 +296,6 @@
     "Enter username": "Kullanıcı adı gir",
     "Email (optional)": "E-posta (opsiyonel)",
     "Couldn't load page": "Sayfa yüklenemiyor",
-    "Old cryptography data detected": "Eski kriptolama verisi tespit edildi",
     "Verification Request": "Doğrulama Talebi",
     "Jump to first unread room.": "Okunmamış ilk odaya zıpla.",
     "Jump to first invite.": "İlk davete zıpla.",
@@ -969,9 +966,6 @@
     "Bahamas": "Bahamalar",
     "Azerbaijan": "Azerbaycan",
     "Austria": "Avusturya",
-    "Review terms and conditions": "Hükümler ve koşulları incele",
-    "Terms and Conditions": "Hükümler ve koşullar",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "%(homeserverDomain)s ana sunucusunu kullanmaya devam etmek için hüküm ve koşulları incelemeli ve kabul etmelisiniz.",
     "Click to view edits": "Düzenlemeleri görmek için tıkla",
     "Edited at %(date)s": "%(date)s tarihinde düzenlendi",
     "%(name)s declined": "%(name)s reddetti",
@@ -1972,7 +1966,8 @@
             "qr_prompt": "Bu eşsiz kodu tara",
             "sas_prompt": "Benzersiz emoji karşılaştır",
             "sas_description": "Her iki cihazda da kamera yoksa benzersiz bir emoji setini karşılaştırın"
-        }
+        },
+        "old_version_detected_title": "Eski kriptolama verisi tespit edildi"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2022,7 +2017,9 @@
         "account_deactivated": "Hesap devre dışı bırakıldı.",
         "registration_username_validation": "Sadece küçük harfler, numara, tire ve alt tire kullanın",
         "phone_label": "Telefon",
-        "phone_optional_label": "Telefon (opsiyonel)"
+        "phone_optional_label": "Telefon (opsiyonel)",
+        "session_logged_out_title": "Oturum Kapatıldı",
+        "session_logged_out_description": "Güvenlik için , bu oturuma çıkış yapıldı . Lütfen tekrar oturum açın."
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2201,6 +2198,9 @@
         "intro": "Devam etmek için bu servisi kullanma şartlarını kabul etmeniz gerekiyor.",
         "column_service": "Hizmet",
         "column_summary": "Özet",
-        "column_document": "Belge"
+        "column_document": "Belge",
+        "tac_title": "Hükümler ve koşullar",
+        "tac_description": "%(homeserverDomain)s ana sunucusunu kullanmaya devam etmek için hüküm ve koşulları incelemeli ve kabul etmelisiniz.",
+        "tac_button": "Hükümler ve koşulları incele"
     }
 }

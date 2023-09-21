@@ -47,7 +47,6 @@
     "Favourite": "Izlase",
     "Filter room members": "Atfiltrēt istabas dalībniekus",
     "Forget room": "Aizmirst istabu",
-    "For security, this session has been signed out. Please sign in again.": "Drošības nolūkos šī sesija ir pārtraukta. Lūdzu, pieraksties par jaunu.",
     "Historical": "Bijušie",
     "Home": "Mājup",
     "Import E2E room keys": "Importēt E2E istabas atslēgas",
@@ -104,7 +103,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Serveris izskatās nesasniedzams, ir pārslogots, vai arī meklēšana beigusies ar savienojuma noildzi :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Serveris ir nesasniedzams, pārslogots, vai arī esat saskārties ar kļūdu programmā.",
     "Session ID": "Sesijas ID",
-    "Signed Out": "Izrakstījās",
     "Start authentication": "Sākt autentifikāciju",
     "This email address is already in use": "Šī epasta adrese jau tiek izmantota",
     "This email address was not found": "Šāda epasta adrese nav atrasta",
@@ -218,8 +216,6 @@
         "other": "Un par %(count)s vairāk..."
     },
     "This room is not public. You will not be able to rejoin without an invite.": "Šī istaba nav publiska un jūs nevarēsiet atkārtoti pievienoties bez uzaicinājuma.",
-    "Old cryptography data detected": "Tika uzieti novecojuši šifrēšanas dati",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Lūdzu ņem vērā, ka Tu pieraksties %(hs)s serverī, nevis matrix.org serverī.",
     "%(items)s and %(count)s others": {
         "one": "%(items)s un viens cits",
@@ -438,10 +434,6 @@
     "Create account": "Izveidot kontu",
     "Your password has been reset.": "Jūsu parole ir atiestatīta.",
     "Could not load user profile": "Nevarēja ielādēt lietotāja profilu",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
-        "other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā."
-    },
     "Couldn't load page": "Neizdevās ielādēt lapu",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
     "Enter phone number (required on this homeserver)": "Ievadiet tālruņa numuru (obligāts šajā bāzes serverī)",
@@ -535,7 +527,6 @@
     "Denmark": "Dānija",
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
-    "Original event source": "Oriģinālais notikuma pirmkods",
     "You don't have permission": "Jums nav atļaujas",
     "Remove for everyone": "Dzēst visiem",
     "Share User": "Dalīties ar lietotāja kontaktdatiem",
@@ -907,34 +898,19 @@
         "other": "Pamatojoties uz %(count)s balsīm"
     },
     "No votes cast": "Nav balsojumu",
-    "Write an option": "Uzrakstiet variantu",
-    "Add option": "Pievienot variantu",
-    "Option %(number)s": "Variants %(number)s",
     "Space options": "Vietas parametri",
     "Reason (optional)": "Iemesls (izvēles)",
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
-    "Question or topic": "Jautājums vai temats",
-    "Create options": "Izveidot atbilžu variantus",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
     "Sorry, you can't edit a poll after votes have been cast.": "Atvainojiet, aptauju nevar rediģēt pēc tam, kad balsis jau ir nodotas.",
     "You do not have permission to start polls in this room.": "Jums nav atļaujas uzsākt aptaujas šajā istabā.",
-    "Sorry, the poll you tried to create was not posted.": "Atvainojiet, aptauja, kuru mēģinājāt izveidot, netika publicēta.",
-    "Results are only revealed when you end the poll": "Rezultāti tiks atklāti tikai pēc aptaujas beigām",
     "Results will be visible when the poll is ended": "Rezultāti būs redzami, kad aptauja būs pabeigta",
     "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
     "The poll has ended. No votes were cast.": "Aptauja ir beigusies. Balsis netika nodotas.",
     "The poll has ended. Top answer: %(topAnswer)s": "Aptauja ir beigusies. Populārākā atbilde: %(topAnswer)s",
-    "What is your poll question or topic?": "Kāds ir jūsu aptaujas jautājums vai tēma?",
     "Failed to end poll": "Neizdevās pārtraukt aptauju",
-    "Failed to post poll": "Neizdevās publicēt aptauju",
     "Can't edit poll": "Nevar rediģēt aptauju",
-    "Closed poll": "Slēgta aptauja",
-    "Open poll": "Atvērt aptauju",
-    "Poll type": "Aptaujas veids",
-    "Edit poll": "Rediģēt aptauju",
     "End Poll": "Pārtraukt aptauju",
-    "Create Poll": "Izveidot aptauju",
-    "Create poll": "Izveidot aptauju",
     "Poll": "Aptauja",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Pievērsiet uzmanību: šī ir laboratorijas funkcija, kas izmanto pagaidu risinājumu. Tas nozīmē, ka jūs nevarēsiet dzēst savu atrašanās vietas vēsturi, un pieredzējušie lietotāji varēs redzēt jūsu atrašanās vietas vēsturi arī pēc tam, kad pārtrauksiet kopīgot savu reāllaika atrašanās vietu šajā istabā.",
@@ -1333,7 +1309,8 @@
         "category_room": "Istaba",
         "category_other": "Citi",
         "show_hidden_events": "Rādīt slēptos notikumus laika skalā",
-        "view_source_decrypted_event_source": "Atšifrēt notikuma pirmkods"
+        "view_source_decrypted_event_source": "Atšifrēt notikuma pirmkods",
+        "original_event_source": "Oriģinālais notikuma pirmkods"
     },
     "export_chat": {
         "creator_summary": "%(creatorName)s izveidoja šo istabu.",
@@ -1774,7 +1751,9 @@
             "complete_description": "Jūs veiksmīgi verificējāt šo lietotāju.",
             "qr_prompt": "Noskenējiet šo unikālo kodu",
             "sas_prompt": "Salīdziniet unikālās emocijzīmes"
-        }
+        },
+        "old_version_detected_title": "Tika uzieti novecojuši šifrēšanas dati",
+        "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas."
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",
@@ -1827,7 +1806,9 @@
         "phone_optional_label": "Tālruņa numurs (izvēles)",
         "email_help_text": "Pievienojiet epasta adresi, lai varētu atiestatīt paroli.",
         "email_phone_discovery_text": "Izmantojiet epasta adresi vai tālruņa numuru, lai pēc izvēles jūs varētu atrast esošie kontakti.",
-        "email_discovery_text": "Izmantojiet epasta adresi, lai pēc izvēles jūs varētu atrast esošie kontakti."
+        "email_discovery_text": "Izmantojiet epasta adresi, lai pēc izvēles jūs varētu atrast esošie kontakti.",
+        "session_logged_out_title": "Izrakstījās",
+        "session_logged_out_description": "Drošības nolūkos šī sesija ir pārtraukta. Lūdzu, pieraksties par jaunu."
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -1995,6 +1976,10 @@
             "no_avatar_label": "Pievienojiet foto, lai padarītu istabu vieglāk pamanāmu citiem cilvēkiem.",
             "start_of_room": "Šis ir <roomName/> istabas pats sākums.",
             "enable_encryption_prompt": "Iespējot šifrēšanu iestatījumos."
+        },
+        "unread_notifications_predecessor": {
+            "one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
+            "other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā."
         }
     },
     "file_panel": {
@@ -2002,5 +1987,22 @@
         "peek_note": "Tev ir jāpievienojas istabai, lai redzētu tās failus",
         "empty_heading": "Šajā istabā nav redzamu failu",
         "empty_description": "Pievienojiet failus no čata vai vienkārši velciet un nometiet tos jebkur istabā."
+    },
+    "poll": {
+        "create_poll_title": "Izveidot aptauju",
+        "create_poll_action": "Izveidot aptauju",
+        "edit_poll_title": "Rediģēt aptauju",
+        "failed_send_poll_title": "Neizdevās publicēt aptauju",
+        "failed_send_poll_description": "Atvainojiet, aptauja, kuru mēģinājāt izveidot, netika publicēta.",
+        "type_heading": "Aptaujas veids",
+        "type_open": "Atvērt aptauju",
+        "type_closed": "Slēgta aptauja",
+        "topic_heading": "Kāds ir jūsu aptaujas jautājums vai tēma?",
+        "topic_label": "Jautājums vai temats",
+        "options_heading": "Izveidot atbilžu variantus",
+        "options_label": "Variants %(number)s",
+        "options_placeholder": "Uzrakstiet variantu",
+        "options_add_button": "Pievienot variantu",
+        "notes": "Rezultāti tiks atklāti tikai pēc aptaujas beigām"
     }
 }

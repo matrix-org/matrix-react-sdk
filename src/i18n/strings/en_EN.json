@@ -33,6 +33,8 @@
         "email_help_text": "Add an email to be able to reset your password.",
         "email_phone_discovery_text": "Use email or phone to optionally be discoverable by existing contacts.",
         "email_discovery_text": "Use email to optionally be discoverable by existing contacts.",
+        "session_logged_out_title": "Signed Out",
+        "session_logged_out_description": "For security, this session has been signed out. Please sign in again.",
         "sign_in_prompt": "Got an account? <a>Sign in</a>",
         "create_account_prompt": "New here? <a>Create an account</a>",
         "reset_password_action": "Reset password",
@@ -1714,6 +1716,7 @@
         "failed_to_find_widget": "There was an error finding this widget.",
         "view_source_decrypted_event_source": "Decrypted event source",
         "view_source_decrypted_event_source_unavailable": "Decrypted source unavailable",
+        "original_event_source": "Original event source",
         "event_id": "Event ID: %(eventId)s"
     },
     "bug_reporting": {
@@ -1834,7 +1837,10 @@
             "sas_description": "Compare a unique set of emoji if you don't have a camera on either device",
             "qr_or_sas": "%(qrCode)s or %(emojiCompare)s",
             "qr_or_sas_header": "Verify this device by completing one of the following:"
-        }
+        },
+        "old_version_detected_title": "Old cryptography data detected",
+        "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
+        "verification_requested_toast_title": "Verification requested"
     },
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.",
     "Got It": "Got It",
@@ -2418,7 +2424,13 @@
             "enable_encryption_prompt": "Enable encryption in settings.",
             "unencrypted_warning": "End-to-end encryption isn't enabled"
         },
-        "drop_file_prompt": "Drop file here to upload"
+        "edit_topic": "Edit topic",
+        "read_topic": "Click to read topic",
+        "drop_file_prompt": "Drop file here to upload",
+        "unread_notifications_predecessor": {
+            "other": "You have %(count)s unread notifications in a prior version of this room.",
+            "one": "You have %(count)s unread notification in a prior version of this room."
+        }
     },
     "Message didn't send. Click for info.": "Message didn't send. Click for info.",
     "View message": "View message",
@@ -3019,23 +3031,25 @@
     "Language Dropdown": "Language Dropdown",
     "Message in %(room)s": "Message in %(room)s",
     "Message from %(user)s": "Message from %(user)s",
-    "Create poll": "Create poll",
-    "Create Poll": "Create Poll",
-    "Edit poll": "Edit poll",
-    "Failed to post poll": "Failed to post poll",
-    "Sorry, the poll you tried to create was not posted.": "Sorry, the poll you tried to create was not posted.",
-    "Poll type": "Poll type",
-    "Open poll": "Open poll",
-    "Closed poll": "Closed poll",
-    "What is your poll question or topic?": "What is your poll question or topic?",
-    "Question or topic": "Question or topic",
-    "Write something…": "Write something…",
-    "Create options": "Create options",
-    "Option %(number)s": "Option %(number)s",
-    "Write an option": "Write an option",
-    "Add option": "Add option",
-    "Voters see results as soon as they have voted": "Voters see results as soon as they have voted",
-    "Results are only revealed when you end the poll": "Results are only revealed when you end the poll",
+    "poll": {
+        "create_poll_title": "Create poll",
+        "create_poll_action": "Create Poll",
+        "edit_poll_title": "Edit poll",
+        "failed_send_poll_title": "Failed to post poll",
+        "failed_send_poll_description": "Sorry, the poll you tried to create was not posted.",
+        "type_heading": "Poll type",
+        "type_open": "Open poll",
+        "type_closed": "Closed poll",
+        "topic_heading": "What is your poll question or topic?",
+        "topic_label": "Question or topic",
+        "topic_placeholder": "Write something…",
+        "options_heading": "Create options",
+        "options_label": "Option %(number)s",
+        "options_placeholder": "Write an option",
+        "options_add_button": "Add option",
+        "disclosed_notes": "Voters see results as soon as they have voted",
+        "notes": "Results are only revealed when you end the poll"
+    },
     "Power level": "Power level",
     "Custom level": "Custom level",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.",
@@ -3061,8 +3075,6 @@
         "other": "%(count)s people you know have already joined",
         "one": "%(count)s person you know has already joined"
     },
-    "Edit topic": "Edit topic",
-    "Click to read topic": "Click to read topic",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Message search initialisation failed, check <a>your settings</a> for more information",
     "Desktop app logo": "Desktop app logo",
     "Use the <a>Desktop app</a> to see all encrypted files": "Use the <a>Desktop app</a> to see all encrypted files",
@@ -3424,7 +3436,10 @@
         "intro": "To continue you need to accept the terms of this service.",
         "column_service": "Service",
         "column_summary": "Summary",
-        "column_document": "Document"
+        "column_document": "Document",
+        "tac_title": "Terms and Conditions",
+        "tac_description": "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.",
+        "tac_button": "Review terms and conditions"
     },
     "You signed in to a new session without verifying it:": "You signed in to a new session without verifying it:",
     "Verify your other session using one of the options below.": "Verify your other session using one of the options below.",
@@ -3679,14 +3694,6 @@
     "Failed to forget room %(errCode)s": "Failed to forget room %(errCode)s",
     "Unable to copy room link": "Unable to copy room link",
     "Unable to copy a link to the room to the clipboard.": "Unable to copy a link to the room to the clipboard.",
-    "Signed Out": "Signed Out",
-    "For security, this session has been signed out. Please sign in again.": "For security, this session has been signed out. Please sign in again.",
-    "Terms and Conditions": "Terms and Conditions",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.",
-    "Review terms and conditions": "Review terms and conditions",
-    "Old cryptography data detected": "Old cryptography data detected",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
-    "Verification requested": "Verification requested",
     "notif_panel": {
         "empty_heading": "You're all caught up",
         "empty_description": "You have no visible notifications."
@@ -3709,10 +3716,6 @@
     "You seem to be in a call, are you sure you want to quit?": "You seem to be in a call, are you sure you want to quit?",
     "Failed to reject invite": "Failed to reject invite",
     "Unknown": "Unknown",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "You have %(count)s unread notifications in a prior version of this room.",
-        "one": "You have %(count)s unread notification in a prior version of this room."
-    },
     "Joining": "Joining",
     "You don't have permission": "You don't have permission",
     "You may want to try a different search or check for typos.": "You may want to try a different search or check for typos.",
@@ -3744,7 +3747,6 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "Could not load user profile": "Could not load user profile",
-    "Original event source": "Original event source",
     "Waiting for users to join %(brand)s": "Waiting for users to join %(brand)s",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted",
     "Unable to verify this device": "Unable to verify this device",

@@ -184,21 +184,12 @@
     "New Password": "Mật khẩu mới",
     "New passwords must match each other.": "Các mật khẩu mới phải khớp với nhau.",
     "A new password must be entered.": "Mật khẩu mới phải được nhập.",
-    "Original event source": "Nguồn sự kiện ban đầu",
     "Could not load user profile": "Không thể tải hồ sơ người dùng",
     "Switch theme": "Chuyển đổi chủ đề",
     "All settings": "Tất cả cài đặt",
     "Failed to load timeline position": "Không tải được vị trí dòng thời gian",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng không thể tìm thấy nó.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng bạn không có quyền xem tin nhắn được đề cập.",
-    "Verification requested": "Đã yêu cầu xác thực",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
-    "Old cryptography data detected": "Đã phát hiện dữ liệu mật mã cũ",
-    "Review terms and conditions": "Xem lại các điều khoản và điều kiện",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Để tiếp tục sử dụng máy chủ nhà của %(homeserverDomain)s, bạn phải xem xét và đồng ý với các điều khoản và điều kiện của chúng tôi.",
-    "Terms and Conditions": "Các điều khoản và điều kiện",
-    "For security, this session has been signed out. Please sign in again.": "Để bảo mật, phiên này đã được đăng xuất. Vui lòng đăng nhập lại.",
-    "Signed Out": "Đã đăng xuất",
     "Unable to copy a link to the room to the clipboard.": "Không thể sao chép liên kết đến phòng vào khay nhớ tạm.",
     "Unable to copy room link": "Không thể sao chép liên kết phòng",
     "Failed to forget room %(errCode)s": "Không thể quên phòng %(errCode)s",
@@ -840,7 +831,6 @@
     "The conversation continues here.": "Cuộc trò chuyện tiếp tục tại đây.",
     "More options": "Thêm tùy chọn",
     "Send voice message": "Gửi tin nhắn thoại",
-    "Create poll": "Tạo cuộc tham dò ý kiến",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi mức năng lượng của người dùng. Đảm bảo bạn có đủ quyền và thử lại.",
     "Error changing power level": "Lỗi khi thay đổi mức công suất",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi yêu cầu mức công suất của phòng. Đảm bảo bạn có đủ quyền và thử lại.",
@@ -1613,10 +1603,6 @@
     "Results": "Kết quả",
     "Joined": "Đã tham gia",
     "Joining": "Đang tham gia",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này.",
-        "other": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này."
-    },
     "Copy link to thread": "Sao chép liên kết vào chủ đề",
     "Thread options": "Tùy chọn theo chủ đề",
     "Mentions only": "Chỉ tin nhắn được đề cập",
@@ -1628,15 +1614,6 @@
     },
     "Spaces you know that contain this space": "Các space bạn biết có chứa space này",
     "If you can't see who you're looking for, send them your invite link below.": "Nếu bạn không thể thấy người bạn đang tìm, hãy gửi cho họ liên kết mời của bạn bên dưới.",
-    "Add option": "Thêm tùy chọn",
-    "Write an option": "Viết tùy chọn",
-    "Option %(number)s": "Tùy chọn %(number)s",
-    "Create options": "Tạo tùy chọn",
-    "Question or topic": "Câu hỏi hoặc chủ đề",
-    "What is your poll question or topic?": "Câu hỏi hoặc chủ đề của thăm dò của bạn là gì?",
-    "Sorry, the poll you tried to create was not posted.": "Xin lỗi, cuộc thăm dò mà bạn đã cố gắng tạo đã không được đăng.",
-    "Failed to post poll": "Đăng cuộc thăm dò thất bại",
-    "Create Poll": "Tạo Cuộc thăm dò ý kiến",
     "%(count)s votes": {
         "one": "%(count)s phiếu bầu",
         "other": "%(count)s phiếu bầu"
@@ -2016,16 +1993,13 @@
     "Video call ended": "Cuộc gọi truyền hình đã kết thúc",
     "We were unable to start a chat with the other user.": "Chúng tôi không thể bắt đầu cuộc trò chuyện với người kia.",
     "View poll in timeline": "Xem cuộc bỏ phiếu trong dòng thời gian",
-    "Click to read topic": "Bấm để xem chủ đề",
     "Click": "Nhấn",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
-    "Open poll": "Bỏ phiếu công khai",
     "Location": "Vị trí",
     "Your device ID": "Định danh thiết bị của bạn",
     "Un-maximise": "Hủy thu nhỏ",
     "This address does not point at this room": "Địa chỉ này không trỏ đến phòng này",
-    "Edit topic": "Sửa chủ đề",
     "Choose a locale": "Chọn vùng miền",
     "Coworkers and teams": "Đồng nghiệp và nhóm",
     "Online community members": "Thành viên cộng đồng trực tuyến",
@@ -2035,7 +2009,6 @@
     "Message pending moderation": "Tin nhắn chờ duyệt",
     "Message in %(room)s": "Tin nhắn trong %(room)s",
     "Message from %(user)s": "Tin nhắn từ %(user)s",
-    "Poll type": "Hình thức bỏ phiếu",
     "Show: Matrix rooms": "Hiện: Phòng Matrix",
     "Friends and family": "Bạn bè và gia đình",
     "Adding…": "Đang thêm…",
@@ -2045,8 +2018,6 @@
     "Error downloading image": "Lỗi khi tải hình ảnh",
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
-    "Closed poll": "Bỏ phiếu kín",
-    "Edit poll": "Chỉnh sửa bỏ phiếu",
     "Declining…": "Đang từ chối…",
     "Image view": "Xem ảnh",
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
@@ -2828,7 +2799,8 @@
         "low_bandwidth_mode": "Chế độ băng thông thấp",
         "developer_mode": "Chế độ nhà phát triển",
         "view_source_decrypted_event_source": "Nguồn sự kiện được giải mã",
-        "view_source_decrypted_event_source_unavailable": "Nguồn được giải mã không khả dụng"
+        "view_source_decrypted_event_source_unavailable": "Nguồn được giải mã không khả dụng",
+        "original_event_source": "Nguồn sự kiện ban đầu"
     },
     "export_chat": {
         "html": "HTML",
@@ -3466,7 +3438,10 @@
             "sas_description": "So sánh một bộ biểu tượng cảm xúc độc đáo nếu bạn không có camera trên một trong hai thiết bị",
             "qr_or_sas": "%(qrCode)s hay %(emojiCompare)s",
             "qr_or_sas_header": "Xác thực thiết bị này bằng việc hoàn tất một trong các điều sau:"
-        }
+        },
+        "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
+        "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
+        "verification_requested_toast_title": "Đã yêu cầu xác thực"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3574,7 +3549,9 @@
         "phone_optional_label": "Điện thoại (tùy chọn)",
         "email_help_text": "Thêm một địa chỉ thư điện tử để có thể đặt lại mật khẩu của bạn.",
         "email_phone_discovery_text": "Sử dụng địa chỉ thư điện tử hoặc điện thoại để dễ dàng được tìm ra bởi người dùng khác.",
-        "email_discovery_text": "Sử dụng địa chỉ thư điện tử để dễ dàng được tìm ra bởi người dùng khác."
+        "email_discovery_text": "Sử dụng địa chỉ thư điện tử để dễ dàng được tìm ra bởi người dùng khác.",
+        "session_logged_out_title": "Đã đăng xuất",
+        "session_logged_out_description": "Để bảo mật, phiên này đã được đăng xuất. Vui lòng đăng nhập lại."
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3873,6 +3850,12 @@
             "private_unencrypted_warning": "Các tin nhắn riêng tư của bạn thường được mã hóa, nhưng phòng này thì không. Thường thì điều này là do thiết bị không được hỗ trợ hoặc phương pháp đang được dùng, như các lời mời qua thư điện tử.",
             "enable_encryption_prompt": "Bật mã hóa trong phần cài đặt.",
             "unencrypted_warning": "Mã hóa đầu-cuối chưa được bật"
+        },
+        "edit_topic": "Sửa chủ đề",
+        "read_topic": "Bấm để xem chủ đề",
+        "unread_notifications_predecessor": {
+            "one": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này.",
+            "other": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này."
         }
     },
     "file_panel": {
@@ -3887,9 +3870,28 @@
         "intro": "Để tiếp tục, bạn cần chấp nhận các điều khoản của dịch vụ này.",
         "column_service": "Dịch vụ",
         "column_summary": "Tóm lược",
-        "column_document": "Tài liệu"
+        "column_document": "Tài liệu",
+        "tac_title": "Các điều khoản và điều kiện",
+        "tac_description": "Để tiếp tục sử dụng máy chủ nhà của %(homeserverDomain)s, bạn phải xem xét và đồng ý với các điều khoản và điều kiện của chúng tôi.",
+        "tac_button": "Xem lại các điều khoản và điều kiện"
     },
     "space_settings": {
         "title": "Cài đặt - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Tạo cuộc tham dò ý kiến",
+        "create_poll_action": "Tạo Cuộc thăm dò ý kiến",
+        "edit_poll_title": "Chỉnh sửa bỏ phiếu",
+        "failed_send_poll_title": "Đăng cuộc thăm dò thất bại",
+        "failed_send_poll_description": "Xin lỗi, cuộc thăm dò mà bạn đã cố gắng tạo đã không được đăng.",
+        "type_heading": "Hình thức bỏ phiếu",
+        "type_open": "Bỏ phiếu công khai",
+        "type_closed": "Bỏ phiếu kín",
+        "topic_heading": "Câu hỏi hoặc chủ đề của thăm dò của bạn là gì?",
+        "topic_label": "Câu hỏi hoặc chủ đề",
+        "options_heading": "Tạo tùy chọn",
+        "options_label": "Tùy chọn %(number)s",
+        "options_placeholder": "Viết tùy chọn",
+        "options_add_button": "Thêm tùy chọn"
     }
 }

@@ -12,7 +12,6 @@
     "Favourite": "Избранное",
     "Filter room members": "Поиск по участникам",
     "Forget room": "Забыть комнату",
-    "For security, this session has been signed out. Please sign in again.": "Для обеспечения безопасности ваш сеанс был завершён. Пожалуйста, войдите снова.",
     "Historical": "Архив",
     "Import E2E room keys": "Импорт ключей шифрования",
     "Invalid Email Address": "Недопустимый email",
@@ -128,7 +127,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Сервер может быть недоступен, перегружен или поиск прекращен по тайм-ауту :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Возможно, сервер недоступен, перегружен или случилась ошибка.",
     "Session ID": "ID сеанса",
-    "Signed Out": "Выполнен выход",
     "This room is not accessible by remote Matrix servers": "Это комната недоступна из других серверов Matrix",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
@@ -218,8 +216,6 @@
     "Send": "Отправить",
     "collapse": "свернуть",
     "expand": "развернуть",
-    "Old cryptography data detected": "Обнаружены старые криптографические данные",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "После понижения своих привилегий вы не сможете это отменить. Если вы являетесь последним привилегированным пользователем в этой комнате, выдать права кому-либо заново будет невозможно.",
     "Replying": "Отвечает",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -260,9 +256,6 @@
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
-    "Terms and Conditions": "Условия и положения",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Для продолжения использования сервера %(homeserverDomain)s вы должны ознакомиться и принять условия и положения.",
-    "Review terms and conditions": "Просмотр условий и положений",
     "Can't leave Server Notices room": "Невозможно покинуть комнату сервера уведомлений",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Эта комната используется для важных сообщений от сервера, поэтому вы не можете ее покинуть.",
     "No Audio Outputs detected": "Аудиовыход не обнаружен",
@@ -511,10 +504,6 @@
     "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
     "Couldn't load page": "Невозможно загрузить страницу",
     "Add room": "Добавить комнату",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "У вас есть %(count)s непрочитанных уведомлений в предыдущей версии этой комнаты.",
-        "one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s."
-    },
     "Could not load user profile": "Не удалось загрузить профиль пользователя",
     "Your password has been reset.": "Ваш пароль был сброшен.",
     "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
@@ -1373,7 +1362,6 @@
     "You can change these anytime.": "Вы можете изменить их в любое время.",
     "Create a space": "Создать пространство",
     "This homeserver has been blocked by its administrator.": "Доступ к этому домашнему серверу заблокирован вашим администратором.",
-    "Original event source": "Оригинальный исходный код",
     "Private space": "Приватное пространство",
     "Public space": "Публичное пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
@@ -1403,7 +1391,6 @@
     "Retry all": "Повторить все",
     "Delete all": "Удалить все",
     "Some of your messages have not been sent": "Некоторые из ваших сообщений не были отправлены",
-    "Verification requested": "Запрошено подтверждение",
     "Unable to copy a link to the room to the clipboard.": "Не удалось скопировать ссылку на комнату в буфер обмена.",
     "Unable to copy room link": "Не удалось скопировать ссылку на комнату",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Вы здесь единственный человек. Если вы уйдете, никто не сможет присоединиться в будущем, включая вас.",
@@ -1594,7 +1581,6 @@
     "Proceed with reset": "Выполнить сброс",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Похоже, у вас нет бумажного ключа, или других сеансов, с которыми вы могли бы свериться.  В этом сеансе вы не сможете получить доступ к старым зашифрованным сообщениям. Чтобы подтвердить свою личность в этом сеансе, вам нужно будет сбросить свои ключи шифрования.",
     "Really reset verification keys?": "Действительно сбросить ключи подтверждения?",
-    "Create poll": "Создать опрос",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Обновление пространства…",
         "other": "Обновление пространств... (%(progress)s из %(count)s)"
@@ -1663,15 +1649,6 @@
     "This address does not point at this room": "Этот адрес не указывает на эту комнату",
     "Missing room name or separator e.g. (my-room:domain.org)": "Отсутствует имя комнаты или разделитель (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Отсутствует разделитель домена (:domain.org)",
-    "Add option": "Добавить вариант",
-    "Write an option": "Напишите вариант",
-    "Option %(number)s": "Вариант %(number)s",
-    "Create options": "Создать варианты",
-    "Question or topic": "Вопрос или тема",
-    "What is your poll question or topic?": "Каков вопрос или тема вашего опроса?",
-    "Sorry, the poll you tried to create was not posted.": "Не удалось отправить опрос, который вы пытались создать.",
-    "Failed to post poll": "Не удалось отправить опрос",
-    "Create Poll": "Создать опрос",
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
     "Share location": "Поделиться местоположением",
     "Could not fetch location": "Не удалось получить местоположение",
@@ -1777,12 +1754,6 @@
     "Use <arrows/> to scroll": "Используйте <arrows/> для прокрутки",
     "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
-    "Results are only revealed when you end the poll": "Результаты отображаются только после завершения опроса",
-    "Voters see results as soon as they have voted": "Голосующие увидят результаты сразу после голосования",
-    "Closed poll": "Закрытый опрос",
-    "Open poll": "Открытый опрос",
-    "Poll type": "Тип опроса",
-    "Edit poll": "Редактировать опрос",
     "What location type do you want to share?": "Каким типом местоположения вы хотите поделиться?",
     "Drop a Pin": "Маркер на карте",
     "My live location": "Моё местоположение в реальном времени",
@@ -1910,8 +1881,6 @@
     "Add new server…": "Добавить новый сервер…",
     "Remove server “%(roomServer)s”": "Удалить сервер «%(roomServer)s»",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
-    "Click to read topic": "Нажмите, чтобы увидеть тему",
-    "Edit topic": "Редактировать тему",
     "Un-maximise": "Развернуть",
     "%(displayName)s's live location": "Местонахождение %(displayName)s в реальном времени",
     "Share for %(duration)s": "Поделиться на %(duration)s",
@@ -2834,7 +2803,8 @@
         "show_hidden_events": "Показывать скрытые события в ленте сообщений",
         "low_bandwidth_mode_description": "Требуется совместимый сервер.",
         "developer_mode": "Режим разработчика",
-        "view_source_decrypted_event_source": "Расшифрованный исходный код"
+        "view_source_decrypted_event_source": "Расшифрованный исходный код",
+        "original_event_source": "Оригинальный исходный код"
     },
     "export_chat": {
         "html": "HTML",
@@ -3460,7 +3430,10 @@
             "sas_description": "Сравните уникальный набор смайликов, если у вас нет камеры ни на одном из устройств",
             "qr_or_sas": "%(qrCode)s или %(emojiCompare)s",
             "qr_or_sas_header": "Заверьте этот сеанс, выполнив одно из следующих действий:"
-        }
+        },
+        "old_version_detected_title": "Обнаружены старые криптографические данные",
+        "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
+        "verification_requested_toast_title": "Запрошено подтверждение"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3562,7 +3535,9 @@
         "phone_optional_label": "Телефон (не обязательно)",
         "email_help_text": "Чтобы иметь возможность изменить свой пароль в случае необходимости, добавьте свой адрес электронной почты.",
         "email_phone_discovery_text": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты или номер телефона.",
-        "email_discovery_text": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты."
+        "email_discovery_text": "Если вы хотите, чтобы другие пользователи могли вас найти, укажите свой адрес электронной почты.",
+        "session_logged_out_title": "Выполнен выход",
+        "session_logged_out_description": "Для обеспечения безопасности ваш сеанс был завершён. Пожалуйста, войдите снова."
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3857,6 +3832,12 @@
             "private_unencrypted_warning": "Ваши личные сообщения обычно шифруются, но эта комната не шифруется. Обычно это связано с использованием неподдерживаемого устройства или метода, например, приглашения по электронной почте.",
             "enable_encryption_prompt": "Включите шифрование в настройках.",
             "unencrypted_warning": "Сквозное шифрование не включено"
+        },
+        "edit_topic": "Редактировать тему",
+        "read_topic": "Нажмите, чтобы увидеть тему",
+        "unread_notifications_predecessor": {
+            "other": "У вас есть %(count)s непрочитанных уведомлений в предыдущей версии этой комнаты.",
+            "one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s."
         }
     },
     "file_panel": {
@@ -3871,9 +3852,30 @@
         "intro": "Для продолжения Вам необходимо принять условия данного сервиса.",
         "column_service": "Сервис",
         "column_summary": "Сводка",
-        "column_document": "Документ"
+        "column_document": "Документ",
+        "tac_title": "Условия и положения",
+        "tac_description": "Для продолжения использования сервера %(homeserverDomain)s вы должны ознакомиться и принять условия и положения.",
+        "tac_button": "Просмотр условий и положений"
     },
     "space_settings": {
         "title": "Настройки — %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Создать опрос",
+        "create_poll_action": "Создать опрос",
+        "edit_poll_title": "Редактировать опрос",
+        "failed_send_poll_title": "Не удалось отправить опрос",
+        "failed_send_poll_description": "Не удалось отправить опрос, который вы пытались создать.",
+        "type_heading": "Тип опроса",
+        "type_open": "Открытый опрос",
+        "type_closed": "Закрытый опрос",
+        "topic_heading": "Каков вопрос или тема вашего опроса?",
+        "topic_label": "Вопрос или тема",
+        "options_heading": "Создать варианты",
+        "options_label": "Вариант %(number)s",
+        "options_placeholder": "Напишите вариант",
+        "options_add_button": "Добавить вариант",
+        "disclosed_notes": "Голосующие увидят результаты сразу после голосования",
+        "notes": "Результаты отображаются только после завершения опроса"
     }
 }

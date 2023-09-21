@@ -460,13 +460,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?",
     "Can't leave Server Notices room": "Kostege nie deuregoan uut ’t servermeldiengsgesprek",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan.",
-    "Signed Out": "Afgemeld",
-    "For security, this session has been signed out. Please sign in again.": "Wegens veiligheidsredenn is deze sessie afgemeld. Gelieve jen heran te meldn.",
-    "Terms and Conditions": "Gebruuksvoorwoardn",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Vo de %(homeserverDomain)s-thuusserver te bluuvn gebruukn, goa je de gebruuksvoorwoardn moetn leezn en anveirdn.",
-    "Review terms and conditions": "Gebruuksvoorwoardn leezn",
-    "Old cryptography data detected": "Oude cryptografiegegeevns gedetecteerd",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Je ku geen berichtn stuurn toutda je <consentLink>uzze algemene voorwoardn</consentLink> geleezn en anveird ghed èt.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver z’n limiet vo moandeliks actieve gebruukers bereikt ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver e systeembronlimiet overschreedn ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
@@ -479,10 +472,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschiens ounbereikboar of overbelast, of ’t zoekn deurdege te lank :(",
     "No more results": "Geen resultoatn nie mi",
     "Failed to reject invite": "Weigern van d’uutnodigienge is mislukt",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "J’èt %(count)s oungeleezn meldiengn in e voorgoande versie van dit gesprek.",
-        "one": "J’èt %(count)s oungeleezn meldieng in e voorgoande versie van dit gesprek."
-    },
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "J’è geprobeerd van e gegeven punt in de tydslyn van dit gesprek te loadn, moa j’è geen toeloatienge vo ’t desbetreffend bericht te zien.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Geprobeerd voor e gegeven punt in de tydslyn van dit gesprek te loadn, moar kostege dit nie viendn.",
     "Failed to load timeline position": "Loadn van tydslynpositie is mislukt",
@@ -1050,7 +1039,9 @@
             "other_party_cancelled": "De tegenparty èt de verificoasje geannuleerd.",
             "complete_title": "Geverifieerd!",
             "complete_description": "J’èt deze gebruuker geverifieerd."
-        }
+        },
+        "old_version_detected_title": "Oude cryptografiegegeevns gedetecteerd",
+        "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn."
     },
     "auth": {
         "sign_in_with_sso": "Anmeldn met enkele anmeldienge",
@@ -1077,7 +1068,9 @@
         "account_deactivated": "Deezn account is gedeactiveerd gewist.",
         "registration_username_validation": "Gebruukt alleene moa letters, cyfers, streeptjes en underscores",
         "phone_label": "Telefongnumero",
-        "phone_optional_label": "Telefongnumero (optioneel)"
+        "phone_optional_label": "Telefongnumero (optioneel)",
+        "session_logged_out_title": "Afgemeld",
+        "session_logged_out_description": "Wegens veiligheidsredenn is deze sessie afgemeld. Gelieve jen heran te meldn."
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1134,7 +1127,11 @@
         "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
     },
     "room": {
-        "drop_file_prompt": "Versleep ’t bestand noar hier vo ’t ip te loaden"
+        "drop_file_prompt": "Versleep ’t bestand noar hier vo ’t ip te loaden",
+        "unread_notifications_predecessor": {
+            "other": "J’èt %(count)s oungeleezn meldiengn in e voorgoande versie van dit gesprek.",
+            "one": "J’èt %(count)s oungeleezn meldieng in e voorgoande versie van dit gesprek."
+        }
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1149,6 +1146,9 @@
         "integration_manager": "Gebruukt robottn, bruggn, widgets en stickerpakkettn",
         "tos": "Gebruuksvoorwoardn",
         "column_service": "Dienst",
-        "column_summary": "Soamnvattienge"
+        "column_summary": "Soamnvattienge",
+        "tac_title": "Gebruuksvoorwoardn",
+        "tac_description": "Vo de %(homeserverDomain)s-thuusserver te bluuvn gebruukn, goa je de gebruuksvoorwoardn moetn leezn en anveirdn.",
+        "tac_button": "Gebruuksvoorwoardn leezn"
     }
 }

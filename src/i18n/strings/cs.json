@@ -66,7 +66,6 @@
     "Failed to unban": "Zrušení vykázání se nezdařilo",
     "Failure to create room": "Vytvoření místnosti se nezdařilo",
     "Forget room": "Zapomenout místnost",
-    "For security, this session has been signed out. Please sign in again.": "Z bezpečnostních důvodů bylo toto přihlášení ukončeno. Přihlašte se prosím znovu.",
     "and %(count)s others...": {
         "other": "a %(count)s další...",
         "one": "a někdo další..."
@@ -204,7 +203,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnovit si heslo a přijímat oznámení e-mailem.",
     "Reject invitation": "Odmítnout pozvání",
-    "Signed Out": "Jste odhlášeni",
     "Connectivity to the server has been lost.": "Spojení se serverem bylo přerušeno.",
     "Sent messages will be stored until your connection has returned.": "Odeslané zprávy zůstanou uložené, dokud se spojení znovu neobnoví.",
     "Failed to load timeline position": "Nepodařilo se načíst pozici na časové ose",
@@ -218,7 +216,6 @@
     "Send": "Odeslat",
     "collapse": "sbalit",
     "expand": "rozbalit",
-    "Old cryptography data detected": "Nalezeny starší šifrované datové zprávy",
     "Sunday": "Neděle",
     "Notification targets": "Cíle oznámení",
     "Today": "Dnes",
@@ -281,9 +278,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Tato místnost není veřejná. Bez pozvánky nebudete moci znovu vstoupit.",
     "Can't leave Server Notices room": "Místnost „Server Notices“ nelze opustit",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Tato místnost je určena pro důležité zprávy od domovského serveru, a proto ji nelze opustit.",
-    "Terms and Conditions": "Smluvní podmínky",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Chcete-li nadále používat domovský server %(homeserverDomain)s, měli byste si přečíst a odsouhlasit naše smluvní podmínky.",
-    "Review terms and conditions": "Přečíst smluvní podmínky",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Dokud si nepřečtete a neodsouhlasíte <consentLink>naše smluvní podmínky</consentLink>, nebudete moci posílat žádné zprávy.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server dosáhl svého měsíčního limitu pro aktivní uživatele. Pro další využívání služby prosím kontaktujte jejího <a>správce</a>.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server dosáhl limitu svých zdrojů. Pro další využívání služby prosím kontaktujte jejího <a>správce</a>.",
@@ -522,10 +516,6 @@
     "Enter username": "Zadejte uživatelské jméno",
     "Some characters not allowed": "Nějaké znaky jsou zakázané",
     "Add room": "Přidat místnost",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Máte %(count)s nepřečtených oznámení v předchozí verzi této místnosti.",
-        "one": "Máte %(count)s nepřečtených oznámení v předchozí verzi této místnosti."
-    },
     "Failed to get autodiscovery configuration from server": "Nepovedlo se načíst nastavení automatického objevování ze serveru",
     "Invalid base_url for m.homeserver": "Neplatná base_url pro m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Na URL domovského serveru asi není funkční Matrix server",
@@ -1261,7 +1251,6 @@
     "Recent changes that have not yet been received": "Nedávné změny, které dosud nebyly přijaty",
     "Restoring keys from backup": "Obnovení klíčů ze zálohy",
     "%(completed)s of %(total)s keys restored": "Obnoveno %(completed)s z %(total)s klíčů",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Pokud nyní nebudete pokračovat, můžete ztratit šifrované zprávy a data, pokud ztratíte přístup ke svým přihlašovacím údajům.",
     "Revoke permissions": "Odvolat oprávnění",
     "Continuing without email": "Pokračuje se bez e-mailu",
@@ -1362,7 +1351,6 @@
     "Click to copy": "Kliknutím zkopírujte",
     "Create a space": "Vytvořit prostor",
     "This homeserver has been blocked by its administrator.": "Tento domovský server byl zablokován jeho správcem.",
-    "Original event source": "Původní zdroj události",
     "Save Changes": "Uložit změny",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
     "Private space": "Soukromý prostor",
@@ -1395,7 +1383,6 @@
     "Reset event store": "Resetovat úložiště událostí",
     "Reset event store?": "Resetovat úložiště událostí?",
     "Avatar": "Avatar",
-    "Verification requested": "Žádost ověření",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Jste zde jediná osoba. Pokud odejdete, nikdo se v budoucnu nebude moci připojit, včetně vás.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Pokud vše resetujete, začnete bez důvěryhodných relací, bez důvěryhodných uživatelů a možná nebudete moci zobrazit minulé zprávy.",
     "Only do this if you have no other device to complete verification with.": "Udělejte to, pouze pokud nemáte žádné jiné zařízení, se kterým byste mohli dokončit ověření.",
@@ -1603,7 +1590,6 @@
     "Unban from %(roomName)s": "Zrušit vykázání z %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Stále budou mít přístup ke všemu, čeho nejste správcem.",
     "Disinvite from %(roomName)s": "Zrušit pozvánku do %(roomName)s",
-    "Create poll": "Vytvořit hlasování",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Aktualizace prostoru...",
         "other": "Aktualizace prostorů... (%(progress)s z %(count)s)"
@@ -1635,13 +1621,6 @@
     "The homeserver the user you're verifying is connected to": "Domovský server, ke kterému je ověřovaný uživatel připojen",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tato místnost nepropojuje zprávy s žádnou platformou. <a>Zjistit více.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Tato místnost se nachází v některých prostorech, jejichž nejste správcem. V těchto prostorech bude stará místnost stále zobrazena, ale lidé budou vyzváni, aby se připojili k nové místnosti.",
-    "Add option": "Přidat volbu",
-    "Write an option": "Napište volbu",
-    "Create options": "Vytvořit volby",
-    "Option %(number)s": "Volba %(number)s",
-    "Question or topic": "Otázka nebo téma",
-    "What is your poll question or topic?": "Jaká je vaše otázka nebo téma hlasování?",
-    "Create Poll": "Vytvořit hlasování",
     "You do not have permission to start polls in this room.": "Nemáte oprávnění zahajovat hlasování v této místnosti.",
     "Copy link to thread": "Kopírovat odkaz na vlákno",
     "Thread options": "Možnosti vláken",
@@ -1673,8 +1652,6 @@
         "one": "%(spaceName)s a %(count)s další",
         "other": "%(spaceName)s and %(count)s dalších"
     },
-    "Sorry, the poll you tried to create was not posted.": "Omlouváme se, ale hlasování, které jste se pokusili vytvořit, nebylo zveřejněno.",
-    "Failed to post poll": "Nepodařilo se zveřejnit hlasování",
     "Sorry, your vote was not registered. Please try again.": "Je nám líto, váš hlas nebyl zaregistrován. Zkuste to prosím znovu.",
     "Vote not registered": "Hlasování není registrováno",
     "Developer": "Pro vývojáře",
@@ -1777,14 +1754,8 @@
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "Join %(roomAddress)s": "Vstoupit do %(roomAddress)s",
-    "Edit poll": "Upravit hlasování",
     "Sorry, you can't edit a poll after votes have been cast.": "Je nám líto, ale po odevzdání hlasů nelze hlasování upravovat.",
     "Can't edit poll": "Nelze upravit hlasování",
-    "Results are only revealed when you end the poll": "Výsledky se zobrazí až po ukončení hlasování",
-    "Voters see results as soon as they have voted": "Hlasující uvidí výsledky ihned po hlasování",
-    "Closed poll": "Uzavřené hlasování",
-    "Open poll": "Otevřené hlasování",
-    "Poll type": "Typ hlasování",
     "Results will be visible when the poll is ended": "Výsledky se zobrazí po ukončení hlasování",
     "Search Dialog": "Dialogové okno hledání",
     "Pinned": "Připnuto",
@@ -1910,8 +1881,6 @@
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>.",
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
-    "Click to read topic": "Klikněte pro přečtení tématu",
-    "Edit topic": "Upravit téma",
     "Joining…": "Připojování…",
     "%(count)s people joined": {
         "one": "%(count)s osoba se připojila",
@@ -2106,7 +2075,6 @@
     "Joining room…": "Vstupování do místnosti…",
     "Joining space…": "Připojování k prostoru…",
     "Adding…": "Přidání…",
-    "Write something…": "Napište něco…",
     "Rejecting invite…": "Odmítání pozvánky…",
     "Encrypting your message…": "Šifrování zprávy…",
     "Sending your message…": "Odeslání zprávy…",
@@ -3092,7 +3060,8 @@
         "low_bandwidth_mode": "Režim malé šířky pásma",
         "developer_mode": "Vývojářský režim",
         "view_source_decrypted_event_source": "Dešifrovaný zdroj události",
-        "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj není dostupný"
+        "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj není dostupný",
+        "original_event_source": "Původní zdroj události"
     },
     "export_chat": {
         "html": "HTML",
@@ -3748,7 +3717,10 @@
             "sas_description": "Pokud na žádném zařízení nemáte kameru, porovnejte jedinečnou kombinaci emoji",
             "qr_or_sas": "%(qrCode)s nebo %(emojiCompare)s",
             "qr_or_sas_header": "Ověřte toto zařízení dokončením jedné z následujících položek:"
-        }
+        },
+        "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
+        "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
+        "verification_requested_toast_title": "Žádost ověření"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3863,7 +3835,9 @@
         "phone_optional_label": "Telefonní číslo (nepovinné)",
         "email_help_text": "Přidejte email, abyste mohli obnovit své heslo.",
         "email_phone_discovery_text": "Použijte e-mail nebo telefon, abyste byli volitelně viditelní pro stávající kontakty.",
-        "email_discovery_text": "Pomocí e-mailu můžete být volitelně viditelní pro existující kontakty."
+        "email_discovery_text": "Pomocí e-mailu můžete být volitelně viditelní pro existující kontakty.",
+        "session_logged_out_title": "Jste odhlášeni",
+        "session_logged_out_description": "Z bezpečnostních důvodů bylo toto přihlášení ukončeno. Přihlašte se prosím znovu."
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -4175,6 +4149,12 @@
             "private_unencrypted_warning": "Vaše soukromé zprávy jsou obvykle šifrované, ale tato místnost není. To je zpravidla způsobeno nepodporovaným zařízením nebo použitou metodou, například e-mailovými pozvánkami.",
             "enable_encryption_prompt": "Povolte šifrování v nastavení.",
             "unencrypted_warning": "Koncové šifrování není povoleno"
+        },
+        "edit_topic": "Upravit téma",
+        "read_topic": "Klikněte pro přečtení tématu",
+        "unread_notifications_predecessor": {
+            "other": "Máte %(count)s nepřečtených oznámení v předchozí verzi této místnosti.",
+            "one": "Máte %(count)s nepřečtených oznámení v předchozí verzi této místnosti."
         }
     },
     "file_panel": {
@@ -4189,9 +4169,31 @@
         "intro": "Musíte souhlasit s podmínkami použití, abychom mohli pokračovat.",
         "column_service": "Služba",
         "column_summary": "Shrnutí",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Smluvní podmínky",
+        "tac_description": "Chcete-li nadále používat domovský server %(homeserverDomain)s, měli byste si přečíst a odsouhlasit naše smluvní podmínky.",
+        "tac_button": "Přečíst smluvní podmínky"
     },
     "space_settings": {
         "title": "Nastavení - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Vytvořit hlasování",
+        "create_poll_action": "Vytvořit hlasování",
+        "edit_poll_title": "Upravit hlasování",
+        "failed_send_poll_title": "Nepodařilo se zveřejnit hlasování",
+        "failed_send_poll_description": "Omlouváme se, ale hlasování, které jste se pokusili vytvořit, nebylo zveřejněno.",
+        "type_heading": "Typ hlasování",
+        "type_open": "Otevřené hlasování",
+        "type_closed": "Uzavřené hlasování",
+        "topic_heading": "Jaká je vaše otázka nebo téma hlasování?",
+        "topic_label": "Otázka nebo téma",
+        "topic_placeholder": "Napište něco…",
+        "options_heading": "Vytvořit volby",
+        "options_label": "Volba %(number)s",
+        "options_placeholder": "Napište volbu",
+        "options_add_button": "Přidat volbu",
+        "disclosed_notes": "Hlasující uvidí výsledky ihned po hlasování",
+        "notes": "Výsledky se zobrazí až po ukončení hlasování"
     }
 }

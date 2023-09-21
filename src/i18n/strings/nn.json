@@ -210,13 +210,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
     "Can't leave Server Notices room": "Kan ikkje forlate Systemvarsel-rommet",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Dette rommet er for viktige meldingar frå Heimtenaren, så du kan ikkje forlate det.",
-    "Signed Out": "Logga Ut",
-    "For security, this session has been signed out. Please sign in again.": "Av sikkerheitsgrunnar har denne øykta vorte logga ut. Ver venleg og logg inn att.",
-    "Terms and Conditions": "Vilkår og Føresetnader",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "For å framleis bruka %(homeserverDomain)s sin heimtenar må du sjå over og seia deg einig i våre Vilkår og Føresetnader.",
-    "Review terms and conditions": "Sjå over Vilkår og Føresetnader",
-    "Old cryptography data detected": "Gamal kryptografidata vart oppdagen",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data frå ein eldre versjon av %(brand)s er oppdaga. Dette kan ha gjort at ende-til-ende kryptering feilar i den eldre versjonen. Krypterte meldingar som er utveksla med den gamle versjonen er kanskje ikkje dekrypterbare i denne versjonen. Dette kan forårsake at meldingar utveksla mot denne versjonen vil feile. Opplever du problem med dette, kan du logge inn og ut igjen. For å behalde meldingshistorikk, eksporter og importer nøklane dine på nytt.",
     "Invite to this room": "Inviter til dette rommet",
     "Notifications": "Varsel",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
@@ -290,10 +283,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Denne meldingen vart ikkje send fordi heimetenaren har nådd grensa for tilgjengelege systemressursar. Kontakt <a>systemadministratoren</a> for å vidare nytta denne tenesta.",
     "Add room": "Legg til rom",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Du har %(count)s uleste varslingar i ein tidligare versjon av dette rommet.",
-        "one": "Du har %(count)s ulest varsel i ein tidligare versjon av dette rommet."
-    },
     "Could not load user profile": "Klarde ikkje å laste brukarprofilen",
     "Your password has been reset.": "Passodet ditt vart nullstilt.",
     "Invalid homeserver discovery response": "Feil svar frå heimetenaren (discovery response)",
@@ -517,14 +506,8 @@
     "End Poll": "Avslutt røysting",
     "Sorry, the poll did not end. Please try again.": "Røystinga vart ikkje avslutta. Prøv på nytt.",
     "Failed to end poll": "Avslutning av røysting gjekk gale",
-    "Failed to post poll": "Oppretting av røysting gjekk gale",
     "The poll has ended. Top answer: %(topAnswer)s": "Røystinga er ferdig. Flest stemmer: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Røystinga er ferdig. Ingen røyster vart mottekne.",
-    "What is your poll question or topic?": "Kva handlar røystinga om ?",
-    "Sorry, the poll you tried to create was not posted.": "Røystinga du prøvde å oppretta vart ikkje publisert.",
-    "Edit poll": "Endra røysting",
-    "Create Poll": "Opprett røysting",
-    "Create poll": "Opprett røysting",
     "Sorry, you can't edit a poll after votes have been cast.": "Beklagar, du kan ikkje endra ei røysting som er i gang.",
     "Can't edit poll": "Røystinga kan ikkje endrast",
     "Poll": "Røysting",
@@ -538,7 +521,6 @@
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
     "Identity server URL must be HTTPS": "URL for identitetstenar må vera HTTPS",
     "Review to ensure your account is safe": "Undersøk dette for å gjere kontoen trygg",
-    "Results are only revealed when you end the poll": "Resultatet blir synleg når du avsluttar røystinga",
     "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
     "Hide sidebar": "Gøym sidestolpen",
     "Show sidebar": "Vis sidestolpen",
@@ -1167,7 +1149,9 @@
         "register_action": "Opprett konto",
         "incorrect_credentials": "Feil brukarnamn og/eller passord.",
         "account_deactivated": "Denne kontoen har blitt deaktivert.",
-        "phone_label": "Telefon"
+        "phone_label": "Telefon",
+        "session_logged_out_title": "Logga Ut",
+        "session_logged_out_description": "Av sikkerheitsgrunnar har denne øykta vorte logga ut. Ver venleg og logg inn att."
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1220,7 +1204,11 @@
         "room_topic": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!"
     },
     "room": {
-        "drop_file_prompt": "Slipp ein fil her for å lasta opp"
+        "drop_file_prompt": "Slipp ein fil her for å lasta opp",
+        "unread_notifications_predecessor": {
+            "other": "Du har %(count)s uleste varslingar i ein tidligare versjon av dette rommet.",
+            "one": "Du har %(count)s ulest varsel i ein tidligare versjon av dette rommet."
+        }
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1230,5 +1218,23 @@
         "context_menu": {
             "explore": "Utforsk romma"
         }
+    },
+    "terms": {
+        "tac_title": "Vilkår og Føresetnader",
+        "tac_description": "For å framleis bruka %(homeserverDomain)s sin heimtenar må du sjå over og seia deg einig i våre Vilkår og Føresetnader.",
+        "tac_button": "Sjå over Vilkår og Føresetnader"
+    },
+    "encryption": {
+        "old_version_detected_title": "Gamal kryptografidata vart oppdagen",
+        "old_version_detected_description": "Data frå ein eldre versjon av %(brand)s er oppdaga. Dette kan ha gjort at ende-til-ende kryptering feilar i den eldre versjonen. Krypterte meldingar som er utveksla med den gamle versjonen er kanskje ikkje dekrypterbare i denne versjonen. Dette kan forårsake at meldingar utveksla mot denne versjonen vil feile. Opplever du problem med dette, kan du logge inn og ut igjen. For å behalde meldingshistorikk, eksporter og importer nøklane dine på nytt."
+    },
+    "poll": {
+        "create_poll_title": "Opprett røysting",
+        "create_poll_action": "Opprett røysting",
+        "edit_poll_title": "Endra røysting",
+        "failed_send_poll_title": "Oppretting av røysting gjekk gale",
+        "failed_send_poll_description": "Røystinga du prøvde å oppretta vart ikkje publisert.",
+        "topic_heading": "Kva handlar røystinga om ?",
+        "notes": "Resultatet blir synleg når du avsluttar røystinga"
     }
 }

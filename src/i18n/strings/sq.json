@@ -154,8 +154,6 @@
     "Reject invitation": "Hidheni tej ftesën",
     "Are you sure you want to reject the invitation?": "Jeni i sigurt se doni të hidhet tej kjo ftesë?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Jeni i sigurt se doni të dilni nga dhoma '%(roomName)s'?",
-    "Signed Out": "I dalë",
-    "Old cryptography data detected": "U pikasën të dhëna kriptografie të vjetër",
     "You seem to be in a call, are you sure you want to quit?": "Duket se jeni në një thirrje, jeni i sigurt se doni të dilet?",
     "Search failed": "Kërkimi shtoi",
     "No more results": "Jo më tepër përfundime",
@@ -247,9 +245,6 @@
     "Send Logs": "Dërgo regjistra",
     "Link to most recent message": "Lidhje për te mesazhet më të freskët",
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
-    "Terms and Conditions": "Terma dhe Kushte",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Që të vazhdohet të përdoret shërbyesi home %(homeserverDomain)s, duhet të shqyrtoni dhe pajtoheni me termat dhe kushtet.",
-    "Review terms and conditions": "Shqyrtoni terma & kushte",
     "Failed to reject invite": "S’u arrit të hidhet tej ftesa",
     "Please <a>contact your service administrator</a> to continue using this service.": "Ju lutemi, që të vazhdoni të përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
     "You do not have permission to start a conference call in this room": "S’keni leje për të nisur një thirrje konferencë këtë në këtë dhomë",
@@ -265,8 +260,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
     "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
     "Can't leave Server Notices room": "Dhoma Njoftime Shërbyesi, s’braktiset dot",
-    "For security, this session has been signed out. Please sign in again.": "Për hir të sigurisë, është bërë dalja nga ky sesion. Ju lutemi, ribëni hyrjen.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
     "Audio Output": "Sinjal Audio",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "S’lidhet dot te shërbyes Home përmes HTTP-je, kur te shtylla e shfletuesit tuaj jepet një URL HTTPS. Ose përdorni HTTPS-në, ose <a>aktivizoni përdorimin e programtheve jo të sigurt</a>.",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "S’lidhet dot te shërbyes Home - ju lutemi, kontrolloni lidhjen tuaj, sigurohuni që <a>dëshmia SSL e shërbyesit tuaj Home</a> besohet, dhe që s’ka ndonjë zgjerim shfletuesi që po bllokon kërkesat tuaja.",
@@ -524,10 +517,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Kjo kartelë është <b>shumë e madhe</b> për ngarkim. Caku për madhësi kartelash është %(limit)s, ndërsa kjo kartelë është %(sizeOfThisFile)s.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Këto kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Keni %(count)s njoftime të palexuar në një version të mëparshëm të kësaj dhome.",
-        "one": "Keni %(count)s njoftim të palexuar në një version të mëparshëm të kësaj dhome."
-    },
     "Invalid base_url for m.identity_server": "Parametër base_url i i pavlefshëm për m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
     "Uploaded sound": "U ngarkua tingull",
@@ -1328,7 +1317,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "I kërkuam shfletuesit të mbajë mend cilin shërbyes Home përdorni, për t’ju lënë të bëni hyrje, por për fat të keq, shfletuesi juaj e ka harruar këtë. Kaloni te faqja e hyrjeve dhe riprovoni.",
     "We couldn't log you in": "S’ju nxorëm dot nga llogaria juaj",
     "Recently visited rooms": "Dhoma të vizituara së fundi",
-    "Original event source": "Burim i veprimtarisë origjinale",
     "%(count)s members": {
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
@@ -1379,7 +1367,6 @@
     "Invite with email or username": "Ftoni përmes email-i ose emri përdoruesi",
     "You can change these anytime.": "Këto mund t’i ndryshoni në çfarëdo kohe.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifikoni identitetin tuaj që të hyhet në mesazhe të fshehtëzuar dhe t’u provoni të tjerëve identitetin tuaj.",
-    "Verification requested": "U kërkua verifikim",
     "Avatar": "Avatar",
     "Consult first": "Konsultohu së pari",
     "Invited people will be able to read old messages.": "Personat e ftuar do të jenë në gjendje të lexojnë mesazhe të vjetër.",
@@ -1587,7 +1574,6 @@
     "Verify with Security Key or Phrase": "Verifikojeni me Kyç ose Frazë Sigurie",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Duket sikur s’keni Kyç Sigurie ose ndonjë pajisje tjetër nga e cila mund të bëni verifikimin. Kjo pajisje s’do të jetë në gjendje të hyjë te mesazhe të dikurshëm të fshehtëzuar. Që të mund të verifikohet identiteti juaj në këtë pajisje, ju duhet të riujdisni kyçet tuaj të verifikimit.",
     "Skip verification for now": "Anashkaloje verifikimin hëpërhë",
-    "Create poll": "Krijoni anketim",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Po përditësohet hapësirë…",
         "other": "Po përditësohen hapësira… (%(progress)s nga %(count)s) gjithsej"
@@ -1631,13 +1617,6 @@
     "The homeserver the user you're verifying is connected to": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Kjo dhomë gjendet në disa hapësira për të cilat nuk jeni një nga përgjegjësit. Në këto hapësira, dhoma e vjetër prapë do të shfaqet, por njerëzve do t’u kërkohet të marrin pjesë te e reja.",
-    "Add option": "Shtoni mundësi",
-    "Write an option": "Shkruani një mundësi",
-    "Option %(number)s": "Mundësia %(number)s",
-    "Create options": "Krijoni mundësi",
-    "Question or topic": "Pyetje ose temë",
-    "What is your poll question or topic?": "Cila është pyetja, ose tema e pyetësorit tuaj?",
-    "Create Poll": "Krijoni Pyetësor",
     "You do not have permission to start polls in this room.": "S’keni leje të nisni anketime në këtë dhomë.",
     "Copy link to thread": "Kopjoje lidhjen te rrjedha",
     "Thread options": "Mundësi rrjedhe",
@@ -1665,8 +1644,6 @@
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
     },
-    "Sorry, the poll you tried to create was not posted.": "Na ndjeni, anketimi që provuat të krijoni s’u postua dot.",
-    "Failed to post poll": "S’u arrit të postohej anketimi",
     "Based on %(count)s votes": {
         "one": "Bazuar në %(count)s votë",
         "other": "Bazua në %(count)s vota"
@@ -1775,15 +1752,9 @@
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "Edit poll": "Përpunoni pyetësor",
     "Sorry, you can't edit a poll after votes have been cast.": "Na ndjeni, s’mund të përpunoni një pyetësor pasi të jenë hedhur votat.",
     "Can't edit poll": "S’përpunohet dot pyetësori",
     "Join %(roomAddress)s": "Hyni te %(roomAddress)s",
-    "Results are only revealed when you end the poll": "Përfundimet shfaqen vetëm kur të përfundoni pyetësorin",
-    "Voters see results as soon as they have voted": "Votuesit shohin përfundimet sapo të kenë votuar",
-    "Closed poll": "Pyetësor i mbyllur",
-    "Open poll": "Pyetësor i hapur",
-    "Poll type": "Lloj pyetësori",
     "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
     "Search Dialog": "Dialog Kërkimi",
     "Pinned": "I fiksuar",
@@ -1900,8 +1871,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Shfaq: Dhoma %(instance)s (%(server)s)",
     "Add new server…": "Shtoni shërbyes të ri…",
     "Remove server “%(roomServer)s”": "Hiqe shërbyesin “%(roomServer)s”",
-    "Click to read topic": "Që të lexoni subjketin, klikojeni",
-    "Edit topic": "Përpunoni subjektin",
     "Un-maximise": "Çmaksimizoje",
     "View live location": "Shihni vendndodhje aty për aty",
     "Ban from room": "Dëboje nga dhomë",
@@ -2100,7 +2069,6 @@
     "Checking…": "Po kontrollohet…",
     "Waiting for partner to confirm…": "Po pritet ripohimi nga partneri…",
     "Adding…": "Po shtohet…",
-    "Write something…": "Shkruani diçka…",
     "Declining…": "Po hidhet poshtë…",
     "Rejecting invite…": "Po hidhet poshtë ftesa…",
     "Joining room…": "Po hyhet në dhomë…",
@@ -3004,7 +2972,8 @@
         "low_bandwidth_mode": "Mënyra gjerësi e ulët bande",
         "developer_mode": "Mënyra zhvillues",
         "view_source_decrypted_event_source": "U shfshehtëzua burim veprimtarie",
-        "view_source_decrypted_event_source_unavailable": "Burim i shfshehtëzuar jo i passhëm"
+        "view_source_decrypted_event_source_unavailable": "Burim i shfshehtëzuar jo i passhëm",
+        "original_event_source": "Burim i veprimtarisë origjinale"
     },
     "export_chat": {
         "html": "HTML",
@@ -3641,7 +3610,10 @@
             "sas_description": "Krahasoni një grup unik emoji-sh, nëse s’keni kamera në njërën nga pajisjet",
             "qr_or_sas": "%(qrCode)s ose %(emojiCompare)s",
             "qr_or_sas_header": "Verifikoni këtë pajisje duke plotësuar një nga sa vijon:"
-        }
+        },
+        "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
+        "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
+        "verification_requested_toast_title": "U kërkua verifikim"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3755,7 +3727,9 @@
         "phone_optional_label": "Telefoni (në daçi)",
         "email_help_text": "Shtoni një email, që të jeni në gjendje të ricaktoni fjalëkalimin tuaj.",
         "email_phone_discovery_text": "Përdorni email ose telefon që, nëse doni, të mund t’ju gjejnë kontaktet ekzistues.",
-        "email_discovery_text": "Përdorni email që, nëse doni, të mund t’ju gjejnë kontaktet ekzistues."
+        "email_discovery_text": "Përdorni email që, nëse doni, të mund t’ju gjejnë kontaktet ekzistues.",
+        "session_logged_out_title": "I dalë",
+        "session_logged_out_description": "Për hir të sigurisë, është bërë dalja nga ky sesion. Ju lutemi, ribëni hyrjen."
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -4063,6 +4037,12 @@
             "private_unencrypted_warning": "Mesazhet tuaja private normalisht fshehtëzohen, por kjo dhomë s’fshehtëzohet. Zakonisht kjo vjen për shkak të përdorimit të një pajisjeje ose metode të pambuluar, bie fjala, ftesa me email.",
             "enable_encryption_prompt": "Aktivizoni fshehtëzimin te rregullimet.",
             "unencrypted_warning": "Fshehtëzimi skaj-më-skaj s’është i aktivizuar"
+        },
+        "edit_topic": "Përpunoni subjektin",
+        "read_topic": "Që të lexoni subjketin, klikojeni",
+        "unread_notifications_predecessor": {
+            "other": "Keni %(count)s njoftime të palexuar në një version të mëparshëm të kësaj dhome.",
+            "one": "Keni %(count)s njoftim të palexuar në një version të mëparshëm të kësaj dhome."
         }
     },
     "file_panel": {
@@ -4077,9 +4057,31 @@
         "intro": "Që të vazhdohet, lypset të pranoni kushtet e këtij shërbimi.",
         "column_service": "Shërbim",
         "column_summary": "Përmbledhje",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Terma dhe Kushte",
+        "tac_description": "Që të vazhdohet të përdoret shërbyesi home %(homeserverDomain)s, duhet të shqyrtoni dhe pajtoheni me termat dhe kushtet.",
+        "tac_button": "Shqyrtoni terma & kushte"
     },
     "space_settings": {
         "title": "Rregullime - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Krijoni anketim",
+        "create_poll_action": "Krijoni Pyetësor",
+        "edit_poll_title": "Përpunoni pyetësor",
+        "failed_send_poll_title": "S’u arrit të postohej anketimi",
+        "failed_send_poll_description": "Na ndjeni, anketimi që provuat të krijoni s’u postua dot.",
+        "type_heading": "Lloj pyetësori",
+        "type_open": "Pyetësor i hapur",
+        "type_closed": "Pyetësor i mbyllur",
+        "topic_heading": "Cila është pyetja, ose tema e pyetësorit tuaj?",
+        "topic_label": "Pyetje ose temë",
+        "topic_placeholder": "Shkruani diçka…",
+        "options_heading": "Krijoni mundësi",
+        "options_label": "Mundësia %(number)s",
+        "options_placeholder": "Shkruani një mundësi",
+        "options_add_button": "Shtoni mundësi",
+        "disclosed_notes": "Votuesit shohin përfundimet sapo të kenë votuar",
+        "notes": "Përfundimet shfaqen vetëm kur të përfundoni pyetësorin"
     }
 }

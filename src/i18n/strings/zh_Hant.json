@@ -34,7 +34,6 @@
     "Favourite": "加入我的最愛",
     "Filter room members": "過濾聊天室成員",
     "Forget room": "忘記聊天室",
-    "For security, this session has been signed out. Please sign in again.": "因為安全因素，此工作階段已被登出。請重新登入。",
     "Historical": "歷史",
     "Import E2E room keys": "匯入聊天室端對端加密金鑰",
     "Incorrect verification code": "驗證碼錯誤",
@@ -51,7 +50,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "伺服器可能無法使用、超載，或搜尋時間過長 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "伺服器可能無法使用、超載，或者您遇到了一個錯誤。",
     "Session ID": "工作階段 ID",
-    "Signed Out": "已登出",
     "This email address is already in use": "這個電子郵件地址已被使用",
     "This email address was not found": "未找到此電子郵件地址",
     "Unable to add email address": "無法新增電子郵件地址",
@@ -219,8 +217,6 @@
     "And %(count)s more...": {
         "other": "與更多 %(count)s 個…"
     },
-    "Old cryptography data detected": "偵測到舊的加密資料",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s，%(monthName)s %(day)s %(fullYear)s",
     "This room is not public. You will not be able to rejoin without an invite.": "這個聊天室不是公開聊天。沒有再次收到邀請的情況下將無法重新加入。",
@@ -262,9 +258,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "清除您瀏覽器的儲存的東西也許可以修復問題，但會將您登出並造成任何已加密的聊天都無法讀取。",
     "Can't leave Server Notices room": "無法離開伺服器通知聊天室",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "這個聊天室是用於發佈從家伺服器而來的重要訊息，所以您不能離開它。",
-    "Terms and Conditions": "條款與細則",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "要繼續使用 %(homeserverDomain)s 家伺服器，您必須審閱並同意我們的條款與細則。",
-    "Review terms and conditions": "審閱條款與細則",
     "No Audio Outputs detected": "未偵測到音訊輸出",
     "Audio Output": "音訊輸出",
     "Share Link to User": "分享使用者連結",
@@ -468,10 +461,6 @@
     "Revoke invite": "撤銷邀請",
     "Invited by %(sender)s": "由 %(sender)s 邀請",
     "Remember my selection for this widget": "記住我對這個小工具的選擇",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。",
-        "one": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。"
-    },
     "The file '%(fileName)s' failed to upload.": "無法上傳檔案「%(fileName)s」。",
     "Notes": "註記",
     "Sign out and remove encryption keys?": "登出並移除加密金鑰？",
@@ -1331,7 +1320,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "我們要求瀏覽器記住它讓您登入時使用的家伺服器，但不幸的是，您的瀏覽器忘了它。到登入頁面然後重試。",
     "We couldn't log you in": "我們無法讓您登入",
     "Recently visited rooms": "最近造訪過的聊天室",
-    "Original event source": "原始活動來源",
     "%(count)s members": {
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
@@ -1396,7 +1384,6 @@
     "You most likely do not want to reset your event index store": "您很可能不想重設您的活動索引儲存",
     "Reset event store": "重設活動儲存",
     "Avatar": "大頭照",
-    "Verification requested": "已請求驗證",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "您是這裡唯一的人。如果您離開，包含您在內的任何人都無法加入。",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果您重設所有東西，您將會在沒有受信任的工作階段、沒有受信任的使用者的情況下重新啟動，且可能會看不到過去的訊息。",
     "Only do this if you have no other device to complete verification with.": "當您沒有其他裝置可以完成驗證時，才執行此動作。",
@@ -1594,7 +1581,6 @@
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "您似乎沒有安全金鑰或其他可以驗證的裝置。此裝置將無法存取舊的加密訊息。為了在此裝置上驗證您的身分，您必須重設您的驗證金鑰。",
     "Skip verification for now": "暫時略過驗證",
     "Really reset verification keys?": "真的要重設驗證金鑰？",
-    "Create poll": "建立投票",
     "They won't be able to access whatever you're not an admin of.": "他們將無法存取您不是管理員的任何地方。",
     "Ban them from specific things I'm able to": "從我有權限的特定地方封鎖他們",
     "Unban them from specific things I'm able to": "從我有權限的特定地方取消封鎖他們",
@@ -1637,13 +1623,6 @@
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "這個聊天室位於您不是管理員的某些聊天空間中。在那些聊天空間中，舊的聊天室仍將會顯示，但系統會提示使用者加入新的聊天室。",
     "Copy link to thread": "複製討論串連結",
     "Thread options": "討論串選項",
-    "Add option": "新增選項",
-    "Write an option": "編寫選項",
-    "Option %(number)s": "選項 %(number)s",
-    "Create options": "建立選項",
-    "Question or topic": "問題或主題",
-    "What is your poll question or topic?": "您的投票問題或主題是什麼？",
-    "Create Poll": "建立投票",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
     "Reply in thread": "在討論串中回覆",
     "Rooms outside of a space": "聊天空間外的聊天室",
@@ -1673,8 +1652,6 @@
         "one": "%(spaceName)s 與 %(count)s 個其他的",
         "other": "%(spaceName)s 與 %(count)s 個其他的"
     },
-    "Sorry, the poll you tried to create was not posted.": "抱歉，您嘗試建立的投票並未發佈。",
-    "Failed to post poll": "張貼投票失敗",
     "Sorry, your vote was not registered. Please try again.": "抱歉，您的投票未計入。請再試一次。",
     "Vote not registered": "投票未計入",
     "Developer": "開發者",
@@ -1777,15 +1754,9 @@
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
     "Join %(roomAddress)s": "加入 %(roomAddress)s",
-    "Edit poll": "編輯投票",
     "Sorry, you can't edit a poll after votes have been cast.": "抱歉，您無法在有人投票後編輯投票。",
     "Can't edit poll": "無法編輯投票",
     "Search Dialog": "搜尋對話方塊",
-    "Results are only revealed when you end the poll": "結果僅在您結束投票後顯示",
-    "Voters see results as soon as they have voted": "投票者在投票後可以立刻看到投票結果",
-    "Open poll": "開放式投票",
-    "Closed poll": "秘密投票",
-    "Poll type": "投票類型",
     "Results will be visible when the poll is ended": "結果將在投票結束時可見",
     "Pinned": "已釘選",
     "Open thread": "開啟討論串",
@@ -1915,8 +1886,6 @@
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "要建立您的帳號，請開啟我們剛剛寄到 %(emailAddress)s 的電子郵件中的連結。",
     "Unread email icon": "未讀電子郵件圖示",
     "Check your email to continue": "檢查您的電子郵件以繼續",
-    "Click to read topic": "點擊以閱讀主題",
-    "Edit topic": "編輯主題",
     "Joining…": "正在加入…",
     "%(count)s people joined": {
         "one": "%(count)s 個人已加入",
@@ -2106,7 +2075,6 @@
     "Checking…": "正在檢查…",
     "Waiting for partner to confirm…": "正在等待夥伴確認…",
     "Adding…": "正在新增…",
-    "Write something…": "寫點東西…",
     "Rejecting invite…": "正在回絕邀請…",
     "Joining room…": "正在加入聊天室…",
     "Joining space…": "正在加入聊天空間…",
@@ -3087,7 +3055,8 @@
         "low_bandwidth_mode": "低頻寬模式",
         "developer_mode": "開發者模式",
         "view_source_decrypted_event_source": "解密活動來源",
-        "view_source_decrypted_event_source_unavailable": "已解密的來源不可用"
+        "view_source_decrypted_event_source_unavailable": "已解密的來源不可用",
+        "original_event_source": "原始活動來源"
     },
     "export_chat": {
         "html": "HTML",
@@ -3743,7 +3712,10 @@
             "sas_description": "如果兩個裝置上都沒有相機的話，就比較一組獨特的表情符號",
             "qr_or_sas": "%(qrCode)s 或 %(emojiCompare)s",
             "qr_or_sas_header": "透過完成以下的任何一個操作來驗證此裝置："
-        }
+        },
+        "old_version_detected_title": "偵測到舊的加密資料",
+        "old_version_detected_description": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
+        "verification_requested_toast_title": "已請求驗證"
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3858,7 +3830,9 @@
         "phone_optional_label": "電話（選擇性）",
         "email_help_text": "新增電子郵件以重設您的密碼。",
         "email_phone_discovery_text": "使用電子郵件或電話以選擇性地被既有的聯絡人探索。",
-        "email_discovery_text": "設定電子郵件地址後，即可選擇性被已有的聯絡人新增為好友。"
+        "email_discovery_text": "設定電子郵件地址後，即可選擇性被已有的聯絡人新增為好友。",
+        "session_logged_out_title": "已登出",
+        "session_logged_out_description": "因為安全因素，此工作階段已被登出。請重新登入。"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -4170,6 +4144,12 @@
             "private_unencrypted_warning": "您的私密訊息會正常加密，但聊天室不會。一般來說這是因為使用了不支援的裝置或方法，例如電子郵件邀請。",
             "enable_encryption_prompt": "在設定中啟用加密。",
             "unencrypted_warning": "端對端加密未啟用"
+        },
+        "edit_topic": "編輯主題",
+        "read_topic": "點擊以閱讀主題",
+        "unread_notifications_predecessor": {
+            "other": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。",
+            "one": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。"
         }
     },
     "file_panel": {
@@ -4184,9 +4164,31 @@
         "intro": "要繼續，您必須同意本服務條款。",
         "column_service": "服務",
         "column_summary": "摘要",
-        "column_document": "文件"
+        "column_document": "文件",
+        "tac_title": "條款與細則",
+        "tac_description": "要繼續使用 %(homeserverDomain)s 家伺服器，您必須審閱並同意我們的條款與細則。",
+        "tac_button": "審閱條款與細則"
     },
     "space_settings": {
         "title": "設定 - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "建立投票",
+        "create_poll_action": "建立投票",
+        "edit_poll_title": "編輯投票",
+        "failed_send_poll_title": "張貼投票失敗",
+        "failed_send_poll_description": "抱歉，您嘗試建立的投票並未發佈。",
+        "type_heading": "投票類型",
+        "type_open": "開放式投票",
+        "type_closed": "秘密投票",
+        "topic_heading": "您的投票問題或主題是什麼？",
+        "topic_label": "問題或主題",
+        "topic_placeholder": "寫點東西…",
+        "options_heading": "建立選項",
+        "options_label": "選項 %(number)s",
+        "options_placeholder": "編寫選項",
+        "options_add_button": "新增選項",
+        "disclosed_notes": "投票者在投票後可以立刻看到投票結果",
+        "notes": "結果僅在您結束投票後顯示"
     }
 }

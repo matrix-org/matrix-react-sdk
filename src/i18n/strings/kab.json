@@ -445,7 +445,6 @@
     "Sign in with SSO": "Anekcum s SSO",
     "Couldn't load page": "Asali n usebter ur yeddi ara",
     "Failed to reject invitation": "Tigtin n tinnubga ur yeddi ara",
-    "Signed Out": "Yeffeɣ seg tuqqna",
     "Failed to reject invite": "Tigtin n tinnubga ur yeddi ara",
     "Switch theme": "Abeddel n usentel",
     "All settings": "Akk iɣewwaren",
@@ -525,8 +524,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Seqdec aqeddac n timagit i uncad s yimayl. <default>Seqdec (%(defaultIdentityServerName)s) amezwer</default> neɣ sefrek deg <settings>yiɣewwaren</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Seqdec aqeddac n timagit i uncad s yimayl. Sefrek deg <settings>yiɣewwaren</settings>.",
     "This room is public": "Taxxamt-a d tazayezt",
-    "Terms and Conditions": "Tiwtilin d tfadiwin",
-    "Review terms and conditions": "Senqed tiwtilin d tfadiwin",
     "You signed in to a new session without verifying it:": "Teqqneḍ ɣer tɣimit war ma tesneqdeḍ-tt:",
     "Verify your other session using one of the options below.": "Senqed tiɣimiyin-ik·im tiyaḍ s useqdec yiwet seg textiṛiyin ddaw.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeqqen ɣer tɣimit tamaynut war ma isenqed-itt:",
@@ -712,8 +709,6 @@
     "Upload files (%(current)s of %(total)s)": "Sali-d ifuyla (%(current)s ɣef %(total)s)",
     "This room is not public. You will not be able to rejoin without an invite.": "Taxxamt-a mačči d tazayezt. Ur tezmireḍ ara ad ternuḍ ɣer-s war tinubga.",
     "Are you sure you want to leave the room '%(roomName)s'?": "S tidet tebɣiḍ ad teǧǧeḍ taxxamt '%(roomName)s'?",
-    "For security, this session has been signed out. Please sign in again.": "Ɣef ssebba n tɣellist, taxxamt-a ad temdel. Ttxil-k·m ɛreḍ tikkelt-nniḍen.",
-    "Old cryptography data detected": "Ala isefka iweglehnen i d-iteffɣen",
     "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad tjerrdeḍ, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a, senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad talseḍ awennez i wawal-ik•im uffir, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a, senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
     "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Tzemreḍ ad teqqneḍ, maca kra n tmahilin ur ttilint ara almi yuɣal-d uqeddac n tmagit. Ma mazal tettwaliḍ alɣu-a senqed tawila-inek•inem neɣ nermes anedbal n uqeddac.",
@@ -854,10 +849,6 @@
     "Sent messages will be stored until your connection has returned.": "Iznan yettwaznen ad ttwakelsen alamma tuɣal-d tuqqna.",
     "You seem to be uploading files, are you sure you want to quit?": "Aql-ak·akem tessalayeḍ-d ifuyla, tebɣiḍ stidet ad teffɣeḍ?",
     "Server may be unavailable, overloaded, or search timed out :(": "Aqeddac yezmer ulac-it, iɛedda aɛebbi i ilaqen neɣ yekfa wakud n unadi:(",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a.",
-        "one": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a."
-    },
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Ttxil-k·m gar tamawt aql-ak·akem tkecmeḍ ɣer uqeddac %(hs)s, neɣ matrix.org.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Senqed yal tiɣimit yettwasqedcen sɣur aseqdac weḥd-s i ucraḍ fell-as d tuttkilt, war attkal ɣef yibenkan yettuzemlen s uzmel anmidag.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s xuṣṣent kra n yisegran yettusran i tuffra s wudem aɣelsan n yiznan iwgelhanen idiganen. Ma yella tebɣiḍ ad tgeḍ tarmit s tmahilt-a, snulfu-d tanarit %(brand)s tudmawant s <nativeLink>unadi n yisegran yettwarnan</nativeLink>.",
@@ -963,8 +954,6 @@
     "Your browser likely removed this data when running low on disk space.": "Yezmer iminig-ik·im yekkes isefka-a mi t-txuṣṣ tallunt ɣef uḍebsi.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Ɛerḍeɣ ad d-saliɣ tazmilt tufrint tesnakudt n texxamt-a, maca ur ssawḍeɣ ara ad t-naf.",
     "Missing captcha public key in homeserver configuration. Please report this to your homeserver administrator.": "Txuṣṣ tsarut tazayezt n captcha deg umtawi n uqeddac agejdan. Ttxil-k·m azen aneqqis ɣef waya i unedbal n uqeddac-ik·im agejdan.",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "I wakken ad tkemmleḍ aseqdec n uqeddac agejdan n %(homeserverDomain)s ilaq ad talseḍ asenqed syen ad tqebleḍ tiwtilin-nneɣ s umata.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ur tezmireḍ ara ad tazneḍ iznan alamma tesneqdeḍ syen ad tqebleḍ <consentLink>tiwtilin-nneɣ</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Izen-ik·im ur yettwazen ara acku aqeddac-a agejdan iɛedda talast n useqdac urmid n wayyur. Ttxil-k·m <a>nermes anedbal-ik·im n umeẓlu</a> i wakken ad tkemmleḍ aseqdec ameẓlu.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Izen-ik·im ur yettwazen ara acku aqeddac-a agejdan iɛedda talast n yiɣbula. Ttxil-k·m <a>nermes anedbal-ik·im n umeẓlu</a> i wakken ad tkemmleḍ aseqdec ameẓlu.",
@@ -2006,7 +1995,9 @@
             "qr_prompt": "Ḍumm tangalt-a tasuft",
             "sas_prompt": "Serwes gar yimujiten asufen",
             "sas_description": "Serwes tagrumma n yimujiten asufen ma yella ur tesɛiḍ ara takamiṛat ɣef yiwen seg sin yibenkan"
-        }
+        },
+        "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
+        "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im."
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2057,7 +2048,9 @@
         "account_deactivated": "Amiḍan-a yettuḥbes.",
         "registration_username_validation": "Seqdec kan isekkilen imeẓẓyanen, izwilen, ijerriden d yidurren kan",
         "phone_label": "Tiliɣri",
-        "phone_optional_label": "Tiliɣri (d afrayan)"
+        "phone_optional_label": "Tiliɣri (d afrayan)",
+        "session_logged_out_title": "Yeffeɣ seg tuqqna",
+        "session_logged_out_description": "Ɣef ssebba n tɣellist, taxxamt-a ad temdel. Ttxil-k·m ɛreḍ tikkelt-nniḍen."
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2156,7 +2149,11 @@
         "switch_theme_dark": "Uɣal ɣer uskar aberkan"
     },
     "room": {
-        "drop_file_prompt": "Eǧǧ afaylu dagi i usali"
+        "drop_file_prompt": "Eǧǧ afaylu dagi i usali",
+        "unread_notifications_predecessor": {
+            "other": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a.",
+            "one": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a."
+        }
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",
@@ -2175,6 +2172,9 @@
         "intro": "I wakken ad tkemmleḍ tesriḍ ad tqebleḍ tiwtilin n umeẓlu-a.",
         "column_service": "Ameẓlu",
         "column_summary": "Agzul",
-        "column_document": "Isemli"
+        "column_document": "Isemli",
+        "tac_title": "Tiwtilin d tfadiwin",
+        "tac_description": "I wakken ad tkemmleḍ aseqdec n uqeddac agejdan n %(homeserverDomain)s ilaq ad talseḍ asenqed syen ad tqebleḍ tiwtilin-nneɣ s umata.",
+        "tac_button": "Senqed tiwtilin d tfadiwin"
     }
 }

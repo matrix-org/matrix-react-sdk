@@ -71,7 +71,6 @@
     "Search failed": "การค้นหาล้มเหลว",
     "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือเจอจุดบกพร่อง",
-    "Signed Out": "ออกจากระบบแล้ว",
     "This email address is already in use": "ที่อยู่อีเมลถูกใช้แล้ว",
     "This email address was not found": "ไม่พบที่อยู่อีเมล",
     "This phone number is already in use": "หมายเลขโทรศัพท์นี้ถูกใช้งานแล้ว",
@@ -518,7 +517,8 @@
         "server_picker_explainer": "ใช้ Matrix โฮมเซิร์ฟเวอร์ที่คุณต้องการหากคุณมี หรือโฮสต์ของคุณเอง",
         "server_picker_learn_more": "เกี่ยวกับโฮมเซิร์ฟเวอร์",
         "incorrect_credentials": "ชื่อผู้ใช้และ/หรือรหัสผ่านไม่ถูกต้อง",
-        "phone_label": "โทรศัพท์"
+        "phone_label": "โทรศัพท์",
+        "session_logged_out_title": "ออกจากระบบแล้ว"
     },
     "setting": {
         "help_about": {

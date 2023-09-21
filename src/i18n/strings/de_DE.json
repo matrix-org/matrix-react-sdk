@@ -19,7 +19,6 @@
     "Failed to unban": "Aufheben der Verbannung fehlgeschlagen",
     "Favourite": "Favorit",
     "Forget room": "Raum entfernen",
-    "For security, this session has been signed out. Please sign in again.": "Aus Sicherheitsgründen wurde diese Sitzung beendet. Bitte melde dich erneut an.",
     "Import E2E room keys": "E2E-Raumschlüssel importieren",
     "Invalid Email Address": "Ungültige E-Mail-Adresse",
     "Sign in with": "Anmelden mit",
@@ -31,7 +30,6 @@
     "Profile": "Profil",
     "Reject invitation": "Einladung ablehnen",
     "Return to login screen": "Zur Anmeldemaske zurückkehren",
-    "Signed Out": "Abgemeldet",
     "This doesn't appear to be a valid email address": "Dies scheint keine gültige E-Mail-Adresse zu sein",
     "This room is not accessible by remote Matrix servers": "Dieser Raum ist von Personen auf anderen Matrix-Servern nicht betretbar",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server ist nicht verfügbar, überlastet oder du bist auf einen Programmfehler gestoßen.",
@@ -218,8 +216,6 @@
     "Send": "Senden",
     "collapse": "Verbergen",
     "expand": "Erweitern",
-    "Old cryptography data detected": "Alte Kryptografiedaten erkannt",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
     "Replying": "Antwortet",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du wirst nicht in der Lage sein, die Änderung zurückzusetzen, da du dich degradierst. Wenn du der letze Nutzer mit Berechtigungen bist, wird es unmöglich sein die Privilegien zurückzubekommen.",
@@ -262,9 +258,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen.",
     "Can't leave Server Notices room": "Der Raum für Server-Mitteilungen kann nicht verlassen werden",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Du kannst diesen Raum nicht verlassen, da dieser Raum für wichtige Mitteilungen vom Heim-Server verwendet wird.",
-    "Terms and Conditions": "Geschäftsbedingungen",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Um den %(homeserverDomain)s-Heim-Server weiterzuverwenden, musst du die Nutzungsbedingungen sichten und akzeptieren.",
-    "Review terms and conditions": "Geschäftsbedingungen anzeigen",
     "Share Link to User": "Link zu Benutzer teilen",
     "Share room": "Raum teilen",
     "Share Room": "Raum teilen",
@@ -566,10 +559,6 @@
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raumes.",
-        "other": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raums."
-    },
     "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
     "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
     "Room %(name)s": "Raum %(name)s",
@@ -1387,7 +1376,6 @@
     "unknown person": "unbekannte Person",
     "%(deviceId)s from %(ip)s": "%(deviceId)s von %(ip)s",
     "Review to ensure your account is safe": "Überprüfe sie, um ein sicheres Konto gewährleisten zu können",
-    "Verification requested": "Verifizierung angefragt",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
     "Consult first": "Zuerst Anfragen",
@@ -1407,7 +1395,6 @@
         "one": "Mitglied anzeigen"
     },
     "Some of your messages have not been sent": "Einige Nachrichten konnten nicht gesendet werden",
-    "Original event source": "Ursprüngliche Rohdaten",
     "Sending": "Senden",
     "You can select all or individual messages to retry or delete": "Du kannst einzelne oder alle Nachrichten erneut senden oder löschen",
     "Delete all": "Alle löschen",
@@ -1597,7 +1584,6 @@
     "Disinvite from %(roomName)s": "Einladung für %(roomName)s zurückziehen",
     "Export chat": "Unterhaltung exportieren",
     "Insert link": "Link einfügen",
-    "Create poll": "Umfrage erstellen",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Space aktualisieren …",
         "other": "Spaces aktualisieren … (%(progress)s von %(count)s)"
@@ -1623,13 +1609,6 @@
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
     "If you can't see who you're looking for, send them your invite link below.": "Wenn du die gesuchte Person nicht findest, sende ihr den Einladungslink zu.",
     "Add a space to a space you manage.": "Einen Space zu einem Space den du verwaltest hinzufügen.",
-    "Add option": "Antwortmöglichkeit hinzufügen",
-    "Write an option": "Antwortmöglichkeit verfassen",
-    "Option %(number)s": "Antwortmöglichkeit %(number)s",
-    "Create options": "Antwortmöglichkeiten erstellen",
-    "Question or topic": "Frage oder Thema",
-    "What is your poll question or topic?": "Was ist die Frage oder das Thema deiner Umfrage?",
-    "Create Poll": "Umfrage erstellen",
     "Ban from %(roomName)s": "Aus %(roomName)s verbannen",
     "Yours, or the other users' session": "Die Sitzung von dir oder dem anderen Nutzer",
     "Yours, or the other users' internet connection": "Die Internetverbindung von dir oder dem anderen Nutzer",
@@ -1695,8 +1674,6 @@
     "Failed to end poll": "Beenden der Umfrage fehlgeschlagen",
     "The poll has ended. Top answer: %(topAnswer)s": "Umfrage beendet. Beliebteste Antwort: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
-    "Sorry, the poll you tried to create was not posted.": "Leider wurde die Umfrage nicht gesendet.",
-    "Failed to post poll": "Absenden der Umfrage fehlgeschlagen",
     "Share location": "Standort teilen",
     "Based on %(count)s votes": {
         "one": "%(count)s Stimme abgegeben",
@@ -1779,12 +1756,6 @@
     "Open thread": "Thread anzeigen",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
-    "Results are only revealed when you end the poll": "Die Ergebnisse werden erst sichtbar, sobald du die Umfrage beendest",
-    "Voters see results as soon as they have voted": "Abstimmende können die Ergebnisse nach Stimmabgabe sehen",
-    "Open poll": "Offene Umfrage",
-    "Closed poll": "Versteckte Umfrage",
-    "Poll type": "Abstimmungsart",
-    "Edit poll": "Umfrage bearbeiten",
     "Results will be visible when the poll is ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
     "Can't edit poll": "Umfrage kann nicht bearbeitet werden",
@@ -1900,9 +1871,7 @@
     },
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Bitte beachte: Dies ist eine experimentelle Funktion, die eine temporäre Implementierung nutzt. Das bedeutet, dass du deinen Standortverlauf nicht löschen kannst und erfahrene Nutzer ihn sehen können, selbst wenn du deinen Echtzeit-Standort nicht mehr mit diesem Raum teilst.",
     "Video room": "Videoraum",
-    "Edit topic": "Thema bearbeiten",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
-    "Click to read topic": "Klicke, um das Thema zu lesen",
     "Add new server…": "Neuen Server hinzufügen …",
     "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
     "Show: Matrix rooms": "Zeige: Matrix-Räume",
@@ -2103,7 +2072,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktiviere „%(manageIntegrations)s“ in den Einstellungen, um dies zu tun.",
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
-    "Write something…": "Schreibe etwas …",
     "Rejecting invite…": "Lehne Einladung ab …",
     "Joining room…": "Betrete Raum …",
     "Joining space…": "Betrete Space …",
@@ -3092,7 +3060,8 @@
         "low_bandwidth_mode": "Modus für geringe Bandbreite",
         "developer_mode": "Entwicklungsmodus",
         "view_source_decrypted_event_source": "Entschlüsselte Rohdaten",
-        "view_source_decrypted_event_source_unavailable": "Entschlüsselte Quelle nicht verfügbar"
+        "view_source_decrypted_event_source_unavailable": "Entschlüsselte Quelle nicht verfügbar",
+        "original_event_source": "Ursprüngliche Rohdaten"
     },
     "export_chat": {
         "html": "HTML",
@@ -3748,7 +3717,10 @@
             "sas_description": "Vergleiche eine einmalige Reihe von Emojis, sofern du an keinem Gerät eine Kamera hast",
             "qr_or_sas": "%(qrCode)s oder %(emojiCompare)s",
             "qr_or_sas_header": "Verifiziere dieses Gerät mit einer der folgenden Möglichkeiten:"
-        }
+        },
+        "old_version_detected_title": "Alte Kryptografiedaten erkannt",
+        "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
+        "verification_requested_toast_title": "Verifizierung angefragt"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3863,7 +3835,9 @@
         "phone_optional_label": "Telefon (optional)",
         "email_help_text": "Füge eine E-Mail-Adresse hinzu, um dein Passwort zurücksetzen zu können.",
         "email_phone_discovery_text": "Nutze optional eine E-Mail-Adresse oder Telefonnummer, um von Nutzern gefunden werden zu können.",
-        "email_discovery_text": "Nutze optional eine E-Mail-Adresse, um von Nutzern gefunden werden zu können."
+        "email_discovery_text": "Nutze optional eine E-Mail-Adresse, um von Nutzern gefunden werden zu können.",
+        "session_logged_out_title": "Abgemeldet",
+        "session_logged_out_description": "Aus Sicherheitsgründen wurde diese Sitzung beendet. Bitte melde dich erneut an."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4175,6 +4149,12 @@
             "private_unencrypted_warning": "Dieser Raum ist nicht verschlüsselt. Oft ist dies aufgrund eines nicht unterstützten Geräts oder Methode wie E-Mail-Einladungen der Fall.",
             "enable_encryption_prompt": "Aktiviere Verschlüsselung in den Einstellungen.",
             "unencrypted_warning": "Ende-zu-Ende-Verschlüsselung ist deaktiviert"
+        },
+        "edit_topic": "Thema bearbeiten",
+        "read_topic": "Klicke, um das Thema zu lesen",
+        "unread_notifications_predecessor": {
+            "one": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raumes.",
+            "other": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raums."
         }
     },
     "file_panel": {
@@ -4189,9 +4169,31 @@
         "intro": "Um fortzufahren, musst du die Bedingungen dieses Dienstes akzeptieren.",
         "column_service": "Dienst",
         "column_summary": "Zusammenfassung",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Geschäftsbedingungen",
+        "tac_description": "Um den %(homeserverDomain)s-Heim-Server weiterzuverwenden, musst du die Nutzungsbedingungen sichten und akzeptieren.",
+        "tac_button": "Geschäftsbedingungen anzeigen"
     },
     "space_settings": {
         "title": "Einstellungen - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Umfrage erstellen",
+        "create_poll_action": "Umfrage erstellen",
+        "edit_poll_title": "Umfrage bearbeiten",
+        "failed_send_poll_title": "Absenden der Umfrage fehlgeschlagen",
+        "failed_send_poll_description": "Leider wurde die Umfrage nicht gesendet.",
+        "type_heading": "Abstimmungsart",
+        "type_open": "Offene Umfrage",
+        "type_closed": "Versteckte Umfrage",
+        "topic_heading": "Was ist die Frage oder das Thema deiner Umfrage?",
+        "topic_label": "Frage oder Thema",
+        "topic_placeholder": "Schreibe etwas …",
+        "options_heading": "Antwortmöglichkeiten erstellen",
+        "options_label": "Antwortmöglichkeit %(number)s",
+        "options_placeholder": "Antwortmöglichkeit verfassen",
+        "options_add_button": "Antwortmöglichkeit hinzufügen",
+        "disclosed_notes": "Abstimmende können die Ergebnisse nach Stimmabgabe sehen",
+        "notes": "Die Ergebnisse werden erst sichtbar, sobald du die Umfrage beendest"
     }
 }

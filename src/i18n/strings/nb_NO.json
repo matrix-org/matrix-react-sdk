@@ -308,7 +308,6 @@
     "Passwords don't match": "Passordene samsvarer ikke",
     "Email (optional)": "E-post (valgfritt)",
     "Upload avatar": "Last opp en avatar",
-    "Terms and Conditions": "Betingelser og vilkår",
     "Add room": "Legg til et rom",
     "Search failed": "Søket mislyktes",
     "No more results": "Ingen flere resultater",
@@ -373,7 +372,6 @@
     "Doesn't look like a valid email address": "Det ser ikke ut som en gyldig E-postadresse",
     "Password is allowed, but unsafe": "Passordet er tillatt, men er ikke trygt",
     "Nice, strong password!": "Strålende, passordet er sterkt!",
-    "Signed Out": "Avlogget",
     "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
@@ -526,7 +524,6 @@
     "Reject invitation": "Avslå invitasjonen",
     "Start authentication": "Begynn autentisering",
     "Couldn't load page": "Klarte ikke å laste inn siden",
-    "Review terms and conditions": "Gå gjennom betingelser og vilkår",
     "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
     "Switch theme": "Bytt tema",
@@ -626,7 +623,6 @@
     "Resume": "Fortsett",
     "Avatar": "Profilbilde",
     "Suggested Rooms": "Foreslåtte rom",
-    "Verification requested": "Verifisering ble forespurt",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmer"
@@ -1598,7 +1594,8 @@
             "complete_title": "Verifisert!",
             "complete_description": "Du har vellykket verifisert denne brukeren.",
             "qr_prompt": "Skann denne unike koden"
-        }
+        },
+        "verification_requested_toast_title": "Verifisering ble forespurt"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1638,7 +1635,8 @@
         "account_deactivated": "Denne kontoen har blitt deaktivert.",
         "registration_username_validation": "Bruk kun småbokstaver, numre, streker og understreker",
         "phone_label": "Telefon",
-        "phone_optional_label": "Telefonnummer (valgfritt)"
+        "phone_optional_label": "Telefonnummer (valgfritt)",
+        "session_logged_out_title": "Avlogget"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1751,6 +1749,8 @@
         "intro": "For å gå videre må du akseptere brukervilkårene til denne tjenesten.",
         "column_service": "Tjeneste",
         "column_summary": "Oppsummering",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Betingelser og vilkår",
+        "tac_button": "Gå gjennom betingelser og vilkår"
     }
 }

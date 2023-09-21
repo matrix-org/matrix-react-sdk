@@ -170,9 +170,6 @@
     "Are you sure you want to reject the invitation?": "Seguro que desexa rexeitar o convite?",
     "Failed to reject invitation": "Fallo ao rexeitar o convite",
     "Are you sure you want to leave the room '%(roomName)s'?": "Seguro que desexa saír da sala '%(roomName)s'?",
-    "Signed Out": "Desconectada",
-    "For security, this session has been signed out. Please sign in again.": "Por seguridade, pechouse a sesión. Por favor, conéctate outra vez.",
-    "Old cryptography data detected": "Detectouse o uso de criptografía sobre datos antigos",
     "Connectivity to the server has been lost.": "Perdeuse a conexión ao servidor.",
     "Sent messages will be stored until your connection has returned.": "As mensaxes enviadas gardaranse ate que retome a conexión.",
     "You seem to be uploading files, are you sure you want to quit?": "Semella estar a subir ficheiros, seguro que desexa deixalo?",
@@ -207,7 +204,6 @@
     "Account": "Conta",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
     "Return to login screen": "Volver a pantalla de acceso",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Non se pode conectar ao servidor vía HTTP cando na barra de enderezos do navegador está HTTPS. Utiliza HTTPS ou <a>active scripts non seguros</a>.",
@@ -269,9 +265,6 @@
     "Link to selected message": "Ligazón á mensaxe escollida",
     "Can't leave Server Notices room": "Non se pode saír da sala de información do servidor",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Esta sala emprégase para mensaxes importantes do servidor da sala, as que non pode saír dela.",
-    "Terms and Conditions": "Termos e condicións",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Para continuar usando o servidor %(homeserverDomain)s ten que revisar primeiro os seus termos e condicións e logo aceptalos.",
-    "Review terms and conditions": "Revise os termos e condicións",
     "No Audio Outputs detected": "Non se detectou unha saída de audio",
     "Audio Output": "Saída de audio",
     "Permission Required": "Precísanse permisos",
@@ -888,10 +881,6 @@
     "Couldn't load page": "Non se puido cargar a páxina",
     "Jump to first unread room.": "Vaite a primeira sala non lida.",
     "Jump to first invite.": "Vai ó primeiro convite.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Tes %(count)s notificacións non lidas nunha versión previa desta sala.",
-        "one": "Tes %(count)s notificacións non lidas nunha versión previa desta sala."
-    },
     "Switch theme": "Cambiar decorado",
     "All settings": "Todos os axustes",
     "Could not load user profile": "Non se cargou o perfil da usuaria",
@@ -1331,7 +1320,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez.",
     "We couldn't log you in": "Non puidemos conectarte",
     "Recently visited rooms": "Salas visitadas recentemente",
-    "Original event source": "Fonte orixinal do evento",
     "%(count)s members": {
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
@@ -1396,7 +1384,6 @@
     "Add existing rooms": "Engadir salas existentes",
     "Consult first": "Preguntar primeiro",
     "Reset event store": "Restablecer almacenaxe de eventos",
-    "Verification requested": "Verificación solicitada",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Es a única persoa aquí. Se saes, ninguén poderá unirse no futuro, incluíndote a ti.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se restableces todo, volverás a comezar sen sesións verificadas, usuarias de confianza, e poderías non poder ver as mensaxes anteriores.",
     "Only do this if you have no other device to complete verification with.": "Fai isto únicamente se non tes outro dispositivo co que completar a verificación.",
@@ -1604,7 +1591,6 @@
     "Unban from %(roomName)s": "Permitir acceso a %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Poderán seguir accedendo a sitios onde ti non es administradora.",
     "Disinvite from %(roomName)s": "Retirar o convite para %(roomName)s",
-    "Create poll": "Crear enquisa",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -1624,13 +1610,6 @@
     "Insert link": "Escribir ligazón",
     "Joined": "Unícheste",
     "Joining": "Uníndote",
-    "Add option": "Engade unha opción",
-    "Write an option": "Escribe unha opción",
-    "Option %(number)s": "Opción %(number)s",
-    "Create options": "Crea as opcións",
-    "Question or topic": "Pregunta ou tema",
-    "What is your poll question or topic?": "Cal é o tema ou asunto da túa enquisa?",
-    "Create Poll": "Crear Enquisa",
     "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verfica tódalas usuarias para ter certeza de que é segura.",
     "Files": "Ficheiros",
     "Close this widget to view it in this panel": "Pecha este widget para velo neste panel",
@@ -1673,8 +1652,6 @@
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e outros %(count)s"
     },
-    "Sorry, the poll you tried to create was not posted.": "A enquisa que ías publicar non se puido publicar.",
-    "Failed to post poll": "Non se puido publicar a enquisa",
     "Sorry, your vote was not registered. Please try again.": "O teu voto non foi rexistrado, inténtao outra vez.",
     "Vote not registered": "Voto non rexistrado",
     "Developer": "Desenvolvemento",
@@ -1777,15 +1754,9 @@
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
-    "Edit poll": "Editar enquisa",
     "Sorry, you can't edit a poll after votes have been cast.": "Non se pode editar unha enquisa cando xa recibiu votos.",
     "Can't edit poll": "Non podes editar a enquisa",
     "Search Dialog": "Diálogo de busca",
-    "Results are only revealed when you end the poll": "Os resultados só son visibles cando remata a enquisa",
-    "Voters see results as soon as they have voted": "As votantes ven os resultados xusto despois de votar",
-    "Closed poll": "Enquisa pechada",
-    "Open poll": "Abrir enquisa",
-    "Poll type": "Tipo de enquisa",
     "Results will be visible when the poll is ended": "Os resultados serán visibles cando remate a enquisa",
     "What location type do you want to share?": "Que tipo de localización queres compartir?",
     "Drop a Pin": "Fixa a posición",
@@ -1916,8 +1887,6 @@
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
     "View related event": "Ver evento relacionado",
-    "Click to read topic": "Preme para ler o tema",
-    "Edit topic": "Editar asunto",
     "Joining…": "Entrando…",
     "%(count)s people joined": {
         "one": "uníuse %(count)s persoa",
@@ -2696,7 +2665,8 @@
         "title": "Ferramentas desenvolvemento",
         "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
         "developer_mode": "Modo desenvolvemento",
-        "view_source_decrypted_event_source": "Fonte descifrada do evento"
+        "view_source_decrypted_event_source": "Fonte descifrada do evento",
+        "original_event_source": "Fonte orixinal do evento"
     },
     "export_chat": {
         "html": "HTML",
@@ -3307,7 +3277,10 @@
             "sas_description": "Compara o conxunto único de emoticonas se non tes cámara no outro dispositivo",
             "qr_or_sas": "%(qrCode)s ou %(emojiCompare)s",
             "qr_or_sas_header": "Verifica este dispositivo usando un dos seguintes métodos:"
-        }
+        },
+        "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
+        "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
+        "verification_requested_toast_title": "Verificación solicitada"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3405,7 +3378,9 @@
         "phone_optional_label": "Teléfono (optativo)",
         "email_help_text": "Engade un email para poder restablecer o contrasinal.",
         "email_phone_discovery_text": "Usa un email ou teléfono para ser (opcionalmente) descubrible polos contactos existentes.",
-        "email_discovery_text": "Usa o email para ser opcionalmente descubrible para os contactos existentes."
+        "email_discovery_text": "Usa o email para ser opcionalmente descubrible para os contactos existentes.",
+        "session_logged_out_title": "Desconectada",
+        "session_logged_out_description": "Por seguridade, pechouse a sesión. Por favor, conéctate outra vez."
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3682,6 +3657,12 @@
             "private_unencrypted_warning": "As túas mensaxes privadas normalmente están cifradas, pero esta sala non o está. Normalmente esto é debido a que estás a usar un dispositivo ou método non soportados, como convites por email.",
             "enable_encryption_prompt": "Activar cifrado non axustes.",
             "unencrypted_warning": "Non está activado o cifrado de extremo-a-extremo"
+        },
+        "edit_topic": "Editar asunto",
+        "read_topic": "Preme para ler o tema",
+        "unread_notifications_predecessor": {
+            "other": "Tes %(count)s notificacións non lidas nunha versión previa desta sala.",
+            "one": "Tes %(count)s notificacións non lidas nunha versión previa desta sala."
         }
     },
     "file_panel": {
@@ -3696,9 +3677,30 @@
         "intro": "Para continuar tes que aceptar os termos deste servizo.",
         "column_service": "Servizo",
         "column_summary": "Resumo",
-        "column_document": "Documento"
+        "column_document": "Documento",
+        "tac_title": "Termos e condicións",
+        "tac_description": "Para continuar usando o servidor %(homeserverDomain)s ten que revisar primeiro os seus termos e condicións e logo aceptalos.",
+        "tac_button": "Revise os termos e condicións"
     },
     "space_settings": {
         "title": "Axustes - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Crear enquisa",
+        "create_poll_action": "Crear Enquisa",
+        "edit_poll_title": "Editar enquisa",
+        "failed_send_poll_title": "Non se puido publicar a enquisa",
+        "failed_send_poll_description": "A enquisa que ías publicar non se puido publicar.",
+        "type_heading": "Tipo de enquisa",
+        "type_open": "Abrir enquisa",
+        "type_closed": "Enquisa pechada",
+        "topic_heading": "Cal é o tema ou asunto da túa enquisa?",
+        "topic_label": "Pregunta ou tema",
+        "options_heading": "Crea as opcións",
+        "options_label": "Opción %(number)s",
+        "options_placeholder": "Escribe unha opción",
+        "options_add_button": "Engade unha opción",
+        "disclosed_notes": "As votantes ven os resultados xusto despois de votar",
+        "notes": "Os resultados só son visibles cando remata a enquisa"
     }
 }

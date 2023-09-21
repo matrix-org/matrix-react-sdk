@@ -37,7 +37,6 @@
     "Failure to create room": "Échec de création du salon",
     "Filter room members": "Filtrer les membres du salon",
     "Forget room": "Oublier le salon",
-    "For security, this session has been signed out. Please sign in again.": "Par mesure de sécurité, la session a expiré. Merci de vous authentifier à nouveau.",
     "Historical": "Historique",
     "Import E2E room keys": "Importer les clés de chiffrement de bout en bout",
     "Incorrect verification code": "Code de vérification incorrect",
@@ -76,7 +75,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Le serveur semble être inaccessible, surchargé ou la recherche a expiré :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Le serveur semble être indisponible, surchargé ou vous êtes tombé sur un bug.",
     "Session ID": "Identifiant de session",
-    "Signed Out": "Déconnecté",
     "This email address is already in use": "Cette adresse e-mail est déjà utilisée",
     "This email address was not found": "Cette adresse e-mail n’a pas été trouvée",
     "This room has no local addresses": "Ce salon n’a pas d’adresse locale",
@@ -218,8 +216,6 @@
     "expand": "développer",
     "collapse": "réduire",
     "Send": "Envoyer",
-    "Old cryptography data detected": "Anciennes données de chiffrement détectées",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Vous ne pourrez pas annuler cette modification car vous vous rétrogradez. Si vous êtes le dernier utilisateur privilégié de ce salon, il sera impossible de récupérer les privilèges.",
     "Replying": "Répond",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
@@ -260,9 +256,6 @@
     "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossible de charger l’évènement auquel il a été répondu, soit il n’existe pas, soit vous n'avez pas l’autorisation de le voir.",
-    "Terms and Conditions": "Conditions générales",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Pour continuer à utiliser le serveur d’accueil %(homeserverDomain)s, vous devez lire et accepter nos conditions générales.",
-    "Review terms and conditions": "Voir les conditions générales",
     "Can't leave Server Notices room": "Impossible de quitter le salon des Annonces du Serveur",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ce salon est utilisé pour les messages importants du serveur d’accueil, vous ne pouvez donc pas en partir.",
     "No Audio Outputs detected": "Aucune sortie audio détectée",
@@ -469,10 +462,6 @@
     "Revoke invite": "Révoquer l’invitation",
     "Invited by %(sender)s": "Invité par %(sender)s",
     "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
-        "one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon."
-    },
     "The file '%(fileName)s' failed to upload.": "Le fichier « %(fileName)s » n’a pas pu être envoyé.",
     "Notes": "Notes",
     "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
@@ -1333,7 +1322,6 @@
     "We couldn't log you in": "Nous n’avons pas pu vous connecter",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
-    "Original event source": "Évènement source original",
     "%(count)s members": {
         "one": "%(count)s membre",
         "other": "%(count)s membres"
@@ -1381,7 +1369,6 @@
     "Invite with email or username": "Inviter par e-mail ou nom d’utilisateur",
     "You can change these anytime.": "Vous pouvez les changer à n’importe quel moment.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Vérifiez votre identité pour accéder aux messages chiffrés et prouver votre identité aux autres.",
-    "Verification requested": "Vérification requise",
     "Avatar": "Avatar",
     "Reset event store": "Réinitialiser le magasin d’évènements",
     "You most likely do not want to reset your event index store": "Il est probable que vous ne vouliez pas réinitialiser votre magasin d’index d’évènements",
@@ -1604,7 +1591,6 @@
     "Unban from %(roomName)s": "Annuler le bannissement de %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Ils pourront toujours accéder aux endroits dans lesquels vous n’êtes pas administrateur.",
     "Disinvite from %(roomName)s": "Annuler l’invitation à %(roomName)s",
-    "Create poll": "Créer un sondage",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Mise-à-jour de l’espace…",
         "other": "Mise-à-jour des espaces… (%(progress)s sur %(count)s)"
@@ -1637,13 +1623,6 @@
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ce salon se trouve dans certains espaces pour lesquels vous n’êtes pas administrateur. Dans ces espaces, l’ancien salon sera toujours disponible, mais un message sera affiché pour inciter les personnes à rejoindre le nouveau salon.",
     "Copy link to thread": "Copier le lien du fil de discussion",
     "Thread options": "Options des fils de discussion",
-    "Add option": "Ajouter un choix",
-    "Option %(number)s": "Choix %(number)s",
-    "Create options": "Créer des choix",
-    "Write an option": "Écrivez un choix",
-    "Question or topic": "Question ou sujet",
-    "What is your poll question or topic?": "Quelle est la question ou le sujet de votre sondage ?",
-    "Create Poll": "Créer un sondage",
     "You do not have permission to start polls in this room.": "Vous n’avez pas la permission de démarrer un sondage dans ce salon.",
     "Mentions only": "Seulement les mentions",
     "Forget": "Oublier",
@@ -1662,8 +1641,6 @@
     "Spaces to show": "Espaces à afficher",
     "Sidebar": "Barre latérale",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
-    "Sorry, the poll you tried to create was not posted.": "Désolé, le sondage que vous avez essayé de créer n’a pas été envoyé.",
-    "Failed to post poll": "Échec lors de la soumission du sondage",
     "Based on %(count)s votes": {
         "one": "Sur la base de %(count)s vote",
         "other": "Sur la base de %(count)s votes"
@@ -1787,12 +1764,6 @@
     "Search Dialog": "Fenêtre de recherche",
     "Use <arrows/> to scroll": "Utilisez <arrows/> pour faire défiler",
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
-    "Results are only revealed when you end the poll": "Les résultats ne sont révélés que lorsque vous terminez le sondage",
-    "Voters see results as soon as they have voted": "Les participants voient les résultats dès qu'ils ont voté",
-    "Closed poll": "Sondage terminé",
-    "Open poll": "Ouvrir le sondage",
-    "Poll type": "Type de sondage",
-    "Edit poll": "Modifier le sondage",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s n'a pas pu envoyer votre position. Veuillez réessayer plus tard.",
     "We couldn't send your location": "Nous n'avons pas pu envoyer votre position",
     "Match system": "S’adapter au système",
@@ -1916,8 +1887,6 @@
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
     "View related event": "Afficher les événements liés",
-    "Click to read topic": "Cliquer pour lire le sujet",
-    "Edit topic": "Modifier le sujet",
     "Joining…": "En train de rejoindre…",
     "Read receipts": "Accusés de réception",
     "%(count)s people joined": {
@@ -2106,7 +2075,6 @@
     "Checking…": "Vérification…",
     "Waiting for partner to confirm…": "Attente de la confirmation du partenaire…",
     "Adding…": "Ajout…",
-    "Write something…": "Écrivez quelque chose…",
     "Rejecting invite…": "Rejet de l’invitation…",
     "Joining room…": "Entrée dans le salon…",
     "Joining space…": "Entrée dans l’espace…",
@@ -3087,7 +3055,8 @@
         "low_bandwidth_mode": "Mode faible bande passante",
         "developer_mode": "Mode développeur",
         "view_source_decrypted_event_source": "Évènement source déchiffré",
-        "view_source_decrypted_event_source_unavailable": "Source déchiffrée non disponible"
+        "view_source_decrypted_event_source_unavailable": "Source déchiffrée non disponible",
+        "original_event_source": "Évènement source original"
     },
     "export_chat": {
         "html": "HTML",
@@ -3743,7 +3712,10 @@
             "sas_description": "Comparez une liste unique d’émojis si vous n’avez d’appareil photo sur aucun des deux appareils",
             "qr_or_sas": "%(qrCode)s ou %(emojiCompare)s",
             "qr_or_sas_header": "Vérifiez cet appareil en réalisant une des actions suivantes :"
-        }
+        },
+        "old_version_detected_title": "Anciennes données de chiffrement détectées",
+        "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
+        "verification_requested_toast_title": "Vérification requise"
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3858,7 +3830,9 @@
         "phone_optional_label": "Téléphone (facultatif)",
         "email_help_text": "Ajouter une adresse e-mail pour pouvoir réinitialiser votre mot de passe.",
         "email_phone_discovery_text": "Utiliser une adresse e-mail ou un numéro de téléphone pour pouvoir être découvert par des contacts existants.",
-        "email_discovery_text": "Utiliser une adresse e-mail pour pouvoir être découvert par des contacts existants."
+        "email_discovery_text": "Utiliser une adresse e-mail pour pouvoir être découvert par des contacts existants.",
+        "session_logged_out_title": "Déconnecté",
+        "session_logged_out_description": "Par mesure de sécurité, la session a expiré. Merci de vous authentifier à nouveau."
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -4170,6 +4144,12 @@
             "private_unencrypted_warning": "Vos messages privés sont normalement chiffrés, mais ce salon ne l’est pas. Cela est généralement dû à un périphérique non supporté, ou à un moyen de communication non supporté comme les invitations par e-mail.",
             "enable_encryption_prompt": "Activer le chiffrement dans les paramètres.",
             "unencrypted_warning": "Le chiffrement de bout en bout n’est pas activé"
+        },
+        "edit_topic": "Modifier le sujet",
+        "read_topic": "Cliquer pour lire le sujet",
+        "unread_notifications_predecessor": {
+            "other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
+            "one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon."
         }
     },
     "file_panel": {
@@ -4184,9 +4164,31 @@
         "intro": "Pour continuer vous devez accepter les conditions de ce service.",
         "column_service": "Service",
         "column_summary": "Résumé",
-        "column_document": "Document"
+        "column_document": "Document",
+        "tac_title": "Conditions générales",
+        "tac_description": "Pour continuer à utiliser le serveur d’accueil %(homeserverDomain)s, vous devez lire et accepter nos conditions générales.",
+        "tac_button": "Voir les conditions générales"
     },
     "space_settings": {
         "title": "Paramètres - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Créer un sondage",
+        "create_poll_action": "Créer un sondage",
+        "edit_poll_title": "Modifier le sondage",
+        "failed_send_poll_title": "Échec lors de la soumission du sondage",
+        "failed_send_poll_description": "Désolé, le sondage que vous avez essayé de créer n’a pas été envoyé.",
+        "type_heading": "Type de sondage",
+        "type_open": "Ouvrir le sondage",
+        "type_closed": "Sondage terminé",
+        "topic_heading": "Quelle est la question ou le sujet de votre sondage ?",
+        "topic_label": "Question ou sujet",
+        "topic_placeholder": "Écrivez quelque chose…",
+        "options_heading": "Créer des choix",
+        "options_label": "Choix %(number)s",
+        "options_placeholder": "Écrivez un choix",
+        "options_add_button": "Ajouter un choix",
+        "disclosed_notes": "Les participants voient les résultats dès qu'ils ont voté",
+        "notes": "Les résultats ne sont révélés que lorsque vous terminez le sondage"
     }
 }

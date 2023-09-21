@@ -177,9 +177,6 @@
     "Are you sure you want to reject the invitation?": "Esteu segur que voleu rebutjar la invitació?",
     "Failed to reject invitation": "No s'ha pogut rebutjar la invitació",
     "Are you sure you want to leave the room '%(roomName)s'?": "Esteu segur que voleu sortir de la sala '%(roomName)s'?",
-    "For security, this session has been signed out. Please sign in again.": "Per seguretat, aquesta sessió s'ha tancat. Torna a iniciar la sessió.",
-    "Old cryptography data detected": "S'han detectat dades de criptografia antigues",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus.",
     "Connectivity to the server has been lost.": "S'ha perdut la connectivitat amb el servidor.",
     "Sent messages will be stored until your connection has returned.": "Els missatges enviats s'emmagatzemaran fins que la vostra connexió hagi tornat.",
     "You seem to be uploading files, are you sure you want to quit?": "Sembla que s'està pujant fitxers, esteu segur que voleu sortir?",
@@ -191,7 +188,6 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "S'ha intentat carregar un punt específic dins la línia de temps d'aquesta sala, però no teniu permís per veure el missatge en qüestió.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "S'ha intentat carregar un punt específic de la línia de temps d'aquesta sala, però no s'ha pogut trobar.",
     "Failed to load timeline position": "No s'ha pogut carregar aquesta posició de la línia de temps",
-    "Signed Out": "Sessió tancada",
     "Uploading %(filename)s and %(count)s others": {
         "other": "Pujant %(filename)s i %(count)s més"
     },
@@ -705,7 +701,9 @@
         "sign_in_or_register_description": "Utilitza el teu compte o crea'n un de nou per continuar.",
         "register_action": "Crea un compte",
         "incorrect_credentials": "Usuari i/o contrasenya incorrectes.",
-        "phone_label": "Telèfon"
+        "phone_label": "Telèfon",
+        "session_logged_out_title": "Sessió tancada",
+        "session_logged_out_description": "Per seguretat, aquesta sessió s'ha tancat. Torna a iniciar la sessió."
     },
     "export_chat": {
         "messages": "Missatges"
@@ -766,5 +764,9 @@
         "context_menu": {
             "explore": "Explora sales"
         }
+    },
+    "encryption": {
+        "old_version_detected_title": "S'han detectat dades de criptografia antigues",
+        "old_version_detected_description": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus."
     }
 }

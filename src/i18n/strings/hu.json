@@ -53,7 +53,6 @@
     "Failure to create room": "Szoba létrehozása sikertelen",
     "Filter room members": "Szoba tagság szűrése",
     "Forget room": "Szoba elfelejtése",
-    "For security, this session has been signed out. Please sign in again.": "A biztonság érdekében ez a kapcsolat le lesz bontva. Légy szíves jelentkezz be újra.",
     "Historical": "Archív",
     "Home": "Kezdőlap",
     "Import E2E room keys": "E2E szobakulcsok importálása",
@@ -92,7 +91,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "A kiszolgáló elérhetetlen, túlterhelt vagy a keresés túllépte az időkorlátot :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "A kiszolgáló elérhetetlen, túlterhelt vagy hibára futott.",
     "Session ID": "Kapcsolat azonosító",
-    "Signed Out": "Kijelentkezett",
     "Start authentication": "Hitelesítés indítása",
     "This email address is already in use": "Ez az e-mail-cím már használatban van",
     "This email address was not found": "Az e-mail-cím nem található",
@@ -218,8 +216,6 @@
     "collapse": "becsukás",
     "expand": "kinyitás",
     "Send": "Elküldés",
-    "Old cryptography data detected": "Régi titkosítási adatot találhatók",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Régebbi %(brand)s verzióból származó adatok találhatók. Ezek hibás működéshez vezethettek a végpontok közti titkosításban a régebbi verzióknál. A nemrég küldött/fogadott titkosított üzenetek, ha a régi adatokat használták, lehetséges, hogy nem lesznek visszafejthetők ebben a verzióban. Ha problémákba ütközik, akkor jelentkezzen ki és be. A régi üzenetek elérésének biztosításához exportálja a kulcsokat, és importálja be újra.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ahogy lefokozod magad a változás visszafordíthatatlan, ha te vagy az utolsó jogosultságokkal bíró felhasználó a szobában a jogok már nem szerezhetők vissza.",
     "Replying": "Válasz",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s. %(monthName)s %(day)s., %(weekDayName)s",
@@ -260,9 +256,6 @@
     "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nem lehet betölteni azt az eseményt amire válaszoltál, mert vagy nem létezik, vagy nincs jogod megnézni.",
-    "Terms and Conditions": "Általános Szerződési Feltételek",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "A(z) %(homeserverDomain)s Matrix-kiszolgáló használatának folytatásához el kell olvasnia és el kell fogadnia a felhasználási feltételeket.",
-    "Review terms and conditions": "Általános Szerződési Feltételek elolvasása",
     "Can't leave Server Notices room": "Nem lehet elhagyni a Kiszolgálóüzenetek szobát",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ez a szoba a Matrix-kiszolgáló fontos kiszolgálóüzenetei közlésére jött létre, nem tud belőle kilépni.",
     "No Audio Outputs detected": "Nem található hangkimenet",
@@ -469,10 +462,6 @@
     "Revoke invite": "Meghívó visszavonása",
     "Invited by %(sender)s": "Meghívta: %(sender)s",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "%(count)s olvasatlan értesítésed van a régi verziójú szobában.",
-        "one": "%(count)s olvasatlan értesítésed van a régi verziójú szobában."
-    },
     "The file '%(fileName)s' failed to upload.": "A(z) „%(fileName)s” fájl feltöltése sikertelen.",
     "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
@@ -1331,7 +1320,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
     "Allow this widget to verify your identity": "A kisalkalmazás ellenőrizheti a személyazonosságát",
     "Recently visited rooms": "Nemrég meglátogatott szobák",
-    "Original event source": "Eredeti esemény forráskód",
     "%(count)s members": {
         "one": "%(count)s tag",
         "other": "%(count)s tag"
@@ -1381,7 +1369,6 @@
     "Invite with email or username": "Meghívás e-mail-címmel vagy felhasználónévvel",
     "You can change these anytime.": "Ezeket bármikor megváltoztathatja.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Ellenőrizze a személyazonosságát, hogy hozzáférjen a titkosított üzeneteihez és másoknak is bizonyítani tudja személyazonosságát.",
-    "Verification requested": "Hitelesítés kérés elküldve",
     "Avatar": "Profilkép",
     "Reset event store": "Az eseménytároló alaphelyzetbe állítása",
     "You most likely do not want to reset your event index store": "Az eseményindex-tárolót nagy valószínűséggel nem szeretné alaphelyzetbe állítani",
@@ -1594,7 +1581,6 @@
     "Verify with Security Key": "Ellenőrzés Biztonsági Kulccsal",
     "Verify with Security Key or Phrase": "Ellenőrzés Biztonsági Kulccsal vagy Jelmondattal",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Úgy tűnik, hogy nem rendelkezik biztonsági kulccsal, vagy másik eszközzel, amelyikkel ellenőrizhetné. Ezzel az eszközzel nem fér majd hozzá a régi titkosított üzenetekhez. Ahhoz, hogy a személyazonosságát ezen az eszközön ellenőrizni lehessen, az ellenőrzédi kulcsokat alaphelyzetbe kell állítani.",
-    "Create poll": "Szavazás létrehozása",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Terek frissítése…",
         "other": "Terek frissítése… (%(progress)s / %(count)s)"
@@ -1634,13 +1620,6 @@
     "Copy link to thread": "Hivatkozás másolása az üzenetszálba",
     "Thread options": "Üzenetszál beállításai",
     "If you can't see who you're looking for, send them your invite link below.": "Ha nem található a keresett személy, küldje el az alábbi hivatkozást neki.",
-    "Add option": "Lehetőség hozzáadása",
-    "Write an option": "Adjon meg egy lehetőséget",
-    "Option %(number)s": "%(number)s. lehetőség",
-    "Create options": "Adjon hozzá választható lehetőségeket",
-    "Question or topic": "Kérdés vagy téma",
-    "What is your poll question or topic?": "Mi a szavazás kérdése vagy tárgya?",
-    "Create Poll": "Szavazás létrehozása",
     "In encrypted rooms, verify all users to ensure it's secure.": "Titkosított szobákban ellenőrizd a szoba összes tagját, hogy meggyőződhess a biztonságról.",
     "Yours, or the other users' session": "Az ön vagy a másik felhasználó munkamenete",
     "Yours, or the other users' internet connection": "Az ön vagy a másik felhasználó Internet kapcsolata",
@@ -1673,8 +1652,6 @@
         "one": "%(spaceName)s és még %(count)s másik",
         "other": "%(spaceName)s és még %(count)s másik"
     },
-    "Sorry, the poll you tried to create was not posted.": "Sajnos a szavazás amit készített nem lett elküldve.",
-    "Failed to post poll": "A szavazást nem sikerült beküldeni",
     "Sorry, your vote was not registered. Please try again.": "Sajnos az Ön szavazata nem lett rögzítve. Kérjük ismételje meg újra.",
     "Vote not registered": "Nem regisztrált szavazat",
     "Pin to sidebar": "Kitűzés az oldalsávra",
@@ -1776,16 +1753,10 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Use <arrows/> to scroll": "Görgetés ezekkel: <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
-    "Edit poll": "Szavazás szerkesztése",
     "Sorry, you can't edit a poll after votes have been cast.": "Sajnos a szavazás nem szerkeszthető miután szavazatok érkeztek.",
     "Can't edit poll": "A szavazás nem szerkeszthető",
     "Join %(roomAddress)s": "Belépés ide: %(roomAddress)s",
     "Search Dialog": "Keresési párbeszédablak",
-    "Results are only revealed when you end the poll": "Az eredmény csak a szavazás végeztével válik láthatóvá",
-    "Voters see results as soon as they have voted": "A szavazók a szavazásuk után látják a szavazatokat",
-    "Closed poll": "Zárt szavazás",
-    "Open poll": "Nyitott szavazás",
-    "Poll type": "Szavazás típusa",
     "Results will be visible when the poll is ended": "Az eredmény a szavazás végeztével válik láthatóvá",
     "Pinned": "Kitűzött",
     "Open thread": "Üzenetszál megnyitása",
@@ -1909,8 +1880,6 @@
     "Output devices": "Kimeneti eszközök",
     "Input devices": "Beviteli eszközök",
     "Open room": "Szoba megnyitása",
-    "Click to read topic": "Kattintson a téma elolvasásához",
-    "Edit topic": "Téma szerkesztése",
     "Enable live location sharing": "Élő helymegosztás engedélyezése",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Figyelem: ez a labor lehetőség egy átmeneti megvalósítás. Ez azt jelenti, hogy a szobába már elküldött helyadatok az élő hely megosztás leállítása után is hozzáférhetők maradnak a szobában.",
     "Live location sharing": "Élő földrajzi hely megosztása",
@@ -2098,7 +2067,6 @@
     "Select '%(scanQRCode)s'": "Kiválasztás „%(scanQRCode)s”",
     "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
     "There are no past polls in this room": "Nincsenek régebbi szavazások ebben a szobában",
-    "Write something…": "Írjon valamit…",
     "Saving…": "Mentés…",
     "There are no active polls in this room": "Nincsenek aktív szavazások ebben a szobában",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
@@ -3009,7 +2977,8 @@
         "low_bandwidth_mode": "Alacsony sávszélességű mód",
         "developer_mode": "Fejlesztői mód",
         "view_source_decrypted_event_source": "Visszafejtett esemény forráskód",
-        "view_source_decrypted_event_source_unavailable": "A visszafejtett forrás nem érhető el"
+        "view_source_decrypted_event_source_unavailable": "A visszafejtett forrás nem érhető el",
+        "original_event_source": "Eredeti esemény forráskód"
     },
     "export_chat": {
         "html": "HTML",
@@ -3648,7 +3617,10 @@
             "sas_description": "Hasonlítsd össze az egyedi emodzsikat ha valamelyik eszközön nincs kamera",
             "qr_or_sas": "%(qrCode)s vagy %(emojiCompare)s",
             "qr_or_sas_header": "Ellenőrizze ezt az eszközt az alábbiak egyikével:"
-        }
+        },
+        "old_version_detected_title": "Régi titkosítási adatot találhatók",
+        "old_version_detected_description": "Régebbi %(brand)s verzióból származó adatok találhatók. Ezek hibás működéshez vezethettek a végpontok közti titkosításban a régebbi verzióknál. A nemrég küldött/fogadott titkosított üzenetek, ha a régi adatokat használták, lehetséges, hogy nem lesznek visszafejthetők ebben a verzióban. Ha problémákba ütközik, akkor jelentkezzen ki és be. A régi üzenetek elérésének biztosításához exportálja a kulcsokat, és importálja be újra.",
+        "verification_requested_toast_title": "Hitelesítés kérés elküldve"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",
@@ -3762,7 +3734,9 @@
         "phone_optional_label": "Telefonszám (nem kötelező)",
         "email_help_text": "Adj meg egy e-mail címet, hogy vissza tudd állítani a jelszavad.",
         "email_phone_discovery_text": "Az e-mail, vagy telefonszám használatával a jelenlegi ismerőseid is megtalálhatnak.",
-        "email_discovery_text": "Az e-mail (nem kötelező) megadása segíthet abban, hogy az ismerőseid megtaláljanak Matrix-on."
+        "email_discovery_text": "Az e-mail (nem kötelező) megadása segíthet abban, hogy az ismerőseid megtaláljanak Matrix-on.",
+        "session_logged_out_title": "Kijelentkezett",
+        "session_logged_out_description": "A biztonság érdekében ez a kapcsolat le lesz bontva. Légy szíves jelentkezz be újra."
     },
     "room_list": {
         "sort_unread_first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",
@@ -4074,6 +4048,12 @@
             "private_unencrypted_warning": "A privát üzenetek általában titkosítottak de ez a szoba nem az. Általában ez a titkosítást nem támogató eszköz vagy metódus használata miatt lehet, mint az e-mail meghívók.",
             "enable_encryption_prompt": "Titkosítás bekapcsolása a beállításokban.",
             "unencrypted_warning": "Végpontok közötti titkosítás nincs engedélyezve"
+        },
+        "edit_topic": "Téma szerkesztése",
+        "read_topic": "Kattintson a téma elolvasásához",
+        "unread_notifications_predecessor": {
+            "other": "%(count)s olvasatlan értesítésed van a régi verziójú szobában.",
+            "one": "%(count)s olvasatlan értesítésed van a régi verziójú szobában."
         }
     },
     "file_panel": {
@@ -4088,9 +4068,31 @@
         "intro": "A folytatáshoz el kell fogadnia a felhasználási feltételeket.",
         "column_service": "Szolgáltatás",
         "column_summary": "Összefoglaló",
-        "column_document": "Dokumentum"
+        "column_document": "Dokumentum",
+        "tac_title": "Általános Szerződési Feltételek",
+        "tac_description": "A(z) %(homeserverDomain)s Matrix-kiszolgáló használatának folytatásához el kell olvasnia és el kell fogadnia a felhasználási feltételeket.",
+        "tac_button": "Általános Szerződési Feltételek elolvasása"
     },
     "space_settings": {
         "title": "Beállítások – %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Szavazás létrehozása",
+        "create_poll_action": "Szavazás létrehozása",
+        "edit_poll_title": "Szavazás szerkesztése",
+        "failed_send_poll_title": "A szavazást nem sikerült beküldeni",
+        "failed_send_poll_description": "Sajnos a szavazás amit készített nem lett elküldve.",
+        "type_heading": "Szavazás típusa",
+        "type_open": "Nyitott szavazás",
+        "type_closed": "Zárt szavazás",
+        "topic_heading": "Mi a szavazás kérdése vagy tárgya?",
+        "topic_label": "Kérdés vagy téma",
+        "topic_placeholder": "Írjon valamit…",
+        "options_heading": "Adjon hozzá választható lehetőségeket",
+        "options_label": "%(number)s. lehetőség",
+        "options_placeholder": "Adjon meg egy lehetőséget",
+        "options_add_button": "Lehetőség hozzáadása",
+        "disclosed_notes": "A szavazók a szavazásuk után látják a szavazatokat",
+        "notes": "Az eredmény csak a szavazás végeztével válik láthatóvá"
     }
 }

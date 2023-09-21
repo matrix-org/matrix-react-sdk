@@ -158,8 +158,6 @@
     "Are you sure you want to reject the invitation?": "Ste si istí, že chcete odmietnuť toto pozvanie?",
     "Failed to reject invitation": "Nepodarilo sa odmietnuť pozvanie",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ste si istí, že chcete opustiť miestnosť '%(roomName)s'?",
-    "Signed Out": "Ste odhlásení",
-    "For security, this session has been signed out. Please sign in again.": "Z bezpečnostných dôvodov bola táto relácia odhlásená. Prosím, prihláste sa znova.",
     "Connectivity to the server has been lost.": "Spojenie so serverom bolo prerušené.",
     "Sent messages will be stored until your connection has returned.": "Odoslané správy ostanú uložené, kým sa spojenie nenadviaže znovu.",
     "You seem to be uploading files, are you sure you want to quit?": "Zdá sa, že práve nahrávate súbory, ste si istí, že chcete skončiť?",
@@ -217,7 +215,6 @@
     "%(duration)sd": "%(duration)sd",
     "collapse": "zbaliť",
     "expand": "rozbaliť",
-    "Old cryptography data detected": "Nájdené zastaralé kryptografické údaje",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v miestnosti, nebude možné získať oprávnenia späť.",
     "Replying": "Odpoveď",
@@ -260,9 +257,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná.",
     "Can't leave Server Notices room": "Nie je možné opustiť miestnosť Oznamy zo servera",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Táto miestnosť je určená na dôležité oznamy a správy od správcov domovského servera, preto ju nie je možné opustiť.",
-    "Terms and Conditions": "Zmluvné podmienky",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Ak chcete aj naďalej používať domovský server %(homeserverDomain)s, mali by ste si prečítať a odsúhlasiť naše zmluvné podmienky.",
-    "Review terms and conditions": "Prečítať zmluvné podmienky",
     "Share Link to User": "Zdieľať odkaz na používateľa",
     "Share room": "Zdieľať miestnosť",
     "Share Room": "Zdieľať miestnosť",
@@ -1013,7 +1007,6 @@
     "Really reset verification keys?": "Skutočne vynulovať overovacie kľúče?",
     "%(displayName)s cancelled verification.": "%(displayName)s zrušil/a overenie.",
     "Verification timed out.": "Čas overovania vypršal.",
-    "Verification requested": "Vyžiadané overenie",
     "Server name": "Názov servera",
     "Your server": "Váš server",
     "%(name)s declined": "%(name)s odmietol/a",
@@ -1068,10 +1061,6 @@
     "Local address": "Lokálna adresa",
     "Address": "Adresa",
     "Enter the name of a new server you want to explore.": "Zadajte názov nového servera, ktorý chcete preskúmať.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítané oznámenie.",
-        "other": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítaných oznámení."
-    },
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
     "This version of %(brand)s does not support searching encrypted messages": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ",
     "This version of %(brand)s does not support viewing some encrypted files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
@@ -1288,7 +1277,6 @@
     "Add space": "Pridať priestor",
     "Add reaction": "Pridať reakciu",
     "Add people": "Pridať ľudí",
-    "Add option": "Pridať možnosť",
     "Adding spaces has moved.": "Pridávanie priestorov bolo presunuté.",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Pridávanie miestností... (%(progress)s z %(count)s)",
@@ -1340,8 +1328,6 @@
     "Preview Space": "Prehľad priestoru",
     "Start new chat": "Spustiť novú konverzáciu",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
-    "Original event source": "Pôvodný zdroj udalosti",
-    "Question or topic": "Otázka alebo téma",
     "View in room": "Zobraziť v miestnosti",
     "Loading new room": "Načítanie novej miestnosti",
     "& %(count)s more": {
@@ -1494,16 +1480,9 @@
     "Sorry, your vote was not registered. Please try again.": "Je nám ľúto, váš hlas nebol zaregistrovaný. Skúste to prosím znova.",
     "Vote not registered": "Hlasovanie nie je zaregistrované",
     "No votes cast": "Žiadne odovzdané hlasy",
-    "What is your poll question or topic?": "Aká je vaša otázka alebo téma ankety?",
     "Thread options": "Možnosti vlákna",
     "Server Options": "Možnosti servera",
-    "Write an option": "Napíšte možnosť",
-    "Option %(number)s": "Možnosť %(number)s",
     "Space options": "Možnosti priestoru",
-    "Create options": "Vytvoriť možnosti",
-    "Sorry, the poll you tried to create was not posted.": "Prepáčte, ale anketa, ktorú ste sa pokúsili vytvoriť, nebola zverejnená.",
-    "Create Poll": "Vytvoriť anketu",
-    "Create poll": "Vytvoriť anketu",
     "More options": "Ďalšie možnosti",
     "Pin to sidebar": "Pripnúť na bočný panel",
     "Quick settings": "Rýchle nastavenia",
@@ -1696,7 +1675,6 @@
     "Not all selected were added": "Neboli pridané všetky vybrané",
     "Want to add a new space instead?": "Chcete namiesto toho pridať nový priestor?",
     "You are not allowed to view this server's rooms list": "Nemáte povolené zobraziť zoznam miestností tohto servera",
-    "Failed to post poll": "Nepodarilo sa odoslať anketu",
     "Share entire screen": "Zdieľať celú obrazovku",
     "Error - Mixed content": "Chyba - Zmiešaný obsah",
     "Failed to get autodiscovery configuration from server": "Nepodarilo sa získať nastavenie automatického zisťovania zo servera",
@@ -1716,7 +1694,6 @@
     "Invite by email": "Pozvať e-mailom",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Vaša aplikácia %(brand)s vám na to neumožňuje použiť správcu integrácie. Obráťte sa na administrátora.",
     "You don't have permission to do this": "Na toto nemáte oprávnenie",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Boli zistené údaje zo staršej verzie %(brand)s. To spôsobilo nefunkčnosť end-to-end kryptografie v staršej verzii. End-to-end šifrované správy, ktoré boli nedávno vymenené pri používaní staršej verzie, sa v tejto verzii nemusia dať dešifrovať. To môže spôsobiť aj zlyhanie správ vymenených pomocou tejto verzie. Ak sa vyskytnú problémy, odhláste sa a znova sa prihláste. Ak chcete zachovať históriu správ, exportujte a znovu importujte svoje kľúče.",
     "This widget would like to:": "Tento widget by chcel:",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ak ste predtým používali novšiu verziu %(brand)s, vaša relácia môže byť s touto verziou nekompatibilná. Zatvorte toto okno a vráťte sa k novšej verzii.",
     "Recent changes that have not yet been received": "Nedávne zmeny, ktoré ešte neboli prijaté",
@@ -1757,12 +1734,6 @@
     "To continue, use Single Sign On to prove your identity.": "Ak chcete pokračovať, použite jednotné prihlásenie SSO na preukázanie svojej totožnosti.",
     "Server did not return valid authentication information.": "Server nevrátil späť platné informácie o overení.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Potvrďte deaktiváciu konta pomocou jednotného prihlásenia SSO na preukázanie svojej totožnosti.",
-    "Results are only revealed when you end the poll": "Výsledky sa zobrazia až po ukončení ankety",
-    "Voters see results as soon as they have voted": "Hlasujúci uvidia výsledky hneď po hlasovaní",
-    "Closed poll": "Uzavretá anketa",
-    "Open poll": "Otvorená anketa",
-    "Poll type": "Typ ankety",
-    "Edit poll": "Upraviť anketu",
     "toggle event": "prepnúť udalosť",
     "Results will be visible when the poll is ended": "Výsledky budú viditeľné po ukončení ankety",
     "Sorry, you can't edit a poll after votes have been cast.": "Je nám ľúto, ale po odovzdaní hlasov nie je možné anketu upravovať.",
@@ -1915,8 +1886,6 @@
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Ak chcete vytvoriť svoje účet, otvorte odkaz v e-maile, ktorý sme práve poslali na %(emailAddress)s.",
     "Unread email icon": "Ikona neprečítaného e-mailu",
     "Check your email to continue": "Pre pokračovanie skontrolujte svoj e-mail",
-    "Click to read topic": "Kliknutím si prečítate tému",
-    "Edit topic": "Upraviť tému",
     "Joining…": "Pripájanie…",
     "%(count)s people joined": {
         "one": "%(count)s človek sa pripojil",
@@ -2103,7 +2072,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ak to chcete urobiť, povoľte v Nastaveniach položku \"%(manageIntegrations)s\".",
     "Waiting for partner to confirm…": "Čakanie na potvrdenie od partnera…",
     "Adding…": "Pridávanie…",
-    "Write something…": "Napíšte niečo…",
     "Rejecting invite…": "Odmietnutie pozvania …",
     "Joining room…": "Pripájanie do miestnosti …",
     "Joining space…": "Pripájanie sa do priestoru …",
@@ -3087,7 +3055,8 @@
         "low_bandwidth_mode": "Režim nízkej šírky pásma",
         "developer_mode": "Režim pre vývojárov",
         "view_source_decrypted_event_source": "Zdroj dešifrovanej udalosti",
-        "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj nie je dostupný"
+        "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj nie je dostupný",
+        "original_event_source": "Pôvodný zdroj udalosti"
     },
     "export_chat": {
         "html": "HTML",
@@ -3743,7 +3712,10 @@
             "sas_description": "Pokiaľ nemáte na svojich zariadeniach kameru, porovnajte jedinečnú kombináciu emotikonov",
             "qr_or_sas": "%(qrCode)s alebo %(emojiCompare)s",
             "qr_or_sas_header": "Overte toto zariadenie dokončením jednej z nasledujúcich možností:"
-        }
+        },
+        "old_version_detected_title": "Nájdené zastaralé kryptografické údaje",
+        "old_version_detected_description": "Boli zistené údaje zo staršej verzie %(brand)s. To spôsobilo nefunkčnosť end-to-end kryptografie v staršej verzii. End-to-end šifrované správy, ktoré boli nedávno vymenené pri používaní staršej verzie, sa v tejto verzii nemusia dať dešifrovať. To môže spôsobiť aj zlyhanie správ vymenených pomocou tejto verzie. Ak sa vyskytnú problémy, odhláste sa a znova sa prihláste. Ak chcete zachovať históriu správ, exportujte a znovu importujte svoje kľúče.",
+        "verification_requested_toast_title": "Vyžiadané overenie"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3858,7 +3830,9 @@
         "phone_optional_label": "Telefón (nepovinné)",
         "email_help_text": "Pridajte e-mail, aby ste mohli obnoviť svoje heslo.",
         "email_phone_discovery_text": "Použite e-mail alebo telefón, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi.",
-        "email_discovery_text": "Použite e-mail, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi."
+        "email_discovery_text": "Použite e-mail, aby ste boli voliteľne vyhľadateľní existujúcimi kontaktmi.",
+        "session_logged_out_title": "Ste odhlásení",
+        "session_logged_out_description": "Z bezpečnostných dôvodov bola táto relácia odhlásená. Prosím, prihláste sa znova."
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -4170,6 +4144,12 @@
             "private_unencrypted_warning": "Vaše súkromné správy sú bežne šifrované, ale táto miestnosť nie je. Zvyčajne je to spôsobené nepodporovaným zariadením alebo použitou metódou, ako napríklad e-mailové pozvánky.",
             "enable_encryption_prompt": "Zapnúť šifrovanie v nastaveniach.",
             "unencrypted_warning": "End-to-end šifrovanie nie je zapnuté"
+        },
+        "edit_topic": "Upraviť tému",
+        "read_topic": "Kliknutím si prečítate tému",
+        "unread_notifications_predecessor": {
+            "one": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítané oznámenie.",
+            "other": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítaných oznámení."
         }
     },
     "file_panel": {
@@ -4184,9 +4164,31 @@
         "intro": "Ak chcete pokračovať, musíte prijať podmienky tejto služby.",
         "column_service": "Služba",
         "column_summary": "Zhrnutie",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Zmluvné podmienky",
+        "tac_description": "Ak chcete aj naďalej používať domovský server %(homeserverDomain)s, mali by ste si prečítať a odsúhlasiť naše zmluvné podmienky.",
+        "tac_button": "Prečítať zmluvné podmienky"
     },
     "space_settings": {
         "title": "Nastavenia - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Vytvoriť anketu",
+        "create_poll_action": "Vytvoriť anketu",
+        "edit_poll_title": "Upraviť anketu",
+        "failed_send_poll_title": "Nepodarilo sa odoslať anketu",
+        "failed_send_poll_description": "Prepáčte, ale anketa, ktorú ste sa pokúsili vytvoriť, nebola zverejnená.",
+        "type_heading": "Typ ankety",
+        "type_open": "Otvorená anketa",
+        "type_closed": "Uzavretá anketa",
+        "topic_heading": "Aká je vaša otázka alebo téma ankety?",
+        "topic_label": "Otázka alebo téma",
+        "topic_placeholder": "Napíšte niečo…",
+        "options_heading": "Vytvoriť možnosti",
+        "options_label": "Možnosť %(number)s",
+        "options_placeholder": "Napíšte možnosť",
+        "options_add_button": "Pridať možnosť",
+        "disclosed_notes": "Hlasujúci uvidia výsledky hneď po hlasovaní",
+        "notes": "Výsledky sa zobrazia až po ukončení ankety"
     }
 }

@@ -188,7 +188,6 @@
     },
     "Upload Error": "Помилка вивантаження",
     "Upload avatar": "Вивантажити аватар",
-    "For security, this session has been signed out. Please sign in again.": "З метою безпеки ваш сеанс було завершено. Увійдіть знову.",
     "Error upgrading room": "Помилка поліпшення кімнати",
     "Double check that your server supports the room version chosen and try again.": "Перевірте, чи підримує ваш сервер вказану версію кімнати та спробуйте ще.",
     "Failed to reject invitation": "Не вдалось відхилити запрошення",
@@ -240,10 +239,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Сервер може бути недосяжним, перевантаженим або запит на пошук застарів :(",
     "No more results": "Інших результатів нема",
     "Failed to reject invite": "Не вдалось відхилити запрошення",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Ви маєте %(count)s непрочитаних сповіщень у попередній версії цієї кімнати.",
-        "one": "У вас %(count)s непрочитане сповіщення у попередній версії цієї кімнати."
-    },
     "Deactivate user?": "Деактивувати користувача?",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивація цього користувача виведе їх з системи й унеможливить вхід у майбутньому. До того ж вони вийдуть з усіх кімнат, у яких перебувають. Ця дія безповоротна. Ви впевнені, що хочете деактивувати цього користувача?",
     "Deactivate user": "Деактивувати користувача",
@@ -479,7 +474,6 @@
     "I don't want my encrypted messages": "Мені не потрібні мої зашифровані повідомлення",
     "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
     "Verify this user by confirming the following emoji appear on their screen.": "Звірте цього користувача підтвердженням того, що наступні емодзі з'являються на його екрані.",
     "If you can't scan the code above, verify by comparing unique emoji.": "Якщо ви не можете сканувати зазначений код, звірте порівнянням унікальних емодзі.",
     "Verify by comparing unique emoji.": "Звірити порівнянням унікальних емодзі.",
@@ -491,8 +485,6 @@
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
     "Add an Integration": "Додати інтеграцію",
     "Show advanced": "Показати розширені",
-    "Review terms and conditions": "Переглянути умови користування",
-    "Old cryptography data detected": "Виявлено старі криптографічні дані",
     "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -841,7 +833,6 @@
     "Preparing to download logs": "Приготування до завантаження журналів",
     "Download %(text)s": "Завантажити %(text)s",
     "Room ID": "ID кімнати",
-    "Original event source": "Оригінальний початковий код",
     "View source": "Переглянути код",
     "Report": "Поскаржитися",
     "Share User": "Поділитися користувачем",
@@ -1101,7 +1092,6 @@
     "Hide sidebar": "Сховати бічну панель",
     "Success!": "Успішно!",
     "Clear personal data": "Очистити особисті дані",
-    "Verification requested": "Запит перевірки",
     "Verification Request": "Запит підтвердження",
     "Leave space": "Вийти з простору",
     "Sent": "Надіслано",
@@ -1163,7 +1153,6 @@
     "View message": "Переглянути повідомлення",
     "Italics": "Курсив",
     "More options": "Інші опції",
-    "Create poll": "Створити опитування",
     "Invited": "Запрошено",
     "Invite to this space": "Запросити до цього простору",
     "Failed to send": "Не вдалося надіслати",
@@ -1221,7 +1210,6 @@
     "Message edits": "Редагування повідомлення",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ви раніше використовували новішу версію %(brand)s для цього сеансу. Щоб знову використовувати цю версію із наскрізним шифруванням, вам потрібно буде вийти та знову ввійти.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Налаштуйте цьому сеансу резервне копіювання, інакше при виході втратите ключі, доступні лише в цьому сеансі.",
-    "Signed Out": "Виконано вихід",
     "To continue, use Single Sign On to prove your identity.": "Щоб продовжити, скористайтеся єдиним входом для підтвердження особи.",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для додаткової безпеки перевірте цього користувача, звіривши одноразовий код на обох своїх пристроях.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Якщо звірити цей пристрій, його буде позначено надійним, а користувачі, які перевірили у вас, будуть довіряти цьому пристрою.",
@@ -1266,19 +1254,10 @@
     "Messaging": "Спілкування",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Зберігайте ключ безпеки в надійному місці, скажімо в менеджері паролів чи сейфі, бо ключ оберігає ваші зашифровані дані.",
     "You do not have permission to start polls in this room.": "Ви не маєте дозволу створювати опитування в цій кімнаті.",
-    "Create Poll": "Створити опитування",
-    "What is your poll question or topic?": "Яке питання чи тема вашого опитування?",
-    "Question or topic": "Питання чи тема",
-    "Create options": "Створіть варіанти",
-    "Option %(number)s": "Варіант %(number)s",
-    "Write an option": "Вписати варіант",
-    "Add option": "Додати варіант",
     "You won't get any notifications": "Ви не отримуватимете жодних сповіщень",
     "Unpin this widget to view it in this panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
     "Vote not registered": "Голос не зареєстрований",
     "Sorry, your vote was not registered. Please try again.": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
-    "Failed to post poll": "Не вдалося надіслати опитування",
-    "Sorry, the poll you tried to create was not posted.": "Не вдалося надіслати опитування, яке ви намагалися створити.",
     "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
     "Chat": "Бесіда",
     "Start new chat": "Почати бесіду",
@@ -1653,8 +1632,6 @@
     "Reset everything": "Скинути все",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Точно вийти з простору «%(spaceName)s»?",
     "This space is not public. You will not be able to rejoin without an invite.": "Цей простір не загальнодоступний. Ви не зможете приєднатися знову без запрошення.",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Щоб використовувати домашній сервер %(homeserverDomain)s далі, перегляньте й погодьте наші умови й положення.",
-    "Terms and Conditions": "Умови й положення",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забули чи втратили всі способи відновлення? <a>Скинути все</a>",
     "Including you, %(commaSeparatedMembers)s": "Включно з вами, %(commaSeparatedMembers)s",
     "Incoming Verification Request": "Надійшов запит на звірку",
@@ -1776,15 +1753,9 @@
     "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "Edit poll": "Редагувати опитування",
     "Sorry, you can't edit a poll after votes have been cast.": "Ви не можете редагувати опитування після завершення голосування.",
     "Can't edit poll": "Неможливо редагувати опитування",
     "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
-    "Results are only revealed when you end the poll": "Результати показуються лише після завершення опитування",
-    "Voters see results as soon as they have voted": "Респонденти бачитимуть результати, як тільки вони проголосують",
-    "Closed poll": "Завершене опитування",
-    "Open poll": "Відкрите опитування",
-    "Poll type": "Тип опитування",
     "Results will be visible when the poll is ended": "Результати будуть видимі після завершення опитування",
     "Search Dialog": "Вікно пошуку",
     "Pinned": "Закріплені",
@@ -1910,8 +1881,6 @@
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею.",
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
-    "Click to read topic": "Натисніть, щоб побачити тему",
-    "Edit topic": "Редагувати тему",
     "Resent!": "Надіслано повторно!",
     "Did not receive it? <a>Resend it</a>": "Не отримали листа? <a>Надіслати повторно</a>",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Щоб створити обліковий запис, відкрийте посилання в електронному листі, який ми щойно надіслали на %(emailAddress)s.",
@@ -2106,7 +2075,6 @@
     "Checking…": "Перевірка…",
     "Waiting for partner to confirm…": "Очікування підтвердження партнером…",
     "Adding…": "Додавання…",
-    "Write something…": "Напишіть щось…",
     "Rejecting invite…": "Відхилення запрошення…",
     "Joining room…": "Приєднання до кімнати…",
     "Joining space…": "Приєднання до простору…",
@@ -3087,7 +3055,8 @@
         "low_bandwidth_mode": "Режим низької пропускної спроможності",
         "developer_mode": "Режим розробника",
         "view_source_decrypted_event_source": "Розшифрований початковий код події",
-        "view_source_decrypted_event_source_unavailable": "Розшифроване джерело недоступне"
+        "view_source_decrypted_event_source_unavailable": "Розшифроване джерело недоступне",
+        "original_event_source": "Оригінальний початковий код"
     },
     "export_chat": {
         "html": "HTML",
@@ -3743,7 +3712,10 @@
             "sas_description": "Порівняйте унікальний набір емодзі якщо жоден ваш пристрій не має камери",
             "qr_or_sas": "%(qrCode)s з %(emojiCompare)s",
             "qr_or_sas_header": "Звірте цей пристрій одним із запропонованих способів:"
-        }
+        },
+        "old_version_detected_title": "Виявлено старі криптографічні дані",
+        "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
+        "verification_requested_toast_title": "Запит перевірки"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3858,7 +3830,9 @@
         "phone_optional_label": "Телефон (не обов'язково)",
         "email_help_text": "Додайте е-пошту, щоб могти скинути пароль.",
         "email_phone_discovery_text": "Можете ввести е-пошту чи телефон, щоб наявні контакти знаходили вас за ними.",
-        "email_discovery_text": "Можете ввести е-пошту, щоб наявні контакти знаходили вас за нею."
+        "email_discovery_text": "Можете ввести е-пошту, щоб наявні контакти знаходили вас за нею.",
+        "session_logged_out_title": "Виконано вихід",
+        "session_logged_out_description": "З метою безпеки ваш сеанс було завершено. Увійдіть знову."
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4170,6 +4144,12 @@
             "private_unencrypted_warning": "Ваші приватні повідомлення, зазвичай, зашифровані, але ця кімната — ні. Зазвичай це пов'язано з непідтримуваним пристроєм або використаним методом, наприклад, запрошення електронною поштою.",
             "enable_encryption_prompt": "Ввімкніть шифрування в налаштуваннях.",
             "unencrypted_warning": "Наскрізне шифрування не ввімкнене"
+        },
+        "edit_topic": "Редагувати тему",
+        "read_topic": "Натисніть, щоб побачити тему",
+        "unread_notifications_predecessor": {
+            "other": "Ви маєте %(count)s непрочитаних сповіщень у попередній версії цієї кімнати.",
+            "one": "У вас %(count)s непрочитане сповіщення у попередній версії цієї кімнати."
         }
     },
     "file_panel": {
@@ -4184,9 +4164,31 @@
         "intro": "Погодьтесь з Умовами надання послуг, щоб продовжити.",
         "column_service": "Служба",
         "column_summary": "Опис",
-        "column_document": "Документ"
+        "column_document": "Документ",
+        "tac_title": "Умови й положення",
+        "tac_description": "Щоб використовувати домашній сервер %(homeserverDomain)s далі, перегляньте й погодьте наші умови й положення.",
+        "tac_button": "Переглянути умови користування"
     },
     "space_settings": {
         "title": "Налаштування — %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Створити опитування",
+        "create_poll_action": "Створити опитування",
+        "edit_poll_title": "Редагувати опитування",
+        "failed_send_poll_title": "Не вдалося надіслати опитування",
+        "failed_send_poll_description": "Не вдалося надіслати опитування, яке ви намагалися створити.",
+        "type_heading": "Тип опитування",
+        "type_open": "Відкрите опитування",
+        "type_closed": "Завершене опитування",
+        "topic_heading": "Яке питання чи тема вашого опитування?",
+        "topic_label": "Питання чи тема",
+        "topic_placeholder": "Напишіть щось…",
+        "options_heading": "Створіть варіанти",
+        "options_label": "Варіант %(number)s",
+        "options_placeholder": "Вписати варіант",
+        "options_add_button": "Додати варіант",
+        "disclosed_notes": "Респонденти бачитимуть результати, як тільки вони проголосують",
+        "notes": "Результати показуються лише після завершення опитування"
     }
 }

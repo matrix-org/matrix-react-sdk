@@ -53,7 +53,6 @@
     "Failure to create room": "방 만들기 실패",
     "Filter room members": "방 구성원 필터",
     "Forget room": "방 지우기",
-    "For security, this session has been signed out. Please sign in again.": "안전을 위해서 이 세션에서 로그아웃했습니다. 다시 로그인해주세요.",
     "Historical": "기록",
     "Home": "홈",
     "Import E2E room keys": "종단간 암호화 방 키 불러오기",
@@ -95,7 +94,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "서버를 쓸 수 없거나 과부하거나, 오류입니다.",
     "Session ID": "세션 ID",
-    "Signed Out": "로그아웃함",
     "Start authentication": "인증 시작",
     "This email address is already in use": "이 이메일 주소는 이미 사용 중입니다",
     "This email address was not found": "이 이메일 주소를 찾을 수 없음",
@@ -208,7 +206,6 @@
     "Low Priority": "중요하지 않음",
     "Wednesday": "수요일",
     "Thank you!": "감사합니다!",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "이전 버전 %(brand)s의 데이터가 감지됬습니다. 이 때문에 이전 버전에서 종단간 암호화가 작동하지 않을 수 있습니다. 이전 버전을 사용하면서 최근에 교환한 종단간 암호화 메시지를 이 버전에서는 복호화할 수 없습니다. 이 버전에서 메시지를 교환할 수 없을 수도 있습니다. 문제가 발생하면 로그아웃한 후 다시 로그인하세요. 메시지 기록을 유지하려면 키를 내보낸 후 다시 가져오세요.",
     "This event could not be displayed": "이 이벤트를 표시할 수 없음",
     "Banned by %(displayName)s": "%(displayName)s님에 의해 출입 금지됨",
     "PM": "오후",
@@ -266,10 +263,6 @@
     },
     "Can't leave Server Notices room": "서버 알림 방을 떠날 수는 없음",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "이 방은 홈서버로부터 중요한 메시지를 받는 데 쓰이므로 떠날 수 없습니다.",
-    "Terms and Conditions": "이용 약관",
-    "Review terms and conditions": "이용 약관 검토",
-    "Old cryptography data detected": "오래된 암호화 데이터 감지됨",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "홈서버 %(homeserverDomain)s을(를) 계속 사용하기 위해서는 저희 이용 약관을 검토하고 동의해주세요.",
     "Clear Storage and Sign Out": "저장소를 지우고 로그아웃",
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
@@ -560,10 +553,6 @@
     "Couldn't load page": "페이지를 불러올 수 없음",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "이 홈서버가 리소스 한도를 초과했기 때문에 메시지를 보낼 수 없었습니다. 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
     "Add room": "방 추가",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "이 방의 이전 버전에서 읽지 않은 %(count)s개의 알림이 있습니다.",
-        "one": "이 방의 이전 버전에서 읽지 않은 %(count)s개의 알림이 있습니다."
-    },
     "Could not load user profile": "사용자 프로필을 불러올 수 없음",
     "Your password has been reset.": "비밀번호가 초기화되었습니다.",
     "Invalid homeserver discovery response": "잘못된 홈서버 검색 응답",
@@ -1392,7 +1381,9 @@
             "other_party_cancelled": "상대방이 확인을 취소했습니다.",
             "complete_title": "인증되었습니다!",
             "complete_description": "성공적으로 이 사용자를 인증했습니다."
-        }
+        },
+        "old_version_detected_title": "오래된 암호화 데이터 감지됨",
+        "old_version_detected_description": "이전 버전 %(brand)s의 데이터가 감지됬습니다. 이 때문에 이전 버전에서 종단간 암호화가 작동하지 않을 수 있습니다. 이전 버전을 사용하면서 최근에 교환한 종단간 암호화 메시지를 이 버전에서는 복호화할 수 없습니다. 이 버전에서 메시지를 교환할 수 없을 수도 있습니다. 문제가 발생하면 로그아웃한 후 다시 로그인하세요. 메시지 기록을 유지하려면 키를 내보낸 후 다시 가져오세요."
     },
     "emoji": {
         "category_frequently_used": "자주 사용함",
@@ -1431,7 +1422,9 @@
         "account_deactivated": "이 계정은 비활성화되었습니다.",
         "registration_username_validation": "소문자, 숫자, 가로선, 밑줄선만 사용할 수 있음",
         "phone_label": "전화",
-        "phone_optional_label": "전화 (선택)"
+        "phone_optional_label": "전화 (선택)",
+        "session_logged_out_title": "로그아웃함",
+        "session_logged_out_description": "안전을 위해서 이 세션에서 로그아웃했습니다. 다시 로그인해주세요."
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1528,7 +1521,11 @@
         "private_heading": "당신의 비공개 스페이스"
     },
     "room": {
-        "drop_file_prompt": "업로드할 파일을 여기에 놓으세요"
+        "drop_file_prompt": "업로드할 파일을 여기에 놓으세요",
+        "unread_notifications_predecessor": {
+            "other": "이 방의 이전 버전에서 읽지 않은 %(count)s개의 알림이 있습니다.",
+            "one": "이 방의 이전 버전에서 읽지 않은 %(count)s개의 알림이 있습니다."
+        }
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",
@@ -1547,6 +1544,9 @@
         "intro": "계속하려면 이 서비스 약관에 동의해야 합니다.",
         "column_service": "서비스",
         "column_summary": "개요",
-        "column_document": "문서"
+        "column_document": "문서",
+        "tac_title": "이용 약관",
+        "tac_description": "홈서버 %(homeserverDomain)s을(를) 계속 사용하기 위해서는 저희 이용 약관을 검토하고 동의해주세요.",
+        "tac_button": "이용 약관 검토"
     }
 }

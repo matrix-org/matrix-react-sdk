@@ -78,7 +78,6 @@
     "Account": "حساب کابری",
     "Incorrect verification code": "کد فعال‌سازی اشتباه است",
     "Home": "خانه",
-    "For security, this session has been signed out. Please sign in again.": "برای امنیت، این نشست نامعتبر شده است. لطفاً دوباره وارد سیستم شوید.",
     "We couldn't log you in": "نتوانستیم شما را وارد کنیم",
     "Only continue if you trust the owner of the server.": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
     "Identity server has no terms of service": "سرور هویت هیچگونه شرایط خدمات ندارد",
@@ -642,10 +641,6 @@
     "You can select all or individual messages to retry or delete": "شما می‌توانید یک یا همه‌ی پیام‌ها را برای تلاش مجدد یا حذف انتخاب کنید",
     "Sent messages will be stored until your connection has returned.": "پیام‌های ارسالی تا زمان بازگشت اتصال شما ذخیره خواهند ماند.",
     "Server may be unavailable, overloaded, or search timed out :(": "سرور ممکن است در دسترس نباشد ، بار زیادی روی آن قرار گرفته یا زمان جستجو به پایان رسیده‌باشد :(",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید.",
-        "one": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید."
-    },
     "%(count)s members": {
         "other": "%(count)s عضو",
         "one": "%(count)s عضو"
@@ -1179,7 +1174,6 @@
     "Your password has been reset.": "گذرواژه‌ی شما با موفقیت تغییر کرد.",
     "New Password": "گذرواژه جدید",
     "New passwords must match each other.": "گذرواژه‌ی جدید باید مطابقت داشته باشند.",
-    "Original event source": "منبع اصلی رخداد",
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
     "Switch theme": "تعویض پوسته",
     "All settings": "همه تنظیمات",
@@ -1197,11 +1191,6 @@
     "Sending": "در حال ارسال",
     "Retry all": "همه را دوباره امتحان کنید",
     "Delete all": "حذف همه",
-    "Verification requested": "درخواست تائید",
-    "Old cryptography data detected": "داده‌های رمزنگاری قدیمی شناسایی شد",
-    "Review terms and conditions": "مرور شرایط و ضوابط",
-    "Terms and Conditions": "شرایط و ضوابط",
-    "Signed Out": "از حساب کاربری خارج شدید",
     "Are you sure you want to leave the space '%(spaceName)s'?": "آیا از ترک فضای '%(spaceName)s' اطمینان دارید؟",
     "This room is not public. You will not be able to rejoin without an invite.": "این اتاق عمومی نیست. پیوستن مجدد بدون دعوتنامه امکان‌پذیر نخواهد بود.",
     "This space is not public. You will not be able to rejoin without an invite.": "این فضا عمومی نیست. امکان پیوستن مجدد بدون دعوتنامه امکان‌پذیر نخواهد بود.",
@@ -1396,9 +1385,7 @@
     "Your area is experiencing difficulties connecting to the internet.": "منطقه شما در اتصال به اینترنت با مشکل روبرو است.",
     "A browser extension is preventing the request.": "پلاگینی در مرورگر مانع از ارسال درخواست می‌گردد.",
     "Your firewall or anti-virus is blocking the request.": "دیوار آتش یا آنتی‌ویروس شما مانع از ارسال درخواست می‌شود.",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "برای ادامه استفاده از سرور %(homeserverDomain)s باید شرایط و ضوابط ما را بررسی کرده و موافقت کنید.",
     "The server (%(serverName)s) took too long to respond.": "زمان پاسخگویی سرور (%(serverName)s) بسیار طولانی شده‌است.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "سرور شما به برخی از درخواست‌ها پاسخ نمی‌دهد. در ادامه برخی از دلایل محتمل آن ذکر شده است.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "این اتاق را از <oldVersion /> به <newVersion /> ارتقا خواهید داد.",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "به‌روزرسانی اتاق اقدامی پیشرفته بوده و معمولاً در صورتی توصیه می‌شود که اتاق به دلیل اشکالات، فقدان قابلیت‌ها یا آسیب پذیری‌های امنیتی، پایدار و قابل استفاده نباشد.",
@@ -1519,18 +1506,13 @@
     "Database unexpectedly closed": "پایگاه داده به طور غیرمنتظره ای بسته شد",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "این ممکن است به دلیل باز بودن برنامه در چندین برگه یا به دلیل پاک کردن داده های مرورگر باشد.",
     "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "به نظر نمی رسد آدرس ایمیل شما با شناسه Matrix در این سرور خانگی مرتبط باشد.",
-    "Failed to post poll": "ارسال نظرسنجی انجام نشد",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
     "%(senderName)s started a voice broadcast": "%(senderName)s یک پخش صوتی را شروع کرد",
-    "Closed poll": "نظرسنجی بسته",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "بدون سرور احراز هویت نمی توان کاربر را از طریق ایمیل دعوت کرد. می توانید در قسمت «تنظیمات» به یکی متصل شوید.",
-    "Sorry, the poll you tried to create was not posted.": "با عرض پوزش، نظرسنجی که سعی کردید ایجاد کنید پست نشد.",
-    "Open poll": "باز کردن نظرسنجی",
     "Identity server not set": "سرور هویت تنظیم نشده است",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "از طرف دیگر، می‌توانید سعی کنید از سرور عمومی در <server/> استفاده کنید، اما این به آن اندازه قابل اعتماد نخواهد بود و آدرس IP شما را با آن سرور به اشتراک می‌گذارد. شما همچنین می توانید این قابلیت را در تنظیمات مدیریت کنید.",
     "Try using %(server)s": "سعی کنید از %(server)s استفاده کنید",
-    "Poll type": "نوع نظرسنجی",
     "common": {
         "about": "درباره",
         "analytics": "تجزیه و تحلیل",
@@ -2001,7 +1983,8 @@
         "category_other": "دیگر",
         "widget_screenshots": "فعال‌سازی امکان اسکرین‌شات برای ویجت‌های پشتیبانی‌شده",
         "show_hidden_events": "نمایش رخدادهای مخفی در گفتگو‌ها",
-        "view_source_decrypted_event_source": "رمزگشایی منبع رخداد"
+        "view_source_decrypted_event_source": "رمزگشایی منبع رخداد",
+        "original_event_source": "منبع اصلی رخداد"
     },
     "export_chat": {
         "html": "HTML",
@@ -2479,7 +2462,10 @@
             "qr_prompt": "این QR-code منحصر به فرد را اسکن کنید",
             "sas_prompt": "شکلک‌های منحصر به فرد را مقایسه کنید",
             "sas_description": "اگر بر روی دستگاه خود دوربین ندارید، از تطابق شکلک‌های منحصر به فرد استفاده نمائید"
-        }
+        },
+        "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
+        "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
+        "verification_requested_toast_title": "درخواست تائید"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2561,7 +2547,9 @@
         "phone_optional_label": "شماره تلفن (اختیاری)",
         "email_help_text": "برای داشتن امکان تغییر گذرواژه در صورت فراموش‌کردن آن، لطفا یک آدرس ایمیل وارد نمائید.",
         "email_phone_discovery_text": "از ایمیل یا تلفن استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید.",
-        "email_discovery_text": "از ایمیل استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید."
+        "email_discovery_text": "از ایمیل استفاده کنید تا به طور اختیاری توسط مخاطبین موجود قابل کشف باشید.",
+        "session_logged_out_title": "از حساب کاربری خارج شدید",
+        "session_logged_out_description": "برای امنیت، این نشست نامعتبر شده است. لطفاً دوباره وارد سیستم شوید."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2814,6 +2802,10 @@
             "room_invite": "فقط به این اتاق دعوت کنید",
             "no_avatar_label": "عکس اضافه کنید تا افراد بتوانند به راحتی اتاق شما را ببینند.",
             "start_of_room": "این شروع <roomName/> است."
+        },
+        "unread_notifications_predecessor": {
+            "other": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید.",
+            "one": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید."
         }
     },
     "file_panel": {
@@ -2828,6 +2820,16 @@
         "intro": "برای ادامه باید شرایط این سرویس را بپذیرید.",
         "column_service": "سرویس",
         "column_summary": "خلاصه",
-        "column_document": "سند"
+        "column_document": "سند",
+        "tac_title": "شرایط و ضوابط",
+        "tac_description": "برای ادامه استفاده از سرور %(homeserverDomain)s باید شرایط و ضوابط ما را بررسی کرده و موافقت کنید.",
+        "tac_button": "مرور شرایط و ضوابط"
+    },
+    "poll": {
+        "failed_send_poll_title": "ارسال نظرسنجی انجام نشد",
+        "failed_send_poll_description": "با عرض پوزش، نظرسنجی که سعی کردید ایجاد کنید پست نشد.",
+        "type_heading": "نوع نظرسنجی",
+        "type_open": "باز کردن نظرسنجی",
+        "type_closed": "نظرسنجی بسته"
     }
 }

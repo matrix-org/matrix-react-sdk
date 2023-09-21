@@ -39,7 +39,6 @@
     "Favourite": "Añadir a favoritos",
     "Filter room members": "Filtrar miembros de la sala",
     "Forget room": "Olvidar sala",
-    "For security, this session has been signed out. Please sign in again.": "Esta sesión ha sido cerrada. Por favor, inicia sesión de nuevo.",
     "Historical": "Historial",
     "Import E2E room keys": "Importar claves de salas con cifrado de extremo a extremo",
     "Incorrect verification code": "Verificación de código incorrecta",
@@ -77,7 +76,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "El servidor podría estar saturado o desconectado, o la búsqueda caducó :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "El servidor podría estar saturado o desconectado, o has encontrado un fallo.",
     "Session ID": "ID de Sesión",
-    "Signed Out": "Desconectado",
     "Start authentication": "Iniciar autenticación",
     "No media permissions": "Sin permisos para el medio",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Probablemente necesites dar permisos manualmente a %(brand)s para tu micrófono/cámara",
@@ -265,11 +263,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala no es pública. No podrás volver a unirte sin una invitación.",
     "Can't leave Server Notices room": "No se puede salir de la sala de avisos del servidor",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "La sala se usa para mensajes importantes del servidor base, así que no puedes abandonarla.",
-    "Terms and Conditions": "Términos y condiciones",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Para continuar usando el servidor base %(homeserverDomain)s, debes revisar y estar de acuerdo con nuestros términos y condiciones.",
-    "Review terms and conditions": "Revisar términos y condiciones",
-    "Old cryptography data detected": "Se detectó información de criptografía antigua",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "No puedes enviar ningún mensaje hasta que revises y estés de acuerdo con <consentLink>nuestros términos y condiciones</consentLink>.",
     "Connectivity to the server has been lost.": "Se ha perdido la conexión con el servidor.",
     "Sent messages will be stored until your connection has returned.": "Los mensajes enviados se almacenarán hasta que vuelva la conexión.",
@@ -449,10 +442,6 @@
     "Cannot connect to integration manager": "No se puede conectar al gestor de integraciones",
     "The integration manager is offline or it cannot reach your homeserver.": "El gestor de integraciones está desconectado o no puede conectar con su servidor.",
     "Jump to first unread room.": "Saltar a la primera sala sin leer.",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Tiene %(count)s notificaciones sin leer en una versión anterior de esta sala.",
-        "one": "Tiene %(count)s notificaciones sin leer en una versión anterior de esta sala."
-    },
     "Setting up keys": "Configurando claves",
     "Verify this session": "Verifica esta sesión",
     "Encryption upgrade available": "Mejora de cifrado disponible",
@@ -1331,7 +1320,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Empieza una conversación con alguien usando su nombre, correo electrónico o nombre de usuario (como <userId/>).",
     "Recently visited rooms": "Salas visitadas recientemente",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "No podrás deshacer esto, ya que te estás quitando tus permisos. Si eres la última persona con permisos en este usuario, no será posible recuperarlos.",
-    "Original event source": "Fuente original del evento",
     "%(count)s members": {
         "one": "%(count)s miembro",
         "other": "%(count)s miembros"
@@ -1379,7 +1367,6 @@
     "Edit devices": "Gestionar dispositivos",
     "Invite with email or username": "Invitar correos electrónicos o nombres de usuario",
     "You can change these anytime.": "Puedes cambiar todo esto en cualquier momento.",
-    "Verification requested": "Solicitud de verificación",
     "Avatar": "Imagen de perfil",
     "Consult first": "Consultar primero",
     "Invited people will be able to read old messages.": "Las personas que invites podrán leer los mensajes antiguos.",
@@ -1604,7 +1591,6 @@
     "Unban from %(roomName)s": "Quitar veto de %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Podrán seguir accediendo a donde no tengas permisos de administración.",
     "Disinvite from %(roomName)s": "Anular la invitación a %(roomName)s",
-    "Create poll": "Crear una encuesta",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
@@ -1631,14 +1617,7 @@
     "Joined": "Te has unido",
     "Copy link to thread": "Copiar enlace al hilo",
     "Thread options": "Ajustes del hilo",
-    "Add option": "Añadir opción",
-    "Write an option": "Escribe una opción",
-    "Option %(number)s": "Opción %(number)s",
-    "Create options": "Crear opciones",
-    "Question or topic": "Pregunta o tema",
-    "What is your poll question or topic?": "¿Cuál es la pregunta o tema de la encuesta?",
     "You do not have permission to start polls in this room.": "No tienes permisos para empezar encuestas en esta sala.",
-    "Create Poll": "Crear encuesta",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
     "Spaces to show": "Qué espacios mostrar",
     "Home is useful for getting an overview of everything.": "La pantalla de Inicio es útil para tener una vista general de todas tus conversaciones.",
@@ -1684,8 +1663,6 @@
     "Failed to end poll": "No se ha podido terminar la encuesta",
     "The poll has ended. Top answer: %(topAnswer)s": "La encuesta ha terminado. Opción ganadora: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "La encuesta ha terminado. Nadie ha votado.",
-    "Sorry, the poll you tried to create was not posted.": "Lo sentimos, la encuesta que has intentado empezar no ha sido publicada.",
-    "Failed to post poll": "No se ha podido enviar la encuesta",
     "Including you, %(commaSeparatedMembers)s": "Además de ti, %(commaSeparatedMembers)s",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s voto. Vota para ver los resultados",
@@ -1775,12 +1752,6 @@
     "Pinned": "Fijado",
     "Search Dialog": "Ventana de búsqueda",
     "Join %(roomAddress)s": "Unirte a %(roomAddress)s",
-    "Results are only revealed when you end the poll": "Los resultados se mostrarán cuando cierres la encuesta",
-    "Voters see results as soon as they have voted": "Quienes voten podrán ver los resultados",
-    "Closed poll": "Encuesta cerrada",
-    "Open poll": "Encuesta abierta",
-    "Poll type": "Tipo de encuesta",
-    "Edit poll": "Editar encuesta",
     "What location type do you want to share?": "¿Qué ubicación quieres compartir?",
     "Drop a Pin": "Elige un punto en el mapa",
     "My live location": "Mi ubicación en tiempo real",
@@ -1914,8 +1885,6 @@
     "An error occurred whilst sharing your live location": "Ocurrió un error mientras se compartía tu ubicación en tiempo real",
     "Output devices": "Dispositivos de salida",
     "Input devices": "Dispositivos de entrada",
-    "Click to read topic": "Pulsa para leer asunto",
-    "Edit topic": "Editar asunto",
     "Joining…": "Uniéndose…",
     "To join, please enable video rooms in Labs first": "Para unirse, por favor activa las salas de vídeo en Labs primero",
     "%(count)s people joined": {
@@ -2072,7 +2041,6 @@
     "Fetching keys from server…": "Obteniendo claves del servidor…",
     "Checking…": "Comprobando…",
     "Adding…": "Añadiendo…",
-    "Write something…": "Escribe algo…",
     "Message in %(room)s": "Mensaje en %(room)s",
     "Declining…": "Rechazando…",
     "Answered elsewhere": "Respondido en otro sitio",
@@ -2936,7 +2904,8 @@
         "low_bandwidth_mode_description": "Es necesario que el servidor base sea compatible.",
         "low_bandwidth_mode": "Modo de bajo ancho de banda",
         "developer_mode": "Modo de desarrollo",
-        "view_source_decrypted_event_source": "Descifrar fuente del evento"
+        "view_source_decrypted_event_source": "Descifrar fuente del evento",
+        "original_event_source": "Fuente original del evento"
     },
     "export_chat": {
         "html": "HTML",
@@ -3565,7 +3534,10 @@
             "sas_description": "Compara un conjunto de emojis si no tienes cámara en ninguno de los dispositivos",
             "qr_or_sas": "%(qrCode)s o %(emojiCompare)s",
             "qr_or_sas_header": "Verifica este dispositivo completando una de las siguientes opciones:"
-        }
+        },
+        "old_version_detected_title": "Se detectó información de criptografía antigua",
+        "old_version_detected_description": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
+        "verification_requested_toast_title": "Solicitud de verificación"
     },
     "emoji": {
         "category_frequently_used": "Frecuente",
@@ -3672,7 +3644,9 @@
         "phone_optional_label": "Teléfono (opcional)",
         "email_help_text": "Añade un correo para poder restablecer tu contraseña si te olvidas.",
         "email_phone_discovery_text": "Usa tu correo electrónico o teléfono para que, opcionalmente, tus contactos puedan descubrir tu cuenta.",
-        "email_discovery_text": "También puedes usarlo para que tus contactos te encuentren fácilmente."
+        "email_discovery_text": "También puedes usarlo para que tus contactos te encuentren fácilmente.",
+        "session_logged_out_title": "Desconectado",
+        "session_logged_out_description": "Esta sesión ha sido cerrada. Por favor, inicia sesión de nuevo."
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -3972,6 +3946,12 @@
             "private_unencrypted_warning": "Tus mensajes privados están cifrados normalmente, pero esta sala no lo está. A menudo, esto pasa porque has iniciado sesión con un dispositivo o método no compatible, como las invitaciones por correo.",
             "enable_encryption_prompt": "Activa el cifrado en los ajustes.",
             "unencrypted_warning": "El cifrado de extremo a extremo no está activado"
+        },
+        "edit_topic": "Editar asunto",
+        "read_topic": "Pulsa para leer asunto",
+        "unread_notifications_predecessor": {
+            "other": "Tiene %(count)s notificaciones sin leer en una versión anterior de esta sala.",
+            "one": "Tiene %(count)s notificaciones sin leer en una versión anterior de esta sala."
         }
     },
     "file_panel": {
@@ -3986,9 +3966,31 @@
         "intro": "Para continuar, necesitas aceptar estos términos de servicio.",
         "column_service": "Servicio",
         "column_summary": "Resumen",
-        "column_document": "Documento"
+        "column_document": "Documento",
+        "tac_title": "Términos y condiciones",
+        "tac_description": "Para continuar usando el servidor base %(homeserverDomain)s, debes revisar y estar de acuerdo con nuestros términos y condiciones.",
+        "tac_button": "Revisar términos y condiciones"
     },
     "space_settings": {
         "title": "Ajustes - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Crear una encuesta",
+        "create_poll_action": "Crear encuesta",
+        "edit_poll_title": "Editar encuesta",
+        "failed_send_poll_title": "No se ha podido enviar la encuesta",
+        "failed_send_poll_description": "Lo sentimos, la encuesta que has intentado empezar no ha sido publicada.",
+        "type_heading": "Tipo de encuesta",
+        "type_open": "Encuesta abierta",
+        "type_closed": "Encuesta cerrada",
+        "topic_heading": "¿Cuál es la pregunta o tema de la encuesta?",
+        "topic_label": "Pregunta o tema",
+        "topic_placeholder": "Escribe algo…",
+        "options_heading": "Crear opciones",
+        "options_label": "Opción %(number)s",
+        "options_placeholder": "Escribe una opción",
+        "options_add_button": "Añadir opción",
+        "disclosed_notes": "Quienes voten podrán ver los resultados",
+        "notes": "Los resultados se mostrarán cuando cierres la encuesta"
     }
 }

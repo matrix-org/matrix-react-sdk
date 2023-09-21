@@ -5,7 +5,6 @@
     "You cannot place a call with yourself.": "Vi ne povas voki vin mem.",
     "Warning!": "Averto!",
     "Sign in with": "Saluti per",
-    "For security, this session has been signed out. Please sign in again.": "Pro sekurecaj kialoj, la salutaĵo adiaŭiĝis. Bonvolu resaluti.",
     "Upload Failed": "Alŝuto malsukcesis",
     "Sun": "Dim",
     "Mon": "Lun",
@@ -168,9 +167,6 @@
     "Are you sure you want to reject the invitation?": "Ĉu vi certe volas rifuzi la inviton?",
     "Failed to reject invitation": "Malsukcesis rifuzi la inviton",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ĉu vi certe volas forlasi la ĉambron '%(roomName)s'?",
-    "Signed Out": "Adiaŭinta",
-    "Old cryptography data detected": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
     "Connectivity to the server has been lost.": "Konekto al la servilo perdiĝis.",
     "Sent messages will be stored until your connection has returned.": "Senditaj mesaĝoj konserviĝos ĝis via konekto refunkcios.",
     "You seem to be uploading files, are you sure you want to quit?": "Ŝajne vi alŝutas dosierojn nun; ĉu vi tamen volas foriri?",
@@ -461,10 +457,6 @@
     "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ĉi tiu ĉambro uziĝas por gravaj mesaĝoj de la hejmservilo, kaj tial vi ne povas foriri.",
     "Add room": "Aldoni ĉambron",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Vi havas %(count)s nelegitajn sciigojn en antaŭa versio de ĉi tiu ĉambro.",
-        "one": "Vi havas %(count)s nelegitan sciigon en antaŭa versio de ĉi tiu ĉambro."
-    },
     "Cannot reach homeserver": "Ne povas atingi hejmservilon",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Certiĝu ke vi havas stabilan retkonekton, aŭ kontaktu la administranton de la servilo",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Petu vian %(brand)s-administranton kontroli <a>vian agordaron</a> je malĝustaj aŭ duoblaj eroj.",
@@ -528,9 +520,6 @@
     "Enter phone number (required on this homeserver)": "Enigu telefonnumeron (bezonata sur ĉi tiu hejmservilo)",
     "Enter username": "Enigu uzantonomon",
     "Some characters not allowed": "Iuj signoj ne estas permesitaj",
-    "Terms and Conditions": "Uzokondiĉoj",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Por daŭre uzadi la hejmservilon %(homeserverDomain)s, vi devas tralegi kaj konsenti niajn uzokondiĉojn.",
-    "Review terms and conditions": "Tralegi uzokondiĉojn",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vi ne povas sendi mesaĝojn ĝis vi tralegos kaj konsentos <consentLink>niajn uzokondiĉojn</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis rimedan limon. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
@@ -1373,7 +1362,6 @@
     "Click to copy": "Klaku por kopii",
     "You can change these anytime.": "Vi povas ŝanĝi ĉi tiujn kiam ajn vi volas.",
     "Create a space": "Krei aron",
-    "Original event source": "Originala fonto de okazo",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
     "You don't have permission": "Vi ne rajtas",
     "Space options": "Agordoj de aro",
@@ -1424,7 +1412,6 @@
     "Retry all": "Reprovi ĉiujn",
     "Delete all": "Forigi ĉiujn",
     "Some of your messages have not been sent": "Kelkaj viaj mesaĝoj ne sendiĝis",
-    "Verification requested": "Kontrolpeto",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Vi estas la nura persono tie ĉi. Se vi foriros, neniu alia plu povos aliĝi, inkluzive vin mem.",
     "Avatar": "Profilbildo",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
@@ -1596,14 +1583,6 @@
     "Failed to end poll": "Malsukcesis fini balotenketon",
     "The poll has ended. Top answer: %(topAnswer)s": "La balotado finiĝis. Plej alta respondo: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "La balotenketo finiĝis. Neniuj voĉoj estis ĵetitaj.",
-    "Results are only revealed when you end the poll": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo",
-    "What is your poll question or topic?": "Kio estas via balotenketo demando aŭ temo?",
-    "Poll type": "Balotspeco",
-    "Sorry, the poll you tried to create was not posted.": "Pardonu, la balotenketo, kiun vi provis krei, ne estis afiŝita.",
-    "Failed to post poll": "Malsukcesis afiŝi balotenketon",
-    "Edit poll": "Redaktu balotenketon",
-    "Create poll": "Krei balotenketon",
-    "Create Poll": "Krei Balotenketon",
     "Results will be visible when the poll is ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos",
     "Sorry, you can't edit a poll after votes have been cast.": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
     "Can't edit poll": "Ne povas redakti balotenketon",
@@ -2222,7 +2201,8 @@
         "category_other": "Alia",
         "widget_screenshots": "Ŝalti bildojn de fenestraĵoj por subtenataj fenestraĵoj",
         "show_hidden_events": "Montri kaŝitajn okazojn en historio",
-        "view_source_decrypted_event_source": "Malĉifrita fonto de okazo"
+        "view_source_decrypted_event_source": "Malĉifrita fonto de okazo",
+        "original_event_source": "Originala fonto de okazo"
     },
     "export_chat": {
         "html": "HTML",
@@ -2771,7 +2751,10 @@
             "qr_prompt": "Skanu ĉi tiun unikan kodon",
             "sas_prompt": "Komparu unikajn bildsignojn",
             "sas_description": "Komparu unikan aron de bildsignoj se vi ne havas kameraon sur la alia aparato"
-        }
+        },
+        "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
+        "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
+        "verification_requested_toast_title": "Kontrolpeto"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2864,7 +2847,9 @@
         "phone_optional_label": "Telefono (malnepra)",
         "email_help_text": "Aldonu retpoŝtadreson por ebligi rehavon de via pasvorto.",
         "email_phone_discovery_text": "Uzu retpoŝtadreson aŭ telefonnumeron por laŭplaĉe esti trovebla de jamaj kontaktoj.",
-        "email_discovery_text": "Uzu retpoŝtadreson por laŭplaĉe esti trovebla de jamaj kontaktoj."
+        "email_discovery_text": "Uzu retpoŝtadreson por laŭplaĉe esti trovebla de jamaj kontaktoj.",
+        "session_logged_out_title": "Adiaŭinta",
+        "session_logged_out_description": "Pro sekurecaj kialoj, la salutaĵo adiaŭiĝis. Bonvolu resaluti."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3144,6 +3129,10 @@
             "private_unencrypted_warning": "Viaj privataj mesaĝoj normale estas ĉifrataj, sed ĉi tiu ĉambro ne estas ĉifrata. Plej ofte tio okazas pro uzo de nesubtenata aparato aŭ metodo, ekzemple retpoŝtaj invitoj.",
             "enable_encryption_prompt": "Ŝaltu ĉifradon per agordoj.",
             "unencrypted_warning": "Tutvoja ĉifrado ne estas ŝaltita"
+        },
+        "unread_notifications_predecessor": {
+            "other": "Vi havas %(count)s nelegitajn sciigojn en antaŭa versio de ĉi tiu ĉambro.",
+            "one": "Vi havas %(count)s nelegitan sciigon en antaŭa versio de ĉi tiu ĉambro."
         }
     },
     "file_panel": {
@@ -3158,9 +3147,22 @@
         "intro": "Por pluigi, vi devas akcepti la uzokondiĉojn de ĉi tiu servo.",
         "column_service": "Servo",
         "column_summary": "Resumo",
-        "column_document": "Dokumento"
+        "column_document": "Dokumento",
+        "tac_title": "Uzokondiĉoj",
+        "tac_description": "Por daŭre uzadi la hejmservilon %(homeserverDomain)s, vi devas tralegi kaj konsenti niajn uzokondiĉojn.",
+        "tac_button": "Tralegi uzokondiĉojn"
     },
     "space_settings": {
         "title": "Agordoj – %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Krei balotenketon",
+        "create_poll_action": "Krei Balotenketon",
+        "edit_poll_title": "Redaktu balotenketon",
+        "failed_send_poll_title": "Malsukcesis afiŝi balotenketon",
+        "failed_send_poll_description": "Pardonu, la balotenketo, kiun vi provis krei, ne estis afiŝita.",
+        "type_heading": "Balotspeco",
+        "topic_heading": "Kio estas via balotenketo demando aŭ temo?",
+        "notes": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo"
     }
 }

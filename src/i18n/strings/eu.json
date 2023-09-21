@@ -38,7 +38,6 @@
     "Import E2E room keys": "Inportatu E2E geletako gakoak",
     "Import room keys": "Inportatu gelako gakoak",
     "Start authentication": "Hasi autentifikazioa",
-    "For security, this session has been signed out. Please sign in again.": "Segurtasunagatik saio hau amaitu da. Hasi saioa berriro.",
     "Moderator": "Moderatzailea",
     "Account": "Kontua",
     "Admin Tools": "Administrazio-tresnak",
@@ -101,7 +100,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
     "Search failed": "Bilaketak huts egin du",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
-    "Signed Out": "Saioa amaituta",
     "This email address was not found": "Ez da e-mail helbide hau aurkitu",
     "This room is not recognised.": "Ez da gela hau ezagutzen.",
     "This doesn't appear to be a valid email address": "Honek ez du baliozko e-mail baten antzik",
@@ -204,7 +202,6 @@
     "%(duration)sh": "%(duration)s h",
     "%(duration)sd": "%(duration)s e",
     "Unnamed room": "Izen gabeko gela",
-    "Old cryptography data detected": "Kriptografia datu zaharrak atzeman dira",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Kontuan izan %(hs)s zerbitzarira elkartu zarela, ez matrix.org.",
     "A text message has been sent to %(msisdn)s": "Testu mezu bat bidali da hona: %(msisdn)s",
     "Jump to read receipt": "Saltatu irakurragirira",
@@ -219,7 +216,6 @@
         "other": "%(items)s eta beste %(count)s",
         "one": "%(items)s eta beste bat"
     },
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ezin izango duzu hau aldatu zure burua mailaz jaisten ari zarelako, zu bazara gelan baimenak dituen azken erabiltzailea ezin izango dira baimenak berreskuratu.",
     "Replying": "Erantzuten",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s(e)ko %(monthName)sk %(day)sa",
@@ -260,9 +256,6 @@
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
-    "Terms and Conditions": "Termino eta baldintzak",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "%(homeserverDomain)s hasiera-zerbitzaria erabiltzen jarraitzeko gure termino eta baldintzak irakurri eta onartu behar dituzu.",
-    "Review terms and conditions": "Irakurri termino eta baldintzak",
     "Can't leave Server Notices room": "Ezin zara Server Notices gelatik atera",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Gela hau mezu hasiera zerbitzariaren garrantzitsuak bidaltzeko erabiltzen da, eta ezin zara atera.",
     "Share Link to User": "Partekatu esteka erabiltzailearekin",
@@ -466,10 +459,6 @@
     "Revoke invite": "Indargabetu gonbidapena",
     "Invited by %(sender)s": "%(sender)s erabiltzaileak gonbidatuta",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Irakurri gabeko %(count)s jakinarazpen dituzu gela honen aurreko bertsio batean.",
-        "one": "Irakurri gabeko %(count)s jakinarazpen duzu gela honen aurreko bertsio batean."
-    },
     "The file '%(fileName)s' failed to upload.": "Huts egin du '%(fileName)s' fitxategia igotzean.",
     "The server does not support the room version specified.": "Zerbitzariak ez du emandako gela-bertsioa onartzen.",
     "Cannot reach homeserver": "Ezin izan da hasiera-zerbitzaria atzitu",
@@ -1641,7 +1630,9 @@
             "qr_prompt": "Eskaneatu kode bakan hau",
             "sas_prompt": "Konparatu emoji bakana",
             "sas_description": "Konparatu emoji sorta bakana gailuek kamerarik ez badute"
-        }
+        },
+        "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
+        "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak."
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1685,7 +1676,9 @@
         "account_deactivated": "Kontu hau desaktibatuta dago.",
         "registration_username_validation": "Erabili letra xeheak, zenbakiak, gidoiak eta azpimarrak, besterik ez",
         "phone_label": "Telefonoa",
-        "phone_optional_label": "Telefonoa (aukerakoa)"
+        "phone_optional_label": "Telefonoa (aukerakoa)",
+        "session_logged_out_title": "Saioa amaituta",
+        "session_logged_out_description": "Segurtasunagatik saio hau amaitu da. Hasi saioa berriro."
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1772,7 +1765,11 @@
         "switch_theme_dark": "Aldatu modu ilunera"
     },
     "room": {
-        "drop_file_prompt": "Jaregin fitxategia hona igotzeko"
+        "drop_file_prompt": "Jaregin fitxategia hona igotzeko",
+        "unread_notifications_predecessor": {
+            "other": "Irakurri gabeko %(count)s jakinarazpen dituzu gela honen aurreko bertsio batean.",
+            "one": "Irakurri gabeko %(count)s jakinarazpen duzu gela honen aurreko bertsio batean."
+        }
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
@@ -1789,6 +1786,9 @@
         "intro": "Jarraitzeko erabilera baldintzak onartu behar dituzu.",
         "column_service": "Zerbitzua",
         "column_summary": "Laburpena",
-        "column_document": "Dokumentua"
+        "column_document": "Dokumentua",
+        "tac_title": "Termino eta baldintzak",
+        "tac_description": "%(homeserverDomain)s hasiera-zerbitzaria erabiltzen jarraitzeko gure termino eta baldintzak irakurri eta onartu behar dituzu.",
+        "tac_button": "Irakurri termino eta baldintzak"
     }
 }

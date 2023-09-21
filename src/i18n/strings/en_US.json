@@ -49,7 +49,6 @@
     "Favourite": "Favorite",
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
-    "For security, this session has been signed out. Please sign in again.": "For security, this session has been signed out. Please sign in again.",
     "Historical": "Historical",
     "Import E2E room keys": "Import E2E room keys",
     "Incorrect verification code": "Incorrect verification code",
@@ -91,7 +90,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server may be unavailable, overloaded, or you hit a bug.",
     "Session ID": "Session ID",
-    "Signed Out": "Signed Out",
     "This email address is already in use": "This email address is already in use",
     "This email address was not found": "This email address was not found",
     "This room has no local addresses": "This room has no local addresses",
@@ -500,7 +498,9 @@
         "sign_in_or_register_description": "Use your account or create a new one to continue.",
         "register_action": "Create Account",
         "incorrect_credentials": "Incorrect username and/or password.",
-        "phone_label": "Phone"
+        "phone_label": "Phone",
+        "session_logged_out_title": "Signed Out",
+        "session_logged_out_description": "For security, this session has been signed out. Please sign in again."
     },
     "export_chat": {
         "messages": "Messages"

@@ -93,7 +93,6 @@
     "Reject invitation": "Dəvəti rədd etmək",
     "Are you sure you want to reject the invitation?": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
     "Failed to reject invitation": "Dəvəti rədd etməyi bacarmadı",
-    "For security, this session has been signed out. Please sign in again.": "Təhlükəsizliyin təmin olunması üçün sizin sessiyanız başa çatmışdır idi. Zəhmət olmasa, yenidən girin.",
     "Notifications": "Xəbərdarlıqlar",
     "Connectivity to the server has been lost.": "Serverlə əlaqə itirilmişdir.",
     "Sent messages will be stored until your connection has returned.": "Hələ ki serverlə əlaqə bərpa olmayacaq, göndərilmiş mesajlar saxlanacaq.",
@@ -297,7 +296,8 @@
         "footer_powered_by_matrix": "Matrix tərəfindən təchiz edilmişdir",
         "unsupported_auth_msisdn": "Bu server telefon nömrəsinin köməyi ilə müəyyənləşdirilməni dəstəkləmir.",
         "register_action": "Hesab Aç",
-        "phone_label": "Telefon"
+        "phone_label": "Telefon",
+        "session_logged_out_description": "Təhlükəsizliyin təmin olunması üçün sizin sessiyanız başa çatmışdır idi. Zəhmət olmasa, yenidən girin."
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"

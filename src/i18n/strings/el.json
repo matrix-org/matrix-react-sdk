@@ -39,7 +39,6 @@
     "Favourite": "Αγαπημένο",
     "Filter room members": "Φιλτράρισμα μελών",
     "Forget room": "Αγνόηση δωματίου",
-    "For security, this session has been signed out. Please sign in again.": "Για λόγους ασφαλείας, αυτή η συνεδρία έχει τερματιστεί. Παρακαλούμε συνδεθείτε ξανά.",
     "Historical": "Ιστορικό",
     "Import E2E room keys": "Εισαγωγή κλειδιών E2E",
     "Incorrect verification code": "Λανθασμένος κωδικός επαλήθευσης",
@@ -60,7 +59,6 @@
     "Phone": "Τηλέφωνο",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
-    "Signed Out": "Αποσυνδέθηκε",
     "This email address is already in use": "Η διεύθυνση ηλ. αλληλογραφίας χρησιμοποιείται ήδη",
     "This email address was not found": "Δεν βρέθηκε η διεύθυνση ηλ. αλληλογραφίας",
     "Create new room": "Δημιουργία νέου δωματίου",
@@ -1211,7 +1209,6 @@
     "Failed to send logs: ": "Αποτυχία αποστολής αρχείων καταγραφής: ",
     "Thank you!": "Ευχαριστώ!",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Δε θα μπορείτε να αναιρέσετε αυτήν την ενέργεια καθώς υποβιβάζετε τον εαυτό σας, εάν είστε ο τελευταίος προνομιούχος χρήστης στο δωμάτιο, θα είναι αδύνατο να ανακτήσετε τα προνόμια.",
-    "Old cryptography data detected": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
     "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
@@ -1487,22 +1484,6 @@
     "e.g. my-room": "π.χ. my-room",
     "Room address": "Διεύθυνση δωματίου",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Αδυναμία φόρτωσης του συμβάντος στο οποίο δόθηκε απάντηση, είτε δεν υπάρχει είτε δεν έχετε άδεια να το προβάλετε.",
-    "Results are only revealed when you end the poll": "Τα αποτελέσματα αποκαλύπτονται μόνο όταν τελειώσετε τη δημοσκόπηση",
-    "Voters see results as soon as they have voted": "Οι ψηφοφόροι βλέπουν τα αποτελέσματα μόλις ψηφίσουν",
-    "Add option": "Προσθήκη επιλογής",
-    "Write an option": "Γράψτε μια επιλογή",
-    "Option %(number)s": "Επιλογή %(number)s",
-    "Create options": "Δημιουργία επιλογών",
-    "Question or topic": "Ερώτηση ή θέμα",
-    "What is your poll question or topic?": "Ποια είναι η ερώτηση ή το θέμα της δημοσκόπησης;",
-    "Closed poll": "Κλειστή δημοσκόπηση",
-    "Open poll": "Ανοιχτή δημοσκόπηση",
-    "Poll type": "Τύπος δημοσκόπησης",
-    "Sorry, the poll you tried to create was not posted.": "Λυπούμαστε, η δημοσκόπηση που προσπαθήσατε να δημιουργήσετε δε δημοσιεύτηκε.",
-    "Failed to post poll": "Αποτυχία δημοσίευσης δημοσκόπησης",
-    "Edit poll": "Επεξεργασία δημοσκόπησης",
-    "Create Poll": "Δημιουργία δημοσκόπησης",
-    "Create poll": "Δημιουργία δημοσκόπησης",
     "Language Dropdown": "Επιλογή Γλώσσας",
     "Information": "Πληροφορίες",
     "Rotate Right": "Περιστροφή δεξιά",
@@ -1595,7 +1576,6 @@
     "Device verified": "Η συσκευή επαληθεύτηκε",
     "Verify this device": "Επαληθεύστε αυτήν τη συσκευή",
     "Unable to verify this device": "Αδυναμία επαλήθευσης αυτής της συσκευής",
-    "Original event source": "Αρχική πηγή συμβάντος",
     "Could not load user profile": "Αδυναμία φόρτωσης του προφίλ χρήστη",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
@@ -1604,9 +1584,6 @@
     "Rooms and spaces": "Δωμάτια και Χώροι",
     "Results": "Αποτελέσματα",
     "You may want to try a different search or check for typos.": "Μπορεί να θέλετε να δοκιμάσετε μια διαφορετική αναζήτηση ή να ελέγξετε για ορθογραφικά λάθη.",
-    "Review terms and conditions": "Ελέγξτε τους όρους και τις προϋποθέσεις",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Για να συνεχίσετε να χρησιμοποιείτε τον κεντρικό διακομιστή %(homeserverDomain)s πρέπει να διαβάσετε και να συμφωνήσετε με τους όρους και τις προϋποθέσεις μας.",
-    "Terms and Conditions": "Οροι και Προϋποθέσεις",
     "Open dial pad": "Άνοιγμα πληκτρολογίου κλήσης",
     "Unnamed audio": "Ήχος χωρίς όνομα",
     "Enter phone number (required on this homeserver)": "Εισαγάγετε τον αριθμό τηλεφώνου (απαιτείται σε αυτόν τον κεντρικό διακομιστή)",
@@ -1618,15 +1595,10 @@
     "This homeserver would like to make sure you are not a robot.": "Αυτός ο κεντρικός διακομιστής θα ήθελε να βεβαιωθεί ότι δεν είστε ρομπότ.",
     "You are sharing your live location": "Μοιράζεστε την τρέχουσα τοποθεσία σας",
     "You don't have permission": "Δεν έχετε άδεια",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Έχετε %(count)s μη αναγνωσμένη ειδοποιήση σε προηγούμενη έκδοση αυτού του δωματίου.",
-        "other": "Έχετε %(count)s μη αναγνωσμένες ειδοποιήσεις σε προηγούμενη έκδοση αυτού του δωματίου."
-    },
     "You can select all or individual messages to retry or delete": "Μπορείτε να επιλέξετε όλα ή μεμονωμένα μηνύματα για επανάληψη ή διαγραφή",
     "Retry all": "Επανάληψη όλων",
     "Delete all": "Διαγραφή όλων",
     "Some of your messages have not been sent": "Μερικά από τα μηνύματα σας δεν έχουν αποσταλεί",
-    "Verification requested": "Ζητήθηκε επαλήθευση",
     "Search spaces": "Αναζήτηση χώρων",
     "Updating %(brand)s": "Ενημέρωση %(brand)s",
     "Unable to upload": "Αδυναμία μεταφόρτωσης",
@@ -1796,7 +1768,6 @@
     "Failed to invite users to %(roomName)s": "Αποτυχία πρόσκλησης χρηστών στο %(roomName)s",
     "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
     "Avatar": "Avatar",
     "Forget": "Ξεχάστε",
     "Resend %(unsentCount)s reaction(s)": "Επανάληψη αποστολής %(unsentCount)s αντιδράσεων",
@@ -1879,7 +1850,6 @@
     "You will no longer be able to log in": "Δεν θα μπορείτε πλέον να συνδεθείτε",
     "Confirm that you would like to deactivate your account. If you proceed:": "Επιβεβαιώστε ότι θέλετε να απενεργοποιήσετε τον λογαριασμό σας. Εάν προχωρήσετε:",
     "Add new server…": "Προσθήκη νέου διακομιστή…",
-    "Edit topic": "Επεξεργασία θέματος",
     "Ban from space": "Αποκλεισμός από τον χώρο",
     "Unban from space": "Αναίρεση αποκλεισμού από τον χώρο",
     "Disinvite from room": "Ακύρωση πρόσκλησης από το δωμάτιο",
@@ -2494,7 +2464,8 @@
         "title": "Εργαλεία προγραμματιστή",
         "show_hidden_events": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
         "developer_mode": "Λειτουργία για προγραμματιστές",
-        "view_source_decrypted_event_source": "Αποκρυπτογραφημένη πηγή συμβάντος"
+        "view_source_decrypted_event_source": "Αποκρυπτογραφημένη πηγή συμβάντος",
+        "original_event_source": "Αρχική πηγή συμβάντος"
     },
     "export_chat": {
         "html": "HTML",
@@ -3096,7 +3067,10 @@
             "sas_prompt": "Συγκρίνετε μοναδικά emoji",
             "sas_description": "Συγκρίνετε ένα μοναδικό σύνολο emoji εάν δεν έχετε κάμερα σε καμία από τις δύο συσκευές",
             "qr_or_sas_header": "Επαληθεύστε αυτήν τη συσκευή συμπληρώνοντας ένα από τα παρακάτω:"
-        }
+        },
+        "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
+        "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
+        "verification_requested_toast_title": "Ζητήθηκε επαλήθευση"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -3192,7 +3166,9 @@
         "phone_optional_label": "Τηλέφωνο (προαιρετικό)",
         "email_help_text": "Προσθέστε ένα email για να μπορείτε να κάνετε επαναφορά του κωδικού πρόσβασης σας.",
         "email_phone_discovery_text": "Χρησιμοποιήστε email ή τηλέφωνο για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές.",
-        "email_discovery_text": "Χρησιμοποιήστε email για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές."
+        "email_discovery_text": "Χρησιμοποιήστε email για να είστε προαιρετικά ανιχνεύσιμος από υπάρχουσες επαφές.",
+        "session_logged_out_title": "Αποσυνδέθηκε",
+        "session_logged_out_description": "Για λόγους ασφαλείας, αυτή η συνεδρία έχει τερματιστεί. Παρακαλούμε συνδεθείτε ξανά."
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3469,6 +3445,11 @@
             "private_unencrypted_warning": "Τα προσωπικά σας μηνύματα είναι συνήθως κρυπτογραφημένα, αλλά αυτό το δωμάτιο δεν είναι. Συνήθως αυτό οφείλεται σε μια μη υποστηριζόμενη συσκευή ή μέθοδο που χρησιμοποιείται, όπως προσκλήσεις μέσω email.",
             "enable_encryption_prompt": "Ενεργοποιήστε την κρυπτογράφηση στις ρυθμίσεις.",
             "unencrypted_warning": "Η κρυπτογράφηση από άκρο σε άκρο δεν είναι ενεργοποιημένη"
+        },
+        "edit_topic": "Επεξεργασία θέματος",
+        "unread_notifications_predecessor": {
+            "one": "Έχετε %(count)s μη αναγνωσμένη ειδοποιήση σε προηγούμενη έκδοση αυτού του δωματίου.",
+            "other": "Έχετε %(count)s μη αναγνωσμένες ειδοποιήσεις σε προηγούμενη έκδοση αυτού του δωματίου."
         }
     },
     "file_panel": {
@@ -3483,9 +3464,30 @@
         "intro": "Για να συνεχίσετε, πρέπει να αποδεχτείτε τους όρους αυτής της υπηρεσίας.",
         "column_service": "Υπηρεσία",
         "column_summary": "Περίληψη",
-        "column_document": "Έγγραφο"
+        "column_document": "Έγγραφο",
+        "tac_title": "Οροι και Προϋποθέσεις",
+        "tac_description": "Για να συνεχίσετε να χρησιμοποιείτε τον κεντρικό διακομιστή %(homeserverDomain)s πρέπει να διαβάσετε και να συμφωνήσετε με τους όρους και τις προϋποθέσεις μας.",
+        "tac_button": "Ελέγξτε τους όρους και τις προϋποθέσεις"
     },
     "space_settings": {
         "title": "Ρυθμίσεις - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Δημιουργία δημοσκόπησης",
+        "create_poll_action": "Δημιουργία δημοσκόπησης",
+        "edit_poll_title": "Επεξεργασία δημοσκόπησης",
+        "failed_send_poll_title": "Αποτυχία δημοσίευσης δημοσκόπησης",
+        "failed_send_poll_description": "Λυπούμαστε, η δημοσκόπηση που προσπαθήσατε να δημιουργήσετε δε δημοσιεύτηκε.",
+        "type_heading": "Τύπος δημοσκόπησης",
+        "type_open": "Ανοιχτή δημοσκόπηση",
+        "type_closed": "Κλειστή δημοσκόπηση",
+        "topic_heading": "Ποια είναι η ερώτηση ή το θέμα της δημοσκόπησης;",
+        "topic_label": "Ερώτηση ή θέμα",
+        "options_heading": "Δημιουργία επιλογών",
+        "options_label": "Επιλογή %(number)s",
+        "options_placeholder": "Γράψτε μια επιλογή",
+        "options_add_button": "Προσθήκη επιλογής",
+        "disclosed_notes": "Οι ψηφοφόροι βλέπουν τα αποτελέσματα μόλις ψηφίσουν",
+        "notes": "Τα αποτελέσματα αποκαλύπτονται μόνο όταν τελειώσετε τη δημοσκόπηση"
     }
 }

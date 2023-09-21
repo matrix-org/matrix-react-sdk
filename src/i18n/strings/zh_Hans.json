@@ -24,7 +24,6 @@
     "Favourite": "收藏",
     "Filter room members": "过滤房间成员",
     "Forget room": "忘记房间",
-    "For security, this session has been signed out. Please sign in again.": "出于安全考虑，此会话已被注销。请重新登录。",
     "Historical": "历史",
     "Import E2E room keys": "导入房间端到端加密密钥",
     "Incorrect verification code": "验证码错误",
@@ -39,7 +38,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "服务器可能不可用、超载，或者搜索超时 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "当前服务器可能处于不可用或过载状态，或者你遇到了一个 bug。",
     "Session ID": "会话 ID",
-    "Signed Out": "已退出登录",
     "This email address is already in use": "此邮箱地址已被使用",
     "This email address was not found": "未找到此邮箱地址",
     "A new password must be entered.": "必须输入新密码。",
@@ -205,8 +203,6 @@
     "<a>In reply to</a> <pill>": "<a>答复</a> <pill>",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "如果你之前使用过较新版本的 %(brand)s，则你的会话可能与当前版本不兼容。请关闭此窗口并使用最新版本。",
     "Please enter the code it contains:": "请输入其包含的代码：",
-    "Old cryptography data detected": "检测到旧的加密数据",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
     "Uploading %(filename)s and %(count)s others": {
         "other": "正在上传 %(filename)s 与其他 %(count)s 个文件",
         "one": "正在上传 %(filename)s 与其他 %(count)s 个文件"
@@ -272,9 +268,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "此房间不是公开房间。如果没有成员邀请，你将无法重新加入。",
     "Can't leave Server Notices room": "无法退出服务器公告房间",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "此房间是用于发布来自家服务器的重要讯息的，所以你不能退出它。",
-    "Terms and Conditions": "条款与要求",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "若要继续使用家服务器 %(homeserverDomain)s，你必须浏览并同意我们的条款与要求。",
-    "Review terms and conditions": "浏览条款与要求",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "在你查看并同意 <consentLink>我们的条款与要求</consentLink> 之前，你不能发送任何消息。",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
     "No Audio Outputs detected": "未检测到可用的音频输出方式",
@@ -467,10 +460,6 @@
     "Revoke invite": "撤销邀请",
     "Invited by %(sender)s": "被 %(sender)s 邀请",
     "Remember my selection for this widget": "记住我对此挂件的选择",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "你在此房间的先前版本中有 %(count)s 条未读通知。",
-        "one": "你在此房间的先前版本中有 %(count)s 条未读通知。"
-    },
     "Add Email Address": "添加邮箱",
     "Add Phone Number": "添加电话号码",
     "Call failed due to misconfigured server": "服务器配置错误导致通话失败",
@@ -1291,7 +1280,6 @@
     "Ignored attempt to disable encryption": "已忽略禁用加密的尝试",
     "Confirm your Security Phrase": "确认你的安全短语",
     "There was a problem communicating with the homeserver, please try again later.": "与家服务器通讯时出现问题，请稍后再试。",
-    "Original event source": "原始事件源码",
     "Sint Maarten": "圣马丁岛",
     "Slovenia": "斯洛文尼亚",
     "Singapore": "新加坡",
@@ -1339,7 +1327,6 @@
     "Sending": "正在发送",
     "Delete all": "删除全部",
     "Some of your messages have not been sent": "你的部分消息未被发送",
-    "Verification requested": "已请求验证",
     "Security Key mismatch": "安全密钥不符",
     "Unable to set up keys": "无法设置密钥",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果你全部重置，你将会在没有受信任的会话重新开始、没有受信任的用户，且可能会看不到过去的消息。",
@@ -1594,7 +1581,6 @@
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "看起来你没有安全密钥或者任何其他可以验证的设备。 此设备将无法访问旧的加密消息。为了在这个设备上验证你的身份，你需要重置你的验证密钥。",
     "Skip verification for now": "暂时跳过验证",
     "Really reset verification keys?": "确实要重置验证密钥？",
-    "Create poll": "创建投票",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "other": "正在更新房间… （%(count)s 中的 %(progress)s）",
         "one": "正在更新空间…"
@@ -1635,13 +1621,6 @@
     "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "这个房间位于你不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
-    "Add option": "添加选项",
-    "Write an option": "写个选项",
-    "Option %(number)s": "选项 %(number)s",
-    "Create options": "创建选项",
-    "Question or topic": "问题或主题",
-    "What is your poll question or topic?": "你的投票问题或主题是什么?",
-    "Create Poll": "创建投票",
     "You do not have permission to start polls in this room.": "你无权在此房间启动投票。",
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
@@ -1673,8 +1652,6 @@
         "one": "%(count)s 票",
         "other": "%(count)s 票"
     },
-    "Sorry, the poll you tried to create was not posted.": "抱歉，您尝试创建的投票未被发布。",
-    "Failed to post poll": "发布投票失败",
     "Sorry, your vote was not registered. Please try again.": "抱歉，你的投票未登记。请重试。",
     "Vote not registered": "投票未登记",
     "Developer": "开发者",
@@ -1910,11 +1887,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "尝试验证你的邀请时返回错误（%(errcode)s）。你可以尝试把这个信息传给邀请你的人。",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为此家服务器已被其管理员屏蔽。请<a>联系你的服务管理员</a>以继续使用服务。",
     "Spell check": "拼写检查",
-    "Results are only revealed when you end the poll": "结果仅在你结束投票后展示",
-    "Voters see results as soon as they have voted": "投票者一投完票就能看到结果",
-    "Closed poll": "封闭式投票",
-    "Open poll": "开放式投票",
-    "Poll type": "投票类型",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
     "Sessions": "会话",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。",
@@ -1955,9 +1927,6 @@
     "Interactively verify by emoji": "用表情符号交互式验证",
     "Show: %(instance)s rooms (%(server)s)": "显示：%(instance)s房间（%(server)s）",
     "Show: Matrix rooms": "显示：Matrix房间",
-    "Click to read topic": "点击阅读话题",
-    "Edit topic": "编辑话题",
-    "Edit poll": "编辑投票",
     "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
     "Choose a locale": "选择区域设置",
     "Empty room (was %(oldName)s)": "空房间（曾是%(oldName)s）",
@@ -2740,7 +2709,8 @@
         "low_bandwidth_mode_description": "需要兼容的家服务器。",
         "low_bandwidth_mode": "低带宽模式",
         "developer_mode": "开发者模式",
-        "view_source_decrypted_event_source": "解密的事件源码"
+        "view_source_decrypted_event_source": "解密的事件源码",
+        "original_event_source": "原始事件源码"
     },
     "export_chat": {
         "html": "HTML",
@@ -3360,7 +3330,10 @@
             "sas_description": "若你在两个设备上都没有相机，比较唯一一组表情符号",
             "qr_or_sas": "%(qrCode)s或%(emojiCompare)s",
             "qr_or_sas_header": "完成以下操作之一来验证此设备："
-        }
+        },
+        "old_version_detected_title": "检测到旧的加密数据",
+        "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
+        "verification_requested_toast_title": "已请求验证"
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3458,7 +3431,9 @@
         "phone_optional_label": "电话号码（可选）",
         "email_help_text": "添加电子邮箱以重置你的密码。",
         "email_phone_discovery_text": "使用电子邮箱或电话以选择性地被现有联系人搜索。",
-        "email_discovery_text": "使用电子邮箱以选择性地被现有联系人搜索。"
+        "email_discovery_text": "使用电子邮箱以选择性地被现有联系人搜索。",
+        "session_logged_out_title": "已退出登录",
+        "session_logged_out_description": "出于安全考虑，此会话已被注销。请重新登录。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3753,6 +3728,12 @@
             "private_unencrypted_warning": "你的私人消息通常是加密的，但此房间不是。这通常是因为使用了不受支持的设备或方法，例如电子邮件邀请。",
             "enable_encryption_prompt": "在设置中启用加密。",
             "unencrypted_warning": "未启用端到端加密"
+        },
+        "edit_topic": "编辑话题",
+        "read_topic": "点击阅读话题",
+        "unread_notifications_predecessor": {
+            "other": "你在此房间的先前版本中有 %(count)s 条未读通知。",
+            "one": "你在此房间的先前版本中有 %(count)s 条未读通知。"
         }
     },
     "file_panel": {
@@ -3767,9 +3748,30 @@
         "intro": "要继续，你需要接受此服务协议。",
         "column_service": "服务",
         "column_summary": "总结",
-        "column_document": "文档"
+        "column_document": "文档",
+        "tac_title": "条款与要求",
+        "tac_description": "若要继续使用家服务器 %(homeserverDomain)s，你必须浏览并同意我们的条款与要求。",
+        "tac_button": "浏览条款与要求"
     },
     "space_settings": {
         "title": "设置 - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "创建投票",
+        "create_poll_action": "创建投票",
+        "edit_poll_title": "编辑投票",
+        "failed_send_poll_title": "发布投票失败",
+        "failed_send_poll_description": "抱歉，您尝试创建的投票未被发布。",
+        "type_heading": "投票类型",
+        "type_open": "开放式投票",
+        "type_closed": "封闭式投票",
+        "topic_heading": "你的投票问题或主题是什么?",
+        "topic_label": "问题或主题",
+        "options_heading": "创建选项",
+        "options_label": "选项 %(number)s",
+        "options_placeholder": "写个选项",
+        "options_add_button": "添加选项",
+        "disclosed_notes": "投票者一投完票就能看到结果",
+        "notes": "结果仅在你结束投票后展示"
     }
 }

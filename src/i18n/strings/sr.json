@@ -170,12 +170,8 @@
     "Are you sure you want to reject the invitation?": "Да ли сте сигурни да желите одбити позивницу?",
     "Failed to reject invitation": "Нисам успео да одбијем позивницу",
     "Are you sure you want to leave the room '%(roomName)s'?": "Да ли сте сигурни да желите напустити собу „%(roomName)s“?",
-    "Signed Out": "Одјављен",
-    "For security, this session has been signed out. Please sign in again.": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново.",
-    "Old cryptography data detected": "Нађени су стари криптографски подаци",
     "<a>In reply to</a> <pill>": "<a>Као одговор за</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Ова соба није јавна. Нећете моћи да поново приступите без позивнице.",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
     "Connectivity to the server has been lost.": "Веза ка серверу је прекинута.",
     "Sent messages will be stored until your connection has returned.": "Послате поруке биће сачуване док се веза не успостави поново.",
     "You seem to be uploading files, are you sure you want to quit?": "Изгледа да отпремате датотеке. Да ли сте сигурни да желите изаћи?",
@@ -262,9 +258,6 @@
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
     "Can't leave Server Notices room": "Не могу да напустим собу са напоменама сервера",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ова соба се користи за важне поруке са сервера. Не можете напустити ову собу.",
-    "Terms and Conditions": "Услови коришћења",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Да наставите са коришћењем сервера %(homeserverDomain)s морате погледати и пристати на наше услове коришћења.",
-    "Review terms and conditions": "Погледај услове коришћења",
     "Share Link to User": "Подели везу са корисником",
     "Share room": "Подели собу",
     "Share Room": "Подели собу",
@@ -1336,7 +1329,9 @@
             "sas_no_match": "Не поклапају се",
             "sas_match": "Поклапају се",
             "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације."
-        }
+        },
+        "old_version_detected_title": "Нађени су стари криптографски подаци",
+        "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве."
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1358,7 +1353,9 @@
         "phone_optional_label": "Телефон (необавезно)",
         "email_help_text": "Додајте е-пошту да бисте могли да ресетујете лозинку.",
         "email_phone_discovery_text": "Користите е-пошту или телефон да би вас постојећи контакти опционално могли открити.",
-        "email_discovery_text": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти."
+        "email_discovery_text": "Користите е-пошту да бисте је по жељи могли открити постојећи контакти.",
+        "session_logged_out_title": "Одјављен",
+        "session_logged_out_description": "Зарад безбедности, одјављени сте из ове сесије. Пријавите се поново."
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1481,6 +1478,9 @@
         "intro": "За наставак, морате прихватити услове коришћења ове услуге.",
         "column_service": "Услуга",
         "column_summary": "Сажетак",
-        "column_document": "Документ"
+        "column_document": "Документ",
+        "tac_title": "Услови коришћења",
+        "tac_description": "Да наставите са коришћењем сервера %(homeserverDomain)s морате погледати и пристати на наше услове коришћења.",
+        "tac_button": "Погледај услове коришћења"
     }
 }

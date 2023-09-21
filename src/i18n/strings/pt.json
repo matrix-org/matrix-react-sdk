@@ -15,7 +15,6 @@
     "Favourite": "Favorito",
     "Filter room members": "Filtrar integrantes da sala",
     "Forget room": "Esquecer sala",
-    "For security, this session has been signed out. Please sign in again.": "Por questões de segurança, esta sessão foi encerrada. Por gentileza conecte-se novamente.",
     "Historical": "Histórico",
     "Import E2E room keys": "Importar chave de criptografia ponta-a-ponta (E2E) da sala",
     "Invalid Email Address": "Endereço de email inválido",
@@ -34,7 +33,6 @@
     "Rooms": "Salas",
     "Server may be unavailable, overloaded, or you hit a bug.": "O servidor pode estar indisponível ou sobrecarregado, ou então você encontrou uma falha no sistema.",
     "Session ID": "Identificador de sessão",
-    "Signed Out": "Deslogar",
     "This doesn't appear to be a valid email address": "Este não aparenta ser um endereço de email válido",
     "This room is not accessible by remote Matrix servers": "Esta sala não é acessível para servidores Matrix remotos",
     "Unable to add email address": "Não foi possível adicionar endereço de email",
@@ -804,7 +802,9 @@
         "phone_label": "Telefone",
         "email_help_text": "Adicione um email para poder repôr a palavra-passe.",
         "email_phone_discovery_text": "Use email ou telefone para, opcionalmente, ser detectável por contactos existentes.",
-        "email_discovery_text": "Use email para, opcionalmente, ser detectável por contactos existentes."
+        "email_discovery_text": "Use email para, opcionalmente, ser detectável por contactos existentes.",
+        "session_logged_out_title": "Deslogar",
+        "session_logged_out_description": "Por questões de segurança, esta sessão foi encerrada. Por gentileza conecte-se novamente."
     },
     "export_chat": {
         "messages": "Mensagens"

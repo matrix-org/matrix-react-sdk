@@ -178,10 +178,6 @@
     "Failed to reject invitation": "Rifiuto dell'invito fallito",
     "This room is not public. You will not be able to rejoin without an invite.": "Questa stanza non è pubblica. Non potrai rientrare senza un invito.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Sei sicuro di volere uscire dalla stanza '%(roomName)s'?",
-    "Signed Out": "Disconnesso",
-    "For security, this session has been signed out. Please sign in again.": "Per sicurezza questa sessione è stata disconnessa. Accedi di nuovo.",
-    "Old cryptography data detected": "Rilevati dati di crittografia obsoleti",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
     "Connectivity to the server has been lost.": "Connessione al server persa.",
     "Sent messages will be stored until your connection has returned.": "I messaggi inviati saranno salvati fino al ritorno della connessione.",
     "You seem to be uploading files, are you sure you want to quit?": "Sembra che tu stia inviando file, sei sicuro di volere uscire?",
@@ -260,9 +256,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile.",
     "Can't leave Server Notices room": "Impossibile abbandonare la stanza Notifiche Server",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Questa stanza viene usata per messaggi importanti dall'homeserver, quindi non puoi lasciarla.",
-    "Terms and Conditions": "Termini e condizioni",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Per continuare a usare l'homeserver %(homeserverDomain)s devi leggere e accettare i nostri termini e condizioni.",
-    "Review terms and conditions": "Leggi i termini e condizioni",
     "Replying": "Rispondere",
     "Popout widget": "Oggetto a comparsa",
     "Share Link to User": "Condividi link utente",
@@ -469,10 +462,6 @@
     "Revoke invite": "Revoca invito",
     "Invited by %(sender)s": "Invitato/a da %(sender)s",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "other": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza.",
-        "one": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza."
-    },
     "The file '%(fileName)s' failed to upload.": "Invio del file '%(fileName)s' fallito.",
     "The server does not support the room version specified.": "Il server non supporta la versione di stanza specificata.",
     "The user's homeserver does not support the version of the room.": "L'homeserver dell'utente non supporta la versione della stanza.",
@@ -1331,7 +1320,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Abbiamo chiesto al browser di ricordare quale homeserver usi per farti accedere, ma sfortunatamente l'ha dimenticato. Vai alla pagina di accesso e riprova.",
     "We couldn't log you in": "Non abbiamo potuto farti accedere",
     "Recently visited rooms": "Stanze visitate di recente",
-    "Original event source": "Sorgente dell'evento originale",
     "%(count)s members": {
         "one": "%(count)s membro",
         "other": "%(count)s membri"
@@ -1391,7 +1379,6 @@
     "Invited people will be able to read old messages.": "Le persone invitate potranno leggere i vecchi messaggi.",
     "You most likely do not want to reset your event index store": "Probabilmente non hai bisogno di reinizializzare il tuo archivio indice degli eventi",
     "Avatar": "Avatar",
-    "Verification requested": "Verifica richiesta",
     "We couldn't create your DM.": "Non abbiamo potuto creare il tuo messaggio diretto.",
     "Consult first": "Prima consulta",
     "Reset event store?": "Reinizializzare l'archivio eventi?",
@@ -1594,7 +1581,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "In risposta a <a>questo messaggio</a>",
     "Export chat": "Esporta conversazione",
-    "Create poll": "Crea sondaggio",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Aggiornamento spazio...",
         "other": "Aggiornamento spazi... (%(progress)s di %(count)s)"
@@ -1635,13 +1621,6 @@
     "The homeserver the user you're verifying is connected to": "L'homeserver al quale è connesso l'utente che stai verificando",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Questa stanza non fa un bridge dei messaggi con alcuna piattaforma. <a>Maggiori informazioni.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Questa stanza è in alcuni spazi di cui non sei amministratore. In quegli spazi, la vecchia stanza verrà ancora mostrata, ma alla gente verrà chiesto di entrare in quella nuova.",
-    "Add option": "Aggiungi opzione",
-    "Write an option": "Scrivi un'opzione",
-    "Option %(number)s": "Opzione %(number)s",
-    "Create options": "Crea opzioni",
-    "Question or topic": "Domanda o argomento",
-    "What is your poll question or topic?": "Qual è la domanda o l'argomento del sondaggio?",
-    "Create Poll": "Crea sondaggio",
     "You do not have permission to start polls in this room.": "Non hai i permessi per creare sondaggi in questa stanza.",
     "Copy link to thread": "Copia link nella conversazione",
     "Thread options": "Opzioni conversazione",
@@ -1673,8 +1652,6 @@
         "one": "%(spaceName)s e altri %(count)s",
         "other": "%(spaceName)s e altri %(count)s"
     },
-    "Sorry, the poll you tried to create was not posted.": "Spiacenti, il sondaggio che hai provato a creare non è stato inviato.",
-    "Failed to post poll": "Invio del sondaggio fallito",
     "Sorry, your vote was not registered. Please try again.": "Spiacenti, il tuo voto non è stato registrato. Riprova.",
     "Vote not registered": "Voto non registrato",
     "Developer": "Sviluppatore",
@@ -1777,14 +1754,8 @@
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Join %(roomAddress)s": "Entra in %(roomAddress)s",
-    "Edit poll": "Modifica sondaggio",
     "Sorry, you can't edit a poll after votes have been cast.": "Spiacenti, non puoi modificare un sondaggio dopo che sono stati inviati voti.",
     "Can't edit poll": "Impossibile modificare il sondaggio",
-    "Results are only revealed when you end the poll": "I risultati verranno rivelati solo quando termini il sondaggio",
-    "Voters see results as soon as they have voted": "I votanti vedranno i risultati appena avranno votato",
-    "Closed poll": "Sondaggio chiuso",
-    "Open poll": "Apri sondaggio",
-    "Poll type": "Tipo sondaggio",
     "Results will be visible when the poll is ended": "I risultati saranno visibili quando il sondaggio è terminato",
     "Open thread": "Apri conversazione",
     "Search Dialog": "Finestra di ricerca",
@@ -1915,8 +1886,6 @@
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Per creare il tuo account, apri il collegamento nell'email che abbiamo inviato a %(emailAddress)s.",
     "Unread email icon": "Icona email non letta",
     "Check your email to continue": "Controlla l'email per continuare",
-    "Click to read topic": "Clicca per leggere l'argomento",
-    "Edit topic": "Modifica argomento",
     "Joining…": "Ingresso…",
     "%(count)s people joined": {
         "one": "È entrata %(count)s persona",
@@ -2105,7 +2074,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
     "Waiting for partner to confirm…": "In attesa che il partner confermi…",
     "Adding…": "Aggiunta…",
-    "Write something…": "Scrivi qualcosa…",
     "Rejecting invite…": "Rifiuto dell'invito…",
     "Joining room…": "Ingresso nella stanza…",
     "Joining space…": "Ingresso nello spazio…",
@@ -3092,7 +3060,8 @@
         "low_bandwidth_mode": "Modalità larghezza di banda bassa",
         "developer_mode": "Modalità sviluppatore",
         "view_source_decrypted_event_source": "Sorgente dell'evento decifrato",
-        "view_source_decrypted_event_source_unavailable": "Sorgente decifrata non disponibile"
+        "view_source_decrypted_event_source_unavailable": "Sorgente decifrata non disponibile",
+        "original_event_source": "Sorgente dell'evento originale"
     },
     "export_chat": {
         "html": "HTML",
@@ -3748,7 +3717,10 @@
             "sas_description": "Confrontate un set di emoji univoci se non avete una fotocamera sui dispositivi",
             "qr_or_sas": "%(qrCode)s o %(emojiCompare)s",
             "qr_or_sas_header": "Verifica questo dispositivo completando una delle seguenti cose:"
-        }
+        },
+        "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
+        "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
+        "verification_requested_toast_title": "Verifica richiesta"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3863,7 +3835,9 @@
         "phone_optional_label": "Telefono (facoltativo)",
         "email_help_text": "Aggiungi un'email per poter reimpostare la password.",
         "email_phone_discovery_text": "Usa l'email o il telefono per essere facoltativamente trovabile dai contatti esistenti.",
-        "email_discovery_text": "Usa l'email per essere facoltativamente trovabile dai contatti esistenti."
+        "email_discovery_text": "Usa l'email per essere facoltativamente trovabile dai contatti esistenti.",
+        "session_logged_out_title": "Disconnesso",
+        "session_logged_out_description": "Per sicurezza questa sessione è stata disconnessa. Accedi di nuovo."
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -4175,6 +4149,12 @@
             "private_unencrypted_warning": "I tuoi messaggi privati normalmente sono cifrati, ma questa stanza non lo è. Di solito ciò è dovuto ad un dispositivo non supportato o dal metodo usato, come gli inviti per email.",
             "enable_encryption_prompt": "Attiva la crittografia nelle impostazioni.",
             "unencrypted_warning": "La crittografia end-to-end non è attiva"
+        },
+        "edit_topic": "Modifica argomento",
+        "read_topic": "Clicca per leggere l'argomento",
+        "unread_notifications_predecessor": {
+            "other": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza.",
+            "one": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza."
         }
     },
     "file_panel": {
@@ -4189,9 +4169,31 @@
         "intro": "Per continuare devi accettare le condizioni di servizio.",
         "column_service": "Servizio",
         "column_summary": "Riepilogo",
-        "column_document": "Documento"
+        "column_document": "Documento",
+        "tac_title": "Termini e condizioni",
+        "tac_description": "Per continuare a usare l'homeserver %(homeserverDomain)s devi leggere e accettare i nostri termini e condizioni.",
+        "tac_button": "Leggi i termini e condizioni"
     },
     "space_settings": {
         "title": "Impostazioni - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Crea sondaggio",
+        "create_poll_action": "Crea sondaggio",
+        "edit_poll_title": "Modifica sondaggio",
+        "failed_send_poll_title": "Invio del sondaggio fallito",
+        "failed_send_poll_description": "Spiacenti, il sondaggio che hai provato a creare non è stato inviato.",
+        "type_heading": "Tipo sondaggio",
+        "type_open": "Apri sondaggio",
+        "type_closed": "Sondaggio chiuso",
+        "topic_heading": "Qual è la domanda o l'argomento del sondaggio?",
+        "topic_label": "Domanda o argomento",
+        "topic_placeholder": "Scrivi qualcosa…",
+        "options_heading": "Crea opzioni",
+        "options_label": "Opzione %(number)s",
+        "options_placeholder": "Scrivi un'opzione",
+        "options_add_button": "Aggiungi opzione",
+        "disclosed_notes": "I votanti vedranno i risultati appena avranno votato",
+        "notes": "I risultati verranno rivelati solo quando termini il sondaggio"
     }
 }

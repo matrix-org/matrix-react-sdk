@@ -112,8 +112,6 @@
     "Source URL": "Upprunaslóð",
     "All messages": "Öll skilaboð",
     "Low Priority": "Lítill forgangur",
-    "Signed Out": "Skráð/ur út",
-    "Terms and Conditions": "Skilmálar og kvaðir",
     "Invite to this room": "Bjóða inn á þessa spjallrás",
     "Notifications": "Tilkynningar",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
@@ -634,7 +632,6 @@
     "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
     "Server name": "Heiti þjóns",
     "Looks good": "Lítur vel út",
-    "Create options": "Búa til valkosti",
     "Information": "Upplýsingar",
     "Rotate Right": "Snúa til hægri",
     "Rotate Left": "Snúa til vinstri",
@@ -842,11 +839,6 @@
     "Your server": "Netþjónninn þinn",
     "Can't find this server or its room list": "Fann ekki þennan netþjón eða spjallrásalista hans",
     "This address is already in use": "Þetta vistfang er nú þegar í notkun",
-    "Open poll": "Opna könnun",
-    "Poll type": "Tegund könnunar",
-    "Edit poll": "Breyta könnun",
-    "Create Poll": "Búa til könnun",
-    "Create poll": "Búa til könnun",
     "Share content": "Deila efni",
     "Share entire screen": "Deila öllum skjánum",
     "Widget ID": "Auðkenni viðmótshluta",
@@ -930,7 +922,6 @@
     "If they don't match, the security of your communication may be compromised.": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð.",
     "Confirm by comparing the following with the User Settings in your other session:": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
     "Start using Key Backup": "Byrja að nota öryggisafrit dulritunarlykla",
-    "Closed poll": "Lokuð könnun",
     "No votes cast": "Engin atkvæði greidd",
     "This room has been replaced and is no longer active.": "Þessari spjallrás hefur verið skipt út og er hún ekki lengur virk.",
     "Delete Backup": "Eyða öryggisafriti",
@@ -959,7 +950,6 @@
     "Spanner": "Skrúflykill",
     "Waiting for %(displayName)s to verify…": "Bíð eftir að %(displayName)s sannreyni…",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Til að halda áfram að nota %(homeserverDomain)s heimaþjóninn þarftu að yfirfara og samþykkja skilmála okkar og kvaðir.",
     "Enter phone number (required on this homeserver)": "Settu inn símanúmer (nauðsynlegt á þessum heimaþjóni)",
     "Enter email address (required on this homeserver)": "Settu inn tölvupóstfang (nauðsynlegt á þessum heimaþjóni)",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -1207,9 +1197,6 @@
     "This address does not point at this room": "Vistfangið beinir ekki á þessa spjallrás",
     "Please provide an address": "Gefðu upp vistfang",
     "Some characters not allowed": "Sumir stafir eru óleyfilegir",
-    "Results are only revealed when you end the poll": "Niðurstöður birtast einungis eftir að þú hefur lokað könnuninni",
-    "Voters see results as soon as they have voted": "Kjósendur sjá niðurstöðurnar þegar þeir hafa kosið",
-    "Sorry, the poll you tried to create was not posted.": "Því miður, könnunin sem þú varst að reyna að útbúa birtist ekki.",
     "Joined": "Gekk í hópinn",
     "Enter a server name": "Settu inn nafn á þjóni",
     "e.g. my-room": "t.d. mín-spjallrás",
@@ -1217,12 +1204,6 @@
     "In reply to <a>this message</a>": "Sem svar við <a>þessum skilaboðum</a>",
     "Custom level": "Sérsniðið stig",
     "Power level": "Stig valda",
-    "Add option": "Bæta við valkosti",
-    "Write an option": "Skrifaðu valmöguleika",
-    "Option %(number)s": "Valkostur %(number)s",
-    "Question or topic": "Spurning eða viðfangsefni",
-    "What is your poll question or topic?": "Hver er spurning eða viðfangsefni könnunarinnar?",
-    "Failed to post poll": "Mistókst að birta könnun",
     "Language Dropdown": "Fellilisti tungumála",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -1366,8 +1347,6 @@
     "Verify this device": "Sannreyna þetta tæki",
     "Search names and descriptions": "Leita í nöfnum og lýsingum",
     "toggle event": "víxla atburði af/á",
-    "Verification requested": "Beðið um sannvottun",
-    "Review terms and conditions": "Yfirfara skilmála og kvaðir",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "Token incorrect": "Rangt teikn",
     "You are sharing your live location": "Þú ert að deila staðsetninu þinni í rauntíma",
@@ -1413,7 +1392,6 @@
     "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
     "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
     "Joining": "Geng í hópinn",
-    "Old cryptography data detected": "Gömul dulritunargögn fundust",
     "Password is allowed, but unsafe": "Lykilorð er leyfilegt, en óöruggt",
     "Nice, strong password!": "Fínt, sterkt lykilorð!",
     "Keys restored": "Dulritunarlyklar endurheimtir",
@@ -1502,7 +1480,6 @@
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
     "Really reset verification keys?": "Viltu í alvörunni endurstilla sannvottunarlyklana?",
-    "For security, this session has been signed out. Please sign in again.": "Í öryggisskyni hefur verið skráð út þessari setu. Skráðu þig aftur inn.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ertu viss um að þú viljir yfirgefa spjallrásina '%(roomName)s'?",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Ertu viss um að þú viljir yfirgefa svæðið '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Þetta svæði er ekki opinbert. Þú munt ekki geta tekið aftur þátt nema að vera boðið.",
@@ -1718,8 +1695,6 @@
     "Friends and family": "Vinir og fjölskylda",
     "We'll help you get connected.": "Við munum hjálpa þér að tengjast.",
     "Choose a locale": "Veldu staðfærslu",
-    "Click to read topic": "Smelltu til að lesa umfjöllunarefni",
-    "Edit topic": "Breyta umfjöllunarefni",
     "Video call ended": "Mynddsímtali lauk",
     "Sessions": "Setur",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
@@ -3174,7 +3149,9 @@
             "sas_description": "Berðu saman einstakar táknmyndir ef ekki er myndavél á tækjunum",
             "qr_or_sas": "%(qrCode)s eða %(emojiCompare)s",
             "qr_or_sas_header": "Sannreyndu þetta tæki með því að ljúka einu af eftirtöldu:"
-        }
+        },
+        "old_version_detected_title": "Gömul dulritunargögn fundust",
+        "verification_requested_toast_title": "Beðið um sannvottun"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3277,7 +3254,9 @@
         "phone_optional_label": "Sími (valfrjálst)",
         "email_help_text": "Bættu við tölvupóstfangi til að geta endurstillt lykilorðið þitt.",
         "email_phone_discovery_text": "Notaðu tölvupóstfang eða símanúmer til að geta verið finnanleg/ur fyrir tengiliðina þína.",
-        "email_discovery_text": "Notaðu tölvupóstfang til að geta verið finnanleg/ur fyrir tengiliðina þína."
+        "email_discovery_text": "Notaðu tölvupóstfang til að geta verið finnanleg/ur fyrir tengiliðina þína.",
+        "session_logged_out_title": "Skráð/ur út",
+        "session_logged_out_description": "Í öryggisskyni hefur verið skráð út þessari setu. Skráðu þig aftur inn."
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3557,7 +3536,9 @@
             "private_unencrypted_warning": "Einkaskilaboðin þín eru venjulega dulrituð, en þessi spjallrás er það hinsvegar ekki. Venjulega kemur þetta til vegna tækis sem ekki sé stutt, eða aðferðarinnar sem sé notuð, eins og t.d. boðum í tölvupósti.",
             "enable_encryption_prompt": "Virkjaðu dulritun í stillingum.",
             "unencrypted_warning": "Enda-í-enda dulritun er ekki virkjuð"
-        }
+        },
+        "edit_topic": "Breyta umfjöllunarefni",
+        "read_topic": "Smelltu til að lesa umfjöllunarefni"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3571,9 +3552,30 @@
         "intro": "Þú verður að samþykkja þjónustuskilmálana til að geta haldið áfram.",
         "column_service": "Þjónusta",
         "column_summary": "Yfirlit",
-        "column_document": "Skjal"
+        "column_document": "Skjal",
+        "tac_title": "Skilmálar og kvaðir",
+        "tac_description": "Til að halda áfram að nota %(homeserverDomain)s heimaþjóninn þarftu að yfirfara og samþykkja skilmála okkar og kvaðir.",
+        "tac_button": "Yfirfara skilmála og kvaðir"
     },
     "space_settings": {
         "title": "Stillingar - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Búa til könnun",
+        "create_poll_action": "Búa til könnun",
+        "edit_poll_title": "Breyta könnun",
+        "failed_send_poll_title": "Mistókst að birta könnun",
+        "failed_send_poll_description": "Því miður, könnunin sem þú varst að reyna að útbúa birtist ekki.",
+        "type_heading": "Tegund könnunar",
+        "type_open": "Opna könnun",
+        "type_closed": "Lokuð könnun",
+        "topic_heading": "Hver er spurning eða viðfangsefni könnunarinnar?",
+        "topic_label": "Spurning eða viðfangsefni",
+        "options_heading": "Búa til valkosti",
+        "options_label": "Valkostur %(number)s",
+        "options_placeholder": "Skrifaðu valmöguleika",
+        "options_add_button": "Bæta við valkosti",
+        "disclosed_notes": "Kjósendur sjá niðurstöðurnar þegar þeir hafa kosið",
+        "notes": "Niðurstöður birtast einungis eftir að þú hefur lokað könnuninni"
     }
 }

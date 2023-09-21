@@ -673,14 +673,9 @@
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "ບໍ່ສາມາດໂຫຼດກິດຈະກຳທີ່ຕອບກັບມາໄດ້, ມັນບໍ່ຢູ່ ຫຼື ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງມັນ.",
     "Custom level": "ລະດັບທີ່ກໍາຫນົດເອງ",
     "Power level": "ລະດັບພະລັງງານ",
-    "Results are only revealed when you end the poll": "ຜົນໄດ້ຮັບຈະຖືກເປີດເຜີຍເມື່ອທ່ານສິ້ນສຸດແບບສຳຫຼວດເທົ່ານັ້ນ",
-    "Voters see results as soon as they have voted": "ຜູ້ລົງຄະແນນເຫັນຜົນທັນທີທີ່ເຂົາເຈົ້າໄດ້ລົງຄະແນນສຽງ",
-    "Add option": "ເພີ່ມຕົວເລືອກ",
-    "Write an option": "ຂຽນຕົວເລືອກ",
     "This address is already in use": "ທີ່ຢູ່ນີ້ຖືກໃຊ້ແລ້ວ",
     "This address is available to use": "ທີ່ຢູ່ນີ້ສາມາດໃຊ້ໄດ້",
     "This address does not point at this room": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
-    "Option %(number)s": "ຕົວເລືອກ %(number)s",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
     "There was a problem communicating with the homeserver, please try again later.": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
@@ -706,7 +701,6 @@
     "Device verified": "ຢັ້ງຢືນອຸປະກອນແລ້ວ",
     "Verify this device": "ຢັ້ງຢືນອຸປະກອນນີ້",
     "Unable to verify this device": "ບໍ່ສາມາດຢັ້ງຢືນອຸປະກອນນີ້ໄດ້",
-    "Original event source": "ແຫຼ່ງຕົ້ນສະບັບ",
     "Could not load user profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
     "Uploading %(filename)s and %(count)s others": {
@@ -726,10 +720,6 @@
     "Joined": "ເຂົ້າຮ່ວມແລ້ວ",
     "You don't have permission": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ",
     "Joining": "ເຂົ້າຮ່ວມ",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້.",
-        "other": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້."
-    },
     "Failed to reject invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
     "No more results": "ບໍ່ມີຜົນອີກຕໍ່ໄປ",
     "Server may be unavailable, overloaded, or search timed out :(": "ເຊີບເວີອາດຈະບໍ່ມີຢູ່, ໂຫຼດເກີນ, ຫຼື ໝົດເວລາການຊອກຫາ :(",
@@ -746,13 +736,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ຖືກສົ່ງເນື່ອງຈາກ homeserver ນີ້ຮອດຂີດຈຳກັດສູງສູດຜູ້ໃຊ້ລາຍເດືອນແລ້ວ. ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ເບິ່ງຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການ.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "ທ່ານບໍ່ສາມາດສົ່ງຂໍ້ຄວາມໄດ້ຈົນກ່ວາທ່ານຈະທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບ <consentLink>ຂໍ້ກໍານົດແລະເງື່ອນໄຂຂອງພວກເຮົາ</consentLink>.",
     "Create new room": "ສ້າງຫ້ອງໃຫມ່",
-    "Verification requested": "ຂໍການຢັ້ງຢືນ",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
-    "Old cryptography data detected": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
-    "Review terms and conditions": "ກວດເບິ່ງຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "ເພື່ອສືບຕໍ່ນຳໃຊ້ %(homeserverDomain)s homeserver ທ່ານຕ້ອງທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບເງື່ອນໄຂ ແລະ ເງື່ອນໄຂຂອງພວກເຮົາ.",
-    "Terms and Conditions": "ຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
-    "Signed Out": "ອອກຈາກລະບົບ",
     "Unable to copy a link to the room to the clipboard.": "ບໍ່ສາມາດສຳເນົາລິ້ງໄປຫາຫ້ອງໃສ່ຄລິບບອດໄດ້.",
     "Unable to copy room link": "ບໍ່ສາມາດສຳເນົາລິ້ງຫ້ອງໄດ້",
     "Failed to forget room %(errCode)s": "ບໍ່ສາມາດລືມຫ້ອງ ໄດ້%(errCode)s",
@@ -997,7 +980,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "ຖ້າທ່ານດຳເນິນການ, ກະລຸນາຮັບຊາບວ່າຂໍ້ຄວາມຂອງທ່ານຈະບໍ່ຖືກລຶບ, ແຕ່ການຊອກຫາອາດຈະຖືກຫຼຸດໜ້ອຍລົງເປັນເວລາສອງສາມນາທີໃນຂະນະທີ່ດັດສະນີຈະຖືກສ້າງໃໝ່",
     "You most likely do not want to reset your event index store": "ສ່ວນຫຼາຍແລ້ວທ່ານບໍ່ຢາກຈະກູ້ຄືນດັດສະນີຂອງທ່ານ",
     "Reset event store?": "ກູ້ຄືນການຕັ້ງຄ່າບໍ?",
-    "For security, this session has been signed out. Please sign in again.": "ເພື່ອຄວາມປອດໄພ, ລະບົບນີ້ໄດ້ຖືກອອກຈາກລະບົບແລ້ວ. ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງ.",
     "Couldn't load page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້",
     "Error downloading audio": "ເກີດຄວາມຜິດພາດໃນການດາວໂຫຼດສຽງ",
     "Unnamed audio": "ສຽງບໍ່ມີຊື່",
@@ -1190,17 +1172,6 @@
     "Collapse quotes": "ຫຍໍ້ວົງຢືມ",
     "Can't create a thread from an event with an existing relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ",
     "View live location": "ເບິ່ງສະຖານທີ່ປັດຈຸບັນ",
-    "Create options": "ສ້າງທາງເລືອກ",
-    "Question or topic": "ຄໍາຖາມ ຫຼື ຫົວຂໍ້",
-    "What is your poll question or topic?": "ຄຳຖາມ ຫຼື ຫົວຂໍ້ການສຳຫຼວດຂອງທ່ານແມ່ນຫຍັງ?",
-    "Closed poll": "ປິດການສຳຫຼວດ",
-    "Open poll": "ເປີດການສຳຫຼວດ",
-    "Poll type": "ປະເພດແບບສຳຫຼວດ",
-    "Sorry, the poll you tried to create was not posted.": "ຂໍອະໄພ, ແບບສຳຫຼວດທີ່ທ່ານພະຍາຍາມສ້າງບໍ່ໄດ້ໂພສ.",
-    "Failed to post poll": "ການໂພສແບບສຳຫຼວດບໍ່ສຳເລັດ",
-    "Edit poll": "ແກ້ໄຂແບບສຳຫຼວດ",
-    "Create Poll": "ສ້າງແບບສຳຫຼວດ",
-    "Create poll": "ສ້າງແບບສຳຫຼວດ",
     "Language Dropdown": "ເລື່ອນພາສາລົງ",
     "Information": "ຂໍ້ມູນ",
     "Rotate Right": "ໝຸນດ້ານຂວາ",
@@ -1915,8 +1886,6 @@
     "Check your email to continue": "ກວດເມວຂອງທ່ານເພື່ອສືບຕໍ່",
     "An error occurred whilst sharing your live location, please try again": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ, ກະລຸນາລອງໃໝ່",
     "An error occurred whilst sharing your live location": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ",
-    "Click to read topic": "ກົດເພື່ອອ່ານຫົວຂໍ້",
-    "Edit topic": "ແກ້ໄຂຫົວຂໍ້",
     "Joining…": "ກຳລັງເຂົ້າ…",
     "%(count)s people joined": {
         "one": "%(count)s ຄົນເຂົ້າຮ່ວມ\"",
@@ -2506,7 +2475,8 @@
         "title": "ເຄື່ອງມືພັດທະນາ",
         "show_hidden_events": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
         "developer_mode": "ຮູບແບບນັກພັດທະນາ",
-        "view_source_decrypted_event_source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້"
+        "view_source_decrypted_event_source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້",
+        "original_event_source": "ແຫຼ່ງຕົ້ນສະບັບ"
     },
     "export_chat": {
         "html": "HTML",
@@ -3108,7 +3078,10 @@
             "sas_prompt": "ປຽບທຽບ emoji ທີ່ເປັນເອກະລັກ",
             "sas_description": "ປຽບທຽບຊຸດ emoji ທີ່ເປັນເອກະລັກຖ້າຫາກທ່ານບໍ່ມີກ້ອງຖ່າຍຮູບຢູ່ໃນອຸປະກອນໃດໜຶ່ງ",
             "qr_or_sas_header": "ຢັ້ງຢືນອຸປະກອນນີ້ໂດຍການເຮັດສິ່ງໃດໜຶ່ງຕໍ່ໄປນີ້:"
-        }
+        },
+        "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
+        "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
+        "verification_requested_toast_title": "ຂໍການຢັ້ງຢືນ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -3206,7 +3179,9 @@
         "phone_optional_label": "ໂທລະສັບ (ທາງເລືອກ)",
         "email_help_text": "ເພີ່ມອີເມວເພື່ອສາມາດກູ້ຄືນລະຫັດຜ່ານຂອງທ່ານໄດ້.",
         "email_phone_discovery_text": "ໃຊ້ອີເມລ໌ ຫຼື ໂທລະສັບເພື່ອຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວຄົ້ນຫາໄດ້.",
-        "email_discovery_text": "ໃຊ້ອີເມລ໌ເພື່ອເປັນທາງເລືອກໃຫ້ຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວສາມາດຄົ້ນຫາໄດ້."
+        "email_discovery_text": "ໃຊ້ອີເມລ໌ເພື່ອເປັນທາງເລືອກໃຫ້ຜູ້ຕິດຕໍ່ທີ່ມີຢູ່ແລ້ວສາມາດຄົ້ນຫາໄດ້.",
+        "session_logged_out_title": "ອອກຈາກລະບົບ",
+        "session_logged_out_description": "ເພື່ອຄວາມປອດໄພ, ລະບົບນີ້ໄດ້ຖືກອອກຈາກລະບົບແລ້ວ. ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງ."
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3486,6 +3461,12 @@
             "private_unencrypted_warning": "ຂໍ້ຄວາມສ່ວນຕົວຂອງທ່ານຖືກເຂົ້າລະຫັດຕາມປົກກະຕິ, ແຕ່ຫ້ອງນີ້ບໍ່ແມ່ນ. ເນື່ອງມາຈາກອຸປະກອນທີ່ບໍ່ຮອງຮັບ ຫຼື ວິທີການຖືກໃຊ້ ເຊັ່ນ: ການເຊີນທາງອີເມວ.",
             "enable_encryption_prompt": "ເປີດໃຊ້ການເຂົ້າລະຫັດໃນການຕັ້ງຄ່າ.",
             "unencrypted_warning": "ບໍ່ໄດ້ເປີດໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງ"
+        },
+        "edit_topic": "ແກ້ໄຂຫົວຂໍ້",
+        "read_topic": "ກົດເພື່ອອ່ານຫົວຂໍ້",
+        "unread_notifications_predecessor": {
+            "one": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້.",
+            "other": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້."
         }
     },
     "file_panel": {
@@ -3500,9 +3481,30 @@
         "intro": "ເພື່ອສືບຕໍ່, ທ່ານຈະຕ້ອງຍອມຮັບເງື່ອນໄຂຂອງການບໍລິການນີ້.",
         "column_service": "ບໍລິການ",
         "column_summary": "ສະຫຼຸບ",
-        "column_document": "ເອກະສານ"
+        "column_document": "ເອກະສານ",
+        "tac_title": "ຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
+        "tac_description": "ເພື່ອສືບຕໍ່ນຳໃຊ້ %(homeserverDomain)s homeserver ທ່ານຕ້ອງທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບເງື່ອນໄຂ ແລະ ເງື່ອນໄຂຂອງພວກເຮົາ.",
+        "tac_button": "ກວດເບິ່ງຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ"
     },
     "space_settings": {
         "title": "ການຕັ້ງຄ່າ - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "ສ້າງແບບສຳຫຼວດ",
+        "create_poll_action": "ສ້າງແບບສຳຫຼວດ",
+        "edit_poll_title": "ແກ້ໄຂແບບສຳຫຼວດ",
+        "failed_send_poll_title": "ການໂພສແບບສຳຫຼວດບໍ່ສຳເລັດ",
+        "failed_send_poll_description": "ຂໍອະໄພ, ແບບສຳຫຼວດທີ່ທ່ານພະຍາຍາມສ້າງບໍ່ໄດ້ໂພສ.",
+        "type_heading": "ປະເພດແບບສຳຫຼວດ",
+        "type_open": "ເປີດການສຳຫຼວດ",
+        "type_closed": "ປິດການສຳຫຼວດ",
+        "topic_heading": "ຄຳຖາມ ຫຼື ຫົວຂໍ້ການສຳຫຼວດຂອງທ່ານແມ່ນຫຍັງ?",
+        "topic_label": "ຄໍາຖາມ ຫຼື ຫົວຂໍ້",
+        "options_heading": "ສ້າງທາງເລືອກ",
+        "options_label": "ຕົວເລືອກ %(number)s",
+        "options_placeholder": "ຂຽນຕົວເລືອກ",
+        "options_add_button": "ເພີ່ມຕົວເລືອກ",
+        "disclosed_notes": "ຜູ້ລົງຄະແນນເຫັນຜົນທັນທີທີ່ເຂົາເຈົ້າໄດ້ລົງຄະແນນສຽງ",
+        "notes": "ຜົນໄດ້ຮັບຈະຖືກເປີດເຜີຍເມື່ອທ່ານສິ້ນສຸດແບບສຳຫຼວດເທົ່ານັ້ນ"
     }
 }

@@ -598,7 +598,6 @@
         "one": "(~%(count)s hasil)",
         "other": "(~%(count)s hasil)"
     },
-    "Signed Out": "Keluar",
     "Start authentication": "Mulai autentikasi",
     "Token incorrect": "Token salah",
     "Delete widget": "Hapus widget",
@@ -998,7 +997,6 @@
     "The conversation continues here.": "Obrolannya dilanjutkan di sini.",
     "More options": "Opsi lebih banyak",
     "Send voice message": "Kirim sebuah pesan suara",
-    "Create poll": "Buat poll",
     "You do not have permission to start polls in this room.": "Anda tidak memiliki izin untuk memulai sebuah poll di ruangan ini.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tingkat daya %(powerLevelNumber)s)",
     "Filter room members": "Saring anggota ruangan",
@@ -1245,13 +1243,6 @@
     "In reply to <a>this message</a>": "Membalas ke <a>pesan ini</a>",
     "<a>In reply to</a> <pill>": "<a>Membalas ke</a> <pill>",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Tidak dapat memuat peristiwa yang dibalas, karena tidak ada atau Anda tidak memiliki izin untuk menampilkannya.",
-    "Add option": "Tambahkan opsi",
-    "Write an option": "Tulis sebuah opsi",
-    "Option %(number)s": "Opsi %(number)s",
-    "Create options": "Buat opsi",
-    "Question or topic": "Pertanyaan atau topik",
-    "What is your poll question or topic?": "Apa pertanyaan atau topik poll Anda?",
-    "Create Poll": "Buat Poll",
     "Language Dropdown": "Dropdown Bahasa",
     "%(count)s people you know have already joined": {
         "one": "%(count)s orang yang Anda tahu telah bergabung",
@@ -1335,7 +1326,6 @@
     "New passwords must match each other.": "Kata sandi baru harus cocok.",
     "Skip verification for now": "Lewatkan verifikasi untuk sementara",
     "Really reset verification keys?": "Benar-benar ingin mengatur ulang kunci-kunci verifikasi?",
-    "Original event source": "Sumber peristiwa asli",
     "Could not load user profile": "Tidak dapat memuat profil pengguna",
     "Currently joining %(count)s rooms": {
         "one": "Saat ini bergabung dengan %(count)s ruangan",
@@ -1357,10 +1347,6 @@
     "You may want to try a different search or check for typos.": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
     "No results found": "Tidak ada hasil yang ditemukan",
     "You don't have permission": "Anda tidak memiliki izin",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini.",
-        "other": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini."
-    },
     "Failed to reject invite": "Gagal untuk menolak undangan",
     "No more results": "Tidak ada hasil lagi",
     "Server may be unavailable, overloaded, or search timed out :(": "Server mungkin tidak tersedia, terlalu penuh, atau waktu pencarian habis :(",
@@ -1375,13 +1361,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homeserver ini melebihi sebuah batas sumber daya. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak terkirim karena homesever ini telah mencapat batas Pengguna Aktif Bulanan. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Anda tidak dapat mengirimkan pesan apa saja sampai Anda lihat dan terima <consentLink>syarat dan ketentuan kami</consentLink>.",
-    "Verification requested": "Verifikasi diminta",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
-    "Old cryptography data detected": "Data kriptografi lama terdeteksi",
-    "Review terms and conditions": "Lihat syarat dan ketentuan",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Untuk melanjutkan menggunakan homeserver %(homeserverDomain)s Anda harus lihat dan terima ke syarat dan ketentuan kami.",
-    "Terms and Conditions": "Syarat dan Ketentuan",
-    "For security, this session has been signed out. Please sign in again.": "Untuk keamanan, sesi ini telah dikeluarkan. Silakan masuk lagi.",
     "Unable to copy a link to the room to the clipboard.": "Tidak dapat menyalin sebuah tautan ruangan ke papan klip.",
     "Unable to copy room link": "Tidak dapat menyalin tautan ruangan",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Apakah Anda yakin untuk keluar dari space '%(spaceName)s'?",
@@ -1667,8 +1646,6 @@
     "Passphrase must not be empty": "Frasa sandi harus tidak kosong",
     "Passphrases must match": "Frasa sandi harus cocok",
     "Unable to set up secret storage": "Tidak dapat menyiapkan penyimpanan rahasia",
-    "Sorry, the poll you tried to create was not posted.": "Maaf, poll yang Anda buat tidak dapat dikirim.",
-    "Failed to post poll": "Gagal untuk mengirim poll",
     "Sorry, your vote was not registered. Please try again.": "Maaf, suara Anda tidak didaftarkan. Silakan coba lagi.",
     "Vote not registered": "Suara tidak didaftarkan",
     "Developer": "Pengembang",
@@ -1776,15 +1753,9 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
     "Use <arrows/> to scroll": "Gunakan <arrows/> untuk menggulirkan",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
-    "Edit poll": "Edit pungutan suara",
     "Sorry, you can't edit a poll after votes have been cast.": "Maaf, Anda tidak dapat mengedit sebuah poll setelah suara-suara diberikan.",
     "Can't edit poll": "Tidak dapat mengedit poll",
     "Join %(roomAddress)s": "Bergabung dengan %(roomAddress)s",
-    "Results are only revealed when you end the poll": "Hasil hanya akan disediakan ketika Anda mengakhiri pemungutan suara",
-    "Voters see results as soon as they have voted": "Pemberi suara akan melihat hasilnya ketika mereka telah memberikan suara",
-    "Closed poll": "Pemungutan suara tertutup",
-    "Open poll": "Pemungutan suara terbuka",
-    "Poll type": "Tipe pemungutan suara",
     "Results will be visible when the poll is ended": "Hasil akan tersedia setelah pemungutan suara berakhir",
     "Search Dialog": "Dialog Pencarian",
     "Pinned": "Disematkan",
@@ -1910,8 +1881,6 @@
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak dikirim karena homeserver ini telah diblokir oleh administrator. Mohon <a>hubungi administrator layanan Anda</a> untuk terus menggunakan layanan ini.",
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
-    "Click to read topic": "Klik untuk membaca topik",
-    "Edit topic": "Edit topik",
     "Resent!": "Dikirimkan ulang!",
     "Did not receive it? <a>Resend it</a>": "Belum menerima? <a>Kirim ulang</a>",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Untuk membuat akun Anda, buka tautan dalam email yang kami kirim ke %(emailAddress)s.",
@@ -2106,7 +2075,6 @@
     "Checking…": "Memeriksa…",
     "Waiting for partner to confirm…": "Menunggu pengguna untuk konfirmasi…",
     "Adding…": "Menambahkan…",
-    "Write something…": "Tulis sesuatu…",
     "Rejecting invite…": "Menolak undangan…",
     "Joining room…": "Bergabung dengan ruangan…",
     "Joining space…": "Bergabung dengan space…",
@@ -3092,7 +3060,8 @@
         "low_bandwidth_mode": "Mode bandwidth rendah",
         "developer_mode": "Mode pengembang",
         "view_source_decrypted_event_source": "Sumber peristiwa terdekripsi",
-        "view_source_decrypted_event_source_unavailable": "Sumber terdekripsi tidak tersedia"
+        "view_source_decrypted_event_source_unavailable": "Sumber terdekripsi tidak tersedia",
+        "original_event_source": "Sumber peristiwa asli"
     },
     "export_chat": {
         "html": "HTML",
@@ -3748,7 +3717,10 @@
             "sas_description": "Bandingkan emoji jika Anda tidak memiliki sebuah kamera di kedua perangkat",
             "qr_or_sas": "%(qrCode)s atau %(emojiCompare)s",
             "qr_or_sas_header": "Verifikasi perangkat ini dengan menyelesaikan salah satu di bawah:"
-        }
+        },
+        "old_version_detected_title": "Data kriptografi lama terdeteksi",
+        "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
+        "verification_requested_toast_title": "Verifikasi diminta"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3863,7 +3835,9 @@
         "phone_optional_label": "Nomor telepon (opsional)",
         "email_help_text": "Tambahkan sebuah email untuk dapat mengatur ulang kata sandi Anda.",
         "email_phone_discovery_text": "Gunakan email atau nomor telepon untuk dapat ditemukan oleh kontak yang sudah ada secara opsional.",
-        "email_discovery_text": "Gunakan email untuk dapat ditemukan oleh kontak yang sudah ada secara opsional."
+        "email_discovery_text": "Gunakan email untuk dapat ditemukan oleh kontak yang sudah ada secara opsional.",
+        "session_logged_out_title": "Keluar",
+        "session_logged_out_description": "Untuk keamanan, sesi ini telah dikeluarkan. Silakan masuk lagi."
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -4175,6 +4149,12 @@
             "private_unencrypted_warning": "Pesan privat Anda biasanya dienkripsi, tetapi di ruangan ini tidak terenkripsi. Biasanya ini disebabkan oleh perangkat yang tidak mendukung atau metode yang sedang digunakan, seperti undangan email.",
             "enable_encryption_prompt": "Aktifkan enkripsi di pengaturan.",
             "unencrypted_warning": "Enkripsi ujung ke ujung tidak diaktifkan"
+        },
+        "edit_topic": "Edit topik",
+        "read_topic": "Klik untuk membaca topik",
+        "unread_notifications_predecessor": {
+            "one": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini.",
+            "other": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini."
         }
     },
     "file_panel": {
@@ -4189,9 +4169,31 @@
         "intro": "Untuk melanjutkan Anda harus menerima persyaratan layanan ini.",
         "column_service": "Layanan",
         "column_summary": "Kesimpulan",
-        "column_document": "Dokumen"
+        "column_document": "Dokumen",
+        "tac_title": "Syarat dan Ketentuan",
+        "tac_description": "Untuk melanjutkan menggunakan homeserver %(homeserverDomain)s Anda harus lihat dan terima ke syarat dan ketentuan kami.",
+        "tac_button": "Lihat syarat dan ketentuan"
     },
     "space_settings": {
         "title": "Pengaturan — %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Buat poll",
+        "create_poll_action": "Buat Poll",
+        "edit_poll_title": "Edit pungutan suara",
+        "failed_send_poll_title": "Gagal untuk mengirim poll",
+        "failed_send_poll_description": "Maaf, poll yang Anda buat tidak dapat dikirim.",
+        "type_heading": "Tipe pemungutan suara",
+        "type_open": "Pemungutan suara terbuka",
+        "type_closed": "Pemungutan suara tertutup",
+        "topic_heading": "Apa pertanyaan atau topik poll Anda?",
+        "topic_label": "Pertanyaan atau topik",
+        "topic_placeholder": "Tulis sesuatu…",
+        "options_heading": "Buat opsi",
+        "options_label": "Opsi %(number)s",
+        "options_placeholder": "Tulis sebuah opsi",
+        "options_add_button": "Tambahkan opsi",
+        "disclosed_notes": "Pemberi suara akan melihat hasilnya ketika mereka telah memberikan suara",
+        "notes": "Hasil hanya akan disediakan ketika Anda mengakhiri pemungutan suara"
     }
 }

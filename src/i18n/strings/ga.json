@@ -388,7 +388,6 @@
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Signed Out": "Sínithe Amach",
     "Create account": "Déan cuntas a chruthú",
     "Deactivate Account": "Cuir cuntas as feidhm",
     "Account management": "Bainistíocht cuntais",
@@ -799,7 +798,8 @@
         "create_account_prompt": "Céaduaire? <a>Cruthaigh cuntas</a>",
         "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
         "register_action": "Déan cuntas a chruthú",
-        "phone_label": "Guthán"
+        "phone_label": "Guthán",
+        "session_logged_out_title": "Sínithe Amach"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

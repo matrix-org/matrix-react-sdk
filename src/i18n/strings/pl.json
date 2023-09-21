@@ -80,7 +80,6 @@
     "Failure to create room": "Nie udało się stworzyć pokoju",
     "Filter room members": "Filtruj członków pokoju",
     "Forget room": "Zapomnij pokój",
-    "For security, this session has been signed out. Please sign in again.": "Ze względów bezpieczeństwa ta sesja została wylogowana. Zaloguj się jeszcze raz.",
     "Home": "Strona główna",
     "Import E2E room keys": "Importuj klucze pokoju E2E",
     "Incorrect verification code": "Nieprawidłowy kod weryfikujący",
@@ -121,7 +120,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Serwer może być niedostępny, przeciążony, lub upłynął czas wyszukiwania :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Serwer może być niedostępny, przeciążony, lub trafiłeś na błąd.",
     "Session ID": "Identyfikator sesji",
-    "Signed Out": "Wylogowano",
     "Start authentication": "Rozpocznij uwierzytelnienie",
     "This email address is already in use": "Podany adres e-mail jest już w użyciu",
     "This email address was not found": "Podany adres e-mail nie został znaleziony",
@@ -255,11 +253,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Ten pokój nie jest publiczny. Nie będziesz w stanie do niego dołączyć bez zaproszenia.",
     "Can't leave Server Notices room": "Nie można opuścić pokoju powiadomień serwera",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ten pokój jest używany do ważnych wiadomości z serwera domowego, więc nie możesz go opuścić.",
-    "Terms and Conditions": "Warunki użytkowania",
-    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.": "Aby kontynuować używanie serwera domowego %(homeserverDomain)s musisz przejrzeć i zaakceptować nasze warunki użytkowania.",
-    "Review terms and conditions": "Przejrzyj warunki użytkowania",
-    "Old cryptography data detected": "Wykryto stare dane kryptograficzne",
-    "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
     "No Audio Outputs detected": "Nie wykryto wyjść audio",
     "Audio Output": "Wyjście audio",
     "Please note you are logging into the %(hs)s server, not matrix.org.": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
@@ -1007,7 +1000,6 @@
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Poprosiliśmy przeglądarkę o zapamiętanie, z którego serwera domowego korzystasz, aby umożliwić Ci logowanie, ale niestety Twoja przeglądarka o tym zapomniała. Przejdź do strony logowania i spróbuj ponownie.",
     "We couldn't log you in": "Nie mogliśmy Cię zalogować",
     "Use the <a>Desktop app</a> to see all encrypted files": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
-    "Verification requested": "Zażądano weryfikacji",
     "Connecting": "Łączenie",
     "Create key backup": "Utwórz kopię zapasową klucza",
     "Generate a Security Key": "Wygeneruj klucz bezpieczeństwa",
@@ -1895,8 +1887,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Ta wersja %(brand)s nie wspiera wyświetlania niektórych plików szyfrowanych",
     "Desktop app logo": "Logo aplikacji Desktop",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Wystąpił błąd inicjalizacji wyszukiwania wiadomości, sprawdź <a>swoje ustawienia</a> po więcej informacji",
-    "Click to read topic": "Kliknij, aby przeczytać temat",
-    "Edit topic": "Edytuj temat",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
         "other": "%(count)s osób, które znasz, już dołączyło"
@@ -1912,19 +1902,6 @@
     "Missing domain separator e.g. (:domain.org)": "Brakuje separatora domeny np. (:domena.org)",
     "Room address": "Adres pokoju",
     "In reply to <a>this message</a>": "W odpowiedzi do <a>tej wiadomości</a>",
-    "Results are only revealed when you end the poll": "Wyniki są ujawnione tylko po zakończeniu ankiety",
-    "Voters see results as soon as they have voted": "Głosujący mogą zobaczyć wyniki po oddaniu głosu",
-    "Add option": "Dodaj opcję",
-    "Write an option": "Napisz opcję",
-    "Option %(number)s": "Opcja %(number)s",
-    "Create options": "Utwórz opcje",
-    "Question or topic": "Pytanie lub temat",
-    "What is your poll question or topic?": "Jakie jest Twoje pytanie lub temat ankiety?",
-    "Closed poll": "Ankieta zamknięta",
-    "Open poll": "Ankieta otwarta",
-    "Poll type": "Typ ankiety",
-    "Failed to post poll": "Nie udało się opublikować ankiety",
-    "Edit poll": "Edytuj ankietę",
     "Message from %(user)s": "Wiadomość od %(user)s",
     "Language Dropdown": "Rozwiń języki",
     "Message in %(room)s": "Wiadomość w %(room)s",
@@ -1936,10 +1913,6 @@
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Jeśli anulujesz teraz, możesz stracić wiadomości szyfrowane i dane, jeśli stracisz dostęp do loginu i hasła.",
     "The request was cancelled.": "Żądanie zostało anulowane.",
     "Cancelled signature upload": "Przesyłanie sygnatury zostało anulowane",
-    "Sorry, the poll you tried to create was not posted.": "Przepraszamy, ankieta, którą próbowałeś utworzyć nie została opublikowana.",
-    "Create Poll": "Utwórz ankietę",
-    "Create poll": "Utwórz ankietę",
-    "Write something…": "Napisz coś…",
     "Any of the following data may be shared:": "Wszystkie wymienione dane mogą być udostępnione:",
     "%(brand)s URL": "%(brand)s URL",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s.",
@@ -2164,16 +2137,11 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jak tylko zaproszeni użytkownicy dołączą do %(brand)s, będziesz mógł czatować w pokoju szyfrowanym end-to-end",
     "Waiting for users to join %(brand)s": "Czekanie na użytkowników %(brand)s",
     "Thread root ID: %(threadRootId)s": "ID root wątku: %(threadRootId)s",
-    "Original event source": "Oryginalne źródło wydarzenia",
     "Search names and descriptions": "Przeszukuj nazwy i opisy",
     "Rooms and spaces": "Pokoje i przestrzenie",
     "Results": "Wyniki",
     "You may want to try a different search or check for typos.": "Możesz spróbować inną frazę lub sprawdzić błędy pisowni.",
     "Joining": "Dołączanie",
-    "You have %(count)s unread notifications in a prior version of this room.": {
-        "one": "Masz %(count)s nieprzeczytanych powiadomień we wcześniejszej wersji tego pokoju.",
-        "other": "Masz %(count)s nieprzeczytane powiadomienie we wcześniejszej wersji tego pokoju."
-    },
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Wiadomość nie została wysłana, ponieważ serwer domowy przekroczył limit swoich zasobów. <a>Skontaktuj się z administratorem serwisu</a>, aby kontynuować.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Wiadomość nie została wysłana, ponieważ serwer domowy został zablokowany przez jego administratora. <a>Skontaktuj się z administratorem serwisu</a>, aby kontynuować.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Wiadomość nie została wysłana, ponieważ serwer domowy przekroczył miesięczny limit aktywnych użytkowników. <a>Skontaktuj się z administratorem serwisu</a>, aby kontynuować.",
@@ -3071,7 +3039,8 @@
         "low_bandwidth_mode": "Tryb niskiej przepustowości",
         "developer_mode": "Tryb programisty",
         "view_source_decrypted_event_source": "Rozszyfrowane wydarzenie źródłowe",
-        "view_source_decrypted_event_source_unavailable": "Rozszyfrowane źródło niedostępne"
+        "view_source_decrypted_event_source_unavailable": "Rozszyfrowane źródło niedostępne",
+        "original_event_source": "Oryginalne źródło wydarzenia"
     },
     "export_chat": {
         "html": "HTML",
@@ -3725,7 +3694,10 @@
             "sas_description": "Porównaj unikatowy zestaw emoji, jeżeli nie masz aparatu na jednym z urządzeń",
             "qr_or_sas": "%(qrCode)s lub %(emojiCompare)s",
             "qr_or_sas_header": "Zweryfikuj to urządzenie wykonują jedno z następujących:"
-        }
+        },
+        "old_version_detected_title": "Wykryto stare dane kryptograficzne",
+        "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
+        "verification_requested_toast_title": "Zażądano weryfikacji"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3840,7 +3812,9 @@
         "phone_optional_label": "Telefon (opcjonalny)",
         "email_help_text": "Dodaj adres e-mail, aby zresetować swoje hasło.",
         "email_phone_discovery_text": "Użyj adresu e-mail lub numeru telefonu, aby móc być odkrywanym przez istniejące kontakty.",
-        "email_discovery_text": "Użyj adresu e-mail, aby opcjonalnie móc być odkrywanym przez istniejące kontakty."
+        "email_discovery_text": "Użyj adresu e-mail, aby opcjonalnie móc być odkrywanym przez istniejące kontakty.",
+        "session_logged_out_title": "Wylogowano",
+        "session_logged_out_description": "Ze względów bezpieczeństwa ta sesja została wylogowana. Zaloguj się jeszcze raz."
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -4152,6 +4126,12 @@
             "private_unencrypted_warning": "Normalnie Twoje wiadomości prywatne są szyfrowane, lecz ten pokój nie jest. Przeważnie jest to spowodowane korzystaniem z niewspieranego urządzenia lub metody, takiej jak zaproszenia e-mail.",
             "enable_encryption_prompt": "Włącz szyfrowanie w ustawieniach.",
             "unencrypted_warning": "Szyfrowanie end-to-end nie jest włączone"
+        },
+        "edit_topic": "Edytuj temat",
+        "read_topic": "Kliknij, aby przeczytać temat",
+        "unread_notifications_predecessor": {
+            "one": "Masz %(count)s nieprzeczytanych powiadomień we wcześniejszej wersji tego pokoju.",
+            "other": "Masz %(count)s nieprzeczytane powiadomienie we wcześniejszej wersji tego pokoju."
         }
     },
     "file_panel": {
@@ -4166,9 +4146,31 @@
         "intro": "Aby kontynuować, musisz zaakceptować zasady użytkowania.",
         "column_service": "Usługa",
         "column_summary": "Opis",
-        "column_document": "Dokument"
+        "column_document": "Dokument",
+        "tac_title": "Warunki użytkowania",
+        "tac_description": "Aby kontynuować używanie serwera domowego %(homeserverDomain)s musisz przejrzeć i zaakceptować nasze warunki użytkowania.",
+        "tac_button": "Przejrzyj warunki użytkowania"
     },
     "space_settings": {
         "title": "Ustawienia - %(spaceName)s"
+    },
+    "poll": {
+        "create_poll_title": "Utwórz ankietę",
+        "create_poll_action": "Utwórz ankietę",
+        "edit_poll_title": "Edytuj ankietę",
+        "failed_send_poll_title": "Nie udało się opublikować ankiety",
+        "failed_send_poll_description": "Przepraszamy, ankieta, którą próbowałeś utworzyć nie została opublikowana.",
+        "type_heading": "Typ ankiety",
+        "type_open": "Ankieta otwarta",
+        "type_closed": "Ankieta zamknięta",
+        "topic_heading": "Jakie jest Twoje pytanie lub temat ankiety?",
+        "topic_label": "Pytanie lub temat",
+        "topic_placeholder": "Napisz coś…",
+        "options_heading": "Utwórz opcje",
+        "options_label": "Opcja %(number)s",
+        "options_placeholder": "Napisz opcję",
+        "options_add_button": "Dodaj opcję",
+        "disclosed_notes": "Głosujący mogą zobaczyć wyniki po oddaniu głosu",
+        "notes": "Wyniki są ujawnione tylko po zakończeniu ankiety"
     }
 }
