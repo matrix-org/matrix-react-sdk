@@ -30,13 +30,13 @@ describe("LogoutDialog", () => {
     beforeEach(() => {
         mockClient = getMockClientWithEventEmitter({
             ...mockClientMethodsCrypto(),
-            getKeyBackupEnabled: jest.fn(),
             getKeyBackupVersion: jest.fn(),
         });
 
-        mockClient.isCryptoEnabled.mockReturnValue(true);
         mockCrypto = mocked(mockClient.getCrypto()!);
-        Object.assign(mockCrypto, {});
+        Object.assign(mockCrypto, {
+            getActiveSessionBackupVersion: jest.fn().mockResolvedValue(null),
+        });
     });
 
     function renderComponent(props: Partial<React.ComponentProps<typeof LogoutDialog>> = {}): RenderResult {
@@ -45,14 +45,14 @@ describe("LogoutDialog", () => {
     }
 
     it("shows a regular dialog when crypto is disabled", async () => {
-        mockClient.isCryptoEnabled.mockReturnValue(false);
+        mocked(mockClient.getCrypto).mockReturnValue(undefined);
         const rendered = renderComponent();
         await rendered.findByText("Are you sure you want to sign out?");
         expect(rendered.container).toMatchSnapshot();
     });
 
     it("shows a regular dialog if backups are working", async () => {
-        mockClient.getKeyBackupEnabled.mockReturnValue(true);
+        mockCrypto.getActiveSessionBackupVersion.mockResolvedValue("1");
         const rendered = renderComponent();
         await rendered.findByText("Are you sure you want to sign out?");
     });
