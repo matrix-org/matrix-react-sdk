@@ -201,8 +201,10 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             onFinished: (proceed) => {
                 if (!proceed) return;
                 this.setState({ loading: true });
+                const versionToDelete = this.state.backupInfo!.version!;
                 MatrixClientPeg.safeGet()
-                    .deleteKeyBackupVersion(this.state.backupInfo!.version!)
+                    .getCrypto()
+                    ?.deleteKeyBackupVersion(versionToDelete)
                     .then(() => {
                         this.loadBackupStatus();
                     });

@@ -38,7 +38,6 @@ describe("<SecureBackupPanel />", () => {
         ...mockClientMethodsCrypto(),
         getKeyBackupVersion: jest.fn().mockReturnValue("1"),
         getClientWellKnown: jest.fn(),
-        deleteKeyBackupVersion: jest.fn(),
     });
 
     const getComponent = () => render(<SecureBackupPanel />);
@@ -57,10 +56,10 @@ describe("<SecureBackupPanel />", () => {
                 matchesDecryptionKey: false,
             }),
             getActiveSessionBackupVersion: jest.fn().mockResolvedValue(null),
+            deleteKeyBackupVersion: jest.fn().mockResolvedValue(undefined),
         });
 
         mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
-        client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
 
         mocked(accessSecretStorage).mockClear().mockResolvedValue();
@@ -125,7 +124,7 @@ describe("<SecureBackupPanel />", () => {
 
         fireEvent.click(within(dialog).getByText("Cancel"));
 
-        expect(client.deleteKeyBackupVersion).not.toHaveBeenCalled();
+        expect(client.getCrypto()!.deleteKeyBackupVersion).not.toHaveBeenCalled();
     });
 
     it("deletes backup after confirmation", async () => {
@@ -154,7 +153,7 @@ describe("<SecureBackupPanel />", () => {
 
         fireEvent.click(within(dialog).getByTestId("dialog-primary-button"));
 
-        expect(client.deleteKeyBackupVersion).toHaveBeenCalledWith("1");
+        expect(client.getCrypto()!.deleteKeyBackupVersion).toHaveBeenCalledWith("1");
 
         // delete request
         await flushPromises();
