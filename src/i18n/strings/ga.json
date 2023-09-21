@@ -21,7 +21,6 @@
     "Failed to verify email address: make sure you clicked the link in the email": "Níor cinntíodh an seoladh ríomhphoist: déan cinnte gur chliceáil tú an nasc sa ríomhphost",
     "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
     "Ignored users": "Úsáideoirí neamhairde",
-    "Ignored/Blocked": "Neamhairde/Tachta",
     "Unrecognised address": "Seoladh nár aithníodh",
     "Verified key": "Eochair deimhnithe",
     "Unignored user": "Úsáideoir leis aird",
@@ -855,5 +854,9 @@
         "intro": {
             "enable_encryption_prompt": "Tosaigh criptiú sna socruithe."
         }
+    },
+    "labs_mjolnir": {
+        "ban_reason": "Neamhairde/Tachta",
+        "title": "Úsáideoirí neamhairde"
     }
 }

@@ -700,7 +700,6 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Користите сервер за идентитет у Подешавањима за директно примање позивница %(brand)s.",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
-    "⚠ These settings are meant for advanced users.": "⚠ Ова подешавања су намењена напредним корисницима.",
     "Change notification settings": "Промените подешавања обавештења",
     "Verification code": "Верификациони код",
     "Please enter verification code sent via text.": "Унесите верификациони код послат путем текста.",
@@ -749,7 +748,6 @@
     "Your server": "Ваш сервер",
     "This room is public": "Ова соба је јавна",
     "Browse": "Прегледајте",
-    "User rules": "Корисничка правила",
     "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
     "This widget may use cookies.": "Овај виџет може користити колачиће.",
     "Widget added by": "Додао је виџет",
@@ -1484,5 +1482,9 @@
         "tac_title": "Услови коришћења",
         "tac_description": "Да наставите са коришћењем сервера %(homeserverDomain)s морате погледати и пристати на наше услове коришћења.",
         "tac_button": "Погледај услове коришћења"
+    },
+    "labs_mjolnir": {
+        "rules_user": "Корисничка правила",
+        "advanced_warning": "⚠ Ова подешавања су намењена напредним корисницима."
     }
 }

@@ -236,7 +236,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en actualitzar l'adreça principal de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
     "Error upgrading room": "Error actualitzant sala",
-    "Error unsubscribing from list": "Error en cancel·lar subscripció de la llista",
     "Error changing power level requirement": "Error en canviar requisit del nivell d'autoritat",
     "Error changing power level": "Error en canviar nivell d'autoritat",
     "Error updating main address": "Error actualitzant adreça principal",
@@ -245,9 +244,6 @@
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "S'ha produït un error en eliminar l'adreça. Pot ser que ja no existeixi o que s'hagi produït un error temporal.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en actualitzar l'adreça alternativa de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
-    "Error removing ignored user/server": "Error eliminant usuari/servidor ignorat",
-    "Error subscribing to list": "Error subscrivint-se a la llista",
-    "Error adding ignored user/server": "Error afegint usuari/servidor ignorat",
     "Unexpected server error trying to leave the room": "Error de servidor inesperat intentant sortir de la sala",
     "Error leaving room": "Error sortint de la sala",
     "Unexpected error resolving identity server configuration": "Error inesperat resolent la configuració del servidor d'identitat",
@@ -285,7 +281,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
     "Room settings": "Configuració de sala",
     "Change notification settings": "Canvia la configuració de notificacions",
-    "⚠ These settings are meant for advanced users.": "⚠ Aquesta configuració està pensada per usuaris avançats.",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, enllaça aquest correu electrònic amb el teu compte a Configuració.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, utilitza un servidor d'identitat a Configuració.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
@@ -770,5 +765,12 @@
     "encryption": {
         "old_version_detected_title": "S'han detectat dades de criptografia antigues",
         "old_version_detected_description": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus."
+    },
+    "labs_mjolnir": {
+        "error_adding_ignore": "Error afegint usuari/servidor ignorat",
+        "error_adding_list_title": "Error subscrivint-se a la llista",
+        "error_removing_ignore": "Error eliminant usuari/servidor ignorat",
+        "error_removing_list_title": "Error en cancel·lar subscripció de la llista",
+        "advanced_warning": "⚠ Aquesta configuració està pensada per usuaris avançats."
     }
 }

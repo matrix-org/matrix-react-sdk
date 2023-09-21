@@ -1152,5 +1152,8 @@
         "tac_title": "Gebruuksvoorwoardn",
         "tac_description": "Vo de %(homeserverDomain)s-thuusserver te bluuvn gebruukn, goa je de gebruuksvoorwoardn moetn leezn en anveirdn.",
         "tac_button": "Gebruuksvoorwoardn leezn"
+    },
+    "labs_mjolnir": {
+        "title": "Genegeerde gebruukers"
     }
 }

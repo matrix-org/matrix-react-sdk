@@ -412,8 +412,6 @@
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Kontoen din har ein kryss-signert identitet det hemmelege lageret, økta di stolar ikkje på denne enno.",
     "Secret storage public key:": "Public-nøkkel for hemmeleg lager:",
     "Ignored users": "Ignorerte brukarar",
-    "Server or user ID to ignore": "Tenar eller brukar-ID for å ignorere",
-    "If this isn't what you want, please use a different tool to ignore users.": "Om det ikkje var dette du ville, bruk eit anna verktøy til å ignorera brukarar.",
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
@@ -1203,7 +1201,10 @@
     },
     "labs_mjolnir": {
         "room_name": "Mi blokkeringsliste",
-        "room_topic": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!"
+        "room_topic": "Dette er di liste over brukarar/tenarar du har blokkert - ikkje forlat rommet!",
+        "title": "Ignorerte brukarar",
+        "personal_new_label": "Tenar eller brukar-ID for å ignorere",
+        "lists_description_2": "Om det ikkje var dette du ville, bruk eit anna verktøy til å ignorera brukarar."
     },
     "room": {
         "drop_file_prompt": "Slipp ein fil her for å lasta opp",
