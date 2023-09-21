@@ -36,7 +36,6 @@ describe("<SecureBackupPanel />", () => {
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsCrypto(),
-        getKeyBackupEnabled: jest.fn(),
         getKeyBackupVersion: jest.fn().mockReturnValue("1"),
         getClientWellKnown: jest.fn(),
         deleteKeyBackupVersion: jest.fn(),
@@ -57,6 +56,7 @@ describe("<SecureBackupPanel />", () => {
                 trusted: false,
                 matchesDecryptionKey: false,
             }),
+            getActiveSessionBackupVersion: jest.fn().mockResolvedValue(null),
         });
 
         mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
@@ -100,7 +100,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("displays when session is connected to key backup", async () => {
-        client.getKeyBackupEnabled.mockReturnValue(true);
+        mocked(client.getCrypto()!).getActiveSessionBackupVersion.mockResolvedValue("1");
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();
