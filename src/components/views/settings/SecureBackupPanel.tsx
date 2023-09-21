@@ -64,7 +64,10 @@ interface IState {
      */
     activeBackupVersion: string | null;
 
-    sessionsRemaining: number;
+    /**
+     * Number of sessions remaining to be backed up. `null` if we have no information on this.
+     */
+    sessionsRemaining: number | null;
 }
 
 export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
@@ -84,7 +87,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             backupInfo: null,
             backupTrustInfo: undefined,
             activeBackupVersion: null,
-            sessionsRemaining: 0,
+            sessionsRemaining: null,
         };
     }
 
@@ -283,7 +286,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             }
 
             let uploadStatus: ReactNode;
-            if (this.state.activeBackupVersion === null) {
+            if (sessionsRemaining === null) {
                 // No upload status to show when backup disabled.
                 uploadStatus = "";
             } else if (sessionsRemaining > 0) {
