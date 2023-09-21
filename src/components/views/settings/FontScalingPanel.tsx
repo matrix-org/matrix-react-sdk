@@ -65,8 +65,9 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         const client = MatrixClientPeg.safeGet();
         const userId = client.getSafeUserId();
         const profileInfo = await client.getProfileInfo(userId);
-        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[, , , value]) => {
+        this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, () => {
             // Update the layout for the preview window according to the user selection
+            const value =  SettingsStore.getValue("layout")
             if (this.state.layout !== value) {
                 this.setState({
                     layout: value,
