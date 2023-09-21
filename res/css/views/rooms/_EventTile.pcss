@@ -31,6 +31,14 @@ $left-gutter: 64px;
     padding-top: 18px;
     position: relative;
 
+    .mx_EventTile_line {
+        span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+    }
+
     &.mx_EventTile_info {
         font-size: var(--cpd-font-size-body-sm);
         color: $secondary-content;
@@ -386,12 +394,6 @@ $left-gutter: 64px;
                     display: -webkit-box; /* Enable -webkit-line-clamp */
                 }
             }
-
-            span {
-                display: flex;
-                align-items: center;
-                gap: 3px;
-            }
         }
 
         .mx_EventTile_line,
@@ -580,12 +582,6 @@ $left-gutter: 64px;
                 .mx_MessageTimestamp {
                     top: 0;
                 }
-
-                span {
-                    display: flex;
-                    align-items: center;
-                    gap: 3px;
-                }
             }
 
             &.mx_EventTile_selected .mx_EventTile_line {
@@ -604,14 +600,6 @@ $left-gutter: 64px;
         /* Reset default values. TODO: remove */
         max-width: unset;
         padding-top: 0;
-
-        .mx_EventTile_line {
-            span {
-                display: flex;
-                align-items: center;
-                gap: 3px;
-            }
-        }
 
         .mx_EventTile_msgOption {
             .mx_ReadReceiptGroup {
