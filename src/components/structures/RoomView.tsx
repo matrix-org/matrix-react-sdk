@@ -129,6 +129,7 @@ import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
 import { isNotUndefined } from "../../Typeguards";
 import { CancelAskToJoinPayload } from "../../dispatcher/payloads/CancelAskToJoinPayload";
 import { SubmitAskToJoinPayload } from "../../dispatcher/payloads/SubmitAskToJoinPayload";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -1248,6 +1249,33 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
                 break;
+            case Action.ViewUser:
+                if (payload.member) {
+                    if (payload.push) {
+                        RightPanelStore.instance.pushCard({
+                            phase: RightPanelPhases.RoomMemberInfo,
+                            state: { member: payload.member },
+                        });
+                    } else {
+                        RightPanelStore.instance.setCards([
+                            { phase: RightPanelPhases.RoomSummary },
+                            { phase: RightPanelPhases.RoomMemberList },
+                            { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
+                        ]);
+                    }
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                }
+                break;
+            case "view_3pid_invite":
+                if (payload.event) {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Room3pidMemberInfo, {
+                        memberInfoEvent: payload.event,
+                    });
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                }
+                break;
         }
     };
 
@@ -2307,7 +2335,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     className="mx_RoomView_auxPanel_hiddenHighlights"
                     onClick={this.onHiddenHighlightsClick}
                 >
-                    {_t("You have %(count)s unread notifications in a prior version of this room.", {
+                    {_t("room|unread_notifications_predecessor", {
                         count: hiddenHighlightCount,
                     })}
                 </AccessibleButton>

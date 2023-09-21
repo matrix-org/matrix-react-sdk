@@ -23,12 +23,10 @@ import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/ico
 import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 
 import { useRoomName } from "../../../hooks/useRoomName";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
-import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { useTopic } from "../../../hooks/room/useTopic";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
@@ -36,19 +34,20 @@ import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMember
 import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
-import { useRoomCallStatus } from "../../../hooks/room/useRoomCallStatus";
+import { useRoomCall } from "../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
-import { placeCall } from "../../../utils/room/placeCall";
 import { useEncryptionStatus } from "../../../hooks/useEncryptionStatus";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import FacePile from "../elements/FacePile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { formatCount } from "../../../utils/FormattingUtils";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -64,16 +63,6 @@ function notificationColorToIndicator(color: NotificationColor): React.Component
     }
 }
 
-/**
- * A helper to show or hide the right panel
- */
-function showOrHidePanel(phase: RightPanelPhases): void {
-    const rightPanel = RightPanelStore.instance;
-    rightPanel.isOpen && rightPanel.currentCard.phase === phase
-        ? rightPanel.togglePanel(null)
-        : rightPanel.setCard({ phase });
-}
-
 export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const client = useMatrixClientContext();
 
@@ -84,7 +73,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
-    const { voiceCallDisabledReason, voiceCallType, videoCallDisabledReason, videoCallType } = useRoomCallStatus(room);
+    const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
@@ -110,6 +99,13 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     }, [room, directRoomsList]);
     const e2eStatus = useEncryptionStatus(client, room);
 
+    const notificationsEnabled = useFeatureEnabled("feature_notifications");
+
+    const roomTopicBody = useMemo(
+        () => topicToHtml(roomTopic?.text, roomTopic?.html),
+        [roomTopic?.html, roomTopic?.text],
+    );
+
     return (
         <Flex
             as="header"
@@ -117,7 +113,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
             gap="var(--cpd-space-3x)"
             className="mx_RoomHeader light-panel"
             onClick={() => {
-                showOrHidePanel(RightPanelPhases.RoomSummary);
+                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
             }}
         >
             <RoomAvatar room={room} size="40px" />
@@ -169,7 +165,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 </BodyText>
                 {roomTopic && (
                     <BodyText as="div" size="sm" className="mx_RoomHeader_topic">
-                        {roomTopic.text}
+                        <Linkify>{roomTopicBody}</Linkify>
                     </BodyText>
                 )}
             </Box>
@@ -178,11 +174,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                         <IconButton
                             disabled={!!voiceCallDisabledReason}
-                            title={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
-                            onClick={(evt) => {
-                                evt.stopPropagation();
-                                placeCall(room, CallType.Voice, voiceCallType);
-                            }}
+                            aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
+                            onClick={voiceCallClick}
                         >
                             <VoiceCallIcon />
                         </IconButton>
@@ -191,11 +184,8 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                 <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
                     <IconButton
                         disabled={!!videoCallDisabledReason}
-                        title={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
-                        onClick={(evt) => {
-                            evt.stopPropagation();
-                            placeCall(room, CallType.Video, videoCallType);
-                        }}
+                        aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                        onClick={videoCallClick}
                     >
                         <VideoCallIcon />
                     </IconButton>
@@ -205,25 +195,27 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                         indicator={notificationColorToIndicator(threadNotifications)}
                         onClick={(evt) => {
                             evt.stopPropagation();
-                            showOrHidePanel(RightPanelPhases.ThreadPanel);
+                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
                         }}
-                        title={_t("common|threads")}
+                        aria-label={_t("common|threads")}
                     >
                         <ThreadsIcon />
                     </IconButton>
                 </Tooltip>
-                <Tooltip label={_t("Notifications")}>
-                    <IconButton
-                        indicator={notificationColorToIndicator(globalNotificationState.color)}
-                        onClick={(evt) => {
-                            evt.stopPropagation();
-                            showOrHidePanel(RightPanelPhases.NotificationPanel);
-                        }}
-                        title={_t("Notifications")}
-                    >
-                        <NotificationsIcon />
-                    </IconButton>
-                </Tooltip>
+                {notificationsEnabled && (
+                    <Tooltip label={_t("Notifications")}>
+                        <IconButton
+                            indicator={notificationColorToIndicator(globalNotificationState.color)}
+                            onClick={(evt) => {
+                                evt.stopPropagation();
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.NotificationPanel);
+                            }}
+                            aria-label={_t("Notifications")}
+                        >
+                            <NotificationsIcon />
+                        </IconButton>
+                    </Tooltip>
+                )}
             </Flex>
             {!isDirectMessage && (
                 <BodyText
@@ -232,7 +224,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     weight="medium"
                     aria-label={_t("%(count)s members", { count: memberCount })}
                     onClick={(e: React.MouseEvent) => {
-                        showOrHidePanel(RightPanelPhases.RoomMemberList);
+                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
                         e.stopPropagation();
                     }}
                 >

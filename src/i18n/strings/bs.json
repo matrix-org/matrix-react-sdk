@@ -1,5 +1,4 @@
 {
-    "Create Account": "Otvori račun",
     "Explore rooms": "Istražite sobe",
     "action": {
         "dismiss": "Odbaci",
@@ -7,5 +6,13 @@
     },
     "common": {
         "identity_server": "Identifikacioni Server"
+    },
+    "auth": {
+        "register_action": "Otvori račun"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Istražite sobe"
+        }
     }
 }

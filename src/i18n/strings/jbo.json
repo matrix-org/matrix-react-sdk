@@ -59,8 +59,6 @@
     "You are now ignoring %(userId)s": ".i ca na jundi tu'a la'o zoi. %(userId)s .zoi",
     "Unignored user": ".i mo'u co'a jundi tu'a le pilno",
     "You are no longer ignoring %(userId)s": ".i ca jundi tu'a la'o zoi. %(userId)s .zoi",
-    "Define the power level of a user": ".i ninga'igau lo ni lo pilno cu vlipa",
-    "Deops user with given id": ".i xruti lo ni lo pilno poi se judri ti cu vlipa",
     "Verified key": "ckiku vau je se lacri",
     "Reason": "krinu",
     "This homeserver has hit its Monthly Active User limit.": ".i le samtcise'u cu bancu lo masti jimte be ri bei lo ni ca'o pilno",
@@ -68,28 +66,11 @@
     "Your browser does not support the required cryptography extensions": ".i le kibrbrauzero na ka'e pilno le mifra ciste poi jai sarcu",
     "Authentication check failed: incorrect password?": ".i pu fliba lo nu birti lo du'u curmi lo nu do jonse .i na'e drani xu japyvla",
     "Please contact your homeserver administrator.": ".i .e'o ko tavla lo admine be le samtcise'u",
-    "Mirror local video feed": "lo du'u xu kau minra lo diklo vidvi",
-    "Send analytics data": "lo du'u xu kau benji lo se lanli datni",
-    "Enable URL previews for this room (only affects you)": "lo du'u xu kau do zmiku purzga lo se urli ne'i le kumfa pe'a",
-    "Enable URL previews by default for participants in this room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli",
-    "Enable widget screenshots on supported widgets": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu",
-    "Waiting for response from server": ".i ca'o denpa lo nu le samtcise'u cu spuda",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
-    "Phone": "fonxa",
     "No display name": ".i na da cmene",
-    "New passwords don't match": ".i le'i lerpoijaspu poi cnino na simxu le ka du",
-    "Passwords can't be empty": ".i lu li'u .e'a nai japyvla",
     "Warning!": ".i ju'i",
-    "Export E2E room keys": "barbei lo kumfa pe'a termifckiku",
-    "Do you want to set an email address?": ".i .au pei do jmina lo te samymri",
-    "Current password": "lo ca japyvla",
-    "New Password": "lerpoijaspu vau je cnino",
-    "Confirm password": "lo za'u re'u japyvla poi cnino",
-    "Change Password": "nu basti fi le ka lerpoijaspu",
     "Authentication": "lo nu facki lo du'u do du ma kau",
     "Failed to set display name": ".i pu fliba lo nu galfi lo cmene",
-    "Command error": ".i da nabmi fi lo nu minde",
-    "Could not find user in room": ".i le pilno na pagbu le se zilbe'i",
     "Session already verified!": ".i xa'o lacri le se samtcise'u",
     "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "Dog": "gerku",
@@ -161,32 +142,20 @@
     "Yesterday": "prulamdei",
     "Cancel search": "nu co'u sisku",
     "Search failed": ".i da nabmi lo nu sisku",
-    "Switch to light mode": "nu le jvinu cu binxo le ka carmi",
-    "Switch to dark mode": "nu le jvinu cu binxo le ka manku",
     "Switch theme": "nu basti fi le ka jvinu",
-    "If you've joined lots of rooms, this might take a while": ".i gi na ja do pagbu so'i se zilbe'i gi la'a ze'u gunka",
-    "Incorrect password": ".i le lerpoijaspu na drani",
-    "Users": "pilno",
     "That matches!": ".i du",
     "Success!": ".i snada",
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Cannot reach homeserver": ".i ca ku na da ka'e zilbe'i le samtcise'u",
-    "Never send encrypted messages to unverified sessions in this room from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i",
-    "Got It": "je'e",
-    "Waiting for %(displayName)s to verify…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
-    "Cancelling…": ".i ca'o co'u co'e",
     "Ok": "je'e",
     "Verify this session": "nu co'a lacri le se samtcise'u",
-    "What's New": "notci le du'u cnino",
-    "Never send encrypted messages to unverified sessions from this session": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
     "Later": "nu ca na co'e",
     "Other users may not trust it": ".i la'a na pa na du be do cu lacri",
     "Sign Up": "nu co'a na'o jaspu",
     "<userName/> wants to chat": ".i la'o zoi. <userName/> .zoi kaidji le ka tavla do",
     "<userName/> invited you": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do",
-    "Enter username": ".i ko cuxna fo le ka judri cmene",
     "Messages in this room are end-to-end encrypted.": ".i ro zilbe'i be fo le cei'i cu mifra",
     "Messages in this room are not end-to-end encrypted.": ".i na pa zilbe'i be fo le cei'i cu mifra",
     "%(count)s verified sessions": {
@@ -212,7 +181,6 @@
         "one": "nu kibdu'a %(count)s vreji poi na du"
     },
     "Are you sure you want to leave the room '%(roomName)s'?": ".i xu do birti le du'u do kaidji le ka co'u pagbu le se zilbe'i be fo la'o zoi. %(roomName)s .zoi",
-    "For security, this session has been signed out. Please sign in again.": ".i ki'u lo nu snura co'u jaspu le se samtcise'u .i ko za'u re'u co'a se jaspu",
     "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
     "Unable to share email address": ".i da nabmi fi lo nu jungau le du'u samymri judri",
     "Unable to share phone number": ".i da nabmi fi lo nu jungau le du'u fonjudri",
@@ -230,7 +198,6 @@
     "Decrypt %(text)s": "nu facki le du'u mifra la'o zoi. %(text)s .zoi",
     "Download %(text)s": "nu kibycpa la'o zoi. %(text)s .zoi",
     "Explore rooms": "nu facki le du'u ve zilbe'i",
-    "Create Account": "nu pa re'u co'a jaspu",
     "common": {
         "analytics": "lanli datni",
         "error": "nabmi",
@@ -310,7 +277,18 @@
             "match_system_theme": "nu mapti le jvinu be le vanbi",
             "custom_font": "nu da pe le vanbi cu ci'artai",
             "custom_font_name": "cmene le ci'artai pe le vanbi",
-            "timeline_image_size_default": "zmiselcu'a"
+            "timeline_image_size_default": "zmiselcu'a",
+            "image_size_default": "zmiselcu'a"
+        },
+        "inline_url_previews_room_account": "lo du'u xu kau do zmiku purzga lo se urli ne'i le kumfa pe'a",
+        "inline_url_previews_room": "lo zmiselcu'a pe lo du'u xu kau lo cmima be le kumfa pe'a cu zmiku purzga lo se urli",
+        "voip": {
+            "mirror_local_feed": "lo du'u xu kau minra lo diklo vidvi"
+        },
+        "security": {
+            "send_analytics": "lo du'u xu kau benji lo se lanli datni",
+            "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
+            "export_megolm_keys": "barbei lo kumfa pe'a termifckiku"
         }
     },
     "create_room": {
@@ -406,7 +384,11 @@
         "category_advanced": "macnu",
         "category_other": "drata",
         "discardsession": ".i macnu vimcu lo ca barkla termifckiku gunma lo kumfa pe'a poi mifra",
-        "me": ".i mrilu lo nu do gasnu"
+        "me": ".i mrilu lo nu do gasnu",
+        "failed_find_user": ".i le pilno na pagbu le se zilbe'i",
+        "op": ".i ninga'igau lo ni lo pilno cu vlipa",
+        "deop": ".i xruti lo ni lo pilno poi se judri ti cu vlipa",
+        "command_error": ".i da nabmi fi lo nu minde"
     },
     "event_preview": {
         "m.call.answer": {
@@ -426,7 +408,8 @@
     },
     "bug_reporting": {
         "collecting_information": ".i ca'o facki le du'u favytcinymupli",
-        "collecting_logs": ".i ca'o facki le du'u citri"
+        "collecting_logs": ".i ca'o facki le du'u citri",
+        "waiting_for_server": ".i ca'o denpa lo nu le samtcise'u cu spuda"
     },
     "voip": {
         "voice_call": "nu snavi fonjo'e",
@@ -434,7 +417,8 @@
         "call_failed": ".i da nabmi fi lo nu co'a fonjo'e"
     },
     "devtools": {
-        "category_other": "drata"
+        "category_other": "drata",
+        "widget_screenshots": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu"
     },
     "Other": "drata",
     "Advanced": "macnu",
@@ -442,7 +426,10 @@
         "placeholder_reply_encrypted": "nu pa mifra be pa jai te spuda cu zilbe'i",
         "placeholder_reply": "nu pa jai te spuda cu zilbe'i",
         "placeholder_encrypted": "nu pa mifra be pa notci cu zilbe'i",
-        "placeholder": "nu pa notci cu zilbe'i"
+        "placeholder": "nu pa notci cu zilbe'i",
+        "autocomplete": {
+            "user_description": "pilno"
+        }
     },
     "room_settings": {
         "permissions": {
@@ -451,6 +438,9 @@
             "m.room.canonical_alias": "nu basti fi le ka ralju lu'i ro judri be le ve zilbe'i",
             "m.room.topic": "nu basti fi le ka skicu lerpoi",
             "invite": "nu friti le ka ziljmina kei pa pilno"
+        },
+        "security": {
+            "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i"
         }
     },
     "encryption": {
@@ -460,7 +450,10 @@
             "in_person": ".i lo nu marji penmi vau ja pilno pa se lacri lo nu tavla cu sarcu lo nu snura",
             "other_party_cancelled": ".i le na du be do co'u troci le ka co'a lacri",
             "complete_title": ".i mo'u co'a lacri",
-            "complete_description": ".i mo'u co'a lacri le pilno"
+            "complete_description": ".i mo'u co'a lacri le pilno",
+            "complete_action": "je'e",
+            "waiting_other_user": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
+            "cancelling": ".i ca'o co'u co'e"
         }
     },
     "export_chat": {
@@ -480,6 +473,34 @@
     "setting": {
         "help_about": {
             "help_link_chat_bot": ".i gi je lo nu samcu'a <a>le dei cei'i</a> gi lo nu co'a tavla le sampre cu tadji lo nu facki le du'u tadji lo nu pilno la'o zoi. %(brand)s .zoi"
+        }
+    },
+    "auth": {
+        "sync_footer_subtitle": ".i gi na ja do pagbu so'i se zilbe'i gi la'a ze'u gunka",
+        "incorrect_password": ".i le lerpoijaspu na drani",
+        "register_action": "nu pa re'u co'a jaspu",
+        "phone_label": "fonxa",
+        "session_logged_out_description": ".i ki'u lo nu snura co'u jaspu le se samtcise'u .i ko za'u re'u co'a se jaspu",
+        "change_password_mismatch": ".i le'i lerpoijaspu poi cnino na simxu le ka du",
+        "change_password_empty": ".i lu li'u .e'a nai japyvla",
+        "set_email_prompt": ".i .au pei do jmina lo te samymri",
+        "change_password_confirm_label": "lo za'u re'u japyvla poi cnino",
+        "change_password_current_label": "lo ca japyvla",
+        "change_password_new_label": "lerpoijaspu vau je cnino",
+        "change_password_action": "nu basti fi le ka lerpoijaspu",
+        "username_field_required_invalid": ".i ko cuxna fo le ka judri cmene",
+        "msisdn_field_label": "fonxa"
+    },
+    "update": {
+        "release_notes_toast_title": "notci le du'u cnino"
+    },
+    "user_menu": {
+        "switch_theme_light": "nu le jvinu cu binxo le ka carmi",
+        "switch_theme_dark": "nu le jvinu cu binxo le ka manku"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "nu facki le du'u ve zilbe'i"
         }
     }
 }

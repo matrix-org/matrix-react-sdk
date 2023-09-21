@@ -259,7 +259,6 @@ describe("Cryptography", function () {
     }
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
-        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         startDMWithBob.call(this);
         // send first message
@@ -281,7 +280,6 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
-        skipIfRustCrypto();
         cy.bootstrapCrossSigning(aliceCredentials);
         autoJoin(this.bob);
 
@@ -326,8 +324,6 @@ describe("Cryptography", function () {
         });
 
         it("should show the correct shield on e2e events", function (this: CryptoTestContext) {
-            skipIfRustCrypto();
-
             // Bob has a second, not cross-signed, device
             let bobSecondDevice: MatrixClient;
             cy.loginBot(homeserver, bob.getUserId(), bob.__cypress_password, {}).then(async (data) => {
@@ -408,9 +404,9 @@ describe("Cryptography", function () {
 
             cy.get(".mx_EventTile_last")
                 .should("contain", "test encrypted from unverified")
-                .find(".mx_EventTile_e2eIcon", { timeout: 100000 })
+                .find(".mx_EventTile_e2eIcon")
                 .should("have.class", "mx_EventTile_e2eIcon_warning")
-                .should("have.attr", "aria-label", "Encrypted by an unverified session");
+                .should("have.attr", "aria-label", "Encrypted by a device not verified by its owner.");
 
             /* Should show a grey padlock for a message from an unknown device */
 
@@ -419,15 +415,17 @@ describe("Cryptography", function () {
                 .then(() => bobSecondDevice.logout(true))
                 .then(() => cy.log(`Bob logged out second device`));
 
+            // some debate over whether this should have a red or a grey shield. Legacy crypto shows a grey shield,
+            // Rust crypto a red one.
             cy.get(".mx_EventTile_last")
                 .should("contain", "test encrypted from unverified")
                 .find(".mx_EventTile_e2eIcon")
-                .should("have.class", "mx_EventTile_e2eIcon_normal")
-                .should("have.attr", "aria-label", "Encrypted by a deleted session");
+                //.should("have.class", "mx_EventTile_e2eIcon_normal")
+                .should("have.attr", "aria-label", "Encrypted by an unknown or deleted device.");
         });
 
         it("Should show a grey padlock for a key restored from backup", () => {
-            skipIfRustCrypto();
+            skipIfRustCrypto(); // requires key backup (https://github.com/vector-im/element-web/issues/24828)
 
             enableKeyBackup();
 
@@ -441,7 +439,7 @@ describe("Cryptography", function () {
                 // no e2e icon
                 .should("not.have.descendants", ".mx_EventTile_e2eIcon");
 
-            /* log out, and back i */
+            /* log out, and back in */
             logOutOfElement();
             cy.get<string>("@securityKey").then((securityKey) => {
                 logIntoElement(homeserver.baseUrl, aliceCredentials.username, aliceCredentials.password, securityKey);
@@ -461,8 +459,6 @@ describe("Cryptography", function () {
         });
 
         it("should show the correct shield on edited e2e events", function (this: CryptoTestContext) {
-            skipIfRustCrypto();
-
             // bob has a second, not cross-signed, device
             cy.loginBot(this.homeserver, this.bob.getUserId(), this.bob.__cypress_password, {}).as("bobSecondDevice");
 
