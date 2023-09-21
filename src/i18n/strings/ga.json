@@ -1,5 +1,4 @@
 {
-    "Sign in with": "Sínigh isteach le",
     "Show more": "Taispeáin níos mó",
     "All settings": "Gach Socrú",
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
@@ -232,7 +231,6 @@
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
-    "Phone": "Guthán",
     "Home": "Tús",
     "Favourite": "Cuir mar ceanán",
     "Removing…": "ag Baint…",
@@ -804,7 +802,9 @@
         "change_password_current_label": "Focal faire reatha",
         "change_password_new_label": "Focal Faire Nua",
         "change_password_action": "Athraigh focal faire",
-        "email_field_label": "Ríomhphost"
+        "email_field_label": "Ríomhphost",
+        "msisdn_field_label": "Guthán",
+        "identifier_label": "Sínigh isteach le"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

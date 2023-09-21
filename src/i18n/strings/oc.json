@@ -114,8 +114,6 @@
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Enter password": "Sasissètz lo senhal",
-    "Phone": "Telefòn",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
     "Success!": "Capitada !",
@@ -340,7 +338,9 @@
         "change_password_current_label": "Senhal actual",
         "change_password_new_label": "Senhal novèl",
         "change_password_action": "Modificar senhal",
-        "email_field_label": "Corrièl"
+        "email_field_label": "Corrièl",
+        "password_field_label": "Sasissètz lo senhal",
+        "msisdn_field_label": "Telefòn"
     },
     "export_chat": {
         "messages": "Messatges"

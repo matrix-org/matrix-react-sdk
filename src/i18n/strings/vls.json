@@ -405,16 +405,6 @@
     "Low Priority": "Leige prioriteit",
     "Home": "Thuus",
     "This homeserver would like to make sure you are not a robot.": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
-    "Phone": "Telefongnumero",
-    "Sign in with": "Anmeldn me",
-    "Use an email address to recover your account": "Gebruukt een e-mailadresse vo jen account t’herstelln",
-    "Enter email address (required on this homeserver)": "Gift een e-mailadresse in (vereist ip deze thuusserver)",
-    "Enter password": "Gif ’t paswoord in",
-    "Password is allowed, but unsafe": "Paswoord is toegeloatn, moar ounveilig",
-    "Nice, strong password!": "Dit is e sterk paswoord!",
-    "Other users can invite you to rooms using your contact details": "Andere gebruukers kunn jen in gesprekkn uutnodign ip basis van je contactgegeevns",
-    "Enter phone number (required on this homeserver)": "Gift den telefongnumero in (vereist ip deze thuusserver)",
-    "Enter username": "Gift de gebruukersnoame in",
     "Some characters not allowed": "Sommige tekens zyn nie toegeloatn",
     "Email (optional)": "E-mailadresse (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
@@ -1073,7 +1063,17 @@
             "msisdn": "’t Is een smse noa %(msisdn)s verstuurd gewist",
             "msisdn_token_prompt": "Gift de code in da ’t er in stoat:",
             "fallback_button": "Authenticoasje beginn"
-        }
+        },
+        "password_field_label": "Gif ’t paswoord in",
+        "password_field_strong_label": "Dit is e sterk paswoord!",
+        "password_field_weak_label": "Paswoord is toegeloatn, moar ounveilig",
+        "username_field_required_invalid": "Gift de gebruukersnoame in",
+        "msisdn_field_label": "Telefongnumero",
+        "identifier_label": "Anmeldn me",
+        "reset_password_email_field_description": "Gebruukt een e-mailadresse vo jen account t’herstelln",
+        "reset_password_email_field_required_invalid": "Gift een e-mailadresse in (vereist ip deze thuusserver)",
+        "msisdn_field_description": "Andere gebruukers kunn jen in gesprekkn uutnodign ip basis van je contactgegeevns",
+        "registration_msisdn_field_required_invalid": "Gift den telefongnumero in (vereist ip deze thuusserver)"
     },
     "export_chat": {
         "messages": "Berichtn"

@@ -42,7 +42,6 @@
     "Algeria": "Dzayer",
     "Albania": "Albanya",
     "Afghanistan": "Afɣanistan",
-    "Phone": "Atilifun",
     "Send": "Azen",
     "edited": "infel",
     "Copied!": "inɣel!",
@@ -163,7 +162,8 @@
     "auth": {
         "register_action": "senflul amiḍan",
         "phone_label": "Atilifun",
-        "email_field_label": "Imayl"
+        "email_field_label": "Imayl",
+        "msisdn_field_label": "Atilifun"
     },
     "room_settings": {
         "permissions": {

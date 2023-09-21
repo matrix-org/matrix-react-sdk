@@ -47,7 +47,6 @@
     "Invalid Email Address": "Invalid Email Address",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Invited": "Invited",
-    "Sign in with": "Sign in with",
     "Join Room": "Join Room",
     "Jump to first unread message.": "Jump to first unread message.",
     "Unignore": "Unignore",
@@ -65,7 +64,6 @@
     "<not supported>": "<not supported>",
     "No more results": "No more results",
     "Operation failed": "Operation failed",
-    "Phone": "Phone",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "Power level must be positive integer.": "Power level must be positive integer.",
     "Profile": "Profile",
@@ -502,7 +500,9 @@
             "msisdn_token_incorrect": "Token incorrect",
             "msisdn_token_prompt": "Please enter the code it contains:",
             "fallback_button": "Start authentication"
-        }
+        },
+        "msisdn_field_label": "Phone",
+        "identifier_label": "Sign in with"
     },
     "export_chat": {
         "messages": "Messages"

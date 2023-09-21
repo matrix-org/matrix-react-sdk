@@ -65,7 +65,6 @@
     "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
     "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
     "Incorrect verification code": "Urett stadfestingskode",
-    "Phone": "Telefon",
     "No display name": "Ingen visningsnamn",
     "Warning!": "Åtvaring!",
     "Authentication": "Authentisering",
@@ -138,7 +137,6 @@
     "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
     "Copied!": "Kopiert!",
     "Failed to copy": "Noko gjekk gale med kopieringa",
-    "Sign in with": "Logg inn med",
     "Email address": "Epostadresse",
     "Something went wrong!": "Noko gjekk gale!",
     "Delete Widget": "Slett Widgeten",
@@ -1150,7 +1148,9 @@
             "msisdn": "Ei tekstmelding vart send til %(msisdn)s",
             "msisdn_token_prompt": "Ver venleg og skriv koden den inneheld inn:",
             "fallback_button": "Start authentisering"
-        }
+        },
+        "msisdn_field_label": "Telefon",
+        "identifier_label": "Logg inn med"
     },
     "export_chat": {
         "messages": "Meldingar"

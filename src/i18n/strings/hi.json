@@ -68,7 +68,6 @@
     "Authentication check failed: incorrect password?": "प्रमाणीकरण जांच विफल: गलत पासवर्ड?",
     "Please contact your homeserver administrator.": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
     "Incorrect verification code": "गलत सत्यापन कोड",
-    "Phone": "फ़ोन",
     "No display name": "कोई प्रदर्शन नाम नहीं",
     "Warning!": "चेतावनी!",
     "Authentication": "प्रमाणीकरण",
@@ -663,7 +662,8 @@
         "change_password_confirm_label": "पासवर्ड की पुष्टि कीजिये",
         "change_password_current_label": "वर्तमान पासवर्ड",
         "change_password_new_label": "नया पासवर्ड",
-        "change_password_action": "पासवर्ड बदलें"
+        "change_password_action": "पासवर्ड बदलें",
+        "msisdn_field_label": "फ़ोन"
     },
     "setting": {
         "help_about": {

@@ -72,7 +72,6 @@
     "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
     "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
     "Incorrect verification code": "El codi de verificació és incorrecte",
-    "Phone": "Telèfon",
     "No display name": "Sense nom visible",
     "Authentication": "Autenticació",
     "Failed to set display name": "No s'ha pogut establir el nom visible",
@@ -126,7 +125,6 @@
     "Copied!": "Copiat!",
     "Failed to copy": "No s'ha pogut copiar",
     "Add an Integration": "Afegeix una integració",
-    "Sign in with": "Inicieu sessió amb",
     "Email address": "Correu electrònic",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "Something went wrong!": "Alguna cosa ha anat malament!",
@@ -702,7 +700,9 @@
             "msisdn": "S'ha enviat un missatge de text a %(msisdn)s",
             "msisdn_token_prompt": "Introdueix el codi que conté:",
             "fallback_button": "Inicia l'autenticació"
-        }
+        },
+        "msisdn_field_label": "Telèfon",
+        "identifier_label": "Inicieu sessió amb"
     },
     "export_chat": {
         "messages": "Missatges"

@@ -11,13 +11,11 @@
     "Forget room": "Esquecer sala",
     "Historical": "Histórico",
     "Invalid Email Address": "Endereço de email inválido",
-    "Sign in with": "Quero entrar",
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "Novas palavras-passe devem coincidir.",
     "Notifications": "Notificações",
     "<not supported>": "<não suportado>",
-    "Phone": "Telefone",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "Profile": "Perfil",
     "Reject invitation": "Rejeitar convite",
@@ -372,7 +370,6 @@
     "Mali": "Mali",
     "<userName/> wants to chat": "<userName/> quer falar",
     "Start a conversation with someone using their name or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome ou nome de utilizador (por exemplo: <userId/>).",
-    "Use an email address to recover your account": "Usar um endereço de email para recuperar a sua conta",
     "Malta": "Malta",
     "Lebanon": "Líbano",
     "Marshall Islands": "Ilhas Marshall",
@@ -536,7 +533,6 @@
     "Luxembourg": "Luxemburgo",
     "St. Pierre & Miquelon": "São Pedro e Miquelon",
     "Join millions for free on the largest public server": "Junte-se a milhões gratuitamente no maior servidor público",
-    "Enter username": "Introduza um nome de utilizador",
     "Failed to send event": "Falha no envio do evento",
     "Failed to read events": "Falha ao ler eventos",
     "Setting up keys": "A configurar chaves",
@@ -806,7 +802,11 @@
             "msisdn_token_incorrect": "Token incorreto",
             "msisdn_token_prompt": "Por favor, entre com o código que está na mensagem:",
             "fallback_button": "Iniciar autenticação"
-        }
+        },
+        "username_field_required_invalid": "Introduza um nome de utilizador",
+        "msisdn_field_label": "Telefone",
+        "identifier_label": "Quero entrar",
+        "reset_password_email_field_description": "Usar um endereço de email para recuperar a sua conta"
     },
     "export_chat": {
         "messages": "Mensagens"

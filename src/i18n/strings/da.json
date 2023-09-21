@@ -168,7 +168,6 @@
     "Verification code": "Verifikationskode",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
-    "Enter password": "Indtast adgangskode",
     "Add a new server": "Tilføj en ny server",
     "Change notification settings": "Skift notifikations indstillinger",
     "Profile picture": "Profil billede",
@@ -758,7 +757,8 @@
         "change_password_confirm_invalid": "Adgangskoderne matcher ikke",
         "change_password_current_label": "Nuværende adgangskode",
         "change_password_new_label": "Ny adgangskode",
-        "change_password_action": "Skift adgangskode"
+        "change_password_action": "Skift adgangskode",
+        "password_field_label": "Indtast adgangskode"
     },
     "export_chat": {
         "messages": "Beskeder"

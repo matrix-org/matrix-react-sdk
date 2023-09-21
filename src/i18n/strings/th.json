@@ -44,7 +44,6 @@
     "Invalid Email Address": "ที่อยู่อีเมลไม่ถูกต้อง",
     "Invalid file%(extra)s": "ไฟล์ %(extra)s ไม่ถูกต้อง",
     "Invited": "เชิญแล้ว",
-    "Sign in with": "เข้าสู่ระบบด้วย",
     "Join Room": "เข้าร่วมห้อง",
     "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
     "Missing user_id in request": "ไม่พบ user_id ในคำขอ",
@@ -53,7 +52,6 @@
     "not specified": "ไม่ได้ระบุ",
     "<not supported>": "<ไม่รองรับ>",
     "No more results": "ไม่มีผลลัพธ์อื่น",
-    "Phone": "โทรศัพท์",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
     "Reject invitation": "ปฏิเสธคำเชิญ",
     "Return to login screen": "กลับไปยังหน้าลงชื่อเข้าใช้",
@@ -520,7 +518,9 @@
         "change_password_current_label": "รหัสผ่านปัจจุบัน",
         "change_password_new_label": "รหัสผ่านใหม่",
         "change_password_action": "เปลี่ยนรหัสผ่าน",
-        "email_field_label": "อีเมล"
+        "email_field_label": "อีเมล",
+        "msisdn_field_label": "โทรศัพท์",
+        "identifier_label": "เข้าสู่ระบบด้วย"
     },
     "setting": {
         "help_about": {
