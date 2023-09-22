@@ -1,6 +1,5 @@
 {
     "Permission Required": "Yêu cầu Cấp quyền",
-    "You do not have permission to start a conference call in this room": "Bạn không có quyền để bắt đầu cuộc gọi nhóm trong phòng này",
     "Send": "Gửi",
     "Sun": "Chủ Nhật",
     "Mon": "Thứ Hai",
@@ -27,10 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s chưa có quyền để gửi thông báo cho bạn - vui lòng kiểm tra thiết lập trình duyệt",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s vẫn chưa được cấp quyền để gửi thông báo - vui lòng thử lại",
-    "Unable to enable Notifications": "Không thể bật thông báo",
-    "This email address was not found": "Địa chỉ thư điện tử này không tồn tại trong hệ thống",
     "Default": "Mặc định",
     "Restricted": "Bị hạn chế",
     "Moderator": "Điều phối viên",
@@ -747,7 +742,6 @@
     "Reason: %(reason)s": "Lý do: %(reason)s",
     "Sign Up": "Đăng Ký",
     "Join the conversation with an account": "Tham gia cuộc trò chuyện bằng một tài khoản",
-    "Empty room": "Phòng trống",
     "Suggested Rooms": "Phòng được đề xuất",
     "Historical": "Lịch sử",
     "Low priority": "Ưu tiên thấp",
@@ -808,7 +802,6 @@
     "Missing media permissions, click the button below to request.": "Thiếu quyền phương tiện, hãy nhấp vào nút bên dưới để yêu cầu.",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công",
     "No media permissions": "Không có quyền sử dụng công cụ truyền thông",
-    "Default Device": "Thiết bị mặc định",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Người quản trị máy chủ của bạn đã vô hiệu hóa mã hóa đầu cuối theo mặc định trong phòng riêng và Tin nhắn trực tiếp.",
     "Message search": "Tìm kiếm tin nhắn",
     "Reject all %(invitedRooms)s invites": "Từ chối tất cả lời mời từ %(invitedRooms)s",
@@ -1443,17 +1436,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Hoa Kỳ",
     "United Kingdom": "Vương quốc Anh",
-    "%(name)s is requesting verification": "%(name)s đang yêu cầu xác thực",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Chúng tôi đã yêu cầu trình duyệt ghi nhớ máy chủ bạn đã sử dụng để bạn có thể đăng nhập lại, nhưng có vẻ như trình duyệt của bạn đã quên máy chủ đó :( Truy cập trang đăng nhập và thử lại.",
-    "We couldn't log you in": "Chúng tôi không thể đăng nhập cho bạn",
-    "Only continue if you trust the owner of the server.": "Chỉ tiếp tục nếu bạn tin tưởng chủ sở hữu máy chủ.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Hành động này yêu cầu truy cập máy chủ định danh mặc định <server /> để xác thực địa chỉ thư điện tử hoặc số điện thoại, nhưng máy chủ không có bất kỳ điều khoản dịch vụ nào.",
-    "Identity server has no terms of service": "Máy chủ định danh này không có điều khoản dịch vụ",
-    "Failed to transfer call": "Có lỗi khi chuyển hướng cuộc gọi",
-    "Transfer Failed": "Không chuyển hướng cuộc gọi được",
-    "Unable to transfer call": "Không thể chuyển cuộc gọi",
-    "There was an error looking up the phone number": "Có lỗi khi tra cứu số điện thoại",
-    "Unable to look up phone number": "Không thể tra cứu số điện thoại",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Lưu trữ Khóa bảo mật của bạn ở nơi an toàn, như trình quản lý mật khẩu hoặc két sắt, vì nó được sử dụng để bảo vệ dữ liệu được mã hóa của bạn.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Chúng tôi sẽ tạo khóa bảo mật để bạn lưu trữ ở nơi an toàn, như trình quản lý mật khẩu hoặc két sắt.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Lấy lại quyền truy cập vào tài khoản của bạn và khôi phục các khóa mã hóa được lưu trữ trong phiên này. Nếu không có chúng, bạn sẽ không thể đọc tất cả các tin nhắn an toàn của mình trong bất kỳ phiên nào.",
@@ -1617,24 +1599,9 @@
     "In spaces %(space1Name)s and %(space2Name)s.": "Trong các space %(space1Name)s và %(space2Name)s.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Cặp (người dùng, phiên) không xác định: (%(userId)s, %(deviceId)s)",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Địa chỉ thư điện tử của bạn không được liên kết với một định danh Matrix trên máy chủ này.",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Không thể mời người dùng bằng địa chỉ thư điện tử mà không dùng máy chủ định danh. Bạn có thể kết nối với một máy chủ trong phần \"Cài đặt\".",
     "Failed to read events": "Không xem sự kiện được",
     "Failed to send event": "Không gửi sự kiện được",
     "You need to be able to kick users to do that.": "Bạn phải đuổi được người dùng thì mới làm vậy được.",
-    "%(senderName)s started a voice broadcast": "%(senderName)s đã bắt đầu phát thanh",
-    "Empty room (was %(oldName)s)": "Phòng trống (trước kia là %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Đang mời %(user)s và 1 người khác",
-        "other": "Đang mời %(user)s và %(count)s người khác"
-    },
-    "Inviting %(user1)s and %(user2)s": "Mời %(user1)s và %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s và 1 người khác",
-        "other": "%(user)s và %(count)s người khác"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s và %(user2)s",
-    "Database unexpectedly closed": "Cơ sở dữ liệu đột nhiên bị đóng",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "Connection": "Kết nối",
     "Voice processing": "Xử lý âm thanh",
@@ -1684,7 +1651,6 @@
     "Unsent": "Chưa gửi",
     "Unable to connect to Homeserver. Retrying…": "Không kết nối được với máy chủ nhà. Đang thử lại…",
     "Voice broadcast": "Phát thanh",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Mở ứng dụng trên nhiều thẻ hay xóa dữ liệu trình duyệt có thể là nguyên nhân.",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
@@ -1697,7 +1663,6 @@
     "New room": "Tạo phòng",
     "Connecting to integration manager…": "Đang kết nối tới quản lý tích hợp…",
     "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Bạn tìm cách tham gia một phòng bằng định danh (ID) phòng nhưng không cung cấp danh sách các máy chủ để tham gia qua. Định danh phòng là nội bộ và không thể được dùng để tham gia phòng mà không có thông tin thêm.",
-    "User is not logged in": "Người dùng đang không đăng nhập",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
@@ -1867,7 +1832,6 @@
     "Declining…": "Đang từ chối…",
     "Image view": "Xem ảnh",
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
-    "Something went wrong.": "Đã xảy ra lỗi.",
     "User cannot be invited until they are unbanned": "Người dùng không thể được mời nếu không được bỏ cấm",
     "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
@@ -2423,7 +2387,10 @@
             "enable_desktop_notifications_session": "Bật thông báo trên màn hình cho phiên này",
             "show_message_desktop_notification": "Hiển thị tin nhắn trong thông báo trên màn hình",
             "enable_audible_notifications_session": "Bật thông báo âm thanh cho phiên này",
-            "noisy": "Bật âm"
+            "noisy": "Bật âm",
+            "error_permissions_denied": "%(brand)s chưa có quyền để gửi thông báo cho bạn - vui lòng kiểm tra thiết lập trình duyệt",
+            "error_permissions_missing": "%(brand)s vẫn chưa được cấp quyền để gửi thông báo - vui lòng thử lại",
+            "error_title": "Không thể bật thông báo"
         },
         "appearance": {
             "layout_irc": "IRC (thử nghiệm)",
@@ -3250,7 +3217,15 @@
         "connection_lost_description": "Bạn không thể gọi khi không có kết nối tới máy chủ.",
         "too_many_calls": "Quá nhiều cuộc gọi",
         "too_many_calls_description": "Bạn đã đạt đến số lượng cuộc gọi đồng thời tối đa.",
-        "cannot_call_yourself_description": "Bạn không thể tự gọi chính mình."
+        "cannot_call_yourself_description": "Bạn không thể tự gọi chính mình.",
+        "msisdn_lookup_failed": "Không thể tra cứu số điện thoại",
+        "msisdn_lookup_failed_description": "Có lỗi khi tra cứu số điện thoại",
+        "msisdn_transfer_failed": "Không thể chuyển cuộc gọi",
+        "transfer_failed": "Không chuyển hướng cuộc gọi được",
+        "transfer_failed_description": "Có lỗi khi chuyển hướng cuộc gọi",
+        "no_permission_conference": "Yêu cầu Cấp quyền",
+        "no_permission_conference_description": "Bạn không có quyền để bắt đầu cuộc gọi nhóm trong phòng này",
+        "default_device": "Thiết bị mặc định"
     },
     "Other": "Khác",
     "Advanced": "Nâng cao",
@@ -3520,7 +3495,14 @@
         "reset_password_email_field_description": "Sử dụng địa chỉ thư điện tử để khôi phục tài khoản của bạn",
         "reset_password_email_field_required_invalid": "Nhập địa chỉ thư điện tử (bắt buộc trên máy chủ này)",
         "msisdn_field_description": "Những người dùng khác có thể mời bạn vào phòng bằng cách sử dụng chi tiết liên hệ của bạn",
-        "registration_msisdn_field_required_invalid": "Nhập số điện thoại (bắt buộc trên máy chủ này)"
+        "registration_msisdn_field_required_invalid": "Nhập số điện thoại (bắt buộc trên máy chủ này)",
+        "oidc": {
+            "error_generic": "Đã xảy ra lỗi.",
+            "error_title": "Chúng tôi không thể đăng nhập cho bạn"
+        },
+        "sso_failed_missing_storage": "Chúng tôi đã yêu cầu trình duyệt ghi nhớ máy chủ bạn đã sử dụng để bạn có thể đăng nhập lại, nhưng có vẻ như trình duyệt của bạn đã quên máy chủ đó :( Truy cập trang đăng nhập và thử lại.",
+        "reset_password_email_not_found_title": "Địa chỉ thư điện tử này không tồn tại trong hệ thống",
+        "reset_password_email_not_associated": "Địa chỉ thư điện tử của bạn không được liên kết với một định danh Matrix trên máy chủ này."
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3876,7 +3858,10 @@
         "column_document": "Tài liệu",
         "tac_title": "Các điều khoản và điều kiện",
         "tac_description": "Để tiếp tục sử dụng máy chủ nhà của %(homeserverDomain)s, bạn phải xem xét và đồng ý với các điều khoản và điều kiện của chúng tôi.",
-        "tac_button": "Xem lại các điều khoản và điều kiện"
+        "tac_button": "Xem lại các điều khoản và điều kiện",
+        "identity_server_no_terms_title": "Máy chủ định danh này không có điều khoản dịch vụ",
+        "identity_server_no_terms_description_1": "Hành động này yêu cầu truy cập máy chủ định danh mặc định <server /> để xác thực địa chỉ thư điện tử hoặc số điện thoại, nhưng máy chủ không có bất kỳ điều khoản dịch vụ nào.",
+        "identity_server_no_terms_description_2": "Chỉ tiếp tục nếu bạn tin tưởng chủ sở hữu máy chủ."
     },
     "space_settings": {
         "title": "Cài đặt - %(spaceName)s"
@@ -3900,5 +3885,25 @@
     "failed_load_async_component": "Không thể tải dữ liệu! Kiểm tra kết nối mạng và thử lại.",
     "upload_failed_generic": "Không tải lên được tập tin '%(fileName)s' .",
     "upload_failed_size": "Tập tin '%(fileName)s' vượt quá giới hạn về kích thước tải lên của máy chủ",
-    "upload_failed_title": "Không tải lên được"
+    "upload_failed_title": "Không tải lên được",
+    "cannot_invite_without_identity_server": "Không thể mời người dùng bằng địa chỉ thư điện tử mà không dùng máy chủ định danh. Bạn có thể kết nối với một máy chủ trong phần \"Cài đặt\".",
+    "error_user_not_logged_in": "Người dùng đang không đăng nhập",
+    "error_database_closed_title": "Cơ sở dữ liệu đột nhiên bị đóng",
+    "error_database_closed_description": "Mở ứng dụng trên nhiều thẻ hay xóa dữ liệu trình duyệt có thể là nguyên nhân.",
+    "empty_room": "Phòng trống",
+    "user1_and_user2": "%(user1)s và %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s và 1 người khác",
+        "other": "%(user)s và %(count)s người khác"
+    },
+    "inviting_user1_and_user2": "Mời %(user1)s và %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Đang mời %(user)s và 1 người khác",
+        "other": "Đang mời %(user)s và %(count)s người khác"
+    },
+    "empty_room_was_name": "Phòng trống (trước kia là %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s đang yêu cầu xác thực",
+        "io.element.voice_broadcast_chunk": "%(senderName)s đã bắt đầu phát thanh"
+    }
 }

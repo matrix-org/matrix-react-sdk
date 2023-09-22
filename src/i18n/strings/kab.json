@@ -107,12 +107,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Cancel entering passphrase?": "Sefsex tafyirt tuffirt n uεeddi?",
-    "Identity server has no terms of service": "Timagit n uqeddac ulac ɣer-sen iferdisen n umeẓlu",
-    "%(name)s is requesting verification": "%(name)s yesra asenqed",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s ulac ɣer-s tisirag i tuzna n yilɣa - ttxil-k/m senqed iɣewwaren n yiminig-ik/im",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ur d-yefk ara tisirag i tuzna n yilɣa - ttxil-k/m εreḍ tikkelt-nniḍen",
-    "Unable to enable Notifications": "Sens irmad n yilɣa",
-    "This email address was not found": "Tansa-a n yimayl ulac-it",
     "Failed to invite": "Ulamek i d-tnecdeḍ",
     "You need to be able to invite users to do that.": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
     "Failed to send request.": "Tuzna n usuter ur teddi ara.",
@@ -128,10 +122,7 @@
     "You are now ignoring %(userId)s": "Aql-ak tura tunfeḍ i %(userId)s",
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
-    "You do not have permission to start a conference call in this room": "Ur tesεiḍ ara tisirag ad tebduḍ asireg s usiwel deg texxamt-a",
     "Are you sure you want to cancel entering passphrase?": "S tidet tebɣiḍ ad tesfesxeḍ asekcem n tefyirt tuffirt?",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Tigawt-a tesra anekcum ɣer uqeddac n tmagit tamezwert <server /> i usentem n tansa n yimayl neɣ uṭṭun n tiliɣri, maca aqeddac ur yesεi ula d yiwet n twali n umeẓlu.",
-    "Only continue if you trust the owner of the server.": "Ala ma tettekleḍ ɣef bab n uqeddac ara tkemmleḍ.",
     "Restricted": "Yesεa tilas",
     "Set up": "Sbadu",
     "Pencil": "Akeryun",
@@ -240,7 +231,6 @@
     "Ignored users": "Iseqdacen yettunfen",
     "<not supported>": "<not supported>",
     "Message search": "Anadi n yizen",
-    "Default Device": "Ibenk arussin",
     "Voice & Video": "Ameslaw & Tavidyut",
     "Notification sound": "Imesli i yilɣa",
     "Failed to unban": "Sefsex aḍraq yugi ad yeddu",
@@ -1422,7 +1412,10 @@
             "enable_desktop_notifications_session": "Sens ilɣa n tnirawt i tɣimit-a",
             "show_message_desktop_notification": "Sken-d iznan deg yilɣa n tnarit",
             "enable_audible_notifications_session": "Sens ilɣa imsiwal i texxamt",
-            "noisy": "Sɛan ṣṣut"
+            "noisy": "Sɛan ṣṣut",
+            "error_permissions_denied": "%(brand)s ulac ɣer-s tisirag i tuzna n yilɣa - ttxil-k/m senqed iɣewwaren n yiminig-ik/im",
+            "error_permissions_missing": "%(brand)s ur d-yefk ara tisirag i tuzna n yilɣa - ttxil-k/m εreḍ tikkelt-nniḍen",
+            "error_title": "Sens irmad n yilɣa"
         },
         "appearance": {
             "heading": "Err arwes-ik·im d udmawan",
@@ -1852,7 +1845,10 @@
         "misconfigured_server_description": "Ttxil-k·m suter deg anedbal n uqeddac-ik·im agejdan (<code>%(homeserverDomain)s</code>) ad yeswel aqeddac TURN akken isawalen ad ddun akken ilaq.",
         "too_many_calls": "Ddeqs n yisawalen",
         "too_many_calls_description": "Tessawḍeḍ amḍan n yisawalen afellay yemseḍfaren.",
-        "cannot_call_yourself_description": "Ur tezmireḍ ara a temsawaleḍ d yiman-ik."
+        "cannot_call_yourself_description": "Ur tezmireḍ ara a temsawaleḍ d yiman-ik.",
+        "no_permission_conference": "Tasiregt tlaq",
+        "no_permission_conference_description": "Ur tesεiḍ ara tisirag ad tebduḍ asireg s usiwel deg texxamt-a",
+        "default_device": "Ibenk arussin"
     },
     "Other": "Nniḍen",
     "Advanced": "Talqayt",
@@ -2022,7 +2018,8 @@
         "reset_password_email_field_description": "Seqdec tansa n yimayl akken ad t-terreḍ amiḍan-ik:im",
         "reset_password_email_field_required_invalid": "Sekcem tansa n yimayl (yettusra deg uqeddac-a agejdan)",
         "msisdn_field_description": "Iseqdacen wiyaḍ zemren ad ak·akem-snubegten ɣer texxamin s useqdec n tlqayt n unermas",
-        "registration_msisdn_field_required_invalid": "Sekcem uṭṭun n tiliɣri (yettusra deg uqeddac-a agejdan)"
+        "registration_msisdn_field_required_invalid": "Sekcem uṭṭun n tiliɣri (yettusra deg uqeddac-a agejdan)",
+        "reset_password_email_not_found_title": "Tansa-a n yimayl ulac-it"
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2178,10 +2175,16 @@
         "column_document": "Isemli",
         "tac_title": "Tiwtilin d tfadiwin",
         "tac_description": "I wakken ad tkemmleḍ aseqdec n uqeddac agejdan n %(homeserverDomain)s ilaq ad talseḍ asenqed syen ad tqebleḍ tiwtilin-nneɣ s umata.",
-        "tac_button": "Senqed tiwtilin d tfadiwin"
+        "tac_button": "Senqed tiwtilin d tfadiwin",
+        "identity_server_no_terms_title": "Timagit n uqeddac ulac ɣer-sen iferdisen n umeẓlu",
+        "identity_server_no_terms_description_1": "Tigawt-a tesra anekcum ɣer uqeddac n tmagit tamezwert <server /> i usentem n tansa n yimayl neɣ uṭṭun n tiliɣri, maca aqeddac ur yesεi ula d yiwet n twali n umeẓlu.",
+        "identity_server_no_terms_description_2": "Ala ma tettekleḍ ɣef bab n uqeddac ara tkemmleḍ."
     },
     "failed_load_async_component": "Yegguma ad d-yali! Senqed tuqqna-inek.inem ɣer uzeṭṭa syen tεerḍeḍ tikkelt-nniḍen.",
     "upload_failed_generic": "Yegguma ad d-yali '%(fileName)s' ufaylu.",
     "upload_failed_size": "Teɣzi n ufaylu-a '%(fileName)s' tεedda teɣzi yettusirgen sɣur aqeddac-a i usali",
-    "upload_failed_title": "Asali ur yeddi ara"
+    "upload_failed_title": "Asali ur yeddi ara",
+    "notifier": {
+        "m.key.verification.request": "%(name)s yesra asenqed"
+    }
 }

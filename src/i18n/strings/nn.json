@@ -1,6 +1,5 @@
 {
     "Permission Required": "Tillating er Naudsynt",
-    "You do not have permission to start a conference call in this room": "Du har ikkje tillating til å starta ei gruppesamtale i dette rommet",
     "Sun": "su",
     "Mon": "må",
     "Tue": "ty",
@@ -26,10 +25,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har ikkje lov til å senda deg varsel - sjekk nettlesarinnstillingane dine",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fekk ikkje tillating til å senda varsel - ver venleg og prøv igjen",
-    "Unable to enable Notifications": "Klarte ikkje å skru på Varsel",
-    "This email address was not found": "Denne epostadressa var ikkje funnen",
     "Default": "Opphavleg innstilling",
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
@@ -215,7 +210,6 @@
     "No Audio Outputs detected": "Ingen ljodavspelingseiningar funne",
     "No Microphones detected": "Ingen opptakseiningar funne",
     "No Webcams detected": "Ingen Nettkamera funne",
-    "Default Device": "Eininga som brukast i utgangspunktet",
     "Audio Output": "Ljodavspeling",
     "A new password must be entered.": "Du må skriva eit nytt passord inn.",
     "New passwords must match each other.": "Dei nye passorda må vera like.",
@@ -286,9 +280,6 @@
     "Setting up keys": "Setter opp nøklar",
     "Verify this session": "Stadfest denne økta",
     "Encryption upgrade available": "Kryptering kan oppgraderast",
-    "Identity server has no terms of service": "Identitetstenaren manglar bruksvilkår",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlinga krev kommunikasjon mot <server />(standard identitetstenar) for å verifisere e-post eller telefonnummer, men tenaren manglar bruksvilkår.",
-    "Only continue if you trust the owner of the server.": "Gå vidare så lenge du har tillit til eigar av tenaren.",
     "Error upgrading room": "Feil ved oppgradering av rom",
     "Double check that your server supports the room version chosen and try again.": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
     "Verifies a user, session, and pubkey tuple": "Verifiser brukar, økt eller public-key objekt (pubkey tuple)",
@@ -392,7 +383,6 @@
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
-    "%(name)s is requesting verification": "%(name)s spør etter verifikasjon",
     "Later": "Seinare",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
@@ -446,7 +436,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Sambandsstatane (USA)",
     "United Kingdom": "Storbritannia",
-    "We couldn't log you in": "Vi klarte ikkje å logga deg inn",
     "End Poll": "Avslutt røysting",
     "Sorry, the poll did not end. Please try again.": "Røystinga vart ikkje avslutta. Prøv på nytt.",
     "Failed to end poll": "Avslutning av røysting gjekk gale",
@@ -483,11 +472,6 @@
         "one": "Endeleg resultat basert etter %(count)s stemme",
         "other": "Endeleg resultat basert etter %(count)s stemmer"
     },
-    "Failed to transfer call": "Overføring av samtalen feila",
-    "Transfer Failed": "Overføring feila",
-    "Unable to transfer call": "Fekk ikkje til å overføra samtalen",
-    "There was an error looking up the phone number": "Det skjedde ein feil under oppslag av telefonnummer",
-    "Unable to look up phone number": "Nummeroppslag gjekk gale",
     "common": {
         "analytics": "Statistikk",
         "error": "Noko gjekk gale",
@@ -693,7 +677,10 @@
             "enable_desktop_notifications_session": "Aktiver skrivebordsvarslingar for denne øka",
             "show_message_desktop_notification": "Vis meldinga i eit skriverbordsvarsel",
             "enable_audible_notifications_session": "Aktiver høyrbare varslingar for denne økta",
-            "noisy": "Bråkete"
+            "noisy": "Bråkete",
+            "error_permissions_denied": "%(brand)s har ikkje lov til å senda deg varsel - sjekk nettlesarinnstillingane dine",
+            "error_permissions_missing": "%(brand)s fekk ikkje tillating til å senda varsel - ver venleg og prøv igjen",
+            "error_title": "Klarte ikkje å skru på Varsel"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentell)",
@@ -1043,7 +1030,15 @@
         "connection_lost_description": "Du kan ikkje starta samtalar utan tilkopling til tenaren.",
         "too_many_calls": "For mange samtalar",
         "too_many_calls_description": "Du har nådd maksimalt tal samtidige samtalar.",
-        "cannot_call_yourself_description": "Du kan ikkje samtala med deg sjølv."
+        "cannot_call_yourself_description": "Du kan ikkje samtala med deg sjølv.",
+        "msisdn_lookup_failed": "Nummeroppslag gjekk gale",
+        "msisdn_lookup_failed_description": "Det skjedde ein feil under oppslag av telefonnummer",
+        "msisdn_transfer_failed": "Fekk ikkje til å overføra samtalen",
+        "transfer_failed": "Overføring feila",
+        "transfer_failed_description": "Overføring av samtalen feila",
+        "no_permission_conference": "Tillating er Naudsynt",
+        "no_permission_conference_description": "Du har ikkje tillating til å starta ei gruppesamtale i dette rommet",
+        "default_device": "Eininga som brukast i utgangspunktet"
     },
     "Other": "Anna",
     "Advanced": "Avansert",
@@ -1146,7 +1141,11 @@
             "sso_body": "Stadfest at du legger til denne e-postadressa, ved å bruka Single-sign-on for å stadfeste identiteten din."
         },
         "msisdn_field_label": "Telefon",
-        "identifier_label": "Logg inn med"
+        "identifier_label": "Logg inn med",
+        "oidc": {
+            "error_title": "Vi klarte ikkje å logga deg inn"
+        },
+        "reset_password_email_not_found_title": "Denne epostadressa var ikkje funnen"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1223,7 +1222,10 @@
     "terms": {
         "tac_title": "Vilkår og Føresetnader",
         "tac_description": "For å framleis bruka %(homeserverDomain)s sin heimtenar må du sjå over og seia deg einig i våre Vilkår og Føresetnader.",
-        "tac_button": "Sjå over Vilkår og Føresetnader"
+        "tac_button": "Sjå over Vilkår og Føresetnader",
+        "identity_server_no_terms_title": "Identitetstenaren manglar bruksvilkår",
+        "identity_server_no_terms_description_1": "Denne handlinga krev kommunikasjon mot <server />(standard identitetstenar) for å verifisere e-post eller telefonnummer, men tenaren manglar bruksvilkår.",
+        "identity_server_no_terms_description_2": "Gå vidare så lenge du har tillit til eigar av tenaren."
     },
     "encryption": {
         "old_version_detected_title": "Gamal kryptografidata vart oppdagen",
@@ -1245,5 +1247,8 @@
     "failed_load_async_component": "Klarte ikkje lasta! Sjå på nettilkoplinga di og prøv igjen.",
     "upload_failed_generic": "Fila '%(fileName)s' vart ikkje lasta opp.",
     "upload_failed_size": "Fila %(fileName)s er større enn heimetenaren si grense for opplastningar",
-    "upload_failed_title": "Opplasting mislukkast"
+    "upload_failed_title": "Opplasting mislukkast",
+    "notifier": {
+        "m.key.verification.request": "%(name)s spør etter verifikasjon"
+    }
 }

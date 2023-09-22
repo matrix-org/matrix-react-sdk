@@ -1,6 +1,5 @@
 {
     "Permission Required": "Toestemmienge vereist",
-    "You do not have permission to start a conference call in this room": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
     "Send": "Verstuurn",
     "Sun": "Zun",
     "Mon": "Moa",
@@ -27,10 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s èt geen toestemmienge vo je meldiengn te verstuurn - controleert je browserinstelliengn",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s èt geen toestemmienge gekreegn ghed vo joun meldiengn te verstuurn - herprobeer ’t e ki",
-    "Unable to enable Notifications": "Kostege meldiengn nie inschoakeln",
-    "This email address was not found": "Dat e-mailadresse hier es nie gevoundn",
     "Default": "Standoard",
     "Restricted": "Beperkten toegank",
     "Moderator": "Moderator",
@@ -182,7 +177,6 @@
     "No Audio Outputs detected": "Geen geluudsuutgangn gedetecteerd",
     "No Microphones detected": "Geen microfoons gevoundn",
     "No Webcams detected": "Geen webcams gevoundn",
-    "Default Device": "Standoardtoestel",
     "Audio Output": "Geluudsuutgang",
     "Voice & Video": "Sproak & video",
     "Room information": "Gespreksinformoasje",
@@ -509,9 +503,7 @@
     "Discovery options will appear once you have added a phone number above.": "Ountdekkiengsopties goan verschynn a j’e telefongnumero toegevoegd ghed èt.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "’t Is een smse versteur noa +%(msisdn)s. Gift de verificoasjecode in da derin stoat.",
     "Command Help": "Hulp by ipdrachtn",
-    "Identity server has no terms of service": "Den identiteitsserver èt geen dienstvoorwoardn",
     "The identity server you have chosen does not have any terms of service.": "Den identiteitsserver da je gekozen ghed èt, èt geen dienstvoorwoardn.",
-    "Only continue if you trust the owner of the server.": "Goat alleene mo verder o je den eigenoar van de server betrouwt.",
     "Terms of service not accepted or the identity server is invalid.": "Dienstvoorwoardn nie anveird, of den identiteitsserver is oungeldig.",
     "Enter a new identity server": "Gift e nieuwen identiteitsserver in",
     "Remove %(email)s?": "%(email)s verwydern?",
@@ -682,7 +674,10 @@
             "rule_tombstone": "Wanneer da gesprekkn ipgewoardeerd wordn",
             "rule_encrypted_room_one_to_one": "Versleuterde berichtn in twigesprekkn",
             "show_message_desktop_notification": "Bericht toogn in bureaubladmeldienge",
-            "noisy": "Lawoaierig"
+            "noisy": "Lawoaierig",
+            "error_permissions_denied": "%(brand)s èt geen toestemmienge vo je meldiengn te verstuurn - controleert je browserinstelliengn",
+            "error_permissions_missing": "%(brand)s èt geen toestemmienge gekreegn ghed vo joun meldiengn te verstuurn - herprobeer ’t e ki",
+            "error_title": "Kostege meldiengn nie inschoakeln"
         },
         "appearance": {
             "timeline_image_size_default": "Standoard",
@@ -938,7 +933,10 @@
         "call_failed": "Iproep mislukt",
         "misconfigured_server": "Iproep mislukt door verkeerd gecounfigureerde server",
         "misconfigured_server_description": "Vroagt an den beheerder van je thuusserver (<code>%(homeserverDomain)s</code>) vo e TURN-server te counfigureern tenende jen iproepn betrouwboar te doen werkn.",
-        "cannot_call_yourself_description": "J’en ku jezelve nie belln."
+        "cannot_call_yourself_description": "J’en ku jezelve nie belln.",
+        "no_permission_conference": "Toestemmienge vereist",
+        "no_permission_conference_description": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
+        "default_device": "Standoardtoestel"
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -1066,7 +1064,8 @@
         "reset_password_email_field_description": "Gebruukt een e-mailadresse vo jen account t’herstelln",
         "reset_password_email_field_required_invalid": "Gift een e-mailadresse in (vereist ip deze thuusserver)",
         "msisdn_field_description": "Andere gebruukers kunn jen in gesprekkn uutnodign ip basis van je contactgegeevns",
-        "registration_msisdn_field_required_invalid": "Gift den telefongnumero in (vereist ip deze thuusserver)"
+        "registration_msisdn_field_required_invalid": "Gift den telefongnumero in (vereist ip deze thuusserver)",
+        "reset_password_email_not_found_title": "Dat e-mailadresse hier es nie gevoundn"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1148,7 +1147,9 @@
         "column_summary": "Soamnvattienge",
         "tac_title": "Gebruuksvoorwoardn",
         "tac_description": "Vo de %(homeserverDomain)s-thuusserver te bluuvn gebruukn, goa je de gebruuksvoorwoardn moetn leezn en anveirdn.",
-        "tac_button": "Gebruuksvoorwoardn leezn"
+        "tac_button": "Gebruuksvoorwoardn leezn",
+        "identity_server_no_terms_title": "Den identiteitsserver èt geen dienstvoorwoardn",
+        "identity_server_no_terms_description_2": "Goat alleene mo verder o je den eigenoar van de server betrouwt."
     },
     "labs_mjolnir": {
         "title": "Genegeerde gebruukers"

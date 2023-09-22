@@ -60,7 +60,7 @@ export default class PasswordReset {
             },
             function (err) {
                 if (err.errcode === "M_THREEPID_NOT_FOUND") {
-                    err.message = _t("This email address was not found");
+                    err.message = _t("auth|reset_password_email_not_found_title");
                 } else if (err.httpStatus) {
                     err.message = err.message + ` (Status ${err.httpStatus})`;
                 }
@@ -110,9 +110,7 @@ export default class PasswordReset {
             if (err.httpStatus === 401) {
                 err.message = _t("settings|general|add_email_failed_verification");
             } else if (err.httpStatus === 404) {
-                err.message = _t(
-                    "Your email address does not appear to be associated with a Matrix ID on this homeserver.",
-                );
+                err.message = _t("auth|reset_password_email_not_associated");
             } else if (err.httpStatus) {
                 err.message += ` (Status ${err.httpStatus})`;
             }

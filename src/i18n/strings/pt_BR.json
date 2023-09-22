@@ -57,12 +57,8 @@
     "Missing user_id in request": "Faltou o id de usuário na requisição",
     "Power level must be positive integer.": "O nível de permissão precisa ser um número inteiro e positivo.",
     "Reason": "Razão",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s não tem permissão para lhe enviar notificações - confirme as configurações do seu navegador",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s não tem permissão para lhe enviar notificações - tente novamente",
     "Room %(roomId)s not visible": "A sala %(roomId)s não está visível",
-    "This email address was not found": "Este endereço de e-mail não foi encontrado",
     "This room is not recognised.": "Esta sala não é reconhecida.",
-    "Unable to enable Notifications": "Não foi possível ativar as notificações",
     "You need to be able to invite users to do that.": "Para fazer isso, precisa ter permissão para convidar outras pessoas.",
     "You need to be logged in.": "Você precisa estar logado.",
     "Connectivity to the server has been lost.": "A conexão com o servidor foi perdida. Verifique sua conexão de internet.",
@@ -130,7 +126,6 @@
     "No Webcams detected": "Nenhuma câmera detectada",
     "No media permissions": "Não tem permissões para acessar a mídia",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera",
-    "Default Device": "Aparelho padrão",
     "Are you sure you want to leave the room '%(roomName)s'?": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Home": "Home",
@@ -217,7 +212,6 @@
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
-    "You do not have permission to start a conference call in this room": "Você não tem permissão para iniciar uma chamada em grupo nesta sala",
     "Missing roomId.": "RoomId ausente.",
     "This homeserver has hit its Monthly Active User limit.": "Este homeserver atingiu seu limite de usuário ativo mensal.",
     "This homeserver has exceeded one of its resource limits.": "Este servidor local ultrapassou um dos seus limites de recursos.",
@@ -388,10 +382,6 @@
     "Cancel entering passphrase?": "Cancelar a introdução da frase de senha?",
     "Are you sure you want to cancel entering passphrase?": "Tem certeza que quer cancelar a introdução da frase de senha?",
     "Setting up keys": "Configurar chaves",
-    "Identity server has no terms of service": "O servidor de identidade não tem termos de serviço",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta ação requer acesso ao servidor de identidade padrão <server /> para poder validar um endereço de e-mail ou número de telefone, mas este servidor não tem nenhum termo de uso.",
-    "Only continue if you trust the owner of the server.": "Continue apenas se você confia em quem possui este servidor.",
-    "%(name)s is requesting verification": "%(name)s está solicitando confirmação",
     "Error upgrading room": "Erro atualizando a sala",
     "Double check that your server supports the room version chosen and try again.": "Verifique se seu servidor suporta a versão de sala escolhida e tente novamente.",
     "Use an identity server": "Usar um servidor de identidade",
@@ -1177,23 +1167,17 @@
     "Invalid Security Key": "Chave de Segurança inválida",
     "Wrong Security Key": "Chave de Segurança errada",
     "Transfer": "Transferir",
-    "Failed to transfer call": "Houve uma falha ao transferir a chamada",
     "A call can only be transferred to a single user.": "Uma chamada só pode ser transferida para um único usuário.",
     "Set my room layout for everyone": "Definir a minha aparência da sala para todos",
     "Open dial pad": "Abrir o teclado de discagem",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Faça backup de suas chaves de criptografia com os dados da sua conta, para se prevenir a perder o acesso às suas sessões. Suas chaves serão protegidas por uma Chave de Segurança exclusiva.",
     "Dial pad": "Teclado de discagem",
-    "There was an error looking up the phone number": "Ocorreu um erro ao procurar o número de telefone",
-    "Unable to look up phone number": "Não foi possível procurar o número de telefone",
     "Remember this": "Lembre-se disso",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
     "Allow this widget to verify your identity": "Permitir que este widget verifique a sua identidade",
     "Recently visited rooms": "Salas visitadas recentemente",
     "Use app": "Usar o aplicativo",
     "Use app for a better experience": "Use o aplicativo para ter uma experiência melhor",
-    "We couldn't log you in": "Não foi possível fazer login",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Anteriormente, pedimos ao seu navegador para lembrar qual servidor local você usa para fazer login, mas infelizmente o navegador se esqueceu disso. Vá para a página de login e tente novamente.",
-    "Empty room": "Sala vazia",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Adicionar sala existente",
     "This homeserver has been blocked by its administrator.": "Este servidor local foi bloqueado pelo seu administrador.",
@@ -1232,8 +1216,6 @@
     "Identity server URL must be HTTPS": "O link do servidor de identidade deve começar com HTTPS",
     "Some invites couldn't be sent": "Alguns convites não puderam ser enviados",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Nós enviamos aos outros, mas as pessoas abaixo não puderam ser convidadas para <RoomName/>",
-    "Transfer Failed": "A Transferência Falhou",
-    "Unable to transfer call": "Não foi possível transferir chamada",
     "This space has no local addresses": "Este espaço não tem endereços locais",
     "No microphone found": "Nenhum microfone encontrado",
     "Unable to access your microphone": "Não foi possível acessar seu microfone",
@@ -1489,21 +1471,11 @@
     "User is already in the space": "O usuário já está no espaço",
     "User is already in the room": "O usuário já está na sala",
     "User does not exist": "O usuário não existe",
-    "Inviting %(user1)s and %(user2)s": "Convidando %(user1)s e %(user2)s",
-    "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
     "Live": "Ao vivo",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Par desconhecido (usuário, sessão): (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Endereço da sala não reconhecido: %(roomAlias)s",
     "You need to be able to kick users to do that.": "Você precisa ter permissão de expulsar usuários para fazer isso.",
     "Failed to invite users to %(roomName)s": "Falha ao convidar usuários para %(roomName)s",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Convidando %(user)s e 1 outro",
-        "other": "Convidando %(user)s e %(count)s outros"
-    },
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s e 1 outro",
-        "other": "%(user)s e %(count)s outros"
-    },
     "You were disconnected from the call. (Error: %(message)s)": "Você foi desconectado da chamada. (Erro: %(message)s)",
     "Remove messages sent by me": "",
     "%(count)s people joined": {
@@ -1528,12 +1500,10 @@
     },
     "In %(spaceName)s.": "No espaço %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
-    "Empty room (was %(oldName)s)": "Sala vazia (era %(oldName)s)",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
     "Can’t start a call": "Não é possível iniciar uma chamada",
     "Failed to read events": "Falha ao ler evento",
     "Failed to send event": "Falha ao enviar evento",
-    "%(senderName)s started a voice broadcast": "%(senderName)s iniciou uma transmissão de voz",
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -1952,7 +1922,10 @@
             "enable_desktop_notifications_session": "Ativar notificações na área de trabalho nesta sessão",
             "show_message_desktop_notification": "Mostrar a mensagem na notificação da área de trabalho",
             "enable_audible_notifications_session": "Ativar o som de notificações nesta sessão",
-            "noisy": "Ativado com som"
+            "noisy": "Ativado com som",
+            "error_permissions_denied": "%(brand)s não tem permissão para lhe enviar notificações - confirme as configurações do seu navegador",
+            "error_permissions_missing": "%(brand)s não tem permissão para lhe enviar notificações - tente novamente",
+            "error_title": "Não foi possível ativar as notificações"
         },
         "appearance": {
             "layout_irc": "IRC (experimental)",
@@ -2608,7 +2581,15 @@
         "connection_lost_description": "Você não pode fazer chamadas sem uma conexão com o servidor.",
         "too_many_calls": "Muitas chamadas",
         "too_many_calls_description": "Você atingiu o número máximo de chamadas simultâneas.",
-        "cannot_call_yourself_description": "Você não pode iniciar uma chamada consigo mesmo."
+        "cannot_call_yourself_description": "Você não pode iniciar uma chamada consigo mesmo.",
+        "msisdn_lookup_failed": "Não foi possível procurar o número de telefone",
+        "msisdn_lookup_failed_description": "Ocorreu um erro ao procurar o número de telefone",
+        "msisdn_transfer_failed": "Não foi possível transferir chamada",
+        "transfer_failed": "A Transferência Falhou",
+        "transfer_failed_description": "Houve uma falha ao transferir a chamada",
+        "no_permission_conference": "Permissão necessária",
+        "no_permission_conference_description": "Você não tem permissão para iniciar uma chamada em grupo nesta sala",
+        "default_device": "Aparelho padrão"
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -2834,7 +2815,12 @@
         "reset_password_email_field_description": "Use um endereço de e-mail para recuperar sua conta",
         "reset_password_email_field_required_invalid": "Digite o endereço de e-mail (necessário neste servidor)",
         "msisdn_field_description": "Outros usuários podem convidá-lo para salas usando seus detalhes de contato",
-        "registration_msisdn_field_required_invalid": "Digite o número de celular (necessário neste servidor)"
+        "registration_msisdn_field_required_invalid": "Digite o número de celular (necessário neste servidor)",
+        "sso_failed_missing_storage": "Anteriormente, pedimos ao seu navegador para lembrar qual servidor local você usa para fazer login, mas infelizmente o navegador se esqueceu disso. Vá para a página de login e tente novamente.",
+        "oidc": {
+            "error_title": "Não foi possível fazer login"
+        },
+        "reset_password_email_not_found_title": "Este endereço de e-mail não foi encontrado"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -3104,7 +3090,10 @@
         "column_document": "Documento",
         "tac_title": "Termos e Condições",
         "tac_description": "Para continuar usando o servidor local %(homeserverDomain)s, você deve ler e concordar com nossos termos e condições.",
-        "tac_button": "Revise os termos e condições"
+        "tac_button": "Revise os termos e condições",
+        "identity_server_no_terms_title": "O servidor de identidade não tem termos de serviço",
+        "identity_server_no_terms_description_1": "Esta ação requer acesso ao servidor de identidade padrão <server /> para poder validar um endereço de e-mail ou número de telefone, mas este servidor não tem nenhum termo de uso.",
+        "identity_server_no_terms_description_2": "Continue apenas se você confia em quem possui este servidor."
     },
     "poll": {
         "create_poll_title": "Criar enquete"
@@ -3112,5 +3101,21 @@
     "failed_load_async_component": "Não foi possível carregar! Verifique sua conexão de rede e tente novamente.",
     "upload_failed_generic": "O envio do arquivo '%(fileName)s' falhou.",
     "upload_failed_size": "O arquivo '%(fileName)s' excede o limite de tamanho deste homeserver para uploads",
-    "upload_failed_title": "O envio falhou"
+    "upload_failed_title": "O envio falhou",
+    "empty_room": "Sala vazia",
+    "user1_and_user2": "%(user1)s e %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s e 1 outro",
+        "other": "%(user)s e %(count)s outros"
+    },
+    "inviting_user1_and_user2": "Convidando %(user1)s e %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Convidando %(user)s e 1 outro",
+        "other": "Convidando %(user)s e %(count)s outros"
+    },
+    "empty_room_was_name": "Sala vazia (era %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s está solicitando confirmação",
+        "io.element.voice_broadcast_chunk": "%(senderName)s iniciou uma transmissão de voz"
+    }
 }

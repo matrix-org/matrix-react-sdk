@@ -104,7 +104,6 @@
     "Notifications": "Tilkynningar",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
     "Search failed": "Leit mistókst",
-    "Default Device": "Sjálfgefið tæki",
     "Profile": "Notandasnið",
     "A new password must be entered.": "Það verður að setja inn nýtt lykilorð.",
     "New passwords must match each other.": "Nýju lykilorðin verða að vera þau sömu.",
@@ -115,8 +114,6 @@
     "Confirm passphrase": "Staðfestu lykilfrasa",
     "Import room keys": "Flytja inn dulritunarlykla spjallrásar",
     "File to import": "Skrá til að flytja inn",
-    "Unable to enable Notifications": "Tekst ekki að virkja tilkynningar",
-    "This email address was not found": "Tölvupóstfangið fannst ekki",
     "Failed to invite": "Mistókst að bjóða",
     "Missing roomId.": "Vantar spjallrásarauðkenni.",
     "Ignored user": "Hunsaður notandi",
@@ -511,8 +508,6 @@
         "one": "%(spaceName)s og %(count)s til viðbótar"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
-    "Failed to transfer call": "Mistókst að áframsenda símtal",
-    "Transfer Failed": "Flutningur mistókst",
     "Couldn't load page": "Gat ekki hlaðið inn síðu",
     "Room avatar": "Auðkennismynd spjallrásar",
     "Room Topic": "Umfjöllunarefni spjallrásar",
@@ -701,16 +696,8 @@
     "You need to be able to invite users to do that.": "Þú þarft að hafa heimild til að bjóða notendum til að gera þetta.",
     "Some invites couldn't be sent": "Sumar boðsbeiðnir var ekki hægt að senda",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Við sendum hin boðin, en fólkinu hér fyrir neðan var ekki hægt að bjóða í <RoomName/>",
-    "We couldn't log you in": "Við gátum ekki skráð þig inn",
-    "Only continue if you trust the owner of the server.": "Ekki halda áfram nema þú treystir eiganda netþjónsins.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Þessi aðgerð krefst þess að til að fá aðgang að sjálfgefna auðkennisþjóninum <server /> þurfi að sannreyna tölvupóstfang eða símanúmer, en netþjónninn er hins vegar ekki með neina þjónustuskilmála.",
-    "Identity server has no terms of service": "Auðkennisþjónninn er ekki með neina þjónustuskilmála",
-    "There was an error looking up the phone number": "Það kom upp villa við að fletta upp símanúmerinu",
     "Set up Secure Messages": "Setja upp örugg skilaboð",
-    "You do not have permission to start a conference call in this room": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
     "Permission Required": "Krafist er heimildar",
-    "Unable to transfer call": "Mistókst að áframsenda símtal",
-    "Unable to look up phone number": "Ekki er hægt að fletta upp símanúmeri",
     "Upgrade your encryption": "Uppfærðu dulritunina þína",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
@@ -773,7 +760,6 @@
     "Other published addresses:": "Önnur birt vistföng:",
     "Published Addresses": "Birt vistföng",
     "This room has no local addresses": "Þessi spjallrás er ekki með nein staðvær vistföng",
-    "Empty room": "Tóm spjallrás",
     "Suggested Rooms": "Tillögur að spjallrásum",
     "Add people": "Bæta við fólki",
     "Invite to space": "Bjóða inn á svæði",
@@ -1172,9 +1158,6 @@
     "Session already verified!": "Seta er þegar sannreynd!",
     "Use an identity server to invite by email. Manage in Settings.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í stillingunum.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Smelltu á að halda áfram til að nota sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s) eða sýslaðu með þetta í stillingunum.",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s voru ekki gefnar heimildir til að senda þér tilkynningar - reyndu aftur",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s hefur ekki heimildir til að senda þér tilkynningar - yfirfarðu stillingar vafrans þíns",
-    "%(name)s is requesting verification": "%(name)s biður um sannvottun",
     "Confirm Security Phrase": "Staðfestu öryggisfrasa",
     "Confirm your Security Phrase": "Staðfestu öryggisfrasann þinn",
     "Enter a Security Phrase": "Settu inn öryggisfrasa",
@@ -1496,7 +1479,6 @@
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
     "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
     "Verifies a user, session, and pubkey tuple": "Sannreynir auðkenni notanda, setu og dreifilykils",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
     "Double check that your server supports the room version chosen and try again.": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd.",
@@ -1565,17 +1547,6 @@
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
     "Live": "Beint",
     "You need to be able to kick users to do that.": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta.",
-    "Empty room (was %(oldName)s)": "Tóm spjallrás (var %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Býð %(user)s og 1 öðrum",
-        "other": "Býð %(user)s og %(count)s til viðbótar"
-    },
-    "Inviting %(user1)s and %(user2)s": "Býð %(user1)s og %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s og 1 annar",
-        "other": "%(user)s og %(count)s til viðbótar"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s og %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eða %(copyButton)s",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
@@ -1660,7 +1631,6 @@
     "Can’t start a call": "Get ekki hafið símtal",
     "Failed to read events": "Mistókst að lesa atburði",
     "Failed to send event": "Mistókst að senda atburð",
-    "%(senderName)s started a voice broadcast": "%(senderName)s hóf talútsendingu",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -2218,7 +2188,10 @@
             "enable_desktop_notifications_session": "Virkja tilkynningar á skjáborði fyrir þessa setu",
             "show_message_desktop_notification": "Birta tilkynningu í innbyggðu kerfistilkynningakerfi",
             "enable_audible_notifications_session": "Virkja tilkynningar með hljóði fyrir þessa setu",
-            "noisy": "Hávært"
+            "noisy": "Hávært",
+            "error_permissions_denied": "%(brand)s hefur ekki heimildir til að senda þér tilkynningar - yfirfarðu stillingar vafrans þíns",
+            "error_permissions_missing": "%(brand)s voru ekki gefnar heimildir til að senda þér tilkynningar - reyndu aftur",
+            "error_title": "Tekst ekki að virkja tilkynningar"
         },
         "appearance": {
             "layout_irc": "IRC (á tilraunastigi)",
@@ -2979,7 +2952,15 @@
         "connection_lost_description": "Þú getur ekki hringt símtöl án tengingar við netþjóninn.",
         "too_many_calls": "Of mörg símtöl",
         "too_many_calls_description": "Þú hefur náð hámarksfjölda samhliða símtala.",
-        "cannot_call_yourself_description": "Þú getur ekki byrjað símtal með sjálfum þér."
+        "cannot_call_yourself_description": "Þú getur ekki byrjað símtal með sjálfum þér.",
+        "msisdn_lookup_failed": "Ekki er hægt að fletta upp símanúmeri",
+        "msisdn_lookup_failed_description": "Það kom upp villa við að fletta upp símanúmerinu",
+        "msisdn_transfer_failed": "Mistókst að áframsenda símtal",
+        "transfer_failed": "Flutningur mistókst",
+        "transfer_failed_description": "Mistókst að áframsenda símtal",
+        "no_permission_conference": "Krafist er heimildar",
+        "no_permission_conference_description": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
+        "default_device": "Sjálfgefið tæki"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -3232,7 +3213,12 @@
         "reset_password_email_field_description": "Notaðu tölvupóstfang til að endurheimta aðganginn þinn",
         "reset_password_email_field_required_invalid": "Settu inn tölvupóstfang (nauðsynlegt á þessum heimaþjóni)",
         "msisdn_field_description": "Aðrir notendur geta boðið þér á spjallrásir með því að nota nánari tengiliðaupplýsingar þínar",
-        "registration_msisdn_field_required_invalid": "Settu inn símanúmer (nauðsynlegt á þessum heimaþjóni)"
+        "registration_msisdn_field_required_invalid": "Settu inn símanúmer (nauðsynlegt á þessum heimaþjóni)",
+        "sso_failed_missing_storage": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur.",
+        "oidc": {
+            "error_title": "Við gátum ekki skráð þig inn"
+        },
+        "reset_password_email_not_found_title": "Tölvupóstfangið fannst ekki"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3558,7 +3544,10 @@
         "column_document": "Skjal",
         "tac_title": "Skilmálar og kvaðir",
         "tac_description": "Til að halda áfram að nota %(homeserverDomain)s heimaþjóninn þarftu að yfirfara og samþykkja skilmála okkar og kvaðir.",
-        "tac_button": "Yfirfara skilmála og kvaðir"
+        "tac_button": "Yfirfara skilmála og kvaðir",
+        "identity_server_no_terms_title": "Auðkennisþjónninn er ekki með neina þjónustuskilmála",
+        "identity_server_no_terms_description_1": "Þessi aðgerð krefst þess að til að fá aðgang að sjálfgefna auðkennisþjóninum <server /> þurfi að sannreyna tölvupóstfang eða símanúmer, en netþjónninn er hins vegar ekki með neina þjónustuskilmála.",
+        "identity_server_no_terms_description_2": "Ekki halda áfram nema þú treystir eiganda netþjónsins."
     },
     "space_settings": {
         "title": "Stillingar - %(spaceName)s"
@@ -3584,5 +3573,21 @@
     "failed_load_async_component": "Mistókst að hlaða inn. Athugaðu nettenginguna þína og reyndu aftur.",
     "upload_failed_generic": "Skrána '%(fileName)s' mistókst að senda inn.",
     "upload_failed_size": "Skráin '%(fileName)s' fer yfir stærðarmörk þessa heimaþjóns fyrir innsendar skrár",
-    "upload_failed_title": "Innsending mistókst"
+    "upload_failed_title": "Innsending mistókst",
+    "empty_room": "Tóm spjallrás",
+    "user1_and_user2": "%(user1)s og %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s og 1 annar",
+        "other": "%(user)s og %(count)s til viðbótar"
+    },
+    "inviting_user1_and_user2": "Býð %(user1)s og %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Býð %(user)s og 1 öðrum",
+        "other": "Býð %(user)s og %(count)s til viðbótar"
+    },
+    "empty_room_was_name": "Tóm spjallrás (var %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s biður um sannvottun",
+        "io.element.voice_broadcast_chunk": "%(senderName)s hóf talútsendingu"
+    }
 }

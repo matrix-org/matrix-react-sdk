@@ -4,7 +4,6 @@
     "No Webcams detected": "Nav webkameru",
     "No media permissions": "Nav datu nesēju, kuriem atļauta piekļuve",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai",
-    "Default Device": "Noklusējuma ierīce",
     "Authentication": "Autentifikācija",
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "A new password must be entered.": "Nepieciešams ievadīt jauno paroli.",
@@ -62,9 +61,6 @@
     "Reason": "Iemesls",
     "Reject invitation": "Noraidīt uzaicinājumu",
     "Return to login screen": "Atgriezties uz pierakstīšanās lapu",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s nav atļauts nosūtīt jums paziņojumus. Lūdzu pārbaudi sava pārlūka iestatījumus",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s nav piešķirta atļauja nosūtīt paziņojumus. Lūdzu mēģini vēlreiz",
-    "Unable to enable Notifications": "Neizdevās iespējot paziņojumus",
     "This will allow you to reset your password and receive notifications.": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus.",
     "Room %(roomId)s not visible": "Istaba %(roomId)s nav redzama",
     "%(roomName)s does not exist.": "%(roomName)s neeksistē.",
@@ -88,7 +84,6 @@
     "Search failed": "Meklēšana neizdevās",
     "Server may be unavailable, overloaded, or search timed out :(": "Serveris izskatās nesasniedzams, ir pārslogots, vai arī meklēšana beigusies ar savienojuma noildzi :(",
     "Session ID": "Sesijas ID",
-    "This email address was not found": "Šāda epasta adrese nav atrasta",
     "This room has no local addresses": "Šai istabai nav lokālo adrešu",
     "This room is not recognised.": "Šī istaba netika atpazīta.",
     "This doesn't appear to be a valid email address": "Šī neizskatās pēc derīgas epasta adreses",
@@ -220,7 +215,6 @@
     "Low Priority": "Zema prioritāte",
     "Thank you!": "Tencinam!",
     "Permission Required": "Nepieciešama atļauja",
-    "You do not have permission to start a conference call in this room": "Šajā istabā nav atļaujas sākt konferences zvanu",
     "Your %(brand)s is misconfigured": "Jūsu %(brand)s ir nepareizi konfigurēts",
     "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
     "Start Verification": "Uzsākt verifikāciju",
@@ -418,7 +412,6 @@
     "%(name)s declined": "%(name)s noraidīja",
     "You declined": "Jūs noraidījāt",
     "Incoming Verification Request": "Ienākošais veifikācijas pieprasījums",
-    "%(name)s is requesting verification": "%(name)s pieprasa verifikāciju",
     "Verification Request": "Verifikācijas pieprasījums",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
     "%(count)s rooms": {
@@ -441,7 +434,6 @@
     "Demote yourself?": "Pazemināt sevi?",
     "Accepting…": "Akceptē…",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
-    "Empty room": "Tukša istaba",
     "Add existing room": "Pievienot eksistējošu istabu",
     "Add room": "Pievienot istabu",
     "Invite to this space": "Uzaicināt uz šo vietu",
@@ -750,16 +742,6 @@
     "Angola": "Angola",
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Mēs lūdzām tīmekļa pārlūkprogrammai atcerēties, kuru bāzes serveri izmantojat, lai ļautu jums pierakstīties, bet diemžēl jūsu pārlūkprogramma to ir aizmirsusi. Dodieties uz pierakstīšanās lapu un mēģiniet vēlreiz.",
-    "We couldn't log you in": "Neizdevās jūs ierakstīt sistēmā",
-    "Only continue if you trust the owner of the server.": "Turpiniet tikai gadījumā, ja uzticaties servera īpašniekam.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Šai darbībai ir nepieciešama piekļuve noklusējuma identitātes serverim <server />, lai validētu e-pasta adresi vai tālruņa numuru, taču serverim nav pakalpojumu sniegšanas noteikumu.",
-    "Identity server has no terms of service": "Identitātes serverim nav pakalpojumu sniegšanas noteikumu",
-    "Failed to transfer call": "Neizdevās pārsūtīt/pāradresēt zvanu",
-    "Transfer Failed": "Pāradresēšana/pārsūtīšana neizdevās",
-    "Unable to transfer call": "Neizdevās pārsūtīt zvanu",
-    "There was an error looking up the phone number": "Meklējot tālruņa numuru, radās kļūda",
-    "Unable to look up phone number": "Nevar atrast tālruņa numuru",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Šī istaba tiek izmantota svarīgiem ziņojumiem no bāzes servera, tāpēc jūs nevarat to pamest.",
     "Can't leave Server Notices room": "Nevar pamest Server Notices istabu",
     "Unexpected server error trying to leave the room": "Mēģinot pamest istabu radās negaidīta servera kļūme",
@@ -1180,7 +1162,10 @@
             "enable_desktop_notifications_session": "Iespējot darbvirsmas paziņojumus šai sesijai",
             "show_message_desktop_notification": "Parādīt ziņu darbvirsmas paziņojumos",
             "enable_audible_notifications_session": "Iespējot dzirdamus paziņojumus šai sesijai",
-            "noisy": "Ar skaņu"
+            "noisy": "Ar skaņu",
+            "error_permissions_denied": "%(brand)s nav atļauts nosūtīt jums paziņojumus. Lūdzu pārbaudi sava pārlūka iestatījumus",
+            "error_permissions_missing": "%(brand)s nav piešķirta atļauja nosūtīt paziņojumus. Lūdzu mēģini vēlreiz",
+            "error_title": "Neizdevās iespējot paziņojumus"
         },
         "appearance": {
             "heading": "Pielāgot izskatu",
@@ -1638,7 +1623,15 @@
         "misconfigured_server_description": "Lūdzu, jautājiet sava bāzes servera administratoram (<code>%(homeserverDomain)s</code>) sakonfigurēt TURN serveri, lai zvani strādātu stabili.",
         "too_many_calls": "Pārāk daudz zvanu",
         "too_many_calls_description": "Ir sasniegts maksimālais vienaicīgu zvanu skaits.",
-        "cannot_call_yourself_description": "Nav iespējams piezvanīt sev."
+        "cannot_call_yourself_description": "Nav iespējams piezvanīt sev.",
+        "msisdn_lookup_failed": "Nevar atrast tālruņa numuru",
+        "msisdn_lookup_failed_description": "Meklējot tālruņa numuru, radās kļūda",
+        "msisdn_transfer_failed": "Neizdevās pārsūtīt zvanu",
+        "transfer_failed": "Pāradresēšana/pārsūtīšana neizdevās",
+        "transfer_failed_description": "Neizdevās pārsūtīt/pāradresēt zvanu",
+        "no_permission_conference": "Nepieciešama atļauja",
+        "no_permission_conference_description": "Šajā istabā nav atļaujas sākt konferences zvanu",
+        "default_device": "Noklusējuma ierīce"
     },
     "Other": "Citi",
     "Advanced": "Papildu",
@@ -1806,7 +1799,12 @@
         "reset_password_email_field_description": "Izmantojiet epasta adresi konta atkopšanai",
         "reset_password_email_field_required_invalid": "Ievadiet epasta adresi (obligāta šajā bāzes serverī)",
         "msisdn_field_description": "Citi lietotāji var jūs uzaicināt uz istabām, izmantojot jūsu kontaktinformāciju",
-        "registration_msisdn_field_required_invalid": "Ievadiet tālruņa numuru (obligāts šajā bāzes serverī)"
+        "registration_msisdn_field_required_invalid": "Ievadiet tālruņa numuru (obligāts šajā bāzes serverī)",
+        "sso_failed_missing_storage": "Mēs lūdzām tīmekļa pārlūkprogrammai atcerēties, kuru bāzes serveri izmantojat, lai ļautu jums pierakstīties, bet diemžēl jūsu pārlūkprogramma to ir aizmirsusi. Dodieties uz pierakstīšanās lapu un mēģiniet vēlreiz.",
+        "oidc": {
+            "error_title": "Neizdevās jūs ierakstīt sistēmā"
+        },
+        "reset_password_email_not_found_title": "Šāda epasta adrese nav atrasta"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -2010,5 +2008,14 @@
     "failed_load_async_component": "Ielāde neizdevās! Pārbaudiet interneta savienojumu un mēģiniet vēlreiz.",
     "upload_failed_generic": "'%(fileName)s' augšupielāde neizdevās.",
     "upload_failed_size": "Fails '%(fileName)s pārsniedz augšupielādējama faila izmēra ierobežojumu šajā bāzes serverī",
-    "upload_failed_title": "Augšupielāde (nosūtīšana) neizdevās"
+    "upload_failed_title": "Augšupielāde (nosūtīšana) neizdevās",
+    "terms": {
+        "identity_server_no_terms_title": "Identitātes serverim nav pakalpojumu sniegšanas noteikumu",
+        "identity_server_no_terms_description_1": "Šai darbībai ir nepieciešama piekļuve noklusējuma identitātes serverim <server />, lai validētu e-pasta adresi vai tālruņa numuru, taču serverim nav pakalpojumu sniegšanas noteikumu.",
+        "identity_server_no_terms_description_2": "Turpiniet tikai gadījumā, ja uzticaties servera īpašniekam."
+    },
+    "empty_room": "Tukša istaba",
+    "notifier": {
+        "m.key.verification.request": "%(name)s pieprasa verifikāciju"
+    }
 }

@@ -42,7 +42,6 @@
     "Logs sent": "ログが送信されました",
     "Thank you!": "ありがとうございます！",
     "Permission Required": "権限が必要です",
-    "You do not have permission to start a conference call in this room": "このルームでグループ通話を開始する権限がありません",
     "Sun": "日",
     "Mon": "月",
     "Tue": "火",
@@ -68,10 +67,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(monthName)s%(day)s日 %(weekDayName)s曜日 %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s年%(monthName)s%(day)s日（%(weekDayName)s）",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s年%(monthName)s%(day)s日 %(weekDayName)s曜日 %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)sに通知を送信する権限がありません。ブラウザーの設定を確認してください",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)sに通知を送信する権限がありませんでした。もう一度試してください",
-    "Unable to enable Notifications": "通知を有効にできません",
-    "This email address was not found": "このメールアドレスが見つかりませんでした",
     "Default": "既定値",
     "Restricted": "制限",
     "Moderator": "モデレーター",
@@ -247,7 +242,6 @@
     "No media permissions": "メディア権限がありません",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "マイクまたはWebカメラにアクセスするために、手動で%(brand)sを許可する必要があるかもしれません",
     "No Audio Outputs detected": "音声出力が検出されません",
-    "Default Device": "既定の端末",
     "Audio Output": "音声出力",
     "Profile": "プロフィール",
     "A new password must be entered.": "新しいパスワードを入力する必要があります。",
@@ -272,9 +266,7 @@
     "You do not have permission to invite people to this room.": "このルームにユーザーを招待する権限がありません。",
     "Unknown server error": "不明なサーバーエラー",
     "Room Name": "ルーム名",
-    "Identity server has no terms of service": "IDサーバーには利用規約がありません",
     "Use an identity server": "IDサーバーを使用",
-    "Only continue if you trust the owner of the server.": "サーバーの所有者を信頼する場合のみ続行してください。",
     "Use an identity server to invite by email. Manage in Settings.": "IDサーバーを使用し、メールで招待。設定画面で管理。",
     "Cannot reach homeserver": "ホームサーバーに接続できません",
     "Your %(brand)s is misconfigured": "あなたの%(brand)sは正しく設定されていません",
@@ -902,13 +894,7 @@
     "Afghanistan": "アフガニスタン",
     "United States": "アメリカ",
     "United Kingdom": "イギリス",
-    "%(name)s is requesting verification": "%(name)sは認証を要求しています",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "残念ながら、ブラウザーはサインインするホームサーバーを忘れてしまいました。サインインページに移動して再試行してください。",
-    "We couldn't log you in": "ログインできませんでした",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "このアクションを行うには、既定のIDサーバー <server /> にアクセスしてメールアドレスまたは電話番号を認証する必要がありますが、サーバーには利用規約がありません。",
     "Dial pad": "ダイヤルパッド",
-    "There was an error looking up the phone number": "電話番号を検索する際にエラーが発生しました",
-    "Unable to look up phone number": "電話番号が見つかりません",
     "IRC display name width": "IRCの表示名の幅",
     "Change notification settings": "通知設定を変更",
     "New login. Was this you?": "新しいログインです。ログインしましたか？",
@@ -973,7 +959,6 @@
     "Error removing address": "アドレスを削除する際にエラーが発生しました",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "アドレスを削除する際にエラーが発生しました。既にルームが存在しないか、一時的なエラーが発生しました。",
     "You don't have permission to delete the address.": "アドレスを削除する権限がありません。",
-    "Empty room": "空のルーム",
     "Suggested Rooms": "おすすめのルーム",
     "Add existing room": "既存のルームを追加",
     "Invite to this space": "このスペースに招待",
@@ -1011,8 +996,6 @@
     "Not a valid identity server (status code %(code)s)": "有効なIDサーバーではありません（ステータスコード %(code)s）",
     "Identity server URL must be HTTPS": "IDサーバーのURLはHTTPSスキーマである必要があります",
     "Failed to save space settings.": "スペースの設定を保存できませんでした。",
-    "Transfer Failed": "転送に失敗しました",
-    "Unable to transfer call": "通話を転送できません",
     "Mentions & keywords": "メンションとキーワード",
     "Global": "全体",
     "New keyword": "新しいキーワード",
@@ -1065,7 +1048,6 @@
     "This upgrade will allow members of selected spaces access to this room without an invite.": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。",
     "Hide sidebar": "サイドバーを表示しない",
-    "Failed to transfer call": "通話の転送に失敗しました",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
         "other": "%(spaceName)sと他%(count)s個"
@@ -1643,18 +1625,7 @@
     "No live locations": "位置情報（ライブ）がありません",
     "View list": "一覧を表示",
     "View List": "一覧を表示",
-    "%(user1)s and %(user2)s": "%(user1)sと%(user2)s",
     "You need to be able to kick users to do that.": "それを行うにはユーザーをキックする権限が必要です。",
-    "Empty room (was %(oldName)s)": "空のルーム（以前の名前は%(oldName)s）",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "%(user)sと1人を招待しています",
-        "other": "%(user)sと%(count)s人を招待しています"
-    },
-    "Inviting %(user1)s and %(user2)s": "%(user1)sと%(user2)sを招待しています",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)sと1人",
-        "other": "%(user)sと%(count)s人"
-    },
     "Unknown room": "不明のルーム",
     "In %(spaceName)s and %(count)s other spaces.": {
         "one": "%(spaceName)sと他%(count)s個のスペース。",
@@ -1769,7 +1740,6 @@
     },
     "Bulk options": "一括オプション",
     "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
-    "%(senderName)s started a voice broadcast": "%(senderName)sが音声配信を開始しました",
     "Ongoing call": "通話中",
     "Add privileged users": "特権ユーザーを追加",
     "Give one or multiple users in this room more privileges": "このルームのユーザーに権限を付与",
@@ -1899,7 +1869,6 @@
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。",
     "Declining…": "拒否しています…",
     "Enable %(brand)s as an additional calling option in this room": "%(brand)sをこのルームの追加の通話手段として有効にする",
     "This session is backing up your keys.": "このセッションは鍵をバックアップしています。",
@@ -2486,7 +2455,10 @@
             "enable_desktop_notifications_session": "このセッションでデスクトップ通知を有効にする",
             "show_message_desktop_notification": "デスクトップ通知にメッセージの内容を表示",
             "enable_audible_notifications_session": "このセッションで音声通知を有効にする",
-            "noisy": "音量大"
+            "noisy": "音量大",
+            "error_permissions_denied": "%(brand)sに通知を送信する権限がありません。ブラウザーの設定を確認してください",
+            "error_permissions_missing": "%(brand)sに通知を送信する権限がありませんでした。もう一度試してください",
+            "error_title": "通知を有効にできません"
         },
         "appearance": {
             "layout_irc": "IRC（実験的）",
@@ -3328,7 +3300,15 @@
         "connection_lost_description": "サーバーに接続していないため、通話を発信できません。",
         "too_many_calls": "通話が多すぎます",
         "too_many_calls_description": "同時通話数の上限に達しました。",
-        "cannot_call_yourself_description": "自分自身に通話を発信することはできません。"
+        "cannot_call_yourself_description": "自分自身に通話を発信することはできません。",
+        "msisdn_lookup_failed": "電話番号が見つかりません",
+        "msisdn_lookup_failed_description": "電話番号を検索する際にエラーが発生しました",
+        "msisdn_transfer_failed": "通話を転送できません",
+        "transfer_failed": "転送に失敗しました",
+        "transfer_failed_description": "通話の転送に失敗しました",
+        "no_permission_conference": "権限が必要です",
+        "no_permission_conference_description": "このルームでグループ通話を開始する権限がありません",
+        "default_device": "既定の端末"
     },
     "Other": "その他",
     "Advanced": "詳細",
@@ -3607,7 +3587,13 @@
         "reset_password_email_field_description": "アカウント復旧用のメールアドレスを設定してください",
         "reset_password_email_field_required_invalid": "メールアドレスを入力してください（このホームサーバーでは必須）",
         "msisdn_field_description": "他のユーザーはあなたの連絡先の情報を用いてルームに招待することができます",
-        "registration_msisdn_field_required_invalid": "電話番号を入力（このホームサーバーでは必須）"
+        "registration_msisdn_field_required_invalid": "電話番号を入力（このホームサーバーでは必須）",
+        "sso_failed_missing_storage": "残念ながら、ブラウザーはサインインするホームサーバーを忘れてしまいました。サインインページに移動して再試行してください。",
+        "oidc": {
+            "error_title": "ログインできませんでした"
+        },
+        "reset_password_email_not_found_title": "このメールアドレスが見つかりませんでした",
+        "reset_password_email_not_associated": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3968,7 +3954,10 @@
         "column_document": "ドキュメント",
         "tac_title": "利用規約",
         "tac_description": "%(homeserverDomain)sのホームサーバーを引き続き使用するには、利用規約を確認して同意する必要があります。",
-        "tac_button": "利用規約を確認"
+        "tac_button": "利用規約を確認",
+        "identity_server_no_terms_title": "IDサーバーには利用規約がありません",
+        "identity_server_no_terms_description_1": "このアクションを行うには、既定のIDサーバー <server /> にアクセスしてメールアドレスまたは電話番号を認証する必要がありますが、サーバーには利用規約がありません。",
+        "identity_server_no_terms_description_2": "サーバーの所有者を信頼する場合のみ続行してください。"
     },
     "space_settings": {
         "title": "設定 - %(spaceName)s"
@@ -3995,5 +3984,21 @@
     "failed_load_async_component": "読み込めません！ネットワークの通信状態を確認して、もう一度やり直してください。",
     "upload_failed_generic": "ファイル '%(fileName)s' のアップロードに失敗しました。",
     "upload_failed_size": "ファイル '%(fileName)s' はこのホームサーバーのアップロードのサイズ上限を超過しています",
-    "upload_failed_title": "アップロードに失敗しました"
+    "upload_failed_title": "アップロードに失敗しました",
+    "empty_room": "空のルーム",
+    "user1_and_user2": "%(user1)sと%(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)sと1人",
+        "other": "%(user)sと%(count)s人"
+    },
+    "inviting_user1_and_user2": "%(user1)sと%(user2)sを招待しています",
+    "inviting_user_and_n_others": {
+        "one": "%(user)sと1人を招待しています",
+        "other": "%(user)sと%(count)s人を招待しています"
+    },
+    "empty_room_was_name": "空のルーム（以前の名前は%(oldName)s）",
+    "notifier": {
+        "m.key.verification.request": "%(name)sは認証を要求しています",
+        "io.element.voice_broadcast_chunk": "%(senderName)sが音声配信を開始しました"
+    }
 }

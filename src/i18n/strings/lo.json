@@ -173,16 +173,6 @@
     "Afghanistan": "ອັຟການິສຖານ",
     "United States": "ສະຫະລັດອາເມລິກາ",
     "United Kingdom": "ປະເທດອັງກິດ",
-    "This email address was not found": "ບໍ່ພົບທີ່ຢູ່ອີເມວນີ້",
-    "Unable to enable Notifications": "ບໍ່ສາມາດເປີດໃຊ້ການແຈ້ງເຕືອນໄດ້",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນ - ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນໃຫ້ທ່ານ - ກະລຸນາກວດສອບການຕັ້ງຄ່າຂອງບຣາວເຊີຂອງທ່ານ",
-    "%(name)s is requesting verification": "%(name)s ກຳລັງຮ້ອງຂໍການຢັ້ງຢືນ",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ພວກເຮົາໃຫ້ບຣາວເຊີຈື່ homeserver ທີ່ທ່ານໃຊ້ ເຂົ້າສູ່ລະບົບ, ແຕ່ເສຍດາຍບຣາວເຊີຂອງທ່ານລືມມັນ. ກັບໄປທີ່ໜ້າເຂົ້າສູ່ລະບົບແລ້ວ ລອງໃໝ່ອີກຄັ້ງ.",
-    "We couldn't log you in": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້",
-    "Only continue if you trust the owner of the server.": "ຖ້າທ່ານໄວ້ວາງໃຈເຈົ້າຂອງເຊີບເວີດັ່ງກ່າວແລ້ວ ໃຫ້ສືບຕໍ່.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "ການດຳເນິນການນີ້ຕ້ອງໄດ້ມີການເຂົ້າເຖິງຂໍ້ມູນການຢັ້ງຢືນຕົວຕົນທີ່ <server /> ເພື່ອກວດສອບອີເມວ ຫຼື ເບີໂທລະສັບ, ແຕ່ເຊີບເວີບໍ່ມີເງື່ອນໄຂໃນບໍລິການໃດໆ.",
-    "Identity server has no terms of service": "ຂໍ້ມູນເຊີບເວີ ບໍ່ມີໃຫ້ບໍລິການ",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s%(time)s",
     "AM": "ຕອນເຊົ້າ",
@@ -206,13 +196,7 @@
     "Tue": "ວັນອັງຄານ",
     "Mon": "ວັນຈັນ",
     "Sun": "ວັນອາທິດ",
-    "You do not have permission to start a conference call in this room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລິເລີ່ມການໂທປະຊຸມໃນຫ້ອງນີ້",
     "Permission Required": "ຕ້ອງການອະນຸຍາດ",
-    "Failed to transfer call": "ການໂອນສາຍບໍ່ສຳເລັດ",
-    "Transfer Failed": "ການໂອນບໍ່ສຳເລັດ",
-    "Unable to transfer call": "ບໍ່ສາມາດໂອນສາຍໄດ້",
-    "There was an error looking up the phone number": "ເກີດຄວາມຜິດພາດໃນການຊອກຫາເບີໂທລະສັບ",
-    "Unable to look up phone number": "ບໍ່ສາມາດຊອກຫາເບີໂທລະສັບໄດ້",
     "Room %(roomId)s not visible": "ບໍ່ເຫັນຫ້ອງ %(roomId)s",
     "Missing room_id in request": "ບໍ່ມີການຮ້ອງຂໍ room_id",
     "You do not have permission to do that in this room.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນັ້ນຢູ່ໃນຫ້ອງນີ້.",
@@ -383,7 +367,6 @@
     "Missing media permissions, click the button below to request.": "ບໍ່ອະນຸຍາດສື່, ກົດໄປທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຮ້ອງຂໍ.",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "ທ່ານອາດຈະຈໍາເປັນຕ້ອງໄດ້ອະນຸຍາດໃຫ້ %(brand)sເຂົ້າເຖິງໄມໂຄຣໂຟນ/ເວັບແຄມຂອງທ່ານ",
     "No media permissions": "ບໍ່ມີການອະນຸຍາດສື່",
-    "Default Device": "ອຸປະກອນເລີ່ມຕົ້ນ",
     "Group all your rooms that aren't part of a space in one place.": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ.",
     "Rooms outside of a space": "ຫ້ອງຢູ່ນອກພື້ນທີ່",
     "Group all your people in one place.": "ຈັດກຸ່ມຄົນທັງໝົດຂອງເຈົ້າຢູ່ບ່ອນດຽວ.",
@@ -1298,7 +1281,6 @@
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
     "<not supported>": "<ບໍ່ຮອງຮັບ>",
-    "Empty room": "ຫ້ອງຫວ່າງ",
     "Suggested Rooms": "ຫ້ອງແນະນຳ",
     "Historical": "ປະຫວັດ",
     "Low priority": "ບູລິມະສິດຕໍ່າ",
@@ -2179,7 +2161,10 @@
             "enable_desktop_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບສຳລັບລະບົບນີ້",
             "show_message_desktop_notification": "ສະແດງຂໍ້ຄວາມໃນການແຈ້ງເຕືອນ desktop",
             "enable_audible_notifications_session": "ເປີດໃຊ້ການແຈ້ງເຕືອນທີ່ໄດ້ຍິນໄດ້ສໍາລັບລະບົບນີ້",
-            "noisy": "ສຽງດັງ"
+            "noisy": "ສຽງດັງ",
+            "error_permissions_denied": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນໃຫ້ທ່ານ - ກະລຸນາກວດສອບການຕັ້ງຄ່າຂອງບຣາວເຊີຂອງທ່ານ",
+            "error_permissions_missing": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນ - ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
+            "error_title": "ບໍ່ສາມາດເປີດໃຊ້ການແຈ້ງເຕືອນໄດ້"
         },
         "appearance": {
             "layout_irc": "(ທົດລອງ)IRC",
@@ -2898,7 +2883,15 @@
         "connection_lost_description": "ທ່ານບໍ່ສາມາດໂທໄດ້ ຖ້າບໍ່ມີການເຊື່ອມຕໍ່ກັບເຊີເວີ.",
         "too_many_calls": "ການໂທຫຼາຍເກີນໄປ",
         "too_many_calls_description": "ທ່ານໂທພ້ອມໆກັນເຖິງຈຳນວນສູງສຸດແລ້ວ.",
-        "cannot_call_yourself_description": "ທ່ານບໍ່ສາມາດໂທຫາຕົວທ່ານເອງໄດ້."
+        "cannot_call_yourself_description": "ທ່ານບໍ່ສາມາດໂທຫາຕົວທ່ານເອງໄດ້.",
+        "msisdn_lookup_failed": "ບໍ່ສາມາດຊອກຫາເບີໂທລະສັບໄດ້",
+        "msisdn_lookup_failed_description": "ເກີດຄວາມຜິດພາດໃນການຊອກຫາເບີໂທລະສັບ",
+        "msisdn_transfer_failed": "ບໍ່ສາມາດໂອນສາຍໄດ້",
+        "transfer_failed": "ການໂອນບໍ່ສຳເລັດ",
+        "transfer_failed_description": "ການໂອນສາຍບໍ່ສຳເລັດ",
+        "no_permission_conference": "ຕ້ອງການອະນຸຍາດ",
+        "no_permission_conference_description": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລິເລີ່ມການໂທປະຊຸມໃນຫ້ອງນີ້",
+        "default_device": "ອຸປະກອນເລີ່ມຕົ້ນ"
     },
     "Other": "ອື່ນໆ",
     "Advanced": "ຂັ້ນສູງ",
@@ -3153,7 +3146,12 @@
         "reset_password_email_field_description": "ໃຊ້ທີ່ຢູ່ອີເມວເພື່ອກູ້ຄືນບັນຊີຂອງທ່ານ",
         "reset_password_email_field_required_invalid": "ໃສ່ທີ່ຢູ່ອີເມວ (ຕ້ອງຢູ່ໃນ homeserver ນີ້)",
         "msisdn_field_description": "ຜູ້ໃຊ້ອື່ນສາມາດເຊີນທ່ານເຂົ້າຫ້ອງໄດ້ໂດຍການໃຊ້ລາຍລະອຽດຕິດຕໍ່ຂອງທ່ານ",
-        "registration_msisdn_field_required_invalid": "ໃສ່ເບີໂທລະສັບ (ຕ້ອງການຢູ່ໃນ homeserver ນີ້)"
+        "registration_msisdn_field_required_invalid": "ໃສ່ເບີໂທລະສັບ (ຕ້ອງການຢູ່ໃນ homeserver ນີ້)",
+        "sso_failed_missing_storage": "ພວກເຮົາໃຫ້ບຣາວເຊີຈື່ homeserver ທີ່ທ່ານໃຊ້ ເຂົ້າສູ່ລະບົບ, ແຕ່ເສຍດາຍບຣາວເຊີຂອງທ່ານລືມມັນ. ກັບໄປທີ່ໜ້າເຂົ້າສູ່ລະບົບແລ້ວ ລອງໃໝ່ອີກຄັ້ງ.",
+        "oidc": {
+            "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້"
+        },
+        "reset_password_email_not_found_title": "ບໍ່ພົບທີ່ຢູ່ອີເມວນີ້"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3487,7 +3485,10 @@
         "column_document": "ເອກະສານ",
         "tac_title": "ຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
         "tac_description": "ເພື່ອສືບຕໍ່ນຳໃຊ້ %(homeserverDomain)s homeserver ທ່ານຕ້ອງທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບເງື່ອນໄຂ ແລະ ເງື່ອນໄຂຂອງພວກເຮົາ.",
-        "tac_button": "ກວດເບິ່ງຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ"
+        "tac_button": "ກວດເບິ່ງຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
+        "identity_server_no_terms_title": "ຂໍ້ມູນເຊີບເວີ ບໍ່ມີໃຫ້ບໍລິການ",
+        "identity_server_no_terms_description_1": "ການດຳເນິນການນີ້ຕ້ອງໄດ້ມີການເຂົ້າເຖິງຂໍ້ມູນການຢັ້ງຢືນຕົວຕົນທີ່ <server /> ເພື່ອກວດສອບອີເມວ ຫຼື ເບີໂທລະສັບ, ແຕ່ເຊີບເວີບໍ່ມີເງື່ອນໄຂໃນບໍລິການໃດໆ.",
+        "identity_server_no_terms_description_2": "ຖ້າທ່ານໄວ້ວາງໃຈເຈົ້າຂອງເຊີບເວີດັ່ງກ່າວແລ້ວ ໃຫ້ສືບຕໍ່."
     },
     "space_settings": {
         "title": "ການຕັ້ງຄ່າ - %(spaceName)s"
@@ -3513,5 +3514,9 @@
     "failed_load_async_component": "ບໍ່ສາມາດໂຫຼດໄດ້! ກະລຸນາກວດເບິ່ງການເຊື່ອມຕໍ່ເຄືອຂ່າຍຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ.",
     "upload_failed_generic": "ໄຟລ໌ '%(fileName)s' ບໍ່ສາມາດອັບໂຫລດໄດ້.",
     "upload_failed_size": "ໄຟລ໌ '%(fileName)s' ເກີນຂະໜາດ ສຳລັບການອັບໂຫລດຂອງ homeserver ນີ້",
-    "upload_failed_title": "ການອັບໂຫລດບໍ່ສຳເລັດ"
+    "upload_failed_title": "ການອັບໂຫລດບໍ່ສຳເລັດ",
+    "empty_room": "ຫ້ອງຫວ່າງ",
+    "notifier": {
+        "m.key.verification.request": "%(name)s ກຳລັງຮ້ອງຂໍການຢັ້ງຢືນ"
+    }
 }

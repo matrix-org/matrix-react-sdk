@@ -9,7 +9,6 @@
     "No Webcams detected": "Nem található webkamera",
     "No media permissions": "Nincs média jogosultság",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Lehet, hogy kézileg kell engedélyeznie a(z) %(brand)s számára, hogy hozzáférjen a mikrofonjához és webkamerájához",
-    "Default Device": "Alapértelmezett eszköz",
     "Authentication": "Azonosítás",
     "Failed to change password. Is your password correct?": "Nem sikerült megváltoztatni a jelszót. Helyesen írta be a jelszavát?",
     "Create new room": "Új szoba létrehozása",
@@ -67,8 +66,6 @@
     "Reason": "Ok",
     "Reject invitation": "Meghívó elutasítása",
     "Return to login screen": "Vissza a bejelentkezési képernyőre",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – ellenőrizze a böngésző beállításait",
-    "%(brand)s was not given permission to send notifications - please try again": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – próbálja újra",
     "Room %(roomId)s not visible": "A(z) %(roomId)s szoba nem látható",
     "%(roomName)s does not exist.": "%(roomName)s nem létezik.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s jelenleg nem érhető el.",
@@ -76,7 +73,6 @@
     "Search failed": "Keresés sikertelen",
     "Server may be unavailable, overloaded, or search timed out :(": "A kiszolgáló elérhetetlen, túlterhelt vagy a keresés túllépte az időkorlátot :(",
     "Session ID": "Kapcsolat azonosító",
-    "This email address was not found": "Az e-mail-cím nem található",
     "This room has no local addresses": "Ennek a szobának nincs helyi címe",
     "This room is not recognised.": "Ez a szoba nem ismerős.",
     "This doesn't appear to be a valid email address": "Ez nem tűnik helyes e-mail címnek",
@@ -86,7 +82,6 @@
     "Unable to remove contact information": "A névjegy információkat nem sikerült törölni",
     "Unable to verify email address.": "Az e-mail cím ellenőrzése sikertelen.",
     "Unban": "Kitiltás visszavonása",
-    "Unable to enable Notifications": "Az értesítések engedélyezése sikertelen",
     "Uploading %(filename)s": "%(filename)s feltöltése",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s és még %(count)s db másik feltöltése",
@@ -243,7 +238,6 @@
     "Demote": "Lefokozás",
     "This event could not be displayed": "Az eseményt nem lehet megjeleníteni",
     "Permission Required": "Jogosultság szükséges",
-    "You do not have permission to start a conference call in this room": "Nincs jogosultsága konferenciahívást kezdeményezni ebben a szobában",
     "Only room administrators will see this warning": "Csak a szoba adminisztrátorai látják ezt a figyelmeztetést",
     "This homeserver has hit its Monthly Active User limit.": "A Matrix-kiszolgáló elérte a havi aktív felhasználói korlátot.",
     "This homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgáló túllépte valamelyik erőforráskorlátját.",
@@ -496,9 +490,7 @@
     "Accept <policyLink /> to continue:": "<policyLink /> elfogadása a továbblépéshez:",
     "Checking server": "Kiszolgáló ellenőrzése",
     "Terms of service not accepted or the identity server is invalid.": "A felhasználási feltételek nincsenek elfogadva, vagy az azonosítási kiszolgáló nem érvényes.",
-    "Identity server has no terms of service": "Az azonosítási kiszolgálónak nincsenek felhasználási feltételei",
     "The identity server you have chosen does not have any terms of service.": "A választott azonosítási kiszolgálóhoz nem tartoznak felhasználási feltételek.",
-    "Only continue if you trust the owner of the server.": "Csak akkor lépjen tovább, ha megbízik a kiszolgáló tulajdonosában.",
     "Disconnect from the identity server <idserver />?": "Bontja a kapcsolatot ezzel az azonosítási kiszolgálóval: <idserver />?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Jelenleg a(z) <server></server> kiszolgálót használja a kapcsolatok kereséséhez, és hogy megtalálják az ismerősei. A használt azonosítási kiszolgálót alább tudja megváltoztatni.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Jelenleg nem használ azonosítási kiszolgálót. A kapcsolatok kereséséhez, és hogy megtalálják az ismerősei, adjon hozzá egy azonosítási kiszolgálót.",
@@ -575,7 +567,6 @@
     "Jump to first unread room.": "Ugrás az első olvasatlan szobához.",
     "Jump to first invite.": "Újrás az első meghívóhoz.",
     "Room %(name)s": "Szoba: %(name)s",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ez a művelet az e-mail-cím vagy telefonszám ellenőrzése miatt hozzáférést igényel a(z) <server /> alapértelmezett azonosítási kiszolgálójához, de a kiszolgálónak nincsenek felhasználási feltételei.",
     "Message Actions": "Üzenet Műveletek",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You verified %(name)s": "Ellenőrizte: %(name)s",
@@ -750,7 +741,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Erősítsd meg a felhasználói beállítások összehasonlításával a többi munkamenetedben:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ezt a munkamenetet hitelesítsd az ő felhasználói beállításának az összehasonlításával:",
     "If they don't match, the security of your communication may be compromised.": "Ha nem egyeznek akkor a kommunikációtok biztonsága veszélyben lehet.",
-    "%(name)s is requesting verification": "%(name)s ellenőrzést kér",
     "well formed": "helyesen formázott",
     "unexpected type": "váratlan típus",
     "Almost there! Is %(displayName)s showing the same shield?": "Majdnem kész! %(displayName)s is ugyanazt a pajzsot mutatja?",
@@ -1159,12 +1149,9 @@
         "other": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez."
     },
     "Transfer": "Átadás",
-    "Failed to transfer call": "A hívás átadása nem sikerült",
     "A call can only be transferred to a single user.": "Csak egy felhasználónak lehet átadni a hívást.",
     "Open dial pad": "Számlap megnyitása",
     "Dial pad": "Tárcsázó számlap",
-    "There was an error looking up the phone number": "Hiba történt a telefonszám megkeresése során",
-    "Unable to look up phone number": "A telefonszámot nem sikerült megtalálni",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "A munkamenet észrevette, hogy a biztonságos üzenetek biztonsági jelmondata és kulcsa törölve lett.",
     "A new Security Phrase and key for Secure Messages have been detected.": "A biztonságos üzenetekhez új biztonsági jelmondat és kulcs lett észlelve.",
     "Confirm your Security Phrase": "Biztonsági Jelmondat megerősítése",
@@ -1188,8 +1175,6 @@
     "Set my room layout for everyone": "A szoba megjelenésének beállítása mindenki számára",
     "Use app": "Alkalmazás használata",
     "Use app for a better experience": "A jobb élmény érdekében használjon alkalmazást",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "A böngészőt arra kértük, hogy jegyezze meg, melyik Matrix-kiszolgálót használta a bejelentkezéshez, de sajnos a böngészője elfelejtette. Navigáljon a bejelentkezési oldalra, és próbálja újra.",
-    "We couldn't log you in": "Sajnos nem tudtuk bejelentkeztetni",
     "Remember this": "Emlékezzen erre",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
     "Allow this widget to verify your identity": "A kisalkalmazás ellenőrizheti a személyazonosságát",
@@ -1214,7 +1199,6 @@
     "Spaces": "Terek",
     "Space selection": "Tér kiválasztása",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Nem fogja tudni visszavonni ezt a változtatást, mert lefokozza magát, ha Ön az utolsó privilegizált felhasználó a térben, akkor lehetetlen lesz a jogosultságok visszanyerése.",
-    "Empty room": "Üres szoba",
     "Suggested Rooms": "Javasolt szobák",
     "Add existing room": "Létező szoba hozzáadása",
     "Invite to this space": "Meghívás a térbe",
@@ -1393,8 +1377,6 @@
     "Global": "Globális",
     "New keyword": "Új kulcsszó",
     "Keyword": "Kulcsszó",
-    "Transfer Failed": "Átadás sikertelen",
-    "Unable to transfer call": "A hívás átadása nem lehetséges",
     "Want to add an existing space instead?": "Inkább meglévő teret adna hozzá?",
     "Private space (invite only)": "Privát tér (csak meghívóval)",
     "Space visibility": "Tér láthatósága",
@@ -1802,17 +1784,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "A legjobb biztonság érdekében ellenőrizze a munkameneteit, és jelentkezzen ki azokból, amelyeket nem ismer fel, vagy már nem használ.",
     "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
     "Manually verify by text": "Kézi szöveges ellenőrzés",
-    "Empty room (was %(oldName)s)": "Üres szoba (%(oldName)s volt)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "%(user)s és 1 további meghívása",
-        "other": "%(user)s és %(count)s további meghívása"
-    },
-    "Inviting %(user1)s and %(user2)s": "%(user1)s és %(user2)s meghívása",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s és 1 további",
-        "other": "%(user)s és %(count)s további"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s és %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s vagy %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
     "Voice broadcast": "Hangközvetítés",
@@ -1897,14 +1868,12 @@
     "Can't start voice message": "Hang üzenetet nem lehet elindítani",
     "Edit link": "Hivatkozás szerkesztése",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "%(senderName)s started a voice broadcast": "%(senderName)s hangos közvetítést indított",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Minden üzenet és meghívó ettől a felhasználótól rejtve marad. Biztos, hogy figyelmen kívül hagyja?",
     "Ignore %(user)s": "%(user)s figyelmen kívül hagyása",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "A fiókadatok külön vannak kezelve itt: <code>%(hostname)s</code>.",
     "unknown": "ismeretlen",
     "Red": "Piros",
     "Grey": "Szürke",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Úgy tűnik, hogy ez az e-mail-cím nincs összekötve Matrix-azonosítóval ezen a Matrix-kiszolgálón.",
     "WARNING: session already verified, but keys do NOT MATCH!": "FIGYELEM: a munkamenet már ellenőrizve van, de a kulcsok NEM EGYEZNEK.",
     "Starting backup…": "Mentés indul…",
     "Secure Backup successful": "Biztonsági mentés sikeres",
@@ -1983,8 +1952,6 @@
     "Start DM anyway": "Közvetlen beszélgetés indítása mindenképpen",
     "Start DM anyway and never warn me again": "Közvetlen beszélgetés indítása mindenképpen és később se figyelmeztessen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ez lehet attól, hogy az alkalmazás több lapon is nyitva van, vagy hogy a böngészőadatok törölve lettek.",
-    "Database unexpectedly closed": "Az adatbázis váratlanul lezárult",
     "Formatting": "Formázás",
     "Image view": "Képnézet",
     "Search all rooms": "Keresés az összes szobában",
@@ -1993,7 +1960,6 @@
     "Error changing password": "Hiba a jelszó módosítása során",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP állapot: %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Ismeretlen jelszómódosítási hiba (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Matrix-kiszolgáló nélkül nem lehet felhasználókat meghívni e-mailben. Kapcsolódjon egyhez a „Beállítások” alatt.",
     "Failed to download source media, no source url was found": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
     "common": {
         "about": "Névjegy",
@@ -2562,7 +2528,10 @@
             "enable_desktop_notifications_session": "Asztali értesítések engedélyezése ehhez a munkamenethez",
             "show_message_desktop_notification": "Üzenet megjelenítése az asztali értesítésekben",
             "enable_audible_notifications_session": "Hallható értesítések engedélyezése ehhez a munkamenethez",
-            "noisy": "Hangos"
+            "noisy": "Hangos",
+            "error_permissions_denied": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – ellenőrizze a böngésző beállításait",
+            "error_permissions_missing": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – próbálja újra",
+            "error_title": "Az értesítések engedélyezése sikertelen"
         },
         "appearance": {
             "layout_irc": "IRC (kísérleti)",
@@ -3424,7 +3393,15 @@
         "connection_lost_description": "Nem kezdeményezhet hívást a kiszolgálóval való kapcsolat nélkül.",
         "too_many_calls": "Túl sok hívás",
         "too_many_calls_description": "Elérte az egyidejű hívások maximális számát.",
-        "cannot_call_yourself_description": "Nem hívhatja fel saját magát."
+        "cannot_call_yourself_description": "Nem hívhatja fel saját magát.",
+        "msisdn_lookup_failed": "A telefonszámot nem sikerült megtalálni",
+        "msisdn_lookup_failed_description": "Hiba történt a telefonszám megkeresése során",
+        "msisdn_transfer_failed": "A hívás átadása nem lehetséges",
+        "transfer_failed": "Átadás sikertelen",
+        "transfer_failed_description": "A hívás átadása nem sikerült",
+        "no_permission_conference": "Jogosultság szükséges",
+        "no_permission_conference_description": "Nincs jogosultsága konferenciahívást kezdeményezni ebben a szobában",
+        "default_device": "Alapértelmezett eszköz"
     },
     "Other": "Egyéb",
     "Advanced": "Speciális",
@@ -3705,7 +3682,13 @@
         "reset_password_email_field_description": "A felhasználói fiók visszaszerzése e-mail címmel",
         "reset_password_email_field_required_invalid": "E-mail-cím megadása (ezen a Matrix-kiszolgálón kötelező)",
         "msisdn_field_description": "Mások meghívhatnak a szobákba a kapcsolatoknál megadott adataiddal",
-        "registration_msisdn_field_required_invalid": "Telefonszám megadása (ennél a Matrix-kiszolgálónál kötelező)"
+        "registration_msisdn_field_required_invalid": "Telefonszám megadása (ennél a Matrix-kiszolgálónál kötelező)",
+        "sso_failed_missing_storage": "A böngészőt arra kértük, hogy jegyezze meg, melyik Matrix-kiszolgálót használta a bejelentkezéshez, de sajnos a böngészője elfelejtette. Navigáljon a bejelentkezési oldalra, és próbálja újra.",
+        "oidc": {
+            "error_title": "Sajnos nem tudtuk bejelentkeztetni"
+        },
+        "reset_password_email_not_found_title": "Az e-mail-cím nem található",
+        "reset_password_email_not_associated": "Úgy tűnik, hogy ez az e-mail-cím nincs összekötve Matrix-azonosítóval ezen a Matrix-kiszolgálón."
     },
     "room_list": {
         "sort_unread_first": "Olvasatlan üzeneteket tartalmazó szobák megjelenítése elől",
@@ -4074,7 +4057,10 @@
         "column_document": "Dokumentum",
         "tac_title": "Általános Szerződési Feltételek",
         "tac_description": "A(z) %(homeserverDomain)s Matrix-kiszolgáló használatának folytatásához el kell olvasnia és el kell fogadnia a felhasználási feltételeket.",
-        "tac_button": "Általános Szerződési Feltételek elolvasása"
+        "tac_button": "Általános Szerződési Feltételek elolvasása",
+        "identity_server_no_terms_title": "Az azonosítási kiszolgálónak nincsenek felhasználási feltételei",
+        "identity_server_no_terms_description_1": "Ez a művelet az e-mail-cím vagy telefonszám ellenőrzése miatt hozzáférést igényel a(z) <server /> alapértelmezett azonosítási kiszolgálójához, de a kiszolgálónak nincsenek felhasználási feltételei.",
+        "identity_server_no_terms_description_2": "Csak akkor lépjen tovább, ha megbízik a kiszolgáló tulajdonosában."
     },
     "space_settings": {
         "title": "Beállítások – %(spaceName)s"
@@ -4101,5 +4087,24 @@
     "failed_load_async_component": "A betöltés sikertelen. Ellenőrizze a hálózati kapcsolatot, és próbálja újra.",
     "upload_failed_generic": "A(z) „%(fileName)s” fájl feltöltése sikertelen.",
     "upload_failed_size": "A(z) „%(fileName)s” mérete túllépi a Matrix-kiszolgáló által megengedett korlátot",
-    "upload_failed_title": "Feltöltés sikertelen"
+    "upload_failed_title": "Feltöltés sikertelen",
+    "cannot_invite_without_identity_server": "Matrix-kiszolgáló nélkül nem lehet felhasználókat meghívni e-mailben. Kapcsolódjon egyhez a „Beállítások” alatt.",
+    "error_database_closed_title": "Az adatbázis váratlanul lezárult",
+    "error_database_closed_description": "Ez lehet attól, hogy az alkalmazás több lapon is nyitva van, vagy hogy a böngészőadatok törölve lettek.",
+    "empty_room": "Üres szoba",
+    "user1_and_user2": "%(user1)s és %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s és 1 további",
+        "other": "%(user)s és %(count)s további"
+    },
+    "inviting_user1_and_user2": "%(user1)s és %(user2)s meghívása",
+    "inviting_user_and_n_others": {
+        "one": "%(user)s és 1 további meghívása",
+        "other": "%(user)s és %(count)s további meghívása"
+    },
+    "empty_room_was_name": "Üres szoba (%(oldName)s volt)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s ellenőrzést kér",
+        "io.element.voice_broadcast_chunk": "%(senderName)s hangos közvetítést indított"
+    }
 }

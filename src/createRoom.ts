@@ -127,9 +127,7 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
             case "email": {
                 const isUrl = client.getIdentityServerUrl(true);
                 if (!isUrl) {
-                    throw new UserFriendlyError(
-                        'Cannot invite user by email without an identity server. You can connect to one under "Settings".',
-                    );
+                    throw new UserFriendlyError("cannot_invite_without_identity_server");
                 }
                 createOpts.invite_3pid = [
                     {

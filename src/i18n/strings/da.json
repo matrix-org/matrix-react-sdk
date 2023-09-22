@@ -42,10 +42,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har ikke tilladelse til at sende dig notifikationer - tjek venligst dine browserindstillinger",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fik ikke tilladelse til at sende notifikationer - Vær sød at prøve igen",
-    "Unable to enable Notifications": "Kunne ikke slå Notifikationer til",
-    "This email address was not found": "Denne emailadresse blev ikke fundet",
     "Restricted": "Begrænset",
     "Moderator": "Moderator",
     "Operation failed": "Operation mislykkedes",
@@ -94,7 +90,6 @@
     "Failed to send logs: ": "Kunne ikke sende logfiler: ",
     "Preparing to send logs": "Forbereder afsendelse af logfiler",
     "Permission Required": "Tilladelse påkrævet",
-    "You do not have permission to start a conference call in this room": "Du har ikke rettighed til at starte et gruppekald i dette rum",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "Missing roomId.": "roomId mangler.",
     "Use an identity server": "Brug en identitetsserver",
@@ -132,10 +127,6 @@
     "Setting up keys": "Sætter nøgler op",
     "Verify this session": "Verificér denne session",
     "Encryption upgrade available": "Opgradering af kryptering tilgængelig",
-    "Identity server has no terms of service": "Identity serveren har ingen terms of service",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handling kræver adgang til default identitets serveren <server /> for at validere en email adresse eller et telefonnummer, men serveren har ingen terms of service.",
-    "Only continue if you trust the owner of the server.": "Fortsæt kun hvis du stoler på ejeren af denne server.",
-    "%(name)s is requesting verification": "%(name)s beder om verifikation",
     "Error upgrading room": "Fejl under opgradering af rum",
     "Double check that your server supports the room version chosen and try again.": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen.",
     "Verifies a user, session, and pubkey tuple": "Verificerer en bruger, session og pubkey tuple",
@@ -162,7 +153,6 @@
     "China": "Kina",
     "Canada": "Canada",
     "Folder": "Mappe",
-    "We couldn't log you in": "Vi kunne ikke logge dig ind",
     "Chile": "Chile",
     "India": "Indien",
     "Iceland": "Island",
@@ -412,16 +402,9 @@
     "American Samoa": "Amerikansk Samoa",
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi spurgte din browser om at huske hvilken homeserver du bruger for at logge på, men din browser har desværre glemt det. Gå til log ind siden og prøv igen.",
-    "Failed to transfer call": "Kunne ikke omstille opkald",
-    "Transfer Failed": "Omstilling fejlede",
-    "Unable to transfer call": "Kan ikke omstille opkald",
-    "There was an error looking up the phone number": "Der opstod en fejl ved at slå telefonnummeret op",
-    "Unable to look up phone number": "Kan ikke slå telefonnummer op",
     "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
     "Your password was successfully changed.": "Din adgangskode blev ændret.",
     "Set a new custom sound": "Sæt en ny brugerdefineret lyd",
-    "Empty room": "Tomt rum",
     "common": {
         "analytics": "Analyse data",
         "error": "Fejl",
@@ -510,7 +493,10 @@
             "rule_call": "Opkalds invitation",
             "rule_suppress_notices": "Beskeder sendt af en bot",
             "show_message_desktop_notification": "Vis besked i skrivebordsnotifikation",
-            "noisy": "Støjende"
+            "noisy": "Støjende",
+            "error_permissions_denied": "%(brand)s har ikke tilladelse til at sende dig notifikationer - tjek venligst dine browserindstillinger",
+            "error_permissions_missing": "%(brand)s fik ikke tilladelse til at sende notifikationer - Vær sød at prøve igen",
+            "error_title": "Kunne ikke slå Notifikationer til"
         },
         "appearance": {
             "custom_theme_success": "Tema tilføjet!",
@@ -724,7 +710,14 @@
         "connection_lost_description": "Du kan ikke lave et opkald uden en forbindelse til serveren.",
         "too_many_calls": "For mange opkald",
         "too_many_calls_description": "Du er nået til det maksimale antal igangværende opkald på en gang.",
-        "cannot_call_yourself_description": "Du kan ikke ringe til dig selv."
+        "cannot_call_yourself_description": "Du kan ikke ringe til dig selv.",
+        "msisdn_lookup_failed": "Kan ikke slå telefonnummer op",
+        "msisdn_lookup_failed_description": "Der opstod en fejl ved at slå telefonnummeret op",
+        "msisdn_transfer_failed": "Kan ikke omstille opkald",
+        "transfer_failed": "Omstilling fejlede",
+        "transfer_failed_description": "Kunne ikke omstille opkald",
+        "no_permission_conference": "Tilladelse påkrævet",
+        "no_permission_conference_description": "Du har ikke rettighed til at starte et gruppekald i dette rum"
     },
     "encryption": {
         "verification": {
@@ -753,7 +746,12 @@
         "uia": {
             "sso_title": "Brug engangs login for at fortsætte",
             "sso_body": "Bekræft tilføjelsen af denne email adresse ved at bruge Single Sign On til at bevise din identitet."
-        }
+        },
+        "sso_failed_missing_storage": "Vi spurgte din browser om at huske hvilken homeserver du bruger for at logge på, men din browser har desværre glemt det. Gå til log ind siden og prøv igen.",
+        "oidc": {
+            "error_title": "Vi kunne ikke logge dig ind"
+        },
+        "reset_password_email_not_found_title": "Denne emailadresse blev ikke fundet"
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -836,5 +834,14 @@
     "failed_load_async_component": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunne ikke uploades.",
     "upload_failed_size": "Filen '%(fileName)s' overstiger homeserverens størrelsesbegrænsning for uploads",
-    "upload_failed_title": "Upload Fejlede"
+    "upload_failed_title": "Upload Fejlede",
+    "terms": {
+        "identity_server_no_terms_title": "Identity serveren har ingen terms of service",
+        "identity_server_no_terms_description_1": "Denne handling kræver adgang til default identitets serveren <server /> for at validere en email adresse eller et telefonnummer, men serveren har ingen terms of service.",
+        "identity_server_no_terms_description_2": "Fortsæt kun hvis du stoler på ejeren af denne server."
+    },
+    "empty_room": "Tomt rum",
+    "notifier": {
+        "m.key.verification.request": "%(name)s beder om verifikation"
+    }
 }

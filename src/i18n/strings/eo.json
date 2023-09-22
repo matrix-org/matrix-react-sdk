@@ -24,10 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s ne havas permeson sciigi vin – bonvolu kontroli la agordojn de via foliumilo",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ne ricevis permeson sendi sciigojn – bonvolu reprovi",
-    "Unable to enable Notifications": "Ne povas ŝalti sciigojn",
-    "This email address was not found": "Tiu ĉi retpoŝtadreso ne troviĝis",
     "Default": "Ordinara",
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
@@ -168,7 +164,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
-    "Default Device": "Implicita aparato",
     "Notifications": "Sciigoj",
     "Profile": "Profilo",
     "A new password must be entered.": "Vi devas enigi novan pasvorton.",
@@ -226,7 +221,6 @@
     "Delete Backup": "Forigi savkopion",
     "General": "Ĝeneralaj",
     "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
-    "You do not have permission to start a conference call in this room": "Vi ne havas permeson komenci grupvokon en ĉi tiu ĉambro",
     "Dog": "Hundo",
     "Cat": "Kato",
     "Lion": "Leono",
@@ -503,9 +497,7 @@
     "Change identity server": "Ŝanĝi identigan servilon",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Ĉu malkonekti de la nuna identiga servilo <current /> kaj konekti anstataŭe al <new />?",
     "Terms of service not accepted or the identity server is invalid.": "Aŭ uzkondiĉoj ne akceptiĝis, aŭ la identiga servilo estas nevalida.",
-    "Identity server has no terms of service": "Identiga servilo havas neniujn uzkondiĉojn",
     "The identity server you have chosen does not have any terms of service.": "La identiga servilo, kiun vi elektis, havas neniujn uzkondiĉojn.",
-    "Only continue if you trust the owner of the server.": "Nur daŭrigu se vi fidas al la posedanto de la servilo.",
     "Disconnect identity server": "Malkonekti la identigan servilon",
     "Disconnect from the identity server <idserver />?": "Ĉu malkonektiĝi de la identiga servilo <idserver />?",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Vi ankoraŭ <b>havigas siajn personajn datumojn</b> je la identiga servilo <idserver />.",
@@ -538,7 +530,6 @@
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
     "Italics": "Kursive",
     "Explore rooms": "Esplori ĉambrojn",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
     "You should:": "Vi devus:",
@@ -751,7 +742,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
     "New login. Was this you?": "Nova saluto. Ĉu tio estis vi?",
-    "%(name)s is requesting verification": "%(name)s petas kontrolon",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
     "well formed": "bone formita",
@@ -1175,19 +1165,14 @@
     "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
     "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
     "Recently visited rooms": "Freŝe vizititiaj ĉambroj",
-    "There was an error looking up the phone number": "Eraris trovado de la telefonnumero",
-    "Unable to look up phone number": "Ne povas trovi telefonnumeron",
     "Use app": "Uzu aplikaĵon",
     "Use app for a better experience": "Uzu aplikaĵon por pli bona sperto",
     "Don't miss a reply": "Ne preterpasu respondon",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu.",
-    "We couldn't log you in": "Ni ne povis salutigi vin",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (ekz. <userId/>), aŭ <a>konigu ĉi tiun ĉambron</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Komencu interparolon kun iu per ĝia nomo, retpoŝtadreso, aŭ uzantonomo (ekz. <userId/>).",
-    "Failed to transfer call": "Malsukcesis transdoni vokon",
     "A call can only be transferred to a single user.": "Voko povas transdoniĝi nur al unu uzanto.",
     "Set my room layout for everyone": "Agordi al ĉiuj mian aranĝon de ĉambro",
     "Open dial pad": "Malfermi ciferplaton",
@@ -1225,7 +1210,6 @@
     "Space selection": "Elekto de aro",
     "Edit devices": "Redakti aparatojn",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vi ne povos malfari ĉi tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta altranga uzanto de la aro, vi ne plu povos rehavi viajn rajtojn.",
-    "Empty room": "Malplena ĉambro",
     "Add existing room": "Aldoni jaman ĉambron",
     "Invite to this space": "Inviti al ĉi tiu aro",
     "Your message was sent": "Via mesaĝo sendiĝis",
@@ -1310,8 +1294,6 @@
     "Not a valid identity server (status code %(code)s)": "Nevalida identiga servilo (statkodo %(code)s)",
     "Some invites couldn't be sent": "Ne povis sendi iujn invitojn",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Ni sendis la aliajn, sed la ĉi-subaj personoj ne povis ricevi inviton al <RoomName/>",
-    "Transfer Failed": "Malsukcesis transdono",
-    "Unable to transfer call": "Ne povas transdoni vokon",
     "Preview Space": "Antaŭrigardi aron",
     "Decide who can view and join %(spaceName)s.": "Decidu, kiu povas rigardi kaj aliĝi aron %(spaceName)s.",
     "Visibility": "Videbleco",
@@ -1461,17 +1443,6 @@
     "Failed to read events": "Malsukcesis legi okazojn",
     "Failed to send event": "Malsukcesis sendi okazon",
     "You need to be able to kick users to do that.": "Vi devas povi piedbati uzantojn por fari tion.",
-    "Empty room (was %(oldName)s)": "Malplena ĉambro (estis %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Invitante %(user)s kaj 1 alian",
-        "other": "Invitante %(user)s kaj %(count)s aliajn"
-    },
-    "Inviting %(user1)s and %(user2)s": "Invitante %(user1)s kaj %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s and 1 alia",
-        "other": "%(user)s kaj %(count)s aliaj"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s kaj %(user2)s",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Ĝisdatigante aro...",
         "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
@@ -1545,8 +1516,6 @@
     "Unknown room": "Nekonata ĉambro",
     "Unable to connect to Homeserver. Retrying…": "Ne povas konektiĝi al hejmservilo. Reprovante…",
     "WARNING: session already verified, but keys do NOT MATCH!": "AVERTO: Salutaĵo jam estas kontrolita, sed la ŝlosiloj NE AKORDAS!",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Via retpoŝtareso ŝajne ne ligiĝas al Matrix-identigilo sur tiu ĉi hejmservilo.",
-    "%(senderName)s started a voice broadcast": "%(senderName)s komencis voĉan elsendon",
     "common": {
         "about": "Prio",
         "analytics": "Analizo",
@@ -1952,7 +1921,10 @@
             "enable_desktop_notifications_session": "Ŝalti labortablajn sciigojn por ĉi tiu salutaĵo",
             "show_message_desktop_notification": "Montradi mesaĝojn en labortablaj sciigoj",
             "enable_audible_notifications_session": "Ŝalti aŭdeblajn sciigojn por ĉi tiu salutaĵo",
-            "noisy": "Brue"
+            "noisy": "Brue",
+            "error_permissions_denied": "%(brand)s ne havas permeson sciigi vin – bonvolu kontroli la agordojn de via foliumilo",
+            "error_permissions_missing": "%(brand)s ne ricevis permeson sendi sciigojn – bonvolu reprovi",
+            "error_title": "Ne povas ŝalti sciigojn"
         },
         "appearance": {
             "layout_bubbles": "Mesaĝaj vezikoj",
@@ -2589,7 +2561,15 @@
         "connection_lost_description": "Vi ne povas voki sen konektaĵo al la servilo.",
         "too_many_calls": "Tro multaj vokoj",
         "too_many_calls_description": "Vi atingis la maksimuman nombron de samtempaj vokoj.",
-        "cannot_call_yourself_description": "Vi ne povas voki vin mem."
+        "cannot_call_yourself_description": "Vi ne povas voki vin mem.",
+        "msisdn_lookup_failed": "Ne povas trovi telefonnumeron",
+        "msisdn_lookup_failed_description": "Eraris trovado de la telefonnumero",
+        "msisdn_transfer_failed": "Ne povas transdoni vokon",
+        "transfer_failed": "Malsukcesis transdono",
+        "transfer_failed_description": "Malsukcesis transdoni vokon",
+        "no_permission_conference": "Necesas permeso",
+        "no_permission_conference_description": "Vi ne havas permeson komenci grupvokon en ĉi tiu ĉambro",
+        "default_device": "Implicita aparato"
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -2821,7 +2801,13 @@
         "reset_password_email_field_description": "Uzu retpoŝtadreson por rehavi vian konton",
         "reset_password_email_field_required_invalid": "Enigu retpoŝtadreson (ĉi tiu hejmservilo ĝin postulas)",
         "msisdn_field_description": "Aliaj uzantoj povas inviti vin al ĉambroj per viaj kontaktaj detaloj",
-        "registration_msisdn_field_required_invalid": "Enigu telefonnumeron (bezonata sur ĉi tiu hejmservilo)"
+        "registration_msisdn_field_required_invalid": "Enigu telefonnumeron (bezonata sur ĉi tiu hejmservilo)",
+        "sso_failed_missing_storage": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu.",
+        "oidc": {
+            "error_title": "Ni ne povis salutigi vin"
+        },
+        "reset_password_email_not_found_title": "Tiu ĉi retpoŝtadreso ne troviĝis",
+        "reset_password_email_not_associated": "Via retpoŝtareso ŝajne ne ligiĝas al Matrix-identigilo sur tiu ĉi hejmservilo."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3153,7 +3139,10 @@
         "column_document": "Dokumento",
         "tac_title": "Uzokondiĉoj",
         "tac_description": "Por daŭre uzadi la hejmservilon %(homeserverDomain)s, vi devas tralegi kaj konsenti niajn uzokondiĉojn.",
-        "tac_button": "Tralegi uzokondiĉojn"
+        "tac_button": "Tralegi uzokondiĉojn",
+        "identity_server_no_terms_title": "Identiga servilo havas neniujn uzkondiĉojn",
+        "identity_server_no_terms_description_1": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
+        "identity_server_no_terms_description_2": "Nur daŭrigu se vi fidas al la posedanto de la servilo."
     },
     "space_settings": {
         "title": "Agordoj – %(spaceName)s"
@@ -3171,5 +3160,21 @@
     "failed_load_async_component": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
     "upload_failed_generic": "Malsukcesis alŝuti dosieron « %(fileName)s ».",
     "upload_failed_size": "La dosiero '%(fileName)s' superas la grandecan limon de ĉi tiu hejmservilo",
-    "upload_failed_title": "Alŝuto malsukcesis"
+    "upload_failed_title": "Alŝuto malsukcesis",
+    "empty_room": "Malplena ĉambro",
+    "user1_and_user2": "%(user1)s kaj %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s and 1 alia",
+        "other": "%(user)s kaj %(count)s aliaj"
+    },
+    "inviting_user1_and_user2": "Invitante %(user1)s kaj %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Invitante %(user)s kaj 1 alian",
+        "other": "Invitante %(user)s kaj %(count)s aliajn"
+    },
+    "empty_room_was_name": "Malplena ĉambro (estis %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s petas kontrolon",
+        "io.element.voice_broadcast_chunk": "%(senderName)s komencis voĉan elsendon"
+    }
 }

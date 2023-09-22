@@ -11,7 +11,6 @@
     "No Webcams detected": "Вебкамеру не виявлено",
     "No media permissions": "Немає медіадозволів",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну",
-    "Default Device": "Уставний пристрій",
     "Authentication": "Автентифікація",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
@@ -83,11 +82,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Permission Required": "Потрібен дозвіл",
-    "You do not have permission to start a conference call in this room": "У вас немає дозволу, щоб розпочати груповий виклик у цій кімнаті",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s не має дозволу надсилати вам сповіщення — перевірте налаштування браузера",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s не має дозволу надсилати сповіщення — будь ласка, спробуйте ще раз",
-    "Unable to enable Notifications": "Не вдалося увімкнути сповіщення",
-    "This email address was not found": "Не знайдено адресу електронної пошти",
     "Restricted": "Обмежено",
     "Moderator": "Модератор",
     "Failed to invite": "Не вдалося запросити",
@@ -127,9 +121,6 @@
     "Demote": "Зменшити повноваження",
     "Failed to mute user": "Не вдалося заглушити користувача",
     "Failed to change power level": "Не вдалося змінити рівень повноважень",
-    "Identity server has no terms of service": "Сервер ідентифікації не має умов надання послуг",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Щоб підтвердити адресу е-пошти або телефон ця дія потребує доступу до типового серверу ідентифікації <server />, але сервер не має жодних умов надання послуг.",
-    "Only continue if you trust the owner of the server.": "Продовжуйте лише якщо довіряєте власнику сервера.",
     "Use an identity server": "Використовувати сервер ідентифікації",
     "Use an identity server to invite by email. Manage in Settings.": "Використовувати сервер ідентифікації для запрошень через е-пошту. Керуйте у налаштуваннях.",
     "Your %(brand)s is misconfigured": "Ваш %(brand)s налаштовано неправильно",
@@ -207,7 +198,6 @@
     "Deactivate user": "Деактивувати користувача",
     "Failed to deactivate user": "Не вдалося деактивувати користувача",
     "Are you sure you want to cancel entering passphrase?": "Ви точно хочете скасувати введення парольної фрази?",
-    "%(name)s is requesting verification": "%(name)s робить запит на звірення",
     "Please enter verification code sent via text.": "Введіть код перевірки, надісланий у текстовому повідомленні.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Текстове повідомлення надіслано на номер +%(msisdn)s. Введіть код перевірки з нього.",
     "Messages in this room are end-to-end encrypted.": "Повідомлення у цій кімнаті захищено наскрізним шифруванням.",
@@ -684,7 +674,6 @@
     "This client does not support end-to-end encryption.": "Цей клієнт не підтримує наскрізного шифрування.",
     "Share Link to User": "Поділитися посиланням на користувача",
     "<a>In reply to</a> <pill>": "<a>У відповідь на</a> <pill>",
-    "We couldn't log you in": "Нам не вдалося виконати вхід",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
     "unknown person": "невідома особа",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
@@ -694,8 +683,6 @@
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Використовувати менеджер інтеграцій <b>%(serverName)s</b> для керування ботами, віджетами й пакунками наліпок.",
     "Identity server (%(server)s)": "Сервер ідентифікації (%(server)s)",
     "Could not connect to identity server": "Не вдалося під'єднатися до сервера ідентифікації",
-    "There was an error looking up the phone number": "Сталася помилка під час пошуку номеру телефону",
-    "Unable to look up phone number": "Неможливо знайти номер телефону",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Індивідуально звіряйте кожен сеанс, який використовується користувачем, щоб позначити його довіреним, не довіряючи пристроям перехресного підписування.",
     "Room settings": "Налаштування кімнати",
@@ -707,9 +694,6 @@
     "The identity server you have chosen does not have any terms of service.": "Вибраний вами сервер ідентифікації не містить жодних умов користування.",
     "Terms of service not accepted or the identity server is invalid.": "Умови користування не прийнято або сервер ідентифікації недійсний.",
     "Some invites couldn't be sent": "Деякі запрошення неможливо надіслати",
-    "Failed to transfer call": "Не вдалося переадресувати виклик",
-    "Transfer Failed": "Не вдалося переадресувати",
-    "Unable to transfer call": "Не вдалося переадресувати виклик",
     "Join the conference from the room information card on the right": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
     "Room information": "Відомості про кімнату",
     "Send voice message": "Надіслати голосове повідомлення",
@@ -761,7 +745,6 @@
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Захистіться від втрати доступу до зашифрованих повідомлень і даних створенням резервної копії ключів шифрування на своєму сервері.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Ми надіслали іншим, але вказаних людей, не вдалося запросити до <RoomName/>",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ми попросили браузер запам’ятати, який домашній сервер ви використовуєте, щоб дозволити вам увійти, але, на жаль, ваш браузер забув його. Перейдіть на сторінку входу та повторіть спробу.",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Ви успішно звірили %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified your device!": "Ви успішно звірили свій пристрій!",
     "You've successfully verified %(displayName)s!": "Ви успішно звірили %(displayName)s!",
@@ -1021,7 +1004,6 @@
     "Try to join anyway": "Все одно спробувати приєднатися",
     "Reason: %(reason)s": "Причина: %(reason)s",
     "Sign Up": "Зареєструватися",
-    "Empty room": "Порожня кімната",
     "Show Widgets": "Показати віджети",
     "Hide Widgets": "Сховати віджети",
     "Forget room": "Забути кімнату",
@@ -1802,17 +1784,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для кращої безпеки звірте свої сеанси та вийдіть з усіх невикористовуваних або нерозпізнаних сеансів.",
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
-    "Empty room (was %(oldName)s)": "Порожня кімната (були %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Запрошення %(user)s і ще 1",
-        "other": "Запрошення %(user)s і ще %(count)s"
-    },
-    "Inviting %(user1)s and %(user2)s": "Запрошення %(user1)s і %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s і ще 1",
-        "other": "%(user)s і ще %(count)s"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s і %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s або %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "You need to be able to kick users to do that.": "Для цього вам потрібен дозвіл вилучати користувачів.",
@@ -1896,7 +1867,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "Edit link": "Змінити посилання",
-    "%(senderName)s started a voice broadcast": "%(senderName)s розпочинає голосову трансляцію",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Ваші дані облікового запису керуються окремо за адресою <code>%(hostname)s</code>.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Усі повідомлення та запрошення від цього користувача будуть приховані. Ви впевнені, що хочете їх нехтувати?",
@@ -1904,7 +1874,6 @@
     "unknown": "невідомо",
     "Red": "Червоний",
     "Grey": "Сірий",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Ваша електронна адреса не пов'язана з Matrix ID на цьому домашньому сервері.",
     "Declining…": "Відхилення…",
     "This session is backing up your keys.": "Під час цього сеансу створюється резервна копія ваших ключів.",
     "There are no past polls in this room": "У цій кімнаті ще не проводилися опитувань",
@@ -1980,8 +1949,6 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Користувача (%(user)s) не було запрошено до %(roomId)s, але утиліта запрошення не видала жодної помилки",
     "Mute room": "Вимкнути сповіщення кімнати",
     "Match default setting": "Збігається з типовим налаштуванням",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Це може бути пов'язано з тим, що застосунок відкрито в кількох вкладках, або з очищенням даних браузера.",
-    "Database unexpectedly closed": "База даних несподівано закрилася",
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
@@ -1993,15 +1960,12 @@
     "Error changing password": "Помилка зміни пароля",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-статус %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Невідома помилка зміни пароля (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Неможливо запросити користувача електронною поштою без сервера ідентифікації. Ви можете під'єднатися до нього в розділі «Налаштування».",
     "Failed to download source media, no source url was found": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
     "Your language": "Ваша мова",
     "Your device ID": "ID вашого пристрою",
-    "User is not logged in": "Користувач не увійшов",
-    "Something went wrong.": "Щось пішло не так.",
     "Ask to join": "Запит на приєднання",
     "Mentions and Keywords only": "Лише згадки та ключові слова",
     "This setting will be applied by default to all your rooms.": "Цей параметр буде застосовано усталеним до всіх ваших кімнат.",
@@ -2052,9 +2016,7 @@
     "Request to join sent": "Запит на приєднання надіслано",
     "Your request to join is pending.": "Ваш запит на приєднання очікує на розгляд.",
     "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Цей сервер використовує стару версію Matrix. Оновіть Matrix до %(version)s, щоб використовувати %(brand)s без помилок.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Ваш домашній сервер застарілий і не підтримує мінімально необхідну версію API. Будь ласка, зв'яжіться з власником вашого сервера або оновіть його.",
-    "Your server is unsupported": "Ваш сервер не підтримується",
     "common": {
         "about": "Відомості",
         "analytics": "Аналітика",
@@ -2632,7 +2594,10 @@
             "enable_desktop_notifications_session": "Увімкнути стільничні сповіщення для цього сеансу",
             "show_message_desktop_notification": "Показувати повідомлення у стільничних сповіщеннях",
             "enable_audible_notifications_session": "Увімкнути звукові сповіщення для цього сеансу",
-            "noisy": "Шумно"
+            "noisy": "Шумно",
+            "error_permissions_denied": "%(brand)s не має дозволу надсилати вам сповіщення — перевірте налаштування браузера",
+            "error_permissions_missing": "%(brand)s не має дозволу надсилати сповіщення — будь ласка, спробуйте ще раз",
+            "error_title": "Не вдалося увімкнути сповіщення"
         },
         "appearance": {
             "layout_irc": "IRC (Експериментально)",
@@ -3518,7 +3483,15 @@
         "connection_lost_description": "Неможливо здійснювати виклики без з'єднання з сервером.",
         "too_many_calls": "Забагато викликів",
         "too_many_calls_description": "Ви досягли максимальної кількості одночасних викликів.",
-        "cannot_call_yourself_description": "Ви не можете подзвонити самим собі."
+        "cannot_call_yourself_description": "Ви не можете подзвонити самим собі.",
+        "msisdn_lookup_failed": "Неможливо знайти номер телефону",
+        "msisdn_lookup_failed_description": "Сталася помилка під час пошуку номеру телефону",
+        "msisdn_transfer_failed": "Не вдалося переадресувати виклик",
+        "transfer_failed": "Не вдалося переадресувати",
+        "transfer_failed_description": "Не вдалося переадресувати виклик",
+        "no_permission_conference": "Потрібен дозвіл",
+        "no_permission_conference_description": "У вас немає дозволу, щоб розпочати груповий виклик у цій кімнаті",
+        "default_device": "Уставний пристрій"
     },
     "Other": "Інше",
     "Advanced": "Подробиці",
@@ -3801,7 +3774,14 @@
         "reset_password_email_field_description": "Введіть е-пошту, щоб могти відновити обліковий запис",
         "reset_password_email_field_required_invalid": "Введіть е-пошту (обов'язково на цьому домашньому сервері)",
         "msisdn_field_description": "Інші користувачі можуть запрошувати вас до кімнат за вашими контактними даними",
-        "registration_msisdn_field_required_invalid": "Введіть номер телефону (обов'язково на цьому домашньому сервері)"
+        "registration_msisdn_field_required_invalid": "Введіть номер телефону (обов'язково на цьому домашньому сервері)",
+        "oidc": {
+            "error_generic": "Щось пішло не так.",
+            "error_title": "Нам не вдалося виконати вхід"
+        },
+        "sso_failed_missing_storage": "Ми попросили браузер запам’ятати, який домашній сервер ви використовуєте, щоб дозволити вам увійти, але, на жаль, ваш браузер забув його. Перейдіть на сторінку входу та повторіть спробу.",
+        "reset_password_email_not_found_title": "Не знайдено адресу електронної пошти",
+        "reset_password_email_not_associated": "Ваша електронна адреса не пов'язана з Matrix ID на цьому домашньому сервері."
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4170,7 +4150,10 @@
         "column_document": "Документ",
         "tac_title": "Умови й положення",
         "tac_description": "Щоб використовувати домашній сервер %(homeserverDomain)s далі, перегляньте й погодьте наші умови й положення.",
-        "tac_button": "Переглянути умови користування"
+        "tac_button": "Переглянути умови користування",
+        "identity_server_no_terms_title": "Сервер ідентифікації не має умов надання послуг",
+        "identity_server_no_terms_description_1": "Щоб підтвердити адресу е-пошти або телефон ця дія потребує доступу до типового серверу ідентифікації <server />, але сервер не має жодних умов надання послуг.",
+        "identity_server_no_terms_description_2": "Продовжуйте лише якщо довіряєте власнику сервера."
     },
     "space_settings": {
         "title": "Налаштування — %(spaceName)s"
@@ -4197,5 +4180,27 @@
     "failed_load_async_component": "Завантаження неможливе! Перевірте інтернет-зʼєднання та спробуйте ще.",
     "upload_failed_generic": "Не вдалося вивантажити файл '%(fileName)s'.",
     "upload_failed_size": "Файл '%(fileName)s' перевищує ліміт розміру для відвантажень домашнього сервера",
-    "upload_failed_title": "Помилка відвантаження"
+    "upload_failed_title": "Помилка відвантаження",
+    "cannot_invite_without_identity_server": "Неможливо запросити користувача електронною поштою без сервера ідентифікації. Ви можете під'єднатися до нього в розділі «Налаштування».",
+    "unsupported_server_title": "Ваш сервер не підтримується",
+    "unsupported_server_description": "Цей сервер використовує стару версію Matrix. Оновіть Matrix до %(version)s, щоб використовувати %(brand)s без помилок.",
+    "error_user_not_logged_in": "Користувач не увійшов",
+    "error_database_closed_title": "База даних несподівано закрилася",
+    "error_database_closed_description": "Це може бути пов'язано з тим, що застосунок відкрито в кількох вкладках, або з очищенням даних браузера.",
+    "empty_room": "Порожня кімната",
+    "user1_and_user2": "%(user1)s і %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s і ще 1",
+        "other": "%(user)s і ще %(count)s"
+    },
+    "inviting_user1_and_user2": "Запрошення %(user1)s і %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Запрошення %(user)s і ще 1",
+        "other": "Запрошення %(user)s і ще %(count)s"
+    },
+    "empty_room_was_name": "Порожня кімната (були %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s робить запит на звірення",
+        "io.element.voice_broadcast_chunk": "%(senderName)s розпочинає голосову трансляцію"
+    }
 }

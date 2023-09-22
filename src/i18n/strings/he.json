@@ -91,11 +91,7 @@
     "Timor-Leste": "טמור-לסטה",
     "St. Martin": "סיינט מרטין",
     "Oman": "אומן",
-    "You do not have permission to start a conference call in this room": "אין לכם הרשאות להתחיל ועידה בחדר זה",
     "Permission Required": "הרשאה דרושה",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
-    "Identity server has no terms of service": "לשרת הזיהוי אין כללי שרות",
-    "Only continue if you trust the owner of the server.": "המשיכו רק אם הנכם בוטחים בבעלים של השרת.",
     "American Samoa": "סמואה האמריקאית",
     "Algeria": "אלג'ריה",
     "Albania": "אלבניה",
@@ -103,11 +99,6 @@
     "Afghanistan": "אפגניסטן",
     "United States": "ארצות הברית",
     "United Kingdom": "אנגליה",
-    "This email address was not found": "המייל הזה לא נמצא",
-    "Unable to enable Notifications": "לא ניתן להפעיל התראות",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s לא נתנו הרשאות לשלוח התרעות - אנא נסו שוב",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s אין אישור לשלוח אליכם הודעות - אנא בדקו את הרשאות הדפדפן",
-    "%(name)s is requesting verification": "%(name)s מבקש אימות",
     "Andorra": "אנדורה",
     "Bangladesh": "בנגלדש",
     "Bahrain": "בחריין",
@@ -815,7 +806,6 @@
     "Room information": "מידע החדר",
     "Voice & Video": "שמע ווידאו",
     "Audio Output": "יציאת שמע",
-    "Default Device": "התקן ברירת מחדל",
     "No Webcams detected": "לא נמצאה מצלמת רשת",
     "No Microphones detected": "לא נמצא מיקרופון",
     "No Audio Outputs detected": "לא התגלו יציאות אודיו",
@@ -1072,7 +1062,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "אמתו את המשתמש הזה כדי לסמן אותו כאמין. אמון במשתמשים מעניק לכם שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
     "An error has occurred.": "קרתה שגיאה.",
     "Transfer": "לְהַעֲבִיר",
-    "Failed to transfer call": "העברת השיחה נכשלה",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "אם לא הסרת את שיטת השחזור, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
@@ -1160,8 +1149,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
     "Dial pad": "לוח חיוג",
-    "There was an error looking up the phone number": "אירעה שגיאה בחיפוש מספר הטלפון",
-    "Unable to look up phone number": "לא ניתן לחפש את מספר הטלפון",
     "Set my room layout for everyone": "הגדר את פריסת החדר שלי עבור כולם",
     "Open dial pad": "פתח לוח חיוג",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "גבה את מפתחות ההצפנה שלך עם נתוני חשבונך במקרה שתאבד את הגישה להפעלות שלך. המפתחות שלך מאובטחים באמצעות מפתח אבטחה ייחודי.",
@@ -1178,8 +1165,6 @@
     "Allow this widget to verify your identity": "אפשר לווידג'ט זה לאמת את זהותך",
     "Use app": "השתמש באפליקציה",
     "Use app for a better experience": "השתמש באפליקציה לחוויה טובה יותר",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ביקשנו מהדפדפן לזכור באיזה שרת בית אתה משתמש כדי לאפשר לך להיכנס, אך למרבה הצער הדפדפן שלך שכח אותו. עבור לדף הכניסה ונסה שוב.",
-    "We couldn't log you in": "לא הצלחנו להתחבר אליך",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s ומנהל האינטגרציה שלך.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "מנהלי שילוב מקבלים נתוני תצורה ויכולים לשנות ווידג'טים, לשלוח הזמנות לחדר ולהגדיר רמות הספק מטעמכם.",
@@ -1195,8 +1180,6 @@
     "Unrecognised room address: %(roomAlias)s": "כתובת חדר לא מוכרת: %(roomAlias)s",
     "Some invites couldn't be sent": "לא ניתן לשלוח חלק מההזמנות",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "ההזמנה נשלחה, פרט למשתמשים הבאים שלא ניתן להזמינם ל - <RoomName/>",
-    "Transfer Failed": "ההעברה נכשלה",
-    "Unable to transfer call": "לא ניתן להעביר שיחה",
     "Your new device is now verified. Other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Device verified": "המכשיר אומת",
@@ -1399,7 +1382,6 @@
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
     "New keyword": "מילת מפתח חדשה",
     "Keyword": "מילת מפתח",
-    "Empty room": "חדר ריק",
     "Location": "מיקום",
     "Share location": "שתף מיקום",
     "Edit devices": "הגדרת מכשירים",
@@ -1830,7 +1812,10 @@
             "enable_desktop_notifications_session": "החל התראות עבור התחברות זו",
             "show_message_desktop_notification": "הצג הודעה בהתראות שולחן עבודה",
             "enable_audible_notifications_session": "אפשר התראות נשמעות עבור התחברות זו",
-            "noisy": "התראה קולית"
+            "noisy": "התראה קולית",
+            "error_permissions_denied": "%(brand)s אין אישור לשלוח אליכם הודעות - אנא בדקו את הרשאות הדפדפן",
+            "error_permissions_missing": "%(brand)s לא נתנו הרשאות לשלוח התרעות - אנא נסו שוב",
+            "error_title": "לא ניתן להפעיל התראות"
         },
         "appearance": {
             "layout_bubbles": "בועות הודעות",
@@ -2442,7 +2427,15 @@
         "connection_lost_description": "אינך יכול לבצע שיחות ללא חיבור לשרת.",
         "too_many_calls": "יותר מדי שיחות",
         "too_many_calls_description": "הגעתם למקסימום שיחות שניתן לבצע בו זמנית.",
-        "cannot_call_yourself_description": "אין אפשרות ליצור שיחה עם עצמך."
+        "cannot_call_yourself_description": "אין אפשרות ליצור שיחה עם עצמך.",
+        "msisdn_lookup_failed": "לא ניתן לחפש את מספר הטלפון",
+        "msisdn_lookup_failed_description": "אירעה שגיאה בחיפוש מספר הטלפון",
+        "msisdn_transfer_failed": "לא ניתן להעביר שיחה",
+        "transfer_failed": "ההעברה נכשלה",
+        "transfer_failed_description": "העברת השיחה נכשלה",
+        "no_permission_conference": "הרשאה דרושה",
+        "no_permission_conference_description": "אין לכם הרשאות להתחיל ועידה בחדר זה",
+        "default_device": "התקן ברירת מחדל"
     },
     "Other": "אחר",
     "Advanced": "מתקדם",
@@ -2672,7 +2665,12 @@
         "reset_password_email_field_description": "השתמש בכתובת דוא\"ל לשחזור חשבונך",
         "reset_password_email_field_required_invalid": "הזן כתובת דוא\"ל (חובה בשרת הבית הזה)",
         "msisdn_field_description": "משתמשים אחרים יכולים להזמין אותך לחדרים באמצעות פרטי יצירת הקשר שלך",
-        "registration_msisdn_field_required_invalid": "הזן מספר טלפון (חובה בשרת בית זה)"
+        "registration_msisdn_field_required_invalid": "הזן מספר טלפון (חובה בשרת בית זה)",
+        "sso_failed_missing_storage": "ביקשנו מהדפדפן לזכור באיזה שרת בית אתה משתמש כדי לאפשר לך להיכנס, אך למרבה הצער הדפדפן שלך שכח אותו. עבור לדף הכניסה ונסה שוב.",
+        "oidc": {
+            "error_title": "לא הצלחנו להתחבר אליך"
+        },
+        "reset_password_email_not_found_title": "המייל הזה לא נמצא"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2961,7 +2959,10 @@
         "column_document": "מסמך",
         "tac_title": "תנאים והגבלות",
         "tac_description": "כדי להמשיך להשתמש בשרת הבית (%(homeserverDomain)s), עליך לבדוק ולהסכים לתנאים ולהגבלות שלנו.",
-        "tac_button": "עיין בתנאים ובהגבלות"
+        "tac_button": "עיין בתנאים ובהגבלות",
+        "identity_server_no_terms_title": "לשרת הזיהוי אין כללי שרות",
+        "identity_server_no_terms_description_1": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
+        "identity_server_no_terms_description_2": "המשיכו רק אם הנכם בוטחים בבעלים של השרת."
     },
     "poll": {
         "create_poll_title": "צרו סקר",
@@ -2978,5 +2979,9 @@
     "failed_load_async_component": "טעינת הדף נכשלה. אנא בדקו את החיבור שלכם לאינטרנט ונסו שנית.",
     "upload_failed_generic": "נכשלה העלאת הקובץ %(fileName)s.",
     "upload_failed_size": "הקובץ %(fileName)s עולה בגודלו על הגודל המותר להעלאה",
-    "upload_failed_title": "העלאה נכשלה"
+    "upload_failed_title": "העלאה נכשלה",
+    "empty_room": "חדר ריק",
+    "notifier": {
+        "m.key.verification.request": "%(name)s מבקש אימות"
+    }
 }

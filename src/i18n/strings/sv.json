@@ -3,7 +3,6 @@
     "No Webcams detected": "Ingen webbkamera hittades",
     "No media permissions": "Inga mediebehörigheter",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Du behöver manuellt tillåta %(brand)s att komma åt din mikrofon/kamera",
-    "Default Device": "Standardenhet",
     "Authentication": "Autentisering",
     "%(items)s and %(lastItem)s": "%(items)s och %(lastItem)s",
     "and %(count)s others...": {
@@ -65,8 +64,6 @@
     "Reason": "Orsak",
     "Reject invitation": "Avböj inbjudan",
     "Return to login screen": "Tillbaka till inloggningsskärmen",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har inte tillstånd att skicka aviseringar - kontrollera webbläsarens inställningar",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fick inte tillstånd att skicka aviseringar - försök igen",
     "Room %(roomId)s not visible": "Rummet %(roomId)s är inte synligt",
     "%(roomName)s does not exist.": "%(roomName)s finns inte.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s är inte tillgängligt för tillfället.",
@@ -79,7 +76,6 @@
     "Delete widget": "Radera widget",
     "AM": "FM",
     "PM": "EM",
-    "This email address was not found": "Den här e-postadressen finns inte",
     "Unnamed room": "Namnlöst rum",
     "Warning!": "Varning!",
     "Sun": "Sön",
@@ -101,7 +97,6 @@
     "Oct": "Okt",
     "Nov": "Nov",
     "Dec": "Dec",
-    "Unable to enable Notifications": "Det går inte att aktivera aviseringar",
     "Failed to invite": "Inbjudan misslyckades",
     "You need to be logged in.": "Du måste vara inloggad.",
     "You need to be able to invite users to do that.": "Du behöver kunna bjuda in användare för att göra det där.",
@@ -239,7 +234,6 @@
     "No Audio Outputs detected": "Inga ljudutgångar hittades",
     "Audio Output": "Ljudutgång",
     "Permission Required": "Behörighet krävs",
-    "You do not have permission to start a conference call in this room": "Du har inte behörighet att starta ett gruppsamtal i detta rum",
     "This event could not be displayed": "Den här händelsen kunde inte visas",
     "Demote yourself?": "Degradera dig själv?",
     "Demote": "Degradera",
@@ -419,7 +413,6 @@
     "Checking server": "Kontrollerar servern",
     "Change identity server": "Byt identitetsserver",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Koppla ifrån från identitetsservern <current /> och anslut till <new /> istället?",
-    "Only continue if you trust the owner of the server.": "Fortsätt endast om du litar på serverns ägare.",
     "Disconnect identity server": "Koppla ifrån identitetsservern",
     "Disconnect from the identity server <idserver />?": "Koppla ifrån från identitetsservern <idserver />?",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Du <b>delar fortfarande dina personuppgifter</b> på identitetsservern <idserver />.",
@@ -468,8 +461,6 @@
     "Unable to load key backup status": "Kunde inte ladda status för nyckelsäkerhetskopiering",
     "Restore from Backup": "Återställ från säkerhetskopia",
     "All keys backed up": "Alla nycklar säkerhetskopierade",
-    "Identity server has no terms of service": "Identitetsservern har inga användarvillkor",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Den här åtgärden kräver åtkomst till standardidentitetsservern <server /> för att validera en e-postadress eller ett telefonnummer, men servern har inga användarvillkor.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Error upgrading room": "Fel vid uppgradering av rum",
     "Double check that your server supports the room version chosen and try again.": "Dubbelkolla att din server stöder den valda rumsversionen och försök igen.",
@@ -557,7 +548,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Du kommer att uppgradera detta rum från <oldVersion /> till <newVersion />.",
     "Remove for everyone": "Ta bort för alla",
     "Are you sure you want to cancel entering passphrase?": "Är du säker på att du vill avbryta inmatning av lösenfrasen?",
-    "%(name)s is requesting verification": "%(name)s begär verifiering",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VARNING: NYCKELVERIFIERING MISSLYCKADES! Den signerade nyckeln för %(userId)s och sessionen %(deviceId)s är \"%(fprint)s\" vilket inte matchar den givna nyckeln \"%(fingerprint)s\". Detta kan betyda att kommunikationen är övervakad!",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Signeringsnyckeln du gav matchar signeringsnyckeln du fick av %(userId)ss session %(deviceId)s. Sessionen markerades som verifierad.",
     "You signed in to a new session without verifying it:": "Du loggade in i en ny session utan att verifiera den:",
@@ -1158,12 +1148,9 @@
     "This widget would like to:": "Den här widgeten skulle vilja:",
     "Approve widget permissions": "Godta widgetbehörigheter",
     "Transfer": "Överlåt",
-    "Failed to transfer call": "Misslyckades att överlåta samtal",
     "A call can only be transferred to a single user.": "Ett samtal kan bara överlåtas till en enskild användare.",
     "Open dial pad": "Öppna knappsats",
     "Dial pad": "Knappsats",
-    "There was an error looking up the phone number": "Ett fel inträffade vid uppslagning av telefonnumret",
-    "Unable to look up phone number": "Kunde inte slå upp telefonnumret",
     "Invalid Security Key": "Ogiltig säkerhetsnyckel",
     "Wrong Security Key": "Fel säkerhetsnyckel",
     "Remember this": "Kom ihåg det här",
@@ -1191,8 +1178,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Kom åt din säkre meddelandehistorik och ställ in säker meddelandehantering genom att ange din säkerhetsnyckel.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Om du har glömt din säkerhetsnyckel så kan du <button>ställa in nya återställningsalternativ</button>",
     "Recently visited rooms": "Nyligen besökta rum",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Vi bad webbläsaren att komma ihåg vilken hemserver du använder för att logga in, men tyvärr har din webbläsare glömt det. Gå till inloggningssidan och försök igen.",
-    "We couldn't log you in": "Vi kunde inte logga in dig",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
@@ -1213,7 +1198,6 @@
     "Spaces": "Utrymmen",
     "Space selection": "Utrymmesval",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Du kommer inte kunna ångra den här ändringen eftersom du degraderar dig själv, och om du är den sista privilegierade användaren i utrymmet så kommer det att vara omöjligt att återfå utrymmet.",
-    "Empty room": "Tomt rum",
     "Suggested Rooms": "Föreslagna rum",
     "Add existing room": "Lägg till existerande rum",
     "Invite to this space": "Bjud in till det här utrymmet",
@@ -1331,8 +1315,6 @@
     "More": "Mer",
     "Show sidebar": "Visa sidopanel",
     "Hide sidebar": "Göm sidopanel",
-    "Transfer Failed": "Överföring misslyckades",
-    "Unable to transfer call": "Kan inte överföra samtal",
     "Space information": "Utrymmesinfo",
     "There was an error loading your notification settings.": "Ett fel inträffade när dina aviseringsinställningar laddades.",
     "Mentions & keywords": "Omnämnanden & nyckelord",
@@ -1797,17 +1779,6 @@
     "Join the room to participate": "Gå med i rummet för att delta",
     "Saved Items": "Sparade föremål",
     "You need to be able to kick users to do that.": "Du behöver kunna kicka användare för att göra det.",
-    "Empty room (was %(oldName)s)": "Tomt rum (var %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Bjuder in %(user)s och 1 till",
-        "other": "Bjuder in %(user)s och %(count)s till"
-    },
-    "Inviting %(user1)s and %(user2)s": "Bjuder in %(user1)s och %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s och 1 till",
-        "other": "%(user)s och %(count)s till"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s och %(user2)s",
     "Unknown room": "Okänt rum",
     "Voice broadcast": "Röstsändning",
     "Live": "Sänder",
@@ -1898,7 +1869,6 @@
     "Failed to send event": "Misslyckades att skicka händelse",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Dina rumsdetaljer hanteras separat av <code>%(hostname)s</code>.",
-    "%(senderName)s started a voice broadcast": "%(senderName)s startade en röstsändning",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alla meddelanden och inbjudningar från den här användaren kommer att döljas. Är du säker på att du vill ignorera denne?",
     "Ignore %(user)s": "Ignorera %(user)s",
     "unknown": "okänd",
@@ -1906,7 +1876,6 @@
     "Grey": "Grå",
     "Declining…": "Nekar…",
     "This session is backing up your keys.": "Den här sessionen säkerhetskopierar dina nycklar.",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Din e-postadress verkar inte vara associerad med ett Matrix-ID på den här hemservern.",
     "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto.",
     "Scan QR code": "Skanna QR-kod",
     "Select '%(scanQRCode)s'": "Välj '%(scanQRCode)s'",
@@ -1938,8 +1907,6 @@
     "Creating…": "Skapar …",
     "Starting export process…": "Startar exportprocessen …",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Användaren (%(user)s) blev inte inbjuden till %(roomId)s, men inget fel gavs av inbjudningsverktyget",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Det här kan orsakas av att ha appen öppen i flera flikar eller av rensning av webbläsardata.",
-    "Database unexpectedly closed": "Databasen stängdes oväntat",
     "Yes, it was me": "Ja, det var jag",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "If you know a room address, try joining through that instead.": "Om du känner till en rumsadress, försök gå med via den istället.",
@@ -1973,7 +1940,6 @@
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-status %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Okänt fel vid lösenordsändring (%(stringifiedError)s)",
     "Failed to download source media, no source url was found": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kan inte bjuda in användare via e-post utan en identitetsserver. Du kan ansluta till en under \"Inställningar\".",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -1987,7 +1953,6 @@
     "Desktop app logo": "Skrivbordsappslogga",
     "Your device ID": "Ditt enhets-ID",
     "Message in %(room)s": "Meddelande i rum %(room)s",
-    "User is not logged in": "Användaren är inte inloggad",
     "The sender has blocked you from receiving this message": "Avsändaren har blockerat dig från att ta emot det här meddelandet",
     "Ended a poll": "Avslutade en omröstning",
     "Your language": "Ditt språk",
@@ -2003,15 +1968,12 @@
     "Unable to find event at that date": "Kunde inte hitta händelse vid det datumet",
     "Are you sure you wish to remove (delete) this event?": "Är du säker på att du vill ta bort (radera) den här händelsen?",
     "Note that removing room changes like this could undo the change.": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
-    "Your server is unsupported": "Din server stöds inte",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Servern använder en äldre version av Matrix. Uppgradera till Matrix %(version)s för att använda %(brand)s utan fel.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Din hemserver är för gammal och stöder inte minimum-API:t som krävs. Vänligen kontakta din serverägare, eller uppgradera din server.",
     "You need an invite to access this room.": "Du behöver en inbjudan för att komma åt det här rummet.",
     "Ask to join": "Be om att gå med",
     "User cannot be invited until they are unbanned": "Användaren kan inte bjudas in förrän den avbannas",
     "People cannot join unless access is granted.": "Personer kan inte gå med om inte åtkomst ges.",
     "Failed to cancel": "Misslyckades att avbryta",
-    "Something went wrong.": "Nånting gick snett.",
     "common": {
         "about": "Om",
         "analytics": "Statistik",
@@ -2588,7 +2550,10 @@
             "enable_desktop_notifications_session": "Aktivera skrivbordsaviseringar för den här sessionen",
             "show_message_desktop_notification": "Visa meddelande i skrivbordsavisering",
             "enable_audible_notifications_session": "Aktivera ljudaviseringar för den här sessionen",
-            "noisy": "Högljudd"
+            "noisy": "Högljudd",
+            "error_permissions_denied": "%(brand)s har inte tillstånd att skicka aviseringar - kontrollera webbläsarens inställningar",
+            "error_permissions_missing": "%(brand)s fick inte tillstånd att skicka aviseringar - försök igen",
+            "error_title": "Det går inte att aktivera aviseringar"
         },
         "appearance": {
             "layout_irc": "IRC (Experimentellt)",
@@ -3459,7 +3424,15 @@
         "connection_lost_description": "Du kan inte ringa samtal utan en anslutning till servern.",
         "too_many_calls": "För många samtal",
         "too_many_calls_description": "Du har nått det maximala antalet samtidiga samtal.",
-        "cannot_call_yourself_description": "Du kan inte ringa till dig själv."
+        "cannot_call_yourself_description": "Du kan inte ringa till dig själv.",
+        "msisdn_lookup_failed": "Kunde inte slå upp telefonnumret",
+        "msisdn_lookup_failed_description": "Ett fel inträffade vid uppslagning av telefonnumret",
+        "msisdn_transfer_failed": "Kan inte överföra samtal",
+        "transfer_failed": "Överföring misslyckades",
+        "transfer_failed_description": "Misslyckades att överlåta samtal",
+        "no_permission_conference": "Behörighet krävs",
+        "no_permission_conference_description": "Du har inte behörighet att starta ett gruppsamtal i detta rum",
+        "default_device": "Standardenhet"
     },
     "Other": "Annat",
     "Advanced": "Avancerat",
@@ -3741,7 +3714,14 @@
         "reset_password_email_field_description": "Använd en a-postadress för att återställa ditt konto",
         "reset_password_email_field_required_invalid": "Skriv in e-postadress (krävs på den här hemservern)",
         "msisdn_field_description": "Andra användare kan bjuda in dig till rum med dina kontaktuppgifter",
-        "registration_msisdn_field_required_invalid": "Skriv in telefonnummer (krävs på den här hemservern)"
+        "registration_msisdn_field_required_invalid": "Skriv in telefonnummer (krävs på den här hemservern)",
+        "oidc": {
+            "error_generic": "Nånting gick snett.",
+            "error_title": "Vi kunde inte logga in dig"
+        },
+        "sso_failed_missing_storage": "Vi bad webbläsaren att komma ihåg vilken hemserver du använder för att logga in, men tyvärr har din webbläsare glömt det. Gå till inloggningssidan och försök igen.",
+        "reset_password_email_not_found_title": "Den här e-postadressen finns inte",
+        "reset_password_email_not_associated": "Din e-postadress verkar inte vara associerad med ett Matrix-ID på den här hemservern."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4110,7 +4090,10 @@
         "column_document": "Dokument",
         "tac_title": "Villkor",
         "tac_description": "För att fortsätta använda hemservern %(homeserverDomain)s måste du granska och godkänna våra villkor.",
-        "tac_button": "Granska villkoren"
+        "tac_button": "Granska villkoren",
+        "identity_server_no_terms_title": "Identitetsservern har inga användarvillkor",
+        "identity_server_no_terms_description_1": "Den här åtgärden kräver åtkomst till standardidentitetsservern <server /> för att validera en e-postadress eller ett telefonnummer, men servern har inga användarvillkor.",
+        "identity_server_no_terms_description_2": "Fortsätt endast om du litar på serverns ägare."
     },
     "space_settings": {
         "title": "Inställningar - %(spaceName)s"
@@ -4137,5 +4120,27 @@
     "failed_load_async_component": "Kan inte ladda! Kolla din nätverksuppkoppling och försök igen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunde inte laddas upp.",
     "upload_failed_size": "Filen '%(fileName)s' överstiger denna hemserverns storleksgräns för uppladdningar",
-    "upload_failed_title": "Uppladdning misslyckades"
+    "upload_failed_title": "Uppladdning misslyckades",
+    "cannot_invite_without_identity_server": "Kan inte bjuda in användare via e-post utan en identitetsserver. Du kan ansluta till en under \"Inställningar\".",
+    "unsupported_server_title": "Din server stöds inte",
+    "unsupported_server_description": "Servern använder en äldre version av Matrix. Uppgradera till Matrix %(version)s för att använda %(brand)s utan fel.",
+    "error_user_not_logged_in": "Användaren är inte inloggad",
+    "error_database_closed_title": "Databasen stängdes oväntat",
+    "error_database_closed_description": "Det här kan orsakas av att ha appen öppen i flera flikar eller av rensning av webbläsardata.",
+    "empty_room": "Tomt rum",
+    "user1_and_user2": "%(user1)s och %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s och 1 till",
+        "other": "%(user)s och %(count)s till"
+    },
+    "inviting_user1_and_user2": "Bjuder in %(user1)s och %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Bjuder in %(user)s och 1 till",
+        "other": "Bjuder in %(user)s och %(count)s till"
+    },
+    "empty_room_was_name": "Tomt rum (var %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s begär verifiering",
+        "io.element.voice_broadcast_chunk": "%(senderName)s startade en röstsändning"
+    }
 }

@@ -5,7 +5,6 @@
     "unknown error code": "άγνωστος κωδικός σφάλματος",
     "No Microphones detected": "Δεν εντοπίστηκε μικρόφωνο",
     "No Webcams detected": "Δεν εντοπίστηκε κάμερα",
-    "Default Device": "Προεπιλεγμένη συσκευή",
     "Authentication": "Πιστοποίηση",
     "A new password must be entered.": "Ο νέος κωδικός πρόσβασης πρέπει να εισαχθεί.",
     "An error has occurred.": "Παρουσιάστηκε ένα σφάλμα.",
@@ -45,7 +44,6 @@
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
-    "This email address was not found": "Δεν βρέθηκε η διεύθυνση ηλ. αλληλογραφίας",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Admin Tools": "Εργαλεία διαχειριστή",
     "No media permissions": "Χωρίς δικαιώματα πολυμέσων",
@@ -67,7 +65,6 @@
     "Unable to remove contact information": "Αδυναμία αφαίρεσης πληροφοριών επαφής",
     "Unable to verify email address.": "Αδυναμία επιβεβαίωσης διεύθυνσης ηλεκτρονικής αλληλογραφίας.",
     "Unban": "Άρση αποκλεισμού",
-    "Unable to enable Notifications": "Αδυναμία ενεργοποίησης των ειδοποιήσεων",
     "Upload avatar": "Αποστολή προσωπικής εικόνας",
     "Warning!": "Προειδοποίηση!",
     "You need to be logged in.": "Πρέπει να είστε συνδεδεμένος.",
@@ -117,8 +114,6 @@
     "not specified": "μη καθορισμένο",
     "No display name": "Χωρίς όνομα",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "Το %(brand)s δεν έχει δικαιώματα για αποστολή ειδοποιήσεων - παρακαλούμε ελέγξτε τις ρυθμίσεις του περιηγητή σας",
-    "%(brand)s was not given permission to send notifications - please try again": "Δεν δόθηκαν δικαιώματα αποστολής ειδοποιήσεων στο %(brand)s - παρακαλούμε προσπαθήστε ξανά",
     "%(roomName)s is not accessible at this time.": "Το %(roomName)s δεν είναι προσβάσιμο αυτή τη στιγμή.",
     "Server may be unavailable, overloaded, or search timed out :(": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή να έχει λήξει η αναζήτηση :(",
     "This room is not recognised.": "Αυτό το δωμάτιο δεν αναγνωρίζεται.",
@@ -191,10 +186,6 @@
     "%(duration)sh": "%(duration)sω",
     "%(duration)sd": "%(duration)sμ",
     "Permission Required": "Απαιτείται Άδεια",
-    "You do not have permission to start a conference call in this room": "Δεν έχετε άδεια για να ξεκινήσετε μια κλήση συνδιάσκεψης σε αυτό το δωμάτιο",
-    "Identity server has no terms of service": "Ο διακομιστής ταυτοποίησης δεν έχει όρους χρήσης",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Αυτή η δράση απαιτεί την πρόσβαση στο προκαθορισμένο διακομιστή ταυτοποίησης <server /> για να επιβεβαιώσει μια διεύθυνση ηλ. ταχυδρομείου ή αριθμό τηλεφώνου, αλλά ο διακομιστής δεν έχει όρους χρήσης.",
-    "Only continue if you trust the owner of the server.": "Συνεχίστε μόνο εάν εμπιστεύεστε τον ιδιοκτήτη του διακομιστή.",
     "Missing roomId.": "Λείπει η ταυτότητα δωματίου.",
     "Use an identity server": "Χρησιμοποιήστε ένα διακομιστή ταυτοτήτων",
     "Your %(brand)s is misconfigured": "Οι παράμετροι του %(brand)s σας είναι λανθασμένα ρυθμισμένοι",
@@ -402,8 +393,6 @@
     "Afghanistan": "Αφγανιστάν",
     "United States": "Ηνωμένες Πολιτείες",
     "United Kingdom": "Ηνωμένο Βασίλειο",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Ζητήσαμε από το πρόγραμμα περιήγησης να θυμάται τον διακομιστή που χρησιμοποιείτε για να συνδέεστε, αλλά το πρόγραμμα περιήγησης δεν το έχει αποθηκεύσει. Πηγαίνετε στην σελίδα σύνδεσεις για να προσπαθήσετε ξανά.",
-    "We couldn't log you in": "Δεν μπορέσαμε να σας συνδέσουμε",
     "Not Trusted": "Μη Έμπιστο",
     "Verifies a user, session, and pubkey tuple": "Επιβεβαιώνει έναν χρήστη, συνεδρία, και pubkey tuple",
     "Ignored user": "Αγνοημένος χρήστης",
@@ -479,12 +468,6 @@
     "Aruba": "Αρούμπα",
     "Antigua & Barbuda": "Αντίγκουα και Μπαρμπούντα",
     "Anguilla": "Ανγκουίλα",
-    "%(name)s is requesting verification": "%(name)s ζητάει επιβεβαίωση",
-    "Failed to transfer call": "Αποτυχία μεταφοράς κλήσης",
-    "Transfer Failed": "Αποτυχία μεταφοράς",
-    "Unable to transfer call": "Αδυναμία μεταφοράς κλήσης",
-    "There was an error looking up the phone number": "Υπήρξε ένα σφάλμα κατά την αναζήτηση αριθμού τηλεφώνου",
-    "Unable to look up phone number": "Αδυναμία αναζήτησης αριθμού τηλεφώνου",
     "Unignored user": "Χρήστης από κατάργηση παράβλεψης",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Το κλειδί υπογραφής που παρείχατε ταιριάζει με το κλειδί που λάβατε από την συνεδρία %(userId)s's %(deviceId)s. Η συνεδρία σημειώνεται ως επιβεβαιωμένη.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s",
@@ -811,7 +794,6 @@
     "Sign Up": "Εγγραφή",
     "Join the conversation with an account": "Συμμετοχή στη συζήτηση με λογιαριασμό",
     "Add space": "Προσθήκη χώρου",
-    "Empty room": "Άδειο δωμάτιο",
     "Suggested Rooms": "Προτεινόμενα δωμάτια",
     "Add room": "Προσθήκη δωματίου",
     "Explore public rooms": "Εξερευνήστε δημόσια δωμάτια",
@@ -2170,7 +2152,10 @@
             "enable_desktop_notifications_session": "Ενεργοποιήστε τις ειδοποιήσεις στον υπολογιστή για αυτήν τη συνεδρία",
             "show_message_desktop_notification": "Εμφάνιση του μηνύματος στην ειδοποίηση στον υπολογιστή",
             "enable_audible_notifications_session": "Ενεργοποιήστε τις ηχητικές ειδοποιήσεις για αυτήν τη συνεδρία",
-            "noisy": "Δυνατά"
+            "noisy": "Δυνατά",
+            "error_permissions_denied": "Το %(brand)s δεν έχει δικαιώματα για αποστολή ειδοποιήσεων - παρακαλούμε ελέγξτε τις ρυθμίσεις του περιηγητή σας",
+            "error_permissions_missing": "Δεν δόθηκαν δικαιώματα αποστολής ειδοποιήσεων στο %(brand)s - παρακαλούμε προσπαθήστε ξανά",
+            "error_title": "Αδυναμία ενεργοποίησης των ειδοποιήσεων"
         },
         "appearance": {
             "layout_irc": "IRC (Πειραματικό)",
@@ -2890,7 +2875,15 @@
         "connection_lost_description": "Δεν μπορείτε να πραγματοποιήσετε κλήσεις χωρίς σύνδεση στο διακομιστή.",
         "too_many_calls": "Πάρα Πολλές Κλήσεις",
         "too_many_calls_description": "Έχετε φτάσει τον μέγιστο αριθμό ταυτοχρόνων κλήσεων.",
-        "cannot_call_yourself_description": "Δεν μπορείτε να καλέσετε τον εαυτό σας."
+        "cannot_call_yourself_description": "Δεν μπορείτε να καλέσετε τον εαυτό σας.",
+        "msisdn_lookup_failed": "Αδυναμία αναζήτησης αριθμού τηλεφώνου",
+        "msisdn_lookup_failed_description": "Υπήρξε ένα σφάλμα κατά την αναζήτηση αριθμού τηλεφώνου",
+        "msisdn_transfer_failed": "Αδυναμία μεταφοράς κλήσης",
+        "transfer_failed": "Αποτυχία μεταφοράς",
+        "transfer_failed_description": "Αποτυχία μεταφοράς κλήσης",
+        "no_permission_conference": "Απαιτείται Άδεια",
+        "no_permission_conference_description": "Δεν έχετε άδεια για να ξεκινήσετε μια κλήση συνδιάσκεψης σε αυτό το δωμάτιο",
+        "default_device": "Προεπιλεγμένη συσκευή"
     },
     "Other": "Άλλα",
     "Advanced": "Προχωρημένες",
@@ -3140,7 +3133,12 @@
         "reset_password_email_field_description": "Χρησιμοποιήστε μια διεύθυνση email για να ανακτήσετε τον λογαριασμό σας",
         "reset_password_email_field_required_invalid": "Εισαγάγετε τη διεύθυνση email (απαιτείται σε αυτόν τον κεντρικό διακομιστή)",
         "msisdn_field_description": "Άλλοι χρήστες μπορούν να σας προσκαλέσουν σε δωμάτια χρησιμοποιώντας τα στοιχεία επικοινωνίας σας",
-        "registration_msisdn_field_required_invalid": "Εισαγάγετε τον αριθμό τηλεφώνου (απαιτείται σε αυτόν τον κεντρικό διακομιστή)"
+        "registration_msisdn_field_required_invalid": "Εισαγάγετε τον αριθμό τηλεφώνου (απαιτείται σε αυτόν τον κεντρικό διακομιστή)",
+        "sso_failed_missing_storage": "Ζητήσαμε από το πρόγραμμα περιήγησης να θυμάται τον διακομιστή που χρησιμοποιείτε για να συνδέεστε, αλλά το πρόγραμμα περιήγησης δεν το έχει αποθηκεύσει. Πηγαίνετε στην σελίδα σύνδεσεις για να προσπαθήσετε ξανά.",
+        "oidc": {
+            "error_title": "Δεν μπορέσαμε να σας συνδέσουμε"
+        },
+        "reset_password_email_not_found_title": "Δεν βρέθηκε η διεύθυνση ηλ. αλληλογραφίας"
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3470,7 +3468,10 @@
         "column_document": "Έγγραφο",
         "tac_title": "Οροι και Προϋποθέσεις",
         "tac_description": "Για να συνεχίσετε να χρησιμοποιείτε τον κεντρικό διακομιστή %(homeserverDomain)s πρέπει να διαβάσετε και να συμφωνήσετε με τους όρους και τις προϋποθέσεις μας.",
-        "tac_button": "Ελέγξτε τους όρους και τις προϋποθέσεις"
+        "tac_button": "Ελέγξτε τους όρους και τις προϋποθέσεις",
+        "identity_server_no_terms_title": "Ο διακομιστής ταυτοποίησης δεν έχει όρους χρήσης",
+        "identity_server_no_terms_description_1": "Αυτή η δράση απαιτεί την πρόσβαση στο προκαθορισμένο διακομιστή ταυτοποίησης <server /> για να επιβεβαιώσει μια διεύθυνση ηλ. ταχυδρομείου ή αριθμό τηλεφώνου, αλλά ο διακομιστής δεν έχει όρους χρήσης.",
+        "identity_server_no_terms_description_2": "Συνεχίστε μόνο εάν εμπιστεύεστε τον ιδιοκτήτη του διακομιστή."
     },
     "space_settings": {
         "title": "Ρυθμίσεις - %(spaceName)s"
@@ -3496,5 +3497,9 @@
     "failed_load_async_component": "Αδυναμία φόρτωσης! Ελέγξτε την σύνδεση του δικτύου και προσπαθήστε ξανά.",
     "upload_failed_generic": "Απέτυχε το ανέβασμα του αρχείου '%(fileName)s'.",
     "upload_failed_size": "Το αρχείο '%(fileName)s' ξεπερνάει το όριο μεγέθους ανεβάσματος αυτού του κεντρικού διακομιστή",
-    "upload_failed_title": "Απέτυχε η αποστολή"
+    "upload_failed_title": "Απέτυχε η αποστολή",
+    "empty_room": "Άδειο δωμάτιο",
+    "notifier": {
+        "m.key.verification.request": "%(name)s ζητάει επιβεβαίωση"
+    }
 }

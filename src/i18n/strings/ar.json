@@ -9,7 +9,6 @@
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
     "Permission Required": "التصريح مطلوب",
-    "You do not have permission to start a conference call in this room": "ينقصك تصريح بدء مكالمة جماعية في هذه الغرفة",
     "Cancel entering passphrase?": "هل تريد إلغاء إدخال عبارة المرور؟",
     "Are you sure you want to cancel entering passphrase?": "هل أنت متأكد من أنك تريد إلغاء إدخال عبارة المرور؟",
     "Setting up keys": "إعداد المفاتيح",
@@ -38,14 +37,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s ‏%(time)s",
-    "Identity server has no terms of service": "ليس لخادوم الهويّة أيّ شروط خدمة",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "يطلب هذا الإجراء الوصول إلى خادوم الهويّات المبدئي<server />للتثبّت من عنوان البريد الإلكتروني أو رقم الهاتف، ولكن ليس للخادوم أيّ شروط خدمة.",
-    "Only continue if you trust the owner of the server.": "لا تُواصل لو لم تكن تثق بمالك الخادوم.",
-    "%(name)s is requesting verification": "يطلب %(name)s التثبّت",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "لا يملك %(brand)s التصريح لإرسال التنبيهات. من فضلك تحقّق من إعدادات المتصفح",
-    "%(brand)s was not given permission to send notifications - please try again": "لم تقدّم التصريح اللازم كي يُرسل %(brand)s التنبيهات. من فضلك أعِد المحاولة",
-    "Unable to enable Notifications": "تعذر تفعيل التنبيهات",
-    "This email address was not found": "لم يوجد عنوان البريد الإلكتروني هذا",
     "Default": "المبدئي",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
@@ -507,7 +498,6 @@
     "The user's homeserver does not support the version of the room.": "لا يدعم خادم المستخدم نموذج هذه الغرفة.",
     "The user must be unbanned before they can be invited.": "يجب إلغاء حظر المستخدم قبل دعوته.",
     "United States": "الولايات المتحدة",
-    "Default Device": "الجهاز الاعتيادي",
     "Albania": "ألبانيا",
     "Afghanistan": "أفغانستان",
     "United Kingdom": "المملكة المتحدة",
@@ -566,7 +556,6 @@
     "American Samoa": "ساموا الأمريكية",
     "Algeria": "الجزائر",
     "Åland Islands": "جزر آلاند",
-    "We couldn't log you in": "تعذر الولوج",
     "Explore rooms": "استكشِف الغرف",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "قد يؤدي استخدام عنصر واجهة المستخدم هذا إلى مشاركة البيانات <helpIcon /> مع %(widgetDomain)s ومدير التكامل الخاص بك.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "يتلقى مديرو التكامل بيانات الضبط، ويمكنهم تعديل عناصر واجهة المستخدم، وإرسال دعوات الغرف، وتعيين مستويات القوة نيابة عنك.",
@@ -674,14 +663,6 @@
     "Denmark": "الدنمارك",
     "Czech Republic": "جمهورية التشيك",
     "Cyprus": "قبرص",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "طلبنا من المتصفّح تذكّر الخادوم المنزل الذي تستعمله لتتمكن من الولوج، ولكن للأسف نسيه. انتقل إلى صفحة الولوج وأعِد المحاولة.",
-    "Failed to transfer call": "فشل تحويل المكالمة",
-    "Transfer Failed": "فشل التحويل",
-    "Unable to transfer call": "تعذر تحويل المكالمة",
-    "There was an error looking up the phone number": "حدث عُطل أثناء البحث عن رقم الهاتف",
-    "Unable to look up phone number": "تعذر العثور على رقم الهاتف",
-    "%(user1)s and %(user2)s": "%(user1)s و %(user2)s",
-    "Empty room": "غرفة فارغة",
     "common": {
         "about": "حول",
         "analytics": "التحاليل",
@@ -870,7 +851,10 @@
             "enable_desktop_notifications_session": "تمكين إشعارات سطح المكتب لهذا الاتصال",
             "show_message_desktop_notification": "إظهار الرسالة في إشعارات سطح المكتب",
             "enable_audible_notifications_session": "تمكين الإشعارات الصوتية لهذا الاتصال",
-            "noisy": "مزعج"
+            "noisy": "مزعج",
+            "error_permissions_denied": "لا يملك %(brand)s التصريح لإرسال التنبيهات. من فضلك تحقّق من إعدادات المتصفح",
+            "error_permissions_missing": "لم تقدّم التصريح اللازم كي يُرسل %(brand)s التنبيهات. من فضلك أعِد المحاولة",
+            "error_title": "تعذر تفعيل التنبيهات"
         },
         "appearance": {
             "heading": "تخصيص مظهرك",
@@ -1191,7 +1175,15 @@
         "connection_lost_description": "لا يمكنك إجراء المكالمات دون اتصال بالخادوم.",
         "too_many_calls": "مكالمات كثيرة جدا",
         "too_many_calls_description": "لقد بلغت الحد الأقصى من المكالمات المتزامنة.",
-        "cannot_call_yourself_description": "لا يمكنك الاتصال بنفسك."
+        "cannot_call_yourself_description": "لا يمكنك الاتصال بنفسك.",
+        "msisdn_lookup_failed": "تعذر العثور على رقم الهاتف",
+        "msisdn_lookup_failed_description": "حدث عُطل أثناء البحث عن رقم الهاتف",
+        "msisdn_transfer_failed": "تعذر تحويل المكالمة",
+        "transfer_failed": "فشل التحويل",
+        "transfer_failed_description": "فشل تحويل المكالمة",
+        "no_permission_conference": "التصريح مطلوب",
+        "no_permission_conference_description": "ينقصك تصريح بدء مكالمة جماعية في هذه الغرفة",
+        "default_device": "الجهاز الاعتيادي"
     },
     "Other": "أخرى",
     "Advanced": "متقدم",
@@ -1304,7 +1296,12 @@
         "uia": {
             "sso_title": "استعمل الولوج الموحّد للمواصلة",
             "sso_body": "أكّد إضافتك لعنوان البريد هذا باستعمال الولوج الموحّد لإثبات هويّتك."
-        }
+        },
+        "sso_failed_missing_storage": "طلبنا من المتصفّح تذكّر الخادوم المنزل الذي تستعمله لتتمكن من الولوج، ولكن للأسف نسيه. انتقل إلى صفحة الولوج وأعِد المحاولة.",
+        "oidc": {
+            "error_title": "تعذر الولوج"
+        },
+        "reset_password_email_not_found_title": "لم يوجد عنوان البريد الإلكتروني هذا"
     },
     "export_chat": {
         "messages": "الرسائل"
@@ -1497,5 +1494,15 @@
         "generic_error": "قد لا يكون الخادوم متاحًا، أو أن عليه ضغط، أو أنك واجهت علة.",
         "unsupported_version": "لا يدعم الخادوم إصدارة الغرفة المحدّدة.",
         "error_title": "فشل إنشاء الغرفة"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "ليس لخادوم الهويّة أيّ شروط خدمة",
+        "identity_server_no_terms_description_1": "يطلب هذا الإجراء الوصول إلى خادوم الهويّات المبدئي<server />للتثبّت من عنوان البريد الإلكتروني أو رقم الهاتف، ولكن ليس للخادوم أيّ شروط خدمة.",
+        "identity_server_no_terms_description_2": "لا تُواصل لو لم تكن تثق بمالك الخادوم."
+    },
+    "empty_room": "غرفة فارغة",
+    "user1_and_user2": "%(user1)s و %(user2)s",
+    "notifier": {
+        "m.key.verification.request": "يطلب %(name)s التثبّت"
     }
 }

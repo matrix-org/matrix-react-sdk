@@ -20,7 +20,6 @@
     "Low Priority": "Lav Prioritet",
     "Saturday": "Lørdag",
     "Permission Required": "Tillatelse kreves",
-    "You do not have permission to start a conference call in this room": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
     "Send": "Send",
     "Sun": "Søn",
     "Mon": "Man",
@@ -47,10 +46,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s kl. %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s kl. %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har ikke tillatelse til å sende deg varsler - vennligst sjekk nettleserinnstillingene",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fikk ikke tillatelse til å sende deg varsler - vennligst prøv igjen",
-    "Unable to enable Notifications": "Klarte ikke slå på Varslinger",
-    "This email address was not found": "Denne e-postadressen ble ikke funnet",
     "Default": "Standard",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
@@ -150,7 +145,6 @@
     "Create account": "Opprett konto",
     "Success!": "Suksess!",
     "Set up": "Sett opp",
-    "Identity server has no terms of service": "Identitetstjeneren har ingen brukervilkår",
     "Lion": "Løve",
     "Pig": "Gris",
     "Rabbit": "Kanin",
@@ -196,7 +190,6 @@
     "No Audio Outputs detected": "Ingen lydutdataer ble oppdaget",
     "No Microphones detected": "Ingen mikrofoner ble oppdaget",
     "No Webcams detected": "Ingen USB-kameraer ble oppdaget",
-    "Default Device": "Standardenhet",
     "Audio Output": "Lydutdata",
     "Voice & Video": "Stemme og video",
     "Room information": "Rominformasjon",
@@ -503,8 +496,6 @@
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
-    "%(name)s is requesting verification": "%(name)s ber om verifisering",
-    "We couldn't log you in": "Vi kunne ikke logge deg inn",
     "Burundi": "Burundi",
     "Burkina Faso": "Burkina Faso",
     "Bulgaria": "Bulgaria",
@@ -537,8 +528,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Only continue if you trust the owner of the server.": "Fortsett kun om du stoler på eieren av serveren.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
     "Recently visited rooms": "Nylig besøkte rom",
     "Edit devices": "Rediger enheter",
     "Add existing room": "Legg til et eksisterende rom",
@@ -1143,7 +1132,10 @@
             "enable_desktop_notifications_session": "Skru på skrivebordsvarsler for denne økten",
             "show_message_desktop_notification": "Vis meldingen i skrivebordsvarselet",
             "enable_audible_notifications_session": "Skru på hørbare varsler for denne økten",
-            "noisy": "Bråkete"
+            "noisy": "Bråkete",
+            "error_permissions_denied": "%(brand)s har ikke tillatelse til å sende deg varsler - vennligst sjekk nettleserinnstillingene",
+            "error_permissions_missing": "%(brand)s fikk ikke tillatelse til å sende deg varsler - vennligst prøv igjen",
+            "error_title": "Klarte ikke slå på Varslinger"
         },
         "appearance": {
             "heading": "Tilpass utseendet du bruker",
@@ -1488,7 +1480,10 @@
         "connection_lost": "Mistet forbindelsen til serveren",
         "connection_lost_description": "Du kan ikke ringe uten tilkobling til serveren.",
         "too_many_calls": "For mange samtaler",
-        "cannot_call_yourself_description": "Du kan ikke ringe deg selv."
+        "cannot_call_yourself_description": "Du kan ikke ringe deg selv.",
+        "no_permission_conference": "Tillatelse kreves",
+        "no_permission_conference_description": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
+        "default_device": "Standardenhet"
     },
     "Other": "Andre",
     "Advanced": "Avansert",
@@ -1626,7 +1621,11 @@
         "msisdn_field_label": "Telefon",
         "identifier_label": "Logg inn med",
         "reset_password_email_field_description": "Bruk en E-postadresse til å gjenopprette kontoen din",
-        "reset_password_email_field_required_invalid": "Skriv inn en E-postadresse (Påkrevd på denne hjemmetjeneren)"
+        "reset_password_email_field_required_invalid": "Skriv inn en E-postadresse (Påkrevd på denne hjemmetjeneren)",
+        "oidc": {
+            "error_title": "Vi kunne ikke logge deg inn"
+        },
+        "reset_password_email_not_found_title": "Denne e-postadressen ble ikke funnet"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1754,10 +1753,16 @@
         "column_summary": "Oppsummering",
         "column_document": "Dokument",
         "tac_title": "Betingelser og vilkår",
-        "tac_button": "Gå gjennom betingelser og vilkår"
+        "tac_button": "Gå gjennom betingelser og vilkår",
+        "identity_server_no_terms_title": "Identitetstjeneren har ingen brukervilkår",
+        "identity_server_no_terms_description_1": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
+        "identity_server_no_terms_description_2": "Fortsett kun om du stoler på eieren av serveren."
     },
     "failed_load_async_component": "Klarte ikke laste! Sjekk nettverstilkoblingen din og prøv igjen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunne ikke lastes opp.",
     "upload_failed_size": "Filen \"%(fileName)s\" er større enn hjemmetjenerens grense for opplastninger",
-    "upload_failed_title": "Opplasting feilet"
+    "upload_failed_title": "Opplasting feilet",
+    "notifier": {
+        "m.key.verification.request": "%(name)s ber om verifisering"
+    }
 }

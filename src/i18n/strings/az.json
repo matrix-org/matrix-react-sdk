@@ -23,7 +23,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Unable to enable Notifications": "Xəbərdarlıqları daxil qoşmağı bacarmadı",
     "Default": "Varsayılan olaraq",
     "Moderator": "Moderator",
     "You need to be logged in.": "Siz sistemə girməlisiniz.",
@@ -94,13 +93,9 @@
     "Return to login screen": "Girişin ekranına qayıtmaq",
     "Confirm passphrase": "Şifrəni təsdiqləyin",
     "Permission Required": "İzn tələb olunur",
-    "You do not have permission to start a conference call in this room": "Bu otaqda konfrans başlamaq üçün icazə yoxdur",
     "Send": "Göndər",
     "PM": "24:00",
     "AM": "12:00",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-un sizə bildiriş göndərmək icazəsi yoxdur - brauzerinizin parametrlərini yoxlayın",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s bildiriş göndərmək üçün icazə verilmədi - lütfən yenidən cəhd edin",
-    "This email address was not found": "Bu e-poçt ünvanı tapılmadı",
     "Restricted": "Məhduddur",
     "Failed to invite": "Dəvət alınmadı",
     "Unable to create widget.": "Widjet yaratmaq olmur.",
@@ -110,9 +105,6 @@
     "You do not have permission to do that in this room.": "Bu otaqda bunu etməyə icazəniz yoxdur.",
     "Verified key": "Təsdiqlənmiş açar",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Identity server has no terms of service": "Şəxsiyyət serverinin xidmət şərtləri yoxdur",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Bu hərəkət e-poçt ünvanı və ya telefon nömrəsini təsdiqləmək üçün standart şəxsiyyət serverinə <server /> girməyi tələb edir, lakin serverdə heç bir xidmət şəraiti yoxdur.",
-    "Only continue if you trust the owner of the server.": "Yalnız server sahibinə etibar etsəniz davam edin.",
     "Room %(roomId)s not visible": "Otaq %(roomId)s görünmür",
     "Error upgrading room": "Otaq yeniləmə xətası",
     "Double check that your server supports the room version chosen and try again.": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin.",
@@ -171,7 +163,10 @@
             "rule_message": "Qrup çatlarında mesajlar",
             "rule_invite_for_me": "Nə vaxt ki, məni otağa dəvət edirlər",
             "rule_call": "Dəvət zəngi",
-            "rule_suppress_notices": "Botla göndərilmiş mesajlar"
+            "rule_suppress_notices": "Botla göndərilmiş mesajlar",
+            "error_permissions_denied": "%(brand)s-un sizə bildiriş göndərmək icazəsi yoxdur - brauzerinizin parametrlərini yoxlayın",
+            "error_permissions_missing": "%(brand)s bildiriş göndərmək üçün icazə verilmədi - lütfən yenidən cəhd edin",
+            "error_title": "Xəbərdarlıqları daxil qoşmağı bacarmadı"
         },
         "appearance": {
             "timeline_image_size_default": "Varsayılan olaraq",
@@ -267,7 +262,9 @@
         "call_failed": "Uğursuz zəng",
         "misconfigured_server": "Düzgün qurulmamış server səbəbindən zəng alınmadı",
         "misconfigured_server_description": "Xahiş edirik, baş serverin administratoruna müraciət edin (<code>%(homeserverDomain)s</code>) ki zənglərin etibarlı işləməsi üçün dönüş serverini konfiqurasiya etsin.",
-        "cannot_call_yourself_description": "Siz özünə zəng vura bilmirsiniz."
+        "cannot_call_yourself_description": "Siz özünə zəng vura bilmirsiniz.",
+        "no_permission_conference": "İzn tələb olunur",
+        "no_permission_conference_description": "Bu otaqda konfrans başlamaq üçün icazə yoxdur"
     },
     "devtools": {
         "category_other": "Digər"
@@ -294,7 +291,8 @@
         "change_password_action": "Şifrəni dəyişdirin",
         "email_field_label": "E-poçt",
         "msisdn_field_label": "Telefon",
-        "identifier_label": "Seçmək"
+        "identifier_label": "Seçmək",
+        "reset_password_email_not_found_title": "Bu e-poçt ünvanı tapılmadı"
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"
@@ -328,5 +326,10 @@
         "generic_error": "Server, istifadə edilə bilməz, yüklənmiş ola bilər və ya bir səhv vurursunuz.",
         "unsupported_version": "Server göstərilən otaq versiyasını dəstəkləmir.",
         "error_title": "Otağı yaratmağı bacarmadı"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "Şəxsiyyət serverinin xidmət şərtləri yoxdur",
+        "identity_server_no_terms_description_1": "Bu hərəkət e-poçt ünvanı və ya telefon nömrəsini təsdiqləmək üçün standart şəxsiyyət serverinə <server /> girməyi tələb edir, lakin serverdə heç bir xidmət şəraiti yoxdur.",
+        "identity_server_no_terms_description_2": "Yalnız server sahibinə etibar etsəniz davam edin."
     }
 }

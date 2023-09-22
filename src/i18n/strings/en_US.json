@@ -5,7 +5,6 @@
     "No Webcams detected": "No Webcams detected",
     "No media permissions": "No media permissions",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "You may need to manually permit %(brand)s to access your microphone/webcam",
-    "Default Device": "Default Device",
     "Authentication": "Authentication",
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
     "and %(count)s others...": {
@@ -68,14 +67,11 @@
     "Reason": "Reason",
     "Reject invitation": "Reject invitation",
     "Return to login screen": "Return to login screen",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s does not have permission to send you notifications - please check your browser settings",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s was not given permission to send notifications - please try again",
     "Room %(roomId)s not visible": "Room %(roomId)s not visible",
     "Rooms": "Rooms",
     "Search failed": "Search failed",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Session ID": "Session ID",
-    "This email address was not found": "This email address was not found",
     "This room has no local addresses": "This room has no local addresses",
     "This room is not recognised.": "This room is not recognized.",
     "This doesn't appear to be a valid email address": "This doesn't appear to be a valid email address",
@@ -85,7 +81,6 @@
     "Unable to remove contact information": "Unable to remove contact information",
     "Unable to verify email address.": "Unable to verify email address.",
     "Unban": "Unban",
-    "Unable to enable Notifications": "Unable to enable Notifications",
     "unknown error code": "unknown error code",
     "Upload avatar": "Upload avatar",
     "Verification Pending": "Verification Pending",
@@ -190,7 +185,6 @@
     "Yesterday": "Yesterday",
     "Low Priority": "Low Priority",
     "Permission Required": "Permission Required",
-    "You do not have permission to start a conference call in this room": "You do not have permission to start a conference call in this room",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Restricted",
     "Missing roomId.": "Missing roomId.",
@@ -202,10 +196,6 @@
     "Cancel entering passphrase?": "Cancel entering passphrase?",
     "Are you sure you want to cancel entering passphrase?": "Are you sure you want to cancel entering passphrase?",
     "Setting up keys": "Setting up keys",
-    "Identity server has no terms of service": "Identity server has no terms of service",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
-    "Only continue if you trust the owner of the server.": "Only continue if you trust the owner of the server.",
-    "%(name)s is requesting verification": "%(name)s is requesting verification",
     "Error upgrading room": "Error upgrading room",
     "Double check that your server supports the room version chosen and try again.": "Double check that your server supports the room version chosen and try again.",
     "Favourited": "Favorited",
@@ -308,7 +298,10 @@
             "rule_invite_for_me": "When I'm invited to a room",
             "rule_call": "Call invitation",
             "rule_suppress_notices": "Messages sent by bot",
-            "noisy": "Noisy"
+            "noisy": "Noisy",
+            "error_permissions_denied": "%(brand)s does not have permission to send you notifications - please check your browser settings",
+            "error_permissions_missing": "%(brand)s was not given permission to send notifications - please try again",
+            "error_title": "Unable to enable Notifications"
         },
         "appearance": {
             "heading": "Customize your appearance",
@@ -454,7 +447,10 @@
         "answered_elsewhere_description": "The call was answered on another device.",
         "misconfigured_server": "Call failed due to misconfigured server",
         "misconfigured_server_description": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
-        "cannot_call_yourself_description": "You cannot place a call with yourself."
+        "cannot_call_yourself_description": "You cannot place a call with yourself.",
+        "no_permission_conference": "Permission Required",
+        "no_permission_conference_description": "You do not have permission to start a conference call in this room",
+        "default_device": "Default Device"
     },
     "devtools": {
         "category_room": "Room",
@@ -495,7 +491,8 @@
             "sso_body": "Confirm adding this email address by using Single Sign On to prove your identity."
         },
         "msisdn_field_label": "Phone",
-        "identifier_label": "Sign in with"
+        "identifier_label": "Sign in with",
+        "reset_password_email_not_found_title": "This email address was not found"
     },
     "export_chat": {
         "messages": "Messages"
@@ -567,5 +564,13 @@
         "generic_error": "Server may be unavailable, overloaded, or you hit a bug.",
         "unsupported_version": "The server does not support the room version specified.",
         "error_title": "Failure to create room"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "Identity server has no terms of service",
+        "identity_server_no_terms_description_1": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
+        "identity_server_no_terms_description_2": "Only continue if you trust the owner of the server."
+    },
+    "notifier": {
+        "m.key.verification.request": "%(name)s is requesting verification"
     }
 }

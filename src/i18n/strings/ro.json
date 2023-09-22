@@ -1,6 +1,5 @@
 {
     "Permission Required": "Permisul Obligatoriu",
-    "You do not have permission to start a conference call in this room": "Nu aveți permisiunea de a începe un apel de conferință în această cameră",
     "Send": "Trimite",
     "Sun": "Dum",
     "Mon": "Lun",
@@ -56,7 +55,9 @@
         "misconfigured_server_description": "Vă rugăm să cereți administratorului serverului dvs. (<code>%(homeserverDomain)s</code>) să configureze un server TURN pentru ca apelurile să funcționeze în mod fiabil.",
         "too_many_calls": "Prea multe apeluri",
         "too_many_calls_description": "Ați atins numărul maxim de apeluri simultane.",
-        "cannot_call_yourself_description": "Nu poți apela cu tine însuți."
+        "cannot_call_yourself_description": "Nu poți apela cu tine însuți.",
+        "no_permission_conference": "Permisul Obligatoriu",
+        "no_permission_conference_description": "Nu aveți permisiunea de a începe un apel de conferință în această cameră"
     },
     "auth": {
         "sso": "Single Sign On",

@@ -22,7 +22,6 @@
     "Rooms": "Ruangan",
     "Search failed": "Pencarian gagal",
     "Session ID": "ID Sesi",
-    "This email address was not found": "Alamat email ini tidak ditemukan",
     "Unable to add email address": "Tidak dapat menambahkan alamat email",
     "Unable to verify email address.": "Tidak dapat memverifikasi alamat email.",
     "unknown error code": "kode kesalahan tidak diketahui",
@@ -50,7 +49,6 @@
     "Admin Tools": "Peralatan Admin",
     "No Webcams detected": "Tidak ada Webcam terdeteksi",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam",
-    "Default Device": "Perangkat Bawaan",
     "Authentication": "Autentikasi",
     "Are you sure you want to leave the room '%(roomName)s'?": "Anda yakin ingin meninggalkan ruangan '%(roomName)s'?",
     "A new password must be entered.": "Kata sandi baru harus dimasukkan.",
@@ -85,7 +83,6 @@
     "Failed to change password. Is your password correct?": "Gagal untuk mengubah kata sandi. Apakah kata sandi Anda benar?",
     "Thank you!": "Terima kasih!",
     "Permission Required": "Izin Dibutuhkan",
-    "You do not have permission to start a conference call in this room": "Anda tidak memiliki permisi untuk memulai panggilan konferensi di ruang ini",
     "Explore rooms": "Jelajahi ruangan",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Kunci penandatanganan yang Anda sediakan cocok dengan kunci penandatanganan yang Anda terima dari sesi %(userId)s %(deviceId)s. Sesi ditandai sebagai terverifikasi.",
@@ -369,25 +366,11 @@
     "Afghanistan": "Afganistan",
     "United States": "Amerika Serikat",
     "United Kingdom": "Britania Raya",
-    "Unable to enable Notifications": "Tidak dapat mengaktifkan Notifikasi",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — silakan coba lagi",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — mohon periksa pengaturan browser Anda",
-    "%(name)s is requesting verification": "%(name)s meminta verifikasi",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Kami menanyakan browser ini untuk mengingat homeserver apa yang Anda gunakan untuk membantu Anda masuk, tetapi sayangnya browser ini melupakannya. Pergi ke halaman masuk dan coba lagi.",
-    "We couldn't log you in": "Kami tidak dapat memasukkan Anda",
-    "Only continue if you trust the owner of the server.": "Hanya lanjutkan jika Anda mempercayai pemilik server ini.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Aksi ini memerlukan mengakses server identitas bawaan <server /> untuk memvalidasi sebuah alamat email atau nomor telepon, tetapi server ini tidak memiliki syarat layanan apa pun.",
-    "Identity server has no terms of service": "Identitas server ini tidak memiliki syarat layanan",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "AM": "AM",
     "PM": "PM",
-    "Unable to transfer call": "Tidak dapat memindahkan panggilan",
-    "Failed to transfer call": "Gagal untuk memindahkan panggilan",
-    "Transfer Failed": "Pemindahan Gagal",
-    "There was an error looking up the phone number": "Sebuah kesalahan terjadi mencari nomor teleponnya",
-    "Unable to look up phone number": "Tidak dapat mencari nomor telepon",
     "expand": "buka",
     "collapse": "tutup",
     "%(duration)sd": "%(duration)sh",
@@ -867,7 +850,6 @@
     "You were banned from %(roomName)s by %(memberName)s": "Anda telah dicekal dari %(roomName)s oleh %(memberName)s",
     "Forget this room": "Lupakan ruangan ini",
     "Join the conversation with an account": "Bergabung obrolan dengan sebuah akun",
-    "Empty room": "Ruangan kosong",
     "Suggested Rooms": "Ruangan yang Disarankan",
     "Explore public rooms": "Jelajahi ruangan publik",
     "Add existing room": "Tambahkan ruangan yang sudah ada",
@@ -1802,17 +1784,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Untuk keamanan yang terbaik, verifikasi sesi Anda dan keluarkan dari sesi yang Anda tidak kenal atau tidak digunakan lagi.",
     "Interactively verify by emoji": "Verifikasi secara interaktif sengan emoji",
     "Manually verify by text": "Verifikasi secara manual dengan teks",
-    "Inviting %(user1)s and %(user2)s": "Mengundang %(user1)s dan %(user2)s",
-    "Empty room (was %(oldName)s)": "Ruangan kosong (sebelumnya %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Mengundang %(user)s dan 1 lainnya",
-        "other": "Mengundang %(user)s dan %(count)s lainnya"
-    },
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s dan 1 lainnya",
-        "other": "%(user)s dan %(count)s lainnya"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s dan %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "-%(downloadButton)s atau %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "You need to be able to kick users to do that.": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
@@ -1896,7 +1867,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
     "Can't start voice message": "Tidak dapat memulai pesan suara",
     "Edit link": "Sunting tautan",
-    "%(senderName)s started a voice broadcast": "%(senderName)s memulai sebuah siaran suara",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Detail akun Anda dikelola secara terpisah di <code>%(hostname)s</code>.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Semua pesan dan undangan dari pengguna ini akan disembunyikan. Apakah Anda yakin ingin mengabaikan?",
@@ -1904,7 +1874,6 @@
     "unknown": "tidak diketahui",
     "Red": "Merah",
     "Grey": "Abu-Abu",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Alamat email Anda terlihat tidak diasosiasikan dengan sebuah ID Matrix di homeserver ini.",
     "This session is backing up your keys.": "Sesi ini mencadangkan kunci Anda.",
     "Declining…": "Menolak…",
     "There are no past polls in this room": "Tidak ada pemungutan suara sebelumnya di ruangan ini",
@@ -1980,8 +1949,6 @@
     "Mute room": "Bisukan ruangan",
     "Match default setting": "Sesuai dengan pengaturan bawaan",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Pengguna (%(user)s) akhirnya tidak diundang ke %(roomId)s tetapi tidak ada kesalahan yang diberikan dari utilitas pengundang",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Ini mungkin terjadi karena memiliki aplikasinya terbuka di beberapa tab atau karena menghapus data peramban.",
-    "Database unexpectedly closed": "Basis data ditutup secara tidak terduga",
     "Start DM anyway": "Mulai percakapan langsung saja",
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
@@ -1993,7 +1960,6 @@
     "Error changing password": "Terjadi kesalahan mengubah kata sandi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Terjadi kesalahan perubahan kata sandi yang tidak diketahui (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\".",
     "Failed to download source media, no source url was found": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
@@ -2002,7 +1968,6 @@
     "Your device ID": "ID perangkat Anda",
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
-    "User is not logged in": "Pengguna belum masuk",
     "Ask to join": "Bertanya untuk bergabung",
     "People cannot join unless access is granted.": "Orang-orang tidak dapat bergabung kecuali diberikan akses.",
     "Email Notifications": "Notifikasi Surel",
@@ -2036,7 +2001,6 @@
     "Unable to find user by email": "Tidak dapat mencari pengguna dengan surel",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Pesan-pesan di ruangan ini dienkripsi secara ujung ke ujung. Ketika orang-orang bergabung, Anda dapat memverifikasi mereka di profil mereka dengan mengetuk pada foto profil mereka.",
     "Upgrade room": "Tingkatkan ruangan",
-    "Something went wrong.": "Ada sesuatu yang salah.",
     "User cannot be invited until they are unbanned": "Pengguna tidak dapat diundang sampai dibatalkan cekalannya",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
     "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
@@ -2052,8 +2016,6 @@
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
     "Message (optional)": "Pesan (opsional)",
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
-    "Your server is unsupported": "Server Anda tidak didukung",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Server ini menjalankan sebuah versi Matrix yang lama. Tingkatkan ke Matrix %(version)s untuk menggunakan %(brand)s tanpa eror.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda.",
     "See less": "Lihat lebih sedikit",
     "See more": "Lihat lebih banyak",
@@ -2637,7 +2599,10 @@
             "enable_desktop_notifications_session": "Aktifkan notifikasi desktop untuk sesi ini",
             "show_message_desktop_notification": "Tampilkan pesan di notifikasi desktop",
             "enable_audible_notifications_session": "Aktifkan notifikasi bersuara untuk sesi ini",
-            "noisy": "Berisik"
+            "noisy": "Berisik",
+            "error_permissions_denied": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — mohon periksa pengaturan browser Anda",
+            "error_permissions_missing": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — silakan coba lagi",
+            "error_title": "Tidak dapat mengaktifkan Notifikasi"
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimental)",
@@ -3523,7 +3488,15 @@
         "connection_lost_description": "Anda tidak dapat membuat panggilan tanpa terhubung ke server.",
         "too_many_calls": "Terlalu Banyak Panggilan",
         "too_many_calls_description": "Anda telah mencapai jumlah maksimum panggilan pada waktu bersamaan.",
-        "cannot_call_yourself_description": "Anda tidak dapat melakukan panggilan dengan diri sendiri."
+        "cannot_call_yourself_description": "Anda tidak dapat melakukan panggilan dengan diri sendiri.",
+        "msisdn_lookup_failed": "Tidak dapat mencari nomor telepon",
+        "msisdn_lookup_failed_description": "Sebuah kesalahan terjadi mencari nomor teleponnya",
+        "msisdn_transfer_failed": "Tidak dapat memindahkan panggilan",
+        "transfer_failed": "Pemindahan Gagal",
+        "transfer_failed_description": "Gagal untuk memindahkan panggilan",
+        "no_permission_conference": "Izin Dibutuhkan",
+        "no_permission_conference_description": "Anda tidak memiliki permisi untuk memulai panggilan konferensi di ruang ini",
+        "default_device": "Perangkat Bawaan"
     },
     "Other": "Lainnya",
     "Advanced": "Tingkat Lanjut",
@@ -3806,7 +3779,14 @@
         "reset_password_email_field_description": "Gunakan sebuah alamat email untuk memulihkan akun Anda",
         "reset_password_email_field_required_invalid": "Masukkan alamat email (diperlukan di homeserver ini)",
         "msisdn_field_description": "Pengguna lain dapat mengundang Anda ke ruangan menggunakan detail kontak Anda",
-        "registration_msisdn_field_required_invalid": "Masukkan nomor telepon (diperlukan di homeserver ini)"
+        "registration_msisdn_field_required_invalid": "Masukkan nomor telepon (diperlukan di homeserver ini)",
+        "oidc": {
+            "error_generic": "Ada sesuatu yang salah.",
+            "error_title": "Kami tidak dapat memasukkan Anda"
+        },
+        "sso_failed_missing_storage": "Kami menanyakan browser ini untuk mengingat homeserver apa yang Anda gunakan untuk membantu Anda masuk, tetapi sayangnya browser ini melupakannya. Pergi ke halaman masuk dan coba lagi.",
+        "reset_password_email_not_found_title": "Alamat email ini tidak ditemukan",
+        "reset_password_email_not_associated": "Alamat email Anda terlihat tidak diasosiasikan dengan sebuah ID Matrix di homeserver ini."
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -4175,7 +4155,10 @@
         "column_document": "Dokumen",
         "tac_title": "Syarat dan Ketentuan",
         "tac_description": "Untuk melanjutkan menggunakan homeserver %(homeserverDomain)s Anda harus lihat dan terima ke syarat dan ketentuan kami.",
-        "tac_button": "Lihat syarat dan ketentuan"
+        "tac_button": "Lihat syarat dan ketentuan",
+        "identity_server_no_terms_title": "Identitas server ini tidak memiliki syarat layanan",
+        "identity_server_no_terms_description_1": "Aksi ini memerlukan mengakses server identitas bawaan <server /> untuk memvalidasi sebuah alamat email atau nomor telepon, tetapi server ini tidak memiliki syarat layanan apa pun.",
+        "identity_server_no_terms_description_2": "Hanya lanjutkan jika Anda mempercayai pemilik server ini."
     },
     "space_settings": {
         "title": "Pengaturan — %(spaceName)s"
@@ -4202,5 +4185,27 @@
     "failed_load_async_component": "Tidak dapat memuat! Periksa koneksi jaringan Anda dan coba lagi.",
     "upload_failed_generic": "File '%(fileName)s' gagal untuk diunggah.",
     "upload_failed_size": "File '%(fileName)s' melebihi batas ukuran unggahan file homeserver",
-    "upload_failed_title": "Unggahan Gagal"
+    "upload_failed_title": "Unggahan Gagal",
+    "cannot_invite_without_identity_server": "Tidak dapat mengundang pengguna dengan surel tanpa server identitas. Anda dapat menghubungkan di \"Pengaturan\".",
+    "unsupported_server_title": "Server Anda tidak didukung",
+    "unsupported_server_description": "Server ini menjalankan sebuah versi Matrix yang lama. Tingkatkan ke Matrix %(version)s untuk menggunakan %(brand)s tanpa eror.",
+    "error_user_not_logged_in": "Pengguna belum masuk",
+    "error_database_closed_title": "Basis data ditutup secara tidak terduga",
+    "error_database_closed_description": "Ini mungkin terjadi karena memiliki aplikasinya terbuka di beberapa tab atau karena menghapus data peramban.",
+    "empty_room": "Ruangan kosong",
+    "user1_and_user2": "%(user1)s dan %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s dan 1 lainnya",
+        "other": "%(user)s dan %(count)s lainnya"
+    },
+    "inviting_user1_and_user2": "Mengundang %(user1)s dan %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Mengundang %(user)s dan 1 lainnya",
+        "other": "Mengundang %(user)s dan %(count)s lainnya"
+    },
+    "empty_room_was_name": "Ruangan kosong (sebelumnya %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s meminta verifikasi",
+        "io.element.voice_broadcast_chunk": "%(senderName)s memulai sebuah siaran suara"
+    }
 }

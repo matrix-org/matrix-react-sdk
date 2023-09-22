@@ -23,14 +23,11 @@
     "Invalid Email Address": "邮箱地址格式错误",
     "Invalid file%(extra)s": "无效文件 %(extra)s",
     "Return to login screen": "返回登录页面",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s 没有通知发送权限 - 请检查你的浏览器设置",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s 没有通知发送权限 - 请重试",
     "Room %(roomId)s not visible": "房间%(roomId)s不可见",
     "Rooms": "房间",
     "Search failed": "搜索失败",
     "Server may be unavailable, overloaded, or search timed out :(": "服务器可能不可用、超载，或者搜索超时 :(",
     "Session ID": "会话 ID",
-    "This email address was not found": "未找到此邮箱地址",
     "A new password must be entered.": "必须输入新密码。",
     "An error has occurred.": "发生了一个错误。",
     "Join Room": "加入房间",
@@ -40,7 +37,6 @@
     "No Webcams detected": "未检测到摄像头",
     "No media permissions": "没有媒体存取权限",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头",
-    "Default Device": "默认设备",
     "Authentication": "认证",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
@@ -92,7 +88,6 @@
     "This doesn't appear to be a valid email address": "这似乎不是有效的邮箱地址",
     "Unable to create widget.": "无法创建挂件。",
     "Unban": "解除封禁",
-    "Unable to enable Notifications": "无法启用通知",
     "Upload avatar": "上传头像",
     "You are not in this room.": "你不在此房间中。",
     "Not a valid %(brand)s keyfile": "不是有效的 %(brand)s 密钥文件",
@@ -223,7 +218,6 @@
     "Demote yourself?": "是否降低你自己的权限？",
     "Demote": "降权",
     "Permission Required": "需要权限",
-    "You do not have permission to start a conference call in this room": "你没有在此房间发起通话会议的权限",
     "This event could not be displayed": "无法显示此事件",
     "Share Link to User": "分享链接给其他用户",
     "Share room": "分享房间",
@@ -423,10 +417,6 @@
     "Verify this session": "验证此会话",
     "Encryption upgrade available": "提供加密升级",
     "New login. Was this you?": "现在登录。请问是你本人吗？",
-    "Identity server has no terms of service": "身份服务器无服务条款",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "此操作需要访问默认的身份服务器 <server /> 以验证邮箱或电话号码，但此服务器无任何服务条款。",
-    "Only continue if you trust the owner of the server.": "只有在你信任服务器所有者后才能继续。",
-    "%(name)s is requesting verification": "%(name)s 正在请求验证",
     "Error upgrading room": "升级房间时发生错误",
     "Double check that your server supports the room version chosen and try again.": "请再次检查你的服务器是否支持所选房间版本，然后再试一次。",
     "Use an identity server": "使用身份服务器",
@@ -913,14 +903,10 @@
     "Afghanistan": "阿富汗",
     "United States": "美国",
     "United Kingdom": "英国",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "我们已要求浏览器记住你使用的家服务器，但不幸的是你的浏览器已忘记。请前往登录页面重试。",
-    "We couldn't log you in": "我们无法使你登入",
     "Room settings": "房间设置",
     "Share invite link": "分享邀请链接",
     "Click to copy": "点击复制",
     "Dial pad": "拨号盘",
-    "There was an error looking up the phone number": "查询电话号码时发生错误",
-    "Unable to look up phone number": "无法查询电话号码",
     "Use app": "使用 app",
     "Use app for a better experience": "使用 app 以获得更好的体验",
     "Enable desktop notifications": "开启桌面通知",
@@ -942,7 +928,6 @@
     "Server Options": "服务器选项",
     "Information": "信息",
     "Not encrypted": "未加密",
-    "Empty room": "空房间",
     "Add existing room": "添加现有的房间",
     "Open dial pad": "打开拨号键盘",
     "Show Widgets": "显示挂件",
@@ -1069,7 +1054,6 @@
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite to %(spaceName)s": "邀请至 %(spaceName)s",
-    "Failed to transfer call": "通话转移失败",
     "Invite by email": "通过邮箱邀请",
     "Edit devices": "编辑设备",
     "Suggested Rooms": "建议的房间",
@@ -1357,8 +1341,6 @@
     "Show sidebar": "显示侧边栏",
     "Hide sidebar": "隐藏侧边栏",
     "Send voice message": "发送语音消息",
-    "Transfer Failed": "转移失败",
-    "Unable to transfer call": "无法转移通话",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
     "Error downloading audio": "下载音频时出错",
@@ -1785,17 +1767,10 @@
     "Interactively verify by emoji": "用表情符号交互式验证",
     "Show: %(instance)s rooms (%(server)s)": "显示：%(instance)s房间（%(server)s）",
     "Show: Matrix rooms": "显示：Matrix房间",
-    "%(user1)s and %(user2)s": "%(user1)s和%(user2)s",
     "Choose a locale": "选择区域设置",
-    "Empty room (was %(oldName)s)": "空房间（曾是%(oldName)s）",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s或%(copyButton)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "Inviting %(user1)s and %(user2)s": "正在邀请 %(user1)s 与 %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s 与 1 个人",
-        "other": "%(user)s 与 %(count)s 个人"
-    },
     "Voice broadcast": "语音广播",
     "Video call (Jitsi)": "视频通话（Jitsi）",
     "Ongoing call": "正在进行的通话",
@@ -1803,10 +1778,6 @@
     "There's no one here to call": "这里没有人可以打电话",
     "You do not have permission to start voice calls": "你没有权限开始语音通话",
     "You need to be able to kick users to do that.": "你需要能够移除用户才能做到那件事。",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "正在邀请%(user)s和另外1个人",
-        "other": "正在邀请%(user)s和其他%(count)s人"
-    },
     "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "You have unverified sessions": "你有未验证的会话",
@@ -1835,13 +1806,7 @@
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "用户（%(user)s）最终未被邀请到%(roomId)s，但邀请工具没给出错误",
     "Failed to read events": "读取时间失败",
     "Failed to send event": "发送事件失败",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "你的电子邮件地址似乎未与此家服务器上的Matrix ID关联。",
-    "%(senderName)s started a voice broadcast": "%(senderName)s开始了语音广播",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "这可能是由于在多个标签页中打开此应用，或由于清除浏览器数据。",
-    "Database unexpectedly closed": "数据库意外关闭",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "无法在未设置身份服务器时邀请用户，你可以在“设置”里连接一个。",
     "This session is backing up your keys.": "此会话正在备份你的密钥。",
-    "User is not logged in": "用户未登录",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -2375,7 +2340,10 @@
             "enable_desktop_notifications_session": "为此会话启用桌面通知",
             "show_message_desktop_notification": "在桌面通知中显示消息",
             "enable_audible_notifications_session": "为此会话启用声音通知",
-            "noisy": "响铃"
+            "noisy": "响铃",
+            "error_permissions_denied": "%(brand)s 没有通知发送权限 - 请检查你的浏览器设置",
+            "error_permissions_missing": "%(brand)s 没有通知发送权限 - 请重试",
+            "error_title": "无法启用通知"
         },
         "appearance": {
             "layout_irc": "IRC（实验性）",
@@ -3145,7 +3113,15 @@
         "connection_lost_description": "你不能在未连接到服务器时进行呼叫。",
         "too_many_calls": "太多通话",
         "too_many_calls_description": "你已达到同时通话的最大数量。",
-        "cannot_call_yourself_description": "你不能打给自己。"
+        "cannot_call_yourself_description": "你不能打给自己。",
+        "msisdn_lookup_failed": "无法查询电话号码",
+        "msisdn_lookup_failed_description": "查询电话号码时发生错误",
+        "msisdn_transfer_failed": "无法转移通话",
+        "transfer_failed": "转移失败",
+        "transfer_failed_description": "通话转移失败",
+        "no_permission_conference": "需要权限",
+        "no_permission_conference_description": "你没有在此房间发起通话会议的权限",
+        "default_device": "默认设备"
     },
     "Other": "其他",
     "Advanced": "高级",
@@ -3405,7 +3381,13 @@
         "reset_password_email_field_description": "使用邮件地址恢复你的账户",
         "reset_password_email_field_required_invalid": "输入邮件地址（此家服务器上必须）",
         "msisdn_field_description": "别的用户可以使用你的联系人详情邀请你加入房间",
-        "registration_msisdn_field_required_invalid": "输入电话号码（此家服务器上必须）"
+        "registration_msisdn_field_required_invalid": "输入电话号码（此家服务器上必须）",
+        "sso_failed_missing_storage": "我们已要求浏览器记住你使用的家服务器，但不幸的是你的浏览器已忘记。请前往登录页面重试。",
+        "oidc": {
+            "error_title": "我们无法使你登入"
+        },
+        "reset_password_email_not_found_title": "未找到此邮箱地址",
+        "reset_password_email_not_associated": "你的电子邮件地址似乎未与此家服务器上的Matrix ID关联。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3754,7 +3736,10 @@
         "column_document": "文档",
         "tac_title": "条款与要求",
         "tac_description": "若要继续使用家服务器 %(homeserverDomain)s，你必须浏览并同意我们的条款与要求。",
-        "tac_button": "浏览条款与要求"
+        "tac_button": "浏览条款与要求",
+        "identity_server_no_terms_title": "身份服务器无服务条款",
+        "identity_server_no_terms_description_1": "此操作需要访问默认的身份服务器 <server /> 以验证邮箱或电话号码，但此服务器无任何服务条款。",
+        "identity_server_no_terms_description_2": "只有在你信任服务器所有者后才能继续。"
     },
     "space_settings": {
         "title": "设置 - %(spaceName)s"
@@ -3780,5 +3765,25 @@
     "failed_load_async_component": "无法加载！请检查你的网络连接并重试。",
     "upload_failed_generic": "文件《%(fileName)s》上传失败。",
     "upload_failed_size": "文件“%(fileName)s”超过了此家服务器的上传大小限制",
-    "upload_failed_title": "上传失败"
+    "upload_failed_title": "上传失败",
+    "cannot_invite_without_identity_server": "无法在未设置身份服务器时邀请用户，你可以在“设置”里连接一个。",
+    "error_user_not_logged_in": "用户未登录",
+    "error_database_closed_title": "数据库意外关闭",
+    "error_database_closed_description": "这可能是由于在多个标签页中打开此应用，或由于清除浏览器数据。",
+    "empty_room": "空房间",
+    "user1_and_user2": "%(user1)s和%(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s 与 1 个人",
+        "other": "%(user)s 与 %(count)s 个人"
+    },
+    "inviting_user1_and_user2": "正在邀请 %(user1)s 与 %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "正在邀请%(user)s和另外1个人",
+        "other": "正在邀请%(user)s和其他%(count)s人"
+    },
+    "empty_room_was_name": "空房间（曾是%(oldName)s）",
+    "notifier": {
+        "m.key.verification.request": "%(name)s 正在请求验证",
+        "io.element.voice_broadcast_chunk": "%(senderName)s开始了语音广播"
+    }
 }

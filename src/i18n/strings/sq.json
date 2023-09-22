@@ -24,10 +24,6 @@
     "Nov": "Nën",
     "Dec": "Dhj",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-i s’ka leje t’ju dërgojë njoftime - Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s-it s’iu dha leje të dërgojë njoftime - ju lutemi, riprovoni",
-    "Unable to enable Notifications": "S’arrihet të aktivizohen njoftimet",
-    "This email address was not found": "Kjo adresë email s’u gjet",
     "Default": "Parazgjedhje",
     "Restricted": "E kufizuar",
     "Moderator": "Moderator",
@@ -144,7 +140,6 @@
     "No media permissions": "S’ka leje mediash",
     "No Microphones detected": "S’u pikasën Mikrofona",
     "No Webcams detected": "S’u pikasën kamera",
-    "Default Device": "Pajisje Parazgjedhje",
     "Profile": "Profil",
     "Return to login screen": "Kthehuni te skena e hyrjeve",
     "Session ID": "ID sesioni",
@@ -220,7 +215,6 @@
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
     "Failed to reject invite": "S’u arrit të hidhet tej ftesa",
     "Please <a>contact your service administrator</a> to continue using this service.": "Ju lutemi, që të vazhdoni të përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
-    "You do not have permission to start a conference call in this room": "S’keni leje për të nisur një thirrje konferencë këtë në këtë dhomë",
     "Missing roomId.": "Mungon roomid.",
     "This room has been replaced and is no longer active.": "Kjo dhomë është zëvendësuar dhe s’është më aktive.",
     "Share room": "Ndani dhomë me të tjerë",
@@ -507,9 +501,7 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Shkëputja prej shërbyesit tuaj të identiteteve do të thotë se s’do të jeni i zbulueshëm nga përdorues të tjerë dhe s’do të jeni në gjendje të ftoni të tjerë përmes email-i apo telefoni.",
     "Discovery options will appear once you have added an email above.": "Mundësitë e zbulimit do të shfaqen sapo të keni shtuar më sipër një email.",
     "Discovery options will appear once you have added a phone number above.": "Mundësitë e zbulimit do të shfaqen sapo të keni shtuar më sipër një numër telefoni.",
-    "Identity server has no terms of service": "Shërbyesi i identiteteve s’ka kushte shërbimi",
     "The identity server you have chosen does not have any terms of service.": "Shërbyesi i identiteteve që keni zgjedhur nuk ka ndonjë kusht shërbimi.",
-    "Only continue if you trust the owner of the server.": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit.",
     "Terms of service not accepted or the identity server is invalid.": "S’janë pranuar kushtet e shërbimit ose shërbyesi i identiteteve është i pavlefshëm.",
     "Enter a new identity server": "Jepni një shërbyes të ri identitetesh",
     "Remove %(email)s?": "Të hiqet %(email)s?",
@@ -567,7 +559,6 @@
     "Your email address hasn't been verified yet": "Adresa juaj email s’është verifikuar ende",
     "Click the link in the email you received to verify and then click continue again.": "Për verifkim, klikoni lidhjen te email që morët dhe mandej vazhdoni sërish.",
     "Show image": "Shfaq figurë",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Room %(name)s": "Dhoma %(name)s",
     "Failed to deactivate user": "S’u arrit të çaktivizohet përdorues",
@@ -755,7 +746,6 @@
     "%(displayName)s cancelled verification.": "%(displayName)s anuloi verifikimin.",
     "You cancelled verification.": "Anuluat verifikimin.",
     "Sign in with SSO": "Hyni me HNj",
-    "%(name)s is requesting verification": "%(name)s po kërkon verifikim",
     "unexpected type": "lloj i papritur",
     "well formed": "e mirëformuar",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Ripohoni çaktivizimin e llogarisë tuaj duke përdorur Hyrje Njëshe që të dëshmoni identitetin tuaj.",
@@ -1156,12 +1146,9 @@
     "Resume": "Rimerre",
     "Reason (optional)": "Arsye (opsionale)",
     "Transfer": "Shpërngule",
-    "Failed to transfer call": "S’u arrit të shpërngulej thirrje",
     "A call can only be transferred to a single user.": "Një thirrje mund të shpërngulet vetëm te një përdorues.",
     "Open dial pad": "Hap butona numrash",
     "Dial pad": "Butona numrash",
-    "There was an error looking up the phone number": "Pati një gabim gjatë kërkimit të numrit të telefonit",
-    "Unable to look up phone number": "S’arrihet të kërkohet numër telefoni",
     "A new Security Phrase and key for Secure Messages have been detected.": "Janë pikasur një Frazë e re Sigurie dhe kyç i ri për Mesazhe të Sigurt.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
     "Confirm your Security Phrase": "Ripohoni Frazën tuaj të Sigurisë",
@@ -1188,8 +1175,6 @@
     "Set my room layout for everyone": "Ujdise skemën e dhomës time për këdo",
     "Use app": "Përdorni aplikacionin",
     "Use app for a better experience": "Për një punim më të mirë, përdorni aplikacionin",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "I kërkuam shfletuesit të mbajë mend cilin shërbyes Home përdorni, për t’ju lënë të bëni hyrje, por për fat të keq, shfletuesi juaj e ka harruar këtë. Kaloni te faqja e hyrjeve dhe riprovoni.",
-    "We couldn't log you in": "S’ju nxorëm dot nga llogaria juaj",
     "Recently visited rooms": "Dhoma të vizituara së fundi",
     "%(count)s members": {
         "one": "%(count)s anëtar",
@@ -1210,7 +1195,6 @@
     "Spaces": "Hapësira",
     "Space selection": "Përzgjedhje hapësire",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, teksa zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te hapësira, s’do të jetë e mundur të rifitoni privilegjet.",
-    "Empty room": "Dhomë e zbrazët",
     "Suggested Rooms": "Roma të Këshilluara",
     "Add existing room": "Shtoni dhomë ekzistuese",
     "Invite to this space": "Ftoni në këtë hapësirë",
@@ -1346,7 +1330,6 @@
     "Could not connect to identity server": "S’u lidh dot te shërbyes identitetesh",
     "Not a valid identity server (status code %(code)s)": "Shërbyes identitetesh i pavlefshëm (kod gjendjeje %(code)s)",
     "Identity server URL must be HTTPS": "URL-ja e shërbyesit të identiteteve duhet të jetë HTTPS",
-    "Unable to transfer call": "S’arrihet të shpërngulet thirrje",
     "Unable to copy a link to the room to the clipboard.": "S’arrihet të kopjohet në të papastër një lidhje për te dhoma.",
     "Unable to copy room link": "S’arrihet të kopjohet lidhja e dhomës",
     "User Directory": "Drejtori Përdoruesi",
@@ -1355,7 +1338,6 @@
     "Global": "Global",
     "New keyword": "Fjalëkyç i ri",
     "Keyword": "Fjalëkyç",
-    "Transfer Failed": "Shpërngulja Dështoi",
     "The call is in an unknown state!": "Thirrja gjendet në një gjendje të panjohur!",
     "Call back": "Thirreni ju",
     "No answer": "S’ka përgjigje",
@@ -1795,16 +1777,6 @@
     "Devices connected": "Pajisje të lidhura",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "Video call (%(brand)s)": "Thirrje video (%(brand)s)",
-    "Empty room (was %(oldName)s)": "Dhomë e zbrazët (qe %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Po ftohet %(user)s dhe 1 tjetër",
-        "other": "Po ftohet %(user)s dhe %(count)s të tjerë"
-    },
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s dhe 1 tjetër",
-        "other": "%(user)s dhe %(count)s të tjerë"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s dhe %(user2)s",
     "Waiting for device to sign in": "Po pritet që të bëhet hyrja te pajisja",
     "Review and approve the sign in": "Shqyrtoni dhe miratojeni hyrjen",
     "Start at the sign in screen": "Filloja në skenën e hyrjes",
@@ -1841,7 +1813,6 @@
     "Voice broadcast": "Transmetim zanor",
     "Live": "Drejtpërdrejt",
     "You need to be able to kick users to do that.": "Që ta bëni këtë, lypset të jeni në gjendje të përzini përdorues.",
-    "Inviting %(user1)s and %(user2)s": "Po ftohen %(user1)s dhe %(user2)s",
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "Hide formatting": "Fshihe formatimin",
@@ -1895,7 +1866,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
     "Can't start voice message": "S’niset dot mesazh zanor",
     "Edit link": "Përpunoni lidhje",
-    "%(senderName)s started a voice broadcast": "%(senderName)s nisi një transmetim zanor",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Krejt mesazhet dhe ftesat prej këtij përdoruesi do të fshihen. Jeni i sigurt se doni të shpërfillet?",
     "Ignore %(user)s": "Shpërfille %(user)s",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Hollësitë e llogarisë tuaj administrohen ndarazi te <code>%(hostname)s</code>.",
@@ -1934,7 +1904,6 @@
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Unable to connect to Homeserver. Retrying…": "S’u arrit të lidhej me shërbyesin Home. Po riprovohet…",
     "WARNING: session already verified, but keys do NOT MATCH!": "KUJDES: sesion tashmë i verifikuar, por kyçet NUK PËRPUTHEN!",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Adresa juaj email s’duket të jetë e përshoqëruar me ndonjë ID Matrix në këtë shërbyes Home.",
     "Loading polls": "Po ngarkohen pyetësorë",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
     "Ended a poll": "Përfundoi një pyetësor",
@@ -1978,8 +1947,6 @@
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ndodhi një gabim rrjeti, teksa provohej të gjendej dhe të kalohej te data e dhënë. Shërbyesi juaj Home mund të jetë jashtë funksionimi, ose mund të ishte një problem i përkohshëm me lidhjen tuaj në internet. Ju lutemi, riprovoni. Nëse kjo vazhdon, ju lutemi, lidhuni me përgjegjësin e shërbyesit tuaj Home.",
     "Poll history": "Historik pyetësorësh",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Përdoruesi (%(user)s) s’doli i ftuar te %(roomId)s, por nga mjeti i ftuesit s’u dha gabim",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Kjo mund të jetë e shkaktuar nga pasja e aplikacionit hapur në shumë skeda, ose për shkak të spastrimit të të dhënave të shfletuesit.",
-    "Database unexpectedly closed": "Baza e të dhënave u mbyll papritur",
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
@@ -1991,7 +1958,6 @@
     "Error changing password": "Gabim në ndryshim fjalëkalimi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (gjendje HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Gabim i panjohur ndryshimi fjalëkalimi (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
     "Failed to download source media, no source url was found": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
@@ -2560,7 +2526,10 @@
             "enable_desktop_notifications_session": "Aktivizo njoftime desktop për këtë sesion",
             "show_message_desktop_notification": "Shfaq mesazh në njoftim për desktop",
             "enable_audible_notifications_session": "Aktivizo njoftime audio për këtë sesion",
-            "noisy": "I zhurmshëm"
+            "noisy": "I zhurmshëm",
+            "error_permissions_denied": "%(brand)s-i s’ka leje t’ju dërgojë njoftime - Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj",
+            "error_permissions_missing": "%(brand)s-it s’iu dha leje të dërgojë njoftime - ju lutemi, riprovoni",
+            "error_title": "S’arrihet të aktivizohen njoftimet"
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimentale)",
@@ -3417,7 +3386,15 @@
         "connection_lost_description": "S’mund të bëni thirrje pa një lidhje te shërbyesi.",
         "too_many_calls": "Shumë Thirrje",
         "too_many_calls_description": "Keni mbërritur në numrin maksimum të thirrjeve të njëkohshme.",
-        "cannot_call_yourself_description": "S’mund të bëni thirrje me vetveten."
+        "cannot_call_yourself_description": "S’mund të bëni thirrje me vetveten.",
+        "msisdn_lookup_failed": "S’arrihet të kërkohet numër telefoni",
+        "msisdn_lookup_failed_description": "Pati një gabim gjatë kërkimit të numrit të telefonit",
+        "msisdn_transfer_failed": "S’arrihet të shpërngulet thirrje",
+        "transfer_failed": "Shpërngulja Dështoi",
+        "transfer_failed_description": "S’u arrit të shpërngulej thirrje",
+        "no_permission_conference": "Lypset Leje",
+        "no_permission_conference_description": "S’keni leje për të nisur një thirrje konferencë këtë në këtë dhomë",
+        "default_device": "Pajisje Parazgjedhje"
     },
     "Other": "Tjetër",
     "Advanced": "Të mëtejshme",
@@ -3698,7 +3675,13 @@
         "reset_password_email_field_description": "Përdorni një adresë email që të rimerrni llogarinë tuaj",
         "reset_password_email_field_required_invalid": "Jepni adresë email (e domosdoshme në këtë shërbyes Home)",
         "msisdn_field_description": "Përdorues të tjerë mund t’ju ftojnë te dhoma duke përdorur hollësitë tuaja për kontakt",
-        "registration_msisdn_field_required_invalid": "Jepni numër telefoni (e domosdoshme në këtë shërbyes Home)"
+        "registration_msisdn_field_required_invalid": "Jepni numër telefoni (e domosdoshme në këtë shërbyes Home)",
+        "sso_failed_missing_storage": "I kërkuam shfletuesit të mbajë mend cilin shërbyes Home përdorni, për t’ju lënë të bëni hyrje, por për fat të keq, shfletuesi juaj e ka harruar këtë. Kaloni te faqja e hyrjeve dhe riprovoni.",
+        "oidc": {
+            "error_title": "S’ju nxorëm dot nga llogaria juaj"
+        },
+        "reset_password_email_not_found_title": "Kjo adresë email s’u gjet",
+        "reset_password_email_not_associated": "Adresa juaj email s’duket të jetë e përshoqëruar me ndonjë ID Matrix në këtë shërbyes Home."
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -4063,7 +4046,10 @@
         "column_document": "Dokument",
         "tac_title": "Terma dhe Kushte",
         "tac_description": "Që të vazhdohet të përdoret shërbyesi home %(homeserverDomain)s, duhet të shqyrtoni dhe pajtoheni me termat dhe kushtet.",
-        "tac_button": "Shqyrtoni terma & kushte"
+        "tac_button": "Shqyrtoni terma & kushte",
+        "identity_server_no_terms_title": "Shërbyesi i identiteteve s’ka kushte shërbimi",
+        "identity_server_no_terms_description_1": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
+        "identity_server_no_terms_description_2": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit."
     },
     "space_settings": {
         "title": "Rregullime - %(spaceName)s"
@@ -4090,5 +4076,24 @@
     "failed_load_async_component": "S’arrihet të ngarkohet! Kontrolloni lidhjen tuaj në rrjet dhe riprovoni.",
     "upload_failed_generic": "Dështoi ngarkimi i kartelës '%(fileName)s'.",
     "upload_failed_size": "Kartela '%(fileName)s' tejkalon kufirin e këtij shërbyesi Home për madhësinë e ngarkimeve",
-    "upload_failed_title": "Ngarkimi Dështoi"
+    "upload_failed_title": "Ngarkimi Dështoi",
+    "cannot_invite_without_identity_server": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
+    "error_database_closed_title": "Baza e të dhënave u mbyll papritur",
+    "error_database_closed_description": "Kjo mund të jetë e shkaktuar nga pasja e aplikacionit hapur në shumë skeda, ose për shkak të spastrimit të të dhënave të shfletuesit.",
+    "empty_room": "Dhomë e zbrazët",
+    "user1_and_user2": "%(user1)s dhe %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s dhe 1 tjetër",
+        "other": "%(user)s dhe %(count)s të tjerë"
+    },
+    "inviting_user1_and_user2": "Po ftohen %(user1)s dhe %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Po ftohet %(user)s dhe 1 tjetër",
+        "other": "Po ftohet %(user)s dhe %(count)s të tjerë"
+    },
+    "empty_room_was_name": "Dhomë e zbrazët (qe %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s po kërkon verifikim",
+        "io.element.voice_broadcast_chunk": "%(senderName)s nisi një transmetim zanor"
+    }
 }

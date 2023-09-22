@@ -1,6 +1,5 @@
 {
     "Explore rooms": "Raziščite sobe",
-    "Identity server has no terms of service": "Identifikacijski strežnik nima pogojev storitve",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
@@ -88,5 +87,8 @@
     },
     "failed_load_async_component": "Napaka pri nalaganju! Preverite vašo povezavo in poskusite ponovno.",
     "upload_failed_generic": "Datoteka '%(fileName)s' se ni uspešno naložila.",
-    "upload_failed_size": "Datoteka '%(fileName)s' je večja od omejitve, nastavljene na strežniku"
+    "upload_failed_size": "Datoteka '%(fileName)s' je večja od omejitve, nastavljene na strežniku",
+    "terms": {
+        "identity_server_no_terms_title": "Identifikacijski strežnik nima pogojev storitve"
+    }
 }

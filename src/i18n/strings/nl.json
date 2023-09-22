@@ -15,7 +15,6 @@
     "No Webcams detected": "Geen webcams gevonden",
     "No media permissions": "Geen mediatoestemmingen",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Je moet %(brand)s wellicht handmatig toestaan je microfoon/webcam te gebruiken",
-    "Default Device": "Standaardapparaat",
     "Are you sure you want to leave the room '%(roomName)s'?": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
@@ -89,8 +88,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
     "Power level must be positive integer.": "Machtsniveau moet een positief geheel getal zijn.",
     "Return to login screen": "Terug naar het loginscherm",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s heeft geen toestemming jou meldingen te sturen - controleer je browserinstellingen",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s kreeg geen toestemming jou meldingen te sturen - probeer het opnieuw",
     "Room %(roomId)s not visible": "Kamer %(roomId)s is niet zichtbaar",
     "%(roomName)s does not exist.": "%(roomName)s bestaat niet.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is op dit moment niet toegankelijk.",
@@ -98,7 +95,6 @@
     "Search failed": "Zoeken mislukt",
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschien onbereikbaar of overbelast, of het zoeken duurde te lang :(",
     "Session ID": "Sessie-ID",
-    "This email address was not found": "Dit e-mailadres is niet gevonden",
     "This room has no local addresses": "Deze kamer heeft geen lokale adressen",
     "This room is not recognised.": "Deze kamer wordt niet herkend.",
     "This doesn't appear to be a valid email address": "Het ziet er niet naar uit dat dit een geldig e-mailadres is",
@@ -108,7 +104,6 @@
     "Unable to remove contact information": "Kan contactinformatie niet verwijderen",
     "Unable to verify email address.": "Kan e-mailadres niet verifiëren.",
     "Unban": "Ontbannen",
-    "Unable to enable Notifications": "Kan meldingen niet inschakelen",
     "Uploading %(filename)s": "%(filename)s wordt geüpload",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s en %(count)s ander worden geüpload",
@@ -230,7 +225,6 @@
     "Can't leave Server Notices room": "Kan servermeldingskamer niet verlaten",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Deze kamer is bedoeld voor belangrijke berichten van de homeserver, dus je kan het niet verlaten.",
     "Permission Required": "Toestemming vereist",
-    "You do not have permission to start a conference call in this room": "Je hebt geen rechten in deze kamer om een vergadering te starten",
     "This event could not be displayed": "Deze gebeurtenis kon niet weergegeven worden",
     "Demote yourself?": "Jezelf degraderen?",
     "Demote": "Degraderen",
@@ -509,9 +503,7 @@
     "Discovery options will appear once you have added a phone number above.": "Vindbaarheidopties zullen verschijnen wanneer je een telefoonnummer hebt toegevoegd.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Er is een sms verstuurd naar +%(msisdn)s. Voor de verificatiecode in die in het bericht staat.",
     "Command Help": "Hulp bij opdrachten",
-    "Identity server has no terms of service": "De identiteitsserver heeft geen dienstvoorwaarden",
     "The identity server you have chosen does not have any terms of service.": "De identiteitsserver die je hebt gekozen heeft geen dienstvoorwaarden.",
-    "Only continue if you trust the owner of the server.": "Ga enkel verder indien je de eigenaar van de server vertrouwt.",
     "Terms of service not accepted or the identity server is invalid.": "Dienstvoorwaarden niet aanvaard, of de identiteitsserver is ongeldig.",
     "Enter a new identity server": "Voer een nieuwe identiteitsserver in",
     "Remove %(email)s?": "%(email)s verwijderen?",
@@ -566,7 +558,6 @@
     "Setting up keys": "Sleutelconfiguratie",
     "Verify this session": "Verifieer deze sessie",
     "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Dit vergt validatie van een e-mailadres of telefoonnummer middels de standaard identiteitsserver <server />, maar die server heeft geen gebruiksvoorwaarden.",
     "Error upgrading room": "Upgraden van kamer mislukt",
     "Double check that your server supports the room version chosen and try again.": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
     "Verifies a user, session, and pubkey tuple": "Verifieert de combinatie van persoon, sessie en publieke sleutel",
@@ -720,7 +711,6 @@
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "New login. Was this you?": "Nieuwe login gevonden. Was jij dat?",
-    "%(name)s is requesting verification": "%(name)s verzoekt om verificatie",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
     "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Bevestig de deactivering van je account door gebruik te maken van eenmalige aanmelding om je identiteit te bewijzen.",
@@ -977,8 +967,6 @@
     "Are you sure you want to cancel entering passphrase?": "Weet je zeker, dat je het invoeren van je wachtwoord wilt afbreken?",
     "Vatican City": "Vaticaanstad",
     "Taiwan": "Taiwan",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "De browser is verzocht de homeserver te onthouden die je gebruikt om in te loggen, maar helaas is de browser deze vergeten. Ga naar de inlog-pagina en probeer het opnieuw.",
-    "We couldn't log you in": "We konden je niet inloggen",
     "This room is public": "Deze kamer is publiek",
     "Explore public rooms": "Publieke kamers ontdekken",
     "Room options": "Kameropties",
@@ -1004,8 +992,6 @@
     "Backup version:": "Versie reservekopie:",
     "The operation could not be completed": "De handeling kon niet worden voltooid",
     "Failed to save your profile": "Profiel opslaan mislukt",
-    "There was an error looking up the phone number": "Bij het zoeken naar het telefoonnummer is een fout opgetreden",
-    "Unable to look up phone number": "Kan telefoonnummer niet opzoeken",
     "Change notification settings": "Meldingsinstellingen wijzigen",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
@@ -1157,7 +1143,6 @@
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
     "a new cross-signing key signature": "een nieuwe kruiselings ondertekenen ondertekening",
     "a new master key signature": "een nieuwe hoofdsleutel ondertekening",
-    "Failed to transfer call": "Oproep niet doorverbonden",
     "A call can only be transferred to a single user.": "Een oproep kan slechts naar één personen worden doorverbonden.",
     "Server did not return valid authentication information.": "Server heeft geen geldige verificatiegegevens teruggestuurd.",
     "Server did not require any authentication": "Server heeft geen authenticatie nodig",
@@ -1213,7 +1198,6 @@
     "Spaces": "Spaces",
     "Space selection": "Space-selectie",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Je kan deze wijziging niet ongedaan maken, omdat je jezelf rechten ontneemt. Als je de laatst bevoegde persoon in de Space bent zal het onmogelijk zijn om weer rechten te krijgen.",
-    "Empty room": "Lege kamer",
     "Suggested Rooms": "Kamersuggesties",
     "Add existing room": "Bestaande kamers toevoegen",
     "Invite to this space": "Voor deze Space uitnodigen",
@@ -1357,8 +1341,6 @@
     "Global": "Overal",
     "New keyword": "Nieuw trefwoord",
     "Keyword": "Trefwoord",
-    "Transfer Failed": "Doorverbinden is mislukt",
-    "Unable to transfer call": "Doorverbinden is mislukt",
     "Unable to copy a link to the room to the clipboard.": "Kopiëren van kamerlink naar het klembord is mislukt.",
     "Unable to copy room link": "Kopiëren van kamerlink is mislukt",
     "The call is in an unknown state!": "Deze oproep heeft een onbekende status!",
@@ -1802,17 +1784,6 @@
     "Manually verify by text": "Handmatig verifiëren via tekst",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Voor de beste beveiliging verifieer je jouw sessies en meldt je jezelf af bij elke sessie die je niet meer herkent of gebruikt.",
     "Sessions": "Sessies",
-    "Empty room (was %(oldName)s)": "Lege ruimte (was %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "%(user)s en 1 andere uitnodigen",
-        "other": "%(user)s en %(count)s anderen uitnodigen"
-    },
-    "Inviting %(user1)s and %(user2)s": "%(user1)s en %(user2)s uitnodigen",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s en 1 andere",
-        "other": "%(user)s en %(count)s anderen"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s en %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s of %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s of %(recoveryFile)s",
     "Completing set up of your new device": "De configuratie van je nieuwe apparaat voltooien",
@@ -2382,7 +2353,10 @@
             "enable_desktop_notifications_session": "Bureaubladmeldingen voor deze sessie inschakelen",
             "show_message_desktop_notification": "Bericht in bureaubladmelding tonen",
             "enable_audible_notifications_session": "Meldingen met geluid voor deze sessie inschakelen",
-            "noisy": "Luid"
+            "noisy": "Luid",
+            "error_permissions_denied": "%(brand)s heeft geen toestemming jou meldingen te sturen - controleer je browserinstellingen",
+            "error_permissions_missing": "%(brand)s kreeg geen toestemming jou meldingen te sturen - probeer het opnieuw",
+            "error_title": "Kan meldingen niet inschakelen"
         },
         "appearance": {
             "layout_irc": "IRC (Experimenteel)",
@@ -3166,7 +3140,15 @@
         "connection_lost_description": "Je kan geen oproepen plaatsen zonder een verbinding met de server.",
         "too_many_calls": "Te veel oproepen",
         "too_many_calls_description": "Je hebt het maximum aantal van gelijktijdige oproepen bereikt.",
-        "cannot_call_yourself_description": "Je kan jezelf niet bellen."
+        "cannot_call_yourself_description": "Je kan jezelf niet bellen.",
+        "msisdn_lookup_failed": "Kan telefoonnummer niet opzoeken",
+        "msisdn_lookup_failed_description": "Bij het zoeken naar het telefoonnummer is een fout opgetreden",
+        "msisdn_transfer_failed": "Doorverbinden is mislukt",
+        "transfer_failed": "Doorverbinden is mislukt",
+        "transfer_failed_description": "Oproep niet doorverbonden",
+        "no_permission_conference": "Toestemming vereist",
+        "no_permission_conference_description": "Je hebt geen rechten in deze kamer om een vergadering te starten",
+        "default_device": "Standaardapparaat"
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -3426,7 +3408,12 @@
         "reset_password_email_field_description": "Gebruik een e-mailadres om je account te herstellen",
         "reset_password_email_field_required_invalid": "Voer een e-mailadres in (vereist op deze homeserver)",
         "msisdn_field_description": "Andere personen kunnen je in kamers uitnodigen op basis van je contactgegevens",
-        "registration_msisdn_field_required_invalid": "Voer telefoonnummer in (vereist op deze homeserver)"
+        "registration_msisdn_field_required_invalid": "Voer telefoonnummer in (vereist op deze homeserver)",
+        "sso_failed_missing_storage": "De browser is verzocht de homeserver te onthouden die je gebruikt om in te loggen, maar helaas is de browser deze vergeten. Ga naar de inlog-pagina en probeer het opnieuw.",
+        "oidc": {
+            "error_title": "We konden je niet inloggen"
+        },
+        "reset_password_email_not_found_title": "Dit e-mailadres is niet gevonden"
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3770,7 +3757,10 @@
         "column_document": "Document",
         "tac_title": "Gebruiksvoorwaarden",
         "tac_description": "Om de %(homeserverDomain)s-homeserver te blijven gebruiken, zal je de gebruiksvoorwaarden moeten bestuderen en aanvaarden.",
-        "tac_button": "Gebruiksvoorwaarden lezen"
+        "tac_button": "Gebruiksvoorwaarden lezen",
+        "identity_server_no_terms_title": "De identiteitsserver heeft geen dienstvoorwaarden",
+        "identity_server_no_terms_description_1": "Dit vergt validatie van een e-mailadres of telefoonnummer middels de standaard identiteitsserver <server />, maar die server heeft geen gebruiksvoorwaarden.",
+        "identity_server_no_terms_description_2": "Ga enkel verder indien je de eigenaar van de server vertrouwt."
     },
     "space_settings": {
         "title": "Instellingen - %(spaceName)s"
@@ -3796,5 +3786,20 @@
     "failed_load_async_component": "Laden mislukt! Controleer je netwerktoegang en probeer het nogmaals.",
     "upload_failed_generic": "Het bestand ‘%(fileName)s’ kon niet geüpload worden.",
     "upload_failed_size": "Het bestand ‘%(fileName)s’ is groter dan de uploadlimiet van de homeserver",
-    "upload_failed_title": "Uploaden mislukt"
+    "upload_failed_title": "Uploaden mislukt",
+    "empty_room": "Lege kamer",
+    "user1_and_user2": "%(user1)s en %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s en 1 andere",
+        "other": "%(user)s en %(count)s anderen"
+    },
+    "inviting_user1_and_user2": "%(user1)s en %(user2)s uitnodigen",
+    "inviting_user_and_n_others": {
+        "one": "%(user)s en 1 andere uitnodigen",
+        "other": "%(user)s en %(count)s anderen uitnodigen"
+    },
+    "empty_room_was_name": "Lege ruimte (was %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s verzoekt om verificatie"
+    }
 }

@@ -1,6 +1,5 @@
 {
     "Permission Required": ".i lo nu curmi cu sarcu",
-    "You do not have permission to start a conference call in this room": ".i na curmi lo nu le du'u co'a girzu fonjo'e cu zilbe'i do fo le ca se cuxna",
     "Send": "nu zilbe'i",
     "Sun": "jy. dy. ze",
     "Mon": "jy. dy. pa",
@@ -27,8 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": ".i li %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
-    "Unable to enable Notifications": ".i na kakne lo nu co'a kakne lo nu benji lo sajgau",
-    "This email address was not found": ".i na da zo'u facki le du'u samymri judri da",
     "Default": "zmiselcu'a",
     "Restricted": "vlipa so'u da",
     "Moderator": "vlipa so'o da",
@@ -263,7 +260,8 @@
             "rule_invite_for_me": "nu da friti le ka ziljmina lo se zilbe'i kei do",
             "rule_call": "nu da co'a fonjo'e do",
             "rule_suppress_notices": "nu da zilbe'i fi pa sampre",
-            "rule_encrypted_room_one_to_one": "nu pa mifra cu zilbe'i pa prenu"
+            "rule_encrypted_room_one_to_one": "nu pa mifra cu zilbe'i pa prenu",
+            "error_title": ".i na kakne lo nu co'a kakne lo nu benji lo sajgau"
         },
         "appearance": {
             "match_system_theme": "nu mapti le jvinu be le vanbi",
@@ -414,7 +412,9 @@
         "voice_call": "nu snavi fonjo'e",
         "video_call": "nu vidvi fonjo'e",
         "call_failed": ".i da nabmi fi lo nu co'a fonjo'e",
-        "cannot_call_yourself_description": ".i do na ka'e fonjo'e do"
+        "cannot_call_yourself_description": ".i do na ka'e fonjo'e do",
+        "no_permission_conference": ".i lo nu curmi cu sarcu",
+        "no_permission_conference_description": ".i na curmi lo nu le du'u co'a girzu fonjo'e cu zilbe'i do fo le ca se cuxna"
     },
     "devtools": {
         "category_other": "drata",
@@ -489,7 +489,8 @@
         "change_password_new_label": "lerpoijaspu vau je cnino",
         "change_password_action": "nu basti fi le ka lerpoijaspu",
         "username_field_required_invalid": ".i ko cuxna fo le ka judri cmene",
-        "msisdn_field_label": "fonxa"
+        "msisdn_field_label": "fonxa",
+        "reset_password_email_not_found_title": ".i na da zo'u facki le du'u samymri judri da"
     },
     "update": {
         "release_notes_toast_title": "notci le du'u cnino"

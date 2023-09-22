@@ -56,10 +56,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s neturi leidimo siųsti jums pranešimus - patikrinkite savo naršyklės nustatymus",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s nebuvo suteiktas leidimas siųsti pranešimus - bandykite dar kartą",
-    "Unable to enable Notifications": "Nepavyko įjungti Pranešimų",
-    "This email address was not found": "Šis el. pašto adresas buvo nerastas",
     "Failed to invite": "Nepavyko pakviesti",
     "You need to be logged in.": "Jūs turite būti prisijungę.",
     "Unable to create widget.": "Nepavyko sukurti valdiklio.",
@@ -117,7 +113,6 @@
     "No Audio Outputs detected": "Neaptikta jokių garso išvesčių",
     "No Microphones detected": "Neaptikta jokių mikrofonų",
     "No Webcams detected": "Neaptikta jokių kamerų",
-    "Default Device": "Numatytasis įrenginys",
     "Audio Output": "Garso išvestis",
     "Profile": "Profilis",
     "A new password must be entered.": "Privalo būti įvestas naujas slaptažodis.",
@@ -133,7 +128,6 @@
     "Import room keys": "Importuoti kambario raktus",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportavimo failas bus apsaugotas slaptafraze. Norėdami iššifruoti failą, čia turėtumėte įvesti slaptafrazę.",
     "File to import": "Failas, kurį importuoti",
-    "You do not have permission to start a conference call in this room": "Jūs neturite leidimo šiame kambaryje pradėti konferencinį pokalbį",
     "Missing room_id in request": "Užklausoje trūksta room_id",
     "Missing user_id in request": "Užklausoje trūksta user_id",
     "This event could not be displayed": "Nepavyko parodyti šio įvykio",
@@ -207,9 +201,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
     "Explore rooms": "Žvalgyti kambarius",
     "Your %(brand)s is misconfigured": "Jūsų %(brand)s yra neteisingai sukonfigūruotas",
-    "Identity server has no terms of service": "Tapatybės serveris neturi paslaugų teikimo sąlygų",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Šiam veiksmui reikalinga pasiekti numatytąjį tapatybės serverį <server />, kad patvirtinti el. pašto adresą arba telefono numerį, bet serveris neturi jokių paslaugos teikimo sąlygų.",
-    "Only continue if you trust the owner of the server.": "Tęskite tik tuo atveju, jei pasitikite serverio savininku.",
     "You need to be able to invite users to do that.": "Norėdami tai atlikti jūs turite turėti galimybę pakviesti vartotojus.",
     "Power level must be positive integer.": "Galios lygis privalo būti teigiamas sveikasis skaičius.",
     "Use an identity server": "Naudoti tapatybės serverį",
@@ -506,7 +497,6 @@
     "Reject invitation": "Atmesti pakvietimą",
     "You can only join it with a working invite.": "Jūs galite prisijungti tik su veikiančiu pakvietimu.",
     "Cancel entering passphrase?": "Atšaukti slaptafrazės įvedimą?",
-    "%(name)s is requesting verification": "%(name)s prašo patvirtinimo",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Encryption upgrade available": "Galimas šifravimo atnaujinimas",
     "Please enter verification code sent via text.": "Įveskite patvirtinimo kodą išsiųstą teksto žinute.",
@@ -772,7 +762,6 @@
     "Brazil": "Brazilija",
     "Belgium": "Belgija",
     "Bangladesh": "Bangladešas",
-    "We couldn't log you in": "Mes negalėjome jūsų prijungti",
     "Confirm your Security Phrase": "Patvirtinkite savo Saugumo Frazę",
     "Generate a Security Key": "Generuoti Saugumo Raktą",
     "Save your Security Key": "Išsaugoti savo Saugumo Raktą",
@@ -886,7 +875,6 @@
     "Recent Conversations": "Pastarieji pokalbiai",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Toliau išvardyti vartotojai gali neegzistuoti arba būti negaliojantys, todėl jų negalima pakviesti: %(csvNames)s",
     "Failed to find the following users": "Nepavyko rasti šių vartotojų",
-    "Failed to transfer call": "Nepavyko perduoti skambučio",
     "A call can only be transferred to a single user.": "Skambutį galima perduoti tik vienam naudotojui.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Negalėjome pakviesti šių vartotojų. Patikrinkite vartotojus, kuriuos norite pakviesti, ir bandykite dar kartą.",
     "Something went wrong trying to invite the users.": "Bandant pakviesti vartotojus kažkas nepavyko.",
@@ -955,11 +943,6 @@
     "Myanmar": "Mianmaras",
     "Mozambique": "Mozambikas",
     "Bahamas": "Bahamų salos",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą.",
-    "Transfer Failed": "Perdavimas Nepavyko",
-    "Unable to transfer call": "Nepavyksta perduoti skambučio",
-    "There was an error looking up the phone number": "Įvyko klaida ieškant telefono numerio",
-    "Unable to look up phone number": "Nepavyko rasti telefono numerio",
     "Unable to share email address": "Nepavyko pasidalinti el. pašto adresu",
     "Verification code": "Patvirtinimo kodas",
     "Mentions & keywords": "Paminėjimai & Raktažodžiai",
@@ -1293,18 +1276,6 @@
     "Latvia": "Latvija",
     "Japan": "Japonija",
     "Italy": "Italija",
-    "Empty room (was %(oldName)s)": "Tuščias kambarys (buvo %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Kviečiami %(user)s ir 1 kitas",
-        "other": "Kviečiami %(user)s ir %(count)s kiti"
-    },
-    "Inviting %(user1)s and %(user2)s": "Kviečiami %(user1)s ir %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s ir 1 kitas",
-        "other": "%(user)s ir %(count)s kiti"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s ir %(user2)s",
-    "Empty room": "Tuščias kambarys",
     "Public rooms": "Vieši kambariai",
     "Search for": "Ieškoti",
     "View source": "Peržiūrėti šaltinį",
@@ -1717,7 +1688,10 @@
             "enable_desktop_notifications_session": "Įjungti darbalaukio pranešimus šiam seansui",
             "show_message_desktop_notification": "Rodyti žinutę darbalaukio pranešime",
             "enable_audible_notifications_session": "Įjungti garsinius pranešimus šiam seansui",
-            "noisy": "Triukšmingas"
+            "noisy": "Triukšmingas",
+            "error_permissions_denied": "%(brand)s neturi leidimo siųsti jums pranešimus - patikrinkite savo naršyklės nustatymus",
+            "error_permissions_missing": "%(brand)s nebuvo suteiktas leidimas siųsti pranešimus - bandykite dar kartą",
+            "error_title": "Nepavyko įjungti Pranešimų"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentinis)",
@@ -2293,7 +2267,15 @@
         "connection_lost_description": "Jūs negalite skambinti kai nėra ryšio su serveriu.",
         "too_many_calls": "Per daug skambučių",
         "too_many_calls_description": "Pasiekėte maksimalų vienu metu vykdomų skambučių skaičių.",
-        "cannot_call_yourself_description": "Negalite skambinti patys sau."
+        "cannot_call_yourself_description": "Negalite skambinti patys sau.",
+        "msisdn_lookup_failed": "Nepavyko rasti telefono numerio",
+        "msisdn_lookup_failed_description": "Įvyko klaida ieškant telefono numerio",
+        "msisdn_transfer_failed": "Nepavyksta perduoti skambučio",
+        "transfer_failed": "Perdavimas Nepavyko",
+        "transfer_failed_description": "Nepavyko perduoti skambučio",
+        "no_permission_conference": "Reikalingas Leidimas",
+        "no_permission_conference_description": "Jūs neturite leidimo šiame kambaryje pradėti konferencinį pokalbį",
+        "default_device": "Numatytasis įrenginys"
     },
     "Other": "Kitas",
     "Advanced": "Išplėstiniai",
@@ -2505,7 +2487,12 @@
         "msisdn_field_label": "Telefonas",
         "identifier_label": "Prisijungti naudojant",
         "reset_password_email_field_description": "Naudokite el. pašto adresą, kad prireikus galėtumėte atgauti paskyrą",
-        "registration_msisdn_field_required_invalid": "Įveskite telefono numerį (privaloma šiame serveryje)"
+        "registration_msisdn_field_required_invalid": "Įveskite telefono numerį (privaloma šiame serveryje)",
+        "sso_failed_missing_storage": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą.",
+        "oidc": {
+            "error_title": "Mes negalėjome jūsų prijungti"
+        },
+        "reset_password_email_not_found_title": "Šis el. pašto adresas buvo nerastas"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2716,10 +2703,28 @@
         "column_service": "Paslauga",
         "column_summary": "Santrauka",
         "column_document": "Dokumentas",
-        "tac_title": "Taisyklės ir Sąlygos"
+        "tac_title": "Taisyklės ir Sąlygos",
+        "identity_server_no_terms_title": "Tapatybės serveris neturi paslaugų teikimo sąlygų",
+        "identity_server_no_terms_description_1": "Šiam veiksmui reikalinga pasiekti numatytąjį tapatybės serverį <server />, kad patvirtinti el. pašto adresą arba telefono numerį, bet serveris neturi jokių paslaugos teikimo sąlygų.",
+        "identity_server_no_terms_description_2": "Tęskite tik tuo atveju, jei pasitikite serverio savininku."
     },
     "failed_load_async_component": "Nepavyko įkelti! Patikrinkite savo tinklo ryšį ir bandykite dar kartą.",
     "upload_failed_generic": "Failo '%(fileName)s' nepavyko įkelti.",
     "upload_failed_size": "Failas '%(fileName)s' viršyja šio serverio įkeliamų failų dydžio limitą",
-    "upload_failed_title": "Įkėlimas Nepavyko"
+    "upload_failed_title": "Įkėlimas Nepavyko",
+    "empty_room": "Tuščias kambarys",
+    "user1_and_user2": "%(user1)s ir %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s ir 1 kitas",
+        "other": "%(user)s ir %(count)s kiti"
+    },
+    "inviting_user1_and_user2": "Kviečiami %(user1)s ir %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Kviečiami %(user)s ir 1 kitas",
+        "other": "Kviečiami %(user)s ir %(count)s kiti"
+    },
+    "empty_room_was_name": "Tuščias kambarys (buvo %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s prašo patvirtinimo"
+    }
 }

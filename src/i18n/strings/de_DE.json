@@ -32,10 +32,6 @@
     "Upload avatar": "Profilbild hochladen",
     "Verification Pending": "Verifizierung ausstehend",
     "You do not have permission to post to this room": "Du hast keine Berechtigung, etwas in diesen Raum zu senden",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s hat keine Berechtigung, Benachrichtigungen zu senden - Bitte überprüfe deine Browsereinstellungen",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s hat keine Berechtigung für das Senden von Benachrichtigungen erhalten - Bitte versuche es erneut",
-    "This email address was not found": "Diese E-Mail-Adresse konnte nicht gefunden werden",
-    "Unable to enable Notifications": "Benachrichtigungen konnten nicht aktiviert werden",
     "Sun": "So",
     "Mon": "Mo",
     "Tue": "Di",
@@ -129,7 +125,6 @@
     "No Microphones detected": "Keine Mikrofone erkannt",
     "No media permissions": "Keine Medienberechtigungen",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst",
-    "Default Device": "Standardgerät",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bist du sicher, dass du den Raum „%(roomName)s“ verlassen möchtest?",
     "Custom level": "Selbstdefiniertes Berechtigungslevel",
     "Verified key": "Verifizierter Schlüssel",
@@ -243,7 +238,6 @@
     "Demote": "Zurückstufen",
     "This event could not be displayed": "Dieses Ereignis konnte nicht angezeigt werden",
     "Permission Required": "Berechtigung benötigt",
-    "You do not have permission to start a conference call in this room": "Du hast keine Berechtigung, ein Konferenzgespräch in diesem Raum zu starten",
     "Only room administrators will see this warning": "Nur Raumadministratoren werden diese Nachricht sehen",
     "This homeserver has hit its Monthly Active User limit.": "Dieser Heim-Server hat seinen Grenzwert an monatlich aktiven Nutzern erreicht.",
     "This homeserver has exceeded one of its resource limits.": "Dieser Heim-Server hat einen seiner Ressourcengrenzwerte überschritten.",
@@ -440,7 +434,6 @@
     "Revoke invite": "Einladung zurückziehen",
     "Invited by %(sender)s": "%(sender)s eingeladen",
     "Checking server": "Überprüfe Server",
-    "Identity server has no terms of service": "Der Identitäts-Server hat keine Nutzungsbedingungen",
     "Use an identity server": "Benutze einen Identitäts-Server",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Benutze einen Identitäts-Server, um andere mittels E-Mail einzuladen. Klicke auf fortfahren, um den Standard-Identitäts-Server (%(defaultIdentityServerName)s) zu benutzen oder ändere ihn in den Einstellungen.",
     "Terms of service not accepted or the identity server is invalid.": "Nutzungsbedingungen nicht akzeptiert oder der Identitäts-Server ist ungültig.",
@@ -451,8 +444,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Wenn du die Verbindung zu deinem Identitäts-Server trennst, kannst du nicht mehr von anderen Benutzern gefunden werden und andere nicht mehr per E-Mail oder Telefonnummer einladen.",
     "Disconnect from the identity server <idserver />?": "Verbindung zum Identitäts-Server <idserver /> trennen?",
     "Deactivate account": "Benutzerkonto deaktivieren",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Diese Handlung erfordert es, auf den Standard-Identitäts-Server <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
-    "Only continue if you trust the owner of the server.": "Fahre nur fort, wenn du den Server-Betreibenden vertraust.",
     "Use an identity server to invite by email. Manage in Settings.": "Verwende einen Identitäts-Server, um per E-Mail einladen zu können. Lege einen in den Einstellungen fest.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Accept <policyLink /> to continue:": "Akzeptiere <policyLink />, um fortzufahren:",
@@ -566,7 +557,6 @@
     "Show advanced": "Erweiterte Einstellungen",
     "Session key": "Sitzungsschlüssel",
     "Recent Conversations": "Letzte Unterhaltungen",
-    "%(name)s is requesting verification": "%(name)s fordert eine Verifizierung an",
     "Not Trusted": "Nicht vertraut",
     "Ask this user to verify their session, or manually verify it below.": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
     "Clear all data in this session?": "Alle Daten dieser Sitzung löschen?",
@@ -1159,7 +1149,6 @@
     "Hold": "Halten",
     "Resume": "Fortsetzen",
     "Transfer": "Übertragen",
-    "Failed to transfer call": "Anruf-Übertragung fehlgeschlagen",
     "A call can only be transferred to a single user.": "Ein Anruf kann nur auf einen einzelnen Nutzer übertragen werden.",
     "Not a valid Security Key": "Kein gültiger Sicherheisschlüssel",
     "This looks like a valid Security Key!": "Dies sieht aus wie ein gültiger Sicherheitsschlüssel!",
@@ -1174,8 +1163,6 @@
     "Open dial pad": "Wähltastatur öffnen",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sichere deine Schlüssel mit deinen Kontodaten, für den Fall, dass du den Zugriff auf deine Sitzungen verlierst. Deine Schlüssel werden mit einem eindeutigen Sicherheitsschlüssel geschützt.",
     "Dial pad": "Wähltastatur",
-    "There was an error looking up the phone number": "Beim Suchen der Telefonnummer ist ein Fehler aufgetreten",
-    "Unable to look up phone number": "Telefonnummer konnte nicht gefunden werden",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
     "Confirm your Security Phrase": "Deine Sicherheitsphrase bestätigen",
@@ -1191,8 +1178,6 @@
     "Allow this widget to verify your identity": "Erlaube diesem Widget deine Identität zu überprüfen",
     "Use app": "App verwenden",
     "Use app for a better experience": "Nutze die App für eine bessere Erfahrung",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Wir haben deinen Browser gebeten, sich zu merken, bei welchem Heim-Server du dich anmeldest, aber dein Browser hat dies leider vergessen. Gehe zur Anmeldeseite und versuche es erneut.",
-    "We couldn't log you in": "Wir konnten dich nicht anmelden",
     "Recently visited rooms": "Kürzlich besuchte Räume",
     "%(count)s members": {
         "other": "%(count)s Mitglieder",
@@ -1207,7 +1192,6 @@
     "Create a space": "Neuen Space erstellen",
     "This homeserver has been blocked by its administrator.": "Dieser Heim-Server wurde von seiner Administration geblockt.",
     "Invite people": "Personen einladen",
-    "Empty room": "Leerer Raum",
     "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
     "Share your public space": "Teile deinen öffentlichen Space mit der Welt",
@@ -1345,8 +1329,6 @@
     "Unable to copy room link": "Raumlink konnte nicht kopiert werden",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
-    "Transfer Failed": "Übertragen fehlgeschlagen",
-    "Unable to transfer call": "Übertragen des Anrufs fehlgeschlagen",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s und deinem Integrationsmanager übertragen werden.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integrationsassistenten erhalten Konfigurationsdaten und können Widgets modifizieren, Raumeinladungen verschicken und in deinem Namen Berechtigungslevel setzen.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Verwende einen Integrations-Server, um Bots, Widgets und Sticker-Pakete zu verwalten.",
@@ -1802,17 +1784,6 @@
     "Saved Items": "Gespeicherte Elemente",
     "Read receipts": "Lesebestätigungen",
     "Join the room to participate": "Betrete den Raum, um teilzunehmen",
-    "Empty room (was %(oldName)s)": "Leerer Raum (war %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "other": "Lade %(user)s und %(count)s weitere Person ein",
-        "one": "Lade %(user)s und eine weitere Person ein"
-    },
-    "Inviting %(user1)s and %(user2)s": "Lade %(user1)s und %(user2)s ein",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s und 1 anderer",
-        "other": "%(user)s und %(count)s andere"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s und %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s oder %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "Voice broadcast": "Sprachübertragung",
@@ -1896,7 +1867,6 @@
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "Edit link": "Link bearbeiten",
-    "%(senderName)s started a voice broadcast": "%(senderName)s begann eine Sprachübertragung",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Deine Kontodaten werden separat auf <code>%(hostname)s</code> verwaltet.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alle Nachrichten und Einladungen der Person werden verborgen. Bist du sicher, dass du sie ignorieren möchtest?",
@@ -1904,7 +1874,6 @@
     "unknown": "unbekannt",
     "Red": "Rot",
     "Grey": "Grau",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Deine E-Mail-Adresse scheint nicht mit einer Matrix-ID auf diesem Heim-Server verknüpft zu sein.",
     "This session is backing up your keys.": "Diese Sitzung sichert deine Schlüssel.",
     "Declining…": "Ablehnen …",
     "There are no past polls in this room": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
@@ -1978,8 +1947,6 @@
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Während des Versuchs, zum Datum zu springen, trat ein Netzwerkfehler auf. Möglicherweise ist dein Heim-Server nicht erreichbar oder es liegt ein temporäres Problem mit deiner Internetverbindung vor. Bitte versuche es erneut. Falls dieser Fehler weiterhin auftritt, kontaktiere bitte deine Heim-Server-Administration.",
     "Poll history": "Umfrageverlauf",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Der Benutzer (%(user)s) wurde nicht in %(roomId)s eingeladen, aber das Einladungsprogramm meldete keinen Fehler",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Dies wurde eventuell durch das Öffnen der App in mehreren Tabs oder das Löschen der Browser-Daten verursacht.",
-    "Database unexpectedly closed": "Datenbank unerwartet geschlossen",
     "Mute room": "Raum stumm stellen",
     "Match default setting": "Standardeinstellung verwenden",
     "Start DM anyway": "Dennoch DM beginnen",
@@ -1993,20 +1960,17 @@
     "Error changing password": "Fehler während der Passwortänderung",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-Status %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Unbekannter Fehler während der Passwortänderung (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Einladen per E-Mail-Adresse ist nicht ohne Identitäts-Server möglich. Du kannst einen unter „Einstellungen“ einrichten.",
     "Failed to download source media, no source url was found": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
     "Your language": "Deine Sprache",
     "Your device ID": "Deine Geräte-ID",
-    "User is not logged in": "Benutzer ist nicht angemeldet",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
     "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
     "User cannot be invited until they are unbanned": "Benutzer kann nicht eingeladen werden, solange er nicht entbannt ist",
     "People, Mentions and Keywords": "Personen, Erwähnungen und Schlüsselwörter",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualisierung:</strong> Wir haben die Benachrichtigungseinstellungen vereinfacht, damit Optionen schneller zu finden sind. Einige benutzerdefinierte Einstellungen werden hier nicht angezeigt, sind aber dennoch aktiv. Wenn du fortfährst, könnten sich einige Einstellungen ändern. <a>Erfahre mehr</a>",
-    "Something went wrong.": "Etwas ist schiefgelaufen.",
     "Email Notifications": "E-Mail-Benachrichtigungen",
     "Email summary": "E-Mail-Zusammenfassung",
     "Receive an email summary of missed notifications": "E-Mail-Zusammenfassung für verpasste Benachrichtigungen erhalten",
@@ -2052,8 +2016,6 @@
     "Your request to join is pending.": "Deine Beitrittsanfrage wurde noch nicht bearbeitet.",
     "Cancel request": "Anfrage abbrechen",
     "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
-    "Your server is unsupported": "Dein Server wird nicht unterstützt",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Dieser Server nutzt eine ältere Matrix-Version. Aktualisiere auf Matrix %(version)s, um %(brand)s fehlerfrei nutzen zu können.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server.",
     "No requests": "Keine Anfragen",
     "Asking to join": "Beitrittsanfragen",
@@ -2637,7 +2599,10 @@
             "enable_desktop_notifications_session": "Desktopbenachrichtigungen in dieser Sitzung",
             "show_message_desktop_notification": "Nachrichteninhalt in der Desktopbenachrichtigung anzeigen",
             "enable_audible_notifications_session": "Benachrichtigungstöne in dieser Sitzung",
-            "noisy": "Laut"
+            "noisy": "Laut",
+            "error_permissions_denied": "%(brand)s hat keine Berechtigung, Benachrichtigungen zu senden - Bitte überprüfe deine Browsereinstellungen",
+            "error_permissions_missing": "%(brand)s hat keine Berechtigung für das Senden von Benachrichtigungen erhalten - Bitte versuche es erneut",
+            "error_title": "Benachrichtigungen konnten nicht aktiviert werden"
         },
         "appearance": {
             "layout_irc": "IRC (Experimentell)",
@@ -3523,7 +3488,15 @@
         "connection_lost_description": "Sie können keine Anrufe starten ohne Verbindung zum Server.",
         "too_many_calls": "Zu viele Anrufe",
         "too_many_calls_description": "Du hast die maximale Anzahl gleichzeitig möglicher Anrufe erreicht.",
-        "cannot_call_yourself_description": "Du kannst keinen Anruf mit dir selbst starten."
+        "cannot_call_yourself_description": "Du kannst keinen Anruf mit dir selbst starten.",
+        "msisdn_lookup_failed": "Telefonnummer konnte nicht gefunden werden",
+        "msisdn_lookup_failed_description": "Beim Suchen der Telefonnummer ist ein Fehler aufgetreten",
+        "msisdn_transfer_failed": "Übertragen des Anrufs fehlgeschlagen",
+        "transfer_failed": "Übertragen fehlgeschlagen",
+        "transfer_failed_description": "Anruf-Übertragung fehlgeschlagen",
+        "no_permission_conference": "Berechtigung benötigt",
+        "no_permission_conference_description": "Du hast keine Berechtigung, ein Konferenzgespräch in diesem Raum zu starten",
+        "default_device": "Standardgerät"
     },
     "Other": "Sonstiges",
     "Advanced": "Erweitert",
@@ -3806,7 +3779,14 @@
         "reset_password_email_field_description": "Verwende eine E-Mail-Adresse, um dein Konto wiederherzustellen",
         "reset_password_email_field_required_invalid": "E-Mail-Adresse eingeben (auf diesem Heim-Server erforderlich)",
         "msisdn_field_description": "Andere Personen können dich mit deinen Kontaktdaten in Räume einladen",
-        "registration_msisdn_field_required_invalid": "Telefonnummer eingeben (auf diesem Heim-Server erforderlich)"
+        "registration_msisdn_field_required_invalid": "Telefonnummer eingeben (auf diesem Heim-Server erforderlich)",
+        "oidc": {
+            "error_generic": "Etwas ist schiefgelaufen.",
+            "error_title": "Wir konnten dich nicht anmelden"
+        },
+        "sso_failed_missing_storage": "Wir haben deinen Browser gebeten, sich zu merken, bei welchem Heim-Server du dich anmeldest, aber dein Browser hat dies leider vergessen. Gehe zur Anmeldeseite und versuche es erneut.",
+        "reset_password_email_not_found_title": "Diese E-Mail-Adresse konnte nicht gefunden werden",
+        "reset_password_email_not_associated": "Deine E-Mail-Adresse scheint nicht mit einer Matrix-ID auf diesem Heim-Server verknüpft zu sein."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4175,7 +4155,10 @@
         "column_document": "Dokument",
         "tac_title": "Geschäftsbedingungen",
         "tac_description": "Um den %(homeserverDomain)s-Heim-Server weiterzuverwenden, musst du die Nutzungsbedingungen sichten und akzeptieren.",
-        "tac_button": "Geschäftsbedingungen anzeigen"
+        "tac_button": "Geschäftsbedingungen anzeigen",
+        "identity_server_no_terms_title": "Der Identitäts-Server hat keine Nutzungsbedingungen",
+        "identity_server_no_terms_description_1": "Diese Handlung erfordert es, auf den Standard-Identitäts-Server <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
+        "identity_server_no_terms_description_2": "Fahre nur fort, wenn du den Server-Betreibenden vertraust."
     },
     "space_settings": {
         "title": "Einstellungen - %(spaceName)s"
@@ -4202,5 +4185,27 @@
     "failed_load_async_component": "Konnte nicht geladen werden! Überprüfe die Netzwerkverbindung und versuche es erneut.",
     "upload_failed_generic": "Die Datei „%(fileName)s“ konnte nicht hochgeladen werden.",
     "upload_failed_size": "Die Datei „%(fileName)s“ überschreitet das Hochladelimit deines Heim-Servers",
-    "upload_failed_title": "Hochladen fehlgeschlagen"
+    "upload_failed_title": "Hochladen fehlgeschlagen",
+    "cannot_invite_without_identity_server": "Einladen per E-Mail-Adresse ist nicht ohne Identitäts-Server möglich. Du kannst einen unter „Einstellungen“ einrichten.",
+    "unsupported_server_title": "Dein Server wird nicht unterstützt",
+    "unsupported_server_description": "Dieser Server nutzt eine ältere Matrix-Version. Aktualisiere auf Matrix %(version)s, um %(brand)s fehlerfrei nutzen zu können.",
+    "error_user_not_logged_in": "Benutzer ist nicht angemeldet",
+    "error_database_closed_title": "Datenbank unerwartet geschlossen",
+    "error_database_closed_description": "Dies wurde eventuell durch das Öffnen der App in mehreren Tabs oder das Löschen der Browser-Daten verursacht.",
+    "empty_room": "Leerer Raum",
+    "user1_and_user2": "%(user1)s und %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s und 1 anderer",
+        "other": "%(user)s und %(count)s andere"
+    },
+    "inviting_user1_and_user2": "Lade %(user1)s und %(user2)s ein",
+    "inviting_user_and_n_others": {
+        "other": "Lade %(user)s und %(count)s weitere Person ein",
+        "one": "Lade %(user)s und eine weitere Person ein"
+    },
+    "empty_room_was_name": "Leerer Raum (war %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s fordert eine Verifizierung an",
+        "io.element.voice_broadcast_chunk": "%(senderName)s begann eine Sprachübertragung"
+    }
 }

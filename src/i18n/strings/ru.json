@@ -54,7 +54,6 @@
     "Thu": "Чт",
     "Fri": "Пт",
     "Sat": "Сб",
-    "Unable to enable Notifications": "Не удалось включить уведомления",
     "and %(count)s others...": {
         "other": "и %(count)s других...",
         "one": "и ещё кто-то..."
@@ -81,12 +80,9 @@
     "Profile": "Профиль",
     "Reason": "Причина",
     "Reject invitation": "Отклонить приглашение",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "У %(brand)s нет разрешения на отправку уведомлений — проверьте настройки браузера",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s не получил разрешение на отправку уведомлений: пожалуйста, попробуйте снова",
     "Room %(roomId)s not visible": "Комната %(roomId)s невидима",
     "Rooms": "Комнаты",
     "Search failed": "Поиск не удался",
-    "This email address was not found": "Этот адрес электронной почты не найден",
     "This room has no local addresses": "У этой комнаты нет адресов на вашем сервере",
     "This room is not recognised.": "Эта комната не опознана.",
     "This doesn't appear to be a valid email address": "Похоже, это недействительный адрес email",
@@ -95,7 +91,6 @@
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
     "Operation failed": "Сбой операции",
     "No Microphones detected": "Микрофоны не обнаружены",
-    "Default Device": "Устройство по умолчанию",
     "No Webcams detected": "Веб-камера не обнаружена",
     "No media permissions": "Нет разрешённых носителей",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную",
@@ -243,7 +238,6 @@
     "Demote yourself?": "Понизить самого себя?",
     "This event could not be displayed": "Не удалось отобразить это событие",
     "Permission Required": "Требуется разрешение",
-    "You do not have permission to start a conference call in this room": "У вас нет разрешения на запуск конференции в этой комнате",
     "Only room administrators will see this warning": "Только администраторы комнат увидят это предупреждение",
     "Upgrade Room Version": "Обновление версии комнаты",
     "Create a new room with the same name, description and avatar": "Создадим новую комнату с тем же именем, описанием и аватаром",
@@ -496,9 +490,7 @@
     "Accept <policyLink /> to continue:": "Примите <policyLink /> для продолжения:",
     "Checking server": "Проверка сервера",
     "Terms of service not accepted or the identity server is invalid.": "Условия использования не приняты или сервер идентификации недействителен.",
-    "Identity server has no terms of service": "Сервер идентификации не имеет условий предоставления услуг",
     "The identity server you have chosen does not have any terms of service.": "Сервер идентификации, который вы выбрали, не имеет никаких условий обслуживания.",
-    "Only continue if you trust the owner of the server.": "Продолжайте, только если доверяете владельцу сервера.",
     "Disconnect from the identity server <idserver />?": "Отсоединиться от сервера идентификации <idserver />?",
     "Do not use an identity server": "Не использовать сервер идентификации",
     "Enter a new identity server": "Введите новый идентификационный сервер",
@@ -576,7 +568,6 @@
     "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
     "Jump to first invite.": "Перейти к первому приглашению.",
     "Message Actions": "Сообщение действий",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Error upgrading room": "Ошибка обновления комнаты",
     "Manage integrations": "Управление интеграциями",
@@ -620,7 +611,6 @@
     "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
-    "%(name)s is requesting verification": "%(name)s запрашивает проверку",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "У вашей учётной записи есть кросс-подпись в секретное хранилище, но она пока не является доверенной в этом сеансе.",
     "well formed": "корректный",
     "unexpected type": "непредвиденный тип",
@@ -1158,12 +1148,9 @@
     "Hold": "Удерживать",
     "Resume": "Возобновить",
     "Transfer": "Перевод",
-    "Failed to transfer call": "Не удалось перевести звонок",
     "A call can only be transferred to a single user.": "Вызов может быть передан только одному пользователю.",
     "Open dial pad": "Открыть панель набора номера",
     "Dial pad": "Панель набора номера",
-    "There was an error looking up the phone number": "При поиске номера телефона произошла ошибка",
-    "Unable to look up phone number": "Невозможно найти номер телефона",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Этот сеанс обнаружил, что ваши секретная фраза и ключ безопасности для защищенных сообщений были удалены.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Обнаружены новая секретная фраза и ключ безопасности для защищенных сообщений.",
     "Confirm your Security Phrase": "Подтвердите секретную фразу",
@@ -1191,8 +1178,6 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Сделайте резервную копию ключей шифрования с данными вашей учетной записи на случай, если вы потеряете доступ к своим сеансам. Ваши ключи будут защищены уникальным ключом безопасности.",
     "Use app": "Использовать приложение",
     "Use app for a better experience": "Используйте приложение для лучшего опыта",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Мы попросили браузер запомнить, какой домашний сервер вы используете для входа в систему, но, к сожалению, ваш браузер забыл об этом. Перейдите на страницу входа и попробуйте ещё раз.",
-    "We couldn't log you in": "Нам не удалось войти в систему",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -1221,7 +1206,6 @@
     "Space selection": "Выбор пространства",
     "Edit devices": "Редактировать сеансы",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Вы не сможете отменить это изменение, поскольку вы понижаете свои права, если вы являетесь последним привилегированным пользователем в пространстве, будет невозможно восстановить привилегии вбудущем.",
-    "Empty room": "Пустая комната",
     "Suggested Rooms": "Предлагаемые комнаты",
     "Add existing room": "Добавить существующую комнату",
     "Invite to this space": "Пригласить в это пространство",
@@ -1422,8 +1406,6 @@
     "Review to ensure your account is safe": "Проверьте, чтобы убедиться, что ваша учётная запись в безопасности",
     "Some invites couldn't be sent": "Некоторые приглашения не могут быть отправлены",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Мы отправили остальных, но нижеперечисленные люди не могут быть приглашены в <RoomName/>",
-    "Transfer Failed": "Перевод не удался",
-    "Unable to transfer call": "Не удалось перевести звонок",
     "Delete avatar": "Удалить аватар",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
@@ -1800,12 +1782,6 @@
     "You need to have the right permissions in order to share locations in this room.": "У вас должны быть определённые разрешения, чтобы делиться местоположениями в этой комнате.",
     "You don't have permission to share locations": "У вас недостаточно прав для публикации местоположений",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
-    "Empty room (was %(oldName)s)": "Пустая комната (без %(oldName)s)",
-    "%(user1)s and %(user2)s": "%(user1)s и %(user2)s",
-    "%(user)s and %(count)s others": {
-        "other": "%(user)s и ещё %(count)s",
-        "one": "%(user)s и ещё 1"
-    },
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
@@ -1819,11 +1795,6 @@
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
     "Voice broadcast": "Голосовая трансляция",
     "You need to be able to kick users to do that.": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Приглашающий %(user)s и 1 других",
-        "other": "Приглашение %(user)s и %(count)s других"
-    },
-    "Inviting %(user1)s and %(user2)s": "Приглашение %(user1)s и %(user2)s",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
     "Are you sure you want to sign out of %(count)s sessions?": {
         "one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
@@ -1882,7 +1853,6 @@
     "Message from %(user)s": "Сообщение от %(user)s",
     "Sign out of all devices": "Выйти из всех сеансов",
     "Set a new account password…": "Установите новый пароль…",
-    "%(senderName)s started a voice broadcast": "%(senderName)s начал(а) голосовую трансляцию",
     "common": {
         "about": "О комнате",
         "analytics": "Аналитика",
@@ -2422,7 +2392,10 @@
             "enable_desktop_notifications_session": "Показывать уведомления на рабочем столе для этого сеанса",
             "show_message_desktop_notification": "Показывать текст сообщения в уведомлениях на рабочем столе",
             "enable_audible_notifications_session": "Звуковые уведомления для этого сеанса",
-            "noisy": "Вкл. (со звуком)"
+            "noisy": "Вкл. (со звуком)",
+            "error_permissions_denied": "У %(brand)s нет разрешения на отправку уведомлений — проверьте настройки браузера",
+            "error_permissions_missing": "%(brand)s не получил разрешение на отправку уведомлений: пожалуйста, попробуйте снова",
+            "error_title": "Не удалось включить уведомления"
         },
         "appearance": {
             "layout_irc": "IRC (Экспериментально)",
@@ -3245,7 +3218,15 @@
         "connection_lost_description": "Вы не можете совершать вызовы без подключения к серверу.",
         "too_many_calls": "Слишком много звонков",
         "too_many_calls_description": "Вы достигли максимального количества одновременных звонков.",
-        "cannot_call_yourself_description": "Вы не можете позвонить самому себе."
+        "cannot_call_yourself_description": "Вы не можете позвонить самому себе.",
+        "msisdn_lookup_failed": "Невозможно найти номер телефона",
+        "msisdn_lookup_failed_description": "При поиске номера телефона произошла ошибка",
+        "msisdn_transfer_failed": "Не удалось перевести звонок",
+        "transfer_failed": "Перевод не удался",
+        "transfer_failed_description": "Не удалось перевести звонок",
+        "no_permission_conference": "Требуется разрешение",
+        "no_permission_conference_description": "У вас нет разрешения на запуск конференции в этой комнате",
+        "default_device": "Устройство по умолчанию"
     },
     "Other": "Другие",
     "Advanced": "Подробности",
@@ -3507,7 +3488,12 @@
         "reset_password_email_field_description": "Используйте почтовый адрес, чтобы восстановить доступ к учётной записи",
         "reset_password_email_field_required_invalid": "Введите адрес электронной почты (требуется для этого сервера)",
         "msisdn_field_description": "Другие пользователи могут приглашать вас в комнаты, используя ваши контактные данные",
-        "registration_msisdn_field_required_invalid": "Введите номер телефона (требуется на этом сервере)"
+        "registration_msisdn_field_required_invalid": "Введите номер телефона (требуется на этом сервере)",
+        "sso_failed_missing_storage": "Мы попросили браузер запомнить, какой домашний сервер вы используете для входа в систему, но, к сожалению, ваш браузер забыл об этом. Перейдите на страницу входа и попробуйте ещё раз.",
+        "oidc": {
+            "error_title": "Нам не удалось войти в систему"
+        },
+        "reset_password_email_not_found_title": "Этот адрес электронной почты не найден"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3858,7 +3844,10 @@
         "column_document": "Документ",
         "tac_title": "Условия и положения",
         "tac_description": "Для продолжения использования сервера %(homeserverDomain)s вы должны ознакомиться и принять условия и положения.",
-        "tac_button": "Просмотр условий и положений"
+        "tac_button": "Просмотр условий и положений",
+        "identity_server_no_terms_title": "Сервер идентификации не имеет условий предоставления услуг",
+        "identity_server_no_terms_description_1": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
+        "identity_server_no_terms_description_2": "Продолжайте, только если доверяете владельцу сервера."
     },
     "space_settings": {
         "title": "Настройки — %(spaceName)s"
@@ -3884,5 +3873,21 @@
     "failed_load_async_component": "Не удалось загрузить! Проверьте подключение к сети и попробуйте снова.",
     "upload_failed_generic": "Файл '%(fileName)s' не был загружен.",
     "upload_failed_size": "Размер файла '%(fileName)s' превышает допустимый предел загрузки, установленный на этом сервере",
-    "upload_failed_title": "Сбой отправки файла"
+    "upload_failed_title": "Сбой отправки файла",
+    "empty_room": "Пустая комната",
+    "user1_and_user2": "%(user1)s и %(user2)s",
+    "user_and_n_others": {
+        "other": "%(user)s и ещё %(count)s",
+        "one": "%(user)s и ещё 1"
+    },
+    "inviting_user1_and_user2": "Приглашение %(user1)s и %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Приглашающий %(user)s и 1 других",
+        "other": "Приглашение %(user)s и %(count)s других"
+    },
+    "empty_room_was_name": "Пустая комната (без %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s запрашивает проверку",
+        "io.element.voice_broadcast_chunk": "%(senderName)s начал(а) голосовую трансляцию"
+    }
 }

@@ -30,7 +30,6 @@
     "Rooms": "அறைகள்",
     "Your %(brand)s is misconfigured": "உங்கள் %(brand)s தவறாக உள்ளமைக்கப்பட்டுள்ளது",
     "Permission Required": "அனுமதி தேவை",
-    "You do not have permission to start a conference call in this room": "இந்த அறையில் ஒரு கூட்டு அழைப்பைத் தொடங்க உங்களுக்கு அனுமதி இல்லை",
     "Server may be unavailable, overloaded, or you hit a bug.": "",
     "Sun": "ஞாயிறு",
     "Mon": "திங்கள்",
@@ -58,8 +57,6 @@
     "Sep": "செப்டம்பர்",
     "Aug": "ஆகஸ்ட்",
     "Jul": "ஜூலை",
-    "There was an error looking up the phone number": "தொலைபேசி எண்ணைத் தேடுவதில் பிழை ஏற்பட்டது",
-    "Unable to look up phone number": "தொலைபேசி எண்ணைத் தேட முடியவில்லை",
     "common": {
         "analytics": "பகுப்பாய்வு",
         "error": "பிழை",
@@ -143,7 +140,11 @@
         "misconfigured_server_description": "அழைப்புகள் நம்பத்தகுந்த வகையில் இயங்குவதற்காக, TURN சேவையகத்தை உள்ளமைக்க உங்கள் வீட்டுசேவையகத்தின் (<code>%(homeserverDomain)s</code>) நிர்வாகியிடம் கேளுங்கள்.",
         "too_many_calls": "மிக அதிக அழைப்புகள்",
         "too_many_calls_description": "ஒரே நேரத்தில் அழைக்கக்கூடிய அதிகபட்ச அழைப்புகளை நீங்கள் அடைந்துவிட்டீர்கள்.",
-        "cannot_call_yourself_description": "நீங்கள் உங்களுடனே அழைப்பை மேற்கொள்ள முடியாது."
+        "cannot_call_yourself_description": "நீங்கள் உங்களுடனே அழைப்பை மேற்கொள்ள முடியாது.",
+        "msisdn_lookup_failed": "தொலைபேசி எண்ணைத் தேட முடியவில்லை",
+        "msisdn_lookup_failed_description": "தொலைபேசி எண்ணைத் தேடுவதில் பிழை ஏற்பட்டது",
+        "no_permission_conference": "அனுமதி தேவை",
+        "no_permission_conference_description": "இந்த அறையில் ஒரு கூட்டு அழைப்பைத் தொடங்க உங்களுக்கு அனுமதி இல்லை"
     },
     "labs": {
         "group_rooms": "அறைகள்"

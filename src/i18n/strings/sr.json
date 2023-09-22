@@ -24,10 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s нема овлашћења за слање обавештења, проверите подешавања вашег прегледача",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s-у није дато овлашћење за слање обавештења, пробајте поново касније",
-    "Unable to enable Notifications": "Нисам успео да омогућим обавештења",
-    "This email address was not found": "Ова мејл адреса није нађена",
     "Default": "Подразумевано",
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
@@ -174,7 +170,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
-    "Default Device": "Подразумевани уређај",
     "Notifications": "Обавештења",
     "Profile": "Профил",
     "A new password must be entered.": "Морате унети нову лозинку.",
@@ -239,7 +234,6 @@
     "No Audio Outputs detected": "Нема уочених излаза звука",
     "Audio Output": "Излаз звука",
     "Permission Required": "Неопходна је дозвола",
-    "You do not have permission to start a conference call in this room": "Немате дозволу да започињете конференцијски позив у овој соби",
     "This event could not be displayed": "Овај догађај не може бити приказан",
     "Demote yourself?": "Рашчињавате себе?",
     "Demote": "Рашчини",
@@ -247,7 +241,6 @@
     "Create account": "Направи налог",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "Identity server has no terms of service": "Идентитетски сервер нема услове коришћења",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
     "Show more": "Прикажи више",
@@ -552,9 +545,6 @@
     "Afghanistan": "Авганистан",
     "United States": "Сједињене Америчке Државе",
     "United Kingdom": "Уједињено Краљевство",
-    "%(name)s is requesting verification": "%(name)s тражи верификацију",
-    "Only continue if you trust the owner of the server.": "Наставите само ако верујете власнику сервера.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ова радња захтева приступ серверу идентитета <server /> за валидацију адресе е-поште или телефонског броја али изгледа да сервер нема „услове услуге“.",
     "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
     "Please contact your homeserver administrator.": "Контактирајте администратора вашег сервера.",
@@ -585,7 +575,6 @@
     "Error changing power level": "Грешка при промени нивоа снаге",
     "Power level": "Ниво снаге",
     "Explore rooms": "Истражи собе",
-    "We couldn't log you in": "Не могу да вас пријавим",
     "Double check that your server supports the room version chosen and try again.": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
@@ -715,7 +704,6 @@
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "УПОЗОРЕЊЕ: ПРОВЕРА КЉУЧА НИЈЕ УСПЕЛА! Кључ за потписивање за %(userId)s и сесију %(deviceId)s је \"%(fprint)s\", који се не подудара са наведеним кључем \"%(fingerprint)s\". То може значити да су ваше комуникације пресретнуте!",
     "Verifies a user, session, and pubkey tuple": "Верификује корисника, сесију и pubkey tuple",
     "Réunion": "Реунион",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Тражили смо од прегледача да запамти који кућни сервер користите за пријаву, али нажалост ваш претраживач га је заборавио. Идите на страницу за пријављивање и покушајте поново.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
     "common": {
         "about": "О програму",
@@ -904,7 +892,10 @@
             "rule_call": "Позивница за позив",
             "rule_suppress_notices": "Поруке послате од бота",
             "show_message_desktop_notification": "Прикажи поруку у стоном обавештењу",
-            "noisy": "Бучно"
+            "noisy": "Бучно",
+            "error_permissions_denied": "%(brand)s нема овлашћења за слање обавештења, проверите подешавања вашег прегледача",
+            "error_permissions_missing": "%(brand)s-у није дато овлашћење за слање обавештења, пробајте поново касније",
+            "error_title": "Нисам успео да омогућим обавештења"
         },
         "appearance": {
             "heading": "Прилагодите изглед",
@@ -1242,7 +1233,10 @@
         "misconfigured_server_description": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
         "too_many_calls": "Превише позива",
         "too_many_calls_description": "Достигли сте максималан број истовремених позива.",
-        "cannot_call_yourself_description": "Не можете позвати сами себе."
+        "cannot_call_yourself_description": "Не можете позвати сами себе.",
+        "no_permission_conference": "Неопходна је дозвола",
+        "no_permission_conference_description": "Немате дозволу да започињете конференцијски позив у овој соби",
+        "default_device": "Подразумевани уређај"
     },
     "Other": "Остало",
     "Advanced": "Напредно",
@@ -1349,7 +1343,12 @@
         "reset_password_email_field_description": "Користите адресу е-поште за опоравак налога",
         "reset_password_email_field_required_invalid": "Унесите адресу е-поште (захтева на овом кућном серверу)",
         "msisdn_field_description": "Други корисници могу да вас позову у собе користећи ваше контакт податке",
-        "registration_msisdn_field_required_invalid": "Унесите број телефона (захтева на овом кућном серверу)"
+        "registration_msisdn_field_required_invalid": "Унесите број телефона (захтева на овом кућном серверу)",
+        "sso_failed_missing_storage": "Тражили смо од прегледача да запамти који кућни сервер користите за пријаву, али нажалост ваш претраживач га је заборавио. Идите на страницу за пријављивање и покушајте поново.",
+        "oidc": {
+            "error_title": "Не могу да вас пријавим"
+        },
+        "reset_password_email_not_found_title": "Ова мејл адреса није нађена"
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1481,7 +1480,10 @@
         "column_document": "Документ",
         "tac_title": "Услови коришћења",
         "tac_description": "Да наставите са коришћењем сервера %(homeserverDomain)s морате погледати и пристати на наше услове коришћења.",
-        "tac_button": "Погледај услове коришћења"
+        "tac_button": "Погледај услове коришћења",
+        "identity_server_no_terms_title": "Идентитетски сервер нема услове коришћења",
+        "identity_server_no_terms_description_1": "Ова радња захтева приступ серверу идентитета <server /> за валидацију адресе е-поште или телефонског броја али изгледа да сервер нема „услове услуге“.",
+        "identity_server_no_terms_description_2": "Наставите само ако верујете власнику сервера."
     },
     "labs_mjolnir": {
         "rules_user": "Корисничка правила",
@@ -1490,5 +1492,8 @@
     "failed_load_async_component": "Не могу да учитам! Проверите повезаност и пробајте поново.",
     "upload_failed_generic": "Фајл „%(fileName)s“ није отпремљен.",
     "upload_failed_size": "Фајл „%(fileName)s“ премашује ограничење величине отпремања на овом серверу",
-    "upload_failed_title": "Отпремање није успело"
+    "upload_failed_title": "Отпремање није успело",
+    "notifier": {
+        "m.key.verification.request": "%(name)s тражи верификацију"
+    }
 }

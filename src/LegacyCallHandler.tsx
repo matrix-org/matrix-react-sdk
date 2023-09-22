@@ -1053,8 +1053,8 @@ export default class LegacyCallHandler extends EventEmitter {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Unable to look up phone number"),
-                description: _t("There was an error looking up the phone number"),
+                title: _t("voip|msisdn_lookup_failed"),
+                description: _t("voip|msisdn_lookup_failed_description"),
             });
             return;
         }
@@ -1101,8 +1101,8 @@ export default class LegacyCallHandler extends EventEmitter {
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Unable to transfer call"),
-                description: _t("There was an error looking up the phone number"),
+                title: _t("voip|msisdn_transfer_failed"),
+                description: _t("voip|msisdn_lookup_failed_description"),
             });
             return;
         }
@@ -1116,8 +1116,8 @@ export default class LegacyCallHandler extends EventEmitter {
             if (!dmRoomId) {
                 logger.log("Failed to transfer call, could not ensure dm exists");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Transfer Failed"),
-                    description: _t("Failed to transfer call"),
+                    title: _t("voip|transfer_failed"),
+                    description: _t("voip|transfer_failed_description"),
                 });
                 return;
             }
@@ -1136,8 +1136,8 @@ export default class LegacyCallHandler extends EventEmitter {
             } catch (e) {
                 logger.log("Failed to transfer call", e);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Transfer Failed"),
-                    description: _t("Failed to transfer call"),
+                    title: _t("voip|transfer_failed"),
+                    description: _t("voip|transfer_failed_description"),
                 });
             }
         }
@@ -1193,8 +1193,8 @@ export default class LegacyCallHandler extends EventEmitter {
         } catch (e) {
             if (e instanceof MatrixError && e.errcode === "M_FORBIDDEN") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Permission Required"),
-                    description: _t("You do not have permission to start a conference call in this room"),
+                    title: _t("voip|no_permission_conference"),
+                    description: _t("voip|no_permission_conference_description"),
                 });
             }
             logger.error(e);

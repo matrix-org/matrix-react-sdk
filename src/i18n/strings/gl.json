@@ -24,10 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s non ten permiso para enviarlle notificacións: comprobe os axustes do navegador",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s non ten permiso para enviar notificacións: inténteo de novo",
-    "Unable to enable Notifications": "Non se puideron activar as notificacións",
-    "This email address was not found": "Non se atopou este enderezo de correo",
     "Default": "Por defecto",
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
@@ -172,7 +168,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Igual ten que permitir manualmente a %(brand)s acceder ao seus micrófono e cámara",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
-    "Default Device": "Dispositivo por defecto",
     "Notifications": "Notificacións",
     "Profile": "Perfil",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
@@ -239,7 +234,6 @@
     "No Audio Outputs detected": "Non se detectou unha saída de audio",
     "Audio Output": "Saída de audio",
     "Permission Required": "Precísanse permisos",
-    "You do not have permission to start a conference call in this room": "Non tes permisos para comezar unha chamada de conferencia nesta sala",
     "This event could not be displayed": "Non se puido amosar este evento",
     "Demote yourself?": "Baixarse a ti mesma de rango?",
     "Demote": "Baixar de rango",
@@ -263,10 +257,6 @@
     "Verify this session": "Verificar esta sesión",
     "Encryption upgrade available": "Mellora do cifrado dispoñible",
     "New login. Was this you?": "Nova sesión. Foches ti?",
-    "Identity server has no terms of service": "O servidor de identidade non ten termos dos servizo",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acción precisa acceder ao servidor de indentidade <server /> para validar o enderezo de email ou o número de teléfono, pero o servidor non publica os seus termos do servizo.",
-    "Only continue if you trust the owner of the server.": "Continúa se realmente confías no dono do servidor.",
-    "%(name)s is requesting verification": "%(name)s está pedindo a verificación",
     "Error upgrading room": "Fallo ao actualizar a sala",
     "Double check that your server supports the room version chosen and try again.": "Comproba ben que o servidor soporta a versión da sala escollida e inténtao outra vez.",
     "Use an identity server": "Usar un servidor de identidade",
@@ -1159,12 +1149,9 @@
     "Hold": "Colgar",
     "Resume": "Retomar",
     "Transfer": "Transferir",
-    "Failed to transfer call": "Fallou a transferencia da chamada",
     "A call can only be transferred to a single user.": "Unha chamada só se pode transferir a unha única usuaria.",
     "Open dial pad": "Abrir marcador",
     "Dial pad": "Marcador",
-    "There was an error looking up the phone number": "Houbo un erro buscando o número de teléfono",
-    "Unable to look up phone number": "Non atopamos o número de teléfono",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sesión detectou que se eliminaron a túa Frase de Seguridade e chave para Mensaxes Seguras.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Detectouse unha nova Frase de Seguridade e chave para as Mensaxes Seguras.",
     "Confirm your Security Phrase": "Confirma a Frase de Seguridade",
@@ -1191,8 +1178,6 @@
     "Allow this widget to verify your identity": "Permitir a este widget verificar a túa identidade",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
     "Remember this": "Lembrar isto",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez.",
-    "We couldn't log you in": "Non puidemos conectarte",
     "Recently visited rooms": "Salas visitadas recentemente",
     "%(count)s members": {
         "one": "%(count)s participante",
@@ -1214,7 +1199,6 @@
     "Spaces": "Espazos",
     "Space selection": "Selección de Espazos",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non poderás desfacer este cambio xa que te estás degradando a ti mesma, se es a última usuaria con privilexios no espazo será imposible volver a obter os privilexios.",
-    "Empty room": "Sala baleira",
     "Suggested Rooms": "Salas suxeridas",
     "Add existing room": "Engadir sala existente",
     "Invite to this space": "Convidar a este espazo",
@@ -1352,8 +1336,6 @@
     "Address": "Enderezo",
     "Some invites couldn't be sent": "Non se puideron enviar algúns convites",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Convidamos as outras, pero as persoas de aquí embaixo non foron convidadas a <RoomName/>",
-    "Transfer Failed": "Fallou a transferencia",
-    "Unable to transfer call": "Non se puido transferir a chamada",
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
     "Unnamed audio": "Audio sen nome",
@@ -1802,17 +1784,6 @@
     "Sessions": "Sesións",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
     "Manually verify by text": "Verificar manualmente con texto",
-    "Empty room (was %(oldName)s)": "Sala baleira (era %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Convidando a %(user)s e outra persoa",
-        "other": "Convidando a %(user)s e %(count)s outras"
-    },
-    "Inviting %(user1)s and %(user2)s": "Convidando a %(user1)s e %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s outra usuaria",
-        "other": "%(user)s e %(count)s outras"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s e %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "You need to be able to kick users to do that.": "Tes que poder expulsar usuarias para facer eso.",
@@ -2336,7 +2307,10 @@
             "enable_desktop_notifications_session": "Activa as notificacións de escritorio para esta sesión",
             "show_message_desktop_notification": "Mostrar mensaxe nas notificacións de escritorio",
             "enable_audible_notifications_session": "Activa as notificacións por son para esta sesión",
-            "noisy": "Ruidoso"
+            "noisy": "Ruidoso",
+            "error_permissions_denied": "%(brand)s non ten permiso para enviarlle notificacións: comprobe os axustes do navegador",
+            "error_permissions_missing": "%(brand)s non ten permiso para enviar notificacións: inténteo de novo",
+            "error_title": "Non se puideron activar as notificacións"
         },
         "appearance": {
             "layout_irc": "IRC (Experimental)",
@@ -3094,7 +3068,15 @@
         "connection_lost_description": "Non podes facer chamadas se non tes conexión ao servidor.",
         "too_many_calls": "Demasiadas chamadas",
         "too_many_calls_description": "Acadaches o número máximo de chamadas simultáneas.",
-        "cannot_call_yourself_description": "Non podes facer unha chamada a ti mesma."
+        "cannot_call_yourself_description": "Non podes facer unha chamada a ti mesma.",
+        "msisdn_lookup_failed": "Non atopamos o número de teléfono",
+        "msisdn_lookup_failed_description": "Houbo un erro buscando o número de teléfono",
+        "msisdn_transfer_failed": "Non se puido transferir a chamada",
+        "transfer_failed": "Fallou a transferencia",
+        "transfer_failed_description": "Fallou a transferencia da chamada",
+        "no_permission_conference": "Precísanse permisos",
+        "no_permission_conference_description": "Non tes permisos para comezar unha chamada de conferencia nesta sala",
+        "default_device": "Dispositivo por defecto"
     },
     "Other": "Outro",
     "Advanced": "Avanzado",
@@ -3352,7 +3334,12 @@
         "reset_password_email_field_description": "Usa un enderezo de email para recuperar a túa conta",
         "reset_password_email_field_required_invalid": "Escribe o enderzo de email (requerido neste servidor)",
         "msisdn_field_description": "Outras usuarias poden convidarte ás salas usando os teus detalles de contacto",
-        "registration_msisdn_field_required_invalid": "Escribe un número de teléfono (requerido neste servidor)"
+        "registration_msisdn_field_required_invalid": "Escribe un número de teléfono (requerido neste servidor)",
+        "sso_failed_missing_storage": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez.",
+        "oidc": {
+            "error_title": "Non puidemos conectarte"
+        },
+        "reset_password_email_not_found_title": "Non se atopou este enderezo de correo"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3683,7 +3670,10 @@
         "column_document": "Documento",
         "tac_title": "Termos e condicións",
         "tac_description": "Para continuar usando o servidor %(homeserverDomain)s ten que revisar primeiro os seus termos e condicións e logo aceptalos.",
-        "tac_button": "Revise os termos e condicións"
+        "tac_button": "Revise os termos e condicións",
+        "identity_server_no_terms_title": "O servidor de identidade non ten termos dos servizo",
+        "identity_server_no_terms_description_1": "Esta acción precisa acceder ao servidor de indentidade <server /> para validar o enderezo de email ou o número de teléfono, pero o servidor non publica os seus termos do servizo.",
+        "identity_server_no_terms_description_2": "Continúa se realmente confías no dono do servidor."
     },
     "space_settings": {
         "title": "Axustes - %(spaceName)s"
@@ -3709,5 +3699,20 @@
     "failed_load_async_component": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
     "upload_failed_generic": "Fallou a subida do ficheiro '%(fileName)s'.",
     "upload_failed_size": "O ficheiro '%(fileName)s' supera o tamaño máximo permitido polo servidor",
-    "upload_failed_title": "Fallou o envío"
+    "upload_failed_title": "Fallou o envío",
+    "empty_room": "Sala baleira",
+    "user1_and_user2": "%(user1)s e %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s outra usuaria",
+        "other": "%(user)s e %(count)s outras"
+    },
+    "inviting_user1_and_user2": "Convidando a %(user1)s e %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Convidando a %(user)s e outra persoa",
+        "other": "Convidando a %(user)s e %(count)s outras"
+    },
+    "empty_room_was_name": "Sala baleira (era %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s está pedindo a verificación"
+    }
 }

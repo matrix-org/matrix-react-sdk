@@ -24,10 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s nemá udelené povolenie, aby vám mohol posielať oznámenia - Prosím, skontrolujte nastavenia vašeho prehliadača",
-    "%(brand)s was not given permission to send notifications - please try again": "Aplikácii %(brand)s nebolo udelené povolenie potrebné pre posielanie oznámení - prosím, skúste to znovu",
-    "Unable to enable Notifications": "Nie je možné povoliť oznámenia",
-    "This email address was not found": "Túto emailovú adresu sa nepodarilo nájsť",
     "Default": "Predvolené",
     "Moderator": "Moderátor",
     "Operation failed": "Operácia zlyhala",
@@ -160,7 +156,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Mali by ste aplikácii %(brand)s ručne udeliť právo pristupovať k mikrofónu a kamere",
     "No Microphones detected": "Neboli rozpoznané žiadne mikrofóny",
     "No Webcams detected": "Neboli rozpoznané žiadne kamery",
-    "Default Device": "Predvolené zariadenie",
     "Notifications": "Oznámenia",
     "Profile": "Profil",
     "A new password must be entered.": "Musíte zadať nové heslo.",
@@ -238,7 +233,6 @@
     "Audio Output": "Výstup zvuku",
     "Share Room Message": "Zdieľať správu z miestnosti",
     "Permission Required": "Vyžaduje sa povolenie",
-    "You do not have permission to start a conference call in this room": "V tejto miestnosti nemáte povolenie začať konferenčný hovor",
     "This event could not be displayed": "Nie je možné zobraziť túto udalosť",
     "Demote yourself?": "Znížiť vlastnú úroveň oprávnení?",
     "Demote": "Znížiť",
@@ -425,10 +419,7 @@
     "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
-    "Identity server has no terms of service": "Server totožností nemá žiadne podmienky poskytovania služieb",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
-    "Only continue if you trust the owner of the server.": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
     "Error upgrading room": "Chyba pri aktualizácii miestnosti",
     "Double check that your server supports the room version chosen and try again.": "Uistite sa, že domovský server podporuje zvolenú verziu miestnosti a skúste znovu.",
     "Use an identity server": "Použiť server totožností",
@@ -468,7 +459,6 @@
     "Verify this session": "Overiť túto reláciu",
     "Encryption upgrade available": "Je dostupná aktualizácia šifrovania",
     "New login. Was this you?": "Nové prihlásenie. Boli ste to vy?",
-    "%(name)s is requesting verification": "%(name)s žiada o overenie",
     "Verifies a user, session, and pubkey tuple": "Overí používateľa, reláciu a verejné kľúče",
     "Session already verified!": "Relácia je už overená!",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "VAROVANIE: OVERENIE KĽÚČOV ZLYHALO! Podpisový kľúč používateľa %(userId)s a relácia %(deviceId)s je \"%(fprint)s\" čo nezodpovedá zadanému kľúču \"%(fingerprint)s\". Môže to znamenať, že vaša komunikácia je odpočúvaná!",
@@ -805,8 +795,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Spojené Štáty",
     "United Kingdom": "Spojené Kráľovstvo",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Požiadali sme prehliadač, aby si pamätal, aký domovský server používate na prihlásenie, ale váš prehliadač ho, bohužiaľ, zabudol. Prejdite na prihlasovaciu stránku a skúste to znova.",
-    "We couldn't log you in": "Nemohli sme vás prihlásiť",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Správcovia integrácie dostávajú konfiguračné údaje a môžu vo vašom mene upravovať widgety, posielať pozvánky do miestnosti a nastavovať úrovne oprávnení.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Na správu botov, widgetov a balíkov nálepiek použite správcu integrácie.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Na správu botov, widgetov a balíkov nálepiek použite správcu integrácie <b>(%(serverName)s)</b>.",
@@ -1306,7 +1294,6 @@
     "Create a new room": "Vytvoriť novú miestnosť",
     "Space selection": "Výber priestoru",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v priestore, nebude možné získať oprávnenia späť.",
-    "Empty room": "Prázdna miestnosť",
     "Suggested Rooms": "Navrhované miestnosti",
     "Share invite link": "Zdieľať odkaz na pozvánku",
     "Click to copy": "Kliknutím skopírujete",
@@ -1577,13 +1564,8 @@
     "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
     "Reply in thread": "Odpovedať vo vlákne",
     "From a thread": "Z vlákna",
-    "There was an error looking up the phone number": "Pri vyhľadávaní telefónneho čísla došlo k chybe",
-    "Unable to look up phone number": "Nie je možné vyhľadať telefónne číslo",
     "Transfer": "Presmerovať",
     "A call can only be transferred to a single user.": "Hovor je možné presmerovať len na jedného používateľa.",
-    "Failed to transfer call": "Nepodarilo sa presmerovať hovor",
-    "Transfer Failed": "Presmerovanie zlyhalo",
-    "Unable to transfer call": "Nie je možné presmerovať hovor",
     "Move right": "Presun doprava",
     "Move left": "Presun doľava",
     "Unban from %(roomName)s": "Zrušiť zákaz vstup do %(roomName)s",
@@ -1802,17 +1784,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "V záujme čo najlepšieho zabezpečenia, overte svoje relácie a odhláste sa z každej relácie, ktorú už nepoznáte alebo nepoužívate.",
     "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
     "Manually verify by text": "Manuálne overte pomocou textu",
-    "Empty room (was %(oldName)s)": "Prázdna miestnosť (bola %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Pozývanie %(user)s a 1 ďalšieho",
-        "other": "Pozývanie %(user)s a %(count)s ďalších"
-    },
-    "Inviting %(user1)s and %(user2)s": "Pozývanie %(user1)s a %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s a 1 ďalší",
-        "other": "%(user)s a %(count)s ďalších"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s a %(user2)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s alebo %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "You need to be able to kick users to do that.": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
@@ -1896,7 +1867,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "Edit link": "Upraviť odkaz",
-    "%(senderName)s started a voice broadcast": "%(senderName)s začal/a hlasové vysielanie",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Údaje o vašom účte sú spravované samostatne na adrese <code>%(hostname)s</code>.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Všetky správy a pozvánky od tohto používateľa budú skryté. Ste si istí, že ich chcete ignorovať?",
@@ -1904,7 +1874,6 @@
     "unknown": "neznáme",
     "Red": "Červená",
     "Grey": "Sivá",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Zdá sa, že vaša emailová adresa nie je priradená k žiadnemu Matrix ID na tomto domovskom serveri.",
     "This session is backing up your keys.": "Táto relácia zálohuje vaše kľúče.",
     "Declining…": "Odmietanie …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadajte bezpečnostnú frázu, ktorú poznáte len vy, keďže sa používa na ochranu vašich údajov. V záujme bezpečnosti by ste nemali heslo k účtu používať opakovane.",
@@ -1978,8 +1947,6 @@
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Pri pokuse nájsť a prejsť na daný dátum došlo k sieťovej chybe. Váš domovský server môže byť vypnutý alebo sa vyskytol len dočasný problém s internetovým pripojením. Skúste to prosím znova. Ak to bude pokračovať, obráťte sa na správcu domovského servera.",
     "Poll history": "História ankety",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Používateľ (%(user)s) neskončil ako pozvaný do %(roomId)s, ale nástroj pre pozývanie neposkytol žiadnu chybu",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Môže to byť spôsobené otvorením aplikácie na viacerých kartách alebo vymazaním údajov prehliadača.",
-    "Database unexpectedly closed": "Databáza sa neočakávane zatvorila",
     "Mute room": "Stlmiť miestnosť",
     "Match default setting": "Rovnaké ako predvolené nastavenie",
     "Start DM anyway": "Spustiť priamu správu aj tak",
@@ -1993,14 +1960,12 @@
     "Error changing password": "Chyba pri zmene hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Neznáma chyba pri zmene hesla (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Nie je možné pozvať používateľa e-mailom bez servera totožnosti. Môžete sa k nemu pripojiť v časti \"Nastavenia\".",
     "Failed to download source media, no source url was found": "Nepodarilo sa stiahnuť zdrojové médium, nebola nájdená žiadna zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná",
     "Waiting for users to join %(brand)s": "Čaká sa na používateľov, kým sa pripoja k aplikácii %(brand)s",
     "You do not have permission to invite users": "Nemáte oprávnenie pozývať používateľov",
     "Your language": "Váš jazyk",
     "Your device ID": "ID vášho zariadenia",
-    "User is not logged in": "Používateľ nie je prihlásený",
     "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
     "Email Notifications": "Emailové oznámenia",
@@ -2010,7 +1975,6 @@
     "Mentions and Keywords": "Zmienky a kľúčové slová",
     "Other things we think you might be interested in:": "Ďalšie veci, ktoré by vás mohli zaujímať:",
     "Show a badge <badge/> when keywords are used in a room.": "Zobraziť odznak <badge/> pri použití kľúčových slov v miestnosti.",
-    "Something went wrong.": "Niečo sa pokazilo.",
     "User cannot be invited until they are unbanned": "Používateľ nemôže byť pozvaný, kým nie je zrušený jeho zákaz",
     "Ask to join": "Požiadať o pripojenie",
     "People cannot join unless access is granted.": "Ľudia sa nemôžu pripojiť, pokiaľ im nebude udelený prístup.",
@@ -2052,9 +2016,7 @@
     "Failed to query public rooms": "Nepodarilo sa vyhľadať verejné miestnosti",
     "Message (optional)": "Správa (voliteľné)",
     "Your request to join is pending.": "Vaša žiadosť o pripojenie čaká na vybavenie.",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "Tento server používa staršiu verziu systému Matrix. Ak chcete používať %(brand)s bez chýb, aktualizujte na Matrix %(version)s.",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Váš domovský server je príliš starý a nepodporuje minimálnu požadovanú verziu API. Obráťte sa na vlastníka servera alebo aktualizujte svoj server.",
-    "Your server is unsupported": "Váš server nie je podporovaný",
     "common": {
         "about": "Informácie",
         "analytics": "Analytické údaje",
@@ -2632,7 +2594,10 @@
             "enable_desktop_notifications_session": "Povoliť oznámenia na ploche pre túto reláciu",
             "show_message_desktop_notification": "Zobraziť text správy v oznámení na pracovnej ploche",
             "enable_audible_notifications_session": "Povoliť zvukové oznámenia pre túto reláciu",
-            "noisy": "Hlasné"
+            "noisy": "Hlasné",
+            "error_permissions_denied": "%(brand)s nemá udelené povolenie, aby vám mohol posielať oznámenia - Prosím, skontrolujte nastavenia vašeho prehliadača",
+            "error_permissions_missing": "Aplikácii %(brand)s nebolo udelené povolenie potrebné pre posielanie oznámení - prosím, skúste to znovu",
+            "error_title": "Nie je možné povoliť oznámenia"
         },
         "appearance": {
             "layout_irc": "IRC (experimentálne)",
@@ -3518,7 +3483,15 @@
         "connection_lost_description": "Bez pripojenia k serveru nie je možné uskutočňovať hovory.",
         "too_many_calls": "Príliš veľa hovorov",
         "too_many_calls_description": "Dosiahli ste maximálny počet súčasných hovorov.",
-        "cannot_call_yourself_description": "Nemôžete zavolať samému sebe."
+        "cannot_call_yourself_description": "Nemôžete zavolať samému sebe.",
+        "msisdn_lookup_failed": "Nie je možné vyhľadať telefónne číslo",
+        "msisdn_lookup_failed_description": "Pri vyhľadávaní telefónneho čísla došlo k chybe",
+        "msisdn_transfer_failed": "Nie je možné presmerovať hovor",
+        "transfer_failed": "Presmerovanie zlyhalo",
+        "transfer_failed_description": "Nepodarilo sa presmerovať hovor",
+        "no_permission_conference": "Vyžaduje sa povolenie",
+        "no_permission_conference_description": "V tejto miestnosti nemáte povolenie začať konferenčný hovor",
+        "default_device": "Predvolené zariadenie"
     },
     "Other": "Ďalšie",
     "Advanced": "Pokročilé",
@@ -3801,7 +3774,14 @@
         "reset_password_email_field_description": "Použite e-mailovú adresu na obnovenie svojho konta",
         "reset_password_email_field_required_invalid": "Zadajte e-mailovú adresu (vyžaduje sa na tomto domovskom serveri)",
         "msisdn_field_description": "Ostatní používatelia vás môžu pozývať do miestností pomocou vašich kontaktných údajov",
-        "registration_msisdn_field_required_invalid": "Zadajte telefónne číslo (povinné na tomto domovskom serveri)"
+        "registration_msisdn_field_required_invalid": "Zadajte telefónne číslo (povinné na tomto domovskom serveri)",
+        "oidc": {
+            "error_generic": "Niečo sa pokazilo.",
+            "error_title": "Nemohli sme vás prihlásiť"
+        },
+        "sso_failed_missing_storage": "Požiadali sme prehliadač, aby si pamätal, aký domovský server používate na prihlásenie, ale váš prehliadač ho, bohužiaľ, zabudol. Prejdite na prihlasovaciu stránku a skúste to znova.",
+        "reset_password_email_not_found_title": "Túto emailovú adresu sa nepodarilo nájsť",
+        "reset_password_email_not_associated": "Zdá sa, že vaša emailová adresa nie je priradená k žiadnemu Matrix ID na tomto domovskom serveri."
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -4170,7 +4150,10 @@
         "column_document": "Dokument",
         "tac_title": "Zmluvné podmienky",
         "tac_description": "Ak chcete aj naďalej používať domovský server %(homeserverDomain)s, mali by ste si prečítať a odsúhlasiť naše zmluvné podmienky.",
-        "tac_button": "Prečítať zmluvné podmienky"
+        "tac_button": "Prečítať zmluvné podmienky",
+        "identity_server_no_terms_title": "Server totožností nemá žiadne podmienky poskytovania služieb",
+        "identity_server_no_terms_description_1": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
+        "identity_server_no_terms_description_2": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera."
     },
     "space_settings": {
         "title": "Nastavenia - %(spaceName)s"
@@ -4197,5 +4180,27 @@
     "failed_load_async_component": "Nie je možné načítať! Skontrolujte prístup na internet a skúste neskôr.",
     "upload_failed_generic": "Nepodarilo sa nahrať súbor „%(fileName)s“.",
     "upload_failed_size": "Veľkosť súboru „%(fileName)s“ prekračuje limit veľkosti súboru nahrávania na tento domovský server",
-    "upload_failed_title": "Nahrávanie zlyhalo"
+    "upload_failed_title": "Nahrávanie zlyhalo",
+    "cannot_invite_without_identity_server": "Nie je možné pozvať používateľa e-mailom bez servera totožnosti. Môžete sa k nemu pripojiť v časti \"Nastavenia\".",
+    "unsupported_server_title": "Váš server nie je podporovaný",
+    "unsupported_server_description": "Tento server používa staršiu verziu systému Matrix. Ak chcete používať %(brand)s bez chýb, aktualizujte na Matrix %(version)s.",
+    "error_user_not_logged_in": "Používateľ nie je prihlásený",
+    "error_database_closed_title": "Databáza sa neočakávane zatvorila",
+    "error_database_closed_description": "Môže to byť spôsobené otvorením aplikácie na viacerých kartách alebo vymazaním údajov prehliadača.",
+    "empty_room": "Prázdna miestnosť",
+    "user1_and_user2": "%(user1)s a %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s a 1 ďalší",
+        "other": "%(user)s a %(count)s ďalších"
+    },
+    "inviting_user1_and_user2": "Pozývanie %(user1)s a %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Pozývanie %(user)s a 1 ďalšieho",
+        "other": "Pozývanie %(user)s a %(count)s ďalších"
+    },
+    "empty_room_was_name": "Prázdna miestnosť (bola %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s žiada o overenie",
+        "io.element.voice_broadcast_chunk": "%(senderName)s začal/a hlasové vysielanie"
+    }
 }

@@ -39,7 +39,6 @@
     "Admin Tools": "Herramientas de administración",
     "No Microphones detected": "Micrófono no detectado",
     "No Webcams detected": "Cámara no detectada",
-    "Default Device": "Dispositivo por defecto",
     "Custom level": "Nivel personalizado",
     "Enter passphrase": "Introducir frase de contraseña",
     "Home": "Inicio",
@@ -83,10 +82,7 @@
     "Reason": "Motivo",
     "Reject invitation": "Rechazar invitación",
     "Return to login screen": "Regresar a la pantalla de inicio de sesión",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s no tiene permiso para enviarte notificaciones - por favor, comprueba los ajustes de tu navegador",
-    "%(brand)s was not given permission to send notifications - please try again": "No le has dado permiso a %(brand)s para enviar notificaciones. Por favor, inténtalo de nuevo",
     "Room %(roomId)s not visible": "La sala %(roomId)s no es visible",
-    "This email address was not found": "No se ha encontrado la dirección de correo electrónico",
     "This room has no local addresses": "Esta sala no tiene direcciones locales",
     "This room is not recognised.": "No se reconoce esta sala.",
     "This doesn't appear to be a valid email address": "Esto no parece un e-mail váido",
@@ -101,7 +97,6 @@
     "Unable to remove contact information": "No se ha podido eliminar la información de contacto",
     "Unable to verify email address.": "No es posible verificar la dirección de correo electrónico.",
     "Unban": "Quitar Veto",
-    "Unable to enable Notifications": "No se han podido activar las notificaciones",
     "Uploading %(filename)s": "Subiendo %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Subiendo %(filename)s y otros %(count)s",
@@ -169,7 +164,6 @@
     "Low Priority": "Prioridad baja",
     "Wednesday": "Miércoles",
     "Permission Required": "Se necesita permiso",
-    "You do not have permission to start a conference call in this room": "No tienes permiso para iniciar una llamada de conferencia en esta sala",
     "%(weekDayName)s %(time)s": "%(weekDayName)s a las %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s de %(monthName)s a las %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s de %(monthName)s de %(fullYear)s",
@@ -386,9 +380,6 @@
     "Use an identity server": "Usar un servidor de identidad",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Usar un servidor de identidad para invitar por correo. Presiona continuar par usar el servidor de identidad por defecto (%(defaultIdentityServerName)s) o adminístralo en Ajustes.",
     "Use an identity server to invite by email. Manage in Settings.": "Usa un servidor de identidad para invitar por correo. Puedes configurarlo en tus ajustes.",
-    "Identity server has no terms of service": "El servidor de identidad no tiene términos de servicio",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acción necesita acceder al servidor de identidad por defecto <server /> para validar un correo o un teléfono, pero el servidor no tiene términos de servicio.",
-    "Only continue if you trust the owner of the server.": "Continúa solamente si confías en el propietario del servidor.",
     "Error upgrading room": "Fallo al mejorar la sala",
     "Double check that your server supports the room version chosen and try again.": "Asegúrate de que tu servidor es compatible con la versión de sala elegida y prueba de nuevo.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
@@ -488,7 +479,6 @@
     "Disconnect from the identity server <idserver />?": "¿Desconectarse del servidor de identidad <idserver />?",
     "You should:": "Deberías:",
     "New login. Was this you?": "Nuevo inicio de sesión. ¿Fuiste tú?",
-    "%(name)s is requesting verification": "%(name)s solicita verificación",
     "You signed in to a new session without verifying it:": "Iniciaste una nueva sesión sin verificarla:",
     "Verify your other session using one of the options below.": "Verifica la otra sesión utilizando una de las siguientes opciones.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) inició una nueva sesión sin verificarla:",
@@ -874,8 +864,6 @@
     },
     "Hide Widgets": "Ocultar accesorios",
     "Show Widgets": "Mostrar accesorios",
-    "There was an error looking up the phone number": "Ha ocurrido un error al buscar el número de teléfono",
-    "Unable to look up phone number": "No se ha podido buscar el número de teléfono",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
     "Confirm your Security Phrase": "Confirma tu frase de seguridad",
@@ -1064,7 +1052,6 @@
     "Continuing without email": "Continuar sin correo electrónico",
     "Modal Widget": "Accesorio emergente",
     "Transfer": "Transferir",
-    "Failed to transfer call": "No se ha podido transferir la llamada",
     "A call can only be transferred to a single user.": "Una llamada solo puede transferirse a un usuario.",
     "Invite by email": "Invitar a través de correo electrónico",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
@@ -1172,8 +1159,6 @@
     "Afghanistan": "Afganistán",
     "United States": "Estados Unidos",
     "United Kingdom": "Reino Unido",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Le hemos preguntado a tu navegador qué servidor base usar para iniciar tu sesión, pero parece que no lo recuerda. Vuelve a la página de inicio de sesión e inténtalo de nuevo.",
-    "We couldn't log you in": "No hemos podido iniciar tu sesión",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si te has olvidado de tu clave de seguridad puedes <button>configurar nuevos métodos de recuperación</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accede a tu historial de mensajes seguros y configúralos introduciendo tu clave de seguridad.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Si has olvidado tu frase de seguridad puedes usar tu <button1>clave de seguridad</button1> o <button2>configurar nuevos métodos de recuperación</button2>",
@@ -1213,7 +1198,6 @@
     "Create a new room": "Crear una sala nueva",
     "Spaces": "Espacios",
     "Space selection": "Selección de espacio",
-    "Empty room": "Sala vacía",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Añadir sala ya existente",
     "Invite to this space": "Invitar al espacio",
@@ -1359,8 +1343,6 @@
     "Global": "Global",
     "New keyword": "Nueva palabra clave",
     "Keyword": "Palabra clave",
-    "Transfer Failed": "La transferencia ha fallado",
-    "Unable to transfer call": "No se ha podido transferir la llamada",
     "Could not connect media": "No se ha podido conectar con los dispositivos multimedia",
     "Their device couldn't start the camera or microphone": "El dispositivo de la otra persona no ha podido iniciar la cámara o micrófono",
     "Error downloading audio": "Error al descargar el audio",
@@ -1801,18 +1783,7 @@
     "Sessions": "Sesiones",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Invitando a %(user)s y 1 más",
-        "other": "Invitando a %(user)s y %(count)s más"
-    },
-    "Inviting %(user1)s and %(user2)s": "Invitando a %(user1)s y %(user2)s",
     "We're creating a room with %(names)s": "Estamos creando una sala con %(names)s",
-    "Empty room (was %(oldName)s)": "Sala vacía (antes era %(oldName)s)",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s y 1 más",
-        "other": "%(user)s y %(count)s más"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s y %(user2)s",
     "Spotlight": "Spotlight",
     "View chat timeline": "Ver historial del chat",
     "You do not have permission to start voice calls": "No tienes permiso para iniciar llamadas de voz",
@@ -1932,7 +1903,6 @@
     "You have unverified sessions": "Tienes sesiones sin verificar",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "WARNING: session already verified, but keys do NOT MATCH!": "ADVERTENCIA: la sesión ya está verificada, pero las claves NO COINCIDEN",
-    "Database unexpectedly closed": "La base de datos se ha cerrado de forma inesperada",
     "Ended a poll": "Cerró una encuesta",
     "Unable to connect to Homeserver. Retrying…": "No se ha podido conectar al servidor base. Reintentando…",
     "If you know a room address, try joining through that instead.": "Si conoces la dirección de una sala, prueba a unirte a través de ella.",
@@ -2520,7 +2490,10 @@
             "enable_desktop_notifications_session": "Activa las notificaciones de escritorio para esta sesión",
             "show_message_desktop_notification": "Mostrar mensaje en las notificaciones de escritorio",
             "enable_audible_notifications_session": "Activar notificaciones sonoras para esta sesión",
-            "noisy": "Sonoro"
+            "noisy": "Sonoro",
+            "error_permissions_denied": "%(brand)s no tiene permiso para enviarte notificaciones - por favor, comprueba los ajustes de tu navegador",
+            "error_permissions_missing": "No le has dado permiso a %(brand)s para enviar notificaciones. Por favor, inténtalo de nuevo",
+            "error_title": "No se han podido activar las notificaciones"
         },
         "appearance": {
             "layout_irc": "IRC (en pruebas)",
@@ -3344,7 +3317,15 @@
         "connection_lost_description": "No puedes llamar porque no hay conexión con el servidor.",
         "too_many_calls": "Demasiadas llamadas",
         "too_many_calls_description": "Has llegado al límite de llamadas simultáneas.",
-        "cannot_call_yourself_description": "No puedes llamarte a ti mismo."
+        "cannot_call_yourself_description": "No puedes llamarte a ti mismo.",
+        "msisdn_lookup_failed": "No se ha podido buscar el número de teléfono",
+        "msisdn_lookup_failed_description": "Ha ocurrido un error al buscar el número de teléfono",
+        "msisdn_transfer_failed": "No se ha podido transferir la llamada",
+        "transfer_failed": "La transferencia ha fallado",
+        "transfer_failed_description": "No se ha podido transferir la llamada",
+        "no_permission_conference": "Se necesita permiso",
+        "no_permission_conference_description": "No tienes permiso para iniciar una llamada de conferencia en esta sala",
+        "default_device": "Dispositivo por defecto"
     },
     "Other": "Otros",
     "Advanced": "Avanzado",
@@ -3616,7 +3597,12 @@
         "reset_password_email_field_description": "Utilice una dirección de correo electrónico para recuperar su cuenta",
         "reset_password_email_field_required_invalid": "Introduce una dirección de correo electrónico (obligatorio en este servidor)",
         "msisdn_field_description": "Otros usuarios pueden invitarte las salas utilizando tus datos de contacto",
-        "registration_msisdn_field_required_invalid": "Introduce un número de teléfono (es obligatorio en este servidor base)"
+        "registration_msisdn_field_required_invalid": "Introduce un número de teléfono (es obligatorio en este servidor base)",
+        "sso_failed_missing_storage": "Le hemos preguntado a tu navegador qué servidor base usar para iniciar tu sesión, pero parece que no lo recuerda. Vuelve a la página de inicio de sesión e inténtalo de nuevo.",
+        "oidc": {
+            "error_title": "No hemos podido iniciar tu sesión"
+        },
+        "reset_password_email_not_found_title": "No se ha encontrado la dirección de correo electrónico"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -3972,7 +3958,10 @@
         "column_document": "Documento",
         "tac_title": "Términos y condiciones",
         "tac_description": "Para continuar usando el servidor base %(homeserverDomain)s, debes revisar y estar de acuerdo con nuestros términos y condiciones.",
-        "tac_button": "Revisar términos y condiciones"
+        "tac_button": "Revisar términos y condiciones",
+        "identity_server_no_terms_title": "El servidor de identidad no tiene términos de servicio",
+        "identity_server_no_terms_description_1": "Esta acción necesita acceder al servidor de identidad por defecto <server /> para validar un correo o un teléfono, pero el servidor no tiene términos de servicio.",
+        "identity_server_no_terms_description_2": "Continúa solamente si confías en el propietario del servidor."
     },
     "space_settings": {
         "title": "Ajustes - %(spaceName)s"
@@ -3999,5 +3988,21 @@
     "failed_load_async_component": "No se ha podido cargar. Comprueba tu conexión de red e inténtalo de nuevo.",
     "upload_failed_generic": "La subida del archivo «%(fileName)s ha fallado.",
     "upload_failed_size": "El archivo «%(fileName)s» supera el tamaño límite del servidor para subidas",
-    "upload_failed_title": "Subida fallida"
+    "upload_failed_title": "Subida fallida",
+    "error_database_closed_title": "La base de datos se ha cerrado de forma inesperada",
+    "empty_room": "Sala vacía",
+    "user1_and_user2": "%(user1)s y %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s y 1 más",
+        "other": "%(user)s y %(count)s más"
+    },
+    "inviting_user1_and_user2": "Invitando a %(user1)s y %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Invitando a %(user)s y 1 más",
+        "other": "Invitando a %(user)s y %(count)s más"
+    },
+    "empty_room_was_name": "Sala vacía (antes era %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s solicita verificación"
+    }
 }

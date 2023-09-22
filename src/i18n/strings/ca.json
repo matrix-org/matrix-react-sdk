@@ -35,10 +35,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s %(time)s",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s no té permís per enviar-te notificacions, comprova la configuració del teu navegador",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s no ha rebut cap permís per enviar notificacions, torna-ho a provar",
-    "Unable to enable Notifications": "No s'han pogut activar les notificacions",
-    "This email address was not found": "Aquesta adreça de correu electrònic no s'ha trobat",
     "Default": "Predeterminat",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
@@ -199,7 +195,6 @@
     "Low Priority": "Baixa prioritat",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
-    "You do not have permission to start a conference call in this room": "No tens permís per iniciar una conferència telefònica en aquesta sala",
     "Missing roomId.": "Falta l'ID de sala.",
     "You do not have permission to invite people to this room.": "No teniu permís per convidar gent a aquesta sala.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
@@ -239,10 +234,6 @@
     "Setting up keys": "Configurant claus",
     "Are you sure you want to cancel entering passphrase?": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
     "Cancel entering passphrase?": "Vols cancel·lar la introducció de la frase secreta?",
-    "%(name)s is requesting verification": "%(name)s està demanant verificació",
-    "Only continue if you trust the owner of the server.": "Continua, només, si confies amb el propietari del servidor.",
-    "Identity server has no terms of service": "El servidor d'identitat no disposa de condicions de servei",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Aquesta acció necessita accedir al servidor d'identitat predeterminat <server /> per validar una adreça de correu electrònic o un número de telèfon, però el servidor no disposa de condicions de servei.",
     "e.g. my-room": "p.e. la-meva-sala",
     "New published address (e.g. #alias:server)": "Nova adreça publicada (p.e. #alias:server)",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no has eliminat el mètode de recuperació, pot ser que un atacant estigui intentant accedir al teu compte. Canvia la teva contrasenya i configura un nou mètode de recuperació a Configuració, immediatament.",
@@ -382,7 +373,10 @@
             "rule_call": "Invitació de trucada",
             "rule_suppress_notices": "Missatges enviats pel bot",
             "show_message_desktop_notification": "Mostra els missatges amb notificacions d'escriptori",
-            "noisy": "Sorollós"
+            "noisy": "Sorollós",
+            "error_permissions_denied": "%(brand)s no té permís per enviar-te notificacions, comprova la configuració del teu navegador",
+            "error_permissions_missing": "%(brand)s no ha rebut cap permís per enviar notificacions, torna-ho a provar",
+            "error_title": "No s'han pogut activar les notificacions"
         },
         "appearance": {
             "subheading": "La configuració d'aspecte només afecta aquesta sessió %(brand)s.",
@@ -630,7 +624,9 @@
         "answered_elsewhere_description": "La trucada s'ha respost des d'un altre dispositiu.",
         "misconfigured_server": "La trucada ha fallat a causa d'una configuració errònia al servidor",
         "misconfigured_server_description": "Demana a l'administrador del servidor local (<code>%(homeserverDomain)s</code>) que configuri un servidor TURN perquè les trucades funcionin de manera fiable.",
-        "cannot_call_yourself_description": "No pots trucar-te a tu mateix."
+        "cannot_call_yourself_description": "No pots trucar-te a tu mateix.",
+        "no_permission_conference": "Es necessita permís",
+        "no_permission_conference_description": "No tens permís per iniciar una conferència telefònica en aquesta sala"
     },
     "Other": "Altres",
     "Advanced": "Avançat",
@@ -695,7 +691,8 @@
             "sso_body": "Confirma l'addició d'aquest correu electrònic mitjançant la inscripció única SSO (per demostrar la teva identitat)."
         },
         "msisdn_field_label": "Telèfon",
-        "identifier_label": "Inicieu sessió amb"
+        "identifier_label": "Inicieu sessió amb",
+        "reset_password_email_not_found_title": "Aquesta adreça de correu electrònic no s'ha trobat"
     },
     "export_chat": {
         "messages": "Missatges"
@@ -778,5 +775,13 @@
         "generic_error": "És possible que el servidor no estigui disponible, sobrecarregat o que hagi topat amb un error.",
         "unsupported_version": "El servidor no és compatible amb la versió de sala especificada.",
         "error_title": "No s'ha pogut crear la sala"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "El servidor d'identitat no disposa de condicions de servei",
+        "identity_server_no_terms_description_1": "Aquesta acció necessita accedir al servidor d'identitat predeterminat <server /> per validar una adreça de correu electrònic o un número de telèfon, però el servidor no disposa de condicions de servei.",
+        "identity_server_no_terms_description_2": "Continua, només, si confies amb el propietari del servidor."
+    },
+    "notifier": {
+        "m.key.verification.request": "%(name)s està demanant verificació"
     }
 }

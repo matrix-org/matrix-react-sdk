@@ -7,7 +7,6 @@
     "An error has occurred.": "D’imigh earráid éigin.",
     "A new password must be entered.": "Caithfear focal faire nua a iontráil.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
-    "Default Device": "Gléas Réamhshocraithe",
     "No media permissions": "Gan cheadanna meáin",
     "No Webcams detected": "Níor braitheadh aon ceamara gréasáin",
     "No Microphones detected": "Níor braitheadh aon micreafón",
@@ -378,7 +377,6 @@
     "Connecting": "Ag Ceangal",
     "Sending": "Ag Seoladh",
     "Avatar": "Abhatár",
-    "You do not have permission to start a conference call in this room": "Níl cead agat glao comhdhála a thosú sa seomra seo",
     "Share your public space": "Roinn do spás poiblí",
     "Invite to %(spaceName)s": "Tabhair cuireadh chun %(spaceName)s",
     "Unnamed room": "Seomra gan ainm",
@@ -727,7 +725,10 @@
         "misconfigured_server": "Theip an glaoch de bharr freastalaí mícumraithe",
         "misconfigured_server_description": "Iarr ar an riarthóir do fhreastalaí baile (<code>%(homeserverDomain)s</code>) freastalaí TURN a chumrú go bhfeidhmeoidh glaonna go hiontaofa.",
         "too_many_calls": "Barraíocht Glaonna",
-        "cannot_call_yourself_description": "Ní féidir leat glaoch ort féin."
+        "cannot_call_yourself_description": "Ní féidir leat glaoch ort féin.",
+        "no_permission_conference": "Is Teastáil Cead",
+        "no_permission_conference_description": "Níl cead agat glao comhdhála a thosú sa seomra seo",
+        "default_device": "Gléas Réamhshocraithe"
     },
     "Other": "Eile",
     "Advanced": "Forbartha",

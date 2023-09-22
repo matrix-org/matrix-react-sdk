@@ -4,7 +4,6 @@
     "No Webcams detected": "Hiçbir Web kamerası bulunamadı",
     "No media permissions": "Medya izinleri yok",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir",
-    "Default Device": "Varsayılan Cihaz",
     "Authentication": "Doğrulama",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
     "and %(count)s others...": {
@@ -65,8 +64,6 @@
     "Reason": "Sebep",
     "Reject invitation": "Daveti Reddet",
     "Return to login screen": "Giriş ekranına dön",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s size bildirim gönderme iznine sahip değil - lütfen tarayıcı ayarlarınızı kontrol edin",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s'a bildirim gönderme izni verilmedi - lütfen tekrar deneyin",
     "Room %(roomId)s not visible": "%(roomId)s odası görünür değil",
     "%(roomName)s does not exist.": "%(roomName)s mevcut değil.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
@@ -74,7 +71,6 @@
     "Search failed": "Arama başarısız",
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Session ID": "Oturum ID",
-    "This email address was not found": "Bu e-posta adresi bulunamadı",
     "This room has no local addresses": "Bu oda hiçbir yerel adrese sahip değil",
     "This room is not recognised.": "Bu oda tanınmıyor.",
     "This doesn't appear to be a valid email address": "Bu geçerli bir e-posta adresi olarak gözükmüyor",
@@ -84,7 +80,6 @@
     "Unable to remove contact information": "Kişi bilgileri kaldırılamıyor",
     "Unable to verify email address.": "E-posta adresi doğrulanamıyor.",
     "Unban": "Yasağı Kaldır",
-    "Unable to enable Notifications": "Bildirimler aktif edilemedi",
     "unknown error code": "bilinmeyen hata kodu",
     "Uploading %(filename)s": "%(filename)s yükleniyor",
     "Uploading %(filename)s and %(count)s others": {
@@ -179,8 +174,6 @@
     "Low Priority": "Düşük Öncelikli",
     "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
-    "Identity server has no terms of service": "Kimlik sunucusu hizmet kurallarına sahip değil",
-    "Only continue if you trust the owner of the server.": "Sadece sunucunun sahibine güveniyorsanız devam edin.",
     "Restricted": "Sınırlı",
     "Missing roomId.": "roomId eksik.",
     "You are not in this room.": "Bu odada değilsin.",
@@ -266,7 +259,6 @@
     "Your password has been reset.": "Parolanız sıfırlandı.",
     "General failure": "Genel başarısızlık",
     "Create account": "Yeni hesap",
-    "You do not have permission to start a conference call in this room": "Bu odada bir konferans başlatmak için izniniz yok",
     "Unable to create widget.": "Görsel bileşen oluşturulamıyor.",
     "Use an identity server to invite by email. Manage in Settings.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. Ayarlardan Yönet.",
     "This homeserver has exceeded one of its resource limits.": "Bu anasunucu kaynak limitlerinden birini aştı.",
@@ -609,7 +601,6 @@
     "Failed to re-authenticate due to a homeserver problem": "Anasunucu problemi yüzünden yeniden kimlik doğrulama başarısız",
     "PM": "24:00",
     "AM": "12:00",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Bu eylem, bir e-posta adresini veya telefon numarasını doğrulamak için varsayılan kimlik sunucusuna <server /> erişilmesini gerektirir, ancak sunucunun herhangi bir hizmet şartı yoktur.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "E-posta ile davet etmek için kimlik sunucusu kullan. Varsayılan kimlik sunucusunu (%(defaultIdentityServerName)s) kullanmak için devam edin ya da ayarlardan değiştirin.",
     "Unignored user": "Reddedilmemiş kullanıcı",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "UYARI: ANAHTAR DOĞRULAMASI BAŞARISIZ! %(userld)s'nin/nın %(deviceId)s oturumu için imza anahtarı \"%(fprint)s\" verilen anahtar ile uyuşmuyor \"%(fingerprint)s\". Bu iletişiminizin engellendiği anlamına gelebilir!",
@@ -624,7 +615,6 @@
     "Verify by comparing unique emoji.": "Eşsiz emoji eşleştirme ile doğrulama.",
     "Edited at %(date)s. Click to view edits.": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla.",
     "Are you sure you want to cancel entering passphrase?": "Parola girmeyi iptal etmek istediğinizden emin misiniz?",
-    "%(name)s is requesting verification": "%(name)s doğrulama istiyor",
     "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
     "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
@@ -1021,21 +1011,16 @@
     "Cross-signing is not set up.": "Çapraz imzalama ayarlanmamış.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Hesabınız gizli belleğinde çapraz imzalama kimliği barındırıyor ancak bu oturumda daha kullanılmış değil.",
     "Cross-signing is ready for use.": "Çapraz imzalama zaten kullanılıyor.",
-    "Unable to look up phone number": "Telefon numarasına bakılamadı",
-    "There was an error looking up the phone number": "Telefon numarasına bakarken bir hata oluştu",
     "Use app": "Uygulamayı kullan",
     "Use app for a better experience": "Daha iyi bir deneyim için uygulamayı kullanın",
     "Some invites couldn't be sent": "Bazı davetler gönderilemiyor",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Başkalarına davetler iletilmekle beraber, aşağıdakiler <RoomName/> odasına davet edilemedi",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Tarayıcınıza bağlandığınız ana sunucuyu anımsamasını söyledik ama ne yazık ki tarayıcınız bunu unutmuş. Lütfen giriş sayfasına gidip tekrar deneyin.",
-    "We couldn't log you in": "Sizin girişinizi yapamadık",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
     "Edit devices": "Cihazları düzenle",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin.",
     "No microphone found": "Mikrofon bulunamadı",
-    "Empty room": "Boş oda",
     "Suggested Rooms": "Önerilen Odalar",
     "View message": "Mesajı görüntüle",
     "Your message was sent": "Mesajınız gönderildi",
@@ -1051,10 +1036,7 @@
     "Could not connect to identity server": "Kimlik Sunucusuna bağlanılamadı",
     "Not a valid identity server (status code %(code)s)": "Geçerli bir Kimlik Sunucu değil ( durum kodu %(code)s )",
     "Identity server URL must be HTTPS": "Kimlik Sunucu URL adresi HTTPS olmak zorunda",
-    "Transfer Failed": "Aktarma Başarısız",
-    "Unable to transfer call": "Arama Karşıdaki kişiye aktarılamıyor",
     "This homeserver has been blocked by its administrator.": "Bu sunucu yöneticisi tarafından bloke edildi.",
-    "Failed to transfer call": "Arama aktarılırken hata oluştu",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1348,7 +1330,10 @@
             "enable_desktop_notifications_session": "Bu oturum için masaüstü bildirimlerini aç",
             "show_message_desktop_notification": "Masaüstü bildiriminde mesaj göster",
             "enable_audible_notifications_session": "Bu oturum için sesli bildirimleri aktifleştir",
-            "noisy": "Gürültülü"
+            "noisy": "Gürültülü",
+            "error_permissions_denied": "%(brand)s size bildirim gönderme iznine sahip değil - lütfen tarayıcı ayarlarınızı kontrol edin",
+            "error_permissions_missing": "%(brand)s'a bildirim gönderme izni verilmedi - lütfen tekrar deneyin",
+            "error_title": "Bildirimler aktif edilemedi"
         },
         "appearance": {
             "heading": "Görünüşü özelleştir",
@@ -1832,7 +1817,15 @@
         "misconfigured_server_description": "Çağrıların sağlıklı bir şekide yapılabilmesi için lütfen anasunucunuzun (<code>%(homeserverDomain)s</code>) yöneticisinden bir TURN sunucusu yapılandırmasını isteyin.",
         "too_many_calls": "Çok fazla arama",
         "too_many_calls_description": "Maksimum eşzamanlı arama sayısına ulaştınız.",
-        "cannot_call_yourself_description": "Kendinizle görüşme yapamazsınız ."
+        "cannot_call_yourself_description": "Kendinizle görüşme yapamazsınız .",
+        "msisdn_lookup_failed": "Telefon numarasına bakılamadı",
+        "msisdn_lookup_failed_description": "Telefon numarasına bakarken bir hata oluştu",
+        "msisdn_transfer_failed": "Arama Karşıdaki kişiye aktarılamıyor",
+        "transfer_failed": "Aktarma Başarısız",
+        "transfer_failed_description": "Arama aktarılırken hata oluştu",
+        "no_permission_conference": "İzin Gerekli",
+        "no_permission_conference_description": "Bu odada bir konferans başlatmak için izniniz yok",
+        "default_device": "Varsayılan Cihaz"
     },
     "Other": "Diğer",
     "Advanced": "Gelişmiş",
@@ -1991,7 +1984,12 @@
         "identifier_label": "Şununla giriş yap",
         "reset_password_email_field_description": "Hesabınızı kurtarmak için bir e-posta adresi kullanın",
         "reset_password_email_field_required_invalid": "E-posta adresi gir ( bu ana sunucuda gerekli)",
-        "registration_msisdn_field_required_invalid": "Telefon numarası gir ( bu ana sunucuda gerekli)"
+        "registration_msisdn_field_required_invalid": "Telefon numarası gir ( bu ana sunucuda gerekli)",
+        "sso_failed_missing_storage": "Tarayıcınıza bağlandığınız ana sunucuyu anımsamasını söyledik ama ne yazık ki tarayıcınız bunu unutmuş. Lütfen giriş sayfasına gidip tekrar deneyin.",
+        "oidc": {
+            "error_title": "Sizin girişinizi yapamadık"
+        },
+        "reset_password_email_not_found_title": "Bu e-posta adresi bulunamadı"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2204,10 +2202,17 @@
         "column_document": "Belge",
         "tac_title": "Hükümler ve koşullar",
         "tac_description": "%(homeserverDomain)s ana sunucusunu kullanmaya devam etmek için hüküm ve koşulları incelemeli ve kabul etmelisiniz.",
-        "tac_button": "Hükümler ve koşulları incele"
+        "tac_button": "Hükümler ve koşulları incele",
+        "identity_server_no_terms_title": "Kimlik sunucusu hizmet kurallarına sahip değil",
+        "identity_server_no_terms_description_1": "Bu eylem, bir e-posta adresini veya telefon numarasını doğrulamak için varsayılan kimlik sunucusuna <server /> erişilmesini gerektirir, ancak sunucunun herhangi bir hizmet şartı yoktur.",
+        "identity_server_no_terms_description_2": "Sadece sunucunun sahibine güveniyorsanız devam edin."
     },
     "failed_load_async_component": "Yüklenemiyor! Ağ bağlantınızı kontrol edin ve yeniden deneyin.",
     "upload_failed_generic": "%(fileName)s dosyası için yükleme başarısız.",
     "upload_failed_size": "%(fileName)s dosyası anasunucunun yükleme boyutu limitini aşıyor",
-    "upload_failed_title": "Yükleme Başarısız"
+    "upload_failed_title": "Yükleme Başarısız",
+    "empty_room": "Boş oda",
+    "notifier": {
+        "m.key.verification.request": "%(name)s doğrulama istiyor"
+    }
 }

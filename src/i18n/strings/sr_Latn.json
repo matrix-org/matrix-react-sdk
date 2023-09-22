@@ -23,9 +23,6 @@
     "Dec": "Dec",
     "PM": "poslepodne",
     "AM": "prepodne",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s nema dozvolu da vam šalje obaveštenja. Molim proverite podešavanja vašeg internet pregledača",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s nije dobio dozvolu da šalje obaveštenja. Molim pokušajte ponovo",
-    "This email address was not found": "Ova adresa elektronske pošte nije pronađena",
     "Default": "Podrazumevano",
     "Restricted": "Ograničeno",
     "Moderator": "Moderator",
@@ -34,9 +31,6 @@
     "You need to be logged in.": "Morate biti prijavljeni",
     "You need to be able to invite users to do that.": "Mora vam biti dozvoljeno da pozovete korisnike kako bi to uradili.",
     "Failed to send request.": "Slanje zahteva nije uspelo.",
-    "Only continue if you trust the owner of the server.": "Produžite samo pod uslovom da vjerujete vlasniku servera.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ova akcija zahtijeva pristup zadanom serveru za provjeru identiteta <server /> radi provjere adrese e-pošte ili telefonskog broja, no server nema nikakve uslove za pružanje usluge.",
-    "Identity server has no terms of service": "Server identiteta nema uslove pružanja usluge",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(time)s",
@@ -86,6 +80,10 @@
             "add_msisdn_confirm_button": "Potvrdite dodavanje telefonskog broja",
             "add_msisdn_confirm_body": "Kliknite taster ispod da biste potvrdili dodavanje telefonskog broja.",
             "add_msisdn_dialog_title": "Dodajte broj telefona"
+        },
+        "notifications": {
+            "error_permissions_denied": "%(brand)s nema dozvolu da vam šalje obaveštenja. Molim proverite podešavanja vašeg internet pregledača",
+            "error_permissions_missing": "%(brand)s nije dobio dozvolu da šalje obaveštenja. Molim pokušajte ponovo"
         }
     },
     "slash_command": {
@@ -112,7 +110,8 @@
         "uia": {
             "sso_title": "Koristite jedinstvenu prijavu (SSO) za nastavak",
             "sso_body": "Potvrdite dodavanje ove email adrese koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet."
-        }
+        },
+        "reset_password_email_not_found_title": "Ova adresa elektronske pošte nije pronađena"
     },
     "keyboard": {
         "keyboard_shortcuts_tab": "Otvori podešavanja"
@@ -135,5 +134,10 @@
         "generic_error": "Serveru se ne može pristupiti, preopterećen je ili ste otkrili grešku.",
         "unsupported_version": "Privatni/javni server koji koristite ne podržava specificiranu verziju sobe.",
         "error_title": "Greška u kreiranju sobe za razgovore"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "Server identiteta nema uslove pružanja usluge",
+        "identity_server_no_terms_description_1": "Ova akcija zahtijeva pristup zadanom serveru za provjeru identiteta <server /> radi provjere adrese e-pošte ili telefonskog broja, no server nema nikakve uslove za pružanje usluge.",
+        "identity_server_no_terms_description_2": "Produžite samo pod uslovom da vjerujete vlasniku servera."
     }
 }

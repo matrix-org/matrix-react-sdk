@@ -35,7 +35,6 @@
     "No Webcams detected": "Ez da kamerarik atzeman",
     "No media permissions": "Media baimenik ez",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Agian eskuz baimendu behar duzu %(brand)sek mikrofonoa edo kamera atzitzea",
-    "Default Device": "Lehenetsitako gailua",
     "An error has occurred.": "Errore bat gertatu da.",
     "Are you sure?": "Ziur zaude?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ziur '%(roomName)s' gelatik atera nahi duzula?",
@@ -75,14 +74,11 @@
     "Reason": "Arrazoia",
     "Reject invitation": "Baztertu gonbidapena",
     "Reject all %(invitedRooms)s invites": "Baztertu %(invitedRooms)s gelarako gonbidapen guztiak",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)sek ez du zuri jakinarazpenak bidaltzeko baimenik,  egiaztatu nabigatzailearen ezarpenak",
-    "%(brand)s was not given permission to send notifications - please try again": "Ez zaio jakinarazpenak bidaltzeko baimena eman %(brand)si, saiatu berriro",
     "Room %(roomId)s not visible": "%(roomId)s gela ez dago ikusgai",
     "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
     "Search failed": "Bilaketak huts egin du",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
-    "This email address was not found": "Ez da e-mail helbide hau aurkitu",
     "This room is not recognised.": "Ez da gela hau ezagutzen.",
     "This doesn't appear to be a valid email address": "Honek ez du baliozko e-mail baten antzik",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Gela honen denbora-lerroko puntu zehatz bat kargatzen saiatu zara, baina ez duzu mezu zehatz hori ikusteko baimenik.",
@@ -90,7 +86,6 @@
     "Unable to add email address": "Ezin izan da e-mail helbidea gehitu",
     "Unable to remove contact information": "Ezin izan da kontaktuaren informazioa kendu",
     "Unable to verify email address.": "Ezin izan da e-mail helbidea egiaztatu.",
-    "Unable to enable Notifications": "Ezin izan dira jakinarazpenak gaitu",
     "Uploading %(filename)s": "%(filename)s igotzen",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s eta beste %(count)s igotzen",
@@ -242,7 +237,6 @@
     "Demote yourself?": "Jaitsi zure burua mailaz?",
     "Demote": "Jaitzi mailaz",
     "Permission Required": "Baimena beharrezkoa",
-    "You do not have permission to start a conference call in this room": "Ez duzu baimenik konferentzia dei bat hasteko gela honetan",
     "This event could not be displayed": "Ezin izan da gertakari hau bistaratu",
     "Please contact your homeserver administrator.": "Jarri zure hasiera-zerbitzariaren administratzailearekin kontaktuan.",
     "This room has been replaced and is no longer active.": "Gela hau ordeztu da eta ez dago aktibo jada.",
@@ -510,7 +504,6 @@
     "Use an identity server": "Erabili identitate zerbitzari bat",
     "Accept <policyLink /> to continue:": "Onartu <policyLink /> jarraitzeko:",
     "Terms of service not accepted or the identity server is invalid.": "Ez dira erabilera baldintzak onartu edo identitate zerbitzari baliogabea da.",
-    "Only continue if you trust the owner of the server.": "Jarraitu soilik zerbitzariaren jabea fidagarritzat jotzen baduzu.",
     "Do not use an identity server": "Ez erabili identitate-zerbitzaririk",
     "Enter a new identity server": "Sartu identitate-zerbitzari berri bat",
     "Remove %(email)s?": "Kendu %(email)s?",
@@ -523,7 +516,6 @@
     "Use an identity server to invite by email. Manage in Settings.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu ezarpenetan.",
     "Change identity server": "Aldatu identitate-zerbitzaria",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Deskonektatu <current /> identitate-zerbitzaritik eta konektatu <new /> zerbitzarira?",
-    "Identity server has no terms of service": "Identitate-zerbitzariak ez du erabilera baldintzarik",
     "The identity server you have chosen does not have any terms of service.": "Hautatu duzun identitate-zerbitzariak ez du erabilera baldintzarik.",
     "Disconnect identity server": "Deskonektatu identitate-zerbitzaritik",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Oraindik <b>informazio pertsonala partekatzen duzu</b> <idserver /> identitate zerbitzarian.",
@@ -573,7 +565,6 @@
     "Cancel search": "Ezeztatu bilaketa",
     "Jump to first unread room.": "Jauzi irakurri gabeko lehen gelara.",
     "Jump to first invite.": "Jauzi lehen gonbidapenera.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ekintza honek lehenetsitako <server /> identitate-zerbitzaria atzitzea eskatzen du, e-mail helbidea edo telefono zenbakia balioztatzeko, baina zerbitzariak ez du erabilera baldintzarik.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Message Actions": "Mezu-ekintzak",
     "You verified %(name)s": "%(name)s egiaztatu duzu",
@@ -748,7 +739,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
-    "%(name)s is requesting verification": "%(name)s egiaztaketa eskatzen ari da",
     "well formed": "ongi osatua",
     "unexpected type": "ustekabeko mota",
     "Almost there! Is %(displayName)s showing the same shield?": "Ia amaitu duzu! %(displayName)s gailuak ezkutu bera erakusten du?",
@@ -1103,7 +1093,10 @@
             "enable_desktop_notifications_session": "Gaitu mahaigaineko jakinarazpenak saio honentzat",
             "show_message_desktop_notification": "Erakutsi mezua mahaigaineko jakinarazpenean",
             "enable_audible_notifications_session": "Gaitu jakinarazpen entzungarriak saio honentzat",
-            "noisy": "Zaratatsua"
+            "noisy": "Zaratatsua",
+            "error_permissions_denied": "%(brand)sek ez du zuri jakinarazpenak bidaltzeko baimenik,  egiaztatu nabigatzailearen ezarpenak",
+            "error_permissions_missing": "Ez zaio jakinarazpenak bidaltzeko baimena eman %(brand)si, saiatu berriro",
+            "error_title": "Ezin izan dira jakinarazpenak gaitu"
         },
         "appearance": {
             "match_system_theme": "Bat egin sistemako azalarekin",
@@ -1490,7 +1483,10 @@
         "call_failed": "Deiak huts egin du",
         "misconfigured_server": "Deiak huts egin du zerbitzaria gaizki konfiguratuta dagoelako",
         "misconfigured_server_description": "Eskatu zure hasiera-zerbitzariaren administratzaileari (<code>%(homeserverDomain)s</code>) TURN zerbitzari bat konfiguratu dezala deiek ondo funtzionatzeko.",
-        "cannot_call_yourself_description": "Ezin diozu zure buruari deitu."
+        "cannot_call_yourself_description": "Ezin diozu zure buruari deitu.",
+        "no_permission_conference": "Baimena beharrezkoa",
+        "no_permission_conference_description": "Ez duzu baimenik konferentzia dei bat hasteko gela honetan",
+        "default_device": "Lehenetsitako gailua"
     },
     "Other": "Beste bat",
     "Advanced": "Aurreratua",
@@ -1651,7 +1647,8 @@
         "reset_password_email_field_description": "Erabili e-mail helbidea zure kontua berreskuratzeko",
         "reset_password_email_field_required_invalid": "Sartu zure e-mail helbidea (hasiera-zerbitzari honetan beharrezkoa da)",
         "msisdn_field_description": "Beste erabiltzaileek geletara gonbidatu zaitzakete zure kontaktu-xehetasunak erabiliz",
-        "registration_msisdn_field_required_invalid": "Sartu telefono zenbakia (hasiera zerbitzari honetan beharrezkoa)"
+        "registration_msisdn_field_required_invalid": "Sartu telefono zenbakia (hasiera zerbitzari honetan beharrezkoa)",
+        "reset_password_email_not_found_title": "Ez da e-mail helbide hau aurkitu"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1792,10 +1789,16 @@
         "column_document": "Dokumentua",
         "tac_title": "Termino eta baldintzak",
         "tac_description": "%(homeserverDomain)s hasiera-zerbitzaria erabiltzen jarraitzeko gure termino eta baldintzak irakurri eta onartu behar dituzu.",
-        "tac_button": "Irakurri termino eta baldintzak"
+        "tac_button": "Irakurri termino eta baldintzak",
+        "identity_server_no_terms_title": "Identitate-zerbitzariak ez du erabilera baldintzarik",
+        "identity_server_no_terms_description_1": "Ekintza honek lehenetsitako <server /> identitate-zerbitzaria atzitzea eskatzen du, e-mail helbidea edo telefono zenbakia balioztatzeko, baina zerbitzariak ez du erabilera baldintzarik.",
+        "identity_server_no_terms_description_2": "Jarraitu soilik zerbitzariaren jabea fidagarritzat jotzen baduzu."
     },
     "failed_load_async_component": "Ezin da kargatu! Egiaztatu sare konexioa eta saiatu berriro.",
     "upload_failed_generic": "Huts egin du '%(fileName)s' fitxategia igotzean.",
     "upload_failed_size": "'%(fileName)s' fitxategiak igoerarako hasiera-zerbitzari honek duen tamaina muga gainditzen du",
-    "upload_failed_title": "Igoerak huts egin du"
+    "upload_failed_title": "Igoerak huts egin du",
+    "notifier": {
+        "m.key.verification.request": "%(name)s egiaztaketa eskatzen ari da"
+    }
 }

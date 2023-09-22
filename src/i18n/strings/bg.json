@@ -34,10 +34,6 @@
     "Warning!": "Внимание!",
     "PM": "PM",
     "AM": "AM",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s няма разрешение да Ви изпраща известия - моля проверете вашите настройки на браузъра",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s не е получил разрешение да изпраща известия - моля опитайте отново",
-    "Unable to enable Notifications": "Неупешно включване на известия",
-    "This email address was not found": "Този имейл адрес не беше открит",
     "Default": "По подразбиране",
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
@@ -173,7 +169,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Може да се наложи ръчно да разрешите на %(brand)s да получи достъп до Вашия микрофон/уеб камера",
     "No Microphones detected": "Няма открити микрофони",
     "No Webcams detected": "Няма открити уеб камери",
-    "Default Device": "Устройство по подразбиране",
     "Profile": "Профил",
     "A new password must be entered.": "Трябва да бъде въведена нова парола.",
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
@@ -243,7 +238,6 @@
     "Demote": "Понижение",
     "This event could not be displayed": "Това събитие не може да бъде показано",
     "Permission Required": "Необходимо е разрешение",
-    "You do not have permission to start a conference call in this room": "Нямате достъп да започнете конферентен разговор в тази стая",
     "Only room administrators will see this warning": "Само администратори на стаята виждат това предупреждение",
     "This homeserver has hit its Monthly Active User limit.": "Този сървър е достигнал лимита си за активни потребители на месец.",
     "This homeserver has exceeded one of its resource limits.": "Този сървър е надвишил някой от лимитите си.",
@@ -494,9 +488,7 @@
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
     "Checking server": "Проверка на сървъра",
-    "Identity server has no terms of service": "Сървъра за самоличност няма условия за ползване",
     "The identity server you have chosen does not have any terms of service.": "Избраният от вас сървър за самоличност няма условия за ползване на услугата.",
-    "Only continue if you trust the owner of the server.": "Продължете, само ако вярвате на собственика на сървъра.",
     "Terms of service not accepted or the identity server is invalid.": "Условията за ползване не бяха приети или сървъра за самоличност е невалиден.",
     "Disconnect from the identity server <idserver />?": "Прекъсване на връзката със сървър за самоличност <idserver />?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "В момента използвате <server></server> за да откривате и да бъдете открити от познати ваши контакти. Може да промените сървъра за самоличност по-долу.",
@@ -560,7 +552,6 @@
     "Hide advanced": "Скрий разширени настройки",
     "Show advanced": "Покажи разширени настройки",
     "Close dialog": "Затвори прозореца",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Това действие изисква връзка със сървъра за самоличност <server /> за валидиране на имейл адреса или телефонния номер, но сървърът не предоставя условия за ползване.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Би било добре да <b>премахнете личните си данни</b> от сървъра за самоличност <idserver /> преди прекъсване на връзката. За съжаление, сървърът за самоличност <idserver /> в момента не е достъпен.",
     "You should:": "Ще е добре да:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "проверите браузър добавките за всичко, което може да блокира връзката със сървъра за самоличност (например Privacy Badger)",
@@ -649,7 +640,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
     "New login. Was this you?": "Нов вход. Вие ли бяхте това?",
-    "%(name)s is requesting verification": "%(name)s изпрати запитване за верификация",
     "Lock": "Заключи",
     "Later": "По-късно",
     "Other users may not trust it": "Други потребители може да не се доверят",
@@ -900,7 +890,6 @@
     "A new Security Phrase and key for Secure Messages have been detected.": "Новa фраза за сигурност и ключ за защитени съобщения бяха открити.",
     "Great! This Security Phrase looks strong enough.": "Чудесно! Тази фраза за сигурност изглежда достатъчно силна.",
     "Confirm your Security Phrase": "Потвърдете вашата фраза за сигурност",
-    "We couldn't log you in": "Не можахме да ви впишем",
     "Anguilla": "Ангила",
     "British Indian Ocean Territory": "Британска територия в Индийския океан",
     "Pitcairn Islands": "острови Питкерн",
@@ -1167,7 +1156,6 @@
     "Review to ensure your account is safe": "Прегледайте, за да уверите, че профилът ви е в безопастност",
     "Share your public space": "Споделете публичното си място",
     "Invite to %(spaceName)s": "Покани в %(spaceName)s",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Помолихме браузъра да запомни кой Home сървър използвате за влизане, но за съжаление браузърът ви го е забравил. Отидете на страницата за влизане и опитайте отново.",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s и с мениджъра на интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Мениджърът на интеграции получава конфигурационни данни, може да модифицира приспособления, да изпраща покани за стаи и да настройва нива на достъп от ваше име.",
@@ -1178,25 +1166,8 @@
     "Not a valid identity server (status code %(code)s)": "Невалиден сървър за самоличност (статус код %(code)s)",
     "Identity server URL must be HTTPS": "Адресът на сървъра за самоличност трябва да бъде HTTPS",
     "Failed to invite users to %(roomName)s": "Неуспешна покана на потребителите към %(roomName)s",
-    "Failed to transfer call": "Неуспешно прехвърляне на повикване",
-    "Transfer Failed": "Трансферът Неуспешен",
-    "Unable to transfer call": "Не може да се прехвърли обаждането",
-    "Unable to look up phone number": "Невъзможно е търсенето на телефонния номер",
-    "There was an error looking up the phone number": "Имаше грешка в търсенето на телефонния номер",
     "Some invites couldn't be sent": "Някои покани не можаха да бъдат изпратени",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Изпратихме останалите покани, но следните хора не можаха да бъдат поканени в <RoomName/>",
-    "Empty room (was %(oldName)s)": "Празна стая (беше %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Канене на %(user)s и още 1 друг",
-        "other": "Канене на %(user)s и %(count)s други"
-    },
-    "Inviting %(user1)s and %(user2)s": "Канене на %(user1)s и %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s и още 1",
-        "other": "%(user)s и %(count)s други"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s и %(user2)s",
-    "Empty room": "Празна стая",
     "common": {
         "about": "Относно",
         "analytics": "Статистика",
@@ -1509,7 +1480,10 @@
             "enable_desktop_notifications_session": "Включи уведомления на работния плот за тази сесия",
             "show_message_desktop_notification": "Показване на съдържание в известията на работния плот",
             "enable_audible_notifications_session": "Включи звукови уведомления за тази сесия",
-            "noisy": "Шумно"
+            "noisy": "Шумно",
+            "error_permissions_denied": "%(brand)s няма разрешение да Ви изпраща известия - моля проверете вашите настройки на браузъра",
+            "error_permissions_missing": "%(brand)s не е получил разрешение да изпраща известия - моля опитайте отново",
+            "error_title": "Неупешно включване на известия"
         },
         "appearance": {
             "heading": "Настройте изгледа",
@@ -1951,7 +1925,15 @@
         "connection_lost_description": "Не можете да поставяте обаждания без връзка със сървъра.",
         "too_many_calls": "Твърде много повиквания",
         "too_many_calls_description": "Достигнахте максималният брой едновременни повиквания.",
-        "cannot_call_yourself_description": "Не може да осъществите разговор със себе си."
+        "cannot_call_yourself_description": "Не може да осъществите разговор със себе си.",
+        "msisdn_lookup_failed": "Невъзможно е търсенето на телефонния номер",
+        "msisdn_lookup_failed_description": "Имаше грешка в търсенето на телефонния номер",
+        "msisdn_transfer_failed": "Не може да се прехвърли обаждането",
+        "transfer_failed": "Трансферът Неуспешен",
+        "transfer_failed_description": "Неуспешно прехвърляне на повикване",
+        "no_permission_conference": "Необходимо е разрешение",
+        "no_permission_conference_description": "Нямате достъп да започнете конферентен разговор в тази стая",
+        "default_device": "Устройство по подразбиране"
     },
     "Other": "Други",
     "Advanced": "Разширени",
@@ -2126,7 +2108,12 @@
         "reset_password_email_field_description": "Използвайте имейл адрес за да възстановите акаунта си",
         "reset_password_email_field_required_invalid": "Въведете имейл адрес (задължително за този сървър)",
         "msisdn_field_description": "Други потребители могат да Ви канят в стаи посредством данните за контакт",
-        "registration_msisdn_field_required_invalid": "Въведете телефонен номер (задължително за този сървър)"
+        "registration_msisdn_field_required_invalid": "Въведете телефонен номер (задължително за този сървър)",
+        "sso_failed_missing_storage": "Помолихме браузъра да запомни кой Home сървър използвате за влизане, но за съжаление браузърът ви го е забравил. Отидете на страницата за влизане и опитайте отново.",
+        "oidc": {
+            "error_title": "Не можахме да ви впишем"
+        },
+        "reset_password_email_not_found_title": "Този имейл адрес не беше открит"
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2297,10 +2284,28 @@
         "column_document": "Документ",
         "tac_title": "Правила и условия",
         "tac_description": "За да продължите да ползвате %(homeserverDomain)s е необходимо да прегледате и да се съгласите с правилата и условията за ползване.",
-        "tac_button": "Прегледай правилата и условията"
+        "tac_button": "Прегледай правилата и условията",
+        "identity_server_no_terms_title": "Сървъра за самоличност няма условия за ползване",
+        "identity_server_no_terms_description_1": "Това действие изисква връзка със сървъра за самоличност <server /> за валидиране на имейл адреса или телефонния номер, но сървърът не предоставя условия за ползване.",
+        "identity_server_no_terms_description_2": "Продължете, само ако вярвате на собственика на сървъра."
     },
     "failed_load_async_component": "Неуспешно зареждане! Проверете мрежовите настройки и опитайте пак.",
     "upload_failed_generic": "Файлът '%(fileName)s' не можа да бъде качен.",
     "upload_failed_size": "Файлът '%(fileName)s' надхвърля ограничението за размер на файлове за този сървър",
-    "upload_failed_title": "Качването е неуспешно"
+    "upload_failed_title": "Качването е неуспешно",
+    "empty_room": "Празна стая",
+    "user1_and_user2": "%(user1)s и %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s и още 1",
+        "other": "%(user)s и %(count)s други"
+    },
+    "inviting_user1_and_user2": "Канене на %(user1)s и %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Канене на %(user)s и още 1 друг",
+        "other": "Канене на %(user)s и %(count)s други"
+    },
+    "empty_room_was_name": "Празна стая (беше %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s изпрати запитване за верификация"
+    }
 }

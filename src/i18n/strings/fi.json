@@ -10,7 +10,6 @@
     "No Webcams detected": "Kameroita ei löytynyt",
     "No media permissions": "Ei mediaoikeuksia",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Voit joutua antamaan %(brand)sille luvan mikrofonin/kameran käyttöön",
-    "Default Device": "Oletuslaite",
     "Authentication": "Tunnistautuminen",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
     "A new password must be entered.": "Sinun täytyy syöttää uusi salasana.",
@@ -62,7 +61,6 @@
     "Rooms": "Huoneet",
     "Search failed": "Haku epäonnistui",
     "Session ID": "Istuntotunniste",
-    "This email address was not found": "Sähköpostiosoitetta ei löytynyt",
     "This room has no local addresses": "Tällä huoneella ei ole paikallista osoitetta",
     "Unban": "Poista porttikielto",
     "Uploading %(filename)s": "Lähetetään %(filename)s",
@@ -111,15 +109,12 @@
     "Decrypt %(text)s": "Pura %(text)s",
     "Missing room_id in request": "room_id puuttuu kyselystä",
     "Missing user_id in request": "user_id puuttuu kyselystä",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)silla ei ole oikeuksia lähettää sinulle ilmoituksia. Ole hyvä ja tarkista selaimen asetukset",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ei saanut lupaa lähettää ilmoituksia - yritä uudelleen",
     "Room %(roomId)s not visible": "Huone %(roomId)s ei ole näkyvissä",
     "%(roomName)s does not exist.": "Huonetta %(roomName)s ei ole olemassa.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ei ole saatavilla tällä hetkellä.",
     "Unable to add email address": "Sähköpostiosoitteen lisääminen epäonnistui",
     "Unable to remove contact information": "Yhteystietojen poistaminen epäonnistui",
     "Unable to verify email address.": "Sähköpostin vahvistaminen epäonnistui.",
-    "Unable to enable Notifications": "Ilmoitusten käyttöönotto epäonnistui",
     "Failed to change power level": "Oikeustason muuttaminen epäonnistui",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
     "Power level must be positive integer.": "Oikeustason pitää olla positiivinen kokonaisluku.",
@@ -211,7 +206,6 @@
     "Thank you!": "Kiitos!",
     "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Tämä huone ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
-    "You do not have permission to start a conference call in this room": "Sinulla ei ole oikeutta aloittaa ryhmäpuhelua tässä huoneessa",
     "Please contact your homeserver administrator.": "Ota yhteyttä kotipalvelimesi ylläpitäjään.",
     "Dog": "Koira",
     "Cat": "Kissa",
@@ -498,9 +492,7 @@
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Käytät palvelinta <server></server> tuntemiesi henkilöiden löytämiseen ja löydetyksi tulemiseen. Voit vaihtaa identiteettipalvelintasi alla.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Et käytä tällä hetkellä identiteettipalvelinta. Lisää identiteettipalvelin alle löytääksesi tuntemiasi henkilöitä ja tullaksesi löydetyksi.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Yhteyden katkaiseminen identiteettipalvelimeesi tarkoittaa, että muut käyttäjät eivät löydä sinua etkä voi kutsua muita sähköpostin tai puhelinnumeron perusteella.",
-    "Only continue if you trust the owner of the server.": "Jatka vain, jos luotat palvelimen omistajaan.",
     "Accept <policyLink /> to continue:": "Hyväksy <policyLink /> jatkaaksesi:",
-    "Identity server has no terms of service": "Identiteettipalvelimella ei ole käyttöehtoja",
     "The identity server you have chosen does not have any terms of service.": "Valitsemallasi identiteettipalvelimella ei ole käyttöehtoja.",
     "Terms of service not accepted or the identity server is invalid.": "Käyttöehtoja ei ole hyväksytty tai identiteettipalvelin ei ole kelvollinen.",
     "Enter a new identity server": "Syötä uusi identiteettipalvelin",
@@ -559,7 +551,6 @@
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
     "Hide advanced": "Piilota lisäasetukset",
     "Show advanced": "Näytä lisäasetukset",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Your email address hasn't been verified yet": "Sähköpostiosoitettasi ei ole vielä varmistettu",
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
@@ -699,7 +690,6 @@
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
     "New login. Was this you?": "Uusi sisäänkirjautuminen. Olitko se sinä?",
-    "%(name)s is requesting verification": "%(name)s pyytää varmennusta",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
     "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
     "Almost there! Is %(displayName)s showing the same shield?": "Melkein valmista! Näyttääkö %(displayName)s saman kilven?",
@@ -1125,17 +1115,13 @@
     "Save your Security Key": "Tallenna turva-avain",
     "This session is encrypting history using the new recovery method.": "Tämä istunto salaa historiansa käyttäen uutta palautustapaa.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
-    "Failed to transfer call": "Puhelunsiirto epäonnistui",
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
     "Open dial pad": "Avaa näppäimistö",
     "Dial pad": "Näppäimistö",
-    "There was an error looking up the phone number": "Puhelinnumeron haussa tapahtui virhe",
-    "Unable to look up phone number": "Puhelinnumeroa ei voi hakea",
     "Use app": "Käytä sovellusta",
     "Use app for a better experience": "Parempi kokemus sovelluksella",
     "Recently visited rooms": "Hiljattain vieraillut huoneet",
     "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Pyysimme selainta muistamaan kirjautumista varten mitä kotipalvelinta käytät, mutta selain on unohtanut sen. Mene kirjautumissivulle ja yritä uudelleen.",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
     "You may want to try a different search or check for typos.": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
     "No results found": "Tuloksia ei löytynyt",
@@ -1153,7 +1139,6 @@
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
-    "Empty room": "Tyhjä huone",
     "Suggested Rooms": "Ehdotetut huoneet",
     "Add existing room": "Lisää olemassa oleva huone",
     "Your message was sent": "Viestisi lähetettiin",
@@ -1209,8 +1194,6 @@
     "Could not connect to identity server": "Identiteettipalvelimeen ei saatu yhteyttä",
     "Not a valid identity server (status code %(code)s)": "Identiteettipalvelin ei ole kelvollinen (tilakoodi %(code)s)",
     "Identity server URL must be HTTPS": "Identiteettipalvelimen URL-osoitteen täytyy olla HTTPS-alkuinen",
-    "Transfer Failed": "Siirto epäonnistui",
-    "Unable to transfer call": "Puhelun siirtäminen ei onnistu",
     "Rooms and spaces": "Huoneet ja avaruudet",
     "Unable to copy a link to the room to the clipboard.": "Huoneen linkin kopiointi leikepöydälle ei onnistu.",
     "Unable to copy room link": "Huoneen linkin kopiointi ei onnistu",
@@ -1294,7 +1277,6 @@
     "Keyword": "Avainsana",
     "Mentions & keywords": "Maininnat ja avainsanat",
     "Some invites couldn't be sent": "Joitain kutsuja ei voitu lähettää",
-    "We couldn't log you in": "Emme voineet kirjata sinua sisään",
     "Spaces": "Avaruudet",
     "Show all rooms": "Näytä kaikki huoneet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
@@ -1693,17 +1675,6 @@
     "Unknown room": "Tuntematon huone",
     "In %(spaceName)s.": "Avaruudessa %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
-    "Empty room (was %(oldName)s)": "Tyhjä huone (oli %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Kutsutaan %(user)s ja 1 muu",
-        "other": "Kutsutaan %(user)s ja %(count)s muuta"
-    },
-    "Inviting %(user1)s and %(user2)s": "Kutsutaan %(user1)s ja %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s ja 1 muu",
-        "other": "%(user)s ja %(count)s muuta"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s ja %(user2)s",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta.",
         "one": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta."
@@ -1779,7 +1750,6 @@
     "Text": "Teksti",
     "Create a link": "Luo linkki",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
-    "%(senderName)s started a voice broadcast": "%(senderName)s aloitti äänen yleislähetyksen",
     "Saving…": "Tallennetaan…",
     "Creating…": "Luodaan…",
     "Verify Session": "Vahvista istunto",
@@ -1836,10 +1806,7 @@
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "If you know a room address, try joining through that instead.": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
     "Safeguard against losing access to encrypted messages & data": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
-    "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
     "Set a new account password…": "Aseta uusi tilin salasana…",
-    "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut",
     "Encrypting your message…": "Salataan viestiäsi…",
     "Joining space…": "Liitytään avaruuteen…",
     "Sending your message…": "Lähetetään viestiäsi…",
@@ -2388,7 +2355,10 @@
             "enable_desktop_notifications_session": "Ota käyttöön työpöytäilmoitukset tälle istunnolle",
             "show_message_desktop_notification": "Näytä viestit ilmoituskeskuksessa",
             "enable_audible_notifications_session": "Ota käyttöön ääni-ilmoitukset tälle istunnolle",
-            "noisy": "Äänekäs"
+            "noisy": "Äänekäs",
+            "error_permissions_denied": "%(brand)silla ei ole oikeuksia lähettää sinulle ilmoituksia. Ole hyvä ja tarkista selaimen asetukset",
+            "error_permissions_missing": "%(brand)s ei saanut lupaa lähettää ilmoituksia - yritä uudelleen",
+            "error_title": "Ilmoitusten käyttöönotto epäonnistui"
         },
         "appearance": {
             "layout_irc": "IRC (kokeellinen)",
@@ -3173,7 +3143,15 @@
         "connection_lost_description": "Et voi soittaa puheluja ilman yhteyttä palvelimeen.",
         "too_many_calls": "Liian monta puhelua",
         "too_many_calls_description": "Saavutit samanaikaisten puheluiden enimmäismäärän.",
-        "cannot_call_yourself_description": "Et voi soittaa itsellesi."
+        "cannot_call_yourself_description": "Et voi soittaa itsellesi.",
+        "msisdn_lookup_failed": "Puhelinnumeroa ei voi hakea",
+        "msisdn_lookup_failed_description": "Puhelinnumeron haussa tapahtui virhe",
+        "msisdn_transfer_failed": "Puhelun siirtäminen ei onnistu",
+        "transfer_failed": "Siirto epäonnistui",
+        "transfer_failed_description": "Puhelunsiirto epäonnistui",
+        "no_permission_conference": "Lisäoikeuksia tarvitaan",
+        "no_permission_conference_description": "Sinulla ei ole oikeutta aloittaa ryhmäpuhelua tässä huoneessa",
+        "default_device": "Oletuslaite"
     },
     "Other": "Muut",
     "Advanced": "Lisäasetukset",
@@ -3446,7 +3424,12 @@
         "reset_password_email_field_description": "Voit palauttaa tilisi sähköpostiosoitteen avulla",
         "reset_password_email_field_required_invalid": "Syötä sähköpostiosoite (vaaditaan tällä kotipalvelimella)",
         "msisdn_field_description": "Muut voivat kutsua sinut huoneisiin yhteystietojesi avulla",
-        "registration_msisdn_field_required_invalid": "Syötä puhelinnumero (vaaditaan tällä kotipalvelimella)"
+        "registration_msisdn_field_required_invalid": "Syötä puhelinnumero (vaaditaan tällä kotipalvelimella)",
+        "sso_failed_missing_storage": "Pyysimme selainta muistamaan kirjautumista varten mitä kotipalvelinta käytät, mutta selain on unohtanut sen. Mene kirjautumissivulle ja yritä uudelleen.",
+        "oidc": {
+            "error_title": "Emme voineet kirjata sinua sisään"
+        },
+        "reset_password_email_not_found_title": "Sähköpostiosoitetta ei löytynyt"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3767,7 +3750,10 @@
         "column_document": "Asiakirja",
         "tac_title": "Käyttöehdot",
         "tac_description": "Jatkaaksesi kotipalvelimen %(homeserverDomain)s käyttöä, sinun täytyy lukea ja hyväksyä käyttöehtomme.",
-        "tac_button": "Lue käyttöehdot"
+        "tac_button": "Lue käyttöehdot",
+        "identity_server_no_terms_title": "Identiteettipalvelimella ei ole käyttöehtoja",
+        "identity_server_no_terms_description_1": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
+        "identity_server_no_terms_description_2": "Jatka vain, jos luotat palvelimen omistajaan."
     },
     "space_settings": {
         "title": "Asetukset - %(spaceName)s"
@@ -3794,5 +3780,24 @@
     "failed_load_async_component": "Lataaminen epäonnistui! Tarkista verkkoyhteytesi ja yritä uudelleen.",
     "upload_failed_generic": "Tiedoston '%(fileName)s' lähettäminen ei onnistunut.",
     "upload_failed_size": "Tiedoston '%(fileName)s' koko ylittää tämän kotipalvelimen lähetettyjen tiedostojen ylärajan",
-    "upload_failed_title": "Lähetys epäonnistui"
+    "upload_failed_title": "Lähetys epäonnistui",
+    "error_user_not_logged_in": "Käyttäjä ei ole sisäänkirjautunut",
+    "error_database_closed_title": "Tietokanta sulkeutui odottamattomasti",
+    "error_database_closed_description": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
+    "empty_room": "Tyhjä huone",
+    "user1_and_user2": "%(user1)s ja %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s ja 1 muu",
+        "other": "%(user)s ja %(count)s muuta"
+    },
+    "inviting_user1_and_user2": "Kutsutaan %(user1)s ja %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Kutsutaan %(user)s ja 1 muu",
+        "other": "Kutsutaan %(user)s ja %(count)s muuta"
+    },
+    "empty_room_was_name": "Tyhjä huone (oli %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s pyytää varmennusta",
+        "io.element.voice_broadcast_chunk": "%(senderName)s aloitti äänen yleislähetyksen"
+    }
 }

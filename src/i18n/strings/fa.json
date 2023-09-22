@@ -51,15 +51,11 @@
     "An error has occurred.": "خطایی رخ داده است.",
     "A new password must be entered.": "گذواژه جدید باید وارد شود.",
     "Authentication": "احراز هویت",
-    "Default Device": "دستگاه پیشفرض",
     "No media permissions": "عدم مجوز رسانه",
     "No Webcams detected": "هیچ وبکمی شناسایی نشد",
     "No Microphones detected": "هیچ میکروفونی شناسایی نشد",
     "Incorrect verification code": "کد فعال‌سازی اشتباه است",
     "Home": "خانه",
-    "We couldn't log you in": "نتوانستیم شما را وارد کنیم",
-    "Only continue if you trust the owner of the server.": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
-    "Identity server has no terms of service": "سرور هویت هیچگونه شرایط خدمات ندارد",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(time)s",
@@ -85,7 +81,6 @@
     "Tue": "سه‌شنبه",
     "Mon": "دوشنبه",
     "Sun": "یکشنبه",
-    "You do not have permission to start a conference call in this room": "شما اجازه‌ی شروع جلسه‌ی تصویری در این اتاق را ندارید",
     "Permission Required": "اجازه نیاز است",
     "Explore rooms": "جستجو در اتاق ها",
     "Use an identity server": "از سرور هویت‌سنجی استفاده کنید",
@@ -357,13 +352,6 @@
     "Afghanistan": "افغانستان",
     "United States": "ایالات متحده",
     "United Kingdom": "انگلستان",
-    "This email address was not found": "این آدرس ایمیل یافت نشد",
-    "Unable to enable Notifications": "فعال کردن اعلان ها امکان پذیر نیست",
-    "%(brand)s was not given permission to send notifications - please try again": "به %(brand)s اجازه ارسال اعلان داده نشده است - لطفاً دوباره امتحان کنید",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s اجازه ارسال اعلان به شما را ندارد - لطفاً تنظیمات مرورگر خود را بررسی کنید",
-    "%(name)s is requesting verification": "%(name)s درخواست تائید دارد",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "ما از مرورگر خواستیم تا سروری را که شما برای ورود استفاده می‌کنید به خاطر بسپارد، اما متاسفانه مرورگر شما آن را فراموش کرده‌است. به صفحه‌ی ورود بروید و دوباره امتحان کنید.",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "این اقدام نیاز به دسترسی به سرور هویت‌سنجی پیش‌فرض <server /> برای تایید آدرس ایمیل یا شماره تماس دارد، اما کارگزار هیچ گونه شرایط خدماتی (terms of service) ندارد.",
     "Use an identity server to invite by email. Manage in Settings.": "برای دعوت از یک سرور هویت‌سنجی استفاده نمائید. می‌توانید این مورد را در تنظیمات پیکربندی نمائید.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "برای دعوت با استفاده از ایمیل از یک سرور هویت‌سنجی استفاده نمائید. جهت استفاده از سرور هویت‌سنجی پیش‌فرض (%(defaultIdentityServerName)s) بر روی ادامه کلیک کنید، وگرنه آن را در بخش تنظیمات پیکربندی نمائید.",
     "Session already verified!": "نشست پیش از این تائید شده‌است!",
@@ -475,7 +463,6 @@
     "Recent Conversations": "گفتگوهای اخیر",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "این کاربران ممکن است وجود نداشته یا نامعتبر باشند و نمی‌توان آنها را دعوت کرد: %(csvNames)s",
     "Failed to find the following users": "این کاربران یافت نشدند",
-    "Failed to transfer call": "انتقال تماس انجام نشد",
     "A call can only be transferred to a single user.": "تماس فقط می تواند به یک کاربر منتقل شود.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "ما نتوانستیم آن کاربران را دعوت کنیم. لطفاً کاربرانی را که می خواهید دعوت کنید بررسی کرده و دوباره امتحان کنید.",
     "Something went wrong trying to invite the users.": "در تلاش برای دعوت از کاربران مشکلی پیش آمد.",
@@ -734,7 +721,6 @@
     "Reason: %(reason)s": "دلیل: %(reason)s",
     "Sign Up": "ثبت نام",
     "Join the conversation with an account": "پیوستن به گفتگو با یک حساب کاربری",
-    "Empty room": "اتاق خالی",
     "Suggested Rooms": "اتاق‌های پیشنهادی",
     "Historical": "تاریخی",
     "Low priority": "اولویت کم",
@@ -1062,8 +1048,6 @@
     "Cat": "گربه",
     "Dog": "سگ",
     "Dial pad": "صفحه شماره‌گیری",
-    "There was an error looking up the phone number": "هنگام یافتن شماره تلفن خطایی رخ داد",
-    "Unable to look up phone number": "امکان یافتن شماره تلفن میسر نیست",
     "Connecting": "در حال اتصال",
     "unknown person": "فرد ناشناس",
     "IRC display name width": "عرض نمایش نام‌های IRC",
@@ -1302,8 +1286,6 @@
     "Could not connect to identity server": "نتوانست به کارساز هویت وصل شود",
     "Not a valid identity server (status code %(code)s)": "کارساز هویت معتبر نیست (کد وضعیت %(code)s)",
     "Identity server URL must be HTTPS": "نشانی کارساز هویت باید HTTPS باشد",
-    "Transfer Failed": "انتقال شکست خورد",
-    "Unable to transfer call": "ناتوان در انتقال تماس",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
         "other": "%(spaceName)s و %(count)s دیگران"
@@ -1314,17 +1296,7 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "دوتایی (کاربر و نشست) ناشناخته : ( %(userId)sو%(deviceId)s )",
     "Failed to invite users to %(roomName)s": "افزودن کاربران به %(roomName)s با شکست روبرو شد",
-    "Inviting %(user)s and %(count)s others": {
-        "other": "دعوت کردن %(user)s و %(count)s دیگر",
-        "one": "دعوت کردن %(user)s و ۱ دیگر"
-    },
     "You need to be able to kick users to do that.": "برای انجام این کار نیاز دارید که بتوانید کاربران را حذف کنید.",
-    "Empty room (was %(oldName)s)": "اتاق خالی (نام قبلی: %(oldName)s)",
-    "%(user)s and %(count)s others": {
-        "other": "%(user)s و %(count)s دیگران",
-        "one": "%(user)s و ۱ دیگر"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s و %(user2)s",
     "Close sidebar": "بستن نوارکناری",
     "Sidebar": "نوارکناری",
     "Show sidebar": "نمایش نوار کناری",
@@ -1371,15 +1343,8 @@
     "You do not have permission to invite people to this space.": "شما دسترسی لازم برای دعوت از افراد به این فضا را ندارید.",
     "Voice broadcast": "صدای جمعی",
     "Live": "زنده",
-    "Inviting %(user1)s and %(user2)s": "دعوت کردن %(user1)s و %(user2)s",
-    "User is not logged in": "کاربر وارد نشده است",
-    "Database unexpectedly closed": "پایگاه داده به طور غیرمنتظره ای بسته شد",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "این ممکن است به دلیل باز بودن برنامه در چندین برگه یا به دلیل پاک کردن داده های مرورگر باشد.",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "به نظر نمی رسد آدرس ایمیل شما با شناسه Matrix در این سرور خانگی مرتبط باشد.",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
-    "%(senderName)s started a voice broadcast": "%(senderName)s یک پخش صوتی را شروع کرد",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "بدون سرور احراز هویت نمی توان کاربر را از طریق ایمیل دعوت کرد. می توانید در قسمت «تنظیمات» به یکی متصل شوید.",
     "common": {
         "about": "درباره",
         "analytics": "تجزیه و تحلیل",
@@ -1765,7 +1730,10 @@
             "enable_desktop_notifications_session": "فعال‌سازی اعلان‌های دسکتاپ برای این نشست",
             "show_message_desktop_notification": "پیام‌ها را در اعلان دسکتاپ نشان بده",
             "enable_audible_notifications_session": "فعال‌سازی اعلان‌های صدادار برای این نشست",
-            "noisy": "پرسروصدا"
+            "noisy": "پرسروصدا",
+            "error_permissions_denied": "%(brand)s اجازه ارسال اعلان به شما را ندارد - لطفاً تنظیمات مرورگر خود را بررسی کنید",
+            "error_permissions_missing": "به %(brand)s اجازه ارسال اعلان داده نشده است - لطفاً دوباره امتحان کنید",
+            "error_title": "فعال کردن اعلان ها امکان پذیر نیست"
         },
         "appearance": {
             "heading": "ظاهر پیام‌رسان خود را سفارشی‌سازی کنید",
@@ -2315,7 +2283,15 @@
         "connection_lost_description": "شما نمی توانید بدون اتصال به سرور تماس برقرار کنید.",
         "too_many_calls": "تعداد زیاد تماس",
         "too_many_calls_description": "شما به بیشینه‌ی تعداد تماس‌های هم‌زمان رسیده‌اید.",
-        "cannot_call_yourself_description": "امکان برقراری تماس با خودتان وجود ندارد."
+        "cannot_call_yourself_description": "امکان برقراری تماس با خودتان وجود ندارد.",
+        "msisdn_lookup_failed": "امکان یافتن شماره تلفن میسر نیست",
+        "msisdn_lookup_failed_description": "هنگام یافتن شماره تلفن خطایی رخ داد",
+        "msisdn_transfer_failed": "ناتوان در انتقال تماس",
+        "transfer_failed": "انتقال شکست خورد",
+        "transfer_failed_description": "انتقال تماس انجام نشد",
+        "no_permission_conference": "اجازه نیاز است",
+        "no_permission_conference_description": "شما اجازه‌ی شروع جلسه‌ی تصویری در این اتاق را ندارید",
+        "default_device": "دستگاه پیشفرض"
     },
     "Other": "دیگر",
     "Advanced": "پیشرفته",
@@ -2521,7 +2497,13 @@
         "reset_password_email_field_description": "برای بازیابی حساب خود از آدرس ایمیل استفاده کنید",
         "reset_password_email_field_required_invalid": "آدرس ایمیل را وارد کنید (در این سرور اجباری است)",
         "msisdn_field_description": "سایر کاربران می توانند شما را با استفاده از اطلاعات تماستان به اتاق ها دعوت کنند",
-        "registration_msisdn_field_required_invalid": "شماره تلفن را وارد کنید (در این سرور اجباری است)"
+        "registration_msisdn_field_required_invalid": "شماره تلفن را وارد کنید (در این سرور اجباری است)",
+        "sso_failed_missing_storage": "ما از مرورگر خواستیم تا سروری را که شما برای ورود استفاده می‌کنید به خاطر بسپارد، اما متاسفانه مرورگر شما آن را فراموش کرده‌است. به صفحه‌ی ورود بروید و دوباره امتحان کنید.",
+        "oidc": {
+            "error_title": "نتوانستیم شما را وارد کنیم"
+        },
+        "reset_password_email_not_found_title": "این آدرس ایمیل یافت نشد",
+        "reset_password_email_not_associated": "به نظر نمی رسد آدرس ایمیل شما با شناسه Matrix در این سرور خانگی مرتبط باشد."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2826,7 +2808,10 @@
         "column_document": "سند",
         "tac_title": "شرایط و ضوابط",
         "tac_description": "برای ادامه استفاده از سرور %(homeserverDomain)s باید شرایط و ضوابط ما را بررسی کرده و موافقت کنید.",
-        "tac_button": "مرور شرایط و ضوابط"
+        "tac_button": "مرور شرایط و ضوابط",
+        "identity_server_no_terms_title": "سرور هویت هیچگونه شرایط خدمات ندارد",
+        "identity_server_no_terms_description_1": "این اقدام نیاز به دسترسی به سرور هویت‌سنجی پیش‌فرض <server /> برای تایید آدرس ایمیل یا شماره تماس دارد، اما کارگزار هیچ گونه شرایط خدماتی (terms of service) ندارد.",
+        "identity_server_no_terms_description_2": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید."
     },
     "poll": {
         "failed_send_poll_title": "ارسال نظرسنجی انجام نشد",
@@ -2838,5 +2823,25 @@
     "failed_load_async_component": "امکان بارگیری محتوا وجود ندارد! لطفا وضعیت اتصال خود به اینترنت را بررسی کرده و مجددا اقدام نمائید.",
     "upload_failed_generic": "بارگذاری پرونده '%(fileName)s' موفقیت‌آمیز نبود.",
     "upload_failed_size": "حجم پرونده‌ی '%(fileName)s' از آستانه‌ی تنظیم‌شده بر روی سرور بیشتر است",
-    "upload_failed_title": "بارگذاری موفقیت‌آمیز نبود"
+    "upload_failed_title": "بارگذاری موفقیت‌آمیز نبود",
+    "cannot_invite_without_identity_server": "بدون سرور احراز هویت نمی توان کاربر را از طریق ایمیل دعوت کرد. می توانید در قسمت «تنظیمات» به یکی متصل شوید.",
+    "error_user_not_logged_in": "کاربر وارد نشده است",
+    "error_database_closed_title": "پایگاه داده به طور غیرمنتظره ای بسته شد",
+    "error_database_closed_description": "این ممکن است به دلیل باز بودن برنامه در چندین برگه یا به دلیل پاک کردن داده های مرورگر باشد.",
+    "empty_room": "اتاق خالی",
+    "user1_and_user2": "%(user1)s و %(user2)s",
+    "user_and_n_others": {
+        "other": "%(user)s و %(count)s دیگران",
+        "one": "%(user)s و ۱ دیگر"
+    },
+    "inviting_user1_and_user2": "دعوت کردن %(user1)s و %(user2)s",
+    "inviting_user_and_n_others": {
+        "other": "دعوت کردن %(user)s و %(count)s دیگر",
+        "one": "دعوت کردن %(user)s و ۱ دیگر"
+    },
+    "empty_room_was_name": "اتاق خالی (نام قبلی: %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s درخواست تائید دارد",
+        "io.element.voice_broadcast_chunk": "%(senderName)s یک پخش صوتی را شروع کرد"
+    }
 }

@@ -2,7 +2,6 @@
     "All messages": "सारे संदेश",
     "All Rooms": "सारे कमरे",
     "Permission Required": "अनुमति आवश्यक है",
-    "You do not have permission to start a conference call in this room": "आपको इस रूम में कॉन्फ़्रेंस कॉल शुरू करने की अनुमति नहीं है",
     "Sun": "रवि",
     "Mon": "सोम",
     "Tue": "मंगल",
@@ -28,8 +27,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Unable to enable Notifications": "अधिसूचनाएं सक्षम करने में असमर्थ",
-    "This email address was not found": "यह ईमेल पता नहीं मिला था",
     "Default": "डिफ़ॉल्ट",
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
@@ -198,7 +195,6 @@
     "No Audio Outputs detected": "कोई ऑडियो आउटपुट नहीं मिला",
     "No Microphones detected": "कोई माइक्रोफोन का पता नहीं चला",
     "No Webcams detected": "कोई वेबकैम नहीं मिला",
-    "Default Device": "डिफ़ॉल्ट उपकरण",
     "Audio Output": "ध्वनि - उत्पादन",
     "Voice & Video": "ध्वनि और वीडियो",
     "Failed to unban": "अप्रतिबंधित करने में विफल",
@@ -354,19 +350,6 @@
     "Afghanistan": "अफ़ग़ानिस्तान",
     "United States": "संयुक्त राज्य अमेरिका",
     "United Kingdom": "यूनाइटेड किंगडम",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s को सूचनाएं भेजने की अनुमति नहीं दी गई थी - कृपया पुनः प्रयास करें",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s को आपको सूचनाएं भेजने की अनुमति नहीं है - कृपया अपनी ब्राउज़र सेटिंग जांचें",
-    "%(name)s is requesting verification": "%(name)s सत्यापन का अनुरोध कर रहा है",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "हमने ब्राउज़र से यह याद रखने के लिए कहा कि आप किस होमसर्वर का उपयोग आपको साइन इन करने के लिए करते हैं, लेकिन दुर्भाग्य से आपका ब्राउज़र इसे भूल गया है। साइन इन पेज पर जाएं और फिर से कोशिश करें.",
-    "We couldn't log you in": "हम आपको लॉग इन नहीं कर सके",
-    "Only continue if you trust the owner of the server.": "केवल तभी जारी रखें जब आप सर्वर के स्वामी पर भरोसा करते हैं।",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "इस क्रिया के लिए ईमेल पते या फ़ोन नंबर को मान्य करने के लिए डिफ़ॉल्ट पहचान सर्वर <server /> तक पहुँचने की आवश्यकता है, लेकिन सर्वर के पास सेवा की कोई शर्तें नहीं हैं।",
-    "Identity server has no terms of service": "पहचान सर्वर की सेवा की कोई शर्तें नहीं हैं",
-    "Failed to transfer call": "कॉल स्थानांतरित करने में विफल",
-    "Transfer Failed": "स्थानांतरण विफल",
-    "Unable to transfer call": "कॉल ट्रांसफर करने में असमर्थ",
-    "There was an error looking up the phone number": "फ़ोन नंबर खोजने में त्रुटि हुई",
-    "Unable to look up phone number": "फ़ोन नंबर देखने में असमर्थ",
     "common": {
         "analytics": "एनालिटिक्स",
         "error": "त्रुटि",
@@ -468,7 +451,10 @@
             "rule_suppress_notices": "रोबॉट द्वारा भेजे गए संदेश",
             "rule_encrypted_room_one_to_one": "एक एक के साथ चैट में एन्क्रिप्टेड संदेश",
             "show_message_desktop_notification": "डेस्कटॉप अधिसूचना में संदेश दिखाएं",
-            "noisy": "शोरगुल"
+            "noisy": "शोरगुल",
+            "error_permissions_denied": "%(brand)s को आपको सूचनाएं भेजने की अनुमति नहीं है - कृपया अपनी ब्राउज़र सेटिंग जांचें",
+            "error_permissions_missing": "%(brand)s को सूचनाएं भेजने की अनुमति नहीं दी गई थी - कृपया पुनः प्रयास करें",
+            "error_title": "अधिसूचनाएं सक्षम करने में असमर्थ"
         },
         "appearance": {
             "timeline_image_size_default": "डिफ़ॉल्ट",
@@ -623,7 +609,15 @@
         "connection_lost_description": "आप सर्वर से कनेक्शन के बिना कॉल नहीं कर सकते।",
         "too_many_calls": "बहुत अधिक कॉल",
         "too_many_calls_description": "आप एक साथ कॉल की अधिकतम संख्या तक पहुंच गए हैं।",
-        "cannot_call_yourself_description": "आप अपने साथ कॉल नहीं कर सकते हैं।"
+        "cannot_call_yourself_description": "आप अपने साथ कॉल नहीं कर सकते हैं।",
+        "msisdn_lookup_failed": "फ़ोन नंबर देखने में असमर्थ",
+        "msisdn_lookup_failed_description": "फ़ोन नंबर खोजने में त्रुटि हुई",
+        "msisdn_transfer_failed": "कॉल ट्रांसफर करने में असमर्थ",
+        "transfer_failed": "स्थानांतरण विफल",
+        "transfer_failed_description": "कॉल स्थानांतरित करने में विफल",
+        "no_permission_conference": "अनुमति आवश्यक है",
+        "no_permission_conference_description": "आपको इस रूम में कॉन्फ़्रेंस कॉल शुरू करने की अनुमति नहीं है",
+        "default_device": "डिफ़ॉल्ट उपकरण"
     },
     "Advanced": "उन्नत",
     "composer": {
@@ -658,7 +652,12 @@
         "uia": {
             "sso_title": "जारी रखने के लिए सिंगल साइन ऑन का उपयोग करें",
             "sso_body": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस ईमेल पते को जोड़ने की पुष्टि करें।"
-        }
+        },
+        "sso_failed_missing_storage": "हमने ब्राउज़र से यह याद रखने के लिए कहा कि आप किस होमसर्वर का उपयोग आपको साइन इन करने के लिए करते हैं, लेकिन दुर्भाग्य से आपका ब्राउज़र इसे भूल गया है। साइन इन पेज पर जाएं और फिर से कोशिश करें.",
+        "oidc": {
+            "error_title": "हम आपको लॉग इन नहीं कर सके"
+        },
+        "reset_password_email_not_found_title": "यह ईमेल पता नहीं मिला था"
     },
     "setting": {
         "help_about": {
@@ -741,5 +740,13 @@
         "generic_error": "सर्वर अनुपलब्ध, अधिभारित हो सकता है, या अपने एक सॉफ्टवेयर गर्बरी को पाया।",
         "unsupported_version": "सर्वर निर्दिष्ट कक्ष संस्करण का समर्थन नहीं करता है।",
         "error_title": "रूम बनाने में विफलता"
+    },
+    "terms": {
+        "identity_server_no_terms_title": "पहचान सर्वर की सेवा की कोई शर्तें नहीं हैं",
+        "identity_server_no_terms_description_1": "इस क्रिया के लिए ईमेल पते या फ़ोन नंबर को मान्य करने के लिए डिफ़ॉल्ट पहचान सर्वर <server /> तक पहुँचने की आवश्यकता है, लेकिन सर्वर के पास सेवा की कोई शर्तें नहीं हैं।",
+        "identity_server_no_terms_description_2": "केवल तभी जारी रखें जब आप सर्वर के स्वामी पर भरोसा करते हैं।"
+    },
+    "notifier": {
+        "m.key.verification.request": "%(name)s सत्यापन का अनुरोध कर रहा है"
     }
 }

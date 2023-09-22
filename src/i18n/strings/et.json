@@ -158,10 +158,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Encryption upgrade available": "Krüptimise uuendus on saadaval",
     "New login. Was this you?": "Uus sisselogimine. Kas see olid sina?",
-    "Identity server has no terms of service": "Isikutuvastusserveril puuduvad kasutustingimused",
-    "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "E-posti aadressi või telefoninumbri kontrolliks see tegevus eeldab päringut vaikimisi isikutuvastusserverisse <server />, aga sellel serveril puuduvad kasutustingimused.",
-    "Only continue if you trust the owner of the server.": "Jätka vaid siis, kui sa usaldad serveri omanikku.",
-    "%(name)s is requesting verification": "%(name)s soovib verifitseerimist",
     "Securely cache encrypted messages locally for them to appear in search results.": "Turvaliselt puhverda krüptitud sõnumid kohalikku arvutisse ja võimalda kasutada neid otsingus.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s'is on puudu need komponendid, mis võimaldavad otsida kohalikest turvaliselt puhverdatud krüptitud sõnumitest. Kui sa tahaksid sellist funktsionaalsust katsetada, siis pead kompileerima %(brand)s'i variandi, kus <nativeLink>need komponendid on lisatud</nativeLink>.",
     "Message search": "Otsing sõnumite seast",
@@ -170,8 +166,6 @@
     "Search failed": "Otsing ebaõnnestus",
     "Server may be unavailable, overloaded, or search timed out :(": "Server kas pole leitav, on ülekoormatud või otsing aegus :(",
     "No more results": "Rohkem otsingutulemusi pole",
-    "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s'il puudub luba sulle teavituste kuvamiseks - palun kontrolli oma brauseri seadistusi",
-    "%(brand)s was not given permission to send notifications - please try again": "%(brand)s ei saanud luba teavituste kuvamiseks - palun proovi uuesti",
     "This homeserver has hit its Monthly Active User limit.": "See koduserver on saavutanud igakuise aktiivsete kasutajate piiri.",
     "Are you sure?": "Kas sa oled kindel?",
     "Jump to read receipt": "Hüppa lugemisteatise juurde",
@@ -207,7 +201,6 @@
     "No Audio Outputs detected": "Ei leidnud ühtegi heliväljundit",
     "No Microphones detected": "Ei leidnud ühtegi mikrofoni",
     "No Webcams detected": "Ei leidnud ühtegi veebikaamerat",
-    "Default Device": "Vaikimisi seade",
     "Audio Output": "Heliväljund",
     "Voice & Video": "Heli ja video",
     "Room information": "Info jututoa kohta",
@@ -449,13 +442,10 @@
     "Sounds": "Helid",
     "Notification sound": "Teavitusheli",
     "Set a new custom sound": "Seadista uus kohandatud heli",
-    "You do not have permission to start a conference call in this room": "Sul ei ole piisavalt õigusi, et selles jututoas alustada konverentsikõnet",
     "Permission Required": "Vaja on täiendavaid õigusi",
     "Cancel entering passphrase?": "Kas katkestame paroolifraasi sisestamise?",
     "Enter passphrase": "Sisesta paroolifraas",
     "Setting up keys": "Võtame krüptovõtmed kasutusele",
-    "Unable to enable Notifications": "Teavituste kasutusele võtmine ei õnnestunud",
-    "This email address was not found": "Seda e-posti aadressi ei leidunud",
     "Enter a server name": "Sisesta serveri nimi",
     "Looks good": "Tundub õige",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posti teel kutse saatmiseks kasuta isikutuvastusserverit. Võid kasutada <default>vaikimisi serverit (%(defaultIdentityServerName)s)</default> või määrata muud serverid <settings>seadistustes</settings>.",
@@ -1159,12 +1149,9 @@
     "Hold": "Pane ootele",
     "Resume": "Jätka",
     "Transfer": "Suuna kõne edasi",
-    "Failed to transfer call": "Kõne edasisuunamine ei õnnestunud",
     "A call can only be transferred to a single user.": "Kõnet on võimalik edasi suunata vaid ühele kasutajale.",
     "Open dial pad": "Ava numbriklahvistik",
     "Dial pad": "Numbriklahvistik",
-    "There was an error looking up the phone number": "Telefoninumbri otsimisel tekkis viga",
-    "Unable to look up phone number": "Telefoninumbrit ei õnnestu leida",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Kui sa oled unustanud oma turvavõtme, siis sa võid <button>seadistada uued taastamise võimalused</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Sisestades turvavõtme pääsed ligi oma turvatud sõnumitele ning sätid tööle krüptitud sõnumivahetuse.",
     "Not a valid Security Key": "Vigane turvavõti",
@@ -1191,8 +1178,6 @@
     "Allow this widget to verify your identity": "Luba sellel vidinal sinu isikut verifitseerida",
     "Use app for a better experience": "Rakendusega saad Matrix'is suhelda parimal viisil",
     "Use app": "Kasuta rakendust",
-    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Me sättisime nii, et sinu veebibrauser jätaks järgmiseks sisselogimiseks meelde sinu koduserveri, kuid kahjuks on ta selle unustanud. Palun mine sisselogimise lehele ja proovi uuesti.",
-    "We couldn't log you in": "Meil ei õnnestunud sind sisse logida",
     "Recently visited rooms": "Hiljuti külastatud jututoad",
     "This homeserver has been blocked by its administrator.": "Ligipääs sellele koduserverile on sinu serveri haldaja poolt blokeeritud.",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Kas oled kindel, et soovid lahkuda kogukonnakeskusest „%(spaceName)s“?",
@@ -1211,7 +1196,6 @@
     "Spaces": "Kogukonnakeskused",
     "Space selection": "Kogukonnakeskuse valik",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Kuna sa vähendad enda õigusi, siis sul ei pruugi hiljem olla võimalik seda muutust tagasi pöörata. Kui sa juhtumisi oled viimane haldusõigustega kasutaja kogukonnakeskuses, siis hiljem on võimatu samu õigusi tagasi saada.",
-    "Empty room": "Tühi jututuba",
     "Suggested Rooms": "Soovitatud jututoad",
     "Add existing room": "Lisa olemasolev jututuba",
     "Invite to this space": "Kutsu siia kogukonnakeskusesse",
@@ -1358,8 +1342,6 @@
     "New keyword": "Uus märksõna",
     "Global": "Üldised",
     "There was an error loading your notification settings.": "Sinu teavituste seadistuste laadimisel tekkis viga.",
-    "Transfer Failed": "Edasisuunamine ei õnnestunud",
-    "Unable to transfer call": "Kõne edasisuunamine ei õnnestunud",
     "The call is in an unknown state!": "Selle kõne oleks on teadmata!",
     "Call back": "Helista tagasi",
     "No answer": "Keegi ei vasta kõnele",
@@ -1801,17 +1783,6 @@
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Parima turvalisuse nimel verifitseeri kõik oma sessioonid ning logi välja neist, mida sa enam ei kasuta.",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
-    "Empty room (was %(oldName)s)": "Tühi jututuba (varasema nimega %(oldName)s)",
-    "Inviting %(user)s and %(count)s others": {
-        "one": "Saadame kutset kasutajale %(user)s ning veel ühele muule kasutajale",
-        "other": "Saadame kutset kasutajale %(user)s ja veel %(count)s'le muule kasutajale"
-    },
-    "Inviting %(user1)s and %(user2)s": "Saadame kutset kasutajatele %(user1)s ja %(user2)s",
-    "%(user)s and %(count)s others": {
-        "one": "%(user)s ja veel 1 kasutaja",
-        "other": "%(user)s ja veel %(count)s kasutajat"
-    },
-    "%(user1)s and %(user2)s": "%(user1)s ja %(user2)s",
     "We're creating a room with %(names)s": "Me loome jututoa järgnevaist: %(names)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s või %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
@@ -1896,7 +1867,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
     "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
     "Edit link": "Muuda linki",
-    "%(senderName)s started a voice broadcast": "%(senderName)s alustas ringhäälingukõnet",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Sinu kasutajakonto lisateave on hallatav siin serveris - <code>%(hostname)s</code>.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Kõik selle kasutaja sõnumid ja kutsed saava olema peidetud. Kas sa oled kindel, et soovid teda eirata?",
@@ -1904,7 +1874,6 @@
     "unknown": "teadmata",
     "Red": "Punane",
     "Grey": "Hall",
-    "Your email address does not appear to be associated with a Matrix ID on this homeserver.": "Sinu e-posti aadress ei tundu olema selles koduserveris seotud Matrixi kasutajatunnusega.",
     "This session is backing up your keys.": "See sessioon varundab sinu krüptovõtmeid.",
     "Declining…": "Keeldumisel…",
     "There are no past polls in this room": "Selles jututoas pole varasemaid küsitlusi",
@@ -1978,8 +1947,6 @@
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Valitud kuupäeva vaate otsimisel ja avamisel tekkis võrguühenduse viga. Kas näiteks sinu koduserver hetkel ei tööta või on ajutisi katkestusi sinu internetiühenduses. Palun proovi mõne aja pärast uuesti. Kui viga kordub veel hiljemgi, siis palun suhtle oma koduserveri haldajaga.",
     "Poll history": "Küsitluste ajalugu",
     "User (%(user)s) did not end up as invited to %(roomId)s but no error was given from the inviter utility": "Kasutaja %(user)s siiski ei saanud kutset %(roomId)s jututuppa, kuid kutse saatja liides ei kuvanud ka viga",
-    "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "See võib olla seotud asjaoluga, et rakendus on avatud mitmes brauseriaknas korraga või brauseri andmete kustutamise tõttu.",
-    "Database unexpectedly closed": "Andmebaasiühendus sulgus ootamatult",
     "Match default setting": "Sobita vaikimisi seadistusega",
     "Mute room": "Summuta jututuba",
     "Start DM anyway": "Ikkagi alusta vestlust",
@@ -1993,17 +1960,14 @@
     "Error changing password": "Viga salasõna muutmisel",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP olekukood %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Tundmatu viga salasõna muutmisel (%(stringifiedError)s)",
-    "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kui isikutuvastusserver on seadistamata, siis e-posti teel kutset saata ei saa. Soovi korral saad seda muuta Seadistuste vaatest.",
     "Failed to download source media, no source url was found": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Kui kutse saanud kasutajad on liitunud %(brand)s'ga, siis saad sa nendega suhelda ja jututuba on läbivalt krüptitud",
     "Waiting for users to join %(brand)s": "Kasutajate liitumise ootel %(brand)s'ga",
     "You do not have permission to invite users": "Sul pole õigusi kutse saatmiseks teistele kasutajatele",
     "Your language": "Sinu keel",
     "Your device ID": "Sinu seadme tunnus",
-    "User is not logged in": "Kasutaja pole võrku loginud",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
     "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
-    "Something went wrong.": "Midagi läks nüüd valesti.",
     "User cannot be invited until they are unbanned": "Kasutajale ei saa kutset saata enne, kui temalt on suhtluskeeld eemaldatud",
     "Ask to join": "Küsi võimalust liitumiseks",
     "People cannot join unless access is granted.": "Kasutajade ei saa liituda enne, kui selleks vastav luba on antud.",
@@ -2052,8 +2016,6 @@
     "Your request to join is pending.": "Sinu liitumissoov on ootel.",
     "Request to join sent": "Ligipääsu päring on saadetud",
     "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
-    "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.": "See server kasutab Matrixi vanemat versiooni. Selleks, et %(brand)s'i kasutamisel vigu ei tekiks palun uuenda serverit nii, et kasutusel oleks Matrixi %(version)s.",
-    "Your server is unsupported": "Sinu server ei ole toetatud",
     "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.": "Sinu koduserver on liiga vana ega toeta vähimat nõutavat API versiooni. Lisateavet saad oma serveri haldajalt või kui ise oled haldaja, siis palun uuenda serverit.",
     "common": {
         "about": "Rakenduse teave",
@@ -2632,7 +2594,10 @@
             "enable_desktop_notifications_session": "Võta selleks sessiooniks kasutusele töölauakeskkonnale omased teavitused",
             "show_message_desktop_notification": "Näita sõnumit töölauakeskkonnale omases teavituses",
             "enable_audible_notifications_session": "Võta selleks sessiooniks kasutusele kuuldavad teavitused",
-            "noisy": "Jutukas"
+            "noisy": "Jutukas",
+            "error_permissions_denied": "%(brand)s'il puudub luba sulle teavituste kuvamiseks - palun kontrolli oma brauseri seadistusi",
+            "error_permissions_missing": "%(brand)s ei saanud luba teavituste kuvamiseks - palun proovi uuesti",
+            "error_title": "Teavituste kasutusele võtmine ei õnnestunud"
         },
         "appearance": {
             "layout_irc": "IRC (katseline)",
@@ -3518,7 +3483,15 @@
         "connection_lost_description": "Kui ühendus sinu serveriga on katkenud, siis sa ei saa helistada.",
         "too_many_calls": "Liiga palju kõnesid",
         "too_many_calls_description": "Oled jõudnud suurima lubatud samaaegsete kõnede arvuni.",
-        "cannot_call_yourself_description": "Sa ei saa iseendale helistada."
+        "cannot_call_yourself_description": "Sa ei saa iseendale helistada.",
+        "msisdn_lookup_failed": "Telefoninumbrit ei õnnestu leida",
+        "msisdn_lookup_failed_description": "Telefoninumbri otsimisel tekkis viga",
+        "msisdn_transfer_failed": "Kõne edasisuunamine ei õnnestunud",
+        "transfer_failed": "Edasisuunamine ei õnnestunud",
+        "transfer_failed_description": "Kõne edasisuunamine ei õnnestunud",
+        "no_permission_conference": "Vaja on täiendavaid õigusi",
+        "no_permission_conference_description": "Sul ei ole piisavalt õigusi, et selles jututoas alustada konverentsikõnet",
+        "default_device": "Vaikimisi seade"
     },
     "Other": "Muud",
     "Advanced": "Teave arendajatele",
@@ -3801,7 +3774,14 @@
         "reset_password_email_field_description": "Kasuta e-posti aadressi ligipääsu taastamiseks oma kontole",
         "reset_password_email_field_required_invalid": "Sisesta e-posti aadress (nõutav selles koduserveris)",
         "msisdn_field_description": "Teades sinu kontaktinfot võivad teised kutsuda sind osalema jututubades",
-        "registration_msisdn_field_required_invalid": "Sisesta telefoninumber (nõutav selles koduserveris)"
+        "registration_msisdn_field_required_invalid": "Sisesta telefoninumber (nõutav selles koduserveris)",
+        "oidc": {
+            "error_generic": "Midagi läks nüüd valesti.",
+            "error_title": "Meil ei õnnestunud sind sisse logida"
+        },
+        "sso_failed_missing_storage": "Me sättisime nii, et sinu veebibrauser jätaks järgmiseks sisselogimiseks meelde sinu koduserveri, kuid kahjuks on ta selle unustanud. Palun mine sisselogimise lehele ja proovi uuesti.",
+        "reset_password_email_not_found_title": "Seda e-posti aadressi ei leidunud",
+        "reset_password_email_not_associated": "Sinu e-posti aadress ei tundu olema selles koduserveris seotud Matrixi kasutajatunnusega."
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -4170,7 +4150,10 @@
         "column_document": "Dokument",
         "tac_title": "Kasutustingimused",
         "tac_description": "Selleks et jätkata koduserveri %(homeserverDomain)s kasutamist sa pead üle vaatama ja nõustuma meie kasutustingimustega.",
-        "tac_button": "Vaata üle kasutustingimused"
+        "tac_button": "Vaata üle kasutustingimused",
+        "identity_server_no_terms_title": "Isikutuvastusserveril puuduvad kasutustingimused",
+        "identity_server_no_terms_description_1": "E-posti aadressi või telefoninumbri kontrolliks see tegevus eeldab päringut vaikimisi isikutuvastusserverisse <server />, aga sellel serveril puuduvad kasutustingimused.",
+        "identity_server_no_terms_description_2": "Jätka vaid siis, kui sa usaldad serveri omanikku."
     },
     "space_settings": {
         "title": "Seadistused - %(spaceName)s"
@@ -4197,5 +4180,27 @@
     "failed_load_async_component": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
     "upload_failed_generic": "Faili '%(fileName)s' üleslaadimine ei õnnestunud.",
     "upload_failed_size": "Faili '%(fileName)s' suurus ületab serveris seadistatud üleslaadimise piiri",
-    "upload_failed_title": "Üleslaadimine ei õnnestunud"
+    "upload_failed_title": "Üleslaadimine ei õnnestunud",
+    "cannot_invite_without_identity_server": "Kui isikutuvastusserver on seadistamata, siis e-posti teel kutset saata ei saa. Soovi korral saad seda muuta Seadistuste vaatest.",
+    "unsupported_server_title": "Sinu server ei ole toetatud",
+    "unsupported_server_description": "See server kasutab Matrixi vanemat versiooni. Selleks, et %(brand)s'i kasutamisel vigu ei tekiks palun uuenda serverit nii, et kasutusel oleks Matrixi %(version)s.",
+    "error_user_not_logged_in": "Kasutaja pole võrku loginud",
+    "error_database_closed_title": "Andmebaasiühendus sulgus ootamatult",
+    "error_database_closed_description": "See võib olla seotud asjaoluga, et rakendus on avatud mitmes brauseriaknas korraga või brauseri andmete kustutamise tõttu.",
+    "empty_room": "Tühi jututuba",
+    "user1_and_user2": "%(user1)s ja %(user2)s",
+    "user_and_n_others": {
+        "one": "%(user)s ja veel 1 kasutaja",
+        "other": "%(user)s ja veel %(count)s kasutajat"
+    },
+    "inviting_user1_and_user2": "Saadame kutset kasutajatele %(user1)s ja %(user2)s",
+    "inviting_user_and_n_others": {
+        "one": "Saadame kutset kasutajale %(user)s ning veel ühele muule kasutajale",
+        "other": "Saadame kutset kasutajale %(user)s ja veel %(count)s'le muule kasutajale"
+    },
+    "empty_room_was_name": "Tühi jututuba (varasema nimega %(oldName)s)",
+    "notifier": {
+        "m.key.verification.request": "%(name)s soovib verifitseerimist",
+        "io.element.voice_broadcast_chunk": "%(senderName)s alustas ringhäälingukõnet"
+    }
 }
