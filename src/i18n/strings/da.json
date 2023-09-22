@@ -18,8 +18,6 @@
     "unknown error code": "Ukendt fejlkode",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
-    "You cannot place a call with yourself.": "Du kan ikke ringe til dig selv.",
-    "Upload Failed": "Upload Fejlede",
     "Sun": "Søn",
     "Mon": "Man",
     "Tue": "Tirs",
@@ -95,17 +93,9 @@
     "Logs sent": "Logfiler sendt",
     "Failed to send logs: ": "Kunne ikke sende logfiler: ",
     "Preparing to send logs": "Forbereder afsendelse af logfiler",
-    "Call failed due to misconfigured server": "Opkaldet mislykkedes pga. fejlkonfigureret server",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bed administratoren af din homeserver (<code>%(homeserverDomain)s</code>) om at konfigurere en TURN server for at opkald virker pålideligt.",
     "Permission Required": "Tilladelse påkrævet",
     "You do not have permission to start a conference call in this room": "Du har ikke rettighed til at starte et gruppekald i dette rum",
-    "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke uploades.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Filen '%(fileName)s' overstiger homeserverens størrelsesbegrænsning for uploads",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Serveren kan være utilgængelig, overbelastet, eller også har du fundet en fejl.",
-    "The server does not support the room version specified.": "Serveren understøtter ikke den oplyste rumversion.",
-    "Failure to create room": "Rummet kunne ikke oprettes",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
-    "Unable to load! Check your network connectivity and try again.": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
     "Missing roomId.": "roomId mangler.",
     "Use an identity server": "Brug en identitetsserver",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Brug en identitetsserver for at invitere pr. mail. Tryk på Fortsæt for at bruge den almindelige identitetsserver (%(defaultIdentityServerName)s) eller indtast en anden under Indstillinger.",
@@ -171,8 +161,6 @@
     "Cuba": "Cuba",
     "China": "Kina",
     "Canada": "Canada",
-    "Too Many Calls": "For mange opkald",
-    "The call could not be established": "Opkaldet kunne ikke etableres",
     "Folder": "Mappe",
     "We couldn't log you in": "Vi kunne ikke logge dig ind",
     "Chile": "Chile",
@@ -205,13 +193,6 @@
     "United States": "Amerikas Forenede Stater",
     "United Kingdom": "Storbritanien",
     "Croatia": "Kroatien",
-    "Answered Elsewhere": "Svaret andet sted",
-    "You've reached the maximum number of simultaneous calls.": "Du er nået til det maksimale antal igangværende opkald på en gang.",
-    "You cannot place calls without a connection to the server.": "Du kan ikke lave et opkald uden en forbindelse til serveren.",
-    "Connectivity to the server has been lost": "Forbindelsen til serveren er tabt",
-    "The call was answered on another device.": "Opkaldet var svaret på en anden enhed.",
-    "The user you called is busy.": "Brugeren du ringede til er optaget.",
-    "User Busy": "Bruger optaget",
     "Are you sure you want to cancel entering passphrase?": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s og %(count)s andre",
@@ -731,7 +712,19 @@
         "already_in_call": "Allerede i et opkald",
         "already_in_call_person": "Du har allerede i et opkald med denne person.",
         "unsupported": "Opkald er ikke understøttet",
-        "unsupported_browser": "Du kan ikke lave opkald i denne browser."
+        "unsupported_browser": "Du kan ikke lave opkald i denne browser.",
+        "user_busy": "Bruger optaget",
+        "user_busy_description": "Brugeren du ringede til er optaget.",
+        "call_failed_description": "Opkaldet kunne ikke etableres",
+        "answered_elsewhere": "Svaret andet sted",
+        "answered_elsewhere_description": "Opkaldet var svaret på en anden enhed.",
+        "misconfigured_server": "Opkaldet mislykkedes pga. fejlkonfigureret server",
+        "misconfigured_server_description": "Bed administratoren af din homeserver (<code>%(homeserverDomain)s</code>) om at konfigurere en TURN server for at opkald virker pålideligt.",
+        "connection_lost": "Forbindelsen til serveren er tabt",
+        "connection_lost_description": "Du kan ikke lave et opkald uden en forbindelse til serveren.",
+        "too_many_calls": "For mange opkald",
+        "too_many_calls_description": "Du er nået til det maksimale antal igangværende opkald på en gang.",
+        "cannot_call_yourself_description": "Du kan ikke ringe til dig selv."
     },
     "encryption": {
         "verification": {
@@ -776,7 +769,10 @@
         "create_room": "Opret en gruppechat"
     },
     "create_room": {
-        "name_validation_required": "Indtast et navn for rummet"
+        "name_validation_required": "Indtast et navn for rummet",
+        "generic_error": "Serveren kan være utilgængelig, overbelastet, eller også har du fundet en fejl.",
+        "unsupported_version": "Serveren understøtter ikke den oplyste rumversion.",
+        "error_title": "Rummet kunne ikke oprettes"
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -836,5 +832,9 @@
             "title": "Sikkerhed & Privatliv",
             "encryption_permanent": "Efter aktivering er det ikke muligt at slå kryptering fra."
         }
-    }
+    },
+    "failed_load_async_component": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
+    "upload_failed_generic": "Filen '%(fileName)s' kunne ikke uploades.",
+    "upload_failed_size": "Filen '%(fileName)s' overstiger homeserverens størrelsesbegrænsning for uploads",
+    "upload_failed_title": "Upload Fejlede"
 }

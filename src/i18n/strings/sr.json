@@ -1,7 +1,5 @@
 {
-    "You cannot place a call with yourself.": "Не можете позвати сами себе.",
     "Warning!": "Упозорење!",
-    "Upload Failed": "Отпремање није успело",
     "Sun": "Нед",
     "Mon": "Пон",
     "Tue": "Уто",
@@ -53,8 +51,6 @@
     "You are no longer ignoring %(userId)s": "Више не занемарујете корисника %(userId)s",
     "Verified key": "Проверени кључ",
     "Reason": "Разлог",
-    "Failure to create room": "Неуспех при прављењу собе",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Сервер је можда недоступан, преоптерећен или сте нашли грешку.",
     "Send": "Пошаљи",
     "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
     "Not a valid %(brand)s keyfile": "Није исправана %(brand)s кључ-датотека",
@@ -247,14 +243,10 @@
     "This event could not be displayed": "Овај догађај не може бити приказан",
     "Demote yourself?": "Рашчињавате себе?",
     "Demote": "Рашчини",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Фајл „%(fileName)s“ премашује ограничење величине отпремања на овом серверу",
-    "Unable to load! Check your network connectivity and try again.": "Не могу да учитам! Проверите повезаност и пробајте поново.",
     "Join millions for free on the largest public server": "Придружите се милионима других бесплатно на највећем јавном серверу",
     "Create account": "Направи налог",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "Call failed due to misconfigured server": "Позив неуспешан због лоше подешеног сервера",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
     "Identity server has no terms of service": "Идентитетски сервер нема услове коришћења",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
@@ -563,13 +555,6 @@
     "%(name)s is requesting verification": "%(name)s тражи верификацију",
     "Only continue if you trust the owner of the server.": "Наставите само ако верујете власнику сервера.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ова радња захтева приступ серверу идентитета <server /> за валидацију адресе е-поште или телефонског броја али изгледа да сервер нема „услове услуге“.",
-    "The server does not support the room version specified.": "Сервер не подржава наведену верзију собе.",
-    "The file '%(fileName)s' failed to upload.": "Фајл „%(fileName)s“ није отпремљен.",
-    "You've reached the maximum number of simultaneous calls.": "Достигли сте максималан број истовремених позива.",
-    "Too Many Calls": "Превише позива",
-    "The call was answered on another device.": "На позив је одговорено на другом уређају.",
-    "Answered Elsewhere": "Одговорен другде",
-    "The call could not be established": "Позив није могао да се успостави",
     "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
     "Please contact your homeserver administrator.": "Контактирајте администратора вашег сервера.",
@@ -1249,7 +1234,15 @@
         "call_failed_media_permissions": "Постоји дозвола за коришћење камере",
         "call_failed_media_applications": "Друга апликације не користи камеру",
         "already_in_call": "Већ у позиву",
-        "already_in_call_person": "Већ разговарате са овом особом."
+        "already_in_call_person": "Већ разговарате са овом особом.",
+        "call_failed_description": "Позив није могао да се успостави",
+        "answered_elsewhere": "Одговорен другде",
+        "answered_elsewhere_description": "На позив је одговорено на другом уређају.",
+        "misconfigured_server": "Позив неуспешан због лоше подешеног сервера",
+        "misconfigured_server_description": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
+        "too_many_calls": "Превише позива",
+        "too_many_calls_description": "Достигли сте максималан број истовремених позива.",
+        "cannot_call_yourself_description": "Не можете позвати сами себе."
     },
     "Other": "Остало",
     "Advanced": "Напредно",
@@ -1386,7 +1379,10 @@
         }
     },
     "create_room": {
-        "encryption_label": "Омогући шифровање с краја на крај"
+        "encryption_label": "Омогући шифровање с краја на крај",
+        "generic_error": "Сервер је можда недоступан, преоптерећен или сте нашли грешку.",
+        "unsupported_version": "Сервер не подржава наведену верзију собе.",
+        "error_title": "Неуспех при прављењу собе"
     },
     "widget": {
         "capability": {
@@ -1490,5 +1486,9 @@
     "labs_mjolnir": {
         "rules_user": "Корисничка правила",
         "advanced_warning": "⚠ Ова подешавања су намењена напредним корисницима."
-    }
+    },
+    "failed_load_async_component": "Не могу да учитам! Проверите повезаност и пробајте поново.",
+    "upload_failed_generic": "Фајл „%(fileName)s“ није отпремљен.",
+    "upload_failed_size": "Фајл „%(fileName)s“ премашује ограничење величине отпремања на овом серверу",
+    "upload_failed_title": "Отпремање није успело"
 }

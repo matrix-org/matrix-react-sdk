@@ -1,9 +1,6 @@
 {
     "Operation failed": "Əməliyyatın nasazlığı",
-    "You cannot place a call with yourself.": "Siz özünə zəng vura bilmirsiniz.",
     "Warning!": "Diqqət!",
-    "Upload Failed": "Faylın göndərilməsinin nasazlığı",
-    "Failure to create room": "Otağı yaratmağı bacarmadı",
     "Sun": "Baz",
     "Mon": "Ber",
     "Tue": "Çax",
@@ -98,12 +95,9 @@
     "Confirm passphrase": "Şifrəni təsdiqləyin",
     "Permission Required": "İzn tələb olunur",
     "You do not have permission to start a conference call in this room": "Bu otaqda konfrans başlamaq üçün icazə yoxdur",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Server, istifadə edilə bilməz, yüklənmiş ola bilər və ya bir səhv vurursunuz.",
-    "The server does not support the room version specified.": "Server göstərilən otaq versiyasını dəstəkləmir.",
     "Send": "Göndər",
     "PM": "24:00",
     "AM": "12:00",
-    "Unable to load! Check your network connectivity and try again.": "Yükləmək olmur! Şəbəkə bağlantınızı yoxlayın və yenidən cəhd edin.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s-un sizə bildiriş göndərmək icazəsi yoxdur - brauzerinizin parametrlərini yoxlayın",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s bildiriş göndərmək üçün icazə verilmədi - lütfən yenidən cəhd edin",
     "This email address was not found": "Bu e-poçt ünvanı tapılmadı",
@@ -115,10 +109,6 @@
     "You are not in this room.": "Sən bu otaqda deyilsən.",
     "You do not have permission to do that in this room.": "Bu otaqda bunu etməyə icazəniz yoxdur.",
     "Verified key": "Təsdiqlənmiş açar",
-    "Call failed due to misconfigured server": "Düzgün qurulmamış server səbəbindən zəng alınmadı",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Xahiş edirik, baş serverin administratoruna müraciət edin (<code>%(homeserverDomain)s</code>) ki zənglərin etibarlı işləməsi üçün dönüş serverini konfiqurasiya etsin.",
-    "The file '%(fileName)s' failed to upload.": "'%(fileName)s' faylı yüklənə bilmədi.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' faylı yükləmə üçün bu server ölçü həddini aşmışdır",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Identity server has no terms of service": "Şəxsiyyət serverinin xidmət şərtləri yoxdur",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Bu hərəkət e-poçt ünvanı və ya telefon nömrəsini təsdiqləmək üçün standart şəxsiyyət serverinə <server /> girməyi tələb edir, lakin serverdə heç bir xidmət şəraiti yoxdur.",
@@ -274,7 +264,10 @@
         "hangup": "Bitirmək",
         "voice_call": "Səs çağırış",
         "video_call": "Video çağırış",
-        "call_failed": "Uğursuz zəng"
+        "call_failed": "Uğursuz zəng",
+        "misconfigured_server": "Düzgün qurulmamış server səbəbindən zəng alınmadı",
+        "misconfigured_server_description": "Xahiş edirik, baş serverin administratoruna müraciət edin (<code>%(homeserverDomain)s</code>) ki zənglərin etibarlı işləməsi üçün dönüş serverini konfiqurasiya etsin.",
+        "cannot_call_yourself_description": "Siz özünə zəng vura bilmirsiniz."
     },
     "devtools": {
         "category_other": "Digər"
@@ -326,5 +319,14 @@
         "security": {
             "history_visibility_legend": "Kim tarixi oxuya bilər?"
         }
+    },
+    "failed_load_async_component": "Yükləmək olmur! Şəbəkə bağlantınızı yoxlayın və yenidən cəhd edin.",
+    "upload_failed_generic": "'%(fileName)s' faylı yüklənə bilmədi.",
+    "upload_failed_size": "'%(fileName)s' faylı yükləmə üçün bu server ölçü həddini aşmışdır",
+    "upload_failed_title": "Faylın göndərilməsinin nasazlığı",
+    "create_room": {
+        "generic_error": "Server, istifadə edilə bilməz, yüklənmiş ola bilər və ya bir səhv vurursunuz.",
+        "unsupported_version": "Server göstərilən otaq versiyasını dəstəkləmir.",
+        "error_title": "Otağı yaratmağı bacarmadı"
     }
 }

@@ -35,7 +35,6 @@
     "Failed to send request.": "การส่งคำขอล้มเหลว",
     "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
     "Failed to unban": "การถอนแบนล้มเหลว",
-    "Failure to create room": "การสร้างห้องล้มเหลว",
     "Filter room members": "กรองสมาชิกห้อง",
     "Forget room": "ลืมห้อง",
     "Historical": "ประวัติแชทเก่า",
@@ -59,7 +58,6 @@
     "Rooms": "ห้องสนทนา",
     "Search failed": "การค้นหาล้มเหลว",
     "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
-    "Server may be unavailable, overloaded, or you hit a bug.": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือเจอจุดบกพร่อง",
     "This email address was not found": "ไม่พบที่อยู่อีเมล",
     "Create new room": "สร้างห้องใหม่",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "ไม่สามารถเชื่อมต่อไปยังเซิร์ฟเวอร์บ้านผ่านทาง HTTP ได้เนื่องจาก URL ที่อยู่บนเบราว์เซอร์เป็น HTTPS กรุณาใช้ HTTPS หรือ<a>เปิดใช้งานสคริปต์ที่ไม่ปลอดภัย</a>.",
@@ -73,7 +71,6 @@
         "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
         "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
     },
-    "Upload Failed": "การอัปโหลดล้มเหลว",
     "Warning!": "คำเตือน!",
     "You need to be logged in.": "คุณต้องเข้าสู่ระบบก่อน",
     "Sun": "อา.",
@@ -119,7 +116,6 @@
     "Enter passphrase": "กรอกรหัสผ่าน",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
     "Verification Pending": "รอการตรวจสอบ",
-    "You cannot place a call with yourself.": "คุณไม่สามารถโทรหาตัวเองได้",
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
     "Error decrypting video": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ",
     "Sunday": "วันอาทิตย์",
@@ -145,19 +141,9 @@
     "Yesterday": "เมื่อวานนี้",
     "Low Priority": "ความสำคัญต่ำ",
     "Explore rooms": "สำรวจห้อง",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "โปรดสอบถามผู้ดูแลระบบของโฮมเซิร์ฟเวอร์ของคุณ (<code>%(homeserverDomain)s</code>) เพื่อกำหนดคอนฟิกเซิร์ฟเวอร์ TURN เพื่อให้การเรียกทำงานได้อย่างน่าเชื่อถือ.",
-    "Call failed due to misconfigured server": "การโทรล้มเหลวเนื่องจากเซิร์ฟเวอร์กำหนดค่าไม่ถูกต้อง",
-    "The call was answered on another device.": "คุณรับสายบนอุปกรณ์อื่นแล้ว.",
-    "The call could not be established": "ไม่สามารถโทรออกได้",
-    "The user you called is busy.": "ผู้ใช้ที่คุณโทรหาไม่ว่าง.",
-    "User Busy": "ผู้ใช้ไม่ว่าง",
     "Only continue if you trust the owner of the server.": "ดำเนินการต่อหากคุณไว้วางใจเจ้าของเซิร์ฟเวอร์เท่านั้น.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "การดำเนินการนี้จำเป็นต้องเข้าถึงเซิร์ฟเวอร์ identity เริ่มต้น <server /> เพื่อตรวจสอบที่อยู่อีเมลหรือหมายเลขโทรศัพท์ แต่เซิร์ฟเวอร์ไม่มีข้อกำหนดในการให้บริการใดๆ.",
     "Identity server has no terms of service": "เซิร์ฟเวอร์ประจำตัวไม่มีข้อกำหนดในการให้บริการ",
-    "The server does not support the room version specified.": "เซิร์ฟเวอร์ไม่รองรับเวอร์ชันห้องที่ระบุ.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ไฟล์ '%(fileName)s' เกินขีดจำกัดขนาดของโฮมเซิร์ฟเวอร์นี้สำหรับการอัปโหลด",
-    "The file '%(fileName)s' failed to upload.": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
-    "Unable to load! Check your network connectivity and try again.": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
     "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
     "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
@@ -172,10 +158,6 @@
     "Unable to transfer call": "ไม่สามารถโอนสายได้",
     "There was an error looking up the phone number": "เกิดข้อผิดพลาดในการค้นหาหมายเลขโทรศัพท์",
     "Unable to look up phone number": "ไม่สามารถค้นหาหมายเลขโทรศัพท์",
-    "You've reached the maximum number of simultaneous calls.": "คุณมีการโทรพร้อมกันถึงจำนวนสูงสุดแล้ว.",
-    "Too Many Calls": "โทรมากเกินไป",
-    "You cannot place calls without a connection to the server.": "คุณไม่สามารถโทรออกได้หากไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์.",
-    "Connectivity to the server has been lost": "ขาดการเชื่อมต่อกับเซิร์ฟเวอร์",
     "Session ID": "รหัสเซสชัน",
     "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
     "Deactivate user": "ปิดใช้งานผู้ใช้",
@@ -482,7 +464,18 @@
         "already_in_call": "อยู่ในสายแล้ว",
         "already_in_call_person": "คุณอยู่ในสายกับบุคคลนี้แล้ว.",
         "unsupported": "ไม่รองรับการโทร",
-        "unsupported_browser": "คุณไม่สามารถโทรออกในเบราว์เซอร์นี้."
+        "unsupported_browser": "คุณไม่สามารถโทรออกในเบราว์เซอร์นี้.",
+        "user_busy": "ผู้ใช้ไม่ว่าง",
+        "user_busy_description": "ผู้ใช้ที่คุณโทรหาไม่ว่าง.",
+        "call_failed_description": "ไม่สามารถโทรออกได้",
+        "answered_elsewhere_description": "คุณรับสายบนอุปกรณ์อื่นแล้ว.",
+        "misconfigured_server": "การโทรล้มเหลวเนื่องจากเซิร์ฟเวอร์กำหนดค่าไม่ถูกต้อง",
+        "misconfigured_server_description": "โปรดสอบถามผู้ดูแลระบบของโฮมเซิร์ฟเวอร์ของคุณ (<code>%(homeserverDomain)s</code>) เพื่อกำหนดคอนฟิกเซิร์ฟเวอร์ TURN เพื่อให้การเรียกทำงานได้อย่างน่าเชื่อถือ.",
+        "connection_lost": "ขาดการเชื่อมต่อกับเซิร์ฟเวอร์",
+        "connection_lost_description": "คุณไม่สามารถโทรออกได้หากไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์.",
+        "too_many_calls": "โทรมากเกินไป",
+        "too_many_calls_description": "คุณมีการโทรพร้อมกันถึงจำนวนสูงสุดแล้ว.",
+        "cannot_call_yourself_description": "คุณไม่สามารถโทรหาตัวเองได้"
     },
     "devtools": {
         "category_room": "ห้อง"
@@ -530,7 +523,10 @@
         }
     },
     "create_room": {
-        "encryption_forced": "เซิร์ฟเวอร์ของคุณกำหนดให้เปิดใช้งานการเข้ารหัสในห้องส่วนตัว."
+        "encryption_forced": "เซิร์ฟเวอร์ของคุณกำหนดให้เปิดใช้งานการเข้ารหัสในห้องส่วนตัว.",
+        "generic_error": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือเจอจุดบกพร่อง",
+        "unsupported_version": "เซิร์ฟเวอร์ไม่รองรับเวอร์ชันห้องที่ระบุ.",
+        "error_title": "การสร้างห้องล้มเหลว"
     },
     "room_list": {
         "failed_remove_tag": "การลบแท็ก %(tagName)s จากห้องล้มเหลว",
@@ -571,5 +567,9 @@
         "intro": {
             "unencrypted_warning": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง"
         }
-    }
+    },
+    "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
+    "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
+    "upload_failed_size": "ไฟล์ '%(fileName)s' เกินขีดจำกัดขนาดของโฮมเซิร์ฟเวอร์นี้สำหรับการอัปโหลด",
+    "upload_failed_title": "การอัปโหลดล้มเหลว"
 }

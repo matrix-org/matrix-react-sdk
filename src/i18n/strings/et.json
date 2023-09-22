@@ -1,6 +1,4 @@
 {
-    "Unable to load! Check your network connectivity and try again.": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
-    "Call failed due to misconfigured server": "Kõne ebaõnnestus valesti seadistatud serveri tõttu",
     "Send": "Saada",
     "Jan": "jaan",
     "Feb": "veeb",
@@ -451,16 +449,8 @@
     "Sounds": "Helid",
     "Notification sound": "Teavitusheli",
     "Set a new custom sound": "Seadista uus kohandatud heli",
-    "You cannot place a call with yourself.": "Sa ei saa iseendale helistada.",
     "You do not have permission to start a conference call in this room": "Sul ei ole piisavalt õigusi, et selles jututoas alustada konverentsikõnet",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Palu oma koduserveri haldajat (<code>%(homeserverDomain)s</code>), et ta seadistaks kõnede kindlamaks toimimiseks TURN serveri.",
     "Permission Required": "Vaja on täiendavaid õigusi",
-    "The file '%(fileName)s' failed to upload.": "Faili '%(fileName)s' üleslaadimine ei õnnestunud.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Faili '%(fileName)s' suurus ületab serveris seadistatud üleslaadimise piiri",
-    "Upload Failed": "Üleslaadimine ei õnnestunud",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Server kas pole võrgus või on ülekoormatud, aga võib-olla oled hoopis komistanud süsteemivea otsa.",
-    "The server does not support the room version specified.": "See server ei toeta antud jututoa versiooni.",
-    "Failure to create room": "Jututoa loomine ei õnnestunud",
     "Cancel entering passphrase?": "Kas katkestame paroolifraasi sisestamise?",
     "Enter passphrase": "Sisesta paroolifraas",
     "Setting up keys": "Võtame krüptovõtmed kasutusele",
@@ -890,7 +880,6 @@
     "Ignored attempt to disable encryption": "Eirasin katset lõpetada krüptimise kasutamine",
     "Failed to save your profile": "Sinu profiili salvestamine ei õnnestunud",
     "The operation could not be completed": "Toimingut ei õnnestunud lõpetada",
-    "The call could not be established": "Kõnet ei saa korraldada",
     "Move right": "Liigu paremale",
     "Move left": "Liigu vasakule",
     "Revoke permissions": "Tühista õigused",
@@ -899,8 +888,6 @@
     },
     "Show Widgets": "Näita vidinaid",
     "Hide Widgets": "Peida vidinad",
-    "The call was answered on another device.": "Kõnele vastati teises seadmes.",
-    "Answered Elsewhere": "Vastatud mujal",
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
     "Enable desktop notifications": "Võta kasutusele töölauakeskkonna teavitused",
@@ -1171,8 +1158,6 @@
     "Reason (optional)": "Põhjus (kui soovid lisada)",
     "Hold": "Pane ootele",
     "Resume": "Jätka",
-    "You've reached the maximum number of simultaneous calls.": "Oled jõudnud suurima lubatud samaaegsete kõnede arvuni.",
-    "Too Many Calls": "Liiga palju kõnesid",
     "Transfer": "Suuna kõne edasi",
     "Failed to transfer call": "Kõne edasisuunamine ei õnnestunud",
     "A call can only be transferred to a single user.": "Kõnet on võimalik edasi suunata vaid ühele kasutajale.",
@@ -1311,8 +1296,6 @@
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Add reaction": "Lisa reaktsioon",
     "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud",
-    "User Busy": "Kasutaja on hõivatud",
-    "The user you called is busy.": "Kasutaja, kellele sa helistasid, on hõivatud.",
     "Currently joining %(count)s rooms": {
         "other": "Parasjagu liitun %(count)s jututoaga",
         "one": "Parasjagu liitun %(count)s jututoaga"
@@ -1559,8 +1542,6 @@
     "Start new chat": "Alusta uut vestlust",
     "Recently viewed": "Hiljuti vaadatud",
     "That's fine": "Sobib",
-    "You cannot place calls without a connection to the server.": "Kui ühendus sinu serveriga on katkenud, siis sa ei saa helistada.",
-    "Connectivity to the server has been lost": "Ühendus sinu serveriga on katkenud",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
         "other": "%(count)s häält antud. Tulemuste nägemiseks tee oma valik"
@@ -2019,9 +2000,7 @@
     "You do not have permission to invite users": "Sul pole õigusi kutse saatmiseks teistele kasutajatele",
     "Your language": "Sinu keel",
     "Your device ID": "Sinu seadme tunnus",
-    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "Alternatiivina võid sa kasutada avalikku serverit <server/>, kuid see ei pruugi olla piisavalt töökindel ning sa jagad ka oma IP-aadressi selle serveriga. Täpsemalt saad seda määrata seadistustes.",
     "User is not logged in": "Kasutaja pole võrku loginud",
-    "Try using %(server)s": "Proovi kasutada %(server)s serverit",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
     "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
     "Something went wrong.": "Midagi läks nüüd valesti.",
@@ -3047,7 +3026,10 @@
         "room_visibility_label": "Jututoa nähtavus",
         "join_rule_invite": "Privaatne jututuba (kutse alusel)",
         "join_rule_restricted": "Nähtav kogukonnakeskuse liikmetele",
-        "unfederated": "Keela kõikide niisuguste kasutajate liitumine selle jututoaga, kelle kasutajakonto ei asu %(serverName)s koduserveris."
+        "unfederated": "Keela kõikide niisuguste kasutajate liitumine selle jututoaga, kelle kasutajakonto ei asu %(serverName)s koduserveris.",
+        "generic_error": "Server kas pole võrgus või on ülekoormatud, aga võib-olla oled hoopis komistanud süsteemivea otsa.",
+        "unsupported_version": "See server ei toeta antud jututoa versiooni.",
+        "error_title": "Jututoa loomine ei õnnestunud"
     },
     "timeline": {
         "m.call": {
@@ -3522,7 +3504,21 @@
         "already_in_call_person": "Sinul juba kõne käsil selle osapoolega.",
         "unsupported": "Kõneteenus ei ole toetatud",
         "unsupported_browser": "Selle veebibrauseriga sa ei saa helistada.",
-        "change_input_device": "Vaheta sisendseadet"
+        "change_input_device": "Vaheta sisendseadet",
+        "user_busy": "Kasutaja on hõivatud",
+        "user_busy_description": "Kasutaja, kellele sa helistasid, on hõivatud.",
+        "call_failed_description": "Kõnet ei saa korraldada",
+        "answered_elsewhere": "Vastatud mujal",
+        "answered_elsewhere_description": "Kõnele vastati teises seadmes.",
+        "misconfigured_server": "Kõne ebaõnnestus valesti seadistatud serveri tõttu",
+        "misconfigured_server_description": "Palu oma koduserveri haldajat (<code>%(homeserverDomain)s</code>), et ta seadistaks kõnede kindlamaks toimimiseks TURN serveri.",
+        "misconfigured_server_fallback": "Alternatiivina võid sa kasutada avalikku serverit <server/>, kuid see ei pruugi olla piisavalt töökindel ning sa jagad ka oma IP-aadressi selle serveriga. Täpsemalt saad seda määrata seadistustes.",
+        "misconfigured_server_fallback_accept": "Proovi kasutada %(server)s serverit",
+        "connection_lost": "Ühendus sinu serveriga on katkenud",
+        "connection_lost_description": "Kui ühendus sinu serveriga on katkenud, siis sa ei saa helistada.",
+        "too_many_calls": "Liiga palju kõnesid",
+        "too_many_calls_description": "Oled jõudnud suurima lubatud samaaegsete kõnede arvuni.",
+        "cannot_call_yourself_description": "Sa ei saa iseendale helistada."
     },
     "Other": "Muud",
     "Advanced": "Teave arendajatele",
@@ -4197,5 +4193,9 @@
         "options_add_button": "Lisa valik",
         "disclosed_notes": "Osalejad näevad tulemusi kohe peale oma valiku tegemist",
         "notes": "Tulemused on näha vaid siis, kui küsitlus in lõppenud"
-    }
+    },
+    "failed_load_async_component": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
+    "upload_failed_generic": "Faili '%(fileName)s' üleslaadimine ei õnnestunud.",
+    "upload_failed_size": "Faili '%(fileName)s' suurus ületab serveris seadistatud üleslaadimise piiri",
+    "upload_failed_title": "Üleslaadimine ei õnnestunud"
 }

@@ -27,7 +27,6 @@
     "Failed to send request.": "El envío de la solicitud falló.",
     "Failed to set display name": "No se ha podido cambiar el nombre público",
     "Failed to unban": "No se pudo quitar veto",
-    "Failure to create room": "No se ha podido crear la sala",
     "Favourite": "Añadir a favoritos",
     "Filter room members": "Filtrar miembros de la sala",
     "Forget room": "Olvidar sala",
@@ -63,7 +62,6 @@
     "Rooms": "Salas",
     "Search failed": "Falló la búsqueda",
     "Server may be unavailable, overloaded, or search timed out :(": "El servidor podría estar saturado o desconectado, o la búsqueda caducó :(",
-    "Server may be unavailable, overloaded, or you hit a bug.": "El servidor podría estar saturado o desconectado, o has encontrado un fallo.",
     "Session ID": "ID de Sesión",
     "No media permissions": "Sin permisos para el medio",
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Probablemente necesites dar permisos manualmente a %(brand)s para tu micrófono/cámara",
@@ -110,13 +108,11 @@
         "other": "Subiendo %(filename)s y otros %(count)s"
     },
     "Upload avatar": "Adjuntar avatar",
-    "Upload Failed": "Subida fallida",
     "Verification Pending": "Verificación Pendiente",
     "Verified key": "Clave verificada",
     "Warning!": "¡Advertencia!",
     "You are not in this room.": "No estás en esta sala.",
     "You do not have permission to do that in this room.": "No tienes permiso para realizar esa acción en esta sala.",
-    "You cannot place a call with yourself.": "No puedes llamarte a ti mismo.",
     "AM": "AM",
     "PM": "PM",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (nivel de permisos %(powerLevelNumber)s)",
@@ -272,8 +268,6 @@
     "Voice & Video": "Voz y vídeo",
     "Phone numbers": "Números de teléfono",
     "Email addresses": "Correos electrónicos",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "El archivo «%(fileName)s» supera el tamaño límite del servidor para subidas",
-    "Unable to load! Check your network connectivity and try again.": "No se ha podido cargar. Comprueba tu conexión de red e inténtalo de nuevo.",
     "Unrecognised address": "Dirección desconocida",
     "You do not have permission to invite people to this room.": "No tienes permisos para inviitar gente a esta sala.",
     "Unknown server error": "Error desconocido del servidor",
@@ -376,8 +370,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica a este usuario para marcarlo como de confianza. Confiar en usuarios aporta tranquilidad en los mensajes cifrados de extremo a extremo.",
     "Incoming Verification Request": "Petición de verificación entrante",
     "Your %(brand)s is misconfigured": "Tu %(brand)s tiene un error de configuración",
-    "The file '%(fileName)s' failed to upload.": "La subida del archivo «%(fileName)s ha fallado.",
-    "The server does not support the room version specified.": "El servidor no soporta la versión de sala especificada.",
     "Cannot reach homeserver": "No se puede conectar con el servidor",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Asegúrate de tener conexión a internet, o contacta con el administrador del servidor",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Solicita al administrador de %(brand)s que compruebe si hay entradas duplicadas o erróneas en <a>tu configuración</a>.",
@@ -391,8 +383,6 @@
     "The user must be unbanned before they can be invited.": "El usuario debe ser desbloqueado antes de poder ser invitado.",
     "The user's homeserver does not support the version of the room.": "El servidor del usuario no soporta la versión de la sala.",
     "Scissors": "Tijeras",
-    "Call failed due to misconfigured server": "La llamada ha fallado debido a una mala configuración del servidor",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Por favor, pídele al administrador de tu servidor base (<code>%(homeserverDomain)s</code>) que configure un servidor TURN para que las llamadas funcionen correctamente.",
     "Use an identity server": "Usar un servidor de identidad",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Usar un servidor de identidad para invitar por correo. Presiona continuar par usar el servidor de identidad por defecto (%(defaultIdentityServerName)s) o adminístralo en Ajustes.",
     "Use an identity server to invite by email. Manage in Settings.": "Usa un servidor de identidad para invitar por correo. Puedes configurarlo en tus ajustes.",
@@ -1184,11 +1174,6 @@
     "United Kingdom": "Reino Unido",
     "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Le hemos preguntado a tu navegador qué servidor base usar para iniciar tu sesión, pero parece que no lo recuerda. Vuelve a la página de inicio de sesión e inténtalo de nuevo.",
     "We couldn't log you in": "No hemos podido iniciar tu sesión",
-    "You've reached the maximum number of simultaneous calls.": "Has llegado al límite de llamadas simultáneas.",
-    "Too Many Calls": "Demasiadas llamadas",
-    "The call was answered on another device.": "Esta llamada fue respondida en otro dispositivo.",
-    "Answered Elsewhere": "Respondida en otra parte",
-    "The call could not be established": "No se ha podido establecer la llamada",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si te has olvidado de tu clave de seguridad puedes <button>configurar nuevos métodos de recuperación</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accede a tu historial de mensajes seguros y configúralos introduciendo tu clave de seguridad.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Si has olvidado tu frase de seguridad puedes usar tu <button1>clave de seguridad</button1> o <button2>configurar nuevos métodos de recuperación</button2>",
@@ -1314,8 +1299,6 @@
         "one": "Entrando en %(count)s sala",
         "other": "Entrando en %(count)s salas"
     },
-    "The user you called is busy.": "La persona a la que has llamado está ocupada.",
-    "User Busy": "Persona ocupada",
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
     "Search for rooms or people": "Busca salas o gente",
@@ -1576,8 +1559,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala no está conectada con ninguna otra plataforma de mensajería. <a>Más información.</a>",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para ayudarnos a descubrir fallos. No incluye nada personal, y no se comparten con terceros.",
     "That's fine": "Vale",
-    "You cannot place calls without a connection to the server.": "No puedes llamar porque no hay conexión con el servidor.",
-    "Connectivity to the server has been lost": "Se ha perdido la conexión con el servidor",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -1977,7 +1958,6 @@
     "Set a new account password…": "Elige una contraseña para la cuenta…",
     "Message from %(user)s": "Mensaje de %(user)s",
     "Enable MSC3946 (to support late-arriving room archives)": "",
-    "Try using %(server)s": "Probar a usar %(server)s",
     "common": {
         "about": "Acerca de",
         "analytics": "Analítica de datos",
@@ -2896,7 +2876,10 @@
         "room_visibility_label": "Visibilidad de la sala",
         "join_rule_invite": "Sala privada (solo por invitación)",
         "join_rule_restricted": "Visible para los miembros del espacio",
-        "unfederated": "Evita que cualquier persona que no sea parte de %(serverName)s se una a esta sala."
+        "unfederated": "Evita que cualquier persona que no sea parte de %(serverName)s se una a esta sala.",
+        "generic_error": "El servidor podría estar saturado o desconectado, o has encontrado un fallo.",
+        "unsupported_version": "El servidor no soporta la versión de sala especificada.",
+        "error_title": "No se ha podido crear la sala"
     },
     "timeline": {
         "m.call": {
@@ -3348,7 +3331,20 @@
         "already_in_call_person": "Ya estás en una llamada con esta persona.",
         "unsupported": "Las llamadas no son compatibles",
         "unsupported_browser": "No puedes llamar usando este navegador de internet.",
-        "change_input_device": "Cambiar dispositivo de entrada"
+        "change_input_device": "Cambiar dispositivo de entrada",
+        "user_busy": "Persona ocupada",
+        "user_busy_description": "La persona a la que has llamado está ocupada.",
+        "call_failed_description": "No se ha podido establecer la llamada",
+        "answered_elsewhere": "Respondida en otra parte",
+        "answered_elsewhere_description": "Esta llamada fue respondida en otro dispositivo.",
+        "misconfigured_server": "La llamada ha fallado debido a una mala configuración del servidor",
+        "misconfigured_server_description": "Por favor, pídele al administrador de tu servidor base (<code>%(homeserverDomain)s</code>) que configure un servidor TURN para que las llamadas funcionen correctamente.",
+        "misconfigured_server_fallback_accept": "Probar a usar %(server)s",
+        "connection_lost": "Se ha perdido la conexión con el servidor",
+        "connection_lost_description": "No puedes llamar porque no hay conexión con el servidor.",
+        "too_many_calls": "Demasiadas llamadas",
+        "too_many_calls_description": "Has llegado al límite de llamadas simultáneas.",
+        "cannot_call_yourself_description": "No puedes llamarte a ti mismo."
     },
     "Other": "Otros",
     "Advanced": "Avanzado",
@@ -3999,5 +3995,9 @@
         "options_add_button": "Añadir opción",
         "disclosed_notes": "Quienes voten podrán ver los resultados",
         "notes": "Los resultados se mostrarán cuando cierres la encuesta"
-    }
+    },
+    "failed_load_async_component": "No se ha podido cargar. Comprueba tu conexión de red e inténtalo de nuevo.",
+    "upload_failed_generic": "La subida del archivo «%(fileName)s ha fallado.",
+    "upload_failed_size": "El archivo «%(fileName)s» supera el tamaño límite del servidor para subidas",
+    "upload_failed_title": "Subida fallida"
 }

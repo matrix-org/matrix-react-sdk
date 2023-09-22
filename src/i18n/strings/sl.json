@@ -26,9 +26,6 @@
     "Tue": "Tor",
     "Mon": "Pon",
     "Sun": "Ned",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Datoteka '%(fileName)s' je večja od omejitve, nastavljene na strežniku",
-    "The file '%(fileName)s' failed to upload.": "Datoteka '%(fileName)s' se ni uspešno naložila.",
-    "Unable to load! Check your network connectivity and try again.": "Napaka pri nalaganju! Preverite vašo povezavo in poskusite ponovno.",
     "common": {
         "analytics": "Analitika",
         "error": "Napaka",
@@ -88,5 +85,8 @@
             "add_msisdn_confirm_body": "Pritisnite gumb spodaj da potrdite dodajanje te telefonske številke.",
             "add_msisdn_dialog_title": "Dodaj telefonsko številko"
         }
-    }
+    },
+    "failed_load_async_component": "Napaka pri nalaganju! Preverite vašo povezavo in poskusite ponovno.",
+    "upload_failed_generic": "Datoteka '%(fileName)s' se ni uspešno naložila.",
+    "upload_failed_size": "Datoteka '%(fileName)s' je večja od omejitve, nastavljene na strežniku"
 }

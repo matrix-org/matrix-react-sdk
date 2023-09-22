@@ -56,7 +56,6 @@
     "Failed to send request.": "Huts egin du eskaera bidaltzean.",
     "Failed to set display name": "Huts egin du pantaila-izena ezartzean",
     "Failed to unban": "Huts egin du debekua kentzean",
-    "Failure to create room": "Huts egin du gela sortzean",
     "Forget room": "Ahaztu gela",
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ezin da hasiera zerbitzarira konektatu, egiaztatu zure konexioa, ziurtatu zure <a>hasiera zerbitzariaren SSL ziurtagiria</a> fidagarritzat jotzen duela zure gailuak, eta nabigatzailearen pluginen batek ez dituela eskaerak blokeatzen.",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Ezin zara hasiera zerbitzarira HTTP bidez konektatu zure nabigatzailearen barran dagoen URLa HTTS bada. Erabili HTTPS edo <a>gaitu script ez seguruak</a>.",
@@ -71,7 +70,6 @@
     "<not supported>": "<euskarririk gabe>",
     "No display name": "Pantaila izenik ez",
     "No more results": "Emaitza gehiagorik ez",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Agian zerbitzaria ez dago eskuragarri, edo gainezka dago, edo akats bat aurkitu duzu.",
     "Power level must be positive integer.": "Botere maila osoko zenbaki positibo bat izan behar da.",
     "Profile": "Profila",
     "Reason": "Arrazoia",
@@ -99,10 +97,8 @@
         "other": "%(filename)s eta beste %(count)s igotzen"
     },
     "Upload avatar": "Igo abatarra",
-    "Upload Failed": "Igoerak huts egin du",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "Verified key": "Egiaztatutako gakoa",
-    "You cannot place a call with yourself.": "Ezin diozu zure buruari deitu.",
     "You need to be able to invite users to do that.": "Erabiltzaileak gonbidatzeko baimena behar duzu hori egiteko.",
     "You need to be logged in.": "Saioa hasi duzu.",
     "You seem to be in a call, are you sure you want to quit?": "Badirudi dei batean zaudela, ziur irten nahi duzula?",
@@ -272,7 +268,6 @@
     "Incompatible local cache": "Katxe lokal bateraezina",
     "Clear cache and resync": "Garbitu katxea eta sinkronizatu berriro",
     "Add some now": "Gehitu batzuk orain",
-    "Unable to load! Check your network connectivity and try again.": "Ezin da kargatu! Egiaztatu sare konexioa eta saiatu berriro.",
     "Delete Backup": "Ezabatu babes-kopia",
     "Unable to load key backup status": "Ezin izan da gakoen babes-kopiaren egoera kargatu",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Zure txaten historiala ez galtzeko, zure gelako gakoak esportatu behar dituzu saioa amaitu aurretik. %(brand)s-en bertsio berriagora bueltatu behar zara hau egiteko",
@@ -302,7 +297,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ezin izan dira behean zerrendatutako Matrix ID-een profilak, berdin gonbidatu nahi dituzu?",
     "Invite anyway and never warn me again": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
     "Invite anyway": "Gonbidatu hala ere",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' fitxategiak igoerarako hasiera-zerbitzari honek duen tamaina muga gainditzen du",
     "Dog": "Txakurra",
     "Cat": "Katua",
     "Lion": "Lehoia",
@@ -422,8 +416,6 @@
     "Revoke invite": "Indargabetu gonbidapena",
     "Invited by %(sender)s": "%(sender)s erabiltzaileak gonbidatuta",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
-    "The file '%(fileName)s' failed to upload.": "Huts egin du '%(fileName)s' fitxategia igotzean.",
-    "The server does not support the room version specified.": "Zerbitzariak ez du emandako gela-bertsioa onartzen.",
     "Cannot reach homeserver": "Ezin izan da hasiera-zerbitzaria atzitu",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Baieztatu Internet konexio egonkor bat duzula, edo jarri kontaktuan zerbitzariaren administratzailearekin",
     "Your %(brand)s is misconfigured": "Zure %(brand)s gaizki konfiguratuta dago",
@@ -499,8 +491,6 @@
     "Failed to re-authenticate due to a homeserver problem": "Berriro autentifikatzean huts egin du hasiera-zerbitzariaren arazo bat dela eta",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
-    "Call failed due to misconfigured server": "Deiak huts egin du zerbitzaria gaizki konfiguratuta dagoelako",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Eskatu zure hasiera-zerbitzariaren administratzaileari (<code>%(homeserverDomain)s</code>) TURN zerbitzari bat konfiguratu dezala deiek ondo funtzionatzeko.",
     "Checking server": "Zerbitzaria egiaztatzen",
     "Disconnect from the identity server <idserver />?": "Deskonektatu <idserver /> identitate-zerbitzaritik?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "<server></server> erabiltzen ari zara kontaktua aurkitzeko eta aurkigarria izateko. Zure identitate-zerbitzaria aldatu dezakezu azpian.",
@@ -1213,7 +1203,10 @@
         "title_private_room": "Sortu gela pribatua",
         "name_validation_required": "Sartu gelaren izena",
         "encryption_label": "Gaitu muturretik-muturrera zifratzea",
-        "topic_label": "Mintzagaia (aukerakoa)"
+        "topic_label": "Mintzagaia (aukerakoa)",
+        "generic_error": "Agian zerbitzaria ez dago eskuragarri, edo gainezka dago, edo akats bat aurkitu duzu.",
+        "unsupported_version": "Zerbitzariak ez du emandako gela-bertsioa onartzen.",
+        "error_title": "Huts egin du gela sortzean"
     },
     "timeline": {
         "m.call.invite": {
@@ -1494,7 +1487,10 @@
         "voice_call": "Ahots-deia",
         "video_call": "Bideo-deia",
         "unknown_caller": "Dei-egile ezezaguna",
-        "call_failed": "Deiak huts egin du"
+        "call_failed": "Deiak huts egin du",
+        "misconfigured_server": "Deiak huts egin du zerbitzaria gaizki konfiguratuta dagoelako",
+        "misconfigured_server_description": "Eskatu zure hasiera-zerbitzariaren administratzaileari (<code>%(homeserverDomain)s</code>) TURN zerbitzari bat konfiguratu dezala deiek ondo funtzionatzeko.",
+        "cannot_call_yourself_description": "Ezin diozu zure buruari deitu."
     },
     "Other": "Beste bat",
     "Advanced": "Aurreratua",
@@ -1797,5 +1793,9 @@
         "tac_title": "Termino eta baldintzak",
         "tac_description": "%(homeserverDomain)s hasiera-zerbitzaria erabiltzen jarraitzeko gure termino eta baldintzak irakurri eta onartu behar dituzu.",
         "tac_button": "Irakurri termino eta baldintzak"
-    }
+    },
+    "failed_load_async_component": "Ezin da kargatu! Egiaztatu sare konexioa eta saiatu berriro.",
+    "upload_failed_generic": "Huts egin du '%(fileName)s' fitxategia igotzean.",
+    "upload_failed_size": "'%(fileName)s' fitxategiak igoerarako hasiera-zerbitzari honek duen tamaina muga gainditzen du",
+    "upload_failed_title": "Igoerak huts egin du"
 }

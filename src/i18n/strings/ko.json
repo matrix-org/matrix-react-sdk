@@ -42,7 +42,6 @@
     "Failed to send request.": "요청을 보내지 못했습니다.",
     "Failed to set display name": "표시 이름을 설정하지 못함",
     "Failed to unban": "출입 금지 풀기에 실패함",
-    "Failure to create room": "방 만들기 실패",
     "Filter room members": "방 구성원 필터",
     "Forget room": "방 지우기",
     "Historical": "기록",
@@ -79,7 +78,6 @@
     "Rooms": "방",
     "Search failed": "검색 실패함",
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
-    "Server may be unavailable, overloaded, or you hit a bug.": "서버를 쓸 수 없거나 과부하거나, 오류입니다.",
     "Session ID": "세션 ID",
     "This email address was not found": "이 이메일 주소를 찾을 수 없음",
     "This room has no local addresses": "이 방은 로컬 주소가 없음",
@@ -98,11 +96,9 @@
         "other": "%(filename)s 외 %(count)s개를 올리는 중"
     },
     "Upload avatar": "아바타 업로드",
-    "Upload Failed": "업로드 실패",
     "Verification Pending": "인증을 기다리는 중",
     "Verified key": "인증한 열쇠",
     "Warning!": "주의!",
-    "You cannot place a call with yourself.": "자기 자신에게는 전화를 걸 수 없습니다.",
     "You do not have permission to post to this room": "이 방에 글을 올릴 권한이 없습니다",
     "You need to be able to invite users to do that.": "그러려면 사용자를 초대할 수 있어야 합니다.",
     "You need to be logged in.": "로그인을 해야 합니다.",
@@ -260,12 +256,6 @@
     "No Audio Outputs detected": "오디오 출력 감지 없음",
     "Audio Output": "오디오 출력",
     "Please <a>contact your service administrator</a> to continue using this service.": "이 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>하세요.",
-    "Call failed due to misconfigured server": "잘못 구성된 서버로 전화에 실패함",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "전화가 안정적으로 작동하도록 TURN 서버를 설정하려면 당신의 홈서버 (<code>%(homeserverDomain)s</code>) 관리자에게 물어보세요 .",
-    "The file '%(fileName)s' failed to upload.": "'%(fileName)s' 파일 업로드에 실패했습니다.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' 파일이 홈서버의 업로드 크기 제한을 초과합니다",
-    "The server does not support the room version specified.": "서버가 지정된 방 버전을 지원하지 않습니다.",
-    "Unable to load! Check your network connectivity and try again.": "불러올 수 없습니다! 네트워크 연결 상태를 확인한 후 다시 시도하세요.",
     "Cannot reach homeserver": "홈서버에 연결할 수 없습니다",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "인터넷 연결이 안정적인지 확인하세요, 또는 서버 관리자에게 연락하세요",
     "Your %(brand)s is misconfigured": "%(brand)s이 잘못 설정됨",
@@ -707,7 +697,6 @@
     "Argentina": "아르헨티나",
     "Laos": "라오스",
     "Transfer Failed": "전송 실패",
-    "User Busy": "사용자 바쁨",
     "Ukraine": "우크라이나",
     "United Kingdom": "영국",
     "Yemen": "예멘",
@@ -725,8 +714,6 @@
     "Australia": "호주",
     "Afghanistan": "아프가니스탄",
     "United States": "미국",
-    "The call was answered on another device.": "이 전화는 다른 기기에서 응답했습니다.",
-    "Answered Elsewhere": "다른 기기에서 응답함",
     "Mark all as read": "모두 읽음으로 표시",
     "Deactivating your account is a permanent action — be careful!": "계정을 비활성화 하는 것은 취소할 수 없습니다. 조심하세요!",
     "Room info": "방 정보",
@@ -1019,7 +1006,10 @@
         "title_private_room": "개인 방 만들기",
         "name_validation_required": "방 이름을 입력해주세요",
         "topic_label": "주제 (선택)",
-        "join_rule_invite": "비공개 방 (초대 필요)"
+        "join_rule_invite": "비공개 방 (초대 필요)",
+        "generic_error": "서버를 쓸 수 없거나 과부하거나, 오류입니다.",
+        "unsupported_version": "서버가 지정된 방 버전을 지원하지 않습니다.",
+        "error_title": "방 만들기 실패"
     },
     "timeline": {
         "m.room.member": {
@@ -1254,7 +1244,13 @@
         "call_failed": "전화 실패",
         "unable_to_access_microphone": "마이크에 접근 불가",
         "unable_to_access_media": "웹캠 / 마이크에 접근 불가",
-        "already_in_call": "이미 전화중"
+        "already_in_call": "이미 전화중",
+        "user_busy": "사용자 바쁨",
+        "answered_elsewhere": "다른 기기에서 응답함",
+        "answered_elsewhere_description": "이 전화는 다른 기기에서 응답했습니다.",
+        "misconfigured_server": "잘못 구성된 서버로 전화에 실패함",
+        "misconfigured_server_description": "전화가 안정적으로 작동하도록 TURN 서버를 설정하려면 당신의 홈서버 (<code>%(homeserverDomain)s</code>) 관리자에게 물어보세요 .",
+        "cannot_call_yourself_description": "자기 자신에게는 전화를 걸 수 없습니다."
     },
     "Other": "기타",
     "Advanced": "고급",
@@ -1555,5 +1551,9 @@
         "tac_title": "이용 약관",
         "tac_description": "홈서버 %(homeserverDomain)s을(를) 계속 사용하기 위해서는 저희 이용 약관을 검토하고 동의해주세요.",
         "tac_button": "이용 약관 검토"
-    }
+    },
+    "failed_load_async_component": "불러올 수 없습니다! 네트워크 연결 상태를 확인한 후 다시 시도하세요.",
+    "upload_failed_generic": "'%(fileName)s' 파일 업로드에 실패했습니다.",
+    "upload_failed_size": "'%(fileName)s' 파일이 홈서버의 업로드 크기 제한을 초과합니다",
+    "upload_failed_title": "업로드 실패"
 }

@@ -1,10 +1,6 @@
 {
-    "You cannot place a call with yourself.": ".i do na ka'e fonjo'e do",
     "Permission Required": ".i lo nu curmi cu sarcu",
     "You do not have permission to start a conference call in this room": ".i na curmi lo nu le du'u co'a girzu fonjo'e cu zilbe'i do fo le ca se cuxna",
-    "Upload Failed": ".i da nabmi fi lo nu kibdu'a",
-    "Failure to create room": ".i da nabmi fi lo nu cupra le ve zilbe'i",
-    "Server may be unavailable, overloaded, or you hit a bug.": ".i la'a cu'i gi ja le samtcise'u cu spofu vau ja mutce le ka gunka gi da samcfi",
     "Send": "nu zilbe'i",
     "Sun": "jy. dy. ze",
     "Mon": "jy. dy. pa",
@@ -167,7 +163,6 @@
     "Hide sessions": "nu ro se samtcise'u cu zilmipri",
     "This room is end-to-end encrypted": ".i ro zilbe'i be fo le cei'i cu mifra",
     "Everyone in this room is verified": ".i do lacri ro pagbu be le se zilbe'i",
-    "The file '%(fileName)s' failed to upload.": ".i da nabmi fi lo nu kibdu'a la'o zoi. %(fileName)s .zoi",
     "Invite to this room": "nu friti le ka ziljmina le se zilbe'i",
     "Revoke invite": "nu zukte le ka na ckaji le se friti",
     "collapse": "nu tcila be na ku viska",
@@ -295,7 +290,9 @@
     },
     "create_room": {
         "title_public_room": "nu cupra pa ve zilbe'i poi gubni",
-        "title_private_room": "nu cupra pa ve zilbe'i poi na gubni"
+        "title_private_room": "nu cupra pa ve zilbe'i poi na gubni",
+        "generic_error": ".i la'a cu'i gi ja le samtcise'u cu spofu vau ja mutce le ka gunka gi da samcfi",
+        "error_title": ".i da nabmi fi lo nu cupra le ve zilbe'i"
     },
     "timeline": {
         "m.call.invite": {
@@ -416,7 +413,8 @@
     "voip": {
         "voice_call": "nu snavi fonjo'e",
         "video_call": "nu vidvi fonjo'e",
-        "call_failed": ".i da nabmi fi lo nu co'a fonjo'e"
+        "call_failed": ".i da nabmi fi lo nu co'a fonjo'e",
+        "cannot_call_yourself_description": ".i do na ka'e fonjo'e do"
     },
     "devtools": {
         "category_other": "drata",
@@ -504,5 +502,7 @@
         "context_menu": {
             "explore": "nu facki le du'u ve zilbe'i"
         }
-    }
+    },
+    "upload_failed_generic": ".i da nabmi fi lo nu kibdu'a la'o zoi. %(fileName)s .zoi",
+    "upload_failed_title": ".i da nabmi fi lo nu kibdu'a"
 }

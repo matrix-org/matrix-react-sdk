@@ -206,12 +206,6 @@
     "Tue": "ວັນອັງຄານ",
     "Mon": "ວັນຈັນ",
     "Sun": "ວັນອາທິດ",
-    "Failure to create room": "ການສ້າງຫ້ອງບໍ່ສຳເລັດ",
-    "The server does not support the room version specified.": "ເຊີບເວີບໍ່ຮອງຮັບລຸ້ນຫ້ອງທີ່ລະບຸໄວ້ໄດ້.",
-    "Server may be unavailable, overloaded, or you hit a bug.": "ເຊີບເວີອາດບໍ່ພ້ອມໃຊ້ງານ, ໂຫຼດເກີນ, ຫຼື ທ່ານຖືກພົບຂໍ້ບົກຜ່ອງ.",
-    "Upload Failed": "ການອັບໂຫລດບໍ່ສຳເລັດ",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ໄຟລ໌ '%(fileName)s' ເກີນຂະໜາດ ສຳລັບການອັບໂຫລດຂອງ homeserver ນີ້",
-    "The file '%(fileName)s' failed to upload.": "ໄຟລ໌ '%(fileName)s' ບໍ່ສາມາດອັບໂຫລດໄດ້.",
     "You do not have permission to start a conference call in this room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລິເລີ່ມການໂທປະຊຸມໃນຫ້ອງນີ້",
     "Permission Required": "ຕ້ອງການອະນຸຍາດ",
     "Failed to transfer call": "ການໂອນສາຍບໍ່ສຳເລັດ",
@@ -219,19 +213,6 @@
     "Unable to transfer call": "ບໍ່ສາມາດໂອນສາຍໄດ້",
     "There was an error looking up the phone number": "ເກີດຄວາມຜິດພາດໃນການຊອກຫາເບີໂທລະສັບ",
     "Unable to look up phone number": "ບໍ່ສາມາດຊອກຫາເບີໂທລະສັບໄດ້",
-    "You cannot place a call with yourself.": "ທ່ານບໍ່ສາມາດໂທຫາຕົວທ່ານເອງໄດ້.",
-    "You've reached the maximum number of simultaneous calls.": "ທ່ານໂທພ້ອມໆກັນເຖິງຈຳນວນສູງສຸດແລ້ວ.",
-    "Too Many Calls": "ການໂທຫຼາຍເກີນໄປ",
-    "You cannot place calls without a connection to the server.": "ທ່ານບໍ່ສາມາດໂທໄດ້ ຖ້າບໍ່ມີການເຊື່ອມຕໍ່ກັບເຊີເວີ.",
-    "Connectivity to the server has been lost": "ການເຊື່ອມຕໍ່ກັບເຊີບເວີໄດ້ສູນຫາຍໄປ",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງສະຖານີຂອງທ່ານ (<code>%(homeserverDomain)s</code>) ເພື່ອກໍານົດຄ່າຂອງ TURN Server ເພື່ອໃຫ້ການໂທເຮັດວຽກໄດ້ຢ່າງສະຖຽນ.",
-    "Call failed due to misconfigured server": "ການໂທບໍ່ສຳເລັດເນື່ອງຈາກເຊີບເວີຕັ້ງຄ່າຜິດພາດ",
-    "The call was answered on another device.": "ການຮັບສາຍຢູ່ໃນອຸປະກອນອື່ນ.",
-    "Answered Elsewhere": "ຕອບຢູ່ບ່ອນອື່ນແລ້ວ",
-    "The call could not be established": "ບໍ່ສາມາດໂທຫາໄດ້",
-    "The user you called is busy.": "ຜູ້ໃຊ້ທີ່ທ່ານໂທຫາຍັງບໍ່ຫວ່າງ.",
-    "User Busy": "ຜູ້ໃຊ້ບໍ່ຫວ່າງ",
-    "Unable to load! Check your network connectivity and try again.": "ບໍ່ສາມາດໂຫຼດໄດ້! ກະລຸນາກວດເບິ່ງການເຊື່ອມຕໍ່ເຄືອຂ່າຍຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ.",
     "Room %(roomId)s not visible": "ບໍ່ເຫັນຫ້ອງ %(roomId)s",
     "Missing room_id in request": "ບໍ່ມີການຮ້ອງຂໍ room_id",
     "You do not have permission to do that in this room.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນັ້ນຢູ່ໃນຫ້ອງນີ້.",
@@ -2465,7 +2446,10 @@
         "room_visibility_label": "ການເບິ່ງເຫັນຫ້ອງ",
         "join_rule_invite": "ຫ້ອງສ່ວນຕົວ (ເຊີນເທົ່ານັ້ນ)",
         "join_rule_restricted": "ເບິ່ງເຫັນພື້ນທີ່ຂອງສະມາຊິກ",
-        "unfederated": "ບລັອກຜູ້ທີ່ບໍ່ມີສ່ວນຮ່ວມ %(serverName)s ບໍ່ໃຫ້ເຂົ້າຮ່ວມຫ້ອງນີ້."
+        "unfederated": "ບລັອກຜູ້ທີ່ບໍ່ມີສ່ວນຮ່ວມ %(serverName)s ບໍ່ໃຫ້ເຂົ້າຮ່ວມຫ້ອງນີ້.",
+        "generic_error": "ເຊີບເວີອາດບໍ່ພ້ອມໃຊ້ງານ, ໂຫຼດເກີນ, ຫຼື ທ່ານຖືກພົບຂໍ້ບົກຜ່ອງ.",
+        "unsupported_version": "ເຊີບເວີບໍ່ຮອງຮັບລຸ້ນຫ້ອງທີ່ລະບຸໄວ້ໄດ້.",
+        "error_title": "ການສ້າງຫ້ອງບໍ່ສຳເລັດ"
     },
     "timeline": {
         "m.call.invite": {
@@ -2902,7 +2886,19 @@
         "already_in_call": "ຢູ່ໃນສາຍໂທແລ້ວ",
         "already_in_call_person": "ທ່ານຢູ່ໃນການໂທກັບບຸກຄົນນີ້ແລ້ວ.",
         "unsupported": "ບໍ່ຮອງຮັບການໂທ",
-        "unsupported_browser": "ທ່ານບໍ່ສາມາດໂທອອກໃນບຣາວເຊີນີ້ໄດ້."
+        "unsupported_browser": "ທ່ານບໍ່ສາມາດໂທອອກໃນບຣາວເຊີນີ້ໄດ້.",
+        "user_busy": "ຜູ້ໃຊ້ບໍ່ຫວ່າງ",
+        "user_busy_description": "ຜູ້ໃຊ້ທີ່ທ່ານໂທຫາຍັງບໍ່ຫວ່າງ.",
+        "call_failed_description": "ບໍ່ສາມາດໂທຫາໄດ້",
+        "answered_elsewhere": "ຕອບຢູ່ບ່ອນອື່ນແລ້ວ",
+        "answered_elsewhere_description": "ການຮັບສາຍຢູ່ໃນອຸປະກອນອື່ນ.",
+        "misconfigured_server": "ການໂທບໍ່ສຳເລັດເນື່ອງຈາກເຊີບເວີຕັ້ງຄ່າຜິດພາດ",
+        "misconfigured_server_description": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງສະຖານີຂອງທ່ານ (<code>%(homeserverDomain)s</code>) ເພື່ອກໍານົດຄ່າຂອງ TURN Server ເພື່ອໃຫ້ການໂທເຮັດວຽກໄດ້ຢ່າງສະຖຽນ.",
+        "connection_lost": "ການເຊື່ອມຕໍ່ກັບເຊີບເວີໄດ້ສູນຫາຍໄປ",
+        "connection_lost_description": "ທ່ານບໍ່ສາມາດໂທໄດ້ ຖ້າບໍ່ມີການເຊື່ອມຕໍ່ກັບເຊີເວີ.",
+        "too_many_calls": "ການໂທຫຼາຍເກີນໄປ",
+        "too_many_calls_description": "ທ່ານໂທພ້ອມໆກັນເຖິງຈຳນວນສູງສຸດແລ້ວ.",
+        "cannot_call_yourself_description": "ທ່ານບໍ່ສາມາດໂທຫາຕົວທ່ານເອງໄດ້."
     },
     "Other": "ອື່ນໆ",
     "Advanced": "ຂັ້ນສູງ",
@@ -3513,5 +3509,9 @@
         "options_add_button": "ເພີ່ມຕົວເລືອກ",
         "disclosed_notes": "ຜູ້ລົງຄະແນນເຫັນຜົນທັນທີທີ່ເຂົາເຈົ້າໄດ້ລົງຄະແນນສຽງ",
         "notes": "ຜົນໄດ້ຮັບຈະຖືກເປີດເຜີຍເມື່ອທ່ານສິ້ນສຸດແບບສຳຫຼວດເທົ່ານັ້ນ"
-    }
+    },
+    "failed_load_async_component": "ບໍ່ສາມາດໂຫຼດໄດ້! ກະລຸນາກວດເບິ່ງການເຊື່ອມຕໍ່ເຄືອຂ່າຍຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ.",
+    "upload_failed_generic": "ໄຟລ໌ '%(fileName)s' ບໍ່ສາມາດອັບໂຫລດໄດ້.",
+    "upload_failed_size": "ໄຟລ໌ '%(fileName)s' ເກີນຂະໜາດ ສຳລັບການອັບໂຫລດຂອງ homeserver ນີ້",
+    "upload_failed_title": "ການອັບໂຫລດບໍ່ສຳເລັດ"
 }

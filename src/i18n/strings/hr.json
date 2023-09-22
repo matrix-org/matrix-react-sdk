@@ -113,25 +113,8 @@
     "Tue": "Uto",
     "Mon": "Pon",
     "Sun": "Ned",
-    "Failure to create room": "Stvaranje sobe neuspješno",
-    "The server does not support the room version specified.": "Poslužitelj ne podržava navedenu verziju sobe.",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Poslužitelj je možda nedostupan, preopterećen, ili ste pronašli grešku u aplikaciji.",
-    "Upload Failed": "Prijenos neuspješan",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Datoteka '%(fileName)s' premašuje maksimalnu veličinu ovog kućnog poslužitelja za prijenose",
-    "The file '%(fileName)s' failed to upload.": "Prijenos datoteke '%(fileName)s' nije uspio.",
     "You do not have permission to start a conference call in this room": "Nemate dopuštenje uspostaviti konferencijski poziv u ovoj sobi",
     "Permission Required": "Potrebno dopuštenje",
-    "You cannot place a call with yourself.": "Ne možete uspostaviti poziv sami sa sobom.",
-    "You've reached the maximum number of simultaneous calls.": "Dosegli ste maksimalan broj istodobnih poziva.",
-    "Too Many Calls": "Previše poziva",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Zamolite administratora Vašeg kućnog poslužitelja (<code>%(homeserverDomain)s</code>) da konfigurira TURN poslužitelj kako bi pozivi mogli pouzdano funkcionirati.",
-    "Call failed due to misconfigured server": "Poziv neuspješan radi pogrešno konfiguriranog poslužitelja",
-    "The call was answered on another device.": "Na poziv je odgovoreno sa drugog uređaja.",
-    "Answered Elsewhere": "Odgovoreno je drugdje",
-    "The call could not be established": "Poziv se nije mogao uspostaviti",
-    "The user you called is busy.": "Pozvani korisnik je zauzet.",
-    "User Busy": "Korisnik zauzet",
-    "Unable to load! Check your network connectivity and try again.": "Učitavanje nije moguće! Provjerite mrežnu povezanost i pokušajte ponovo.",
     "Could not connect to identity server": "Nije moguće spojiti se na poslužitelja identiteta",
     "common": {
         "analytics": "Analitika",
@@ -158,7 +141,17 @@
         "call_failed_media_permissions": "Jeli dopušteno korištenje web kamere",
         "call_failed_media_applications": "Da ni jedna druga aplikacija već ne koristi web kameru",
         "already_in_call": "Već u pozivu",
-        "already_in_call_person": "Već ste u pozivu sa tom osobom."
+        "already_in_call_person": "Već ste u pozivu sa tom osobom.",
+        "user_busy": "Korisnik zauzet",
+        "user_busy_description": "Pozvani korisnik je zauzet.",
+        "call_failed_description": "Poziv se nije mogao uspostaviti",
+        "answered_elsewhere": "Odgovoreno je drugdje",
+        "answered_elsewhere_description": "Na poziv je odgovoreno sa drugog uređaja.",
+        "misconfigured_server": "Poziv neuspješan radi pogrešno konfiguriranog poslužitelja",
+        "misconfigured_server_description": "Zamolite administratora Vašeg kućnog poslužitelja (<code>%(homeserverDomain)s</code>) da konfigurira TURN poslužitelj kako bi pozivi mogli pouzdano funkcionirati.",
+        "too_many_calls": "Previše poziva",
+        "too_many_calls_description": "Dosegli ste maksimalan broj istodobnih poziva.",
+        "cannot_call_yourself_description": "Ne možete uspostaviti poziv sami sa sobom."
     },
     "auth": {
         "sso": "Jedinstvena prijava (SSO)",
@@ -180,5 +173,14 @@
             "add_msisdn_confirm_body": "Kliknite gumb ispod da biste potvrdili dodavanje ovog telefonskog broja.",
             "add_msisdn_dialog_title": "Dodaj telefonski broj"
         }
+    },
+    "failed_load_async_component": "Učitavanje nije moguće! Provjerite mrežnu povezanost i pokušajte ponovo.",
+    "upload_failed_generic": "Prijenos datoteke '%(fileName)s' nije uspio.",
+    "upload_failed_size": "Datoteka '%(fileName)s' premašuje maksimalnu veličinu ovog kućnog poslužitelja za prijenose",
+    "upload_failed_title": "Prijenos neuspješan",
+    "create_room": {
+        "generic_error": "Poslužitelj je možda nedostupan, preopterećen, ili ste pronašli grešku u aplikaciji.",
+        "unsupported_version": "Poslužitelj ne podržava navedenu verziju sobe.",
+        "error_title": "Stvaranje sobe neuspješno"
     }
 }

@@ -1,7 +1,5 @@
 {
-    "You cannot place a call with yourself.": "Non podes facer unha chamada a ti mesma.",
     "Warning!": "Aviso!",
-    "Upload Failed": "Fallou o envío",
     "Sun": "Dom",
     "Mon": "Lun",
     "Tue": "Mar",
@@ -52,8 +50,6 @@
     "You are no longer ignoring %(userId)s": "Xa non está a ignorar a %(userId)s",
     "Verified key": "Chave verificada",
     "Reason": "Razón",
-    "Failure to create room": "Fallou a creación da sala",
-    "Server may be unavailable, overloaded, or you hit a bug.": "O servidor podería non estar dispoñible, con sobrecarga ou ter un fallo.",
     "Send": "Enviar",
     "Your browser does not support the required cryptography extensions": "O seu navegador non soporta as extensións de criptografía necesarias",
     "Not a valid %(brand)s keyfile": "Non é un ficheiro de chaves %(brand)s válido",
@@ -262,12 +258,6 @@
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Your password has been reset.": "Restableceuse o contrasinal.",
-    "Unable to load! Check your network connectivity and try again.": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
-    "Call failed due to misconfigured server": "Fallou a chamada porque o servidor está mal configurado",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Contacta coa administración do teu servidor (<code>%(homeserverDomain)s</code>) para configurar un servidor TURN para que as chamadas funcionen de xeito fiable.",
-    "The file '%(fileName)s' failed to upload.": "Fallou a subida do ficheiro '%(fileName)s'.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "O ficheiro '%(fileName)s' supera o tamaño máximo permitido polo servidor",
-    "The server does not support the room version specified.": "O servidor non soporta a versión da sala indicada.",
     "Cancel entering passphrase?": "Cancelar a escrita da frase de paso?",
     "Setting up keys": "Configurando as chaves",
     "Verify this session": "Verificar esta sesión",
@@ -890,7 +880,6 @@
     "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
     "Failed to save your profile": "Non se gardaron os cambios",
     "The operation could not be completed": "Non se puido realizar a acción",
-    "The call could not be established": "Non se puido establecer a chamada",
     "Move right": "Mover á dereita",
     "Move left": "Mover á esquerda",
     "Revoke permissions": "Revogar permisos",
@@ -899,8 +888,6 @@
     },
     "Show Widgets": "Mostrar Widgets",
     "Hide Widgets": "Agochar Widgets",
-    "The call was answered on another device.": "A chamada foi respondida noutro dispositivo.",
-    "Answered Elsewhere": "Respondido noutro lugar",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -1171,8 +1158,6 @@
     "Reason (optional)": "Razón (optativa)",
     "Hold": "Colgar",
     "Resume": "Retomar",
-    "You've reached the maximum number of simultaneous calls.": "Acadaches o número máximo de chamadas simultáneas.",
-    "Too Many Calls": "Demasiadas chamadas",
     "Transfer": "Transferir",
     "Failed to transfer call": "Fallou a transferencia da chamada",
     "A call can only be transferred to a single user.": "Unha chamada só se pode transferir a unha única usuaria.",
@@ -1315,8 +1300,6 @@
         "one": "Neste intre estás en %(count)s sala",
         "other": "Neste intre estás en %(count)s salas"
     },
-    "The user you called is busy.": "A persoa á que chamas está ocupada.",
-    "User Busy": "Usuaria ocupada",
     "Or send invite link": "Ou envía ligazón de convite",
     "Some suggestions may be hidden for privacy.": "Algunhas suxestións poderían estar agochadas por privacidade.",
     "Search for rooms or people": "Busca salas ou persoas",
@@ -1567,8 +1550,6 @@
     "Share location": "Compartir localización",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
     "That's fine": "Iso está ben",
-    "You cannot place calls without a connection to the server.": "Non podes facer chamadas se non tes conexión ao servidor.",
-    "Connectivity to the server has been lost": "Perdeuse a conexión ao servidor",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
     "Other searches": "Outras buscas",
@@ -2656,7 +2637,10 @@
         "room_visibility_label": "Visibilidade da sala",
         "join_rule_invite": "Sala privada (só con convite)",
         "join_rule_restricted": "Visible para membros do espazo",
-        "unfederated": "Evitar que calquera externo a %(serverName)s se poida unir a esta sala."
+        "unfederated": "Evitar que calquera externo a %(serverName)s se poida unir a esta sala.",
+        "generic_error": "O servidor podería non estar dispoñible, con sobrecarga ou ter un fallo.",
+        "unsupported_version": "O servidor non soporta a versión da sala indicada.",
+        "error_title": "Fallou a creación da sala"
     },
     "timeline": {
         "m.call": {
@@ -3098,7 +3082,19 @@
         "already_in_call": "Xa estás nunha chamada",
         "already_in_call_person": "Xa estás nunha conversa con esta persoa.",
         "unsupported": "Non hai soporte para chamadas",
-        "unsupported_browser": "Non podes facer chamadas con este navegador."
+        "unsupported_browser": "Non podes facer chamadas con este navegador.",
+        "user_busy": "Usuaria ocupada",
+        "user_busy_description": "A persoa á que chamas está ocupada.",
+        "call_failed_description": "Non se puido establecer a chamada",
+        "answered_elsewhere": "Respondido noutro lugar",
+        "answered_elsewhere_description": "A chamada foi respondida noutro dispositivo.",
+        "misconfigured_server": "Fallou a chamada porque o servidor está mal configurado",
+        "misconfigured_server_description": "Contacta coa administración do teu servidor (<code>%(homeserverDomain)s</code>) para configurar un servidor TURN para que as chamadas funcionen de xeito fiable.",
+        "connection_lost": "Perdeuse a conexión ao servidor",
+        "connection_lost_description": "Non podes facer chamadas se non tes conexión ao servidor.",
+        "too_many_calls": "Demasiadas chamadas",
+        "too_many_calls_description": "Acadaches o número máximo de chamadas simultáneas.",
+        "cannot_call_yourself_description": "Non podes facer unha chamada a ti mesma."
     },
     "Other": "Outro",
     "Advanced": "Avanzado",
@@ -3709,5 +3705,9 @@
         "options_add_button": "Engade unha opción",
         "disclosed_notes": "As votantes ven os resultados xusto despois de votar",
         "notes": "Os resultados só son visibles cando remata a enquisa"
-    }
+    },
+    "failed_load_async_component": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
+    "upload_failed_generic": "Fallou a subida do ficheiro '%(fileName)s'.",
+    "upload_failed_size": "O ficheiro '%(fileName)s' supera o tamaño máximo permitido polo servidor",
+    "upload_failed_title": "Fallou o envío"
 }

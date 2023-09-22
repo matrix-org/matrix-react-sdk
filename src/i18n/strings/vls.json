@@ -1,13 +1,6 @@
 {
-    "You cannot place a call with yourself.": "J’en ku jezelve nie belln.",
     "Permission Required": "Toestemmienge vereist",
     "You do not have permission to start a conference call in this room": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
-    "The file '%(fileName)s' failed to upload.": "’t Bestand ‘%(fileName)s’ kostege nie gipload wordn.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "’t Bestand ‘%(fileName)s’ es groter of den iploadlimiet van den thuusserver",
-    "Upload Failed": "Iploadn mislukt",
-    "Server may be unavailable, overloaded, or you hit a bug.": "De server es misschiens ounbereikboar of overbelast, of je zyt e foute tegengekommn.",
-    "The server does not support the room version specified.": "De server oundersteunt deze versie van gesprekkn nie.",
-    "Failure to create room": "Anmoakn van gesprek es mislukt",
     "Send": "Verstuurn",
     "Sun": "Zun",
     "Mon": "Moa",
@@ -34,7 +27,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
-    "Unable to load! Check your network connectivity and try again.": "Loadn mislukt! Controleer je netwerktoegang en herprobeer ’t e ki.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s èt geen toestemmienge vo je meldiengn te verstuurn - controleert je browserinstelliengn",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s èt geen toestemmienge gekreegn ghed vo joun meldiengn te verstuurn - herprobeer ’t e ki",
     "Unable to enable Notifications": "Kostege meldiengn nie inschoakeln",
@@ -517,8 +509,6 @@
     "Discovery options will appear once you have added a phone number above.": "Ountdekkiengsopties goan verschynn a j’e telefongnumero toegevoegd ghed èt.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "’t Is een smse versteur noa +%(msisdn)s. Gift de verificoasjecode in da derin stoat.",
     "Command Help": "Hulp by ipdrachtn",
-    "Call failed due to misconfigured server": "Iproep mislukt door verkeerd gecounfigureerde server",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vroagt an den beheerder van je thuusserver (<code>%(homeserverDomain)s</code>) vo e TURN-server te counfigureern tenende jen iproepn betrouwboar te doen werkn.",
     "Identity server has no terms of service": "Den identiteitsserver èt geen dienstvoorwoardn",
     "The identity server you have chosen does not have any terms of service.": "Den identiteitsserver da je gekozen ghed èt, èt geen dienstvoorwoardn.",
     "Only continue if you trust the owner of the server.": "Goat alleene mo verder o je den eigenoar van de server betrouwt.",
@@ -945,7 +935,10 @@
         "hangup": "Iphangn",
         "voice_call": "Sproakiproep",
         "video_call": "Video-iproep",
-        "call_failed": "Iproep mislukt"
+        "call_failed": "Iproep mislukt",
+        "misconfigured_server": "Iproep mislukt door verkeerd gecounfigureerde server",
+        "misconfigured_server_description": "Vroagt an den beheerder van je thuusserver (<code>%(homeserverDomain)s</code>) vo e TURN-server te counfigureern tenende jen iproepn betrouwboar te doen werkn.",
+        "cannot_call_yourself_description": "J’en ku jezelve nie belln."
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -1159,5 +1152,14 @@
     },
     "labs_mjolnir": {
         "title": "Genegeerde gebruukers"
+    },
+    "failed_load_async_component": "Loadn mislukt! Controleer je netwerktoegang en herprobeer ’t e ki.",
+    "upload_failed_generic": "’t Bestand ‘%(fileName)s’ kostege nie gipload wordn.",
+    "upload_failed_size": "’t Bestand ‘%(fileName)s’ es groter of den iploadlimiet van den thuusserver",
+    "upload_failed_title": "Iploadn mislukt",
+    "create_room": {
+        "generic_error": "De server es misschiens ounbereikboar of overbelast, of je zyt e foute tegengekommn.",
+        "unsupported_version": "De server oundersteunt deze versie van gesprekkn nie.",
+        "error_title": "Anmoakn van gesprek es mislukt"
     }
 }

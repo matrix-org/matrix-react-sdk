@@ -35,7 +35,6 @@
     "Set up": "برپایی",
     "Forget room": "فراموش کردن اتاق",
     "Filter room members": "فیلتر کردن اعضای اتاق",
-    "Failure to create room": "ایجاد اتاق با خطا مواجه شد",
     "Failed to unban": "رفع مسدودیت با خطا مواجه شد",
     "Failed to set display name": "تنظیم نام نمایشی با خطا مواجه شد",
     "Failed to send request.": "ارسال درخواست با خطا مواجه شد.",
@@ -86,22 +85,8 @@
     "Tue": "سه‌شنبه",
     "Mon": "دوشنبه",
     "Sun": "یکشنبه",
-    "The server does not support the room version specified.": "سرور از نسخه‌ی اتاقی که مشخص شده‌است، پشتیبانی نمی‌کند.",
-    "Server may be unavailable, overloaded, or you hit a bug.": "سرور ممکن است از دسترس خارج شده، یا فشار بار زیادی را تحمل کرده، و یا به یک باگ نرم‌افزاری برخورد کرده باشد.",
-    "Upload Failed": "بارگذاری موفقیت‌آمیز نبود",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "حجم پرونده‌ی '%(fileName)s' از آستانه‌ی تنظیم‌شده بر روی سرور بیشتر است",
-    "The file '%(fileName)s' failed to upload.": "بارگذاری پرونده '%(fileName)s' موفقیت‌آمیز نبود.",
     "You do not have permission to start a conference call in this room": "شما اجازه‌ی شروع جلسه‌ی تصویری در این اتاق را ندارید",
     "Permission Required": "اجازه نیاز است",
-    "You cannot place a call with yourself.": "امکان برقراری تماس با خودتان وجود ندارد.",
-    "You've reached the maximum number of simultaneous calls.": "شما به بیشینه‌ی تعداد تماس‌های هم‌زمان رسیده‌اید.",
-    "Too Many Calls": "تعداد زیاد تماس",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "لطفا برای برقراری تماس، از مدیر <code>%(homeserverDomain)s</code> بخواهید سرور TURN را پیکربندی نماید.",
-    "Call failed due to misconfigured server": "تماس به دلیل پیکربندی نادرست سرور موفقیت‌آمیز نبود",
-    "The call was answered on another device.": "تماس بر روی دستگاه دیگری پاسخ داده شد.",
-    "Answered Elsewhere": "در جای دیگری پاسخ داده شد",
-    "The call could not be established": "امکان برقراری تماس وجود ندارد",
-    "Unable to load! Check your network connectivity and try again.": "امکان بارگیری محتوا وجود ندارد! لطفا وضعیت اتصال خود به اینترنت را بررسی کرده و مجددا اقدام نمائید.",
     "Explore rooms": "جستجو در اتاق ها",
     "Use an identity server": "از سرور هویت‌سنجی استفاده کنید",
     "Double check that your server supports the room version chosen and try again.": "بررسی کنید که کارگزار شما از نسخه اتاق انتخاب‌شده پشتیبانی کرده و دوباره امتحان کنید.",
@@ -1319,16 +1304,12 @@
     "Identity server URL must be HTTPS": "نشانی کارساز هویت باید HTTPS باشد",
     "Transfer Failed": "انتقال شکست خورد",
     "Unable to transfer call": "ناتوان در انتقال تماس",
-    "The user you called is busy.": "کاربر موردنظر مشغول است.",
-    "User Busy": "کاربر مشغول",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
         "other": "%(spaceName)s و %(count)s دیگران"
     },
     "Some invites couldn't be sent": "بعضی از دعوت ها ارسال نشد",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "ما برای باقی ارسال کردیم، ولی افراد زیر نمی توانند به <RoomName/> دعوت شوند",
-    "You cannot place calls without a connection to the server.": "شما نمی توانید بدون اتصال به سرور تماس برقرار کنید.",
-    "Connectivity to the server has been lost": "اتصال با سرور قطع شده است",
     "Unrecognised room address: %(roomAlias)s": "نشانی اتاق %(roomAlias)s شناسایی نشد",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "دوتایی (کاربر و نشست) ناشناخته : ( %(userId)sو%(deviceId)s )",
@@ -1399,8 +1380,6 @@
     "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
     "%(senderName)s started a voice broadcast": "%(senderName)s یک پخش صوتی را شروع کرد",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "بدون سرور احراز هویت نمی توان کاربر را از طریق ایمیل دعوت کرد. می توانید در قسمت «تنظیمات» به یکی متصل شوید.",
-    "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "از طرف دیگر، می‌توانید سعی کنید از سرور عمومی در <server/> استفاده کنید، اما این به آن اندازه قابل اعتماد نخواهد بود و آدرس IP شما را با آن سرور به اشتراک می‌گذارد. شما همچنین می توانید این قابلیت را در تنظیمات مدیریت کنید.",
-    "Try using %(server)s": "سعی کنید از %(server)s استفاده کنید",
     "common": {
         "about": "درباره",
         "analytics": "تجزیه و تحلیل",
@@ -1939,7 +1918,10 @@
         "unfederated_label_default_off": "اگر اتاق فقط برای همکاری با تیم های داخلی در سرور خانه شما استفاده شود ، ممکن است این قابلیت را فعال کنید. این بعدا نمی تواند تغییر کند.",
         "unfederated_label_default_on": "اگر از اتاق برای همکاری با تیم های خارجی که سرور خود را دارند استفاده شود ، ممکن است این را غیرفعال کنید. این نمی‌تواند بعدا تغییر کند.",
         "topic_label": "موضوع (اختیاری)",
-        "unfederated": "از عضوشدن کاربرانی در این اتاق که حساب آن‌ها متعلق به سرور %(serverName)s است، جلوگیری کن."
+        "unfederated": "از عضوشدن کاربرانی در این اتاق که حساب آن‌ها متعلق به سرور %(serverName)s است، جلوگیری کن.",
+        "generic_error": "سرور ممکن است از دسترس خارج شده، یا فشار بار زیادی را تحمل کرده، و یا به یک باگ نرم‌افزاری برخورد کرده باشد.",
+        "unsupported_version": "سرور از نسخه‌ی اتاقی که مشخص شده‌است، پشتیبانی نمی‌کند.",
+        "error_title": "ایجاد اتاق با خطا مواجه شد"
     },
     "timeline": {
         "m.call": {
@@ -2319,7 +2301,21 @@
         "already_in_call": "هم‌اکنون در تماس هستید",
         "already_in_call_person": "شما هم‌اکنون با این فرد در تماس هستید.",
         "unsupported": "تماس ها پشتیبانی نمی شوند",
-        "unsupported_browser": "شما نمیتوانید در این مرورگر تماس برقرار کنید."
+        "unsupported_browser": "شما نمیتوانید در این مرورگر تماس برقرار کنید.",
+        "user_busy": "کاربر مشغول",
+        "user_busy_description": "کاربر موردنظر مشغول است.",
+        "call_failed_description": "امکان برقراری تماس وجود ندارد",
+        "answered_elsewhere": "در جای دیگری پاسخ داده شد",
+        "answered_elsewhere_description": "تماس بر روی دستگاه دیگری پاسخ داده شد.",
+        "misconfigured_server": "تماس به دلیل پیکربندی نادرست سرور موفقیت‌آمیز نبود",
+        "misconfigured_server_description": "لطفا برای برقراری تماس، از مدیر <code>%(homeserverDomain)s</code> بخواهید سرور TURN را پیکربندی نماید.",
+        "misconfigured_server_fallback": "از طرف دیگر، می‌توانید سعی کنید از سرور عمومی در <server/> استفاده کنید، اما این به آن اندازه قابل اعتماد نخواهد بود و آدرس IP شما را با آن سرور به اشتراک می‌گذارد. شما همچنین می توانید این قابلیت را در تنظیمات مدیریت کنید.",
+        "misconfigured_server_fallback_accept": "سعی کنید از %(server)s استفاده کنید",
+        "connection_lost": "اتصال با سرور قطع شده است",
+        "connection_lost_description": "شما نمی توانید بدون اتصال به سرور تماس برقرار کنید.",
+        "too_many_calls": "تعداد زیاد تماس",
+        "too_many_calls_description": "شما به بیشینه‌ی تعداد تماس‌های هم‌زمان رسیده‌اید.",
+        "cannot_call_yourself_description": "امکان برقراری تماس با خودتان وجود ندارد."
     },
     "Other": "دیگر",
     "Advanced": "پیشرفته",
@@ -2838,5 +2834,9 @@
         "type_heading": "نوع نظرسنجی",
         "type_open": "باز کردن نظرسنجی",
         "type_closed": "نظرسنجی بسته"
-    }
+    },
+    "failed_load_async_component": "امکان بارگیری محتوا وجود ندارد! لطفا وضعیت اتصال خود به اینترنت را بررسی کرده و مجددا اقدام نمائید.",
+    "upload_failed_generic": "بارگذاری پرونده '%(fileName)s' موفقیت‌آمیز نبود.",
+    "upload_failed_size": "حجم پرونده‌ی '%(fileName)s' از آستانه‌ی تنظیم‌شده بر روی سرور بیشتر است",
+    "upload_failed_title": "بارگذاری موفقیت‌آمیز نبود"
 }

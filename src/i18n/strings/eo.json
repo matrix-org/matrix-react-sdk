@@ -1,7 +1,5 @@
 {
-    "You cannot place a call with yourself.": "Vi ne povas voki vin mem.",
     "Warning!": "Averto!",
-    "Upload Failed": "Alŝuto malsukcesis",
     "Sun": "Dim",
     "Mon": "Lun",
     "Tue": "Mar",
@@ -52,8 +50,6 @@
     "You are no longer ignoring %(userId)s": "Vi nun reatentas uzanton %(userId)s",
     "Verified key": "Kontrolita ŝlosilo",
     "Reason": "Kialo",
-    "Failure to create room": "Malsukcesis krei ĉambron",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Servilo povas esti neatingebla, troŝarĝita, aŭ vi renkontis cimon.",
     "Your browser does not support the required cryptography extensions": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
     "Not a valid %(brand)s keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
     "Authentication check failed: incorrect password?": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
@@ -222,7 +218,6 @@
     "Preparing to send logs": "Pretigante sendon de protokolo",
     "Permission Required": "Necesas permeso",
     "Missing roomId.": "Mankas identigilo de la ĉambro.",
-    "Unable to load! Check your network connectivity and try again.": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
     "This homeserver has hit its Monthly Active User limit.": "Tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj.",
     "This homeserver has exceeded one of its resource limits.": "Tiu ĉi hejmservilo superis je unu el siaj rimedaj limoj.",
     "You do not have permission to invite people to this room.": "Vi ne havas permeson inviti personojn al la ĉambro.",
@@ -232,7 +227,6 @@
     "General": "Ĝeneralaj",
     "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
     "You do not have permission to start a conference call in this room": "Vi ne havas permeson komenci grupvokon en ĉi tiu ĉambro",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "La dosiero '%(fileName)s' superas la grandecan limon de ĉi tiu hejmservilo",
     "Dog": "Hundo",
     "Cat": "Kato",
     "Lion": "Leono",
@@ -325,8 +319,6 @@
     "That doesn't match.": "Tio ne akordas.",
     "Success!": "Sukceso!",
     "Set up": "Agordi",
-    "The file '%(fileName)s' failed to upload.": "Malsukcesis alŝuti dosieron « %(fileName)s ».",
-    "The server does not support the room version specified.": "La servilo ne subtenas la donitan ĉambran version.",
     "Unrecognised address": "Nerekonita adreso",
     "The user must be unbanned before they can be invited.": "Necesas malforbari ĉi tiun uzanton antaŭ ol ĝin inviti.",
     "The user's homeserver does not support the version of the room.": "Hejmservilo de ĉi tiu uzanto ne subtenas la version de la ĉambro.",
@@ -501,8 +493,6 @@
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
-    "Call failed due to misconfigured server": "Voko malsukcesis pro misagordita servilo",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Bonvolu peti la administranton de via hejmservilo (<code>%(homeserverDomain)s</code>) agordi TURN-servilon, por ke vokoj funkciu dependeble.",
     "Use an identity server": "Uzi identigan servilon",
     "Use an identity server to invite by email. Manage in Settings.": "Uzi identigan servilon por inviti retpoŝte. Administru en Agordoj.",
     "Do not use an identity server": "Ne uzi identigan servilon",
@@ -898,9 +888,6 @@
     "Unknown App": "Nekonata aplikaĵo",
     "Error leaving room": "Eraro dum foriro de la ĉambro",
     "Unexpected server error trying to leave the room": "Neatendita servila eraro dum foriro de ĉambro",
-    "The call was answered on another device.": "La voko estis respondita per alia aparato.",
-    "Answered Elsewhere": "Respondita aliloke",
-    "The call could not be established": "Ne povis meti la vokon",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
@@ -1152,8 +1139,6 @@
     "Curaçao": "Kuracao",
     "Cocos (Keeling) Islands": "Kokosinsuloj",
     "Cayman Islands": "Kajmaninsuloj",
-    "You've reached the maximum number of simultaneous calls.": "Vi atingis la maksimuman nombron de samtempaj vokoj.",
-    "Too Many Calls": "Tro multaj vokoj",
     "Invite by email": "Inviti per retpoŝto",
     "Reason (optional)": "Kialo (malnepra)",
     "Server Options": "Elektebloj de servilo",
@@ -1315,8 +1300,6 @@
         "one": "Nun aliĝante al %(count)s ĉambro",
         "other": "Nun aliĝante al %(count)s ĉambroj"
     },
-    "The user you called is busy.": "La uzanto, kiun vi vokis, estas okupata.",
-    "User Busy": "Uzanto estas okupata",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Uzo de tiu ĉi fenestraĵo eble havigos datumojn <helpIcon /> al %(widgetDomain)s kaj via kunigilo.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Kunigiloj ricevas agordajn datumojn, kaj povas modifi fenestraĵojn, sendi invitojn al ĉambroj, kaj vianome agordi povnivelojn.",
@@ -1459,7 +1442,6 @@
     "Unknown failure": "Nekonata malsukceso",
     "Failed to update the join rules": "Malsukcesis ĝisdatigi regulojn pri aliĝo",
     "Failed to invite users to %(roomName)s": "Malsukcesis inviti uzantojn al %(roomName)s",
-    "You cannot place calls without a connection to the server.": "Vi ne povas voki sen konektaĵo al la servilo.",
     "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Nekonata (uzanto, salutaĵo) duopo: (%(userId)s, %(deviceId)s)",
     "Unrecognised room address: %(roomAlias)s": "Nekonata ĉambra adreso: %(roomAlias)s",
     "Pin to sidebar": "Fiksi al flanka breto",
@@ -1490,7 +1472,6 @@
         "other": "%(user)s kaj %(count)s aliaj"
     },
     "%(user1)s and %(user2)s": "%(user1)s kaj %(user2)s",
-    "Connectivity to the server has been lost": "Konektebleco al la servilo estas perdita",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Ĝisdatigante aro...",
         "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
@@ -2180,7 +2161,10 @@
         "room_visibility_label": "Videbleco de ĉambro",
         "join_rule_invite": "Privata ĉambro (nur por invititoj)",
         "join_rule_restricted": "Videbla al aranoj",
-        "unfederated": "Bloki de la ĉambro ĉiun ekster %(serverName)s."
+        "unfederated": "Bloki de la ĉambro ĉiun ekster %(serverName)s.",
+        "generic_error": "Servilo povas esti neatingebla, troŝarĝita, aŭ vi renkontis cimon.",
+        "unsupported_version": "La servilo ne subtenas la donitan ĉambran version.",
+        "error_title": "Malsukcesis krei ĉambron"
     },
     "timeline": {
         "m.call": {
@@ -2593,7 +2577,19 @@
         "already_in_call_person": "Vi jam vokas ĉi tiun personon.",
         "unsupported": "Vokoj estas nesubtenataj",
         "unsupported_browser": "Vi ne povas telefoni per ĉi tiu retumilo.",
-        "change_input_device": "Ŝanĝu enigan aparaton"
+        "change_input_device": "Ŝanĝu enigan aparaton",
+        "user_busy": "Uzanto estas okupata",
+        "user_busy_description": "La uzanto, kiun vi vokis, estas okupata.",
+        "call_failed_description": "Ne povis meti la vokon",
+        "answered_elsewhere": "Respondita aliloke",
+        "answered_elsewhere_description": "La voko estis respondita per alia aparato.",
+        "misconfigured_server": "Voko malsukcesis pro misagordita servilo",
+        "misconfigured_server_description": "Bonvolu peti la administranton de via hejmservilo (<code>%(homeserverDomain)s</code>) agordi TURN-servilon, por ke vokoj funkciu dependeble.",
+        "connection_lost": "Konektebleco al la servilo estas perdita",
+        "connection_lost_description": "Vi ne povas voki sen konektaĵo al la servilo.",
+        "too_many_calls": "Tro multaj vokoj",
+        "too_many_calls_description": "Vi atingis la maksimuman nombron de samtempaj vokoj.",
+        "cannot_call_yourself_description": "Vi ne povas voki vin mem."
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -3171,5 +3167,9 @@
         "type_heading": "Balotspeco",
         "topic_heading": "Kio estas via balotenketo demando aŭ temo?",
         "notes": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo"
-    }
+    },
+    "failed_load_async_component": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
+    "upload_failed_generic": "Malsukcesis alŝuti dosieron « %(fileName)s ».",
+    "upload_failed_size": "La dosiero '%(fileName)s' superas la grandecan limon de ĉi tiu hejmservilo",
+    "upload_failed_title": "Alŝuto malsukcesis"
 }

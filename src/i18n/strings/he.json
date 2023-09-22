@@ -1,7 +1,5 @@
 {
-    "You cannot place a call with yourself.": "אין אפשרות ליצור שיחה עם עצמך.",
     "Warning!": "אזהרה!",
-    "Upload Failed": "העלאה נכשלה",
     "Sun": "ראשון",
     "Mon": "שני",
     "Tue": "שלישי",
@@ -93,21 +91,8 @@
     "Timor-Leste": "טמור-לסטה",
     "St. Martin": "סיינט מרטין",
     "Oman": "אומן",
-    "Unable to load! Check your network connectivity and try again.": "טעינת הדף נכשלה. אנא בדקו את החיבור שלכם לאינטרנט ונסו שנית.",
-    "Failure to create room": "כשלון ביצירת חדר",
-    "The server does not support the room version specified.": "השרת אינו תומך בגירסת החדר הזו.",
-    "Server may be unavailable, overloaded, or you hit a bug.": "יתכן והשרת לא זמין, עמוס, או שקיימת תקלה.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "הקובץ %(fileName)s עולה בגודלו על הגודל המותר להעלאה",
-    "The file '%(fileName)s' failed to upload.": "נכשלה העלאת הקובץ %(fileName)s.",
     "You do not have permission to start a conference call in this room": "אין לכם הרשאות להתחיל ועידה בחדר זה",
     "Permission Required": "הרשאה דרושה",
-    "You've reached the maximum number of simultaneous calls.": "הגעתם למקסימום שיחות שניתן לבצע בו זמנית.",
-    "Too Many Calls": "יותר מדי שיחות",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "אנא בקשו ממנהל השרת (<code>%(homeserverDomain)s</code>) לסדר את הגדרות שרת TURN על מנת שהשיחות יפעלו בעקביות.",
-    "Call failed due to misconfigured server": "השיחה נכשלה בגלל הגדרות שרת שגויות",
-    "The call was answered on another device.": "השיחה נענתה במכשיר אחר.",
-    "Answered Elsewhere": "נענה במקום אחר",
-    "The call could not be established": "לא ניתן להתקשר",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
     "Identity server has no terms of service": "לשרת הזיהוי אין כללי שרות",
     "Only continue if you trust the owner of the server.": "המשיכו רק אם הנכם בוטחים בבעלים של השרת.",
@@ -1212,7 +1197,6 @@
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "ההזמנה נשלחה, פרט למשתמשים הבאים שלא ניתן להזמינם ל - <RoomName/>",
     "Transfer Failed": "ההעברה נכשלה",
     "Unable to transfer call": "לא ניתן להעביר שיחה",
-    "Connectivity to the server has been lost": "נותק החיבור מול השרת",
     "Your new device is now verified. Other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Device verified": "המכשיר אומת",
@@ -1222,7 +1206,6 @@
     "Failed to send": "השליחה נכשלה",
     "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
     "Share your public space": "שתף את מרחב העבודה הציבורי שלך",
-    "You cannot place calls without a connection to the server.": "אינך יכול לבצע שיחות ללא חיבור לשרת.",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Spaces": "מרחבי עבודה",
@@ -1263,8 +1246,6 @@
     "Connecting": "מקשר",
     "unknown person": "אדם לא ידוע",
     "This homeserver has been blocked by its administrator.": "שרת זה נחסם על ידי מנהלו.",
-    "The user you called is busy.": "המשתמש עסוק כרגע.",
-    "User Busy": "המשתמש עסוק",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
@@ -2057,7 +2038,10 @@
         "topic_label": "נושא (לא חובה)",
         "room_visibility_label": "נראות של החדר",
         "join_rule_restricted": "נראה לחברי מרחב העבודה",
-        "unfederated": "חסום ממישהו שאינו חלק מ- %(serverName)s מלהצטרף אי פעם לחדר זה."
+        "unfederated": "חסום ממישהו שאינו חלק מ- %(serverName)s מלהצטרף אי פעם לחדר זה.",
+        "generic_error": "יתכן והשרת לא זמין, עמוס, או שקיימת תקלה.",
+        "unsupported_version": "השרת אינו תומך בגירסת החדר הזו.",
+        "error_title": "כשלון ביצירת חדר"
     },
     "timeline": {
         "m.call.invite": {
@@ -2446,7 +2430,19 @@
         "already_in_call": "כבר בשיחה",
         "already_in_call_person": "אתה כבר בשיחה עם האדם הזה.",
         "unsupported": "שיחות לא נתמכות",
-        "unsupported_browser": "לא ניתן לבצע שיחות בדפדפן זה."
+        "unsupported_browser": "לא ניתן לבצע שיחות בדפדפן זה.",
+        "user_busy": "המשתמש עסוק",
+        "user_busy_description": "המשתמש עסוק כרגע.",
+        "call_failed_description": "לא ניתן להתקשר",
+        "answered_elsewhere": "נענה במקום אחר",
+        "answered_elsewhere_description": "השיחה נענתה במכשיר אחר.",
+        "misconfigured_server": "השיחה נכשלה בגלל הגדרות שרת שגויות",
+        "misconfigured_server_description": "אנא בקשו ממנהל השרת (<code>%(homeserverDomain)s</code>) לסדר את הגדרות שרת TURN על מנת שהשיחות יפעלו בעקביות.",
+        "connection_lost": "נותק החיבור מול השרת",
+        "connection_lost_description": "אינך יכול לבצע שיחות ללא חיבור לשרת.",
+        "too_many_calls": "יותר מדי שיחות",
+        "too_many_calls_description": "הגעתם למקסימום שיחות שניתן לבצע בו זמנית.",
+        "cannot_call_yourself_description": "אין אפשרות ליצור שיחה עם עצמך."
     },
     "Other": "אחר",
     "Advanced": "מתקדם",
@@ -2978,5 +2974,9 @@
         "type_closed": "סגר סקר",
         "topic_heading": "מה השאלה או הנושא שלכם בסקר?",
         "notes": "תוצאות יהיה זמינות להצגה רק עם סגירת הסקר"
-    }
+    },
+    "failed_load_async_component": "טעינת הדף נכשלה. אנא בדקו את החיבור שלכם לאינטרנט ונסו שנית.",
+    "upload_failed_generic": "נכשלה העלאת הקובץ %(fileName)s.",
+    "upload_failed_size": "הקובץ %(fileName)s עולה בגודלו על הגודל המותר להעלאה",
+    "upload_failed_title": "העלאה נכשלה"
 }

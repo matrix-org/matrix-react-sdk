@@ -42,7 +42,6 @@
     "Failed to send request.": "A kérést nem sikerült elküldeni.",
     "Failed to set display name": "Megjelenítési nevet nem sikerült beállítani",
     "Failed to unban": "A kitiltás visszavonása sikertelen",
-    "Failure to create room": "Szoba létrehozása sikertelen",
     "Filter room members": "Szoba tagság szűrése",
     "Forget room": "Szoba elfelejtése",
     "Historical": "Archív",
@@ -76,7 +75,6 @@
     "Rooms": "Szobák",
     "Search failed": "Keresés sikertelen",
     "Server may be unavailable, overloaded, or search timed out :(": "A kiszolgáló elérhetetlen, túlterhelt vagy a keresés túllépte az időkorlátot :(",
-    "Server may be unavailable, overloaded, or you hit a bug.": "A kiszolgáló elérhetetlen, túlterhelt vagy hibára futott.",
     "Session ID": "Kapcsolat azonosító",
     "This email address was not found": "Az e-mail-cím nem található",
     "This room has no local addresses": "Ennek a szobának nincs helyi címe",
@@ -95,12 +93,10 @@
         "other": "%(filename)s és még %(count)s db másik feltöltése"
     },
     "Upload avatar": "Profilkép feltöltése",
-    "Upload Failed": "Feltöltés sikertelen",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (szint: %(powerLevelNumber)s)",
     "Verification Pending": "Ellenőrzés függőben",
     "Verified key": "Ellenőrzött kulcs",
     "Warning!": "Figyelmeztetés!",
-    "You cannot place a call with yourself.": "Nem hívhatja fel saját magát.",
     "You do not have permission to post to this room": "Nincs jogod üzenetet küldeni ebbe a szobába",
     "You need to be able to invite users to do that.": "Hogy ezt tegye, ahhoz meg kell tudnia hívni felhasználókat.",
     "You need to be logged in.": "Be kell jelentkeznie.",
@@ -276,7 +272,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Hogy a régi üzenetekhez továbbra is hozzáférhess kijelentkezés előtt ki kell mentened a szobák titkosító kulcsait. Ehhez a %(brand)s egy frissebb verzióját kell használnod",
     "Incompatible Database": "Nem kompatibilis adatbázis",
     "Continue With Encryption Disabled": "Folytatás a titkosítás kikapcsolásával",
-    "Unable to load! Check your network connectivity and try again.": "A betöltés sikertelen. Ellenőrizze a hálózati kapcsolatot, és próbálja újra.",
     "Delete Backup": "Mentés törlése",
     "Unable to load key backup status": "A mentett kulcsok állapotát nem lehet betölteni",
     "That matches!": "Egyeznek!",
@@ -333,7 +328,6 @@
     "Create account": "Fiók létrehozása",
     "Recovery Method Removed": "Helyreállítási mód törölve",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ha nem Ön törölte a helyreállítási módot, akkor lehet, hogy egy támadó hozzá akar férni a fiókjához. Azonnal változtassa meg a jelszavát, és állítson be egy helyreállítási módot a Beállításokban.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "A(z) „%(fileName)s” mérete túllépi a Matrix-kiszolgáló által megengedett korlátot",
     "Dog": "Kutya",
     "Cat": "Macska",
     "Lion": "Oroszlán",
@@ -425,7 +419,6 @@
     "Revoke invite": "Meghívó visszavonása",
     "Invited by %(sender)s": "Meghívta: %(sender)s",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
-    "The file '%(fileName)s' failed to upload.": "A(z) „%(fileName)s” fájl feltöltése sikertelen.",
     "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
@@ -443,7 +436,6 @@
     },
     "Cancel All": "Összes megszakítása",
     "Upload Error": "Feltöltési hiba",
-    "The server does not support the room version specified.": "A kiszolgáló nem támogatja a megadott szobaverziót.",
     "The user's homeserver does not support the version of the room.": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott szobaverziót.",
     "Join the conversation with an account": "Beszélgetéshez való csatlakozás felhasználói fiókkal lehetséges",
     "Sign Up": "Fiók készítés",
@@ -501,8 +493,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Kérlek mond el nekünk mi az ami nem működött, vagy még jobb, ha egy GitHub jegyben leírod a problémát.",
     "Find others by phone or email": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
     "Be found by phone or email": "Találják meg telefonszám vagy e-mail-cím alapján",
-    "Call failed due to misconfigured server": "A hívás a helytelenül beállított kiszolgáló miatt sikertelen",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Kérje meg a Matrix-kiszolgáló (<code>%(homeserverDomain)s</code>) rendszergazdáját, hogy a hívások megfelelő működéséhez állítson be egy TURN-kiszolgálót.",
     "Accept <policyLink /> to continue:": "<policyLink /> elfogadása a továbblépéshez:",
     "Checking server": "Kiszolgáló ellenőrzése",
     "Terms of service not accepted or the identity server is invalid.": "A felhasználási feltételek nincsenek elfogadva, vagy az azonosítási kiszolgáló nem érvényes.",
@@ -890,7 +880,6 @@
     "Video conference started by %(senderName)s": "A videókonferenciát elindította: %(senderName)s",
     "Failed to save your profile": "A saját profil mentése sikertelen",
     "The operation could not be completed": "A műveletet nem lehetett befejezni",
-    "The call could not be established": "A hívás felépítése sikertelen",
     "Move right": "Mozgatás jobbra",
     "Move left": "Mozgatás balra",
     "Revoke permissions": "Jogosultságok visszavonása",
@@ -901,8 +890,6 @@
     },
     "Show Widgets": "Kisalkalmazások megjelenítése",
     "Hide Widgets": "Kisalkalmazások elrejtése",
-    "The call was answered on another device.": "A hívás másik eszközön lett fogadva.",
-    "Answered Elsewhere": "Máshol lett felvéve",
     "Enable desktop notifications": "Asztali értesítések engedélyezése",
     "Don't miss a reply": "Ne szalasszon el egy választ se",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Hívj meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a szobát</a>.",
@@ -1165,8 +1152,6 @@
     "Approve widget permissions": "Kisalkalmazás-engedélyek elfogadása",
     "Continuing without email": "Folytatás e-mail-cím nélkül",
     "Reason (optional)": "Ok (opcionális)",
-    "You've reached the maximum number of simultaneous calls.": "Elérte az egyidejű hívások maximális számát.",
-    "Too Many Calls": "Túl sok hívás",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
     "Server Options": "Szerver lehetőségek",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
@@ -1315,8 +1300,6 @@
         "one": "%(count)s szobába lép be",
         "other": "%(count)s szobába lép be"
     },
-    "The user you called is busy.": "A hívott felhasználó foglalt.",
-    "User Busy": "A felhasználó foglalt",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Ha van hozzá jogosultsága, nyissa meg a menüt bármelyik üzenetben és válassza a <b>Kitűzés</b> menüpontot a kitűzéshez.",
     "Or send invite link": "Vagy meghívó link küldése",
@@ -1566,8 +1549,6 @@
     "No votes cast": "Nem adtak le szavazatot",
     "Share location": "Tartózkodási hely megosztása",
     "That's fine": "Rendben van",
-    "You cannot place calls without a connection to the server.": "Nem kezdeményezhet hívást a kiszolgálóval való kapcsolat nélkül.",
-    "Connectivity to the server has been lost": "Megszakadt a kapcsolat a kiszolgálóval",
     "Final result based on %(count)s votes": {
         "one": "Végeredmény %(count)s szavazat alapján",
         "other": "Végeredmény %(count)s szavazat alapján"
@@ -2965,7 +2946,10 @@
         "room_visibility_label": "Szoba láthatóság",
         "join_rule_invite": "Privát szoba (csak meghívóval)",
         "join_rule_restricted": "Tér tagság számára látható",
-        "unfederated": "A szobába ne léphessenek be azok, akik nem ezen a szerveren vannak: %(serverName)s."
+        "unfederated": "A szobába ne léphessenek be azok, akik nem ezen a szerveren vannak: %(serverName)s.",
+        "generic_error": "A kiszolgáló elérhetetlen, túlterhelt vagy hibára futott.",
+        "unsupported_version": "A kiszolgáló nem támogatja a megadott szobaverziót.",
+        "error_title": "Szoba létrehozása sikertelen"
     },
     "timeline": {
         "m.call": {
@@ -3428,7 +3412,19 @@
         "already_in_call_person": "Már hívásban van ezzel a személlyel.",
         "unsupported": "A hívások nem támogatottak",
         "unsupported_browser": "Nem indíthat hívást ebben a böngészőben.",
-        "change_input_device": "Bemeneti eszköz megváltoztatása"
+        "change_input_device": "Bemeneti eszköz megváltoztatása",
+        "user_busy": "A felhasználó foglalt",
+        "user_busy_description": "A hívott felhasználó foglalt.",
+        "call_failed_description": "A hívás felépítése sikertelen",
+        "answered_elsewhere": "Máshol lett felvéve",
+        "answered_elsewhere_description": "A hívás másik eszközön lett fogadva.",
+        "misconfigured_server": "A hívás a helytelenül beállított kiszolgáló miatt sikertelen",
+        "misconfigured_server_description": "Kérje meg a Matrix-kiszolgáló (<code>%(homeserverDomain)s</code>) rendszergazdáját, hogy a hívások megfelelő működéséhez állítson be egy TURN-kiszolgálót.",
+        "connection_lost": "Megszakadt a kapcsolat a kiszolgálóval",
+        "connection_lost_description": "Nem kezdeményezhet hívást a kiszolgálóval való kapcsolat nélkül.",
+        "too_many_calls": "Túl sok hívás",
+        "too_many_calls_description": "Elérte az egyidejű hívások maximális számát.",
+        "cannot_call_yourself_description": "Nem hívhatja fel saját magát."
     },
     "Other": "Egyéb",
     "Advanced": "Speciális",
@@ -4101,5 +4097,9 @@
         "options_add_button": "Lehetőség hozzáadása",
         "disclosed_notes": "A szavazók a szavazásuk után látják a szavazatokat",
         "notes": "Az eredmény csak a szavazás végeztével válik láthatóvá"
-    }
+    },
+    "failed_load_async_component": "A betöltés sikertelen. Ellenőrizze a hálózati kapcsolatot, és próbálja újra.",
+    "upload_failed_generic": "A(z) „%(fileName)s” fájl feltöltése sikertelen.",
+    "upload_failed_size": "A(z) „%(fileName)s” mérete túllépi a Matrix-kiszolgáló által megengedett korlátot",
+    "upload_failed_title": "Feltöltés sikertelen"
 }

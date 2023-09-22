@@ -1,8 +1,5 @@
 {
     "Explore rooms": "ოთახების დათავლიერება",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ფაილი '%(fileName)s' აჭარბებს ამ ჰომსერვერის ზომის ლიმიტს ატვირთვისთვის",
-    "The file '%(fileName)s' failed to upload.": "ფაილი '%(fileName)s' ვერ აიტვირთა.",
-    "The server does not support the room version specified.": "სერვერი არ მუშაობს ოთახის მითითებულ ვერსიაზე.",
     "Sun": "მზე",
     "Dec": "დეკ",
     "PM": "PM",
@@ -16,7 +13,6 @@
     "Nov": "ნოე",
     "Mar": "მარ",
     "May": "მაი",
-    "Server may be unavailable, overloaded, or you hit a bug.": "სერვერი შეიძლება იყოს მიუწვდომელი, გადატვირთული, ან შეიძლება ეს ბაგია.",
     "Jan": "იან",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "ეს მოქმედება საჭიროებს პირადობის სერვერთან კავშირს ელ.ფოსტის ან მობილურის ნომრის დასადასტურებლად, მაგრამ სერვერს არ გააჩნია მომსახურების პირობები.",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "შეუძლებელია მომხმარებლის ელ.ფოსტით დამატება პირადობის სერვერის გარეშე. თქვენ შეგიძლიათ დაუკავშირდეთ ერთ-ერთს \"პარამეტრებში\".",
@@ -26,9 +22,6 @@
     "Jun": "ივნ",
     "Apr": "აპრ",
     "Fri": "პარ",
-    "Failure to create room": "ოთახის შექმნის შეცდომა",
-    "Upload Failed": "ატვირთვა ვერ მოხერხდა",
-    "Unable to load! Check your network connectivity and try again.": "ვერ იტვირთება! შეამოწმეთ თქვენი ინტერნეტ-კავშირი და სცადეთ ისევ.",
     "Feb": "თებ",
     "common": {
         "error": "შეცდომა",
@@ -75,5 +68,14 @@
             "add_msisdn_confirm_body": "დააჭირეთ ღილაკს მობილურის ნომრის დასადასტურებლად.",
             "add_msisdn_dialog_title": "მობილურის ნომრის დამატება"
         }
+    },
+    "failed_load_async_component": "ვერ იტვირთება! შეამოწმეთ თქვენი ინტერნეტ-კავშირი და სცადეთ ისევ.",
+    "upload_failed_generic": "ფაილი '%(fileName)s' ვერ აიტვირთა.",
+    "upload_failed_size": "ფაილი '%(fileName)s' აჭარბებს ამ ჰომსერვერის ზომის ლიმიტს ატვირთვისთვის",
+    "upload_failed_title": "ატვირთვა ვერ მოხერხდა",
+    "create_room": {
+        "generic_error": "სერვერი შეიძლება იყოს მიუწვდომელი, გადატვირთული, ან შეიძლება ეს ბაგია.",
+        "unsupported_version": "სერვერი არ მუშაობს ოთახის მითითებულ ვერსიაზე.",
+        "error_title": "ოთახის შექმნის შეცდომა"
     }
 }

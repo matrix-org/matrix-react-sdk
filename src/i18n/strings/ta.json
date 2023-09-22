@@ -29,15 +29,9 @@
     "Thank you!": "உங்களுக்கு நன்றி",
     "Rooms": "அறைகள்",
     "Your %(brand)s is misconfigured": "உங்கள் %(brand)s தவறாக உள்ளமைக்கப்பட்டுள்ளது",
-    "You cannot place a call with yourself.": "நீங்கள் உங்களுடனே அழைப்பை மேற்கொள்ள முடியாது.",
     "Permission Required": "அனுமதி தேவை",
     "You do not have permission to start a conference call in this room": "இந்த அறையில் ஒரு கூட்டு அழைப்பைத் தொடங்க உங்களுக்கு அனுமதி இல்லை",
-    "The file '%(fileName)s' failed to upload.": "'%(fileName)s' கோப்பு பதிவேற்றத் தவறிவிட்டது.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "'%(fileName)s' கோப்பு இந்த வீட்டுச்சேவையகத்தின் பதிவேற்றங்களுக்கான அளவு வரம்பை மீறுகிறது",
-    "Upload Failed": "பதிவேற்றம் தோல்வியுற்றது",
     "Server may be unavailable, overloaded, or you hit a bug.": "",
-    "The server does not support the room version specified.": "குறிப்பிடப்பட்ட அறை பதிப்பை சேவையகம் ஆதரிக்கவில்லை.",
-    "Failure to create room": "அறையை உருவாக்கத் தவறியது",
     "Sun": "ஞாயிறு",
     "Mon": "திங்கள்",
     "Tue": "செவ்வாய்",
@@ -66,16 +60,6 @@
     "Jul": "ஜூலை",
     "There was an error looking up the phone number": "தொலைபேசி எண்ணைத் தேடுவதில் பிழை ஏற்பட்டது",
     "Unable to look up phone number": "தொலைபேசி எண்ணைத் தேட முடியவில்லை",
-    "You've reached the maximum number of simultaneous calls.": "ஒரே நேரத்தில் அழைக்கக்கூடிய அதிகபட்ச அழைப்புகளை நீங்கள் அடைந்துவிட்டீர்கள்.",
-    "Too Many Calls": "மிக அதிக அழைப்புகள்",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "அழைப்புகள் நம்பத்தகுந்த வகையில் இயங்குவதற்காக, TURN சேவையகத்தை உள்ளமைக்க உங்கள் வீட்டுசேவையகத்தின் (<code>%(homeserverDomain)s</code>) நிர்வாகியிடம் கேளுங்கள்.",
-    "Call failed due to misconfigured server": "தவறாக உள்ளமைக்கப்பட்ட சேவையகம் காரணமாக அழைப்பு தோல்வியடைந்தது",
-    "The call was answered on another device.": "அழைப்பு மற்றொரு சாதனத்தில் பதிலளிக்கப்பட்டது.",
-    "Answered Elsewhere": "வேறு எங்கோ பதிலளிக்கப்பட்டது",
-    "The call could not be established": "அழைப்பை நிறுவ முடியவில்லை",
-    "Unable to load! Check your network connectivity and try again.": "ஏற்ற முடியவில்லை! உங்கள் பிணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
-    "The user you called is busy.": "நீங்கள் அழைத்தவர் தற்போது வேளையாக இருக்கிறார்.",
-    "User Busy": "பயன்படுத்துபவர் தற்போது வேளையாக இருக்கிறார்",
     "common": {
         "analytics": "பகுப்பாய்வு",
         "error": "பிழை",
@@ -149,7 +133,17 @@
         "call_failed_media_permissions": "புகைப்படக்கருவியைப் பயன்படுத்த அனுமதி வழங்கப்பட்டுள்ளது",
         "call_failed_media_applications": "வேறு எந்த பயன்பாடும் புகைப்படக்கருவியைப் பயன்படுத்துவதில்லை",
         "already_in_call": "முன்னதாகவே அழைப்பில் உள்ளது",
-        "already_in_call_person": "நீங்கள் முன்னதாகவே இந்த நபருடன் அழைப்பில் உள்ளீர்கள்."
+        "already_in_call_person": "நீங்கள் முன்னதாகவே இந்த நபருடன் அழைப்பில் உள்ளீர்கள்.",
+        "user_busy": "பயன்படுத்துபவர் தற்போது வேளையாக இருக்கிறார்",
+        "user_busy_description": "நீங்கள் அழைத்தவர் தற்போது வேளையாக இருக்கிறார்.",
+        "call_failed_description": "அழைப்பை நிறுவ முடியவில்லை",
+        "answered_elsewhere": "வேறு எங்கோ பதிலளிக்கப்பட்டது",
+        "answered_elsewhere_description": "அழைப்பு மற்றொரு சாதனத்தில் பதிலளிக்கப்பட்டது.",
+        "misconfigured_server": "தவறாக உள்ளமைக்கப்பட்ட சேவையகம் காரணமாக அழைப்பு தோல்வியடைந்தது",
+        "misconfigured_server_description": "அழைப்புகள் நம்பத்தகுந்த வகையில் இயங்குவதற்காக, TURN சேவையகத்தை உள்ளமைக்க உங்கள் வீட்டுசேவையகத்தின் (<code>%(homeserverDomain)s</code>) நிர்வாகியிடம் கேளுங்கள்.",
+        "too_many_calls": "மிக அதிக அழைப்புகள்",
+        "too_many_calls_description": "ஒரே நேரத்தில் அழைக்கக்கூடிய அதிகபட்ச அழைப்புகளை நீங்கள் அடைந்துவிட்டீர்கள்.",
+        "cannot_call_yourself_description": "நீங்கள் உங்களுடனே அழைப்பை மேற்கொள்ள முடியாது."
     },
     "labs": {
         "group_rooms": "அறைகள்"
@@ -176,5 +170,13 @@
         "context_menu": {
             "explore": "அறைகளை ஆராயுங்கள்"
         }
+    },
+    "failed_load_async_component": "ஏற்ற முடியவில்லை! உங்கள் பிணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+    "upload_failed_generic": "'%(fileName)s' கோப்பு பதிவேற்றத் தவறிவிட்டது.",
+    "upload_failed_size": "'%(fileName)s' கோப்பு இந்த வீட்டுச்சேவையகத்தின் பதிவேற்றங்களுக்கான அளவு வரம்பை மீறுகிறது",
+    "upload_failed_title": "பதிவேற்றம் தோல்வியுற்றது",
+    "create_room": {
+        "unsupported_version": "குறிப்பிடப்பட்ட அறை பதிப்பை சேவையகம் ஆதரிக்கவில்லை.",
+        "error_title": "அறையை உருவாக்கத் தவறியது"
     }
 }

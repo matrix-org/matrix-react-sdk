@@ -19,13 +19,8 @@
     "Yesterday": "I går",
     "Low Priority": "Lav Prioritet",
     "Saturday": "Lørdag",
-    "You cannot place a call with yourself.": "Du kan ikke ringe deg selv.",
     "Permission Required": "Tillatelse kreves",
     "You do not have permission to start a conference call in this room": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Filen \"%(fileName)s\" er større enn hjemmetjenerens grense for opplastninger",
-    "Upload Failed": "Opplasting feilet",
-    "Failure to create room": "Klarte ikke å opprette rommet",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Tjeneren kan være utilgjengelig, overbelastet, eller du fant en feil.",
     "Send": "Send",
     "Sun": "Søn",
     "Mon": "Man",
@@ -52,7 +47,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s kl. %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s kl. %(time)s",
-    "Unable to load! Check your network connectivity and try again.": "Klarte ikke laste! Sjekk nettverstilkoblingen din og prøv igjen.",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s har ikke tillatelse til å sende deg varsler - vennligst sjekk nettleserinnstillingene",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s fikk ikke tillatelse til å sende deg varsler - vennligst prøv igjen",
     "Unable to enable Notifications": "Klarte ikke slå på Varslinger",
@@ -74,10 +68,6 @@
     "Missing room_id in request": "Manglende room_id i forespørselen",
     "Room %(roomId)s not visible": "Rom %(roomId)s er ikke synlig",
     "Missing user_id in request": "Manglende user_id i forespørselen",
-    "Call failed due to misconfigured server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
-    "The file '%(fileName)s' failed to upload.": "Filen '%(fileName)s' kunne ikke lastes opp.",
-    "The server does not support the room version specified.": "Tjeneren støtter ikke rom versjonen som ble spesifisert.",
     "Ignored user": "Ignorert(e) bruker",
     "You are now ignoring %(userId)s": "%(userId)s er nå ignorert",
     "Unignored user": "Uignorert bruker",
@@ -549,9 +539,6 @@
     "United Kingdom": "Storbritannia",
     "Only continue if you trust the owner of the server.": "Fortsett kun om du stoler på eieren av serveren.",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
-    "Too Many Calls": "For mange samtaler",
-    "The call was answered on another device.": "Samtalen ble besvart på en annen enhet.",
-    "The call could not be established": "Samtalen kunne ikke etableres",
     "Recently visited rooms": "Nylig besøkte rom",
     "Edit devices": "Rediger enheter",
     "Add existing room": "Legg til et eksisterende rom",
@@ -866,8 +853,6 @@
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
     "St. Martin": "Saint Martin",
     "St. Barthélemy": "Saint Barthélemy",
-    "You cannot place calls without a connection to the server.": "Du kan ikke ringe uten tilkobling til serveren.",
-    "Connectivity to the server has been lost": "Mistet forbindelsen til serveren",
     "common": {
         "about": "Om",
         "analytics": "Statistikk",
@@ -1256,7 +1241,10 @@
         "title_private_room": "Opprett et privat rom",
         "name_validation_required": "Vennligst skriv inn et navn for rommet",
         "encryption_label": "Aktiver start-til-mål-kryptering",
-        "topic_label": "Tema (valgfritt)"
+        "topic_label": "Tema (valgfritt)",
+        "generic_error": "Tjeneren kan være utilgjengelig, overbelastet, eller du fant en feil.",
+        "unsupported_version": "Tjeneren støtter ikke rom versjonen som ble spesifisert.",
+        "error_title": "Klarte ikke å opprette rommet"
     },
     "timeline": {
         "m.room.member": {
@@ -1492,7 +1480,15 @@
         "already_in_call": "Allerede i en samtale",
         "already_in_call_person": "Du er allerede i en samtale med denne personen.",
         "unsupported": "Samtaler støttes ikke",
-        "unsupported_browser": "Du kan ikke ringe i denne nettleseren."
+        "unsupported_browser": "Du kan ikke ringe i denne nettleseren.",
+        "call_failed_description": "Samtalen kunne ikke etableres",
+        "answered_elsewhere_description": "Samtalen ble besvart på en annen enhet.",
+        "misconfigured_server": "Oppringingen feilet på grunn av feil-konfigurert tjener",
+        "misconfigured_server_description": "Vennligst be administratoren av din hjemmetjener (<code>%(homeserverDomain)s</code>) til å konfigurere en TURN tjener slik at samtaler vil fungere best mulig.",
+        "connection_lost": "Mistet forbindelsen til serveren",
+        "connection_lost_description": "Du kan ikke ringe uten tilkobling til serveren.",
+        "too_many_calls": "For mange samtaler",
+        "cannot_call_yourself_description": "Du kan ikke ringe deg selv."
     },
     "Other": "Andre",
     "Advanced": "Avansert",
@@ -1759,5 +1755,9 @@
         "column_document": "Dokument",
         "tac_title": "Betingelser og vilkår",
         "tac_button": "Gå gjennom betingelser og vilkår"
-    }
+    },
+    "failed_load_async_component": "Klarte ikke laste! Sjekk nettverstilkoblingen din og prøv igjen.",
+    "upload_failed_generic": "Filen '%(fileName)s' kunne ikke lastes opp.",
+    "upload_failed_size": "Filen \"%(fileName)s\" er større enn hjemmetjenerens grense for opplastninger",
+    "upload_failed_title": "Opplasting feilet"
 }

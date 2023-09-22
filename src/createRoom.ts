@@ -390,15 +390,15 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
                     roomId,
                 });
                 logger.error("Failed to create room " + roomId + " " + err);
-                let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
+                let description = _t("create_room|generic_error");
                 if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
                     // Technically not possible with the UI as of April 2019 because there's no
                     // options for the user to change this. However, it's not a bad thing to report
                     // the error to the user for if/when the UI is available.
-                    description = _t("The server does not support the room version specified.");
+                    description = _t("create_room|unsupported_version");
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failure to create room"),
+                    title: _t("create_room|error_title"),
                     description,
                 });
                 return null;

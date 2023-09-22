@@ -1,8 +1,6 @@
 {
-    "You cannot place a call with yourself.": "Du kan ikkje samtala med deg sjølv.",
     "Permission Required": "Tillating er Naudsynt",
     "You do not have permission to start a conference call in this room": "Du har ikkje tillating til å starta ei gruppesamtale i dette rommet",
-    "Upload Failed": "Opplasting mislukkast",
     "Sun": "su",
     "Mon": "må",
     "Tue": "ty",
@@ -55,8 +53,6 @@
     "You are no longer ignoring %(userId)s": "Du overser ikkje %(userId)s no lenger",
     "Verified key": "Godkjend nøkkel",
     "Reason": "Grunnlag",
-    "Failure to create room": "Klarte ikkje å laga rommet",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
     "Send": "Send",
     "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
     "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
@@ -251,8 +247,6 @@
     "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
     "This homeserver has hit its Monthly Active User limit.": "Heimtenaren har truffe den Månadlege Grensa si for Aktive Brukarar.",
     "This homeserver has exceeded one of its resource limits.": "Heimtenaren har gått over ei av ressursgrensene sine.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Fila %(fileName)s er større enn heimetenaren si grense for opplastningar",
-    "Unable to load! Check your network connectivity and try again.": "Klarte ikkje lasta! Sjå på nettilkoplinga di og prøv igjen.",
     "Your %(brand)s is misconfigured": "%(brand)s-klienten din er sett opp feil",
     "Explore rooms": "Utforsk romma",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
@@ -285,10 +279,6 @@
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
-    "Call failed due to misconfigured server": "Samtalen gjekk gale fordi tenaren er oppsatt feil",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Spør administratoren for din heimetenar<code>%(homeserverDomain)s</code> om å setje opp ein \"TURN-server\" slik at talesamtalar fungerer på rett måte.",
-    "The file '%(fileName)s' failed to upload.": "Fila '%(fileName)s' vart ikkje lasta opp.",
-    "The server does not support the room version specified.": "Tenaren støttar ikkje den spesifikke versjonen av rommet.",
     "Use an identity server": "Bruk ein identitetstenar",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
     "Use an identity server to invite by email. Manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
@@ -436,7 +426,6 @@
     "Email Address": "E-postadresse",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du bør <b>fjerne dine personlege data</b> frå identitetstenaren <idserver /> før du koplar frå. Dessverre er identitetstenaren <idserver /> utilgjengeleg og kan ikkje nåast akkurat no.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Vi tilrår at du slettar personleg informasjon, som e-postadresser og telefonnummer frå identitetstenaren før du koplar frå.",
-    "The call was answered on another device.": "Samtalen vart svart på på ei anna eining.",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
     "Azerbaijan": "Aserbajdsjan",
@@ -458,10 +447,6 @@
     "United States": "Sambandsstatane (USA)",
     "United Kingdom": "Storbritannia",
     "We couldn't log you in": "Vi klarte ikkje å logga deg inn",
-    "Too Many Calls": "For mange samtalar",
-    "The call could not be established": "Samtalen kunne ikkje opprettast",
-    "The user you called is busy.": "Brukaren du ringde er opptatt.",
-    "User Busy": "Brukaren er opptatt",
     "End Poll": "Avslutt røysting",
     "Sorry, the poll did not end. Please try again.": "Røystinga vart ikkje avslutta. Prøv på nytt.",
     "Failed to end poll": "Avslutning av røysting gjekk gale",
@@ -503,9 +488,6 @@
     "Unable to transfer call": "Fekk ikkje til å overføra samtalen",
     "There was an error looking up the phone number": "Det skjedde ein feil under oppslag av telefonnummer",
     "Unable to look up phone number": "Nummeroppslag gjekk gale",
-    "You've reached the maximum number of simultaneous calls.": "Du har nådd maksimalt tal samtidige samtalar.",
-    "You cannot place calls without a connection to the server.": "Du kan ikkje starta samtalar utan tilkopling til tenaren.",
-    "Connectivity to the server has been lost": "Tilkopling til tenaren vart tapt",
     "common": {
         "analytics": "Statistikk",
         "error": "Noko gjekk gale",
@@ -806,7 +788,10 @@
         "title_private_room": "Lag eit privat rom",
         "join_rule_change_notice": "Du kan endra dette kva tid som helst frå rominnstillingar.",
         "encryption_label": "Skru på ende-til-ende kryptering",
-        "topic_label": "Emne (valfritt)"
+        "topic_label": "Emne (valfritt)",
+        "generic_error": "Tenaren er kanskje utilgjengeleg, overlasta elles så traff du ein bug.",
+        "unsupported_version": "Tenaren støttar ikkje den spesifikke versjonen av rommet.",
+        "error_title": "Klarte ikkje å laga rommet"
     },
     "timeline": {
         "m.call.invite": {
@@ -1047,7 +1032,18 @@
         "already_in_call": "Allereie i ein samtale",
         "already_in_call_person": "Du er allereie i ein samtale med denne personen.",
         "unsupported": "Samtalar er ikkje støtta",
-        "unsupported_browser": "Du kan ikkje samtala i nettlesaren."
+        "unsupported_browser": "Du kan ikkje samtala i nettlesaren.",
+        "user_busy": "Brukaren er opptatt",
+        "user_busy_description": "Brukaren du ringde er opptatt.",
+        "call_failed_description": "Samtalen kunne ikkje opprettast",
+        "answered_elsewhere_description": "Samtalen vart svart på på ei anna eining.",
+        "misconfigured_server": "Samtalen gjekk gale fordi tenaren er oppsatt feil",
+        "misconfigured_server_description": "Spør administratoren for din heimetenar<code>%(homeserverDomain)s</code> om å setje opp ein \"TURN-server\" slik at talesamtalar fungerer på rett måte.",
+        "connection_lost": "Tilkopling til tenaren vart tapt",
+        "connection_lost_description": "Du kan ikkje starta samtalar utan tilkopling til tenaren.",
+        "too_many_calls": "For mange samtalar",
+        "too_many_calls_description": "Du har nådd maksimalt tal samtidige samtalar.",
+        "cannot_call_yourself_description": "Du kan ikkje samtala med deg sjølv."
     },
     "Other": "Anna",
     "Advanced": "Avansert",
@@ -1245,5 +1241,9 @@
         "failed_send_poll_description": "Røystinga du prøvde å oppretta vart ikkje publisert.",
         "topic_heading": "Kva handlar røystinga om ?",
         "notes": "Resultatet blir synleg når du avsluttar røystinga"
-    }
+    },
+    "failed_load_async_component": "Klarte ikkje lasta! Sjå på nettilkoplinga di og prøv igjen.",
+    "upload_failed_generic": "Fila '%(fileName)s' vart ikkje lasta opp.",
+    "upload_failed_size": "Fila %(fileName)s er større enn heimetenaren si grense for opplastningar",
+    "upload_failed_title": "Opplasting mislukkast"
 }

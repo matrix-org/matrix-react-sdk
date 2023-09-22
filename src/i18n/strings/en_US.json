@@ -37,7 +37,6 @@
     "Failed to send request.": "Failed to send request.",
     "Failed to set display name": "Failed to set display name",
     "Failed to unban": "Failed to unban",
-    "Failure to create room": "Failure to create room",
     "Favourite": "Favorite",
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
@@ -75,7 +74,6 @@
     "Rooms": "Rooms",
     "Search failed": "Search failed",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
-    "Server may be unavailable, overloaded, or you hit a bug.": "Server may be unavailable, overloaded, or you hit a bug.",
     "Session ID": "Session ID",
     "This email address was not found": "This email address was not found",
     "This room has no local addresses": "This room has no local addresses",
@@ -90,11 +88,9 @@
     "Unable to enable Notifications": "Unable to enable Notifications",
     "unknown error code": "unknown error code",
     "Upload avatar": "Upload avatar",
-    "Upload Failed": "Upload Failed",
     "Verification Pending": "Verification Pending",
     "Verified key": "Verified key",
     "Warning!": "Warning!",
-    "You cannot place a call with yourself.": "You cannot place a call with yourself.",
     "You do not have permission to post to this room": "You do not have permission to post to this room",
     "You need to be able to invite users to do that.": "You need to be able to invite users to do that.",
     "You need to be logged in.": "You need to be logged in.",
@@ -202,13 +198,7 @@
     "Aeroplane": "Airplane",
     "Cat": "Cat",
     "Unrecognised address": "Unrecognized address",
-    "The file '%(fileName)s' failed to upload.": "The file '%(fileName)s' failed to upload.",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
-    "The server does not support the room version specified.": "The server does not support the room version specified.",
-    "Unable to load! Check your network connectivity and try again.": "Unable to load! Check your network connectivity and try again.",
     "Your %(brand)s is misconfigured": "Your %(brand)s is misconfigured",
-    "Call failed due to misconfigured server": "Call failed due to misconfigured server",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
     "Cancel entering passphrase?": "Cancel entering passphrase?",
     "Are you sure you want to cancel entering passphrase?": "Are you sure you want to cancel entering passphrase?",
     "Setting up keys": "Setting up keys",
@@ -222,11 +212,6 @@
     "Explore rooms": "Explore rooms",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "Message search initialisation failed": "Message search initialization failed",
-    "The call was answered on another device.": "The call was answered on another device.",
-    "Answered Elsewhere": "Answered Elsewhere",
-    "The call could not be established": "The call could not be established",
-    "The user you called is busy.": "The user you called is busy.",
-    "User Busy": "User Busy",
     "common": {
         "analytics": "Analytics",
         "error": "Error",
@@ -461,7 +446,15 @@
         "call_failed_microphone": "Call failed because microphone could not be accessed. Check that a microphone is plugged in and set up correctly.",
         "call_failed_media": "Call failed because webcam or microphone could not be accessed. Check that:",
         "call_failed_media_connected": "A microphone and webcam are plugged in and set up correctly",
-        "call_failed_media_permissions": "Permission is granted to use the webcam"
+        "call_failed_media_permissions": "Permission is granted to use the webcam",
+        "user_busy": "User Busy",
+        "user_busy_description": "The user you called is busy.",
+        "call_failed_description": "The call could not be established",
+        "answered_elsewhere": "Answered Elsewhere",
+        "answered_elsewhere_description": "The call was answered on another device.",
+        "misconfigured_server": "Call failed due to misconfigured server",
+        "misconfigured_server_description": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
+        "cannot_call_yourself_description": "You cannot place a call with yourself."
     },
     "devtools": {
         "category_room": "Room",
@@ -565,5 +558,14 @@
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"
         }
+    },
+    "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
+    "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
+    "upload_failed_size": "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
+    "upload_failed_title": "Upload Failed",
+    "create_room": {
+        "generic_error": "Server may be unavailable, overloaded, or you hit a bug.",
+        "unsupported_version": "The server does not support the room version specified.",
+        "error_title": "Failure to create room"
     }
 }
