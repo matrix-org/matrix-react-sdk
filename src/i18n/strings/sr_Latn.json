@@ -30,7 +30,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Start a group chat": "Pokreni grupni razgovor",
-    "User is already in the room": "Korisnik je već u sobi",
     "common": {
         "error": "Greška",
         "attachment": "Prilog",
@@ -135,7 +134,8 @@
     },
     "invite": {
         "failed_title": "Slanje pozivnice nije uspelo",
-        "failed_generic": "Operacija nije uspela"
+        "failed_generic": "Operacija nije uspela",
+        "error_already_joined_room": "Korisnik je već u sobi"
     },
     "widget": {
         "error_need_to_be_logged_in": "Morate biti prijavljeni",

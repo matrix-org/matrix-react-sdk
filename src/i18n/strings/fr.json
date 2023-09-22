@@ -58,7 +58,6 @@
     "Unable to add email address": "Impossible d'ajouter l’adresse e-mail",
     "Unable to remove contact information": "Impossible de supprimer les informations du contact",
     "Unable to verify email address.": "Impossible de vérifier l’adresse e-mail.",
-    "Unban": "Révoquer le bannissement",
     "Upload avatar": "Envoyer un avatar",
     "Verification Pending": "Vérification en attente",
     "Warning!": "Attention !",
@@ -112,8 +111,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "No Microphones detected": "Aucun micro détecté",
     "No Webcams detected": "Aucune caméra détectée",
-    "No media permissions": "Pas de permission pour les médias",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Il est possible que vous deviez manuellement autoriser %(brand)s à accéder à votre micro/caméra",
     "Are you sure you want to leave the room '%(roomName)s'?": "Voulez-vous vraiment quitter le salon « %(roomName)s » ?",
     "Custom level": "Rang personnalisé",
     "Uploading %(filename)s": "Envoi de %(filename)s",
@@ -132,9 +129,6 @@
     },
     "Home": "Accueil",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (rang %(powerLevelNumber)s)",
-    "Your browser does not support the required cryptography extensions": "Votre navigateur ne prend pas en charge les extensions cryptographiques nécessaires",
-    "Not a valid %(brand)s keyfile": "Fichier de clé %(brand)s non valide",
-    "Authentication check failed: incorrect password?": "Erreur d’authentification : mot de passe incorrect ?",
     "This will allow you to reset your password and receive notifications.": "Ceci vous permettra de réinitialiser votre mot de passe et de recevoir des notifications.",
     "Delete widget": "Supprimer le widget",
     "AM": "AM",
@@ -200,8 +194,6 @@
     "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossible de charger l’évènement auquel il a été répondu, soit il n’existe pas, soit vous n'avez pas l’autorisation de le voir.",
-    "Can't leave Server Notices room": "Impossible de quitter le salon des Annonces du Serveur",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ce salon est utilisé pour les messages importants du serveur d’accueil, vous ne pouvez donc pas en partir.",
     "No Audio Outputs detected": "Aucune sortie audio détectée",
     "Audio Output": "Sortie audio",
     "Share Link to User": "Partager le lien vers l’utilisateur",
@@ -252,8 +244,6 @@
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
     "Failed to decrypt %(failedCount)s sessions!": "Le déchiffrement de %(failedCount)s sessions a échoué !",
     "Invalid homeserver discovery response": "Réponse de découverte du serveur d’accueil non valide",
-    "You do not have permission to invite people to this room.": "Vous n’avez pas la permission d’inviter des personnes dans ce salon.",
-    "Unknown server error": "Erreur de serveur inconnue",
     "Set up": "Configurer",
     "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",
     "General failure": "Erreur générale",
@@ -262,7 +252,6 @@
     "Set up Secure Messages": "Configurer les messages sécurisés",
     "Go to Settings": "Aller aux paramètres",
     "Unable to load commit detail: %(msg)s": "Impossible de charger les détails de l’envoi : %(msg)s",
-    "Unrecognised address": "Adresse non reconnue",
     "The following users may not exist": "Les utilisateurs suivants pourraient ne pas exister",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même les inviter ?",
     "Invite anyway and never warn me again": "Inviter quand même et ne plus me prévenir",
@@ -378,7 +367,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Une erreur est survenue lors de la mise à jour de l’adresse principale de salon. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
     "Could not load user profile": "Impossible de charger le profil de l’utilisateur",
-    "The user must be unbanned before they can be invited.": "Le bannissement de l’utilisateur doit être révoqué avant de pouvoir l’inviter.",
     "Accept all %(invitedRooms)s invites": "Accepter les %(invitedRooms)s invitations",
     "Power level": "Rang",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ce salon utilise la version <roomVersion />, que ce serveur d’accueil a marqué comme <i>instable</i>.",
@@ -405,7 +393,6 @@
     },
     "Cancel All": "Tout annuler",
     "Upload Error": "Erreur d’envoi",
-    "The user's homeserver does not support the version of the room.": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de ce salon.",
     "Join the conversation with an account": "Rejoindre la conversation avec un compte",
     "Sign Up": "S’inscrire",
     "Reason: %(reason)s": "Motif : %(reason)s",
@@ -529,7 +516,6 @@
     "Jump to first invite.": "Sauter à la première invitation.",
     "Room %(name)s": "Salon %(name)s",
     "Message Actions": "Actions de message",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You verified %(name)s": "Vous avez vérifié %(name)s",
     "You cancelled verifying %(name)s": "Vous avez annulé la vérification de %(name)s",
     "%(name)s cancelled verifying": "%(name)s a annulé la vérification",
@@ -562,8 +548,6 @@
     "Remove for everyone": "Supprimer pour tout le monde",
     "Manage integrations": "Gérer les intégrations",
     "Verification Request": "Demande de vérification",
-    "Error upgrading room": "Erreur lors de la mise à niveau du salon",
-    "Double check that your server supports the room version chosen and try again.": "Vérifiez que votre serveur prend en charge la version de salon choisie et réessayez.",
     "Unencrypted": "Non chiffré",
     "Upgrade private room": "Mettre à niveau le salon privé",
     "Upgrade public room": "Mettre à niveau le salon public",
@@ -771,15 +755,12 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "Unexpected server error trying to leave the room": "Erreur de serveur inattendue en essayant de quitter le salon",
-    "Error leaving room": "Erreur en essayant de quitter le salon",
     "Change notification settings": "Modifier les paramètres de notification",
     "Your server isn't responding to some <a>requests</a>.": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne peut actuellement mettre en cache vos messages chiffrés localement de manière sécurisée via le navigateur Web. Utilisez <desktopLink>%(brand)s Desktop</desktopLink> pour que les messages chiffrés apparaissent dans vos résultats de recherche.",
     "ready": "prêt",
     "The operation could not be completed": "L’opération n’a pas pu être terminée",
     "Failed to save your profile": "Erreur lors de l’enregistrement du profil",
-    "Unknown App": "Application inconnue",
     "Ignored attempt to disable encryption": "Essai de désactiver le chiffrement ignoré",
     "not ready": "pas prêt",
     "Secret storage:": "Coffre secret :",
@@ -1147,7 +1128,6 @@
     "Leave Space": "Quitter l’espace",
     "Edit settings relating to your space.": "Modifiez les paramètres de votre espace.",
     "Failed to save space settings.": "Échec de l’enregistrement des paramètres.",
-    "Invite to %(spaceName)s": "Inviter à %(spaceName)s",
     "Create a new room": "Créer un nouveau salon",
     "Spaces": "Espaces",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vous ne pourrez pas annuler ce changement puisque vous vous rétrogradez. Si vous êtes le dernier utilisateur a privilèges de cet espace, il deviendra impossible d’en reprendre contrôle.",
@@ -1158,7 +1138,6 @@
     "Space options": "Options de l’espace",
     "Leave space": "Quitter l’espace",
     "Invite people": "Inviter des personnes",
-    "Share your public space": "Partager votre espace public",
     "Share invite link": "Partager le lien d’invitation",
     "Click to copy": "Cliquez pour copier",
     "Create a space": "Créer un espace",
@@ -1492,7 +1471,6 @@
         "other": "Résultat final sur la base de %(count)s votes"
     },
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Partager des données anonymisées pour nous aider à identifier les problèmes. Rien de personnel. Aucune tierce partie.",
-    "That's fine": "C’est bon",
     "Recent searches": "Recherches récentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
     "Other searches": "Autres recherches",
@@ -1612,14 +1590,6 @@
     "The person who invited you has already left.": "La personne qui vous a invité(e) a déjà quitté le salon.",
     "Sorry, your homeserver is too old to participate here.": "Désolé, votre serveur d'accueil est trop vieux pour participer ici.",
     "There was an error joining.": "Il y a eu une erreur en rejoignant.",
-    "The user's homeserver does not support the version of the space.": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de cet espace.",
-    "User may or may not exist": "L’utilisateur existe peut-être",
-    "User does not exist": "L’utilisateur n’existe pas",
-    "User is already in the room": "L’utilisateur est déjà dans ce salon",
-    "User is already in the space": "L’utilisateur est déjà dans cet espace",
-    "User is already invited to the room": "L’utilisateur a déjà été invité dans ce salon",
-    "User is already invited to the space": "L’utilisateur a déjà été invité dans cet espace",
-    "You do not have permission to invite people to this space.": "Vous n’avez pas la permission d’inviter des personnes dans cet espace.",
     "View live location": "Voir la position en direct",
     "Ban from room": "Bannir du salon",
     "Unban from room": "Révoquer le bannissement du salon",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Afficher les salons",
     "Explore public spaces in the new search dialog": "Explorer les espaces publics dans la nouvelle fenêtre de recherche",
     "Join the room to participate": "Rejoindre le salon pour participer",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Dans %(spaceName)s et %(count)s autre espace.",
-        "other": "Dans %(spaceName)s et %(count)s autres espaces."
-    },
-    "In %(spaceName)s.": "Dans l’espace %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "Stop and close": "Arrêter et fermer",
     "Online community members": "Membres de la communauté en ligne",
     "Coworkers and teams": "Collègues et équipes",
@@ -1903,7 +1867,6 @@
     "You do not have permission to invite users": "Vous n’avez pas la permission d’inviter des utilisateurs",
     "Your language": "Votre langue",
     "Your device ID": "Votre ID d’appareil",
-    "User cannot be invited until they are unbanned": "L’utilisateur ne peut pas être invité tant qu’il est banni",
     "Ask to join": "Demander à venir",
     "People cannot join unless access is granted.": "Les personnes ne peuvent pas venir tant que l’accès ne leur est pas autorisé.",
     "Receive an email summary of missed notifications": "Recevoir un résumé par courriel des notifications manquées",
@@ -2152,7 +2115,8 @@
         "send_report": "Envoyer le signalement",
         "clear": "Effacer",
         "exit_fullscreeen": "Quitter le plein écran",
-        "enter_fullscreen": "Afficher en plein écran"
+        "enter_fullscreen": "Afficher en plein écran",
+        "unban": "Révoquer le bannissement"
     },
     "a11y": {
         "user_menu": "Menu utilisateur",
@@ -3445,7 +3409,9 @@
         "no_permission_conference_description": "Vous n’avez pas l’autorisation de lancer un appel en téléconférence dans ce salon",
         "default_device": "Appareil par défaut",
         "failed_call_live_broadcast_title": "Impossible de démarrer un appel",
-        "failed_call_live_broadcast_description": "Vous ne pouvez pas démarrer un appel car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour démarrer un appel."
+        "failed_call_live_broadcast_description": "Vous ne pouvez pas démarrer un appel car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour démarrer un appel.",
+        "no_media_perms_title": "Pas de permission pour les médias",
+        "no_media_perms_description": "Il est possible que vous deviez manuellement autoriser %(brand)s à accéder à votre micro/caméra"
     },
     "Other": "Autre",
     "Advanced": "Avancé",
@@ -3570,7 +3536,10 @@
         "verification_requested_toast_title": "Vérification requise",
         "cancel_entering_passphrase_title": "Annuler la saisie du mot de passe ?",
         "cancel_entering_passphrase_description": "Souhaitez-vous vraiment annuler la saisie de la phrase de passe ?",
-        "bootstrap_title": "Configuration des clés"
+        "bootstrap_title": "Configuration des clés",
+        "export_unsupported": "Votre navigateur ne prend pas en charge les extensions cryptographiques nécessaires",
+        "import_invalid_keyfile": "Fichier de clé %(brand)s non valide",
+        "import_invalid_passphrase": "Erreur d’authentification : mot de passe incorrect ?"
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3593,7 +3562,8 @@
         "pseudonymous_usage_data": "Aidez nous à identifier les problèmes et améliorer %(analyticsOwner)s en envoyant des rapports d’usage anonymes. Pour comprendre de quelle manière les gens utilisent plusieurs appareils, nous créeront un identifiant aléatoire commun à tous vos appareils.",
         "bullet_1": "Nous n’enregistrons ou ne profilons <Bold>aucune</Bold> donnée du compte",
         "bullet_2": "Nous ne partageons <Bold>aucune</Bold> information avec des tiers",
-        "disable_prompt": "Vous pouvez désactiver ceci à n’importe quel moment dans les paramètres"
+        "disable_prompt": "Vous pouvez désactiver ceci à n’importe quel moment dans les paramètres",
+        "accept_button": "C’est bon"
     },
     "chat_effects": {
         "confetti_description": "Envoie le message avec des confettis",
@@ -3872,7 +3842,8 @@
         },
         "error_need_to_be_logged_in": "Vous devez être identifié.",
         "error_need_invite_permission": "Vous devez avoir l’autorisation d’inviter des utilisateurs pour faire ceci.",
-        "error_need_kick_permission": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci."
+        "error_need_kick_permission": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci.",
+        "no_name": "Application inconnue"
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -3986,7 +3957,8 @@
             "home": "Accueil de l’espace",
             "explore": "Parcourir les salons",
             "manage_and_explore": "Gérer et découvrir les salons"
-        }
+        },
+        "share_public": "Partager votre espace public"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -4106,7 +4078,13 @@
         "unread_notifications_predecessor": {
             "other": "Vous avez %(count)s notifications non lues dans une version précédente de ce salon.",
             "one": "Vous avez %(count)s notification non lue dans une version précédente de ce salon."
-        }
+        },
+        "leave_unexpected_error": "Erreur de serveur inattendue en essayant de quitter le salon",
+        "leave_server_notices_title": "Impossible de quitter le salon des Annonces du Serveur",
+        "leave_error_title": "Erreur en essayant de quitter le salon",
+        "upgrade_error_title": "Erreur lors de la mise à niveau du salon",
+        "upgrade_error_description": "Vérifiez que votre serveur prend en charge la version de salon choisie et réessayez.",
+        "leave_server_notices_description": "Ce salon est utilisé pour les messages importants du serveur d’accueil, vous ne pouvez donc pas en partir."
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
@@ -4181,7 +4159,22 @@
         "failed_generic": "L’opération a échoué",
         "room_failed_title": "Impossible d’inviter les utilisateurs dans %(roomName)s",
         "room_failed_partial": "Nous avons envoyé les invitations, mais les personnes ci-dessous n’ont pas pu être invitées à rejoindre <RoomName/>",
-        "room_failed_partial_title": "Certaines invitations n’ont pas pu être envoyées"
+        "room_failed_partial_title": "Certaines invitations n’ont pas pu être envoyées",
+        "invalid_address": "Adresse non reconnue",
+        "unban_first_title": "L’utilisateur ne peut pas être invité tant qu’il est banni",
+        "error_permissions_space": "Vous n’avez pas la permission d’inviter des personnes dans cet espace.",
+        "error_permissions_room": "Vous n’avez pas la permission d’inviter des personnes dans ce salon.",
+        "error_already_invited_space": "L’utilisateur a déjà été invité dans cet espace",
+        "error_already_invited_room": "L’utilisateur a déjà été invité dans ce salon",
+        "error_already_joined_space": "L’utilisateur est déjà dans cet espace",
+        "error_already_joined_room": "L’utilisateur est déjà dans ce salon",
+        "error_user_not_found": "L’utilisateur n’existe pas",
+        "error_profile_undisclosed": "L’utilisateur existe peut-être",
+        "error_bad_state": "Le bannissement de l’utilisateur doit être révoqué avant de pouvoir l’inviter.",
+        "error_version_unsupported_space": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de cet espace.",
+        "error_version_unsupported_room": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de ce salon.",
+        "error_unknown": "Erreur de serveur inconnue",
+        "to_space": "Inviter à %(spaceName)s"
     },
     "scalar": {
         "error_create": "Impossible de créer le widget.",
@@ -4208,5 +4201,12 @@
         "connection": "Il y a eu un problème lors de la communication avec le serveur d’accueil, veuillez réessayer ultérieurement.",
         "mixed_content": "Impossible de se connecter au serveur d'accueil en HTTP si l’URL dans la barre de votre explorateur est en HTTPS. Utilisez HTTPS ou <a>activez la prise en charge des scripts non-vérifiés</a>.",
         "tls": "Impossible de se connecter au serveur d’accueil - veuillez vérifier votre connexion, assurez-vous que le <a>certificat SSL de votre serveur d’accueil</a> est un certificat de confiance, et qu’aucune extension du navigateur ne bloque les requêtes."
-    }
+    },
+    "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Dans %(spaceName)s et %(count)s autre espace.",
+        "other": "Dans %(spaceName)s et %(count)s autres espaces."
+    },
+    "in_space": "Dans l’espace %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

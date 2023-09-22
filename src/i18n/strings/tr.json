@@ -2,8 +2,6 @@
     "Admin Tools": "Admin Araçları",
     "No Microphones detected": "Hiçbir Mikrofon bulunamadı",
     "No Webcams detected": "Hiçbir Web kamerası bulunamadı",
-    "No media permissions": "Medya izinleri yok",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir",
     "Authentication": "Doğrulama",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
     "and %(count)s others...": {
@@ -70,7 +68,6 @@
     "Unable to add email address": "E-posta adresi eklenemiyor",
     "Unable to remove contact information": "Kişi bilgileri kaldırılamıyor",
     "Unable to verify email address.": "E-posta adresi doğrulanamıyor.",
-    "Unban": "Yasağı Kaldır",
     "unknown error code": "bilinmeyen hata kodu",
     "Uploading %(filename)s": "%(filename)s yükleniyor",
     "Uploading %(filename)s and %(count)s others": {
@@ -133,9 +130,6 @@
     "Add an Integration": "Entegrasyon ekleyin",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "Something went wrong!": "Bir şeyler yanlış gitti!",
-    "Your browser does not support the required cryptography extensions": "Tarayıcınız gerekli şifreleme uzantılarını desteklemiyor",
-    "Not a valid %(brand)s keyfile": "Geçersiz bir %(brand)s anahtar dosyası",
-    "Authentication check failed: incorrect password?": "Kimlik doğrulama denetimi başarısız oldu : yanlış şifre ?",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Notification targets": "Bildirim hedefleri",
@@ -162,7 +156,6 @@
     "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
-    "Error upgrading room": "Oda güncellenirken hata",
     "%(brand)s URL": "%(brand)s Linki",
     "Room ID": "Oda ID",
     "More options": "Daha fazla seçenek",
@@ -239,9 +232,6 @@
         "other": "%(items)s ve diğer %(count)s",
         "one": "%(items)s ve bir diğeri"
     },
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Unrecognised address": "Tanınmayan adres",
-    "You do not have permission to invite people to this room.": "Bu odaya kişi davet etme izniniz yok.",
     "Clear personal data": "Kişisel veri temizle",
     "That matches!": "Eşleşti!",
     "That doesn't match.": "Eşleşmiyor.",
@@ -442,8 +432,6 @@
     "You're previewing %(roomName)s. Want to join it?": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
     "You don't currently have any stickerpacks enabled": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
     "Room Topic": "Oda Başlığı",
-    "The user's homeserver does not support the version of the room.": "Kullanıcının ana sunucusu odanın sürümünü desteklemiyor.",
-    "Unknown server error": "Bilinmeyen sunucu hatası",
     "Missing media permissions, click the button below to request.": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
     "Unignore": "Yoksayma",
     "Unable to revoke sharing for email address": "E-posta adresi paylaşımı kaldırılamadı",
@@ -461,8 +449,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
-    "Double check that your server supports the room version chosen and try again.": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
-    "The user must be unbanned before they can be invited.": "Kullanıcının davet edilebilmesi için öncesinde yasağının kaldırılması gereklidir.",
     "Message search": "Mesaj arama",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Kullanıcının güç düzeyini değiştirirken bir hata oluştu. Yeterli izinlere sahip olduğunuza emin olun ve yeniden deneyin.",
     "Click the link in the email you received to verify and then click continue again.": "Aldığınız e-postaki bağlantıyı tıklayarak doğrulayın ve sonra tekrar tıklayarak devam edin.",
@@ -580,11 +566,6 @@
     "Set up Secure Backup": "Güvenli Yedekleme kur",
     "Enable desktop notifications": "Masaüstü bildirimlerini etkinleştir",
     "Don't miss a reply": "Yanıtları kaçırma",
-    "Unknown App": "Bilinmeyen uygulama",
-    "Error leaving room": "Odadan ayrılırken hata",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Bu oda, Ana Sunucudan gelen önemli mesajlar için kullanılır, bu yüzden ayrılamazsınız.",
-    "Can't leave Server Notices room": "Sunucu Bildirimleri odasından ayrılınamıyor",
-    "Unexpected server error trying to leave the room": "Odadan ayrılmaya çalışırken beklenmeyen sunucu hatası",
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambiya",
     "Yemen": "Yemen",
@@ -1132,7 +1113,8 @@
         "refresh": "Yenile",
         "mention": "Bahsetme",
         "submit": "Gönder",
-        "send_report": "Rapor gönder"
+        "send_report": "Rapor gönder",
+        "unban": "Yasağı Kaldır"
     },
     "a11y": {
         "user_menu": "Kullanıcı menüsü",
@@ -1788,7 +1770,9 @@
         "transfer_failed_description": "Arama aktarılırken hata oluştu",
         "no_permission_conference": "İzin Gerekli",
         "no_permission_conference_description": "Bu odada bir konferans başlatmak için izniniz yok",
-        "default_device": "Varsayılan Cihaz"
+        "default_device": "Varsayılan Cihaz",
+        "no_media_perms_title": "Medya izinleri yok",
+        "no_media_perms_description": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir"
     },
     "Other": "Diğer",
     "Advanced": "Gelişmiş",
@@ -1870,7 +1854,10 @@
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
         "cancel_entering_passphrase_description": "Parola girmeyi iptal etmek istediğinizden emin misiniz?",
-        "bootstrap_title": "Anahtarları ayarla"
+        "bootstrap_title": "Anahtarları ayarla",
+        "export_unsupported": "Tarayıcınız gerekli şifreleme uzantılarını desteklemiyor",
+        "import_invalid_keyfile": "Geçersiz bir %(brand)s anahtar dosyası",
+        "import_invalid_passphrase": "Kimlik doğrulama denetimi başarısız oldu : yanlış şifre ?"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2068,7 +2055,8 @@
             "see_msgtype_sent_active_room": "Aktif odanıza gönderilen <b>%(msgtype)s</b> mesajları görün"
         },
         "error_need_to_be_logged_in": "Oturum açmanız gerekiyor.",
-        "error_need_invite_permission": "Bunu yapmak için kullanıcıları davet etmeye ihtiyacınız var."
+        "error_need_invite_permission": "Bunu yapmak için kullanıcıları davet etmeye ihtiyacınız var.",
+        "no_name": "Bilinmeyen uygulama"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2160,7 +2148,13 @@
             "room_invite": "Sadece bu odaya davet et",
             "no_avatar_label": "İnsanların odanı kolayca tanıması için bir fotoğraf ekle.",
             "start_of_room": "Bu <roomName/> odasının başlangıcıdır."
-        }
+        },
+        "leave_unexpected_error": "Odadan ayrılmaya çalışırken beklenmeyen sunucu hatası",
+        "leave_server_notices_title": "Sunucu Bildirimleri odasından ayrılınamıyor",
+        "leave_error_title": "Odadan ayrılırken hata",
+        "upgrade_error_title": "Oda güncellenirken hata",
+        "upgrade_error_description": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
+        "leave_server_notices_description": "Bu oda, Ana Sunucudan gelen önemli mesajlar için kullanılır, bu yüzden ayrılamazsınız."
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
@@ -2197,7 +2191,12 @@
         "failed_title": "Davet edilemedi",
         "failed_generic": "Operasyon başarısız oldu",
         "room_failed_partial": "Başkalarına davetler iletilmekle beraber, aşağıdakiler <RoomName/> odasına davet edilemedi",
-        "room_failed_partial_title": "Bazı davetler gönderilemiyor"
+        "room_failed_partial_title": "Bazı davetler gönderilemiyor",
+        "invalid_address": "Tanınmayan adres",
+        "error_permissions_room": "Bu odaya kişi davet etme izniniz yok.",
+        "error_bad_state": "Kullanıcının davet edilebilmesi için öncesinde yasağının kaldırılması gereklidir.",
+        "error_version_unsupported_room": "Kullanıcının ana sunucusu odanın sürümünü desteklemiyor.",
+        "error_unknown": "Bilinmeyen sunucu hatası"
     },
     "scalar": {
         "error_create": "Görsel bileşen oluşturulamıyor.",
@@ -2220,5 +2219,6 @@
         "admin_contact": "Bu servisi kullanmaya devam etmek için lütfen <a>servis yöneticinizle bağlantı kurun</a>.",
         "mixed_content": "Tarayıcı çubuğunuzda bir HTTPS URL'si olduğunda Ana Sunusuna HTTP üzerinden bağlanılamıyor . Ya HTTPS kullanın veya <a> güvensiz komut dosyalarını</a> etkinleştirin.",
         "tls": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

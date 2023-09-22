@@ -2,7 +2,6 @@
     "Admin Tools": "నిర్వాహకుని ఉపకరణాలు",
     "No Microphones detected": "మైక్రోఫోన్లు కనుగొనబడలేదు",
     "No Webcams detected": "వెబ్కామ్లు కనుగొనబడలేదు",
-    "No media permissions": "మీడియా అనుమతులు లేవు",
     "Authentication": "ప్రామాణీకరణ",
     "You do not have permission to post to this room": "మీకు ఈ గదికి పోస్ట్ చేయడానికి అనుమతి లేదు",
     "A new password must be entered.": "కొత్త పాస్ వర్డ్ ను తప్పక నమోదు చేయాలి.",
@@ -140,7 +139,8 @@
     "voip": {
         "call_failed": "కాల్ విఫలమయింది",
         "cannot_call_yourself_description": "మీకు మీరే కాల్ చేయలేరు.",
-        "default_device": "డిఫాల్ట్ పరికరం"
+        "default_device": "డిఫాల్ట్ పరికరం",
+        "no_media_perms_title": "మీడియా అనుమతులు లేవు"
     },
     "auth": {
         "sso": "సింగిల్ సైన్ ఆన్",

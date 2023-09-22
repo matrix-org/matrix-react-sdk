@@ -8,8 +8,6 @@
     "Admin Tools": "Засоби адміністрування",
     "No Microphones detected": "Мікрофон не виявлено",
     "No Webcams detected": "Вебкамеру не виявлено",
-    "No media permissions": "Немає медіадозволів",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну",
     "Authentication": "Автентифікація",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
@@ -84,15 +82,11 @@
     "Moderator": "Модератор",
     "Reason": "Причина",
     "Default": "Типовий",
-    "Your browser does not support the required cryptography extensions": "Ваш браузер не підтримує необхідних криптографічних функцій",
-    "Not a valid %(brand)s keyfile": "Файл ключа %(brand)s некоректний",
-    "Authentication check failed: incorrect password?": "Помилка автентифікації: неправильний пароль?",
     "Please contact your homeserver administrator.": "Будь ласка, зв'яжіться з адміністратором вашого домашнього сервера.",
     "Incorrect verification code": "Неправильний код перевірки",
     "No display name": "Немає псевдоніма",
     "Failed to set display name": "Не вдалося налаштувати псевдонім",
     "This event could not be displayed": "Неможливо показати цю подію",
-    "Unban": "Розблокувати",
     "Failed to ban user": "Не вдалося заблокувати користувача",
     "Demote yourself?": "Зменшити свої повноваження?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ви не зможете скасувати цю дію, оскільки ви зменшуєте свої повноваження. Якщо ви останній привілейований користувач у цій кімнаті, ви не зможете повернути повноваження.",
@@ -125,12 +119,8 @@
     },
     "Upload Error": "Помилка вивантаження",
     "Upload avatar": "Вивантажити аватар",
-    "Error upgrading room": "Помилка поліпшення кімнати",
-    "Double check that your server supports the room version chosen and try again.": "Перевірте, чи підримує ваш сервер вказану версію кімнати та спробуйте ще.",
     "Failed to reject invitation": "Не вдалось відхилити запрошення",
     "This room is not public. You will not be able to rejoin without an invite.": "Ця кімната не загальнодоступна. Ви не зможете повторно приєднатися без запрошення.",
-    "Can't leave Server Notices room": "Неможливо вийти з кімнати сповіщень сервера",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ця кімната використовується для важливих повідомлень з домашнього сервера, тож ви не можете з неї вийти.",
     "Enter passphrase": "Введіть парольну фразу",
     "Verify this session": "Звірити цей сеанс",
     "Later": "Пізніше",
@@ -186,11 +176,6 @@
         "other": "%(items)s та ще %(count)s учасників",
         "one": "%(items)s і ще хтось"
     },
-    "Unrecognised address": "Нерозпізнана адреса",
-    "You do not have permission to invite people to this room.": "У вас немає дозволу запрошувати людей у цю кімнату.",
-    "The user must be unbanned before they can be invited.": "Потрібно розблокувати користувача перед тим як їх можна буде запросити.",
-    "The user's homeserver does not support the version of the room.": "Домашній сервер користувача не підтримує версію кімнати.",
-    "Unknown server error": "Невідома помилка з боку сервера",
     "Your homeserver has exceeded its user limit.": "Ваш домашній сервер перевищив свій ліміт користувачів.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
     "Contact your <a>server admin</a>.": "Зверніться до <a>адміністратора сервера</a>.",
@@ -365,9 +350,6 @@
     "Show advanced": "Показати розширені",
     "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Unexpected server error trying to leave the room": "Під час спроби вийти з кімнати виникла неочікувана помилка сервера",
-    "Unknown App": "Невідомий додаток",
     "Set up Secure Backup": "Налаштувати захищене резервне копіювання",
     "Safeguard against losing access to encrypted messages & data": "Захистіться від втрати доступу до зашифрованих повідомлень і даних",
     "Change notification settings": "Змінити налаштування сповіщень",
@@ -698,8 +680,6 @@
     "Unable to share phone number": "Не вдалося надіслати телефонний номер",
     "Unable to share email address": "Не вдалося надіслати адресу е-пошти",
     "Share invite link": "Надіслати запрошувальне посилання",
-    "Invite to %(spaceName)s": "Запросити до %(spaceName)s",
-    "Share your public space": "Поділитися своїм загальнодоступним простором",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Захистіться від втрати доступу до зашифрованих повідомлень і даних створенням резервної копії ключів шифрування на своєму сервері.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
@@ -724,7 +704,6 @@
     "Enable desktop notifications": "Увімкнути сповіщення стільниці",
     "Don't miss a reply": "Не пропустіть відповідей",
     "Review to ensure your account is safe": "Перевірте, щоб переконатися, що ваш обліковий запис у безпеці",
-    "Error leaving room": "Помилка під час виходу з кімнати",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
     "Start Verification": "Почати перевірку",
@@ -1344,7 +1323,6 @@
     "Connect this session to Key Backup": "Налаштувати цьому сеансу резервне копіювання ключів",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
     "<not supported>": "<не підтримується>",
-    "That's fine": "Гаразд",
     "Failed to re-authenticate due to a homeserver problem": "Не вдалося перезайти через проблему з домашнім сервером",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Скидання ключів звірки неможливо скасувати. Після скидання, ви втратите доступ до старих зашифрованих повідомлень, а всі друзі, які раніше вас звіряли, бачитимуть застереження безпеки, поки ви не проведете звірку з ними знову.",
     "I'll verify later": "Звірю пізніше",
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "Особа, котра вас запросила, вже вийшла.",
     "Sorry, your homeserver is too old to participate here.": "На жаль, ваш домашній сервер застарий для участі тут.",
     "There was an error joining.": "Сталася помилка під час приєднання.",
-    "The user's homeserver does not support the version of the space.": "Домашній сервер користувача не підтримувати версію простору.",
-    "User may or may not exist": "Користувач може або не може існувати",
-    "User does not exist": "Користувача не існує",
-    "User is already in the room": "Користувач уже долучився до цієї кімнати",
-    "User is already in the space": "Користувач уже долучився до цього простору",
-    "User is already invited to the room": "Користувача вже запрошено до цієї кімнати",
-    "User is already invited to the space": "Користувача вже запрошено до цього простору",
-    "You do not have permission to invite people to this space.": "Ви не маєте дозволу запрошувати людей у цей простір.",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
     "%(count)s participants": {
         "one": "1 учасник",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
     "Join the room to participate": "Приєднуйтеся до кімнати, щоб взяти участь",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "У %(spaceName)s та %(count)s іншому просторі.",
-        "other": "У %(spaceName)s та %(count)s інших пристроях."
-    },
-    "In %(spaceName)s.": "У просторі %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "У просторах %(space1Name)s і %(space2Name)s.",
     "You don't have permission to share locations": "Ви не маєте дозволу ділитися місцем перебування",
     "Stop and close": "Припинити й закрити",
     "Online community members": "Учасники онлайн-спільноти",
@@ -1930,7 +1894,6 @@
     "Messages sent by bots": "Повідомлення від ботів",
     "New room activity, upgrades and status messages occur": "Нова діяльність у кімнаті, поліпшення та повідомлення про стан",
     "Unable to find user by email": "Не вдалося знайти користувача за адресою електронної пошти",
-    "User cannot be invited until they are unbanned": "Не можна запросити користувача до його розблокування",
     "People cannot join unless access is granted.": "Люди не можуть приєднатися, якщо їм не надано доступ.",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Оновлення:</strong>Ми спростили налаштування сповіщень, щоб полегшити пошук потрібних опцій. Деякі налаштування, які ви вибрали раніше, тут не показано, але вони залишаються активними. Якщо ви продовжите, деякі з ваших налаштувань можуть змінитися. <a>Докладніше</a>",
     "Show a badge <badge/> when keywords are used in a room.": "Показувати значок <badge/>, коли в кімнаті вжито ключові слова.",
@@ -2152,7 +2115,8 @@
         "send_report": "Надіслати звіт",
         "clear": "Очистити",
         "exit_fullscreeen": "Вийти з повноекранного режиму",
-        "enter_fullscreen": "Перейти у повноекранний режим"
+        "enter_fullscreen": "Перейти у повноекранний режим",
+        "unban": "Розблокувати"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -3445,7 +3409,9 @@
         "no_permission_conference_description": "У вас немає дозволу, щоб розпочати груповий виклик у цій кімнаті",
         "default_device": "Уставний пристрій",
         "failed_call_live_broadcast_title": "Не вдалося розпочати виклик",
-        "failed_call_live_broadcast_description": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик."
+        "failed_call_live_broadcast_description": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик.",
+        "no_media_perms_title": "Немає медіадозволів",
+        "no_media_perms_description": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну"
     },
     "Other": "Інше",
     "Advanced": "Подробиці",
@@ -3570,7 +3536,10 @@
         "verification_requested_toast_title": "Запит перевірки",
         "cancel_entering_passphrase_title": "Скасувати введення парольної фрази?",
         "cancel_entering_passphrase_description": "Ви точно хочете скасувати введення парольної фрази?",
-        "bootstrap_title": "Налаштовування ключів"
+        "bootstrap_title": "Налаштовування ключів",
+        "export_unsupported": "Ваш браузер не підтримує необхідних криптографічних функцій",
+        "import_invalid_keyfile": "Файл ключа %(brand)s некоректний",
+        "import_invalid_passphrase": "Помилка автентифікації: неправильний пароль?"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3593,7 +3562,8 @@
         "pseudonymous_usage_data": "Допомагайте нам визначати проблеми й удосконалювати %(analyticsOwner)s, надсилаючи анонімні дані про використання. Щоб розуміти, як люди використовують кілька пристроїв, ми створимо спільний для ваших пристроїв випадковий ідентифікатор.",
         "bullet_1": "Ми <Bold>не</Bold> зберігаємо й <Bold>не</Bold> аналізуємо жодних даних облікового запису",
         "bullet_2": "Ми <Bold>не</Bold> передаємо даних стороннім особам",
-        "disable_prompt": "Можна вимкнути це коли завгодно в налаштуваннях"
+        "disable_prompt": "Можна вимкнути це коли завгодно в налаштуваннях",
+        "accept_button": "Гаразд"
     },
     "chat_effects": {
         "confetti_description": "Надсилає це повідомлення з конфеті",
@@ -3872,7 +3842,8 @@
         },
         "error_need_to_be_logged_in": "Вам потрібно увійти.",
         "error_need_invite_permission": "Для цього вам потрібен дозвіл запрошувати користувачів.",
-        "error_need_kick_permission": "Для цього вам потрібен дозвіл вилучати користувачів."
+        "error_need_kick_permission": "Для цього вам потрібен дозвіл вилучати користувачів.",
+        "no_name": "Невідомий додаток"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -3986,7 +3957,8 @@
             "home": "Домівка простору",
             "explore": "Каталог кімнат",
             "manage_and_explore": "Керування і перегляд кімнат"
-        }
+        },
+        "share_public": "Поділитися своїм загальнодоступним простором"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -4106,7 +4078,13 @@
         "unread_notifications_predecessor": {
             "other": "Ви маєте %(count)s непрочитаних сповіщень у попередній версії цієї кімнати.",
             "one": "У вас %(count)s непрочитане сповіщення у попередній версії цієї кімнати."
-        }
+        },
+        "leave_unexpected_error": "Під час спроби вийти з кімнати виникла неочікувана помилка сервера",
+        "leave_server_notices_title": "Неможливо вийти з кімнати сповіщень сервера",
+        "leave_error_title": "Помилка під час виходу з кімнати",
+        "upgrade_error_title": "Помилка поліпшення кімнати",
+        "upgrade_error_description": "Перевірте, чи підримує ваш сервер вказану версію кімнати та спробуйте ще.",
+        "leave_server_notices_description": "Ця кімната використовується для важливих повідомлень з домашнього сервера, тож ви не можете з неї вийти."
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
@@ -4181,7 +4159,22 @@
         "failed_generic": "Не вдалося виконати дію",
         "room_failed_title": "Не вдалося запросити користувачів до %(roomName)s",
         "room_failed_partial": "Ми надіслали іншим, але вказаних людей, не вдалося запросити до <RoomName/>",
-        "room_failed_partial_title": "Деякі запрошення неможливо надіслати"
+        "room_failed_partial_title": "Деякі запрошення неможливо надіслати",
+        "invalid_address": "Нерозпізнана адреса",
+        "unban_first_title": "Не можна запросити користувача до його розблокування",
+        "error_permissions_space": "Ви не маєте дозволу запрошувати людей у цей простір.",
+        "error_permissions_room": "У вас немає дозволу запрошувати людей у цю кімнату.",
+        "error_already_invited_space": "Користувача вже запрошено до цього простору",
+        "error_already_invited_room": "Користувача вже запрошено до цієї кімнати",
+        "error_already_joined_space": "Користувач уже долучився до цього простору",
+        "error_already_joined_room": "Користувач уже долучився до цієї кімнати",
+        "error_user_not_found": "Користувача не існує",
+        "error_profile_undisclosed": "Користувач може або не може існувати",
+        "error_bad_state": "Потрібно розблокувати користувача перед тим як їх можна буде запросити.",
+        "error_version_unsupported_space": "Домашній сервер користувача не підтримувати версію простору.",
+        "error_version_unsupported_room": "Домашній сервер користувача не підтримує версію кімнати.",
+        "error_unknown": "Невідома помилка з боку сервера",
+        "to_space": "Запросити до %(spaceName)s"
     },
     "scalar": {
         "error_create": "Неможливо створити віджет.",
@@ -4208,5 +4201,12 @@
         "connection": "Не вдалося зв'язатися з домашнім сервером, повторіть спробу пізніше.",
         "mixed_content": "З'єднуватися з домашнім сервером через HTTP, коли в рядку адреси браузера введено HTTPS-адресу, не можна. Використовуйте HTTPS або <a>дозвольте небезпечні скрипти</a>.",
         "tls": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити."
-    }
+    },
+    "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "У %(spaceName)s та %(count)s іншому просторі.",
+        "other": "У %(spaceName)s та %(count)s інших пристроях."
+    },
+    "in_space": "У просторі %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

@@ -44,7 +44,6 @@
     "Search failed": "Η αναζήτηση απέτυχε",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Admin Tools": "Εργαλεία διαχειριστή",
-    "No media permissions": "Χωρίς δικαιώματα πολυμέσων",
     "Enter passphrase": "Εισαγωγή συνθηματικού",
     "Failed to set display name": "Δεν ήταν δυνατό ο ορισμός του ονόματος εμφάνισης",
     "Home": "Αρχική",
@@ -59,7 +58,6 @@
     "Unable to add email address": "Αδυναμία προσθήκης διεύθυνσης ηλ. αλληλογραφίας",
     "Unable to remove contact information": "Αδυναμία αφαίρεσης πληροφοριών επαφής",
     "Unable to verify email address.": "Αδυναμία επιβεβαίωσης διεύθυνσης ηλεκτρονικής αλληλογραφίας.",
-    "Unban": "Άρση αποκλεισμού",
     "Upload avatar": "Αποστολή προσωπικής εικόνας",
     "Warning!": "Προειδοποίηση!",
     "Sun": "Κυρ",
@@ -120,7 +118,6 @@
     "You seem to be in a call, are you sure you want to quit?": "Φαίνεται ότι είστε σε μια κλήση, είστε βέβαιοι ότι θέλετε να αποχωρήσετε;",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Connectivity to the server has been lost.": "Χάθηκε η συνδεσιμότητα στον διακομιστή.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Μπορεί να χρειαστεί να ορίσετε χειροκίνητα την πρόσβαση του %(brand)s στο μικρόφωνο/κάμερα",
     "You seem to be uploading files, are you sure you want to quit?": "Φαίνεται ότι αποστέλετε αρχεία, είστε βέβαιοι ότι θέλετε να αποχωρήσετε;",
     "Reject all %(invitedRooms)s invites": "Απόρριψη όλων των προσκλήσεων %(invitedRooms)s",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Δεν θα μπορέσετε να αναιρέσετε αυτήν την αλλαγή καθώς προωθείτε τον χρήστη να έχει το ίδιο επίπεδο δύναμης με τον εαυτό σας.",
@@ -128,9 +125,6 @@
     "Failed to load timeline position": "Δεν ήταν δυνατή η φόρτωση της θέσης του χρονολόγιου",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν καταφέρατε να το βρείτε.",
-    "Your browser does not support the required cryptography extensions": "Ο περιηγητής σας δεν υποστηρίζει τα απαιτούμενα πρόσθετα κρυπτογράφησης",
-    "Not a valid %(brand)s keyfile": "Μη έγκυρο αρχείο κλειδιού %(brand)s",
-    "Authentication check failed: incorrect password?": "Αποτυχία ελέγχου πιστοποίησης: λανθασμένος κωδικός πρόσβασης;",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Αυτή η διαδικασία σας επιτρέπει να εξαγάγετε τα κλειδιά για τα μηνύματα που έχετε λάβει σε κρυπτογραφημένα δωμάτια σε ένα τοπικό αρχείο. Στη συνέχεια, θα μπορέσετε να εισάγετε το αρχείο σε άλλο πρόγραμμα του Matrix, έτσι ώστε το πρόγραμμα να είναι σε θέση να αποκρυπτογραφήσει αυτά τα μηνύματα.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Αυτή η διαδικασία σας επιτρέπει να εισαγάγετε κλειδιά κρυπτογράφησης που έχετε προηγουμένως εξάγει από άλλο πρόγραμμα του Matrix. Στη συνέχεια, θα μπορέσετε να αποκρυπτογραφήσετε τυχόν μηνύματα που το άλλο πρόγραμμα θα μπορούσε να αποκρυπτογραφήσει.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Το αρχείο εξαγωγής θα είναι προστατευμένο με συνθηματικό. Θα χρειαστεί να πληκτρολογήσετε το συνθηματικό εδώ για να αποκρυπτογραφήσετε το αρχείο.",
@@ -173,10 +167,6 @@
     "Your homeserver has exceeded its user limit.": "Ο διακομιστής σας ξεπέρασε το όριο χρηστών.",
     "Use app": "Χρησιμοποιήστε την εφαρμογή",
     "Use app for a better experience": "Χρησιμοποιήστε την εφαρμογή για καλύτερη εμπειρία",
-    "Unknown server error": "Άγνωστο σφάλμα διακομιστή",
-    "You do not have permission to invite people to this room.": "Δεν έχετε δικαίωμα να προσκαλείτε άτομα σε αυτό το δωμάτιο.",
-    "Unrecognised address": "Η διεύθυνση δεν αναγνωρίστηκε",
-    "Error leaving room": "Σφάλμα στην έξοδο από το δωμάτιο",
     "%(items)s and %(count)s others": {
         "one": "%(items)s και ένα ακόμα",
         "other": "%(items)s και %(count)s άλλα"
@@ -185,8 +175,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "Ο %(name)s (%(userId)s) συνδέθηκε σε μία νέα συνεδρία χωρίς να την επιβεβαιώσει:",
     "Verify your other session using one of the options below.": "Επιβεβαιώστε την άλλη σας συνεδρία χρησιμοποιώντας μία από τις παρακάτω επιλογές.",
     "You signed in to a new session without verifying it:": "Συνδεθήκατε σε μια νέα συνεδρία χωρίς να την επιβεβαιώσετε:",
-    "Double check that your server supports the room version chosen and try again.": "Επανελέγξτε ότι ο διακομιστής σας υποστηρίζει την έκδοση δωματίου που επιλέξατε και προσπαθήστε ξανά.",
-    "Error upgrading room": "Σφάλμα αναβάθμισης δωματίου",
     "Zimbabwe": "Ζιμπάμπουε",
     "Zambia": "Ζαμπία",
     "Yemen": "Υεμένη",
@@ -522,15 +510,6 @@
     "Message search": "Αναζήτηση μηνυμάτων",
     "Allow people to preview your space before they join.": "Επιτρέψτε στους χρήστες να κάνουν προεπισκόπηση του χώρου σας προτού να εγγραφούν.",
     "Invite people": "Προσκαλέστε άτομα",
-    "Unknown App": "Άγνωστη εφαρμογή",
-    "Share your public space": "Μοιραστείτε τον δημόσιο χώρο σας",
-    "Invite to %(spaceName)s": "Πρόσκληση σε %(spaceName)s",
-    "The user's homeserver does not support the version of the room.": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του δωματίου.",
-    "The user must be unbanned before they can be invited.": "Πρέπει να καταργηθεί η απαγόρευση του χρήστη για να προσκληθεί.",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Αυτό το δωμάτιο χρησιμοποιείται για σημαντικά μηνύματα από τον κεντρικό διακομιστή, επομένως δεν μπορείτε να το αφήσετε.",
-    "Can't leave Server Notices room": "Δεν είναι δυνατή η έξοδος από την αίθουσα ειδοποιήσεων διακομιστή",
-    "Unexpected server error trying to leave the room": "Μη αναμενόμενο σφάλμα διακομιστή κατά την προσπάθεια εξόδου από το δωμάτιο",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
     "Themes": "Θέματα",
@@ -556,7 +535,6 @@
     "Don't miss a reply": "Μην χάσετε καμία απάντηση",
     "Later": "Αργότερα",
     "Review to ensure your account is safe": "Ελέγξτε για να βεβαιωθείτε ότι ο λογαριασμός σας είναι ασφαλής",
-    "That's fine": "Είναι εντάξει",
     "IRC display name width": "Πλάτος εμφανιζόμενου ονόματος IRC",
     "Pizza": "Πίτσα",
     "Corn": "Καλαμπόκι",
@@ -1550,14 +1528,6 @@
     "The person who invited you has already left.": "Το άτομο που σας προσκάλεσε έχει ήδη φύγει.",
     "Sorry, your homeserver is too old to participate here.": "Λυπούμαστε, ο κεντρικός σας διακομιστής είναι πολύ παλιός για να συμμετέχει εδώ.",
     "There was an error joining.": "Παρουσιάστηκε σφάλμα κατά τη σύνδεση.",
-    "The user's homeserver does not support the version of the space.": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του χώρου.",
-    "User may or may not exist": "Ο χρήστης μπορεί να υπάρχει ή να μην υπάρχει",
-    "User does not exist": "Ο χρήστης δεν υπάρχει",
-    "User is already in the room": "Ο χρήστης βρίσκεται ήδη στο δωμάτιο",
-    "User is already in the space": "Ο χρήστης έχει ήδη προσκληθεί στο χώρο",
-    "User is already invited to the room": "Ο χρήστης έχει ήδη προσκληθεί στο δωμάτιο",
-    "User is already invited to the space": "Ο χρήστης έχει ήδη προσκληθεί στο χώρο",
-    "You do not have permission to invite people to this space.": "Δεν έχετε άδεια να προσκαλέσετε άτομα σε αυτόν τον χώρο.",
     "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
     "Avatar": "Avatar",
@@ -1843,7 +1813,8 @@
         "mention": "Αναφορά",
         "submit": "Υποβολή",
         "send_report": "Αποστολή αναφοράς",
-        "clear": "Καθαρισμός"
+        "clear": "Καθαρισμός",
+        "unban": "Άρση αποκλεισμού"
     },
     "a11y": {
         "user_menu": "Μενού χρήστη",
@@ -2844,7 +2815,9 @@
         "transfer_failed_description": "Αποτυχία μεταφοράς κλήσης",
         "no_permission_conference": "Απαιτείται Άδεια",
         "no_permission_conference_description": "Δεν έχετε άδεια για να ξεκινήσετε μια κλήση συνδιάσκεψης σε αυτό το δωμάτιο",
-        "default_device": "Προεπιλεγμένη συσκευή"
+        "default_device": "Προεπιλεγμένη συσκευή",
+        "no_media_perms_title": "Χωρίς δικαιώματα πολυμέσων",
+        "no_media_perms_description": "Μπορεί να χρειαστεί να ορίσετε χειροκίνητα την πρόσβαση του %(brand)s στο μικρόφωνο/κάμερα"
     },
     "Other": "Άλλα",
     "Advanced": "Προχωρημένες",
@@ -2962,7 +2935,10 @@
         "verification_requested_toast_title": "Ζητήθηκε επαλήθευση",
         "cancel_entering_passphrase_title": "Ακύρωση εισαγωγής κωδικού;",
         "cancel_entering_passphrase_description": "Είστε σίγουρος/η ότι θέλετε να ακυρώσετε την εισαγωγή κωδικού;",
-        "bootstrap_title": "Ρύθμιση κλειδιών"
+        "bootstrap_title": "Ρύθμιση κλειδιών",
+        "export_unsupported": "Ο περιηγητής σας δεν υποστηρίζει τα απαιτούμενα πρόσθετα κρυπτογράφησης",
+        "import_invalid_keyfile": "Μη έγκυρο αρχείο κλειδιού %(brand)s",
+        "import_invalid_passphrase": "Αποτυχία ελέγχου πιστοποίησης: λανθασμένος κωδικός πρόσβασης;"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -2985,7 +2961,8 @@
         "pseudonymous_usage_data": "Βοηθήστε μας να εντοπίσουμε προβλήματα και να βελτιώσουμε το %(analyticsOwner)s κοινοποιώντας ανώνυμα δεδομένα χρήσης. Για να κατανοήσουμε πώς οι άνθρωποι χρησιμοποιούν πολλαπλές συσκευές, θα δημιουργήσουμε ένα τυχαίο αναγνωριστικό, κοινόχρηστο από τις συσκευές σας.",
         "bullet_1": "<Bold>Δεν</Bold> καταγράφουμε ούτε ιχνηλατούμε οποιαδήποτε δεδομένα λογαριασμού",
         "bullet_2": "<Bold>Δε</Bold> μοιραζόμαστε πληροφορίες με τρίτους",
-        "disable_prompt": "Μπορείτε να το απενεργοποιήσετε ανά πάσα στιγμή στις ρυθμίσεις"
+        "disable_prompt": "Μπορείτε να το απενεργοποιήσετε ανά πάσα στιγμή στις ρυθμίσεις",
+        "accept_button": "Είναι εντάξει"
     },
     "chat_effects": {
         "confetti_description": "Στέλνει το δεδομένο μήνυμα με κομφετί",
@@ -3237,7 +3214,8 @@
             "see_msgtype_sent_active_room": "Δείτε <b>%(msgtype)s</b> μηνύματα που δημοσιεύτηκαν στο ενεργό δωμάτιό σας"
         },
         "error_need_to_be_logged_in": "Πρέπει να είστε συνδεδεμένος.",
-        "error_need_invite_permission": "Για να το κάνετε αυτό πρέπει να έχετε τη δυνατότητα να προσκαλέσετε χρήστες."
+        "error_need_invite_permission": "Για να το κάνετε αυτό πρέπει να έχετε τη δυνατότητα να προσκαλέσετε χρήστες.",
+        "no_name": "Άγνωστη εφαρμογή"
     },
     "feedback": {
         "sent": "Τα σχόλια στάλθηκαν",
@@ -3320,7 +3298,8 @@
             "home": "Αρχική σελίδα χώρου",
             "explore": "Εξερευνήστε δωμάτια",
             "manage_and_explore": "Διαχειριστείτε και εξερευνήστε δωμάτια"
-        }
+        },
+        "share_public": "Μοιραστείτε τον δημόσιο χώρο σας"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3427,7 +3406,13 @@
         "unread_notifications_predecessor": {
             "one": "Έχετε %(count)s μη αναγνωσμένη ειδοποιήση σε προηγούμενη έκδοση αυτού του δωματίου.",
             "other": "Έχετε %(count)s μη αναγνωσμένες ειδοποιήσεις σε προηγούμενη έκδοση αυτού του δωματίου."
-        }
+        },
+        "leave_unexpected_error": "Μη αναμενόμενο σφάλμα διακομιστή κατά την προσπάθεια εξόδου από το δωμάτιο",
+        "leave_server_notices_title": "Δεν είναι δυνατή η έξοδος από την αίθουσα ειδοποιήσεων διακομιστή",
+        "leave_error_title": "Σφάλμα στην έξοδο από το δωμάτιο",
+        "upgrade_error_title": "Σφάλμα αναβάθμισης δωματίου",
+        "upgrade_error_description": "Επανελέγξτε ότι ο διακομιστής σας υποστηρίζει την έκδοση δωματίου που επιλέξατε και προσπαθήστε ξανά.",
+        "leave_server_notices_description": "Αυτό το δωμάτιο χρησιμοποιείται για σημαντικά μηνύματα από τον κεντρικό διακομιστή, επομένως δεν μπορείτε να το αφήσετε."
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
@@ -3483,7 +3468,21 @@
         "failed_generic": "Η λειτουργία απέτυχε",
         "room_failed_title": "Αποτυχία πρόσκλησης χρηστών στο %(roomName)s",
         "room_failed_partial": "Στάλθηκαν οι προσκλήσεις στους άλλους, αλλά δεν ήταν δυνατή η αποστολή πρόσκλησης στους παρακάτω στο <RoomName/>",
-        "room_failed_partial_title": "Δεν ήταν δυνατή η αποστολή κάποιων προσκλήσεων"
+        "room_failed_partial_title": "Δεν ήταν δυνατή η αποστολή κάποιων προσκλήσεων",
+        "invalid_address": "Η διεύθυνση δεν αναγνωρίστηκε",
+        "error_permissions_space": "Δεν έχετε άδεια να προσκαλέσετε άτομα σε αυτόν τον χώρο.",
+        "error_permissions_room": "Δεν έχετε δικαίωμα να προσκαλείτε άτομα σε αυτό το δωμάτιο.",
+        "error_already_invited_space": "Ο χρήστης έχει ήδη προσκληθεί στο χώρο",
+        "error_already_invited_room": "Ο χρήστης έχει ήδη προσκληθεί στο δωμάτιο",
+        "error_already_joined_space": "Ο χρήστης έχει ήδη προσκληθεί στο χώρο",
+        "error_already_joined_room": "Ο χρήστης βρίσκεται ήδη στο δωμάτιο",
+        "error_user_not_found": "Ο χρήστης δεν υπάρχει",
+        "error_profile_undisclosed": "Ο χρήστης μπορεί να υπάρχει ή να μην υπάρχει",
+        "error_bad_state": "Πρέπει να καταργηθεί η απαγόρευση του χρήστη για να προσκληθεί.",
+        "error_version_unsupported_space": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του χώρου.",
+        "error_version_unsupported_room": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του δωματίου.",
+        "error_unknown": "Άγνωστο σφάλμα διακομιστή",
+        "to_space": "Πρόσκληση σε %(spaceName)s"
     },
     "scalar": {
         "error_create": "Αδυναμία δημιουργίας μικροεφαρμογής.",
@@ -3507,5 +3506,6 @@
         "connection": "Παρουσιάστηκε πρόβλημα κατά την επικοινωνία με τον κεντρικό διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
         "mixed_content": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή μέσω HTTP όταν μια διεύθυνση HTTPS βρίσκεται στην μπάρα του περιηγητή. Είτε χρησιμοποιήστε HTTPS ή <a>ενεργοποιήστε τα μη ασφαλή σενάρια εντολών</a>.",
         "tls": "Δεν είναι δυνατή η σύνδεση στον κεντρικό διακομιστή - παρακαλούμε ελέγξτε τη συνδεσιμότητα, βεβαιωθείτε ότι το <a>πιστοποιητικό SSL</a> του διακομιστή είναι έμπιστο και ότι κάποιο πρόσθετο περιηγητή δεν αποτρέπει τα αιτήματα."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

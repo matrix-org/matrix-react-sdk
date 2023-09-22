@@ -98,7 +98,6 @@
     "Unable to remove contact information": "Nepavyko pašalinti kontaktinės informacijos",
     "<not supported>": "<nepalaikoma>",
     "Reject all %(invitedRooms)s invites": "Atmesti visus %(invitedRooms)s pakvietimus",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Jums gali tekti rankiniu būdu duoti leidimą %(brand)s prieigai prie mikrofono/kameros",
     "No Audio Outputs detected": "Neaptikta jokių garso išvesčių",
     "No Microphones detected": "Neaptikta jokių mikrofonų",
     "No Webcams detected": "Neaptikta jokių kamerų",
@@ -117,7 +116,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportavimo failas bus apsaugotas slaptafraze. Norėdami iššifruoti failą, čia turėtumėte įvesti slaptafrazę.",
     "File to import": "Failas, kurį importuoti",
     "This event could not be displayed": "Nepavyko parodyti šio įvykio",
-    "Unban": "Atblokuoti",
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
     "Invited": "Pakviesta",
     "Filter room members": "Filtruoti kambario dalyvius",
@@ -125,9 +123,6 @@
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
     "%(duration)sd": "%(duration)s d",
-    "Your browser does not support the required cryptography extensions": "Jūsų naršyklė nepalaiko reikalingų kriptografijos plėtinių",
-    "Not a valid %(brand)s keyfile": "Negaliojantis %(brand)s rakto failas",
-    "Authentication check failed: incorrect password?": "Autentifikavimo patikra nepavyko: neteisingas slaptažodis?",
     "Authentication": "Autentifikavimas",
     "Forget room": "Pamiršti kambarį",
     "Share room": "Bendrinti kambarį",
@@ -167,7 +162,6 @@
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
     "Historical": "Istoriniai",
-    "Unknown server error": "Nežinoma serverio klaida",
     "Delete Backup": "Ištrinti Atsarginę Kopiją",
     "Set up": "Nustatyti",
     "Preparing to send logs": "Ruošiamasi išsiųsti žurnalus",
@@ -188,11 +182,6 @@
         "one": "%(items)s ir dar vienas"
     },
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
-    "Unrecognised address": "Neatpažintas adresas",
-    "You do not have permission to invite people to this room.": "Jūs neturite leidimo pakviesti žmones į šį kambarį.",
-    "The user must be unbanned before they can be invited.": "Norint pakviesti vartotoją, prieš tai reikia pašalinti jo draudimą.",
-    "The user's homeserver does not support the version of the room.": "Vartotojo serveris nepalaiko kambario versijos.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "General": "Bendrieji",
     "Remove recent messages by %(user)s": "Pašalinti paskutines %(user)s žinutes",
     "Jump to read receipt": "Nušokti iki perskaitytų žinučių",
@@ -344,7 +333,6 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Valdiklio ištrinimas pašalina jį visiems kambaryje esantiems vartotojams. Ar tikrai norite ištrinti šį valdiklį?",
     "Invalid homeserver discovery response": "Klaidingas serverio radimo atsakas",
     "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
-    "Double check that your server supports the room version chosen and try again.": "Dar kartą įsitikinkite, kad jūsų serveris palaiko pasirinktą kambario versiją ir bandykite iš naujo.",
     "Dog": "Šuo",
     "Cat": "Katė",
     "Lion": "Liūtas",
@@ -441,7 +429,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Šio įrenginio patvirtinimas pažymės jį kaip patikimą, ir vartotojai, kurie patvirtino su jumis, pasitikės šiuo įrenginiu.",
     "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
     "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
-    "No media permissions": "Nėra medijos leidimų",
     "Almost there! Is %(displayName)s showing the same shield?": "Beveik atlikta! Ar %(displayName)s rodo tokį patį skydą?",
     "IRC display name width": "IRC rodomo vardo plotis",
     "Room avatar": "Kambario pseudoportretas",
@@ -452,8 +439,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Failed to reject invitation": "Nepavyko atmesti pakvietimo",
-    "Can't leave Server Notices room": "Negalima išeiti iš Serverio Pranešimų kambario",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Šis kambarys yra naudojamas svarbioms žinutėms iš serverio, tad jūs negalite iš jo išeiti.",
     "Reject & Ignore user": "Atmesti ir ignoruoti vartotoją",
     "Reject invitation": "Atmesti pakvietimą",
     "You can only join it with a working invite.": "Jūs galite prisijungti tik su veikiančiu pakvietimu.",
@@ -521,7 +506,6 @@
     "This session is encrypting history using the new recovery method.": "Šis seansas šifruoja istoriją naudodamas naują atgavimo metodą.",
     "Recovery Method Removed": "Atgavimo Metodas Pašalintas",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
-    "Error upgrading room": "Klaida atnaujinant kambarį",
     "All settings": "Visi nustatymai",
     "Change notification settings": "Keisti pranešimų nustatymus",
     "Room information": "Kambario informacija",
@@ -576,10 +560,7 @@
     "Set up Secure Backup": "Nustatyti Saugią Atsarginę Kopiją",
     "Ok": "Gerai",
     "Contact your <a>server admin</a>.": "Susisiekite su savo <a>serverio administratoriumi</a>.",
-    "Unknown App": "Nežinoma Programa",
-    "Error leaving room": "Klaida išeinant iš kambario",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Šio vartotojo deaktyvavimas atjungs juos ir neleis jiems vėl prisijungti atgal. Taip pat jie išeis iš visų kambarių, kuriuose jie yra. Šis veiksmas negali būti atšauktas. Ar tikrai norite deaktyvuoti šį vartotoją?",
-    "Unexpected server error trying to leave the room": "Netikėta serverio klaida bandant išeiti iš kambario",
     "Not Trusted": "Nepatikimas",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
     "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
@@ -889,7 +870,6 @@
     "Could not connect to identity server": "Nepavyko prisijungti prie tapatybės serverio",
     "Not a valid identity server (status code %(code)s)": "Netinkamas tapatybės serveris (statuso kodas %(code)s)",
     "Identity server URL must be HTTPS": "Tapatybės serverio URL privalo būti HTTPS",
-    "Invite to %(spaceName)s": "Pakvietimas į %(spaceName)s",
     "Northern Mariana Islands": "Šiaurės Marianų salos",
     "Norfolk Island": "Norfolko sala",
     "Nepal": "Nepalas",
@@ -1121,7 +1101,6 @@
     "Enable desktop notifications": "Įjungti darbalaukio pranešimus",
     "Don't miss a reply": "Nepraleiskite atsakymų",
     "Review to ensure your account is safe": "Peržiūrėkite, ar jūsų paskyra yra saugi",
-    "That's fine": "Tai gerai",
     "Preview Space": "Peržiūrėti erdvę",
     "Failed to update the visibility of this space": "Nepavyko atnaujinti šios erdvės matomumo",
     "Access": "Prieiga",
@@ -1400,7 +1379,8 @@
         "maximise": "Maksimizuoti",
         "mention": "Paminėti",
         "submit": "Pateikti",
-        "send_report": "Siųsti pranešimą"
+        "send_report": "Siųsti pranešimą",
+        "unban": "Atblokuoti"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -2239,7 +2219,9 @@
         "transfer_failed_description": "Nepavyko perduoti skambučio",
         "no_permission_conference": "Reikalingas Leidimas",
         "no_permission_conference_description": "Jūs neturite leidimo šiame kambaryje pradėti konferencinį pokalbį",
-        "default_device": "Numatytasis įrenginys"
+        "default_device": "Numatytasis įrenginys",
+        "no_media_perms_title": "Nėra medijos leidimų",
+        "no_media_perms_description": "Jums gali tekti rankiniu būdu duoti leidimą %(brand)s prieigai prie mikrofono/kameros"
     },
     "Other": "Kitas",
     "Advanced": "Išplėstiniai",
@@ -2357,7 +2339,10 @@
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
         "cancel_entering_passphrase_description": "Ar tikrai norite atšaukti slaptafrazės įvedimą?",
-        "bootstrap_title": "Raktų nustatymas"
+        "bootstrap_title": "Raktų nustatymas",
+        "export_unsupported": "Jūsų naršyklė nepalaiko reikalingų kriptografijos plėtinių",
+        "import_invalid_keyfile": "Negaliojantis %(brand)s rakto failas",
+        "import_invalid_passphrase": "Autentifikavimo patikra nepavyko: neteisingas slaptažodis?"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2375,7 +2360,8 @@
     "analytics": {
         "enable_prompt": "Padėkite pagerinti %(analyticsOwner)s",
         "consent_migration": "Anksčiau sutikote su mumis dalytis anoniminiais naudojimo duomenimis. Atnaujiname, kaip tai veikia.",
-        "learn_more": "Dalinkitės anoniminiais duomenimis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių. <LearnMoreLink>Sužinokite daugiau</LearnMoreLink>"
+        "learn_more": "Dalinkitės anoniminiais duomenimis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių. <LearnMoreLink>Sužinokite daugiau</LearnMoreLink>",
+        "accept_button": "Tai gerai"
     },
     "chat_effects": {
         "confetti_description": "Siunčia pateiktą žinutę su konfeti",
@@ -2540,7 +2526,8 @@
             "see_event_type_sent_active_room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje"
         },
         "error_need_to_be_logged_in": "Jūs turite būti prisijungę.",
-        "error_need_invite_permission": "Norėdami tai atlikti jūs turite turėti galimybę pakviesti vartotojus."
+        "error_need_invite_permission": "Norėdami tai atlikti jūs turite turėti galimybę pakviesti vartotojus.",
+        "no_name": "Nežinoma Programa"
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2666,7 +2653,13 @@
         "unread_notifications_predecessor": {
             "one": "Jūs turite %(count)s neperskaitytą pranešimą ankstesnėje šio kambario versijoje.",
             "other": "Jūs turite %(count)s neperskaitytus(-ų) pranešimus(-ų) ankstesnėje šio kambario versijoje."
-        }
+        },
+        "leave_unexpected_error": "Netikėta serverio klaida bandant išeiti iš kambario",
+        "leave_server_notices_title": "Negalima išeiti iš Serverio Pranešimų kambario",
+        "leave_error_title": "Klaida išeinant iš kambario",
+        "upgrade_error_title": "Klaida atnaujinant kambarį",
+        "upgrade_error_description": "Dar kartą įsitikinkite, kad jūsų serveris palaiko pasirinktą kambario versiją ir bandykite iš naujo.",
+        "leave_server_notices_description": "Šis kambarys yra naudojamas svarbioms žinutėms iš serverio, tad jūs negalite iš jo išeiti."
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2710,7 +2703,13 @@
     },
     "invite": {
         "failed_title": "Nepavyko pakviesti",
-        "failed_generic": "Operacija nepavyko"
+        "failed_generic": "Operacija nepavyko",
+        "invalid_address": "Neatpažintas adresas",
+        "error_permissions_room": "Jūs neturite leidimo pakviesti žmones į šį kambarį.",
+        "error_bad_state": "Norint pakviesti vartotoją, prieš tai reikia pašalinti jo draudimą.",
+        "error_version_unsupported_room": "Vartotojo serveris nepalaiko kambario versijos.",
+        "error_unknown": "Nežinoma serverio klaida",
+        "to_space": "Pakvietimas į %(spaceName)s"
     },
     "scalar": {
         "error_create": "Nepavyko sukurti valdiklio.",
@@ -2732,5 +2731,6 @@
         "resource_limits": "Šis serveris viršijo vieno iš savo išteklių limitą.",
         "mixed_content": "Neįmanoma prisijungti prie serverio per HTTP, kai naršyklės juostoje yra HTTPS URL. Naudokite HTTPS arba <a>įjunkite nesaugias rašmenas</a>.",
         "tls": "Nepavyksta prisijungti prie serverio - patikrinkite savo ryšį, įsitikinkite, kad jūsų <a>serverio SSL sertifikatas</a> yra patikimas ir, kad naršyklės plėtinys neužblokuoja užklausų."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

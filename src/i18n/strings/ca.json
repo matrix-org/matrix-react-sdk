@@ -39,14 +39,10 @@
     "Moderator": "Moderador",
     "Reason": "Raó",
     "Send": "Envia",
-    "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
-    "Not a valid %(brand)s keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
-    "Authentication check failed: incorrect password?": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?",
     "Incorrect verification code": "El codi de verificació és incorrecte",
     "No display name": "Sense nom visible",
     "Authentication": "Autenticació",
     "Failed to set display name": "No s'ha pogut establir el nom visible",
-    "Unban": "Retira l'expulsió",
     "This room is not public. You will not be able to rejoin without an invite.": "Aquesta sala no és pública. No podreu tronar a entrar sense invitació.",
     "Failed to ban user": "No s'ha pogut expulsar l'usuari",
     "Failed to mute user": "No s'ha pogut silenciar l'usuari",
@@ -177,12 +173,9 @@
     "Low Priority": "Baixa prioritat",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
-    "You do not have permission to invite people to this room.": "No teniu permís per convidar gent a aquesta sala.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
     "Invite anyway": "Convidar igualment",
-    "Unrecognised address": "Adreça no reconeguda",
-    "Unknown server error": "Error de servidor desconegut",
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
     "Email addresses": "Adreces de correu electrònic",
     "Phone numbers": "Números de telèfon",
@@ -192,7 +185,6 @@
     "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en actualitzar l'adreça principal de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
-    "Error upgrading room": "Error actualitzant sala",
     "Error changing power level requirement": "Error en canviar requisit del nivell d'autoritat",
     "Error changing power level": "Error en canviar nivell d'autoritat",
     "Error updating main address": "Error actualitzant adreça principal",
@@ -201,12 +193,9 @@
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "S'ha produït un error en eliminar l'adreça. Pot ser que ja no existeixi o que s'hagi produït un error temporal.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en actualitzar l'adreça alternativa de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
-    "Unexpected server error trying to leave the room": "Error de servidor inesperat intentant sortir de la sala",
-    "Error leaving room": "Error sortint de la sala",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar els requisits del nivell d'autoritat de la sala. Assegura't que tens suficients permisos i torna-ho a provar.",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar el nivell d'autoritat de l'usuari. Assegura't que tens suficients permisos i torna-ho a provar.",
     "Power level": "Nivell d'autoritat",
-    "Double check that your server supports the room version chosen and try again.": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar.",
     "e.g. my-room": "p.e. la-meva-sala",
     "New published address (e.g. #alias:server)": "Nova adreça publicada (p.e. #alias:server)",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no has eliminat el mètode de recuperació, pot ser que un atacant estigui intentant accedir al teu compte. Canvia la teva contrasenya i configura un nou mètode de recuperació a Configuració, immediatament.",
@@ -301,7 +290,8 @@
         "import": "Importa",
         "export": "Exporta",
         "mention": "Menciona",
-        "submit": "Envia"
+        "submit": "Envia",
+        "unban": "Retira l'expulsió"
     },
     "labs": {
         "pinning": "Fixació de missatges",
@@ -726,7 +716,11 @@
         "failed_add_tag": "No s'ha pogut afegir l'etiqueta %(tagName)s a la sala"
     },
     "room": {
-        "drop_file_prompt": "Deixa anar el fitxer aquí per pujar-lo"
+        "drop_file_prompt": "Deixa anar el fitxer aquí per pujar-lo",
+        "leave_unexpected_error": "Error de servidor inesperat intentant sortir de la sala",
+        "leave_error_title": "Error sortint de la sala",
+        "upgrade_error_title": "Error actualitzant sala",
+        "upgrade_error_description": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar."
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -742,7 +736,10 @@
         "old_version_detected_description": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus.",
         "cancel_entering_passphrase_title": "Vols cancel·lar la introducció de la frase secreta?",
         "cancel_entering_passphrase_description": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
-        "bootstrap_title": "Configurant claus"
+        "bootstrap_title": "Configurant claus",
+        "export_unsupported": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
+        "import_invalid_keyfile": "El fitxer no és un fitxer de claus de %(brand)s vàlid",
+        "import_invalid_passphrase": "Ha fallat l'autenticació: heu introduït correctament la contrasenya?"
     },
     "labs_mjolnir": {
         "error_adding_ignore": "Error afegint usuari/servidor ignorat",
@@ -770,7 +767,10 @@
     },
     "invite": {
         "failed_title": "No s'ha pogut convidar",
-        "failed_generic": "No s'ha pogut realitzar l'operació"
+        "failed_generic": "No s'ha pogut realitzar l'operació",
+        "invalid_address": "Adreça no reconeguda",
+        "error_permissions_room": "No teniu permís per convidar gent a aquesta sala.",
+        "error_unknown": "Error de servidor desconegut"
     },
     "widget": {
         "error_need_to_be_logged_in": "Has d'haver iniciat sessió.",

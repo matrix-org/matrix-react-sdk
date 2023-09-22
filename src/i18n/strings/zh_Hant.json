@@ -49,8 +49,6 @@
     "Admin Tools": "管理員工具",
     "No Microphones detected": "未偵測到麥克風",
     "No Webcams detected": "未偵測到網路攝影機",
-    "No media permissions": "沒有媒體權限",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "您可能需要手動允許 %(brand)s 存取您的麥克風／網路攝影機",
     "Are you sure you want to leave the room '%(roomName)s'?": "您確定要離開聊天室「%(roomName)s」嗎？",
     "Custom level": "自訂等級",
     "Enter passphrase": "輸入安全密語",
@@ -75,7 +73,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "嘗試載入此聊天室時間軸上的特定時間點，但是找不到。",
     "Unable to remove contact information": "無法移除聯絡人資訊",
     "Unable to verify email address.": "無法驗證電子郵件。",
-    "Unban": "解除封鎖",
     "Uploading %(filename)s": "正在上傳 %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "正在上傳 %(filename)s 與另 %(count)s 個檔案",
@@ -129,9 +126,6 @@
     "Unable to restore session": "無法復原工作階段",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
     "Something went wrong!": "出了點問題！",
-    "Your browser does not support the required cryptography extensions": "您的瀏覽器不支援需要的加密擴充",
-    "Not a valid %(brand)s keyfile": "不是有效的 %(brand)s 金鑰檔案",
-    "Authentication check failed: incorrect password?": "無法檢查認證：密碼錯誤？",
     "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
     "and %(count)s others...": {
         "other": "與另 %(count)s 個人…",
@@ -200,8 +194,6 @@
     "Clear Storage and Sign Out": "清除儲存的東西並登出",
     "We encountered an error trying to restore your previous session.": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "清除您瀏覽器的儲存的東西也許可以修復問題，但會將您登出並造成任何已加密的聊天都無法讀取。",
-    "Can't leave Server Notices room": "無法離開伺服器通知聊天室",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "這個聊天室是用於發佈從家伺服器而來的重要訊息，所以您不能離開它。",
     "No Audio Outputs detected": "未偵測到音訊輸出",
     "Audio Output": "音訊輸出",
     "Share Link to User": "分享使用者連結",
@@ -251,8 +243,6 @@
     "No backup found!": "找不到備份！",
     "Failed to decrypt %(failedCount)s sessions!": "無法解密 %(failedCount)s 個工作階段！",
     "Invalid homeserver discovery response": "家伺服器的探索回應無效",
-    "You do not have permission to invite people to this room.": "您沒有權限邀請夥伴到此聊天室。",
-    "Unknown server error": "未知的伺服器錯誤",
     "Set up": "設定",
     "Invalid identity server discovery response": "身份伺服器探索回應無效",
     "General failure": "一般錯誤",
@@ -261,7 +251,6 @@
     "Set up Secure Messages": "設定安全訊息",
     "Go to Settings": "前往設定",
     "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
-    "Unrecognised address": "無法識別的位址",
     "The following users may not exist": "以下的使用者可能不存在",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
     "Invite anyway and never warn me again": "無論如何都要邀請，而且不要再警告我",
@@ -377,7 +366,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "更新聊天室的主要位址時發生錯誤。可能是不被伺服器允許或是遇到暫時性的錯誤。",
     "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
     "Could not load user profile": "無法載入使用者簡介",
-    "The user must be unbanned before they can be invited.": "使用者必須在被邀請前先解除封鎖。",
     "Accept all %(invitedRooms)s invites": "接受所有 %(invitedRooms)s 邀請",
     "Power level": "權限等級",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此聊天室正在執行聊天室版本 <roomVersion />，此家伺服器已標記為<i>不穩定</i>。",
@@ -404,7 +392,6 @@
     },
     "Cancel All": "全部取消",
     "Upload Error": "上傳錯誤",
-    "The user's homeserver does not support the version of the room.": "使用者的家伺服器不支援此聊天室版本。",
     "Join the conversation with an account": "加入與某個帳號的對話",
     "Sign Up": "註冊",
     "Reason: %(reason)s": "理由：%(reason)s",
@@ -528,7 +515,6 @@
     "Jump to first invite.": "跳到第一個邀請。",
     "Room %(name)s": "聊天室 %(name)s",
     "Message Actions": "訊息動作",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You verified %(name)s": "您驗證了 %(name)s",
     "You cancelled verifying %(name)s": "您已取消驗證 %(name)s",
     "%(name)s cancelled verifying": "%(name)s 已取消驗證",
@@ -561,8 +547,6 @@
     "Remove for everyone": "為所有人移除",
     "Manage integrations": "管理整合功能",
     "Verification Request": "驗證請求",
-    "Error upgrading room": "升級聊天室時遇到錯誤",
-    "Double check that your server supports the room version chosen and try again.": "仔細檢查您的伺服器是否支援選定的聊天室版本，然後再試一次。",
     "Unencrypted": "未加密",
     "Upgrade private room": "升級私密聊天室",
     "Upgrade public room": "升級公開聊天室",
@@ -788,11 +772,8 @@
     "Recent changes that have not yet been received": "尚未收到最新變更",
     "Explore public rooms": "探索公開聊天室",
     "Preparing to download logs": "正在準備下載紀錄檔",
-    "Unexpected server error trying to leave the room": "試圖離開聊天室時發生意外的伺服器錯誤",
-    "Error leaving room": "離開聊天室時發生錯誤",
     "Set up Secure Backup": "設定安全備份",
     "Information": "資訊",
-    "Unknown App": "未知的應用程式",
     "Not encrypted": "未加密",
     "Room settings": "聊天室設定",
     "Take a picture": "拍照",
@@ -1147,7 +1128,6 @@
     "Failed to save space settings.": "無法儲存聊天空間設定。",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
-    "Invite to %(spaceName)s": "邀請加入 %(spaceName)s",
     "Create a new room": "建立新聊天室",
     "Spaces": "聊天空間",
     "Space selection": "選取聊天空間",
@@ -1159,7 +1139,6 @@
     "Space options": "聊天空間選項",
     "Leave space": "離開聊天空間",
     "Invite people": "邀請夥伴",
-    "Share your public space": "分享您的公開聊天空間",
     "Share invite link": "分享邀請連結",
     "Click to copy": "點擊複製",
     "Create a space": "建立聊天空間",
@@ -1480,7 +1459,6 @@
     },
     "No votes cast": "尚無投票",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "分享匿名資料以協助我們識別問題。無個人資料。無第三方。",
-    "That's fine": "沒關係",
     "Share location": "分享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您確定您想要結束此投票？這將會顯示最終投票結果並阻止人們投票。",
     "End Poll": "結束投票",
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "邀請您的人已離開。",
     "Sorry, your homeserver is too old to participate here.": "抱歉，您的家伺服器太舊，無法在此參與。",
     "There was an error joining.": "加入時發生錯誤。",
-    "The user's homeserver does not support the version of the space.": "使用者的家伺服器不支援這個聊天空間的版本。",
-    "User may or may not exist": "使用者可能存在也可能不存在",
-    "User does not exist": "使用者不存在",
-    "User is already in the room": "使用者已在聊天室中",
-    "User is already in the space": "使用者已在聊天空間中",
-    "User is already invited to the room": "使用者已被邀請到聊天室",
-    "User is already invited to the space": "使用者已被邀請到聊天空間",
-    "You do not have permission to invite people to this space.": "您沒有權限邀請他人加入此聊天空間。",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "%(featureName)s Beta feedback": "%(featureName)s Beta 測試回饋",
     "%(count)s participants": {
@@ -1708,12 +1678,6 @@
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
     "Join the room to participate": "加入聊天室以參與",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "在 %(spaceName)s 與 %(count)s 個其他空間。",
-        "other": "在 %(spaceName)s 與 %(count)s 個其他空間。"
-    },
-    "In %(spaceName)s.": "在空間 %(spaceName)s。",
-    "In spaces %(space1Name)s and %(space2Name)s.": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "Stop and close": "停止並關閉",
     "Online community members": "線上社群成員",
     "Coworkers and teams": "同事與團隊",
@@ -1913,7 +1877,6 @@
     "Email Notifications": "電子郵件通知",
     "People, Mentions and Keywords": "人們、提及與關鍵字",
     "This setting will be applied by default to all your rooms.": "預設情況下，此設定將會套用於您所有的聊天室。",
-    "User cannot be invited until they are unbanned": "在解除封鎖前，無法邀請使用者",
     "Receive an email summary of missed notifications": "接收錯過通知的電子郵件摘要",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>更新：</strong>我們簡化了通知設定，讓選項更容易找到。您過去選擇的一些自訂設定未在此處顯示，但它們仍然作用中。若繼續，您的某些設定可能會發生變化。<a>取得更多資訊</a>",
     "Other things we think you might be interested in:": "我們認為您可能感興趣的其他事情：",
@@ -2152,7 +2115,8 @@
         "send_report": "傳送回報",
         "clear": "清除",
         "exit_fullscreeen": "離開全螢幕",
-        "enter_fullscreen": "進入全螢幕"
+        "enter_fullscreen": "進入全螢幕",
+        "unban": "解除封鎖"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -3445,7 +3409,9 @@
         "no_permission_conference_description": "您沒有在此聊天室啟動會議通話的權限",
         "default_device": "預設裝置",
         "failed_call_live_broadcast_title": "無法開始通話",
-        "failed_call_live_broadcast_description": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。"
+        "failed_call_live_broadcast_description": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。",
+        "no_media_perms_title": "沒有媒體權限",
+        "no_media_perms_description": "您可能需要手動允許 %(brand)s 存取您的麥克風／網路攝影機"
     },
     "Other": "其他",
     "Advanced": "進階",
@@ -3570,7 +3536,10 @@
         "verification_requested_toast_title": "已請求驗證",
         "cancel_entering_passphrase_title": "取消輸入安全密語？",
         "cancel_entering_passphrase_description": "您確定要取消輸入安全密語嗎？",
-        "bootstrap_title": "正在產生金鑰"
+        "bootstrap_title": "正在產生金鑰",
+        "export_unsupported": "您的瀏覽器不支援需要的加密擴充",
+        "import_invalid_keyfile": "不是有效的 %(brand)s 金鑰檔案",
+        "import_invalid_passphrase": "無法檢查認證：密碼錯誤？"
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3593,7 +3562,8 @@
         "pseudonymous_usage_data": "匿名分享使用資料能幫我們辨識錯誤和改善 %(analyticsOwner)s。為了瞭解使用者如何使用多種裝置，我們會隨機產生能夠辨識您裝置的辨識碼。",
         "bullet_1": "我們<Bold>不會</Bold>記錄或分析任何帳號資料",
         "bullet_2": "我們<Bold>不會</Bold>與第三方分享這些資訊",
-        "disable_prompt": "您可以隨時在設定中關閉此功能"
+        "disable_prompt": "您可以隨時在設定中關閉此功能",
+        "accept_button": "沒關係"
     },
     "chat_effects": {
         "confetti_description": "使用彩帶傳送訊息",
@@ -3872,7 +3842,8 @@
         },
         "error_need_to_be_logged_in": "您需要登入。",
         "error_need_invite_permission": "您需要擁有邀請使用者的權限才能做這件事。",
-        "error_need_kick_permission": "您必須可以踢除使用者才能作到這件事。"
+        "error_need_kick_permission": "您必須可以踢除使用者才能作到這件事。",
+        "no_name": "未知的應用程式"
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -3986,7 +3957,8 @@
             "home": "聊天空間首頁",
             "explore": "探索聊天室",
             "manage_and_explore": "管理與探索聊天室"
-        }
+        },
+        "share_public": "分享您的公開聊天空間"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -4106,7 +4078,13 @@
         "unread_notifications_predecessor": {
             "other": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。",
             "one": "您在此聊天室的先前版本有 %(count)s 個未讀的通知。"
-        }
+        },
+        "leave_unexpected_error": "試圖離開聊天室時發生意外的伺服器錯誤",
+        "leave_server_notices_title": "無法離開伺服器通知聊天室",
+        "leave_error_title": "離開聊天室時發生錯誤",
+        "upgrade_error_title": "升級聊天室時遇到錯誤",
+        "upgrade_error_description": "仔細檢查您的伺服器是否支援選定的聊天室版本，然後再試一次。",
+        "leave_server_notices_description": "這個聊天室是用於發佈從家伺服器而來的重要訊息，所以您不能離開它。"
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",
@@ -4181,7 +4159,22 @@
         "failed_generic": "無法操作",
         "room_failed_title": "邀請使用者加入 %(roomName)s 失敗",
         "room_failed_partial": "我們已將邀請傳送給其他人，但以下的人無法邀請加入 <RoomName/>",
-        "room_failed_partial_title": "部份邀請無法傳送"
+        "room_failed_partial_title": "部份邀請無法傳送",
+        "invalid_address": "無法識別的位址",
+        "unban_first_title": "在解除封鎖前，無法邀請使用者",
+        "error_permissions_space": "您沒有權限邀請他人加入此聊天空間。",
+        "error_permissions_room": "您沒有權限邀請夥伴到此聊天室。",
+        "error_already_invited_space": "使用者已被邀請到聊天空間",
+        "error_already_invited_room": "使用者已被邀請到聊天室",
+        "error_already_joined_space": "使用者已在聊天空間中",
+        "error_already_joined_room": "使用者已在聊天室中",
+        "error_user_not_found": "使用者不存在",
+        "error_profile_undisclosed": "使用者可能存在也可能不存在",
+        "error_bad_state": "使用者必須在被邀請前先解除封鎖。",
+        "error_version_unsupported_space": "使用者的家伺服器不支援這個聊天空間的版本。",
+        "error_version_unsupported_room": "使用者的家伺服器不支援此聊天室版本。",
+        "error_unknown": "未知的伺服器錯誤",
+        "to_space": "邀請加入 %(spaceName)s"
     },
     "scalar": {
         "error_create": "無法建立小工具。",
@@ -4208,5 +4201,12 @@
         "connection": "與家伺服器通訊時出現問題，請再試一次。",
         "mixed_content": "當瀏覽器網址列使用的是 HTTPS 網址時，不能使用 HTTP 連線到家伺服器。請改用 HTTPS 連線或<a>允許不安全的指令碼</a>。",
         "tls": "無法連線到家伺服器 - 請檢查您的連線，確保您的<a>家伺服器的 SSL 憑證</a>可被信任，而瀏覽器擴充套件也沒有阻擋請求。"
-    }
+    },
+    "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
+    "in_space_and_n_other_spaces": {
+        "one": "在 %(spaceName)s 與 %(count)s 個其他空間。",
+        "other": "在 %(spaceName)s 與 %(count)s 個其他空間。"
+    },
+    "in_space": "在空間 %(spaceName)s。",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

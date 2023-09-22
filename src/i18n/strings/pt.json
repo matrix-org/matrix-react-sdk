@@ -26,7 +26,6 @@
     "Unable to add email address": "Não foi possível adicionar endereço de email",
     "Unable to remove contact information": "Não foi possível remover informação de contato",
     "Unable to verify email address.": "Não foi possível verificar o endereço de email.",
-    "Unban": "Desfazer banimento",
     "unknown error code": "código de erro desconhecido",
     "Upload avatar": "Enviar icone de perfil de usuário",
     "Verification Pending": "Verificação pendente",
@@ -112,8 +111,6 @@
     "Invited": "Convidada(o)",
     "No Microphones detected": "Não foi detetado nenhum microfone",
     "No Webcams detected": "Não foi detetada nenhuma Webcam",
-    "No media permissions": "Não há permissões para o uso de vídeo/áudio no seu navegador",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam",
     "Are you sure you want to leave the room '%(roomName)s'?": "Você tem certeza que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Create new room": "Criar nova sala",
@@ -138,9 +135,6 @@
     "PM": "PM",
     "Copied!": "Copiado!",
     "Failed to copy": "Falha ao copiar",
-    "Your browser does not support the required cryptography extensions": "O seu navegador não suporta as extensões de criptografia necessárias",
-    "Not a valid %(brand)s keyfile": "Não é um ficheiro de chaves %(brand)s válido",
-    "Authentication check failed: incorrect password?": "Erro de autenticação: palavra-passe incorreta?",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
     "Unignore": "Deixar de ignorar",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
@@ -500,7 +494,8 @@
         "register": "Registar",
         "import": "Importar",
         "export": "Exportar",
-        "submit": "Enviar"
+        "submit": "Enviar",
+        "unban": "Desfazer banimento"
     },
     "keyboard": {
         "home": "Início"
@@ -697,7 +692,9 @@
         "transfer_failed_description": "Falha ao transferir chamada",
         "no_permission_conference": "Permissão Requerida",
         "no_permission_conference_description": "Não tem autorização para iniciar uma chamada de conferência nesta sala",
-        "default_device": "Dispositivo padrão"
+        "default_device": "Dispositivo padrão",
+        "no_media_perms_title": "Não há permissões para o uso de vídeo/áudio no seu navegador",
+        "no_media_perms_description": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam"
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -886,7 +883,10 @@
     "encryption": {
         "cancel_entering_passphrase_title": "Cancelar a introdução da frase-passe?",
         "cancel_entering_passphrase_description": "Tem a certeza que quer cancelar a introdução da frase-passe?",
-        "bootstrap_title": "A configurar chaves"
+        "bootstrap_title": "A configurar chaves",
+        "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
+        "import_invalid_keyfile": "Não é um ficheiro de chaves %(brand)s válido",
+        "import_invalid_passphrase": "Erro de autenticação: palavra-passe incorreta?"
     },
     "error": {
         "mixed_content": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",

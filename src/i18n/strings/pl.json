@@ -1,6 +1,5 @@
 {
     "This will allow you to reset your password and receive notifications.": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia.",
-    "Your browser does not support the required cryptography extensions": "Twoja przeglądarka nie wspiera wymaganych rozszerzeń kryptograficznych",
     "Something went wrong!": "Coś poszło nie tak!",
     "Unknown error": "Nieznany błąd",
     "Create new room": "Utwórz nowy pokój",
@@ -24,7 +23,6 @@
     "Sat": "Sob",
     "Sun": "Nd",
     "Warning!": "Uwaga!",
-    "Unban": "Odbanuj",
     "Are you sure?": "Czy jesteś pewien?",
     "Notifications": "Powiadomienia",
     "unknown error code": "nieznany kod błędu",
@@ -34,8 +32,6 @@
     "Admin Tools": "Narzędzia Administracyjne",
     "No Microphones detected": "Nie wykryto żadnego mikrofonu",
     "No Webcams detected": "Nie wykryto żadnej kamerki internetowej",
-    "No media permissions": "Brak uprawnień do mediów",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Możliwe, że będziesz musiał ręcznie pozwolić %(brand)sowi na dostęp do twojego mikrofonu/kamerki internetowej",
     "Authentication": "Uwierzytelnienie",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "A new password must be entered.": "Musisz wprowadzić nowe hasło.",
@@ -137,8 +133,6 @@
     "Error decrypting image": "Błąd deszyfrowania obrazu",
     "Error decrypting video": "Błąd deszyfrowania wideo",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Próbowano załadować konkretny punkt na osi czasu w tym pokoju, ale nie można go znaleźć.",
-    "Not a valid %(brand)s keyfile": "Niepoprawny plik klucza %(brand)s",
-    "Authentication check failed: incorrect password?": "Próba autentykacji nieudana: nieprawidłowe hasło?",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Za chwilę zostaniesz przekierowany/a na zewnętrzną stronę w celu powiązania Twojego konta z %(integrationsUrl)s. Czy chcesz kontynuować?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Restricted": "Ograniczony",
@@ -197,8 +191,6 @@
     "Share Room Message": "Udostępnij wiadomość w pokoju",
     "Link to selected message": "Link do zaznaczonej wiadomości",
     "This room is not public. You will not be able to rejoin without an invite.": "Ten pokój nie jest publiczny. Nie będziesz w stanie do niego dołączyć bez zaproszenia.",
-    "Can't leave Server Notices room": "Nie można opuścić pokoju powiadomień serwera",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ten pokój jest używany do ważnych wiadomości z serwera domowego, więc nie możesz go opuścić.",
     "No Audio Outputs detected": "Nie wykryto wyjść audio",
     "Audio Output": "Wyjście audio",
     "Demote yourself?": "Zdegradować siebie?",
@@ -218,8 +210,6 @@
         "other": "I %(count)s więcej…"
     },
     "Delete Backup": "Usuń kopię zapasową",
-    "You do not have permission to invite people to this room.": "Nie masz uprawnień do zapraszania ludzi do tego pokoju.",
-    "Unknown server error": "Nieznany błąd serwera",
     "%(items)s and %(count)s others": {
         "other": "%(items)s i %(count)s innych",
         "one": "%(items)s i jedna inna osoba"
@@ -231,7 +221,6 @@
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
     "That doesn't match.": "To się nie zgadza.",
     "Go to Settings": "Przejdź do ustawień",
-    "Unrecognised address": "Nierozpoznany adres",
     "I don't want my encrypted messages": "Nie chcę moich zaszyfrowanych wiadomości",
     "You'll lose access to your encrypted messages": "Utracisz dostęp do zaszyfrowanych wiadomości",
     "Dog": "Pies",
@@ -320,8 +309,6 @@
     "Notification sound": "Dźwięk powiadomień",
     "Set a new custom sound": "Ustaw nowy niestandardowy dźwięk",
     "Browse": "Przeglądaj",
-    "The user must be unbanned before they can be invited.": "Użytkownik musi być odbanowany, zanim będzie mógł być zaproszony.",
-    "The user's homeserver does not support the version of the room.": "Serwer domowy użytkownika nie wspiera tej wersji pokoju.",
     "Thumbs up": "Kciuk w górę",
     "Ball": "Piłka",
     "Accept <policyLink /> to continue:": "Zaakceptuj <policyLink /> aby kontynuować:",
@@ -343,7 +330,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Wyrażasz zgodę na warunki użytkowania serwera%(serverName)s aby pozwolić na odkrywanie Ciebie za pomocą adresu e-mail oraz numeru telefonu.",
     "Discovery": "Odkrywanie",
     "Deactivate account": "Dezaktywuj konto",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Change identity server": "Zmień serwer tożsamości",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Rozłączyć się z bieżącym serwerem tożsamości <current /> i połączyć się z <new />?",
     "Disconnect identity server": "Rozłącz serwer tożsamości",
@@ -443,8 +429,6 @@
         "one": "Prześlij %(count)s inny plik"
     },
     "Enter your account password to confirm the upgrade:": "Wprowadź hasło do konta, aby potwierdzić aktualizację:",
-    "Error upgrading room": "Błąd podczas aktualizacji pokoju",
-    "Double check that your server supports the room version chosen and try again.": "Sprawdź ponownie czy Twój serwer wspiera wybraną wersję pokoju i spróbuj ponownie.",
     "Favourited": "Ulubiony",
     "This room is public": "Ten pokój jest publiczny",
     "Remove %(count)s messages": {
@@ -483,7 +467,6 @@
     "Message search": "Wyszukiwanie wiadomości",
     "Set up Secure Backup": "Skonfiguruj bezpieczną kopię zapasową",
     "Ok": "OK",
-    "Unknown App": "Nieznana aplikacja",
     "Enable desktop notifications": "Włącz powiadomienia na pulpicie",
     "Don't miss a reply": "Nie przegap odpowiedzi",
     "Israel": "Izrael",
@@ -826,8 +809,6 @@
     "Contact your <a>server admin</a>.": "Skontaktuj się ze swoim <a>administratorem serwera</a>.",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
-    "Error leaving room": "Błąd opuszczania pokoju",
-    "Unexpected server error trying to leave the room": "Nieoczekiwany błąd serwera podczas próby opuszczania pokoju",
     "Everyone in this room is verified": "Wszyscy w tym pokoju są zweryfikowani",
     "This room is end-to-end encrypted": "Ten pokój jest szyfrowany end-to-end",
     "Scroll to most recent messages": "Przewiń do najnowszych wiadomości",
@@ -910,9 +891,6 @@
     "Use app": "Użyj aplikacji",
     "Use app for a better experience": "Użyj aplikacji by mieć lepsze doświadczenie",
     "Review to ensure your account is safe": "Sprawdź, by upewnić się że Twoje konto jest bezpieczne",
-    "That's fine": "To jest w porządku",
-    "Share your public space": "Zaproś do swojej publicznej przestrzeni",
-    "Invite to %(spaceName)s": "Zaproś do %(spaceName)s",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
     "ready": "gotowy",
@@ -969,20 +947,6 @@
     "Sorry, your homeserver is too old to participate here.": "Przykro nam, twój serwer domowy jest zbyt stary, by uczestniczyć tu.",
     "There was an error joining.": "Wystąpił błąd podczas dołączania.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
-    "The user's homeserver does not support the version of the space.": "Serwer domowy użytkownika nie wspiera tej wersji przestrzeni.",
-    "User may or may not exist": "Użytkownik może istnieć lub nie",
-    "User does not exist": "Użytkownik nie istnieje",
-    "User is already in the room": "Użytkownik jest już w pokoju",
-    "User is already in the space": "Użytkownik jest już w przestrzeni",
-    "User is already invited to the room": "Użytkownik jest już zaproszony do tego pokoju",
-    "User is already invited to the space": "Użytkownik jest już zaproszony do tej przestrzeni",
-    "You do not have permission to invite people to this space.": "Nie masz uprawnień, by zapraszać ludzi do tej przestrzeni.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "W %(spaceName)s i %(count)s innej przestrzeni.",
-        "other": "W %(spaceName)s i %(count)s innych przestrzeniach."
-    },
-    "In %(spaceName)s.": "W przestrzeni %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "Sessions": "Sesje",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
@@ -1908,7 +1872,6 @@
     "Ask to join": "Poproś o dołączenie",
     "People cannot join unless access is granted.": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualizacja:</strong>Uprościliśmy Ustawienia powiadomień, aby łatwiej je nawigować. Niektóre ustawienia niestandardowe nie są już tu widoczne, lecz wciąż aktywne. Jeśli kontynuujesz, niektóre Twoje ustawienia mogą się zmienić. <a>Dowiedz się więcej</a>",
-    "User cannot be invited until they are unbanned": "Nie można zaprosić użytkownika, dopóki nie zostanie odbanowany",
     "Mentions and Keywords only": "Wyłącznie wzmianki i słowa kluczowe",
     "Play a sound for": "Odtwórz dźwięk dla",
     "Notify when someone mentions using @room": "Powiadom mnie, gdy ktoś użyje wzmianki @room",
@@ -2139,7 +2102,8 @@
         "send_report": "Wyślij zgłoszenie",
         "clear": "Wyczyść",
         "exit_fullscreeen": "Wyjdź z trybu pełnoekranowego",
-        "enter_fullscreen": "Otwórz w trybie pełnoekranowym"
+        "enter_fullscreen": "Otwórz w trybie pełnoekranowym",
+        "unban": "Odbanuj"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -3430,7 +3394,9 @@
         "no_permission_conference_description": "Nie posiadasz uprawnień do rozpoczęcia rozmowy grupowej w tym pokoju",
         "default_device": "Urządzenie domyślne",
         "failed_call_live_broadcast_title": "Nie można rozpocząć połączenia",
-        "failed_call_live_broadcast_description": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie."
+        "failed_call_live_broadcast_description": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie.",
+        "no_media_perms_title": "Brak uprawnień do mediów",
+        "no_media_perms_description": "Możliwe, że będziesz musiał ręcznie pozwolić %(brand)sowi na dostęp do twojego mikrofonu/kamerki internetowej"
     },
     "Other": "Inne",
     "Advanced": "Zaawansowane",
@@ -3555,7 +3521,10 @@
         "verification_requested_toast_title": "Zażądano weryfikacji",
         "cancel_entering_passphrase_title": "Anulować wpisywanie hasła?",
         "cancel_entering_passphrase_description": "Czy na pewno chcesz anulować wpisywanie hasła?",
-        "bootstrap_title": "Konfigurowanie kluczy"
+        "bootstrap_title": "Konfigurowanie kluczy",
+        "export_unsupported": "Twoja przeglądarka nie wspiera wymaganych rozszerzeń kryptograficznych",
+        "import_invalid_keyfile": "Niepoprawny plik klucza %(brand)s",
+        "import_invalid_passphrase": "Próba autentykacji nieudana: nieprawidłowe hasło?"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3578,7 +3547,8 @@
         "pseudonymous_usage_data": "Pomóż nam zidentyfikować problemy i ulepszyć %(analyticsOwner)s, udostępniając anonimowe dane o użytkowaniu. Aby zrozumieć, w jaki sposób użytkownicy korzystają z wielu urządzeń, wygenerujemy losowy identyfikator dzielony pomiędzy Twoimi urządzeniami.",
         "bullet_1": "<Bold>Nie zapisujemy</Bold> żadnych danych, ani nie profilujemy twojego konta",
         "bullet_2": "<Bold>Nie udostępniamy</Bold> żadnych informacji podmiotom zewnętrznym",
-        "disable_prompt": "Możesz to wyłączyć kiedy zechcesz w ustawieniach"
+        "disable_prompt": "Możesz to wyłączyć kiedy zechcesz w ustawieniach",
+        "accept_button": "To jest w porządku"
     },
     "chat_effects": {
         "confetti_description": "Wysyła podaną wiadomość z konfetti",
@@ -3856,7 +3826,8 @@
         },
         "error_need_to_be_logged_in": "Musisz być zalogowany.",
         "error_need_invite_permission": "Aby to zrobić, musisz mieć możliwość zapraszania użytkowników.",
-        "error_need_kick_permission": "Aby to zrobić, musisz móc wyrzucać użytkowników."
+        "error_need_kick_permission": "Aby to zrobić, musisz móc wyrzucać użytkowników.",
+        "no_name": "Nieznana aplikacja"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -3970,7 +3941,8 @@
             "home": "Przestrzeń główna",
             "explore": "Przeglądaj pokoje",
             "manage_and_explore": "Zarządzaj i odkrywaj pokoje"
-        }
+        },
+        "share_public": "Zaproś do swojej publicznej przestrzeni"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -4090,7 +4062,13 @@
         "unread_notifications_predecessor": {
             "one": "Masz %(count)s nieprzeczytanych powiadomień we wcześniejszej wersji tego pokoju.",
             "other": "Masz %(count)s nieprzeczytane powiadomienie we wcześniejszej wersji tego pokoju."
-        }
+        },
+        "leave_unexpected_error": "Nieoczekiwany błąd serwera podczas próby opuszczania pokoju",
+        "leave_server_notices_title": "Nie można opuścić pokoju powiadomień serwera",
+        "leave_error_title": "Błąd opuszczania pokoju",
+        "upgrade_error_title": "Błąd podczas aktualizacji pokoju",
+        "upgrade_error_description": "Sprawdź ponownie czy Twój serwer wspiera wybraną wersję pokoju i spróbuj ponownie.",
+        "leave_server_notices_description": "Ten pokój jest używany do ważnych wiadomości z serwera domowego, więc nie możesz go opuścić."
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4163,7 +4141,22 @@
         "failed_generic": "Operacja nie udała się",
         "room_failed_title": "Nie udało się zaprosić użytkowników do %(roomName)s",
         "room_failed_partial": "Wysłaliśmy pozostałym, ale osoby poniżej nie mogły zostać zaproszone do <RoomName/>",
-        "room_failed_partial_title": "Niektóre zaproszenia nie mogły zostać wysłane"
+        "room_failed_partial_title": "Niektóre zaproszenia nie mogły zostać wysłane",
+        "invalid_address": "Nierozpoznany adres",
+        "unban_first_title": "Nie można zaprosić użytkownika, dopóki nie zostanie odbanowany",
+        "error_permissions_space": "Nie masz uprawnień, by zapraszać ludzi do tej przestrzeni.",
+        "error_permissions_room": "Nie masz uprawnień do zapraszania ludzi do tego pokoju.",
+        "error_already_invited_space": "Użytkownik jest już zaproszony do tej przestrzeni",
+        "error_already_invited_room": "Użytkownik jest już zaproszony do tego pokoju",
+        "error_already_joined_space": "Użytkownik jest już w przestrzeni",
+        "error_already_joined_room": "Użytkownik jest już w pokoju",
+        "error_user_not_found": "Użytkownik nie istnieje",
+        "error_profile_undisclosed": "Użytkownik może istnieć lub nie",
+        "error_bad_state": "Użytkownik musi być odbanowany, zanim będzie mógł być zaproszony.",
+        "error_version_unsupported_space": "Serwer domowy użytkownika nie wspiera tej wersji przestrzeni.",
+        "error_version_unsupported_room": "Serwer domowy użytkownika nie wspiera tej wersji pokoju.",
+        "error_unknown": "Nieznany błąd serwera",
+        "to_space": "Zaproś do %(spaceName)s"
     },
     "scalar": {
         "error_create": "Nie można utworzyć widżetu.",
@@ -4190,5 +4183,12 @@
         "connection": "Wystąpił problem podczas łączenia się z serwerem domowym, spróbuj ponownie później.",
         "mixed_content": "Nie można nawiązać połączenia z serwerem przy użyciu HTTP podczas korzystania z HTTPS dla bieżącej strony. Użyj HTTPS lub <a>włącz niebezpieczne skrypty</a>.",
         "tls": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania."
-    }
+    },
+    "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "W %(spaceName)s i %(count)s innej przestrzeni.",
+        "other": "W %(spaceName)s i %(count)s innych przestrzeniach."
+    },
+    "in_space": "W przestrzeni %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

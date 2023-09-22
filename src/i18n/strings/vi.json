@@ -35,14 +35,6 @@
         "one": "%(items)s và một mục khác"
     },
     "%(items)s and %(lastItem)s": "%(items)s và %(lastItem)s",
-    "Your browser does not support the required cryptography extensions": "Trình duyệt của bạn không hỗ trợ chức năng mã hóa",
-    "Not a valid %(brand)s keyfile": "Tệp khóa %(brand)s không hợp lệ",
-    "Authentication check failed: incorrect password?": "Kiểm tra đăng nhập thất bại: sai mật khẩu?",
-    "Unrecognised address": "Không nhận ra địa chỉ",
-    "You do not have permission to invite people to this room.": "Bạn không đủ quyền để mời người khác vào phòng chat.",
-    "The user must be unbanned before they can be invited.": "Người dùng phải được gỡ cấm tham gia trước khi được mời.",
-    "The user's homeserver does not support the version of the room.": "Phiên bản máy chủ nhà của người dùng không hỗ trợ phiên bản phòng này.",
-    "Unknown server error": "Lỗi máy chủ không xác định",
     "Please contact your homeserver administrator.": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
     "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
@@ -745,7 +737,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi yêu cầu mức công suất của phòng. Đảm bảo bạn có đủ quyền và thử lại.",
     "Error changing power level requirement": "Lỗi khi thay đổi yêu cầu mức nguồn",
     "Banned by %(displayName)s": "Bị cấm bởi %(displayName)s",
-    "Unban": "Bỏ cấm",
     "Failed to unban": "Không thể bỏ cấm",
     "Browse": "Duyệt qua",
     "Set a new custom sound": "Đặt âm thanh tùy chỉnh mới",
@@ -764,8 +755,6 @@
     "Audio Output": "Đầu ra âm thanh",
     "Request media permissions": "Yêu cầu quyền phương tiện",
     "Missing media permissions, click the button below to request.": "Thiếu quyền phương tiện, hãy nhấp vào nút bên dưới để yêu cầu.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công",
-    "No media permissions": "Không có quyền sử dụng công cụ truyền thông",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Người quản trị máy chủ của bạn đã vô hiệu hóa mã hóa đầu cuối theo mặc định trong phòng riêng và Tin nhắn trực tiếp.",
     "Message search": "Tìm kiếm tin nhắn",
     "Reject all %(invitedRooms)s invites": "Từ chối tất cả lời mời từ %(invitedRooms)s",
@@ -1064,16 +1053,6 @@
     "Don't miss a reply": "Đừng bỏ lỡ một câu trả lời",
     "Later": "Để sau",
     "Review to ensure your account is safe": "Xem lại để đảm bảo tài khoản của bạn an toàn",
-    "Unknown App": "Ứng dụng không xác định",
-    "Share your public space": "Chia sẻ space công cộng của bạn",
-    "Invite to %(spaceName)s": "Mời tham gia %(spaceName)s",
-    "Double check that your server supports the room version chosen and try again.": "Kiểm tra kỹ xem máy chủ của bạn có hỗ trợ phiên bản phòng đã chọn hay không và thử lại.",
-    "Error upgrading room": "Lỗi khi nâng cấp phòng",
-    "Error leaving room": "Lỗi khi rời khỏi phòng",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Phòng này được sử dụng cho các tin nhắn quan trọng từ máy chủ, vì vậy bạn không thể rời khỏi nó.",
-    "Can't leave Server Notices room": "Không thể rời khỏi phòng Thông báo máy chủ",
-    "Unexpected server error trying to leave the room": "Lỗi máy chủ không mong muốn khi cố gắng rời khỏi phòng",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "All keys backed up": "Tất cả các khóa được sao lưu",
     "Connect this session to Key Backup": "Kết nối phiên này với Khóa Sao lưu",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Kết nối phiên này với máy chủ sao lưu khóa trước khi đăng xuất để tránh mất bất kỳ khóa nào có thể chỉ có trong phiên này.",
@@ -1477,7 +1456,6 @@
     "Themes": "Chủ đề",
     "Moderation": "Việc vận hành",
     "Messaging": "Tin nhắn",
-    "That's fine": "Không sao cả",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s và %(count)s khác",
         "other": "%(spaceName)s và %(count)s khác"
@@ -1531,20 +1509,6 @@
     "Sorry, your homeserver is too old to participate here.": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
     "There was an error joining.": "Đã xảy ra lỗi khi tham gia.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
-    "The user's homeserver does not support the version of the space.": "Máy chủ nhà của người dùng không hỗ trợ phiên bản của space.",
-    "User may or may not exist": "Người dùng có thể hoặc không tồn tại",
-    "User does not exist": "Người dùng không tồn tại",
-    "User is already in the room": "Người dùng đã trong phòng",
-    "User is already in the space": "Người dùng đã trong space",
-    "User is already invited to the room": "Người dùng đã được mời vào phòng",
-    "User is already invited to the space": "Người dùng đã được mời vào space",
-    "You do not have permission to invite people to this space.": "Bạn không có quyền để mời mọi người vào space này.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Trong %(spaceName)s và %(count)s space khác.",
-        "other": "Trong %(spaceName)s và %(count)s space khác."
-    },
-    "In %(spaceName)s.": "Trong space %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Trong các space %(space1Name)s và %(space2Name)s.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "Connection": "Kết nối",
@@ -1769,7 +1733,6 @@
     "Declining…": "Đang từ chối…",
     "Image view": "Xem ảnh",
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
-    "User cannot be invited until they are unbanned": "Người dùng không thể được mời nếu không được bỏ cấm",
     "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
     "Email Notifications": "Thông báo qua thư điện tử",
@@ -1979,7 +1942,8 @@
         "send_report": "Gửi báo cáo",
         "clear": "Xoá",
         "exit_fullscreeen": "Thoát toàn màn hình",
-        "enter_fullscreen": "Vào toàn màn hình"
+        "enter_fullscreen": "Vào toàn màn hình",
+        "unban": "Bỏ cấm"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -3180,7 +3144,9 @@
         "no_permission_conference_description": "Bạn không có quyền để bắt đầu cuộc gọi nhóm trong phòng này",
         "default_device": "Thiết bị mặc định",
         "failed_call_live_broadcast_title": "Không thể bắt đầu cuộc gọi",
-        "failed_call_live_broadcast_description": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi."
+        "failed_call_live_broadcast_description": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
+        "no_media_perms_title": "Không có quyền sử dụng công cụ truyền thông",
+        "no_media_perms_description": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công"
     },
     "Other": "Khác",
     "Advanced": "Nâng cao",
@@ -3305,7 +3271,10 @@
         "verification_requested_toast_title": "Đã yêu cầu xác thực",
         "cancel_entering_passphrase_title": "Hủy nhập cụm mật khẩu?",
         "cancel_entering_passphrase_description": "Bạn có chắc chắn muốn hủy nhập cụm mật khẩu không?",
-        "bootstrap_title": "Đang thiết lập khóa bảo mật"
+        "bootstrap_title": "Đang thiết lập khóa bảo mật",
+        "export_unsupported": "Trình duyệt của bạn không hỗ trợ chức năng mã hóa",
+        "import_invalid_keyfile": "Tệp khóa %(brand)s không hợp lệ",
+        "import_invalid_passphrase": "Kiểm tra đăng nhập thất bại: sai mật khẩu?"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3327,7 +3296,8 @@
         "privacy_policy": "Bạn có thể đọc tất cả các điều khoản của chúng tôi <PrivacyPolicyUrl>ở đây</PrivacyPolicyUrl>",
         "bullet_1": "Chúng tôi <Bold>không</Bold> thu thập hoặc lập hồ sơ bất kỳ dữ liệu tài khoản nào",
         "bullet_2": "Chúng tôi <Bold>không</Bold> chia sẻ thông tin với các bên thứ ba",
-        "disable_prompt": "Bạn có thể tắt tính năng này bất cứ lúc nào trong cài đặt"
+        "disable_prompt": "Bạn có thể tắt tính năng này bất cứ lúc nào trong cài đặt",
+        "accept_button": "Không sao cả"
     },
     "chat_effects": {
         "confetti_description": "Gửi tin nhắn đã cho với hoa giấy",
@@ -3589,7 +3559,8 @@
         },
         "error_need_to_be_logged_in": "Bạn phải đăng nhập.",
         "error_need_invite_permission": "Bạn cần mời được người dùng thì mới làm vậy được.",
-        "error_need_kick_permission": "Bạn phải đuổi được người dùng thì mới làm vậy được."
+        "error_need_kick_permission": "Bạn phải đuổi được người dùng thì mới làm vậy được.",
+        "no_name": "Ứng dụng không xác định"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3699,7 +3670,8 @@
             "devtools_open_timeline": "Xem dòng thời gian phòng (devtools)",
             "explore": "Khám phá các phòng",
             "manage_and_explore": "Quản lý và khám phá phòng"
-        }
+        },
+        "share_public": "Chia sẻ space công cộng của bạn"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3814,7 +3786,13 @@
         "unread_notifications_predecessor": {
             "one": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này.",
             "other": "Bạn có %(count)s thông báo chưa đọc trong phiên bản trước của phòng này."
-        }
+        },
+        "leave_unexpected_error": "Lỗi máy chủ không mong muốn khi cố gắng rời khỏi phòng",
+        "leave_server_notices_title": "Không thể rời khỏi phòng Thông báo máy chủ",
+        "leave_error_title": "Lỗi khi rời khỏi phòng",
+        "upgrade_error_title": "Lỗi khi nâng cấp phòng",
+        "upgrade_error_description": "Kiểm tra kỹ xem máy chủ của bạn có hỗ trợ phiên bản phòng đã chọn hay không và thử lại.",
+        "leave_server_notices_description": "Phòng này được sử dụng cho các tin nhắn quan trọng từ máy chủ, vì vậy bạn không thể rời khỏi nó."
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3884,7 +3862,22 @@
         "failed_generic": "Tác vụ thất bại",
         "room_failed_title": "Mời người dùng vào %(roomName)s thất bại",
         "room_failed_partial": "Chúng tôi đã mời những người khác, nhưng những người dưới đây không thể được mời tham gia <RoomName/>",
-        "room_failed_partial_title": "Không thể gửi một số lời mời"
+        "room_failed_partial_title": "Không thể gửi một số lời mời",
+        "invalid_address": "Không nhận ra địa chỉ",
+        "unban_first_title": "Người dùng không thể được mời nếu không được bỏ cấm",
+        "error_permissions_space": "Bạn không có quyền để mời mọi người vào space này.",
+        "error_permissions_room": "Bạn không đủ quyền để mời người khác vào phòng chat.",
+        "error_already_invited_space": "Người dùng đã được mời vào space",
+        "error_already_invited_room": "Người dùng đã được mời vào phòng",
+        "error_already_joined_space": "Người dùng đã trong space",
+        "error_already_joined_room": "Người dùng đã trong phòng",
+        "error_user_not_found": "Người dùng không tồn tại",
+        "error_profile_undisclosed": "Người dùng có thể hoặc không tồn tại",
+        "error_bad_state": "Người dùng phải được gỡ cấm tham gia trước khi được mời.",
+        "error_version_unsupported_space": "Máy chủ nhà của người dùng không hỗ trợ phiên bản của space.",
+        "error_version_unsupported_room": "Phiên bản máy chủ nhà của người dùng không hỗ trợ phiên bản phòng này.",
+        "error_unknown": "Lỗi máy chủ không xác định",
+        "to_space": "Mời tham gia %(spaceName)s"
     },
     "scalar": {
         "error_create": "Không thể tạo widget.",
@@ -3911,5 +3904,12 @@
         "connection": "Đã xảy ra sự cố khi giao tiếp với máy chủ, vui lòng thử lại sau.",
         "mixed_content": "Không thể kết nối với máy chủ thông qua HTTP khi URL HTTPS nằm trong thanh trình duyệt của bạn. Sử dụng HTTPS hoặc bật các tập lệnh không an toàn <a>enable unsafe scripts</a>.",
         "tls": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu."
-    }
+    },
+    "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Trong %(spaceName)s và %(count)s space khác.",
+        "other": "Trong %(spaceName)s và %(count)s space khác."
+    },
+    "in_space": "Trong space %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

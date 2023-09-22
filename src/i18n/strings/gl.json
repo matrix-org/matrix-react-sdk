@@ -29,15 +29,11 @@
     "Moderator": "Moderador",
     "Reason": "Razón",
     "Send": "Enviar",
-    "Your browser does not support the required cryptography extensions": "O seu navegador non soporta as extensións de criptografía necesarias",
-    "Not a valid %(brand)s keyfile": "Non é un ficheiro de chaves %(brand)s válido",
-    "Authentication check failed: incorrect password?": "Fallou a comprobación de autenticación: contrasinal incorrecto?",
     "Incorrect verification code": "Código de verificación incorrecto",
     "No display name": "Sen nome público",
     "Authentication": "Autenticación",
     "Failed to set display name": "Fallo ao establecer o nome público",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Unban": "Non bloquear",
     "Failed to ban user": "Fallo ao bloquear usuaria",
     "Failed to mute user": "Fallo ó silenciar usuaria",
     "Failed to change power level": "Fallo ao cambiar o nivel de permisos",
@@ -146,8 +142,6 @@
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
     "<not supported>": "<non soportado>",
     "Reject all %(invitedRooms)s invites": "Rexeitar todos os %(invitedRooms)s convites",
-    "No media permissions": "Sen permisos de medios",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Igual ten que permitir manualmente a %(brand)s acceder ao seus micrófono e cámara",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
     "Notifications": "Notificacións",
@@ -207,8 +201,6 @@
     "Share User": "Compartir usuaria",
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
-    "Can't leave Server Notices room": "Non se pode saír da sala de información do servidor",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Esta sala emprégase para mensaxes importantes do servidor da sala, as que non pode saír dela.",
     "No Audio Outputs detected": "Non se detectou unha saída de audio",
     "Audio Output": "Saída de audio",
     "Permission Required": "Precísanse permisos",
@@ -230,8 +222,6 @@
     "Verify this session": "Verificar esta sesión",
     "Encryption upgrade available": "Mellora do cifrado dispoñible",
     "New login. Was this you?": "Nova sesión. Foches ti?",
-    "Error upgrading room": "Fallo ao actualizar a sala",
-    "Double check that your server supports the room version chosen and try again.": "Comproba ben que o servidor soporta a versión da sala escollida e inténtao outra vez.",
     "General": "Xeral",
     "Discovery": "Descubrir",
     "Deactivate account": "Desactivar conta",
@@ -251,14 +241,8 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
     "Ask this user to verify their session, or manually verify it below.": "Pídelle a usuaria que verifique a súa sesión, ou verificaa manualmente aquí.",
     "Not Trusted": "Non confiable",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Unrecognised address": "Enderezo non recoñecible",
-    "You do not have permission to invite people to this room.": "Non tes permiso para convidar a xente a esta sala.",
-    "The user must be unbanned before they can be invited.": "A usuria debe ser desbloqueada antes de poder convidala.",
     "Messages in this room are end-to-end encrypted.": "As mensaxes desta sala están cifradas de extremo-a-extremo.",
     "Messages in this room are not end-to-end encrypted.": "As mensaxes desta sala non están cifradas de extremo-a-extremo.",
-    "The user's homeserver does not support the version of the room.": "O servidor da usuaria non soporta a versión da sala.",
-    "Unknown server error": "Erro descoñecido no servidor",
     "Later": "Máis tarde",
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
@@ -788,11 +772,8 @@
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
     "Explore public rooms": "Explorar salas públicas",
     "Preparing to download logs": "Preparándose para descargar rexistro",
-    "Unexpected server error trying to leave the room": "Fallo non agardado no servidor ó intentar saír da sala",
-    "Error leaving room": "Erro ó saír da sala",
     "Set up Secure Backup": "Configurar Copia de apoio Segura",
     "Information": "Información",
-    "Unknown App": "App descoñecida",
     "Not encrypted": "Sen cifrar",
     "Room settings": "Axustes da sala",
     "Take a picture": "Tomar unha foto",
@@ -1147,7 +1128,6 @@
     "Failed to save space settings.": "Fallo ao gardar os axustes do espazo.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
-    "Invite to %(spaceName)s": "Convidar a %(spaceName)s",
     "Create a new room": "Crear unha nova sala",
     "Spaces": "Espazos",
     "Space selection": "Selección de Espazos",
@@ -1159,7 +1139,6 @@
     "Space options": "Opcións do Espazo",
     "Leave space": "Saír do espazo",
     "Invite people": "Convidar persoas",
-    "Share your public space": "Comparte o teu espazo público",
     "Share invite link": "Compartir ligazón do convite",
     "Click to copy": "Click para copiar",
     "Create a space": "Crear un espazo",
@@ -1481,7 +1460,6 @@
     "No votes cast": "Sen votos",
     "Share location": "Compartir localización",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
-    "That's fine": "Iso está ben",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
     "Other searches": "Outras buscas",
@@ -1584,13 +1562,6 @@
     "Unsent": "Sen enviar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
-    "User may or may not exist": "A usuaria podería non existir",
-    "User does not exist": "A usuaria non existe",
-    "User is already in the room": "A usuaria xa está na sala",
-    "User is already in the space": "A usuaria xa está no espazo",
-    "User is already invited to the room": "A usuaria xa está convidada á sala",
-    "User is already invited to the space": "A usuaria xa está convidada ao espazo",
-    "You do not have permission to invite people to this space.": "Non tes permiso para convidar persoas a este espazo.",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
     "%(featureName)s Beta feedback": "Informe sobre %(featureName)s Beta",
     "%(count)s participants": {
@@ -1619,7 +1590,6 @@
     "The person who invited you has already left.": "A persoa que te convidou xa deixou o lugar.",
     "Sorry, your homeserver is too old to participate here.": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
     "There was an error joining.": "Houbo un erro ao unirte.",
-    "The user's homeserver does not support the version of the space.": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
     "Live location ended": "Rematou a localización en directo",
     "View live location": "Ver localización en directo",
     "Live location enabled": "Activada a localización en directo",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Mostrar salas",
     "Join the room to participate": "Únete á sala para participar",
     "Explore public spaces in the new search dialog": "Explorar espazos públicos no novo diálogo de busca",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "No %(spaceName)s e %(count)s outro espazo.",
-        "other": "No espazo %(spaceName)s e %(count)s outros espazos."
-    },
-    "In %(spaceName)s.": "No espazo %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "Stop and close": "Deter e pechar",
     "Online community members": "Membros de comunidades en liña",
     "Coworkers and teams": "Persoas e equipos do traballo",
@@ -1924,7 +1888,8 @@
         "send_report": "Enviar denuncia",
         "clear": "Limpar",
         "exit_fullscreeen": "Saír de pantalla completa",
-        "enter_fullscreen": "Ir a pantalla completa"
+        "enter_fullscreen": "Ir a pantalla completa",
+        "unban": "Non bloquear"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -3033,7 +2998,9 @@
         "transfer_failed_description": "Fallou a transferencia da chamada",
         "no_permission_conference": "Precísanse permisos",
         "no_permission_conference_description": "Non tes permisos para comezar unha chamada de conferencia nesta sala",
-        "default_device": "Dispositivo por defecto"
+        "default_device": "Dispositivo por defecto",
+        "no_media_perms_title": "Sen permisos de medios",
+        "no_media_perms_description": "Igual ten que permitir manualmente a %(brand)s acceder ao seus micrófono e cámara"
     },
     "Other": "Outro",
     "Advanced": "Avanzado",
@@ -3154,7 +3121,10 @@
         "verification_requested_toast_title": "Verificación solicitada",
         "cancel_entering_passphrase_title": "Cancelar a escrita da frase de paso?",
         "cancel_entering_passphrase_description": "¿Estás seguro de que non queres escribir a frase de paso?",
-        "bootstrap_title": "Configurando as chaves"
+        "bootstrap_title": "Configurando as chaves",
+        "export_unsupported": "O seu navegador non soporta as extensións de criptografía necesarias",
+        "import_invalid_keyfile": "Non é un ficheiro de chaves %(brand)s válido",
+        "import_invalid_passphrase": "Fallou a comprobación de autenticación: contrasinal incorrecto?"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3177,7 +3147,8 @@
         "pseudonymous_usage_data": "Axúdanos a atopar problemas e mellorar %(analyticsOwner)s compartindo datos anónimos de uso. Para comprender de que xeito as persoas usan varios dispositivos imos crear un identificador aleatorio compartido polos teus dispositivos.",
         "bullet_1": "<Bold>Non</Bold> rexistramos o teu perfil nin datos da conta",
         "bullet_2": "<Bold>Non</Bold> compartimos a información con terceiras partes",
-        "disable_prompt": "Podes desactivar esto cando queiras non axustes"
+        "disable_prompt": "Podes desactivar esto cando queiras non axustes",
+        "accept_button": "Iso está ben"
     },
     "chat_effects": {
         "confetti_description": "Envía a mensaxe con confetti",
@@ -3427,7 +3398,8 @@
         },
         "error_need_to_be_logged_in": "Tes que iniciar sesión.",
         "error_need_invite_permission": "Precisa autorización para convidar a outros usuarias para poder facer iso.",
-        "error_need_kick_permission": "Tes que poder expulsar usuarias para facer eso."
+        "error_need_kick_permission": "Tes que poder expulsar usuarias para facer eso.",
+        "no_name": "App descoñecida"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3511,7 +3483,8 @@
             "home": "Inicio do espazo",
             "explore": "Explorar salas",
             "manage_and_explore": "Xestionar e explorar salas"
-        }
+        },
+        "share_public": "Comparte o teu espazo público"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3626,7 +3599,13 @@
         "unread_notifications_predecessor": {
             "other": "Tes %(count)s notificacións non lidas nunha versión previa desta sala.",
             "one": "Tes %(count)s notificacións non lidas nunha versión previa desta sala."
-        }
+        },
+        "leave_unexpected_error": "Fallo non agardado no servidor ó intentar saír da sala",
+        "leave_server_notices_title": "Non se pode saír da sala de información do servidor",
+        "leave_error_title": "Erro ó saír da sala",
+        "upgrade_error_title": "Fallo ao actualizar a sala",
+        "upgrade_error_description": "Comproba ben que o servidor soporta a versión da sala escollida e inténtao outra vez.",
+        "leave_server_notices_description": "Esta sala emprégase para mensaxes importantes do servidor da sala, as que non pode saír dela."
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3693,7 +3672,21 @@
         "failed_generic": "Fallou a operación",
         "room_failed_title": "Fallou o convite das usuarias para %(roomName)s",
         "room_failed_partial": "Convidamos as outras, pero as persoas de aquí embaixo non foron convidadas a <RoomName/>",
-        "room_failed_partial_title": "Non se puideron enviar algúns convites"
+        "room_failed_partial_title": "Non se puideron enviar algúns convites",
+        "invalid_address": "Enderezo non recoñecible",
+        "error_permissions_space": "Non tes permiso para convidar persoas a este espazo.",
+        "error_permissions_room": "Non tes permiso para convidar a xente a esta sala.",
+        "error_already_invited_space": "A usuaria xa está convidada ao espazo",
+        "error_already_invited_room": "A usuaria xa está convidada á sala",
+        "error_already_joined_space": "A usuaria xa está no espazo",
+        "error_already_joined_room": "A usuaria xa está na sala",
+        "error_user_not_found": "A usuaria non existe",
+        "error_profile_undisclosed": "A usuaria podería non existir",
+        "error_bad_state": "A usuria debe ser desbloqueada antes de poder convidala.",
+        "error_version_unsupported_space": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
+        "error_version_unsupported_room": "O servidor da usuaria non soporta a versión da sala.",
+        "error_unknown": "Erro descoñecido no servidor",
+        "to_space": "Convidar a %(spaceName)s"
     },
     "scalar": {
         "error_create": "Non se puido crear o trebello.",
@@ -3722,5 +3715,12 @@
         "connection": "Houbo un problema de comunicación co servidor de inicio, inténtao máis tarde.",
         "mixed_content": "Non se pode conectar ao servidor vía HTTP cando na barra de enderezos do navegador está HTTPS. Utiliza HTTPS ou <a>active scripts non seguros</a>.",
         "tls": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións."
-    }
+    },
+    "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "No %(spaceName)s e %(count)s outro espazo.",
+        "other": "No espazo %(spaceName)s e %(count)s outros espazos."
+    },
+    "in_space": "No espazo %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

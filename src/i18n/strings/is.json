@@ -32,7 +32,6 @@
     "Send": "Senda",
     "Authentication": "Auðkenning",
     "Notification targets": "Markmið tilkynninga",
-    "Unban": "Afbanna",
     "Are you sure?": "Ertu viss?",
     "Unignore": "Hætta að hunsa",
     "Admin Tools": "Kerfisstjóratól",
@@ -133,9 +132,6 @@
     "Passphrases must match": "Lykilfrasar verða að stemma",
     "Passphrase must not be empty": "Lykilfrasi má ekki vera auður",
     "Explore rooms": "Kanna spjallrásir",
-    "The user's homeserver does not support the version of the room.": "Heimaþjónn notandans styður ekki útgáfu spjallrásarinnar.",
-    "The user must be unbanned before they can be invited.": "Notandinn þarf að vera afbannaður áður en að hægt er að bjóða þeim.",
-    "You do not have permission to invite people to this room.": "Þú hefur ekki heimild til að bjóða fólk í þessa spjallrás.",
     "Add room": "Bæta við spjallrás",
     "Room information": "Upplýsingar um spjallrás",
     "Room options": "Valkostir spjallrásar",
@@ -151,7 +147,6 @@
     "All settings": "Allar stillingar",
     "Change notification settings": "Breytta tilkynningastillingum",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
-    "Unknown server error": "Óþekkt villa á þjóni",
     "Ignored users": "Hunsaðir notendur",
     "Use the <a>Desktop app</a> to search encrypted messages": "Notaðu <a>tölvuforritið</a> til að sía dulrituð skilaboð",
     "Use the <a>Desktop app</a> to see all encrypted files": "Notaðu <a>tölvuforritið</a> til að sjá öll dulrituð gögn",
@@ -485,8 +480,6 @@
     "Ok": "Í lagi",
     "Use app": "Nota smáforrit",
     "Later": "Seinna",
-    "That's fine": "Það er í góðu",
-    "Unknown App": "Óþekkt forrit",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s og %(count)s til viðbótar",
         "one": "%(spaceName)s og %(count)s til viðbótar"
@@ -660,8 +653,6 @@
     "Show sidebar": "Sýna hliðarspjald",
     "Hide sidebar": "Fela hliðarspjald",
     "Messaging": "Skilaboð",
-    "Share your public space": "Deildu opinbera svæðinu þínu",
-    "Invite to %(spaceName)s": "Bjóða inn á %(spaceName)s",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
     "Video conference started by %(senderName)s": "Myndfjarfundur hafinn af %(senderName)s",
@@ -695,11 +686,6 @@
     "Enable desktop notifications": "Virkja tilkynningar á skjáborði",
     "Don't miss a reply": "Ekki missa af svari",
     "Review to ensure your account is safe": "Yfirfarðu þetta til að tryggja að aðgangurinn þinn sé öruggur",
-    "Error upgrading room": "Villa við að uppfæra spjallrás",
-    "Unrecognised address": "Óþekkjanlegt vistfang",
-    "Error leaving room": "Villa við að yfirgefa spjallrás",
-    "Not a valid %(brand)s keyfile": "Er ekki gild %(brand)s lykilskrá",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "%(items)s and %(count)s others": {
         "one": "%(items)s og einn til viðbótar",
@@ -1107,10 +1093,7 @@
     "Unable to revoke sharing for phone number": "Ekki er hægt að afturkalla að deila símanúmeri",
     "Verify the link in your inbox": "Athugaðu tengilinn í pósthólfinu þínu",
     "Set up Secure Backup": "Setja upp varið öryggisafrit",
-    "Authentication check failed: incorrect password?": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
-    "Your browser does not support the required cryptography extensions": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
     "Message didn't send. Click for info.": "Mistókst að senda skilaboð. Smelltu til að fá nánari upplýsingar.",
-    "No media permissions": "Engar heimildir fyrir myndefni",
     "That doesn't match.": "Þetta stemmir ekki.",
     "That matches!": "Þetta passar!",
     "Clear personal data": "Hreinsa persónuleg gögn",
@@ -1327,7 +1310,6 @@
     "Verify by scanning": "Sannprófa með skönnun",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Villa kom upp við að breyta valdastigi notandans. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur.",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Villa kom upp við að breyta kröfum spjallrásarinnar um valdastig. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur.",
-    "Unexpected server error trying to leave the room": "Óvænt villa kom upp við að reyna að yfirgefa spjallrásina",
     "Some of your messages have not been sent": "Sum skilaboðin þín hafa ekki verið send",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Skilaboðin þín voru ekki send vegna þess að þessi heimaþjónn er kominn fram yfir takmörk á notuðum tilföngum. Hafðu <a>samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þjónustuna.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Skilaboðin þín voru ekki send vegna þess að þessi heimaþjónn er kominn fram yfir takmörk á mánaðarlega virkum notendum. Hafðu <a>samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þjónustuna.",
@@ -1380,14 +1362,6 @@
     "The person who invited you has already left.": "Aðilinn sem bauð þér er þegar farinn.",
     "Sorry, your homeserver is too old to participate here.": "Því miður, heimaþjónninn þinn er of gamall til að taka þátt í þessu.",
     "There was an error joining.": "Það kom upp villa við að taka þátt.",
-    "The user's homeserver does not support the version of the space.": "Heimaþjónn notandans styður ekki útgáfu svæðisins.",
-    "User may or may not exist": "Notandinn gæti verið til eða ekki",
-    "User does not exist": "Notandinn er ekki til",
-    "User is already in the room": "Notandinn er nú þegar á spjallrásinni",
-    "User is already in the space": "Notandinn er nú þegar á svæðinu",
-    "User is already invited to the room": "Notandanum hefur nú þegar verið boðið á spjallrásina",
-    "User is already invited to the space": "Notandanum hefur nú þegar verið boðið á svæðið",
-    "You do not have permission to invite people to this space.": "Þú hefur ekki heimild til að bjóða fólk á þetta svæði.",
     "Request media permissions": "Biðja um heimildir fyrir myndefni",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
@@ -1431,10 +1405,7 @@
     "Terms of service not accepted or the identity server is invalid.": "Þjónustuskilmálar eru ekki samþykktir eða að auðkennisþjónn er ógildur.",
     "Connect this session to Key Backup": "Tengja þessa setu við öryggisafrit af lykli",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
-    "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
-    "Double check that your server supports the room version chosen and try again.": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
     "%(count)s people joined": {
         "one": "%(count)s aðili hefur tekið þátt",
         "other": "%(count)s aðilar hafa tekið þátt"
@@ -1541,12 +1512,6 @@
     "Unpin this widget to view it in this panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "You were disconnected from the call. (Error: %(message)s)": "Þú varst aftengd/ur frá samtalinu. (Villa: %(message)s)",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Á %(spaceName)s og %(count)s svæði til viðbótar.",
-        "other": "Á %(spaceName)s og %(count)s svæðum til viðbótar."
-    },
-    "In %(spaceName)s.": "Á svæðinu %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
@@ -1802,7 +1767,8 @@
         "send_report": "Senda kæru",
         "clear": "Hreinsa",
         "exit_fullscreeen": "Fara úr fullskjásstillingu",
-        "enter_fullscreen": "Fara í fullskjásstillingu"
+        "enter_fullscreen": "Fara í fullskjásstillingu",
+        "unban": "Afbanna"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -2921,7 +2887,8 @@
         "no_permission_conference": "Krafist er heimildar",
         "no_permission_conference_description": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
         "default_device": "Sjálfgefið tæki",
-        "failed_call_live_broadcast_title": "Get ekki hafið símtal"
+        "failed_call_live_broadcast_title": "Get ekki hafið símtal",
+        "no_media_perms_title": "Engar heimildir fyrir myndefni"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -3033,7 +3000,10 @@
         "verification_requested_toast_title": "Beðið um sannvottun",
         "cancel_entering_passphrase_title": "Hætta við að setja inn lykilfrasa?",
         "cancel_entering_passphrase_description": "Viltu örugglega hætta við að setja inn lykilfrasa?",
-        "bootstrap_title": "Set upp dulritunarlykla"
+        "bootstrap_title": "Set upp dulritunarlykla",
+        "export_unsupported": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
+        "import_invalid_keyfile": "Er ekki gild %(brand)s lykilskrá",
+        "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3056,7 +3026,8 @@
         "pseudonymous_usage_data": "Hjálpaðu okkur við að greina vandamál og bæta %(analyticsOwner)s með því að deila nafnlausum gögnum varðandi notkun. Til að skilja hvernig fólk notar saman mörg tæki, munum við útbúa tilviljanakennt auðkenni, sem tækin þín deila.",
         "bullet_1": "Við skráum <Bold>ekki</Bold> eða búum til snið með gögnum notendaaðganga",
         "bullet_2": "Við deilum <Bold>ekki</Bold> upplýsingum með utanaðkomandi aðilum",
-        "disable_prompt": "Þú getur slökkt á þessu hvenær sem er í stillingunum"
+        "disable_prompt": "Þú getur slökkt á þessu hvenær sem er í stillingunum",
+        "accept_button": "Það er í góðu"
     },
     "chat_effects": {
         "confetti_description": "Sendir skilaboðin með skrauti",
@@ -3306,7 +3277,8 @@
         },
         "error_need_to_be_logged_in": "Þú þarft að vera skráð/ur inn.",
         "error_need_invite_permission": "Þú þarft að hafa heimild til að bjóða notendum til að gera þetta.",
-        "error_need_kick_permission": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta."
+        "error_need_kick_permission": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta.",
+        "no_name": "Óþekkt forrit"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3403,7 +3375,8 @@
             "home": "Forsíða svæðis",
             "explore": "Kanna spjallrásir",
             "manage_and_explore": "Sýsla með og kanna spjallrásir"
-        }
+        },
+        "share_public": "Deildu opinbera svæðinu þínu"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3503,7 +3476,13 @@
             "unencrypted_warning": "Enda-í-enda dulritun er ekki virkjuð"
         },
         "edit_topic": "Breyta umfjöllunarefni",
-        "read_topic": "Smelltu til að lesa umfjöllunarefni"
+        "read_topic": "Smelltu til að lesa umfjöllunarefni",
+        "leave_unexpected_error": "Óvænt villa kom upp við að reyna að yfirgefa spjallrásina",
+        "leave_server_notices_title": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
+        "leave_error_title": "Villa við að yfirgefa spjallrás",
+        "upgrade_error_title": "Villa við að uppfæra spjallrás",
+        "upgrade_error_description": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
+        "leave_server_notices_description": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana."
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3571,7 +3550,21 @@
         "failed_generic": "Aðgerð tókst ekki",
         "room_failed_title": "Mistókst að bjóða notendum í %(roomName)s",
         "room_failed_partial": "Við sendum hin boðin, en fólkinu hér fyrir neðan var ekki hægt að bjóða í <RoomName/>",
-        "room_failed_partial_title": "Sumar boðsbeiðnir var ekki hægt að senda"
+        "room_failed_partial_title": "Sumar boðsbeiðnir var ekki hægt að senda",
+        "invalid_address": "Óþekkjanlegt vistfang",
+        "error_permissions_space": "Þú hefur ekki heimild til að bjóða fólk á þetta svæði.",
+        "error_permissions_room": "Þú hefur ekki heimild til að bjóða fólk í þessa spjallrás.",
+        "error_already_invited_space": "Notandanum hefur nú þegar verið boðið á svæðið",
+        "error_already_invited_room": "Notandanum hefur nú þegar verið boðið á spjallrásina",
+        "error_already_joined_space": "Notandinn er nú þegar á svæðinu",
+        "error_already_joined_room": "Notandinn er nú þegar á spjallrásinni",
+        "error_user_not_found": "Notandinn er ekki til",
+        "error_profile_undisclosed": "Notandinn gæti verið til eða ekki",
+        "error_bad_state": "Notandinn þarf að vera afbannaður áður en að hægt er að bjóða þeim.",
+        "error_version_unsupported_space": "Heimaþjónn notandans styður ekki útgáfu svæðisins.",
+        "error_version_unsupported_room": "Heimaþjónn notandans styður ekki útgáfu spjallrásarinnar.",
+        "error_unknown": "Óþekkt villa á þjóni",
+        "to_space": "Bjóða inn á %(spaceName)s"
     },
     "scalar": {
         "error_create": "Gat ekki búið til viðmótshluta.",
@@ -3595,5 +3588,12 @@
         "resource_limits": "Þessi heimaþjónn er kominn fram yfir takmörk á tilföngum sínum.",
         "admin_contact": "<a>Hafðu samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þessa þjónustu.",
         "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar."
-    }
+    },
+    "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Á %(spaceName)s og %(count)s svæði til viðbótar.",
+        "other": "Á %(spaceName)s og %(count)s svæðum til viðbótar."
+    },
+    "in_space": "Á svæðinu %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

@@ -103,7 +103,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Error upgrading room": "Tuccḍa deg uleqqem n texxamt",
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
     "Restricted": "Yesεa tilas",
@@ -149,9 +148,6 @@
     "Set a Security Phrase": "Sbadu tafyirt taɣelsant",
     "Confirm Security Phrase": "Sentem tafyirt tuffirt",
     "Recovery Method Removed": "Tarrayt n ujebber tettwakkes",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Not a valid %(brand)s keyfile": "Afaylu n tsarut %(brand)s d arameɣtu",
-    "Unknown server error": "Tuccḍa n uqeddac d tarussint",
     "Dog": "Aqjun",
     "Horse": "Aεewdiw",
     "Pig": "Ilef",
@@ -178,10 +174,6 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Double check that your server supports the room version chosen and try again.": "Senqed akken ilaq ma yella aqeddac-inek·inem issefrak lqem n texxamtyettwafernen syen εreḍ tikkelt-nniḍen.",
-    "Unrecognised address": "Tansa ur tettwassen ara",
-    "You do not have permission to invite people to this room.": "Ur tesεiḍ ara tasiregt ad d-necdeḍ imdanen ɣer texxamt-a.",
-    "The user's homeserver does not support the version of the room.": "Aqeddac agejdan n useqdac ur issefrek ara lqem n texxamt yettwafernen.",
     "Change notification settings": "Snifel iɣewwaren n yilɣa",
     "Accept <policyLink /> to continue:": "Qbel <policyLink /> i wakken ad tkemmleḍ:",
     "in account data": "deg yisefka n umiḍan",
@@ -460,12 +452,6 @@
     "Show image": "Sken tugna",
     "Invalid base_url for m.identity_server": "D arameɣtu base_url i m.identity_server",
     "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
-    "Your browser does not support the required cryptography extensions": "Iminig-ik·im ur issefrak ara iseɣzaf n uwgelhen yettusran",
-    "Authentication check failed: incorrect password?": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?",
-    "Can't leave Server Notices room": "Ur nezmir ara ad neǧǧ taxxamt n yiwenniten n uqeddac",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Taxxamt-a tettuseqdac i yiznan yesɛan azal sɣur aqeddac agejdan, ɣef waya ur tezmireḍ ara ad tt-teǧǧeḍ.",
-    "Error leaving room": "Tuccaḍa deg tuffɣa seg texxamt",
-    "The user must be unbanned before they can be invited.": "Aseqdac ilaq ad yettwakkes uqbel ad izmiren ad t-id-snubegten.",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
     "Contact your <a>server admin</a>.": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
@@ -473,7 +459,6 @@
     "Bulk options": "Tixtiṛiyin s ubleɣ",
     "Accept all %(invitedRooms)s invites": "Qbel akk tinubgiwin %(invitedRooms)s",
     "Reject all %(invitedRooms)s invites": "Agi akk tinubgiwin %(invitedRooms)s",
-    "No media permissions": "Ulac tisirag n umidyat",
     "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
     "Request media permissions": "Suter tisirag n umidyat",
     "No Audio Outputs detected": "Ulac tuffɣiwin n umeslaw i d-yettwafen",
@@ -486,7 +471,6 @@
     "Room Addresses": "Tansiwin n texxamt",
     "Uploaded sound": "Ameslaw i d-yulin",
     "Set a new custom sound": "Sbadu ameslaw udmawan amaynut",
-    "Unban": "Asefsex n tigtin",
     "Error changing power level requirement": "Tuccḍa deg usnifel n tuttra n uswir afellay",
     "Error changing power level": "Tuccḍa deg usnifel n uswir afellay",
     "Unable to revoke sharing for email address": "Asefsex n beṭṭu n tansa n yimayl ur yeddi ara",
@@ -583,7 +567,6 @@
     "The room upgrade could not be completed": "Aleqqem n texxamt yegguma ad yemmed",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
-    "Unexpected server error trying to leave the room": "Tuccḍa n uqeddac ur nettwaṛǧa ara lawan n tuffɣa seg texxamt",
     "Securely cache encrypted messages locally for them to appear in search results.": "Ḥrez iznan iwgelhanen idiganen s wudem awurman i wakken ad d-banen deg yigmaḍ n unadi.",
     "The integration manager is offline or it cannot reach your homeserver.": "Amsefrak n umsidef ha-t-an beṛṛa n tuqqna neɣ ur yezmir ara ad yaweḍ ɣer uqeddac-ik·im agejdan.",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
@@ -658,7 +641,6 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "Tzemreḍ daɣen aḥraz uffir & tesferkeḍ tisura-ik·im deg yiɣewwaren.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Ilaq-ak·am ahat ad tesirgeḍ s ufus %(brand)s i unekcum ɣer usawaḍ/webcam",
     "Click the link in the email you received to verify and then click continue again.": "Sit ɣef useɣwen yella deg yimayl i teṭṭfeḍ i usenqed syen sit tikkelt tayeḍ ad tkemmleḍ.",
     "Discovery options will appear once you have added an email above.": "Tixtiṛiyin n usnirem ad d-banent akken ara ternuḍ imayl s ufella.",
     "Discovery options will appear once you have added a phone number above.": "Tixtiṛiyin n usnirem ad d-banent akken ara ternuḍ uṭṭun n tilifun s ufella.",
@@ -791,7 +773,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Izen-ik·im ur yettwazen ara acku aqeddac-a agejdan iɛedda talast n yiɣbula. Ttxil-k·m <a>nermes anedbal-ik·im n umeẓlu</a> i wakken ad tkemmleḍ aseqdec ameẓlu.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tɛerḍeḍ ad d-tsaliḍ tazmilt tufrint deg tesnakudt n teamt, maca ur tesɛiḍ ara tisirag ad d-tsekneḍ izen i d-teɛniḍ.",
     "Trophy": "Arraz",
-    "Unknown App": "Asnas arussin",
     "Cross-signing is ready for use.": "Azmul anmidag yewjed i useqdec.",
     "Cross-signing is not set up.": "Azmul anmidag ur yettwasebded ara.",
     "Backup version:": "Lqem n uklas:",
@@ -1209,7 +1190,8 @@
         "refresh": "Smiren",
         "mention": "Abdar",
         "submit": "Azen",
-        "send_report": "Azen aneqqis"
+        "send_report": "Azen aneqqis",
+        "unban": "Asefsex n tigtin"
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac",
@@ -1814,7 +1796,9 @@
         "cannot_call_yourself_description": "Ur tezmireḍ ara a temsawaleḍ d yiman-ik.",
         "no_permission_conference": "Tasiregt tlaq",
         "no_permission_conference_description": "Ur tesεiḍ ara tisirag ad tebduḍ asireg s usiwel deg texxamt-a",
-        "default_device": "Ibenk arussin"
+        "default_device": "Ibenk arussin",
+        "no_media_perms_title": "Ulac tisirag n umidyat",
+        "no_media_perms_description": "Ilaq-ak·am ahat ad tesirgeḍ s ufus %(brand)s i unekcum ɣer usawaḍ/webcam"
     },
     "Other": "Nniḍen",
     "Advanced": "Talqayt",
@@ -1901,7 +1885,10 @@
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
         "cancel_entering_passphrase_title": "Sefsex tafyirt tuffirt n uεeddi?",
         "cancel_entering_passphrase_description": "S tidet tebɣiḍ ad tesfesxeḍ asekcem n tefyirt tuffirt?",
-        "bootstrap_title": "Asebded n tsura"
+        "bootstrap_title": "Asebded n tsura",
+        "export_unsupported": "Iminig-ik·im ur issefrak ara iseɣzaf n uwgelhen yettusran",
+        "import_invalid_keyfile": "Afaylu n tsarut %(brand)s d arameɣtu",
+        "import_invalid_passphrase": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2047,7 +2034,8 @@
             "send_videos_this_room": "Azen tividyutin deg texxamt-a am wakken d kečč"
         },
         "error_need_to_be_logged_in": "Tesriḍ ad teqqneḍ.",
-        "error_need_invite_permission": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi."
+        "error_need_invite_permission": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
+        "no_name": "Asnas arussin"
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2134,7 +2122,13 @@
         "unread_notifications_predecessor": {
             "other": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a.",
             "one": "Ɣur-k·m %(count)s ilɣa ur nettwaɣra ara deg lqem yezrin n texxamt-a."
-        }
+        },
+        "leave_unexpected_error": "Tuccḍa n uqeddac ur nettwaṛǧa ara lawan n tuffɣa seg texxamt",
+        "leave_server_notices_title": "Ur nezmir ara ad neǧǧ taxxamt n yiwenniten n uqeddac",
+        "leave_error_title": "Tuccaḍa deg tuffɣa seg texxamt",
+        "upgrade_error_title": "Tuccḍa deg uleqqem n texxamt",
+        "upgrade_error_description": "Senqed akken ilaq ma yella aqeddac-inek·inem issefrak lqem n texxamtyettwafernen syen εreḍ tikkelt-nniḍen.",
+        "leave_server_notices_description": "Taxxamt-a tettuseqdac i yiznan yesɛan azal sɣur aqeddac agejdan, ɣef waya ur tezmireḍ ara ad tt-teǧǧeḍ."
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",
@@ -2170,7 +2164,12 @@
     },
     "invite": {
         "failed_title": "Ulamek i d-tnecdeḍ",
-        "failed_generic": "Tamhelt ur teddi ara"
+        "failed_generic": "Tamhelt ur teddi ara",
+        "invalid_address": "Tansa ur tettwassen ara",
+        "error_permissions_room": "Ur tesεiḍ ara tasiregt ad d-necdeḍ imdanen ɣer texxamt-a.",
+        "error_bad_state": "Aseqdac ilaq ad yettwakkes uqbel ad izmiren ad t-id-snubegten.",
+        "error_version_unsupported_room": "Aqeddac agejdan n useqdac ur issefrek ara lqem n texxamt yettwafernen.",
+        "error_unknown": "Tuccḍa n uqeddac d tarussint"
     },
     "scalar": {
         "error_create": "Timerna n uwiǧit ulamek.",
@@ -2192,5 +2191,6 @@
         "admin_contact": "Ttxil-k·m <a>nermes anedbal-ik·im n uqeddac</a> i wakken ad tkemmleḍ aseqdec n yibenk-a.",
         "mixed_content": "Ur tessawḍeḍ ara ad teqqneḍ ɣer uqeddac agejdan s HTTP mi ara yili URL n HTTPS deg ufeggag n yiminig-ik·im. Seqdec HTTPS neɣ <a>sermed isekripten ariɣelsanen</a>.",
         "tls": "Yegguma ad yeqqen ɣer uqeddac agejdan - ttxil-k·m senqed tuqqna-inek·inem, tḍemneḍ belli <a>aselken n SSL n uqeddac agejdan</a> yettwattkal, rnu aseɣzan n yiminig-nni ur issewḥal ara isutar."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

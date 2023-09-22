@@ -27,14 +27,10 @@
     "Default": "Predvolené",
     "Moderator": "Moderátor",
     "Reason": "Dôvod",
-    "Your browser does not support the required cryptography extensions": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
-    "Not a valid %(brand)s keyfile": "Toto nie je správny súbor s kľúčmi %(brand)s",
-    "Authentication check failed: incorrect password?": "Kontrola overenia zlyhala: Nesprávne heslo?",
     "Incorrect verification code": "Nesprávny overovací kód",
     "No display name": "Žiadne zobrazované meno",
     "Failed to set display name": "Nepodarilo sa nastaviť zobrazované meno",
     "Authentication": "Overenie",
-    "Unban": "Povoliť vstup",
     "Failed to ban user": "Nepodarilo sa zakázať používateľa",
     "Failed to mute user": "Nepodarilo sa umlčať používateľa",
     "Failed to change power level": "Nepodarilo sa zmeniť úroveň oprávnenia",
@@ -134,8 +130,6 @@
     "Unable to remove contact information": "Nie je možné odstrániť kontaktné informácie",
     "<not supported>": "<nepodporované>",
     "Reject all %(invitedRooms)s invites": "Odmietnuť všetky %(invitedRooms)s pozvania",
-    "No media permissions": "Nepovolený prístup k médiám",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Mali by ste aplikácii %(brand)s ručne udeliť právo pristupovať k mikrofónu a kamere",
     "No Microphones detected": "Neboli rozpoznané žiadne mikrofóny",
     "No Webcams detected": "Neboli rozpoznané žiadne kamery",
     "Notifications": "Oznámenia",
@@ -199,8 +193,6 @@
     "Clear Storage and Sign Out": "Vymazať úložisko a odhlásiť sa",
     "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná.",
-    "Can't leave Server Notices room": "Nie je možné opustiť miestnosť Oznamy zo servera",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Táto miestnosť je určená na dôležité oznamy a správy od správcov domovského servera, preto ju nie je možné opustiť.",
     "Share Link to User": "Zdieľať odkaz na používateľa",
     "Share room": "Zdieľať miestnosť",
     "Share Room": "Zdieľať miestnosť",
@@ -232,9 +224,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
     "Updating %(brand)s": "Prebieha aktualizácia %(brand)s",
-    "Unrecognised address": "Nerozpoznaná adresa",
-    "You do not have permission to invite people to this room.": "Nemáte povolenie pozývať ľudí do tejto miestnosti.",
-    "Unknown server error": "Neznáma chyba servera",
     "Delete Backup": "Vymazať zálohu",
     "Unable to load key backup status": "Nie je možné načítať stav zálohy kľúčov",
     "Set up": "Nastaviť",
@@ -266,7 +255,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste si nenastavili nový spôsob obnovenia, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Set up Secure Messages": "Nastavenie zabezpečených správ",
     "Go to Settings": "Otvoriť nastavenia",
-    "The user must be unbanned before they can be invited.": "Tomuto používateľovi musíte pred odoslaním pozvania povoliť vstup.",
     "Dog": "Pes",
     "Cat": "Mačka",
     "Lion": "Lev",
@@ -380,14 +368,10 @@
     "Success!": "Úspech!",
     "Recovery Method Removed": "Odstránený spôsob obnovenia",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
-    "The user's homeserver does not support the version of the room.": "Používateľov domovský server nepodporuje verziu miestnosti.",
     "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
-    "Error upgrading room": "Chyba pri aktualizácii miestnosti",
-    "Double check that your server supports the room version chosen and try again.": "Uistite sa, že domovský server podporuje zvolenú verziu miestnosti a skúste znovu.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Secret storage public key:": "Verejný kľúč bezpečného úložiska:",
     "in account data": "v údajoch účtu",
     "Cannot connect to integration manager": "Nie je možné sa pripojiť k integračnému serveru",
@@ -498,7 +482,6 @@
     "Show advanced": "Ukázať pokročilé možnosti",
     "Explore rooms": "Preskúmať miestnosti",
     "All settings": "Všetky nastavenia",
-    "Unexpected server error trying to leave the room": "Neočakávaná chyba servera pri pokuse opustiť miestnosť",
     "Italics": "Kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -817,7 +800,6 @@
     "Public space": "Verejný priestor",
     "Recommended for public spaces.": "Odporúča sa pre verejné priestory.",
     "This may be useful for public spaces.": "To môže byť užitočné pre verejné priestory.",
-    "Share your public space": "Zdieľajte svoj verejný priestor",
     "Rooms and spaces": "Miestnosti a priestory",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
@@ -922,7 +904,6 @@
     "Recently Direct Messaged": "Nedávno zaslané priame správy",
     "Something went wrong with your invite to %(roomName)s": "Niečo sa pokazilo s vašou pozvánkou do miestnosti %(roomName)s",
     "Invite to space": "Pozvať do priestoru",
-    "Invite to %(spaceName)s": "Pozvať do priestoru %(spaceName)s",
     "Invite to this space": "Pozvať do tohto priestoru",
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
     "Hide sessions": "Skryť relácie",
@@ -1172,7 +1153,6 @@
     "Open dial pad": "Otvoriť číselník",
     "Continuing without email": "Pokračovanie bez e-mailu",
     "Take a picture": "Urobiť fotografiu",
-    "Error leaving room": "Chyba pri odchode z miestnosti",
     "Wrong file type": "Nesprávny typ súboru",
     "Device verified": "Zariadenie overené",
     "Room members": "Členovia miestnosti",
@@ -1203,7 +1183,6 @@
     "Remember this": "Zapamätať si toto",
     "Dial pad": "Číselník",
     "Decline All": "Zamietnuť všetky",
-    "Unknown App": "Neznáma aplikácia",
     "Security Key": "Bezpečnostný kľúč",
     "Security Phrase": "Bezpečnostná fráza",
     "Submit logs": "Odoslať záznamy",
@@ -1449,7 +1428,6 @@
     "Safeguard against losing access to encrypted messages & data": "Zabezpečte sa proti strate šifrovaných správ a údajov",
     "Use app for a better experience": "Použite aplikáciu pre lepší zážitok",
     "Review to ensure your account is safe": "Skontrolujte, či je vaše konto bezpečné",
-    "That's fine": "To je v poriadku",
     "Cross-signing is not set up.": "Krížové podpisovanie nie je nastavené.",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "Osoba, ktorá vás pozvala, už odišla.",
     "Sorry, your homeserver is too old to participate here.": "Prepáčte, ale váš domovský server je príliš zastaralý na to, aby sa tu mohol zúčastniť.",
     "There was an error joining.": "Pri pripájaní došlo k chybe.",
-    "The user's homeserver does not support the version of the space.": "Používateľov domovský server nepodporuje verziu priestoru.",
-    "User may or may not exist": "Používateľ môže, ale nemusí existovať",
-    "User does not exist": "Používateľ neexistuje",
-    "User is already in the room": "Používateľ sa už nachádza v miestnosti",
-    "User is already in the space": "Používateľ sa už nachádza v priestore",
-    "User is already invited to the room": "Používateľ už bol pozvaný do miestnosti",
-    "User is already invited to the space": "Používateľ už bol pozvaný do priestoru",
-    "You do not have permission to invite people to this space.": "Nemáte povolenie pozývať ľudí do tohto priestoru.",
     "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
     "%(count)s participants": {
         "one": "1 účastník",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Zobraziť miestnosti",
     "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania",
     "Join the room to participate": "Pripojte sa k miestnosti a zúčastnite sa",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "V %(spaceName)s a v %(count)s ďalšom priestore.",
-        "other": "V %(spaceName)s a %(count)s ďalších priestoroch."
-    },
-    "In %(spaceName)s.": "V priestore %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "Stop and close": "Zastaviť a zavrieť",
     "Online community members": "Členovia online komunity",
     "Coworkers and teams": "Spolupracovníci a tímy",
@@ -1912,7 +1876,6 @@
     "Mentions and Keywords": "Zmienky a kľúčové slová",
     "Other things we think you might be interested in:": "Ďalšie veci, ktoré by vás mohli zaujímať:",
     "Show a badge <badge/> when keywords are used in a room.": "Zobraziť odznak <badge/> pri použití kľúčových slov v miestnosti.",
-    "User cannot be invited until they are unbanned": "Používateľ nemôže byť pozvaný, kým nie je zrušený jeho zákaz",
     "Ask to join": "Požiadať o pripojenie",
     "People cannot join unless access is granted.": "Ľudia sa nemôžu pripojiť, pokiaľ im nebude udelený prístup.",
     "Email summary": "Emailový súhrn",
@@ -2152,7 +2115,8 @@
         "send_report": "Odoslať hlásenie",
         "clear": "Vyčistiť",
         "exit_fullscreeen": "Ukončiť režim celej obrazovky",
-        "enter_fullscreen": "Prejsť na celú obrazovku"
+        "enter_fullscreen": "Prejsť na celú obrazovku",
+        "unban": "Povoliť vstup"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -3445,7 +3409,9 @@
         "no_permission_conference_description": "V tejto miestnosti nemáte povolenie začať konferenčný hovor",
         "default_device": "Predvolené zariadenie",
         "failed_call_live_broadcast_title": "Nie je možné začať hovor",
-        "failed_call_live_broadcast_description": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor."
+        "failed_call_live_broadcast_description": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor.",
+        "no_media_perms_title": "Nepovolený prístup k médiám",
+        "no_media_perms_description": "Mali by ste aplikácii %(brand)s ručne udeliť právo pristupovať k mikrofónu a kamere"
     },
     "Other": "Ďalšie",
     "Advanced": "Pokročilé",
@@ -3570,7 +3536,10 @@
         "verification_requested_toast_title": "Vyžiadané overenie",
         "cancel_entering_passphrase_title": "Zrušiť zadanie prístupovej frázy?",
         "cancel_entering_passphrase_description": "Naozaj chcete zrušiť zadávanie prístupovej frázy?",
-        "bootstrap_title": "Príprava kľúčov"
+        "bootstrap_title": "Príprava kľúčov",
+        "export_unsupported": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
+        "import_invalid_keyfile": "Toto nie je správny súbor s kľúčmi %(brand)s",
+        "import_invalid_passphrase": "Kontrola overenia zlyhala: Nesprávne heslo?"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3593,7 +3562,8 @@
         "pseudonymous_usage_data": "Pomôžte nám identifikovať problémy a zlepšiť %(analyticsOwner)s zdieľaním anonymných údajov o používaní. Aby sme pochopili, ako ľudia používajú viacero zariadení, vygenerujeme náhodný identifikátor zdieľaný vašimi zariadeniami.",
         "bullet_1": "<Bold>Nezaznamenávame ani neprofilujeme</Bold> žiadne údaje o účte",
         "bullet_2": "<Bold>Nezdieľame</Bold> informácie s tretími stranami",
-        "disable_prompt": "Túto funkciu môžete kedykoľvek vypnúť v nastaveniach"
+        "disable_prompt": "Túto funkciu môžete kedykoľvek vypnúť v nastaveniach",
+        "accept_button": "To je v poriadku"
     },
     "chat_effects": {
         "confetti_description": "Odošle danú správu s konfetami",
@@ -3872,7 +3842,8 @@
         },
         "error_need_to_be_logged_in": "Mali by ste byť prihlásení.",
         "error_need_invite_permission": "Musíte mať oprávnenie pozývať používateľov, aby ste to mohli urobiť.",
-        "error_need_kick_permission": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť."
+        "error_need_kick_permission": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
+        "no_name": "Neznáma aplikácia"
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -3986,7 +3957,8 @@
             "home": "Domov priestoru",
             "explore": "Preskúmať miestnosti",
             "manage_and_explore": "Spravovať a preskúmať miestnosti"
-        }
+        },
+        "share_public": "Zdieľajte svoj verejný priestor"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -4106,7 +4078,13 @@
         "unread_notifications_predecessor": {
             "one": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítané oznámenie.",
             "other": "V predchádzajúcej verzii tejto miestnosti máte %(count)s neprečítaných oznámení."
-        }
+        },
+        "leave_unexpected_error": "Neočakávaná chyba servera pri pokuse opustiť miestnosť",
+        "leave_server_notices_title": "Nie je možné opustiť miestnosť Oznamy zo servera",
+        "leave_error_title": "Chyba pri odchode z miestnosti",
+        "upgrade_error_title": "Chyba pri aktualizácii miestnosti",
+        "upgrade_error_description": "Uistite sa, že domovský server podporuje zvolenú verziu miestnosti a skúste znovu.",
+        "leave_server_notices_description": "Táto miestnosť je určená na dôležité oznamy a správy od správcov domovského servera, preto ju nie je možné opustiť."
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
@@ -4181,7 +4159,22 @@
         "failed_generic": "Operácia zlyhala",
         "room_failed_title": "Nepodarilo pozvať používateľov do %(roomName)s",
         "room_failed_partial": "Ostatným sme pozvánky poslali, ale nižšie uvedené osoby nemohli byť pozvané do <RoomName/>",
-        "room_failed_partial_title": "Niektoré pozvánky nebolo možné odoslať"
+        "room_failed_partial_title": "Niektoré pozvánky nebolo možné odoslať",
+        "invalid_address": "Nerozpoznaná adresa",
+        "unban_first_title": "Používateľ nemôže byť pozvaný, kým nie je zrušený jeho zákaz",
+        "error_permissions_space": "Nemáte povolenie pozývať ľudí do tohto priestoru.",
+        "error_permissions_room": "Nemáte povolenie pozývať ľudí do tejto miestnosti.",
+        "error_already_invited_space": "Používateľ už bol pozvaný do priestoru",
+        "error_already_invited_room": "Používateľ už bol pozvaný do miestnosti",
+        "error_already_joined_space": "Používateľ sa už nachádza v priestore",
+        "error_already_joined_room": "Používateľ sa už nachádza v miestnosti",
+        "error_user_not_found": "Používateľ neexistuje",
+        "error_profile_undisclosed": "Používateľ môže, ale nemusí existovať",
+        "error_bad_state": "Tomuto používateľovi musíte pred odoslaním pozvania povoliť vstup.",
+        "error_version_unsupported_space": "Používateľov domovský server nepodporuje verziu priestoru.",
+        "error_version_unsupported_room": "Používateľov domovský server nepodporuje verziu miestnosti.",
+        "error_unknown": "Neznáma chyba servera",
+        "to_space": "Pozvať do priestoru %(spaceName)s"
     },
     "scalar": {
         "error_create": "Nie je možné vytvoriť widget.",
@@ -4208,5 +4201,12 @@
         "connection": "Nastal problém pri komunikácii s domovským serverom. Skúste to prosím znova.",
         "mixed_content": "K domovskému serveru nie je možné pripojiť sa použitím protokolu HTTP keďže v adresnom riadku prehliadača máte HTTPS adresu. Použite protokol HTTPS alebo <a>povolte nezabezpečené skripty</a>.",
         "tls": "Nie je možné pripojiť sa k domovskému serveru - skontrolujte prosím funkčnosť vášho pripojenia na internet. Uistite sa že <a>certifikát domovského servera</a> je dôveryhodný a že žiaden doplnok nainštalovaný v prehliadači nemôže blokovať požiadavky."
-    }
+    },
+    "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "V %(spaceName)s a v %(count)s ďalšom priestore.",
+        "other": "V %(spaceName)s a %(count)s ďalších priestoroch."
+    },
+    "in_space": "V priestore %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

@@ -27,7 +27,6 @@
     "Unable to add email address": "E-Mail-Adresse konnte nicht hinzugefügt werden",
     "Unable to remove contact information": "Die Kontaktinformationen können nicht gelöscht werden",
     "Unable to verify email address.": "Die E-Mail-Adresse konnte nicht verifiziert werden.",
-    "Unban": "Verbannung aufheben",
     "unknown error code": "Unbekannter Fehlercode",
     "Upload avatar": "Profilbild hochladen",
     "Verification Pending": "Verifizierung ausstehend",
@@ -112,8 +111,6 @@
     "Invited": "Eingeladen",
     "No Webcams detected": "Keine Webcam erkannt",
     "No Microphones detected": "Keine Mikrofone erkannt",
-    "No media permissions": "Keine Medienberechtigungen",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bist du sicher, dass du den Raum „%(roomName)s“ verlassen möchtest?",
     "Custom level": "Selbstdefiniertes Berechtigungslevel",
     "Uploading %(filename)s": "%(filename)s wird hochgeladen",
@@ -133,9 +130,6 @@
         "one": "(~%(count)s Ergebnis)",
         "other": "(~%(count)s Ergebnisse)"
     },
-    "Your browser does not support the required cryptography extensions": "Dein Browser unterstützt die benötigten Verschlüsselungserweiterungen nicht",
-    "Not a valid %(brand)s keyfile": "Keine gültige %(brand)s-Schlüsseldatei",
-    "Authentication check failed: incorrect password?": "Authentifizierung fehlgeschlagen: Falsches Passwort?",
     "This will allow you to reset your password and receive notifications.": "Dies ermöglicht es dir, dein Passwort zurückzusetzen und Benachrichtigungen zu empfangen.",
     "Delete widget": "Widget entfernen",
     "AM": "a. m.",
@@ -200,8 +194,6 @@
     "Clear Storage and Sign Out": "Speicher leeren und abmelden",
     "We encountered an error trying to restore your previous session.": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen.",
-    "Can't leave Server Notices room": "Der Raum für Server-Mitteilungen kann nicht verlassen werden",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Du kannst diesen Raum nicht verlassen, da dieser Raum für wichtige Mitteilungen vom Heim-Server verwendet wird.",
     "Share Link to User": "Link zu Benutzer teilen",
     "Share room": "Raum teilen",
     "Share Room": "Raum teilen",
@@ -248,8 +240,6 @@
     "Unable to create key backup": "Konnte Schlüsselsicherung nicht erstellen",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
-    "You do not have permission to invite people to this room.": "Du hast keine Berechtigung, Personen in diesen Raum einzuladen.",
-    "Unknown server error": "Unbekannter Server-Fehler",
     "Unable to load key backup status": "Konnte Status der Schlüsselsicherung nicht laden",
     "Set up": "Einrichten",
     "Unable to load commit detail: %(msg)s": "Konnte Übermittlungsdetails nicht laden: %(msg)s",
@@ -262,7 +252,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Wenn du die neue Wiederherstellungsmethode nicht festgelegt hast, versucht ein Angreifer möglicherweise, auf dein Konto zuzugreifen. Ändere dein Kontopasswort und lege sofort eine neue Wiederherstellungsmethode in den Einstellungen fest.",
     "Set up Secure Messages": "Richte sichere Nachrichten ein",
     "Go to Settings": "Gehe zu Einstellungen",
-    "Unrecognised address": "Nicht erkannte Adresse",
     "The following users may not exist": "Eventuell existieren folgende Benutzer nicht",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
     "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
@@ -373,7 +362,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Bulk options": "Sammeloptionen",
     "Join millions for free on the largest public server": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
-    "The user must be unbanned before they can be invited.": "Verbannte Nutzer können nicht eingeladen werden.",
     "Scissors": "Schere",
     "Accept all %(invitedRooms)s invites": "Akzeptiere alle %(invitedRooms)s Einladungen",
     "Error updating main address": "Fehler beim Aktualisieren der Hauptadresse",
@@ -381,7 +369,6 @@
     "Power level": "Berechtigungsstufe",
     "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "Could not load user profile": "Konnte Nutzerprofil nicht laden",
-    "The user's homeserver does not support the version of the room.": "Die Raumversion wird vom Heim-Server des Benutzers nicht unterstützt.",
     "Sign Up": "Registrieren",
     "Reason: %(reason)s": "Grund: %(reason)s",
     "Forget this room": "Diesen Raum entfernen",
@@ -406,14 +393,11 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Wenn du die Verbindung zu deinem Identitäts-Server trennst, kannst du nicht mehr von anderen Benutzern gefunden werden und andere nicht mehr per E-Mail oder Telefonnummer einladen.",
     "Disconnect from the identity server <idserver />?": "Verbindung zum Identitäts-Server <idserver /> trennen?",
     "Deactivate account": "Benutzerkonto deaktivieren",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Accept <policyLink /> to continue:": "Akzeptiere <policyLink />, um fortzufahren:",
     "Change identity server": "Identitäts-Server wechseln",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du solltest deine <b>persönlichen Daten</b> vom Identitäts-Server <idserver /> entfernen, bevor du die Verbindung trennst. Leider ist der Identitäts-Server <idserver /> derzeit außer Betrieb oder kann nicht erreicht werden.",
     "You should:": "Du solltest:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "Überprüfe deinen Browser auf Erweiterungen, die den Identitäts-Server blockieren könnten (z. B. Privacy Badger)",
-    "Error upgrading room": "Fehler bei Raumaktualisierung",
-    "Double check that your server supports the room version chosen and try again.": "Überprüfe nochmal ob dein Server die ausgewählte Raumversion unterstützt und versuche es nochmal.",
     "Verify this session": "Sitzung verifizieren",
     "Lock": "Schloss",
     "Later": "Später",
@@ -788,11 +772,8 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "Du kannst auch in den Einstellungen Sicherungen einrichten und deine Schlüssel verwalten.",
     "Explore public rooms": "Öffentliche Räume erkunden",
     "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
-    "Unexpected server error trying to leave the room": "Unerwarteter Server-Fehler beim Versuch den Raum zu verlassen",
-    "Error leaving room": "Fehler beim Verlassen des Raums",
     "Set up Secure Backup": "Schlüsselsicherung einrichten",
     "Information": "Information",
-    "Unknown App": "Unbekannte App",
     "Not encrypted": "Nicht verschlüsselt",
     "Room settings": "Raumeinstellungen",
     "Take a picture": "Bildschirmfoto",
@@ -1146,7 +1127,6 @@
     "Invite people": "Personen einladen",
     "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
-    "Share your public space": "Teile deinen öffentlichen Space mit der Welt",
     "Invite to this space": "In diesen Space einladen",
     "Private space": "Privater Space",
     "Public space": "Öffentlicher Space",
@@ -1165,7 +1145,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename, E-Mail-Adresse oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite to %(roomName)s": "In %(roomName)s einladen",
-    "Invite to %(spaceName)s": "In %(spaceName)s einladen",
     "Spaces": "Spaces",
     "Invite with email or username": "Personen mit E-Mail oder Benutzernamen einladen",
     "You can change these anytime.": "Du kannst diese jederzeit ändern.",
@@ -1458,7 +1437,6 @@
         "one": "%(spaceName)s und %(count)s anderer",
         "other": "%(spaceName)s und %(count)s andere"
     },
-    "That's fine": "Das ist okay",
     "Spaces you know that contain this space": "Spaces, die diesen Space enthalten und in denen du Mitglied bist",
     "Open in OpenStreetMap": "In OpenStreetMap öffnen",
     "Recent searches": "Kürzliche Gesucht",
@@ -1587,14 +1565,6 @@
     "Sorry, your homeserver is too old to participate here.": "Verzeihung, dein Heim-Server ist hierfür zu alt.",
     "There was an error joining.": "Es gab einen Fehler beim Betreten.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s ist in mobilen Browsern experimentell. Für eine bessere Erfahrung nutze unsere App.",
-    "The user's homeserver does not support the version of the space.": "Die Space-Version wird vom Heim-Server des Benutzers nicht unterstützt.",
-    "User may or may not exist": "Diese Person existiert möglicherweise nicht",
-    "User does not exist": "Diese Person existiert nicht",
-    "User is already in the room": "Die Person ist bereits im Raum",
-    "User is already in the space": "Die Person ist bereits im Space",
-    "User is already invited to the room": "Die Person wurde bereits eingeladen",
-    "User is already invited to the space": "Die Person wurde bereits eingeladen",
-    "You do not have permission to invite people to this space.": "Du hast keine Berechtigung, Personen in diesen Space einzuladen.",
     "Live location sharing": "Echtzeit-Standortfreigabe",
     "View live location": "Echtzeit-Standort anzeigen",
     "Ban from room": "Bannen",
@@ -1701,17 +1671,11 @@
     "We're creating a room with %(names)s": "Wir erstellen einen Raum mit %(names)s",
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Unterhaltung werden Ende-zu-Ende-verschlüsselt.",
     "Deactivating your account is a permanent action — be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich — sei vorsichtig!",
-    "In spaces %(space1Name)s and %(space2Name)s.": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Für bestmögliche Sicherheit verifiziere deine Sitzungen und melde dich von allen ab, die du nicht erkennst oder nutzt.",
     "Sessions": "Sitzungen",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Im Space %(spaceName)s und %(count)s weiteren Spaces.",
-        "other": "In %(spaceName)s und %(count)s weiteren Spaces."
-    },
-    "In %(spaceName)s.": "Im Space %(spaceName)s.",
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Un-maximise": "Maximieren rückgängig machen",
@@ -1905,7 +1869,6 @@
     "Your device ID": "Deine Geräte-ID",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
     "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
-    "User cannot be invited until they are unbanned": "Benutzer kann nicht eingeladen werden, solange er nicht entbannt ist",
     "People, Mentions and Keywords": "Personen, Erwähnungen und Schlüsselwörter",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualisierung:</strong> Wir haben die Benachrichtigungseinstellungen vereinfacht, damit Optionen schneller zu finden sind. Einige benutzerdefinierte Einstellungen werden hier nicht angezeigt, sind aber dennoch aktiv. Wenn du fortfährst, könnten sich einige Einstellungen ändern. <a>Erfahre mehr</a>",
     "Email Notifications": "E-Mail-Benachrichtigungen",
@@ -2157,7 +2120,8 @@
         "send_report": "Bericht senden",
         "clear": "Löschen",
         "exit_fullscreeen": "Vollbild verlassen",
-        "enter_fullscreen": "Vollbild"
+        "enter_fullscreen": "Vollbild",
+        "unban": "Verbannung aufheben"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -3450,7 +3414,9 @@
         "no_permission_conference_description": "Du hast keine Berechtigung, ein Konferenzgespräch in diesem Raum zu starten",
         "default_device": "Standardgerät",
         "failed_call_live_broadcast_title": "Kann keinen Anruf beginnen",
-        "failed_call_live_broadcast_description": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen."
+        "failed_call_live_broadcast_description": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
+        "no_media_perms_title": "Keine Medienberechtigungen",
+        "no_media_perms_description": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst"
     },
     "Other": "Sonstiges",
     "Advanced": "Erweitert",
@@ -3575,7 +3541,10 @@
         "verification_requested_toast_title": "Verifizierung angefragt",
         "cancel_entering_passphrase_title": "Eingabe der Passphrase abbrechen?",
         "cancel_entering_passphrase_description": "Bist du sicher, dass du die Eingabe der Passphrase abbrechen möchtest?",
-        "bootstrap_title": "Schlüssel werden eingerichtet"
+        "bootstrap_title": "Schlüssel werden eingerichtet",
+        "export_unsupported": "Dein Browser unterstützt die benötigten Verschlüsselungserweiterungen nicht",
+        "import_invalid_keyfile": "Keine gültige %(brand)s-Schlüsseldatei",
+        "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3598,7 +3567,8 @@
         "pseudonymous_usage_data": "Hilf uns dabei Probleme zu identifizieren und %(analyticsOwner)s zu verbessern, indem du anonyme Nutzungsdaten teilst. Um zu verstehen, wie Personen mehrere Geräte verwenden, werden wir eine zufällige Kennung generieren, die zwischen deinen Geräten geteilt wird.",
         "bullet_1": "Wir erfassen und analysieren <Bold>keine</Bold> Kontodaten",
         "bullet_2": "Wir teilen <Bold>keine</Bold> Informationen mit Dritten",
-        "disable_prompt": "Du kannst dies jederzeit in den Einstellungen deaktivieren"
+        "disable_prompt": "Du kannst dies jederzeit in den Einstellungen deaktivieren",
+        "accept_button": "Das ist okay"
     },
     "chat_effects": {
         "confetti_description": "Sendet die Nachricht mit Konfetti",
@@ -3877,7 +3847,8 @@
         },
         "error_need_to_be_logged_in": "Du musst angemeldet sein.",
         "error_need_invite_permission": "Du musst die Berechtigung \"Benutzer einladen\" haben, um diese Aktion ausführen zu können.",
-        "error_need_kick_permission": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun."
+        "error_need_kick_permission": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
+        "no_name": "Unbekannte App"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -3991,7 +3962,8 @@
             "home": "Space-Übersicht",
             "explore": "Räume erkunden",
             "manage_and_explore": "Räume erkunden und verwalten"
-        }
+        },
+        "share_public": "Teile deinen öffentlichen Space mit der Welt"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -4111,7 +4083,13 @@
         "unread_notifications_predecessor": {
             "one": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raumes.",
             "other": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raums."
-        }
+        },
+        "leave_unexpected_error": "Unerwarteter Server-Fehler beim Versuch den Raum zu verlassen",
+        "leave_server_notices_title": "Der Raum für Server-Mitteilungen kann nicht verlassen werden",
+        "leave_error_title": "Fehler beim Verlassen des Raums",
+        "upgrade_error_title": "Fehler bei Raumaktualisierung",
+        "upgrade_error_description": "Überprüfe nochmal ob dein Server die ausgewählte Raumversion unterstützt und versuche es nochmal.",
+        "leave_server_notices_description": "Du kannst diesen Raum nicht verlassen, da dieser Raum für wichtige Mitteilungen vom Heim-Server verwendet wird."
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4186,7 +4164,22 @@
         "failed_generic": "Aktion fehlgeschlagen",
         "room_failed_title": "Fehler beim Einladen von Benutzern in %(roomName)s",
         "room_failed_partial": "Die anderen wurden gesendet, aber die folgenden Leute konnten leider nicht in <RoomName/> eingeladen werden",
-        "room_failed_partial_title": "Einige Einladungen konnten nicht versendet werden"
+        "room_failed_partial_title": "Einige Einladungen konnten nicht versendet werden",
+        "invalid_address": "Nicht erkannte Adresse",
+        "unban_first_title": "Benutzer kann nicht eingeladen werden, solange er nicht entbannt ist",
+        "error_permissions_space": "Du hast keine Berechtigung, Personen in diesen Space einzuladen.",
+        "error_permissions_room": "Du hast keine Berechtigung, Personen in diesen Raum einzuladen.",
+        "error_already_invited_space": "Die Person wurde bereits eingeladen",
+        "error_already_invited_room": "Die Person wurde bereits eingeladen",
+        "error_already_joined_space": "Die Person ist bereits im Space",
+        "error_already_joined_room": "Die Person ist bereits im Raum",
+        "error_user_not_found": "Diese Person existiert nicht",
+        "error_profile_undisclosed": "Diese Person existiert möglicherweise nicht",
+        "error_bad_state": "Verbannte Nutzer können nicht eingeladen werden.",
+        "error_version_unsupported_space": "Die Space-Version wird vom Heim-Server des Benutzers nicht unterstützt.",
+        "error_version_unsupported_room": "Die Raumversion wird vom Heim-Server des Benutzers nicht unterstützt.",
+        "error_unknown": "Unbekannter Server-Fehler",
+        "to_space": "In %(spaceName)s einladen"
     },
     "scalar": {
         "error_create": "Widget kann nicht erstellt werden.",
@@ -4213,5 +4206,12 @@
         "connection": "Es gab ein Problem bei der Kommunikation mit dem Heim-Server. Bitte versuche es später erneut.",
         "mixed_content": "Es kann keine Verbindung zum Heim-Server via HTTP aufgebaut werden, wenn die Adresszeile des Browsers eine HTTPS-URL enthält. Entweder HTTPS verwenden oder alternativ <a>unsichere Skripte erlauben</a>.",
         "tls": "Verbindung zum Heim-Server fehlgeschlagen – bitte überprüfe die Internetverbindung und stelle sicher, dass dem <a>SSL-Zertifikat deines Heimservers</a> vertraut wird und dass Anfragen nicht durch eine Browser-Erweiterung blockiert werden."
-    }
+    },
+    "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Im Space %(spaceName)s und %(count)s weiteren Spaces.",
+        "other": "In %(spaceName)s und %(count)s weiteren Spaces."
+    },
+    "in_space": "Im Space %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

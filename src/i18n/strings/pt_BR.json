@@ -26,7 +26,6 @@
     "Unable to add email address": "Não foi possível adicionar um endereço de e-mail",
     "Unable to remove contact information": "Não foi possível remover informação de contato",
     "Unable to verify email address.": "Não foi possível confirmar o endereço de e-mail.",
-    "Unban": "Remover banimento",
     "unknown error code": "código de erro desconhecido",
     "Upload avatar": "Enviar uma foto de perfil",
     "Verification Pending": "Confirmação pendente",
@@ -112,8 +111,6 @@
     "Invited": "Convidada(o)",
     "No Microphones detected": "Não foi detectado nenhum microfone",
     "No Webcams detected": "Nenhuma câmera detectada",
-    "No media permissions": "Não tem permissões para acessar a mídia",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera",
     "Are you sure you want to leave the room '%(roomName)s'?": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Home": "Home",
@@ -133,9 +130,6 @@
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
     },
-    "Your browser does not support the required cryptography extensions": "O seu navegador não suporta as extensões de criptografia necessárias",
-    "Not a valid %(brand)s keyfile": "Não é um arquivo de chave válido do %(brand)s",
-    "Authentication check failed: incorrect password?": "Falha ao checar a autenticação: senha incorreta?",
     "This will allow you to reset your password and receive notifications.": "Isso permitirá que você redefina sua senha e receba notificações.",
     "Restricted": "Restrito",
     "PM": "PM",
@@ -191,8 +185,6 @@
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
-    "You do not have permission to invite people to this room.": "Você não tem permissão para convidar pessoas para esta sala.",
-    "Unknown server error": "Erro de servidor desconhecido",
     "Please contact your homeserver administrator.": "Por favor, entre em contato com o administrador do seu homeserver.",
     "Delete Backup": "Remover backup",
     "Unable to load key backup status": "Não foi possível carregar o status do backup da chave",
@@ -244,8 +236,6 @@
     "Popout widget": "Widget Popout",
     "Send Logs": "Enviar relatórios",
     "Failed to decrypt %(failedCount)s sessions!": "Falha ao descriptografar as sessões de %(failedCount)s!",
-    "Can't leave Server Notices room": "Não é possível sair da sala Avisos do Servidor",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Esta sala é usada para mensagens importantes do Homeserver, então você não pode sair dela.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Você não pode enviar nenhuma mensagem até revisar e concordar com <consentLink>nossos termos e condições</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sua mensagem não foi enviada porque este homeserver atingiu seu Limite de usuário ativo mensal. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Sua mensagem não foi enviada porque este servidor local excedeu o limite de recursos. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
@@ -262,7 +252,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não definiu a nova opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina uma nova opção de recuperação imediatamente nas Configurações.",
     "Set up Secure Messages": "Configurar mensagens seguras",
     "Go to Settings": "Ir para as configurações",
-    "Unrecognised address": "Endereço não reconhecido",
     "The following users may not exist": "Os seguintes usuários podem não existir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Não é possível encontrar perfis para os IDs da Matrix listados abaixo - você gostaria de convidá-los mesmo assim?",
     "Invite anyway and never warn me again": "Convide mesmo assim e nunca mais me avise",
@@ -303,7 +292,6 @@
     "Glasses": "Óculos",
     "Spanner": "Chave inglesa",
     "Santa": "Papai-noel",
-    "The user must be unbanned before they can be invited.": "O banimento do usuário precisa ser removido antes de ser convidado.",
     "Thumbs up": "Joinha",
     "Umbrella": "Guarda-chuva",
     "Hourglass": "Ampulheta",
@@ -354,15 +342,11 @@
     "Voice & Video": "Voz e vídeo",
     "Room information": "Informação da sala",
     "Room Addresses": "Endereços da sala",
-    "Error upgrading room": "Erro atualizando a sala",
-    "Double check that your server supports the room version chosen and try again.": "Verifique se seu servidor suporta a versão de sala escolhida e tente novamente.",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
     "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
     "Ask this user to verify their session, or manually verify it below.": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
     "Not Trusted": "Não confiável",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "The user's homeserver does not support the version of the room.": "O servidor desta(e) usuária(o) não suporta a versão desta sala.",
     "Later": "Mais tarde",
     "Your homeserver has exceeded its user limit.": "Seu servidor ultrapassou seu limite de usuárias(os).",
     "Your homeserver has exceeded one of its resource limits.": "Seu servidor local excedeu um de seus limites de recursos.",
@@ -764,9 +748,6 @@
     "Use a different passphrase?": "Usar uma frase secreta diferente?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Você confirmou %(deviceName)s (%(deviceId)s) com êxito!",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
-    "Unexpected server error trying to leave the room": "Erro inesperado no servidor, ao tentar sair da sala",
-    "Error leaving room": "Erro ao sair da sala",
-    "Unknown App": "App desconhecido",
     "Widgets": "Widgets",
     "Edit widgets, bridges & bots": "Editar widgets, integrações e bots",
     "Add widgets, bridges & bots": "Adicionar widgets, integrações e bots",
@@ -1146,14 +1127,12 @@
     "Failed to save space settings.": "Falha ao salvar as configurações desse espaço.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
-    "Invite to %(spaceName)s": "Convidar para %(spaceName)s",
     "Create a new room": "Criar uma nova sala",
     "Spaces": "Espaços",
     "Invite to this space": "Convidar para este espaço",
     "Your message was sent": "A sua mensagem foi enviada",
     "Space options": "Opções do espaço",
     "Invite people": "Convidar pessoas",
-    "Share your public space": "Compartilhar o seu espaço público",
     "Share invite link": "Compartilhar link de convite",
     "Click to copy": "Clique para copiar",
     "Create a space": "Criar um espaço",
@@ -1293,7 +1272,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "That's fine": "Isso é bom",
     "Cross-signing is ready but keys are not backed up.": "A verificação está pronta mas as chaves não tem um backup configurado.",
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
     "Pin to sidebar": "Fixar na barra lateral",
@@ -1418,9 +1396,6 @@
         "other": "Visto por %(count)s pessoas"
     },
     "Sessions": "Sessões",
-    "User is already in the space": "O usuário já está no espaço",
-    "User is already in the room": "O usuário já está na sala",
-    "User does not exist": "O usuário não existe",
     "You were disconnected from the call. (Error: %(message)s)": "Você foi desconectado da chamada. (Erro: %(message)s)",
     "Remove messages sent by me": "",
     "%(count)s people joined": {
@@ -1435,16 +1410,6 @@
     "The person who invited you has already left.": "A pessoa que o convidou já saiu.",
     "There was an error joining.": "Ocorreu um erro ao entrar.",
     "Unknown room": "Sala desconhecida",
-    "User may or may not exist": "O usuário pode ou não existir",
-    "User is already invited to the room": "O usuário já foi convidado para a sala",
-    "User is already invited to the space": "O usuário já foi convidado para o espaço",
-    "You do not have permission to invite people to this space.": "Você não tem permissão para convidar pessoas para este espaço.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Em %(spaceName)s e %(count)s outro espaço.",
-        "other": "Em %(spaceName)s e %(count)s outros espaços."
-    },
-    "In %(spaceName)s.": "No espaço %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -1627,7 +1592,8 @@
         "submit": "Enviar",
         "send_report": "Enviar relatório",
         "exit_fullscreeen": "Sair da tela cheia",
-        "enter_fullscreen": "Entrar em tela cheia"
+        "enter_fullscreen": "Entrar em tela cheia",
+        "unban": "Remover banimento"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -2546,7 +2512,9 @@
         "no_permission_conference_description": "Você não tem permissão para iniciar uma chamada em grupo nesta sala",
         "default_device": "Aparelho padrão",
         "failed_call_live_broadcast_title": "Não é possível iniciar uma chamada",
-        "failed_call_live_broadcast_description": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada."
+        "failed_call_live_broadcast_description": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
+        "no_media_perms_title": "Não tem permissões para acessar a mídia",
+        "no_media_perms_description": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera"
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -2653,7 +2621,10 @@
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
         "cancel_entering_passphrase_title": "Cancelar a introdução da frase de senha?",
         "cancel_entering_passphrase_description": "Tem certeza que quer cancelar a introdução da frase de senha?",
-        "bootstrap_title": "Configurar chaves"
+        "bootstrap_title": "Configurar chaves",
+        "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
+        "import_invalid_keyfile": "Não é um arquivo de chave válido do %(brand)s",
+        "import_invalid_passphrase": "Falha ao checar a autenticação: senha incorreta?"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2671,7 +2642,8 @@
     "analytics": {
         "enable_prompt": "Ajude a melhorar %(analyticsOwner)s",
         "consent_migration": "Você consentiu anteriormente em compartilhar dados de uso anônimos conosco. Estamos atualizando como isso funciona.",
-        "learn_more": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros. <LearnMoreLink>Saiba mais</LearnMoreLink>"
+        "learn_more": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros. <LearnMoreLink>Saiba mais</LearnMoreLink>",
+        "accept_button": "Isso é bom"
     },
     "chat_effects": {
         "confetti_description": "Envia a mensagem com confetes",
@@ -2894,7 +2866,8 @@
         },
         "error_need_to_be_logged_in": "Você precisa estar logado.",
         "error_need_invite_permission": "Para fazer isso, precisa ter permissão para convidar outras pessoas.",
-        "error_need_kick_permission": "Você precisa ter permissão de expulsar usuários para fazer isso."
+        "error_need_kick_permission": "Você precisa ter permissão de expulsar usuários para fazer isso.",
+        "no_name": "App desconhecido"
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -2971,7 +2944,8 @@
         "landing_welcome": "Boas-vindas ao <name/>",
         "context_menu": {
             "explore": "Explorar salas"
-        }
+        },
+        "share_public": "Compartilhar o seu espaço público"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -3047,7 +3021,13 @@
         "unread_notifications_predecessor": {
             "other": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala.",
             "one": "Você tem %(count)s notificações não lidas em uma versão anterior desta sala."
-        }
+        },
+        "leave_unexpected_error": "Erro inesperado no servidor, ao tentar sair da sala",
+        "leave_server_notices_title": "Não é possível sair da sala Avisos do Servidor",
+        "leave_error_title": "Erro ao sair da sala",
+        "upgrade_error_title": "Erro atualizando a sala",
+        "upgrade_error_description": "Verifique se seu servidor suporta a versão de sala escolhida e tente novamente.",
+        "leave_server_notices_description": "Esta sala é usada para mensagens importantes do Homeserver, então você não pode sair dela."
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -3097,7 +3077,20 @@
         "failed_generic": "A operação falhou",
         "room_failed_title": "Falha ao convidar usuários para %(roomName)s",
         "room_failed_partial": "Nós enviamos aos outros, mas as pessoas abaixo não puderam ser convidadas para <RoomName/>",
-        "room_failed_partial_title": "Alguns convites não puderam ser enviados"
+        "room_failed_partial_title": "Alguns convites não puderam ser enviados",
+        "invalid_address": "Endereço não reconhecido",
+        "error_permissions_space": "Você não tem permissão para convidar pessoas para este espaço.",
+        "error_permissions_room": "Você não tem permissão para convidar pessoas para esta sala.",
+        "error_already_invited_space": "O usuário já foi convidado para o espaço",
+        "error_already_invited_room": "O usuário já foi convidado para a sala",
+        "error_already_joined_space": "O usuário já está no espaço",
+        "error_already_joined_room": "O usuário já está na sala",
+        "error_user_not_found": "O usuário não existe",
+        "error_profile_undisclosed": "O usuário pode ou não existir",
+        "error_bad_state": "O banimento do usuário precisa ser removido antes de ser convidado.",
+        "error_version_unsupported_room": "O servidor desta(e) usuária(o) não suporta a versão desta sala.",
+        "error_unknown": "Erro de servidor desconhecido",
+        "to_space": "Convidar para %(spaceName)s"
     },
     "scalar": {
         "error_create": "Não foi possível criar o widget.",
@@ -3123,5 +3116,12 @@
         "connection": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
         "mixed_content": "Uma conexão com o servidor local via HTTP não pode ser estabelecida se a barra de endereços do navegador contiver um endereço HTTPS. Use HTTPS ou, em vez disso, permita ao navegador executar <a>scripts não seguros</a>.",
         "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede."
-    }
+    },
+    "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Em %(spaceName)s e %(count)s outro espaço.",
+        "other": "Em %(spaceName)s e %(count)s outros espaços."
+    },
+    "in_space": "No espaço %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

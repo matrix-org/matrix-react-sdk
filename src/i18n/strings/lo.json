@@ -324,7 +324,6 @@
     "Error changing power level requirement": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງຄວາມຕ້ອງການລະດັບພະລັງງານ",
     "Reason": "ເຫດຜົນ",
     "Banned by %(displayName)s": "ຫ້າມໂດຍ %(displayName)s",
-    "Unban": "ຍົກເລີກການຫ້າມ",
     "Failed to unban": "ຍົກເລີກບໍ່ສໍາເລັດ",
     "Browse": "ຄົ້ນຫາ",
     "Set a new custom sound": "ຕັ້ງສຽງແບບກຳນົດເອງ",
@@ -349,8 +348,6 @@
     "Audio Output": "ສຽງອອກ",
     "Request media permissions": "ຮ້ອງຂໍການອະນຸຍາດສື່ມວນຊົນ",
     "Missing media permissions, click the button below to request.": "ບໍ່ອະນຸຍາດສື່, ກົດໄປທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຮ້ອງຂໍ.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "ທ່ານອາດຈະຈໍາເປັນຕ້ອງໄດ້ອະນຸຍາດໃຫ້ %(brand)sເຂົ້າເຖິງໄມໂຄຣໂຟນ/ເວັບແຄມຂອງທ່ານ",
-    "No media permissions": "ບໍ່ມີການອະນຸຍາດສື່",
     "Group all your rooms that aren't part of a space in one place.": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ.",
     "Rooms outside of a space": "ຫ້ອງຢູ່ນອກພື້ນທີ່",
     "Group all your people in one place.": "ຈັດກຸ່ມຄົນທັງໝົດຂອງເຈົ້າຢູ່ບ່ອນດຽວ.",
@@ -1187,34 +1184,7 @@
     "Don't miss a reply": "ຢ່າພາດການຕອບກັບ",
     "Later": "ຕໍ່ມາ",
     "Review to ensure your account is safe": "ກວດສອບໃຫ້ແນ່ໃຈວ່າບັນຊີຂອງທ່ານປອດໄພ",
-    "That's fine": "ບໍ່ເປັນຫຍັງ",
-    "Unknown App": "ແອັບທີ່ບໍ່ຮູ້ຈັກ",
-    "Share your public space": "ແບ່ງປັນພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
-    "Invite to %(spaceName)s": "ຊີນໄປທີ່ %(spaceName)s",
-    "Double check that your server supports the room version chosen and try again.": "ກວດເບິ່ງຄືນວ່າເຊີບເວີຂອງທ່ານຮອງຮັບເວີຊັນຫ້ອງທີ່ເລືອກແລ້ວ ແລະ ລອງໃໝ່ອີກ.",
-    "Error upgrading room": "ເກີດຄວາມຜິດພາດໃນການຍົກລະດັບຫ້ອງ",
     "Unnamed room": "ບໍ່ມີຊື່ຫ້ອງ",
-    "Unknown server error": "ຄວາມຜິດພາດຂອງເຊີບເວີທີ່ບໍ່ຮູ້ຈັກ",
-    "The user's homeserver does not support the version of the room.": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງຫ້ອງ.",
-    "The user's homeserver does not support the version of the space.": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງພື້ນທີ່ດັ່ງກ່າວ.",
-    "The user must be unbanned before they can be invited.": "ຜູ້ໃຊ້ຕ້ອງຍົກເລີກການຫ້າມກ່ອນທີ່ຈະສາມາດເຊີນໄດ້.",
-    "User may or may not exist": "ຜູ້ໃຊ້ອາດມີ ຫຼືບໍ່ມີຢູ່",
-    "User does not exist": "ບໍ່ມີຜູ້ໃຊ້",
-    "User is already in the room": "ຜູ້ໃຊ້ຢູ່ໃນຫ້ອງແລ້ວ",
-    "User is already in the space": "ຜູ້ໃຊ້ຢູ່ໃນພື້ນທີ່ແລ້ວ",
-    "User is already invited to the room": "ໄດ້ເຊີນຜູ້ໃຊ້ເຂົ້າຫ້ອງແລ້ວ",
-    "User is already invited to the space": "ຜູ້ໃຊ້ໄດ້ຖືກເຊີນເຂົ້າໄປໃນພຶ້ນທີ່ແລ້ວ",
-    "You do not have permission to invite people to this room.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຊີນຄົນເຂົ້າຫ້ອງນີ້.",
-    "You do not have permission to invite people to this space.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຊີນຄົນເຂົ້າມາໃນພື້ນທີ່ນີ້.",
-    "Unrecognised address": "ບໍ່ຮັບຮູ້ທີ່ຢູ່",
-    "Authentication check failed: incorrect password?": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?",
-    "Not a valid %(brand)s keyfile": "ບໍ່ແມ່ນ %(brand)s ຟຮາຍຫຼັກ ທີ່ຖືກຕ້ອງ",
-    "Your browser does not support the required cryptography extensions": "ບຣາວເຊີຂອງທ່ານບໍ່ຮອງຮັບການເພິ່ມເຂົ້າລະຫັດລັບທີ່ຕ້ອງການ",
-    "Error leaving room": "ເກີດຄວາມຜິດພາດໃນຄະນະທີ່ອອກຈາກຫ້ອງ",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "ຫ້ອງນີ້ໃຊ້ສໍາລັບຂໍ້ຄວາມທີ່ສໍາຄັນຈາກ Homeserver, ດັ່ງນັ້ນທ່ານບໍ່ສາມາດອອກຈາກມັນ.",
-    "Can't leave Server Notices room": "ບໍ່ສາມາດອອກຈາກຫ້ອງແຈ້ງເຕືອນຂອງເຊີບເວີໄດ້",
-    "Unexpected server error trying to leave the room": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດຂອງເຊີບເວີ ໃນຄະນະທີ່ພະຍາຍາມອອກຈາກຫ້ອງ",
-    "%(name)s (%(userId)s)": "%(name)s(%(userId)s)",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ແລະ %(count)s ອື່ນໆ",
         "other": "%(spaceName)s ແລະ %(count)s ອື່ນໆ"
@@ -1859,7 +1829,8 @@
         "mention": "ກ່າວເຖິງ",
         "submit": "ສົ່ງ",
         "send_report": "ສົ່ງບົດລາຍງານ",
-        "clear": "ຈະແຈ້ງ"
+        "clear": "ຈະແຈ້ງ",
+        "unban": "ຍົກເລີກການຫ້າມ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -2852,7 +2823,9 @@
         "transfer_failed_description": "ການໂອນສາຍບໍ່ສຳເລັດ",
         "no_permission_conference": "ຕ້ອງການອະນຸຍາດ",
         "no_permission_conference_description": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລິເລີ່ມການໂທປະຊຸມໃນຫ້ອງນີ້",
-        "default_device": "ອຸປະກອນເລີ່ມຕົ້ນ"
+        "default_device": "ອຸປະກອນເລີ່ມຕົ້ນ",
+        "no_media_perms_title": "ບໍ່ມີການອະນຸຍາດສື່",
+        "no_media_perms_description": "ທ່ານອາດຈະຈໍາເປັນຕ້ອງໄດ້ອະນຸຍາດໃຫ້ %(brand)sເຂົ້າເຖິງໄມໂຄຣໂຟນ/ເວັບແຄມຂອງທ່ານ"
     },
     "Other": "ອື່ນໆ",
     "Advanced": "ຂັ້ນສູງ",
@@ -2970,7 +2943,10 @@
         "verification_requested_toast_title": "ຂໍການຢັ້ງຢືນ",
         "cancel_entering_passphrase_title": "ຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານບໍ?",
         "cancel_entering_passphrase_description": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານ?",
-        "bootstrap_title": "ການຕັ້ງຄ່າກະແຈ"
+        "bootstrap_title": "ການຕັ້ງຄ່າກະແຈ",
+        "export_unsupported": "ບຣາວເຊີຂອງທ່ານບໍ່ຮອງຮັບການເພິ່ມເຂົ້າລະຫັດລັບທີ່ຕ້ອງການ",
+        "import_invalid_keyfile": "ບໍ່ແມ່ນ %(brand)s ຟຮາຍຫຼັກ ທີ່ຖືກຕ້ອງ",
+        "import_invalid_passphrase": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -2993,7 +2969,8 @@
         "pseudonymous_usage_data": "ຊ່ວຍພວກເຮົາລະບຸບັນຫາ ແລະ ປັບປຸງ %(analyticsOwner)s ໂດຍການແບ່ງປັນຂໍ້ມູນການນຳໃຊ້ທີ່ບໍ່ເປີດເຜີຍຊື່. ເພື່ອເຂົ້າໃຈວິທີທີ່ຄົນໃຊ້ຫຼາຍອຸປະກອນ, ພວກເຮົາຈະສ້າງຕົວລະບຸແບບສຸ່ມ, ແບ່ງປັນໂດຍອຸປະກອນຂອງທ່ານ.",
         "bullet_1": "ພວກເຮົາ <Bold>ບໍ່</Bold> ບັນທຶກ ຫຼື ປະຫວັດຂໍ້ມູນບັນຊີໃດໆ",
         "bullet_2": "ພວກເຮົາ <Bold>ບໍ່</Bold> ແບ່ງປັນຂໍ້ມູນກັບພາກສ່ວນທີສາມ",
-        "disable_prompt": "ທ່ານສາມາດປິດຕັ້ງຄ່າໄດ້ທຸກເວລາ"
+        "disable_prompt": "ທ່ານສາມາດປິດຕັ້ງຄ່າໄດ້ທຸກເວລາ",
+        "accept_button": "ບໍ່ເປັນຫຍັງ"
     },
     "chat_effects": {
         "confetti_description": "ສົ່ງຂໍ້ຄວາມພ້ອມດ້ວຍ confetti",
@@ -3252,7 +3229,8 @@
             "see_msgtype_sent_active_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງໃຊ້ງານຂອງທ່ານ"
         },
         "error_need_to_be_logged_in": "ທ່ານຈໍາເປັນຕ້ອງເຂົ້າສູ່ລະບົບ.",
-        "error_need_invite_permission": "ທ່ານຈະຕ້ອງເຊີນຜູ້ໃຊ້ໃຫ້ເຮັດແນວນັ້ນ."
+        "error_need_invite_permission": "ທ່ານຈະຕ້ອງເຊີນຜູ້ໃຊ້ໃຫ້ເຮັດແນວນັ້ນ.",
+        "no_name": "ແອັບທີ່ບໍ່ຮູ້ຈັກ"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3336,7 +3314,8 @@
             "home": "ພຶ້ນທີ່ home",
             "explore": "ການສຳຫຼວດຫ້ອງ",
             "manage_and_explore": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ"
-        }
+        },
+        "share_public": "ແບ່ງປັນພື້ນທີ່ສາທາລະນະຂອງທ່ານ"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3444,7 +3423,13 @@
         "unread_notifications_predecessor": {
             "one": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້.",
             "other": "ທ່ານມີ %(count)s ການແຈ້ງເຕືອນທີ່ຍັງບໍ່ໄດ້ອ່ານຢູ່ໃນສະບັບກ່ອນໜ້າຂອງຫ້ອງນີ້."
-        }
+        },
+        "leave_unexpected_error": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດຂອງເຊີບເວີ ໃນຄະນະທີ່ພະຍາຍາມອອກຈາກຫ້ອງ",
+        "leave_server_notices_title": "ບໍ່ສາມາດອອກຈາກຫ້ອງແຈ້ງເຕືອນຂອງເຊີບເວີໄດ້",
+        "leave_error_title": "ເກີດຄວາມຜິດພາດໃນຄະນະທີ່ອອກຈາກຫ້ອງ",
+        "upgrade_error_title": "ເກີດຄວາມຜິດພາດໃນການຍົກລະດັບຫ້ອງ",
+        "upgrade_error_description": "ກວດເບິ່ງຄືນວ່າເຊີບເວີຂອງທ່ານຮອງຮັບເວີຊັນຫ້ອງທີ່ເລືອກແລ້ວ ແລະ ລອງໃໝ່ອີກ.",
+        "leave_server_notices_description": "ຫ້ອງນີ້ໃຊ້ສໍາລັບຂໍ້ຄວາມທີ່ສໍາຄັນຈາກ Homeserver, ດັ່ງນັ້ນທ່ານບໍ່ສາມາດອອກຈາກມັນ."
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3500,7 +3485,21 @@
         "failed_generic": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
         "room_failed_title": "ໃນການເຊີນຜູ້ໃຊ້ໄປຫາ %(roomName)s ບໍ່ສຳເລັດ",
         "room_failed_partial": "ພວກເຮົາໄດ້ສົ່ງຄົນອື່ນແລ້ວ, ແຕ່ຄົນລຸ່ມນີ້ບໍ່ສາມາດໄດ້ຮັບເຊີນໃຫ້ເຂົ້າຮ່ວມ <RoomName/>",
-        "room_failed_partial_title": "ບໍ່ສາມາດສົ່ງບາງຄຳເຊີນໄດ້"
+        "room_failed_partial_title": "ບໍ່ສາມາດສົ່ງບາງຄຳເຊີນໄດ້",
+        "invalid_address": "ບໍ່ຮັບຮູ້ທີ່ຢູ່",
+        "error_permissions_space": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຊີນຄົນເຂົ້າມາໃນພື້ນທີ່ນີ້.",
+        "error_permissions_room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຊີນຄົນເຂົ້າຫ້ອງນີ້.",
+        "error_already_invited_space": "ຜູ້ໃຊ້ໄດ້ຖືກເຊີນເຂົ້າໄປໃນພຶ້ນທີ່ແລ້ວ",
+        "error_already_invited_room": "ໄດ້ເຊີນຜູ້ໃຊ້ເຂົ້າຫ້ອງແລ້ວ",
+        "error_already_joined_space": "ຜູ້ໃຊ້ຢູ່ໃນພື້ນທີ່ແລ້ວ",
+        "error_already_joined_room": "ຜູ້ໃຊ້ຢູ່ໃນຫ້ອງແລ້ວ",
+        "error_user_not_found": "ບໍ່ມີຜູ້ໃຊ້",
+        "error_profile_undisclosed": "ຜູ້ໃຊ້ອາດມີ ຫຼືບໍ່ມີຢູ່",
+        "error_bad_state": "ຜູ້ໃຊ້ຕ້ອງຍົກເລີກການຫ້າມກ່ອນທີ່ຈະສາມາດເຊີນໄດ້.",
+        "error_version_unsupported_space": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງພື້ນທີ່ດັ່ງກ່າວ.",
+        "error_version_unsupported_room": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງຫ້ອງ.",
+        "error_unknown": "ຄວາມຜິດພາດຂອງເຊີບເວີທີ່ບໍ່ຮູ້ຈັກ",
+        "to_space": "ຊີນໄປທີ່ %(spaceName)s"
     },
     "scalar": {
         "error_create": "ບໍ່ສາມາດສ້າງ widget ໄດ້.",
@@ -3524,5 +3523,6 @@
         "connection": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
         "mixed_content": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
         "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ."
-    }
+    },
+    "name_and_id": "%(name)s(%(userId)s)"
 }

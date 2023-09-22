@@ -207,8 +207,6 @@
     "Room Topic": "Jututoa teema",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
     "General failure": "Üldine viga",
-    "No media permissions": "Meediaõigused puuduvad",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Sa võib-olla pead andma %(brand)s'ile loa mikrofoni ja veebikaamera kasutamiseks",
     "Missing media permissions, click the button below to request.": "Meediaga seotud õigused puuduvad. Nende nõutamiseks klõpsi järgnevat nuppu.",
     "Request media permissions": "Nõuta meediaõigusi",
     "Any of the following data may be shared:": "Järgnevaid andmeid võib jagada:",
@@ -218,14 +216,6 @@
     "%(brand)s URL": "%(brand)s'i aadress",
     "Room ID": "Jututoa tunnus",
     "Widget ID": "Vidina tunnus",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Your browser does not support the required cryptography extensions": "Sinu brauser ei toeta vajalikke krüptoteeke",
-    "Not a valid %(brand)s keyfile": "See ei ole sobilik võtmefail %(brand)s'i jaoks",
-    "Authentication check failed: incorrect password?": "Autentimine ebaõnnestus: kas salasõna pole õige?",
-    "Unrecognised address": "Tundmatu aadress",
-    "You do not have permission to invite people to this room.": "Sul pole õigusi siia jututuppa osalejate kutsumiseks.",
-    "The user's homeserver does not support the version of the room.": "Kasutaja koduserver ei toeta selle jututoa versiooni.",
-    "Unknown server error": "Tundmatu serveriviga",
     "No display name": "Kuvatav nimi puudub",
     "Failed to set display name": "Kuvatava nime määramine ebaõnnestus",
     "Display Name": "Kuvatav nimi",
@@ -520,8 +510,6 @@
     "Sign in with SSO": "Logi sisse kasutades SSO'd ehk ühekordset autentimist",
     "Failed to reject invitation": "Kutse tagasi lükkamine ei õnnestunud",
     "This room is not public. You will not be able to rejoin without an invite.": "See ei ole avalik jututuba. Ilma kutseta sa ei saa uuesti liituda.",
-    "Can't leave Server Notices room": "Serveriteadete jututoast ei saa lahkuda",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Seda jututuba kasutatakse sinu koduserveri oluliste teadete jaoks ja seega sa ei saa sealt lahkuda.",
     "Upload all": "Laadi kõik üles",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
     "Switch theme": "Vaheta teemat",
@@ -546,7 +534,6 @@
     "Popout widget": "Ava rakendus eraldi aknas",
     "More options": "Täiendavad seadistused",
     "Language Dropdown": "Keelevalik",
-    "The user must be unbanned before they can be invited.": "Enne kutse saatmist peab kasutajalt olema eemaldatud ligipääsukeeld.",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Contact your <a>server admin</a>.": "Võta ühendust <a>oma serveri haldajaga</a>.",
@@ -562,7 +549,6 @@
     "None": "Ei ühelgi juhul",
     "Ignored users": "Eiratud kasutajad",
     "Failed to unban": "Ligipääsu taastamine ei õnnestunud",
-    "Unban": "Taasta ligipääs",
     "Banned by %(displayName)s": "Ligipääs on keelatud %(displayName)s poolt",
     "Error changing power level requirement": "Viga õiguste taseme nõuete muutmisel",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Jututoa õiguste taseme nõuete muutmisel tekkis viga. Kontrolli, et sul on selleks piisavalt õigusi ja proovi uuesti.",
@@ -694,8 +680,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
     "Favourited": "Märgitud lemmikuks",
     "Forget Room": "Unusta jututuba ära",
-    "Error upgrading room": "Viga jututoa uuendamisel",
-    "Double check that your server supports the room version chosen and try again.": "Kontrolli veel kord, kas sinu koduserver toetab seda jututoa versiooni ning proovi uuesti.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Sinu kontol on turvahoidlas olemas risttunnustamise identiteet, kuid seda veel ei loeta antud sessioonis usaldusväärseks.",
     "well formed": "korrektses vormingus",
     "unexpected type": "tundmatut tüüpi",
@@ -788,11 +772,8 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
-    "Unexpected server error trying to leave the room": "Jututoast lahkumisel tekkis serveris ootamatu viga",
-    "Error leaving room": "Viga jututoast lahkumisel",
     "Set up Secure Backup": "Võta kasutusele turvaline varundus",
     "Information": "Teave",
-    "Unknown App": "Tundmatu rakendus",
     "Not encrypted": "Krüptimata",
     "Room settings": "Jututoa seadistused",
     "Take a picture": "Tee foto",
@@ -1143,7 +1124,6 @@
     "Failed to save space settings.": "Kogukonnakeskuse seadistuste salvestamine ei õnnestunud.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
-    "Invite to %(spaceName)s": "Kutsu kogukonnakeskusesse %(spaceName)s",
     "Create a new room": "Loo uus jututuba",
     "Spaces": "Kogukonnakeskused",
     "Space selection": "Kogukonnakeskuse valik",
@@ -1154,7 +1134,6 @@
     "Your message was sent": "Sinu sõnum sai saadetud",
     "Space options": "Kogukonnakeskus eelistused",
     "Leave space": "Lahku kogukonnakeskusest",
-    "Share your public space": "Jaga oma avalikku kogukonnakeskust",
     "Invite people": "Kutsu teisi kasutajaid",
     "Share invite link": "Jaga kutse linki",
     "Click to copy": "Kopeerimiseks klõpsa",
@@ -1473,7 +1452,6 @@
     "Invite to space": "Kutsu siia kogukonnakeskusesse",
     "Start new chat": "Alusta uut vestlust",
     "Recently viewed": "Hiljuti vaadatud",
-    "That's fine": "Sobib",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
         "other": "%(count)s häält antud. Tulemuste nägemiseks tee oma valik"
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "See, kes saatis sulle kutse, on juba lahkunud.",
     "Sorry, your homeserver is too old to participate here.": "Vabandust, sinu koduserver on siin osalemiseks liiga vana.",
     "There was an error joining.": "Liitumisel tekkis viga.",
-    "The user's homeserver does not support the version of the space.": "Kasutaja koduserver ei toeta selle kogukonna versiooni.",
-    "User may or may not exist": "Kasutaja võib olla, aga ka võib mitte olla olemas",
-    "User does not exist": "Sellist kasutajat pole olemas",
-    "User is already in the room": "Kasutaja juba on jututoa selle liige",
-    "User is already in the space": "Kasutaja juba on kogukonna selle liige",
-    "User is already invited to the room": "Sellel kasutajal juba on kutse siia jututuppa",
-    "User is already invited to the space": "Sellel kasutajal juba on kutse siia kogukonda",
-    "You do not have permission to invite people to this space.": "Sul pole õigusi siia kogukonda osalejate kutsumiseks.",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
         "one": "1 osaleja",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
     "Join the room to participate": "Osalemiseks liitu jututoaga",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Kogukonnas %(spaceName)s ja veel %(count)s's kogukonnas.",
-        "other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas."
-    },
-    "In %(spaceName)s.": "Kogukonnas %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "Stop and close": "Peata ja sulge",
     "Online community members": "Võrgupõhise kogukonna liikmed",
     "Coworkers and teams": "Kolleegid ja töörühmad",
@@ -1905,7 +1869,6 @@
     "Your device ID": "Sinu seadme tunnus",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
     "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
-    "User cannot be invited until they are unbanned": "Kasutajale ei saa kutset saata enne, kui temalt on suhtluskeeld eemaldatud",
     "Ask to join": "Küsi võimalust liitumiseks",
     "People cannot join unless access is granted.": "Kasutajade ei saa liituda enne, kui selleks vastav luba on antud.",
     "Email Notifications": "E-posti teel saadetavad teavitused",
@@ -2152,7 +2115,8 @@
         "send_report": "Saada veateade",
         "clear": "Eemalda",
         "exit_fullscreeen": "Lülita täisekraanivaade välja",
-        "enter_fullscreen": "Lülita täisekraanivaade sisse"
+        "enter_fullscreen": "Lülita täisekraanivaade sisse",
+        "unban": "Taasta ligipääs"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -3445,7 +3409,9 @@
         "no_permission_conference_description": "Sul ei ole piisavalt õigusi, et selles jututoas alustada konverentsikõnet",
         "default_device": "Vaikimisi seade",
         "failed_call_live_broadcast_title": "Kõne algatamine ei õnnestu",
-        "failed_call_live_broadcast_description": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne."
+        "failed_call_live_broadcast_description": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne.",
+        "no_media_perms_title": "Meediaõigused puuduvad",
+        "no_media_perms_description": "Sa võib-olla pead andma %(brand)s'ile loa mikrofoni ja veebikaamera kasutamiseks"
     },
     "Other": "Muud",
     "Advanced": "Teave arendajatele",
@@ -3570,7 +3536,10 @@
         "verification_requested_toast_title": "Verifitseerimistaotlus on saadetud",
         "cancel_entering_passphrase_title": "Kas katkestame paroolifraasi sisestamise?",
         "cancel_entering_passphrase_description": "Kas oled kindel et sa soovid katkestada paroolifraasi sisestamise?",
-        "bootstrap_title": "Võtame krüptovõtmed kasutusele"
+        "bootstrap_title": "Võtame krüptovõtmed kasutusele",
+        "export_unsupported": "Sinu brauser ei toeta vajalikke krüptoteeke",
+        "import_invalid_keyfile": "See ei ole sobilik võtmefail %(brand)s'i jaoks",
+        "import_invalid_passphrase": "Autentimine ebaõnnestus: kas salasõna pole õige?"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3593,7 +3562,8 @@
         "pseudonymous_usage_data": "Võimalike vigade leidmiseks ja %(analyticsOwner)s'i arendamiseks jaga meiega anonüümseid andmeid. Selleks, et mõistaksime, kuidas kasutajad erinevaid seadmeid pruugivad me loome sinu seadmetele ühise juhusliku tunnuse.",
         "bullet_1": "Meie <Bold>ei</Bold> salvesta ega profileeri sinu kasutajakonto andmeid",
         "bullet_2": "Meie <Bold>ei</Bold> jaga teavet kolmandate osapooltega",
-        "disable_prompt": "Seadistustest saad alati määrata, et see funktsionaalsus pole kasutusel"
+        "disable_prompt": "Seadistustest saad alati määrata, et see funktsionaalsus pole kasutusel",
+        "accept_button": "Sobib"
     },
     "chat_effects": {
         "confetti_description": "Lisab sellele sõnumile serpentiine",
@@ -3872,7 +3842,8 @@
         },
         "error_need_to_be_logged_in": "Sa peaksid olema sisse loginud.",
         "error_need_invite_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele kutse saatmiseks.",
-        "error_need_kick_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks."
+        "error_need_kick_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks.",
+        "no_name": "Tundmatu rakendus"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -3986,7 +3957,8 @@
             "home": "Kogukonnakeskuse avaleht",
             "explore": "Tutvu jututubadega",
             "manage_and_explore": "Halda ja uuri jututubasid"
-        }
+        },
+        "share_public": "Jaga oma avalikku kogukonnakeskust"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -4106,7 +4078,13 @@
         "unread_notifications_predecessor": {
             "other": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitust.",
             "one": "Sinul on selle jututoa varasemas versioonis %(count)s lugemata teavitus."
-        }
+        },
+        "leave_unexpected_error": "Jututoast lahkumisel tekkis serveris ootamatu viga",
+        "leave_server_notices_title": "Serveriteadete jututoast ei saa lahkuda",
+        "leave_error_title": "Viga jututoast lahkumisel",
+        "upgrade_error_title": "Viga jututoa uuendamisel",
+        "upgrade_error_description": "Kontrolli veel kord, kas sinu koduserver toetab seda jututoa versiooni ning proovi uuesti.",
+        "leave_server_notices_description": "Seda jututuba kasutatakse sinu koduserveri oluliste teadete jaoks ja seega sa ei saa sealt lahkuda."
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -4181,7 +4159,22 @@
         "failed_generic": "Toiming ei õnnestunud",
         "room_failed_title": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud",
         "room_failed_partial": "Teised kasutajad said kutse, kuid allpool toodud kasutajatele ei õnnestunud saata kutset <RoomName/> jututuppa",
-        "room_failed_partial_title": "Mõnede kutsete saatmine ei õnnestunud"
+        "room_failed_partial_title": "Mõnede kutsete saatmine ei õnnestunud",
+        "invalid_address": "Tundmatu aadress",
+        "unban_first_title": "Kasutajale ei saa kutset saata enne, kui temalt on suhtluskeeld eemaldatud",
+        "error_permissions_space": "Sul pole õigusi siia kogukonda osalejate kutsumiseks.",
+        "error_permissions_room": "Sul pole õigusi siia jututuppa osalejate kutsumiseks.",
+        "error_already_invited_space": "Sellel kasutajal juba on kutse siia kogukonda",
+        "error_already_invited_room": "Sellel kasutajal juba on kutse siia jututuppa",
+        "error_already_joined_space": "Kasutaja juba on kogukonna selle liige",
+        "error_already_joined_room": "Kasutaja juba on jututoa selle liige",
+        "error_user_not_found": "Sellist kasutajat pole olemas",
+        "error_profile_undisclosed": "Kasutaja võib olla, aga ka võib mitte olla olemas",
+        "error_bad_state": "Enne kutse saatmist peab kasutajalt olema eemaldatud ligipääsukeeld.",
+        "error_version_unsupported_space": "Kasutaja koduserver ei toeta selle kogukonna versiooni.",
+        "error_version_unsupported_room": "Kasutaja koduserver ei toeta selle jututoa versiooni.",
+        "error_unknown": "Tundmatu serveriviga",
+        "to_space": "Kutsu kogukonnakeskusesse %(spaceName)s"
     },
     "scalar": {
         "error_create": "Vidina loomine ei õnnestunud.",
@@ -4208,5 +4201,12 @@
         "connection": "Serveriühenduses tekkis viga. Palun proovi mõne aja pärast uuesti.",
         "mixed_content": "Kui aadressiribal on HTTPS-aadress, siis HTTP-protokolli kasutades ei saa ühendust koduserveriga. Palun pruugi HTTPS-protokolli või <a>luba brauseris ebaturvaliste skriptide kasutamine</a>.",
         "tls": "Ei sa ühendust koduserveriga. Palun kontrolli, et sinu <a>koduserveri SSL sertifikaat</a> oleks usaldusväärne ning mõni brauseri lisamoodul ei blokeeri päringuid."
-    }
+    },
+    "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Kogukonnas %(spaceName)s ja veel %(count)s's kogukonnas.",
+        "other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas."
+    },
+    "in_space": "Kogukonnas %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

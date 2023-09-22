@@ -15,7 +15,6 @@
     "A new password must be entered.": "Pasahitz berri bat sartu behar da.",
     "Jump to first unread message.": "Jauzi irakurri gabeko lehen mezura.",
     "Warning!": "Abisua!",
-    "Unban": "Debekua kendu",
     "Connectivity to the server has been lost.": "Zerbitzariarekin konexioa galdu da.",
     "You do not have permission to post to this room": "Ez duzu gela honetara mezuak bidaltzeko baimenik",
     "Filter room members": "Iragazi gelako kideak",
@@ -32,8 +31,6 @@
     "Admin Tools": "Administrazio-tresnak",
     "No Microphones detected": "Ez da mikrofonorik atzeman",
     "No Webcams detected": "Ez da kamerarik atzeman",
-    "No media permissions": "Media baimenik ez",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Agian eskuz baimendu behar duzu %(brand)sek mikrofonoa edo kamera atzitzea",
     "An error has occurred.": "Errore bat gertatu da.",
     "Are you sure?": "Ziur zaude?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ziur '%(roomName)s' gelatik atera nahi duzula?",
@@ -129,9 +126,6 @@
     "Add an Integration": "Gehitu integrazioa",
     "Something went wrong!": "Zerk edo zerk huts egin du!",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
-    "Your browser does not support the required cryptography extensions": "Zure nabigatzaileak ez ditu onartzen beharrezkoak diren kriptografia gehigarriak",
-    "Not a valid %(brand)s keyfile": "Ez da baliozko %(brand)s gako-fitxategia",
-    "Authentication check failed: incorrect password?": "Autentifikazio errorea: pasahitz okerra?",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
     "and %(count)s others...": {
         "other": "eta beste %(count)s…",
@@ -200,8 +194,6 @@
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
-    "Can't leave Server Notices room": "Ezin zara Server Notices gelatik atera",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Gela hau mezu hasiera zerbitzariaren garrantzitsuak bidaltzeko erabiltzen da, eta ezin zara atera.",
     "Share Link to User": "Partekatu esteka erabiltzailearekin",
     "Share room": "Partekatu gela",
     "Share Room": "Partekatu gela",
@@ -251,8 +243,6 @@
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
     "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
     "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
-    "You do not have permission to invite people to this room.": "Ez duzu jendea gela honetara gonbidatzeko baimenik.",
-    "Unknown server error": "Zerbitzari errore ezezaguna",
     "Set up": "Ezarri",
     "General failure": "Hutsegite orokorra",
     "New Recovery Method": "Berreskuratze metodo berria",
@@ -261,7 +251,6 @@
     "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
     "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ez baduzu berreskuratze sistema berria ezarri, erasotzaile bat zure kontua atzitzen saiatzen egon daiteke. Aldatu zure kontuaren pasahitza eta ezarri berreskuratze metodo berria berehala ezarpenetan.",
-    "Unrecognised address": "Helbide ezezaguna",
     "The following users may not exist": "Hurrengo erabiltzaileak agian ez dira existitzen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ezin izan dira behean zerrendatutako Matrix ID-een profilak, berdin gonbidatu nahi dituzu?",
     "Invite anyway and never warn me again": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
@@ -372,7 +361,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Zure gakoen babes-kopia egiten ari da (lehen babes-kopiak minutu batzuk behar ditzake).",
     "Success!": "Ongi!",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ez baduzu berreskuratze metodoa kendu, agian erasotzaile bat zure mezuen historialera sarbidea lortu nahi du. Aldatu kontuaren pasahitza eta ezarri berreskuratze metodo berri bat berehala ezarpenetan.",
-    "The user must be unbanned before they can be invited.": "Erabiltzaileari debekua kendu behar zaio gonbidatu aurretik.",
     "Scissors": "Artaziak",
     "Accept all %(invitedRooms)s invites": "Onartu %(invitedRooms)s gelako gonbidapen guztiak",
     "Error updating main address": "Errorea helbide nagusia eguneratzean",
@@ -385,7 +373,6 @@
     "Revoke invite": "Indargabetu gonbidapena",
     "Invited by %(sender)s": "%(sender)s erabiltzaileak gonbidatuta",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
-    "The user's homeserver does not support the version of the room.": "Erabiltzailearen hasiera-zerbitzariak ez du gelaren bertsioa onartzen.",
     "Uploaded sound": "Igotako soinua",
     "Sounds": "Soinuak",
     "Notification sound": "Jakinarazpen soinua",
@@ -527,7 +514,6 @@
     "Cancel search": "Ezeztatu bilaketa",
     "Jump to first unread room.": "Jauzi irakurri gabeko lehen gelara.",
     "Jump to first invite.": "Jauzi lehen gonbidapenera.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Message Actions": "Mezu-ekintzak",
     "You verified %(name)s": "%(name)s egiaztatu duzu",
     "You cancelled verifying %(name)s": "%(name)s egiaztatzeari utzi diozu",
@@ -561,8 +547,6 @@
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Remove for everyone": "Kendu denentzat",
     "Verification Request": "Egiaztaketa eskaria",
-    "Error upgrading room": "Errorea gela eguneratzean",
-    "Double check that your server supports the room version chosen and try again.": "Egiaztatu zure zerbitzariak aukeratutako gela bertsioa onartzen duela eta saiatu berriro.",
     "Secret storage public key:": "Biltegi sekretuko gako publikoa:",
     "in account data": "kontuaren datuetan",
     "not stored": "gorde gabe",
@@ -897,7 +881,8 @@
         "refresh": "Freskatu",
         "mention": "Aipatu",
         "submit": "Bidali",
-        "send_report": "Bidali salaketa"
+        "send_report": "Bidali salaketa",
+        "unban": "Debekua kendu"
     },
     "a11y": {
         "user_menu": "Erabiltzailea-menua",
@@ -1454,7 +1439,9 @@
         "cannot_call_yourself_description": "Ezin diozu zure buruari deitu.",
         "no_permission_conference": "Baimena beharrezkoa",
         "no_permission_conference_description": "Ez duzu baimenik konferentzia dei bat hasteko gela honetan",
-        "default_device": "Lehenetsitako gailua"
+        "default_device": "Lehenetsitako gailua",
+        "no_media_perms_title": "Media baimenik ez",
+        "no_media_perms_description": "Agian eskuz baimendu behar duzu %(brand)sek mikrofonoa edo kamera atzitzea"
     },
     "Other": "Beste bat",
     "Advanced": "Aurreratua",
@@ -1539,7 +1526,10 @@
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
         "cancel_entering_passphrase_title": "Ezeztatu pasa-esaldiaren sarrera?",
-        "bootstrap_title": "Gakoak ezartzen"
+        "bootstrap_title": "Gakoak ezartzen",
+        "export_unsupported": "Zure nabigatzaileak ez ditu onartzen beharrezkoak diren kriptografia gehigarriak",
+        "import_invalid_keyfile": "Ez da baliozko %(brand)s gako-fitxategia",
+        "import_invalid_passphrase": "Autentifikazio errorea: pasahitz okerra?"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1748,7 +1738,11 @@
         "unread_notifications_predecessor": {
             "other": "Irakurri gabeko %(count)s jakinarazpen dituzu gela honen aurreko bertsio batean.",
             "one": "Irakurri gabeko %(count)s jakinarazpen duzu gela honen aurreko bertsio batean."
-        }
+        },
+        "leave_server_notices_title": "Ezin zara Server Notices gelatik atera",
+        "upgrade_error_title": "Errorea gela eguneratzean",
+        "upgrade_error_description": "Egiaztatu zure zerbitzariak aukeratutako gela bertsioa onartzen duela eta saiatu berriro.",
+        "leave_server_notices_description": "Gela hau mezu hasiera zerbitzariaren garrantzitsuak bidaltzeko erabiltzen da, eta ezin zara atera."
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
@@ -1782,7 +1776,12 @@
     },
     "invite": {
         "failed_title": "Huts egin du ganbidapenak",
-        "failed_generic": "Eragiketak huts egin du"
+        "failed_generic": "Eragiketak huts egin du",
+        "invalid_address": "Helbide ezezaguna",
+        "error_permissions_room": "Ez duzu jendea gela honetara gonbidatzeko baimenik.",
+        "error_bad_state": "Erabiltzaileari debekua kendu behar zaio gonbidatu aurretik.",
+        "error_version_unsupported_room": "Erabiltzailearen hasiera-zerbitzariak ez du gelaren bertsioa onartzen.",
+        "error_unknown": "Zerbitzari errore ezezaguna"
     },
     "widget": {
         "error_need_to_be_logged_in": "Saioa hasi duzu.",
@@ -1808,5 +1807,6 @@
         "admin_contact": "<a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzu hau erabiltzen jarraitzeko.",
         "mixed_content": "Ezin zara hasiera zerbitzarira HTTP bidez konektatu zure nabigatzailearen barran dagoen URLa HTTS bada. Erabili HTTPS edo <a>gaitu script ez seguruak</a>.",
         "tls": "Ezin da hasiera zerbitzarira konektatu, egiaztatu zure konexioa, ziurtatu zure <a>hasiera zerbitzariaren SSL ziurtagiria</a> fidagarritzat jotzen duela zure gailuak, eta nabigatzailearen pluginen batek ez dituela eskaerak blokeatzen."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

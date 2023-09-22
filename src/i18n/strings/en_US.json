@@ -3,8 +3,6 @@
     "PM": "PM",
     "No Microphones detected": "No Microphones detected",
     "No Webcams detected": "No Webcams detected",
-    "No media permissions": "No media permissions",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "You may need to manually permit %(brand)s to access your microphone/webcam",
     "Authentication": "Authentication",
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
     "and %(count)s others...": {
@@ -68,7 +66,6 @@
     "Unable to add email address": "Unable to add email address",
     "Unable to remove contact information": "Unable to remove contact information",
     "Unable to verify email address.": "Unable to verify email address.",
-    "Unban": "Unban",
     "unknown error code": "unknown error code",
     "Upload avatar": "Upload avatar",
     "Verification Pending": "Verification Pending",
@@ -138,9 +135,6 @@
         "other": "(~%(count)s results)"
     },
     "Something went wrong!": "Something went wrong!",
-    "Your browser does not support the required cryptography extensions": "Your browser does not support the required cryptography extensions",
-    "Not a valid %(brand)s keyfile": "Not a valid %(brand)s keyfile",
-    "Authentication check failed: incorrect password?": "Authentication check failed: incorrect password?",
     "This will allow you to reset your password and receive notifications.": "This will allow you to reset your password and receive notifications.",
     "Sunday": "Sunday",
     "Notification targets": "Notification targets",
@@ -170,9 +164,6 @@
     "Spanner": "Wrench",
     "Aeroplane": "Airplane",
     "Cat": "Cat",
-    "Unrecognised address": "Unrecognized address",
-    "Error upgrading room": "Error upgrading room",
-    "Double check that your server supports the room version chosen and try again.": "Double check that your server supports the room version chosen and try again.",
     "Favourited": "Favorited",
     "Explore rooms": "Explore rooms",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
@@ -237,7 +228,8 @@
         "register": "Register",
         "import": "Import",
         "export": "Export",
-        "submit": "Submit"
+        "submit": "Submit",
+        "unban": "Unban"
     },
     "keyboard": {
         "home": "Home"
@@ -430,7 +422,9 @@
         "cannot_call_yourself_description": "You cannot place a call with yourself.",
         "no_permission_conference": "Permission Required",
         "no_permission_conference_description": "You do not have permission to start a conference call in this room",
-        "default_device": "Default Device"
+        "default_device": "Default Device",
+        "no_media_perms_title": "No media permissions",
+        "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam"
     },
     "devtools": {
         "category_room": "Room",
@@ -505,7 +499,9 @@
         }
     },
     "room": {
-        "drop_file_prompt": "Drop file here to upload"
+        "drop_file_prompt": "Drop file here to upload",
+        "upgrade_error_title": "Error upgrading room",
+        "upgrade_error_description": "Double check that your server supports the room version chosen and try again."
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",
@@ -556,7 +552,8 @@
     },
     "invite": {
         "failed_title": "Failed to invite",
-        "failed_generic": "Operation failed"
+        "failed_generic": "Operation failed",
+        "invalid_address": "Unrecognized address"
     },
     "widget": {
         "error_need_to_be_logged_in": "You need to be logged in.",
@@ -577,7 +574,10 @@
     "encryption": {
         "cancel_entering_passphrase_title": "Cancel entering passphrase?",
         "cancel_entering_passphrase_description": "Are you sure you want to cancel entering passphrase?",
-        "bootstrap_title": "Setting up keys"
+        "bootstrap_title": "Setting up keys",
+        "export_unsupported": "Your browser does not support the required cryptography extensions",
+        "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
+        "import_invalid_passphrase": "Authentication check failed: incorrect password?"
     },
     "error": {
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",

@@ -74,7 +74,6 @@
     "Bridges": "Bridges",
     "Sounds": "Sons",
     "Browse": "Percórrer",
-    "Unban": "Reabilitar",
     "Phone Number": "Numèro de telefòn",
     "Unencrypted": "Pas chifrat",
     "Italics": "Italicas",
@@ -216,7 +215,8 @@
         "import": "Importar",
         "export": "Exportar",
         "refresh": "Actualizada",
-        "submit": "Mandar"
+        "submit": "Mandar",
+        "unban": "Reabilitar"
     },
     "keyboard": {
         "home": "Dorsièr personal",

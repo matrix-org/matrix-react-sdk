@@ -511,7 +511,8 @@
         "logout": "Logout",
         "restore": "Restore",
         "import": "Import",
-        "disable": "Disable"
+        "disable": "Disable",
+        "unban": "Unban"
     },
     "common": {
         "error": "Error",
@@ -753,7 +754,9 @@
         "hangup": "Hangup",
         "maximise": "Fill screen",
         "expand": "Return to call",
-        "on_hold": "%(name)s on hold"
+        "on_hold": "%(name)s on hold",
+        "no_media_perms_title": "No media permissions",
+        "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam"
     },
     "unsupported_server_title": "Your server is unsupported",
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
@@ -789,7 +792,22 @@
         "failed_generic": "Operation failed",
         "room_failed_title": "Failed to invite users to %(roomName)s",
         "room_failed_partial": "We sent the others, but the below people couldn't be invited to <RoomName/>",
-        "room_failed_partial_title": "Some invites couldn't be sent"
+        "room_failed_partial_title": "Some invites couldn't be sent",
+        "invalid_address": "Unrecognised address",
+        "unban_first_title": "User cannot be invited until they are unbanned",
+        "error_permissions_space": "You do not have permission to invite people to this space.",
+        "error_permissions_room": "You do not have permission to invite people to this room.",
+        "error_already_invited_space": "User is already invited to the space",
+        "error_already_invited_room": "User is already invited to the room",
+        "error_already_joined_space": "User is already in the space",
+        "error_already_joined_room": "User is already in the room",
+        "error_user_not_found": "User does not exist",
+        "error_profile_undisclosed": "User may or may not exist",
+        "error_bad_state": "The user must be unbanned before they can be invited.",
+        "error_version_unsupported_space": "The user's homeserver does not support the version of the space.",
+        "error_version_unsupported_room": "The user's homeserver does not support the version of the room.",
+        "error_unknown": "Unknown server error",
+        "to_space": "Invite to %(spaceName)s"
     },
     "widget": {
         "error_need_to_be_logged_in": "You need to be logged in.",
@@ -859,7 +877,8 @@
             "send_msgtype_active_room": "Send <b>%(msgtype)s</b> messages as you in your active room",
             "see_msgtype_sent_this_room": "See <b>%(msgtype)s</b> messages posted to this room",
             "see_msgtype_sent_active_room": "See <b>%(msgtype)s</b> messages posted to your active room"
-        }
+        },
+        "no_name": "Unknown App"
     },
     "scalar": {
         "error_create": "Unable to create widget.",
@@ -906,7 +925,10 @@
         },
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
-        "verification_requested_toast_title": "Verification requested"
+        "verification_requested_toast_title": "Verification requested",
+        "export_unsupported": "Your browser does not support the required cryptography extensions",
+        "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
+        "import_invalid_passphrase": "Authentication check failed: incorrect password?"
     },
     "slash_command": {
         "spoiler": "Sends the given message as a spoiler",
@@ -1387,39 +1409,10 @@
     },
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s and %(space2Name)s",
-    "In spaces %(space1Name)s and %(space2Name)s.": "In spaces %(space1Name)s and %(space2Name)s.",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s and %(count)s others",
         "one": "%(spaceName)s and %(count)s other"
     },
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "other": "In %(spaceName)s and %(count)s other spaces.",
-        "one": "In %(spaceName)s and %(count)s other space."
-    },
-    "In %(spaceName)s.": "In %(spaceName)s.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Unexpected server error trying to leave the room": "Unexpected server error trying to leave the room",
-    "Can't leave Server Notices room": "Can't leave Server Notices room",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "This room is used for important messages from the Homeserver, so you cannot leave it.",
-    "Error leaving room": "Error leaving room",
-    "Your browser does not support the required cryptography extensions": "Your browser does not support the required cryptography extensions",
-    "Not a valid %(brand)s keyfile": "Not a valid %(brand)s keyfile",
-    "Authentication check failed: incorrect password?": "Authentication check failed: incorrect password?",
-    "Unrecognised address": "Unrecognised address",
-    "Unban": "Unban",
-    "User cannot be invited until they are unbanned": "User cannot be invited until they are unbanned",
-    "You do not have permission to invite people to this space.": "You do not have permission to invite people to this space.",
-    "You do not have permission to invite people to this room.": "You do not have permission to invite people to this room.",
-    "User is already invited to the space": "User is already invited to the space",
-    "User is already invited to the room": "User is already invited to the room",
-    "User is already in the space": "User is already in the space",
-    "User is already in the room": "User is already in the room",
-    "User does not exist": "User does not exist",
-    "User may or may not exist": "User may or may not exist",
-    "The user must be unbanned before they can be invited.": "The user must be unbanned before they can be invited.",
-    "The user's homeserver does not support the version of the space.": "The user's homeserver does not support the version of the space.",
-    "The user's homeserver does not support the version of the room.": "The user's homeserver does not support the version of the room.",
-    "Unknown server error": "Unknown server error",
     "zxcvbn": {
         "warnings": {
             "straightRow": "Straight rows of keys are easy to guess",
@@ -1456,13 +1449,6 @@
             "pwned": "If you use this password elsewhere, you should change it."
         }
     },
-    "Error upgrading room": "Error upgrading room",
-    "Double check that your server supports the room version chosen and try again.": "Double check that your server supports the room version chosen and try again.",
-    "Invite to %(spaceName)s": "Invite to %(spaceName)s",
-    "Share your public space": "Share your public space",
-    "Unknown App": "Unknown App",
-    "No media permissions": "No media permissions",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "You may need to manually permit %(brand)s to access your microphone/webcam",
     "location_sharing": {
         "MapStyleUrlNotConfigured": "This homeserver is not configured to display maps.",
         "WebGLNotEnabled": "WebGL is required to display maps, please enable it in your browser settings.",
@@ -1539,7 +1525,6 @@
         "size_limit": "Size Limit",
         "include_attachments": "Include Attachments"
     },
-    "That's fine": "That's fine",
     "analytics": {
         "consent_migration": "You previously consented to share anonymous usage data with us. We're updating how that works.",
         "learn_more": "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>",
@@ -1548,7 +1533,8 @@
         "pseudonymous_usage_data": "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.",
         "bullet_1": "We <Bold>don't</Bold> record or profile any account data",
         "bullet_2": "We <Bold>don't</Bold> share information with third parties",
-        "disable_prompt": "You can turn this off anytime in settings"
+        "disable_prompt": "You can turn this off anytime in settings",
+        "accept_button": "That's fine"
     },
     "You have unverified sessions": "You have unverified sessions",
     "Review to ensure your account is safe": "Review to ensure your account is safe",
@@ -2516,7 +2502,13 @@
         "unread_notifications_predecessor": {
             "other": "You have %(count)s unread notifications in a prior version of this room.",
             "one": "You have %(count)s unread notification in a prior version of this room."
-        }
+        },
+        "leave_unexpected_error": "Unexpected server error trying to leave the room",
+        "leave_server_notices_title": "Can't leave Server Notices room",
+        "leave_error_title": "Error leaving room",
+        "upgrade_error_title": "Error upgrading room",
+        "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
+        "leave_server_notices_description": "This room is used for important messages from the Homeserver, so you cannot leave it."
     },
     "Message didn't send. Click for info.": "Message didn't send. Click for info.",
     "View message": "View message",
@@ -3631,7 +3623,8 @@
         "failed_remove_rooms": "Failed to remove some rooms. Try again later",
         "failed_load_rooms": "Failed to load list of rooms.",
         "incompatible_server_hierarchy": "Your server does not support showing space hierarchies.",
-        "landing_welcome": "Welcome to <name/>"
+        "landing_welcome": "Welcome to <name/>",
+        "share_public": "Share your public space"
     },
     "Thread options": "Thread options",
     "Unable to start audio streaming.": "Unable to start audio streaming.",
@@ -3863,5 +3856,12 @@
     "Recovery Method Removed": "Recovery Method Removed",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
+    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
+    "in_space1_and_space2": "In spaces %(space1Name)s and %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "other": "In %(spaceName)s and %(count)s other spaces.",
+        "one": "In %(spaceName)s and %(count)s other space."
+    },
+    "in_space": "In %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

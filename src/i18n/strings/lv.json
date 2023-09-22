@@ -2,8 +2,6 @@
     "Admin Tools": "Administratora rīki",
     "No Microphones detected": "Nav mikrofonu",
     "No Webcams detected": "Nav webkameru",
-    "No media permissions": "Nav datu nesēju, kuriem atļauta piekļuve",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai",
     "Authentication": "Autentifikācija",
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "A new password must be entered.": "Nepieciešams ievadīt jauno paroli.",
@@ -83,7 +81,6 @@
     "Unable to add email address": "Neizdevās pievienot epasta adresi",
     "Unable to remove contact information": "Neizdevās dzēst kontaktinformāciju",
     "Unable to verify email address.": "Neizdevās apstiprināt epasta adresi.",
-    "Unban": "Atcelt pieejas liegumu",
     "unknown error code": "nezināms kļūdas kods",
     "Create new room": "Izveidot jaunu istabu",
     "Upload avatar": "Augšupielādēt avataru",
@@ -130,9 +127,6 @@
     "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
     "Something went wrong!": "Kaut kas nogāja greizi!",
-    "Your browser does not support the required cryptography extensions": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
-    "Not a valid %(brand)s keyfile": "Nederīgs %(brand)s atslēgfails",
-    "Authentication check failed: incorrect password?": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?",
     "and %(count)s others...": {
         "other": "un vēl %(count)s citi...",
         "one": "un vēl viens cits..."
@@ -236,7 +230,6 @@
     "Remove recent messages": "Dzēst nesenās ziņas",
     "Banana": "Banāns",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s liedza jums pieeju %(roomName)s",
-    "The user must be unbanned before they can be invited.": "Lietotājam jābūt atceltam pieejas liegumam pirms uzaicināšanas.",
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
@@ -253,7 +246,6 @@
     "Server Options": "Servera parametri",
     "<userName/> invited you": "<userName/> uzaicināja jūs",
     "<userName/> wants to chat": "<userName/> vēlas sarakstīties",
-    "You do not have permission to invite people to this room.": "Jums nav atļaujas uzaicināt cilvēkus šajā istabā.",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
@@ -394,7 +386,6 @@
     "Create a new room with the same name, description and avatar": "Izveidot istabu ar to pašu nosaukumu, aprakstu un avataru",
     "Email (optional)": "Epasts (izvēles)",
     "Invite to %(roomName)s": "Uzaicināt uz %(roomName)s",
-    "Invite to %(spaceName)s": "Uzaicināt uz %(spaceName)s",
     "Continue With Encryption Disabled": "Turpināt ar atspējotu šifrēšanu",
     "Create a new room": "Izveidot jaunu istabu",
     "%(name)s cancelled": "%(name)s atcēla",
@@ -416,7 +407,6 @@
     "Accept <policyLink /> to continue:": "Akceptēt <policyLink />, lai turpinātu:",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
     "Denmark": "Dānija",
     "American Samoa": "Amerikāņu Samoa",
@@ -699,9 +689,6 @@
     "Angola": "Angola",
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Šī istaba tiek izmantota svarīgiem ziņojumiem no bāzes servera, tāpēc jūs nevarat to pamest.",
-    "Can't leave Server Notices room": "Nevar pamest Server Notices istabu",
-    "Unexpected server error trying to leave the room": "Mēģinot pamest istabu radās negaidīta servera kļūme",
     "Cancel All": "Atcelt visu",
     "Sending": "Sūta",
     "Can't load this message": "Nevar ielādēt šo ziņu",
@@ -814,7 +801,6 @@
     },
     "Files": "Faili",
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
-    "Share your public space": "Dalīties ar jūsu publisko vietu",
     "You can change these anytime.": "Jebkurā laikā varat to mainīt.",
     "Join public room": "Pievienoties publiskai istabai",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
@@ -984,7 +970,8 @@
         "mention": "Pieminēt",
         "submit": "Iesniegt",
         "send_report": "Nosūtīt ziņojumu",
-        "clear": "Notīrīt"
+        "clear": "Notīrīt",
+        "unban": "Atcelt pieejas liegumu"
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne",
@@ -1595,7 +1582,9 @@
         "transfer_failed_description": "Neizdevās pārsūtīt/pāradresēt zvanu",
         "no_permission_conference": "Nepieciešama atļauja",
         "no_permission_conference_description": "Šajā istabā nav atļaujas sākt konferences zvanu",
-        "default_device": "Noklusējuma ierīce"
+        "default_device": "Noklusējuma ierīce",
+        "no_media_perms_title": "Nav datu nesēju, kuriem atļauta piekļuve",
+        "no_media_perms_description": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai"
     },
     "Other": "Citi",
     "Advanced": "Papildu",
@@ -1679,7 +1668,10 @@
         "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
         "cancel_entering_passphrase_title": "Atcelt frāzveida paroles ievadi?",
         "cancel_entering_passphrase_description": "Vai tiešām vēlaties atcelt frāzveida paroles ievadi?",
-        "bootstrap_title": "Atslēgu iestatīšana"
+        "bootstrap_title": "Atslēgu iestatīšana",
+        "export_unsupported": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
+        "import_invalid_keyfile": "Nederīgs %(brand)s atslēgfails",
+        "import_invalid_passphrase": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",
@@ -1909,7 +1901,8 @@
         "landing_welcome": "Laipni lūdzam uz <name/>",
         "context_menu": {
             "explore": "Pārlūkot istabas"
-        }
+        },
+        "share_public": "Dalīties ar jūsu publisko vietu"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",
@@ -1959,7 +1952,10 @@
         "unread_notifications_predecessor": {
             "one": "Jums ir %(count)s nelasīts paziņojums iepriekšējā šīs istabas versijā.",
             "other": "Jums ir %(count)s nelasīti paziņojumi iepriekšējā šīs istabas versijā."
-        }
+        },
+        "leave_unexpected_error": "Mēģinot pamest istabu radās negaidīta servera kļūme",
+        "leave_server_notices_title": "Nevar pamest Server Notices istabu",
+        "leave_server_notices_description": "Šī istaba tiek izmantota svarīgiem ziņojumiem no bāzes servera, tāpēc jūs nevarat to pamest."
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",
@@ -2001,7 +1997,10 @@
         "failed_title": "Neizdevās uzaicināt",
         "failed_generic": "Darbība neizdevās",
         "room_failed_partial": "Pārējiem uzaicinājumi tika nosūtīti, bet zemāk norādītos cilvēkus uz <RoomName/> nevarēja uzaicināt",
-        "room_failed_partial_title": "Dažus uzaicinājumus nevarēja nosūtīt"
+        "room_failed_partial_title": "Dažus uzaicinājumus nevarēja nosūtīt",
+        "error_permissions_room": "Jums nav atļaujas uzaicināt cilvēkus šajā istabā.",
+        "error_bad_state": "Lietotājam jābūt atceltam pieejas liegumam pirms uzaicināšanas.",
+        "to_space": "Uzaicināt uz %(spaceName)s"
     },
     "scalar": {
         "error_create": "Neizdevās izveidot widžetu.",
@@ -2023,5 +2022,6 @@
         "resource_limits": "Šis bāzes serveris ir pārsniedzis vienu no tā resursu ierobežojumiem.",
         "mixed_content": "Neizdodas savienoties ar bāzes serveri izmantojot HTTP protokolu, kad pārlūka adreses laukā norādīts HTTPS protokols. Tā vietā izmanto HTTPS vai <a>iespējo nedrošos skriptus</a>.",
         "tls": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

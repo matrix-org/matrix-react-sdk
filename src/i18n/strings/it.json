@@ -8,7 +8,6 @@
     "Admin Tools": "Strumenti di amministrazione",
     "No Microphones detected": "Nessun Microfono rilevato",
     "No Webcams detected": "Nessuna Webcam rilevata",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Potresti dover permettere manualmente a %(brand)s di accedere al tuo microfono/webcam",
     "Authentication": "Autenticazione",
     "Warning!": "Attenzione!",
     "Sun": "Dom",
@@ -43,13 +42,9 @@
     "Moderator": "Moderatore",
     "Reason": "Motivo",
     "Send": "Invia",
-    "Your browser does not support the required cryptography extensions": "Il tuo browser non supporta l'estensione crittografica richiesta",
-    "Not a valid %(brand)s keyfile": "Non è una chiave di %(brand)s valida",
-    "Authentication check failed: incorrect password?": "Controllo di autenticazione fallito: password sbagliata?",
     "Incorrect verification code": "Codice di verifica sbagliato",
     "No display name": "Nessun nome visibile",
     "Failed to set display name": "Impostazione nome visibile fallita",
-    "Unban": "Togli ban",
     "Failed to ban user": "Ban utente fallito",
     "Failed to mute user": "Impossibile silenziare l'utente",
     "Failed to change power level": "Cambio di livello poteri fallito",
@@ -151,7 +146,6 @@
     "Unable to remove contact information": "Impossibile rimuovere le informazioni di contatto",
     "<not supported>": "<non supportato>",
     "Reject all %(invitedRooms)s invites": "Rifiuta tutti gli inviti da %(invitedRooms)s",
-    "No media permissions": "Nessuna autorizzazione per i media",
     "Profile": "Profilo",
     "A new password must be entered.": "Deve essere inserita una nuova password.",
     "New passwords must match each other.": "Le nuove password devono coincidere.",
@@ -198,8 +192,6 @@
     "Clear Storage and Sign Out": "Elimina l'archiviazione e disconnetti",
     "Send Logs": "Invia i log",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile.",
-    "Can't leave Server Notices room": "Impossibile abbandonare la stanza Notifiche Server",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Questa stanza viene usata per messaggi importanti dall'homeserver, quindi non puoi lasciarla.",
     "Replying": "Rispondere",
     "Popout widget": "Oggetto a comparsa",
     "Share Link to User": "Condividi link utente",
@@ -238,8 +230,6 @@
     "Incompatible local cache": "Cache locale non compatibile",
     "Clear cache and resync": "Svuota cache e risincronizza",
     "Add some now": "Aggiungine ora",
-    "You do not have permission to invite people to this room.": "Non hai l'autorizzazione di invitare persone in questa stanza.",
-    "Unknown server error": "Errore sconosciuto del server",
     "Delete Backup": "Elimina backup",
     "Unable to load key backup status": "Impossibile caricare lo stato del backup delle chiavi",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Per evitare di perdere la cronologia della chat, devi esportare le tue chiavi della stanza prima di uscire. Dovrai tornare alla versione più recente di %(brand)s per farlo",
@@ -262,12 +252,10 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non hai impostato il nuovo metodo di recupero, un aggressore potrebbe tentare di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni.",
     "Set up Secure Messages": "Imposta i messaggi sicuri",
     "Go to Settings": "Vai alle impostazioni",
-    "Unrecognised address": "Indirizzo non riconosciuto",
     "The following users may not exist": "I seguenti utenti potrebbero non esistere",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque invitarli?",
     "Invite anyway and never warn me again": "Invitali lo stesso e non avvisarmi più",
     "Invite anyway": "Invita comunque",
-    "The user must be unbanned before they can be invited.": "L'utente non deve essere bandito per essere invitato.",
     "Dog": "Cane",
     "Cat": "Gatto",
     "Lion": "Leone",
@@ -388,7 +376,6 @@
     "Revoke invite": "Revoca invito",
     "Invited by %(sender)s": "Invitato/a da %(sender)s",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
-    "The user's homeserver does not support the version of the room.": "L'homeserver dell'utente non supporta la versione della stanza.",
     "Join the conversation with an account": "Unisciti alla conversazione con un account",
     "Sign Up": "Registrati",
     "Reason: %(reason)s": "Motivo: %(reason)s",
@@ -528,7 +515,6 @@
     "Jump to first unread room.": "Salta alla prima stanza non letta.",
     "Jump to first invite.": "Salta al primo invito.",
     "Room %(name)s": "Stanza %(name)s",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "None": "Nessuno",
     "Message Actions": "Azioni messaggio",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Hai ignorato questo utente, perciò il suo messaggio è nascosto. <a>Mostra comunque.</a>",
@@ -562,8 +548,6 @@
     "Remove for everyone": "Rimuovi per tutti",
     "Manage integrations": "Gestisci integrazioni",
     "Verification Request": "Richiesta verifica",
-    "Error upgrading room": "Errore di aggiornamento stanza",
-    "Double check that your server supports the room version chosen and try again.": "Controlla che il tuo server supporti la versione di stanza scelta e riprova.",
     "Unencrypted": "Non criptato",
     "Upgrade private room": "Aggiorna stanza privata",
     "Upgrade public room": "Aggiorna stanza pubblica",
@@ -788,11 +772,8 @@
     "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
     "Explore public rooms": "Esplora stanze pubbliche",
     "Preparing to download logs": "Preparazione al download dei log",
-    "Unexpected server error trying to leave the room": "Errore inaspettato del server tentando di abbandonare la stanza",
-    "Error leaving room": "Errore uscendo dalla stanza",
     "Information": "Informazione",
     "Set up Secure Backup": "Imposta il Backup Sicuro",
-    "Unknown App": "App sconosciuta",
     "Cross-signing is ready for use.": "La firma incrociata è pronta all'uso.",
     "Cross-signing is not set up.": "La firma incrociata non è impostata.",
     "Backup version:": "Versione backup:",
@@ -1147,7 +1128,6 @@
     "Failed to save space settings.": "Impossibile salvare le impostazioni dello spazio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
-    "Invite to %(spaceName)s": "Invita in %(spaceName)s",
     "Create a new room": "Crea nuova stanza",
     "Spaces": "Spazi",
     "Space selection": "Selezione spazio",
@@ -1159,7 +1139,6 @@
     "Space options": "Opzioni dello spazio",
     "Leave space": "Esci dallo spazio",
     "Invite people": "Invita persone",
-    "Share your public space": "Condividi il tuo spazio pubblico",
     "Share invite link": "Condividi collegamento di invito",
     "Click to copy": "Clicca per copiare",
     "Create a space": "Crea uno spazio",
@@ -1481,7 +1460,6 @@
     "Recently viewed": "Visti di recente",
     "Share location": "Condividi posizione",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Condividi dati anonimi per aiutarci a identificare problemi. Niente di personale. Niente terze parti.",
-    "That's fine": "Va bene",
     "End Poll": "Termina sondaggio",
     "Sorry, the poll did not end. Please try again.": "Spiacenti, il sondaggio non è terminato. Riprova.",
     "Failed to end poll": "Chiusura del sondaggio fallita",
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "La persona che ti ha invitato/a è già uscita.",
     "Sorry, your homeserver is too old to participate here.": "Spiacenti, il tuo homeserver è troppo vecchio per partecipare qui.",
     "There was an error joining.": "Si è verificato un errore entrando.",
-    "The user's homeserver does not support the version of the space.": "L'homeserver dell'utente non supporta la versione dello spazio.",
-    "User may or may not exist": "L'utente forse non esiste",
-    "User does not exist": "L'utente non esiste",
-    "User is already in the room": "L'utente è già nella stanza",
-    "User is already in the space": "L'utente è già nello spazio",
-    "User is already invited to the room": "L'utente è già stato invitato nella stanza",
-    "User is already invited to the space": "L'utente è già stato invitato nello spazio",
-    "You do not have permission to invite people to this space.": "Non hai l'autorizzazione di invitare persone in questo spazio.",
     "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
     "%(count)s participants": {
         "one": "1 partecipante",
@@ -1709,12 +1679,6 @@
     "Explore public spaces in the new search dialog": "Esplora gli spazi pubblici nella nuova finestra di ricerca",
     "Stop and close": "Ferma e chiudi",
     "Join the room to participate": "Entra nella stanza per partecipare",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "In %(spaceName)s e in %(count)s altro spazio.",
-        "other": "In %(spaceName)s e in altri %(count)s spazi."
-    },
-    "In %(spaceName)s.": "Nello spazio %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "You're in": "Sei dentro",
     "Online community members": "Membri di comunità online",
     "Coworkers and teams": "Colleghi e squadre",
@@ -1917,7 +1881,6 @@
     "Reset to default settings": "Ripristina alle impostazioni predefinite",
     "Unable to find user by email": "Impossibile trovare l'utente per email",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Qui i messaggi sono cifrati end-to-end. Verifica %(displayName)s nel suo profilo - tocca la sua immagine.",
-    "User cannot be invited until they are unbanned": "L'utente non può essere invitato finché è bandito",
     "Email Notifications": "Notifiche email",
     "Email summary": "Riepilogo email",
     "I want to be notified for (Default Setting)": "Voglio ricevere una notifica per (impostazione predefinita)",
@@ -2157,7 +2120,8 @@
         "send_report": "Invia segnalazione",
         "clear": "Svuota",
         "exit_fullscreeen": "Esci da schermo intero",
-        "enter_fullscreen": "Attiva schermo intero"
+        "enter_fullscreen": "Attiva schermo intero",
+        "unban": "Togli ban"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -3450,7 +3414,9 @@
         "no_permission_conference_description": "Non hai il permesso di avviare una chiamata di gruppo in questa stanza",
         "default_device": "Dispositivo Predefinito",
         "failed_call_live_broadcast_title": "Impossibile avviare una chiamata",
-        "failed_call_live_broadcast_description": "Non puoi avviare una chiamata perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare una chiamata."
+        "failed_call_live_broadcast_description": "Non puoi avviare una chiamata perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare una chiamata.",
+        "no_media_perms_title": "Nessuna autorizzazione per i media",
+        "no_media_perms_description": "Potresti dover permettere manualmente a %(brand)s di accedere al tuo microfono/webcam"
     },
     "Other": "Altro",
     "Advanced": "Avanzato",
@@ -3575,7 +3541,10 @@
         "verification_requested_toast_title": "Verifica richiesta",
         "cancel_entering_passphrase_title": "Annullare l'inserimento della password?",
         "cancel_entering_passphrase_description": "Sei sicuro di volere annullare l'inserimento della frase?",
-        "bootstrap_title": "Configurazione chiavi"
+        "bootstrap_title": "Configurazione chiavi",
+        "export_unsupported": "Il tuo browser non supporta l'estensione crittografica richiesta",
+        "import_invalid_keyfile": "Non è una chiave di %(brand)s valida",
+        "import_invalid_passphrase": "Controllo di autenticazione fallito: password sbagliata?"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3598,7 +3567,8 @@
         "pseudonymous_usage_data": "Aiutaci a identificare problemi e a migliorare %(analyticsOwner)s condividendo dati di utilizzo anonimi. Per capire come le persone usano diversi dispositivi, genereremo un identificativo casuale, condiviso dai tuoi dispositivi.",
         "bullet_1": "<Bold>Non</Bold> registriamo o profiliamo alcun dato dell'account",
         "bullet_2": "<Bold>Non</Bold> condividiamo informazioni con terze parti",
-        "disable_prompt": "Puoi disattivarlo in qualsiasi momento nelle impostazioni"
+        "disable_prompt": "Puoi disattivarlo in qualsiasi momento nelle impostazioni",
+        "accept_button": "Va bene"
     },
     "chat_effects": {
         "confetti_description": "Invia il messaggio in questione con coriandoli",
@@ -3877,7 +3847,8 @@
         },
         "error_need_to_be_logged_in": "Devi aver eseguito l'accesso.",
         "error_need_invite_permission": "Devi poter invitare utenti per completare l'azione.",
-        "error_need_kick_permission": "Devi poter cacciare via utenti per completare l'azione."
+        "error_need_kick_permission": "Devi poter cacciare via utenti per completare l'azione.",
+        "no_name": "App sconosciuta"
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -3991,7 +3962,8 @@
             "home": "Pagina iniziale dello spazio",
             "explore": "Esplora stanze",
             "manage_and_explore": "Gestisci ed esplora le stanze"
-        }
+        },
+        "share_public": "Condividi il tuo spazio pubblico"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -4111,7 +4083,13 @@
         "unread_notifications_predecessor": {
             "other": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza.",
             "one": "Hai %(count)s notifiche non lette in una versione precedente di questa stanza."
-        }
+        },
+        "leave_unexpected_error": "Errore inaspettato del server tentando di abbandonare la stanza",
+        "leave_server_notices_title": "Impossibile abbandonare la stanza Notifiche Server",
+        "leave_error_title": "Errore uscendo dalla stanza",
+        "upgrade_error_title": "Errore di aggiornamento stanza",
+        "upgrade_error_description": "Controlla che il tuo server supporti la versione di stanza scelta e riprova.",
+        "leave_server_notices_description": "Questa stanza viene usata per messaggi importanti dall'homeserver, quindi non puoi lasciarla."
     },
     "file_panel": {
         "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",
@@ -4186,7 +4164,22 @@
         "failed_generic": "Operazione fallita",
         "room_failed_title": "Impossibile invitare gli utenti in %(roomName)s",
         "room_failed_partial": "Abbiamo inviato gli altri, ma non è stato possibile invitare le seguenti persone in <RoomName/>",
-        "room_failed_partial_title": "Alcuni inviti non sono stati spediti"
+        "room_failed_partial_title": "Alcuni inviti non sono stati spediti",
+        "invalid_address": "Indirizzo non riconosciuto",
+        "unban_first_title": "L'utente non può essere invitato finché è bandito",
+        "error_permissions_space": "Non hai l'autorizzazione di invitare persone in questo spazio.",
+        "error_permissions_room": "Non hai l'autorizzazione di invitare persone in questa stanza.",
+        "error_already_invited_space": "L'utente è già stato invitato nello spazio",
+        "error_already_invited_room": "L'utente è già stato invitato nella stanza",
+        "error_already_joined_space": "L'utente è già nello spazio",
+        "error_already_joined_room": "L'utente è già nella stanza",
+        "error_user_not_found": "L'utente non esiste",
+        "error_profile_undisclosed": "L'utente forse non esiste",
+        "error_bad_state": "L'utente non deve essere bandito per essere invitato.",
+        "error_version_unsupported_space": "L'homeserver dell'utente non supporta la versione dello spazio.",
+        "error_version_unsupported_room": "L'homeserver dell'utente non supporta la versione della stanza.",
+        "error_unknown": "Errore sconosciuto del server",
+        "to_space": "Invita in %(spaceName)s"
     },
     "scalar": {
         "error_create": "Impossibile creare il widget.",
@@ -4213,5 +4206,12 @@
         "connection": "C'è stato un problema nella comunicazione con l'homeserver, riprova più tardi.",
         "mixed_content": "Impossibile connettersi all'homeserver via HTTP quando c'è un URL HTTPS nella barra del tuo browser. Usa HTTPS o <a>attiva gli script non sicuri</a>.",
         "tls": "Impossibile connettersi all'homeserver - controlla la tua connessione, assicurati che il <a>certificato SSL dell'homeserver</a> sia fidato e che un'estensione del browser non stia bloccando le richieste."
-    }
+    },
+    "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "In %(spaceName)s e in %(count)s altro spazio.",
+        "other": "In %(spaceName)s e in altri %(count)s spazi."
+    },
+    "in_space": "Nello spazio %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

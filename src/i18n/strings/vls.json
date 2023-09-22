@@ -35,14 +35,6 @@
         "one": "%(items)s en één ander"
     },
     "%(items)s and %(lastItem)s": "%(items)s en %(lastItem)s",
-    "Your browser does not support the required cryptography extensions": "Je browser oundersteunt de benodigde cryptografie-extensies nie",
-    "Not a valid %(brand)s keyfile": "Geen geldig %(brand)s-sleuterbestand",
-    "Authentication check failed: incorrect password?": "Anmeldiengscontrole mislukt: verkeerd paswoord?",
-    "Unrecognised address": "Adresse nie herkend",
-    "You do not have permission to invite people to this room.": "J’en èt geen toestemmienge vo menschn in dit gesprek uut te nodign.",
-    "The user must be unbanned before they can be invited.": "De gebruuker kun nie uutgenodigd wordn voda z’n verbannienge oungedoan gemakt gewist es.",
-    "The user's homeserver does not support the version of the room.": "Den thuusserver van de gebruuker biedt geen oundersteunienge vo de gespreksversie.",
-    "Unknown server error": "Ounbekende serverfoute",
     "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
     "Dog": "Hound",
     "Cat": "Katte",
@@ -147,8 +139,6 @@
     "Bulk options": "Bulkopties",
     "Accept all %(invitedRooms)s invites": "Alle %(invitedRooms)s-uutnodigiengn anveirdn",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s-uutnodigiengn weigern",
-    "No media permissions": "Geen mediatoestemmiengn",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Je moe %(brand)s wellicht handmoatig toestoan van je microfoon/webcam te gebruukn",
     "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
     "Request media permissions": "Mediatoestemmiengn verzoekn",
     "No Audio Outputs detected": "Geen geluudsuutgangn gedetecteerd",
@@ -159,7 +149,6 @@
     "Room information": "Gespreksinformoasje",
     "Room Addresses": "Gespreksadressn",
     "Failed to unban": "Ountbann mislukt",
-    "Unban": "Ountbann",
     "Banned by %(displayName)s": "Verbann deur %(displayName)s",
     "This event could not be displayed": "Deze gebeurtenisse kostege nie weergegeevn wordn",
     "Failed to ban user": "Verbann van gebruuker es mislukt",
@@ -373,8 +362,6 @@
     "Failed to reject invitation": "Weigern van d’uutnodigienge is mislukt",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?",
-    "Can't leave Server Notices room": "Kostege nie deuregoan uut ’t servermeldiengsgesprek",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Je ku geen berichtn stuurn toutda je <consentLink>uzze algemene voorwoardn</consentLink> geleezn en anveird ghed èt.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver z’n limiet vo moandeliks actieve gebruukers bereikt ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver e systeembronlimiet overschreedn ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
@@ -569,7 +556,8 @@
         "export": "Exporteern",
         "refresh": "Herloadn",
         "mention": "Vermeldn",
-        "submit": "Bevestign"
+        "submit": "Bevestign",
+        "unban": "Ountbann"
     },
     "labs": {
         "pinning": "Bericht vastprikkn",
@@ -905,7 +893,9 @@
         "cannot_call_yourself_description": "J’en ku jezelve nie belln.",
         "no_permission_conference": "Toestemmienge vereist",
         "no_permission_conference_description": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
-        "default_device": "Standoardtoestel"
+        "default_device": "Standoardtoestel",
+        "no_media_perms_title": "Geen mediatoestemmiengn",
+        "no_media_perms_description": "Je moe %(brand)s wellicht handmoatig toestoan van je microfoon/webcam te gebruukn"
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -976,7 +966,10 @@
             "unsupported_method": "Kan geen oundersteunde verificoasjemethode viendn."
         },
         "old_version_detected_title": "Oude cryptografiegegeevns gedetecteerd",
-        "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn."
+        "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn.",
+        "export_unsupported": "Je browser oundersteunt de benodigde cryptografie-extensies nie",
+        "import_invalid_keyfile": "Geen geldig %(brand)s-sleuterbestand",
+        "import_invalid_passphrase": "Anmeldiengscontrole mislukt: verkeerd paswoord?"
     },
     "auth": {
         "sign_in_with_sso": "Anmeldn met enkele anmeldienge",
@@ -1108,7 +1101,9 @@
         "unread_notifications_predecessor": {
             "other": "J’èt %(count)s oungeleezn meldiengn in e voorgoande versie van dit gesprek.",
             "one": "J’èt %(count)s oungeleezn meldieng in e voorgoande versie van dit gesprek."
-        }
+        },
+        "leave_server_notices_title": "Kostege nie deuregoan uut ’t servermeldiengsgesprek",
+        "leave_server_notices_description": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan."
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1144,7 +1139,12 @@
     },
     "invite": {
         "failed_title": "Uutnodign es mislukt",
-        "failed_generic": "Handelienge es mislukt"
+        "failed_generic": "Handelienge es mislukt",
+        "invalid_address": "Adresse nie herkend",
+        "error_permissions_room": "J’en èt geen toestemmienge vo menschn in dit gesprek uut te nodign.",
+        "error_bad_state": "De gebruuker kun nie uutgenodigd wordn voda z’n verbannienge oungedoan gemakt gewist es.",
+        "error_version_unsupported_room": "Den thuusserver van de gebruuker biedt geen oundersteunienge vo de gespreksversie.",
+        "error_unknown": "Ounbekende serverfoute"
     },
     "widget": {
         "error_need_to_be_logged_in": "Hiervoorn moe je angemeld zyn.",

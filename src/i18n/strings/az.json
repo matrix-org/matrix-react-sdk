@@ -30,7 +30,6 @@
     "Failed to set display name": "Görünüş adını təyin etmək bacarmadı",
     "Notification targets": "Xəbərdarlıqlar üçün qurğular",
     "not specified": "qeyd edilmədi",
-    "Unban": "Blokdan çıxarmaq",
     "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
     "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
     "Failed to change power level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı",
@@ -87,8 +86,6 @@
     "AM": "12:00",
     "Restricted": "Məhduddur",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Error upgrading room": "Otaq yeniləmə xətası",
-    "Double check that your server supports the room version chosen and try again.": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin.",
     "Explore rooms": "Otaqları kəşf edin",
     "common": {
         "analytics": "Analitik",
@@ -121,7 +118,8 @@
         "dismiss": "Nəzərə almayın",
         "close": "Bağlamaq",
         "accept": "Qəbul etmək",
-        "register": "Qeydiyyatdan keçmək"
+        "register": "Qeydiyyatdan keçmək",
+        "unban": "Blokdan çıxarmaq"
     },
     "keyboard": {
         "home": "Başlanğıc"
@@ -337,5 +335,9 @@
         "error_missing_room_id_request": "Sorğuda room_id yoxdur",
         "error_room_not_visible": "Otaq %(roomId)s görünmür",
         "error_missing_user_id_request": "Sorğuda user_id yoxdur"
+    },
+    "room": {
+        "upgrade_error_title": "Otaq yeniləmə xətası",
+        "upgrade_error_description": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin."
     }
 }

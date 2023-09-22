@@ -12,8 +12,6 @@
     "Admin Tools": "Beheerdersgereedschap",
     "No Microphones detected": "Geen microfoons gevonden",
     "No Webcams detected": "Geen webcams gevonden",
-    "No media permissions": "Geen mediatoestemmingen",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Je moet %(brand)s wellicht handmatig toestaan je microfoon/webcam te gebruiken",
     "Are you sure you want to leave the room '%(roomName)s'?": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
@@ -94,7 +92,6 @@
     "Unable to add email address": "Kan e-mailadres niet toevoegen",
     "Unable to remove contact information": "Kan contactinformatie niet verwijderen",
     "Unable to verify email address.": "Kan e-mailadres niet verifiëren.",
-    "Unban": "Ontbannen",
     "Uploading %(filename)s": "%(filename)s wordt geüpload",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s en %(count)s ander worden geüpload",
@@ -133,9 +130,6 @@
     "Add an Integration": "Voeg een integratie toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "Something went wrong!": "Er is iets misgegaan!",
-    "Your browser does not support the required cryptography extensions": "Jouw browser ondersteunt de benodigde cryptografie-extensies niet",
-    "Not a valid %(brand)s keyfile": "Geen geldig %(brand)s-sleutelbestand",
-    "Authentication check failed: incorrect password?": "Aanmeldingscontrole mislukt: onjuist wachtwoord?",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
     "Delete widget": "Widget verwijderen",
     "AM": "AM",
@@ -200,8 +194,6 @@
     "Send Logs": "Logs versturen",
     "We encountered an error trying to restore your previous session.": "Het herstel van je vorige sessie is mislukt.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Het wissen van de browseropslag zal het probleem misschien verhelpen, maar zal je ook uitloggen en je gehele versleutelde kamergeschiedenis onleesbaar maken.",
-    "Can't leave Server Notices room": "Kan servermeldingskamer niet verlaten",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Deze kamer is bedoeld voor belangrijke berichten van de homeserver, dus je kan het niet verlaten.",
     "Permission Required": "Toestemming vereist",
     "This event could not be displayed": "Deze gebeurtenis kon niet weergegeven worden",
     "Demote yourself?": "Jezelf degraderen?",
@@ -218,10 +210,6 @@
     "Audio Output": "Geluidsuitgang",
     "Ignored users": "Genegeerde personen",
     "Bulk options": "Bulkopties",
-    "Unrecognised address": "Adres niet herkend",
-    "You do not have permission to invite people to this room.": "Je bent niet bevoegd anderen in deze kamer uit te nodigen.",
-    "The user must be unbanned before they can be invited.": "De persoon kan niet uitgenodigd worden totdat zijn ban is verwijderd.",
-    "Unknown server error": "Onbekende serverfout",
     "Please contact your homeserver administrator.": "Gelieve contact op te nemen met de beheerder van jouw homeserver.",
     "Dog": "Hond",
     "Cat": "Kat",
@@ -405,7 +393,6 @@
     },
     "Cancel All": "Alles annuleren",
     "Upload Error": "Fout bij versturen van bestand",
-    "The user's homeserver does not support the version of the room.": "De homeserver van de persoon biedt geen ondersteuning voor deze kamerversie.",
     "Join the conversation with an account": "Neem deel aan de kamer met een account",
     "Sign Up": "Registreren",
     "Reason: %(reason)s": "Reden: %(reason)s",
@@ -518,9 +505,6 @@
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
     "Verify this session": "Verifieer deze sessie",
     "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
-    "Error upgrading room": "Upgraden van kamer mislukt",
-    "Double check that your server supports the room version chosen and try again.": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Lock": "Hangslot",
     "Other users may not trust it": "Mogelijk wantrouwen anderen het",
     "Later": "Later",
@@ -1007,9 +991,6 @@
     "Use app for a better experience": "Gebruik de app voor een betere ervaring",
     "Enable desktop notifications": "Bureaubladmeldingen inschakelen",
     "Don't miss a reply": "Mis geen antwoord",
-    "Unknown App": "Onbekende app",
-    "Error leaving room": "Fout bij verlaten kamer",
-    "Unexpected server error trying to leave the room": "Onverwachte serverfout bij het verlaten van deze kamer",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -1146,7 +1127,6 @@
     "Edit settings relating to your space.": "Bewerk instellingen gerelateerd aan jouw space.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, e-mail, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
-    "Invite to %(spaceName)s": "Voor %(spaceName)s uitnodigen",
     "Create a new room": "Nieuwe kamer aanmaken",
     "Spaces": "Spaces",
     "Space selection": "Space-selectie",
@@ -1158,7 +1138,6 @@
     "Space options": "Space-opties",
     "Leave space": "Space verlaten",
     "Invite people": "Personen uitnodigen",
-    "Share your public space": "Deel jouw publieke space",
     "Share invite link": "Deel uitnodigingskoppeling",
     "Click to copy": "Klik om te kopiëren",
     "Create a space": "Space maken",
@@ -1480,7 +1459,6 @@
     },
     "No votes cast": "Geen stemmen uitgebracht",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Deel anonieme gedragsdata om ons te helpen problemen te identificeren. Geen persoonsgegevens. Geen derde partijen.",
-    "That's fine": "Dat is prima",
     "Share location": "Locatie delen",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Weet je zeker dat je de poll wil sluiten? Dit zal zichtbaar zijn in de einduitslag van de poll en personen kunnen dan niet langer stemmen.",
     "End Poll": "Poll sluiten",
@@ -1548,7 +1526,6 @@
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
-    "You do not have permission to invite people to this space.": "Je bent niet gemachtigd om mensen voor deze space uit te nodigen.",
     "Unsent": "niet verstuurd",
     "Search Dialog": "Dialoogvenster Zoeken",
     "Join %(roomAddress)s": "%(roomAddress)s toetreden",
@@ -1611,13 +1588,6 @@
     "Sorry, your homeserver is too old to participate here.": "Sorry, je server is te oud om hier aan deel te nemen.",
     "There was an error joining.": "Er is een fout opgetreden bij het deelnemen.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s is experimenteel in een mobiele webbrowser. Gebruik onze gratis native app voor een betere ervaring en de nieuwste functies.",
-    "The user's homeserver does not support the version of the space.": "De server van de persoon ondersteunt de versie van de ruimte niet.",
-    "User may or may not exist": "Persoon kan wel of niet bestaan",
-    "User does not exist": "Persoon bestaat niet",
-    "User is already invited to the room": "Persoon is al uitgenodigd voor de kamer",
-    "User is already in the room": "Persoon is al in de kamer",
-    "User is already in the space": "Persoon is al in de space",
-    "User is already invited to the space": "Persoon is al uitgenodigd voor de space",
     "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
     "You are sharing your live location": "Je deelt je live locatie",
     "Live location enabled": "Live locatie ingeschakeld",
@@ -1717,12 +1687,6 @@
     "You need to have the right permissions in order to share locations in this room.": "Je dient de juiste rechten te hebben om locaties in deze ruimte te delen.",
     "You don't have permission to share locations": "Je bent niet gemachtigd om locaties te delen",
     "Join the room to participate": "Doe mee met de kamer om deel te nemen",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "In %(spaceName)s en %(count)s andere space.",
-        "other": "In %(spaceName)s en %(count)s andere spaces."
-    },
-    "In %(spaceName)s.": "In space %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "In spaces %(space1Name)s en %(space2Name)s.",
     "Messages in this chat will be end-to-end encrypted.": "Berichten in deze chat worden eind-tot-eind versleuteld.",
     "Saved Items": "Opgeslagen items",
     "We're creating a room with %(names)s": "We maken een kamer aan met %(names)s",
@@ -1970,7 +1934,8 @@
         "send_report": "Rapport versturen",
         "clear": "Wis",
         "exit_fullscreeen": "Volledig scherm verlaten",
-        "enter_fullscreen": "Volledig scherm openen"
+        "enter_fullscreen": "Volledig scherm openen",
+        "unban": "Ontbannen"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -3106,7 +3071,9 @@
         "transfer_failed_description": "Oproep niet doorverbonden",
         "no_permission_conference": "Toestemming vereist",
         "no_permission_conference_description": "Je hebt geen rechten in deze kamer om een vergadering te starten",
-        "default_device": "Standaardapparaat"
+        "default_device": "Standaardapparaat",
+        "no_media_perms_title": "Geen mediatoestemmingen",
+        "no_media_perms_description": "Je moet %(brand)s wellicht handmatig toestaan je microfoon/webcam te gebruiken"
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -3229,7 +3196,10 @@
         "verification_requested_toast_title": "Verificatieverzocht",
         "cancel_entering_passphrase_title": "Wachtwoord annuleren?",
         "cancel_entering_passphrase_description": "Weet je zeker, dat je het invoeren van je wachtwoord wilt afbreken?",
-        "bootstrap_title": "Sleutelconfiguratie"
+        "bootstrap_title": "Sleutelconfiguratie",
+        "export_unsupported": "Jouw browser ondersteunt de benodigde cryptografie-extensies niet",
+        "import_invalid_keyfile": "Geen geldig %(brand)s-sleutelbestand",
+        "import_invalid_passphrase": "Aanmeldingscontrole mislukt: onjuist wachtwoord?"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -3252,7 +3222,8 @@
         "pseudonymous_usage_data": "Help ons problemen te identificeren en %(analyticsOwner)s te verbeteren door anonieme gebruiksgegevens te delen. Om inzicht te krijgen in hoe mensen meerdere apparaten gebruiken, genereren we een willekeurige identificatie die door jouw apparaten wordt gedeeld.",
         "bullet_1": "We verwerken of bewaren <Bold>geen</Bold> accountgegevens",
         "bullet_2": "We delen <Bold>geen</Bold> informatie met derde partijen",
-        "disable_prompt": "Je kan dit elk moment uitzetten in instellingen"
+        "disable_prompt": "Je kan dit elk moment uitzetten in instellingen",
+        "accept_button": "Dat is prima"
     },
     "chat_effects": {
         "confetti_description": "Stuurt het bericht met confetti",
@@ -3502,7 +3473,8 @@
         },
         "error_need_to_be_logged_in": "Hiervoor dien je ingelogd te zijn.",
         "error_need_invite_permission": "Dit vereist de bevoegdheid om personen uit te nodigen.",
-        "error_need_kick_permission": "U moet in staat zijn om gebruikers te verwijderen om dit te doen."
+        "error_need_kick_permission": "U moet in staat zijn om gebruikers te verwijderen om dit te doen.",
+        "no_name": "Onbekende app"
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3601,7 +3573,8 @@
             "home": "Space home",
             "explore": "Kamers ontdekken",
             "manage_and_explore": "Beheer & ontdek kamers"
-        }
+        },
+        "share_public": "Deel jouw publieke space"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3716,7 +3689,13 @@
         "unread_notifications_predecessor": {
             "other": "Je hebt %(count)s ongelezen meldingen in een vorige versie van deze kamer.",
             "one": "Je hebt %(count)s ongelezen meldingen in een vorige versie van deze kamer."
-        }
+        },
+        "leave_unexpected_error": "Onverwachte serverfout bij het verlaten van deze kamer",
+        "leave_server_notices_title": "Kan servermeldingskamer niet verlaten",
+        "leave_error_title": "Fout bij verlaten kamer",
+        "upgrade_error_title": "Upgraden van kamer mislukt",
+        "upgrade_error_description": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
+        "leave_server_notices_description": "Deze kamer is bedoeld voor belangrijke berichten van de homeserver, dus je kan het niet verlaten."
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3783,7 +3762,21 @@
         "failed_generic": "Handeling is mislukt",
         "room_failed_title": "Kan personen niet uitnodigen voor %(roomName)s",
         "room_failed_partial": "De anderen zijn verstuurd, maar de volgende personen konden niet worden uitgenodigd voor <RoomName/>",
-        "room_failed_partial_title": "Sommige uitnodigingen konden niet verstuurd worden"
+        "room_failed_partial_title": "Sommige uitnodigingen konden niet verstuurd worden",
+        "invalid_address": "Adres niet herkend",
+        "error_permissions_space": "Je bent niet gemachtigd om mensen voor deze space uit te nodigen.",
+        "error_permissions_room": "Je bent niet bevoegd anderen in deze kamer uit te nodigen.",
+        "error_already_invited_space": "Persoon is al uitgenodigd voor de space",
+        "error_already_invited_room": "Persoon is al uitgenodigd voor de kamer",
+        "error_already_joined_space": "Persoon is al in de space",
+        "error_already_joined_room": "Persoon is al in de kamer",
+        "error_user_not_found": "Persoon bestaat niet",
+        "error_profile_undisclosed": "Persoon kan wel of niet bestaan",
+        "error_bad_state": "De persoon kan niet uitgenodigd worden totdat zijn ban is verwijderd.",
+        "error_version_unsupported_space": "De server van de persoon ondersteunt de versie van de ruimte niet.",
+        "error_version_unsupported_room": "De homeserver van de persoon biedt geen ondersteuning voor deze kamerversie.",
+        "error_unknown": "Onbekende serverfout",
+        "to_space": "Voor %(spaceName)s uitnodigen"
     },
     "scalar": {
         "error_create": "Kan widget niet aanmaken.",
@@ -3807,5 +3800,12 @@
         "connection": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
         "mixed_content": "Kan geen verbinding maken met de homeserver via HTTP wanneer er een HTTPS-URL in je browserbalk staat. Gebruik HTTPS of <a>schakel onveilige scripts in</a>.",
         "tls": "Geen verbinding met de homeserver - controleer je verbinding, zorg ervoor dat het <a>SSL-certificaat van de homeserver</a> vertrouwd is en dat er geen browserextensies verzoeken blokkeren."
-    }
+    },
+    "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "In %(spaceName)s en %(count)s andere space.",
+        "other": "In %(spaceName)s en %(count)s andere spaces."
+    },
+    "in_space": "In space %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

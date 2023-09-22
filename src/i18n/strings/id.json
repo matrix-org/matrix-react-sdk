@@ -1,6 +1,5 @@
 {
     "No Microphones detected": "Tidak ada mikrofon terdeteksi",
-    "No media permissions": "Tidak ada izin media",
     "Are you sure?": "Apakah Anda yakin?",
     "An error has occurred.": "Telah terjadi kesalahan.",
     "Are you sure you want to reject the invitation?": "Anda yakin menolak undangannya?",
@@ -47,7 +46,6 @@
     "Dec": "Des",
     "Admin Tools": "Peralatan Admin",
     "No Webcams detected": "Tidak ada Webcam terdeteksi",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam",
     "Authentication": "Autentikasi",
     "Are you sure you want to leave the room '%(roomName)s'?": "Anda yakin ingin meninggalkan ruangan '%(roomName)s'?",
     "A new password must be entered.": "Kata sandi baru harus dimasukkan.",
@@ -347,7 +345,6 @@
     "Unignore": "Hilangkan Abaian",
     "Copied!": "Disalin!",
     "Historical": "Riwayat",
-    "Unban": "Hilangkan Cekalan",
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
     "Resume": "Lanjutkan",
@@ -487,7 +484,6 @@
     "Audio Output": "Output Audio",
     "Set up": "Siapkan",
     "Delete Backup": "Hapus Cadangan",
-    "Unrecognised address": "Alamat tidak dikenal",
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
     "Logs sent": "Catatan terkirim",
@@ -530,19 +526,6 @@
     "Sending": "Mengirim",
     "Spaces": "Space",
     "Connecting": "Menghubungkan",
-    "Error upgrading room": "Gagal meningkatkan ruangan",
-    "Unknown server error": "Kesalahan server yang tidak diketahui",
-    "The user's homeserver does not support the version of the room.": "Homeserver penggunanya tidak mendukung versi ruangannya.",
-    "The user must be unbanned before they can be invited.": "Pengguna harus dihilangkan cekalannya sebelum diundang kembali.",
-    "You do not have permission to invite people to this room.": "Anda tidak ada izin untuk mengundang orang ke ruangan ini.",
-    "Error leaving room": "Terjadi kesalahan saat meninggalkan ruangan",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ruangan ini digunakan untuk pesan yang penting dari Homeservernya, jadi Anda tidak dapat meninggalkannya.",
-    "Can't leave Server Notices room": "Tidak dapat meninggalkan ruangan Pemberitahuan Server",
-    "Unexpected server error trying to leave the room": "Kesalahan server yang tidak terduga saat mencoba untuk meninggalkan ruangannya",
-    "Authentication check failed: incorrect password?": "Pemeriksaan autentikasi gagal: kata sandi salah?",
-    "Not a valid %(brand)s keyfile": "Bukan keyfile %(brand)s yang absah",
-    "Your browser does not support the required cryptography extensions": "Browser Anda tidak mendukung ekstensi kriptografi yang dibutuhkan",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "%(items)s and %(count)s others": {
         "one": "%(items)s dan satu lainnya",
         "other": "%(items)s dan %(count)s lainnya"
@@ -677,10 +660,6 @@
     "Enable desktop notifications": "Aktifkan notifikasi desktop",
     "Don't miss a reply": "Jangan lewatkan sebuah balasan",
     "Review to ensure your account is safe": "Periksa untuk memastikan akun Anda aman",
-    "Unknown App": "Aplikasi Tidak Diketahui",
-    "Share your public space": "Bagikan space publik Anda",
-    "Invite to %(spaceName)s": "Undang ke %(spaceName)s",
-    "Double check that your server supports the room version chosen and try again.": "Periksa ulang jika server Anda mendukung versi ruangan ini dan coba lagi.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Manajer integrasi menerima data pengaturan, dan dapat mengubah widget, mengirimkan undangan ruangan, dan mengatur tingkat daya dengan sepengetahuan Anda.",
     "Manage integrations": "Kelola integrasi",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Gunakan sebuah manajer integrasi untuk mengelola bot, widget, dan paket stiker.",
@@ -1480,7 +1459,6 @@
     },
     "No votes cast": "Tidak ada suara",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bagikan data anonim untuk membantu kami mengidentifikasi masalah-masalah. Tidak ada yang pribadi. Tidak ada pihak ketiga.",
-    "That's fine": "Saya tidak keberatan",
     "Share location": "Bagikan lokasi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Apakah Anda yakin untuk mengakhiri poll ini? Ini akan menampilkan hasil akhir dari poll dan orang-orang tidak dapat memberikan suara lagi.",
     "End Poll": "Akhiri Poll",
@@ -1604,14 +1582,6 @@
     "The person who invited you has already left.": "Orang yang mengundang Anda telah keluar.",
     "Sorry, your homeserver is too old to participate here.": "Maaf, homeserver Anda terlalu usang untuk berpartisipasi di sini.",
     "There was an error joining.": "Terjadi sebuah kesalahan bergabung.",
-    "The user's homeserver does not support the version of the space.": "Homeserver pengguna tidak mendukung versi space.",
-    "User may or may not exist": "Pengguna mungkin atau mungkin tidak ada",
-    "User does not exist": "Pengguna tidak ada",
-    "User is already in the room": "Pengguna sudah ada di ruangan",
-    "User is already in the space": "Pengguna sudah ada di space",
-    "User is already invited to the room": "Pengguna sudah diundang ke ruangan",
-    "User is already invited to the space": "Pengguna sudah diundang ke space",
-    "You do not have permission to invite people to this space.": "Anda tidak memiliki izin untuk mengundang seseorang ke space ini.",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
         "one": "1 perserta",
@@ -1708,12 +1678,6 @@
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
     "Join the room to participate": "Bergabung dengan ruangan ini untuk berpartisipasi",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Dalam %(spaceName)s dan %(count)s space lainnya.",
-        "other": "Dalam %(spaceName)s dan %(count)s space lainnya."
-    },
-    "In %(spaceName)s.": "Dalam space %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "Stop and close": "Berhenti dan tutup",
     "Online community members": "Anggota komunitas daring",
     "Coworkers and teams": "Teman kerja dan tim",
@@ -1938,7 +1902,6 @@
     "Unable to find user by email": "Tidak dapat mencari pengguna dengan surel",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Pesan-pesan di ruangan ini dienkripsi secara ujung ke ujung. Ketika orang-orang bergabung, Anda dapat memverifikasi mereka di profil mereka dengan mengetuk pada foto profil mereka.",
     "Upgrade room": "Tingkatkan ruangan",
-    "User cannot be invited until they are unbanned": "Pengguna tidak dapat diundang sampai dibatalkan cekalannya",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
     "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
     "Other spaces you know": "Space lainnya yang Anda tahu",
@@ -2157,7 +2120,8 @@
         "send_report": "Kirimkan laporan",
         "clear": "Hapus",
         "exit_fullscreeen": "Keluar dari layar penuh",
-        "enter_fullscreen": "Masuki layar penuh"
+        "enter_fullscreen": "Masuki layar penuh",
+        "unban": "Hilangkan Cekalan"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -3450,7 +3414,9 @@
         "no_permission_conference_description": "Anda tidak memiliki permisi untuk memulai panggilan konferensi di ruang ini",
         "default_device": "Perangkat Bawaan",
         "failed_call_live_broadcast_title": "Tidak dapat memulai panggilan",
-        "failed_call_live_broadcast_description": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan."
+        "failed_call_live_broadcast_description": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
+        "no_media_perms_title": "Tidak ada izin media",
+        "no_media_perms_description": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam"
     },
     "Other": "Lainnya",
     "Advanced": "Tingkat Lanjut",
@@ -3575,7 +3541,10 @@
         "verification_requested_toast_title": "Verifikasi diminta",
         "cancel_entering_passphrase_title": "Batalkan memasukkan frasa sandi?",
         "cancel_entering_passphrase_description": "Apakah Anda yakin untuk membatalkan pemasukkan frasa sandi?",
-        "bootstrap_title": "Menyiapkan kunci"
+        "bootstrap_title": "Menyiapkan kunci",
+        "export_unsupported": "Browser Anda tidak mendukung ekstensi kriptografi yang dibutuhkan",
+        "import_invalid_keyfile": "Bukan keyfile %(brand)s yang absah",
+        "import_invalid_passphrase": "Pemeriksaan autentikasi gagal: kata sandi salah?"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3598,7 +3567,8 @@
         "pseudonymous_usage_data": "Bantu kami mengidentifikasi masalah-masalah dan membuat %(analyticsOwner)s lebih baik dengan membagikan data penggunaan anonim. Untuk memahami bagaimana orang-orang menggunakan beberapa perangkat-perangkat, kami akan membuat pengenal acak, yang dibagikan oleh perangkat Anda.",
         "bullet_1": "Kami <Bold>tidak</Bold> merekam atau memprofil data akun apa pun",
         "bullet_2": "Kami <Bold>tidak</Bold> membagikan informasi ini dengan pihak ketiga",
-        "disable_prompt": "Anda dapat mematikannya kapan saja di pengaturan"
+        "disable_prompt": "Anda dapat mematikannya kapan saja di pengaturan",
+        "accept_button": "Saya tidak keberatan"
     },
     "chat_effects": {
         "confetti_description": "Kirim pesan dengan konfeti",
@@ -3877,7 +3847,8 @@
         },
         "error_need_to_be_logged_in": "Anda harus masuk.",
         "error_need_invite_permission": "Anda harus dapat mengundang pengguna untuk melakukannya.",
-        "error_need_kick_permission": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu."
+        "error_need_kick_permission": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
+        "no_name": "Aplikasi Tidak Diketahui"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -3991,7 +3962,8 @@
             "home": "Beranda space",
             "explore": "Jelajahi ruangan",
             "manage_and_explore": "Kelola & jelajahi ruangan"
-        }
+        },
+        "share_public": "Bagikan space publik Anda"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -4111,7 +4083,13 @@
         "unread_notifications_predecessor": {
             "one": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini.",
             "other": "Anda punya %(count)s notifikasi yang belum dibaca dalam versi sebelumnya dari ruangan ini."
-        }
+        },
+        "leave_unexpected_error": "Kesalahan server yang tidak terduga saat mencoba untuk meninggalkan ruangannya",
+        "leave_server_notices_title": "Tidak dapat meninggalkan ruangan Pemberitahuan Server",
+        "leave_error_title": "Terjadi kesalahan saat meninggalkan ruangan",
+        "upgrade_error_title": "Gagal meningkatkan ruangan",
+        "upgrade_error_description": "Periksa ulang jika server Anda mendukung versi ruangan ini dan coba lagi.",
+        "leave_server_notices_description": "Ruangan ini digunakan untuk pesan yang penting dari Homeservernya, jadi Anda tidak dapat meninggalkannya."
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4186,7 +4164,22 @@
         "failed_generic": "Operasi gagal",
         "room_failed_title": "Gagal mengundang pengguna ke %(roomName)s",
         "room_failed_partial": "Kami telah mengirim yang lainnya, tetapi orang berikut ini tidak dapat diundang ke <RoomName/>",
-        "room_failed_partial_title": "Beberapa undangan tidak dapat dikirim"
+        "room_failed_partial_title": "Beberapa undangan tidak dapat dikirim",
+        "invalid_address": "Alamat tidak dikenal",
+        "unban_first_title": "Pengguna tidak dapat diundang sampai dibatalkan cekalannya",
+        "error_permissions_space": "Anda tidak memiliki izin untuk mengundang seseorang ke space ini.",
+        "error_permissions_room": "Anda tidak ada izin untuk mengundang orang ke ruangan ini.",
+        "error_already_invited_space": "Pengguna sudah diundang ke space",
+        "error_already_invited_room": "Pengguna sudah diundang ke ruangan",
+        "error_already_joined_space": "Pengguna sudah ada di space",
+        "error_already_joined_room": "Pengguna sudah ada di ruangan",
+        "error_user_not_found": "Pengguna tidak ada",
+        "error_profile_undisclosed": "Pengguna mungkin atau mungkin tidak ada",
+        "error_bad_state": "Pengguna harus dihilangkan cekalannya sebelum diundang kembali.",
+        "error_version_unsupported_space": "Homeserver pengguna tidak mendukung versi space.",
+        "error_version_unsupported_room": "Homeserver penggunanya tidak mendukung versi ruangannya.",
+        "error_unknown": "Kesalahan server yang tidak diketahui",
+        "to_space": "Undang ke %(spaceName)s"
     },
     "scalar": {
         "error_create": "Tidak dapat membuat widget.",
@@ -4213,5 +4206,12 @@
         "connection": "Terjadi sebuah masalah berkomunikasi dengan homeservernya, coba lagi nanti.",
         "mixed_content": "Tidak dapat terhubung ke homeserver melalui HTTP ketika URL di browser berupa HTTPS. Gunakan HTTPS atau <a>aktifkan skrip yang tidak aman</a>.",
         "tls": "Tidak dapat terhubung ke homeserver — harap cek koneksi anda, pastikan <a>sertifikat SSL homeserver</a> Anda terpercaya, dan ekstensi browser tidak memblokir permintaan."
-    }
+    },
+    "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Dalam %(spaceName)s dan %(count)s space lainnya.",
+        "other": "Dalam %(spaceName)s dan %(count)s space lainnya."
+    },
+    "in_space": "Dalam space %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

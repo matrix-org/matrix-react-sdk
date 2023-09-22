@@ -54,8 +54,6 @@
     "Yesterday": "אתמול",
     "Low Priority": "עדיפות נמוכה",
     "Thank you!": "רב תודות!",
-    "Double check that your server supports the room version chosen and try again.": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
-    "Error upgrading room": "שגיאה בשדרוג חדר",
     "Moderator": "מנהל",
     "Restricted": "מחוץ לתחום",
     "Timor-Leste": "טמור-לסטה",
@@ -309,19 +307,6 @@
     "Vietnam": "וייטנאם",
     "Venezuela": "ונצואלה",
     "Vatican City": "ותיקן",
-    "Unknown server error": "שגיאת שרת לא ידועה",
-    "The user's homeserver does not support the version of the room.": "השרת של המשתמש אינו תומך בחדר זה.",
-    "The user must be unbanned before they can be invited.": "על המשתמש להיום לא חסום לפני שניתן יהיה להזמינו לחדר.",
-    "You do not have permission to invite people to this room.": "אין לכם הרשאות להזמין אנשים לחדר זה.",
-    "Unrecognised address": "כתובת לא מזוהה",
-    "Error leaving room": "שגיאת נסיון לצאת מהחדר",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "החדר הזה משמש להודעות חשובות מהשרת ולכן אינכם יכולים לעזוב אותו.",
-    "Can't leave Server Notices room": "לא יכול לעזוב את חדר ההודעות של השרת",
-    "Unexpected server error trying to leave the room": "שגיאת שרת לא צפויה בנסיון לעזוב את החדר",
-    "Authentication check failed: incorrect password?": "האימות שלכם נכשל: סיסמא שגויה?",
-    "Not a valid %(brand)s keyfile": "קובץ מפתח של %(brand)s אינו תקין",
-    "Your browser does not support the required cryptography extensions": "הדפדפן שלכם אינו תומך בהצפנה הדרושה",
-    "%(name)s (%(userId)s)": "%(userId)s %(name)s",
     "%(items)s and %(lastItem)s": "%(items)s ו%(lastItem)s אחרון",
     "%(items)s and %(count)s others": {
         "one": "%(items)s ועוד אחד אחר",
@@ -454,7 +439,6 @@
     "Enable desktop notifications": "אשרו התראות שולחן עבודה",
     "Don't miss a reply": "אל תפספסו תגובה",
     "Later": "מאוחר יותר",
-    "Unknown App": "אפליקציה לא ידועה",
     "Server did not return valid authentication information.": "השרת לא החזיר מידע אימות תקף.",
     "Server did not require any authentication": "השרת לא נדרש לאימות כלשהו",
     "There was a problem communicating with the server. Please try again.": "הייתה בעיה בתקשורת עם השרת. בבקשה נסה שוב.",
@@ -728,7 +712,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "אירעה שגיאה בשינוי דרישות רמת הניהול של החדר. ודא שיש לך הרשאות מספיקות ונסה שוב.",
     "Error changing power level requirement": "שגיאה בשינוי דרישת דרגת ניהול",
     "Banned by %(displayName)s": "נחסם על ידי %(displayName)s",
-    "Unban": "הסר חסימה",
     "Failed to unban": "שגיאה בהסרת חסימה",
     "This widget may use cookies.": "יישומון זה עשוי להשתמש בעוגיות.",
     "Widget added by": "ישומון נוסף על ידי",
@@ -769,8 +752,6 @@
     "No Audio Outputs detected": "לא התגלו יציאות אודיו",
     "Request media permissions": "בקש הרשאות למדיה",
     "Missing media permissions, click the button below to request.": "חסרות הרשאות מדיה, לחץ על הלחצן למטה כדי לבקש.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "ייתכן שיהיה עליך לאפשר ידנית ל-%(brand)s גישה למיקרופון / מצלמת האינטרנט שלך",
-    "No media permissions": "אין הרשאות מדיה",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות.",
     "Message search": "חיפוש הודעה",
     "Reject all %(invitedRooms)s invites": "דחה את כל ההזמנות של %(invitedRooms)s",
@@ -1138,7 +1119,6 @@
     "Failed to remove user": "הסרת המשתמש נכשלה",
     "Failed to send": "השליחה נכשלה",
     "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
-    "Share your public space": "שתף את מרחב העבודה הציבורי שלך",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Spaces": "מרחבי עבודה",
@@ -1147,7 +1127,6 @@
     "Back to thread": "חזרה לשרשור",
     "Room members": "חברי החדר",
     "Back to chat": "חזרה לצ'אט",
-    "That's fine": "זה בסדר",
     "Voice Message": "הודעה קולית",
     "Send voice message": "שלח הודעה קולית",
     "Your message was sent": "ההודעה שלך נשלחה",
@@ -1309,18 +1288,7 @@
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
-    "The user's homeserver does not support the version of the space.": "השרת של המשתמש אינו תומך בגירסא זו של מרחבי עבודה.",
-    "User is already in the space": "המשתמש כבר במרחב העבודה",
-    "User is already invited to the space": "המשתמש כבר מוזמן למרחב העבודה",
-    "You do not have permission to invite people to this space.": "אין לכם הרשאה להזמין משתתפים אחרים למרחב עבודה זה.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "ב%(spaceName)sו%(count)s מרחבי עבודה אחרים.",
-        "other": "%(spaceName)sו%(count)s מרחבי עבודה אחרים."
-    },
-    "In %(spaceName)s.": "במרחבי עבודה%(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "Search %(spaceName)s": "חיפוש %(spaceName)s",
-    "Invite to %(spaceName)s": "הזמן אל %(spaceName)s",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sו%(count)sאחרים",
         "other": "%(spaceName)sו%(count)s אחרים"
@@ -1531,7 +1499,8 @@
         "submit": "הגש",
         "send_report": "שלח דיווח",
         "exit_fullscreeen": "יציאה ממסך מלא",
-        "enter_fullscreen": "עברו למסך מלא"
+        "enter_fullscreen": "עברו למסך מלא",
+        "unban": "הסר חסימה"
     },
     "a11y": {
         "user_menu": "תפריט משתמש",
@@ -2396,7 +2365,9 @@
         "transfer_failed_description": "העברת השיחה נכשלה",
         "no_permission_conference": "הרשאה דרושה",
         "no_permission_conference_description": "אין לכם הרשאות להתחיל ועידה בחדר זה",
-        "default_device": "התקן ברירת מחדל"
+        "default_device": "התקן ברירת מחדל",
+        "no_media_perms_title": "אין הרשאות מדיה",
+        "no_media_perms_description": "ייתכן שיהיה עליך לאפשר ידנית ל-%(brand)s גישה למיקרופון / מצלמת האינטרנט שלך"
     },
     "Other": "אחר",
     "Advanced": "מתקדם",
@@ -2503,7 +2474,10 @@
         "verification_requested_toast_title": "התבקש אימות",
         "cancel_entering_passphrase_title": "בטל הקלדת סיסמא?",
         "cancel_entering_passphrase_description": "האם אתם בטוחים שהינכם רוצים לבטל?",
-        "bootstrap_title": "מגדיר מפתחות"
+        "bootstrap_title": "מגדיר מפתחות",
+        "export_unsupported": "הדפדפן שלכם אינו תומך בהצפנה הדרושה",
+        "import_invalid_keyfile": "קובץ מפתח של %(brand)s אינו תקין",
+        "import_invalid_passphrase": "האימות שלכם נכשל: סיסמא שגויה?"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2521,7 +2495,8 @@
     "analytics": {
         "enable_prompt": "עזרו בשיפור %(analyticsOwner)s",
         "consent_migration": "הסכמתם בעבר לשתף איתנו מידע אנונימי לגבי השימוש שלכם. אנחנו מעדכנים איך זה מתבצע.",
-        "learn_more": "שתף נתונים אנונימיים כדי לעזור לנו לזהות בעיות. ללא אישי. אין צדדים שלישיים. <LearnMoreLink>למידע נוסף</LearnMoreLink>"
+        "learn_more": "שתף נתונים אנונימיים כדי לעזור לנו לזהות בעיות. ללא אישי. אין צדדים שלישיים. <LearnMoreLink>למידע נוסף</LearnMoreLink>",
+        "accept_button": "זה בסדר"
     },
     "chat_effects": {
         "confetti_description": "שולח הודעה זו ביחד עם קונפטי",
@@ -2749,7 +2724,8 @@
             "see_msgtype_sent_active_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר הפעיל שלכם"
         },
         "error_need_to_be_logged_in": "עליכם להיות מחוברים.",
-        "error_need_invite_permission": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו."
+        "error_need_invite_permission": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו.",
+        "no_name": "אפליקציה לא ידועה"
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -2819,7 +2795,8 @@
         "incompatible_server_hierarchy": "השרת שלכם אינו תומך בהצגת היררכית חללי עבודה.",
         "context_menu": {
             "explore": "גלה חדרים"
-        }
+        },
+        "share_public": "שתף את מרחב העבודה הציבורי שלך"
     },
     "location_sharing": {
         "MapStyleUrlNotReachable": "שרת בית זה אינו מוגדר כהלכה להצגת מפות, או ששרת המפות המוגדר אינו ניתן לגישה.",
@@ -2918,7 +2895,13 @@
         "unread_notifications_predecessor": {
             "one": "יש לך %(count)s הודעה שלא נקראה בגירסה קודמת של חדר זה.",
             "other": "יש לך %(count)s הודעות שלא נקראו בגרסה קודמת של חדר זה."
-        }
+        },
+        "leave_unexpected_error": "שגיאת שרת לא צפויה בנסיון לעזוב את החדר",
+        "leave_server_notices_title": "לא יכול לעזוב את חדר ההודעות של השרת",
+        "leave_error_title": "שגיאת נסיון לצאת מהחדר",
+        "upgrade_error_title": "שגיאה בשדרוג חדר",
+        "upgrade_error_description": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
+        "leave_server_notices_description": "החדר הזה משמש להודעות חשובות מהשרת ולכן אינכם יכולים לעזוב אותו."
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
@@ -2965,7 +2948,17 @@
         "failed_generic": "פעולה נכשלה",
         "room_failed_title": "נכשל בהזמנת משתמשים לחדר - %(roomName)",
         "room_failed_partial": "ההזמנה נשלחה, פרט למשתמשים הבאים שלא ניתן להזמינם ל - <RoomName/>",
-        "room_failed_partial_title": "לא ניתן לשלוח חלק מההזמנות"
+        "room_failed_partial_title": "לא ניתן לשלוח חלק מההזמנות",
+        "invalid_address": "כתובת לא מזוהה",
+        "error_permissions_space": "אין לכם הרשאה להזמין משתתפים אחרים למרחב עבודה זה.",
+        "error_permissions_room": "אין לכם הרשאות להזמין אנשים לחדר זה.",
+        "error_already_invited_space": "המשתמש כבר מוזמן למרחב העבודה",
+        "error_already_joined_space": "המשתמש כבר במרחב העבודה",
+        "error_bad_state": "על המשתמש להיום לא חסום לפני שניתן יהיה להזמינו לחדר.",
+        "error_version_unsupported_space": "השרת של המשתמש אינו תומך בגירסא זו של מרחבי עבודה.",
+        "error_version_unsupported_room": "השרת של המשתמש אינו תומך בחדר זה.",
+        "error_unknown": "שגיאת שרת לא ידועה",
+        "to_space": "הזמן אל %(spaceName)s"
     },
     "scalar": {
         "error_create": "לא ניתן היה ליצור ווידג'ט.",
@@ -2989,5 +2982,12 @@
         "connection": "הייתה תקשורת עם שרת הבית. נסה שוב מאוחר יותר.",
         "mixed_content": "לא ניתן להתחבר לשרת ביתי באמצעות HTTP כאשר כתובת HTTPS נמצאת בסרגל הדפדפן שלך. השתמש ב- HTTPS או <a> הפעל סקריפטים לא בטוחים </a>.",
         "tls": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות."
-    }
+    },
+    "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "ב%(spaceName)sו%(count)s מרחבי עבודה אחרים.",
+        "other": "%(spaceName)sו%(count)s מרחבי עבודה אחרים."
+    },
+    "in_space": "במרחבי עבודה%(spaceName)s.",
+    "name_and_id": "%(userId)s %(name)s"
 }

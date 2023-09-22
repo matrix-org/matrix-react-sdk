@@ -88,7 +88,6 @@
     "General": "Generelt",
     "None": "Ingen",
     "Browse": "Bla",
-    "Unban": "Opphev utestengelse",
     "Unable to verify phone number.": "Klarte ikke å verifisere telefonnummeret.",
     "Verification code": "Verifikasjonskode",
     "Email Address": "E-postadresse",
@@ -165,7 +164,6 @@
     "Ignored users": "Ignorerte brukere",
     "Unignore": "Opphev ignorering",
     "Message search": "Meldingssøk",
-    "No media permissions": "Ingen mediatillatelser",
     "Missing media permissions, click the button below to request.": "Manglende mediatillatelser, klikk på knappen nedenfor for å be om dem.",
     "Request media permissions": "Be om mediatillatelser",
     "No Audio Outputs detected": "Ingen lydutdataer ble oppdaget",
@@ -255,7 +253,6 @@
         "one": "%(items)s og én annen"
     },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
     "Authentication": "Autentisering",
@@ -330,9 +327,6 @@
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
-    "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
-    "Unrecognised address": "Adressen ble ikke gjenkjent",
-    "Unknown server error": "Ukjent tjenerfeil",
     "Aeroplane": "Fly",
     "No display name": "Ingen visningsnavn",
     "unexpected type": "uventet type",
@@ -469,7 +463,6 @@
     "Unable to revoke sharing for email address": "Klarte ikke å trekke tilbake deling for denne e-postadressen",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
     "Invite people": "Inviter personer",
-    "You do not have permission to invite people to this room.": "Du har ikke tilgang til å invitere personer til dette rommet.",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -528,7 +521,6 @@
         "other": "%(count)s rom",
         "one": "%(count)s rom"
     },
-    "Invite to %(spaceName)s": "Inviter til %(spaceName)s",
     "unknown person": "ukjent person",
     "Click to copy": "Klikk for å kopiere",
     "Share invite link": "Del invitasjonslenke",
@@ -597,7 +589,6 @@
     "Dial pad": "Nummerpanel",
     "Enable desktop notifications": "Aktiver skrivebordsvarsler",
     "Don't miss a reply": "Ikke gå glipp av noen svar",
-    "Unknown App": "Ukjent app",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -978,7 +969,8 @@
         "refresh": "Oppdater",
         "mention": "Nevn",
         "submit": "Send",
-        "send_report": "Send inn rapport"
+        "send_report": "Send inn rapport",
+        "unban": "Opphev utestengelse"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -1467,7 +1459,8 @@
         "cannot_call_yourself_description": "Du kan ikke ringe deg selv.",
         "no_permission_conference": "Tillatelse kreves",
         "no_permission_conference_description": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
-        "default_device": "Standardenhet"
+        "default_device": "Standardenhet",
+        "no_media_perms_title": "Ingen mediatillatelser"
     },
     "Other": "Andre",
     "Advanced": "Avansert",
@@ -1536,7 +1529,8 @@
             "cancelling": "Avbryter …"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
-        "bootstrap_title": "Setter opp nøkler"
+        "bootstrap_title": "Setter opp nøkler",
+        "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1653,7 +1647,8 @@
             "see_images_sent_this_room": "Se bilder som er lagt ut i dette rommet"
         },
         "error_need_to_be_logged_in": "Du må være logget inn.",
-        "error_need_invite_permission": "Du må kunne invitere andre brukere for å gjøre det."
+        "error_need_invite_permission": "Du må kunne invitere andre brukere for å gjøre det.",
+        "no_name": "Ukjent app"
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -1755,7 +1750,11 @@
     },
     "invite": {
         "failed_title": "Klarte ikke invitere",
-        "failed_generic": "Operasjon mislyktes"
+        "failed_generic": "Operasjon mislyktes",
+        "invalid_address": "Adressen ble ikke gjenkjent",
+        "error_permissions_room": "Du har ikke tilgang til å invitere personer til dette rommet.",
+        "error_unknown": "Ukjent tjenerfeil",
+        "to_space": "Inviter til %(spaceName)s"
     },
     "scalar": {
         "error_create": "Klarte ikke lage widgeten.",
@@ -1768,5 +1767,6 @@
         "error_missing_room_id_request": "Manglende room_id i forespørselen",
         "error_room_not_visible": "Rom %(roomId)s er ikke synlig",
         "error_missing_user_id_request": "Manglende user_id i forespørselen"
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

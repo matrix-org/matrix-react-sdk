@@ -20,7 +20,6 @@
     "Unable to add email address": "Не удается добавить email",
     "Unable to remove contact information": "Не удалось удалить контактную информацию",
     "Unable to verify email address.": "Не удалось проверить email.",
-    "Unban": "Разблокировать",
     "unknown error code": "неизвестный код ошибки",
     "Upload avatar": "Загрузить аватар",
     "Verification Pending": "В ожидании подтверждения",
@@ -82,8 +81,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "No Microphones detected": "Микрофоны не обнаружены",
     "No Webcams detected": "Веб-камера не обнаружена",
-    "No media permissions": "Нет разрешённых носителей",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную",
     "Are you sure you want to leave the room '%(roomName)s'?": "Уверены, что хотите покинуть '%(roomName)s'?",
     "Custom level": "Специальные права",
     "Email address": "Электронная почта",
@@ -133,9 +130,6 @@
     "%(roomName)s does not exist.": "%(roomName)s не существует.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s на данный момент недоступна.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (уровень прав %(powerLevelNumber)s)",
-    "Not a valid %(brand)s keyfile": "Недействительный файл ключей %(brand)s",
-    "Your browser does not support the required cryptography extensions": "Ваш браузер не поддерживает необходимые криптографические расширения",
-    "Authentication check failed: incorrect password?": "Ошибка аутентификации: возможно, неправильный пароль?",
     "This will allow you to reset your password and receive notifications.": "Это позволит при необходимости сбросить пароль и получать уведомления.",
     "Delete widget": "Удалить виджет",
     "AM": "ДП",
@@ -200,8 +194,6 @@
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
-    "Can't leave Server Notices room": "Невозможно покинуть комнату сервера уведомлений",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Эта комната используется для важных сообщений от сервера, поэтому вы не можете ее покинуть.",
     "No Audio Outputs detected": "Аудиовыход не обнаружен",
     "Audio Output": "Аудиовыход",
     "Share Link to User": "Поделиться ссылкой на пользователя",
@@ -222,9 +214,6 @@
     "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
-    "Unrecognised address": "Нераспознанный адрес",
-    "You do not have permission to invite people to this room.": "У вас нет разрешения приглашать людей в эту комнату.",
-    "Unknown server error": "Неизвестная ошибка сервера",
     "Please contact your homeserver administrator.": "Пожалуйста, свяжитесь с администратором вашего сервера.",
     "Email Address": "Адрес электронной почты",
     "Delete Backup": "Удалить резервную копию",
@@ -330,7 +319,6 @@
     "Headphones": "Наушники",
     "Folder": "Папка",
     "Your keys are being backed up (the first backup could take a few minutes).": "Выполняется резервная копия ключей (первый раз это может занять несколько минут).",
-    "The user must be unbanned before they can be invited.": "Пользователь должен быть разблокирован прежде чем может быть приглашён.",
     "Scissors": "Ножницы",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Мы отправили вам сообщение для подтверждения адреса электронной почты. Пожалуйста, следуйте указаниям в сообщении, после чего нажмите кнопку ниже.",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Вы уверены? Зашифрованные сообщения будут безвозвратно утеряны при отсутствии соответствующего резервного копирования ваших ключей.",
@@ -348,7 +336,6 @@
     "You'll lose access to your encrypted messages": "Вы потеряете доступ к вашим шифрованным сообщениям",
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
-    "The user's homeserver does not support the version of the room.": "Домашний сервер пользователя не поддерживает версию комнаты.",
     "Bulk options": "Основные опции",
     "This room has been replaced and is no longer active.": "Эта комната заменена и более неактивна.",
     "Join the conversation with an account": "Присоединиться к разговору с учётной записью",
@@ -529,8 +516,6 @@
     "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
     "Jump to first invite.": "Перейти к первому приглашению.",
     "Message Actions": "Сообщение действий",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Error upgrading room": "Ошибка обновления комнаты",
     "Manage integrations": "Управление интеграциями",
     "Direct Messages": "Личные сообщения",
     "%(count)s sessions": {
@@ -541,7 +526,6 @@
     "Verify this session": "Заверьте этот сеанс",
     "Your keys are <b>not being backed up from this session</b>.": "Ваши ключи <b>не резервируются с этом сеансе</b>.",
     "Encryption upgrade available": "Доступно обновление шифрования",
-    "Double check that your server supports the room version chosen and try again.": "Убедитесь, что ваш сервер поддерживает выбранную версию комнаты и попробуйте снова.",
     "Lock": "Заблокировать",
     "Other users may not trust it": "Другие пользователи могут не доверять этому сеансу",
     "Later": "Позже",
@@ -787,11 +771,8 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
     "Explore public rooms": "Просмотреть публичные комнаты",
     "Preparing to download logs": "Подготовка к загрузке журналов",
-    "Unexpected server error trying to leave the room": "Неожиданная ошибка сервера при попытке покинуть комнату",
-    "Error leaving room": "Ошибка при выходе из комнаты",
     "Set up Secure Backup": "Настроить безопасное резервное копирование",
     "Information": "Информация",
-    "Unknown App": "Неизвестное приложение",
     "Not encrypted": "Не зашифровано",
     "Room settings": "Настройки комнаты",
     "Take a picture": "Сделать снимок",
@@ -1153,7 +1134,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этим пространством</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, учётную запись (как <userId/>) или <a>поделитесь этим пространством</a>.",
     "Invite to %(roomName)s": "Пригласить в %(roomName)s",
-    "Invite to %(spaceName)s": "Пригласить в %(spaceName)s",
     "Create a new room": "Создать новую комнату",
     "Spaces": "Пространства",
     "Space selection": "Выбор пространства",
@@ -1165,7 +1145,6 @@
     "Your message was sent": "Ваше сообщение было отправлено",
     "Space options": "Настройки пространства",
     "Leave space": "Покинуть пространство",
-    "Share your public space": "Поделитесь своим публичным пространством",
     "Invite with email or username": "Пригласить по электронной почте или имени пользователя",
     "Invite people": "Пригласить людей",
     "Share invite link": "Поделиться ссылкой на приглашение",
@@ -1540,7 +1519,6 @@
     "Messaging": "Общение",
     "Room members": "Участники комнаты",
     "Back to chat": "Назад в чат",
-    "That's fine": "Всё в порядке",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s и %(count)s другой",
         "other": "%(spaceName)s и %(count)s других"
@@ -1571,16 +1549,8 @@
     "Failed to join": "Не удалось войти",
     "Sorry, your homeserver is too old to participate here.": "К сожалению, ваш домашний сервер слишком старый для участия.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s работает в экспериментальном режиме в мобильном браузере. Для лучших впечатлений и новейших функций используйте наше родное бесплатное приложение.",
-    "User does not exist": "Пользователь не существует",
-    "User is already in the room": "Пользователь уже в комнате",
-    "User is already invited to the room": "Пользователь уже приглашён в комнату",
     "The person who invited you has already left.": "Человек, который вас пригласил, уже ушёл.",
     "There was an error joining.": "Ошибка при вступлении.",
-    "The user's homeserver does not support the version of the space.": "Домашний сервер пользователя не поддерживает версию пространства.",
-    "User may or may not exist": "Пользователь может быть, а может и не быть",
-    "User is already in the space": "Пользователь уже пребывает в пространстве",
-    "User is already invited to the space": "Пользователь уже приглашён в пространство",
-    "You do not have permission to invite people to this space.": "Вам не разрешено приглашать людей в это пространство.",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "Connection lost": "Соединение потеряно",
     "The person who invited you has already left, or their server is offline.": "Пригласивший вас человек уже ушёл, или его сервер не подключён к сети.",
@@ -1710,15 +1680,9 @@
     "Coworkers and teams": "Коллеги и команды",
     "Friends and family": "Друзья и семья",
     "Messages in this chat will be end-to-end encrypted.": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
-    "In %(spaceName)s.": "В пространстве %(spaceName)s.",
     "Stop and close": "Остановить и закрыть",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "В %(spaceName)s и %(count)s другом пространстве.",
-        "other": "В %(spaceName)s и %(count)s других пространствах."
-    },
-    "In spaces %(space1Name)s and %(space2Name)s.": "В пространствах %(space1Name)s и %(space2Name)s.",
     "Sessions": "Сеансы",
     "We'll help you get connected.": "Мы поможем вам подключиться.",
     "Join the room to participate": "Присоединяйтесь к комнате для участия",
@@ -1988,7 +1952,8 @@
         "send_report": "Отослать отчёт",
         "clear": "Очистить",
         "exit_fullscreeen": "Выйти из полноэкранного режима",
-        "enter_fullscreen": "Перейти в полноэкранный режим"
+        "enter_fullscreen": "Перейти в полноэкранный режим",
+        "unban": "Разблокировать"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -3182,7 +3147,9 @@
         "no_permission_conference_description": "У вас нет разрешения на запуск конференции в этой комнате",
         "default_device": "Устройство по умолчанию",
         "failed_call_live_broadcast_title": "Невозможно начать звонок",
-        "failed_call_live_broadcast_description": "Вы не можете начать звонок, так как вы производите живое вещание. Пожалуйста, остановите вещание, чтобы начать звонок."
+        "failed_call_live_broadcast_description": "Вы не можете начать звонок, так как вы производите живое вещание. Пожалуйста, остановите вещание, чтобы начать звонок.",
+        "no_media_perms_title": "Нет разрешённых носителей",
+        "no_media_perms_description": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную"
     },
     "Other": "Другие",
     "Advanced": "Подробности",
@@ -3303,7 +3270,10 @@
         "verification_requested_toast_title": "Запрошено подтверждение",
         "cancel_entering_passphrase_title": "Отменить ввод кодовой фразы?",
         "cancel_entering_passphrase_description": "Вы уверены, что хотите отменить ввод кодовой фразы?",
-        "bootstrap_title": "Настройка ключей"
+        "bootstrap_title": "Настройка ключей",
+        "export_unsupported": "Ваш браузер не поддерживает необходимые криптографические расширения",
+        "import_invalid_keyfile": "Недействительный файл ключей %(brand)s",
+        "import_invalid_passphrase": "Ошибка аутентификации: возможно, неправильный пароль?"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3326,7 +3296,8 @@
         "pseudonymous_usage_data": "Помогите нам выявить проблемы и улучшить %(analyticsOwner)s, поделившись анонимными данными об использовании. Чтобы понять, как люди используют несколько устройств, мы генерируем случайный идентификатор, общий для всех ваших устройств.",
         "bullet_1": "Мы <<Bold>не</Bold> записываем и <Bold>не</Bold> профилируем любые данные учетной записи",
         "bullet_2": "Мы <Bold>не</Bold> передаем информацию третьим лицам",
-        "disable_prompt": "Вы можете отключить это в любое время в настройках"
+        "disable_prompt": "Вы можете отключить это в любое время в настройках",
+        "accept_button": "Всё в порядке"
     },
     "chat_effects": {
         "confetti_description": "Отправляет данное сообщение с конфетти",
@@ -3580,7 +3551,8 @@
         },
         "error_need_to_be_logged_in": "Вы должны войти в систему.",
         "error_need_invite_permission": "Для этого вы должны иметь возможность приглашать пользователей.",
-        "error_need_kick_permission": "Вы должны иметь возможность пинать пользователей, чтобы сделать это."
+        "error_need_kick_permission": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
+        "no_name": "Неизвестное приложение"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3685,7 +3657,8 @@
             "home": "Пространство — Главная",
             "explore": "Обзор комнат",
             "manage_and_explore": "Управление и список комнат"
-        }
+        },
+        "share_public": "Поделитесь своим публичным пространством"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3801,7 +3774,13 @@
         "unread_notifications_predecessor": {
             "other": "У вас есть %(count)s непрочитанных уведомлений в предыдущей версии этой комнаты.",
             "one": "В предыдущей версии этой комнаты у вас есть непрочитанное уведомление %(count)s."
-        }
+        },
+        "leave_unexpected_error": "Неожиданная ошибка сервера при попытке покинуть комнату",
+        "leave_server_notices_title": "Невозможно покинуть комнату сервера уведомлений",
+        "leave_error_title": "Ошибка при выходе из комнаты",
+        "upgrade_error_title": "Ошибка обновления комнаты",
+        "upgrade_error_description": "Убедитесь, что ваш сервер поддерживает выбранную версию комнаты и попробуйте снова.",
+        "leave_server_notices_description": "Эта комната используется для важных сообщений от сервера, поэтому вы не можете ее покинуть."
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -3869,7 +3848,21 @@
         "failed_generic": "Сбой операции",
         "room_failed_title": "Не удалось пригласить пользователей в %(roomName)s",
         "room_failed_partial": "Мы отправили остальных, но нижеперечисленные люди не могут быть приглашены в <RoomName/>",
-        "room_failed_partial_title": "Некоторые приглашения не могут быть отправлены"
+        "room_failed_partial_title": "Некоторые приглашения не могут быть отправлены",
+        "invalid_address": "Нераспознанный адрес",
+        "error_permissions_space": "Вам не разрешено приглашать людей в это пространство.",
+        "error_permissions_room": "У вас нет разрешения приглашать людей в эту комнату.",
+        "error_already_invited_space": "Пользователь уже приглашён в пространство",
+        "error_already_invited_room": "Пользователь уже приглашён в комнату",
+        "error_already_joined_space": "Пользователь уже пребывает в пространстве",
+        "error_already_joined_room": "Пользователь уже в комнате",
+        "error_user_not_found": "Пользователь не существует",
+        "error_profile_undisclosed": "Пользователь может быть, а может и не быть",
+        "error_bad_state": "Пользователь должен быть разблокирован прежде чем может быть приглашён.",
+        "error_version_unsupported_space": "Домашний сервер пользователя не поддерживает версию пространства.",
+        "error_version_unsupported_room": "Домашний сервер пользователя не поддерживает версию комнаты.",
+        "error_unknown": "Неизвестная ошибка сервера",
+        "to_space": "Пригласить в %(spaceName)s"
     },
     "scalar": {
         "error_create": "Не удалось создать виджет.",
@@ -3895,5 +3888,12 @@
         "connection": "Возникла проблема при обмене данными с домашним сервером. Повторите попытку позже.",
         "mixed_content": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
         "tls": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы."
-    }
+    },
+    "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "В %(spaceName)s и %(count)s другом пространстве.",
+        "other": "В %(spaceName)s и %(count)s других пространствах."
+    },
+    "in_space": "В пространстве %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

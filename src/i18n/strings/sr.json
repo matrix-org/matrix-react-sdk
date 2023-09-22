@@ -30,14 +30,10 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Reason": "Разлог",
     "Send": "Пошаљи",
-    "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
-    "Not a valid %(brand)s keyfile": "Није исправана %(brand)s кључ-датотека",
-    "Authentication check failed: incorrect password?": "Провера идентитета није успела: нетачна лозинка?",
     "Incorrect verification code": "Нетачни потврдни код",
     "No display name": "Нема приказног имена",
     "Authentication": "Идентификација",
     "Failed to set display name": "Нисам успео да поставим приказно име",
-    "Unban": "Скини забрану",
     "Failed to ban user": "Неуспех при забрањивању приступа кориснику",
     "Failed to mute user": "Неуспех при пригушивању корисника",
     "Failed to change power level": "Не могу да изменим ниво снаге",
@@ -148,8 +144,6 @@
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
     "<not supported>": "<није подржано>",
     "Reject all %(invitedRooms)s invites": "Одбиј све позивнице за собе %(invitedRooms)s",
-    "No media permissions": "Нема овлашћења за медије",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
     "Notifications": "Обавештења",
@@ -200,8 +194,6 @@
     "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
-    "Can't leave Server Notices room": "Не могу да напустим собу са напоменама сервера",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ова соба се користи за важне поруке са сервера. Не можете напустити ову собу.",
     "Share Link to User": "Подели везу са корисником",
     "Share room": "Подели собу",
     "Share Room": "Подели собу",
@@ -219,7 +211,6 @@
     "Create account": "Направи налог",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
     "Show more": "Прикажи више",
     "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
@@ -272,7 +263,6 @@
     "Recently Direct Messaged": "Недавне директне поруке",
     "Looks good!": "Изгледа добро!",
     "Switch theme": "Промени тему",
-    "Error upgrading room": "Грешка при надоградњи собе",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбија",
     "Yemen": "Јемен",
@@ -525,7 +515,6 @@
     "Please contact your homeserver administrator.": "Контактирајте администратора вашег сервера.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домаћи сервер је прекорачио ограничење неког ресурса.",
     "Your homeserver has exceeded its user limit.": "Ваш домаћи сервер је прекорачио ограничење корисника.",
-    "The user's homeserver does not support the version of the room.": "Корисников домаћи сервер не подржава верзију собе.",
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
@@ -543,7 +532,6 @@
     "Error changing power level": "Грешка при промени нивоа снаге",
     "Power level": "Ниво снаге",
     "Explore rooms": "Истражи собе",
-    "Double check that your server supports the room version chosen and try again.": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
     "Anchor": "сидро",
@@ -772,7 +760,8 @@
         "export": "Извези",
         "refresh": "Освежи",
         "mention": "Спомени",
-        "submit": "Пошаљи"
+        "submit": "Пошаљи",
+        "unban": "Скини забрану"
     },
     "labs": {
         "pinning": "Закачене поруке",
@@ -1209,7 +1198,9 @@
         "cannot_call_yourself_description": "Не можете позвати сами себе.",
         "no_permission_conference": "Неопходна је дозвола",
         "no_permission_conference_description": "Немате дозволу да започињете конференцијски позив у овој соби",
-        "default_device": "Подразумевани уређај"
+        "default_device": "Подразумевани уређај",
+        "no_media_perms_title": "Нема овлашћења за медије",
+        "no_media_perms_description": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери"
     },
     "Other": "Остало",
     "Advanced": "Напредно",
@@ -1261,7 +1252,10 @@
         "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
         "cancel_entering_passphrase_title": "Отказати унос фразе?",
         "cancel_entering_passphrase_description": "Заиста желите да откажете унос фразе?",
-        "bootstrap_title": "Постављам кључеве"
+        "bootstrap_title": "Постављам кључеве",
+        "export_unsupported": "Ваш прегледач не подржава потребна криптографска проширења",
+        "import_invalid_keyfile": "Није исправана %(brand)s кључ-датотека",
+        "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?"
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1444,7 +1438,11 @@
         "switch_theme_dark": "Пребаци на тамну тему"
     },
     "room": {
-        "drop_file_prompt": "Превуци датотеку овде да би је отпремио"
+        "drop_file_prompt": "Превуци датотеку овде да би је отпремио",
+        "leave_server_notices_title": "Не могу да напустим собу са напоменама сервера",
+        "upgrade_error_title": "Грешка при надоградњи собе",
+        "upgrade_error_description": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
+        "leave_server_notices_description": "Ова соба се користи за важне поруке са сервера. Не можете напустити ову собу."
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
@@ -1481,7 +1479,9 @@
     },
     "invite": {
         "failed_title": "Нисам успео да пошаљем позивницу",
-        "failed_generic": "Радња није успела"
+        "failed_generic": "Радња није успела",
+        "error_permissions_room": "Немате дозволу за позивање људи у ову собу.",
+        "error_version_unsupported_room": "Корисников домаћи сервер не подржава верзију собе."
     },
     "scalar": {
         "error_create": "Не могу да направим виџет.",

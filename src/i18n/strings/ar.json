@@ -37,8 +37,6 @@
     "Default": "المبدئي",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
-    "Error upgrading room": "خطأ في ترقية الغرفة",
-    "Double check that your server supports the room version chosen and try again.": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
     "Logs sent": "تم ارسال سجل الاحداث",
     "Reason": "السبب",
     "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
@@ -419,7 +417,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "تعذر تغيير مستوى قوة الغرفة. تأكد من أن لديك صلاحيات كافية وحاول مرة أخرى.",
     "Error changing power level requirement": "تعذر تغيير متطلبات مستوى القوة",
     "Banned by %(displayName)s": "حظره %(displayName)s",
-    "Unban": "فك الحظر",
     "Failed to unban": "تعذر فك الحظر",
     "Browse": "تصفح",
     "Set a new custom sound": "تعيين صوت مخصص جديد",
@@ -437,8 +434,6 @@
     "No Audio Outputs detected": "لم يتم الكشف عن مخرجات الصوت",
     "Request media permissions": "اطلب الإذن للوسائط",
     "Missing media permissions, click the button below to request.": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "قد تحتاج إلى السماح يدويًا ل%(brand)s s بالوصول إلى الميكروفون / كاميرا الويب",
-    "No media permissions": "لا إذن للوسائط",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
     "Message search": "بحث الرسائل",
     "Reject all %(invitedRooms)s invites": "رفض كل الدعوات (%(invitedRooms)s)",
@@ -457,10 +452,6 @@
     "Notifications": "الإشعارات",
     "Don't miss a reply": "لا تفوت أي رد",
     "Later": "لاحقاً",
-    "Unknown App": "تطبيق غير معروف",
-    "Unknown server error": "خطأ غير معروف في الخادم",
-    "The user's homeserver does not support the version of the room.": "لا يدعم خادم المستخدم نموذج هذه الغرفة.",
-    "The user must be unbanned before they can be invited.": "يجب إلغاء حظر المستخدم قبل دعوته.",
     "United States": "الولايات المتحدة",
     "Albania": "ألبانيا",
     "Afghanistan": "أفغانستان",
@@ -726,7 +717,8 @@
         "show_all": "أظهر الكل",
         "review": "مراجعة",
         "manage": "إدارة",
-        "mention": "إشارة"
+        "mention": "إشارة",
+        "unban": "فك الحظر"
     },
     "labs": {
         "pinning": "تثبيت الرسالة",
@@ -1157,7 +1149,9 @@
         "transfer_failed_description": "فشل تحويل المكالمة",
         "no_permission_conference": "التصريح مطلوب",
         "no_permission_conference_description": "ينقصك تصريح بدء مكالمة جماعية في هذه الغرفة",
-        "default_device": "الجهاز الاعتيادي"
+        "default_device": "الجهاز الاعتيادي",
+        "no_media_perms_title": "لا إذن للوسائط",
+        "no_media_perms_description": "قد تحتاج إلى السماح يدويًا ل%(brand)s s بالوصول إلى الميكروفون / كاميرا الويب"
     },
     "Other": "أخرى",
     "Advanced": "متقدم",
@@ -1376,7 +1370,8 @@
             "see_videos_sent_active_room": "أظهر الفيديوهات المرسلة إلى هذه غرفتك النشطة"
         },
         "error_need_to_be_logged_in": "عليك الولوج.",
-        "error_need_invite_permission": "يجب أن تكون قادرًا على دعوة المستخدمين للقيام بذلك."
+        "error_need_invite_permission": "يجب أن تكون قادرًا على دعوة المستخدمين للقيام بذلك.",
+        "no_name": "تطبيق غير معروف"
     },
     "zxcvbn": {
         "suggestions": {
@@ -1463,7 +1458,9 @@
             "user_created": "%(displayName)s أنشأ هذه الغرفة.",
             "no_avatar_label": "أضف صورة ، حتى يسهل على الناس تمييز غرفتك.",
             "start_of_room": "هذه بداية <roomName/>."
-        }
+        },
+        "upgrade_error_title": "خطأ في ترقية الغرفة",
+        "upgrade_error_description": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى."
     },
     "space": {
         "context_menu": {
@@ -1493,7 +1490,10 @@
         "failed_title": "فشلت الدعوة",
         "failed_generic": "فشلت العملية",
         "room_failed_partial": "أرسلنا الآخرين، ولكن لم تتم دعوة الأشخاص أدناه إلى <RoomName/>",
-        "room_failed_partial_title": "تعذر إرسال بعض الدعوات"
+        "room_failed_partial_title": "تعذر إرسال بعض الدعوات",
+        "error_bad_state": "يجب إلغاء حظر المستخدم قبل دعوته.",
+        "error_version_unsupported_room": "لا يدعم خادم المستخدم نموذج هذه الغرفة.",
+        "error_unknown": "خطأ غير معروف في الخادم"
     },
     "scalar": {
         "error_create": "غير قادر على إنشاء Widget.",

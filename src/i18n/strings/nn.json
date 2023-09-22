@@ -30,9 +30,6 @@
     "Moderator": "Moderator",
     "Reason": "Grunnlag",
     "Send": "Send",
-    "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
-    "Not a valid %(brand)s keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
-    "Authentication check failed: incorrect password?": "Authentiseringsforsøk mislukkast: feil passord?",
     "Incorrect verification code": "Urett stadfestingskode",
     "No display name": "Ingen visningsnamn",
     "Warning!": "Åtvaring!",
@@ -40,7 +37,6 @@
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
     "Notification targets": "Varselmål",
     "This event could not be displayed": "Denne hendingen kunne ikkje visast",
-    "Unban": "Slepp inn att",
     "Failed to ban user": "Fekk ikkje til å stenge ute brukaren",
     "Demote yourself?": "Senke ditt eige tilgangsnivå?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kan ikkje gjera om på denne endringa sidan du senkar tilgangsnivået ditt. Viss du er den siste privilegerte brukaren i rommet vil det bli umogleg å få tilbake tilgangsrettane.",
@@ -163,8 +159,6 @@
     "Failed to reject invitation": "Fekk ikkje til å seia nei til innbyding",
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
-    "Can't leave Server Notices room": "Kan ikkje forlate Systemvarsel-rommet",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Dette rommet er for viktige meldingar frå Heimtenaren, så du kan ikkje forlate det.",
     "Invite to this room": "Inviter til dette rommet",
     "Notifications": "Varsel",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
@@ -186,8 +180,6 @@
     "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
     "<not supported>": "<ikkje støtta>",
     "Reject all %(invitedRooms)s invites": "Kanseller alle invitasjonar frå %(invitedRooms)s",
-    "No media permissions": "Ingen mediatilgang",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Det kan henda at du må gje %(brand)s tilgang til mikrofonen/nettkameraet for hand",
     "No Audio Outputs detected": "Ingen ljodavspelingseiningar funne",
     "No Microphones detected": "Ingen opptakseiningar funne",
     "No Webcams detected": "Ingen Nettkamera funne",
@@ -249,10 +241,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
     "Verify this session": "Stadfest denne økta",
     "Encryption upgrade available": "Kryptering kan oppgraderast",
-    "Error upgrading room": "Feil ved oppgradering av rom",
-    "Double check that your server supports the room version chosen and try again.": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
-    "You do not have permission to invite people to this room.": "Du har ikkje lov til å invitera andre til dette rommet.",
-    "The user must be unbanned before they can be invited.": "Blokkeringa av brukaren må fjernast før dei kan bli inviterte.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruka ein identitetstenar er frivillig. Om du vel å ikkje bruka dette, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan ikkje invitera andre med e-post eller telefonnummer.",
     "Email addresses": "E-postadresser",
@@ -536,7 +524,8 @@
         "export": "Eksporter",
         "refresh": "Hent fram på nytt",
         "mention": "Nemn",
-        "submit": "Send inn"
+        "submit": "Send inn",
+        "unban": "Slepp inn att"
     },
     "labs": {
         "pinning": "Meldingsfesting",
@@ -1015,7 +1004,9 @@
         "transfer_failed_description": "Overføring av samtalen feila",
         "no_permission_conference": "Tillating er Naudsynt",
         "no_permission_conference_description": "Du har ikkje tillating til å starta ei gruppesamtale i dette rommet",
-        "default_device": "Eininga som brukast i utgangspunktet"
+        "default_device": "Eininga som brukast i utgangspunktet",
+        "no_media_perms_title": "Ingen mediatilgang",
+        "no_media_perms_description": "Det kan henda at du må gje %(brand)s tilgang til mikrofonen/nettkameraet for hand"
     },
     "Other": "Anna",
     "Advanced": "Avansert",
@@ -1187,7 +1178,11 @@
         "unread_notifications_predecessor": {
             "other": "Du har %(count)s uleste varslingar i ein tidligare versjon av dette rommet.",
             "one": "Du har %(count)s ulest varsel i ein tidligare versjon av dette rommet."
-        }
+        },
+        "leave_server_notices_title": "Kan ikkje forlate Systemvarsel-rommet",
+        "upgrade_error_title": "Feil ved oppgradering av rom",
+        "upgrade_error_description": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
+        "leave_server_notices_description": "Dette rommet er for viktige meldingar frå Heimtenaren, så du kan ikkje forlate det."
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1214,7 +1209,10 @@
             "sas_caption_self": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen."
         },
         "cancel_entering_passphrase_title": "Avbryte inntasting av passfrase ?",
-        "bootstrap_title": "Setter opp nøklar"
+        "bootstrap_title": "Setter opp nøklar",
+        "export_unsupported": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
+        "import_invalid_keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
+        "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",
@@ -1234,7 +1232,9 @@
     },
     "invite": {
         "failed_title": "Fekk ikkje til å invitera",
-        "failed_generic": "Handling mislukkast"
+        "failed_generic": "Handling mislukkast",
+        "error_permissions_room": "Du har ikkje lov til å invitera andre til dette rommet.",
+        "error_bad_state": "Blokkeringa av brukaren må fjernast før dei kan bli inviterte."
     },
     "widget": {
         "error_need_to_be_logged_in": "Du må vera logga inn.",

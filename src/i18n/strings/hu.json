@@ -6,8 +6,6 @@
     "Admin Tools": "Admin. Eszközök",
     "No Microphones detected": "Nem található mikrofon",
     "No Webcams detected": "Nem található webkamera",
-    "No media permissions": "Nincs média jogosultság",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Lehet, hogy kézileg kell engedélyeznie a(z) %(brand)s számára, hogy hozzáférjen a mikrofonjához és webkamerájához",
     "Authentication": "Azonosítás",
     "Failed to change password. Is your password correct?": "Nem sikerült megváltoztatni a jelszót. Helyesen írta be a jelszavát?",
     "Create new room": "Új szoba létrehozása",
@@ -72,7 +70,6 @@
     "Unable to add email address": "Az e-mail címet nem sikerült hozzáadni",
     "Unable to remove contact information": "A névjegy információkat nem sikerült törölni",
     "Unable to verify email address.": "Az e-mail cím ellenőrzése sikertelen.",
-    "Unban": "Kitiltás visszavonása",
     "Uploading %(filename)s": "%(filename)s feltöltése",
     "Uploading %(filename)s and %(count)s others": {
         "one": "%(filename)s és még %(count)s db másik feltöltése",
@@ -129,9 +126,6 @@
     "Error decrypting video": "Hiba a videó visszafejtésénél",
     "Add an Integration": "Integráció hozzáadása",
     "Something went wrong!": "Valami rosszul sikerült.",
-    "Your browser does not support the required cryptography extensions": "A böngészője nem támogatja a szükséges titkosítási kiterjesztéseket",
-    "Not a valid %(brand)s keyfile": "Nem érvényes %(brand)s kulcsfájl",
-    "Authentication check failed: incorrect password?": "Hitelesítési ellenőrzés sikertelen: hibás jelszó?",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ezzel a folyamattal kimentheted a titkosított szobák üzeneteihez tartozó kulcsokat egy helyi fájlba. Ez után be tudod tölteni ezt a fájlt egy másik Matrix kliensbe, így az a kliens is vissza tudja fejteni az üzeneteket.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
@@ -200,8 +194,6 @@
     "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nem lehet betölteni azt az eseményt amire válaszoltál, mert vagy nem létezik, vagy nincs jogod megnézni.",
-    "Can't leave Server Notices room": "Nem lehet elhagyni a Kiszolgálóüzenetek szobát",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ez a szoba a Matrix-kiszolgáló fontos kiszolgálóüzenetei közlésére jött létre, nem tud belőle kilépni.",
     "No Audio Outputs detected": "Nem található hangkimenet",
     "Audio Output": "Hangkimenet",
     "Share Link to User": "A felhasználóra mutató hivatkozás",
@@ -252,8 +244,6 @@
     "No backup found!": "Mentés nem található!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s kapcsolatot nem lehet visszafejteni!",
     "Invalid homeserver discovery response": "A Matrix-kiszolgáló felderítésére kapott válasz érvénytelen",
-    "You do not have permission to invite people to this room.": "Nincs jogosultsága embereket meghívni ebbe a szobába.",
-    "Unknown server error": "Ismeretlen kiszolgálóhiba",
     "Set up": "Beállítás",
     "Invalid identity server discovery response": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
     "General failure": "Általános hiba",
@@ -262,7 +252,6 @@
     "Set up Secure Messages": "Biztonságos Üzenetek beállítása",
     "Go to Settings": "Irány a Beállítások",
     "Unable to load commit detail: %(msg)s": "A véglegesítés részleteinek betöltése sikertelen: %(msg)s",
-    "Unrecognised address": "Ismeretlen cím",
     "The following users may not exist": "Az alábbi felhasználók lehet, hogy nem léteznek",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Az alábbi Matrix ID-koz nem sikerül megtalálni a profilokat - így is meghívod őket?",
     "Invite anyway and never warn me again": "Mindenképpen meghív és ne figyelmeztess többet",
@@ -378,7 +367,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "A szoba elsődleges címének frissítésénél hiba történt. Vagy nincs engedélyezve a szerveren vagy átmeneti hiba történt.",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Could not load user profile": "A felhasználói profil nem tölthető be",
-    "The user must be unbanned before they can be invited.": "Előbb vissza kell vonni felhasználó kitiltását, mielőtt újra meghívható lesz.",
     "Accept all %(invitedRooms)s invites": "Mind a(z) %(invitedRooms)s meghívó elfogadása",
     "Power level": "Hozzáférési szint",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A szoba verziója: <roomVersion />, amelyet a Matrix-kiszolgáló <i>instabilnak</i> tekint.",
@@ -405,7 +393,6 @@
     },
     "Cancel All": "Összes megszakítása",
     "Upload Error": "Feltöltési hiba",
-    "The user's homeserver does not support the version of the room.": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott szobaverziót.",
     "Join the conversation with an account": "Beszélgetéshez való csatlakozás felhasználói fiókkal lehetséges",
     "Sign Up": "Fiók készítés",
     "Reason: %(reason)s": "Ok: %(reason)s",
@@ -529,7 +516,6 @@
     "Jump to first invite.": "Újrás az első meghívóhoz.",
     "Room %(name)s": "Szoba: %(name)s",
     "Message Actions": "Üzenet Műveletek",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You verified %(name)s": "Ellenőrizte: %(name)s",
     "You cancelled verifying %(name)s": "Az ellenőrzést megszakítottad ehhez: %(name)s",
     "%(name)s cancelled verifying": "%(name)s megszakította az ellenőrzést",
@@ -562,8 +548,6 @@
     "Integrations not allowed": "Az integrációk nem engedélyezettek",
     "Manage integrations": "Integrációk kezelése",
     "Verification Request": "Ellenőrzési kérés",
-    "Error upgrading room": "Hiba a szoba verziófrissítésekor",
-    "Double check that your server supports the room version chosen and try again.": "Ellenőrizze még egyszer, hogy a kiszolgálója támogatja-e kiválasztott szobaverziót, és próbálja újra.",
     "Unencrypted": "Titkosítatlan",
     "Upgrade private room": "Privát szoba fejlesztése",
     "Upgrade public room": "Nyilvános szoba fejlesztése",
@@ -787,12 +771,9 @@
     "The server is not configured to indicate what the problem is (CORS).": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
     "Recent changes that have not yet been received": "A legutóbbi változások, amelyek még nem érkeztek meg",
     "Explore public rooms": "Nyilvános szobák felfedezése",
-    "Unexpected server error trying to leave the room": "Váratlan kiszolgálóhiba lépett fel a szobából való kilépés során",
-    "Error leaving room": "Hiba a szoba elhagyásakor",
     "Information": "Információ",
     "Preparing to download logs": "Napló előkészítése feltöltéshez",
     "Set up Secure Backup": "Biztonsági mentés beállítása",
-    "Unknown App": "Ismeretlen alkalmazás",
     "Not encrypted": "Nem titkosított",
     "Room settings": "Szoba beállítások",
     "Take a picture": "Fénykép készítése",
@@ -1147,7 +1128,6 @@
     "Failed to save space settings.": "A tér beállításának mentése sikertelen.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevével, felhasználói nevével (pl. <userId/>) vagy <a>oszd meg ezt a teret</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a teret</a>.",
-    "Invite to %(spaceName)s": "Meghívás ide: %(spaceName)s",
     "Create a new room": "Új szoba készítése",
     "Spaces": "Terek",
     "Space selection": "Tér kiválasztása",
@@ -1159,7 +1139,6 @@
     "Space options": "Tér beállításai",
     "Leave space": "Tér elhagyása",
     "Invite people": "Emberek meghívása",
-    "Share your public space": "Nyilvános tér megosztása",
     "Share invite link": "Meghívási hivatkozás megosztása",
     "Click to copy": "Másolás kattintással",
     "Create a space": "Tér létrehozása",
@@ -1480,7 +1459,6 @@
     },
     "No votes cast": "Nem adtak le szavazatot",
     "Share location": "Tartózkodási hely megosztása",
-    "That's fine": "Rendben van",
     "Final result based on %(count)s votes": {
         "one": "Végeredmény %(count)s szavazat alapján",
         "other": "Végeredmény %(count)s szavazat alapján"
@@ -1586,14 +1564,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "A(z) %(brand)s kísérleti állapotban van a mobilos webböngészőkben. A jobb élmény és a legújabb funkciók használatához használja az ingyenes natív alkalmazásunkat.",
     "Sorry, your homeserver is too old to participate here.": "Sajnáljuk, a Matrix-kiszolgáló túl régi verziójú ahhoz, hogy ebben részt vegyen.",
     "There was an error joining.": "A csatlakozás során hiba történt.",
-    "The user's homeserver does not support the version of the space.": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott tér verziót.",
-    "User may or may not exist": "A felhasználó lehet, hogy nem létezik",
-    "User does not exist": "A felhasználó nem létezik",
-    "User is already invited to the space": "A felhasználó már meg van hívva a térre",
-    "User is already in the room": "A felhasználó már a szobában van",
-    "User is already in the space": "A felhasználó már a téren van",
-    "User is already invited to the room": "A felhasználó már meg van hívva a szobába",
-    "You do not have permission to invite people to this space.": "Nincs jogosultsága embereket meghívni ebbe a térbe.",
     "Disinvite from room": "Meghívó visszavonása a szobából",
     "Disinvite from space": "Meghívó visszavonása a térről",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "A meghívó ellenőrzésekor az alábbi hibát kaptuk: %(errcode)s. Ezt az információt megpróbálhatja eljuttatni a szoba gazdájának.",
@@ -1717,12 +1687,6 @@
     "You need to have the right permissions in order to share locations in this room.": "Az ebben a szobában történő helymegosztáshoz a megfelelő jogosultságokra van szüksége.",
     "You don't have permission to share locations": "Nincs jogosultsága a helymegosztáshoz",
     "Join the room to participate": "Csatlakozz a szobához, hogy részt vehess",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "Itt: %(spaceName)s és %(count)s másik térben.",
-        "other": "Itt: %(spaceName)s és %(count)s másik térben."
-    },
-    "In %(spaceName)s.": "Ebben a térben: %(spaceName)s.",
-    "In spaces %(space1Name)s and %(space2Name)s.": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "Messages in this chat will be end-to-end encrypted.": "Az üzenetek ebben a beszélgetésben végponti titkosítással vannak védve.",
     "We're creating a room with %(names)s": "Szobát készítünk: %(names)s",
     "Choose a locale": "Válasszon nyelvet",
@@ -2096,7 +2060,8 @@
         "send_report": "Jelentés küldése",
         "clear": "Törlés",
         "exit_fullscreeen": "Kilépés a teljes képernyőből",
-        "enter_fullscreen": "Teljes képernyőre váltás"
+        "enter_fullscreen": "Teljes képernyőre váltás",
+        "unban": "Kitiltás visszavonása"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -3356,7 +3321,9 @@
         "no_permission_conference_description": "Nincs jogosultsága konferenciahívást kezdeményezni ebben a szobában",
         "default_device": "Alapértelmezett eszköz",
         "failed_call_live_broadcast_title": "Nem sikerült hívást indítani",
-        "failed_call_live_broadcast_description": "Nem lehet hívást kezdeményezni élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hívás indításához."
+        "failed_call_live_broadcast_description": "Nem lehet hívást kezdeményezni élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hívás indításához.",
+        "no_media_perms_title": "Nincs média jogosultság",
+        "no_media_perms_description": "Lehet, hogy kézileg kell engedélyeznie a(z) %(brand)s számára, hogy hozzáférjen a mikrofonjához és webkamerájához"
     },
     "Other": "Egyéb",
     "Advanced": "Speciális",
@@ -3480,7 +3447,10 @@
         "verification_requested_toast_title": "Hitelesítés kérés elküldve",
         "cancel_entering_passphrase_title": "Megszakítja a jelmondat bevitelét?",
         "cancel_entering_passphrase_description": "Biztos, hogy megszakítja a jelmondat bevitelét?",
-        "bootstrap_title": "Kulcsok beállítása"
+        "bootstrap_title": "Kulcsok beállítása",
+        "export_unsupported": "A böngészője nem támogatja a szükséges titkosítási kiterjesztéseket",
+        "import_invalid_keyfile": "Nem érvényes %(brand)s kulcsfájl",
+        "import_invalid_passphrase": "Hitelesítési ellenőrzés sikertelen: hibás jelszó?"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",
@@ -3503,7 +3473,8 @@
         "pseudonymous_usage_data": "Segítsen észrevennünk a hibákat, és jobbá tenni a(z) %(analyticsOwner)s a névtelen használati adatok küldése által. Ahhoz, hogy megértsük, hogyan használnak a felhasználók egyszerre több eszközt, egy véletlenszerű azonosítót generálunk, ami az eszközei között meg lesz osztva.",
         "bullet_1": "<Bold>Nem</Bold> mentünk vagy analizálunk semmilyen felhasználói adatot",
         "bullet_2": "<Bold>Nem</Bold> osztunk meg információt harmadik féllel",
-        "disable_prompt": "Ezt bármikor kikapcsolhatja a beállításokban"
+        "disable_prompt": "Ezt bármikor kikapcsolhatja a beállításokban",
+        "accept_button": "Rendben van"
     },
     "chat_effects": {
         "confetti_description": "Konfettivel küldi el az üzenetet",
@@ -3779,7 +3750,8 @@
         },
         "error_need_to_be_logged_in": "Be kell jelentkeznie.",
         "error_need_invite_permission": "Hogy ezt tegye, ahhoz meg kell tudnia hívni felhasználókat.",
-        "error_need_kick_permission": "Hogy ezt tegye, ahhoz ki kell tudnia rúgni felhasználókat."
+        "error_need_kick_permission": "Hogy ezt tegye, ahhoz ki kell tudnia rúgni felhasználókat.",
+        "no_name": "Ismeretlen alkalmazás"
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -3893,7 +3865,8 @@
             "home": "Kezdő tér",
             "explore": "Szobák felderítése",
             "manage_and_explore": "Szobák kezelése és felderítése"
-        }
+        },
+        "share_public": "Nyilvános tér megosztása"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -4013,7 +3986,13 @@
         "unread_notifications_predecessor": {
             "other": "%(count)s olvasatlan értesítésed van a régi verziójú szobában.",
             "one": "%(count)s olvasatlan értesítésed van a régi verziójú szobában."
-        }
+        },
+        "leave_unexpected_error": "Váratlan kiszolgálóhiba lépett fel a szobából való kilépés során",
+        "leave_server_notices_title": "Nem lehet elhagyni a Kiszolgálóüzenetek szobát",
+        "leave_error_title": "Hiba a szoba elhagyásakor",
+        "upgrade_error_title": "Hiba a szoba verziófrissítésekor",
+        "upgrade_error_description": "Ellenőrizze még egyszer, hogy a kiszolgálója támogatja-e kiválasztott szobaverziót, és próbálja újra.",
+        "leave_server_notices_description": "Ez a szoba a Matrix-kiszolgáló fontos kiszolgálóüzenetei közlésére jött létre, nem tud belőle kilépni."
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",
@@ -4085,7 +4064,21 @@
         "failed_generic": "Sikertelen művelet",
         "room_failed_title": "A felhasználók meghívása sikertelen ide: %(roomName)s",
         "room_failed_partial": "Az alábbi embereket nem sikerül meghívni ide: <RoomName/>, de a többi meghívó elküldve",
-        "room_failed_partial_title": "Néhány meghívót nem sikerült elküldeni"
+        "room_failed_partial_title": "Néhány meghívót nem sikerült elküldeni",
+        "invalid_address": "Ismeretlen cím",
+        "error_permissions_space": "Nincs jogosultsága embereket meghívni ebbe a térbe.",
+        "error_permissions_room": "Nincs jogosultsága embereket meghívni ebbe a szobába.",
+        "error_already_invited_space": "A felhasználó már meg van hívva a térre",
+        "error_already_invited_room": "A felhasználó már meg van hívva a szobába",
+        "error_already_joined_space": "A felhasználó már a téren van",
+        "error_already_joined_room": "A felhasználó már a szobában van",
+        "error_user_not_found": "A felhasználó nem létezik",
+        "error_profile_undisclosed": "A felhasználó lehet, hogy nem létezik",
+        "error_bad_state": "Előbb vissza kell vonni felhasználó kitiltását, mielőtt újra meghívható lesz.",
+        "error_version_unsupported_space": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott tér verziót.",
+        "error_version_unsupported_room": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott szobaverziót.",
+        "error_unknown": "Ismeretlen kiszolgálóhiba",
+        "to_space": "Meghívás ide: %(spaceName)s"
     },
     "scalar": {
         "error_create": "Nem lehet kisalkalmazást létrehozni.",
@@ -4112,5 +4105,12 @@
         "connection": "A kiszolgálóval való kommunikáció során probléma történt, próbálja újra.",
         "mixed_content": "Nem lehet HTTP-vel csatlakozni a Matrix-kiszolgálóhoz, ha HTTPS van a böngésző címsorában. Vagy használjon HTTPS-t vagy <a>engedélyezze a nem biztonságos parancsfájlokat</a>.",
         "tls": "Nem lehet kapcsolódni a Matrix-kiszolgálóhoz – ellenőrizze a kapcsolatot, győződjön meg arról, hogy a <a>Matrix-kiszolgáló tanúsítványa</a> hiteles, és hogy a böngészőkiegészítők nem blokkolják a kéréseket."
-    }
+    },
+    "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "Itt: %(spaceName)s és %(count)s másik térben.",
+        "other": "Itt: %(spaceName)s és %(count)s másik térben."
+    },
+    "in_space": "Ebben a térben: %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

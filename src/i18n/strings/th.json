@@ -11,8 +11,6 @@
     "Favourite": "รายการโปรด",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
     "No Webcams detected": "ไม่พบกล้องเว็บแคม",
-    "No media permissions": "ไม่มีสิทธิ์เข้าถึงสื่อ",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง",
     "Authentication": "การยืนยันตัวตน",
     "%(items)s and %(lastItem)s": "%(items)s และ %(lastItem)s",
     "and %(count)s others...": {
@@ -56,7 +54,6 @@
     "Failed to change power level": "การเปลี่ยนระดับอำนาจล้มเหลว",
     "Unable to add email address": "ไมาสามารถเพิ่มที่อยู่อีเมล",
     "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
-    "Unban": "ปลดแบน",
     "Uploading %(filename)s": "กำลังอัปโหลด %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
@@ -277,7 +274,8 @@
         "register": "ลงทะเบียน",
         "import": "นำเข้า",
         "export": "ส่งออก",
-        "submit": "ส่ง"
+        "submit": "ส่ง",
+        "unban": "ปลดแบน"
     },
     "keyboard": {
         "home": "เมนูหลัก"
@@ -448,7 +446,9 @@
         "transfer_failed_description": "โอนสายไม่สำเร็จ",
         "no_permission_conference": "ต้องได้รับอนุญาต",
         "no_permission_conference_description": "คุณไม่ได้รับอนุญาตให้เริ่มการประชุมทางโทรศัพท์ในห้องนี้",
-        "default_device": "อุปกรณ์เริ่มต้น"
+        "default_device": "อุปกรณ์เริ่มต้น",
+        "no_media_perms_title": "ไม่มีสิทธิ์เข้าถึงสื่อ",
+        "no_media_perms_description": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง"
     },
     "devtools": {
         "category_room": "ห้อง"

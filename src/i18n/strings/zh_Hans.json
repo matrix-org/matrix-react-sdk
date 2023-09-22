@@ -33,8 +33,6 @@
     "Admin Tools": "管理员工具",
     "No Microphones detected": "未检测到麦克风",
     "No Webcams detected": "未检测到摄像头",
-    "No media permissions": "没有媒体存取权限",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头",
     "Authentication": "认证",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
@@ -75,9 +73,7 @@
     "%(roomName)s does not exist.": "%(roomName)s 不存在。",
     "This room has no local addresses": "此房间没有本地地址",
     "This doesn't appear to be a valid email address": "这似乎不是有效的邮箱地址",
-    "Unban": "解除封禁",
     "Upload avatar": "上传头像",
-    "Not a valid %(brand)s keyfile": "不是有效的 %(brand)s 密钥文件",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
@@ -122,7 +118,6 @@
     "Confirm Removal": "确认移除",
     "Unable to remove contact information": "无法移除联系人信息",
     "Add an Integration": "添加集成",
-    "Authentication check failed: incorrect password?": "身份验证失败：密码错误？",
     "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
     "Send": "发送",
     "Unignore": "取消忽略",
@@ -209,8 +204,6 @@
     "Link to most recent message": "最新消息的链接",
     "Link to selected message": "选中消息的链接",
     "This room is not public. You will not be able to rejoin without an invite.": "此房间不是公开房间。如果没有成员邀请，你将无法重新加入。",
-    "Can't leave Server Notices room": "无法退出服务器公告房间",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "此房间是用于发布来自家服务器的重要讯息的，所以你不能退出它。",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "在你查看并同意 <consentLink>我们的条款与要求</consentLink> 之前，你不能发送任何消息。",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
     "No Audio Outputs detected": "未检测到可用的音频输出方式",
@@ -240,9 +233,6 @@
     "Unable to restore backup": "无法还原备份",
     "Unable to load backup status": "无法获取备份状态",
     "Go to Settings": "打开设置",
-    "You do not have permission to invite people to this room.": "你没有权限将其他用户邀请至本房间。",
-    "Unknown server error": "未知服务器错误",
-    "Unrecognised address": "无法识别地址",
     "Dog": "狗",
     "Cat": "猫",
     "Lion": "狮子",
@@ -376,7 +366,6 @@
     "Set up Secure Messages": "设置安全消息",
     "Recovery Method Removed": "恢复方式已移除",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果你没有移除此恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新的恢复方式。",
-    "The user must be unbanned before they can be invited.": "用户必须先解封才能被邀请。",
     "Accept all %(invitedRooms)s invites": "接受所有 %(invitedRooms)s 邀请",
     "Power level": "权力级别",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
@@ -389,16 +378,11 @@
     "Verify this session": "验证此会话",
     "Encryption upgrade available": "提供加密升级",
     "New login. Was this you?": "现在登录。请问是你本人吗？",
-    "Error upgrading room": "升级房间时发生错误",
-    "Double check that your server supports the room version chosen and try again.": "请再次检查你的服务器是否支持所选房间版本，然后再试一次。",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s(%(userId)s)登录到未验证的新会话：",
     "Ask this user to verify their session, or manually verify it below.": "要求此用户验证其会话，或在下面手动进行验证。",
     "Not Trusted": "不可信任",
-    "%(name)s (%(userId)s)": "%(name)s%(userId)s",
-    "Your browser does not support the required cryptography extensions": "你的浏览器不支持所需的密码学扩展",
-    "The user's homeserver does not support the version of the room.": "用户的家服务器不支持此房间版本。",
     "Later": "稍后再说",
     "Your homeserver has exceeded its user limit.": "你的家服务器已超过用户限制。",
     "Your homeserver has exceeded one of its resource limits.": "你的家服务器已超过某项资源限制。",
@@ -775,8 +759,6 @@
     "This session is encrypting history using the new recovery method.": "此会话正在使用新的恢复方法加密历史。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
     "IRC display name width": "IRC 显示名称宽度",
-    "Unexpected server error trying to leave the room": "试图离开房间时发生意外服务器错误",
-    "Error leaving room": "离开房间时出错",
     "well formed": "格式正确",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
     "Unable to revoke sharing for email address": "无法撤消电子邮件地址共享",
@@ -788,7 +770,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Country Dropdown": "国家下拉菜单",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
-    "Unknown App": "未知应用",
     "Cross-signing is ready for use.": "交叉签名已可用。",
     "Cross-signing is not set up.": "未设置交叉签名。",
     "Backup version:": "备份版本：",
@@ -892,7 +873,6 @@
     "The operation could not be completed": "操作无法完成",
     "Space options": "空间选项",
     "Leave space": "离开空间",
-    "Share your public space": "分享你的公共空间",
     "Create a space": "创建空间",
     "This version of %(brand)s does not support searching encrypted messages": "当前版本的 %(brand)s 不支持搜索加密消息",
     "This version of %(brand)s does not support viewing some encrypted files": "当前版本的 %(brand)s 不支持查看某些加密文件",
@@ -1006,7 +986,6 @@
     "You can change these anytime.": "你随时可以更改它们。",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
-    "Invite to %(spaceName)s": "邀请至 %(spaceName)s",
     "Invite by email": "通过邮箱邀请",
     "Edit devices": "编辑设备",
     "Suggested Rooms": "建议的房间",
@@ -1480,7 +1459,6 @@
     },
     "No votes cast": "尚无投票",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "共享匿名数据以帮助我们发现问题。 与个人无关。 没有第三方。",
-    "That's fine": "没问题",
     "Share location": "共享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。",
     "End Poll": "结束投票",
@@ -1516,20 +1494,6 @@
     "Sorry, your homeserver is too old to participate here.": "抱歉，你的家服务器过旧，故无法参与其中。",
     "There was an error joining.": "加入时发生错误。",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "在移动网页浏览器中 %(brand)s 是实验性功能。为了获取更好的体验和最新功能，请使用我们的免费原生应用。",
-    "The user's homeserver does not support the version of the space.": "用户的家服务器版本不支持空间。",
-    "User may or may not exist": "用户可能存在页可能不存在",
-    "User does not exist": "用户不存在",
-    "User is already in the room": "用户已在房间中",
-    "User is already in the space": "用户已在空间中",
-    "User is already invited to the room": "用户已被邀请至房间",
-    "User is already invited to the space": "用户已被邀请至空间",
-    "You do not have permission to invite people to this space.": "你无权邀请他人加入此空间。",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "在 %(spaceName)s 和其他 %(count)s 个空间。",
-        "other": "在 %(spaceName)s 和其他 %(count)s 个空间。"
-    },
-    "In %(spaceName)s.": "在 %(spaceName)s 空间。",
-    "In spaces %(space1Name)s and %(space2Name)s.": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "Failed to remove user": "移除用户失败",
     "Pinned": "已固定",
@@ -1937,7 +1901,8 @@
         "send_report": "发送报告",
         "clear": "清除",
         "exit_fullscreeen": "退出全屏",
-        "enter_fullscreen": "进入全屏"
+        "enter_fullscreen": "进入全屏",
+        "unban": "解除封禁"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -3077,7 +3042,9 @@
         "no_permission_conference": "需要权限",
         "no_permission_conference_description": "你没有在此房间发起通话会议的权限",
         "default_device": "默认设备",
-        "failed_call_live_broadcast_title": "无法开始通话"
+        "failed_call_live_broadcast_title": "无法开始通话",
+        "no_media_perms_title": "没有媒体存取权限",
+        "no_media_perms_description": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头"
     },
     "Other": "其他",
     "Advanced": "高级",
@@ -3200,7 +3167,10 @@
         "verification_requested_toast_title": "已请求验证",
         "cancel_entering_passphrase_title": "取消输入口令词组？",
         "cancel_entering_passphrase_description": "你确定要取消输入口令词组吗？",
-        "bootstrap_title": "设置密钥"
+        "bootstrap_title": "设置密钥",
+        "export_unsupported": "你的浏览器不支持所需的密码学扩展",
+        "import_invalid_keyfile": "不是有效的 %(brand)s 密钥文件",
+        "import_invalid_passphrase": "身份验证失败：密码错误？"
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3222,7 +3192,8 @@
         "privacy_policy": "你可以在<PrivacyPolicyUrl>此处</PrivacyPolicyUrl>阅读我们所有的条款",
         "bullet_1": "我们<Bold>不会</Bold>记录或配置任何账户数据",
         "bullet_2": "我们<Bold>不会</Bold>与第三方共享信息",
-        "disable_prompt": "您可以随时在设置中关闭此功能"
+        "disable_prompt": "您可以随时在设置中关闭此功能",
+        "accept_button": "没问题"
     },
     "chat_effects": {
         "confetti_description": "附加五彩纸屑发送",
@@ -3474,7 +3445,8 @@
         },
         "error_need_to_be_logged_in": "你需要登录。",
         "error_need_invite_permission": "你需要有邀请用户的权限才能进行此操作。",
-        "error_need_kick_permission": "你需要能够移除用户才能做到那件事。"
+        "error_need_kick_permission": "你需要能够移除用户才能做到那件事。",
+        "no_name": "未知应用"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3579,7 +3551,8 @@
             "home": "空间首页",
             "explore": "探索房间",
             "manage_and_explore": "管理并探索房间"
-        }
+        },
+        "share_public": "分享你的公共空间"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3693,7 +3666,13 @@
         "unread_notifications_predecessor": {
             "other": "你在此房间的先前版本中有 %(count)s 条未读通知。",
             "one": "你在此房间的先前版本中有 %(count)s 条未读通知。"
-        }
+        },
+        "leave_unexpected_error": "试图离开房间时发生意外服务器错误",
+        "leave_server_notices_title": "无法退出服务器公告房间",
+        "leave_error_title": "离开房间时出错",
+        "upgrade_error_title": "升级房间时发生错误",
+        "upgrade_error_description": "请再次检查你的服务器是否支持所选房间版本，然后再试一次。",
+        "leave_server_notices_description": "此房间是用于发布来自家服务器的重要讯息的，所以你不能退出它。"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3765,7 +3744,21 @@
         "failed_generic": "操作失败",
         "room_failed_title": "未能邀请用户加入 %(roomName)s",
         "room_failed_partial": "我们已向其他人发送邀请，但无法邀请以下人员至<RoomName/>",
-        "room_failed_partial_title": "部分邀请无法发送"
+        "room_failed_partial_title": "部分邀请无法发送",
+        "invalid_address": "无法识别地址",
+        "error_permissions_space": "你无权邀请他人加入此空间。",
+        "error_permissions_room": "你没有权限将其他用户邀请至本房间。",
+        "error_already_invited_space": "用户已被邀请至空间",
+        "error_already_invited_room": "用户已被邀请至房间",
+        "error_already_joined_space": "用户已在空间中",
+        "error_already_joined_room": "用户已在房间中",
+        "error_user_not_found": "用户不存在",
+        "error_profile_undisclosed": "用户可能存在页可能不存在",
+        "error_bad_state": "用户必须先解封才能被邀请。",
+        "error_version_unsupported_space": "用户的家服务器版本不支持空间。",
+        "error_version_unsupported_room": "用户的家服务器不支持此房间版本。",
+        "error_unknown": "未知服务器错误",
+        "to_space": "邀请至 %(spaceName)s"
     },
     "scalar": {
         "error_create": "无法创建挂件。",
@@ -3791,5 +3784,12 @@
         "connection": "与家服务器通讯时出现问题，请稍后再试。",
         "mixed_content": "当浏览器地址栏里有 HTTPS 的 URL 时，不能使用 HTTP 连接家服务器。请使用 HTTPS 或者<a>允许不安全的脚本</a>。",
         "tls": "无法连接家服务器 - 请检查网络连接，确保你的<a>家服务器 SSL 证书</a>被信任，且没有浏览器插件拦截请求。"
-    }
+    },
+    "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
+    "in_space_and_n_other_spaces": {
+        "one": "在 %(spaceName)s 和其他 %(count)s 个空间。",
+        "other": "在 %(spaceName)s 和其他 %(count)s 个空间。"
+    },
+    "in_space": "在 %(spaceName)s 空间。",
+    "name_and_id": "%(name)s%(userId)s"
 }

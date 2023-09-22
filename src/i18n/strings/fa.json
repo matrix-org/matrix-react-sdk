@@ -49,7 +49,6 @@
     "An error has occurred.": "خطایی رخ داده است.",
     "A new password must be entered.": "گذواژه جدید باید وارد شود.",
     "Authentication": "احراز هویت",
-    "No media permissions": "عدم مجوز رسانه",
     "No Webcams detected": "هیچ وبکمی شناسایی نشد",
     "No Microphones detected": "هیچ میکروفونی شناسایی نشد",
     "Incorrect verification code": "کد فعال‌سازی اشتباه است",
@@ -81,8 +80,6 @@
     "Sun": "یکشنبه",
     "Permission Required": "اجازه نیاز است",
     "Explore rooms": "جستجو در اتاق ها",
-    "Double check that your server supports the room version chosen and try again.": "بررسی کنید که کارگزار شما از نسخه اتاق انتخاب‌شده پشتیبانی کرده و دوباره امتحان کنید.",
-    "Error upgrading room": "خطا در ارتقاء نسخه اتاق",
     "Moderator": "معاون",
     "Restricted": "ممنوع",
     "Zimbabwe": "زیمبابوه",
@@ -824,7 +821,6 @@
     "Error changing power level requirement": "خطا در تغییر الزامات سطح دسترسی",
     "Banned by %(displayName)s": "توسط %(displayName)s تحریم شد",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "این اتاق، ارتباط بین پیام‌ها و پلتفورم‌های زیر را ایجاد می‌کند. <a>بیشتر بدانید.</a>",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "ممکن است لازم باشد دسترسی %(brand)s به میکروفون/دوربین را به صورت دستی فعال کنید",
     "Accept all %(invitedRooms)s invites": "همه‌ی دعوت‌های %(invitedRooms)s را قبول کن",
     "Reject all %(invitedRooms)s invites": "همه‌ی دعوت‌های %(invitedRooms)s را رد کن",
     "Bulk options": "گزینه‌های دسته‌جمعی",
@@ -1015,19 +1011,6 @@
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "This event could not be displayed": "امکان نمایش این رخداد وجود ندارد",
     "Edit message": "ویرایش پیام",
-    "Unknown server error": "خطای ناشناخته از سمت سرور",
-    "The user's homeserver does not support the version of the room.": "سرور کاربر از نسخه‌ی اتاق پشتیبانی نمی‌کند.",
-    "The user must be unbanned before they can be invited.": "برای اینکه کاربر بتواند دعوت شود، ابتدا باید رفع تحریم شود.",
-    "You do not have permission to invite people to this room.": "شما دسترسی دعوت افراد به این اتاق را ندارید.",
-    "Unrecognised address": "آدرس ناشناخته",
-    "Error leaving room": "خطا در ترک اتاق",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "این اتاق برای نمایش پیام‌های مهم سرور استفاده می‌شود، لذا امکان ترک آن وجود ندارد.",
-    "Can't leave Server Notices room": "نمی توان از اتاق اعلامیه های سرور خارج شد",
-    "Unexpected server error trying to leave the room": "خطای غیرمنتظره روی سرور هنگام تلاش برای ترک اتاق",
-    "Authentication check failed: incorrect password?": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟",
-    "Not a valid %(brand)s keyfile": "فایل کلید %(brand)s معتبر نیست",
-    "Your browser does not support the required cryptography extensions": "مرورگر شما از افزونه‌های رمزنگاری مورد نیاز پشتیبانی نمی‌کند",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "%(items)s and %(lastItem)s": "%(items)s و %(lastItem)s",
     "%(items)s and %(count)s others": {
         "one": "%(items)s و یکی دیگر",
@@ -1105,7 +1088,6 @@
     "Unable to revoke sharing for email address": "لغو اشتراک گذاری برای آدرس ایمیل ممکن نیست",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "هنگام تغییر طرح دسترسی کاربر خطایی رخ داد. از داشتن سطح دسترسی کافی برای این کار اطمینان حاصل کرده و مجددا اقدام نمائید.",
     "Error changing power level": "تغییر سطح دسترسی با خطا همراه بود",
-    "Unban": "رفع تحریم",
     "Browse": "جستجو",
     "Set a new custom sound": "تنظیم صدای دلخواه جدید",
     "Notification sound": "صدای اعلان",
@@ -1144,9 +1126,6 @@
     "Enable desktop notifications": "فعال‌کردن اعلان‌های دسکتاپ",
     "Don't miss a reply": "پاسخی را از دست ندهید",
     "Review to ensure your account is safe": "برای کسب اطمینان از امن‌بودن حساب کاربری خود، لطفا بررسی فرمائید",
-    "Unknown App": "برنامه ناشناخته",
-    "Share your public space": "محیط عمومی خود را به اشتراک بگذارید",
-    "Invite to %(spaceName)s": "دعوت به %(spaceName)s",
     "Phone numbers": "شماره تلفن",
     "Email addresses": "آدرس ایمیل",
     "Show advanced": "نمایش بخش پیشرفته",
@@ -1257,11 +1236,6 @@
     "Deactivating your account is a permanent action — be careful!": "غیرفعال سازی اکانت شما یک اقدام دائمی است - مراقب باشید!",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
     "You were disconnected from the call. (Error: %(message)s)": "شما از تماس قطع شدید.(خطا: %(message)s)",
-    "In %(spaceName)s.": "در فضای %(spaceName)s.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "other": "در %(spaceName)s و %(count)s دیگر فضاها."
-    },
-    "In spaces %(space1Name)s and %(space2Name)s.": "در فضای %(space1Name)s و %(space2Name)s.",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
     "Themes": "قالب ها",
@@ -1278,15 +1252,6 @@
     "There was an error joining.": "خطایی در هنگام پیوستن رخ داده است.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
     "Unknown room": "اتاق ناشناس",
-    "That's fine": "بسیارعالی",
-    "The user's homeserver does not support the version of the space.": "نسخه فضای شما با سرور خانگی کاربر سازگاری ندارد.",
-    "User may or may not exist": "ممکن است کاربر وجود نداشته باشد",
-    "User does not exist": "کاربر وجود ندارد",
-    "User is already in the room": "کاربر در این اتاق حاضر است",
-    "User is already in the space": "کاربر در این فضا حاضر است",
-    "User is already invited to the room": "کاربر به این اتاق دعوت شده است",
-    "User is already invited to the space": "کاربر به این فضا دعوت شده است",
-    "You do not have permission to invite people to this space.": "شما دسترسی لازم برای دعوت از افراد به این فضا را ندارید.",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
     "common": {
@@ -1451,7 +1416,8 @@
         "submit": "ارسال",
         "send_report": "ارسال گزارش",
         "exit_fullscreeen": "خروج از نمایش تمام صفحه",
-        "enter_fullscreen": "نمایش تمام صفحه"
+        "enter_fullscreen": "نمایش تمام صفحه",
+        "unban": "رفع تحریم"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -2249,7 +2215,9 @@
         "transfer_failed_description": "انتقال تماس انجام نشد",
         "no_permission_conference": "اجازه نیاز است",
         "no_permission_conference_description": "شما اجازه‌ی شروع جلسه‌ی تصویری در این اتاق را ندارید",
-        "default_device": "دستگاه پیشفرض"
+        "default_device": "دستگاه پیشفرض",
+        "no_media_perms_title": "عدم مجوز رسانه",
+        "no_media_perms_description": "ممکن است لازم باشد دسترسی %(brand)s به میکروفون/دوربین را به صورت دستی فعال کنید"
     },
     "Other": "دیگر",
     "Advanced": "پیشرفته",
@@ -2338,7 +2306,10 @@
         "verification_requested_toast_title": "درخواست تائید",
         "cancel_entering_passphrase_title": "وارد کردن عبارت امنیتی لغو شود؟",
         "cancel_entering_passphrase_description": "آیا مطمئن هستید که می خواهید وارد کردن عبارت امنیتی را لغو کنید؟",
-        "bootstrap_title": "تنظیم کلیدها"
+        "bootstrap_title": "تنظیم کلیدها",
+        "export_unsupported": "مرورگر شما از افزونه‌های رمزنگاری مورد نیاز پشتیبانی نمی‌کند",
+        "import_invalid_keyfile": "فایل کلید %(brand)s معتبر نیست",
+        "import_invalid_passphrase": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2356,7 +2327,8 @@
     "analytics": {
         "enable_prompt": "بهتر کردن راهنمای کاربری %(analyticsOwner)s",
         "consent_migration": "شما به ارسال گزارش چگونگی استفاده از سرویس رضایت داده بودید. ما نحوه استفاده از این اطلاعات را بروز میکنیم.",
-        "learn_more": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>"
+        "learn_more": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>",
+        "accept_button": "بسیارعالی"
     },
     "chat_effects": {
         "confetti_description": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
@@ -2587,7 +2559,8 @@
         },
         "error_need_to_be_logged_in": "شما باید وارد شوید.",
         "error_need_invite_permission": "نیاز است که شما قادر به دعوت کاربران به آن باشید.",
-        "error_need_kick_permission": "برای انجام این کار نیاز دارید که بتوانید کاربران را حذف کنید."
+        "error_need_kick_permission": "برای انجام این کار نیاز دارید که بتوانید کاربران را حذف کنید.",
+        "no_name": "برنامه ناشناخته"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2671,7 +2644,8 @@
         "context_menu": {
             "explore": "جستجو در اتاق ها",
             "manage_and_explore": "مدیریت و جستجوی اتاق‌ها"
-        }
+        },
+        "share_public": "محیط عمومی خود را به اشتراک بگذارید"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
@@ -2767,7 +2741,13 @@
         "unread_notifications_predecessor": {
             "other": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید.",
             "one": "شما %(count)s اعلان خوانده‌نشده در نسخه‌ی قبلی این اتاق دارید."
-        }
+        },
+        "leave_unexpected_error": "خطای غیرمنتظره روی سرور هنگام تلاش برای ترک اتاق",
+        "leave_server_notices_title": "نمی توان از اتاق اعلامیه های سرور خارج شد",
+        "leave_error_title": "خطا در ترک اتاق",
+        "upgrade_error_title": "خطا در ارتقاء نسخه اتاق",
+        "upgrade_error_description": "بررسی کنید که کارگزار شما از نسخه اتاق انتخاب‌شده پشتیبانی کرده و دوباره امتحان کنید.",
+        "leave_server_notices_description": "این اتاق برای نمایش پیام‌های مهم سرور استفاده می‌شود، لذا امکان ترک آن وجود ندارد."
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2825,7 +2805,21 @@
         "failed_generic": "عملیات انجام نشد",
         "room_failed_title": "افزودن کاربران به %(roomName)s با شکست روبرو شد",
         "room_failed_partial": "ما برای باقی ارسال کردیم، ولی افراد زیر نمی توانند به <RoomName/> دعوت شوند",
-        "room_failed_partial_title": "بعضی از دعوت ها ارسال نشد"
+        "room_failed_partial_title": "بعضی از دعوت ها ارسال نشد",
+        "invalid_address": "آدرس ناشناخته",
+        "error_permissions_space": "شما دسترسی لازم برای دعوت از افراد به این فضا را ندارید.",
+        "error_permissions_room": "شما دسترسی دعوت افراد به این اتاق را ندارید.",
+        "error_already_invited_space": "کاربر به این فضا دعوت شده است",
+        "error_already_invited_room": "کاربر به این اتاق دعوت شده است",
+        "error_already_joined_space": "کاربر در این فضا حاضر است",
+        "error_already_joined_room": "کاربر در این اتاق حاضر است",
+        "error_user_not_found": "کاربر وجود ندارد",
+        "error_profile_undisclosed": "ممکن است کاربر وجود نداشته باشد",
+        "error_bad_state": "برای اینکه کاربر بتواند دعوت شود، ابتدا باید رفع تحریم شود.",
+        "error_version_unsupported_space": "نسخه فضای شما با سرور خانگی کاربر سازگاری ندارد.",
+        "error_version_unsupported_room": "سرور کاربر از نسخه‌ی اتاق پشتیبانی نمی‌کند.",
+        "error_unknown": "خطای ناشناخته از سمت سرور",
+        "to_space": "دعوت به %(spaceName)s"
     },
     "scalar": {
         "error_create": "ایجاد ابزارک امکان پذیر نیست.",
@@ -2849,5 +2843,11 @@
         "connection": "در برقراری ارتباط با سرور مشکلی پیش آمده، لطفاً چند لحظه‌ی دیگر مجددا امتحان کنید.",
         "mixed_content": "امکان اتصال به سرور از طریق پروتکل‌های HTTP و HTTPS در مروگر شما میسر نیست. یا از HTTPS استفاده کرده و یا <a>حالت اجرای غیرامن اسکریپت‌ها</a> را فعال کنید.",
         "tls": "اتصال به سرور میسر نیست - لطفا اتصال اینترنت خود را بررسی کنید؛ اطمینان حاصل کنید <a>گواهینامه‌ی SSL سرور شما</a> قابل اعتماد است، و اینکه پلاگینی بر روی مرورگر شما مانع از ارسال درخواست به سرور نمی‌شود."
-    }
+    },
+    "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "other": "در %(spaceName)s و %(count)s دیگر فضاها."
+    },
+    "in_space": "در فضای %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

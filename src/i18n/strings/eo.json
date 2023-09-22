@@ -28,15 +28,11 @@
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
     "Reason": "Kialo",
-    "Your browser does not support the required cryptography extensions": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
-    "Not a valid %(brand)s keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
-    "Authentication check failed: incorrect password?": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
     "Send": "Sendi",
     "Incorrect verification code": "Malĝusta kontrola kodo",
     "No display name": "Sen vidiga nomo",
     "Authentication": "Aŭtentikigo",
     "Failed to set display name": "Malsukcesis agordi vidigan nomon",
-    "Unban": "Malforbari",
     "Failed to ban user": "Malsukcesis forbari uzanton",
     "Failed to mute user": "Malsukcesis silentigi uzanton",
     "Failed to change power level": "Malsukcesis ŝanĝi povnivelon",
@@ -142,8 +138,6 @@
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
     "<not supported>": "<nesubtenata>",
     "Reject all %(invitedRooms)s invites": "Rifuzi ĉiujn %(invitedRooms)s invitojn",
-    "No media permissions": "Neniuj permesoj pri aŭdvidaĵoj",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
     "Notifications": "Sciigoj",
@@ -191,8 +185,6 @@
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
     "Permission Required": "Necesas permeso",
-    "You do not have permission to invite people to this room.": "Vi ne havas permeson inviti personojn al la ĉambro.",
-    "Unknown server error": "Nekonata servila eraro",
     "Please contact your homeserver administrator.": "Bonvolu kontakti la administranton de via hejmservilo.",
     "Delete Backup": "Forigi savkopion",
     "General": "Ĝeneralaj",
@@ -289,9 +281,6 @@
     "That doesn't match.": "Tio ne akordas.",
     "Success!": "Sukceso!",
     "Set up": "Agordi",
-    "Unrecognised address": "Nerekonita adreso",
-    "The user must be unbanned before they can be invited.": "Necesas malforbari ĉi tiun uzanton antaŭ ol ĝin inviti.",
-    "The user's homeserver does not support the version of the room.": "Hejmservilo de ĉi tiu uzanto ne subtenas la version de la ĉambro.",
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
@@ -310,7 +299,6 @@
     "Account management": "Administrado de kontoj",
     "This event could not be displayed": "Ĉi tiu okazo ne povis montriĝi",
     "This room is not public. You will not be able to rejoin without an invite.": "Ĉi tiu ĉambro ne estas publika. Vi ne povos re-aliĝi sen invito.",
-    "Can't leave Server Notices room": "Ne eblas eliri el ĉambro « Server Notices »",
     "Revoke invite": "Nuligi inviton",
     "Invited by %(sender)s": "Invitita de %(sender)s",
     "Error updating main address": "Ĝisdatigo de la ĉefa adreso eraris",
@@ -374,7 +362,6 @@
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "This homeserver would like to make sure you are not a robot.": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto.",
     "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Ĉi tiu ĉambro uziĝas por gravaj mesaĝoj de la hejmservilo, kaj tial vi ne povas foriri.",
     "Add room": "Aldoni ĉambron",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
     "Uploaded sound": "Alŝutita sono",
@@ -491,7 +478,6 @@
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
     "Italics": "Kursive",
     "Explore rooms": "Esplori ĉambrojn",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
     "You should:": "Vi devus:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrolu kromprogramojn de via foliumilo je ĉio, kio povus malhelpi konekton al la identiga servilo (ekzemple « Privacy Badger »)",
@@ -572,8 +558,6 @@
     "Upgrade your encryption": "Gradaltigi vian ĉifradon",
     "Verify this session": "Kontroli ĉi tiun salutaĵon",
     "Encryption upgrade available": "Ĝisdatigo de ĉifrado haveblas",
-    "Error upgrading room": "Eraris ĝisdatigo de la ĉambro",
-    "Double check that your server supports the room version chosen and try again.": "Bone kontrolu, ĉu via servilo subtenas la elektitan version de ĉambro, kaj reprovu.",
     "Show more": "Montri pli",
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
@@ -829,9 +813,6 @@
     "Cross-signing is ready for use.": "Delegaj subskriboj estas pretaj por uzado.",
     "Safeguard against losing access to encrypted messages & data": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj",
     "Set up Secure Backup": "Agordi Sekuran savkopiadon",
-    "Unknown App": "Nekonata aplikaĵo",
-    "Error leaving room": "Eraro dum foriro de la ĉambro",
-    "Unexpected server error trying to leave the room": "Neatendita servila eraro dum foriro de ĉambro",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
@@ -1157,7 +1138,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite to %(roomName)s": "Inviti al %(roomName)s",
-    "Invite to %(spaceName)s": "Inviti al %(spaceName)s",
     "Create a new room": "Krei novan ĉambron",
     "Spaces": "Aroj",
     "Space selection": "Elekto de aro",
@@ -1167,7 +1147,6 @@
     "Invite to this space": "Inviti al ĉi tiu aro",
     "Your message was sent": "Via mesaĝo sendiĝis",
     "Leave space": "Forlasi aron",
-    "Share your public space": "Diskonigu vian publikan aron",
     "Invite with email or username": "Inviti per retpoŝtadreso aŭ uzantonomo",
     "Invite people": "Inviti personojn",
     "Share invite link": "Diskonigi invitan ligilon",
@@ -1395,24 +1374,10 @@
     },
     "Loading new room": "Ŝarĝante novan ĉambron",
     "Upgrading room": "Altgradiga ĉambro",
-    "The user's homeserver does not support the version of the space.": "La hejmservilo de la uzanto ne subtenas la version de la aro.",
-    "User may or may not exist": "Uzanto povas aŭ ne ekzisti",
-    "User does not exist": "Uzanto ne ekzistas",
-    "User is already in the room": "Uzanto jam estas en la ĉambro",
-    "User is already in the space": "Uzanto jam estas en la aro",
-    "User is already invited to the room": "Uzanto jam estas invitita al la ĉambro",
-    "User is already invited to the space": "Uzanto jam estas invitita al la aro",
-    "You do not have permission to invite people to this space.": "Vi ne havas permeson inviti personojn al ĉi tiu aro.",
-    "In %(spaceName)s and %(count)s other spaces.": {
-        "one": "En %(spaceName)s kaj %(count)s alia aro.",
-        "other": "En %(spaceName)s kaj %(count)s aliaj aroj."
-    },
-    "In %(spaceName)s.": "En aro %(spaceName)s.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
     },
-    "In spaces %(space1Name)s and %(space2Name)s.": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kaj %(space2Name)s",
     "What location type do you want to share?": "Kiel vi volas kunhavigi vian lokon?",
     "My live location": "Mia realtempa loko",
@@ -1445,7 +1410,6 @@
     "Sidebar": "Flanka kolumno",
     "Public rooms": "Publikajn ĉambrojn",
     "Add privileged users": "Aldoni rajtigitan uzanton",
-    "That's fine": "Tio estas bone",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "The person who invited you has already left, or their server is offline.": "Aŭ la persono, kiu vin invitis, jam foriris, aŭ ĝia servilo estas eksterreta.",
@@ -1625,7 +1589,8 @@
         "submit": "Sendi",
         "send_report": "Sendi raporton",
         "exit_fullscreeen": "Eliru plenekrano",
-        "enter_fullscreen": "Plenekrano"
+        "enter_fullscreen": "Plenekrano",
+        "unban": "Malforbari"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -2524,7 +2489,9 @@
         "no_permission_conference_description": "Vi ne havas permeson komenci grupvokon en ĉi tiu ĉambro",
         "default_device": "Implicita aparato",
         "failed_call_live_broadcast_title": "Ne povas komenci vokon",
-        "failed_call_live_broadcast_description": "Vi ne povas komenci vokon ĉar vi nuntempe registras vivan elsendon. Bonvolu fini vian vivan elsendon por komenci vokon."
+        "failed_call_live_broadcast_description": "Vi ne povas komenci vokon ĉar vi nuntempe registras vivan elsendon. Bonvolu fini vian vivan elsendon por komenci vokon.",
+        "no_media_perms_title": "Neniuj permesoj pri aŭdvidaĵoj",
+        "no_media_perms_description": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao"
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -2628,7 +2595,10 @@
         "verification_requested_toast_title": "Kontrolpeto",
         "cancel_entering_passphrase_title": "Ĉu nuligi enigon de pasfrazo?",
         "cancel_entering_passphrase_description": "Ĉu vi certe volas nuligi enigon de pasfrazo?",
-        "bootstrap_title": "Agordo de klavoj"
+        "bootstrap_title": "Agordo de klavoj",
+        "export_unsupported": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
+        "import_invalid_keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
+        "import_invalid_passphrase": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2644,7 +2614,8 @@
         "quick_reactions": "Rapidaj reagoj"
     },
     "analytics": {
-        "consent_migration": "Vi antaŭe konsentis kunhavigi anonimajn uzdatumojn kun ni. Ni ĝisdatigas kiel tio funkcias."
+        "consent_migration": "Vi antaŭe konsentis kunhavigi anonimajn uzdatumojn kun ni. Ni ĝisdatigas kiel tio funkcias.",
+        "accept_button": "Tio estas bone"
     },
     "chat_effects": {
         "confetti_description": "Sendas la mesaĝon kun konfetoj",
@@ -2900,7 +2871,8 @@
         },
         "error_need_to_be_logged_in": "Vi devas esti salutinta.",
         "error_need_invite_permission": "Vi bezonas permeson inviti uzantojn por tio.",
-        "error_need_kick_permission": "Vi devas povi piedbati uzantojn por fari tion."
+        "error_need_kick_permission": "Vi devas povi piedbati uzantojn por fari tion.",
+        "no_name": "Nekonata aplikaĵo"
     },
     "feedback": {
         "sent": "Prikomentoj sendiĝis",
@@ -2994,7 +2966,8 @@
         "context_menu": {
             "explore": "Esplori ĉambrojn",
             "manage_and_explore": "Administri kaj esplori ĉambrojn"
-        }
+        },
+        "share_public": "Diskonigu vian publikan aron"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -3095,7 +3068,13 @@
         "unread_notifications_predecessor": {
             "other": "Vi havas %(count)s nelegitajn sciigojn en antaŭa versio de ĉi tiu ĉambro.",
             "one": "Vi havas %(count)s nelegitan sciigon en antaŭa versio de ĉi tiu ĉambro."
-        }
+        },
+        "leave_unexpected_error": "Neatendita servila eraro dum foriro de ĉambro",
+        "leave_server_notices_title": "Ne eblas eliri el ĉambro « Server Notices »",
+        "leave_error_title": "Eraro dum foriro de la ĉambro",
+        "upgrade_error_title": "Eraris ĝisdatigo de la ĉambro",
+        "upgrade_error_description": "Bone kontrolu, ĉu via servilo subtenas la elektitan version de ĉambro, kaj reprovu.",
+        "leave_server_notices_description": "Ĉi tiu ĉambro uziĝas por gravaj mesaĝoj de la hejmservilo, kaj tial vi ne povas foriri."
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3155,7 +3134,21 @@
         "failed_generic": "Ago malsukcesis",
         "room_failed_title": "Malsukcesis inviti uzantojn al %(roomName)s",
         "room_failed_partial": "Ni sendis la aliajn, sed la ĉi-subaj personoj ne povis ricevi inviton al <RoomName/>",
-        "room_failed_partial_title": "Ne povis sendi iujn invitojn"
+        "room_failed_partial_title": "Ne povis sendi iujn invitojn",
+        "invalid_address": "Nerekonita adreso",
+        "error_permissions_space": "Vi ne havas permeson inviti personojn al ĉi tiu aro.",
+        "error_permissions_room": "Vi ne havas permeson inviti personojn al la ĉambro.",
+        "error_already_invited_space": "Uzanto jam estas invitita al la aro",
+        "error_already_invited_room": "Uzanto jam estas invitita al la ĉambro",
+        "error_already_joined_space": "Uzanto jam estas en la aro",
+        "error_already_joined_room": "Uzanto jam estas en la ĉambro",
+        "error_user_not_found": "Uzanto ne ekzistas",
+        "error_profile_undisclosed": "Uzanto povas aŭ ne ekzisti",
+        "error_bad_state": "Necesas malforbari ĉi tiun uzanton antaŭ ol ĝin inviti.",
+        "error_version_unsupported_space": "La hejmservilo de la uzanto ne subtenas la version de la aro.",
+        "error_version_unsupported_room": "Hejmservilo de ĉi tiu uzanto ne subtenas la version de la ĉambro.",
+        "error_unknown": "Nekonata servila eraro",
+        "to_space": "Inviti al %(spaceName)s"
     },
     "scalar": {
         "error_create": "Ne povas krei fenestraĵon.",
@@ -3182,5 +3175,12 @@
         "connection": "Eraris komunikado kun la hejmservilo, bonvolu reprovi poste.",
         "mixed_content": "Hejmservilo ne alkonekteblas per HTTP kun HTTPS URL en via adresbreto. Aŭ uzu HTTPS aŭ <a>ŝaltu malsekurajn skriptojn</a>.",
         "tls": "Ne eblas konekti al hejmservilo – bonvolu kontroli vian konekton, certigi ke <a>la SSL-atestilo de via hejmservilo</a> estas fidata, kaj ke neniu foliumila kromprogramo blokas petojn."
-    }
+    },
+    "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
+    "in_space_and_n_other_spaces": {
+        "one": "En %(spaceName)s kaj %(count)s alia aro.",
+        "other": "En %(spaceName)s kaj %(count)s aliaj aroj."
+    },
+    "in_space": "En aro %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)"
 }

@@ -37,14 +37,10 @@
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
     "Reason": "Причина",
-    "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
-    "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
-    "Authentication check failed: incorrect password?": "Неуспешна автентикация: неправилна парола?",
     "Incorrect verification code": "Неправилен код за потвърждение",
     "No display name": "Няма име",
     "Authentication": "Автентикация",
     "Failed to set display name": "Неуспешно задаване на име",
-    "Unban": "Отблокирай",
     "Failed to ban user": "Неуспешно блокиране на потребителя",
     "Failed to mute user": "Неуспешно заглушаване на потребителя",
     "Failed to change power level": "Неуспешна промяна на нивото на достъп",
@@ -147,8 +143,6 @@
     },
     "Uploading %(filename)s": "Качване на %(filename)s",
     "<not supported>": "<не се поддържа>",
-    "No media permissions": "Няма разрешения за медийните устройства",
-    "You may need to manually permit %(brand)s to access your microphone/webcam": "Може да се наложи ръчно да разрешите на %(brand)s да получи достъп до Вашия микрофон/уеб камера",
     "No Microphones detected": "Няма открити микрофони",
     "No Webcams detected": "Няма открити уеб камери",
     "Profile": "Профил",
@@ -200,8 +194,6 @@
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими.",
-    "Can't leave Server Notices room": "Не може да напуснете стая \"Server Notices\"",
-    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Тази стая се използва за важни съобщения от сървъра, така че не можете да я напуснете.",
     "Share Link to User": "Сподели връзка с потребител",
     "Share room": "Сподели стаята",
     "Share Room": "Споделяне на стая",
@@ -238,8 +230,6 @@
     "Incompatible local cache": "Несъвместим локален кеш",
     "Clear cache and resync": "Изчисти кеша и ресинхронизирай",
     "Add some now": "Добави сега",
-    "You do not have permission to invite people to this room.": "Нямате привилегии да каните хора в тази стая.",
-    "Unknown server error": "Непозната сървърна грешка",
     "Delete Backup": "Изтрий резервното копие",
     "Unable to load key backup status": "Неуспешно зареждане на състоянието на резервното копие на ключа",
     "Set up": "Настрой",
@@ -262,7 +252,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ако не сте настройвали новия метод за възстановяване, вероятно някой се опитва да проникне в акаунта Ви. Веднага променете паролата на акаунта си и настройте нов метод за възстановяване от Настройки.",
     "Set up Secure Messages": "Настрой Защитени Съобщения",
     "Go to Settings": "Отиди в Настройки",
-    "Unrecognised address": "Неразпознат адрес",
     "The following users may not exist": "Следните потребители може да не съществуват",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не бяга открити профили за изброените по-долу Matrix идентификатори. Желаете ли да ги поканите въпреки това?",
     "Invite anyway and never warn me again": "Покани въпреки това и не питай отново",
@@ -378,7 +367,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Случи се грешка при обновяването на основния адрес за стаята. Може да не е позволено от сървъра, или да се е случила друга временна грешка.",
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
     "Could not load user profile": "Неуспешно зареждане на потребителския профил",
-    "The user must be unbanned before they can be invited.": "Трябва да се махне блокирането на потребителя преди да може да бъде поканен пак.",
     "Accept all %(invitedRooms)s invites": "Приеми всички %(invitedRooms)s покани",
     "Power level": "Ниво на достъп",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
@@ -405,7 +393,6 @@
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
-    "The user's homeserver does not support the version of the room.": "Сървърът на потребителя не поддържа версията на стаята.",
     "Join the conversation with an account": "Присъедини се към разговор с акаунт",
     "Sign Up": "Регистриране",
     "Reason: %(reason)s": "Причина: %(reason)s",
@@ -529,7 +516,6 @@
     "Cancel search": "Отмени търсенето",
     "Jump to first unread room.": "Отиди до първата непрочетена стая.",
     "Jump to first invite.": "Отиди до първата покана.",
-    "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You verified %(name)s": "Потвърдихте %(name)s",
     "You cancelled verifying %(name)s": "Отказахте потвърждаването за %(name)s",
     "%(name)s cancelled verifying": "%(name)s отказа потвърждаването",
@@ -541,8 +527,6 @@
     "You sent a verification request": "Изпратихте заявка за потвърждение",
     "Cannot connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
     "The integration manager is offline or it cannot reach your homeserver.": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви.",
-    "Error upgrading room": "Грешка при обновяване на стаята",
-    "Double check that your server supports the room version chosen and try again.": "Проверете дали сървъра поддържа тази версия на стаята и опитайте пак.",
     "Secret storage public key:": "Публичен ключ за секретно складиране:",
     "in account data": "в данни за акаунта",
     "not stored": "не е складиран",
@@ -754,10 +738,7 @@
     "Room options": "Настройки на стаята",
     "Safeguard against losing access to encrypted messages & data": "Защитете се срещу загуба на достъп до криптирани съобшения и информация",
     "Set up Secure Backup": "Конфигуриране на Защитен Архив",
-    "Unknown App": "Неизвестно приложение",
-    "Error leaving room": "Грешка при напускане на стаята",
     "Change notification settings": "Промяна на настройките за уведомление",
-    "Unexpected server error trying to leave the room": "Възникна неочаквана сървърна грешка при опит за напускане на стаята",
     "This room is public": "Тази стая е публична",
     "Move right": "Премести надясно",
     "Move left": "Премести наляво",
@@ -1107,8 +1088,6 @@
     "Use app for a better experience": "Използвайте приложението за по-добра работа",
     "Use app": "Използване на приложението",
     "Review to ensure your account is safe": "Прегледайте, за да уверите, че профилът ви е в безопастност",
-    "Share your public space": "Споделете публичното си място",
-    "Invite to %(spaceName)s": "Покани в %(spaceName)s",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s и с мениджъра на интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Мениджърът на интеграции получава конфигурационни данни, може да модифицира приспособления, да изпраща покани за стаи и да настройва нива на достъп от ваше име.",
@@ -1260,7 +1239,8 @@
         "refresh": "Опресни",
         "mention": "Спомени",
         "submit": "Изпрати",
-        "send_report": "Изпрати доклад"
+        "send_report": "Изпрати доклад",
+        "unban": "Отблокирай"
     },
     "a11y": {
         "user_menu": "Потребителско меню",
@@ -1895,7 +1875,9 @@
         "transfer_failed_description": "Неуспешно прехвърляне на повикване",
         "no_permission_conference": "Необходимо е разрешение",
         "no_permission_conference_description": "Нямате достъп да започнете конферентен разговор в тази стая",
-        "default_device": "Устройство по подразбиране"
+        "default_device": "Устройство по подразбиране",
+        "no_media_perms_title": "Няма разрешения за медийните устройства",
+        "no_media_perms_description": "Може да се наложи ръчно да разрешите на %(brand)s да получи достъп до Вашия микрофон/уеб камера"
     },
     "Other": "Други",
     "Advanced": "Разширени",
@@ -1982,7 +1964,10 @@
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
         "cancel_entering_passphrase_title": "Откажете въвеждането на парола?",
         "cancel_entering_passphrase_description": "Сигурни ли сте че желате да прекратите въвеждането на паролата?",
-        "bootstrap_title": "Настройка на ключове"
+        "bootstrap_title": "Настройка на ключове",
+        "export_unsupported": "Вашият браузър не поддържа необходимите разширения за шифроване",
+        "import_invalid_keyfile": "Невалиден файл с ключ за %(brand)s",
+        "import_invalid_passphrase": "Неуспешна автентикация: неправилна парола?"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2236,7 +2221,13 @@
         "unread_notifications_predecessor": {
             "other": "Имате %(count)s непрочетени известия в предишна версия на тази стая.",
             "one": "Имате %(count)s непрочетено известие в предишна версия на тази стая."
-        }
+        },
+        "leave_unexpected_error": "Възникна неочаквана сървърна грешка при опит за напускане на стаята",
+        "leave_server_notices_title": "Не може да напуснете стая \"Server Notices\"",
+        "leave_error_title": "Грешка при напускане на стаята",
+        "upgrade_error_title": "Грешка при обновяване на стаята",
+        "upgrade_error_description": "Проверете дали сървъра поддържа тази версия на стаята и опитайте пак.",
+        "leave_server_notices_description": "Тази стая се използва за важни съобщения от сървъра, така че не можете да я напуснете."
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
@@ -2248,7 +2239,8 @@
         "context_menu": {
             "explore": "Открий стаи",
             "manage_and_explore": "Управление и откриване на стаи"
-        }
+        },
+        "share_public": "Споделете публичното си място"
     },
     "terms": {
         "integration_manager": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",
@@ -2288,11 +2280,18 @@
         "failed_generic": "Операцията е неуспешна",
         "room_failed_title": "Неуспешна покана на потребителите към %(roomName)s",
         "room_failed_partial": "Изпратихме останалите покани, но следните хора не можаха да бъдат поканени в <RoomName/>",
-        "room_failed_partial_title": "Някои покани не можаха да бъдат изпратени"
+        "room_failed_partial_title": "Някои покани не можаха да бъдат изпратени",
+        "invalid_address": "Неразпознат адрес",
+        "error_permissions_room": "Нямате привилегии да каните хора в тази стая.",
+        "error_bad_state": "Трябва да се махне блокирането на потребителя преди да може да бъде поканен пак.",
+        "error_version_unsupported_room": "Сървърът на потребителя не поддържа версията на стаята.",
+        "error_unknown": "Непозната сървърна грешка",
+        "to_space": "Покани в %(spaceName)s"
     },
     "widget": {
         "error_need_to_be_logged_in": "Трябва да влезете в профила си.",
-        "error_need_invite_permission": "За да извършите това, трябва да имате право да добавяте потребители."
+        "error_need_invite_permission": "За да извършите това, трябва да имате право да добавяте потребители.",
+        "no_name": "Неизвестно приложение"
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",
@@ -2315,5 +2314,6 @@
         "connection": "Възникна проблем при комуникацията със Home сървъра, моля опитайте отново по-късно.",
         "mixed_content": "Не е възможно свързване към Home сървъра чрез HTTP, когато има HTTPS адрес в лентата на браузъра Ви. Или използвайте HTTPS или <a>включете функция небезопасни скриптове</a>.",
         "tls": "Няма връзка с Home сървъра. Моля, проверете Вашата връзка. Уверете се, че <a>SSL сертификатът на Home сървъра</a> е надежден и че някое разширение на браузъра не блокира заявките."
-    }
+    },
+    "name_and_id": "%(name)s (%(userId)s)"
 }

@@ -78,20 +78,10 @@
         "one": "%(items)s og en anden"
     },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "Your browser does not support the required cryptography extensions": "Din browser understøtter ikke de påkrævede kryptografiske udvidelser",
-    "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s nøglefil",
-    "Authentication check failed: incorrect password?": "Godkendelse mislykkedes: forkert adgangskode?",
-    "Unrecognised address": "Ukendt adresse",
-    "You do not have permission to invite people to this room.": "Du har ikke tilladelse til at invitere personer til dette rum.",
-    "The user must be unbanned before they can be invited.": "Brugerens ban skal ophæves inden de kan blive inviteret.",
-    "The user's homeserver does not support the version of the room.": "Brugerens homeserver understøtter ikke versionen af dette rum.",
-    "Unknown server error": "Ukendt serverfejl",
     "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
     "Enter passphrase": "Indtast kodeord",
     "Verify this session": "Verificér denne session",
     "Encryption upgrade available": "Opgradering af kryptering tilgængelig",
-    "Error upgrading room": "Fejl under opgradering af rum",
-    "Double check that your server supports the room version chosen and try again.": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen.",
     "Explore rooms": "Udforsk rum",
     "Verification code": "Verifikationskode",
     "Headphones": "Hovedtelefoner",
@@ -693,7 +683,10 @@
         },
         "cancel_entering_passphrase_title": "Annuller indtastning af kodeord?",
         "cancel_entering_passphrase_description": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",
-        "bootstrap_title": "Sætter nøgler op"
+        "bootstrap_title": "Sætter nøgler op",
+        "export_unsupported": "Din browser understøtter ikke de påkrævede kryptografiske udvidelser",
+        "import_invalid_keyfile": "Ikke en gyldig %(brand)s nøglefil",
+        "import_invalid_passphrase": "Godkendelse mislykkedes: forkert adgangskode?"
     },
     "emoji": {
         "categories": "Kategorier"
@@ -828,7 +821,12 @@
         "failed_title": "Kunne ikke invitere",
         "failed_generic": "Operation mislykkedes",
         "room_failed_partial": "Vi har sendt til de andre, men nedenstående mennesker kunne ikke blive inviteret til <RoomName/>",
-        "room_failed_partial_title": "Nogle invitationer kunne ikke blive sendt"
+        "room_failed_partial_title": "Nogle invitationer kunne ikke blive sendt",
+        "invalid_address": "Ukendt adresse",
+        "error_permissions_room": "Du har ikke tilladelse til at invitere personer til dette rum.",
+        "error_bad_state": "Brugerens ban skal ophæves inden de kan blive inviteret.",
+        "error_version_unsupported_room": "Brugerens homeserver understøtter ikke versionen af dette rum.",
+        "error_unknown": "Ukendt serverfejl"
     },
     "widget": {
         "error_need_to_be_logged_in": "Du skal være logget ind.",
@@ -851,5 +849,9 @@
     "error": {
         "mau": "Denne homeserver har nået sin begrænsning for antallet af aktive brugere per måned.",
         "resource_limits": "Denne homeserver har overskredet en af dens ressourcegrænser."
+    },
+    "room": {
+        "upgrade_error_title": "Fejl under opgradering af rum",
+        "upgrade_error_description": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen."
     }
 }
