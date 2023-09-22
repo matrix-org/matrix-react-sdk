@@ -17,6 +17,16 @@ limitations under the License.
 import type { MatrixClient, MatrixEvent, Room, IndexedDBStore } from "matrix-js-sdk/src/matrix";
 import Chainable = Cypress.Chainable;
 
+/**
+ * A utility that is able to find messages based on their content, by looking
+ * inside the `timeline` objects in the object model.
+ *
+ * Crucially, we hold on to references to events that have been edited or
+ * redacted, so we can still look them up by their old content.
+ *
+ * Provides utilities that build on the ability to find messages, e.g. replyTo,
+ * which finds a message and then constructs a reply to it.
+ */
 export class MessageFinder {
     /**
      * Map of message content -> event.
@@ -197,6 +207,12 @@ export class MessageFinder {
     }
 }
 
+/**
+ * Something that can provide the content of a message.
+ *
+ * For example, we return and instance of this from {@link
+ * MessageFinder.replyTo} which creates a reply based on a previous message.
+ */
 export abstract class MessageContentSpec {
     messageFinder: MessageFinder | null;
 
@@ -207,6 +223,13 @@ export abstract class MessageContentSpec {
     public abstract getContent(room: Room): Promise<Record<string, unknown>>;
 }
 
+/**
+ * Something that can perform an action at the time we would usually send a
+ * message.
+ *
+ * For example, we return an instance of this from {@link
+ * MessageFinder.redactionOf} which redacts the message we are referring to.
+ */
 export abstract class BotActionSpec {
     messageFinder: MessageFinder | null;
 
@@ -217,8 +240,16 @@ export abstract class BotActionSpec {
     public abstract performAction(cli: MatrixClient, room: Room): Promise<void>;
 }
 
+/**
+ * Something that we will turn into a message or event when we pass it in to
+ * e.g. receiveMessages.
+ */
 export type Message = string | MessageContentSpec | BotActionSpec;
 
+/**
+ * Use the supplied client to send messages or perform actions as specified by
+ * the supplied {@link Message} items.
+ */
 export function sendMessageAsClient(cli: MatrixClient, room: string, messages: Message[]) {
     const roomIdFinder = findRoomByName(room);
     for (const message of messages) {
@@ -234,16 +265,23 @@ export function sendMessageAsClient(cli: MatrixClient, room: string, messages: M
     }
 }
 
+/**
+ * Open the room with the supplied name.
+ */
 export function goTo(room: string) {
     cy.viewRoomByName(room);
 }
 
-export function findRoomByName(room: string): Chainable<Room> {
+function findRoomByName(room: string): Chainable<Room> {
     return cy.getClient().then((cli) => {
         return cli.getRooms().find((r) => r.name === room);
     });
 }
 
+/**
+ * Click the thread with the supplied content in the thread root to open it in
+ * the Threads panel.
+ */
 export function openThread(rootMessage: string) {
     cy.log("Open thread", rootMessage);
     cy.get(".mx_RoomView_body", { log: false }).within(() => {
@@ -265,6 +303,9 @@ export function closeThreadsPanel() {
     cy.get(".mx_RightPanel").should("not.exist");
 }
 
+/**
+ * Return to the list of threads, given we are viewing a single thread.
+ */
 export function backToThreadsList() {
     cy.log("Back to threads list");
     cy.get(".mx_RightPanel").findByTitle("Threads").click();
@@ -287,14 +328,25 @@ function getRoomListTile(room: string) {
     return cy.findByRole("treeitem", { name: new RegExp("^" + room), log: false });
 }
 
+/**
+ * Assert that the message containing the supplied text is visible in the UI.
+ * Note: matches part of the message content as well as the whole of it.
+ */
 export function assertMessageLoaded(messagePart: string) {
     cy.get(".mx_EventTile_body").contains(messagePart).should("exist");
 }
 
+/**
+ * Assert that the message containing the supplied text is not visible in the UI.
+ * Note: matches part of the message content as well as the whole of it.
+ */
 export function assertMessageNotLoaded(messagePart: string) {
     cy.get(".mx_EventTile_body").contains(messagePart).should("not.exist");
 }
 
+/**
+ * Scroll the messages panel up 1000 pixels.
+ */
 export function pageUp() {
     cy.get(".mx_RoomView_messagePanel").then((refs) =>
         refs.each((_, messagePanel) => {
@@ -313,12 +365,20 @@ export function many(prefix: string, howMany: number): Array<string> {
     return Array.from(Array(howMany).keys()).map((i) => prefix + i.toFixed());
 }
 
+/**
+ * Click the "Mark as Read" context menu item on the room with the supplied name
+ * in the room list.
+ */
 export function markAsRead(room: string) {
     cy.log("Marking room as read", room);
     getRoomListTile(room).rightclick();
     cy.findByText("Mark as read").click();
 }
 
+/**
+ * Assert that the room with the supplied name is "read" in the room list - i.g.
+ * has not dot or count of unread messages.
+ */
 export function assertRead(room: string) {
     cy.log("Assert room read", room);
     return getRoomListTile(room).within(() => {
@@ -385,6 +445,9 @@ export function assertUnreadGreaterThan(room: string, greaterThan: number) {
     });
 }
 
+/**
+ * Click the "Threads" or "Back" button if needed to get to the threads list.
+ */
 export function openThreadList() {
     cy.log("Open threads list");
 
@@ -415,6 +478,10 @@ function getThreadListTile(rootMessage: string) {
     return cy.contains(".mx_ThreadPanel .mx_EventTile_body", rootMessage, { log: false }).closest("li");
 }
 
+/**
+ * Assert that the thread with the supplied content in its root message is shown
+ * as read in the Threads list.
+ */
 export function assertReadThread(rootMessage: string) {
     cy.log("Assert thread read", rootMessage);
     return getThreadListTile(rootMessage).within(() => {
@@ -422,6 +489,10 @@ export function assertReadThread(rootMessage: string) {
     });
 }
 
+/**
+ * Assert that the thread with the supplied content in its root message is shown
+ * as unread in the Threads list.
+ */
 export function assertUnreadThread(rootMessage: string) {
     cy.log("Assert unread thread", rootMessage);
     return getThreadListTile(rootMessage).within(() => {
@@ -429,6 +500,9 @@ export function assertUnreadThread(rootMessage: string) {
     });
 }
 
+/**
+ * Save our indexeddb information and then refresh the page.
+ */
 export function saveAndReload() {
     cy.log("Save and reload");
     cy.getClient().then((cli) => {
