@@ -13,12 +13,7 @@
     "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
     "Ignored users": "Úsáideoirí neamhairde",
     "Unrecognised address": "Seoladh nár aithníodh",
-    "Verified key": "Eochair deimhnithe",
-    "Unignored user": "Úsáideoir leis aird",
-    "Ignored user": "Úsáideoir neamhairde",
     "Unignore": "Stop ag tabhairt neamhaird air",
-    "Missing roomId.": "Comhartha aitheantais seomra ar iarraidh.",
-    "Operation failed": "Chlis an oibríocht",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Permission Required": "Is Teastáil Cead",
     "Spaces": "Spásanna",
@@ -677,7 +672,10 @@
         "me": "Taispeáin gníomh",
         "deop": "Bain an cumhacht oibritheora ó úsáideoir leis an ID áirithe",
         "server_error": "Earráid freastalaí",
-        "command_error": "Earráid ordaithe"
+        "command_error": "Earráid ordaithe",
+        "ignore_dialog_title": "Úsáideoir neamhairde",
+        "unignore_dialog_title": "Úsáideoir leis aird",
+        "verify_success_title": "Eochair deimhnithe"
     },
     "presence": {
         "online": "Ar Líne",
@@ -865,5 +863,11 @@
         "generic_error": "D’fhéadfadh nach mbeadh an freastalaí ar fáil, ró-ualaithe, nó fuair tú fabht.",
         "unsupported_version": "Ní thacaíonn an freastalaí leis an leagan seomra a shonraítear.",
         "error_title": "Níorbh fhéidir an seomra a chruthú"
+    },
+    "invite": {
+        "failed_generic": "Chlis an oibríocht"
+    },
+    "scalar": {
+        "error_missing_room_id": "Comhartha aitheantais seomra ar iarraidh."
     }
 }

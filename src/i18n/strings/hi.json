@@ -30,25 +30,6 @@
     "Default": "डिफ़ॉल्ट",
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
-    "Operation failed": "कार्रवाई विफल",
-    "Failed to invite": "आमंत्रित करने में विफल",
-    "You need to be logged in.": "आपको लॉग इन करने की जरूरत है।",
-    "You need to be able to invite users to do that.": "आपको उपयोगकर्ताओं को ऐसा करने के लिए आमंत्रित करने में सक्षम होना चाहिए।",
-    "Unable to create widget.": "विजेट बनाने में असमर्थ।",
-    "Missing roomId.": "गुमशुदा रूम ID।",
-    "Failed to send request.": "अनुरोध भेजने में विफल।",
-    "This room is not recognised.": "यह रूम पहचाना नहीं गया है।",
-    "Power level must be positive integer.": "पावर स्तर सकारात्मक पूर्णांक होना चाहिए।",
-    "You are not in this room.": "आप इस रूम में नहीं हैं।",
-    "You do not have permission to do that in this room.": "आपको इस कमरे में ऐसा करने की अनुमति नहीं है।",
-    "Missing room_id in request": "अनुरोध में रूम_आईडी गुम है",
-    "Room %(roomId)s not visible": "%(roomId)s रूम दिखाई नहीं दे रहा है",
-    "Missing user_id in request": "अनुरोध में user_id गुम है",
-    "Ignored user": "अनदेखा उपयोगकर्ता",
-    "You are now ignoring %(userId)s": "आप %(userId)s को अनदेखा कर रहे हैं",
-    "Unignored user": "अनदेखा बंद किया गया उपयोगकर्ता",
-    "You are no longer ignoring %(userId)s": "अब आप %(userId)s को अनदेखा नहीं कर रहे हैं",
-    "Verified key": "सत्यापित कुंजी",
     "Reason": "कारण",
     "Send": "भेजें",
     "This homeserver has hit its Monthly Active User limit.": "इस होमसर्वर ने अपनी मासिक सक्रिय उपयोगकर्ता सीमा को प्राप्त कर लिया हैं।",
@@ -569,7 +550,12 @@
         "deop": "दिए गए आईडी के साथ उपयोगकर्ता को देओप्स करना",
         "server_error_detail": "सर्वर अनुपलब्ध, अधिभारित, या कुछ और गलत हो गया।",
         "server_error": "सर्वर त्रुटि",
-        "command_error": "कमांड त्रुटि"
+        "command_error": "कमांड त्रुटि",
+        "ignore_dialog_title": "अनदेखा उपयोगकर्ता",
+        "ignore_dialog_description": "आप %(userId)s को अनदेखा कर रहे हैं",
+        "unignore_dialog_title": "अनदेखा बंद किया गया उपयोगकर्ता",
+        "unignore_dialog_description": "अब आप %(userId)s को अनदेखा नहीं कर रहे हैं",
+        "verify_success_title": "सत्यापित कुंजी"
     },
     "presence": {
         "online_for": "%(duration)s के लिए ऑनलाइन",
@@ -748,5 +734,25 @@
     },
     "notifier": {
         "m.key.verification.request": "%(name)s सत्यापन का अनुरोध कर रहा है"
+    },
+    "invite": {
+        "failed_title": "आमंत्रित करने में विफल",
+        "failed_generic": "कार्रवाई विफल"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "आपको लॉग इन करने की जरूरत है।",
+        "error_need_invite_permission": "आपको उपयोगकर्ताओं को ऐसा करने के लिए आमंत्रित करने में सक्षम होना चाहिए।"
+    },
+    "scalar": {
+        "error_create": "विजेट बनाने में असमर्थ।",
+        "error_missing_room_id": "गुमशुदा रूम ID।",
+        "error_send_request": "अनुरोध भेजने में विफल।",
+        "error_room_unknown": "यह रूम पहचाना नहीं गया है।",
+        "error_power_level_invalid": "पावर स्तर सकारात्मक पूर्णांक होना चाहिए।",
+        "error_membership": "आप इस रूम में नहीं हैं।",
+        "error_permission": "आपको इस कमरे में ऐसा करने की अनुमति नहीं है।",
+        "error_missing_room_id_request": "अनुरोध में रूम_आईडी गुम है",
+        "error_room_not_visible": "%(roomId)s रूम दिखाई नहीं दे रहा है",
+        "error_missing_user_id_request": "अनुरोध में user_id गुम है"
     }
 }

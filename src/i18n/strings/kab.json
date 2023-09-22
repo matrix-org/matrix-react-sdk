@@ -23,7 +23,6 @@
     "AM": "FT",
     "Default": "Amezwer",
     "Moderator": "Aseɣyad",
-    "You need to be logged in.": "Tesriḍ ad teqqneḍ.",
     "Thank you!": "Tanemmirt!",
     "Reason": "Taɣẓint",
     "Later": "Ticki",
@@ -101,28 +100,13 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ma ulac aɣilif, senqed imayl-ik/im syen sit ɣef useɣwen i yellan. Akken ara yemmed waya, sit ad tkemmleḍ.",
     "This will allow you to reset your password and receive notifications.": "Ayagi ad ak(akem)-yeǧǧ ad twennzeḍ awal-ik/im uffir yerna ad d-tremseḍ ilɣa.",
     "Enter passphrase": "Sekcem tafyirt tuffirt",
-    "Setting up keys": "Asebded n tsura",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Cancel entering passphrase?": "Sefsex tafyirt tuffirt n uεeddi?",
-    "Failed to invite": "Ulamek i d-tnecdeḍ",
-    "You need to be able to invite users to do that.": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
-    "Failed to send request.": "Tuzna n usuter ur teddi ara.",
-    "This room is not recognised.": "Taxxamt-a ur tṣeggem ara.",
-    "You are not in this room.": "Ulac-ik/ikem deg texxamt-a.",
-    "You do not have permission to do that in this room.": "Ur tesεiḍ ara tasiregt ad tgeḍ ayagi deg texxamt-a.",
-    "Missing room_id in request": "Ixuṣṣ taxxamt_asulay deg usuter",
-    "Room %(roomId)s not visible": "Taxxamt %(roomId)s ur d-tban ara",
-    "Missing user_id in request": "Ixuṣṣ useqdac_asulay deg usuter",
     "Error upgrading room": "Tuccḍa deg uleqqem n texxamt",
-    "Use an identity server": "Seqdec timagit n uqeddac",
-    "Ignored user": "Aseqdac yettunfen",
-    "You are now ignoring %(userId)s": "Aql-ak tura tunfeḍ i %(userId)s",
     "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
     "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
-    "Are you sure you want to cancel entering passphrase?": "S tidet tebɣiḍ ad tesfesxeḍ asekcem n tefyirt tuffirt?",
     "Restricted": "Yesεa tilas",
     "Set up": "Sbadu",
     "Pencil": "Akeryun",
@@ -131,12 +115,6 @@
     "New Recovery Method": "Tarrayt tamaynut n ujebber",
     "Go to Settings": "Ddu ɣer yiɣewwaren",
     "Set up Secure Messages": "Sbadu iznan iɣelsanen",
-    "Operation failed": "Tamhelt ur teddi ara",
-    "Unable to create widget.": "Timerna n uwiǧit ulamek.",
-    "Missing roomId.": "Ixuṣ usulay n texxamt.",
-    "Use an identity server to invite by email. Manage in Settings.": "Seqdec aqeddac n timagit i uncad s yimayl. Asefrek deg yiɣewwaren.",
-    "Session already verified!": "Tiɣimit tettwasenqed yakan!",
-    "Verified key": "Tasarut tettwasenqed",
     "Logs sent": "Iɣmisen ttewaznen",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(count)s others": {
@@ -201,11 +179,7 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Power level must be positive integer.": "Ilaq ad yili uswir n tezmert d ummid ufrir.",
     "Double check that your server supports the room version chosen and try again.": "Senqed akken ilaq ma yella aqeddac-inek·inem issefrak lqem n texxamtyettwafernen syen εreḍ tikkelt-nniḍen.",
-    "Unignored user": "Aseqdac ur yettuzeglen ara",
-    "You are no longer ignoring %(userId)s": "Dayen ur tettazgaleḍ ara akk %(userId)s",
-    "Verifies a user, session, and pubkey tuple": "Yessenqad tagrumma-a: aseqdac, tiɣimit d tsarut tazayezt",
     "Cannot reach homeserver": "Anekcum ɣer uqeddac agejdan d awezɣi",
     "Cannot reach identity server": "Anekcum ɣer uqeddac n tmagit d awezɣi",
     "No homeserver URL provided": "Ulac URL n uqeddac agejdan i d-yettunefken",
@@ -377,9 +351,6 @@
     "All settings": "Akk iɣewwaren",
     "A new password must be entered.": "Awal uffir amaynut ilaq ad yettusekcem.",
     "General failure": "Tuccḍa tamatut",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Seqdec aqeddac n timagit i uncad s yimayl. Sit, tkemmleḍ aseqdec n uqeddac n timagit amezwer (%(defaultIdentityServerName)s) neɣ sefrek deg yiɣewwaren.",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ƔUR-K·M: tASARUT N USENQED UR TEDDI ARA! Tasarut n uzmul n %(userId)s akked tɣimit %(deviceId)s d \"%(fprint)s\" ur imṣada ara d tsarut i d-yettunefken \"%(fingerprint)s\". Ayagi yezmer ad d-yini tiywalin-ik·im ttusweḥlent!",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Tasarut n uzmul i d-tefkiḍ temṣada d tsarut n uzmul i d-tremseḍ seg tɣimit %(userId)s's %(deviceId)s. Tiɣimit tettucreḍ tettwasenqed.",
     "Unicorn": "Azara",
     "Penguin": "Awarfus",
     "Octopus": "Azayz",
@@ -1793,7 +1764,19 @@
         "unknown_command": "Taladna tarussint",
         "server_error_detail": "Aqeddac ulac-it, neɣ iɛebba aṭas neɣ yella wayen ur nteddu ara akken ilaq.",
         "server_error": "Tuccḍa n uqeddac",
-        "command_error": "Tuccḍa n tladna"
+        "command_error": "Tuccḍa n tladna",
+        "invite_3pid_use_default_is_title": "Seqdec timagit n uqeddac",
+        "invite_3pid_use_default_is_title_description": "Seqdec aqeddac n timagit i uncad s yimayl. Sit, tkemmleḍ aseqdec n uqeddac n timagit amezwer (%(defaultIdentityServerName)s) neɣ sefrek deg yiɣewwaren.",
+        "invite_3pid_needs_is_error": "Seqdec aqeddac n timagit i uncad s yimayl. Asefrek deg yiɣewwaren.",
+        "ignore_dialog_title": "Aseqdac yettunfen",
+        "ignore_dialog_description": "Aql-ak tura tunfeḍ i %(userId)s",
+        "unignore_dialog_title": "Aseqdac ur yettuzeglen ara",
+        "unignore_dialog_description": "Dayen ur tettazgaleḍ ara akk %(userId)s",
+        "verify": "Yessenqad tagrumma-a: aseqdac, tiɣimit d tsarut tazayezt",
+        "verify_nop": "Tiɣimit tettwasenqed yakan!",
+        "verify_mismatch": "ƔUR-K·M: tASARUT N USENQED UR TEDDI ARA! Tasarut n uzmul n %(userId)s akked tɣimit %(deviceId)s d \"%(fprint)s\" ur imṣada ara d tsarut i d-yettunefken \"%(fingerprint)s\". Ayagi yezmer ad d-yini tiywalin-ik·im ttusweḥlent!",
+        "verify_success_title": "Tasarut tettwasenqed",
+        "verify_success_description": "Tasarut n uzmul i d-tefkiḍ temṣada d tsarut n uzmul i d-tremseḍ seg tɣimit %(userId)s's %(deviceId)s. Tiɣimit tettucreḍ tettwasenqed."
     },
     "presence": {
         "online_for": "Srid azal n %(duration)s",
@@ -1932,7 +1915,10 @@
             "cancelling": "Asefsex…"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
-        "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im."
+        "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
+        "cancel_entering_passphrase_title": "Sefsex tafyirt tuffirt n uεeddi?",
+        "cancel_entering_passphrase_description": "S tidet tebɣiḍ ad tesfesxeḍ asekcem n tefyirt tuffirt?",
+        "bootstrap_title": "Asebded n tsura"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2066,7 +2052,9 @@
         "capability": {
             "see_images_sent_active_room": "Wali tignatin i d-yeffɣen deg texxamt-a iremden",
             "send_videos_this_room": "Azen tividyutin deg texxamt-a am wakken d kečč"
-        }
+        },
+        "error_need_to_be_logged_in": "Tesriḍ ad teqqneḍ.",
+        "error_need_invite_permission": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi."
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2186,5 +2174,21 @@
     "upload_failed_title": "Asali ur yeddi ara",
     "notifier": {
         "m.key.verification.request": "%(name)s yesra asenqed"
+    },
+    "invite": {
+        "failed_title": "Ulamek i d-tnecdeḍ",
+        "failed_generic": "Tamhelt ur teddi ara"
+    },
+    "scalar": {
+        "error_create": "Timerna n uwiǧit ulamek.",
+        "error_missing_room_id": "Ixuṣ usulay n texxamt.",
+        "error_send_request": "Tuzna n usuter ur teddi ara.",
+        "error_room_unknown": "Taxxamt-a ur tṣeggem ara.",
+        "error_power_level_invalid": "Ilaq ad yili uswir n tezmert d ummid ufrir.",
+        "error_membership": "Ulac-ik/ikem deg texxamt-a.",
+        "error_permission": "Ur tesεiḍ ara tasiregt ad tgeḍ ayagi deg texxamt-a.",
+        "error_missing_room_id_request": "Ixuṣṣ taxxamt_asulay deg usuter",
+        "error_room_not_visible": "Taxxamt %(roomId)s ur d-tban ara",
+        "error_missing_user_id_request": "Ixuṣṣ useqdac_asulay deg usuter"
     }
 }

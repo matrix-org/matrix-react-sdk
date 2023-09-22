@@ -41,7 +41,6 @@
     "AM": "AM",
     "Default": "Predefinit",
     "Moderator": "Moderator",
-    "Operation failed": "L'operacion a fracassat",
     "Thank you!": "Mercés !",
     "Reason": "Rason",
     "Notifications": "Notificacions",
@@ -382,5 +381,8 @@
         "verification": {
             "cancelling": "Anullacion…"
         }
+    },
+    "invite": {
+        "failed_generic": "L'operacion a fracassat"
     }
 }

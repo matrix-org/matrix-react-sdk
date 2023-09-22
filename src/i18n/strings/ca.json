@@ -7,7 +7,6 @@
     "Failed to change password. Is your password correct?": "S'ha produït un error en canviar la contrasenya. És correcta la teva contrasenya?",
     "Notifications": "Notificacions",
     "unknown error code": "codi d'error desconegut",
-    "Operation failed": "No s'ha pogut realitzar l'operació",
     "Rooms": "Sales",
     "Warning!": "Avís!",
     "Sun": "dg.",
@@ -38,23 +37,6 @@
     "Default": "Predeterminat",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
-    "Failed to invite": "No s'ha pogut convidar",
-    "You need to be logged in.": "Has d'haver iniciat sessió.",
-    "You need to be able to invite users to do that.": "Per fer això, necessites poder convidar a usuaris.",
-    "Unable to create widget.": "No s'ha pogut crear el giny.",
-    "Failed to send request.": "No s'ha pogut enviar la sol·licitud.",
-    "This room is not recognised.": "No es reconeix aquesta sala.",
-    "Power level must be positive integer.": "El nivell d'autoritat ha de ser un enter positiu.",
-    "You are not in this room.": "No ets en aquesta sala.",
-    "You do not have permission to do that in this room.": "No tens permís per fer això en aquesta sala.",
-    "Missing room_id in request": "Falta el room_id a la sol·licitud",
-    "Room %(roomId)s not visible": "Sala %(roomId)s no visible",
-    "Missing user_id in request": "Falta l'user_id a la sol·licitud",
-    "Ignored user": "Usuari ignorat",
-    "You are now ignoring %(userId)s": "Estàs ignorant l'usuari %(userId)s",
-    "Unignored user": "Usuari no ignorat",
-    "You are no longer ignoring %(userId)s": "Ja no estàs ignorant l'usuari %(userId)s",
-    "Verified key": "Claus verificades",
     "Reason": "Raó",
     "Send": "Envia",
     "Your browser does not support the required cryptography extensions": "El vostre navegador no és compatible amb els complements criptogràfics necessaris",
@@ -195,7 +177,6 @@
     "Low Priority": "Baixa prioritat",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
-    "Missing roomId.": "Falta l'ID de sala.",
     "You do not have permission to invite people to this room.": "No teniu permís per convidar gent a aquesta sala.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
@@ -229,19 +210,13 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar els requisits del nivell d'autoritat de la sala. Assegura't que tens suficients permisos i torna-ho a provar.",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar el nivell d'autoritat de l'usuari. Assegura't que tens suficients permisos i torna-ho a provar.",
     "Power level": "Nivell d'autoritat",
-    "Use an identity server": "Utilitza un servidor d'identitat",
     "Double check that your server supports the room version chosen and try again.": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar.",
-    "Setting up keys": "Configurant claus",
-    "Are you sure you want to cancel entering passphrase?": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
-    "Cancel entering passphrase?": "Vols cancel·lar la introducció de la frase secreta?",
     "e.g. my-room": "p.e. la-meva-sala",
     "New published address (e.g. #alias:server)": "Nova adreça publicada (p.e. #alias:server)",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no has eliminat el mètode de recuperació, pot ser que un atacant estigui intentant accedir al teu compte. Canvia la teva contrasenya i configura un nou mètode de recuperació a Configuració, immediatament.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no has configurat el teu mètode de recuperació, pot ser que un atacant estigui intentant accedir al teu compte. Canvia la teva contrasenya i configura un nou mètode de recuperació a Configuració, immediatament.",
     "You can also set up Secure Backup & manage your keys in Settings.": "També pots configurar la còpia de seguretat segura i gestionar les teves claus a Configuració.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Prèviament has fet servir %(brand)s a %(host)s amb la càrrega mandrosa de membres activada. En aquesta versió la càrrega mandrosa està desactivada. Com que la memòria cau local no és compatible entre les dues versions, %(brand)s necessita tornar a sincronitzar el teu compte.",
-    "Use an identity server to invite by email. Manage in Settings.": "Utilitza un servidor d'identitat per convidar per correu electrònic. Gestiona'l a Configuració.",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. Fes clic a continua per a utilitzar el servidor d'identitat predeterminat (%(defaultIdentityServerName)s) o gestiona'l a Configuració.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. <default>Utilitza el predeterminat (%(defaultIdentityServerName)s)</default> o gestiona'l a <settings>Configuració</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. Gestiona'l a <settings>Configuració</settings>.",
     "Integrations not allowed": "No es permeten integracions",
@@ -599,7 +574,15 @@
         "deop": "Degrada l'usuari amb l'id donat",
         "server_error_detail": "El servidor no està disponible, està sobrecarregat o alguna altra cosa no ha funcionat correctament.",
         "server_error": "Error de servidor",
-        "command_error": "Error en l'ordre"
+        "command_error": "Error en l'ordre",
+        "invite_3pid_use_default_is_title": "Utilitza un servidor d'identitat",
+        "invite_3pid_use_default_is_title_description": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. Fes clic a continua per a utilitzar el servidor d'identitat predeterminat (%(defaultIdentityServerName)s) o gestiona'l a Configuració.",
+        "invite_3pid_needs_is_error": "Utilitza un servidor d'identitat per convidar per correu electrònic. Gestiona'l a Configuració.",
+        "ignore_dialog_title": "Usuari ignorat",
+        "ignore_dialog_description": "Estàs ignorant l'usuari %(userId)s",
+        "unignore_dialog_title": "Usuari no ignorat",
+        "unignore_dialog_description": "Ja no estàs ignorant l'usuari %(userId)s",
+        "verify_success_title": "Claus verificades"
     },
     "presence": {
         "online_for": "En línia durant %(duration)s",
@@ -758,7 +741,10 @@
     },
     "encryption": {
         "old_version_detected_title": "S'han detectat dades de criptografia antigues",
-        "old_version_detected_description": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus."
+        "old_version_detected_description": "S'han detectat dades d'una versió antiga del %(brand)s. Això haurà provocat que el xifratge d'extrem a extrem no funcioni correctament a la versió anterior. Els missatges xifrats d'extrem a extrem que s'han intercanviat recentment mentre s'utilitzava la versió anterior no es poden desxifrar en aquesta versió. També pot provocar que els missatges intercanviats amb aquesta versió fallin. Si teniu problemes, sortiu de la sessió i torneu a entrar-hi. Per poder llegir l'historial dels missatges xifrats, exporteu i torneu a importar les vostres claus.",
+        "cancel_entering_passphrase_title": "Vols cancel·lar la introducció de la frase secreta?",
+        "cancel_entering_passphrase_description": "Estàs segur que vols cancel·lar la introducció de la frase secreta?",
+        "bootstrap_title": "Configurant claus"
     },
     "labs_mjolnir": {
         "error_adding_ignore": "Error afegint usuari/servidor ignorat",
@@ -783,5 +769,25 @@
     },
     "notifier": {
         "m.key.verification.request": "%(name)s està demanant verificació"
+    },
+    "invite": {
+        "failed_title": "No s'ha pogut convidar",
+        "failed_generic": "No s'ha pogut realitzar l'operació"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Has d'haver iniciat sessió.",
+        "error_need_invite_permission": "Per fer això, necessites poder convidar a usuaris."
+    },
+    "scalar": {
+        "error_create": "No s'ha pogut crear el giny.",
+        "error_missing_room_id": "Falta l'ID de sala.",
+        "error_send_request": "No s'ha pogut enviar la sol·licitud.",
+        "error_room_unknown": "No es reconeix aquesta sala.",
+        "error_power_level_invalid": "El nivell d'autoritat ha de ser un enter positiu.",
+        "error_membership": "No ets en aquesta sala.",
+        "error_permission": "No tens permís per fer això en aquesta sala.",
+        "error_missing_room_id_request": "Falta el room_id a la sol·licitud",
+        "error_room_not_visible": "Sala %(roomId)s no visible",
+        "error_missing_user_id_request": "Falta l'user_id a la sol·licitud"
     }
 }

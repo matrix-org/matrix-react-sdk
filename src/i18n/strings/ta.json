@@ -8,7 +8,6 @@
     "Low Priority": "குறைந்த முன்னுரிமை",
     "Notification targets": "அறிவிப்பு இலக்குகள்",
     "Notifications": "அறிவிப்புகள்",
-    "Operation failed": "செயல்பாடு தோல்வியுற்றது",
     "Search…": "தேடு…",
     "Send": "அனுப்பு",
     "Source URL": "மூல முகவரி",
@@ -179,5 +178,8 @@
     "create_room": {
         "unsupported_version": "குறிப்பிடப்பட்ட அறை பதிப்பை சேவையகம் ஆதரிக்கவில்லை.",
         "error_title": "அறையை உருவாக்கத் தவறியது"
+    },
+    "invite": {
+        "failed_generic": "செயல்பாடு தோல்வியுற்றது"
     }
 }

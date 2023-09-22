@@ -1,5 +1,4 @@
 {
-    "Operation failed": "Операцията е неуспешна",
     "Send": "Изпрати",
     "Failed to change password. Is your password correct?": "Неуспешна промяна. Правилно ли сте въвели Вашата парола?",
     "Sun": "нд.",
@@ -37,23 +36,6 @@
     "Default": "По подразбиране",
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
-    "Failed to invite": "Неуспешна покана",
-    "You need to be logged in.": "Трябва да влезете в профила си.",
-    "You need to be able to invite users to do that.": "За да извършите това, трябва да имате право да добавяте потребители.",
-    "Unable to create widget.": "Неуспешно създаване на приспособление.",
-    "Failed to send request.": "Неуспешно изпращане на заявката.",
-    "This room is not recognised.": "Стаята не е разпозната.",
-    "Power level must be positive integer.": "Нивото на достъп трябва да бъде позитивно число.",
-    "You are not in this room.": "Не сте в тази стая.",
-    "You do not have permission to do that in this room.": "Нямате достъп да направите това в тази стая.",
-    "Missing room_id in request": "Липсва room_id в заявката",
-    "Room %(roomId)s not visible": "Стая %(roomId)s не е видима",
-    "Missing user_id in request": "Липсва user_id в заявката",
-    "Ignored user": "Игнориран потребител",
-    "You are now ignoring %(userId)s": "Вече игнорирате %(userId)s",
-    "Unignored user": "Неигнориран потребител",
-    "You are no longer ignoring %(userId)s": "Вече не игнорирате %(userId)s",
-    "Verified key": "Потвърден ключ",
     "Reason": "Причина",
     "Your browser does not support the required cryptography extensions": "Вашият браузър не поддържа необходимите разширения за шифроване",
     "Not a valid %(brand)s keyfile": "Невалиден файл с ключ за %(brand)s",
@@ -215,7 +197,6 @@
     "Yesterday": "Вчера",
     "Low Priority": "Нисък приоритет",
     "Thank you!": "Благодарим!",
-    "Missing roomId.": "Липсва идентификатор на стая.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
     "Popout widget": "Изкарай в нов прозорец",
     "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
@@ -513,9 +494,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Използването на сървър за самоличност не е задължително. Ако не използвате такъв, няма да бъдете откриваеми от други потребители и няма да можете да ги каните по имейл или телефон.",
     "Do not use an identity server": "Не ползвай сървър за самоличност",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Приемете условията за ползване на сървъра за самоличност (%(serverName)s) за да бъдете откриваеми по имейл адрес или телефонен номер.",
-    "Use an identity server": "Използвай сървър за самоличност",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Използвайте сървър за самоличност за да каните по имейл. Натиснете продължи за да използвате сървъра за самоличност по подразбиране (%(defaultIdentityServerName)s) или го променете в Настройки.",
-    "Use an identity server to invite by email. Manage in Settings.": "Използвайте сървър за самоличност за да каните по имейл. Управление от Настройки.",
     "Error changing power level": "Грешка при промяната на нивото на достъп",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Възникна грешка при промяната на нивото на достъп на потребителя. Уверете се, че имате необходимите привилегии и опитайте пак.",
     "Deactivate user?": "Деактивиране на потребителя?",
@@ -628,14 +606,8 @@
     "Direct Messages": "Директни съобщения",
     "Failed to find the following users": "Неуспешно откриване на следните потребители",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Следните потребители не съществуват или са невалидни и не могат да бъдат поканени: %(csvNames)s",
-    "Cancel entering passphrase?": "Откажете въвеждането на парола?",
-    "Setting up keys": "Настройка на ключове",
     "Verify this session": "Потвърди тази сесия",
     "Encryption upgrade available": "Има обновление на шифроването",
-    "Verifies a user, session, and pubkey tuple": "Потвърждава потребител, сесия и двойка ключове",
-    "Session already verified!": "Сесията вече е потвърдена!",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ВНИМАНИЕ: ПОТВЪРЖДАВАНЕТО НА КЛЮЧОВЕТЕ Е НЕУСПЕШНО! Подписващия ключ за %(userId)s и сесия %(deviceId)s е \"%(fprint)s\", което не съвпада с предоставения ключ \"%(fingerprint)s\". Това може би означава, че комуникацията ви бива прихваната!",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Предоставения от вас ключ за подписване съвпада с ключа за подписване получен от сесия %(deviceId)s на %(userId)s. Сесията е маркирана като потвърдена.",
     "Not Trusted": "Недоверено",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
@@ -801,7 +773,6 @@
     "Set up Secure Backup": "Конфигуриране на Защитен Архив",
     "Unknown App": "Неизвестно приложение",
     "Error leaving room": "Грешка при напускане на стаята",
-    "Are you sure you want to cancel entering passphrase?": "Сигурни ли сте че желате да прекратите въвеждането на паролата?",
     "Change notification settings": "Промяна на настройките за уведомление",
     "Unexpected server error trying to leave the room": "Възникна неочаквана сървърна грешка при опит за напускане на стаята",
     "This room is public": "Тази стая е публична",
@@ -1165,9 +1136,6 @@
     "Could not connect to identity server": "Неуспешна връзка със сървъра за самоличност",
     "Not a valid identity server (status code %(code)s)": "Невалиден сървър за самоличност (статус код %(code)s)",
     "Identity server URL must be HTTPS": "Адресът на сървъра за самоличност трябва да бъде HTTPS",
-    "Failed to invite users to %(roomName)s": "Неуспешна покана на потребителите към %(roomName)s",
-    "Some invites couldn't be sent": "Някои покани не можаха да бъдат изпратени",
-    "We sent the others, but the below people couldn't be invited to <RoomName/>": "Изпратихме останалите покани, но следните хора не можаха да бъдат поканени в <RoomName/>",
     "common": {
         "about": "Относно",
         "analytics": "Статистика",
@@ -1863,7 +1831,19 @@
         "unknown_command": "Непозната команда",
         "server_error_detail": "Сървърът е недостъпен, претоварен или нещо друго се обърка.",
         "server_error": "Сървърна грешка",
-        "command_error": "Грешка в командата"
+        "command_error": "Грешка в командата",
+        "invite_3pid_use_default_is_title": "Използвай сървър за самоличност",
+        "invite_3pid_use_default_is_title_description": "Използвайте сървър за самоличност за да каните по имейл. Натиснете продължи за да използвате сървъра за самоличност по подразбиране (%(defaultIdentityServerName)s) или го променете в Настройки.",
+        "invite_3pid_needs_is_error": "Използвайте сървър за самоличност за да каните по имейл. Управление от Настройки.",
+        "ignore_dialog_title": "Игнориран потребител",
+        "ignore_dialog_description": "Вече игнорирате %(userId)s",
+        "unignore_dialog_title": "Неигнориран потребител",
+        "unignore_dialog_description": "Вече не игнорирате %(userId)s",
+        "verify": "Потвърждава потребител, сесия и двойка ключове",
+        "verify_nop": "Сесията вече е потвърдена!",
+        "verify_mismatch": "ВНИМАНИЕ: ПОТВЪРЖДАВАНЕТО НА КЛЮЧОВЕТЕ Е НЕУСПЕШНО! Подписващия ключ за %(userId)s и сесия %(deviceId)s е \"%(fprint)s\", което не съвпада с предоставения ключ \"%(fingerprint)s\". Това може би означава, че комуникацията ви бива прихваната!",
+        "verify_success_title": "Потвърден ключ",
+        "verify_success_description": "Предоставения от вас ключ за подписване съвпада с ключа за подписване получен от сесия %(deviceId)s на %(userId)s. Сесията е маркирана като потвърдена."
     },
     "presence": {
         "online_for": "Онлайн от %(duration)s",
@@ -2017,7 +1997,10 @@
             "cancelling": "Отказване…"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
-        "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове."
+        "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
+        "cancel_entering_passphrase_title": "Откажете въвеждането на парола?",
+        "cancel_entering_passphrase_description": "Сигурни ли сте че желате да прекратите въвеждането на паролата?",
+        "bootstrap_title": "Настройка на ключове"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2307,5 +2290,28 @@
     "empty_room_was_name": "Празна стая (беше %(oldName)s)",
     "notifier": {
         "m.key.verification.request": "%(name)s изпрати запитване за верификация"
+    },
+    "invite": {
+        "failed_title": "Неуспешна покана",
+        "failed_generic": "Операцията е неуспешна",
+        "room_failed_title": "Неуспешна покана на потребителите към %(roomName)s",
+        "room_failed_partial": "Изпратихме останалите покани, но следните хора не можаха да бъдат поканени в <RoomName/>",
+        "room_failed_partial_title": "Някои покани не можаха да бъдат изпратени"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Трябва да влезете в профила си.",
+        "error_need_invite_permission": "За да извършите това, трябва да имате право да добавяте потребители."
+    },
+    "scalar": {
+        "error_create": "Неуспешно създаване на приспособление.",
+        "error_missing_room_id": "Липсва идентификатор на стая.",
+        "error_send_request": "Неуспешно изпращане на заявката.",
+        "error_room_unknown": "Стаята не е разпозната.",
+        "error_power_level_invalid": "Нивото на достъп трябва да бъде позитивно число.",
+        "error_membership": "Не сте в тази стая.",
+        "error_permission": "Нямате достъп да направите това в тази стая.",
+        "error_missing_room_id_request": "Липсва room_id в заявката",
+        "error_room_not_visible": "Стая %(roomId)s не е видима",
+        "error_missing_user_id_request": "Липсва user_id в заявката"
     }
 }

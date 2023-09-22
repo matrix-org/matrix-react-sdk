@@ -49,25 +49,6 @@
     "Default": "Standard",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
-    "Operation failed": "Operasjon mislyktes",
-    "Failed to invite": "Klarte ikke invitere",
-    "You need to be logged in.": "Du må være logget inn.",
-    "You need to be able to invite users to do that.": "Du må kunne invitere andre brukere for å gjøre det.",
-    "Unable to create widget.": "Klarte ikke lage widgeten.",
-    "Missing roomId.": "Manglende rom-ID.",
-    "Failed to send request.": "Klarte ikke sende forespørsel.",
-    "This room is not recognised.": "Dette rommet ble ikke gjenkjent.",
-    "Power level must be positive integer.": "Effektnivået må være et positivt heltall.",
-    "You are not in this room.": "Du er ikke i dette rommet.",
-    "You do not have permission to do that in this room.": "Du har ikke tillatelse til å gjøre det i dette rommet.",
-    "Missing room_id in request": "Manglende room_id i forespørselen",
-    "Room %(roomId)s not visible": "Rom %(roomId)s er ikke synlig",
-    "Missing user_id in request": "Manglende user_id i forespørselen",
-    "Ignored user": "Ignorert(e) bruker",
-    "You are now ignoring %(userId)s": "%(userId)s er nå ignorert",
-    "Unignored user": "Uignorert bruker",
-    "You are no longer ignoring %(userId)s": "%(userId)s blir ikke lengre ignorert",
-    "Verified key": "Verifisert nøkkel",
     "Reason": "Årsak",
     "Dog": "Hund",
     "Cat": "Katt",
@@ -348,10 +329,7 @@
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
-    "Setting up keys": "Setter opp nøkler",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
-    "Use an identity server": "Bruk en identitetstjener",
-    "Session already verified!": "Økten er allerede verifisert!",
     "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
@@ -1432,7 +1410,14 @@
         "unknown_command_button": "Send som en melding",
         "unknown_command": "Ukjent kommando",
         "server_error": "Serverfeil",
-        "command_error": "Kommandofeil"
+        "command_error": "Kommandofeil",
+        "invite_3pid_use_default_is_title": "Bruk en identitetstjener",
+        "ignore_dialog_title": "Ignorert(e) bruker",
+        "ignore_dialog_description": "%(userId)s er nå ignorert",
+        "unignore_dialog_title": "Uignorert bruker",
+        "unignore_dialog_description": "%(userId)s blir ikke lengre ignorert",
+        "verify_nop": "Økten er allerede verifisert!",
+        "verify_success_title": "Verifisert nøkkel"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1551,7 +1536,8 @@
             "complete_action": "Skjønner",
             "cancelling": "Avbryter …"
         },
-        "verification_requested_toast_title": "Verifisering ble forespurt"
+        "verification_requested_toast_title": "Verifisering ble forespurt",
+        "bootstrap_title": "Setter opp nøkler"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1665,7 +1651,9 @@
             "change_topic_this_room": "Endre dette rommets tema",
             "change_name_this_room": "Endre rommets navn",
             "see_images_sent_this_room": "Se bilder som er lagt ut i dette rommet"
-        }
+        },
+        "error_need_to_be_logged_in": "Du må være logget inn.",
+        "error_need_invite_permission": "Du må kunne invitere andre brukere for å gjøre det."
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -1764,5 +1752,21 @@
     "upload_failed_title": "Opplasting feilet",
     "notifier": {
         "m.key.verification.request": "%(name)s ber om verifisering"
+    },
+    "invite": {
+        "failed_title": "Klarte ikke invitere",
+        "failed_generic": "Operasjon mislyktes"
+    },
+    "scalar": {
+        "error_create": "Klarte ikke lage widgeten.",
+        "error_missing_room_id": "Manglende rom-ID.",
+        "error_send_request": "Klarte ikke sende forespørsel.",
+        "error_room_unknown": "Dette rommet ble ikke gjenkjent.",
+        "error_power_level_invalid": "Effektnivået må være et positivt heltall.",
+        "error_membership": "Du er ikke i dette rommet.",
+        "error_permission": "Du har ikke tillatelse til å gjøre det i dette rommet.",
+        "error_missing_room_id_request": "Manglende room_id i forespørselen",
+        "error_room_not_visible": "Rom %(roomId)s er ikke synlig",
+        "error_missing_user_id_request": "Manglende user_id i forespørselen"
     }
 }

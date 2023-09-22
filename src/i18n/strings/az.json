@@ -1,5 +1,4 @@
 {
-    "Operation failed": "Əməliyyatın nasazlığı",
     "Warning!": "Diqqət!",
     "Sun": "Baz",
     "Mon": "Ber",
@@ -25,16 +24,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Default": "Varsayılan olaraq",
     "Moderator": "Moderator",
-    "You need to be logged in.": "Siz sistemə girməlisiniz.",
-    "You need to be able to invite users to do that.": "Bunun üçün siz istifadəçiləri dəvət etmək imkanına malik olmalısınız.",
-    "Failed to send request.": "Sorğunu göndərməyi bacarmadı.",
-    "Power level must be positive integer.": "Hüquqların səviyyəsi müsbət tam ədəd olmalıdır.",
-    "Missing room_id in request": "Sorğuda room_id yoxdur",
-    "Missing user_id in request": "Sorğuda user_id yoxdur",
-    "Ignored user": "İstifadəçi blokun siyahısına əlavə edilmişdir",
-    "You are now ignoring %(userId)s": "Siz %(userId)s blokladınız",
-    "Unignored user": "İstifadəçi blokun siyahısından götürülmüşdür",
-    "You are no longer ignoring %(userId)s": "Siz %(userId)s blokdan çıxardınız",
     "Reason": "Səbəb",
     "Incorrect verification code": "Təsdiq etmənin səhv kodu",
     "Authentication": "Müəyyənləşdirilmə",
@@ -97,20 +86,9 @@
     "PM": "24:00",
     "AM": "12:00",
     "Restricted": "Məhduddur",
-    "Failed to invite": "Dəvət alınmadı",
-    "Unable to create widget.": "Widjet yaratmaq olmur.",
-    "Missing roomId.": "Yarımçıq otaq ID.",
-    "This room is not recognised.": "Bu otaq tanınmır.",
-    "You are not in this room.": "Sən bu otaqda deyilsən.",
-    "You do not have permission to do that in this room.": "Bu otaqda bunu etməyə icazəniz yoxdur.",
-    "Verified key": "Təsdiqlənmiş açar",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Room %(roomId)s not visible": "Otaq %(roomId)s görünmür",
     "Error upgrading room": "Otaq yeniləmə xətası",
     "Double check that your server supports the room version chosen and try again.": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin.",
-    "Use an identity server": "Şəxsiyyət serverindən istifadə edin",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Defolt şəxsiyyət serverini (%(defaultIdentityServerName)s) istifadə etməyə və ya Parametrlərdə idarə etməyə davam edin.",
-    "Use an identity server to invite by email. Manage in Settings.": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Parametrlərdə idarə edin.",
     "Explore rooms": "Otaqları kəşf edin",
     "common": {
         "analytics": "Analitik",
@@ -248,7 +226,15 @@
         "me": "Hərəkətlərin nümayişi",
         "op": "Bir istifadəçinin güc səviyyəsini müəyyənləşdirin",
         "deop": "Verilmiş ID-lə istifadəçidən operatorun səlahiyyətlərini çıxardır",
-        "command_error": "Komandanın səhvi"
+        "command_error": "Komandanın səhvi",
+        "invite_3pid_use_default_is_title": "Şəxsiyyət serverindən istifadə edin",
+        "invite_3pid_use_default_is_title_description": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Defolt şəxsiyyət serverini (%(defaultIdentityServerName)s) istifadə etməyə və ya Parametrlərdə idarə etməyə davam edin.",
+        "invite_3pid_needs_is_error": "E-poçtla dəvət etmək üçün şəxsiyyət serverindən istifadə edin. Parametrlərdə idarə edin.",
+        "ignore_dialog_title": "İstifadəçi blokun siyahısına əlavə edilmişdir",
+        "ignore_dialog_description": "Siz %(userId)s blokladınız",
+        "unignore_dialog_title": "İstifadəçi blokun siyahısından götürülmüşdür",
+        "unignore_dialog_description": "Siz %(userId)s blokdan çıxardınız",
+        "verify_success_title": "Təsdiqlənmiş açar"
     },
     "bug_reporting": {
         "collecting_information": "Proqramın versiyası haqqında məlumatın yığılması",
@@ -331,5 +317,25 @@
         "identity_server_no_terms_title": "Şəxsiyyət serverinin xidmət şərtləri yoxdur",
         "identity_server_no_terms_description_1": "Bu hərəkət e-poçt ünvanı və ya telefon nömrəsini təsdiqləmək üçün standart şəxsiyyət serverinə <server /> girməyi tələb edir, lakin serverdə heç bir xidmət şəraiti yoxdur.",
         "identity_server_no_terms_description_2": "Yalnız server sahibinə etibar etsəniz davam edin."
+    },
+    "invite": {
+        "failed_title": "Dəvət alınmadı",
+        "failed_generic": "Əməliyyatın nasazlığı"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Siz sistemə girməlisiniz.",
+        "error_need_invite_permission": "Bunun üçün siz istifadəçiləri dəvət etmək imkanına malik olmalısınız."
+    },
+    "scalar": {
+        "error_create": "Widjet yaratmaq olmur.",
+        "error_missing_room_id": "Yarımçıq otaq ID.",
+        "error_send_request": "Sorğunu göndərməyi bacarmadı.",
+        "error_room_unknown": "Bu otaq tanınmır.",
+        "error_power_level_invalid": "Hüquqların səviyyəsi müsbət tam ədəd olmalıdır.",
+        "error_membership": "Sən bu otaqda deyilsən.",
+        "error_permission": "Bu otaqda bunu etməyə icazəniz yoxdur.",
+        "error_missing_room_id_request": "Sorğuda room_id yoxdur",
+        "error_room_not_visible": "Otaq %(roomId)s görünmür",
+        "error_missing_user_id_request": "Sorğuda user_id yoxdur"
     }
 }

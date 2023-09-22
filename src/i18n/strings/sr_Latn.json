@@ -26,11 +26,6 @@
     "Default": "Podrazumevano",
     "Restricted": "Ograničeno",
     "Moderator": "Moderator",
-    "Operation failed": "Operacija nije uspela",
-    "Failed to invite": "Slanje pozivnice nije uspelo",
-    "You need to be logged in.": "Morate biti prijavljeni",
-    "You need to be able to invite users to do that.": "Mora vam biti dozvoljeno da pozovete korisnike kako bi to uradili.",
-    "Failed to send request.": "Slanje zahteva nije uspelo.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(time)s",
@@ -139,5 +134,16 @@
         "identity_server_no_terms_title": "Server identiteta nema uslove pružanja usluge",
         "identity_server_no_terms_description_1": "Ova akcija zahtijeva pristup zadanom serveru za provjeru identiteta <server /> radi provjere adrese e-pošte ili telefonskog broja, no server nema nikakve uslove za pružanje usluge.",
         "identity_server_no_terms_description_2": "Produžite samo pod uslovom da vjerujete vlasniku servera."
+    },
+    "invite": {
+        "failed_title": "Slanje pozivnice nije uspelo",
+        "failed_generic": "Operacija nije uspela"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Morate biti prijavljeni",
+        "error_need_invite_permission": "Mora vam biti dozvoljeno da pozovete korisnike kako bi to uradili."
+    },
+    "scalar": {
+        "error_send_request": "Slanje zahteva nije uspelo."
     }
 }

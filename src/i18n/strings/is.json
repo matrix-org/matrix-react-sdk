@@ -28,16 +28,6 @@
     "Default": "Sjálfgefið",
     "Restricted": "Takmarkað",
     "Moderator": "Umsjónarmaður",
-    "Operation failed": "Aðgerð tókst ekki",
-    "You need to be logged in.": "Þú þarft að vera skráð/ur inn.",
-    "Unable to create widget.": "Gat ekki búið til viðmótshluta.",
-    "Failed to send request.": "Mistókst að senda beiðni.",
-    "This room is not recognised.": "Spjallrás er ekki þekkt.",
-    "Power level must be positive integer.": "Völd verða að vera jákvæð heiltala.",
-    "You are not in this room.": "Þú ert ekki á þessari spjallrás.",
-    "You do not have permission to do that in this room.": "Þú hefur ekki réttindi til þess að gera þetta á þessari spjallrás.",
-    "Missing room_id in request": "Vantar spjallrásarauðkenni í beiðni",
-    "Missing user_id in request": "Vantar notandaauðkenni í beiðni",
     "Reason": "Ástæða",
     "Send": "Senda",
     "Authentication": "Auðkenning",
@@ -114,10 +104,6 @@
     "Confirm passphrase": "Staðfestu lykilfrasa",
     "Import room keys": "Flytja inn dulritunarlykla spjallrásar",
     "File to import": "Skrá til að flytja inn",
-    "Failed to invite": "Mistókst að bjóða",
-    "Missing roomId.": "Vantar spjallrásarauðkenni.",
-    "Ignored user": "Hunsaður notandi",
-    "Verified key": "Staðfestur dulritunarlykill",
     "Delete Widget": "Eyða viðmótshluta",
     "Delete widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
@@ -501,8 +487,6 @@
     "Later": "Seinna",
     "That's fine": "Það er í góðu",
     "Unknown App": "Óþekkt forrit",
-    "Use an identity server": "Nota auðkennisþjón",
-    "Setting up keys": "Set upp dulritunarlykla",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s og %(count)s til viðbótar",
         "one": "%(spaceName)s og %(count)s til viðbótar"
@@ -678,10 +662,6 @@
     "Messaging": "Skilaboð",
     "Share your public space": "Deildu opinbera svæðinu þínu",
     "Invite to %(spaceName)s": "Bjóða inn á %(spaceName)s",
-    "Are you sure you want to cancel entering passphrase?": "Viltu örugglega hætta við að setja inn lykilfrasa?",
-    "Cancel entering passphrase?": "Hætta við að setja inn lykilfrasa?",
-    "You are no longer ignoring %(userId)s": "Þú ert ekki lengur að hunsa %(userId)s",
-    "Unignored user": "Ekki-hunsaður notandi",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
     "Video conference started by %(senderName)s": "Myndfjarfundur hafinn af %(senderName)s",
@@ -690,12 +670,6 @@
     "Join the conference from the room information card on the right": "Taka þátt í fjarfundinum á upplýsingaspjaldi spjallrásaarinnar til hægri",
     "Join the conference at the top of this room": "Taka þátt í fjarfundinum efst í þessari spjallrás",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
-    "You are now ignoring %(userId)s": "Þú ert núna að hunsa %(userId)s",
-    "Unrecognised room address: %(roomAlias)s": "Óþekkjanlegt vistfang spjallrásar: %(roomAlias)s",
-    "Room %(roomId)s not visible": "Spjallrásin %(roomId)s er ekki sýnileg",
-    "You need to be able to invite users to do that.": "Þú þarft að hafa heimild til að bjóða notendum til að gera þetta.",
-    "Some invites couldn't be sent": "Sumar boðsbeiðnir var ekki hægt að senda",
-    "We sent the others, but the below people couldn't be invited to <RoomName/>": "Við sendum hin boðin, en fólkinu hér fyrir neðan var ekki hægt að bjóða í <RoomName/>",
     "Set up Secure Messages": "Setja upp örugg skilaboð",
     "Permission Required": "Krafist er heimildar",
     "Upgrade your encryption": "Uppfærðu dulritunina þína",
@@ -1155,9 +1129,6 @@
     "Open dial pad": "Opna talnaborð",
     "You cancelled": "Þú hættir við",
     "You accepted": "Þú samþykktir",
-    "Session already verified!": "Seta er þegar sannreynd!",
-    "Use an identity server to invite by email. Manage in Settings.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í stillingunum.",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Smelltu á að halda áfram til að nota sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s) eða sýslaðu með þetta í stillingunum.",
     "Confirm Security Phrase": "Staðfestu öryggisfrasa",
     "Confirm your Security Phrase": "Staðfestu öryggisfrasann þinn",
     "Enter a Security Phrase": "Settu inn öryggisfrasa",
@@ -1416,7 +1387,6 @@
     "Automatically invite members from this room to the new one": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
-    "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Óþekkt pörun (notandi, seta): (%(userId)s, %(deviceId)s)",
     "Failed to join": "Mistókst að taka þátt",
     "The person who invited you has already left, or their server is offline.": "Aðilinn sem bauð þér er þegar farinn eða að netþjónninn hans/hennar er ekki tengdur.",
     "The person who invited you has already left.": "Aðilinn sem bauð þér er þegar farinn.",
@@ -1467,7 +1437,6 @@
     "Forget this space": "Gleyma þessu svæði",
     "You were removed by %(memberName)s": "Þú hefur verið fjarlægð/ur af %(memberName)s",
     "Loading preview": "Hleð inn forskoðun",
-    "Failed to invite users to %(roomName)s": "Mistókst að bjóða notendum í %(roomName)s",
     "Consult first": "Ráðfæra fyrst",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Þú ert áfram að <b>deila persónulegum gögnum</b> á auðkenningarþjóninum <idserver />.",
     "contact the administrators of identity server <idserver />": "að hafa samband við stjórnendur auðkennisþjónsins <idserver />",
@@ -1478,11 +1447,8 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
     "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
-    "Verifies a user, session, and pubkey tuple": "Sannreynir auðkenni notanda, setu og dreifilykils",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
     "Double check that your server supports the room version chosen and try again.": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd.",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "AÐVÖRUN: SANNVOTTUN LYKILS MISTÓKST! Undirritunarlykillinn fyrir %(userId)s og setuna %(deviceId)s er \"%(fprint)s\" sem samsvarar ekki uppgefna lyklinum \"%(fingerprint)s\". Þetta gæti þýtt að einhver hafi komist inn í samskiptin þín!",
     "%(count)s people joined": {
         "one": "%(count)s aðili hefur tekið þátt",
         "other": "%(count)s aðilar hafa tekið þátt"
@@ -1546,7 +1512,6 @@
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
     "Live": "Beint",
-    "You need to be able to kick users to do that.": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta.",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eða %(copyButton)s",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
@@ -1629,8 +1594,6 @@
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
     "You have unverified sessions": "Þú ert með óstaðfestar setur",
     "Can’t start a call": "Get ekki hafið símtal",
-    "Failed to read events": "Mistókst að lesa atburði",
-    "Failed to send event": "Mistókst að senda atburð",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -2859,7 +2822,21 @@
         "unknown_command": "Óþekkt skipun",
         "server_error_detail": "Netþjónninn gæti verið undir miklu álagi eða ekki til taks, nú eða að eitthvað hafi farið úrskeiðis.",
         "server_error": "Villa á þjóni",
-        "command_error": "Skipanavilla"
+        "command_error": "Skipanavilla",
+        "invite_3pid_use_default_is_title": "Nota auðkennisþjón",
+        "invite_3pid_use_default_is_title_description": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Smelltu á að halda áfram til að nota sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s) eða sýslaðu með þetta í stillingunum.",
+        "invite_3pid_needs_is_error": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í stillingunum.",
+        "part_unknown_alias": "Óþekkjanlegt vistfang spjallrásar: %(roomAlias)s",
+        "ignore_dialog_title": "Hunsaður notandi",
+        "ignore_dialog_description": "Þú ert núna að hunsa %(userId)s",
+        "unignore_dialog_title": "Ekki-hunsaður notandi",
+        "unignore_dialog_description": "Þú ert ekki lengur að hunsa %(userId)s",
+        "verify": "Sannreynir auðkenni notanda, setu og dreifilykils",
+        "verify_unknown_pair": "Óþekkt pörun (notandi, seta): (%(userId)s, %(deviceId)s)",
+        "verify_nop": "Seta er þegar sannreynd!",
+        "verify_mismatch": "AÐVÖRUN: SANNVOTTUN LYKILS MISTÓKST! Undirritunarlykillinn fyrir %(userId)s og setuna %(deviceId)s er \"%(fprint)s\" sem samsvarar ekki uppgefna lyklinum \"%(fingerprint)s\". Þetta gæti þýtt að einhver hafi komist inn í samskiptin þín!",
+        "verify_success_title": "Staðfestur dulritunarlykill",
+        "verify_success_description": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd."
     },
     "presence": {
         "busy": "Upptekinn",
@@ -3069,7 +3046,10 @@
             "cancelling": "Hætti við…"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
-        "verification_requested_toast_title": "Beðið um sannvottun"
+        "verification_requested_toast_title": "Beðið um sannvottun",
+        "cancel_entering_passphrase_title": "Hætta við að setja inn lykilfrasa?",
+        "cancel_entering_passphrase_description": "Viltu örugglega hætta við að setja inn lykilfrasa?",
+        "bootstrap_title": "Set upp dulritunarlykla"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3332,7 +3312,10 @@
             "send_msgtype_active_room": "Senda <b>%(msgtype)s</b>-skilaboð sem þú á virku spjallrásina þína",
             "see_msgtype_sent_this_room": "Sjá <b>%(msgtype)s</b> skilaboð sem birtast í þessari spjallrás",
             "see_msgtype_sent_active_room": "Sjá <b>%(msgtype)s</b> skilaboð sem birtast í virku spjallrásina þinni"
-        }
+        },
+        "error_need_to_be_logged_in": "Þú þarft að vera skráð/ur inn.",
+        "error_need_invite_permission": "Þú þarft að hafa heimild til að bjóða notendum til að gera þetta.",
+        "error_need_kick_permission": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta."
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3589,5 +3572,26 @@
     "notifier": {
         "m.key.verification.request": "%(name)s biður um sannvottun",
         "io.element.voice_broadcast_chunk": "%(senderName)s hóf talútsendingu"
+    },
+    "invite": {
+        "failed_title": "Mistókst að bjóða",
+        "failed_generic": "Aðgerð tókst ekki",
+        "room_failed_title": "Mistókst að bjóða notendum í %(roomName)s",
+        "room_failed_partial": "Við sendum hin boðin, en fólkinu hér fyrir neðan var ekki hægt að bjóða í <RoomName/>",
+        "room_failed_partial_title": "Sumar boðsbeiðnir var ekki hægt að senda"
+    },
+    "scalar": {
+        "error_create": "Gat ekki búið til viðmótshluta.",
+        "error_missing_room_id": "Vantar spjallrásarauðkenni.",
+        "error_send_request": "Mistókst að senda beiðni.",
+        "error_room_unknown": "Spjallrás er ekki þekkt.",
+        "error_power_level_invalid": "Völd verða að vera jákvæð heiltala.",
+        "error_membership": "Þú ert ekki á þessari spjallrás.",
+        "error_permission": "Þú hefur ekki réttindi til þess að gera þetta á þessari spjallrás.",
+        "failed_send_event": "Mistókst að senda atburð",
+        "failed_read_event": "Mistókst að lesa atburði",
+        "error_missing_room_id_request": "Vantar spjallrásarauðkenni í beiðni",
+        "error_room_not_visible": "Spjallrásin %(roomId)s er ekki sýnileg",
+        "error_missing_user_id_request": "Vantar notandaauðkenni í beiðni"
     }
 }

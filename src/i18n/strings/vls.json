@@ -29,25 +29,6 @@
     "Default": "Standoard",
     "Restricted": "Beperkten toegank",
     "Moderator": "Moderator",
-    "Operation failed": "Handelienge es mislukt",
-    "Failed to invite": "Uutnodign es mislukt",
-    "You need to be logged in.": "Hiervoorn moe je angemeld zyn.",
-    "You need to be able to invite users to do that.": "Hiervoorn moe je gebruukers kunn uutnodign.",
-    "Unable to create widget.": "Kostege de widget nie anmoakn.",
-    "Missing roomId.": "roomId ountbreekt.",
-    "Failed to send request.": "Verstuurn van verzoek es mislukt.",
-    "This room is not recognised.": "Da gesprek wordt hier nie herkend.",
-    "Power level must be positive integer.": "Machtsniveau moet e positief geheel getal zyn.",
-    "You are not in this room.": "J’en zit nie in ’t gesprek hier.",
-    "You do not have permission to do that in this room.": "J’en èt geen toestemmienge vo dat in da gesprek hier te doen.",
-    "Missing room_id in request": "room_id ountbrikt in verzoek",
-    "Room %(roomId)s not visible": "Gesprek %(roomId)s es nie zichtboar",
-    "Missing user_id in request": "user_id ountbrikt in verzoek",
-    "Ignored user": "Genegeerde gebruuker",
-    "You are now ignoring %(userId)s": "Je negeert nu %(userId)s",
-    "Unignored user": "Oungenegeerde gebruuker",
-    "You are no longer ignoring %(userId)s": "Je negeert %(userId)s nie mi",
-    "Verified key": "Geverifieerde sleuter",
     "Reason": "Reedn",
     "No homeserver URL provided": "Geen thuusserver-URL ingegeevn",
     "Unexpected error resolving homeserver configuration": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
@@ -913,7 +894,12 @@
         "deop": "Ountmachtigt de gebruuker me de gegeevn ID",
         "server_error_detail": "De server is ounbereikboar of overbelast, of der is etwat anders foutgegoan.",
         "server_error": "Serverfoute",
-        "command_error": "Ipdrachtfoute"
+        "command_error": "Ipdrachtfoute",
+        "ignore_dialog_title": "Genegeerde gebruuker",
+        "ignore_dialog_description": "Je negeert nu %(userId)s",
+        "unignore_dialog_title": "Oungenegeerde gebruuker",
+        "unignore_dialog_description": "Je negeert %(userId)s nie mi",
+        "verify_success_title": "Geverifieerde sleuter"
     },
     "presence": {
         "online_for": "Online vo %(duration)s",
@@ -1162,5 +1148,25 @@
         "generic_error": "De server es misschiens ounbereikboar of overbelast, of je zyt e foute tegengekommn.",
         "unsupported_version": "De server oundersteunt deze versie van gesprekkn nie.",
         "error_title": "Anmoakn van gesprek es mislukt"
+    },
+    "invite": {
+        "failed_title": "Uutnodign es mislukt",
+        "failed_generic": "Handelienge es mislukt"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Hiervoorn moe je angemeld zyn.",
+        "error_need_invite_permission": "Hiervoorn moe je gebruukers kunn uutnodign."
+    },
+    "scalar": {
+        "error_create": "Kostege de widget nie anmoakn.",
+        "error_missing_room_id": "roomId ountbreekt.",
+        "error_send_request": "Verstuurn van verzoek es mislukt.",
+        "error_room_unknown": "Da gesprek wordt hier nie herkend.",
+        "error_power_level_invalid": "Machtsniveau moet e positief geheel getal zyn.",
+        "error_membership": "J’en zit nie in ’t gesprek hier.",
+        "error_permission": "J’en èt geen toestemmienge vo dat in da gesprek hier te doen.",
+        "error_missing_room_id_request": "room_id ountbrikt in verzoek",
+        "error_room_not_visible": "Gesprek %(roomId)s es nie zichtboar",
+        "error_missing_user_id_request": "user_id ountbrikt in verzoek"
     }
 }

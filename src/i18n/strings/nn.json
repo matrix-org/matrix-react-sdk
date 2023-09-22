@@ -28,25 +28,6 @@
     "Default": "Opphavleg innstilling",
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
-    "Operation failed": "Handling mislukkast",
-    "Failed to invite": "Fekk ikkje til å invitera",
-    "You need to be logged in.": "Du må vera logga inn.",
-    "You need to be able to invite users to do that.": "Du må ha lov til å invitera brukarar for å gjera det.",
-    "Unable to create widget.": "Klarte ikkje å laga widget.",
-    "Missing roomId.": "Manglande roomId.",
-    "Failed to send request.": "Fekk ikkje til å senda førespurnad.",
-    "This room is not recognised.": "Rommet er ikkje attkjend.",
-    "Power level must be positive integer.": "Tilgangsnivået må vera eit positivt heiltal.",
-    "You are not in this room.": "Du er ikkje i dette rommet.",
-    "You do not have permission to do that in this room.": "Du har ikkje lov til å gjera det i dette rommet.",
-    "Missing room_id in request": "Manglande room_Id i førespurnad",
-    "Room %(roomId)s not visible": "Rommet %(roomId)s er ikkje synleg",
-    "Missing user_id in request": "Manglande user_id i førespurnad",
-    "Ignored user": "Oversedd brukar",
-    "You are now ignoring %(userId)s": "Du overser no %(userId)s",
-    "Unignored user": "Avoversedd brukar",
-    "You are no longer ignoring %(userId)s": "Du overser ikkje %(userId)s no lenger",
-    "Verified key": "Godkjend nøkkel",
     "Reason": "Grunnlag",
     "Send": "Send",
     "Your browser does not support the required cryptography extensions": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
@@ -273,19 +254,10 @@
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
-    "Use an identity server": "Bruk ein identitetstenar",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
-    "Use an identity server to invite by email. Manage in Settings.": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
-    "Cancel entering passphrase?": "Avbryte inntasting av passfrase ?",
-    "Setting up keys": "Setter opp nøklar",
     "Verify this session": "Stadfest denne økta",
     "Encryption upgrade available": "Kryptering kan oppgraderast",
     "Error upgrading room": "Feil ved oppgradering av rom",
     "Double check that your server supports the room version chosen and try again.": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
-    "Verifies a user, session, and pubkey tuple": "Verifiser brukar, økt eller public-key objekt (pubkey tuple)",
-    "Session already verified!": "Sesjon er tidligare verifisert!",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert.",
     "You do not have permission to invite people to this room.": "Du har ikkje lov til å invitera andre til dette rommet.",
     "The user must be unbanned before they can be invited.": "Blokkeringa av brukaren må fjernast før dei kan bli inviterte.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
@@ -991,7 +963,19 @@
         "unknown_command": "Ukjend kommando",
         "server_error_detail": "Tenar utilgjengeleg, overlasta eller har eit anna problem.",
         "server_error": "Noko gjekk gale med tenaren",
-        "command_error": "Noko gjekk gale med kommandoen"
+        "command_error": "Noko gjekk gale med kommandoen",
+        "invite_3pid_use_default_is_title": "Bruk ein identitetstenar",
+        "invite_3pid_use_default_is_title_description": "Bruk ein identitetstenar for å invitera via e-post. Klikk for å fortsetja å bruka standard identitetstenar (%(defaultIdentityServerName)s) eller styre dette i innstillingane.",
+        "invite_3pid_needs_is_error": "Bruk ein identitetstenar for å invitera via e-post. Styr dette i Innstillingane.",
+        "ignore_dialog_title": "Oversedd brukar",
+        "ignore_dialog_description": "Du overser no %(userId)s",
+        "unignore_dialog_title": "Avoversedd brukar",
+        "unignore_dialog_description": "Du overser ikkje %(userId)s no lenger",
+        "verify": "Verifiser brukar, økt eller public-key objekt (pubkey tuple)",
+        "verify_nop": "Sesjon er tidligare verifisert!",
+        "verify_mismatch": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
+        "verify_success_title": "Godkjend nøkkel",
+        "verify_success_description": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert."
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -1233,7 +1217,9 @@
         "verification": {
             "explainer": "Sikre meldingar med denne brukaren er ende-til-ende krypterte og kan ikkje lesast av tredjepart.",
             "sas_caption_self": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen."
-        }
+        },
+        "cancel_entering_passphrase_title": "Avbryte inntasting av passfrase ?",
+        "bootstrap_title": "Setter opp nøklar"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",
@@ -1250,5 +1236,25 @@
     "upload_failed_title": "Opplasting mislukkast",
     "notifier": {
         "m.key.verification.request": "%(name)s spør etter verifikasjon"
+    },
+    "invite": {
+        "failed_title": "Fekk ikkje til å invitera",
+        "failed_generic": "Handling mislukkast"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "Du må vera logga inn.",
+        "error_need_invite_permission": "Du må ha lov til å invitera brukarar for å gjera det."
+    },
+    "scalar": {
+        "error_create": "Klarte ikkje å laga widget.",
+        "error_missing_room_id": "Manglande roomId.",
+        "error_send_request": "Fekk ikkje til å senda førespurnad.",
+        "error_room_unknown": "Rommet er ikkje attkjend.",
+        "error_power_level_invalid": "Tilgangsnivået må vera eit positivt heiltal.",
+        "error_membership": "Du er ikkje i dette rommet.",
+        "error_permission": "Du har ikkje lov til å gjera det i dette rommet.",
+        "error_missing_room_id_request": "Manglande room_Id i førespurnad",
+        "error_room_not_visible": "Rommet %(roomId)s er ikkje synleg",
+        "error_missing_user_id_request": "Manglande user_id i førespurnad"
     }
 }

@@ -197,22 +197,6 @@
     "Mon": "ວັນຈັນ",
     "Sun": "ວັນອາທິດ",
     "Permission Required": "ຕ້ອງການອະນຸຍາດ",
-    "Room %(roomId)s not visible": "ບໍ່ເຫັນຫ້ອງ %(roomId)s",
-    "Missing room_id in request": "ບໍ່ມີການຮ້ອງຂໍ room_id",
-    "You do not have permission to do that in this room.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນັ້ນຢູ່ໃນຫ້ອງນີ້.",
-    "You are not in this room.": "ທ່ານບໍ່ໄດ້ຢູ່ໃນຫ້ອງນີ້.",
-    "Power level must be positive integer.": "ລະດັບພະລັງງານຈະຕ້ອງເປັນຈຳນວນບວກ.",
-    "This room is not recognised.": "ຫ້ອງນີ້ບໍ່ຖືກຮັບຮູ້.",
-    "Failed to send request.": "ສົ່ງຄຳຮ້ອງຂໍບໍ່ສຳເລັດ.",
-    "Missing roomId.": "ລະຫັດຫ້ອງຫາຍໄປ.",
-    "Unable to create widget.": "ບໍ່ສາມາດສ້າງ widget ໄດ້.",
-    "You need to be able to invite users to do that.": "ທ່ານຈະຕ້ອງເຊີນຜູ້ໃຊ້ໃຫ້ເຮັດແນວນັ້ນ.",
-    "You need to be logged in.": "ທ່ານຈໍາເປັນຕ້ອງເຂົ້າສູ່ລະບົບ.",
-    "Some invites couldn't be sent": "ບໍ່ສາມາດສົ່ງບາງຄຳເຊີນໄດ້",
-    "We sent the others, but the below people couldn't be invited to <RoomName/>": "ພວກເຮົາໄດ້ສົ່ງຄົນອື່ນແລ້ວ, ແຕ່ຄົນລຸ່ມນີ້ບໍ່ສາມາດໄດ້ຮັບເຊີນໃຫ້ເຂົ້າຮ່ວມ <RoomName/>",
-    "Failed to invite users to %(roomName)s": "ໃນການເຊີນຜູ້ໃຊ້ໄປຫາ %(roomName)s ບໍ່ສຳເລັດ",
-    "Operation failed": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
-    "Failed to invite": "ການເຊີນບໍ່ສຳເລັດ",
     "Moderator": "ຜູ້ດຳເນິນລາຍການ",
     "Restricted": "ຖືກຈຳກັດ",
     "Default": "ຄ່າເລີ່ມຕົ້ນ",
@@ -827,24 +811,6 @@
     "Proceed with reset": "ດຳເນີນການຕັ້ງຄ່າໃໝ່",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "ເບິ່ງຄືວ່າທ່ານບໍ່ມີກະແຈຄວາມປອດໄພ ຫຼື ອຸປະກອນອື່ນໆທີ່ທ່ານສາມາດຢືນຢັນໄດ້. ອຸປະກອນນີ້ຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້. ເພື່ອຢືນຢັນຕົວຕົນຂອງທ່ານໃນອຸປະກອນນີ້, ທ່ານຈຳເປັນຕ້ອງຕັ້ງລະຫັດຢືນຢັນຂອງທ່ານ.",
     "Create account": "ສ້າງບັນຊີ",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "ກະແຈໄຂລະຫັດທີ່ທ່ານໃຊ້ກົງກັບກະແຈໄຂລະຫັດທີ່ທ່ານໄດ້ຮັບຈາກ %(userId)s ເທິງອຸປະກອນ %(deviceId)s. ລະບົບຢັ້ງຢືນສຳເລັດແລ້ວ.",
-    "Verified key": "ກະແຈທີ່ຢືນຢັນແລ້ວ",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ຄຳເຕືອນ: ການຢືນຢັນບໍ່ສຳເລັັດ! ປຸ່ມເຊັນຊື່ສຳລັບ %(userId)s ແລະ ລະບົບ %(deviceId)s ແມ່ນ \"%(fprint)s\" ບໍ່ກົງກັບລະຫັດທີ່ລະບຸໄວ້ \"%(fingerprint)s\". ນີ້ອາດຈະຫມາຍຄວາມວ່າການສື່ສານຂອງທ່ານຖືກຂັດຂວາງ!",
-    "Session already verified!": "ການຢັ້ງຢືນລະບົບແລ້ວ!",
-    "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "ບໍ່ຮູ້ຈັກ (ຜູ້ໃຊ້, ລະບົບ) ຄູ່: (%(userId)s, %(deviceId)s)",
-    "Verifies a user, session, and pubkey tuple": "ຢືນຢັນຜູ້ໃຊ້, ລະບົບ, ແລະ pubkey tuple",
-    "Setting up keys": "ການຕັ້ງຄ່າກະແຈ",
-    "Are you sure you want to cancel entering passphrase?": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານ?",
-    "Cancel entering passphrase?": "ຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານບໍ?",
-    "Missing user_id in request": "ບໍ່ມີ user_id ໃນການຮ້ອງຂໍ",
-    "You are no longer ignoring %(userId)s": "ທ່ານບໍ່ໄດ້ສົນໃຈ %(userId)s ອີກຕໍ່ໄປ",
-    "Unignored user": "ສົນໃຈຜູ້ໃຊ້",
-    "You are now ignoring %(userId)s": "ດຽວນີ້ທ່ານບໍ່ສົນໃຈ %(userId)s",
-    "Ignored user": "ບໍ່ສົນໃຈຜູ້ໃຊ້",
-    "Unrecognised room address: %(roomAlias)s": "ບໍ່ຮູ້ຈັກທີ່ຢູ່ຫ້ອງ: %(roomAlias)s",
-    "Use an identity server to invite by email. Manage in Settings.": "ໃຊ້ເຊີເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ. ຈັດການໃນການຕັ້ງຄ່າ.",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ.ກົດສືບຕໍ່ໃຊ້ເຊີບເວີລິບຸຕົວຕົນເລີ່ມຕົ້ນ (%(defaultIdentityServerName)s) ຫຼືຈັດການ ການຕັ້ງຄ່າ.",
-    "Use an identity server": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
         "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
@@ -2798,7 +2764,21 @@
         "unknown_command": "ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ",
         "server_error_detail": "ເຊີບເວີບໍ່ສາມາດໃຊ້ໄດ້, ໂຫຼດເກີນກຳນົດ, ຫຼື ມີອັນອື່ນຜິດພາດ.",
         "server_error": "ເຊີບເວີຜິດພາດ",
-        "command_error": "ຄໍາສັ່ງຜິດພາດ"
+        "command_error": "ຄໍາສັ່ງຜິດພາດ",
+        "invite_3pid_use_default_is_title": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນ",
+        "invite_3pid_use_default_is_title_description": "ໃຊ້ເຊີບເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ.ກົດສືບຕໍ່ໃຊ້ເຊີບເວີລິບຸຕົວຕົນເລີ່ມຕົ້ນ (%(defaultIdentityServerName)s) ຫຼືຈັດການ ການຕັ້ງຄ່າ.",
+        "invite_3pid_needs_is_error": "ໃຊ້ເຊີເວີລະບຸຕົວຕົນເພື່ອເຊີນທາງອີເມວ. ຈັດການໃນການຕັ້ງຄ່າ.",
+        "part_unknown_alias": "ບໍ່ຮູ້ຈັກທີ່ຢູ່ຫ້ອງ: %(roomAlias)s",
+        "ignore_dialog_title": "ບໍ່ສົນໃຈຜູ້ໃຊ້",
+        "ignore_dialog_description": "ດຽວນີ້ທ່ານບໍ່ສົນໃຈ %(userId)s",
+        "unignore_dialog_title": "ສົນໃຈຜູ້ໃຊ້",
+        "unignore_dialog_description": "ທ່ານບໍ່ໄດ້ສົນໃຈ %(userId)s ອີກຕໍ່ໄປ",
+        "verify": "ຢືນຢັນຜູ້ໃຊ້, ລະບົບ, ແລະ pubkey tuple",
+        "verify_unknown_pair": "ບໍ່ຮູ້ຈັກ (ຜູ້ໃຊ້, ລະບົບ) ຄູ່: (%(userId)s, %(deviceId)s)",
+        "verify_nop": "ການຢັ້ງຢືນລະບົບແລ້ວ!",
+        "verify_mismatch": "ຄຳເຕືອນ: ການຢືນຢັນບໍ່ສຳເລັັດ! ປຸ່ມເຊັນຊື່ສຳລັບ %(userId)s ແລະ ລະບົບ %(deviceId)s ແມ່ນ \"%(fprint)s\" ບໍ່ກົງກັບລະຫັດທີ່ລະບຸໄວ້ \"%(fingerprint)s\". ນີ້ອາດຈະຫມາຍຄວາມວ່າການສື່ສານຂອງທ່ານຖືກຂັດຂວາງ!",
+        "verify_success_title": "ກະແຈທີ່ຢືນຢັນແລ້ວ",
+        "verify_success_description": "ກະແຈໄຂລະຫັດທີ່ທ່ານໃຊ້ກົງກັບກະແຈໄຂລະຫັດທີ່ທ່ານໄດ້ຮັບຈາກ %(userId)s ເທິງອຸປະກອນ %(deviceId)s. ລະບົບຢັ້ງຢືນສຳເລັດແລ້ວ."
     },
     "presence": {
         "busy": "ບໍ່ຫວ່າງ",
@@ -3006,7 +2986,10 @@
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
-        "verification_requested_toast_title": "ຂໍການຢັ້ງຢືນ"
+        "verification_requested_toast_title": "ຂໍການຢັ້ງຢືນ",
+        "cancel_entering_passphrase_title": "ຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານບໍ?",
+        "cancel_entering_passphrase_description": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການຍົກເລີກການໃສ່ປະໂຫຍກລະຫັດຜ່ານ?",
+        "bootstrap_title": "ການຕັ້ງຄ່າກະແຈ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -3276,7 +3259,9 @@
             "send_msgtype_active_room": "ສົ່ງຂໍ້ຄວາມ <b>%(msgtype)s</b> ໃນຂະນະທີ່ທ່ານຢູ່ໃນຫ້ອງຂອງທ່ານ",
             "see_msgtype_sent_this_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງນີ້",
             "see_msgtype_sent_active_room": "ເບິ່ງ <b>%(msgtype)s</b> ຂໍ້ຄວາມທີ່ໂພສໃນຫ້ອງໃຊ້ງານຂອງທ່ານ"
-        }
+        },
+        "error_need_to_be_logged_in": "ທ່ານຈໍາເປັນຕ້ອງເຂົ້າສູ່ລະບົບ.",
+        "error_need_invite_permission": "ທ່ານຈະຕ້ອງເຊີນຜູ້ໃຊ້ໃຫ້ເຮັດແນວນັ້ນ."
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3518,5 +3503,24 @@
     "empty_room": "ຫ້ອງຫວ່າງ",
     "notifier": {
         "m.key.verification.request": "%(name)s ກຳລັງຮ້ອງຂໍການຢັ້ງຢືນ"
+    },
+    "invite": {
+        "failed_title": "ການເຊີນບໍ່ສຳເລັດ",
+        "failed_generic": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
+        "room_failed_title": "ໃນການເຊີນຜູ້ໃຊ້ໄປຫາ %(roomName)s ບໍ່ສຳເລັດ",
+        "room_failed_partial": "ພວກເຮົາໄດ້ສົ່ງຄົນອື່ນແລ້ວ, ແຕ່ຄົນລຸ່ມນີ້ບໍ່ສາມາດໄດ້ຮັບເຊີນໃຫ້ເຂົ້າຮ່ວມ <RoomName/>",
+        "room_failed_partial_title": "ບໍ່ສາມາດສົ່ງບາງຄຳເຊີນໄດ້"
+    },
+    "scalar": {
+        "error_create": "ບໍ່ສາມາດສ້າງ widget ໄດ້.",
+        "error_missing_room_id": "ລະຫັດຫ້ອງຫາຍໄປ.",
+        "error_send_request": "ສົ່ງຄຳຮ້ອງຂໍບໍ່ສຳເລັດ.",
+        "error_room_unknown": "ຫ້ອງນີ້ບໍ່ຖືກຮັບຮູ້.",
+        "error_power_level_invalid": "ລະດັບພະລັງງານຈະຕ້ອງເປັນຈຳນວນບວກ.",
+        "error_membership": "ທ່ານບໍ່ໄດ້ຢູ່ໃນຫ້ອງນີ້.",
+        "error_permission": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນັ້ນຢູ່ໃນຫ້ອງນີ້.",
+        "error_missing_room_id_request": "ບໍ່ມີການຮ້ອງຂໍ room_id",
+        "error_room_not_visible": "ບໍ່ເຫັນຫ້ອງ %(roomId)s",
+        "error_missing_user_id_request": "ບໍ່ມີ user_id ໃນການຮ້ອງຂໍ"
     }
 }

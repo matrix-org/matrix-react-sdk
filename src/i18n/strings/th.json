@@ -7,7 +7,6 @@
     "Profile": "โปรไฟล์",
     "Reason": "เหตุผล",
     "Notifications": "การแจ้งเตือน",
-    "Operation failed": "การดำเนินการล้มเหลว",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "Favourite": "รายการโปรด",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
@@ -31,7 +30,6 @@
     "Failed to change password. Is your password correct?": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
     "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
-    "Failed to send request.": "การส่งคำขอล้มเหลว",
     "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
     "Failed to unban": "การถอนแบนล้มเหลว",
     "Filter room members": "กรองสมาชิกห้อง",
@@ -43,7 +41,6 @@
     "Invited": "เชิญแล้ว",
     "Join Room": "เข้าร่วมห้อง",
     "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
-    "Missing user_id in request": "ไม่พบ user_id ในคำขอ",
     "Moderator": "ผู้ช่วยดูแล",
     "New passwords must match each other.": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
     "not specified": "ไม่ได้ระบุ",
@@ -67,7 +64,6 @@
         "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
     },
     "Warning!": "คำเตือน!",
-    "You need to be logged in.": "คุณต้องเข้าสู่ระบบก่อน",
     "Sun": "อา.",
     "Mon": "จ.",
     "Tue": "อ.",
@@ -94,7 +90,6 @@
     "Confirm passphrase": "ยืนยันรหัสผ่าน",
     "Import room keys": "นำเข้ากุณแจห้อง",
     "File to import": "ไฟล์ที่จะนำเข้า",
-    "Failed to invite": "การเชิญล้มเหลว",
     "Confirm Removal": "ยืนยันการลบ",
     "Unknown error": "ข้อผิดพลาดที่ไม่รู้จัก",
     "Home": "เมนูหลัก",
@@ -106,7 +101,6 @@
     "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่",
     "Custom level": "กำหนดระดับเอง",
     "No display name": "ไม่มีชื่อที่แสดง",
-    "Power level must be positive integer.": "ระดับอำนาจต้องเป็นจำนวนเต็มบวก",
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
     "Enter passphrase": "กรอกรหัสผ่าน",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
@@ -578,5 +572,17 @@
     "empty_room_was_name": "ห้องว่าง (เดิม %(oldName)s)",
     "notifier": {
         "m.key.verification.request": "%(name)s กำลังขอการตรวจสอบ"
+    },
+    "invite": {
+        "failed_title": "การเชิญล้มเหลว",
+        "failed_generic": "การดำเนินการล้มเหลว"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": "คุณต้องเข้าสู่ระบบก่อน"
+    },
+    "scalar": {
+        "error_send_request": "การส่งคำขอล้มเหลว",
+        "error_power_level_invalid": "ระดับอำนาจต้องเป็นจำนวนเต็มบวก",
+        "error_missing_user_id_request": "ไม่พบ user_id ในคำขอ"
     }
 }

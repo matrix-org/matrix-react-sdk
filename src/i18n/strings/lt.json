@@ -6,7 +6,6 @@
     "Notifications": "Pranešimai",
     "Changelog": "Keitinių žurnalas",
     "Failed to change password. Is your password correct?": "Nepavyko pakeisti slaptažodžio. Ar jūsų slaptažodis teisingas?",
-    "Operation failed": "Operacija nepavyko",
     "This Room": "Šis pokalbių kambarys",
     "Unavailable": "Neprieinamas",
     "Favourite": "Mėgstamas",
@@ -56,16 +55,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s %(time)s",
-    "Failed to invite": "Nepavyko pakviesti",
-    "You need to be logged in.": "Jūs turite būti prisijungę.",
-    "Unable to create widget.": "Nepavyko sukurti valdiklio.",
-    "Failed to send request.": "Nepavyko išsiųsti užklausos.",
-    "This room is not recognised.": "Šis kambarys yra neatpažintas.",
-    "You are not in this room.": "Jūs nesate šiame kambaryje.",
-    "You do not have permission to do that in this room.": "Jūs neturite leidimo tai atlikti šiame kambaryje.",
-    "Room %(roomId)s not visible": "Kambarys %(roomId)s nematomas",
-    "You are now ignoring %(userId)s": "Dabar ignoruojate %(userId)s",
-    "Verified key": "Patvirtintas raktas",
     "Reason": "Priežastis",
     "Incorrect verification code": "Neteisingas patvirtinimo kodas",
     "No display name": "Nėra rodomo vardo",
@@ -128,8 +117,6 @@
     "Import room keys": "Importuoti kambario raktus",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportavimo failas bus apsaugotas slaptafraze. Norėdami iššifruoti failą, čia turėtumėte įvesti slaptafrazę.",
     "File to import": "Failas, kurį importuoti",
-    "Missing room_id in request": "Užklausoje trūksta room_id",
-    "Missing user_id in request": "Užklausoje trūksta user_id",
     "This event could not be displayed": "Nepavyko parodyti šio įvykio",
     "Unban": "Atblokuoti",
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
@@ -164,7 +151,6 @@
     "Send Logs": "Siųsti žurnalus",
     "Unable to restore session": "Nepavyko atkurti seanso",
     "Invalid Email Address": "Neteisingas el. pašto adresas",
-    "Missing roomId.": "Trūksta kambario ID.",
     "This homeserver has hit its Monthly Active User limit.": "Šis serveris pasiekė savo mėnesinį aktyvių vartotojų limitą.",
     "This homeserver has exceeded one of its resource limits.": "Šis serveris viršijo vieno iš savo išteklių limitą.",
     "Unignore": "Nebeignoruoti",
@@ -201,14 +187,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
     "Explore rooms": "Žvalgyti kambarius",
     "Your %(brand)s is misconfigured": "Jūsų %(brand)s yra neteisingai sukonfigūruotas",
-    "You need to be able to invite users to do that.": "Norėdami tai atlikti jūs turite turėti galimybę pakviesti vartotojus.",
-    "Power level must be positive integer.": "Galios lygis privalo būti teigiamas sveikasis skaičius.",
-    "Use an identity server": "Naudoti tapatybės serverį",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Norėdami pakviesti nurodydami el. paštą, naudokite tapatybės serverį. Tam, kad toliau būtų naudojamas numatytasis tapatybės serveris %(defaultIdentityServerName)s, spauskite tęsti, arba tvarkykite Nustatymuose.",
-    "Use an identity server to invite by email. Manage in Settings.": "Norėdami pakviesti nurodydami el. paštą, naudokite tapatybės serverį. Tvarkykite nustatymuose.",
-    "Ignored user": "Ignoruojamas vartotojas",
-    "Unignored user": "Nebeignoruojamas vartotojas",
-    "You are no longer ignoring %(userId)s": "Dabar nebeignoruojate %(userId)s",
     "Cannot reach homeserver": "Serveris nepasiekiamas",
     "Ensure you have a stable internet connection, or get in touch with the server admin": "Įsitikinkite, kad jūsų interneto ryšys yra stabilus, arba susisiekite su serverio administratoriumi",
     "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Paprašykite savo %(brand)s administratoriaus patikrinti ar <a>jūsų konfigūracijoje</a> nėra neteisingų arba pasikartojančių įrašų.",
@@ -320,7 +298,6 @@
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Išsiuntėme jums el. laišką, kad patvirtintumėme savo adresą. Sekite ten pateiktas instrukcijas ir tada paspauskite žemiau esantį mygtuką.",
     "Email Address": "El. pašto adresas",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
-    "Setting up keys": "Raktų nustatymas",
     "That matches!": "Tai sutampa!",
     "That doesn't match.": "Tai nesutampa.",
     "Your password has been reset.": "Jūsų slaptažodis buvo iš naujo nustatytas.",
@@ -382,7 +359,6 @@
     "Invalid homeserver discovery response": "Klaidingas serverio radimo atsakas",
     "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
     "Double check that your server supports the room version chosen and try again.": "Dar kartą įsitikinkite, kad jūsų serveris palaiko pasirinktą kambario versiją ir bandykite iš naujo.",
-    "Session already verified!": "Seansas jau patvirtintas!",
     "Dog": "Šuo",
     "Cat": "Katė",
     "Lion": "Liūtas",
@@ -496,7 +472,6 @@
     "Reject & Ignore user": "Atmesti ir ignoruoti vartotoją",
     "Reject invitation": "Atmesti pakvietimą",
     "You can only join it with a working invite.": "Jūs galite prisijungti tik su veikiančiu pakvietimu.",
-    "Cancel entering passphrase?": "Atšaukti slaptafrazės įvedimą?",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Encryption upgrade available": "Galimas šifravimo atnaujinimas",
     "Please enter verification code sent via text.": "Įveskite patvirtinimo kodą išsiųstą teksto žinute.",
@@ -562,7 +537,6 @@
     "Recovery Method Removed": "Atgavimo Metodas Pašalintas",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
     "Error upgrading room": "Klaida atnaujinant kambarį",
-    "Are you sure you want to cancel entering passphrase?": "Ar tikrai norite atšaukti slaptafrazės įvedimą?",
     "All settings": "Visi nustatymai",
     "Change notification settings": "Keisti pranešimų nustatymus",
     "Room information": "Kambario informacija",
@@ -612,9 +586,6 @@
     "Upgrade Room Version": "Atnaujinti Kambario Versiją",
     "Upgrade this room to version %(version)s": "Atnaujinti šį kambarį į %(version)s versiją",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Naujojo kambario pradžioje įdėkite nuorodą į senąjį kambarį, kad žmonės galėtų matyti senas žinutes",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas.",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
-    "Verifies a user, session, and pubkey tuple": "Patvirtina vartotojo, seanso ir pubkey daugiadalę duomenų struktūrą",
     "You signed in to a new session without verifying it:": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Jūs taip pat galite nustatyti Saugią Atsarginę Kopiją ir tvarkyti savo raktus Nustatymuose.",
     "Set up Secure Backup": "Nustatyti Saugią Atsarginę Kopiją",
@@ -2184,7 +2155,19 @@
         "unknown_command": "Nežinoma komanda",
         "server_error_detail": "Serveris neprieinamas, perkrautas arba nutiko kažkas kito.",
         "server_error": "Serverio klaida",
-        "command_error": "Komandos klaida"
+        "command_error": "Komandos klaida",
+        "invite_3pid_use_default_is_title": "Naudoti tapatybės serverį",
+        "invite_3pid_use_default_is_title_description": "Norėdami pakviesti nurodydami el. paštą, naudokite tapatybės serverį. Tam, kad toliau būtų naudojamas numatytasis tapatybės serveris %(defaultIdentityServerName)s, spauskite tęsti, arba tvarkykite Nustatymuose.",
+        "invite_3pid_needs_is_error": "Norėdami pakviesti nurodydami el. paštą, naudokite tapatybės serverį. Tvarkykite nustatymuose.",
+        "ignore_dialog_title": "Ignoruojamas vartotojas",
+        "ignore_dialog_description": "Dabar ignoruojate %(userId)s",
+        "unignore_dialog_title": "Nebeignoruojamas vartotojas",
+        "unignore_dialog_description": "Dabar nebeignoruojate %(userId)s",
+        "verify": "Patvirtina vartotojo, seanso ir pubkey daugiadalę duomenų struktūrą",
+        "verify_nop": "Seansas jau patvirtintas!",
+        "verify_mismatch": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
+        "verify_success_title": "Patvirtintas raktas",
+        "verify_success_description": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas."
     },
     "presence": {
         "busy": "Užsiėmęs",
@@ -2390,7 +2373,10 @@
             "waiting_other_user": "Laukiama kol %(displayName)s patvirtins…",
             "cancelling": "Atšaukiama…"
         },
-        "old_version_detected_title": "Aptikti seni kriptografijos duomenys"
+        "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
+        "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
+        "cancel_entering_passphrase_description": "Ar tikrai norite atšaukti slaptafrazės įvedimą?",
+        "bootstrap_title": "Raktų nustatymas"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2561,7 +2547,9 @@
             "byline_state_key": "su būsenos raktu %(stateKey)s",
             "any_room": "Aukščiau išvardyti, bet ir bet kuriame kambaryje, prie kurio prisijungėte arba į kurį esate pakviestas",
             "see_event_type_sent_active_room": "Peržiūrėti <b>%(eventType)s</b> įvykius, paskelbtus jūsų aktyviame kambaryje"
-        }
+        },
+        "error_need_to_be_logged_in": "Jūs turite būti prisijungę.",
+        "error_need_invite_permission": "Norėdami tai atlikti jūs turite turėti galimybę pakviesti vartotojus."
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2726,5 +2714,21 @@
     "empty_room_was_name": "Tuščias kambarys (buvo %(oldName)s)",
     "notifier": {
         "m.key.verification.request": "%(name)s prašo patvirtinimo"
+    },
+    "invite": {
+        "failed_title": "Nepavyko pakviesti",
+        "failed_generic": "Operacija nepavyko"
+    },
+    "scalar": {
+        "error_create": "Nepavyko sukurti valdiklio.",
+        "error_missing_room_id": "Trūksta kambario ID.",
+        "error_send_request": "Nepavyko išsiųsti užklausos.",
+        "error_room_unknown": "Šis kambarys yra neatpažintas.",
+        "error_power_level_invalid": "Galios lygis privalo būti teigiamas sveikasis skaičius.",
+        "error_membership": "Jūs nesate šiame kambaryje.",
+        "error_permission": "Jūs neturite leidimo tai atlikti šiame kambaryje.",
+        "error_missing_room_id_request": "Užklausoje trūksta room_id",
+        "error_room_not_visible": "Kambarys %(roomId)s nematomas",
+        "error_missing_user_id_request": "Užklausoje trūksta user_id"
     }
 }

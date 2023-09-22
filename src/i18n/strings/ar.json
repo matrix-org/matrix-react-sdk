@@ -9,9 +9,6 @@
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
     "Permission Required": "التصريح مطلوب",
-    "Cancel entering passphrase?": "هل تريد إلغاء إدخال عبارة المرور؟",
-    "Are you sure you want to cancel entering passphrase?": "هل أنت متأكد من أنك تريد إلغاء إدخال عبارة المرور؟",
-    "Setting up keys": "إعداد المفاتيح",
     "Sun": "الأحد",
     "Mon": "الإثنين",
     "Tue": "الثلاثاء",
@@ -40,34 +37,8 @@
     "Default": "المبدئي",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
-    "Failed to invite": "فشلت الدعوة",
-    "Operation failed": "فشلت العملية",
-    "You need to be logged in.": "عليك الولوج.",
-    "You need to be able to invite users to do that.": "يجب أن تكون قادرًا على دعوة المستخدمين للقيام بذلك.",
-    "Unable to create widget.": "غير قادر على إنشاء Widget.",
-    "Missing roomId.": "معرف الغرفة مفقود.",
-    "Failed to send request.": "فشل في ارسال الطلب.",
-    "This room is not recognised.": "لم يتم التعرف على هذه الغرفة.",
-    "Power level must be positive integer.": "يجب أن يكون مستوى الطاقة عددًا صحيحًا موجبًا.",
-    "You are not in this room.": "أنت لست في هذه الغرفة.",
-    "You do not have permission to do that in this room.": "ليس لديك صلاحية للقيام بذلك في هذه الغرفة.",
-    "Missing room_id in request": "رقم الغرفة مفقود في الطلب",
-    "Room %(roomId)s not visible": "الغرفة %(roomId)s غير مرئية",
-    "Missing user_id in request": "رقم المستخدم مفقود في الطلب",
     "Error upgrading room": "خطأ في ترقية الغرفة",
     "Double check that your server supports the room version chosen and try again.": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
-    "Use an identity server": "خادوم التعريف",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "استخدم سيرفر للهوية للدعوة عبر البريد الالكتروني. انقر على استمرار لاستخدام سيرفر الهوية الافتراضي (%(defaultIdentityServerName)s) او قم بضبط الاعدادات.",
-    "Use an identity server to invite by email. Manage in Settings.": "استخدم سيرفر الهوية للدعوة عبر البريد الالكتروني. ضبط الاعدادات.",
-    "Ignored user": "مستخدم متجاهل",
-    "You are now ignoring %(userId)s": "انت تقوم الان بتجاهل %(userId)s",
-    "Unignored user": "المستخدم غير متجاهل",
-    "You are no longer ignoring %(userId)s": "انت لم تعد متجاهلا للمستخدم %(userId)s",
-    "Verifies a user, session, and pubkey tuple": "يتحقق من العناصر: المستخدم والجلسة والمفتاح العام",
-    "Session already verified!": "تم التحقق من الجلسة بالفعل!",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "تحذير: فشل التحقق من المفتاح! مفتاح التوقيع للمستخدم %(userId)s و الجلسة %(deviceId)s هو \"%(fprint)s\" والتي لا تتوافق مع المفتاح \"%(fingerprint)s\" المعطى. هذا يعني ان اتصالك اصبح مكشوف!",
-    "Verified key": "مفتاح مؤكد",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "مفتاح التوقيع الذي اعطيته يتوافق مع مفتاح التوقيع الذي استلمته من جلسة المستخدم %(userId)s رقم %(deviceId)s. تم تحديد الجلسة على انها مؤكدة.",
     "Logs sent": "تم ارسال سجل الاحداث",
     "Reason": "السبب",
     "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
@@ -568,8 +539,6 @@
     "Paraguay": "باراغواي",
     "Netherlands": "هولندا",
     "Greece": "اليونان",
-    "Some invites couldn't be sent": "تعذر إرسال بعض الدعوات",
-    "We sent the others, but the below people couldn't be invited to <RoomName/>": "أرسلنا الآخرين، ولكن لم تتم دعوة الأشخاص أدناه إلى <RoomName/>",
     "Zimbabwe": "زمبابوي",
     "Yemen": "اليمن",
     "Vietnam": "فيتنام",
@@ -1117,7 +1086,19 @@
         "unknown_command": "أمر غير معروف",
         "server_error_detail": "الخادم غير متوفر أو محمّل فوق طاقته أو وقع خطأ غير ذلك.",
         "server_error": "خطأ في الخادم",
-        "command_error": "خطأ في الأمر"
+        "command_error": "خطأ في الأمر",
+        "invite_3pid_use_default_is_title": "خادوم التعريف",
+        "invite_3pid_use_default_is_title_description": "استخدم سيرفر للهوية للدعوة عبر البريد الالكتروني. انقر على استمرار لاستخدام سيرفر الهوية الافتراضي (%(defaultIdentityServerName)s) او قم بضبط الاعدادات.",
+        "invite_3pid_needs_is_error": "استخدم سيرفر الهوية للدعوة عبر البريد الالكتروني. ضبط الاعدادات.",
+        "ignore_dialog_title": "مستخدم متجاهل",
+        "ignore_dialog_description": "انت تقوم الان بتجاهل %(userId)s",
+        "unignore_dialog_title": "المستخدم غير متجاهل",
+        "unignore_dialog_description": "انت لم تعد متجاهلا للمستخدم %(userId)s",
+        "verify": "يتحقق من العناصر: المستخدم والجلسة والمفتاح العام",
+        "verify_nop": "تم التحقق من الجلسة بالفعل!",
+        "verify_mismatch": "تحذير: فشل التحقق من المفتاح! مفتاح التوقيع للمستخدم %(userId)s و الجلسة %(deviceId)s هو \"%(fprint)s\" والتي لا تتوافق مع المفتاح \"%(fingerprint)s\" المعطى. هذا يعني ان اتصالك اصبح مكشوف!",
+        "verify_success_title": "مفتاح مؤكد",
+        "verify_success_description": "مفتاح التوقيع الذي اعطيته يتوافق مع مفتاح التوقيع الذي استلمته من جلسة المستخدم %(userId)s رقم %(deviceId)s. تم تحديد الجلسة على انها مؤكدة."
     },
     "presence": {
         "online_for": "متصل منذ %(duration)s",
@@ -1265,7 +1246,10 @@
             "unsupported_method": "تعذر العثور على أحد طرق التحقق الممكنة.",
             "waiting_other_user": "بانتظار %(displayName)s للتحقق…",
             "cancelling": "جارٍ الإلغاء…"
-        }
+        },
+        "cancel_entering_passphrase_title": "هل تريد إلغاء إدخال عبارة المرور؟",
+        "cancel_entering_passphrase_description": "هل أنت متأكد من أنك تريد إلغاء إدخال عبارة المرور؟",
+        "bootstrap_title": "إعداد المفاتيح"
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",
@@ -1392,7 +1376,9 @@
             "send_videos_active_room": "أرسل الفيديوهات بهويتك في غرفتك النشطة",
             "see_videos_sent_this_room": "أظهر الفيديوهات المرسلة إلى هذه الغرفة",
             "see_videos_sent_active_room": "أظهر الفيديوهات المرسلة إلى هذه غرفتك النشطة"
-        }
+        },
+        "error_need_to_be_logged_in": "عليك الولوج.",
+        "error_need_invite_permission": "يجب أن تكون قادرًا على دعوة المستخدمين للقيام بذلك."
     },
     "zxcvbn": {
         "suggestions": {
@@ -1504,5 +1490,23 @@
     "user1_and_user2": "%(user1)s و %(user2)s",
     "notifier": {
         "m.key.verification.request": "يطلب %(name)s التثبّت"
+    },
+    "invite": {
+        "failed_title": "فشلت الدعوة",
+        "failed_generic": "فشلت العملية",
+        "room_failed_partial": "أرسلنا الآخرين، ولكن لم تتم دعوة الأشخاص أدناه إلى <RoomName/>",
+        "room_failed_partial_title": "تعذر إرسال بعض الدعوات"
+    },
+    "scalar": {
+        "error_create": "غير قادر على إنشاء Widget.",
+        "error_missing_room_id": "معرف الغرفة مفقود.",
+        "error_send_request": "فشل في ارسال الطلب.",
+        "error_room_unknown": "لم يتم التعرف على هذه الغرفة.",
+        "error_power_level_invalid": "يجب أن يكون مستوى الطاقة عددًا صحيحًا موجبًا.",
+        "error_membership": "أنت لست في هذه الغرفة.",
+        "error_permission": "ليس لديك صلاحية للقيام بذلك في هذه الغرفة.",
+        "error_missing_room_id_request": "رقم الغرفة مفقود في الطلب",
+        "error_room_not_visible": "الغرفة %(roomId)s غير مرئية",
+        "error_missing_user_id_request": "رقم المستخدم مفقود في الطلب"
     }
 }

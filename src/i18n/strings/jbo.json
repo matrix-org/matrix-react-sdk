@@ -29,27 +29,8 @@
     "Default": "zmiselcu'a",
     "Restricted": "vlipa so'u da",
     "Moderator": "vlipa so'o da",
-    "Power level must be positive integer.": ".i lo nu le ni vlipa cu kacna'u cu sarcu",
     "Failed to change power level": ".i pu fliba lo nu gafygau lo ni vlipa",
-    "Operation failed": ".i da nabmi",
-    "Failed to invite": ".i da nabmi fi lo nu friti le ka ziljmina",
-    "You need to be logged in.": ".i lo nu da jaspu do sarcu",
-    "You need to be able to invite users to do that.": ".i lo nu do vlipa le ka friti le ka ziljmina cu sarcu",
-    "Unable to create widget.": ".i na kakne lo nu zbasu lo uidje",
-    "Missing roomId.": ".i claxu lo judri be lo kumfa pe'a",
-    "Failed to send request.": ".i da nabmi fi lo nu benji le ve cpedu",
-    "This room is not recognised.": ".i na sanji le kumfa pe'a",
-    "You are not in this room.": ".i do na pagbu le se zilbe'i",
-    "You do not have permission to do that in this room.": ".i do na vlipa le ka zo'e zilbe'i do fo zo'e",
-    "Missing room_id in request": ".i na pa judri be pa ve zilbe'i cu pagbu le ve cpedu",
-    "Room %(roomId)s not visible": ".i na kakne lo nu viska la'o ly. %(roomId)s .ly. noi kumfa pe'a",
-    "Missing user_id in request": ".i na pa judri be pa pilno cu pagbu le ve cpedu",
     "Changes your display nickname": "",
-    "Ignored user": ".i mo'u co'a na jundi tu'a le pilno",
-    "You are now ignoring %(userId)s": ".i ca na jundi tu'a la'o zoi. %(userId)s .zoi",
-    "Unignored user": ".i mo'u co'a jundi tu'a le pilno",
-    "You are no longer ignoring %(userId)s": ".i ca jundi tu'a la'o zoi. %(userId)s .zoi",
-    "Verified key": "ckiku vau je se lacri",
     "Reason": "krinu",
     "This homeserver has hit its Monthly Active User limit.": ".i le samtcise'u cu bancu lo masti jimte be ri bei lo ni ca'o pilno",
     "This homeserver has exceeded one of its resource limits.": ".i le samtcise'u cu bancu pa lo jimte be ri",
@@ -61,7 +42,6 @@
     "Warning!": ".i ju'i",
     "Authentication": "lo nu facki lo du'u do du ma kau",
     "Failed to set display name": ".i pu fliba lo nu galfi lo cmene",
-    "Session already verified!": ".i xa'o lacri le se samtcise'u",
     "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "Dog": "gerku",
     "Cat": "mlatu",
@@ -385,7 +365,13 @@
         "failed_find_user": ".i le pilno na pagbu le se zilbe'i",
         "op": ".i ninga'igau lo ni lo pilno cu vlipa",
         "deop": ".i xruti lo ni lo pilno poi se judri ti cu vlipa",
-        "command_error": ".i da nabmi fi lo nu minde"
+        "command_error": ".i da nabmi fi lo nu minde",
+        "ignore_dialog_title": ".i mo'u co'a na jundi tu'a le pilno",
+        "ignore_dialog_description": ".i ca na jundi tu'a la'o zoi. %(userId)s .zoi",
+        "unignore_dialog_title": ".i mo'u co'a jundi tu'a le pilno",
+        "unignore_dialog_description": ".i ca jundi tu'a la'o zoi. %(userId)s .zoi",
+        "verify_nop": ".i xa'o lacri le se samtcise'u",
+        "verify_success_title": "ckiku vau je se lacri"
     },
     "event_preview": {
         "m.call.answer": {
@@ -505,5 +491,25 @@
         }
     },
     "upload_failed_generic": ".i da nabmi fi lo nu kibdu'a la'o zoi. %(fileName)s .zoi",
-    "upload_failed_title": ".i da nabmi fi lo nu kibdu'a"
+    "upload_failed_title": ".i da nabmi fi lo nu kibdu'a",
+    "invite": {
+        "failed_title": ".i da nabmi fi lo nu friti le ka ziljmina",
+        "failed_generic": ".i da nabmi"
+    },
+    "widget": {
+        "error_need_to_be_logged_in": ".i lo nu da jaspu do sarcu",
+        "error_need_invite_permission": ".i lo nu do vlipa le ka friti le ka ziljmina cu sarcu"
+    },
+    "scalar": {
+        "error_create": ".i na kakne lo nu zbasu lo uidje",
+        "error_missing_room_id": ".i claxu lo judri be lo kumfa pe'a",
+        "error_send_request": ".i da nabmi fi lo nu benji le ve cpedu",
+        "error_room_unknown": ".i na sanji le kumfa pe'a",
+        "error_power_level_invalid": ".i lo nu le ni vlipa cu kacna'u cu sarcu",
+        "error_membership": ".i do na pagbu le se zilbe'i",
+        "error_permission": ".i do na vlipa le ka zo'e zilbe'i do fo zo'e",
+        "error_missing_room_id_request": ".i na pa judri be pa ve zilbe'i cu pagbu le ve cpedu",
+        "error_room_not_visible": ".i na kakne lo nu viska la'o ly. %(roomId)s .ly. noi kumfa pe'a",
+        "error_missing_user_id_request": ".i na pa judri be pa pilno cu pagbu le ve cpedu"
+    }
 }

@@ -22,7 +22,6 @@
     "PM": "PM",
     "AM": "AM",
     "Rooms": "חדרים",
-    "Operation failed": "פעולה נכשלה",
     "Send": "שלח",
     "Failed to change password. Is your password correct?": "שינוי הסיסמה נכשל. האם הסיסמה שלך נכונה?",
     "unknown error code": "קוד שגיאה לא מוכר",
@@ -56,36 +55,8 @@
     "Low Priority": "עדיפות נמוכה",
     "Thank you!": "רב תודות!",
     "Your %(brand)s is misconfigured": "ה %(brand)s שלך מוגדר באופן שגוי",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת.",
-    "Verified key": "מפתח מאושר",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
-    "Session already verified!": "ההתחברות כבר אושרה!",
-    "Verifies a user, session, and pubkey tuple": "מוודא משתמש, התחברות וצמד מפתח ציבורי",
-    "You are no longer ignoring %(userId)s": "אינכם מתעלמים יותר מ %(userId)s",
-    "Unignored user": "משתמש מוכר",
-    "You are now ignoring %(userId)s": "אתם עכשיו מתעלמים מ %(userId)s",
-    "Ignored user": "משתמש נעלם",
-    "Use an identity server to invite by email. Manage in Settings.": "השתמש בשרת זיהוי להזמין דרך מייל. ניהול דרך ההגדרות.",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "השתמש בשרת זיהוי על מנת להזמין דרך מייל. לחצו על המשך להשתמש בשרת ברירת המחדל %(defaultIdentityServerName)s או הגדירו את השרת שלכם בהגדרות.",
-    "Use an identity server": "השתמש בשרת זיהוי",
     "Double check that your server supports the room version chosen and try again.": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
     "Error upgrading room": "שגיאה בשדרוג חדר",
-    "Setting up keys": "מגדיר מפתחות",
-    "Are you sure you want to cancel entering passphrase?": "האם אתם בטוחים שהינכם רוצים לבטל?",
-    "Cancel entering passphrase?": "בטל הקלדת סיסמא?",
-    "Missing user_id in request": "קוד זיהוי משתמש חסר בשורת הבקשה",
-    "Room %(roomId)s not visible": "קוד זיהוי החדר %(roomId)s אינו נראה",
-    "Missing room_id in request": "קוד זיהוי החדר חסר בשורת הבקשה",
-    "You do not have permission to do that in this room.": "אין לכם הרשאות לבצע פעולה זו בחדר זה.",
-    "You are not in this room.": "אינכם נמצאים בחדר זה.",
-    "Power level must be positive integer.": "דרגת הרשאות חייבת להיות מספר חיובי.",
-    "This room is not recognised.": "החדר הזה אינו מזוהה.",
-    "Failed to send request.": "שליחת בקשה נכשלה.",
-    "Missing roomId.": "קוד זיהוי של החדר חסר.",
-    "Unable to create widget.": "לא ניתן היה ליצור ווידג'ט.",
-    "You need to be able to invite users to do that.": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו.",
-    "You need to be logged in.": "עליכם להיות מחוברים.",
-    "Failed to invite": "הזמנה נכשלה",
     "Moderator": "מנהל",
     "Restricted": "מחוץ לתחום",
     "Timor-Leste": "טמור-לסטה",
@@ -1177,9 +1148,6 @@
     "Enter Security Phrase": "הזן ביטוי אבטחה",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "לא ניתן לפענח גיבוי עם ביטוי אבטחה זה: אנא ודא שהזנת את ביטוי האבטחה הנכון.",
     "Incorrect Security Phrase": "ביטוי אבטחה שגוי",
-    "Unrecognised room address: %(roomAlias)s": "כתובת חדר לא מוכרת: %(roomAlias)s",
-    "Some invites couldn't be sent": "לא ניתן לשלוח חלק מההזמנות",
-    "We sent the others, but the below people couldn't be invited to <RoomName/>": "ההזמנה נשלחה, פרט למשתמשים הבאים שלא ניתן להזמינם ל - <RoomName/>",
     "Your new device is now verified. Other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
     "Device verified": "המכשיר אומת",
@@ -1308,7 +1276,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "@mentions & keywords": "אזכורים ומילות מפתח",
     "Mentions & keywords": "אזכורים ומילות מפתח",
-    "Failed to invite users to %(roomName)s": "נכשל בהזמנת משתמשים לחדר - %(roomName)",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
     "Adding spaces has moved.": "הוספת מרחבי עבודה הוזז.",
@@ -2347,7 +2314,20 @@
         "unknown_command": "פקודה לא ידועה",
         "server_error_detail": "השרת לא זמין, עמוס מדי או שמשהו אחר השתבש.",
         "server_error": "שגיאת שרת",
-        "command_error": "שגיאת פקודה"
+        "command_error": "שגיאת פקודה",
+        "invite_3pid_use_default_is_title": "השתמש בשרת זיהוי",
+        "invite_3pid_use_default_is_title_description": "השתמש בשרת זיהוי על מנת להזמין דרך מייל. לחצו על המשך להשתמש בשרת ברירת המחדל %(defaultIdentityServerName)s או הגדירו את השרת שלכם בהגדרות.",
+        "invite_3pid_needs_is_error": "השתמש בשרת זיהוי להזמין דרך מייל. ניהול דרך ההגדרות.",
+        "part_unknown_alias": "כתובת חדר לא מוכרת: %(roomAlias)s",
+        "ignore_dialog_title": "משתמש נעלם",
+        "ignore_dialog_description": "אתם עכשיו מתעלמים מ %(userId)s",
+        "unignore_dialog_title": "משתמש מוכר",
+        "unignore_dialog_description": "אינכם מתעלמים יותר מ %(userId)s",
+        "verify": "מוודא משתמש, התחברות וצמד מפתח ציבורי",
+        "verify_nop": "ההתחברות כבר אושרה!",
+        "verify_mismatch": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
+        "verify_success_title": "מפתח מאושר",
+        "verify_success_description": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת."
     },
     "presence": {
         "online_for": "מחובר %(duration)s",
@@ -2539,7 +2519,10 @@
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
-        "verification_requested_toast_title": "התבקש אימות"
+        "verification_requested_toast_title": "התבקש אימות",
+        "cancel_entering_passphrase_title": "בטל הקלדת סיסמא?",
+        "cancel_entering_passphrase_description": "האם אתם בטוחים שהינכם רוצים לבטל?",
+        "bootstrap_title": "מגדיר מפתחות"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2773,7 +2756,9 @@
             "send_msgtype_active_room": "שלחו <b>%(msgtype)s</b> הודעות בשמכם בחדר הפעיל שלכם",
             "see_msgtype_sent_this_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר זה",
             "see_msgtype_sent_active_room": "ראו <b>%(msgtype)s</b> הודעות שפורסמו בחדר הפעיל שלכם"
-        }
+        },
+        "error_need_to_be_logged_in": "עליכם להיות מחוברים.",
+        "error_need_invite_permission": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו."
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -2983,5 +2968,24 @@
     "empty_room": "חדר ריק",
     "notifier": {
         "m.key.verification.request": "%(name)s מבקש אימות"
+    },
+    "invite": {
+        "failed_title": "הזמנה נכשלה",
+        "failed_generic": "פעולה נכשלה",
+        "room_failed_title": "נכשל בהזמנת משתמשים לחדר - %(roomName)",
+        "room_failed_partial": "ההזמנה נשלחה, פרט למשתמשים הבאים שלא ניתן להזמינם ל - <RoomName/>",
+        "room_failed_partial_title": "לא ניתן לשלוח חלק מההזמנות"
+    },
+    "scalar": {
+        "error_create": "לא ניתן היה ליצור ווידג'ט.",
+        "error_missing_room_id": "קוד זיהוי של החדר חסר.",
+        "error_send_request": "שליחת בקשה נכשלה.",
+        "error_room_unknown": "החדר הזה אינו מזוהה.",
+        "error_power_level_invalid": "דרגת הרשאות חייבת להיות מספר חיובי.",
+        "error_membership": "אינכם נמצאים בחדר זה.",
+        "error_permission": "אין לכם הרשאות לבצע פעולה זו בחדר זה.",
+        "error_missing_room_id_request": "קוד זיהוי החדר חסר בשורת הבקשה",
+        "error_room_not_visible": "קוד זיהוי החדר %(roomId)s אינו נראה",
+        "error_missing_user_id_request": "קוד זיהוי משתמש חסר בשורת הבקשה"
     }
 }

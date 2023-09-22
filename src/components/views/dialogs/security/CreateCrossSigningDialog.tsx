@@ -126,7 +126,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             };
 
             const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                title: _t("Setting up keys"),
+                title: _t("encryption|bootstrap_title"),
                 matrixClient: MatrixClientPeg.safeGet(),
                 makeRequest,
                 aestheticsForStagePhases: {
@@ -195,7 +195,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             <BaseDialog
                 className="mx_CreateCrossSigningDialog"
                 onFinished={this.props.onFinished}
-                title={_t("Setting up keys")}
+                title={_t("encryption|bootstrap_title")}
                 hasCancel={false}
                 fixedWidth={false}
             >

@@ -27,25 +27,7 @@
     "Default": "Подразумевано",
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
-    "Operation failed": "Радња није успела",
-    "Failed to invite": "Нисам успео да пошаљем позивницу",
-    "You need to be logged in.": "Морате бити пријављени.",
-    "You need to be able to invite users to do that.": "Морате имати могућност слања позивница корисницима да бисте то урадили.",
-    "Unable to create widget.": "Не могу да направим виџет.",
-    "Failed to send request.": "Неуспех при слању захтева.",
-    "This room is not recognised.": "Ова соба није препозната.",
-    "Power level must be positive integer.": "Ниво снаге мора бити позитивни број.",
-    "You are not in this room.": "Нисте у овој соби.",
-    "You do not have permission to do that in this room.": "Немате овлашћење да урадите то у овој соби.",
-    "Missing room_id in request": "Недостаје room_id у захтеву",
-    "Room %(roomId)s not visible": "Соба %(roomId)s није видљива",
-    "Missing user_id in request": "Недостаје user_id у захтеву",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Ignored user": "Занемарени корисник",
-    "You are now ignoring %(userId)s": "Сада занемарујете корисника %(userId)s",
-    "Unignored user": "Незанемарени корисник",
-    "You are no longer ignoring %(userId)s": "Више не занемарујете корисника %(userId)s",
-    "Verified key": "Проверени кључ",
     "Reason": "Разлог",
     "Send": "Пошаљи",
     "Your browser does not support the required cryptography extensions": "Ваш прегледач не подржава потребна криптографска проширења",
@@ -212,7 +194,6 @@
     "Low Priority": "Најмања важност",
     "Thank you!": "Хвала вам!",
     "Popout widget": "Виџет за искакање",
-    "Missing roomId.": "Недостаје roomId.",
     "You don't currently have any stickerpacks enabled": "Тренутно немате омогућено било које паковање са налепницама",
     "Preparing to send logs": "Припремам се за слање записника",
     "Logs sent": "Записници су послати",
@@ -295,9 +276,6 @@
     "Looks good!": "Изгледа добро!",
     "Switch theme": "Промени тему",
     "Error upgrading room": "Грешка при надоградњи собе",
-    "Setting up keys": "Постављам кључеве",
-    "Are you sure you want to cancel entering passphrase?": "Заиста желите да откажете унос фразе?",
-    "Cancel entering passphrase?": "Отказати унос фразе?",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбија",
     "Yemen": "Јемен",
@@ -555,9 +533,6 @@
     "Unexpected error resolving homeserver configuration": "Неочекивана грешка при откривању подешавања сервера",
     "No homeserver URL provided": "Није наведен УРЛ сервера",
     "Cannot reach homeserver": "Сервер недоступан",
-    "Session already verified!": "Сесија је већ верификована!",
-    "Use an identity server to invite by email. Manage in Settings.": "Користите сервер идентитета за позивнице е-поштом. Управљајте у поставкама.",
-    "Use an identity server": "Користи сервер идентитета",
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
@@ -699,10 +674,6 @@
     "Verify your other session using one of the options below.": "Потврдите другу сесију помоћу једних од опција у испод.",
     "You signed in to a new session without verifying it:": "Пријавили сте се у нову сесију без потврђивања:",
     "Accept all %(invitedRooms)s invites": "Прихвати све %(invitedRooms)s позивнице",
-    "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Користите сервер за идентитет да бисте послали позивнице е-поштом. Кликните на даље да бисте користили уобичајни сервер идентитета %(defaultIdentityServerName)s или управљајте у подешавањима.",
-    "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Кључ за потписивање који сте навели поклапа се са кључем за потписивање који сте добили од %(userId)s сесије %(deviceId)s. Сесија је означена као проверена.",
-    "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "УПОЗОРЕЊЕ: ПРОВЕРА КЉУЧА НИЈЕ УСПЕЛА! Кључ за потписивање за %(userId)s и сесију %(deviceId)s је \"%(fprint)s\", који се не подудара са наведеним кључем \"%(fingerprint)s\". То може значити да су ваше комуникације пресретнуте!",
-    "Verifies a user, session, and pubkey tuple": "Верификује корисника, сесију и pubkey tuple",
     "Réunion": "Реунион",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
     "common": {
@@ -1198,7 +1169,19 @@
         "server_error": "Грешка на серверу",
         "command_error": "Грешка у наредби",
         "server_error_detail": "Сервер није доступан или је преоптерећен или је нешто пошло наопако.",
-        "unknown_command_button": "Пошаљи у облику поруке"
+        "unknown_command_button": "Пошаљи у облику поруке",
+        "invite_3pid_use_default_is_title": "Користи сервер идентитета",
+        "invite_3pid_use_default_is_title_description": "Користите сервер за идентитет да бисте послали позивнице е-поштом. Кликните на даље да бисте користили уобичајни сервер идентитета %(defaultIdentityServerName)s или управљајте у подешавањима.",
+        "invite_3pid_needs_is_error": "Користите сервер идентитета за позивнице е-поштом. Управљајте у поставкама.",
+        "ignore_dialog_title": "Занемарени корисник",
+        "ignore_dialog_description": "Сада занемарујете корисника %(userId)s",
+        "unignore_dialog_title": "Незанемарени корисник",
+        "unignore_dialog_description": "Више не занемарујете корисника %(userId)s",
+        "verify": "Верификује корисника, сесију и pubkey tuple",
+        "verify_nop": "Сесија је већ верификована!",
+        "verify_mismatch": "УПОЗОРЕЊЕ: ПРОВЕРА КЉУЧА НИЈЕ УСПЕЛА! Кључ за потписивање за %(userId)s и сесију %(deviceId)s је \"%(fprint)s\", који се не подудара са наведеним кључем \"%(fingerprint)s\". То може значити да су ваше комуникације пресретнуте!",
+        "verify_success_title": "Проверени кључ",
+        "verify_success_description": "Кључ за потписивање који сте навели поклапа се са кључем за потписивање који сте добили од %(userId)s сесије %(deviceId)s. Сесија је означена као проверена."
     },
     "presence": {
         "online_for": "На мрежи %(duration)s",
@@ -1285,7 +1268,10 @@
             "cancelling": "Отказујем…"
         },
         "old_version_detected_title": "Нађени су стари криптографски подаци",
-        "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве."
+        "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
+        "cancel_entering_passphrase_title": "Отказати унос фразе?",
+        "cancel_entering_passphrase_description": "Заиста желите да откажете унос фразе?",
+        "bootstrap_title": "Постављам кључеве"
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1442,7 +1428,9 @@
             "send_msgtype_active_room": "Пошаљи <b>%(msgtype)s</b> поруке као Ви у активној соби",
             "see_msgtype_sent_this_room": "Видите <b>%(msgtype)s</b> поруке објављене у овој соби",
             "see_msgtype_sent_active_room": "Видите <b>%(msgtype)s</b> поруке објављене у Вашој активној соби"
-        }
+        },
+        "error_need_to_be_logged_in": "Морате бити пријављени.",
+        "error_need_invite_permission": "Морате имати могућност слања позивница корисницима да бисте то урадили."
     },
     "create_space": {
         "private_personal_heading": "Са ким радите?"
@@ -1495,5 +1483,21 @@
     "upload_failed_title": "Отпремање није успело",
     "notifier": {
         "m.key.verification.request": "%(name)s тражи верификацију"
+    },
+    "invite": {
+        "failed_title": "Нисам успео да пошаљем позивницу",
+        "failed_generic": "Радња није успела"
+    },
+    "scalar": {
+        "error_create": "Не могу да направим виџет.",
+        "error_missing_room_id": "Недостаје roomId.",
+        "error_send_request": "Неуспех при слању захтева.",
+        "error_room_unknown": "Ова соба није препозната.",
+        "error_power_level_invalid": "Ниво снаге мора бити позитивни број.",
+        "error_membership": "Нисте у овој соби.",
+        "error_permission": "Немате овлашћење да урадите то у овој соби.",
+        "error_missing_room_id_request": "Недостаје room_id у захтеву",
+        "error_room_not_visible": "Соба %(roomId)s није видљива",
+        "error_missing_user_id_request": "Недостаје user_id у захтеву"
     }
 }
