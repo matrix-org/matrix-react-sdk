@@ -422,6 +422,7 @@
         "continue": "Continue",
         "leave_room": "Leave room",
         "no": "No",
+        "unban": "Unban",
         "enter_fullscreen": "Enter fullscreen",
         "exit_fullscreeen": "Exit fullscreen",
         "zoom_in": "Zoom in",
@@ -511,8 +512,7 @@
         "logout": "Logout",
         "restore": "Restore",
         "import": "Import",
-        "disable": "Disable",
-        "unban": "Unban"
+        "disable": "Disable"
     },
     "common": {
         "error": "Error",
@@ -726,6 +726,8 @@
         "failed_call_live_broadcast_title": "Can’t start a call",
         "failed_call_live_broadcast_description": "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.",
         "change_input_device": "Change input device",
+        "no_media_perms_title": "No media permissions",
+        "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam",
         "video_call_started": "Video call started",
         "unsilence": "Sound on",
         "silence": "Silence call",
@@ -754,9 +756,7 @@
         "hangup": "Hangup",
         "maximise": "Fill screen",
         "expand": "Return to call",
-        "on_hold": "%(name)s on hold",
-        "no_media_perms_title": "No media permissions",
-        "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam"
+        "on_hold": "%(name)s on hold"
     },
     "unsupported_server_title": "Your server is unsupported",
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
@@ -898,6 +898,9 @@
         "cancel_entering_passphrase_title": "Cancel entering passphrase?",
         "cancel_entering_passphrase_description": "Are you sure you want to cancel entering passphrase?",
         "bootstrap_title": "Setting up keys",
+        "export_unsupported": "Your browser does not support the required cryptography extensions",
+        "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
+        "import_invalid_passphrase": "Authentication check failed: incorrect password?",
         "verification": {
             "other_party_cancelled": "The other party cancelled the verification.",
             "complete_title": "Verified!",
@@ -925,10 +928,7 @@
         },
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
-        "verification_requested_toast_title": "Verification requested",
-        "export_unsupported": "Your browser does not support the required cryptography extensions",
-        "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
-        "import_invalid_passphrase": "Authentication check failed: incorrect password?"
+        "verification_requested_toast_title": "Verification requested"
     },
     "slash_command": {
         "spoiler": "Sends the given message as a spoiler",
@@ -1409,9 +1409,48 @@
     },
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s and %(space2Name)s",
+    "in_space1_and_space2": "In spaces %(space1Name)s and %(space2Name)s.",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s and %(count)s others",
         "one": "%(spaceName)s and %(count)s other"
+    },
+    "in_space_and_n_other_spaces": {
+        "other": "In %(spaceName)s and %(count)s other spaces.",
+        "one": "In %(spaceName)s and %(count)s other space."
+    },
+    "in_space": "In %(spaceName)s.",
+    "name_and_id": "%(name)s (%(userId)s)",
+    "room": {
+        "leave_unexpected_error": "Unexpected server error trying to leave the room",
+        "leave_server_notices_title": "Can't leave Server Notices room",
+        "leave_server_notices_description": "This room is used for important messages from the Homeserver, so you cannot leave it.",
+        "leave_error_title": "Error leaving room",
+        "upgrade_error_title": "Error upgrading room",
+        "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
+        "intro": {
+            "send_message_start_dm": "Send your first message to invite <displayName/> to chat",
+            "encrypted_3pid_dm_pending_join": "Once everyone has joined, you’ll be able to chat",
+            "start_of_dm_history": "This is the beginning of your direct message history with <displayName/>.",
+            "dm_caption": "Only the two of you are in this conversation, unless either of you invites anyone to join.",
+            "topic_edit": "Topic: %(topic)s (<a>edit</a>)",
+            "topic": "Topic: %(topic)s ",
+            "no_topic": "<a>Add a topic</a> to help people know what it is about.",
+            "you_created": "You created this room.",
+            "user_created": "%(displayName)s created this room.",
+            "room_invite": "Invite to just this room",
+            "no_avatar_label": "Add a photo, so people can easily spot your room.",
+            "start_of_room": "This is the start of <roomName/>.",
+            "private_unencrypted_warning": "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.",
+            "enable_encryption_prompt": "Enable encryption in settings.",
+            "unencrypted_warning": "End-to-end encryption isn't enabled"
+        },
+        "edit_topic": "Edit topic",
+        "read_topic": "Click to read topic",
+        "drop_file_prompt": "Drop file here to upload",
+        "unread_notifications_predecessor": {
+            "other": "You have %(count)s unread notifications in a prior version of this room.",
+            "one": "You have %(count)s unread notification in a prior version of this room."
+        }
     },
     "zxcvbn": {
         "warnings": {
@@ -1448,6 +1487,24 @@
             "noNeed": "No need for symbols, digits, or uppercase letters",
             "pwned": "If you use this password elsewhere, you should change it."
         }
+    },
+    "space": {
+        "share_public": "Share your public space",
+        "context_menu": {
+            "devtools_open_timeline": "See room timeline (devtools)",
+            "home": "Space home",
+            "manage_and_explore": "Manage & explore rooms",
+            "explore": "Explore rooms"
+        },
+        "suggested_tooltip": "This room is suggested as a good one to join",
+        "suggested": "Suggested",
+        "select_room_below": "Select a room below first",
+        "unmark_suggested": "Mark as not suggested",
+        "mark_suggested": "Mark as suggested",
+        "failed_remove_rooms": "Failed to remove some rooms. Try again later",
+        "failed_load_rooms": "Failed to load list of rooms.",
+        "incompatible_server_hierarchy": "Your server does not support showing space hierarchies.",
+        "landing_welcome": "Welcome to <name/>"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "This homeserver is not configured to display maps.",
@@ -1526,6 +1583,7 @@
         "include_attachments": "Include Attachments"
     },
     "analytics": {
+        "accept_button": "That's fine",
         "consent_migration": "You previously consented to share anonymous usage data with us. We're updating how that works.",
         "learn_more": "Share anonymous data to help us identify issues. Nothing personal. No third parties. <LearnMoreLink>Learn More</LearnMoreLink>",
         "enable_prompt": "Help improve %(analyticsOwner)s",
@@ -1533,8 +1591,7 @@
         "pseudonymous_usage_data": "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.",
         "bullet_1": "We <Bold>don't</Bold> record or profile any account data",
         "bullet_2": "We <Bold>don't</Bold> share information with third parties",
-        "disable_prompt": "You can turn this off anytime in settings",
-        "accept_button": "That's fine"
+        "disable_prompt": "You can turn this off anytime in settings"
     },
     "You have unverified sessions": "You have unverified sessions",
     "Review to ensure your account is safe": "Review to ensure your account is safe",
@@ -2478,38 +2535,6 @@
     "Formatting": "Formatting",
     "Italics": "Italics",
     "Insert link": "Insert link",
-    "room": {
-        "intro": {
-            "send_message_start_dm": "Send your first message to invite <displayName/> to chat",
-            "encrypted_3pid_dm_pending_join": "Once everyone has joined, you’ll be able to chat",
-            "start_of_dm_history": "This is the beginning of your direct message history with <displayName/>.",
-            "dm_caption": "Only the two of you are in this conversation, unless either of you invites anyone to join.",
-            "topic_edit": "Topic: %(topic)s (<a>edit</a>)",
-            "topic": "Topic: %(topic)s ",
-            "no_topic": "<a>Add a topic</a> to help people know what it is about.",
-            "you_created": "You created this room.",
-            "user_created": "%(displayName)s created this room.",
-            "room_invite": "Invite to just this room",
-            "no_avatar_label": "Add a photo, so people can easily spot your room.",
-            "start_of_room": "This is the start of <roomName/>.",
-            "private_unencrypted_warning": "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.",
-            "enable_encryption_prompt": "Enable encryption in settings.",
-            "unencrypted_warning": "End-to-end encryption isn't enabled"
-        },
-        "edit_topic": "Edit topic",
-        "read_topic": "Click to read topic",
-        "drop_file_prompt": "Drop file here to upload",
-        "unread_notifications_predecessor": {
-            "other": "You have %(count)s unread notifications in a prior version of this room.",
-            "one": "You have %(count)s unread notification in a prior version of this room."
-        },
-        "leave_unexpected_error": "Unexpected server error trying to leave the room",
-        "leave_server_notices_title": "Can't leave Server Notices room",
-        "leave_error_title": "Error leaving room",
-        "upgrade_error_title": "Error upgrading room",
-        "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
-        "leave_server_notices_description": "This room is used for important messages from the Homeserver, so you cannot leave it."
-    },
     "Message didn't send. Click for info.": "Message didn't send. Click for info.",
     "View message": "View message",
     "presence": {
@@ -3608,24 +3633,6 @@
     "Mark as read": "Mark as read",
     "Match default setting": "Match default setting",
     "Mute room": "Mute room",
-    "space": {
-        "context_menu": {
-            "devtools_open_timeline": "See room timeline (devtools)",
-            "home": "Space home",
-            "manage_and_explore": "Manage & explore rooms",
-            "explore": "Explore rooms"
-        },
-        "suggested_tooltip": "This room is suggested as a good one to join",
-        "suggested": "Suggested",
-        "select_room_below": "Select a room below first",
-        "unmark_suggested": "Mark as not suggested",
-        "mark_suggested": "Mark as suggested",
-        "failed_remove_rooms": "Failed to remove some rooms. Try again later",
-        "failed_load_rooms": "Failed to load list of rooms.",
-        "incompatible_server_hierarchy": "Your server does not support showing space hierarchies.",
-        "landing_welcome": "Welcome to <name/>",
-        "share_public": "Share your public space"
-    },
     "Thread options": "Thread options",
     "Unable to start audio streaming.": "Unable to start audio streaming.",
     "Failed to start livestream": "Failed to start livestream",
@@ -3856,12 +3863,5 @@
     "Recovery Method Removed": "Recovery Method Removed",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
-    "in_space1_and_space2": "In spaces %(space1Name)s and %(space2Name)s.",
-    "in_space_and_n_other_spaces": {
-        "other": "In %(spaceName)s and %(count)s other spaces.",
-        "one": "In %(spaceName)s and %(count)s other space."
-    },
-    "in_space": "In %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
 }
