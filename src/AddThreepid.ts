@@ -229,7 +229,7 @@ export default class AddThreepid {
                         },
                     };
                     const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
-                        title: _t("Add Email Address"),
+                        title: _t("settings|general|add_email_dialog_title"),
                         matrixClient: this.matrixClient,
                         authData: err.data,
                         makeRequest: this.makeAddThreepidOnlyRequest,
@@ -243,10 +243,7 @@ export default class AddThreepid {
             }
         } catch (err) {
             if (err instanceof HTTPError && err.httpStatus === 401) {
-                throw new UserFriendlyError(
-                    "Failed to verify email address: make sure you clicked the link in the email",
-                    { cause: err },
-                );
+                throw new UserFriendlyError("settings|general|add_email_failed_verification", { cause: err });
             }
             // Otherwise, just blurt out the same error
             throw err;
@@ -294,7 +291,7 @@ export default class AddThreepid {
                 await authClient.getAccessToken(),
             );
         } else {
-            throw new UserFriendlyError("The add / bind with MSISDN flow is misconfigured");
+            throw new UserFriendlyError("settings|general|add_msisdn_misconfigured");
         }
 
         if (this.bind) {
@@ -320,19 +317,19 @@ export default class AddThreepid {
                 const dialogAesthetics = {
                     [SSOAuthEntry.PHASE_PREAUTH]: {
                         title: _t("auth|uia|sso_title"),
-                        body: _t("Confirm adding this phone number by using Single Sign On to prove your identity."),
+                        body: _t("settings|general|add_msisdn_confirm_sso_button"),
                         continueText: _t("auth|sso"),
                         continueKind: "primary",
                     },
                     [SSOAuthEntry.PHASE_POSTAUTH]: {
-                        title: _t("Confirm adding phone number"),
-                        body: _t("Click the button below to confirm adding this phone number."),
+                        title: _t("settings|general|add_msisdn_confirm_button"),
+                        body: _t("settings|general|add_msisdn_confirm_body"),
                         continueText: _t("action|confirm"),
                         continueKind: "primary",
                     },
                 };
                 const { finished } = Modal.createDialog(InteractiveAuthDialog<{}>, {
-                    title: _t("Add Phone Number"),
+                    title: _t("settings|general|add_msisdn_dialog_title"),
                     matrixClient: this.matrixClient,
                     authData: err.data,
                     makeRequest: this.makeAddThreepidOnlyRequest,

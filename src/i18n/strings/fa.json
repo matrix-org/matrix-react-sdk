@@ -27,18 +27,12 @@
     "Yesterday": "دیروز",
     "Low Priority": "کم اهمیت",
     "Failed to change password. Is your password correct?": "خطا در تغییر گذرواژه. آیا از درستی گذرواژه‌تان اطمینان دارید؟",
-    "Add Email Address": "افزودن نشانی رایانامه",
-    "Confirm adding phone number": "تأیید افزودن شماره تلفن",
-    "Add Phone Number": "افزودن شماره تلفن",
     "Later": "بعداً",
     "Contact your <a>server admin</a>.": "تماس با <a>مدیر کارسازتان</a>.",
     "Ok": "تأیید",
     "Encryption upgrade available": "ارتقای رمزنگاری ممکن است",
     "Verify this session": "تأیید این نشست",
     "Set up": "برپایی",
-    "Click the button below to confirm adding this phone number.": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "برای اثبات هویت خود، اضافه‌شدن این شماره تلفن را با استفاده از Single Sign On تائید کنید.",
-    "Failed to verify email address: make sure you clicked the link in the email": "خطا در تائید آدرس ایمیل: مطمئن شوید که بر روی لینک موجود در ایمیل کلیک کرده اید",
     "Forget room": "فراموش کردن اتاق",
     "Filter room members": "فیلتر کردن اعضای اتاق",
     "Failure to create room": "ایجاد اتاق با خطا مواجه شد",
@@ -1876,7 +1870,13 @@
             "email_address_in_use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
             "msisdn_in_use": "این شماره تلفن در حال استفاده است",
             "confirm_adding_email_title": "تأیید افزودن رایانامه",
-            "confirm_adding_email_body": "برای تأیید افزودن این نشانی رایانامه، دکمهٔ زیر را بزنید."
+            "confirm_adding_email_body": "برای تأیید افزودن این نشانی رایانامه، دکمهٔ زیر را بزنید.",
+            "add_email_dialog_title": "افزودن نشانی رایانامه",
+            "add_email_failed_verification": "خطا در تائید آدرس ایمیل: مطمئن شوید که بر روی لینک موجود در ایمیل کلیک کرده اید",
+            "add_msisdn_confirm_sso_button": "برای اثبات هویت خود، اضافه‌شدن این شماره تلفن را با استفاده از Single Sign On تائید کنید.",
+            "add_msisdn_confirm_button": "تأیید افزودن شماره تلفن",
+            "add_msisdn_confirm_body": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
+            "add_msisdn_dialog_title": "افزودن شماره تلفن"
         }
     },
     "devtools": {

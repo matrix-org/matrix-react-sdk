@@ -27,7 +27,6 @@
     "Warning!": "Внимание!",
     "You do not have permission to post to this room": "Вы не можете писать в эту комнату",
     "Failed to send request.": "Не удалось отправить запрос.",
-    "Failed to verify email address: make sure you clicked the link in the email": "Не удалось проверить email: убедитесь, что вы перешли по ссылке в письме",
     "Failure to create room": "Не удалось создать комнату",
     "Missing room_id in request": "Отсутствует room_id в запросе",
     "Missing user_id in request": "Отсутствует user_id в запросе",
@@ -516,8 +515,6 @@
     "Use an identity server": "Используйте сервер идентификации",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Используйте сервер идентификации что бы пригласить по электронной почте Нажмите Продолжить, чтобы использовать стандартный сервер идентифицации(%(defaultIdentityServerName)s) или изменить в Настройках.",
     "Use an identity server to invite by email. Manage in Settings.": "Используйте сервер идентификации что бы пригласить по электронной почте Управление в настройках.",
-    "Add Email Address": "Добавить адрес Email",
-    "Add Phone Number": "Добавить номер телефона",
     "Change identity server": "Изменить сервер идентификации",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Отключиться от сервера идентификации <current /> и вместо этого подключиться к <new />?",
     "Disconnect identity server": "Отключить идентификационный сервер",
@@ -633,9 +630,6 @@
     "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Подтвердите добавление этого номера телефона с помощью единой точки входа.",
-    "Confirm adding phone number": "Подтвердите добавление номера телефона",
-    "Click the button below to confirm adding this phone number.": "Нажмите кнопку ниже для добавления этого номера телефона.",
     "%(name)s is requesting verification": "%(name)s запрашивает проверку",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "У вашей учётной записи есть кросс-подпись в секретное хранилище, но она пока не является доверенной в этом сеансе.",
     "well formed": "корректный",
@@ -2639,7 +2633,13 @@
             "email_address_in_use": "Этот адрес электронной почты уже используется",
             "msisdn_in_use": "Этот номер телефона уже используется",
             "confirm_adding_email_title": "Подтвердите добавление почтового адреса",
-            "confirm_adding_email_body": "Нажмите кнопку ниже для подтверждения этого почтового адреса."
+            "confirm_adding_email_body": "Нажмите кнопку ниже для подтверждения этого почтового адреса.",
+            "add_email_dialog_title": "Добавить адрес Email",
+            "add_email_failed_verification": "Не удалось проверить email: убедитесь, что вы перешли по ссылке в письме",
+            "add_msisdn_confirm_sso_button": "Подтвердите добавление этого номера телефона с помощью единой точки входа.",
+            "add_msisdn_confirm_button": "Подтвердите добавление номера телефона",
+            "add_msisdn_confirm_body": "Нажмите кнопку ниже для добавления этого номера телефона.",
+            "add_msisdn_dialog_title": "Добавить номер телефона"
         }
     },
     "devtools": {

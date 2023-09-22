@@ -35,7 +35,6 @@
     "Failed to send request.": "การส่งคำขอล้มเหลว",
     "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
     "Failed to unban": "การถอนแบนล้มเหลว",
-    "Failed to verify email address: make sure you clicked the link in the email": "การยืนยันอีเมลล้มเหลว: กรุณาตรวจสอบว่าคุณคลิกลิงก์ในอีเมลแล้ว",
     "Failure to create room": "การสร้างห้องล้มเหลว",
     "Filter room members": "กรองสมาชิกห้อง",
     "Forget room": "ลืมห้อง",
@@ -146,7 +145,6 @@
     "Yesterday": "เมื่อวานนี้",
     "Low Priority": "ความสำคัญต่ำ",
     "Explore rooms": "สำรวจห้อง",
-    "Add Email Address": "เพิ่มที่อยู่อีเมล",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "โปรดสอบถามผู้ดูแลระบบของโฮมเซิร์ฟเวอร์ของคุณ (<code>%(homeserverDomain)s</code>) เพื่อกำหนดคอนฟิกเซิร์ฟเวอร์ TURN เพื่อให้การเรียกทำงานได้อย่างน่าเชื่อถือ.",
     "Call failed due to misconfigured server": "การโทรล้มเหลวเนื่องจากเซิร์ฟเวอร์กำหนดค่าไม่ถูกต้อง",
     "The call was answered on another device.": "คุณรับสายบนอุปกรณ์อื่นแล้ว.",
@@ -160,10 +158,6 @@
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ไฟล์ '%(fileName)s' เกินขีดจำกัดขนาดของโฮมเซิร์ฟเวอร์นี้สำหรับการอัปโหลด",
     "The file '%(fileName)s' failed to upload.": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
     "Unable to load! Check your network connectivity and try again.": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
-    "Add Phone Number": "เพิ่มหมายเลขโทรศัพท์",
-    "Click the button below to confirm adding this phone number.": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
-    "Confirm adding phone number": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "ยืนยันการเพิ่มหมายเลขโทรศัพท์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
     "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
     "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
@@ -436,7 +430,13 @@
             "email_address_in_use": "ที่อยู่อีเมลถูกใช้แล้ว",
             "msisdn_in_use": "หมายเลขโทรศัพท์นี้ถูกใช้งานแล้ว",
             "confirm_adding_email_title": "ยืนยันการเพิ่มอีเมล",
-            "confirm_adding_email_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มที่อยู่อีเมลนี้."
+            "confirm_adding_email_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มที่อยู่อีเมลนี้.",
+            "add_email_dialog_title": "เพิ่มที่อยู่อีเมล",
+            "add_email_failed_verification": "การยืนยันอีเมลล้มเหลว: กรุณาตรวจสอบว่าคุณคลิกลิงก์ในอีเมลแล้ว",
+            "add_msisdn_confirm_sso_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
+            "add_msisdn_confirm_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
+            "add_msisdn_confirm_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
+            "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์"
         }
     },
     "timeline": {

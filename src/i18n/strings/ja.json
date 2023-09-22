@@ -15,7 +15,6 @@
     "Failed to forget room %(errCode)s": "ルームの履歴を消去するのに失敗しました %(errCode)s",
     "Rooms": "ルーム",
     "Unnamed room": "名前のないルーム",
-    "Failed to verify email address: make sure you clicked the link in the email": "メールアドレスの認証に失敗しました。電子メール内のリンクをクリックしたことを確認してください",
     "Thursday": "木曜日",
     "All Rooms": "全てのルーム",
     "You cannot delete this message. (%(code)s)": "このメッセージを削除できません。(%(code)s）",
@@ -278,8 +277,6 @@
     "You do not have permission to invite people to this room.": "このルームにユーザーを招待する権限がありません。",
     "Unknown server error": "不明なサーバーエラー",
     "Room Name": "ルーム名",
-    "Add Email Address": "メールアドレスを追加",
-    "Add Phone Number": "電話番号を追加",
     "Call failed due to misconfigured server": "サーバーの不正な設定のため通話に失敗しました",
     "The file '%(fileName)s' failed to upload.": "ファイル '%(fileName)s' のアップロードに失敗しました。",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ファイル '%(fileName)s' はこのホームサーバーのアップロードのサイズ上限を超過しています",
@@ -939,9 +936,6 @@
     "The call was answered on another device.": "他の端末で呼び出しに応答しました。",
     "Answered Elsewhere": "他の端末で応答しました",
     "The call could not be established": "通話を確立できませんでした",
-    "Click the button below to confirm adding this phone number.": "下のボタンをクリックすると、この電話番号を追加します。",
-    "Confirm adding phone number": "電話番号の追加を承認",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、電話番号の追加を承認してください。",
     "%(name)s accepted": "%(name)sは受け付けました",
     "You accepted": "受け付けました",
     "%(name)s cancelled": "%(name)sは中止しました",
@@ -2707,7 +2701,13 @@
             "email_address_in_use": "このメールアドレスは既に使用されています",
             "msisdn_in_use": "この電話番号は既に使用されています",
             "confirm_adding_email_title": "メールアドレスの追加を承認",
-            "confirm_adding_email_body": "下のボタンをクリックすると、このメールアドレスを追加します。"
+            "confirm_adding_email_body": "下のボタンをクリックすると、このメールアドレスを追加します。",
+            "add_email_dialog_title": "メールアドレスを追加",
+            "add_email_failed_verification": "メールアドレスの認証に失敗しました。電子メール内のリンクをクリックしたことを確認してください",
+            "add_msisdn_confirm_sso_button": "シングルサインオンを使用して本人確認を行い、電話番号の追加を承認してください。",
+            "add_msisdn_confirm_button": "電話番号の追加を承認",
+            "add_msisdn_confirm_body": "下のボタンをクリックすると、この電話番号を追加します。",
+            "add_msisdn_dialog_title": "電話番号を追加"
         }
     },
     "devtools": {

@@ -63,7 +63,6 @@
         "other": "a %(count)s další...",
         "one": "a někdo další..."
     },
-    "Failed to verify email address: make sure you clicked the link in the email": "E-mailovou adresu se nepodařilo ověřit. Přesvědčte se, že jste klepli na odkaz v e-mailové zprávě",
     "Incorrect verification code": "Nesprávný ověřovací kód",
     "Invalid Email Address": "Neplatná e-mailová adresa",
     "Join Room": "Vstoupit do místnosti",
@@ -529,8 +528,6 @@
     "Command Help": "Nápověda příkazu",
     "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
     "Be found by phone or email": "Umožnit ostatním mě nalézt pomocí e-mailu nebo telefonu",
-    "Add Email Address": "Přidat e-mailovou adresu",
-    "Add Phone Number": "Přidat telefonní číslo",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Tato akce vyžaduje přístup k výchozímu serveru identity <server /> aby šlo ověřit e-mail a telefon, ale server nemá podmínky použití.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Před odpojením byste měli <b>smazat osobní údaje</b> ze serveru identit <idserver />. Bohužel, server je offline nebo neodpovídá.",
@@ -743,9 +740,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "V šifrovaných místnostech jsou vaše zprávy bezpečné a pouze vy a příjemce má klíče k jejich rozšifrování.",
     "Verify all users in a room to ensure it's secure.": "Ověřit všechny uživatele v místnosti, abyste se přesvědčili o bezpečnosti.",
     "Enter a server name": "Zadejte jméno serveru",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrďte přidání telefonního čísla pomocí Jednotného přihlášení.",
-    "Confirm adding phone number": "Potrvrdit přidání telefonního čísla",
-    "Click the button below to confirm adding this phone number.": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
     "Almost there! Is %(displayName)s showing the same shield?": "Téměř hotovo! Je relace %(displayName)s také ověřená?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Ověřili jste %(deviceName)s (%(deviceId)s)!",
@@ -2011,7 +2005,6 @@
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
     "Formatting": "Formátování",
-    "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
     "Upload custom sound": "Nahrát vlastní zvuk",
     "Error changing password": "Chyba při změně hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
@@ -2865,7 +2858,14 @@
             "msisdn_in_use": "Toto telefonní číslo je již používáno",
             "identity_server_no_token": "Nebyl nalezen žádný přístupový token identity",
             "confirm_adding_email_title": "Potvrdit přidání emailu",
-            "confirm_adding_email_body": "Kliknutím na tlačítko potvrdíte přidání emailové adresy."
+            "confirm_adding_email_body": "Kliknutím na tlačítko potvrdíte přidání emailové adresy.",
+            "add_email_dialog_title": "Přidat e-mailovou adresu",
+            "add_email_failed_verification": "E-mailovou adresu se nepodařilo ověřit. Přesvědčte se, že jste klepli na odkaz v e-mailové zprávě",
+            "add_msisdn_misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
+            "add_msisdn_confirm_sso_button": "Potvrďte přidání telefonního čísla pomocí Jednotného přihlášení.",
+            "add_msisdn_confirm_button": "Potrvrdit přidání telefonního čísla",
+            "add_msisdn_confirm_body": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
+            "add_msisdn_dialog_title": "Přidat telefonní číslo"
         }
     },
     "devtools": {

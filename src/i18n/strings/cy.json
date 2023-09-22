@@ -1,7 +1,4 @@
 {
-    "Add Email Address": "Ychwanegu Cyfeiriad E-bost",
-    "Failed to verify email address: make sure you clicked the link in the email": "Methiant gwirio cyfeiriad e-bost: gwnewch yn siŵr eich bod wedi clicio'r ddolen yn yr e-bost",
-    "Add Phone Number": "Ychwanegu Rhif Ffôn",
     "Explore rooms": "Archwilio Ystafelloedd",
     "action": {
         "dismiss": "Wfftio",
@@ -21,7 +18,10 @@
     "settings": {
         "general": {
             "email_address_in_use": "Mae'r cyfeiriad e-bost yma yn cael ei ddefnyddio eisoes",
-            "msisdn_in_use": "Mae'r rhif ffôn yma yn cael ei ddefnyddio eisoes"
+            "msisdn_in_use": "Mae'r rhif ffôn yma yn cael ei ddefnyddio eisoes",
+            "add_email_dialog_title": "Ychwanegu Cyfeiriad E-bost",
+            "add_email_failed_verification": "Methiant gwirio cyfeiriad e-bost: gwnewch yn siŵr eich bod wedi clicio'r ddolen yn yr e-bost",
+            "add_msisdn_dialog_title": "Ychwanegu Rhif Ffôn"
         }
     }
 }

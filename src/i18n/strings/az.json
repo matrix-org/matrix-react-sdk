@@ -1,6 +1,5 @@
 {
     "Operation failed": "Əməliyyatın nasazlığı",
-    "Failed to verify email address: make sure you clicked the link in the email": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
     "You cannot place a call with yourself.": "Siz özünə zəng vura bilmirsiniz.",
     "Warning!": "Diqqət!",
     "Upload Failed": "Faylın göndərilməsinin nasazlığı",
@@ -116,8 +115,6 @@
     "You are not in this room.": "Sən bu otaqda deyilsən.",
     "You do not have permission to do that in this room.": "Bu otaqda bunu etməyə icazəniz yoxdur.",
     "Verified key": "Təsdiqlənmiş açar",
-    "Add Email Address": "Emal ünvan əlavə etmək",
-    "Add Phone Number": "Telefon nömrəsi əlavə etmək",
     "Call failed due to misconfigured server": "Düzgün qurulmamış server səbəbindən zəng alınmadı",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Xahiş edirik, baş serverin administratoruna müraciət edin (<code>%(homeserverDomain)s</code>) ki zənglərin etibarlı işləməsi üçün dönüş serverini konfiqurasiya etsin.",
     "The file '%(fileName)s' failed to upload.": "'%(fileName)s' faylı yüklənə bilmədi.",
@@ -198,7 +195,10 @@
         "general": {
             "account_section": "Hesab",
             "email_address_in_use": "Bu e-mail ünvanı istifadə olunur",
-            "msisdn_in_use": "Bu telefon nömrəsi artıq istifadə olunur"
+            "msisdn_in_use": "Bu telefon nömrəsi artıq istifadə olunur",
+            "add_email_dialog_title": "Emal ünvan əlavə etmək",
+            "add_email_failed_verification": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
+            "add_msisdn_dialog_title": "Telefon nömrəsi əlavə etmək"
         }
     },
     "timeline": {

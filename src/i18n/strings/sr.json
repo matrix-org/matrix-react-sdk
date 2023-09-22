@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Неуспела провера адресе е-поште: морате да кликнете на везу у поруци",
     "You cannot place a call with yourself.": "Не можете позвати сами себе.",
     "Warning!": "Упозорење!",
     "Upload Failed": "Отпремање није успело",
@@ -256,7 +255,6 @@
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Call failed due to misconfigured server": "Позив неуспешан због лоше подешеног сервера",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
-    "Add Email Address": "Додај адресу е-поште",
     "Identity server has no terms of service": "Идентитетски сервер нема услове коришћења",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
     "Encryption upgrade available": "Надоградња шифровања је доступна",
@@ -572,10 +570,6 @@
     "The call was answered on another device.": "На позив је одговорено на другом уређају.",
     "Answered Elsewhere": "Одговорен другде",
     "The call could not be established": "Позив није могао да се успостави",
-    "Add Phone Number": "Додај број телефона",
-    "Click the button below to confirm adding this phone number.": "Кликните на дугме испод за потврду додавања броја телефона.",
-    "Confirm adding phone number": "Потврда додавања броја телефона",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Потврдите додавање броја телефона помоћу јединствене пријаве да докажете свој идентитет.",
     "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
     "Please contact your homeserver administrator.": "Контактирајте администратора вашег сервера.",
@@ -967,7 +961,13 @@
             "email_address_in_use": "Ова адреса е-поште се већ користи",
             "msisdn_in_use": "Овај број телефона се већ користи",
             "confirm_adding_email_title": "Потврди додавање е-адресе",
-            "confirm_adding_email_body": "Кликните на дугме испод за потврђивање додавања ове е-адресе."
+            "confirm_adding_email_body": "Кликните на дугме испод за потврђивање додавања ове е-адресе.",
+            "add_email_dialog_title": "Додај адресу е-поште",
+            "add_email_failed_verification": "Неуспела провера адресе е-поште: морате да кликнете на везу у поруци",
+            "add_msisdn_confirm_sso_button": "Потврдите додавање броја телефона помоћу јединствене пријаве да докажете свој идентитет.",
+            "add_msisdn_confirm_button": "Потврда додавања броја телефона",
+            "add_msisdn_confirm_body": "Кликните на дугме испод за потврду додавања броја телефона.",
+            "add_msisdn_dialog_title": "Додај број телефона"
         }
     },
     "devtools": {

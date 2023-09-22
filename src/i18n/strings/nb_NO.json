@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Klarte ikke verifisere e-postadressen: dobbelsjekk at du trykket på lenken i e-posten",
     "Sunday": "Søndag",
     "Notification targets": "Mål for varsel",
     "Today": "I dag",
@@ -85,8 +84,6 @@
     "You are no longer ignoring %(userId)s": "%(userId)s blir ikke lengre ignorert",
     "Verified key": "Verifisert nøkkel",
     "Reason": "Årsak",
-    "Add Email Address": "Legg til E-postadresse",
-    "Add Phone Number": "Legg til telefonnummer",
     "Dog": "Hund",
     "Cat": "Katt",
     "Horse": "Hest",
@@ -368,7 +365,6 @@
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
-    "Confirm adding phone number": "Bekreft tillegging av telefonnummer",
     "Setting up keys": "Setter opp nøkler",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
     "Use an identity server": "Bruk en identitetstjener",
@@ -556,8 +552,6 @@
     "Too Many Calls": "For mange samtaler",
     "The call was answered on another device.": "Samtalen ble besvart på en annen enhet.",
     "The call could not be established": "Samtalen kunne ikke etableres",
-    "Click the button below to confirm adding this phone number.": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekreft dette telefonnummeret ved å bruke Single Sign On for å bevise din identitet.",
     "Recently visited rooms": "Nylig besøkte rom",
     "Edit devices": "Rediger enheter",
     "Add existing room": "Legg til et eksisterende rom",
@@ -1226,7 +1220,13 @@
             "email_address_in_use": "Denne e-postadressen er allerede i bruk",
             "msisdn_in_use": "Dette mobilnummeret er allerede i bruk",
             "confirm_adding_email_title": "Bekreft tillegging av E-postadresse",
-            "confirm_adding_email_body": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen."
+            "confirm_adding_email_body": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen.",
+            "add_email_dialog_title": "Legg til E-postadresse",
+            "add_email_failed_verification": "Klarte ikke verifisere e-postadressen: dobbelsjekk at du trykket på lenken i e-posten",
+            "add_msisdn_confirm_sso_button": "Bekreft dette telefonnummeret ved å bruke Single Sign On for å bevise din identitet.",
+            "add_msisdn_confirm_button": "Bekreft tillegging av telefonnummer",
+            "add_msisdn_confirm_body": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
+            "add_msisdn_dialog_title": "Legg til telefonnummer"
         }
     },
     "devtools": {

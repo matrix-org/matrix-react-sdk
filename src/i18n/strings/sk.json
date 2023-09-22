@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Nepodarilo sa overiť emailovú adresu: Uistite sa, že ste správne klikli na odkaz v emailovej správe",
     "You cannot place a call with yourself.": "Nemôžete zavolať samému sebe.",
     "Warning!": "Upozornenie!",
     "Upload Failed": "Nahrávanie zlyhalo",
@@ -439,8 +438,6 @@
     "Identity server has no terms of service": "Server totožností nemá žiadne podmienky poskytovania služieb",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
     "Only continue if you trust the owner of the server.": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera.",
-    "Add Email Address": "Pridať emailovú adresu",
-    "Add Phone Number": "Pridať telefónne číslo",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
     "Error upgrading room": "Chyba pri aktualizácii miestnosti",
     "Double check that your server supports the room version chosen and try again.": "Uistite sa, že domovský server podporuje zvolenú verziu miestnosti a skúste znovu.",
@@ -476,9 +473,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Súhlaste s podmienkami používania servera totožností (%(serverName)s), aby ste mohli byť nájdení zadaním emailovej adresy alebo telefónneho čísla.",
     "Discovery": "Objavovanie",
     "Deactivate account": "Deaktivovať účet",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrďte pridanie telefónneho čísla pomocou Single Sign On.",
-    "Confirm adding phone number": "Potvrdiť pridanie telefónneho čísla",
-    "Click the button below to confirm adding this phone number.": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
     "Cancel entering passphrase?": "Zrušiť zadanie prístupovej frázy?",
     "Setting up keys": "Príprava kľúčov",
     "Verify this session": "Overiť túto reláciu",
@@ -2011,7 +2005,6 @@
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
     "Formatting": "Formátovanie",
-    "The add / bind with MSISDN flow is misconfigured": "Pridanie / prepojenie s MSISDN je nesprávne nakonfigurované",
     "Image view": "Prehľad obrázkov",
     "Upload custom sound": "Nahrať vlastný zvuk",
     "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
@@ -2860,7 +2853,14 @@
             "msisdn_in_use": "Toto telefónne číslo sa už používa",
             "identity_server_no_token": "Nenašiel sa prístupový token totožnosti",
             "confirm_adding_email_title": "Potvrdiť pridanie emailu",
-            "confirm_adding_email_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie emailovej adresy."
+            "confirm_adding_email_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie emailovej adresy.",
+            "add_email_dialog_title": "Pridať emailovú adresu",
+            "add_email_failed_verification": "Nepodarilo sa overiť emailovú adresu: Uistite sa, že ste správne klikli na odkaz v emailovej správe",
+            "add_msisdn_misconfigured": "Pridanie / prepojenie s MSISDN je nesprávne nakonfigurované",
+            "add_msisdn_confirm_sso_button": "Potvrďte pridanie telefónneho čísla pomocou Single Sign On.",
+            "add_msisdn_confirm_button": "Potvrdiť pridanie telefónneho čísla",
+            "add_msisdn_confirm_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
+            "add_msisdn_dialog_title": "Pridať telefónne číslo"
         }
     },
     "devtools": {

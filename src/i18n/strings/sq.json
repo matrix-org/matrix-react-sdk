@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "S’u arrit të verifikohej adresë email: sigurohuni se keni klikuar lidhjen te email-i",
     "You cannot place a call with yourself.": "S’mund të bëni thirrje me vetveten.",
     "Warning!": "Sinjalizim!",
     "Upload Failed": "Ngarkimi Dështoi",
@@ -570,8 +569,6 @@
     "Close dialog": "Mbylle dialogun",
     "Hide advanced": "Fshihi të mëtejshmet",
     "Show advanced": "Shfaqi të mëtejshmet",
-    "Add Email Address": "Shtoni Adresë Email",
-    "Add Phone Number": "Shtoni Numër Telefoni",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Përpara shkëputjes, duhet <b>të hiqni të dhënat tuaja personale</b> nga shërbyesi i identiteteve <idserver />. Mjerisht, shërbyesi i identiteteve <idserver /> hëpërhë është jashtë funksionimi dhe s’mund të kapet.",
     "You should:": "Duhet:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "të kontrolloni shtojcat e shfletuesit tuaj për çfarëdo që mund të bllokojë shërbyesin e identiteteve (bie fjala, Privacy Badger)",
@@ -760,9 +757,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifikoni individualisht çdo sesion të përdorur nga një përdorues, për t’i vënë shenjë si i besuar, duke mos besuar pajisje <em>cross-signed</em>.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Në dhoma të fshehtëzuara, mesazhet tuaj sigurohen dhe vetëm ju dhe marrësi ka kyçet unikë për shkyçjen e tyre.",
     "Verify all users in a room to ensure it's secure.": "Verifiko krejt përdoruesit në dhomë, për të garantuar se është e sigurt.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Ripohojeni shtimin e këtij numri telefoni duke përdorur Hyrje Njëshe që të provoni identitetin tuaj.",
-    "Confirm adding phone number": "Ripohoni shtim numri telefoni",
-    "Click the button below to confirm adding this phone number.": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
     "Almost there! Is %(displayName)s showing the same shield?": "Thuaje mbërritëm! A shfaq %(displayName)s të njëjtën mburojë?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Keni verifikuar me sukses %(deviceName)s (%(deviceId)s)!",
     "Start verification again from the notification.": "Rifillo verifikimin prej njoftimit.",
@@ -2784,7 +2778,13 @@
             "msisdn_in_use": "Ky numër telefoni është tashmë në përdorim",
             "identity_server_no_token": "S’u gjet token hyrjeje identiteti",
             "confirm_adding_email_title": "Ripohoni shtim email-i",
-            "confirm_adding_email_body": "Klikoni butonin më poshtë që të ripohoni shtimin e kësaj adrese email."
+            "confirm_adding_email_body": "Klikoni butonin më poshtë që të ripohoni shtimin e kësaj adrese email.",
+            "add_email_dialog_title": "Shtoni Adresë Email",
+            "add_email_failed_verification": "S’u arrit të verifikohej adresë email: sigurohuni se keni klikuar lidhjen te email-i",
+            "add_msisdn_confirm_sso_button": "Ripohojeni shtimin e këtij numri telefoni duke përdorur Hyrje Njëshe që të provoni identitetin tuaj.",
+            "add_msisdn_confirm_button": "Ripohoni shtim numri telefoni",
+            "add_msisdn_confirm_body": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
+            "add_msisdn_dialog_title": "Shtoni Numër Telefoni"
         }
     },
     "devtools": {

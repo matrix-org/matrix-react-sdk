@@ -3,17 +3,11 @@
     "Create new room": "إنشاء غرفة جديدة",
     "Failed to change password. Is your password correct?": "فشلت عملية تعديل الكلمة السرية. هل كلمتك السرية صحيحة ؟",
     "Send": "إرسال",
-    "Failed to verify email address: make sure you clicked the link in the email": "فشل التثبّت من عنوان البريد الإلكتروني: تأكّد من نقر الرابط في البريد المُرسل",
     "Unavailable": "غير متوفر",
     "All Rooms": "كل الغُرف",
     "All messages": "كل الرسائل",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
-    "Add Email Address": "أضِف بريدًا إلكترونيًا",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "أكّد إضافتك لرقم الهاتف هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
-    "Confirm adding phone number": "أكّد إضافة رقم الهاتف",
-    "Click the button below to confirm adding this phone number.": "انقر الزر بالأسفل لتأكيد إضافة رقم الهاتف هذا.",
-    "Add Phone Number": "أضِف رقم الهاتف",
     "Unable to load! Check your network connectivity and try again.": "تعذر التحميل! افحص اتصالك بالشبكة وأعِد المحاولة.",
     "Call failed due to misconfigured server": "فشل الاتصال بسبب سوء ضبط الخادوم",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "من فضلك اطلب من مسؤول الخادوم المنزل الذي تستعمله (<code>%(homeserverDomain)s</code>) أن يضبط خادوم TURN كي تعمل الاتصالات بنحوٍ يكون محط ثقة.",
@@ -959,7 +953,13 @@
             "email_address_in_use": "عنوان البريد هذا مستعمل",
             "msisdn_in_use": "رقم الهاتف هذا مستخدم بالفعل",
             "confirm_adding_email_title": "أكّد إضافة البريد الإلكتروني",
-            "confirm_adding_email_body": "انقر الزر بالأسفل لتأكيد إضافة عنوان البريد الإلكتروني هذا."
+            "confirm_adding_email_body": "انقر الزر بالأسفل لتأكيد إضافة عنوان البريد الإلكتروني هذا.",
+            "add_email_dialog_title": "أضِف بريدًا إلكترونيًا",
+            "add_email_failed_verification": "فشل التثبّت من عنوان البريد الإلكتروني: تأكّد من نقر الرابط في البريد المُرسل",
+            "add_msisdn_confirm_sso_button": "أكّد إضافتك لرقم الهاتف هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
+            "add_msisdn_confirm_button": "أكّد إضافة رقم الهاتف",
+            "add_msisdn_confirm_body": "انقر الزر بالأسفل لتأكيد إضافة رقم الهاتف هذا.",
+            "add_msisdn_dialog_title": "أضِف رقم الهاتف"
         }
     },
     "devtools": {

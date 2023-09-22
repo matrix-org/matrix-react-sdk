@@ -14,7 +14,6 @@
     "Return to login screen": "Itzuli saio hasierarako pantailara",
     "Email address": "E-mail helbidea",
     "A new password must be entered.": "Pasahitz berri bat sartu behar da.",
-    "Failed to verify email address: make sure you clicked the link in the email": "Huts egin du e-mail helbidearen egiaztaketak, egin klik e-mailean zetorren estekan",
     "Jump to first unread message.": "Jauzi irakurri gabeko lehen mezura.",
     "Warning!": "Abisua!",
     "Unban": "Debekua kendu",
@@ -530,8 +529,6 @@
     "Deactivate user": "Desaktibatu erabiltzailea",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Lotu e-mail hau zure kontuarekin gonbidapenak zuzenean %(brand)s-en jasotzeko.",
     "This invite to %(roomName)s was sent to %(email)s": "%(roomName)s gelara gonbidapen hau %(email)s helbidera bidali da",
-    "Add Email Address": "Gehitu e-mail helbidea",
-    "Add Phone Number": "Gehitu telefono zenbakia",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Sakatu jarraitu lehenetsitakoa erabiltzeko (%(defaultIdentityServerName)s) edo aldatu ezarpenetan.",
     "Use an identity server to invite by email. Manage in Settings.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu ezarpenetan.",
     "Change identity server": "Aldatu identitate-zerbitzaria",
@@ -761,9 +758,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Baieztatu telefono zenbaki hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
-    "Confirm adding phone number": "Berretsi telefono zenbakia gehitzea",
-    "Click the button below to confirm adding this phone number.": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
     "%(name)s is requesting verification": "%(name)s egiaztaketa eskatzen ari da",
     "well formed": "ongi osatua",
     "unexpected type": "ustekabeko mota",
@@ -1193,7 +1187,13 @@
             "email_address_in_use": "E-mail helbide hau erabilita dago",
             "msisdn_in_use": "Telefono zenbaki hau erabilita dago",
             "confirm_adding_email_title": "Baieztatu e-maila gehitzea",
-            "confirm_adding_email_body": "Sakatu beheko botoia e-mail helbide hau gehitzea berresteko."
+            "confirm_adding_email_body": "Sakatu beheko botoia e-mail helbide hau gehitzea berresteko.",
+            "add_email_dialog_title": "Gehitu e-mail helbidea",
+            "add_email_failed_verification": "Huts egin du e-mail helbidearen egiaztaketak, egin klik e-mailean zetorren estekan",
+            "add_msisdn_confirm_sso_button": "Baieztatu telefono zenbaki hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
+            "add_msisdn_confirm_button": "Berretsi telefono zenbakia gehitzea",
+            "add_msisdn_confirm_body": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
+            "add_msisdn_dialog_title": "Gehitu telefono zenbakia"
         }
     },
     "devtools": {

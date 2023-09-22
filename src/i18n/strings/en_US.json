@@ -37,7 +37,6 @@
     "Failed to send request.": "Failed to send request.",
     "Failed to set display name": "Failed to set display name",
     "Failed to unban": "Failed to unban",
-    "Failed to verify email address: make sure you clicked the link in the email": "Failed to verify email address: make sure you clicked the link in the email",
     "Failure to create room": "Failure to create room",
     "Favourite": "Favorite",
     "Filter room members": "Filter room members",
@@ -210,11 +209,6 @@
     "Your %(brand)s is misconfigured": "Your %(brand)s is misconfigured",
     "Call failed due to misconfigured server": "Call failed due to misconfigured server",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
-    "Add Email Address": "Add Email Address",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirm adding this phone number by using Single Sign On to prove your identity.",
-    "Confirm adding phone number": "Confirm adding phone number",
-    "Click the button below to confirm adding this phone number.": "Click the button below to confirm adding this phone number.",
-    "Add Phone Number": "Add Phone Number",
     "Cancel entering passphrase?": "Cancel entering passphrase?",
     "Are you sure you want to cancel entering passphrase?": "Are you sure you want to cancel entering passphrase?",
     "Setting up keys": "Setting up keys",
@@ -349,7 +343,13 @@
             "email_address_in_use": "This email address is already in use",
             "msisdn_in_use": "This phone number is already in use",
             "confirm_adding_email_title": "Confirm adding email",
-            "confirm_adding_email_body": "Click the button below to confirm adding this email address."
+            "confirm_adding_email_body": "Click the button below to confirm adding this email address.",
+            "add_email_dialog_title": "Add Email Address",
+            "add_email_failed_verification": "Failed to verify email address: make sure you clicked the link in the email",
+            "add_msisdn_confirm_sso_button": "Confirm adding this phone number by using Single Sign On to prove your identity.",
+            "add_msisdn_confirm_button": "Confirm adding phone number",
+            "add_msisdn_confirm_body": "Click the button below to confirm adding this phone number.",
+            "add_msisdn_dialog_title": "Add Phone Number"
         }
     },
     "timeline": {

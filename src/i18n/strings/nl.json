@@ -72,7 +72,6 @@
     "Failed to send request.": "Versturen van verzoek is mislukt.",
     "Failed to set display name": "Instellen van weergavenaam is mislukt",
     "Failed to unban": "Ontbannen mislukt",
-    "Failed to verify email address: make sure you clicked the link in the email": "Kan het e-mailadres niet verifiëren: zorg ervoor dat je de koppeling in de e-mail hebt aangeklikt",
     "Failure to create room": "Aanmaken van kamer is mislukt",
     "Filter room members": "Kamerleden filteren",
     "Forget room": "Kamer vergeten",
@@ -572,8 +571,6 @@
     "Close dialog": "Dialoog sluiten",
     "Hide advanced": "Geavanceerde info verbergen",
     "Show advanced": "Geavanceerde info tonen",
-    "Add Email Address": "E-mailadres toevoegen",
-    "Add Phone Number": "Telefoonnummer toevoegen",
     "Your email address hasn't been verified yet": "Jouw e-mailadres is nog niet geverifieerd",
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
     "Setting up keys": "Sleutelconfiguratie",
@@ -732,9 +729,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bevestig je identiteit met je eenmalige aanmelding om dit telefoonnummer toe te voegen.",
-    "Confirm adding phone number": "Bevestig toevoegen van het telefoonnummer",
-    "Click the button below to confirm adding this phone number.": "Klik op de knop hieronder om het toevoegen van dit telefoonnummer te bevestigen.",
     "New login. Was this you?": "Nieuwe login gevonden. Was jij dat?",
     "%(name)s is requesting verification": "%(name)s verzoekt om verificatie",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
@@ -2576,7 +2570,13 @@
             "email_address_in_use": "Dit e-mailadres is al in gebruik",
             "msisdn_in_use": "Dit telefoonnummer is al in gebruik",
             "confirm_adding_email_title": "Bevestig toevoegen van het e-mailadres",
-            "confirm_adding_email_body": "Klik op de knop hieronder om dit e-mailadres toe te voegen."
+            "confirm_adding_email_body": "Klik op de knop hieronder om dit e-mailadres toe te voegen.",
+            "add_email_dialog_title": "E-mailadres toevoegen",
+            "add_email_failed_verification": "Kan het e-mailadres niet verifiëren: zorg ervoor dat je de koppeling in de e-mail hebt aangeklikt",
+            "add_msisdn_confirm_sso_button": "Bevestig je identiteit met je eenmalige aanmelding om dit telefoonnummer toe te voegen.",
+            "add_msisdn_confirm_button": "Bevestig toevoegen van het telefoonnummer",
+            "add_msisdn_confirm_body": "Klik op de knop hieronder om het toevoegen van dit telefoonnummer te bevestigen.",
+            "add_msisdn_dialog_title": "Telefoonnummer toevoegen"
         }
     },
     "devtools": {

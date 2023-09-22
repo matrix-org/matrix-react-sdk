@@ -15,7 +15,6 @@
     "Failed to send request.": "请求发送失败。",
     "Failed to set display name": "设置显示名称失败",
     "Failed to unban": "解除封禁失败",
-    "Failed to verify email address: make sure you clicked the link in the email": "邮箱验证失败：请确保你已点击邮件中的链接",
     "Failure to create room": "创建房间失败",
     "Favourite": "收藏",
     "Filter room members": "过滤房间成员",
@@ -424,14 +423,9 @@
     "Revoke invite": "撤销邀请",
     "Invited by %(sender)s": "被 %(sender)s 邀请",
     "Remember my selection for this widget": "记住我对此挂件的选择",
-    "Add Email Address": "添加邮箱",
-    "Add Phone Number": "添加电话号码",
     "Call failed due to misconfigured server": "服务器配置错误导致通话失败",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "请联系你的家服务器（<code>%(homeserverDomain)s</code>）的管理员配置 TURN 服务器，以确保通话过程稳定。",
     "Your %(brand)s is misconfigured": "你的 %(brand)s 配置有错误",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "通过单点登录以证明你的身份，并确认添加此电话号码。",
-    "Confirm adding phone number": "确认添加电话号码",
-    "Click the button below to confirm adding this phone number.": "点击下面的按钮，以确认添加此电话号码。",
     "The file '%(fileName)s' failed to upload.": "文件《%(fileName)s》上传失败。",
     "The server does not support the room version specified.": "服务器不支持指定的房间版本。",
     "Cancel entering passphrase?": "取消输入口令词组？",
@@ -1866,7 +1860,6 @@
     "Database unexpectedly closed": "数据库意外关闭",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "无法在未设置身份服务器时邀请用户，你可以在“设置”里连接一个。",
     "This session is backing up your keys.": "此会话正在备份你的密钥。",
-    "The add / bind with MSISDN flow is misconfigured": "MSISDN的新增/绑定流程配置错误",
     "User is not logged in": "用户未登录",
     "common": {
         "about": "关于",
@@ -2555,7 +2548,14 @@
             "msisdn_in_use": "此电话号码已被使用",
             "identity_server_no_token": "找不到身份访问令牌",
             "confirm_adding_email_title": "确认添加邮箱",
-            "confirm_adding_email_body": "点击下面的按钮，以确认添加此邮箱地址。"
+            "confirm_adding_email_body": "点击下面的按钮，以确认添加此邮箱地址。",
+            "add_email_dialog_title": "添加邮箱",
+            "add_email_failed_verification": "邮箱验证失败：请确保你已点击邮件中的链接",
+            "add_msisdn_misconfigured": "MSISDN的新增/绑定流程配置错误",
+            "add_msisdn_confirm_sso_button": "通过单点登录以证明你的身份，并确认添加此电话号码。",
+            "add_msisdn_confirm_button": "确认添加电话号码",
+            "add_msisdn_confirm_body": "点击下面的按钮，以确认添加此电话号码。",
+            "add_msisdn_dialog_title": "添加电话号码"
         }
     },
     "devtools": {

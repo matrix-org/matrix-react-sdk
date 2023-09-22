@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Fallo na verificación do enderezo de correo: asegúrese de ter picado na ligazón do correo",
     "You cannot place a call with yourself.": "Non podes facer unha chamada a ti mesma.",
     "Warning!": "Aviso!",
     "Upload Failed": "Fallou o envío",
@@ -255,11 +254,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque este servidor acadou o Límite Mensual de Usuaria Activa. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque o servidor superou o límite de recursos. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Please <a>contact your service administrator</a> to continue using this service.": "Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
-    "Add Email Address": "Engadir email",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma que queres engadir este teléfono usando Single Sign On como proba de identidade.",
-    "Confirm adding phone number": "Confirma a adición do teléfono",
-    "Click the button below to confirm adding this phone number.": "Preme no botón inferior para confirmar que engades este número.",
-    "Add Phone Number": "Engadir novo Número",
     "Sign Up": "Rexistro",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma a desactivación da túa conta usando Single Sign On para probar a túa identidade.",
@@ -2507,7 +2501,13 @@
             "email_address_in_use": "Xa se está a usar este email",
             "msisdn_in_use": "Xa se está a usar este teléfono",
             "confirm_adding_email_title": "Confirma novo email",
-            "confirm_adding_email_body": "Preme no botón inferior para confirmar que queres engadir o email."
+            "confirm_adding_email_body": "Preme no botón inferior para confirmar que queres engadir o email.",
+            "add_email_dialog_title": "Engadir email",
+            "add_email_failed_verification": "Fallo na verificación do enderezo de correo: asegúrese de ter picado na ligazón do correo",
+            "add_msisdn_confirm_sso_button": "Confirma que queres engadir este teléfono usando Single Sign On como proba de identidade.",
+            "add_msisdn_confirm_button": "Confirma a adición do teléfono",
+            "add_msisdn_confirm_body": "Preme no botón inferior para confirmar que engades este número.",
+            "add_msisdn_dialog_title": "Engadir novo Número"
         }
     },
     "devtools": {

@@ -1,10 +1,4 @@
 {
-    "Add Phone Number": "ເພີ່ມເບີໂທລະສັບ",
-    "Click the button below to confirm adding this phone number.": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
-    "Confirm adding phone number": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
-    "Failed to verify email address: make sure you clicked the link in the email": "ບໍ່ສາມາດກວດສອບອີເມວໄດ້: ໃຫ້ແນ່ໃຈວ່າທ່ານໄດ້ກົດໃສ່ການເຊື່ອມຕໍ່ໃນອີເມວ",
-    "Add Email Address": "ເພີ່ມອີເມວ",
     "Papua New Guinea": "ປາປົວນິວກີນີ",
     "Panama": "ປານາມາ",
     "Palestine": "ປາແລັດສະໄຕ",
@@ -2317,7 +2311,13 @@
             "email_address_in_use": "ອີເມວນີ້ຖືກໃຊ້ແລ້ວ",
             "msisdn_in_use": "ເບີໂທນີ້ຖືກໃຊ້ແລ້ວ",
             "confirm_adding_email_title": "ຢືນຢັນການເພີ່ມອີເມວ",
-            "confirm_adding_email_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້."
+            "confirm_adding_email_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
+            "add_email_dialog_title": "ເພີ່ມອີເມວ",
+            "add_email_failed_verification": "ບໍ່ສາມາດກວດສອບອີເມວໄດ້: ໃຫ້ແນ່ໃຈວ່າທ່ານໄດ້ກົດໃສ່ການເຊື່ອມຕໍ່ໃນອີເມວ",
+            "add_msisdn_confirm_sso_button": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
+            "add_msisdn_confirm_button": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
+            "add_msisdn_confirm_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
+            "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ"
         }
     },
     "devtools": {

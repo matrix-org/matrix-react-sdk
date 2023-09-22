@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Nismo u mogućnosti verificirati Vašu email adresu. Provjerite dali ste kliknuli link u mailu",
     "France": "Francuska",
     "Finland": "Finska",
     "Fiji": "Fiji",
@@ -133,11 +132,6 @@
     "The user you called is busy.": "Pozvani korisnik je zauzet.",
     "User Busy": "Korisnik zauzet",
     "Unable to load! Check your network connectivity and try again.": "Učitavanje nije moguće! Provjerite mrežnu povezanost i pokušajte ponovo.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrdite dodavanje ovog telefonskog broja koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet.",
-    "Add Phone Number": "Dodaj telefonski broj",
-    "Click the button below to confirm adding this phone number.": "Kliknite gumb ispod da biste potvrdili dodavanje ovog telefonskog broja.",
-    "Confirm adding phone number": "Potvrdite dodavanje telefonskog broja",
-    "Add Email Address": "Dodaj email adresu",
     "Could not connect to identity server": "Nije moguće spojiti se na poslužitelja identiteta",
     "common": {
         "analytics": "Analitika",
@@ -178,7 +172,13 @@
             "email_address_in_use": "Ova email adresa se već koristi",
             "msisdn_in_use": "Ovaj broj telefona se već koristi",
             "confirm_adding_email_title": "Potvrdite dodavanje email adrese",
-            "confirm_adding_email_body": "Kliknite gumb ispod da biste potvrdili dodavanje ove email adrese."
+            "confirm_adding_email_body": "Kliknite gumb ispod da biste potvrdili dodavanje ove email adrese.",
+            "add_email_dialog_title": "Dodaj email adresu",
+            "add_email_failed_verification": "Nismo u mogućnosti verificirati Vašu email adresu. Provjerite dali ste kliknuli link u mailu",
+            "add_msisdn_confirm_sso_button": "Potvrdite dodavanje ovog telefonskog broja koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet.",
+            "add_msisdn_confirm_button": "Potvrdite dodavanje telefonskog broja",
+            "add_msisdn_confirm_body": "Kliknite gumb ispod da biste potvrdili dodavanje ovog telefonskog broja.",
+            "add_msisdn_dialog_title": "Dodaj telefonski broj"
         }
     }
 }

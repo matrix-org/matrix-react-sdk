@@ -1,7 +1,6 @@
 {
     "All messages": "सारे संदेश",
     "All Rooms": "सारे कमरे",
-    "Failed to verify email address: make sure you clicked the link in the email": "ईमेल आईडी सत्यापित नही हो पाया: कृपया सुनिश्चित कर लें कि आपने ईमेल में मौजूद लिंक पर क्लिक किया है",
     "You cannot place a call with yourself.": "आप अपने साथ कॉल नहीं कर सकते हैं।",
     "Permission Required": "अनुमति आवश्यक है",
     "You do not have permission to start a conference call in this room": "आपको इस रूम में कॉन्फ़्रेंस कॉल शुरू करने की अनुमति नहीं है",
@@ -387,11 +386,6 @@
     "The call could not be established": "कॉल स्थापित नहीं किया जा सका",
     "The user you called is busy.": "आपके द्वारा कॉल किया गया उपयोगकर्ता व्यस्त है।",
     "User Busy": "उपयोगकर्ता व्यस्त है",
-    "Add Phone Number": "फोन नंबर डालें",
-    "Click the button below to confirm adding this phone number.": "इस फ़ोन नंबर को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-    "Confirm adding phone number": "फ़ोन नंबर जोड़ने की पुष्टि करें",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस फ़ोन नंबर को जोड़ने की पुष्टि करें।",
-    "Add Email Address": "ईमेल पता जोड़ें",
     "common": {
         "analytics": "एनालिटिक्स",
         "error": "त्रुटि",
@@ -520,7 +514,13 @@
             "email_address_in_use": "यह ईमेल आईडी पहले से इस्तेमाल में है",
             "msisdn_in_use": "यह फ़ोन नंबर पहले से इस्तेमाल में है",
             "confirm_adding_email_title": "ईमेल जोड़ने की पुष्टि करें",
-            "confirm_adding_email_body": "इस ईमेल पते को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।"
+            "confirm_adding_email_body": "इस ईमेल पते को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+            "add_email_dialog_title": "ईमेल पता जोड़ें",
+            "add_email_failed_verification": "ईमेल आईडी सत्यापित नही हो पाया: कृपया सुनिश्चित कर लें कि आपने ईमेल में मौजूद लिंक पर क्लिक किया है",
+            "add_msisdn_confirm_sso_button": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस फ़ोन नंबर को जोड़ने की पुष्टि करें।",
+            "add_msisdn_confirm_button": "फ़ोन नंबर जोड़ने की पुष्टि करें",
+            "add_msisdn_confirm_body": "इस फ़ोन नंबर को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+            "add_msisdn_dialog_title": "फोन नंबर डालें"
         }
     },
     "timeline": {

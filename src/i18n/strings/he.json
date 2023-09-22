@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "אימות כתובת הדוא\"ל נכשלה: וודא שלחצת על הקישור בדוא\"ל",
     "You cannot place a call with yourself.": "אין אפשרות ליצור שיחה עם עצמך.",
     "Warning!": "אזהרה!",
     "Upload Failed": "העלאה נכשלה",
@@ -59,11 +58,6 @@
     "Low Priority": "עדיפות נמוכה",
     "Thank you!": "רב תודות!",
     "Your %(brand)s is misconfigured": "ה %(brand)s שלך מוגדר באופן שגוי",
-    "Add Phone Number": "הוסף מספר טלפון",
-    "Click the button below to confirm adding this phone number.": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
-    "Confirm adding phone number": "אישור הוספת מספר טלפון",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "אשר הוספת מספר טלפון על ידי כניסה חד שלבית לאימות חשבונכם.",
-    "Add Email Address": "הוספת כתובת מייל",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת.",
     "Verified key": "מפתח מאושר",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
@@ -1962,7 +1956,13 @@
             "email_address_in_use": "כתובת הדואר הזו כבר בשימוש",
             "msisdn_in_use": "מספר הטלפון הזה כבר בשימוש",
             "confirm_adding_email_title": "אשר הוספת כתובת מייל",
-            "confirm_adding_email_body": "לחץ על הכפתור בכדי לאשר הוספה של כתובת מייל הזו."
+            "confirm_adding_email_body": "לחץ על הכפתור בכדי לאשר הוספה של כתובת מייל הזו.",
+            "add_email_dialog_title": "הוספת כתובת מייל",
+            "add_email_failed_verification": "אימות כתובת הדוא\"ל נכשלה: וודא שלחצת על הקישור בדוא\"ל",
+            "add_msisdn_confirm_sso_button": "אשר הוספת מספר טלפון על ידי כניסה חד שלבית לאימות חשבונכם.",
+            "add_msisdn_confirm_button": "אישור הוספת מספר טלפון",
+            "add_msisdn_confirm_body": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
+            "add_msisdn_dialog_title": "הוסף מספר טלפון"
         }
     },
     "devtools": {

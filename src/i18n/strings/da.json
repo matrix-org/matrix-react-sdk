@@ -18,7 +18,6 @@
     "unknown error code": "Ukendt fejlkode",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
-    "Failed to verify email address: make sure you clicked the link in the email": "Kunne ikke bekræfte emailaddressen: vær sikker på at klikke på linket i e-mailen",
     "You cannot place a call with yourself.": "Du kan ikke ringe til dig selv.",
     "Upload Failed": "Upload Fejlede",
     "Sun": "Søn",
@@ -138,11 +137,6 @@
     "The user's homeserver does not support the version of the room.": "Brugerens homeserver understøtter ikke versionen af dette rum.",
     "Unknown server error": "Ukendt serverfejl",
     "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
-    "Add Email Address": "Tilføj e-mail adresse",
-    "Add Phone Number": "Tilføj telefonnummer",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekræft tilføjelsen af dette telefonnummer ved at bruge Single Sign On til at bevise din identitet.",
-    "Confirm adding phone number": "Bekræft tilføjelse af telefonnummer",
-    "Click the button below to confirm adding this phone number.": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
     "Cancel entering passphrase?": "Annuller indtastning af kodeord?",
     "Enter passphrase": "Indtast kodeord",
     "Setting up keys": "Sætter nøgler op",
@@ -554,7 +548,13 @@
             "email_address_in_use": "Denne email adresse er allerede i brug",
             "msisdn_in_use": "Dette telefonnummer er allerede i brug",
             "confirm_adding_email_title": "Bekræft tilføjelse af email",
-            "confirm_adding_email_body": "Klik på knappen herunder for at bekræfte tilføjelsen af denne email adresse."
+            "confirm_adding_email_body": "Klik på knappen herunder for at bekræfte tilføjelsen af denne email adresse.",
+            "add_email_dialog_title": "Tilføj e-mail adresse",
+            "add_email_failed_verification": "Kunne ikke bekræfte emailaddressen: vær sikker på at klikke på linket i e-mailen",
+            "add_msisdn_confirm_sso_button": "Bekræft tilføjelsen af dette telefonnummer ved at bruge Single Sign On til at bevise din identitet.",
+            "add_msisdn_confirm_button": "Bekræft tilføjelse af telefonnummer",
+            "add_msisdn_confirm_body": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
+            "add_msisdn_dialog_title": "Tilføj telefonnummer"
         }
     },
     "devtools": {

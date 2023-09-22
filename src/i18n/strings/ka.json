@@ -2,9 +2,6 @@
     "Explore rooms": "ოთახების დათავლიერება",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ფაილი '%(fileName)s' აჭარბებს ამ ჰომსერვერის ზომის ლიმიტს ატვირთვისთვის",
     "The file '%(fileName)s' failed to upload.": "ფაილი '%(fileName)s' ვერ აიტვირთა.",
-    "Add Email Address": "ელ. ფოსტის მისამართის დამატება",
-    "Failed to verify email address: make sure you clicked the link in the email": "ელ. ფოსტის მისამართის ვერიფიკაცია ვერ მოხერხდა: დარწმუნდი, რომ დააჭირე ბმულს ელ. ფოსტის წერილში",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "ამ ტელეფონის ნომრის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად.",
     "The server does not support the room version specified.": "სერვერი არ მუშაობს ოთახის მითითებულ ვერსიაზე.",
     "Sun": "მზე",
     "Dec": "დეკ",
@@ -19,7 +16,6 @@
     "Nov": "ნოე",
     "Mar": "მარ",
     "May": "მაი",
-    "Click the button below to confirm adding this phone number.": "დააჭირეთ ღილაკს მობილურის ნომრის დასადასტურებლად.",
     "Server may be unavailable, overloaded, or you hit a bug.": "სერვერი შეიძლება იყოს მიუწვდომელი, გადატვირთული, ან შეიძლება ეს ბაგია.",
     "Jan": "იან",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "ეს მოქმედება საჭიროებს პირადობის სერვერთან კავშირს ელ.ფოსტის ან მობილურის ნომრის დასადასტურებლად, მაგრამ სერვერს არ გააჩნია მომსახურების პირობები.",
@@ -33,8 +29,6 @@
     "Failure to create room": "ოთახის შექმნის შეცდომა",
     "Upload Failed": "ატვირთვა ვერ მოხერხდა",
     "Unable to load! Check your network connectivity and try again.": "ვერ იტვირთება! შეამოწმეთ თქვენი ინტერნეტ-კავშირი და სცადეთ ისევ.",
-    "Add Phone Number": "მობილურის ნომრის დამატება",
-    "Confirm adding phone number": "დაადასტურეთ მობილურის ნომრის დამატება",
     "Feb": "თებ",
     "common": {
         "error": "შეცდომა",
@@ -73,7 +67,13 @@
             "msisdn_in_use": "ტელეფონის ეს ნომერი დაკავებულია",
             "identity_server_no_token": "იდენთიფიკაციის წვდომის ტოკენი ვერ მოიძებნა",
             "confirm_adding_email_title": "დაადასტურე ელ.ფოსტის დამატება",
-            "confirm_adding_email_body": "ელ. ფოსტის ამ მისამართის დამატება დაადასტურე ღილაკზე დაჭერით."
+            "confirm_adding_email_body": "ელ. ფოსტის ამ მისამართის დამატება დაადასტურე ღილაკზე დაჭერით.",
+            "add_email_dialog_title": "ელ. ფოსტის მისამართის დამატება",
+            "add_email_failed_verification": "ელ. ფოსტის მისამართის ვერიფიკაცია ვერ მოხერხდა: დარწმუნდი, რომ დააჭირე ბმულს ელ. ფოსტის წერილში",
+            "add_msisdn_confirm_sso_button": "ამ ტელეფონის ნომრის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად.",
+            "add_msisdn_confirm_button": "დაადასტურეთ მობილურის ნომრის დამატება",
+            "add_msisdn_confirm_body": "დააჭირეთ ღილაკს მობილურის ნომრის დასადასტურებლად.",
+            "add_msisdn_dialog_title": "მობილურის ნომრის დამატება"
         }
     }
 }

@@ -39,7 +39,6 @@
     "Failed to send request.": "Pyynnön lähettäminen epäonnistui.",
     "Failed to set display name": "Näyttönimen asettaminen epäonnistui",
     "Failed to unban": "Porttikiellon poistaminen epäonnistui",
-    "Failed to verify email address: make sure you clicked the link in the email": "Sähköpostin vahvistus epäonnistui: varmista, että napsautit sähköpostissa olevaa linkkiä",
     "Failure to create room": "Huoneen luominen epäonnistui",
     "Filter room members": "Suodata huoneen jäseniä",
     "Forget room": "Unohda huone",
@@ -557,8 +556,6 @@
     "e.g. my-room": "esim. oma-huone",
     "Show image": "Näytä kuva",
     "Close dialog": "Sulje dialogi",
-    "Add Email Address": "Lisää sähköpostiosoite",
-    "Add Phone Number": "Lisää puhelinnumero",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Suosittelemme <b>poistamaan henkilökohtaiset tietosi</b> identiteettipalvelimelta <idserver /> ennen yhteyden katkaisemista. Valitettavasti identiteettipalvelin <idserver /> on parhaillaan poissa verkosta tai siihen ei saada yhteyttä.",
     "You should:": "Sinun tulisi:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "tarkistaa, että selaimen lisäosat (kuten Privacy Badger) eivät estä identiteettipalvelinta",
@@ -701,8 +698,6 @@
     "Your server": "Palvelimesi",
     "Add a new server": "Lisää uusi palvelin",
     "Server name": "Palvelimen nimi",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Vahvista tämän puhelinnumeron lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-    "Confirm adding phone number": "Vahvista puhelinnumeron lisääminen",
     "Published Addresses": "Julkaistut osoitteet",
     "Other published addresses:": "Muut julkaistut osoitteet:",
     "No other published addresses yet, add one below": "Toistaiseksi ei muita julkaistuja osoitteita, lisää alle",
@@ -713,7 +708,6 @@
     "Submit logs": "Lähetä lokit",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
-    "Click the button below to confirm adding this phone number.": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
     "New login. Was this you?": "Uusi sisäänkirjautuminen. Olitko se sinä?",
     "%(name)s is requesting verification": "%(name)s pyytää varmennusta",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
@@ -2595,7 +2589,13 @@
             "email_address_in_use": "Tämä sähköpostiosoite on jo käytössä",
             "msisdn_in_use": "Puhelinnumero on jo käytössä",
             "confirm_adding_email_title": "Vahvista sähköpostin lisääminen",
-            "confirm_adding_email_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän sähköpostiosoitteen."
+            "confirm_adding_email_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän sähköpostiosoitteen.",
+            "add_email_dialog_title": "Lisää sähköpostiosoite",
+            "add_email_failed_verification": "Sähköpostin vahvistus epäonnistui: varmista, että napsautit sähköpostissa olevaa linkkiä",
+            "add_msisdn_confirm_sso_button": "Vahvista tämän puhelinnumeron lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
+            "add_msisdn_confirm_button": "Vahvista puhelinnumeron lisääminen",
+            "add_msisdn_confirm_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
+            "add_msisdn_dialog_title": "Lisää puhelinnumero"
         }
     },
     "devtools": {

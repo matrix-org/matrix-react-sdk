@@ -70,7 +70,6 @@
     "Yesterday": "నిన్న",
     "Low Priority": "తక్కువ ప్రాధాన్యత",
     "Saturday": "శనివారం",
-    "Failed to verify email address: make sure you clicked the link in the email": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
     "common": {
         "error": "లోపం",
         "mute": "నిశబ్ధము",
@@ -126,7 +125,8 @@
             "account_section": "ఖాతా",
             "email_address_in_use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
             "msisdn_in_use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
-            "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు"
+            "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
+            "add_email_failed_verification": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా"
         }
     },
     "timeline": {

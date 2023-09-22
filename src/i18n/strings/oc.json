@@ -1,6 +1,4 @@
 {
-    "Add Email Address": "Ajustar una adreça electronica",
-    "Add Phone Number": "Ajustar un numèro de telefòn",
     "Admin Tools": "Aisinas d’administrator",
     "Invite to this room": "Convidar a aquesta sala",
     "Invited": "Convidat",
@@ -323,7 +321,9 @@
             "email_address_in_use": "Aquela adreça e-mail es ja utilizada",
             "msisdn_in_use": "Aquel numèro de telefòn es ja utilizat",
             "confirm_adding_email_title": "Confirmar l'adicion de l'adressa e-mail",
-            "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail."
+            "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
+            "add_email_dialog_title": "Ajustar una adreça electronica",
+            "add_msisdn_dialog_title": "Ajustar un numèro de telefòn"
         }
     },
     "auth": {

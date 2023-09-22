@@ -17,7 +17,6 @@
     "The call could not be established": "Níor féidir an glaoch a bhunú",
     "Unable to load! Check your network connectivity and try again.": "Ní féidir a lódáil! Seiceáil do nascacht líonra agus bain triail eile as.",
     "The call was answered on another device.": "Do ghníomhaire úsáideora.",
-    "Failed to verify email address: make sure you clicked the link in the email": "Níor cinntíodh an seoladh ríomhphoist: déan cinnte gur chliceáil tú an nasc sa ríomhphost",
     "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
     "Ignored users": "Úsáideoirí neamhairde",
     "Unrecognised address": "Seoladh nár aithníodh",
@@ -359,11 +358,6 @@
     "Mon": "Lua",
     "Sun": "Doṁ",
     "Send": "Seol",
-    "Add Phone Number": "Cuir uimhir ghutháin",
-    "Click the button below to confirm adding this phone number.": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
-    "Confirm adding phone number": "Deimhnigh an uimhir ghutháin nua",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
-    "Add Email Address": "Cuir seoladh ríomhphoist",
     "Explore rooms": "Breathnaigh thart ar na seomraí",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
@@ -642,7 +636,13 @@
             "email_address_in_use": "Úsáidtear an seoladh ríomhphoist seo chean féin",
             "msisdn_in_use": "Úsáidtear an uimhir ghutháin seo chean féin",
             "confirm_adding_email_title": "Deimhnigh an seoladh ríomhphoist nua",
-            "confirm_adding_email_body": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú."
+            "confirm_adding_email_body": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú.",
+            "add_email_dialog_title": "Cuir seoladh ríomhphoist",
+            "add_email_failed_verification": "Níor cinntíodh an seoladh ríomhphoist: déan cinnte gur chliceáil tú an nasc sa ríomhphost",
+            "add_msisdn_confirm_sso_button": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
+            "add_msisdn_confirm_button": "Deimhnigh an uimhir ghutháin nua",
+            "add_msisdn_confirm_body": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
+            "add_msisdn_dialog_title": "Cuir uimhir ghutháin"
         }
     },
     "devtools": {

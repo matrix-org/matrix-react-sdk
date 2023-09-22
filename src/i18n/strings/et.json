@@ -1,6 +1,4 @@
 {
-    "Add Email Address": "Lisa e-posti aadress",
-    "Failed to verify email address: make sure you clicked the link in the email": "E-posti aadressi kontrollimine ei õnnestunud: palun vaata, et sa kindlasti klõpsisid saabunud kirjas olnud viidet",
     "Unable to load! Check your network connectivity and try again.": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
     "Call failed due to misconfigured server": "Kõne ebaõnnestus valesti seadistatud serveri tõttu",
     "Send": "Saada",
@@ -571,10 +569,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
     "Switch theme": "Vaheta teemat",
     "All settings": "Kõik seadistused",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Kinnita selle telefoninumbri lisamine kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
-    "Confirm adding phone number": "Kinnita telefoninumbri lisamine",
-    "Click the button below to confirm adding this phone number.": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
-    "Add Phone Number": "Lisa telefoninumber",
     "Default": "Tavaline",
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
@@ -2011,7 +2005,6 @@
     "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
     "Formatting": "Vormindame andmeid",
-    "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
     "Image view": "Pildivaade",
     "Upload custom sound": "Laadi üles oma helifail",
     "Search all rooms": "Otsi kõikidest jututubadest",
@@ -2860,7 +2853,14 @@
             "msisdn_in_use": "See telefoninumber on juba kasutusel",
             "identity_server_no_token": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
             "confirm_adding_email_title": "Kinnita e-posti aadressi lisamine",
-            "confirm_adding_email_body": "Klõpsi järgnevat nuppu e-posti aadressi lisamise kinnitamiseks."
+            "confirm_adding_email_body": "Klõpsi järgnevat nuppu e-posti aadressi lisamise kinnitamiseks.",
+            "add_email_dialog_title": "Lisa e-posti aadress",
+            "add_email_failed_verification": "E-posti aadressi kontrollimine ei õnnestunud: palun vaata, et sa kindlasti klõpsisid saabunud kirjas olnud viidet",
+            "add_msisdn_misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
+            "add_msisdn_confirm_sso_button": "Kinnita selle telefoninumbri lisamine kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
+            "add_msisdn_confirm_button": "Kinnita telefoninumbri lisamine",
+            "add_msisdn_confirm_body": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
+            "add_msisdn_dialog_title": "Lisa telefoninumber"
         }
     },
     "devtools": {

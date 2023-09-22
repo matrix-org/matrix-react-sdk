@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Nepavyko patvirtinti el. pašto adreso: įsitikinkite, kad paspaudėte nuorodą el. laiške",
     "Sunday": "Sekmadienis",
     "Notification targets": "Pranešimo objektai",
     "Today": "Šiandien",
@@ -211,8 +210,6 @@
     "Unable to restore backup": "Nepavyko atkurti atsarginės kopijos",
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
-    "Add Email Address": "Pridėti El. Pašto Adresą",
-    "Add Phone Number": "Pridėti Telefono Numerį",
     "Explore rooms": "Žvalgyti kambarius",
     "Your %(brand)s is misconfigured": "Jūsų %(brand)s yra neteisingai sukonfigūruotas",
     "Call failed due to misconfigured server": "Skambutis nepavyko dėl neteisingai sukonfigūruoto serverio",
@@ -378,9 +375,6 @@
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Are you sure you want to reject the invitation?": "Ar tikrai norite atmesti pakvietimą?",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Atnaujinkite šį seansą, kad jam būtų leista patvirtinti kitus seansus, suteikiant jiems prieigą prie šifruotų žinučių ir juos pažymint kaip patikimus kitiems vartotojams.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Patvirtinkite šio tel. nr. pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
-    "Confirm adding phone number": "Patvirtinkite telefono numerio pridėjimą",
-    "Click the button below to confirm adding this phone number.": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Atsijungti nuo <current /> tapatybės serverio ir jo vietoje prisijungti prie <new />?",
     "Terms of service not accepted or the identity server is invalid.": "Nesutikta su paslaugų teikimo sąlygomis arba tapatybės serveris yra klaidingas.",
     "The identity server you have chosen does not have any terms of service.": "Jūsų pasirinktas tapatybės serveris neturi jokių paslaugų teikimo sąlygų.",
@@ -1879,7 +1873,13 @@
             "email_address_in_use": "Šis el. pašto adresas jau naudojamas",
             "msisdn_in_use": "Šis telefono numeris jau naudojamas",
             "confirm_adding_email_title": "Patvirtinkite el. pašto pridėjimą",
-            "confirm_adding_email_body": "Paspauskite mygtuką žemiau, kad patvirtintumėte šio el. pašto pridėjimą."
+            "confirm_adding_email_body": "Paspauskite mygtuką žemiau, kad patvirtintumėte šio el. pašto pridėjimą.",
+            "add_email_dialog_title": "Pridėti El. Pašto Adresą",
+            "add_email_failed_verification": "Nepavyko patvirtinti el. pašto adreso: įsitikinkite, kad paspaudėte nuorodą el. laiške",
+            "add_msisdn_confirm_sso_button": "Patvirtinkite šio tel. nr. pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
+            "add_msisdn_confirm_button": "Patvirtinkite telefono numerio pridėjimą",
+            "add_msisdn_confirm_body": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
+            "add_msisdn_dialog_title": "Pridėti Telefono Numerį"
         }
     },
     "devtools": {

@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Adresa de e-mail nu a putut fi verificată: asigurați-vă că ați făcut click pe linkul din e-mail",
     "You cannot place a call with yourself.": "Nu poți apela cu tine însuți.",
     "Permission Required": "Permisul Obligatoriu",
     "You do not have permission to start a conference call in this room": "Nu aveți permisiunea de a începe un apel de conferință în această cameră",
@@ -44,11 +43,6 @@
     "The user you called is busy.": "Utilizatorul pe care l-ați sunat este ocupat.",
     "User Busy": "Utilizator ocupat",
     "Unable to load! Check your network connectivity and try again.": "Imposibil de incarcat! Verificați conectivitatea rețelei și încercați din nou.",
-    "Add Phone Number": "Adaugă numărul de telefon",
-    "Click the button below to confirm adding this phone number.": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestui număr de telefon.",
-    "Confirm adding phone number": "Confirmați adăugarea numărului de telefon",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirmați adăugarea acestui număr de telefon utilizând Single Sign On pentru a vă dovedi identitatea.",
-    "Add Email Address": "Adăugați o adresă de e-mail",
     "common": {
         "analytics": "Analizarea",
         "error": "Eroare"
@@ -87,7 +81,13 @@
             "email_address_in_use": "Această adresă de email este deja utilizată",
             "msisdn_in_use": "Acest număr de telefon este deja utilizat",
             "confirm_adding_email_title": "Confirmați adăugarea e-mailului",
-            "confirm_adding_email_body": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestei adrese de e-mail."
+            "confirm_adding_email_body": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestei adrese de e-mail.",
+            "add_email_dialog_title": "Adăugați o adresă de e-mail",
+            "add_email_failed_verification": "Adresa de e-mail nu a putut fi verificată: asigurați-vă că ați făcut click pe linkul din e-mail",
+            "add_msisdn_confirm_sso_button": "Confirmați adăugarea acestui număr de telefon utilizând Single Sign On pentru a vă dovedi identitatea.",
+            "add_msisdn_confirm_button": "Confirmați adăugarea numărului de telefon",
+            "add_msisdn_confirm_body": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestui număr de telefon.",
+            "add_msisdn_dialog_title": "Adaugă numărul de telefon"
         }
     }
 }

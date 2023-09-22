@@ -54,7 +54,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
     "Failed to send request.": "Não foi possível mandar requisição.",
-    "Failed to verify email address: make sure you clicked the link in the email": "Falha ao confirmar o endereço de e-mail: certifique-se de clicar no link do e-mail",
     "Failure to create room": "Não foi possível criar a sala",
     "Missing room_id in request": "Faltou o id da sala na requisição",
     "Missing user_id in request": "Faltou o id de usuário na requisição",
@@ -392,9 +391,6 @@
     "Voice & Video": "Voz e vídeo",
     "Room information": "Informação da sala",
     "Room Addresses": "Endereços da sala",
-    "Add Email Address": "Adicionar endereço de e-mail",
-    "Confirm adding phone number": "Confirmar adição de número de telefone",
-    "Add Phone Number": "Adicionar número de telefone",
     "Call failed due to misconfigured server": "A chamada falhou por conta de má configuração no servidor",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Por favor, peça ao administrador do seu servidor (<code>%(homeserverDomain)s</code>) para configurar um servidor TURN, de modo que as chamadas funcionem de maneira estável.",
     "The file '%(fileName)s' failed to upload.": "O envio do arquivo '%(fileName)s' falhou.",
@@ -524,7 +520,6 @@
     "Create key backup": "Criar backup de chave",
     "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
-    "Click the button below to confirm adding this phone number.": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
     "Forget Room": "Esquecer Sala",
     "Favourited": "Favoritado",
     "You cancelled verifying %(name)s": "Você cancelou a confirmação de %(name)s",
@@ -599,7 +594,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Se você confirmar esse usuário, a sessão será marcada como confiável para você e para ele.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Confirmar este aparelho o marcará como confiável para você e para os usuários que se confirmaram com você.",
     "Email (optional)": "E-mail (opcional)",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirme a adição deste número de telefone usando o Login Único para provar sua identidade.",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Use um servidor de identidade para convidar por e-mail. Clique em continuar para usar o servidor de identidade padrão (%(defaultIdentityServerName)s) ou gerencie nas Configurações.",
     "Display Name": "Nome e sobrenome",
     "Checking server": "Verificando servidor",
@@ -2110,7 +2104,13 @@
             "email_address_in_use": "Este endereço de email já está em uso",
             "msisdn_in_use": "Este número de telefone já está em uso",
             "confirm_adding_email_title": "Confirmar a inclusão de e-mail",
-            "confirm_adding_email_body": "Clique no botão abaixo para confirmar a adição deste endereço de e-mail."
+            "confirm_adding_email_body": "Clique no botão abaixo para confirmar a adição deste endereço de e-mail.",
+            "add_email_dialog_title": "Adicionar endereço de e-mail",
+            "add_email_failed_verification": "Falha ao confirmar o endereço de e-mail: certifique-se de clicar no link do e-mail",
+            "add_msisdn_confirm_sso_button": "Confirme a adição deste número de telefone usando o Login Único para provar sua identidade.",
+            "add_msisdn_confirm_button": "Confirmar adição de número de telefone",
+            "add_msisdn_confirm_body": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
+            "add_msisdn_dialog_title": "Adicionar número de telefone"
         }
     },
     "devtools": {

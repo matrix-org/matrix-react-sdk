@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Chưa xác nhận địa chỉ thư điện tử: hãy chắc chắn bạn đã nhấn vào liên kết trong thư",
     "You cannot place a call with yourself.": "Bạn không thể tự gọi chính mình.",
     "Permission Required": "Yêu cầu Cấp quyền",
     "You do not have permission to start a conference call in this room": "Bạn không có quyền để bắt đầu cuộc gọi nhóm trong phòng này",
@@ -98,11 +97,6 @@
     "No recent messages by %(user)s found": "Không tìm thấy tin nhắn gần đây của %(user)s",
     "Failed to ban user": "Đã có lỗi khi chặn người dùng",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bạn có chắc chắn muốn rời khỏi phòng '%(roomName)s' không?",
-    "Confirm adding phone number": "Xác nhận thêm số điện thoại",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Xác nhận thêm số điện thoại này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
-    "Add Email Address": "Thêm địa chỉ thử điện tử",
-    "Add Phone Number": "Thêm Số Điện Thoại",
-    "Click the button below to confirm adding this phone number.": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
     "The call could not be established": "Không thể khởi tạo cuộc gọi",
     "The user you called is busy.": "Người dùng bạn vừa gọi hiện đang bận.",
     "User Busy": "Người dùng bận",
@@ -1854,7 +1848,6 @@
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Không gian là cách để nhóm phòng và người. Bên cạnh các không gian bạn đang ở, bạn cũng có thể sử dụng một số không gian đã được xây dựng sẵn.",
     "Group all your rooms that aren't part of a space in one place.": "Nhóm tất cả các phòng của bạn mà không phải là một phần của không gian ở một nơi.",
     "Group all your favourite rooms and people in one place.": "Nhóm tất cả các phòng và người mà bạn yêu thích ở một nơi.",
-    "The add / bind with MSISDN flow is misconfigured": "Thêm / liên kết với luồng MSISDN sai cấu hình",
     "Past polls": "Các cuộc bỏ phiếu trước",
     "Active polls": "Các cuộc bỏ phiếu hiện tại",
     "unavailable": "không có sẵn",
@@ -2650,7 +2643,14 @@
             "msisdn_in_use": "Số điện thoại này đã được sử dụng",
             "identity_server_no_token": "Không tìm thấy mã thông báo danh tính",
             "confirm_adding_email_title": "Xác nhận thêm địa chỉ thư điện tử",
-            "confirm_adding_email_body": "Nhấn vào nút dưới đây để xác nhận thêm địa chỉ thư điện tử này."
+            "confirm_adding_email_body": "Nhấn vào nút dưới đây để xác nhận thêm địa chỉ thư điện tử này.",
+            "add_email_dialog_title": "Thêm địa chỉ thử điện tử",
+            "add_email_failed_verification": "Chưa xác nhận địa chỉ thư điện tử: hãy chắc chắn bạn đã nhấn vào liên kết trong thư",
+            "add_msisdn_misconfigured": "Thêm / liên kết với luồng MSISDN sai cấu hình",
+            "add_msisdn_confirm_sso_button": "Xác nhận thêm số điện thoại này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
+            "add_msisdn_confirm_button": "Xác nhận thêm số điện thoại",
+            "add_msisdn_confirm_body": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
+            "add_msisdn_dialog_title": "Thêm Số Điện Thoại"
         }
     },
     "devtools": {

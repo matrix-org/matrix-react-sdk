@@ -53,7 +53,6 @@
     "You are now ignoring %(userId)s": "Du overser no %(userId)s",
     "Unignored user": "Avoversedd brukar",
     "You are no longer ignoring %(userId)s": "Du overser ikkje %(userId)s no lenger",
-    "Failed to verify email address: make sure you clicked the link in the email": "Fekk ikkje til å stadfesta e-postadressa: sjå til at du klikka på den rette lenkja i e-posten",
     "Verified key": "Godkjend nøkkel",
     "Reason": "Grunnlag",
     "Failure to create room": "Klarte ikkje å laga rommet",
@@ -286,8 +285,6 @@
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
-    "Add Email Address": "Legg til e-postadresse",
-    "Add Phone Number": "Legg til telefonnummer",
     "Call failed due to misconfigured server": "Samtalen gjekk gale fordi tenaren er oppsatt feil",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Spør administratoren for din heimetenar<code>%(homeserverDomain)s</code> om å setje opp ein \"TURN-server\" slik at talesamtalar fungerer på rett måte.",
     "The file '%(fileName)s' failed to upload.": "Fila '%(fileName)s' vart ikkje lasta opp.",
@@ -405,9 +402,6 @@
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Stadfest dette telefonnummeret for å bruka Single-sign-on for å bevisa identiteten din.",
-    "Confirm adding phone number": "Stadfest tilleggjing av telefonnummeret",
-    "Click the button below to confirm adding this phone number.": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
     "%(name)s is requesting verification": "%(name)s spør etter verifikasjon",
     "Later": "Seinare",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
@@ -787,7 +781,13 @@
             "email_address_in_use": "Denne e-postadressa er allereie i bruk",
             "msisdn_in_use": "Dette telefonnummeret er allereie i bruk",
             "confirm_adding_email_title": "Stadfest at du ynskjer å legga til e-postadressa",
-            "confirm_adding_email_body": "Trykk på knappen under for å stadfesta at du ynskjer å legga til denne e-postadressa."
+            "confirm_adding_email_body": "Trykk på knappen under for å stadfesta at du ynskjer å legga til denne e-postadressa.",
+            "add_email_dialog_title": "Legg til e-postadresse",
+            "add_email_failed_verification": "Fekk ikkje til å stadfesta e-postadressa: sjå til at du klikka på den rette lenkja i e-posten",
+            "add_msisdn_confirm_sso_button": "Stadfest dette telefonnummeret for å bruka Single-sign-on for å bevisa identiteten din.",
+            "add_msisdn_confirm_button": "Stadfest tilleggjing av telefonnummeret",
+            "add_msisdn_confirm_body": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
+            "add_msisdn_dialog_title": "Legg til telefonnummer"
         }
     },
     "devtools": {

@@ -27,7 +27,6 @@
     "Failed to send request.": "El envío de la solicitud falló.",
     "Failed to set display name": "No se ha podido cambiar el nombre público",
     "Failed to unban": "No se pudo quitar veto",
-    "Failed to verify email address: make sure you clicked the link in the email": "No se ha podido verificar la dirección de correo electrónico: asegúrate de hacer clic en el enlace del mensaje",
     "Failure to create room": "No se ha podido crear la sala",
     "Favourite": "Añadir a favoritos",
     "Filter room members": "Filtrar miembros de la sala",
@@ -397,8 +396,6 @@
     "Use an identity server": "Usar un servidor de identidad",
     "Use an identity server to invite by email. Click continue to use the default identity server (%(defaultIdentityServerName)s) or manage in Settings.": "Usar un servidor de identidad para invitar por correo. Presiona continuar par usar el servidor de identidad por defecto (%(defaultIdentityServerName)s) o adminístralo en Ajustes.",
     "Use an identity server to invite by email. Manage in Settings.": "Usa un servidor de identidad para invitar por correo. Puedes configurarlo en tus ajustes.",
-    "Add Email Address": "Añadir dirección de correo",
-    "Add Phone Number": "Añadir número de teléfono",
     "Identity server has no terms of service": "El servidor de identidad no tiene términos de servicio",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Esta acción necesita acceder al servidor de identidad por defecto <server /> para validar un correo o un teléfono, pero el servidor no tiene términos de servicio.",
     "Only continue if you trust the owner of the server.": "Continúa solamente si confías en el propietario del servidor.",
@@ -500,9 +497,6 @@
     "Disconnect identity server": "Desconectar servidor de identidad",
     "Disconnect from the identity server <idserver />?": "¿Desconectarse del servidor de identidad <idserver />?",
     "You should:": "Deberías:",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma el nuevo número de teléfono usando SSO para probar tu identidad.",
-    "Confirm adding phone number": "Confirmar nuevo número de teléfono",
-    "Click the button below to confirm adding this phone number.": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
     "New login. Was this you?": "Nuevo inicio de sesión. ¿Fuiste tú?",
     "%(name)s is requesting verification": "%(name)s solicita verificación",
     "You signed in to a new session without verifying it:": "Iniciaste una nueva sesión sin verificarla:",
@@ -2733,7 +2727,13 @@
             "email_address_in_use": "Esta dirección de correo electrónico ya está en uso",
             "msisdn_in_use": "Este número de teléfono ya está en uso",
             "confirm_adding_email_title": "Confirmar un nuevo correo electrónico",
-            "confirm_adding_email_body": "Haz clic en el botón de abajo para confirmar esta nueva dirección de correo electrónico."
+            "confirm_adding_email_body": "Haz clic en el botón de abajo para confirmar esta nueva dirección de correo electrónico.",
+            "add_email_dialog_title": "Añadir dirección de correo",
+            "add_email_failed_verification": "No se ha podido verificar la dirección de correo electrónico: asegúrate de hacer clic en el enlace del mensaje",
+            "add_msisdn_confirm_sso_button": "Confirma el nuevo número de teléfono usando SSO para probar tu identidad.",
+            "add_msisdn_confirm_button": "Confirmar nuevo número de teléfono",
+            "add_msisdn_confirm_body": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
+            "add_msisdn_dialog_title": "Añadir número de teléfono"
         }
     },
     "devtools": {

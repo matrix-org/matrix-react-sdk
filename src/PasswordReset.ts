@@ -108,7 +108,7 @@ export default class PasswordReset {
             );
         } catch (err: any) {
             if (err.httpStatus === 401) {
-                err.message = _t("Failed to verify email address: make sure you clicked the link in the email");
+                err.message = _t("settings|general|add_email_failed_verification");
             } else if (err.httpStatus === 404) {
                 err.message = _t(
                     "Your email address does not appear to be associated with a Matrix ID on this homeserver.",

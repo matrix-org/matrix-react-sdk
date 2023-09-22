@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt",
     "You cannot place a call with yourself.": "J’en ku jezelve nie belln.",
     "Permission Required": "Toestemmienge vereist",
     "You do not have permission to start a conference call in this room": "J’en èt geen toestemmienge voor in da groepsgesprek hier e vergoaderiengsgesprek te begunn",
@@ -724,7 +723,8 @@
             "account_section": "Account",
             "language_section": "Toale en regio",
             "email_address_in_use": "Dat e-mailadresse hier es al in gebruuk",
-            "msisdn_in_use": "Dezen telefongnumero es al in gebruuk"
+            "msisdn_in_use": "Dezen telefongnumero es al in gebruuk",
+            "add_email_failed_verification": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt"
         }
     },
     "devtools": {

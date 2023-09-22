@@ -37,7 +37,6 @@
     "Failed to send request.": "İstek gönderimi başarısız oldu.",
     "Failed to set display name": "Görünür ismi ayarlama başarısız oldu",
     "Failed to unban": "Yasağı kaldırmak başarısız oldu",
-    "Failed to verify email address: make sure you clicked the link in the email": "E-posta adresi doğrulanamadı: E-postadaki bağlantıya tıkladığınızdan emin olun",
     "Failure to create room": "Oda oluşturulamadı",
     "Favourite": "Favori",
     "Filter room members": "Oda üyelerini Filtrele",
@@ -182,8 +181,6 @@
     "Search…": "Arama…",
     "Yesterday": "Dün",
     "Low Priority": "Düşük Öncelikli",
-    "Add Email Address": "Eposta Adresi Ekle",
-    "Add Phone Number": "Telefon Numarası Ekle",
     "Call failed due to misconfigured server": "Hatalı yapılandırılmış sunucu nedeniyle arama başarısız",
     "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
@@ -636,8 +633,6 @@
     "Verify by emoji": "Emojiyle doğrula",
     "Verify by comparing unique emoji.": "Eşsiz emoji eşleştirme ile doğrulama.",
     "Edited at %(date)s. Click to view edits.": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla.",
-    "Confirm adding phone number": "Telefon numarası eklemeyi onayla",
-    "Click the button below to confirm adding this phone number.": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
     "Are you sure you want to cancel entering passphrase?": "Parola girmeyi iptal etmek istediğinizden emin misiniz?",
     "%(name)s is requesting verification": "%(name)s doğrulama istiyor",
     "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
@@ -940,7 +935,6 @@
     "Too Many Calls": "Çok fazla arama",
     "The call was answered on another device.": "Arama başka bir cihazda cevaplandı.",
     "The call could not be established": "Arama yapılamadı",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu telefon numarasını eklemeyi onaylayın.",
     "Change notification settings": "Bildirim ayarlarını değiştir",
     "Your server isn't responding to some <a>requests</a>.": "Sunucunuz bası <a>istekler'e</a> onay vermiyor.",
     "Thumbs up": "Başparmak havaya",
@@ -1476,7 +1470,13 @@
             "email_address_in_use": "Bu e-posta adresi zaten kullanımda",
             "msisdn_in_use": "Bu telefon numarası zaten kullanımda",
             "confirm_adding_email_title": "E-posta adresini eklemeyi onayla",
-            "confirm_adding_email_body": "E-posta adresini eklemeyi kabul etmek için aşağıdaki tuşa tıklayın."
+            "confirm_adding_email_body": "E-posta adresini eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
+            "add_email_dialog_title": "Eposta Adresi Ekle",
+            "add_email_failed_verification": "E-posta adresi doğrulanamadı: E-postadaki bağlantıya tıkladığınızdan emin olun",
+            "add_msisdn_confirm_sso_button": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu telefon numarasını eklemeyi onaylayın.",
+            "add_msisdn_confirm_button": "Telefon numarası eklemeyi onayla",
+            "add_msisdn_confirm_body": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
+            "add_msisdn_dialog_title": "Telefon Numarası Ekle"
         }
     },
     "devtools": {

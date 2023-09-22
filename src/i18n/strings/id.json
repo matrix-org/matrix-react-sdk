@@ -85,7 +85,6 @@
     "Low Priority": "Prioritas Rendah",
     "Failed to change password. Is your password correct?": "Gagal untuk mengubah kata sandi. Apakah kata sandi Anda benar?",
     "Thank you!": "Terima kasih!",
-    "Failed to verify email address: make sure you clicked the link in the email": "Gagal memverifikasi alamat email: pastikan Anda telah menekan link di dalam email",
     "Permission Required": "Izin Dibutuhkan",
     "You do not have permission to start a conference call in this room": "Anda tidak memiliki permisi untuk memulai panggilan konferensi di ruang ini",
     "Explore rooms": "Jelajahi ruangan",
@@ -406,11 +405,6 @@
     "The call could not be established": "Panggilan tidak dapat dilakukan",
     "The user you called is busy.": "Pengguna yang Anda panggil sedang sibuk.",
     "User Busy": "Pengguna Sibuk",
-    "Add Phone Number": "Tambahkan Nomor Telepon",
-    "Click the button below to confirm adding this phone number.": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
-    "Confirm adding phone number": "Konfirmasi penambahan nomor telepon",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Konfirmasi penambahan nomor telepon ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
-    "Add Email Address": "Tambahkan Alamat Email",
     "expand": "buka",
     "collapse": "tutup",
     "%(duration)sd": "%(duration)sh",
@@ -2011,7 +2005,6 @@
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
     "Formatting": "Format",
-    "The add / bind with MSISDN flow is misconfigured": "Aliran penambahan/pengaitan MSISDN tidak diatur dengan benar",
     "Image view": "Tampilan gambar",
     "Search all rooms": "Cari semua ruangan",
     "Search this room": "Cari ruangan ini",
@@ -2865,7 +2858,14 @@
             "msisdn_in_use": "Nomor telepon ini telah dipakai",
             "identity_server_no_token": "Tidak ada token akses identitas yang ditemukan",
             "confirm_adding_email_title": "Konfirmasi penambahan email",
-            "confirm_adding_email_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan alamat email ini."
+            "confirm_adding_email_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan alamat email ini.",
+            "add_email_dialog_title": "Tambahkan Alamat Email",
+            "add_email_failed_verification": "Gagal memverifikasi alamat email: pastikan Anda telah menekan link di dalam email",
+            "add_msisdn_misconfigured": "Aliran penambahan/pengaitan MSISDN tidak diatur dengan benar",
+            "add_msisdn_confirm_sso_button": "Konfirmasi penambahan nomor telepon ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
+            "add_msisdn_confirm_button": "Konfirmasi penambahan nomor telepon",
+            "add_msisdn_confirm_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
+            "add_msisdn_dialog_title": "Tambahkan Nomor Telepon"
         }
     },
     "devtools": {

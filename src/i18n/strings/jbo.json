@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri",
     "You cannot place a call with yourself.": ".i do na ka'e fonjo'e do",
     "Permission Required": ".i lo nu curmi cu sarcu",
     "You do not have permission to start a conference call in this room": ".i na curmi lo nu le du'u co'a girzu fonjo'e cu zilbe'i do fo le ca se cuxna",
@@ -290,7 +289,8 @@
         },
         "general": {
             "email_address_in_use": ".i xa'o pilno fa da le samymri judri",
-            "msisdn_in_use": ".i xa'o pilno fa da le fonxa judri"
+            "msisdn_in_use": ".i xa'o pilno fa da le fonxa judri",
+            "add_email_failed_verification": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri"
         }
     },
     "create_room": {

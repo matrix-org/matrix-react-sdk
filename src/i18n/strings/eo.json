@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Kontrolo de via retpoŝtadreso malsukcesis: certigu, ke vi klakis la ligilon en la retmesaĝo",
     "You cannot place a call with yourself.": "Vi ne povas voki vin mem.",
     "Warning!": "Averto!",
     "Upload Failed": "Alŝuto malsukcesis",
@@ -549,8 +548,6 @@
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
     "Italics": "Kursive",
     "Explore rooms": "Esplori ĉambrojn",
-    "Add Email Address": "Aldoni retpoŝtadreson",
-    "Add Phone Number": "Aldoni telefonnumeron",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
@@ -763,9 +760,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Konfirmu aldonon de ĉi tiu telefonnumero per identiĝo per ununura saluto.",
-    "Confirm adding phone number": "Konfirmu aldonon de telefonnumero",
-    "Click the button below to confirm adding this phone number.": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
     "New login. Was this you?": "Nova saluto. Ĉu tio estis vi?",
     "%(name)s is requesting verification": "%(name)s petas kontrolon",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
@@ -2093,7 +2087,13 @@
             "email_address_in_use": "Tiu ĉi retpoŝtadreso jam estas uzata",
             "msisdn_in_use": "Tiu ĉi telefonnumero jam estas uzata",
             "confirm_adding_email_title": "Konfirmi aldonon de retpoŝtadreso",
-            "confirm_adding_email_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu retpoŝtadreso."
+            "confirm_adding_email_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu retpoŝtadreso.",
+            "add_email_dialog_title": "Aldoni retpoŝtadreson",
+            "add_email_failed_verification": "Kontrolo de via retpoŝtadreso malsukcesis: certigu, ke vi klakis la ligilon en la retmesaĝo",
+            "add_msisdn_confirm_sso_button": "Konfirmu aldonon de ĉi tiu telefonnumero per identiĝo per ununura saluto.",
+            "add_msisdn_confirm_button": "Konfirmu aldonon de telefonnumero",
+            "add_msisdn_confirm_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
+            "add_msisdn_dialog_title": "Aldoni telefonnumeron"
         }
     },
     "devtools": {

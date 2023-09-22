@@ -93,12 +93,6 @@
     "Create account": "Rnu amiḍan",
     "Success!": "Tammug akken iwata!",
     "Your %(brand)s is misconfigured": "%(brand)s inek(inem) ur ittusbadu ara",
-    "Add Email Address": "Rnu tansa n yimayl",
-    "Failed to verify email address: make sure you clicked the link in the email": "Asenqed n tansa n yimayl ur yeddi ara: wali ma yella tsateḍ ɣef useɣwen yellan deg yimayl",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Sentem timerna n wuṭṭun n tilifun s useqdec n unekcum asuf i ubeggen n timagit-ik(im).",
-    "Confirm adding phone number": "Sentem timerna n wuṭṭun n tilifun",
-    "Click the button below to confirm adding this phone number.": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n wuṭṭun-a n tilifun.",
-    "Add Phone Number": "Rnu uṭṭun n tilifun",
     "Updating %(brand)s": "Leqqem %(brand)s",
     "I don't want my encrypted messages": "Ur bɣiɣ ara izan-inu iwgelhanen",
     "Manually export keys": "Sifeḍ s ufus tisura",
@@ -1522,7 +1516,13 @@
             "email_address_in_use": "Tansa-agi n yimayl tettuseqdac yakan",
             "msisdn_in_use": "Uṭṭun-agi n tilifun yettuseqddac yakan",
             "confirm_adding_email_title": "Sentem timerna n yimayl",
-            "confirm_adding_email_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n tansa-a n yimayl."
+            "confirm_adding_email_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n tansa-a n yimayl.",
+            "add_email_dialog_title": "Rnu tansa n yimayl",
+            "add_email_failed_verification": "Asenqed n tansa n yimayl ur yeddi ara: wali ma yella tsateḍ ɣef useɣwen yellan deg yimayl",
+            "add_msisdn_confirm_sso_button": "Sentem timerna n wuṭṭun n tilifun s useqdec n unekcum asuf i ubeggen n timagit-ik(im).",
+            "add_msisdn_confirm_button": "Sentem timerna n wuṭṭun n tilifun",
+            "add_msisdn_confirm_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n wuṭṭun-a n tilifun.",
+            "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun"
         }
     },
     "devtools": {

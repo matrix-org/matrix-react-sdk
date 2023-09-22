@@ -31,7 +31,6 @@
     "Notifications": "Известия",
     "Rooms": "Стаи",
     "Unnamed room": "Стая без име",
-    "Failed to verify email address: make sure you clicked the link in the email": "Неуспешно потвърждаване на имейл адреса: уверете се, че сте кликнали върху връзката в имейла",
     "You cannot place a call with yourself.": "Не може да осъществите разговор със себе си.",
     "Warning!": "Внимание!",
     "Upload Failed": "Качването е неуспешно",
@@ -571,8 +570,6 @@
     "Hide advanced": "Скрий разширени настройки",
     "Show advanced": "Покажи разширени настройки",
     "Close dialog": "Затвори прозореца",
-    "Add Email Address": "Добави имейл адрес",
-    "Add Phone Number": "Добави телефонен номер",
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Това действие изисква връзка със сървъра за самоличност <server /> за валидиране на имейл адреса или телефонния номер, но сървърът не предоставя условия за ползване.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Би било добре да <b>премахнете личните си данни</b> от сървъра за самоличност <idserver /> преди прекъсване на връзката. За съжаление, сървърът за самоличност <idserver /> в момента не е достъпен.",
     "You should:": "Ще е добре да:",
@@ -650,9 +647,6 @@
     "Direct Messages": "Директни съобщения",
     "Failed to find the following users": "Неуспешно откриване на следните потребители",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Следните потребители не съществуват или са невалидни и не могат да бъдат поканени: %(csvNames)s",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Потвърдете добавянето на този телефонен номер като докажете идентичността си чрез използване на Single Sign On.",
-    "Confirm adding phone number": "Потвърдете добавянето на телефонен номер",
-    "Click the button below to confirm adding this phone number.": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
     "Cancel entering passphrase?": "Откажете въвеждането на парола?",
     "Setting up keys": "Настройка на ключове",
     "Verify this session": "Потвърди тази сесия",
@@ -1613,7 +1607,13 @@
             "email_address_in_use": "Този имейл адрес е вече зает",
             "msisdn_in_use": "Този телефонен номер е вече зает",
             "confirm_adding_email_title": "Потвърдете добавянето на имейл",
-            "confirm_adding_email_body": "Кликнете бутона по-долу за да потвърдите добавянето на имейл адреса."
+            "confirm_adding_email_body": "Кликнете бутона по-долу за да потвърдите добавянето на имейл адреса.",
+            "add_email_dialog_title": "Добави имейл адрес",
+            "add_email_failed_verification": "Неуспешно потвърждаване на имейл адреса: уверете се, че сте кликнали върху връзката в имейла",
+            "add_msisdn_confirm_sso_button": "Потвърдете добавянето на този телефонен номер като докажете идентичността си чрез използване на Single Sign On.",
+            "add_msisdn_confirm_button": "Потвърдете добавянето на телефонен номер",
+            "add_msisdn_confirm_body": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
+            "add_msisdn_dialog_title": "Добави телефонен номер"
         }
     },
     "devtools": {

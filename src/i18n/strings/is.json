@@ -1,5 +1,4 @@
 {
-    "Failed to verify email address: make sure you clicked the link in the email": "Gat ekki sannprófað tölvupóstfang: gakktu úr skugga um að þú hafir smellt á tengilinn í tölvupóstinum",
     "Warning!": "Aðvörun!",
     "Upload Failed": "Innsending mistókst",
     "Sun": "sun",
@@ -199,10 +198,6 @@
     "Remove recent messages by %(user)s": "Fjarlægja nýleg skilaboð frá %(user)s",
     "Messages in this room are not end-to-end encrypted.": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
     "You cannot place a call with yourself.": "Þú getur ekki byrjað símtal með sjálfum þér.",
-    "Add Phone Number": "Bæta við símanúmeri",
-    "Click the button below to confirm adding this phone number.": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
-    "Confirm adding phone number": "Staðfestu að bæta við símanúmeri",
-    "Add Email Address": "Bæta við tölvupóstfangi",
     "None": "Ekkert",
     "Italics": "Skáletrað",
     "Discovery": "Uppgötvun",
@@ -535,7 +530,6 @@
     "Call failed due to misconfigured server": "Símtal mistókst vegna vanstillingar netþjóns",
     "The call was answered on another device.": "Símtalinu var svarað á öðru tæki.",
     "The call could not be established": "Ekki tókst að koma símtalinu á",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Staðfestu viðbætingu þessa símanúmers með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "Go to Settings": "Fara í stillingar",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
     "Success!": "Tókst!",
@@ -2414,7 +2408,13 @@
             "email_address_in_use": "Þetta tölvupóstfang er nú þegar í notkun",
             "msisdn_in_use": "Þetta símanúmer er nú þegar í notkun",
             "confirm_adding_email_title": "Staðfestu að bæta við tölvupósti",
-            "confirm_adding_email_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu netfangi."
+            "confirm_adding_email_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu netfangi.",
+            "add_email_dialog_title": "Bæta við tölvupóstfangi",
+            "add_email_failed_verification": "Gat ekki sannprófað tölvupóstfang: gakktu úr skugga um að þú hafir smellt á tengilinn í tölvupóstinum",
+            "add_msisdn_confirm_sso_button": "Staðfestu viðbætingu þessa símanúmers með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
+            "add_msisdn_confirm_button": "Staðfestu að bæta við símanúmeri",
+            "add_msisdn_confirm_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
+            "add_msisdn_dialog_title": "Bæta við símanúmeri"
         }
     },
     "devtools": {

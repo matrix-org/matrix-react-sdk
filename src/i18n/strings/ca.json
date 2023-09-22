@@ -9,7 +9,6 @@
     "unknown error code": "codi d'error desconegut",
     "Operation failed": "No s'ha pogut realitzar l'operació",
     "Rooms": "Sales",
-    "Failed to verify email address: make sure you clicked the link in the email": "No s'ha pogut verificar l'adreça de correu electrònic: assegura't de fer clic a l'enllaç del correu electrònic",
     "You cannot place a call with yourself.": "No pots trucar-te a tu mateix.",
     "Warning!": "Avís!",
     "Upload Failed": "No s'ha pogut pujar",
@@ -280,13 +279,8 @@
     "Call failed due to misconfigured server": "La trucada ha fallat a causa d'una configuració errònia al servidor",
     "The call was answered on another device.": "La trucada s'ha respost des d'un altre dispositiu.",
     "The call could not be established": "No s'ha pogut establir la trucada",
-    "Add Phone Number": "Afegeix número de telèfon",
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma l'addició d'aquest número de telèfon mitjançant la inscripció única SSO (per demostrar la teva identitat).",
-    "Click the button below to confirm adding this phone number.": "Fes clic al botó de sota per confirmar l'addició d'aquest número de telèfon.",
-    "Confirm adding phone number": "Confirma l'addició del número de telèfon",
-    "Add Email Address": "Afegeix una adreça de correu electrònic",
     "Explore rooms": "Explora sales",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu.",
     "Could not connect to identity server": "No s'ha pogut connectar amb el servidor d'identitat",
@@ -429,7 +423,13 @@
             "email_address_in_use": "Aquesta adreça de correu electrònic ja està en ús",
             "msisdn_in_use": "Aquest número de telèfon ja està en ús",
             "confirm_adding_email_title": "Confirma l'addició del correu electrònic",
-            "confirm_adding_email_body": "Fes clic al botó de sota per confirmar l'addició d'aquesta adreça de correu electrònic."
+            "confirm_adding_email_body": "Fes clic al botó de sota per confirmar l'addició d'aquesta adreça de correu electrònic.",
+            "add_email_dialog_title": "Afegeix una adreça de correu electrònic",
+            "add_email_failed_verification": "No s'ha pogut verificar l'adreça de correu electrònic: assegura't de fer clic a l'enllaç del correu electrònic",
+            "add_msisdn_confirm_sso_button": "Confirma l'addició d'aquest número de telèfon mitjançant la inscripció única SSO (per demostrar la teva identitat).",
+            "add_msisdn_confirm_button": "Confirma l'addició del número de telèfon",
+            "add_msisdn_confirm_body": "Fes clic al botó de sota per confirmar l'addició d'aquest número de telèfon.",
+            "add_msisdn_dialog_title": "Afegeix número de telèfon"
         }
     },
     "devtools": {
