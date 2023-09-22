@@ -330,7 +330,6 @@
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
-    "Your %(brand)s is misconfigured": "Ditt %(brand)s-oppsett er feiloppsatt",
     "Not a valid %(brand)s keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
     "Unrecognised address": "Adressen ble ikke gjenkjent",
     "Unknown server error": "Ukjent tjenerfeil",
@@ -1611,7 +1610,8 @@
         "oidc": {
             "error_title": "Vi kunne ikke logge deg inn"
         },
-        "reset_password_email_not_found_title": "Denne e-postadressen ble ikke funnet"
+        "reset_password_email_not_found_title": "Denne e-postadressen ble ikke funnet",
+        "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",

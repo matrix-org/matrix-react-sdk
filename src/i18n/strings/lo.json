@@ -568,11 +568,6 @@
     "This address is already in use": "ທີ່ຢູ່ນີ້ຖືກໃຊ້ແລ້ວ",
     "This address is available to use": "ທີ່ຢູ່ນີ້ສາມາດໃຊ້ໄດ້",
     "This address does not point at this room": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ.",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
-    "There was a problem communicating with the homeserver, please try again later.": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org.",
-    "Please <a>contact your service administrator</a> to continue using this service.": "ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການນີ້.",
     "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ",
     "Identity server URL does not appear to be a valid identity server": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
     "Invalid base_url for m.identity_server": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
@@ -1230,20 +1225,6 @@
         "one": "%(items)s ແລະ ອີກນຶ່ງລາຍການ",
         "other": "%(items)s ແລະ %(count)s ອື່ນໆ"
     },
-    "This homeserver has exceeded one of its resource limits.": "homeserverນີ້ໃຊ້ຊັບພະຍາກອນເກີນຂີດຈຳກັດຢ່າງໃດຢ່າງໜຶ່ງ.",
-    "This homeserver has been blocked by its administrator.": "homeserver ນີ້ຖືກບລັອກໂດຍຜູູ້ຄຸ້ມຄອງລະບົບ.",
-    "This homeserver has hit its Monthly Active User limit.": "homeserver ນີ້ຮອດຂີດຈຳກັດຂອງຜູ້ໃຊ້ປະຈຳເດືອນແລ້ວ.",
-    "Unexpected error resolving identity server configuration": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການກຳນົດຄ່າເຊີບເວີ",
-    "Unexpected error resolving homeserver configuration": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການຕັ້ງຄ່າ homeserver",
-    "No homeserver URL provided": "ບໍ່ມີການສະໜອງ URL homeserver",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "ທ່ານສາມາດເຂົ້າສູ່ລະບົບ, ແຕ່ຄຸນສົມບັດບາງຢ່າງຈະບໍ່ມີຈົນກ່ວາເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບຄືນໄປບ່ອນອອນໄລນ໌. ຖ້າທ່ານຍັງເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "ທ່ານສາມາດຕັ້ງລະຫັດຜ່ານຂອງທ່ານໃໝ່ໄດ້, ແຕ່ບາງຄຸນສົມບັດຈະບໍ່ສາມາດໃຊ້ໄດ້ຈົນກວ່າເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບມາອອນລາຍ. ຖ້າທ່ານຍັງເຫັນເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "ທ່ານສາມາດລົງທະບຽນໄດ້, ແຕ່ຄຸນສົມບັດບາງຢ່າງຈະບໍ່ສາມາດໃຊ້ໄດ້ຈົນກວ່າ ເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບມາອອນລາຍ. ຖ້າຫາກທ່ານຍັງເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
-    "Cannot reach identity server": "ບໍ່ສາມາດເຂົ້າຫາເຊີບເວີທີ່ລະບຸຕົວຕົນໄດ້",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "ຂໍໃຫ້ຜູ້ຄຸ້ມຄອງ %(brand)s ຂອງທ່ານກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບລາຍການທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຊໍ້າກັນ.",
-    "Your %(brand)s is misconfigured": "%(brand)s ກຳນົດຄ່າຂອງທ່ານບໍ່ຖືກຕ້ອງ",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "ໃຫ້ແນ່ໃຈວ່າທ່ານມີການເຊື່ອມຕໍ່ອິນເຕີເນັດທີ່ຫມັ້ນຄົງ, ຫຼື ຕິດຕໍ່ກັບຜູ້ຄູ້ມຄອງເຊີບເວີ",
-    "Cannot reach homeserver": "ບໍ່ສາມາດຕິດຕໍ່ homeserver ໄດ້",
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
     "<not supported>": "<ບໍ່ຮອງຮັບ>",
@@ -3134,7 +3115,17 @@
         "oidc": {
             "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້"
         },
-        "reset_password_email_not_found_title": "ບໍ່ພົບທີ່ຢູ່ອີເມວນີ້"
+        "reset_password_email_not_found_title": "ບໍ່ພົບທີ່ຢູ່ອີເມວນີ້",
+        "misconfigured_title": "%(brand)s ກຳນົດຄ່າຂອງທ່ານບໍ່ຖືກຕ້ອງ",
+        "misconfigured_body": "ຂໍໃຫ້ຜູ້ຄຸ້ມຄອງ %(brand)s ຂອງທ່ານກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບລາຍການທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຊໍ້າກັນ.",
+        "failed_connect_identity_server": "ບໍ່ສາມາດເຂົ້າຫາເຊີບເວີທີ່ລະບຸຕົວຕົນໄດ້",
+        "failed_connect_identity_server_register": "ທ່ານສາມາດລົງທະບຽນໄດ້, ແຕ່ຄຸນສົມບັດບາງຢ່າງຈະບໍ່ສາມາດໃຊ້ໄດ້ຈົນກວ່າ ເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບມາອອນລາຍ. ຖ້າຫາກທ່ານຍັງເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
+        "failed_connect_identity_server_reset_password": "ທ່ານສາມາດຕັ້ງລະຫັດຜ່ານຂອງທ່ານໃໝ່ໄດ້, ແຕ່ບາງຄຸນສົມບັດຈະບໍ່ສາມາດໃຊ້ໄດ້ຈົນກວ່າເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບມາອອນລາຍ. ຖ້າທ່ານຍັງເຫັນເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
+        "failed_connect_identity_server_other": "ທ່ານສາມາດເຂົ້າສູ່ລະບົບ, ແຕ່ຄຸນສົມບັດບາງຢ່າງຈະບໍ່ມີຈົນກ່ວາເຊີບເວີທີ່ລະບຸຕົວຕົນຈະກັບຄືນໄປບ່ອນອອນໄລນ໌. ຖ້າທ່ານຍັງເຫັນຄໍາເຕືອນນີ້, ໃຫ້ກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ຫຼື ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີ.",
+        "no_hs_url_provided": "ບໍ່ມີການສະໜອງ URL homeserver",
+        "autodiscovery_unexpected_error_hs": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການຕັ້ງຄ່າ homeserver",
+        "autodiscovery_unexpected_error_is": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການກຳນົດຄ່າເຊີບເວີ",
+        "incorrect_credentials_detail": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org."
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3522,5 +3513,16 @@
         "error_missing_room_id_request": "ບໍ່ມີການຮ້ອງຂໍ room_id",
         "error_room_not_visible": "ບໍ່ເຫັນຫ້ອງ %(roomId)s",
         "error_missing_user_id_request": "ບໍ່ມີ user_id ໃນການຮ້ອງຂໍ"
+    },
+    "cannot_reach_homeserver": "ບໍ່ສາມາດຕິດຕໍ່ homeserver ໄດ້",
+    "cannot_reach_homeserver_detail": "ໃຫ້ແນ່ໃຈວ່າທ່ານມີການເຊື່ອມຕໍ່ອິນເຕີເນັດທີ່ຫມັ້ນຄົງ, ຫຼື ຕິດຕໍ່ກັບຜູ້ຄູ້ມຄອງເຊີບເວີ",
+    "error": {
+        "mau": "homeserver ນີ້ຮອດຂີດຈຳກັດຂອງຜູ້ໃຊ້ປະຈຳເດືອນແລ້ວ.",
+        "hs_blocked": "homeserver ນີ້ຖືກບລັອກໂດຍຜູູ້ຄຸ້ມຄອງລະບົບ.",
+        "resource_limits": "homeserverນີ້ໃຊ້ຊັບພະຍາກອນເກີນຂີດຈຳກັດຢ່າງໃດຢ່າງໜຶ່ງ.",
+        "admin_contact": "ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການນີ້.",
+        "connection": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "mixed_content": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
+        "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ."
     }
 }

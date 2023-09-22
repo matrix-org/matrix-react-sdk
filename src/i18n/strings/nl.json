@@ -9,7 +9,6 @@
     "An error has occurred.": "Er is een fout opgetreden.",
     "Are you sure?": "Weet je het zeker?",
     "Are you sure you want to reject the invitation?": "Weet je zeker dat je de uitnodiging wilt weigeren?",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Kan geen verbinding maken met de homeserver via HTTP wanneer er een HTTPS-URL in je browserbalk staat. Gebruik HTTPS of <a>schakel onveilige scripts in</a>.",
     "Admin Tools": "Beheerdersgereedschap",
     "No Microphones detected": "Geen microfoons gevonden",
     "No Webcams detected": "Geen webcams gevonden",
@@ -52,7 +51,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s, %(time)s",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Geen verbinding met de homeserver - controleer je verbinding, zorg ervoor dat het <a>SSL-certificaat van de homeserver</a> vertrouwd is en dat er geen browserextensies verzoeken blokkeren.",
     "Deactivate Account": "Account Sluiten",
     "Decrypt %(text)s": "%(text)s ontsleutelen",
     "Download %(text)s": "%(text)s downloaden",
@@ -168,7 +166,6 @@
     "And %(count)s more...": {
         "other": "En %(count)s meer…"
     },
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "Let op dat je inlogt bij de %(hs)s-server, niet matrix.org.",
     "<a>In reply to</a> <pill>": "<a>Als antwoord op</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit is geen publieke kamer. Slechts op uitnodiging zal je opnieuw kunnen toetreden.",
     "You don't currently have any stickerpacks enabled": "Je hebt momenteel geen stickerpakketten ingeschakeld",
@@ -221,8 +218,6 @@
     "Audio Output": "Geluidsuitgang",
     "Ignored users": "Genegeerde personen",
     "Bulk options": "Bulkopties",
-    "This homeserver has hit its Monthly Active User limit.": "Deze homeserver heeft zijn limiet voor maandelijks actieve personen bereikt.",
-    "This homeserver has exceeded one of its resource limits.": "Deze homeserver heeft één van zijn systeembron-limieten overschreden.",
     "Unrecognised address": "Adres niet herkend",
     "You do not have permission to invite people to this room.": "Je bent niet bevoegd anderen in deze kamer uit te nodigen.",
     "The user must be unbanned before they can be invited.": "De persoon kan niet uitgenodigd worden totdat zijn ban is verwijderd.",
@@ -372,7 +367,6 @@
     "Invalid homeserver discovery response": "Ongeldig homeserver-vindbaarheids-antwoord",
     "Invalid identity server discovery response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
     "General failure": "Algemene fout",
-    "Please <a>contact your service administrator</a> to continue using this service.": "Gelieve <a>contact op te nemen met je dienstbeheerder</a> om deze dienst te blijven gebruiken.",
     "Create account": "Registeren",
     "That matches!": "Dat komt overeen!",
     "That doesn't match.": "Dat komt niet overeen.",
@@ -411,8 +405,6 @@
     },
     "Cancel All": "Alles annuleren",
     "Upload Error": "Fout bij versturen van bestand",
-    "No homeserver URL provided": "Geen homeserver-URL opgegeven",
-    "Unexpected error resolving homeserver configuration": "Onverwachte fout bij het controleren van de homeserver-configuratie",
     "The user's homeserver does not support the version of the room.": "De homeserver van de persoon biedt geen ondersteuning voor deze kamerversie.",
     "Join the conversation with an account": "Neem deel aan de kamer met een account",
     "Sign Up": "Registreren",
@@ -446,15 +438,6 @@
     "Notification sound": "Meldingsgeluid",
     "Set a new custom sound": "Stel een nieuw aangepast geluid in",
     "Browse": "Bladeren",
-    "Cannot reach homeserver": "Kan homeserver niet bereiken",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "Zorg dat je een stabiele internetverbinding hebt, of neem contact op met de systeembeheerder",
-    "Your %(brand)s is misconfigured": "Je %(brand)s is onjuist geconfigureerd",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Vraag jouw %(brand)s-beheerder <a>je configuratie</a> na te kijken op onjuiste of dubbele items.",
-    "Unexpected error resolving identity server configuration": "Onverwachte fout bij het oplossen van de identiteitsserverconfiguratie",
-    "Cannot reach identity server": "Kan identiteitsserver niet bereiken",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je kan jezelf registreren, maar sommige functies zullen pas beschikbaar zijn wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je kan jouw wachtwoord opnieuw instellen, maar sommige functies zullen pas beschikbaar komen wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Je kan inloggen, maar sommige functies zullen pas beschikbaar zijn wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een systeembeheerder.",
     "Upload all": "Alles versturen",
     "Edited at %(date)s. Click to view edits.": "Bewerkt op %(date)s. Klik om de bewerkingen te bekijken.",
     "Message edits": "Berichtbewerkingen",
@@ -1059,7 +1042,6 @@
     "Confirm your Security Phrase": "Bevestig je veiligheidswachtwoord",
     "Great! This Security Phrase looks strong enough.": "Geweldig. Dit veiligheidswachtwoord ziet er sterk genoeg uit.",
     "Enter a Security Phrase": "Veiligheidswachtwoord invoeren",
-    "There was a problem communicating with the homeserver, please try again later.": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
     "Move right": "Ga naar rechts",
@@ -1180,7 +1162,6 @@
     "Share invite link": "Deel uitnodigingskoppeling",
     "Click to copy": "Klik om te kopiëren",
     "Create a space": "Space maken",
-    "This homeserver has been blocked by its administrator.": "Deze homeserver is geblokkeerd door jouw beheerder.",
     "Private space": "Privé Space",
     "Public space": "Publieke Space",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
@@ -1795,8 +1776,6 @@
     },
     "Sorry — this call is currently full": "Sorry — dit gesprek is momenteel vol",
     "Unknown room": "Onbekende kamer",
-    "Voice broadcast": "Spraakuitzending",
-    "Live": "Live",
     "common": {
         "about": "Over",
         "analytics": "Gebruiksgegevens",
@@ -3395,7 +3374,17 @@
         "oidc": {
             "error_title": "We konden je niet inloggen"
         },
-        "reset_password_email_not_found_title": "Dit e-mailadres is niet gevonden"
+        "reset_password_email_not_found_title": "Dit e-mailadres is niet gevonden",
+        "misconfigured_title": "Je %(brand)s is onjuist geconfigureerd",
+        "misconfigured_body": "Vraag jouw %(brand)s-beheerder <a>je configuratie</a> na te kijken op onjuiste of dubbele items.",
+        "failed_connect_identity_server": "Kan identiteitsserver niet bereiken",
+        "failed_connect_identity_server_register": "Je kan jezelf registreren, maar sommige functies zullen pas beschikbaar zijn wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
+        "failed_connect_identity_server_reset_password": "Je kan jouw wachtwoord opnieuw instellen, maar sommige functies zullen pas beschikbaar komen wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een serverbeheerder.",
+        "failed_connect_identity_server_other": "Je kan inloggen, maar sommige functies zullen pas beschikbaar zijn wanneer de identiteitsserver weer online is. Als je deze waarschuwing blijft zien, controleer dan je configuratie of neem contact op met een systeembeheerder.",
+        "no_hs_url_provided": "Geen homeserver-URL opgegeven",
+        "autodiscovery_unexpected_error_hs": "Onverwachte fout bij het controleren van de homeserver-configuratie",
+        "autodiscovery_unexpected_error_is": "Onverwachte fout bij het oplossen van de identiteitsserverconfiguratie",
+        "incorrect_credentials_detail": "Let op dat je inlogt bij de %(hs)s-server, niet matrix.org."
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3568,7 +3557,9 @@
         "confirm_stop_affirm": "Ja, stop uitzending",
         "resume": "hervat spraakuitzending",
         "pause": "spraakuitzending pauzeren",
-        "play": "spraakuitzending afspelen"
+        "play": "spraakuitzending afspelen",
+        "live": "Live",
+        "action": "Spraakuitzending"
     },
     "update": {
         "see_changes_button": "Wat is er nieuw?",
@@ -3805,5 +3796,16 @@
         "error_missing_room_id_request": "room_id ontbreekt in verzoek",
         "error_room_not_visible": "Kamer %(roomId)s is niet zichtbaar",
         "error_missing_user_id_request": "user_id ontbreekt in verzoek"
+    },
+    "cannot_reach_homeserver": "Kan homeserver niet bereiken",
+    "cannot_reach_homeserver_detail": "Zorg dat je een stabiele internetverbinding hebt, of neem contact op met de systeembeheerder",
+    "error": {
+        "mau": "Deze homeserver heeft zijn limiet voor maandelijks actieve personen bereikt.",
+        "hs_blocked": "Deze homeserver is geblokkeerd door jouw beheerder.",
+        "resource_limits": "Deze homeserver heeft één van zijn systeembron-limieten overschreden.",
+        "admin_contact": "Gelieve <a>contact op te nemen met je dienstbeheerder</a> om deze dienst te blijven gebruiken.",
+        "connection": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
+        "mixed_content": "Kan geen verbinding maken met de homeserver via HTTP wanneer er een HTTPS-URL in je browserbalk staat. Gebruik HTTPS of <a>schakel onveilige scripts in</a>.",
+        "tls": "Geen verbinding met de homeserver - controleer je verbinding, zorg ervoor dat het <a>SSL-certificaat van de homeserver</a> vertrouwd is en dat er geen browserextensies verzoeken blokkeren."
     }
 }

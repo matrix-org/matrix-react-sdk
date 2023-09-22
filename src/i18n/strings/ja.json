@@ -70,8 +70,6 @@
     "Restricted": "制限",
     "Moderator": "モデレーター",
     "Reason": "理由",
-    "This homeserver has hit its Monthly Active User limit.": "このホームサーバーは月間アクティブユーザー数の上限に達しました 。",
-    "This homeserver has exceeded one of its resource limits.": "このホームサーバーはリソースの上限に達しました。",
     "Your browser does not support the required cryptography extensions": "お使いのブラウザーは、必要な暗号化拡張機能をサポートしていません",
     "Not a valid %(brand)s keyfile": "有効な%(brand)sキーファイルではありません",
     "Authentication check failed: incorrect password?": "認証に失敗しました：間違ったパスワード？",
@@ -228,10 +226,6 @@
     "A new password must be entered.": "新しいパスワードを入力する必要があります。",
     "New passwords must match each other.": "新しいパスワードは互いに一致する必要があります。",
     "Return to login screen": "ログイン画面に戻る",
-    "Please <a>contact your service administrator</a> to continue using this service.": "このサービスを引き続き使用するには、<a>サービス管理者にお問い合わせ</a>ください。",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
     "Session ID": "セッションID",
     "Passphrases must match": "パスフレーズが一致していません",
     "Passphrase must not be empty": "パスフレーズには1文字以上が必要です",
@@ -247,10 +241,6 @@
     "You do not have permission to invite people to this room.": "このルームにユーザーを招待する権限がありません。",
     "Unknown server error": "不明なサーバーエラー",
     "Room Name": "ルーム名",
-    "Cannot reach homeserver": "ホームサーバーに接続できません",
-    "Your %(brand)s is misconfigured": "あなたの%(brand)sは正しく設定されていません",
-    "Cannot reach identity server": "IDサーバーに接続できません",
-    "No homeserver URL provided": "ホームサーバーのURLが指定されていません",
     "The user's homeserver does not support the version of the room.": "ユーザーのホームサーバーは、このバージョンのルームをサポートしていません。",
     "Phone numbers": "電話番号",
     "General": "一般",
@@ -589,13 +579,6 @@
     "Unrecognised address": "認識されないアドレス",
     "Error leaving room": "ルームを退出する際にエラーが発生しました",
     "Unexpected server error trying to leave the room": "ルームから退出する際に予期しないサーバーエラーが発生しました",
-    "Unexpected error resolving identity server configuration": "IDサーバーの設定の解釈中に予期しないエラーが発生しました",
-    "Unexpected error resolving homeserver configuration": "ホームサーバーの設定の解釈中に予期しないエラーが発生しました",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "ログインできますが、IDサーバーがオンラインになるまで一部の機能を使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "パスワードをリセットできますが、IDサーバーがオンラインになるまで一部の機能を使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "登録できますが、IDサーバーがオンラインになるまで一部の機能は使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "<a>設定</a>が間違っているか重複しているか確認するよう、%(brand)sの管理者に問い合わせてください。",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "安定したインターネット接続があることを確認するか、サーバー管理者に連絡してください",
     "Ask this user to verify their session, or manually verify it below.": "このユーザーにセッションを認証するよう依頼するか、以下から手動で認証してください。",
     "Verify your other session using one of the options below.": "以下のどれか一つを使って他のセッションを認証します。",
     "Double check that your server supports the room version chosen and try again.": "選択したルームのバージョンをあなたのサーバーがサポートしているか改めて確認し、もう一度試してください。",
@@ -941,7 +924,6 @@
     "Share invite link": "招待リンクを共有",
     "Click to copy": "クリックでコピー",
     "Create a space": "スペースを作成",
-    "This homeserver has been blocked by its administrator.": "このホームサーバーは管理者によりブロックされています。",
     "Edit devices": "端末を編集",
     "You have no ignored users.": "無視しているユーザーはいません。",
     "Save Changes": "変更を保存",
@@ -1332,7 +1314,6 @@
     "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
     "Only do this if you have no other device to complete verification with.": "認証を行える端末がない場合のみ行ってください。",
     "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
-    "There was a problem communicating with the homeserver, please try again later.": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
     "From a thread": "スレッドから",
     "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
     "Create key backup": "鍵のバックアップを作成",
@@ -1639,8 +1620,6 @@
     "Check that the code below matches with your other device:": "以下のコードが他の端末と一致していることを確認してください：",
     "Great! This Security Phrase looks strong enough.": "すばらしい！ このセキュリティーフレーズは十分に強力なようです。",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)sまたは%(copyButton)s",
-    "Voice broadcast": "音声配信",
-    "Live": "ライブ",
     "Video call ended": "ビデオ通話が終了しました",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
     "To join, please enable video rooms in Labs first": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
@@ -1689,7 +1668,6 @@
     "You need to have the right permissions in order to share locations in this room.": "このルームでの位置情報の共有には適切な権限が必要です。",
     "To view, please enable video rooms in Labs first": "表示するには、まずラボのビデオ通話ルームを有効にしてください",
     "Are you sure you're at the right place?": "正しい場所にいますか？",
-    "Can’t start a call": "通話を開始できません",
     "Text": "テキスト",
     "Freedom": "自由",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)sではエンドツーエンド暗号化が設定されていますが、より少ないユーザー数に限定されています。",
@@ -1702,7 +1680,6 @@
         "other": "%(count)s個のセッションからサインアウトしてよろしいですか？"
     },
     "Bulk options": "一括オプション",
-    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
     "Ongoing call": "通話中",
     "Add privileged users": "特権ユーザーを追加",
     "Give one or multiple users in this room more privileges": "このルームのユーザーに権限を付与",
@@ -1861,7 +1838,6 @@
     "Saving…": "保存しています…",
     "Creating…": "作成しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
-    "Unable to connect to Homeserver. Retrying…": "ホームサーバーに接続できません。 再試行しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
     "common": {
@@ -3285,7 +3261,9 @@
         "transfer_failed_description": "通話の転送に失敗しました",
         "no_permission_conference": "権限が必要です",
         "no_permission_conference_description": "このルームでグループ通話を開始する権限がありません",
-        "default_device": "既定の端末"
+        "default_device": "既定の端末",
+        "failed_call_live_broadcast_title": "通話を開始できません",
+        "failed_call_live_broadcast_description": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。"
     },
     "Other": "その他",
     "Advanced": "詳細",
@@ -3573,7 +3551,17 @@
             "error_title": "ログインできませんでした"
         },
         "reset_password_email_not_found_title": "このメールアドレスが見つかりませんでした",
-        "reset_password_email_not_associated": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。"
+        "reset_password_email_not_associated": "あなたのメールアドレスは、このホームサーバーのMatrix IDに関連付けられていないようです。",
+        "misconfigured_title": "あなたの%(brand)sは正しく設定されていません",
+        "misconfigured_body": "<a>設定</a>が間違っているか重複しているか確認するよう、%(brand)sの管理者に問い合わせてください。",
+        "failed_connect_identity_server": "IDサーバーに接続できません",
+        "failed_connect_identity_server_register": "登録できますが、IDサーバーがオンラインになるまで一部の機能は使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
+        "failed_connect_identity_server_reset_password": "パスワードをリセットできますが、IDサーバーがオンラインになるまで一部の機能を使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
+        "failed_connect_identity_server_other": "ログインできますが、IDサーバーがオンラインになるまで一部の機能を使用できません。この警告が引き続き表示される場合は、設定を確認するか、サーバー管理者にお問い合わせください。",
+        "no_hs_url_provided": "ホームサーバーのURLが指定されていません",
+        "autodiscovery_unexpected_error_hs": "ホームサーバーの設定の解釈中に予期しないエラーが発生しました",
+        "autodiscovery_unexpected_error_is": "IDサーバーの設定の解釈中に予期しないエラーが発生しました",
+        "incorrect_credentials_detail": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3758,7 +3746,9 @@
         "pause": "音声配信を一時停止",
         "buffering": "バッファリングしています…",
         "play": "音声配信を再生",
-        "connection_error": "接続エラー - 録音を停止しました"
+        "connection_error": "接続エラー - 録音を停止しました",
+        "live": "ライブ",
+        "action": "音声配信"
     },
     "update": {
         "see_changes_button": "新着",
@@ -4004,5 +3994,17 @@
         "error_missing_room_id_request": "リクエストにroom_idがありません",
         "error_room_not_visible": "ルーム %(roomId)s は見えません",
         "error_missing_user_id_request": "リクエストにuser_idがありません"
+    },
+    "cannot_reach_homeserver": "ホームサーバーに接続できません",
+    "cannot_reach_homeserver_detail": "安定したインターネット接続があることを確認するか、サーバー管理者に連絡してください",
+    "error": {
+        "mau": "このホームサーバーは月間アクティブユーザー数の上限に達しました 。",
+        "hs_blocked": "このホームサーバーは管理者によりブロックされています。",
+        "resource_limits": "このホームサーバーはリソースの上限に達しました。",
+        "admin_contact": "このサービスを引き続き使用するには、<a>サービス管理者にお問い合わせ</a>ください。",
+        "sync": "ホームサーバーに接続できません。 再試行しています…",
+        "connection": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
+        "mixed_content": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
+        "tls": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。"
     }
 }

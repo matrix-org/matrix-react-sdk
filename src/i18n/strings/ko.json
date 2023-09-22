@@ -23,8 +23,6 @@
         "other": "외 %(count)s명..."
     },
     "Are you sure you want to reject the invitation?": "초대를 거절하시겠어요?",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요.",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
     "Custom level": "맞춤 등급",
     "Deactivate Account": "계정 비활성화",
     "Decrypt %(text)s": "%(text)s 복호화",
@@ -213,7 +211,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "This homeserver has hit its Monthly Active User limit.": "이 홈서버가 월 간 활성 사용자 수 한도를 초과했습니다.",
     "Please contact your homeserver administrator.": "홈서버 관리자에게 연락하세요.",
     "This room has been replaced and is no longer active.": "이 방은 대체되어서 더 이상 활동하지 않습니다.",
     "The conversation continues here.": "이 대화는 여기서 이어집니다.",
@@ -230,19 +227,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "이 홈서버가 월 간 활성 사용자 한도를 초과했기 때문에 메시지를 보낼 수 없었습니다. 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
     "No Audio Outputs detected": "오디오 출력 감지 없음",
     "Audio Output": "오디오 출력",
-    "Please <a>contact your service administrator</a> to continue using this service.": "이 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>하세요.",
-    "Cannot reach homeserver": "홈서버에 연결할 수 없습니다",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "인터넷 연결이 안정적인지 확인하세요, 또는 서버 관리자에게 연락하세요",
-    "Your %(brand)s is misconfigured": "%(brand)s이 잘못 설정됨",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "%(brand)s 관리자에게 <a>당신의 설정</a>에 잘못되거나 중복된 항목이 있는지 확인하도록 요청하세요.",
-    "Cannot reach identity server": "ID 서버에 연결할 수 없습니다",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "등록할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "비밀번호를 다시 설정할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "로그인할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
-    "No homeserver URL provided": "홈서버 URL이 제공되지 않음",
-    "Unexpected error resolving homeserver configuration": "홈서버 설정을 해결하는 중 예기치 않은 오류",
-    "Unexpected error resolving identity server configuration": "ID 서버 설정을 해결하는 중 예기치 않은 오류",
-    "This homeserver has exceeded one of its resource limits.": "이 홈서버가 리소스 한도를 초과했습니다.",
     "Unrecognised address": "인식할 수 없는 주소",
     "You do not have permission to invite people to this room.": "이 방에 사람을 초대할 권한이 없습니다.",
     "The user must be unbanned before they can be invited.": "초대하려면 사용자가 출입 금지되지 않은 상태여야 합니다.",
@@ -478,7 +462,6 @@
     "Invalid base_url for m.identity_server": "잘못된 m.identity_server 용 base_url",
     "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
     "General failure": "일반적인 실패",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다.",
     "Create account": "계정 만들기",
     "Failed to re-authenticate due to a homeserver problem": "홈서버 문제로 다시 인증에 실패함",
     "Clear personal data": "개인 정보 지우기",
@@ -1385,7 +1368,17 @@
         "oidc": {
             "error_generic": "무언가가 잘못되었습니다."
         },
-        "reset_password_email_not_found_title": "이 이메일 주소를 찾을 수 없음"
+        "reset_password_email_not_found_title": "이 이메일 주소를 찾을 수 없음",
+        "misconfigured_title": "%(brand)s이 잘못 설정됨",
+        "misconfigured_body": "%(brand)s 관리자에게 <a>당신의 설정</a>에 잘못되거나 중복된 항목이 있는지 확인하도록 요청하세요.",
+        "failed_connect_identity_server": "ID 서버에 연결할 수 없습니다",
+        "failed_connect_identity_server_register": "등록할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
+        "failed_connect_identity_server_reset_password": "비밀번호를 다시 설정할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
+        "failed_connect_identity_server_other": "로그인할 수 있지만 ID 서버가 다시 온라인 상태가 될 때까지 일부 기능을 사용할 수 없습니다. 이 경고가 계속 표시되면, 설정을 확인하거나 서버 관리자에게 연락하세요.",
+        "no_hs_url_provided": "홈서버 URL이 제공되지 않음",
+        "autodiscovery_unexpected_error_hs": "홈서버 설정을 해결하는 중 예기치 않은 오류",
+        "autodiscovery_unexpected_error_is": "ID 서버 설정을 해결하는 중 예기치 않은 오류",
+        "incorrect_credentials_detail": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다."
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1564,5 +1557,14 @@
         "error_missing_room_id_request": "요청에서 room_id가 빠짐",
         "error_room_not_visible": "방 %(roomId)s이(가) 보이지 않음",
         "error_missing_user_id_request": "요청에서 user_id이(가) 빠짐"
+    },
+    "cannot_reach_homeserver": "홈서버에 연결할 수 없습니다",
+    "cannot_reach_homeserver_detail": "인터넷 연결이 안정적인지 확인하세요, 또는 서버 관리자에게 연락하세요",
+    "error": {
+        "mau": "이 홈서버가 월 간 활성 사용자 수 한도를 초과했습니다.",
+        "resource_limits": "이 홈서버가 리소스 한도를 초과했습니다.",
+        "admin_contact": "이 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>하세요.",
+        "mixed_content": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
+        "tls": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요."
     }
 }

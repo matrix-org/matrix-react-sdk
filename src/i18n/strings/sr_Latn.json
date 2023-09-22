@@ -1,5 +1,4 @@
 {
-    "Your %(brand)s is misconfigured": "Vaš %(brand)s nije dobro podešen",
     "Explore rooms": "Istražite sobe",
     "Send": "Pošalji",
     "Sun": "Ned",
@@ -30,9 +29,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "There was a problem communicating with the homeserver, please try again later.": "Postoji problem u komunikaciji sa privatnim/javnim serverom. Molim Vas pokušajte kasnije.",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "Napominjem Vas da se prijavljujete na %(hs)s server, a ne na matrix.org.",
-    "Please <a>contact your service administrator</a> to continue using this service.": "Molim Vas da <a>kontaktirate administratora</a> kako bi ste nastavili sa korištenjem usluge.",
     "Start a group chat": "Pokreni grupni razgovor",
     "User is already in the room": "Korisnik je već u sobi",
     "common": {
@@ -106,7 +102,9 @@
             "sso_title": "Koristite jedinstvenu prijavu (SSO) za nastavak",
             "sso_body": "Potvrdite dodavanje ove email adrese koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet."
         },
-        "reset_password_email_not_found_title": "Ova adresa elektronske pošte nije pronađena"
+        "reset_password_email_not_found_title": "Ova adresa elektronske pošte nije pronađena",
+        "misconfigured_title": "Vaš %(brand)s nije dobro podešen",
+        "incorrect_credentials_detail": "Napominjem Vas da se prijavljujete na %(hs)s server, a ne na matrix.org."
     },
     "keyboard": {
         "keyboard_shortcuts_tab": "Otvori podešavanja"
@@ -145,5 +143,9 @@
     },
     "scalar": {
         "error_send_request": "Slanje zahteva nije uspelo."
+    },
+    "error": {
+        "admin_contact": "Molim Vas da <a>kontaktirate administratora</a> kako bi ste nastavili sa korištenjem usluge.",
+        "connection": "Postoji problem u komunikaciji sa privatnim/javnim serverom. Molim Vas pokušajte kasnije."
     }
 }

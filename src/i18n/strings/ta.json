@@ -27,7 +27,6 @@
     "Yesterday": "நேற்று",
     "Thank you!": "உங்களுக்கு நன்றி",
     "Rooms": "அறைகள்",
-    "Your %(brand)s is misconfigured": "உங்கள் %(brand)s தவறாக உள்ளமைக்கப்பட்டுள்ளது",
     "Permission Required": "அனுமதி தேவை",
     "Server may be unavailable, overloaded, or you hit a bug.": "",
     "Sun": "ஞாயிறு",
@@ -155,7 +154,8 @@
         "uia": {
             "sso_title": "தொடர ஒற்றை உள்நுழைவைப் பயன்படுத்தவும்",
             "sso_body": "உங்கள் அடையாளத்தை நிரூபிக்க ஒற்றை உள்நுழைவைப் பயன்படுத்தி இந்த மின்னஞ்சல் முகவரியை சேர்ப்பதை உறுதிப்படுத்தவும்."
-        }
+        },
+        "misconfigured_title": "உங்கள் %(brand)s தவறாக உள்ளமைக்கப்பட்டுள்ளது"
     },
     "room_list": {
         "failed_remove_tag": "அறையில் இருந்து குறிச்சொல் %(tagName)s களை அகற்றுவது தோல்வியடைந்தது",

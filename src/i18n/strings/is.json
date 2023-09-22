@@ -705,8 +705,6 @@
         "one": "%(items)s og einn til viðbótar",
         "other": "%(items)s og %(count)s til viðbótar"
     },
-    "No homeserver URL provided": "Engin slóð heimaþjóns tilgreind",
-    "Cannot reach identity server": "Næ ekki sambandi við auðkennisþjón",
     "Private space": "Einkasvæði",
     "Mentions only": "Aðeins minnst á",
     "Reset everything": "Frumstilla allt",
@@ -818,9 +816,6 @@
     "Access": "Aðgangur",
     "Back to thread": "Til baka í spjallþráð",
     "Verify this session": "Sannprófa þessa setu",
-    "This homeserver has exceeded one of its resource limits.": "Þessi heimaþjónn er kominn fram yfir takmörk á tilföngum sínum.",
-    "This homeserver has hit its Monthly Active User limit.": "Þessi heimaþjónn er kominn fram yfir takmörk á mánaðarlega virkum notendum.",
-    "Cannot reach homeserver": "Næ ekki að tengjast heimaþjóni",
     "Favourited": "Í eftirlætum",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
@@ -1114,10 +1109,6 @@
     "Set up Secure Backup": "Setja upp varið öryggisafrit",
     "Authentication check failed: incorrect password?": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
     "Your browser does not support the required cryptography extensions": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
-    "This homeserver has been blocked by its administrator.": "Þessi heimaþjónn hefur verið útilokaður af kerfisstjóra hans.",
-    "Unexpected error resolving identity server configuration": "Óvænt villa kom upp við að lesa uppsetningu auðkenningarþjóns",
-    "Unexpected error resolving homeserver configuration": "Óvænt villa kom upp við að lesa uppsetningu heimaþjóns",
-    "Your %(brand)s is misconfigured": "%(brand)s-uppsetningin þín er rangt stillt",
     "Message didn't send. Click for info.": "Mistókst að senda skilaboð. Smelltu til að fá nánari upplýsingar.",
     "No media permissions": "Engar heimildir fyrir myndefni",
     "That doesn't match.": "Þetta stemmir ekki.",
@@ -1234,7 +1225,6 @@
     "wait and try again later": "bíða og reyna aftur síðar",
     "New Recovery Method": "Ný endurheimtuaðferð",
     "I'll verify later": "Ég mun sannreyna síðar",
-    "Please <a>contact your service administrator</a> to continue using this service.": "<a>Hafðu samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þessa þjónustu.",
     "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
     "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
     "Joining": "Geng í hópinn",
@@ -1305,8 +1295,6 @@
     "Verify with Security Key": "Sannreyna með öryggislykli",
     "Verify with Security Key or Phrase": "Sannreyna með öryggisfrasa",
     "Proceed with reset": "Halda áfram með endurstillingu",
-    "There was a problem communicating with the homeserver, please try again later.": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar.",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
     "Really reset verification keys?": "Viltu í alvörunni endurstilla sannvottunarlyklana?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ertu viss um að þú viljir yfirgefa spjallrásina '%(roomName)s'?",
@@ -1400,8 +1388,6 @@
     "User is already invited to the room": "Notandanum hefur nú þegar verið boðið á spjallrásina",
     "User is already invited to the space": "Notandanum hefur nú þegar verið boðið á svæðið",
     "You do not have permission to invite people to this space.": "Þú hefur ekki heimild til að bjóða fólk á þetta svæði.",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Biddu kerfisstjórann á %(brand)s að athuga hvort <a>uppsetningin þín</a> innihaldi rangar eða tvíteknar færslur.",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "Gakktu úr skugga um að þú hafir stöðuga nettengingu, eða hafðu samband við kerfisstjóra netþjónsins þíns",
     "Request media permissions": "Biðja um heimildir fyrir myndefni",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
@@ -1511,7 +1497,6 @@
     "Sessions": "Setur",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
-    "Live": "Beint",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eða %(copyButton)s",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
@@ -1566,7 +1551,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
     "Unknown room": "Óþekkt spjallrás",
-    "Voice broadcast": "Útvörpun tals",
     "Send email": "Senda tölvupóst",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Þú hefur verið skráður út úr öllum tækjum og munt ekki lengur fá ýti-tilkynningar. Til að endurvirkja tilkynningar, þarf að skrá sig aftur inn á hverju tæki fyrir sig.",
     "Sign out of all devices": "Skrá út af öllum tækjum",
@@ -1593,7 +1577,6 @@
     "Voice settings": "Raddstillingar",
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
     "You have unverified sessions": "Þú ert með óstaðfestar setur",
-    "Can’t start a call": "Get ekki hafið símtal",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -2937,7 +2920,8 @@
         "transfer_failed_description": "Mistókst að áframsenda símtal",
         "no_permission_conference": "Krafist er heimildar",
         "no_permission_conference_description": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
-        "default_device": "Sjálfgefið tæki"
+        "default_device": "Sjálfgefið tæki",
+        "failed_call_live_broadcast_title": "Get ekki hafið símtal"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -3198,7 +3182,14 @@
         "oidc": {
             "error_title": "Við gátum ekki skráð þig inn"
         },
-        "reset_password_email_not_found_title": "Tölvupóstfangið fannst ekki"
+        "reset_password_email_not_found_title": "Tölvupóstfangið fannst ekki",
+        "misconfigured_title": "%(brand)s-uppsetningin þín er rangt stillt",
+        "misconfigured_body": "Biddu kerfisstjórann á %(brand)s að athuga hvort <a>uppsetningin þín</a> innihaldi rangar eða tvíteknar færslur.",
+        "failed_connect_identity_server": "Næ ekki sambandi við auðkennisþjón",
+        "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
+        "autodiscovery_unexpected_error_hs": "Óvænt villa kom upp við að lesa uppsetningu heimaþjóns",
+        "autodiscovery_unexpected_error_is": "Óvænt villa kom upp við að lesa uppsetningu auðkenningarþjóns",
+        "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org."
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3372,7 +3363,9 @@
         "pause": "setja talútsendingu í bið",
         "buffering": "Hleð í biðminni…",
         "play": "spila talútsendingu",
-        "connection_error": "Villa í tengingu - Upptaka í bið"
+        "connection_error": "Villa í tengingu - Upptaka í bið",
+        "live": "Beint",
+        "action": "Útvörpun tals"
     },
     "update": {
         "see_changes_button": "Hvað er nýtt á döfinni?",
@@ -3593,5 +3586,14 @@
         "error_missing_room_id_request": "Vantar spjallrásarauðkenni í beiðni",
         "error_room_not_visible": "Spjallrásin %(roomId)s er ekki sýnileg",
         "error_missing_user_id_request": "Vantar notandaauðkenni í beiðni"
+    },
+    "cannot_reach_homeserver": "Næ ekki að tengjast heimaþjóni",
+    "cannot_reach_homeserver_detail": "Gakktu úr skugga um að þú hafir stöðuga nettengingu, eða hafðu samband við kerfisstjóra netþjónsins þíns",
+    "error": {
+        "mau": "Þessi heimaþjónn er kominn fram yfir takmörk á mánaðarlega virkum notendum.",
+        "hs_blocked": "Þessi heimaþjónn hefur verið útilokaður af kerfisstjóra hans.",
+        "resource_limits": "Þessi heimaþjónn er kominn fram yfir takmörk á tilföngum sínum.",
+        "admin_contact": "<a>Hafðu samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þessa þjónustu.",
+        "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar."
     }
 }

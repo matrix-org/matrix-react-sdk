@@ -46,13 +46,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
     "Ask this user to verify their session, or manually verify it below.": "اطلب من هذا المستخدم التحقُّق من جلسته أو تحقَّق منها يدويًّا أدناه.",
     "Not Trusted": "غير موثوقة",
-    "Cannot reach homeserver": "لا يمكن الوصول إلى السيرفر",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "تأكد من أنك تملك اتصال بالانترنت مستقر أو تواصل مع مدير السيرفر",
-    "Your %(brand)s is misconfigured": "%(brand)s لديك غير مهيأ",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "اطلب من مدير %(brand)s أن يراجع <a>ضبطك</a> ليتأكد من خلوِّه من المدخلات المكرَّرة أو الخاطئة.",
-    "Cannot reach identity server": "لا يمكن الوصول لهوية السيرفر",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "بوسعك التسجيل، لكن تنبَّه إلى أن بعض الميزات لن تتوفَّر حتى عودة خادم الهوية للعمل. عليك مراجعة ضبطك أو التواصل مع مدير الخادم إن تكرَّرت رؤية هذا التحذير.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "بوسعك تصفير كلمة مرورك، لكن تنبَّه إلى أن بعض الميزات لن تتوفَّر حتى عودة خادم الهوية للعمل. عليك مراجعة ضبطك أو التواصل مع مدير الخادم إن تكرَّرت رؤية هذا التحذير.",
     "Language Dropdown": "قائمة اللغة المنسدلة",
     "Information": "المعلومات",
     "Rotate Right": "أدر لليمين",
@@ -1285,7 +1278,12 @@
         "oidc": {
             "error_title": "تعذر الولوج"
         },
-        "reset_password_email_not_found_title": "لم يوجد عنوان البريد الإلكتروني هذا"
+        "reset_password_email_not_found_title": "لم يوجد عنوان البريد الإلكتروني هذا",
+        "misconfigured_title": "%(brand)s لديك غير مهيأ",
+        "misconfigured_body": "اطلب من مدير %(brand)s أن يراجع <a>ضبطك</a> ليتأكد من خلوِّه من المدخلات المكرَّرة أو الخاطئة.",
+        "failed_connect_identity_server": "لا يمكن الوصول لهوية السيرفر",
+        "failed_connect_identity_server_register": "بوسعك التسجيل، لكن تنبَّه إلى أن بعض الميزات لن تتوفَّر حتى عودة خادم الهوية للعمل. عليك مراجعة ضبطك أو التواصل مع مدير الخادم إن تكرَّرت رؤية هذا التحذير.",
+        "failed_connect_identity_server_reset_password": "بوسعك تصفير كلمة مرورك، لكن تنبَّه إلى أن بعض الميزات لن تتوفَّر حتى عودة خادم الهوية للعمل. عليك مراجعة ضبطك أو التواصل مع مدير الخادم إن تكرَّرت رؤية هذا التحذير."
     },
     "export_chat": {
         "messages": "الرسائل"
@@ -1508,5 +1506,7 @@
         "error_missing_room_id_request": "رقم الغرفة مفقود في الطلب",
         "error_room_not_visible": "الغرفة %(roomId)s غير مرئية",
         "error_missing_user_id_request": "رقم المستخدم مفقود في الطلب"
-    }
+    },
+    "cannot_reach_homeserver": "لا يمكن الوصول إلى السيرفر",
+    "cannot_reach_homeserver_detail": "تأكد من أنك تملك اتصال بالانترنت مستقر أو تواصل مع مدير السيرفر"
 }

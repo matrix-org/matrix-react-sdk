@@ -73,19 +73,6 @@
     "Preparing to send logs": "Forbereder afsendelse af logfiler",
     "Permission Required": "Tilladelse påkrævet",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
-    "Cannot reach homeserver": "Homeserveren kan ikke kontaktes",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "Vær sikker at du har en stabil internetforbindelse, eller kontakt serveradministratoren",
-    "Your %(brand)s is misconfigured": "Din %(brand)s er konfigureret forkert",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Bed din %(brand)s administrator om at kontrollere <a>din konfiguration</a> for forkerte eller dobbelte poster.",
-    "Cannot reach identity server": "Identitetsserveren kan ikke kontaktes",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Du kan registrere dig, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Du kan nulstille dit kodeord, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Du kan logge på, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
-    "No homeserver URL provided": "Ingen homeserver URL oplyst",
-    "Unexpected error resolving homeserver configuration": "Uventet fejl ved indlæsning af homeserver-konfigurationen",
-    "Unexpected error resolving identity server configuration": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen",
-    "This homeserver has hit its Monthly Active User limit.": "Denne homeserver har nået sin begrænsning for antallet af aktive brugere per måned.",
-    "This homeserver has exceeded one of its resource limits.": "Denne homeserver har overskredet en af dens ressourcegrænser.",
     "%(items)s and %(count)s others": {
         "other": "%(items)s og %(count)s andre",
         "one": "%(items)s og en anden"
@@ -735,7 +722,16 @@
         "oidc": {
             "error_title": "Vi kunne ikke logge dig ind"
         },
-        "reset_password_email_not_found_title": "Denne emailadresse blev ikke fundet"
+        "reset_password_email_not_found_title": "Denne emailadresse blev ikke fundet",
+        "misconfigured_title": "Din %(brand)s er konfigureret forkert",
+        "misconfigured_body": "Bed din %(brand)s administrator om at kontrollere <a>din konfiguration</a> for forkerte eller dobbelte poster.",
+        "failed_connect_identity_server": "Identitetsserveren kan ikke kontaktes",
+        "failed_connect_identity_server_register": "Du kan registrere dig, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
+        "failed_connect_identity_server_reset_password": "Du kan nulstille dit kodeord, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
+        "failed_connect_identity_server_other": "Du kan logge på, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
+        "no_hs_url_provided": "Ingen homeserver URL oplyst",
+        "autodiscovery_unexpected_error_hs": "Uventet fejl ved indlæsning af homeserver-konfigurationen",
+        "autodiscovery_unexpected_error_is": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen"
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -849,5 +845,11 @@
         "error_missing_room_id_request": "Mangler room_id i forespørgsel",
         "error_room_not_visible": "rum %(roomId)s ikke synligt",
         "error_missing_user_id_request": "Manglende user_id i forespørgsel"
+    },
+    "cannot_reach_homeserver": "Homeserveren kan ikke kontaktes",
+    "cannot_reach_homeserver_detail": "Vær sikker at du har en stabil internetforbindelse, eller kontakt serveradministratoren",
+    "error": {
+        "mau": "Denne homeserver har nået sin begrænsning for antallet af aktive brugere per måned.",
+        "resource_limits": "Denne homeserver har overskredet en af dens ressourcegrænser."
     }
 }

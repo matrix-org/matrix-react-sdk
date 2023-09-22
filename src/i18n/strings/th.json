@@ -53,7 +53,6 @@
     "Search failed": "การค้นหาล้มเหลว",
     "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
     "Create new room": "สร้างห้องใหม่",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "ไม่สามารถเชื่อมต่อไปยังเซิร์ฟเวอร์บ้านผ่านทาง HTTP ได้เนื่องจาก URL ที่อยู่บนเบราว์เซอร์เป็น HTTPS กรุณาใช้ HTTPS หรือ<a>เปิดใช้งานสคริปต์ที่ไม่ปลอดภัย</a>.",
     "Failed to change power level": "การเปลี่ยนระดับอำนาจล้มเหลว",
     "Unable to add email address": "ไมาสามารถเพิ่มที่อยู่อีเมล",
     "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
@@ -98,7 +97,6 @@
         "other": "(~%(count)s ผลลัพท์)"
     },
     "A new password must be entered.": "กรุณากรอกรหัสผ่านใหม่",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่",
     "Custom level": "กำหนดระดับเอง",
     "No display name": "ไม่มีชื่อที่แสดง",
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
@@ -584,5 +582,9 @@
         "error_send_request": "การส่งคำขอล้มเหลว",
         "error_power_level_invalid": "ระดับอำนาจต้องเป็นจำนวนเต็มบวก",
         "error_missing_user_id_request": "ไม่พบ user_id ในคำขอ"
+    },
+    "error": {
+        "mixed_content": "ไม่สามารถเชื่อมต่อไปยังเซิร์ฟเวอร์บ้านผ่านทาง HTTP ได้เนื่องจาก URL ที่อยู่บนเบราว์เซอร์เป็น HTTPS กรุณาใช้ HTTPS หรือ<a>เปิดใช้งานสคริปต์ที่ไม่ปลอดภัย</a>.",
+        "tls": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่"
     }
 }

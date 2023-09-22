@@ -181,8 +181,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
     "Invite anyway": "Convidar igualment",
-    "This homeserver has hit its Monthly Active User limit.": "Aquest homeserver ha assolit el seu límit d'usuaris actius mensuals.",
-    "This homeserver has exceeded one of its resource limits.": "Aquest homeserver ha sobrepassat on dels seus límits de recursos.",
     "Unrecognised address": "Adreça no reconeguda",
     "Unknown server error": "Error de servidor desconegut",
     "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
@@ -205,8 +203,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "S'ha produït un error en actualitzar l'adreça alternativa de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
     "Unexpected server error trying to leave the room": "Error de servidor inesperat intentant sortir de la sala",
     "Error leaving room": "Error sortint de la sala",
-    "Unexpected error resolving identity server configuration": "Error inesperat resolent la configuració del servidor d'identitat",
-    "Unexpected error resolving homeserver configuration": "Error inesperat resolent la configuració del servidor local",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar els requisits del nivell d'autoritat de la sala. Assegura't que tens suficients permisos i torna-ho a provar.",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "S'ha produït un error en canviar el nivell d'autoritat de l'usuari. Assegura't que tens suficients permisos i torna-ho a provar.",
     "Power level": "Nivell d'autoritat",
@@ -675,7 +671,9 @@
         },
         "msisdn_field_label": "Telèfon",
         "identifier_label": "Inicieu sessió amb",
-        "reset_password_email_not_found_title": "Aquesta adreça de correu electrònic no s'ha trobat"
+        "reset_password_email_not_found_title": "Aquesta adreça de correu electrònic no s'ha trobat",
+        "autodiscovery_unexpected_error_hs": "Error inesperat resolent la configuració del servidor local",
+        "autodiscovery_unexpected_error_is": "Error inesperat resolent la configuració del servidor d'identitat"
     },
     "export_chat": {
         "messages": "Missatges"
@@ -789,5 +787,9 @@
         "error_missing_room_id_request": "Falta el room_id a la sol·licitud",
         "error_room_not_visible": "Sala %(roomId)s no visible",
         "error_missing_user_id_request": "Falta l'user_id a la sol·licitud"
+    },
+    "error": {
+        "mau": "Aquest homeserver ha assolit el seu límit d'usuaris actius mensuals.",
+        "resource_limits": "Aquest homeserver ha sobrepassat on dels seus límits de recursos."
     }
 }

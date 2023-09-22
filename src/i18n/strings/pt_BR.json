@@ -63,7 +63,6 @@
     },
     "Are you sure?": "Você tem certeza?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Uma conexão com o servidor local via HTTP não pode ser estabelecida se a barra de endereços do navegador contiver um endereço HTTPS. Use HTTPS ou, em vez disso, permita ao navegador executar <a>scripts não seguros</a>.",
     "Decrypt %(text)s": "Descriptografar %(text)s",
     "Download %(text)s": "Baixar %(text)s",
     "Failed to ban user": "Não foi possível banir o usuário",
@@ -126,7 +125,6 @@
     "Create new room": "Criar nova sala",
     "Something went wrong!": "Não foi possível carregar!",
     "Admin Tools": "Ferramentas de administração",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
     "No display name": "Nenhum nome e sobrenome",
     "%(roomName)s does not exist.": "%(roomName)s não existe.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
@@ -170,7 +168,6 @@
         "other": "E %(count)s mais..."
     },
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala não é pública. Você não poderá voltar sem ser convidada/o.",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org.",
     "Sunday": "Domingo",
     "Notification targets": "Aparelhos notificados",
     "Today": "Hoje",
@@ -194,8 +191,6 @@
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
-    "This homeserver has hit its Monthly Active User limit.": "Este homeserver atingiu seu limite de usuário ativo mensal.",
-    "This homeserver has exceeded one of its resource limits.": "Este servidor local ultrapassou um dos seus limites de recursos.",
     "You do not have permission to invite people to this room.": "Você não tem permissão para convidar pessoas para esta sala.",
     "Unknown server error": "Erro de servidor desconhecido",
     "Please contact your homeserver administrator.": "Por favor, entre em contato com o administrador do seu homeserver.",
@@ -259,7 +254,6 @@
     "Invalid homeserver discovery response": "Resposta de descoberta de homeserver inválida",
     "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
     "General failure": "Falha geral",
-    "Please <a>contact your service administrator</a> to continue using this service.": "Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando este serviço.",
     "That matches!": "Isto corresponde!",
     "That doesn't match.": "Isto não corresponde.",
     "Go back to set it again.": "Voltar para configurar novamente.",
@@ -367,17 +361,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
     "Ask this user to verify their session, or manually verify it below.": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
     "Not Trusted": "Não confiável",
-    "Cannot reach homeserver": "Não consigo acessar o servidor",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "Verifique se está com uma conexão de internet estável, ou entre em contato com os administradores do servidor",
-    "Your %(brand)s is misconfigured": "O %(brand)s está mal configurado",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "Entre em contato com o administrador do %(brand)s para verificar se há entradas inválidas ou duplicadas nas <a>suas configurações</a>.",
-    "Cannot reach identity server": "Não consigo acessar o servidor de identidade",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Você pode se registrar, mas alguns recursos não estarão disponíveis até que o servidor de identidade esteja no ar novamente. Se você continuar vendo este alerta, verifique sua configuração ou entre em contato com um dos administradores do servidor.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Você pode trocar sua senha, mas alguns recursos não estarão disponíveis até que o servidor de identidade esteja no ar novamente. Se você seguir vendo este alerta, verifique suas configurações ou entre em contato com um dos administradores do servidor.",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Você pode fazer login, mas alguns recursos estarão indisponíveis até que o servidor de identidade estiver no ar novamente. Se você continuar vendo este alerta, verifique suas configurações ou entre em contato com os administradores do servidor.",
-    "No homeserver URL provided": "Nenhum endereço fornecido do servidor local",
-    "Unexpected error resolving homeserver configuration": "Erro inesperado buscando a configuração do servidor",
-    "Unexpected error resolving identity server configuration": "Erro inesperado buscando a configuração do servidor de identidade",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
     "The user's homeserver does not support the version of the room.": "O servidor desta(e) usuária(o) não suporta a versão desta sala.",
     "Later": "Mais tarde",
@@ -1111,7 +1094,6 @@
     "Decline All": "Recusar tudo",
     "This widget would like to:": "Este widget gostaria de:",
     "Approve widget permissions": "Autorizar as permissões do widget",
-    "There was a problem communicating with the homeserver, please try again later.": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
     "Server Options": "Opções do servidor",
@@ -1151,7 +1133,6 @@
     "Use app for a better experience": "Use o aplicativo para ter uma experiência melhor",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Adicionar sala existente",
-    "This homeserver has been blocked by its administrator.": "Este servidor local foi bloqueado pelo seu administrador.",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -1440,7 +1421,6 @@
     "User is already in the space": "O usuário já está no espaço",
     "User is already in the room": "O usuário já está na sala",
     "User does not exist": "O usuário não existe",
-    "Live": "Ao vivo",
     "You were disconnected from the call. (Error: %(message)s)": "Você foi desconectado da chamada. (Erro: %(message)s)",
     "Remove messages sent by me": "",
     "%(count)s people joined": {
@@ -1465,8 +1445,6 @@
     },
     "In %(spaceName)s.": "No espaço %(spaceName)s.",
     "In spaces %(space1Name)s and %(space2Name)s.": "Nos espaços %(space1Name)s e %(space2Name)s.",
-    "You can’t start a call as you are currently recording a live broadcast. Please end your live broadcast in order to start a call.": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
-    "Can’t start a call": "Não é possível iniciar uma chamada",
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -2566,7 +2544,9 @@
         "transfer_failed_description": "Houve uma falha ao transferir a chamada",
         "no_permission_conference": "Permissão necessária",
         "no_permission_conference_description": "Você não tem permissão para iniciar uma chamada em grupo nesta sala",
-        "default_device": "Aparelho padrão"
+        "default_device": "Aparelho padrão",
+        "failed_call_live_broadcast_title": "Não é possível iniciar uma chamada",
+        "failed_call_live_broadcast_description": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada."
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -2800,7 +2780,17 @@
         "oidc": {
             "error_title": "Não foi possível fazer login"
         },
-        "reset_password_email_not_found_title": "Este endereço de e-mail não foi encontrado"
+        "reset_password_email_not_found_title": "Este endereço de e-mail não foi encontrado",
+        "misconfigured_title": "O %(brand)s está mal configurado",
+        "misconfigured_body": "Entre em contato com o administrador do %(brand)s para verificar se há entradas inválidas ou duplicadas nas <a>suas configurações</a>.",
+        "failed_connect_identity_server": "Não consigo acessar o servidor de identidade",
+        "failed_connect_identity_server_register": "Você pode se registrar, mas alguns recursos não estarão disponíveis até que o servidor de identidade esteja no ar novamente. Se você continuar vendo este alerta, verifique sua configuração ou entre em contato com um dos administradores do servidor.",
+        "failed_connect_identity_server_reset_password": "Você pode trocar sua senha, mas alguns recursos não estarão disponíveis até que o servidor de identidade esteja no ar novamente. Se você seguir vendo este alerta, verifique suas configurações ou entre em contato com um dos administradores do servidor.",
+        "failed_connect_identity_server_other": "Você pode fazer login, mas alguns recursos estarão indisponíveis até que o servidor de identidade estiver no ar novamente. Se você continuar vendo este alerta, verifique suas configurações ou entre em contato com os administradores do servidor.",
+        "no_hs_url_provided": "Nenhum endereço fornecido do servidor local",
+        "autodiscovery_unexpected_error_hs": "Erro inesperado buscando a configuração do servidor",
+        "autodiscovery_unexpected_error_is": "Erro inesperado buscando a configuração do servidor de identidade",
+        "incorrect_credentials_detail": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org."
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -2958,7 +2948,8 @@
         "confirm_stop_title": "Parar a transmissão ao vivo?",
         "confirm_stop_affirm": "Sim, interromper a transmissão",
         "confirm_listen_title": "Ouvir transmissão ao vivo?",
-        "confirm_listen_description": "Se você começar a ouvir esta tramissão ao vivo, a gravação desta transmissão, será encerrada."
+        "confirm_listen_description": "Se você começar a ouvir esta tramissão ao vivo, a gravação desta transmissão, será encerrada.",
+        "live": "Ao vivo"
     },
     "update": {
         "see_changes_button": "O que há de novidades?",
@@ -3121,5 +3112,16 @@
         "error_missing_room_id_request": "Faltou o id da sala na requisição",
         "error_room_not_visible": "A sala %(roomId)s não está visível",
         "error_missing_user_id_request": "Faltou o id de usuário na requisição"
+    },
+    "cannot_reach_homeserver": "Não consigo acessar o servidor",
+    "cannot_reach_homeserver_detail": "Verifique se está com uma conexão de internet estável, ou entre em contato com os administradores do servidor",
+    "error": {
+        "mau": "Este homeserver atingiu seu limite de usuário ativo mensal.",
+        "hs_blocked": "Este servidor local foi bloqueado pelo seu administrador.",
+        "resource_limits": "Este servidor local ultrapassou um dos seus limites de recursos.",
+        "admin_contact": "Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando este serviço.",
+        "connection": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
+        "mixed_content": "Uma conexão com o servidor local via HTTP não pode ser estabelecida se a barra de endereços do navegador contiver um endereço HTTPS. Use HTTPS ou, em vez disso, permita ao navegador executar <a>scripts não seguros</a>.",
+        "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede."
     }
 }

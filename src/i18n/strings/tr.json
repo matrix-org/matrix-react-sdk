@@ -15,8 +15,6 @@
     "Are you sure?": "Emin misiniz ?",
     "Are you sure you want to leave the room '%(roomName)s'?": "'%(roomName)s' odasından ayrılmak istediğinize emin misiniz ?",
     "Are you sure you want to reject the invitation?": "Daveti reddetmek istediğinizden emin misiniz ?",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun.",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Tarayıcı çubuğunuzda bir HTTPS URL'si olduğunda Ana Sunusuna HTTP üzerinden bağlanılamıyor . Ya HTTPS kullanın veya <a> güvensiz komut dosyalarını</a> etkinleştirin.",
     "Custom level": "Özel seviye",
     "Deactivate Account": "Hesabı Devre Dışı Bırakma",
     "Decrypt %(text)s": "%(text)s metninin şifresini çöz",
@@ -165,13 +163,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
     "Error upgrading room": "Oda güncellenirken hata",
-    "Cannot reach homeserver": "Ana sunucuya erişilemiyor",
-    "Your %(brand)s is misconfigured": "%(brand)s hatalı ayarlanmış",
-    "Cannot reach identity server": "Kimlik sunucu erişilemiyor",
-    "No homeserver URL provided": "Ana sunucu adresi belirtilmemiş",
-    "Unexpected error resolving homeserver configuration": "Ana sunucu yapılandırması çözümlenirken beklenmeyen hata",
-    "Unexpected error resolving identity server configuration": "Kimlik sunucu yapılandırması çözümlenirken beklenmeyen hata",
-    "This homeserver has hit its Monthly Active User limit.": "Bu ana sunucu Aylık Aktif Kullanıcı limitine ulaştı.",
     "%(brand)s URL": "%(brand)s Linki",
     "Room ID": "Oda ID",
     "More options": "Daha fazla seçenek",
@@ -244,7 +235,6 @@
     "Your password has been reset.": "Parolanız sıfırlandı.",
     "General failure": "Genel başarısızlık",
     "Create account": "Yeni hesap",
-    "This homeserver has exceeded one of its resource limits.": "Bu anasunucu kaynak limitlerinden birini aştı.",
     "%(items)s and %(count)s others": {
         "other": "%(items)s ve diğer %(count)s",
         "one": "%(items)s ve bir diğeri"
@@ -452,7 +442,6 @@
     "You're previewing %(roomName)s. Want to join it?": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
     "You don't currently have any stickerpacks enabled": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
     "Room Topic": "Oda Başlığı",
-    "Ensure you have a stable internet connection, or get in touch with the server admin": "Kararlı bir internet bağlantısına sahip olduğunuzdan emin olun yada sunucu yöneticisi ile iletişime geçin",
     "The user's homeserver does not support the version of the room.": "Kullanıcının ana sunucusu odanın sürümünü desteklemiyor.",
     "Unknown server error": "Bilinmeyen sunucu hatası",
     "Missing media permissions, click the button below to request.": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
@@ -473,10 +462,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
     "Double check that your server supports the room version chosen and try again.": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
-    "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.": "%(brand)s yöneticinize <a>yapılandırmanızın</a> hatalı ve mükerrer girdilerini kontrol etmesi için talepte bulunun.",
-    "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Kayıt olabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
-    "You can reset your password, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Parolanızı sıfırlayabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
-    "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.": "Oturum açabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
     "The user must be unbanned before they can be invited.": "Kullanıcının davet edilebilmesi için öncesinde yasağının kaldırılması gereklidir.",
     "Message search": "Mesaj arama",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Kullanıcının güç düzeyini değiştirirken bir hata oluştu. Yeterli izinlere sahip olduğunuza emin olun ve yeniden deneyin.",
@@ -487,7 +472,6 @@
     "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
-    "Please <a>contact your service administrator</a> to continue using this service.": "Bu servisi kullanmaya devam etmek için lütfen <a>servis yöneticinizle bağlantı kurun</a>.",
     "Go back to set it again.": "Geri git ve yeniden ayarla.",
     "Upgrade your encryption": "Şifrelemenizi güncelleyin",
     "Create key backup": "Anahtar yedeği oluştur",
@@ -550,7 +534,6 @@
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
     "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-    "Please note you are logging into the %(hs)s server, not matrix.org.": "Lütfen %(hs)s sunucusuna oturum açtığınızın farkında olun. Bu sunucu matrix.org değil.",
     "Enter your account password to confirm the upgrade:": "Güncellemeyi başlatmak için hesap şifreni gir:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Güncellemeyi teyit etmek için sunucuda oturum açmaya ihtiyacınız var.",
     "Unable to set up secret storage": "Sır deposu ayarlanamıyor",
@@ -1005,7 +988,6 @@
     "Could not connect to identity server": "Kimlik Sunucusuna bağlanılamadı",
     "Not a valid identity server (status code %(code)s)": "Geçerli bir Kimlik Sunucu değil ( durum kodu %(code)s )",
     "Identity server URL must be HTTPS": "Kimlik Sunucu URL adresi HTTPS olmak zorunda",
-    "This homeserver has been blocked by its administrator.": "Bu sunucu yöneticisi tarafından bloke edildi.",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1973,7 +1955,17 @@
         "oidc": {
             "error_title": "Sizin girişinizi yapamadık"
         },
-        "reset_password_email_not_found_title": "Bu e-posta adresi bulunamadı"
+        "reset_password_email_not_found_title": "Bu e-posta adresi bulunamadı",
+        "misconfigured_title": "%(brand)s hatalı ayarlanmış",
+        "misconfigured_body": "%(brand)s yöneticinize <a>yapılandırmanızın</a> hatalı ve mükerrer girdilerini kontrol etmesi için talepte bulunun.",
+        "failed_connect_identity_server": "Kimlik sunucu erişilemiyor",
+        "failed_connect_identity_server_register": "Kayıt olabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
+        "failed_connect_identity_server_reset_password": "Parolanızı sıfırlayabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
+        "failed_connect_identity_server_other": "Oturum açabilirsiniz, fakat kimlik sunucunuz çevrimiçi olana kadar bazı özellikler mevcut olmayacak. Bu uyarıyı sürekli görüyorsanız, yapılandırmanızı kontrol edin veya sunucu yöneticinizle iletişime geçin.",
+        "no_hs_url_provided": "Ana sunucu adresi belirtilmemiş",
+        "autodiscovery_unexpected_error_hs": "Ana sunucu yapılandırması çözümlenirken beklenmeyen hata",
+        "autodiscovery_unexpected_error_is": "Kimlik sunucu yapılandırması çözümlenirken beklenmeyen hata",
+        "incorrect_credentials_detail": "Lütfen %(hs)s sunucusuna oturum açtığınızın farkında olun. Bu sunucu matrix.org değil."
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2218,5 +2210,15 @@
         "error_missing_room_id_request": "İstekte eksik room_id",
         "error_room_not_visible": "%(roomId)s odası görünür değil",
         "error_missing_user_id_request": "İstekte user_id eksik"
+    },
+    "cannot_reach_homeserver": "Ana sunucuya erişilemiyor",
+    "cannot_reach_homeserver_detail": "Kararlı bir internet bağlantısına sahip olduğunuzdan emin olun yada sunucu yöneticisi ile iletişime geçin",
+    "error": {
+        "mau": "Bu ana sunucu Aylık Aktif Kullanıcı limitine ulaştı.",
+        "hs_blocked": "Bu sunucu yöneticisi tarafından bloke edildi.",
+        "resource_limits": "Bu anasunucu kaynak limitlerinden birini aştı.",
+        "admin_contact": "Bu servisi kullanmaya devam etmek için lütfen <a>servis yöneticinizle bağlantı kurun</a>.",
+        "mixed_content": "Tarayıcı çubuğunuzda bir HTTPS URL'si olduğunda Ana Sunusuna HTTP üzerinden bağlanılamıyor . Ya HTTPS kullanın veya <a> güvensiz komut dosyalarını</a> etkinleştirin.",
+        "tls": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun."
     }
 }
