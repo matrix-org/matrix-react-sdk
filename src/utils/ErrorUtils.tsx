@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { MatrixError, ConnectionError } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td, Tags, TranslatedString, TranslationKey } from "../languageHandler";
+import { _t, _td, lookupString, Tags, TranslatedString, TranslationKey } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 import ExternalLink from "../components/views/elements/ExternalLink";
@@ -67,7 +67,7 @@ export function messageForResourceLimitError(
         }
     };
 
-    if (errString.includes("<a>")) {
+    if (lookupString(errString).includes("<a>")) {
         return _t(errString, {}, Object.assign({ a: linkSub }, extraTranslations));
     } else {
         return _t(errString, {}, extraTranslations!);
