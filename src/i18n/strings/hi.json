@@ -1,8 +1,6 @@
 {
     "All messages": "सारे संदेश",
     "All Rooms": "सारे कमरे",
-    "This email address is already in use": "यह ईमेल आईडी पहले से इस्तेमाल में है",
-    "This phone number is already in use": "यह फ़ोन नंबर पहले से इस्तेमाल में है",
     "Failed to verify email address: make sure you clicked the link in the email": "ईमेल आईडी सत्यापित नही हो पाया: कृपया सुनिश्चित कर लें कि आपने ईमेल में मौजूद लिंक पर क्लिक किया है",
     "You cannot place a call with yourself.": "आप अपने साथ कॉल नहीं कर सकते हैं।",
     "Permission Required": "अनुमति आवश्यक है",
@@ -394,10 +392,6 @@
     "Confirm adding phone number": "फ़ोन नंबर जोड़ने की पुष्टि करें",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस फ़ोन नंबर को जोड़ने की पुष्टि करें।",
     "Add Email Address": "ईमेल पता जोड़ें",
-    "Click the button below to confirm adding this email address.": "इस ईमेल पते को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-    "Confirm adding email": "ईमेल जोड़ने की पुष्टि करें",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस ईमेल पते को जोड़ने की पुष्टि करें।",
-    "Use Single Sign On to continue": "जारी रखने के लिए सिंगल साइन ऑन का उपयोग करें",
     "common": {
         "analytics": "एनालिटिक्स",
         "error": "त्रुटि",
@@ -522,7 +516,11 @@
         },
         "general": {
             "account_section": "अकाउंट",
-            "language_section": "भाषा और क्षेत्र"
+            "language_section": "भाषा और क्षेत्र",
+            "email_address_in_use": "यह ईमेल आईडी पहले से इस्तेमाल में है",
+            "msisdn_in_use": "यह फ़ोन नंबर पहले से इस्तेमाल में है",
+            "confirm_adding_email_title": "ईमेल जोड़ने की पुष्टि करें",
+            "confirm_adding_email_body": "इस ईमेल पते को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।"
         }
     },
     "timeline": {
@@ -663,7 +661,11 @@
         "change_password_current_label": "वर्तमान पासवर्ड",
         "change_password_new_label": "नया पासवर्ड",
         "change_password_action": "पासवर्ड बदलें",
-        "msisdn_field_label": "फ़ोन"
+        "msisdn_field_label": "फ़ोन",
+        "uia": {
+            "sso_title": "जारी रखने के लिए सिंगल साइन ऑन का उपयोग करें",
+            "sso_body": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस ईमेल पते को जोड़ने की पुष्टि करें।"
+        }
     },
     "setting": {
         "help_about": {

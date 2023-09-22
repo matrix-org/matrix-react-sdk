@@ -5,12 +5,6 @@
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
     "Failed to verify email address: make sure you clicked the link in the email": "ບໍ່ສາມາດກວດສອບອີເມວໄດ້: ໃຫ້ແນ່ໃຈວ່າທ່ານໄດ້ກົດໃສ່ການເຊື່ອມຕໍ່ໃນອີເມວ",
     "Add Email Address": "ເພີ່ມອີເມວ",
-    "Click the button below to confirm adding this email address.": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
-    "Confirm adding email": "ຢືນຢັນການເພີ່ມອີເມວ",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ ແບບປະຕູດຍວ (SSO)ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
-    "Use Single Sign On to continue": "ໃຊ້ການເຂົ້າສູ່ລະບົບແບບປະຕູດຽວ (SSO) ເພື່ອສືບຕໍ່",
-    "This phone number is already in use": "ເບີໂທນີ້ຖືກໃຊ້ແລ້ວ",
-    "This email address is already in use": "ອີເມວນີ້ຖືກໃຊ້ແລ້ວ",
     "Papua New Guinea": "ປາປົວນິວກີນີ",
     "Panama": "ປານາມາ",
     "Palestine": "ປາແລັດສະໄຕ",
@@ -2319,7 +2313,11 @@
         },
         "general": {
             "account_section": "ບັນຊີ",
-            "language_section": "ພາສາ ແລະ ພາກພື້ນ"
+            "language_section": "ພາສາ ແລະ ພາກພື້ນ",
+            "email_address_in_use": "ອີເມວນີ້ຖືກໃຊ້ແລ້ວ",
+            "msisdn_in_use": "ເບີໂທນີ້ຖືກໃຊ້ແລ້ວ",
+            "confirm_adding_email_title": "ຢືນຢັນການເພີ່ມອີເມວ",
+            "confirm_adding_email_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້."
         }
     },
     "devtools": {
@@ -3144,7 +3142,9 @@
             "msisdn": "ຂໍ້ຄວາມໄດ້ຖືກສົ່ງໄປຫາ %(msisdn)s",
             "msisdn_token_prompt": "ກະລຸນາໃສ່ລະຫັດທີ່ມີຢູ່:",
             "sso_failed": "ມີບາງຢ່າງຜິດພາດໃນການຢືນຢັນຕົວຕົນຂອງທ່ານ. ຍົກເລີກແລ້ວລອງໃໝ່.",
-            "fallback_button": "ເລີ່ມການພິສູດຢືນຢັນ"
+            "fallback_button": "ເລີ່ມການພິສູດຢືນຢັນ",
+            "sso_title": "ໃຊ້ການເຂົ້າສູ່ລະບົບແບບປະຕູດຽວ (SSO) ເພື່ອສືບຕໍ່",
+            "sso_body": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ ແບບປະຕູດຍວ (SSO)ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ."
         },
         "password_field_label": "ໃສ່ລະຫັດຜ່ານ",
         "password_field_strong_label": "ດີ, ລະຫັດຜ່ານທີ່ເຂັ້ມແຂງ!",

@@ -27,10 +27,6 @@
     "Yesterday": "دیروز",
     "Low Priority": "کم اهمیت",
     "Failed to change password. Is your password correct?": "خطا در تغییر گذرواژه. آیا از درستی گذرواژه‌تان اطمینان دارید؟",
-    "This email address is already in use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
-    "This phone number is already in use": "این شماره تلفن در حال استفاده است",
-    "Use Single Sign On to continue": "برای ادامه، از ورود یکپارچه استفاده کنید",
-    "Confirm adding email": "تأیید افزودن رایانامه",
     "Add Email Address": "افزودن نشانی رایانامه",
     "Confirm adding phone number": "تأیید افزودن شماره تلفن",
     "Add Phone Number": "افزودن شماره تلفن",
@@ -40,8 +36,6 @@
     "Encryption upgrade available": "ارتقای رمزنگاری ممکن است",
     "Verify this session": "تأیید این نشست",
     "Set up": "برپایی",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "برای تأیید هویتتان، این نشانی رایانامه را با ورود یکپارچه تأیید کنید.",
-    "Click the button below to confirm adding this email address.": "برای تأیید افزودن این نشانی رایانامه، دکمهٔ زیر را بزنید.",
     "Click the button below to confirm adding this phone number.": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "برای اثبات هویت خود، اضافه‌شدن این شماره تلفن را با استفاده از Single Sign On تائید کنید.",
     "Failed to verify email address: make sure you clicked the link in the email": "خطا در تائید آدرس ایمیل: مطمئن شوید که بر روی لینک موجود در ایمیل کلیک کرده اید",
@@ -1411,7 +1405,6 @@
     "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
     "%(senderName)s started a voice broadcast": "%(senderName)s یک پخش صوتی را شروع کرد",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "بدون سرور احراز هویت نمی توان کاربر را از طریق ایمیل دعوت کرد. می توانید در قسمت «تنظیمات» به یکی متصل شوید.",
-    "Identity server not set": "سرور هویت تنظیم نشده است",
     "Alternatively, you can try to use the public server at <server/>, but this will not be as reliable, and it will share your IP address with that server. You can also manage this in Settings.": "از طرف دیگر، می‌توانید سعی کنید از سرور عمومی در <server/> استفاده کنید، اما این به آن اندازه قابل اعتماد نخواهد بود و آدرس IP شما را با آن سرور به اشتراک می‌گذارد. شما همچنین می توانید این قابلیت را در تنظیمات مدیریت کنید.",
     "Try using %(server)s": "سعی کنید از %(server)s استفاده کنید",
     "common": {
@@ -1878,7 +1871,12 @@
         },
         "general": {
             "account_section": "حساب کابری",
-            "language_section": "زبان و جغرافیا"
+            "language_section": "زبان و جغرافیا",
+            "identity_server_not_set": "سرور هویت تنظیم نشده است",
+            "email_address_in_use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
+            "msisdn_in_use": "این شماره تلفن در حال استفاده است",
+            "confirm_adding_email_title": "تأیید افزودن رایانامه",
+            "confirm_adding_email_body": "برای تأیید افزودن این نشانی رایانامه، دکمهٔ زیر را بزنید."
         }
     },
     "devtools": {
@@ -2512,7 +2510,9 @@
             "msisdn": "کد فعال‌سازی به %(msisdn)s ارسال شد",
             "msisdn_token_prompt": "لطفا کدی را که در آن وجود دارد وارد کنید:",
             "sso_failed": "تائید هویت شما با مشکل مواجه شد. لطفا فرآیند را لغو کرده و مجددا اقدام نمائید.",
-            "fallback_button": "آغاز فرآیند احراز هویت"
+            "fallback_button": "آغاز فرآیند احراز هویت",
+            "sso_title": "برای ادامه، از ورود یکپارچه استفاده کنید",
+            "sso_body": "برای تأیید هویتتان، این نشانی رایانامه را با ورود یکپارچه تأیید کنید."
         },
         "password_field_label": "گذرواژه را وارد کنید",
         "password_field_strong_label": "احسنت، گذرواژه‌ی انتخابی قوی است!",

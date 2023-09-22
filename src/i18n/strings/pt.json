@@ -63,10 +63,8 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s não tem permissões para enviar notificações a você - por favor, verifique as configurações do seu navegador",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s não tem permissões para enviar notificações a você - por favor, tente novamente",
     "Room %(roomId)s not visible": "A sala %(roomId)s não está visível",
-    "This email address is already in use": "Este endereço de email já está sendo usado",
     "This email address was not found": "Este endereço de email não foi encontrado",
     "This room is not recognised.": "Esta sala não é reconhecida.",
-    "This phone number is already in use": "Este número de telefone já está sendo usado",
     "Unable to enable Notifications": "Não foi possível ativar as notificações",
     "Upload Failed": "O envio falhou",
     "You cannot place a call with yourself.": "Você não pode iniciar uma chamada.",
@@ -207,12 +205,6 @@
     "Explore rooms": "Explorar rooms",
     "Not a valid identity server (status code %(code)s)": "Servidor de Identidade inválido (código de status %(code)s)",
     "Identity server URL must be HTTPS": "O link do servidor de identidade deve começar com HTTPS",
-    "Use Single Sign On to continue": "Use Single Sign On para continuar",
-    "Identity server not set": "Servidor de identidade não definido",
-    "No identity access token found": "Nenhum token de identidade de acesso encontrado",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirme adicionar este endereço de email usando Single Sign On para provar a sua identidade.",
-    "Confirm adding email": "Confirmar adição de email",
-    "Click the button below to confirm adding this email address.": "Pressione o botão abaixo para confirmar se quer adicionar este endereço de email.",
     "The add / bind with MSISDN flow is misconfigured": "A junção / vinculo com o fluxo MSISDN está mal configurado",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirme que quer adicionar este número de telefone usando Single Sign On para provar a sua identidade.",
     "Confirm adding phone number": "Confirme que quer adicionar o número de telefone",
@@ -662,7 +654,13 @@
             "cryptography_section": "Criptografia"
         },
         "general": {
-            "account_section": "Conta"
+            "account_section": "Conta",
+            "identity_server_not_set": "Servidor de identidade não definido",
+            "email_address_in_use": "Este endereço de email já está sendo usado",
+            "msisdn_in_use": "Este número de telefone já está sendo usado",
+            "identity_server_no_token": "Nenhum token de identidade de acesso encontrado",
+            "confirm_adding_email_title": "Confirmar adição de email",
+            "confirm_adding_email_body": "Pressione o botão abaixo para confirmar se quer adicionar este endereço de email."
         }
     },
     "devtools": {
@@ -801,7 +799,9 @@
             "email": "Para criar a sua conta, abra a ligação no email que acabámos de enviar para %(emailAddress)s.",
             "msisdn_token_incorrect": "Token incorreto",
             "msisdn_token_prompt": "Por favor, entre com o código que está na mensagem:",
-            "fallback_button": "Iniciar autenticação"
+            "fallback_button": "Iniciar autenticação",
+            "sso_title": "Use Single Sign On para continuar",
+            "sso_body": "Confirme adicionar este endereço de email usando Single Sign On para provar a sua identidade."
         },
         "username_field_required_invalid": "Introduza um nome de utilizador",
         "msisdn_field_label": "Telefone",

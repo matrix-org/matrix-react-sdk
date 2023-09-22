@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "See e-posti aadress on juba kasutusel",
-    "This phone number is already in use": "See telefoninumber on juba kasutusel",
     "Add Email Address": "Lisa e-posti aadress",
     "Failed to verify email address: make sure you clicked the link in the email": "E-posti aadressi kontrollimine ei õnnestunud: palun vaata, et sa kindlasti klõpsisid saabunud kirjas olnud viidet",
     "Unable to load! Check your network connectivity and try again.": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
@@ -573,10 +571,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
     "Switch theme": "Vaheta teemat",
     "All settings": "Kõik seadistused",
-    "Use Single Sign On to continue": "Jätkamiseks kasuta ühekordset sisselogimist",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Kinnita selle e-posti aadress kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
-    "Confirm adding email": "Kinnita e-posti aadressi lisamine",
-    "Click the button below to confirm adding this email address.": "Klõpsi järgnevat nuppu e-posti aadressi lisamise kinnitamiseks.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Kinnita selle telefoninumbri lisamine kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
     "Confirm adding phone number": "Kinnita telefoninumbri lisamine",
     "Click the button below to confirm adding this phone number.": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
     "Formatting": "Vormindame andmeid",
     "The add / bind with MSISDN flow is misconfigured": "„Add“ ja „bind“ meetodid MSISDN jaoks on valesti seadistatud",
-    "No identity access token found": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
-    "Identity server not set": "Isikutuvastusserver on määramata",
     "Image view": "Pildivaade",
     "Upload custom sound": "Laadi üles oma helifail",
     "Search all rooms": "Otsi kõikidest jututubadest",
@@ -2862,7 +2854,13 @@
             "oidc_manage_button": "Halda kasutajakontot",
             "account_section": "Kasutajakonto",
             "language_section": "Keel ja piirkond",
-            "spell_check_section": "Õigekirja kontroll"
+            "spell_check_section": "Õigekirja kontroll",
+            "identity_server_not_set": "Isikutuvastusserver on määramata",
+            "email_address_in_use": "See e-posti aadress on juba kasutusel",
+            "msisdn_in_use": "See telefoninumber on juba kasutusel",
+            "identity_server_no_token": "Ei leidu tunnusluba isikutuvastusserveri jaoks",
+            "confirm_adding_email_title": "Kinnita e-posti aadressi lisamine",
+            "confirm_adding_email_body": "Klõpsi järgnevat nuppu e-posti aadressi lisamise kinnitamiseks."
         }
     },
     "devtools": {
@@ -3791,7 +3789,9 @@
             "registration_token_prompt": "Sisesta koduserveri haldaja poolt antud tunnuskood.",
             "registration_token_label": "Registreerimise tunnuskood",
             "sso_failed": "Midagi läks sinu isiku tuvastamisel viltu. Tühista viimane toiming ja proovi uuesti.",
-            "fallback_button": "Alusta autentimist"
+            "fallback_button": "Alusta autentimist",
+            "sso_title": "Jätkamiseks kasuta ühekordset sisselogimist",
+            "sso_body": "Kinnita selle e-posti aadress kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On)."
         },
         "password_field_label": "Sisesta salasõna",
         "password_field_strong_label": "Vahva, see on korralik salasõna!",

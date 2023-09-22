@@ -91,12 +91,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Serveris izskatās nesasniedzams, ir pārslogots, vai arī meklēšana beigusies ar savienojuma noildzi :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Serveris ir nesasniedzams, pārslogots, vai arī esat saskārties ar kļūdu programmā.",
     "Session ID": "Sesijas ID",
-    "This email address is already in use": "Šī epasta adrese jau tiek izmantota",
     "This email address was not found": "Šāda epasta adrese nav atrasta",
     "This room has no local addresses": "Šai istabai nav lokālo adrešu",
     "This room is not recognised.": "Šī istaba netika atpazīta.",
     "This doesn't appear to be a valid email address": "Šī neizskatās pēc derīgas epasta adreses",
-    "This phone number is already in use": "Šis tālruņa numurs jau tiek izmantots",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Notika mēģinājums specifisku posmu šīs istabas laika skalā, bet jums nav atļaujas skatīt konkrēto ziņu.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Mēģinājums ielādēt šīs istabas čata vēstures izvēlēto posmu neizdevās, jo tas netika atrasts.",
     "Unable to add email address": "Neizdevās pievienot epasta adresi",
@@ -285,11 +283,7 @@
     "Cancel entering passphrase?": "Atcelt frāzveida paroles ievadi?",
     "Click the button below to confirm adding this phone number.": "Jānospiež zemāk esošā poga, lai apstiprinātu šī tālruņa numura pievienošanu.",
     "Confirm adding phone number": "Apstiprināt tālruņa numura pievienošanu",
-    "Confirm adding email": "Apstiprināt e-pasta adreses pievienošanu",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Apstiprināt šīs epasta adreses pievienošanu, izmantojot vienoto pieteikšanos savas identitātes apliecināšanai.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Apstiprināt šī tālruņa numura pievienošanu, izmantojot vienoto pieteikšanos savas identitātes apliecināšanai.",
-    "Click the button below to confirm adding this email address.": "Nospiest zemāk esošo pogu, lai apstiprinātu šīs e-pasta adreses pievienošanu.",
-    "Use Single Sign On to continue": "Izmantot vienoto pieteikšanos, lai turpinātu",
     "Great! This Security Phrase looks strong enough.": "Lieliski! Šī slepenā frāze šķiet pietiekami sarežgīta.",
     "Confirm your Security Phrase": "Apstipriniet savu slepeno frāzi",
     "Set a Security Phrase": "Iestatiet slepeno frāzi",
@@ -1258,7 +1252,11 @@
         },
         "general": {
             "account_section": "Konts",
-            "language_section": "Valoda un reģions"
+            "language_section": "Valoda un reģions",
+            "email_address_in_use": "Šī epasta adrese jau tiek izmantota",
+            "msisdn_in_use": "Šis tālruņa numurs jau tiek izmantots",
+            "confirm_adding_email_title": "Apstiprināt e-pasta adreses pievienošanu",
+            "confirm_adding_email_body": "Nospiest zemāk esošo pogu, lai apstiprinātu šīs e-pasta adreses pievienošanu."
         }
     },
     "devtools": {
@@ -1797,7 +1795,9 @@
             "msisdn": "Teksta ziņa tika nosūtīta uz %(msisdn)s",
             "msisdn_token_prompt": "Lūdzu, ievadiet tajā ietverto kodu:",
             "sso_failed": "Kaut kas nogāja greizi, mēģinot apstiprināt jūsu identitāti. Atceliet un mēģiniet vēlreiz.",
-            "fallback_button": "Sākt autentifikāciju"
+            "fallback_button": "Sākt autentifikāciju",
+            "sso_title": "Izmantot vienoto pieteikšanos, lai turpinātu",
+            "sso_body": "Apstiprināt šīs epasta adreses pievienošanu, izmantojot vienoto pieteikšanos savas identitātes apliecināšanai."
         },
         "password_field_label": "Ievadiet paroli",
         "password_field_strong_label": "Lieliski, sarežģīta parole!",

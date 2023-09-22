@@ -63,10 +63,8 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s não tem permissão para lhe enviar notificações - confirme as configurações do seu navegador",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s não tem permissão para lhe enviar notificações - tente novamente",
     "Room %(roomId)s not visible": "A sala %(roomId)s não está visível",
-    "This email address is already in use": "Este endereço de email já está em uso",
     "This email address was not found": "Este endereço de e-mail não foi encontrado",
     "This room is not recognised.": "Esta sala não é reconhecida.",
-    "This phone number is already in use": "Este número de telefone já está em uso",
     "Unable to enable Notifications": "Não foi possível ativar as notificações",
     "Upload Failed": "O envio falhou",
     "You cannot place a call with yourself.": "Você não pode iniciar uma chamada consigo mesmo.",
@@ -394,10 +392,6 @@
     "Voice & Video": "Voz e vídeo",
     "Room information": "Informação da sala",
     "Room Addresses": "Endereços da sala",
-    "Use Single Sign On to continue": "Use \"Single Sign On\" para continuar",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirme a inclusão deste endereço de e-mail usando o Single Sign On para comprovar sua identidade.",
-    "Confirm adding email": "Confirmar a inclusão de e-mail",
-    "Click the button below to confirm adding this email address.": "Clique no botão abaixo para confirmar a adição deste endereço de e-mail.",
     "Add Email Address": "Adicionar endereço de e-mail",
     "Confirm adding phone number": "Confirmar adição de número de telefone",
     "Add Phone Number": "Adicionar número de telefone",
@@ -2112,7 +2106,11 @@
         },
         "general": {
             "account_section": "Conta",
-            "language_section": "Idioma e região"
+            "language_section": "Idioma e região",
+            "email_address_in_use": "Este endereço de email já está em uso",
+            "msisdn_in_use": "Este número de telefone já está em uso",
+            "confirm_adding_email_title": "Confirmar a inclusão de e-mail",
+            "confirm_adding_email_body": "Clique no botão abaixo para confirmar a adição deste endereço de e-mail."
         }
     },
     "devtools": {
@@ -2825,7 +2823,9 @@
             "msisdn": "Uma mensagem de texto foi enviada para %(msisdn)s",
             "msisdn_token_prompt": "Por favor, entre com o código que está na mensagem:",
             "sso_failed": "Algo deu errado ao confirmar a sua identidade. Cancele e tente novamente.",
-            "fallback_button": "Iniciar autenticação"
+            "fallback_button": "Iniciar autenticação",
+            "sso_title": "Use \"Single Sign On\" para continuar",
+            "sso_body": "Confirme a inclusão deste endereço de e-mail usando o Single Sign On para comprovar sua identidade."
         },
         "password_field_label": "Digite a senha",
         "password_field_strong_label": "Muito bem, uma senha forte!",

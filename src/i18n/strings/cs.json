@@ -88,7 +88,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Server může být nedostupný, přetížený nebo vyhledávání vypršelo :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server může být nedostupný, přetížený nebo jste narazili na chybu.",
     "Session ID": "ID sezení",
-    "This email address is already in use": "Tato e-mailová adresa je již používána",
     "This email address was not found": "Tato e-mailová adresa nebyla nalezena",
     "This room has no local addresses": "Tato místnost nemá žádné místní adresy",
     "This room is not recognised.": "Tato místnost nebyla rozpoznána.",
@@ -99,7 +98,6 @@
     "You do not have permission to post to this room": "Nemáte oprávnění zveřejňovat příspěvky v této místnosti",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Nelze se připojit k domovskému serveru přes HTTP, pokud je v adresním řádku HTTPS. Buď použijte HTTPS, nebo <a>povolte nezabezpečené skripty</a>.",
     "This doesn't appear to be a valid email address": "Tato e-mailová adresa se zdá být neplatná",
-    "This phone number is already in use": "Toto telefonní číslo je již používáno",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Pokusili jste se načíst bod v časové ose místnosti, ale pro zobrazení zpráv z daného časového úseku nemáte oprávnění.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Pokusili jste se načíst bod na časové ose místnosti, ale nepodařilo se ho najít.",
     "Unable to add email address": "Nepodařilo se přidat e-mailovou adresu",
@@ -745,10 +743,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "V šifrovaných místnostech jsou vaše zprávy bezpečné a pouze vy a příjemce má klíče k jejich rozšifrování.",
     "Verify all users in a room to ensure it's secure.": "Ověřit všechny uživatele v místnosti, abyste se přesvědčili o bezpečnosti.",
     "Enter a server name": "Zadejte jméno serveru",
-    "Use Single Sign On to continue": "Pokračovat pomocí Jednotného přihlášení",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Potvrďte přidání této adresy pomocí Jednotného přihlášení.",
-    "Confirm adding email": "Potvrdit přidání emailu",
-    "Click the button below to confirm adding this email address.": "Kliknutím na tlačítko potvrdíte přidání emailové adresy.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrďte přidání telefonního čísla pomocí Jednotného přihlášení.",
     "Confirm adding phone number": "Potrvrdit přidání telefonního čísla",
     "Click the button below to confirm adding this phone number.": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
     "Formatting": "Formátování",
     "The add / bind with MSISDN flow is misconfigured": "Přidání/připojení s MSISDN je nesprávně nakonfigurováno",
-    "No identity access token found": "Nebyl nalezen žádný přístupový token identity",
-    "Identity server not set": "Server identit není nastaven",
     "Upload custom sound": "Nahrát vlastní zvuk",
     "Error changing password": "Chyba při změně hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
@@ -2867,7 +2859,13 @@
             "oidc_manage_button": "Spravovat účet",
             "account_section": "Účet",
             "language_section": "Jazyk a region",
-            "spell_check_section": "Kontrola pravopisu"
+            "spell_check_section": "Kontrola pravopisu",
+            "identity_server_not_set": "Server identit není nastaven",
+            "email_address_in_use": "Tato e-mailová adresa je již používána",
+            "msisdn_in_use": "Toto telefonní číslo je již používáno",
+            "identity_server_no_token": "Nebyl nalezen žádný přístupový token identity",
+            "confirm_adding_email_title": "Potvrdit přidání emailu",
+            "confirm_adding_email_body": "Kliknutím na tlačítko potvrdíte přidání emailové adresy."
         }
     },
     "devtools": {
@@ -3796,7 +3794,9 @@
             "registration_token_prompt": "Zadejte registrační token poskytnutý správcem domovského serveru.",
             "registration_token_label": "Registrační token",
             "sso_failed": "Při ověřování vaší identity se něco pokazilo. Zrušte to a zkuste to znovu.",
-            "fallback_button": "Zahájit autentizaci"
+            "fallback_button": "Zahájit autentizaci",
+            "sso_title": "Pokračovat pomocí Jednotného přihlášení",
+            "sso_body": "Potvrďte přidání této adresy pomocí Jednotného přihlášení."
         },
         "password_field_label": "Zadejte heslo",
         "password_field_strong_label": "Super, to vypadá jako rozumné heslo!",

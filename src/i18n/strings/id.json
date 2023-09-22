@@ -85,8 +85,6 @@
     "Low Priority": "Prioritas Rendah",
     "Failed to change password. Is your password correct?": "Gagal untuk mengubah kata sandi. Apakah kata sandi Anda benar?",
     "Thank you!": "Terima kasih!",
-    "This email address is already in use": "Alamat email ini telah dipakai",
-    "This phone number is already in use": "Nomor telepon ini telah dipakai",
     "Failed to verify email address: make sure you clicked the link in the email": "Gagal memverifikasi alamat email: pastikan Anda telah menekan link di dalam email",
     "Permission Required": "Izin Dibutuhkan",
     "You do not have permission to start a conference call in this room": "Anda tidak memiliki permisi untuk memulai panggilan konferensi di ruang ini",
@@ -413,10 +411,6 @@
     "Confirm adding phone number": "Konfirmasi penambahan nomor telepon",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Konfirmasi penambahan nomor telepon ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
     "Add Email Address": "Tambahkan Alamat Email",
-    "Click the button below to confirm adding this email address.": "Klik tombol di bawah untuk mengkonfirmasi penambahan alamat email ini.",
-    "Confirm adding email": "Konfirmasi penambahan email",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Konfirmasi penambahan alamat email ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
-    "Use Single Sign On to continue": "Gunakan Single Sign On untuk melanjutkan",
     "expand": "buka",
     "collapse": "tutup",
     "%(duration)sd": "%(duration)sh",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
     "Formatting": "Format",
     "The add / bind with MSISDN flow is misconfigured": "Aliran penambahan/pengaitan MSISDN tidak diatur dengan benar",
-    "No identity access token found": "Tidak ada token akses identitas yang ditemukan",
-    "Identity server not set": "Server identitas tidak diatur",
     "Image view": "Tampilan gambar",
     "Search all rooms": "Cari semua ruangan",
     "Search this room": "Cari ruangan ini",
@@ -2867,7 +2859,13 @@
             "oidc_manage_button": "Kelola akun",
             "account_section": "Akun",
             "language_section": "Bahasa dan wilayah",
-            "spell_check_section": "Pemeriksa ejaan"
+            "spell_check_section": "Pemeriksa ejaan",
+            "identity_server_not_set": "Server identitas tidak diatur",
+            "email_address_in_use": "Alamat email ini telah dipakai",
+            "msisdn_in_use": "Nomor telepon ini telah dipakai",
+            "identity_server_no_token": "Tidak ada token akses identitas yang ditemukan",
+            "confirm_adding_email_title": "Konfirmasi penambahan email",
+            "confirm_adding_email_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan alamat email ini."
         }
     },
     "devtools": {
@@ -3796,7 +3794,9 @@
             "registration_token_prompt": "Masukkan token pendaftaran yang disediakan oleh administrator homeserver.",
             "registration_token_label": "Token pendaftaran",
             "sso_failed": "Ada sesuatu yang salah saat mengkonfirmasi identitas Anda. Batalkan dan coba lagi.",
-            "fallback_button": "Mulai autentikasi"
+            "fallback_button": "Mulai autentikasi",
+            "sso_title": "Gunakan Single Sign On untuk melanjutkan",
+            "sso_body": "Konfirmasi penambahan alamat email ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda."
         },
         "password_field_label": "Masukkan kata sandi",
         "password_field_strong_label": "Bagus, kata sandinya kuat!",

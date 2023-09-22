@@ -82,10 +82,8 @@
     "Delete widget": "Radera widget",
     "AM": "FM",
     "PM": "EM",
-    "This email address is already in use": "Den här e-postadressen används redan",
     "This email address was not found": "Den här e-postadressen finns inte",
     "Unnamed room": "Namnlöst rum",
-    "This phone number is already in use": "Detta telefonnummer används redan",
     "You cannot place a call with yourself.": "Du kan inte ringa till dig själv.",
     "Warning!": "Varning!",
     "Upload Failed": "Uppladdning misslyckades",
@@ -571,10 +569,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Detta påverkar vanligtvis bara hur rummet bearbetas på servern. Om du har problem med %(brand)s, vänligen <a>rapportera ett fel</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Du kommer att uppgradera detta rum från <oldVersion /> till <newVersion />.",
     "Remove for everyone": "Ta bort för alla",
-    "Use Single Sign On to continue": "Använd samlad inloggning (single sign on) för att fortsätta",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Bekräfta tilläggning av e-postadressen genom att använda samlad inloggning för att bevisa din identitet.",
-    "Confirm adding email": "Bekräfta tilläggning av e-postadressen",
-    "Click the button below to confirm adding this email address.": "Klicka på knappen nedan för att bekräfta tilläggning av e-postadressen.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekräfta tilläggning av telefonnumret genom att använda samlad inloggning för att bevisa din identitet.",
     "Confirm adding phone number": "Bekräfta tilläggning av telefonnumret",
     "Click the button below to confirm adding this phone number.": "Klicka på knappen nedan för att bekräfta tilläggning av telefonnumret.",
@@ -2006,8 +2000,6 @@
     "Failed to download source media, no source url was found": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Kan inte bjuda in användare via e-post utan en identitetsserver. Du kan ansluta till en under \"Inställningar\".",
     "The add / bind with MSISDN flow is misconfigured": "Flöde för tilläggning/bindning med MSISDN är felkonfigurerat",
-    "No identity access token found": "Ingen identitetsåtkomsttoken hittades",
-    "Identity server not set": "Identitetsserver inte inställd",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -2818,7 +2810,13 @@
             "oidc_manage_button": "Hantera konto",
             "account_section": "Konto",
             "language_section": "Språk och region",
-            "spell_check_section": "Rättstavning"
+            "spell_check_section": "Rättstavning",
+            "identity_server_not_set": "Identitetsserver inte inställd",
+            "email_address_in_use": "Den här e-postadressen används redan",
+            "msisdn_in_use": "Detta telefonnummer används redan",
+            "identity_server_no_token": "Ingen identitetsåtkomsttoken hittades",
+            "confirm_adding_email_title": "Bekräfta tilläggning av e-postadressen",
+            "confirm_adding_email_body": "Klicka på knappen nedan för att bekräfta tilläggning av e-postadressen."
         }
     },
     "devtools": {
@@ -3731,7 +3729,9 @@
             "registration_token_prompt": "Ange en registreringstoken försedd av hemserveradministratören.",
             "registration_token_label": "Registreringstoken",
             "sso_failed": "Något gick fel vid bekräftelse av din identitet. Avbryt och försök igen.",
-            "fallback_button": "Starta autentisering"
+            "fallback_button": "Starta autentisering",
+            "sso_title": "Använd samlad inloggning (single sign on) för att fortsätta",
+            "sso_body": "Bekräfta tilläggning av e-postadressen genom att använda samlad inloggning för att bevisa din identitet."
         },
         "password_field_label": "Skriv in lösenord",
         "password_field_strong_label": "Bra, säkert lösenord!",

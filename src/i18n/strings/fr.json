@@ -63,12 +63,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Le serveur semble être inaccessible, surchargé ou la recherche a expiré :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Le serveur semble être indisponible, surchargé ou vous êtes tombé sur un bug.",
     "Session ID": "Identifiant de session",
-    "This email address is already in use": "Cette adresse e-mail est déjà utilisée",
     "This email address was not found": "Cette adresse e-mail n’a pas été trouvée",
     "This room has no local addresses": "Ce salon n’a pas d’adresse locale",
     "This room is not recognised.": "Ce salon n’est pas reconnu.",
     "This doesn't appear to be a valid email address": "Cette adresse e-mail ne semble pas valide",
-    "This phone number is already in use": "Ce numéro de téléphone est déjà utilisé",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Un instant donné du fil de discussion n’a pu être chargé car vous n’avez pas la permission de le visualiser.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Un instant donné du fil de discussion n’a pu être chargé car il n’a pas pu être trouvé.",
     "Unable to add email address": "Impossible d'ajouter l’adresse e-mail",
@@ -766,10 +764,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Dans les salons chiffrés, vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
     "Verify all users in a room to ensure it's secure.": "Vérifiez tous les utilisateurs d’un salon pour vous assurer qu’il est sécurisé.",
     "Sign in with SSO": "Se connecter avec l’authentification unique",
-    "Use Single Sign On to continue": "Utiliser l’authentification unique pour continuer",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmez l’ajout de cette adresse e-mail en utilisant l’authentification unique pour prouver votre identité.",
-    "Confirm adding email": "Confirmer l’ajout de l’e-mail",
-    "Click the button below to confirm adding this email address.": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de l’adresse e-mail.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirmez l’ajout de ce numéro de téléphone en utilisant l’authentification unique pour prouver votre identité.",
     "Confirm adding phone number": "Confirmer l’ajout du numéro de téléphone",
     "Click the button below to confirm adding this phone number.": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de ce numéro de téléphone.",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
     "Formatting": "Formatage",
     "The add / bind with MSISDN flow is misconfigured": "L’ajout / liaison avec le flux MSISDN est mal configuré",
-    "No identity access token found": "Aucun jeton d’accès d’identité trouvé",
-    "Identity server not set": "Serveur d'identité non défini",
     "Image view": "Vue d’image",
     "Upload custom sound": "Envoyer un son personnalisé",
     "Search all rooms": "Rechercher dans tous les salons",
@@ -2862,7 +2854,13 @@
             "oidc_manage_button": "Gérer le compte",
             "account_section": "Compte",
             "language_section": "Langue et région",
-            "spell_check_section": "Vérificateur orthographique"
+            "spell_check_section": "Vérificateur orthographique",
+            "identity_server_not_set": "Serveur d'identité non défini",
+            "email_address_in_use": "Cette adresse e-mail est déjà utilisée",
+            "msisdn_in_use": "Ce numéro de téléphone est déjà utilisé",
+            "identity_server_no_token": "Aucun jeton d’accès d’identité trouvé",
+            "confirm_adding_email_title": "Confirmer l’ajout de l’e-mail",
+            "confirm_adding_email_body": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de l’adresse e-mail."
         }
     },
     "devtools": {
@@ -3791,7 +3789,9 @@
             "registration_token_prompt": "Saisissez un jeton d’enregistrement fourni par l’administrateur du serveur d’accueil.",
             "registration_token_label": "Jeton d’enregistrement",
             "sso_failed": "Une erreur s’est produite lors de la vérification de votre identité. Annulez et réessayez.",
-            "fallback_button": "Commencer l’authentification"
+            "fallback_button": "Commencer l’authentification",
+            "sso_title": "Utiliser l’authentification unique pour continuer",
+            "sso_body": "Confirmez l’ajout de cette adresse e-mail en utilisant l’authentification unique pour prouver votre identité."
         },
         "password_field_label": "Saisir le mot de passe",
         "password_field_strong_label": "Bien joué, un mot de passe robuste !",

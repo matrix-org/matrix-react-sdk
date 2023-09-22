@@ -31,8 +31,6 @@
     "Notifications": "Известия",
     "Rooms": "Стаи",
     "Unnamed room": "Стая без име",
-    "This email address is already in use": "Този имейл адрес е вече зает",
-    "This phone number is already in use": "Този телефонен номер е вече зает",
     "Failed to verify email address: make sure you clicked the link in the email": "Неуспешно потвърждаване на имейл адреса: уверете се, че сте кликнали върху връзката в имейла",
     "You cannot place a call with yourself.": "Не може да осъществите разговор със себе си.",
     "Warning!": "Внимание!",
@@ -652,10 +650,6 @@
     "Direct Messages": "Директни съобщения",
     "Failed to find the following users": "Неуспешно откриване на следните потребители",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Следните потребители не съществуват или са невалидни и не могат да бъдат поканени: %(csvNames)s",
-    "Use Single Sign On to continue": "Използвайте Single Sign On за да продължите",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Потвърдете добавянето на този имейл адрес като потвърдите идентичността си чрез Single Sign On.",
-    "Confirm adding email": "Потвърдете добавянето на имейл",
-    "Click the button below to confirm adding this email address.": "Кликнете бутона по-долу за да потвърдите добавянето на имейл адреса.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Потвърдете добавянето на този телефонен номер като докажете идентичността си чрез използване на Single Sign On.",
     "Confirm adding phone number": "Потвърдете добавянето на телефонен номер",
     "Click the button below to confirm adding this phone number.": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
@@ -1615,7 +1609,11 @@
         },
         "general": {
             "account_section": "Акаунт",
-            "language_section": "Език и регион"
+            "language_section": "Език и регион",
+            "email_address_in_use": "Този имейл адрес е вече зает",
+            "msisdn_in_use": "Този телефонен номер е вече зает",
+            "confirm_adding_email_title": "Потвърдете добавянето на имейл",
+            "confirm_adding_email_body": "Кликнете бутона по-долу за да потвърдите добавянето на имейл адреса."
         }
     },
     "devtools": {
@@ -2119,7 +2117,9 @@
             "msisdn_token_incorrect": "Неправителен тоукън",
             "msisdn": "Текстово съобщение беше изпратено на %(msisdn)s",
             "msisdn_token_prompt": "Моля, въведете кода, който то съдържа:",
-            "fallback_button": "Започни автентикация"
+            "fallback_button": "Започни автентикация",
+            "sso_title": "Използвайте Single Sign On за да продължите",
+            "sso_body": "Потвърдете добавянето на този имейл адрес като потвърдите идентичността си чрез Single Sign On."
         },
         "password_field_label": "Въведете парола",
         "password_field_strong_label": "Хубава, силна парола!",

@@ -77,12 +77,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Sunucu kullanılamıyor , aşırı yüklenmiş , veya bir hatayla karşılaşmış olabilirsiniz.",
     "Session ID": "Oturum ID",
-    "This email address is already in use": "Bu e-posta adresi zaten kullanımda",
     "This email address was not found": "Bu e-posta adresi bulunamadı",
     "This room has no local addresses": "Bu oda hiçbir yerel adrese sahip değil",
     "This room is not recognised.": "Bu oda tanınmıyor.",
     "This doesn't appear to be a valid email address": "Bu geçerli bir e-posta adresi olarak gözükmüyor",
-    "This phone number is already in use": "Bu telefon numarası zaten kullanımda",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Bu odanın zaman çizelgesinde belirli bir nokta yüklemeye çalışıldı , ama geçerli mesajı görüntülemeye izniniz yok.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Bu odanın akışında belirli bir noktaya yüklemeye çalışıldı , ancak bulunamadı.",
     "Unable to add email address": "E-posta adresi eklenemiyor",
@@ -638,8 +636,6 @@
     "Verify by emoji": "Emojiyle doğrula",
     "Verify by comparing unique emoji.": "Eşsiz emoji eşleştirme ile doğrulama.",
     "Edited at %(date)s. Click to view edits.": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla.",
-    "Confirm adding email": "E-posta adresini eklemeyi onayla",
-    "Click the button below to confirm adding this email address.": "E-posta adresini eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
     "Confirm adding phone number": "Telefon numarası eklemeyi onayla",
     "Click the button below to confirm adding this phone number.": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
     "Are you sure you want to cancel entering passphrase?": "Parola girmeyi iptal etmek istediğinizden emin misiniz?",
@@ -945,8 +941,6 @@
     "The call was answered on another device.": "Arama başka bir cihazda cevaplandı.",
     "The call could not be established": "Arama yapılamadı",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu telefon numarasını eklemeyi onaylayın.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu e-posta adresini eklemeyi onaylayın.",
-    "Use Single Sign On to continue": "Devam etmek için tek seferlik oturum açın",
     "Change notification settings": "Bildirim ayarlarını değiştir",
     "Your server isn't responding to some <a>requests</a>.": "Sunucunuz bası <a>istekler'e</a> onay vermiyor.",
     "Thumbs up": "Başparmak havaya",
@@ -1478,7 +1472,11 @@
         },
         "general": {
             "account_section": "Hesap",
-            "language_section": "Dil ve bölge"
+            "language_section": "Dil ve bölge",
+            "email_address_in_use": "Bu e-posta adresi zaten kullanımda",
+            "msisdn_in_use": "Bu telefon numarası zaten kullanımda",
+            "confirm_adding_email_title": "E-posta adresini eklemeyi onayla",
+            "confirm_adding_email_body": "E-posta adresini eklemeyi kabul etmek için aşağıdaki tuşa tıklayın."
         }
     },
     "devtools": {
@@ -1985,7 +1983,9 @@
             "msisdn_token_incorrect": "Belirteç(Token) hatalı",
             "msisdn": "%(msisdn)s ye bir metin mesajı gönderildi",
             "msisdn_token_prompt": "Lütfen içerdiği kodu girin:",
-            "fallback_button": "Kimlik Doğrulamayı başlatın"
+            "fallback_button": "Kimlik Doğrulamayı başlatın",
+            "sso_title": "Devam etmek için tek seferlik oturum açın",
+            "sso_body": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu e-posta adresini eklemeyi onaylayın."
         },
         "password_field_label": "Şifre gir",
         "password_field_strong_label": "Güzel, güçlü şifre!",

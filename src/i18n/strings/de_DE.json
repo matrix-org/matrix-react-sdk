@@ -37,9 +37,7 @@
     "Failure to create room": "Raumerstellung fehlgeschlagen",
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s hat keine Berechtigung, Benachrichtigungen zu senden - Bitte überprüfe deine Browsereinstellungen",
     "%(brand)s was not given permission to send notifications - please try again": "%(brand)s hat keine Berechtigung für das Senden von Benachrichtigungen erhalten - Bitte versuche es erneut",
-    "This email address is already in use": "Diese E-Mail-Adresse wird bereits verwendet",
     "This email address was not found": "Diese E-Mail-Adresse konnte nicht gefunden werden",
-    "This phone number is already in use": "Diese Telefonnummer wird bereits verwendet",
     "Unable to enable Notifications": "Benachrichtigungen konnten nicht aktiviert werden",
     "Upload Failed": "Hochladen fehlgeschlagen",
     "You cannot place a call with yourself.": "Du kannst keinen Anruf mit dir selbst starten.",
@@ -581,13 +579,9 @@
     "Show advanced": "Erweiterte Einstellungen",
     "Session key": "Sitzungsschlüssel",
     "Recent Conversations": "Letzte Unterhaltungen",
-    "Use Single Sign On to continue": "Einmalanmeldung zum Fortfahren nutzen",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Bestätige die neue E-Mail-Adresse mit Single-Sign-On, um deine Identität nachzuweisen.",
-    "Confirm adding email": "Hinzugefügte E-Mail-Addresse bestätigen",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bestätige die hinzugefügte Telefonnummer, indem du deine Identität mittels der Einmalanmeldung nachweist.",
     "Click the button below to confirm adding this phone number.": "Klicke unten die Schaltfläche, um die hinzugefügte Telefonnummer zu bestätigen.",
     "%(name)s is requesting verification": "%(name)s fordert eine Verifizierung an",
-    "Click the button below to confirm adding this email address.": "Klicke unten auf den Knopf, um die hinzugefügte E-Mail-Adresse zu bestätigen.",
     "Confirm adding phone number": "Hinzugefügte Telefonnummer bestätigen",
     "Not Trusted": "Nicht vertraut",
     "Ask this user to verify their session, or manually verify it below.": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
     "Formatting": "Formatierung",
     "The add / bind with MSISDN flow is misconfigured": "Das MSISDN-Verknüpfungsverfahren ist falsch konfiguriert",
-    "No identity access token found": "Kein Identitäts-Zugangs-Token gefunden",
-    "Identity server not set": "Kein Identitäts-Server festgelegt",
     "Image view": "Bildbetrachter",
     "Search all rooms": "Alle Räume durchsuchen",
     "Search this room": "Diesen Raum durchsuchen",
@@ -2867,7 +2859,13 @@
             "oidc_manage_button": "Konto verwalten",
             "account_section": "Benutzerkonto",
             "language_section": "Sprache und Region",
-            "spell_check_section": "Rechtschreibprüfung"
+            "spell_check_section": "Rechtschreibprüfung",
+            "identity_server_not_set": "Kein Identitäts-Server festgelegt",
+            "email_address_in_use": "Diese E-Mail-Adresse wird bereits verwendet",
+            "msisdn_in_use": "Diese Telefonnummer wird bereits verwendet",
+            "identity_server_no_token": "Kein Identitäts-Zugangs-Token gefunden",
+            "confirm_adding_email_title": "Hinzugefügte E-Mail-Addresse bestätigen",
+            "confirm_adding_email_body": "Klicke unten auf den Knopf, um die hinzugefügte E-Mail-Adresse zu bestätigen."
         }
     },
     "devtools": {
@@ -3796,7 +3794,9 @@
             "registration_token_prompt": "Gib einen von deiner Home-Server-Administration zur Verfügung gestellten Registrierungstoken ein.",
             "registration_token_label": "Registrierungstoken",
             "sso_failed": "Bei der Bestätigung deiner Identität ist ein Fehler aufgetreten. Abbrechen und erneut versuchen.",
-            "fallback_button": "Authentifizierung beginnen"
+            "fallback_button": "Authentifizierung beginnen",
+            "sso_title": "Einmalanmeldung zum Fortfahren nutzen",
+            "sso_body": "Bestätige die neue E-Mail-Adresse mit Single-Sign-On, um deine Identität nachzuweisen."
         },
         "password_field_label": "Passwort eingeben",
         "password_field_strong_label": "Super, ein starkes Passwort!",

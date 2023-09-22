@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Þetta tölvupóstfang er nú þegar í notkun",
-    "This phone number is already in use": "Þetta símanúmer er nú þegar í notkun",
     "Failed to verify email address: make sure you clicked the link in the email": "Gat ekki sannprófað tölvupóstfang: gakktu úr skugga um að þú hafir smellt á tengilinn í tölvupóstinum",
     "Warning!": "Aðvörun!",
     "Upload Failed": "Innsending mistókst",
@@ -205,8 +203,6 @@
     "Click the button below to confirm adding this phone number.": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
     "Confirm adding phone number": "Staðfestu að bæta við símanúmeri",
     "Add Email Address": "Bæta við tölvupóstfangi",
-    "Click the button below to confirm adding this email address.": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu netfangi.",
-    "Confirm adding email": "Staðfestu að bæta við tölvupósti",
     "None": "Ekkert",
     "Italics": "Skáletrað",
     "Discovery": "Uppgötvun",
@@ -529,7 +525,6 @@
     "Answered Elsewhere": "Svarað annars staðar",
     "The user you called is busy.": "Notandinn sem þú hringdir í er upptekinn.",
     "User Busy": "Notandi upptekinn",
-    "Use Single Sign On to continue": "Notaðu einfalda innskráningu (single-sign-on) til að halda áfram",
     "Couldn't load page": "Gat ekki hlaðið inn síðu",
     "Room avatar": "Auðkennismynd spjallrásar",
     "Room Topic": "Umfjöllunarefni spjallrásar",
@@ -541,7 +536,6 @@
     "The call was answered on another device.": "Símtalinu var svarað á öðru tæki.",
     "The call could not be established": "Ekki tókst að koma símtalinu á",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Staðfestu viðbætingu þessa símanúmers með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Staðfestu viðbætingu þessa tölvupóstfangs með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "Go to Settings": "Fara í stillingar",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
     "Success!": "Tókst!",
@@ -2416,7 +2410,11 @@
         "general": {
             "account_section": "Notandaaðgangur",
             "language_section": "Tungumál og landsvæði",
-            "spell_check_section": "Stafsetningaryfirferð"
+            "spell_check_section": "Stafsetningaryfirferð",
+            "email_address_in_use": "Þetta tölvupóstfang er nú þegar í notkun",
+            "msisdn_in_use": "Þetta símanúmer er nú þegar í notkun",
+            "confirm_adding_email_title": "Staðfestu að bæta við tölvupósti",
+            "confirm_adding_email_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu netfangi."
         }
     },
     "devtools": {
@@ -3223,7 +3221,9 @@
             "msisdn": "Textaskilaboð hafa verið send á %(msisdn)s",
             "msisdn_token_prompt": "Settu inn kóðann sem þau innihalda:",
             "sso_failed": "Eitthvað fór úrskeiðis við að staðfesta auðkennin þín. Hættu við og prófaðu aftur.",
-            "fallback_button": "Hefja auðkenningu"
+            "fallback_button": "Hefja auðkenningu",
+            "sso_title": "Notaðu einfalda innskráningu (single-sign-on) til að halda áfram",
+            "sso_body": "Staðfestu viðbætingu þessa tölvupóstfangs með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt."
         },
         "password_field_label": "Settu inn lykilorð",
         "password_field_strong_label": "Fínt, sterkt lykilorð!",

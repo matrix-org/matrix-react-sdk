@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Tiu ĉi retpoŝtadreso jam estas uzata",
-    "This phone number is already in use": "Tiu ĉi telefonnumero jam estas uzata",
     "Failed to verify email address: make sure you clicked the link in the email": "Kontrolo de via retpoŝtadreso malsukcesis: certigu, ke vi klakis la ligilon en la retmesaĝo",
     "You cannot place a call with yourself.": "Vi ne povas voki vin mem.",
     "Warning!": "Averto!",
@@ -765,10 +763,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
-    "Use Single Sign On to continue": "Daŭrigi per ununura saluto",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Konfirmi aldonon de ĉi tiu retpoŝtadreso, uzante ununuran saluton por pruvi vian identecon.",
-    "Confirm adding email": "Konfirmi aldonon de retpoŝtadreso",
-    "Click the button below to confirm adding this email address.": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu retpoŝtadreso.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Konfirmu aldonon de ĉi tiu telefonnumero per identiĝo per ununura saluto.",
     "Confirm adding phone number": "Konfirmu aldonon de telefonnumero",
     "Click the button below to confirm adding this phone number.": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
@@ -2095,7 +2089,11 @@
         },
         "general": {
             "account_section": "Konto",
-            "language_section": "Lingvo kaj regiono"
+            "language_section": "Lingvo kaj regiono",
+            "email_address_in_use": "Tiu ĉi retpoŝtadreso jam estas uzata",
+            "msisdn_in_use": "Tiu ĉi telefonnumero jam estas uzata",
+            "confirm_adding_email_title": "Konfirmi aldonon de retpoŝtadreso",
+            "confirm_adding_email_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu retpoŝtadreso."
         }
     },
     "devtools": {
@@ -2812,7 +2810,9 @@
             "msisdn": "Tekstmesaĝo sendiĝîs al %(msisdn)s",
             "msisdn_token_prompt": "Bonvolu enigi la enhavatan kodon:",
             "sso_failed": "Io misokazis dum konfirmado de via identeco. Nuligu kaj reprovu.",
-            "fallback_button": "Komenci aŭtentikigon"
+            "fallback_button": "Komenci aŭtentikigon",
+            "sso_title": "Daŭrigi per ununura saluto",
+            "sso_body": "Konfirmi aldonon de ĉi tiu retpoŝtadreso, uzante ununuran saluton por pruvi vian identecon."
         },
         "password_field_label": "Enigu pasvorton",
         "password_field_strong_label": "Bona, forta pasvorto!",

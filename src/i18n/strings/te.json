@@ -70,10 +70,7 @@
     "Yesterday": "నిన్న",
     "Low Priority": "తక్కువ ప్రాధాన్యత",
     "Saturday": "శనివారం",
-    "This email address is already in use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
-    "This phone number is already in use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
     "Failed to verify email address: make sure you clicked the link in the email": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
-    "Confirm adding email": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
     "common": {
         "error": "లోపం",
         "mute": "నిశబ్ధము",
@@ -126,7 +123,10 @@
             "cryptography_section": "క్రిప్టోగ్రఫీ"
         },
         "general": {
-            "account_section": "ఖాతా"
+            "account_section": "ఖాతా",
+            "email_address_in_use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
+            "msisdn_in_use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
+            "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు"
         }
     },
     "timeline": {

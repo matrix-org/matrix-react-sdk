@@ -90,12 +90,10 @@
     "Room %(roomId)s not visible": "Комната %(roomId)s невидима",
     "Rooms": "Комнаты",
     "Search failed": "Поиск не удался",
-    "This email address is already in use": "Этот адрес электронной почты уже используется",
     "This email address was not found": "Этот адрес электронной почты не найден",
     "This room has no local addresses": "У этой комнаты нет адресов на вашем сервере",
     "This room is not recognised.": "Эта комната не опознана.",
     "This doesn't appear to be a valid email address": "Похоже, это недействительный адрес email",
-    "This phone number is already in use": "Этот номер телефона уже используется",
     "You seem to be uploading files, are you sure you want to quit?": "Похоже, вы сейчас отправляете файлы. Уверены, что хотите выйти?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
@@ -635,10 +633,6 @@
     "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
-    "Use Single Sign On to continue": "Воспользуйтесь единой точкой входа для продолжения",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Подтвердите добавление этого почтового адреса с помощью единой точки входа.",
-    "Confirm adding email": "Подтвердите добавление почтового адреса",
-    "Click the button below to confirm adding this email address.": "Нажмите кнопку ниже для подтверждения этого почтового адреса.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Подтвердите добавление этого номера телефона с помощью единой точки входа.",
     "Confirm adding phone number": "Подтвердите добавление номера телефона",
     "Click the button below to confirm adding this phone number.": "Нажмите кнопку ниже для добавления этого номера телефона.",
@@ -2641,7 +2635,11 @@
         "general": {
             "account_section": "Учётная запись",
             "language_section": "Язык и регион",
-            "spell_check_section": "Проверка орфографии"
+            "spell_check_section": "Проверка орфографии",
+            "email_address_in_use": "Этот адрес электронной почты уже используется",
+            "msisdn_in_use": "Этот номер телефона уже используется",
+            "confirm_adding_email_title": "Подтвердите добавление почтового адреса",
+            "confirm_adding_email_body": "Нажмите кнопку ниже для подтверждения этого почтового адреса."
         }
     },
     "devtools": {
@@ -3498,7 +3496,9 @@
             "msisdn": "Текстовое сообщение отправлено на %(msisdn)s",
             "msisdn_token_prompt": "Введите полученный код:",
             "sso_failed": "Что-то пошло не так при вашей идентификации. Отмените последнее действие и попробуйте еще раз.",
-            "fallback_button": "Начать аутентификацию"
+            "fallback_button": "Начать аутентификацию",
+            "sso_title": "Воспользуйтесь единой точкой входа для продолжения",
+            "sso_body": "Подтвердите добавление этого почтового адреса с помощью единой точки входа."
         },
         "password_field_label": "Введите пароль",
         "password_field_strong_label": "Хороший, надежный пароль!",

@@ -89,12 +89,10 @@
     "%(brand)s does not have permission to send you notifications - please check your browser settings": "%(brand)s no tiene permiso para enviarte notificaciones - por favor, comprueba los ajustes de tu navegador",
     "%(brand)s was not given permission to send notifications - please try again": "No le has dado permiso a %(brand)s para enviar notificaciones. Por favor, inténtalo de nuevo",
     "Room %(roomId)s not visible": "La sala %(roomId)s no es visible",
-    "This email address is already in use": "Esta dirección de correo electrónico ya está en uso",
     "This email address was not found": "No se ha encontrado la dirección de correo electrónico",
     "This room has no local addresses": "Esta sala no tiene direcciones locales",
     "This room is not recognised.": "No se reconoce esta sala.",
     "This doesn't appear to be a valid email address": "Esto no parece un e-mail váido",
-    "This phone number is already in use": "Este número de teléfono ya está en uso",
     "unknown error code": "Código de error desconocido",
     "This will allow you to reset your password and receive notifications.": "Esto te permitirá reiniciar tu contraseña y recibir notificaciones.",
     "Authentication check failed: incorrect password?": "La verificación de autenticación falló: ¿contraseña incorrecta?",
@@ -502,10 +500,6 @@
     "Disconnect identity server": "Desconectar servidor de identidad",
     "Disconnect from the identity server <idserver />?": "¿Desconectarse del servidor de identidad <idserver />?",
     "You should:": "Deberías:",
-    "Use Single Sign On to continue": "Continuar con registro único (SSO)",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirma la nueva dirección de correo usando SSO para probar tu identidad.",
-    "Confirm adding email": "Confirmar un nuevo correo electrónico",
-    "Click the button below to confirm adding this email address.": "Haz clic en el botón de abajo para confirmar esta nueva dirección de correo electrónico.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma el nuevo número de teléfono usando SSO para probar tu identidad.",
     "Confirm adding phone number": "Confirmar nuevo número de teléfono",
     "Click the button below to confirm adding this phone number.": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
@@ -1964,7 +1958,6 @@
     "Starting export process…": "Iniciando el proceso de exportación…",
     "WARNING: session already verified, but keys do NOT MATCH!": "ADVERTENCIA: la sesión ya está verificada, pero las claves NO COINCIDEN",
     "Database unexpectedly closed": "La base de datos se ha cerrado de forma inesperada",
-    "Identity server not set": "Servidor de identidad no configurado",
     "Ended a poll": "Cerró una encuesta",
     "Unable to connect to Homeserver. Retrying…": "No se ha podido conectar al servidor base. Reintentando…",
     "If you know a room address, try joining through that instead.": "Si conoces la dirección de una sala, prueba a unirte a través de ella.",
@@ -2735,7 +2728,12 @@
             "oidc_manage_button": "Gestionar cuenta",
             "account_section": "Cuenta",
             "language_section": "Idioma y región",
-            "spell_check_section": "Corrector ortográfico"
+            "spell_check_section": "Corrector ortográfico",
+            "identity_server_not_set": "Servidor de identidad no configurado",
+            "email_address_in_use": "Esta dirección de correo electrónico ya está en uso",
+            "msisdn_in_use": "Este número de teléfono ya está en uso",
+            "confirm_adding_email_title": "Confirmar un nuevo correo electrónico",
+            "confirm_adding_email_body": "Haz clic en el botón de abajo para confirmar esta nueva dirección de correo electrónico."
         }
     },
     "devtools": {
@@ -3606,7 +3604,9 @@
             "msisdn": "Se envió un mensaje de texto a %(msisdn)s",
             "msisdn_token_prompt": "Por favor, escribe el código que contiene:",
             "sso_failed": "Ha ocurrido un error al confirmar tu identidad. Cancela e inténtalo de nuevo.",
-            "fallback_button": "Iniciar autenticación"
+            "fallback_button": "Iniciar autenticación",
+            "sso_title": "Continuar con registro único (SSO)",
+            "sso_body": "Confirma la nueva dirección de correo usando SSO para probar tu identidad."
         },
         "password_field_label": "Escribe tu contraseña",
         "password_field_strong_label": "¡Fantástico, una contraseña fuerte!",

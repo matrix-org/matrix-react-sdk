@@ -24,8 +24,6 @@
     "Authentication": "Autentifikazioa",
     "Verification Pending": "Egiaztaketa egiteke",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
-    "This email address is already in use": "E-mail helbide hau erabilita dago",
-    "This phone number is already in use": "Telefono zenbaki hau erabilita dago",
     "This room has no local addresses": "Gela honek ez du tokiko helbiderik",
     "Session ID": "Saioaren IDa",
     "Export room keys": "Esportatu gelako gakoak",
@@ -763,10 +761,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
-    "Use Single Sign On to continue": "Erabili Single sign-on jarraitzeko",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Baieztatu e-mail hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
-    "Confirm adding email": "Baieztatu e-maila gehitzea",
-    "Click the button below to confirm adding this email address.": "Sakatu beheko botoia e-mail helbide hau gehitzea berresteko.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Baieztatu telefono zenbaki hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
     "Confirm adding phone number": "Berretsi telefono zenbakia gehitzea",
     "Click the button below to confirm adding this phone number.": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
@@ -1195,7 +1189,11 @@
         },
         "general": {
             "account_section": "Kontua",
-            "language_section": "Hizkuntza eta eskualdea"
+            "language_section": "Hizkuntza eta eskualdea",
+            "email_address_in_use": "E-mail helbide hau erabilita dago",
+            "msisdn_in_use": "Telefono zenbaki hau erabilita dago",
+            "confirm_adding_email_title": "Baieztatu e-maila gehitzea",
+            "confirm_adding_email_body": "Sakatu beheko botoia e-mail helbide hau gehitzea berresteko."
         }
     },
     "devtools": {
@@ -1644,7 +1642,9 @@
             "msisdn_token_incorrect": "Token okerra",
             "msisdn": "Testu mezu bat bidali da hona: %(msisdn)s",
             "msisdn_token_prompt": "Sartu dakarren kodea:",
-            "fallback_button": "Hasi autentifikazioa"
+            "fallback_button": "Hasi autentifikazioa",
+            "sso_title": "Erabili Single sign-on jarraitzeko",
+            "sso_body": "Baieztatu e-mail hau gehitzea Single sign-on bidez zure identitatea frogatuz."
         },
         "password_field_label": "Sartu pasahitza",
         "password_field_strong_label": "Ongi, pasahitz sendoa!",

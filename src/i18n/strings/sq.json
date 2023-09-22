@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Kjo adresë email është tashmë në përdorim",
-    "This phone number is already in use": "Ky numër telefoni është tashmë në përdorim",
     "Failed to verify email address: make sure you clicked the link in the email": "S’u arrit të verifikohej adresë email: sigurohuni se keni klikuar lidhjen te email-i",
     "You cannot place a call with yourself.": "S’mund të bëni thirrje me vetveten.",
     "Warning!": "Sinjalizim!",
@@ -762,10 +760,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifikoni individualisht çdo sesion të përdorur nga një përdorues, për t’i vënë shenjë si i besuar, duke mos besuar pajisje <em>cross-signed</em>.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Në dhoma të fshehtëzuara, mesazhet tuaj sigurohen dhe vetëm ju dhe marrësi ka kyçet unikë për shkyçjen e tyre.",
     "Verify all users in a room to ensure it's secure.": "Verifiko krejt përdoruesit në dhomë, për të garantuar se është e sigurt.",
-    "Use Single Sign On to continue": "Që të vazhdohet, përdorni Hyrje Njëshe",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Ripohoni shtimin e kësaj adrese email duke përdorur Hyrje Njëshe për të provuar identitetin tuaj.",
-    "Confirm adding email": "Ripohoni shtim email-i",
-    "Click the button below to confirm adding this email address.": "Klikoni butonin më poshtë që të ripohoni shtimin e kësaj adrese email.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Ripohojeni shtimin e këtij numri telefoni duke përdorur Hyrje Njëshe që të provoni identitetin tuaj.",
     "Confirm adding phone number": "Ripohoni shtim numri telefoni",
     "Click the button below to confirm adding this phone number.": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
@@ -2022,8 +2016,6 @@
     "Error changing password": "Gabim në ndryshim fjalëkalimi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (gjendje HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Gabim i panjohur ndryshimi fjalëkalimi (%(stringifiedError)s)",
-    "No identity access token found": "S’u gjet token hyrjeje identiteti",
-    "Identity server not set": "Shërbyes identitetesh i paujdisur",
     "Cannot invite user by email without an identity server. You can connect to one under \"Settings\".": "Pa një shërbyes identitetesh, s’mund të ftohet përdorues përmes email-i. Me një të tillë mund të lidheni që prej “Rregullimeve”.",
     "Failed to download source media, no source url was found": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
@@ -2786,7 +2778,13 @@
             "oidc_manage_button": "Administroni llogari",
             "account_section": "Llogari",
             "language_section": "Gjuhë dhe rajon",
-            "spell_check_section": "Kontroll drejtshkrimi"
+            "spell_check_section": "Kontroll drejtshkrimi",
+            "identity_server_not_set": "Shërbyes identitetesh i paujdisur",
+            "email_address_in_use": "Kjo adresë email është tashmë në përdorim",
+            "msisdn_in_use": "Ky numër telefoni është tashmë në përdorim",
+            "identity_server_no_token": "S’u gjet token hyrjeje identiteti",
+            "confirm_adding_email_title": "Ripohoni shtim email-i",
+            "confirm_adding_email_body": "Klikoni butonin më poshtë që të ripohoni shtimin e kësaj adrese email."
         }
     },
     "devtools": {
@@ -3688,7 +3686,9 @@
             "registration_token_prompt": "Jepni një token regjistrimi dhënë nga përgjegjësi i shërbyesit Home.",
             "registration_token_label": "Token regjistrimi",
             "sso_failed": "Diç shkoi ters me ripohimin e identitetit tuaj. Anulojeni dhe riprovoni.",
-            "fallback_button": "Fillo mirëfilltësim"
+            "fallback_button": "Fillo mirëfilltësim",
+            "sso_title": "Që të vazhdohet, përdorni Hyrje Njëshe",
+            "sso_body": "Ripohoni shtimin e kësaj adrese email duke përdorur Hyrje Njëshe për të provuar identitetin tuaj."
         },
         "password_field_label": "Jepni fjalëkalim",
         "password_field_strong_label": "Bukur, fjalëkalim i fortë!",

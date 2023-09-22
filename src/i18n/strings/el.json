@@ -47,7 +47,6 @@
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
-    "This email address is already in use": "Η διεύθυνση ηλ. αλληλογραφίας χρησιμοποιείται ήδη",
     "This email address was not found": "Δεν βρέθηκε η διεύθυνση ηλ. αλληλογραφίας",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Admin Tools": "Εργαλεία διαχειριστή",
@@ -66,7 +65,6 @@
     "Session ID": "Αναγνωριστικό συνεδρίας",
     "This room has no local addresses": "Αυτό το δωμάτιο δεν έχει τοπικές διευθύνσεις",
     "This doesn't appear to be a valid email address": "Δεν μοιάζει με μια έγκυρη διεύθυνση ηλεκτρονικής αλληλογραφίας",
-    "This phone number is already in use": "Αυτός ο αριθμός τηλεφώνου είναι ήδη σε χρήση",
     "Unable to add email address": "Αδυναμία προσθήκης διεύθυνσης ηλ. αλληλογραφίας",
     "Unable to remove contact information": "Αδυναμία αφαίρεσης πληροφοριών επαφής",
     "Unable to verify email address.": "Αδυναμία επιβεβαίωσης διεύθυνσης ηλεκτρονικής αλληλογραφίας.",
@@ -426,8 +424,6 @@
     "Answered Elsewhere": "Απαντήθηκε αλλού",
     "The call could not be established": "Η κλήση δεν μπόρεσε να πραγματοποιηθεί",
     "Confirm adding phone number": "Επιβεβαιώστε την προσθήκη του τηλεφωνικού αριθμού",
-    "Click the button below to confirm adding this email address.": "Πιέστε το κουμπί από κάτω για να επιβεβαιώσετε την προσθήκη της διεύθυνσης ηλ. ταχυδρομείου.",
-    "Confirm adding email": "Επιβεβαιώστε την προσθήκη διεύθυνσης ηλ. ταχυδρομείου",
     "Not Trusted": "Μη Έμπιστο",
     "Verifies a user, session, and pubkey tuple": "Επιβεβαιώνει έναν χρήστη, συνεδρία, και pubkey tuple",
     "The user you called is busy.": "Ο χρήστης που καλέσατε είναι απασχολημένος.",
@@ -514,8 +510,6 @@
     "Connectivity to the server has been lost": "Χάθηκε η συνδεσιμότητα με τον διακομιστή",
     "User Busy": "Χρήστης Απασχολημένος",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Επιβεβαιώστε την προσθήκη αυτού του αριθμού τηλεφώνου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Επιβεβαιώστε την προσθήκη αυτής της διεύθυνσης ηλ. ταχυδρομείου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας.",
-    "Use Single Sign On to continue": "Χρήση Single Sign On για συνέχεια",
     "Unignored user": "Χρήστης από κατάργηση παράβλεψης",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "Το κλειδί υπογραφής που παρείχατε ταιριάζει με το κλειδί που λάβατε από την συνεδρία %(userId)s's %(deviceId)s. Η συνεδρία σημειώνεται ως επιβεβαιωμένη.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s",
@@ -2311,7 +2305,11 @@
         },
         "general": {
             "account_section": "Λογαριασμός",
-            "language_section": "Γλώσσα και περιοχή"
+            "language_section": "Γλώσσα και περιοχή",
+            "email_address_in_use": "Η διεύθυνση ηλ. αλληλογραφίας χρησιμοποιείται ήδη",
+            "msisdn_in_use": "Αυτός ο αριθμός τηλεφώνου είναι ήδη σε χρήση",
+            "confirm_adding_email_title": "Επιβεβαιώστε την προσθήκη διεύθυνσης ηλ. ταχυδρομείου",
+            "confirm_adding_email_body": "Πιέστε το κουμπί από κάτω για να επιβεβαιώσετε την προσθήκη της διεύθυνσης ηλ. ταχυδρομείου."
         }
     },
     "devtools": {
@@ -3131,7 +3129,9 @@
             "msisdn": "Ένα μήνυμα κειμένου έχει σταλεί στη διεύθυνση %(msisdn)s",
             "msisdn_token_prompt": "Παρακαλούμε εισάγετε τον κωδικό που περιέχει:",
             "sso_failed": "Κάτι πήγε στραβά στην επιβεβαίωση της ταυτότητάς σας. Ακυρώστε και δοκιμάστε ξανά.",
-            "fallback_button": "Έναρξη πιστοποίησης"
+            "fallback_button": "Έναρξη πιστοποίησης",
+            "sso_title": "Χρήση Single Sign On για συνέχεια",
+            "sso_body": "Επιβεβαιώστε την προσθήκη αυτής της διεύθυνσης ηλ. ταχυδρομείου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας."
         },
         "password_field_label": "Εισάγετε τον κωδικό πρόσβασης",
         "password_field_strong_label": "Πολύ καλά, ισχυρός κωδικός πρόσβασης!",

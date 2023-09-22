@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Xa se está a usar este email",
-    "This phone number is already in use": "Xa se está a usar este teléfono",
     "Failed to verify email address: make sure you clicked the link in the email": "Fallo na verificación do enderezo de correo: asegúrese de ter picado na ligazón do correo",
     "You cannot place a call with yourself.": "Non podes facer unha chamada a ti mesma.",
     "Warning!": "Aviso!",
@@ -257,10 +255,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque este servidor acadou o Límite Mensual de Usuaria Activa. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque o servidor superou o límite de recursos. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Please <a>contact your service administrator</a> to continue using this service.": "Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
-    "Use Single Sign On to continue": "Usar Single Sign On para continuar",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirma que queres engadir este email usando Single Sign On como proba de identidade.",
-    "Confirm adding email": "Confirma novo email",
-    "Click the button below to confirm adding this email address.": "Preme no botón inferior para confirmar que queres engadir o email.",
     "Add Email Address": "Engadir email",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma que queres engadir este teléfono usando Single Sign On como proba de identidade.",
     "Confirm adding phone number": "Confirma a adición do teléfono",
@@ -2509,7 +2503,11 @@
         "general": {
             "account_section": "Conta",
             "language_section": "Idioma e rexión",
-            "spell_check_section": "Corrección"
+            "spell_check_section": "Corrección",
+            "email_address_in_use": "Xa se está a usar este email",
+            "msisdn_in_use": "Xa se está a usar este teléfono",
+            "confirm_adding_email_title": "Confirma novo email",
+            "confirm_adding_email_body": "Preme no botón inferior para confirmar que queres engadir o email."
         }
     },
     "devtools": {
@@ -3343,7 +3341,9 @@
             "msisdn": "Enviouse unha mensaxe de texto a %(msisdn)s",
             "msisdn_token_prompt": "Por favor introduza o código que contén:",
             "sso_failed": "Algo fallou ao intentar confirma a túa identidade. Cancela e inténtao outra vez.",
-            "fallback_button": "Inicie a autenticación"
+            "fallback_button": "Inicie a autenticación",
+            "sso_title": "Usar Single Sign On para continuar",
+            "sso_body": "Confirma que queres engadir este email usando Single Sign On como proba de identidade."
         },
         "password_field_label": "Escribe contrasinal",
         "password_field_strong_label": "Ben, bo contrasinal!",

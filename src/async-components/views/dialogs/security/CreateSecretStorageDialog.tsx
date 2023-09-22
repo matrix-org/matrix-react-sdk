@@ -301,7 +301,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         } else {
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
-                    title: _t("Use Single Sign On to continue"),
+                    title: _t("auth|uia|sso_title"),
                     body: _t("To continue, use Single Sign On to prove your identity."),
                     continueText: _t("auth|sso"),
                     continueKind: "primary",

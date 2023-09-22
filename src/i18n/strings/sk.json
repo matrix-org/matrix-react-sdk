@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Táto emailová adresa sa už používa",
-    "This phone number is already in use": "Toto telefónne číslo sa už používa",
     "Failed to verify email address: make sure you clicked the link in the email": "Nepodarilo sa overiť emailovú adresu: Uistite sa, že ste správne klikli na odkaz v emailovej správe",
     "You cannot place a call with yourself.": "Nemôžete zavolať samému sebe.",
     "Warning!": "Upozornenie!",
@@ -478,10 +476,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Súhlaste s podmienkami používania servera totožností (%(serverName)s), aby ste mohli byť nájdení zadaním emailovej adresy alebo telefónneho čísla.",
     "Discovery": "Objavovanie",
     "Deactivate account": "Deaktivovať účet",
-    "Use Single Sign On to continue": "Pokračovať pomocou Single Sign On",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Potvrďte pridanie tejto adresy pomocou Single Sign On.",
-    "Confirm adding email": "Potvrdiť pridanie emailu",
-    "Click the button below to confirm adding this email address.": "Kliknutím na tlačidlo nižšie potvrdíte pridanie emailovej adresy.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrďte pridanie telefónneho čísla pomocou Single Sign On.",
     "Confirm adding phone number": "Potvrdiť pridanie telefónneho čísla",
     "Click the button below to confirm adding this phone number.": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
     "Formatting": "Formátovanie",
     "The add / bind with MSISDN flow is misconfigured": "Pridanie / prepojenie s MSISDN je nesprávne nakonfigurované",
-    "No identity access token found": "Nenašiel sa prístupový token totožnosti",
-    "Identity server not set": "Server totožnosti nie je nastavený",
     "Image view": "Prehľad obrázkov",
     "Upload custom sound": "Nahrať vlastný zvuk",
     "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
@@ -2862,7 +2854,13 @@
             "oidc_manage_button": "Spravovať účet",
             "account_section": "Účet",
             "language_section": "Jazyk a región",
-            "spell_check_section": "Kontrola pravopisu"
+            "spell_check_section": "Kontrola pravopisu",
+            "identity_server_not_set": "Server totožnosti nie je nastavený",
+            "email_address_in_use": "Táto emailová adresa sa už používa",
+            "msisdn_in_use": "Toto telefónne číslo sa už používa",
+            "identity_server_no_token": "Nenašiel sa prístupový token totožnosti",
+            "confirm_adding_email_title": "Potvrdiť pridanie emailu",
+            "confirm_adding_email_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie emailovej adresy."
         }
     },
     "devtools": {
@@ -3791,7 +3789,9 @@
             "registration_token_prompt": "Zadajte registračný token poskytnutý správcom domovského servera.",
             "registration_token_label": "Registračný token",
             "sso_failed": "Pri potvrdzovaní vašej totožnosti sa niečo pokazilo. Zrušte to a skúste to znova.",
-            "fallback_button": "Spustiť overenie"
+            "fallback_button": "Spustiť overenie",
+            "sso_title": "Pokračovať pomocou Single Sign On",
+            "sso_body": "Potvrďte pridanie tejto adresy pomocou Single Sign On."
         },
         "password_field_label": "Zadať heslo",
         "password_field_strong_label": "Pekné, silné heslo!",

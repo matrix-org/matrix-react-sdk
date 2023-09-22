@@ -82,12 +82,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "서버를 쓸 수 없거나 과부하거나, 오류입니다.",
     "Session ID": "세션 ID",
-    "This email address is already in use": "이 이메일 주소는 이미 사용 중입니다",
     "This email address was not found": "이 이메일 주소를 찾을 수 없음",
     "This room has no local addresses": "이 방은 로컬 주소가 없음",
     "This room is not recognised.": "이 방은 드러나지 않습니다.",
     "This doesn't appear to be a valid email address": "올바르지 않은 이메일 주소로 보입니다",
-    "This phone number is already in use": "이 전화번호는 이미 사용 중입니다",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "이 방의 타임라인에서 특정 시점을 불러오려고 했지만, 문제의 메시지를 볼 수 있는 권한이 없습니다.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "이 방의 타임라인에서 특정 시점을 불러오려고 했지만, 찾을 수 없었습니다.",
     "Unable to add email address": "이메일 주소를 추가할 수 없음",
@@ -636,7 +634,6 @@
     "More options": "추가 옵션",
     "Pin to sidebar": "사이드바 고정",
     "All settings": "전체 설정",
-    "Use Single Sign On to continue": "SSO로 계속하기",
     "Join public room": "공개 방 참가하기",
     "New room": "새로운 방 만들기",
     "Start new chat": "새로운 대화 시작하기",
@@ -998,7 +995,9 @@
         "general": {
             "account_section": "계정",
             "language_section": "언어와 나라",
-            "spell_check_section": "맞춤법 검사"
+            "spell_check_section": "맞춤법 검사",
+            "email_address_in_use": "이 이메일 주소는 이미 사용 중입니다",
+            "msisdn_in_use": "이 전화번호는 이미 사용 중입니다"
         }
     },
     "devtools": {
@@ -1392,7 +1391,8 @@
             "msisdn_token_incorrect": "토큰이 맞지 않음",
             "msisdn": "%(msisdn)s님에게 문자 메시지를 보냈습니다",
             "msisdn_token_prompt": "들어있던 코드를 입력해주세요:",
-            "fallback_button": "인증 시작"
+            "fallback_button": "인증 시작",
+            "sso_title": "SSO로 계속하기"
         },
         "password_field_label": "비밀번호 입력",
         "password_field_strong_label": "좋습니다, 강한 비밀번호!",

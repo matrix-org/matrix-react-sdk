@@ -118,12 +118,6 @@
     "Search failed": "La recèrca a fracassat",
     "Success!": "Capitada !",
     "Explore rooms": "Percórrer las salas",
-    "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
-    "Confirm adding email": "Confirmar l'adicion de l'adressa e-mail",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat.",
-    "Use Single Sign On to continue": "Utilizar l'autentificacion unica (SSO) per contunhar",
-    "This phone number is already in use": "Aquel numèro de telefòn es ja utilizat",
-    "This email address is already in use": "Aquela adreça e-mail es ja utilizada",
     "common": {
         "mute": "Copar lo son",
         "no_results": "Pas cap de resultat",
@@ -325,7 +319,11 @@
             "encryption_section": "Chiframent"
         },
         "general": {
-            "account_section": "Compte"
+            "account_section": "Compte",
+            "email_address_in_use": "Aquela adreça e-mail es ja utilizada",
+            "msisdn_in_use": "Aquel numèro de telefòn es ja utilizat",
+            "confirm_adding_email_title": "Confirmar l'adicion de l'adressa e-mail",
+            "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail."
         }
     },
     "auth": {
@@ -340,7 +338,11 @@
         "change_password_action": "Modificar senhal",
         "email_field_label": "Corrièl",
         "password_field_label": "Sasissètz lo senhal",
-        "msisdn_field_label": "Telefòn"
+        "msisdn_field_label": "Telefòn",
+        "uia": {
+            "sso_title": "Utilizar l'autentificacion unica (SSO) per contunhar",
+            "sso_body": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat."
+        }
     },
     "export_chat": {
         "messages": "Messatges"

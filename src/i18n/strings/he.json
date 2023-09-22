@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "כתובת הדואר הזו כבר בשימוש",
-    "This phone number is already in use": "מספר הטלפון הזה כבר בשימוש",
     "Failed to verify email address: make sure you clicked the link in the email": "אימות כתובת הדוא\"ל נכשלה: וודא שלחצת על הקישור בדוא\"ל",
     "You cannot place a call with yourself.": "אין אפשרות ליצור שיחה עם עצמך.",
     "Warning!": "אזהרה!",
@@ -66,8 +64,6 @@
     "Confirm adding phone number": "אישור הוספת מספר טלפון",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "אשר הוספת מספר טלפון על ידי כניסה חד שלבית לאימות חשבונכם.",
     "Add Email Address": "הוספת כתובת מייל",
-    "Click the button below to confirm adding this email address.": "לחץ על הכפתור בכדי לאשר הוספה של כתובת מייל הזו.",
-    "Confirm adding email": "אשר הוספת כתובת מייל",
     "The signing key you provided matches the signing key you received from %(userId)s's session %(deviceId)s. Session marked as verified.": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת.",
     "Verified key": "מפתח מאושר",
     "WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session %(deviceId)s is \"%(fprint)s\" which does not match the provided key \"%(fingerprint)s\". This could mean your communications are being intercepted!": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
@@ -373,8 +369,6 @@
     "Vietnam": "וייטנאם",
     "Venezuela": "ונצואלה",
     "Vatican City": "ותיקן",
-    "Use Single Sign On to continue": "השתמש בכניסה חד שלבית על מנת להמשיך",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "אשרו הוספת מייל זה על ידי כניסה למערכת להוכיח את זהותכם.",
     "Unknown server error": "שגיאת שרת לא ידועה",
     "The user's homeserver does not support the version of the room.": "השרת של המשתמש אינו תומך בחדר זה.",
     "The user must be unbanned before they can be invited.": "על המשתמש להיום לא חסום לפני שניתן יהיה להזמינו לחדר.",
@@ -1964,7 +1958,11 @@
         },
         "general": {
             "account_section": "חשבון",
-            "language_section": "שפה ואיזור"
+            "language_section": "שפה ואיזור",
+            "email_address_in_use": "כתובת הדואר הזו כבר בשימוש",
+            "msisdn_in_use": "מספר הטלפון הזה כבר בשימוש",
+            "confirm_adding_email_title": "אשר הוספת כתובת מייל",
+            "confirm_adding_email_body": "לחץ על הכפתור בכדי לאשר הוספה של כתובת מייל הזו."
         }
     },
     "devtools": {
@@ -2663,7 +2661,9 @@
             "msisdn_token_incorrect": "אסימון שגוי",
             "msisdn": "הודעת טקסט נשלחה אל %(msisdn)s",
             "msisdn_token_prompt": "אנא הכנס את הקוד שהוא מכיל:",
-            "fallback_button": "התחל אימות"
+            "fallback_button": "התחל אימות",
+            "sso_title": "השתמש בכניסה חד שלבית על מנת להמשיך",
+            "sso_body": "אשרו הוספת מייל זה על ידי כניסה למערכת להוכיח את זהותכם."
         },
         "password_field_label": "הזן סיסמה",
         "password_field_strong_label": "יפה, סיסמה חזקה!",

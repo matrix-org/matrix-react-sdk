@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Ова адреса е-поште се већ користи",
-    "This phone number is already in use": "Овај број телефона се већ користи",
     "Failed to verify email address: make sure you clicked the link in the email": "Неуспела провера адресе е-поште: морате да кликнете на везу у поруци",
     "You cannot place a call with yourself.": "Не можете позвати сами себе.",
     "Warning!": "Упозорење!",
@@ -258,10 +256,6 @@
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Call failed due to misconfigured server": "Позив неуспешан због лоше подешеног сервера",
     "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Замолите администратора вашег сервера (<code>%(homeserverDomain)s</code>) да подеси „TURN“ сервер како би позиви радили поуздано.",
-    "Use Single Sign On to continue": "Користи јединствену пријаву за наставак",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Потврдите додавање ове е-адресе коришћењем јединствене пријаве за доказивање вашег идентитета.",
-    "Confirm adding email": "Потврди додавање е-адресе",
-    "Click the button below to confirm adding this email address.": "Кликните на дугме испод за потврђивање додавања ове е-адресе.",
     "Add Email Address": "Додај адресу е-поште",
     "Identity server has no terms of service": "Идентитетски сервер нема услове коришћења",
     "You do not have permission to invite people to this room.": "Немате дозволу за позивање људи у ову собу.",
@@ -969,7 +963,11 @@
         },
         "general": {
             "account_section": "Налог",
-            "language_section": "Језик и област"
+            "language_section": "Језик и област",
+            "email_address_in_use": "Ова адреса е-поште се већ користи",
+            "msisdn_in_use": "Овај број телефона се већ користи",
+            "confirm_adding_email_title": "Потврди додавање е-адресе",
+            "confirm_adding_email_body": "Кликните на дугме испод за потврђивање додавања ове е-адресе."
         }
     },
     "devtools": {
@@ -1343,7 +1341,9 @@
             "msisdn": "Текстуална порука је послата на %(msisdn)s",
             "msisdn_token_prompt": "Унесите код који се налази у њој:",
             "sso_failed": "Нешто је пошло по наопако у потврђивању вашег идентитета. Откажите и покушајте поново.",
-            "fallback_button": "Започните идентификацију"
+            "fallback_button": "Започните идентификацију",
+            "sso_title": "Користи јединствену пријаву за наставак",
+            "sso_body": "Потврдите додавање ове е-адресе коришћењем јединствене пријаве за доказивање вашег идентитета."
         },
         "password_field_label": "Унесите лозинку",
         "password_field_strong_label": "Лепа, јака лозинка!",

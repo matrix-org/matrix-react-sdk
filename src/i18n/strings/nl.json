@@ -101,12 +101,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschien onbereikbaar of overbelast, of het zoeken duurde te lang :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "De server is misschien onbereikbaar of overbelast, of je bent een bug tegengekomen.",
     "Session ID": "Sessie-ID",
-    "This email address is already in use": "Dit e-mailadres is al in gebruik",
     "This email address was not found": "Dit e-mailadres is niet gevonden",
     "This room has no local addresses": "Deze kamer heeft geen lokale adressen",
     "This room is not recognised.": "Deze kamer wordt niet herkend.",
     "This doesn't appear to be a valid email address": "Het ziet er niet naar uit dat dit een geldig e-mailadres is",
-    "This phone number is already in use": "Dit telefoonnummer is al in gebruik",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Je probeert een punt in de tijdlijn van deze kamer te laden, maar je hebt niet voldoende rechten om het bericht te lezen.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Geprobeerd een gegeven punt in de tijdslijn van deze kamer te laden, maar kon dit niet vinden.",
     "Unable to add email address": "Kan e-mailadres niet toevoegen",
@@ -734,10 +732,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
-    "Use Single Sign On to continue": "Ga verder met eenmalige aanmelding",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Bevestig je identiteit met je eenmalige aanmelding om dit e-mailadres toe te voegen.",
-    "Confirm adding email": "Bevestig toevoegen van het e-mailadres",
-    "Click the button below to confirm adding this email address.": "Klik op de knop hieronder om dit e-mailadres toe te voegen.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bevestig je identiteit met je eenmalige aanmelding om dit telefoonnummer toe te voegen.",
     "Confirm adding phone number": "Bevestig toevoegen van het telefoonnummer",
     "Click the button below to confirm adding this phone number.": "Klik op de knop hieronder om het toevoegen van dit telefoonnummer te bevestigen.",
@@ -2578,7 +2572,11 @@
         "general": {
             "account_section": "Account",
             "language_section": "Taal en regio",
-            "spell_check_section": "Spellingscontrole"
+            "spell_check_section": "Spellingscontrole",
+            "email_address_in_use": "Dit e-mailadres is al in gebruik",
+            "msisdn_in_use": "Dit telefoonnummer is al in gebruik",
+            "confirm_adding_email_title": "Bevestig toevoegen van het e-mailadres",
+            "confirm_adding_email_body": "Klik op de knop hieronder om dit e-mailadres toe te voegen."
         }
     },
     "devtools": {
@@ -3417,7 +3415,9 @@
             "msisdn": "Er is een sms naar %(msisdn)s verstuurd",
             "msisdn_token_prompt": "Voer de code in die het bevat:",
             "sso_failed": "Er is iets misgegaan bij het bevestigen van jouw identiteit. Annuleer en probeer het opnieuw.",
-            "fallback_button": "Authenticatie starten"
+            "fallback_button": "Authenticatie starten",
+            "sso_title": "Ga verder met eenmalige aanmelding",
+            "sso_body": "Bevestig je identiteit met je eenmalige aanmelding om dit e-mailadres toe te voegen."
         },
         "password_field_label": "Voer wachtwoord in",
         "password_field_strong_label": "Dit is een sterk wachtwoord!",

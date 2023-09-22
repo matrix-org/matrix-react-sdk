@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": ".i xa'o pilno fa da le samymri judri",
-    "This phone number is already in use": ".i xa'o pilno fa da le fonxa judri",
     "Failed to verify email address: make sure you clicked the link in the email": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri",
     "You cannot place a call with yourself.": ".i do na ka'e fonjo'e do",
     "Permission Required": ".i lo nu curmi cu sarcu",
@@ -289,6 +287,10 @@
             "send_analytics": "lo du'u xu kau benji lo se lanli datni",
             "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u",
             "export_megolm_keys": "barbei lo kumfa pe'a termifckiku"
+        },
+        "general": {
+            "email_address_in_use": ".i xa'o pilno fa da le samymri judri",
+            "msisdn_in_use": ".i xa'o pilno fa da le fonxa judri"
         }
     },
     "create_room": {

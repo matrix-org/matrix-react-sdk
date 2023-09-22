@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Ova email adresa se već koristi",
-    "This phone number is already in use": "Ovaj broj telefona se već koristi",
     "Failed to verify email address: make sure you clicked the link in the email": "Nismo u mogućnosti verificirati Vašu email adresu. Provjerite dali ste kliknuli link u mailu",
     "France": "Francuska",
     "Finland": "Finska",
@@ -136,14 +134,10 @@
     "User Busy": "Korisnik zauzet",
     "Unable to load! Check your network connectivity and try again.": "Učitavanje nije moguće! Provjerite mrežnu povezanost i pokušajte ponovo.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Potvrdite dodavanje ovog telefonskog broja koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Potvrdite dodavanje ove email adrese koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet.",
-    "Use Single Sign On to continue": "Koristite jedinstvenu prijavu (SSO) za nastavak",
     "Add Phone Number": "Dodaj telefonski broj",
     "Click the button below to confirm adding this phone number.": "Kliknite gumb ispod da biste potvrdili dodavanje ovog telefonskog broja.",
     "Confirm adding phone number": "Potvrdite dodavanje telefonskog broja",
     "Add Email Address": "Dodaj email adresu",
-    "Click the button below to confirm adding this email address.": "Kliknite gumb ispod da biste potvrdili dodavanje ove email adrese.",
-    "Confirm adding email": "Potvrdite dodavanje email adrese",
     "Could not connect to identity server": "Nije moguće spojiti se na poslužitelja identiteta",
     "common": {
         "analytics": "Analitika",
@@ -173,6 +167,18 @@
         "already_in_call_person": "Već ste u pozivu sa tom osobom."
     },
     "auth": {
-        "sso": "Jedinstvena prijava (SSO)"
+        "sso": "Jedinstvena prijava (SSO)",
+        "uia": {
+            "sso_title": "Koristite jedinstvenu prijavu (SSO) za nastavak",
+            "sso_body": "Potvrdite dodavanje ove email adrese koristeći jedinstvenu prijavu (SSO) da biste dokazali Vaš identitet."
+        }
+    },
+    "settings": {
+        "general": {
+            "email_address_in_use": "Ova email adresa se već koristi",
+            "msisdn_in_use": "Ovaj broj telefona se već koristi",
+            "confirm_adding_email_title": "Potvrdite dodavanje email adrese",
+            "confirm_adding_email_body": "Kliknite gumb ispod da biste potvrdili dodavanje ove email adrese."
+        }
     }
 }

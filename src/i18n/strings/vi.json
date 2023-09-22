@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Địa chỉ thư điện tử này đã được sử dụng",
-    "This phone number is already in use": "Số điện thoại này đã được sử dụng",
     "Failed to verify email address: make sure you clicked the link in the email": "Chưa xác nhận địa chỉ thư điện tử: hãy chắc chắn bạn đã nhấn vào liên kết trong thư",
     "You cannot place a call with yourself.": "Bạn không thể tự gọi chính mình.",
     "Permission Required": "Yêu cầu Cấp quyền",
@@ -103,15 +101,11 @@
     "Confirm adding phone number": "Xác nhận thêm số điện thoại",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Xác nhận thêm số điện thoại này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
     "Add Email Address": "Thêm địa chỉ thử điện tử",
-    "Click the button below to confirm adding this email address.": "Nhấn vào nút dưới đây để xác nhận thêm địa chỉ thư điện tử này.",
-    "Confirm adding email": "Xác nhận thêm địa chỉ thư điện tử",
     "Add Phone Number": "Thêm Số Điện Thoại",
     "Click the button below to confirm adding this phone number.": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
     "The call could not be established": "Không thể khởi tạo cuộc gọi",
     "The user you called is busy.": "Người dùng bạn vừa gọi hiện đang bận.",
     "User Busy": "Người dùng bận",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Xác nhận việc thêm địa chỉ thư điện tử này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
-    "Use Single Sign On to continue": "Sử dụng Đăng Nhập Một Lần để tiếp tục",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nếu bạn không xóa phương pháp khôi phục, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nếu bạn vô tình làm điều này, bạn có thể Cài đặt Tin nhắn được bảo toàn trên phiên này. Tính năng này sẽ mã hóa lại lịch sử tin nhắn của phiên này bằng một phương pháp khôi phục mới.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
@@ -1666,7 +1660,6 @@
     },
     "%(user1)s and %(user2)s": "%(user1)s và %(user2)s",
     "Database unexpectedly closed": "Cơ sở dữ liệu đột nhiên bị đóng",
-    "Identity server not set": "Máy chủ định danh chưa được đặt",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "Connection": "Kết nối",
     "Voice processing": "Xử lý âm thanh",
@@ -1692,7 +1685,6 @@
         "other": "%(count)s người đã tham gia"
     },
     "Sorry — this call is currently full": "Xin lỗi — cuộc gọi này đang đầy",
-    "No identity access token found": "Không tìm thấy mã thông báo danh tính",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Red": "Đỏ",
@@ -2652,7 +2644,13 @@
             "oidc_manage_button": "Quản lý tài khoản",
             "account_section": "Tài khoản",
             "language_section": "Ngôn ngữ và khu vực",
-            "spell_check_section": "Kiểm tra chính tả"
+            "spell_check_section": "Kiểm tra chính tả",
+            "identity_server_not_set": "Máy chủ định danh chưa được đặt",
+            "email_address_in_use": "Địa chỉ thư điện tử này đã được sử dụng",
+            "msisdn_in_use": "Số điện thoại này đã được sử dụng",
+            "identity_server_no_token": "Không tìm thấy mã thông báo danh tính",
+            "confirm_adding_email_title": "Xác nhận thêm địa chỉ thư điện tử",
+            "confirm_adding_email_body": "Nhấn vào nút dưới đây để xác nhận thêm địa chỉ thư điện tử này."
         }
     },
     "devtools": {
@@ -3511,7 +3509,9 @@
             "msisdn": "Một tin nhắn văn bản đã được gửi tới %(msisdn)s",
             "msisdn_token_prompt": "Vui lòng nhập mã mà nó chứa:",
             "sso_failed": "Đã xảy ra sự cố khi xác nhận danh tính của bạn. Hủy và thử lại.",
-            "fallback_button": "Bắt đầu xác thực"
+            "fallback_button": "Bắt đầu xác thực",
+            "sso_title": "Sử dụng Đăng Nhập Một Lần để tiếp tục",
+            "sso_body": "Xác nhận việc thêm địa chỉ thư điện tử này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn."
         },
         "password_field_label": "Nhập mật khẩu",
         "password_field_strong_label": "Mật khẩu mạnh, tốt đó!",

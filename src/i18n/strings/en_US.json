@@ -78,12 +78,10 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server may be unavailable, overloaded, or you hit a bug.",
     "Session ID": "Session ID",
-    "This email address is already in use": "This email address is already in use",
     "This email address was not found": "This email address was not found",
     "This room has no local addresses": "This room has no local addresses",
     "This room is not recognised.": "This room is not recognized.",
     "This doesn't appear to be a valid email address": "This doesn't appear to be a valid email address",
-    "This phone number is already in use": "This phone number is already in use",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tried to load a specific point in this room's timeline, but was unable to find it.",
     "Unable to add email address": "Unable to add email address",
@@ -228,10 +226,6 @@
     "Double check that your server supports the room version chosen and try again.": "Double check that your server supports the room version chosen and try again.",
     "Favourited": "Favorited",
     "Explore rooms": "Explore rooms",
-    "Click the button below to confirm adding this email address.": "Click the button below to confirm adding this email address.",
-    "Confirm adding email": "Confirm adding email",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirm adding this email address by using Single Sign On to prove your identity.",
-    "Use Single Sign On to continue": "Use Single Sign On to continue",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "Message search initialisation failed": "Message search initialization failed",
     "The call was answered on another device.": "The call was answered on another device.",
@@ -351,7 +345,11 @@
             "cryptography_section": "Cryptography"
         },
         "general": {
-            "account_section": "Account"
+            "account_section": "Account",
+            "email_address_in_use": "This email address is already in use",
+            "msisdn_in_use": "This phone number is already in use",
+            "confirm_adding_email_title": "Confirm adding email",
+            "confirm_adding_email_body": "Click the button below to confirm adding this email address."
         }
     },
     "timeline": {
@@ -499,7 +497,9 @@
         "uia": {
             "msisdn_token_incorrect": "Token incorrect",
             "msisdn_token_prompt": "Please enter the code it contains:",
-            "fallback_button": "Start authentication"
+            "fallback_button": "Start authentication",
+            "sso_title": "Use Single Sign On to continue",
+            "sso_body": "Confirm adding this email address by using Single Sign On to prove your identity."
         },
         "msisdn_field_label": "Phone",
         "identifier_label": "Sign in with"

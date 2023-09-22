@@ -97,8 +97,6 @@
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
     "Confirm passphrase": "Şifrəni təsdiqləyin",
-    "This email address is already in use": "Bu e-mail ünvanı istifadə olunur",
-    "This phone number is already in use": "Bu telefon nömrəsi artıq istifadə olunur",
     "Permission Required": "İzn tələb olunur",
     "You do not have permission to start a conference call in this room": "Bu otaqda konfrans başlamaq üçün icazə yoxdur",
     "Server may be unavailable, overloaded, or you hit a bug.": "Server, istifadə edilə bilməz, yüklənmiş ola bilər və ya bir səhv vurursunuz.",
@@ -198,7 +196,9 @@
             "cryptography_section": "Kriptoqrafiya"
         },
         "general": {
-            "account_section": "Hesab"
+            "account_section": "Hesab",
+            "email_address_in_use": "Bu e-mail ünvanı istifadə olunur",
+            "msisdn_in_use": "Bu telefon nömrəsi artıq istifadə olunur"
         }
     },
     "timeline": {

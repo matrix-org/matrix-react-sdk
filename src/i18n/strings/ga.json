@@ -364,13 +364,7 @@
     "Confirm adding phone number": "Deimhnigh an uimhir ghutháin nua",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
     "Add Email Address": "Cuir seoladh ríomhphoist",
-    "Click the button below to confirm adding this email address.": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú.",
-    "Confirm adding email": "Deimhnigh an seoladh ríomhphoist nua",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Deimhnigh an seoladh ríomhphoist seo le SSO mar cruthúnas céannachta.",
     "Explore rooms": "Breathnaigh thart ar na seomraí",
-    "Use Single Sign On to continue": "Lean ar aghaidh le SSO",
-    "This phone number is already in use": "Úsáidtear an uimhir ghutháin seo chean féin",
-    "This email address is already in use": "Úsáidtear an seoladh ríomhphoist seo chean féin",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
@@ -644,7 +638,11 @@
             "encryption_section": "Criptiúchán"
         },
         "general": {
-            "account_section": "Cuntas"
+            "account_section": "Cuntas",
+            "email_address_in_use": "Úsáidtear an seoladh ríomhphoist seo chean féin",
+            "msisdn_in_use": "Úsáidtear an uimhir ghutháin seo chean féin",
+            "confirm_adding_email_title": "Deimhnigh an seoladh ríomhphoist nua",
+            "confirm_adding_email_body": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú."
         }
     },
     "devtools": {
@@ -804,7 +802,11 @@
         "change_password_action": "Athraigh focal faire",
         "email_field_label": "Ríomhphost",
         "msisdn_field_label": "Guthán",
-        "identifier_label": "Sínigh isteach le"
+        "identifier_label": "Sínigh isteach le",
+        "uia": {
+            "sso_title": "Lean ar aghaidh le SSO",
+            "sso_body": "Deimhnigh an seoladh ríomhphoist seo le SSO mar cruthúnas céannachta."
+        }
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"

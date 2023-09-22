@@ -12,8 +12,6 @@
     "You may need to manually permit %(brand)s to access your microphone/webcam": "Potresti dover permettere manualmente a %(brand)s di accedere al tuo microfono/webcam",
     "Default Device": "Dispositivo Predefinito",
     "Authentication": "Autenticazione",
-    "This email address is already in use": "Questo indirizzo e-mail è già in uso",
-    "This phone number is already in use": "Questo numero di telefono è già in uso",
     "Failed to verify email address: make sure you clicked the link in the email": "Impossibile verificare l'indirizzo e-mail: assicurati di aver cliccato il link nell'e-mail",
     "You cannot place a call with yourself.": "Non puoi chiamare te stesso.",
     "Warning!": "Attenzione!",
@@ -766,10 +764,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Nelle stanze cifrate, i tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
     "Verify all users in a room to ensure it's secure.": "Verifica tutti gli utenti in una stanza per confermare che sia sicura.",
     "Sign in with SSO": "Accedi con SSO",
-    "Use Single Sign On to continue": "Usa Single Sign On per continuare",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Conferma aggiungendo questa email usando Single Sign On per provare la tua identità.",
-    "Confirm adding email": "Conferma aggiungendo email",
-    "Click the button below to confirm adding this email address.": "Clicca il pulsante sotto per confermare l'aggiunta di questa email.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Conferma aggiungendo questo numero di telefono usando Single Sign On per provare la tua identità.",
     "Confirm adding phone number": "Conferma aggiungendo un numero di telefono",
     "Click the button below to confirm adding this phone number.": "Clicca il pulsante sotto per confermare l'aggiunta di questo numero di telefono.",
@@ -2017,8 +2011,6 @@
     "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?",
     "Formatting": "Formattazione",
-    "No identity access token found": "Nessun token di accesso d'identità trovato",
-    "Identity server not set": "Server d'identità non impostato",
     "The add / bind with MSISDN flow is misconfigured": "L'aggiunta / bind con il flusso MSISDN è mal configurata",
     "Image view": "Vista immagine",
     "Search all rooms": "Cerca in tutte le stanze",
@@ -2867,7 +2859,13 @@
             "oidc_manage_button": "Gestisci account",
             "account_section": "Account",
             "language_section": "Lingua e regione",
-            "spell_check_section": "Controllo ortografico"
+            "spell_check_section": "Controllo ortografico",
+            "identity_server_not_set": "Server d'identità non impostato",
+            "email_address_in_use": "Questo indirizzo e-mail è già in uso",
+            "msisdn_in_use": "Questo numero di telefono è già in uso",
+            "identity_server_no_token": "Nessun token di accesso d'identità trovato",
+            "confirm_adding_email_title": "Conferma aggiungendo email",
+            "confirm_adding_email_body": "Clicca il pulsante sotto per confermare l'aggiunta di questa email."
         }
     },
     "devtools": {
@@ -3796,7 +3794,9 @@
             "registration_token_prompt": "Inserisci un token di registrazione fornito dall'amministratore dell'homeserver.",
             "registration_token_label": "Token di registrazione",
             "sso_failed": "Qualcosa è andato storto confermando la tua identità. Annulla e riprova.",
-            "fallback_button": "Inizia l'autenticazione"
+            "fallback_button": "Inizia l'autenticazione",
+            "sso_title": "Usa Single Sign On per continuare",
+            "sso_body": "Conferma aggiungendo questa email usando Single Sign On per provare la tua identità."
         },
         "password_field_label": "Inserisci password",
         "password_field_strong_label": "Bene, password robusta!",

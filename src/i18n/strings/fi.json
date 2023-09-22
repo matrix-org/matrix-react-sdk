@@ -64,7 +64,6 @@
     "Rooms": "Huoneet",
     "Search failed": "Haku epäonnistui",
     "Session ID": "Istuntotunniste",
-    "This email address is already in use": "Tämä sähköpostiosoite on jo käytössä",
     "This email address was not found": "Sähköpostiosoitetta ei löytynyt",
     "This room has no local addresses": "Tällä huoneella ei ole paikallista osoitetta",
     "Unban": "Poista porttikielto",
@@ -78,7 +77,6 @@
     "Invalid file%(extra)s": "Virheellinen tiedosto%(extra)s",
     "This room is not recognised.": "Huonetta ei tunnistettu.",
     "This doesn't appear to be a valid email address": "Tämä ei vaikuta olevan kelvollinen sähköpostiosoite",
-    "This phone number is already in use": "Puhelinnumero on jo käytössä",
     "Verified key": "Varmennettu avain",
     "Warning!": "Varoitus!",
     "You are not in this room.": "Et ole tässä huoneessa.",
@@ -703,9 +701,6 @@
     "Your server": "Palvelimesi",
     "Add a new server": "Lisää uusi palvelin",
     "Server name": "Palvelimen nimi",
-    "Use Single Sign On to continue": "Jatka kertakirjautumista käyttäen",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-    "Confirm adding email": "Vahvista sähköpostin lisääminen",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Vahvista tämän puhelinnumeron lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
     "Confirm adding phone number": "Vahvista puhelinnumeron lisääminen",
     "Published Addresses": "Julkaistut osoitteet",
@@ -718,7 +713,6 @@
     "Submit logs": "Lähetä lokit",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
-    "Click the button below to confirm adding this email address.": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän sähköpostiosoitteen.",
     "Click the button below to confirm adding this phone number.": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
     "New login. Was this you?": "Uusi sisäänkirjautuminen. Olitko se sinä?",
     "%(name)s is requesting verification": "%(name)s pyytää varmennusta",
@@ -1869,7 +1863,6 @@
     "Safeguard against losing access to encrypted messages & data": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
     "This may be caused by having the app open in multiple tabs or due to clearing browser data.": "Tämä voi johtua siitä, että sovellus on auki useissa välilehdissä tai selaimen tietojen tyhjentämisestä.",
     "Database unexpectedly closed": "Tietokanta sulkeutui odottamattomasti",
-    "Identity server not set": "Identiteettipalvelinta ei ole asetettu",
     "Set a new account password…": "Aseta uusi tilin salasana…",
     "User is not logged in": "Käyttäjä ei ole sisäänkirjautunut",
     "Encrypting your message…": "Salataan viestiäsi…",
@@ -2597,7 +2590,12 @@
             "oidc_manage_button": "Hallitse tiliä",
             "account_section": "Tili",
             "language_section": "Kieli ja alue",
-            "spell_check_section": "Oikeinkirjoituksen tarkistus"
+            "spell_check_section": "Oikeinkirjoituksen tarkistus",
+            "identity_server_not_set": "Identiteettipalvelinta ei ole asetettu",
+            "email_address_in_use": "Tämä sähköpostiosoite on jo käytössä",
+            "msisdn_in_use": "Puhelinnumero on jo käytössä",
+            "confirm_adding_email_title": "Vahvista sähköpostin lisääminen",
+            "confirm_adding_email_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän sähköpostiosoitteen."
         }
     },
     "devtools": {
@@ -3436,7 +3434,9 @@
             "msisdn": "Tekstiviesti lähetetty numeroon %(msisdn)s",
             "msisdn_token_prompt": "Ole hyvä ja syötä sen sisältämä koodi:",
             "sso_failed": "Jokin meni pieleen henkilöllisyyttä vahvistaessa. Peruuta ja yritä uudelleen.",
-            "fallback_button": "Aloita tunnistus"
+            "fallback_button": "Aloita tunnistus",
+            "sso_title": "Jatka kertakirjautumista käyttäen",
+            "sso_body": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen."
         },
         "password_field_label": "Syötä salasana",
         "password_field_strong_label": "Hyvä, vahva salasana!",

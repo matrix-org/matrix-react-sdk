@@ -92,13 +92,7 @@
     "Your password has been reset.": "Awal uffir-inek/inem yettuwennez.",
     "Create account": "Rnu amiḍan",
     "Success!": "Tammug akken iwata!",
-    "This email address is already in use": "Tansa-agi n yimayl tettuseqdac yakan",
-    "This phone number is already in use": "Uṭṭun-agi n tilifun yettuseqddac yakan",
     "Your %(brand)s is misconfigured": "%(brand)s inek(inem) ur ittusbadu ara",
-    "Use Single Sign On to continue": "Seqdec anekcum asuf akken ad tkemmleḍ",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Sentem timerna n tansa-a n yimayl s useqdec n unekcum asuf i ubeggen n timagit-in(im).",
-    "Confirm adding email": "Sentem timerna n yimayl",
-    "Click the button below to confirm adding this email address.": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n tansa-a n yimayl.",
     "Add Email Address": "Rnu tansa n yimayl",
     "Failed to verify email address: make sure you clicked the link in the email": "Asenqed n tansa n yimayl ur yeddi ara: wali ma yella tsateḍ ɣef useɣwen yellan deg yimayl",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Sentem timerna n wuṭṭun n tilifun s useqdec n unekcum asuf i ubeggen n timagit-ik(im).",
@@ -1524,7 +1518,11 @@
         },
         "general": {
             "account_section": "Amiḍan",
-            "language_section": "Tutlayt d temnaḍt"
+            "language_section": "Tutlayt d temnaḍt",
+            "email_address_in_use": "Tansa-agi n yimayl tettuseqdac yakan",
+            "msisdn_in_use": "Uṭṭun-agi n tilifun yettuseqddac yakan",
+            "confirm_adding_email_title": "Sentem timerna n yimayl",
+            "confirm_adding_email_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n tansa-a n yimayl."
         }
     },
     "devtools": {
@@ -2014,7 +2012,9 @@
             "msisdn_token_incorrect": "Ajuṭu d arameɣtu",
             "msisdn": "Izen aḍris yettwazen ɣer %(msisdn)s",
             "msisdn_token_prompt": "Ttxil-k·m sekcem tangalt yellan deg-s:",
-            "fallback_button": "Bdu alɣu"
+            "fallback_button": "Bdu alɣu",
+            "sso_title": "Seqdec anekcum asuf akken ad tkemmleḍ",
+            "sso_body": "Sentem timerna n tansa-a n yimayl s useqdec n unekcum asuf i ubeggen n timagit-in(im)."
         },
         "password_field_label": "Sekcem awal n uffir",
         "password_field_strong_label": "Igerrez, d awal uffir iǧhed aṭas!",

@@ -9,8 +9,6 @@
     "unknown error code": "codi d'error desconegut",
     "Operation failed": "No s'ha pogut realitzar l'operació",
     "Rooms": "Sales",
-    "This email address is already in use": "Aquesta adreça de correu electrònic ja està en ús",
-    "This phone number is already in use": "Aquest número de telèfon ja està en ús",
     "Failed to verify email address: make sure you clicked the link in the email": "No s'ha pogut verificar l'adreça de correu electrònic: assegura't de fer clic a l'enllaç del correu electrònic",
     "You cannot place a call with yourself.": "No pots trucar-te a tu mateix.",
     "Warning!": "Avís!",
@@ -283,16 +281,12 @@
     "The call was answered on another device.": "La trucada s'ha respost des d'un altre dispositiu.",
     "The call could not be established": "No s'ha pogut establir la trucada",
     "Add Phone Number": "Afegeix número de telèfon",
-    "Confirm adding email": "Confirma l'addició del correu electrònic",
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirma l'addició d'aquest número de telèfon mitjançant la inscripció única SSO (per demostrar la teva identitat).",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirma l'addició d'aquest correu electrònic mitjançant la inscripció única SSO (per demostrar la teva identitat).",
-    "Use Single Sign On to continue": "Utilitza la inscripció única (SSO) per a continuar",
     "Click the button below to confirm adding this phone number.": "Fes clic al botó de sota per confirmar l'addició d'aquest número de telèfon.",
     "Confirm adding phone number": "Confirma l'addició del número de telèfon",
     "Add Email Address": "Afegeix una adreça de correu electrònic",
-    "Click the button below to confirm adding this email address.": "Fes clic al botó de sota per confirmar l'addició d'aquesta adreça de correu electrònic.",
     "Explore rooms": "Explora sales",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu.",
     "Could not connect to identity server": "No s'ha pogut connectar amb el servidor d'identitat",
@@ -431,7 +425,11 @@
         },
         "general": {
             "account_section": "Compte",
-            "language_section": "Idioma i regió"
+            "language_section": "Idioma i regió",
+            "email_address_in_use": "Aquesta adreça de correu electrònic ja està en ús",
+            "msisdn_in_use": "Aquest número de telèfon ja està en ús",
+            "confirm_adding_email_title": "Confirma l'addició del correu electrònic",
+            "confirm_adding_email_body": "Fes clic al botó de sota per confirmar l'addició d'aquesta adreça de correu electrònic."
         }
     },
     "devtools": {
@@ -699,7 +697,9 @@
             "msisdn_token_incorrect": "Token incorrecte",
             "msisdn": "S'ha enviat un missatge de text a %(msisdn)s",
             "msisdn_token_prompt": "Introdueix el codi que conté:",
-            "fallback_button": "Inicia l'autenticació"
+            "fallback_button": "Inicia l'autenticació",
+            "sso_title": "Utilitza la inscripció única (SSO) per a continuar",
+            "sso_body": "Confirma l'addició d'aquest correu electrònic mitjançant la inscripció única SSO (per demostrar la teva identitat)."
         },
         "msisdn_field_label": "Telèfon",
         "identifier_label": "Inicieu sessió amb"

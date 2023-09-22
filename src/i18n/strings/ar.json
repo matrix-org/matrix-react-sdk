@@ -3,18 +3,12 @@
     "Create new room": "إنشاء غرفة جديدة",
     "Failed to change password. Is your password correct?": "فشلت عملية تعديل الكلمة السرية. هل كلمتك السرية صحيحة ؟",
     "Send": "إرسال",
-    "This email address is already in use": "عنوان البريد هذا مستعمل",
-    "This phone number is already in use": "رقم الهاتف هذا مستخدم بالفعل",
     "Failed to verify email address: make sure you clicked the link in the email": "فشل التثبّت من عنوان البريد الإلكتروني: تأكّد من نقر الرابط في البريد المُرسل",
     "Unavailable": "غير متوفر",
     "All Rooms": "كل الغُرف",
     "All messages": "كل الرسائل",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
-    "Use Single Sign On to continue": "استعمل الولوج الموحّد للمواصلة",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "أكّد إضافتك لعنوان البريد هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
-    "Confirm adding email": "أكّد إضافة البريد الإلكتروني",
-    "Click the button below to confirm adding this email address.": "انقر الزر بالأسفل لتأكيد إضافة عنوان البريد الإلكتروني هذا.",
     "Add Email Address": "أضِف بريدًا إلكترونيًا",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "أكّد إضافتك لرقم الهاتف هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
     "Confirm adding phone number": "أكّد إضافة رقم الهاتف",
@@ -961,7 +955,11 @@
         },
         "general": {
             "account_section": "الحساب",
-            "language_section": "اللغة والمنطقة"
+            "language_section": "اللغة والمنطقة",
+            "email_address_in_use": "عنوان البريد هذا مستعمل",
+            "msisdn_in_use": "رقم الهاتف هذا مستخدم بالفعل",
+            "confirm_adding_email_title": "أكّد إضافة البريد الإلكتروني",
+            "confirm_adding_email_body": "انقر الزر بالأسفل لتأكيد إضافة عنوان البريد الإلكتروني هذا."
         }
     },
     "devtools": {
@@ -1309,7 +1307,11 @@
         "change_password_confirm_label": "تأكيد كلمة المرور",
         "change_password_current_label": "كلمة المرور الحالية",
         "change_password_new_label": "كلمة مرور جديدة",
-        "change_password_action": "تغيير كلمة المرور"
+        "change_password_action": "تغيير كلمة المرور",
+        "uia": {
+            "sso_title": "استعمل الولوج الموحّد للمواصلة",
+            "sso_body": "أكّد إضافتك لعنوان البريد هذا باستعمال الولوج الموحّد لإثبات هويّتك."
+        }
     },
     "export_chat": {
         "messages": "الرسائل"

@@ -18,8 +18,6 @@
     "unknown error code": "Ukendt fejlkode",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
-    "This email address is already in use": "Denne email adresse er allerede i brug",
-    "This phone number is already in use": "Dette telefonnummer er allerede i brug",
     "Failed to verify email address: make sure you clicked the link in the email": "Kunne ikke bekræfte emailaddressen: vær sikker på at klikke på linket i e-mailen",
     "You cannot place a call with yourself.": "Du kan ikke ringe til dig selv.",
     "Upload Failed": "Upload Fejlede",
@@ -142,10 +140,6 @@
     "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
     "Add Email Address": "Tilføj e-mail adresse",
     "Add Phone Number": "Tilføj telefonnummer",
-    "Use Single Sign On to continue": "Brug engangs login for at fortsætte",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Bekræft tilføjelsen af denne email adresse ved at bruge Single Sign On til at bevise din identitet.",
-    "Confirm adding email": "Bekræft tilføjelse af email",
-    "Click the button below to confirm adding this email address.": "Klik på knappen herunder for at bekræfte tilføjelsen af denne email adresse.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekræft tilføjelsen af dette telefonnummer ved at bruge Single Sign On til at bevise din identitet.",
     "Confirm adding phone number": "Bekræft tilføjelse af telefonnummer",
     "Click the button below to confirm adding this phone number.": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
@@ -556,7 +550,11 @@
             "cryptography_section": "Kryptografi"
         },
         "general": {
-            "account_section": "Konto"
+            "account_section": "Konto",
+            "email_address_in_use": "Denne email adresse er allerede i brug",
+            "msisdn_in_use": "Dette telefonnummer er allerede i brug",
+            "confirm_adding_email_title": "Bekræft tilføjelse af email",
+            "confirm_adding_email_body": "Klik på knappen herunder for at bekræfte tilføjelsen af denne email adresse."
         }
     },
     "devtools": {
@@ -758,7 +756,11 @@
         "change_password_current_label": "Nuværende adgangskode",
         "change_password_new_label": "Ny adgangskode",
         "change_password_action": "Skift adgangskode",
-        "password_field_label": "Indtast adgangskode"
+        "password_field_label": "Indtast adgangskode",
+        "uia": {
+            "sso_title": "Brug engangs login for at fortsætte",
+            "sso_body": "Bekræft tilføjelsen af denne email adresse ved at bruge Single Sign On til at bevise din identitet."
+        }
     },
     "export_chat": {
         "messages": "Beskeder"

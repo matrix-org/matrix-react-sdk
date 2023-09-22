@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Šis el. pašto adresas jau naudojamas",
-    "This phone number is already in use": "Šis telefono numeris jau naudojamas",
     "Failed to verify email address: make sure you clicked the link in the email": "Nepavyko patvirtinti el. pašto adreso: įsitikinkite, kad paspaudėte nuorodą el. laiške",
     "Sunday": "Sekmadienis",
     "Notification targets": "Pranešimo objektai",
@@ -337,7 +335,6 @@
     "Confirm Removal": "Patvirtinkite pašalinimą",
     "Manually export keys": "Eksportuoti raktus rankiniu būdu",
     "Go back to set it again.": "Grįžti atgal, kad nustatyti iš naujo.",
-    "Click the button below to confirm adding this email address.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šio el. pašto pridėjimą.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Prieš atsijungiant rekomenduojame iš tapatybės serverio pašalinti savo el. pašto adresus ir telefono numerius.",
     "Email addresses": "El. pašto adresai",
     "Account management": "Paskyros tvarkymas",
@@ -381,9 +378,6 @@
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Are you sure you want to reject the invitation?": "Ar tikrai norite atmesti pakvietimą?",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Atnaujinkite šį seansą, kad jam būtų leista patvirtinti kitus seansus, suteikiant jiems prieigą prie šifruotų žinučių ir juos pažymint kaip patikimus kitiems vartotojams.",
-    "Use Single Sign On to continue": "Norėdami tęsti naudokite Vieną Prisijungimą",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
-    "Confirm adding email": "Patvirtinkite el. pašto pridėjimą",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Patvirtinkite šio tel. nr. pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
     "Confirm adding phone number": "Patvirtinkite telefono numerio pridėjimą",
     "Click the button below to confirm adding this phone number.": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
@@ -1881,7 +1875,11 @@
         "general": {
             "account_section": "Paskyra",
             "language_section": "Kalba ir regionas",
-            "spell_check_section": "Rašybos tikrinimas"
+            "spell_check_section": "Rašybos tikrinimas",
+            "email_address_in_use": "Šis el. pašto adresas jau naudojamas",
+            "msisdn_in_use": "Šis telefono numeris jau naudojamas",
+            "confirm_adding_email_title": "Patvirtinkite el. pašto pridėjimą",
+            "confirm_adding_email_body": "Paspauskite mygtuką žemiau, kad patvirtintumėte šio el. pašto pridėjimą."
         }
     },
     "devtools": {
@@ -2502,7 +2500,9 @@
             "msisdn_token_incorrect": "Neteisingas prieigos raktas",
             "msisdn": "Tekstinė žinutė buvo išsiųsta į %(msisdn)s",
             "msisdn_token_prompt": "Įveskite joje esantį kodą:",
-            "fallback_button": "Pradėti tapatybės nustatymą"
+            "fallback_button": "Pradėti tapatybės nustatymą",
+            "sso_title": "Norėdami tęsti naudokite Vieną Prisijungimą",
+            "sso_body": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę."
         },
         "password_field_strong_label": "Puiku, stiprus slaptažodis!",
         "username_field_required_invalid": "Įveskite vartotojo vardą",

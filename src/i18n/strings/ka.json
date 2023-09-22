@@ -2,17 +2,9 @@
     "Explore rooms": "ოთახების დათავლიერება",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "ფაილი '%(fileName)s' აჭარბებს ამ ჰომსერვერის ზომის ლიმიტს ატვირთვისთვის",
     "The file '%(fileName)s' failed to upload.": "ფაილი '%(fileName)s' ვერ აიტვირთა.",
-    "This email address is already in use": "ელ. ფოსტის ეს მისამართი დაკავებულია",
-    "Use Single Sign On to continue": "გასაგრძელებლად გამოიყენე ერთჯერადი ავტორიზაცია",
-    "Confirm adding email": "დაადასტურე ელ.ფოსტის დამატება",
-    "Click the button below to confirm adding this email address.": "ელ. ფოსტის ამ მისამართის დამატება დაადასტურე ღილაკზე დაჭერით.",
     "Add Email Address": "ელ. ფოსტის მისამართის დამატება",
     "Failed to verify email address: make sure you clicked the link in the email": "ელ. ფოსტის მისამართის ვერიფიკაცია ვერ მოხერხდა: დარწმუნდი, რომ დააჭირე ბმულს ელ. ფოსტის წერილში",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "ამ ტელეფონის ნომრის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "ელ. ფოსტის მისამართის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად.",
-    "This phone number is already in use": "ტელეფონის ეს ნომერი დაკავებულია",
-    "Identity server not set": "იდენთიფიკაციის სერვერი არ არის განსაზღვრული",
-    "No identity access token found": "იდენთიფიკაციის წვდომის ტოკენი ვერ მოიძებნა",
     "The server does not support the room version specified.": "სერვერი არ მუშაობს ოთახის მითითებულ ვერსიაზე.",
     "Sun": "მზე",
     "Dec": "დეკ",
@@ -60,7 +52,11 @@
     },
     "auth": {
         "sso": "ერთჯერადი ავტორიზაცია",
-        "register_action": "ანგარიშის შექმნა"
+        "register_action": "ანგარიშის შექმნა",
+        "uia": {
+            "sso_title": "გასაგრძელებლად გამოიყენე ერთჯერადი ავტორიზაცია",
+            "sso_body": "ელ. ფოსტის მისამართის დასადასტურებლად გამოიყენე ერთჯერადი ავტორიზაცია, საკუთარი იდენტობის დასადასტურებლად."
+        }
     },
     "keyboard": {
         "dismiss_read_marker_and_jump_bottom": "გააუქმეთ წაკითხული მარკერი და გადადით ქვემოთ"
@@ -68,6 +64,16 @@
     "space": {
         "context_menu": {
             "explore": "ოთახების დათავლიერება"
+        }
+    },
+    "settings": {
+        "general": {
+            "identity_server_not_set": "იდენთიფიკაციის სერვერი არ არის განსაზღვრული",
+            "email_address_in_use": "ელ. ფოსტის ეს მისამართი დაკავებულია",
+            "msisdn_in_use": "ტელეფონის ეს ნომერი დაკავებულია",
+            "identity_server_no_token": "იდენთიფიკაციის წვდომის ტოკენი ვერ მოიძებნა",
+            "confirm_adding_email_title": "დაადასტურე ელ.ფოსტის დამატება",
+            "confirm_adding_email_body": "ელ. ფოსტის ამ მისამართის დამატება დაადასტურე ღილაკზე დაჭერით."
         }
     }
 }

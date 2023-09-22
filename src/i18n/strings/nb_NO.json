@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Denne e-postadressen er allerede i bruk",
-    "This phone number is already in use": "Dette mobilnummeret er allerede i bruk",
     "Failed to verify email address: make sure you clicked the link in the email": "Klarte ikke verifisere e-postadressen: dobbelsjekk at du trykket på lenken i e-posten",
     "Sunday": "Søndag",
     "Notification targets": "Mål for varsel",
@@ -370,7 +368,6 @@
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
-    "Confirm adding email": "Bekreft tillegging av E-postadresse",
     "Confirm adding phone number": "Bekreft tillegging av telefonnummer",
     "Setting up keys": "Setter opp nøkler",
     "New login. Was this you?": "En ny pålogging. Var det deg?",
@@ -517,8 +514,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
     "Invite people": "Inviter personer",
     "You do not have permission to invite people to this room.": "Du har ikke tilgang til å invitere personer til dette rommet.",
-    "Click the button below to confirm adding this email address.": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen.",
-    "Use Single Sign On to continue": "Bruk Single Sign On for å fortsette",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -563,7 +558,6 @@
     "The call could not be established": "Samtalen kunne ikke etableres",
     "Click the button below to confirm adding this phone number.": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Bekreft dette telefonnummeret ved å bruke Single Sign On for å bevise din identitet.",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Befrekt denne e-postadressen ved å bruke Single Sign On for å bevise din identitet.",
     "Recently visited rooms": "Nylig besøkte rom",
     "Edit devices": "Rediger enheter",
     "Add existing room": "Legg til et eksisterende rom",
@@ -1228,7 +1222,11 @@
         },
         "general": {
             "account_section": "Konto",
-            "language_section": "Språk og område"
+            "language_section": "Språk og område",
+            "email_address_in_use": "Denne e-postadressen er allerede i bruk",
+            "msisdn_in_use": "Dette mobilnummeret er allerede i bruk",
+            "confirm_adding_email_title": "Bekreft tillegging av E-postadresse",
+            "confirm_adding_email_body": "Klikk på knappen under for å bekrefte at du vil legge til denne e-postadressen."
         }
     },
     "devtools": {
@@ -1620,7 +1618,9 @@
             "msisdn_token_incorrect": "Sjetongen er feil",
             "msisdn": "En SMS har blitt sendt til %(msisdn)s",
             "msisdn_token_prompt": "Vennligst skriv inn koden den inneholder:",
-            "fallback_button": "Begynn autentisering"
+            "fallback_button": "Begynn autentisering",
+            "sso_title": "Bruk Single Sign On for å fortsette",
+            "sso_body": "Befrekt denne e-postadressen ved å bruke Single Sign On for å bevise din identitet."
         },
         "password_field_label": "Skriv inn passord",
         "password_field_strong_label": "Strålende, passordet er sterkt!",

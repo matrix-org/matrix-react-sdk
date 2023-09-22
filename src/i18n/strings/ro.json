@@ -1,6 +1,4 @@
 {
-    "This email address is already in use": "Această adresă de email este deja utilizată",
-    "This phone number is already in use": "Acest număr de telefon este deja utilizat",
     "Failed to verify email address: make sure you clicked the link in the email": "Adresa de e-mail nu a putut fi verificată: asigurați-vă că ați făcut click pe linkul din e-mail",
     "You cannot place a call with yourself.": "Nu poți apela cu tine însuți.",
     "Permission Required": "Permisul Obligatoriu",
@@ -51,10 +49,6 @@
     "Confirm adding phone number": "Confirmați adăugarea numărului de telefon",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Confirmați adăugarea acestui număr de telefon utilizând Single Sign On pentru a vă dovedi identitatea.",
     "Add Email Address": "Adăugați o adresă de e-mail",
-    "Click the button below to confirm adding this email address.": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestei adrese de e-mail.",
-    "Confirm adding email": "Confirmați adăugarea e-mailului",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmați adăugarea acestei adrese de e-mail utilizând Single Sign On pentru a vă dovedi identitatea.",
-    "Use Single Sign On to continue": "Utilizați Single Sign On pentru a continua",
     "common": {
         "analytics": "Analizarea",
         "error": "Eroare"
@@ -77,11 +71,23 @@
     },
     "auth": {
         "sso": "Single Sign On",
-        "register_action": "Înregistare"
+        "register_action": "Înregistare",
+        "uia": {
+            "sso_title": "Utilizați Single Sign On pentru a continua",
+            "sso_body": "Confirmați adăugarea acestei adrese de e-mail utilizând Single Sign On pentru a vă dovedi identitatea."
+        }
     },
     "space": {
         "context_menu": {
             "explore": "Explorează camerele"
+        }
+    },
+    "settings": {
+        "general": {
+            "email_address_in_use": "Această adresă de email este deja utilizată",
+            "msisdn_in_use": "Acest număr de telefon este deja utilizat",
+            "confirm_adding_email_title": "Confirmați adăugarea e-mailului",
+            "confirm_adding_email_body": "Faceți clic pe butonul de mai jos pentru a confirma adăugarea acestei adrese de e-mail."
         }
     }
 }

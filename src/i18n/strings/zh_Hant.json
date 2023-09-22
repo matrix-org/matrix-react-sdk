@@ -42,7 +42,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "伺服器可能無法使用、超載，或搜尋時間過長 :(",
     "Server may be unavailable, overloaded, or you hit a bug.": "伺服器可能無法使用、超載，或者您遇到了一個錯誤。",
     "Session ID": "工作階段 ID",
-    "This email address is already in use": "這個電子郵件地址已被使用",
     "This email address was not found": "未找到此電子郵件地址",
     "Unable to add email address": "無法新增電子郵件地址",
     "Unable to enable Notifications": "無法啟用通知功能",
@@ -90,7 +89,6 @@
     "This room has no local addresses": "此聊天室沒有本機位址",
     "This room is not recognised.": "無法識別此聊天室。",
     "This doesn't appear to be a valid email address": "不像是有效的電子郵件地址",
-    "This phone number is already in use": "這個電話號碼已被使用",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "嘗試載入此聊天室時間軸上的特定時間點，但您沒有權限檢視相關的訊息。",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "嘗試載入此聊天室時間軸上的特定時間點，但是找不到。",
     "Unable to remove contact information": "無法移除聯絡人資訊",
@@ -765,10 +763,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "在加密聊天室中，您的訊息相當安全，只有您與接收者有獨特的金鑰可以將其解鎖。",
     "Verify all users in a room to ensure it's secure.": "請驗證聊天室中的所有使用者來確保安全。",
     "Sign in with SSO": "使用 SSO 登入",
-    "Use Single Sign On to continue": "使用單一登入來繼續",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "使用單一登入來證明身分，以確認新增該電子郵件地址。",
-    "Confirm adding email": "確認新增電子郵件",
-    "Click the button below to confirm adding this email address.": "點擊下方按鈕以確認新增此電子郵件地址。",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "透過使用單一登入來證明您的身分，以確認新增此電話號碼。",
     "Confirm adding phone number": "確認新增電話號碼",
     "Click the button below to confirm adding this phone number.": "點擊下方按鈕以確認新增此電話號碼。",
@@ -2018,8 +2012,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
     "Formatting": "格式化",
     "The add / bind with MSISDN flow is misconfigured": "新增/綁定 MSISDN 流程設定錯誤",
-    "No identity access token found": "找不到身分存取權杖",
-    "Identity server not set": "身分伺服器未設定",
     "Image view": "影像檢視",
     "Upload custom sound": "上傳自訂音效",
     "Search all rooms": "搜尋所有聊天室",
@@ -2862,7 +2854,13 @@
             "oidc_manage_button": "管理帳號",
             "account_section": "帳號",
             "language_section": "語言與區域",
-            "spell_check_section": "拼字檢查"
+            "spell_check_section": "拼字檢查",
+            "identity_server_not_set": "身分伺服器未設定",
+            "email_address_in_use": "這個電子郵件地址已被使用",
+            "msisdn_in_use": "這個電話號碼已被使用",
+            "identity_server_no_token": "找不到身分存取權杖",
+            "confirm_adding_email_title": "確認新增電子郵件",
+            "confirm_adding_email_body": "點擊下方按鈕以確認新增此電子郵件地址。"
         }
     },
     "devtools": {
@@ -3791,7 +3789,9 @@
             "registration_token_prompt": "輸入由家伺服器管理員提供的註冊權杖。",
             "registration_token_label": "註冊權杖",
             "sso_failed": "確認您身分時出了一點問題。取消並再試一次。",
-            "fallback_button": "開始認證"
+            "fallback_button": "開始認證",
+            "sso_title": "使用單一登入來繼續",
+            "sso_body": "使用單一登入來證明身分，以確認新增該電子郵件地址。"
         },
         "password_field_label": "輸入密碼",
         "password_field_strong_label": "很好，密碼強度夠高！",
