@@ -64,7 +64,7 @@ const FacePile: FC<IProps> = ({
     );
 
     const content = (
-        <div className="mx_FacePile">
+        <div onClick={props.onClick} className="mx_FacePile">
             <AvatarStack>{pileContents}</AvatarStack>
             {children}
         </div>
