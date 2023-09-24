@@ -42,7 +42,7 @@ const FacePile: FC<IProps> = ({
 }) => {
     const faces = members.map(
         tooltipLabel
-            ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
+            ? (m) => <MemberAvatar key={m.userId} member={m} size={size} viewUserOnClick={viewUserOnClick} hideTitle />
             : (m) => (
                   <Tooltip key={m.userId} label={m.name} shortcut={tooltipShortcut}>
                       <MemberAvatar
