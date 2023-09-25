@@ -1253,7 +1253,6 @@
     "Recently viewed": "Visualizado recentemente",
     "Insert link": "Inserir link",
     "You do not have permission to start polls in this room.": "Você não tem permissão para iniciar enquetes nesta sala.",
-    "Share location": "Compartilhar localização",
     "Reply in thread": "Responder no tópico",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -2923,7 +2922,8 @@
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
-        "location_not_available": "Local não disponível"
+        "location_not_available": "Local não disponível",
+        "share_button": "Compartilhar localização"
     },
     "labs_mjolnir": {
         "room_name": "Minha lista de banidos",

@@ -1355,7 +1355,6 @@
     "Failed to end poll": "Beenden der Umfrage fehlgeschlagen",
     "The poll has ended. Top answer: %(topAnswer)s": "Umfrage beendet. Beliebteste Antwort: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
-    "Share location": "Standort teilen",
     "Based on %(count)s votes": {
         "one": "%(count)s Stimme abgegeben",
         "other": "%(count)s Stimmen abgegeben"
@@ -1425,8 +1424,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
     "Can't edit poll": "Umfrage kann nicht bearbeitet werden",
     "They won't be able to access whatever you're not an admin of.": "Die Person wird keinen Zutritt zu Bereichen haben, in denen du nicht administrierst.",
-    "Click to drop a pin": "Klicke, um den Standort zu setzen",
-    "Click to move the pin": "Klicke, um den Standort zu bewegen",
     "Click": "Klick",
     "Expand quotes": "Zitate ausklappen",
     "Collapse quotes": "Zitate einklappen",
@@ -1449,8 +1446,6 @@
         "one": "Entferne Nachrichten in %(count)s Raum",
         "other": "Entferne Nachrichten in %(count)s Räumen"
     },
-    "Share for %(duration)s": "Geteilt für %(duration)s",
-    "Live location sharing": "Echtzeit-Standortfreigabe",
     "View live location": "Echtzeit-Standort anzeigen",
     "Ban from room": "Bannen",
     "Unban from room": "Entbannen",
@@ -1503,7 +1498,6 @@
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
     "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
-    "Enable live location sharing": "Aktiviere Echtzeit-Standortfreigabe",
     "To view %(roomName)s, you need an invite": "Um %(roomName)s zu betrachten, benötigst du eine Einladung",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s wurde während des Betretens zurückgegeben. Wenn du denkst, dass diese Meldung nicht korrekt ist, <issueLink>reiche bitte einen Fehlerbericht ein</issueLink>.",
     "Private room": "Privater Raum",
@@ -1514,7 +1508,6 @@
         "one": "%(count)s Person beigetreten",
         "other": "%(count)s Personen beigetreten"
     },
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Bitte beachte: Dies ist eine experimentelle Funktion, die eine temporäre Implementierung nutzt. Das bedeutet, dass du deinen Standortverlauf nicht löschen kannst und erfahrene Nutzer ihn sehen können, selbst wenn du deinen Echtzeit-Standort nicht mehr mit diesem Raum teilst.",
     "Video room": "Videoraum",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Add new server…": "Neuen Server hinzufügen …",
@@ -3940,7 +3933,14 @@
         "failed_timeout": "Zeitüberschreitung beim Abrufen deines Standortes. Bitte versuche es später erneut.",
         "failed_unknown": "Beim Abruf deines Standortes ist ein unbekannter Fehler aufgetreten. Bitte versuche es später erneut.",
         "expand_map": "Karte vergrößern",
-        "failed_load_map": "Karte kann nicht geladen werden"
+        "failed_load_map": "Karte kann nicht geladen werden",
+        "live_enable_heading": "Echtzeit-Standortfreigabe",
+        "live_enable_description": "Bitte beachte: Dies ist eine experimentelle Funktion, die eine temporäre Implementierung nutzt. Das bedeutet, dass du deinen Standortverlauf nicht löschen kannst und erfahrene Nutzer ihn sehen können, selbst wenn du deinen Echtzeit-Standort nicht mehr mit diesem Raum teilst.",
+        "live_toggle_label": "Aktiviere Echtzeit-Standortfreigabe",
+        "live_share_button": "Geteilt für %(duration)s",
+        "click_move_pin": "Klicke, um den Standort zu bewegen",
+        "click_drop_pin": "Klicke, um den Standort zu setzen",
+        "share_button": "Standort teilen"
     },
     "labs_mjolnir": {
         "room_name": "Meine Bannliste",

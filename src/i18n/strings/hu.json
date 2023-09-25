@@ -1359,7 +1359,6 @@
         "other": "%(count)s leadott szavazat. Szavazzon az eredmény megtekintéséhez"
     },
     "No votes cast": "Nem adtak le szavazatot",
-    "Share location": "Tartózkodási hely megosztása",
     "Final result based on %(count)s votes": {
         "one": "Végeredmény %(count)s szavazat alapján",
         "other": "Végeredmény %(count)s szavazat alapján"
@@ -1431,8 +1430,6 @@
     "My current location": "Jelenlegi saját földrajzi helyzet",
     "%(brand)s could not send your location. Please try again later.": "Az %(brand)s nem tudja elküldeni a földrajzi helyzetét. Próbálja újra később.",
     "We couldn't send your location": "A földrajzi helyzetet nem sikerült elküldeni",
-    "Click to move the pin": "Kattintson a jelölő mozgatásához",
-    "Click to drop a pin": "Kattintson a hely megjelöléséhez",
     "Click": "Kattintson",
     "Expand quotes": "Idézetek megjelenítése",
     "Collapse quotes": "Idézetek összecsukása",
@@ -1451,7 +1448,6 @@
         "other": "%(count)s üzenetet készül törölni az alábbi felhasználótól: %(user)s. A művelet mindenki számára visszavonhatatlanul eltávolítja ezeket a beszélgetésekből. Biztos, hogy folytatja?"
     },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Használhatja a más szerver opciót, hogy egy másik matrix szerverre jelentkezz be amihez megadod a szerver url címét. Ezzel használhatja a(z) %(brand)s klienst egy már létező Matrix fiókkal egy másik matrix szerveren.",
-    "Share for %(duration)s": "Megosztás eddig: %(duration)s",
     "Disinvite from room": "Meghívó visszavonása a szobából",
     "Disinvite from space": "Meghívó visszavonása a térről",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "A meghívó ellenőrzésekor az alábbi hibát kaptuk: %(errcode)s. Ezt az információt megpróbálhatja eljuttatni a szoba gazdájának.",
@@ -1523,9 +1519,6 @@
     "Output devices": "Kimeneti eszközök",
     "Input devices": "Beviteli eszközök",
     "Open room": "Szoba megnyitása",
-    "Enable live location sharing": "Élő helymegosztás engedélyezése",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Figyelem: ez a labor lehetőség egy átmeneti megvalósítás. Ez azt jelenti, hogy a szobába már elküldött helyadatok az élő hely megosztás leállítása után is hozzáférhetők maradnak a szobában.",
-    "Live location sharing": "Élő földrajzi hely megosztása",
     "Joining…": "Belépés…",
     "Show Labs settings": "Labor beállítások megjelenítése",
     "To join, please enable video rooms in Labs first": "A belépéshez a Laborban be kell kapcsolni a videó szobákat",
@@ -3845,7 +3838,14 @@
         "failed_timeout": "Időtúllépés történt a földrajzi helyzetének lekérésekor. Próbálja újra később.",
         "failed_unknown": "Ismeretlen hiba a földrajzi helyzetének lekérésekor. Próbálja újra később.",
         "expand_map": "Térkép szétnyitása",
-        "failed_load_map": "A térkép betöltése sikertelen"
+        "failed_load_map": "A térkép betöltése sikertelen",
+        "live_enable_heading": "Élő földrajzi hely megosztása",
+        "live_enable_description": "Figyelem: ez a labor lehetőség egy átmeneti megvalósítás. Ez azt jelenti, hogy a szobába már elküldött helyadatok az élő hely megosztás leállítása után is hozzáférhetők maradnak a szobában.",
+        "live_toggle_label": "Élő helymegosztás engedélyezése",
+        "live_share_button": "Megosztás eddig: %(duration)s",
+        "click_move_pin": "Kattintson a jelölő mozgatásához",
+        "click_drop_pin": "Kattintson a hely megjelöléséhez",
+        "share_button": "Tartózkodási hely megosztása"
     },
     "labs_mjolnir": {
         "room_name": "Saját tiltólista",

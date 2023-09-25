@@ -1359,7 +1359,6 @@
         "other": "%(count)s stemmen uitgebracht. Stem om de resultaten te zien"
     },
     "No votes cast": "Geen stemmen uitgebracht",
-    "Share location": "Locatie delen",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Weet je zeker dat je de poll wil sluiten? Dit zal zichtbaar zijn in de einduitslag van de poll en personen kunnen dan niet langer stemmen.",
     "End Poll": "Poll sluiten",
     "Sorry, the poll did not end. Please try again.": "Helaas, de poll is niet gesloten. Probeer het opnieuw.",
@@ -1436,9 +1435,6 @@
     "%(displayName)s's live location": "De live locatie van %(displayName)s",
     "We couldn't send your location": "We kunnen jouw locatie niet versturen",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s kan jouw locatie niet versturen. Probeer het later opnieuw.",
-    "Click to drop a pin": "Klik om een pin neer te zetten",
-    "Click to move the pin": "Klik om de pin te verplaatsen",
-    "Share for %(duration)s": "Delen voor %(duration)s",
     "Results will be visible when the poll is ended": "Resultaten zijn zichtbaar wanneer de poll is afgelopen",
     "Sorry, you can't edit a poll after votes have been cast.": "Sorry, je kan een poll niet bewerken nadat er gestemd is.",
     "Can't edit poll": "Kan poll niet bewerken",
@@ -1510,9 +1506,6 @@
     },
     "Your password was successfully changed.": "Wachtwoord veranderen geslaagd.",
     "An error occurred while stopping your live location": "Er is een fout opgetreden bij het stoppen van je live locatie",
-    "Enable live location sharing": "Live locatie delen inschakelen",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Let op: dit is een labfunctie met een tijdelijke implementatie. Dit betekent dat je jouw locatiegeschiedenis niet kunt verwijderen en dat geavanceerde gebruikers jouw locatiegeschiedenis kunnen zien, zelfs nadat je stopt met het delen van uw live locatie met deze ruimte.",
-    "Live location sharing": "Live locatie delen",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is niet verzonden omdat deze server is geblokkeerd door de beheerder. Neem <a>contact op met je servicebeheerder</a> om de service te blijven gebruiken.",
     "Cameras": "Camera's",
     "Output devices": "Uitvoerapparaten",
@@ -3560,7 +3553,14 @@
         "failed_timeout": "Er is een time-out opgetreden bij het ophalen van jouw locatie. Probeer het later opnieuw.",
         "failed_unknown": "Onbekende fout bij ophalen van locatie. Probeer het later opnieuw.",
         "expand_map": "Map uitvouwen",
-        "failed_load_map": "Kan kaart niet laden"
+        "failed_load_map": "Kan kaart niet laden",
+        "live_enable_heading": "Live locatie delen",
+        "live_enable_description": "Let op: dit is een labfunctie met een tijdelijke implementatie. Dit betekent dat je jouw locatiegeschiedenis niet kunt verwijderen en dat geavanceerde gebruikers jouw locatiegeschiedenis kunnen zien, zelfs nadat je stopt met het delen van uw live locatie met deze ruimte.",
+        "live_toggle_label": "Live locatie delen inschakelen",
+        "live_share_button": "Delen voor %(duration)s",
+        "click_move_pin": "Klik om de pin te verplaatsen",
+        "click_drop_pin": "Klik om een pin neer te zetten",
+        "share_button": "Locatie delen"
     },
     "labs_mjolnir": {
         "room_name": "Mijn banlijst",

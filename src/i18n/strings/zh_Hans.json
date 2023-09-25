@@ -1359,7 +1359,6 @@
         "other": "票数已达 %(count)s 票。要查看结果请亲自投票"
     },
     "No votes cast": "尚无投票",
-    "Share location": "共享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。",
     "End Poll": "结束投票",
     "Sorry, the poll did not end. Please try again.": "抱歉，投票没有结束。 请再试一次。",
@@ -1458,8 +1457,6 @@
     "This address had invalid server or is already in use": "此地址的服务器无效或已被使用",
     "Missing room name or separator e.g. (my-room:domain.org)": "缺少房间名称或分隔符，例子（my-room:domain.org）",
     "Missing domain separator e.g. (:domain.org)": "缺少域分隔符，例子（:domain.org）",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "请注意：这是使用临时实现的实验室功能。这意味着你无法删除你的位置历史，并且甚至在你停止与此房间分享实时位置后，高级用户将仍能查看你的位置历史。",
-    "Live location sharing": "实时位置分享",
     "toggle event": "切换事件",
     "Results will be visible when the poll is ended": "结果将在投票结束时可见",
     "Sorry, you can't edit a poll after votes have been cast.": "抱歉，你无法在有人投票后编辑投票。",
@@ -1492,10 +1489,6 @@
     "%(displayName)s's live location": "%(displayName)s的实时位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s无法发送你的位置。请稍后再试。",
     "We couldn't send your location": "我们无法发送你的位置",
-    "Click to drop a pin": "点击以放置图钉",
-    "Click to move the pin": "点击以移动图钉",
-    "Share for %(duration)s": "分享%(duration)s",
-    "Enable live location sharing": "启用实时位置分享",
     "%(count)s Members": {
         "one": "%(count)s个成员",
         "other": "%(count)s个成员"
@@ -3538,7 +3531,14 @@
         "failed_timeout": "尝试获取你的位置超时。请之后再试。",
         "failed_unknown": "获取位置时发生错误。请之后再试。",
         "expand_map": "展开地图",
-        "failed_load_map": "无法加载地图"
+        "failed_load_map": "无法加载地图",
+        "live_enable_heading": "实时位置分享",
+        "live_enable_description": "请注意：这是使用临时实现的实验室功能。这意味着你无法删除你的位置历史，并且甚至在你停止与此房间分享实时位置后，高级用户将仍能查看你的位置历史。",
+        "live_toggle_label": "启用实时位置分享",
+        "live_share_button": "分享%(duration)s",
+        "click_move_pin": "点击以移动图钉",
+        "click_drop_pin": "点击以放置图钉",
+        "share_button": "共享位置"
     },
     "labs_mjolnir": {
         "room_name": "我的封禁列表",

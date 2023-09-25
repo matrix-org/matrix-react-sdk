@@ -1369,7 +1369,6 @@
         "one": "Rezultati përfundimtar, bazua në %(count)s votë",
         "other": "Rezultati përfundimtar, bazua në %(count)s vota"
     },
-    "Share location": "Jepe vendndodhjen",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
     "Other searches": "Kërkime të tjera",
@@ -1432,8 +1431,6 @@
     "Expand quotes": "Zgjeroji thonjëzat",
     "Collapse quotes": "Tkurri thonjëzat",
     "Drop a Pin": "Lini një Piketë",
-    "Click to drop a pin": "Klikoni që të lihet një piketë",
-    "Click to move the pin": "Klikoni që të lëvizet piketa",
     "Click": "Klikim",
     "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
@@ -1444,7 +1441,6 @@
         "other": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë për këdo te biseda. Doni të vazhdohet?",
         "one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
     },
-    "Share for %(duration)s": "Ndaje me të tjerë për %(duration)s",
     "Currently removing messages in %(count)s rooms": {
         "one": "Aktualisht po hiqen mesazhe në %(count)s dhomë",
         "other": "Aktualisht po hiqen mesazhe në %(count)s dhoma"
@@ -1557,9 +1553,6 @@
     "Choose a locale": "Zgjidhni vendore",
     "You need to have the right permissions in order to share locations in this room.": "Që të mund të jepni në këtë dhomë vendndodhje, lypset të keni lejet e duhura.",
     "You don't have permission to share locations": "S’keni leje të jepni vendndodhje",
-    "Enable live location sharing": "Aktivizo dhënie vendndodhjeje aty për aty",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Ju lutemi, kini parasysh: kjo është një veçori në zhvillim, që përdor një sendërtim të përkohshëm. Kjo do të thotë se s’do të jeni në gjendje të fshini historikun e vendndodhjeve tuaja dhe përdoruesit e përparuar do të jenë në gjendje të shohin historikun e vendndodhjeve tuaja edhe pasi të keni ndalur në këtë dhomë dhënien aty për aty të vendndodhjes tuaj.",
-    "Live location sharing": "Dhënie vendndodhjeje aty për aty",
     "Messages in this chat will be end-to-end encrypted.": "Mesazhet në këtë fjalosje do të jenë të fshehtëzuar skaj-më-skaj.",
     "To join, please enable video rooms in Labs first": "Për t’u bërë pjesë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
     "To view, please enable video rooms in Labs first": "Për të parë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
@@ -3834,7 +3827,14 @@
         "failed_timeout": "Mbaroi koha duke provuar të sillet vendndodhja juaj. Ju lutemi, riprovoni më vonë.",
         "failed_unknown": "Gabim i panjohur në sjelljen e vendndodhjes. Ju lutemi, riprovoni më vonë.",
         "expand_map": "Zgjeroje hartën",
-        "failed_load_map": "S’arrihet të ngarkohet hartë"
+        "failed_load_map": "S’arrihet të ngarkohet hartë",
+        "live_enable_heading": "Dhënie vendndodhjeje aty për aty",
+        "live_enable_description": "Ju lutemi, kini parasysh: kjo është një veçori në zhvillim, që përdor një sendërtim të përkohshëm. Kjo do të thotë se s’do të jeni në gjendje të fshini historikun e vendndodhjeve tuaja dhe përdoruesit e përparuar do të jenë në gjendje të shohin historikun e vendndodhjeve tuaja edhe pasi të keni ndalur në këtë dhomë dhënien aty për aty të vendndodhjes tuaj.",
+        "live_toggle_label": "Aktivizo dhënie vendndodhjeje aty për aty",
+        "live_share_button": "Ndaje me të tjerë për %(duration)s",
+        "click_move_pin": "Klikoni që të lëvizet piketa",
+        "click_drop_pin": "Klikoni që të lihet një piketë",
+        "share_button": "Jepe vendndodhjen"
     },
     "labs_mjolnir": {
         "room_name": "Lista Ime e Dëbimeve",

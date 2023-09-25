@@ -711,7 +711,6 @@
     "End Poll": "Pārtraukt aptauju",
     "Poll": "Aptauja",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Pievērsiet uzmanību: šī ir laboratorijas funkcija, kas izmanto pagaidu risinājumu. Tas nozīmē, ka jūs nevarēsiet dzēst savu atrašanās vietas vēsturi, un pieredzējušie lietotāji varēs redzēt jūsu atrašanās vietas vēsturi arī pēc tam, kad pārtrauksiet kopīgot savu reāllaika atrašanās vietu šajā istabā.",
     "You need to have the right permissions in order to share locations in this room.": "Jums ir jābūt pietiekāmām piekļuves tiesībām, lai kopīgotu atrašanās vietas šajā istabā.",
     "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
     "An error occurred while stopping your live location, please try again": "Notika kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu, lūdzu, mēģiniet vēlreiz",
@@ -722,9 +721,7 @@
     "You don't have permission to share locations": "Jums nav atļaujas kopīgot atrašanās vietu",
     "You are sharing your live location": "Jūs kopīgojat savu reāllaika atrašanās vietu",
     "We couldn't send your location": "Mēs nevarējām nosūtīt jūsu atrašanās vietu",
-    "Enable live location sharing": "Iespējot reāllaika atrašanās vietas kopīgošanu",
     "Could not fetch location": "Neizdevās iegūt atrašanās vietas datus",
-    "Live location sharing": "Reāllaika atrašanās vietas kopīgošana",
     "No live locations": "Reāllaika atrašanās vietas kopīgošana nenotiek",
     "Live location enabled": "Reāllaika atrašanās vietas kopīgošana iespējota",
     "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
@@ -733,7 +730,6 @@
     "%(displayName)s's live location": "%(displayName)s reāllaika atrašanās vieta",
     "My live location": "Mana reāllaika atrašanās vieta",
     "My current location": "Mana atrašanās vieta",
-    "Share location": "Kopīgot atrašanās vietu",
     "Location": "Atrašanās vieta",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Mēs nevarējām piekļūt jūsu mikrofonam. Lūdzu, pārbaudiet pārlūkprogrammas iestatījumus un mēģiniet vēlreiz.",
     "Unable to access your microphone": "Nevar piekļūt mikrofonam",
@@ -1900,7 +1896,11 @@
         "failed_timeout": "Neizdevās iegūt jūsu atrašanās vietu dēļ noilguma. Lūdzu, mēģiniet vēlreiz vēlāk.",
         "failed_unknown": "Nezināma kļūda, iegūstot atrašanās vietu. Lūdzu, mēģiniet vēlreiz vēlāk.",
         "expand_map": "Izvērst karti",
-        "failed_load_map": "Nevar ielādēt karti"
+        "failed_load_map": "Nevar ielādēt karti",
+        "live_enable_heading": "Reāllaika atrašanās vietas kopīgošana",
+        "live_enable_description": "Pievērsiet uzmanību: šī ir laboratorijas funkcija, kas izmanto pagaidu risinājumu. Tas nozīmē, ka jūs nevarēsiet dzēst savu atrašanās vietas vēsturi, un pieredzējušie lietotāji varēs redzēt jūsu atrašanās vietas vēsturi arī pēc tam, kad pārtrauksiet kopīgot savu reāllaika atrašanās vietu šajā istabā.",
+        "live_toggle_label": "Iespējot reāllaika atrašanās vietas kopīgošanu",
+        "share_button": "Kopīgot atrašanās vietu"
     },
     "create_space": {
         "explainer": "Vietas ir jauns veids, kā grupēt istabas un cilvēkus. Kādu vietu vēlaties izveidot? To var mainīt vēlāk.",

@@ -1342,7 +1342,6 @@
     "Start new chat": "Bắt đầu trò chuyện mới",
     "Recently viewed": "Được xem gần đây",
     "You do not have permission to start polls in this room.": "Bạn không có quyền để bắt đầu các cuộc thăm dò trong phòng này.",
-    "Share location": "Chia sẻ vị trí",
     "Reply in thread": "Trả lời theo chủ đề",
     "You won't get any notifications": "Bạn sẽ không nhận bất kỳ thông báo nào",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
@@ -3648,7 +3647,8 @@
         "failed_timeout": "Tìm vị trí của bạn mất quá lâu. Hãy thử lại sau.",
         "failed_unknown": "Lỗi không xác định khi tìm vị trí của bạn. Hãy thử lại sau.",
         "expand_map": "Mở rộng bản đồ",
-        "failed_load_map": "Không thể tải bản đồ"
+        "failed_load_map": "Không thể tải bản đồ",
+        "share_button": "Chia sẻ vị trí"
     },
     "labs_mjolnir": {
         "room_name": "Danh sách Cấm của tôi",

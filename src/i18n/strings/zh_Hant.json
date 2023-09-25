@@ -1359,7 +1359,6 @@
         "other": "已投 %(count)s 票。投票後即可檢視結果"
     },
     "No votes cast": "尚無投票",
-    "Share location": "分享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您確定您想要結束此投票？這將會顯示最終投票結果並阻止人們投票。",
     "End Poll": "結束投票",
     "Sorry, the poll did not end. Please try again.": "抱歉，投票沒有結束。請再試一次。",
@@ -1431,8 +1430,6 @@
     "My current location": "我目前的位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s 無法傳送您的位置。請稍後再試。",
     "We couldn't send your location": "我們無法傳送您的位置",
-    "Click to drop a pin": "點擊以放置圖釘",
-    "Click to move the pin": "點擊以移動圖釘",
     "Click": "點擊",
     "Expand quotes": "展開引號",
     "Collapse quotes": "收折引號",
@@ -1449,7 +1446,6 @@
         "one": "目前正在移除 %(count)s 個聊天室中的訊息",
         "other": "目前正在移除 %(count)s 個聊天室中的訊息"
     },
-    "Share for %(duration)s": "分享 %(duration)s",
     "Unsent": "未傳送",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "嘗試存取聊天室或聊天空間時發生錯誤 %(errcode)s。若您認為到這個訊息是個錯誤，請<issueLink>遞交錯誤回報</issueLink>。",
@@ -1510,9 +1506,6 @@
     },
     "Your password was successfully changed.": "您的密碼已成功變更。",
     "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
-    "Enable live location sharing": "啟用即時位置分享",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "請注意：這是暫時開發的實驗性功能。您無法刪除位置紀錄，而且即使您停止與此聊天室分享即時位置，進階使用者仍能看見您的定位紀錄。",
-    "Live location sharing": "即時位置分享",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
     "Open room": "開啟聊天室",
@@ -3935,7 +3928,14 @@
         "failed_timeout": "嘗試取得您的位置時逾時。請稍後再試。",
         "failed_unknown": "取得位置時發生未知錯誤。請稍後再試。",
         "expand_map": "展開地圖",
-        "failed_load_map": "無法載入地圖"
+        "failed_load_map": "無法載入地圖",
+        "live_enable_heading": "即時位置分享",
+        "live_enable_description": "請注意：這是暫時開發的實驗性功能。您無法刪除位置紀錄，而且即使您停止與此聊天室分享即時位置，進階使用者仍能看見您的定位紀錄。",
+        "live_toggle_label": "啟用即時位置分享",
+        "live_share_button": "分享 %(duration)s",
+        "click_move_pin": "點擊以移動圖釘",
+        "click_drop_pin": "點擊以放置圖釘",
+        "share_button": "分享位置"
     },
     "labs_mjolnir": {
         "room_name": "我的封鎖清單",

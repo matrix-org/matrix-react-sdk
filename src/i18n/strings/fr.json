@@ -1361,7 +1361,6 @@
     "Failed to end poll": "Impossible de terminer le sondage",
     "The poll has ended. Top answer: %(topAnswer)s": "Le sondage est terminé. Meilleure réponse : %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Le sondage est terminé. Aucun vote n’a été exprimé.",
-    "Share location": "Partager la position",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s vote exprimé. Votez pour voir les résultats",
         "other": "%(count)s votes exprimés. Votez pour voir les résultats"
@@ -1431,8 +1430,6 @@
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s n'a pas pu envoyer votre position. Veuillez réessayer plus tard.",
     "We couldn't send your location": "Nous n'avons pas pu envoyer votre position",
-    "Click to drop a pin": "Cliquer pour mettre un marqueur",
-    "Click to move the pin": "Cliquer pour déplacer le marqueur",
     "Click": "Clic",
     "Expand quotes": "Étendre les citations",
     "Collapse quotes": "Réduire les citations",
@@ -1447,7 +1444,6 @@
     },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Vous pouvez utiliser l’option de serveur personnalisé pour vous connecter à d'autres serveurs Matrix en spécifiant une URL de serveur d'accueil différente. Cela vous permet d’utiliser %(brand)s avec un compte Matrix existant sur un serveur d’accueil différent.",
     "%(displayName)s's live location": "Position en direct de %(displayName)s",
-    "Share for %(duration)s": "Partagé pendant %(duration)s",
     "Currently removing messages in %(count)s rooms": {
         "one": "Actuellement en train de supprimer les messages dans %(count)s salon",
         "other": "Actuellement en train de supprimer les messages dans %(count)s salons"
@@ -1516,9 +1512,6 @@
     "Output devices": "Périphériques de sortie",
     "Input devices": "Périphériques d’entrée",
     "Open room": "Ouvrir le salon",
-    "Enable live location sharing": "Activer le partage de position en continu",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Attention : c'est une fonctionnalité expérimentale qui utilise une implémentation temporaire. Cela implique que vous ne pourrez pas supprimer votre historique de positions, et les utilisateurs avancés pourront voir votre historique de positions même après avoir arrêter le partage de votre position en continu dans ce salon.",
-    "Live location sharing": "Partage de position en continu",
     "Show Labs settings": "Afficher les réglages des expérimentations",
     "To join, please enable video rooms in Labs first": "Pour rejoindre, veuillez d’abord activer les salons vision dans la section Expérimental",
     "To view, please enable video rooms in Labs first": "Pour afficher, veuillez d’abord activer les salons vision dans la section Expérimental",
@@ -3935,7 +3928,14 @@
         "failed_timeout": "Délai d’attente expiré en essayant de récupérer votre position. Veuillez réessayer plus tard.",
         "failed_unknown": "Erreur inconnue en récupérant votre position. Veuillez réessayer plus tard.",
         "expand_map": "Étendre la carte",
-        "failed_load_map": "Impossible de charger la carte"
+        "failed_load_map": "Impossible de charger la carte",
+        "live_enable_heading": "Partage de position en continu",
+        "live_enable_description": "Attention : c'est une fonctionnalité expérimentale qui utilise une implémentation temporaire. Cela implique que vous ne pourrez pas supprimer votre historique de positions, et les utilisateurs avancés pourront voir votre historique de positions même après avoir arrêter le partage de votre position en continu dans ce salon.",
+        "live_toggle_label": "Activer le partage de position en continu",
+        "live_share_button": "Partagé pendant %(duration)s",
+        "click_move_pin": "Cliquer pour déplacer le marqueur",
+        "click_drop_pin": "Cliquer pour mettre un marqueur",
+        "share_button": "Partager la position"
     },
     "labs_mjolnir": {
         "room_name": "Ma liste de bannissement",

@@ -1366,7 +1366,6 @@
     "Add people": "Añadir gente",
     "Invite to space": "Invitar al espacio",
     "Start new chat": "Crear conversación",
-    "Share location": "Compartir ubicación",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala no está conectada con ninguna otra plataforma de mensajería. <a>Más información.</a>",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
@@ -1433,8 +1432,6 @@
     "Open thread": "Abrir hilo",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
-    "Click to drop a pin": "Haz clic para colocar un marcador",
-    "Click to move the pin": "Haz clic para mover el marcador",
     "Click": "Clic",
     "Expand quotes": "Expandir citas",
     "Collapse quotes": "Plegar citas",
@@ -1445,7 +1442,6 @@
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
     "Preserve system messages": "Mantener mensajes del sistema",
     "%(displayName)s's live location": "Ubicación en tiempo real de %(displayName)s",
-    "Share for %(duration)s": "Compartir durante %(duration)s",
     "Currently removing messages in %(count)s rooms": {
         "one": "Borrando mensajes en %(count)s sala",
         "other": "Borrando mensajes en %(count)s salas"
@@ -1496,9 +1492,6 @@
     "You will not be able to reactivate your account": "No podrás reactivarla",
     "Confirm that you would like to deactivate your account. If you proceed:": "Confirma que quieres desactivar tu cuenta. Si continúas:",
     "To continue, please enter your account password:": "Para continuar, escribe la contraseña de tu cuenta:",
-    "Enable live location sharing": "Activar compartir ubicación en tiempo real",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Nota: esta funcionalidad es un experimento, y su funcionamiento es todavía provisional. Esto significa que no podrás eliminar el historial de tu ubicación, y usuarios con conocimientos avanzados podrán verlo en esta sala incluso cuando dejes de compartir en tiempo real.",
-    "Live location sharing": "Compartir ubicación en tiempo real",
     "This invite was sent to %(email)s which is not associated with your account": "Esta invitación se envió originalmente a %(email)s, que no está asociada a tu cuenta",
     "This invite was sent to %(email)s": "Esta invitación se envió a %(email)s",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Ha ocurrido un error (%(errcode)s) al validar tu invitación. Puedes intentar a pasarle esta información a la persona que te ha invitado.",
@@ -3750,7 +3743,14 @@
         "failed_timeout": "Tras un tiempo intentándolo, no hemos podido obtener tu ubicación. Por favor, inténtalo de nuevo más tarde.",
         "failed_unknown": "Error desconocido al conseguir tu ubicación. Por favor, inténtalo de nuevo más tarde.",
         "expand_map": "Expandir mapa",
-        "failed_load_map": "No se ha podido cargar el mapa"
+        "failed_load_map": "No se ha podido cargar el mapa",
+        "live_enable_heading": "Compartir ubicación en tiempo real",
+        "live_enable_description": "Nota: esta funcionalidad es un experimento, y su funcionamiento es todavía provisional. Esto significa que no podrás eliminar el historial de tu ubicación, y usuarios con conocimientos avanzados podrán verlo en esta sala incluso cuando dejes de compartir en tiempo real.",
+        "live_toggle_label": "Activar compartir ubicación en tiempo real",
+        "live_share_button": "Compartir durante %(duration)s",
+        "click_move_pin": "Haz clic para mover el marcador",
+        "click_drop_pin": "Haz clic para colocar un marcador",
+        "share_button": "Compartir ubicación"
     },
     "labs_mjolnir": {
         "room_name": "Mi lista de baneos",

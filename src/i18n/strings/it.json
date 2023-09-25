@@ -1359,7 +1359,6 @@
     },
     "No votes cast": "Nessun voto",
     "Recently viewed": "Visti di recente",
-    "Share location": "Condividi posizione",
     "End Poll": "Termina sondaggio",
     "Sorry, the poll did not end. Please try again.": "Spiacenti, il sondaggio non è terminato. Riprova.",
     "Failed to end poll": "Chiusura del sondaggio fallita",
@@ -1431,8 +1430,6 @@
     "Pinned": "Fissato",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
     "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione",
-    "Click to drop a pin": "Clicca per lasciare una puntina",
-    "Click to move the pin": "Clicca per spostare la puntina",
     "Click": "Click",
     "Expand quotes": "Espandi le citazioni",
     "Collapse quotes": "Riduci le citazioni",
@@ -1445,7 +1442,6 @@
         "other": "Stai per rimuovere %(count)s messaggi di %(user)s. Verranno rimossi permanentemente per chiunque nella conversazione. Vuoi continuare?"
     },
     "%(displayName)s's live location": "Posizione in tempo reale di %(displayName)s",
-    "Share for %(duration)s": "Condividi per %(duration)s",
     "Currently removing messages in %(count)s rooms": {
         "one": "Rimozione di messaggi in corso in %(count)s stanza",
         "other": "Rimozione di messaggi in corso in %(count)s stanze"
@@ -1510,9 +1506,6 @@
     },
     "Your password was successfully changed.": "La tua password è stata cambiata correttamente.",
     "An error occurred while stopping your live location": "Si è verificato un errore fermando la tua posizione in tempo reale",
-    "Enable live location sharing": "Attiva condivisione posizione in tempo reale",
-    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Nota: si tratta di una funzionalità sperimentale che usa un'implementazione temporanea. Ciò significa che non potrai eliminare la cronologia delle posizioni e gli utenti avanzati potranno vederla anche dopo l'interruzione della tua condivisione con questa stanza.",
-    "Live location sharing": "Condivisione posizione in tempo reale",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e altri",
     "Open room": "Apri stanza",
@@ -3940,7 +3933,14 @@
         "failed_timeout": "Tentativo di rilevare la tua posizione scaduto. Riprova più tardi.",
         "failed_unknown": "Errore sconosciuto rilevando la posizione. Riprova più tardi.",
         "expand_map": "Espandi mappa",
-        "failed_load_map": "Impossibile caricare la mappa"
+        "failed_load_map": "Impossibile caricare la mappa",
+        "live_enable_heading": "Condivisione posizione in tempo reale",
+        "live_enable_description": "Nota: si tratta di una funzionalità sperimentale che usa un'implementazione temporanea. Ciò significa che non potrai eliminare la cronologia delle posizioni e gli utenti avanzati potranno vederla anche dopo l'interruzione della tua condivisione con questa stanza.",
+        "live_toggle_label": "Attiva condivisione posizione in tempo reale",
+        "live_share_button": "Condividi per %(duration)s",
+        "click_move_pin": "Clicca per spostare la puntina",
+        "click_drop_pin": "Clicca per lasciare una puntina",
+        "share_button": "Condividi posizione"
     },
     "labs_mjolnir": {
         "room_name": "Mia lista ban",

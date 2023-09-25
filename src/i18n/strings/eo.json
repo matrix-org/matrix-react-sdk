@@ -1291,7 +1291,6 @@
     "My current location": "Mia nuna loko",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
     "We couldn't send your location": "Ni ne povis sendi vian lokon",
-    "Share location": "Kunhavigi lokon",
     "Could not fetch location": "Loko ne eblis akiri",
     "Location": "Loko",
     "Confirm new password": "Konfirmu novan pasvorton",
@@ -2955,7 +2954,8 @@
         "mapbox_logo": "Mapbox-emblemo",
         "reset_bearing": "Restarigu la lagron norden",
         "failed_generic": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
-        "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste."
+        "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste.",
+        "share_button": "Kunhavigi lokon"
     },
     "labs_mjolnir": {
         "room_name": "Mia listo de forbaroj",

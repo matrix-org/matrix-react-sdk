@@ -1279,7 +1279,6 @@
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
-    "Share location": "Jaa sijainti",
     "Could not fetch location": "Sijaintia ei voitu noutaa",
     "Results will be visible when the poll is ended": "Tulokset näkyvät, kun kysely on päättynyt",
     "Sorry, you can't edit a poll after votes have been cast.": "Et voi muokata kyselyä äänestyksen jälkeen.",
@@ -1504,8 +1503,6 @@
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "Sign in new device": "Kirjaa sisään uusi laite",
     "Drop a Pin": "Sijoita karttaneula",
-    "Click to drop a pin": "Napsauta sijoittaaksesi karttaneulan",
-    "Click to move the pin": "Napsauta siirtääksesi karttaneulaa",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
     "Send email": "Lähetä sähköpostia",
     "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
@@ -3546,7 +3543,10 @@
         "failed_timeout": "Sijaintisi noutaminen aikakatkaistiin. Yritä myöhemmin uudelleen.",
         "failed_unknown": "Tuntematon virhe sijaintia noudettaessa. Yritä myöhemmin uudelleen.",
         "expand_map": "Laajenna kartta",
-        "failed_load_map": "Kartan lataaminen ei onnistu"
+        "failed_load_map": "Kartan lataaminen ei onnistu",
+        "click_move_pin": "Napsauta siirtääksesi karttaneulaa",
+        "click_drop_pin": "Napsauta sijoittaaksesi karttaneulan",
+        "share_button": "Jaa sijainti"
     },
     "labs_mjolnir": {
         "room_name": "Tekemäni estot",
