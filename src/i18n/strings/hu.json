@@ -48,7 +48,6 @@
     "Moderator": "Moderátor",
     "New passwords must match each other.": "Az új jelszavaknak meg kell egyezniük egymással.",
     "not specified": "nincs meghatározva",
-    "<not supported>": "<nem támogatott>",
     "No display name": "Nincs megjelenítendő név",
     "No more results": "Nincs több találat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
@@ -571,12 +570,9 @@
     "Enter your account password to confirm the upgrade:": "A fejlesztés megerősítéséhez add meg a fiók jelszavadat:",
     "You'll need to authenticate with the server to confirm the upgrade.": "A fejlesztés megerősítéséhez újból hitelesítenie kell a kiszolgálóval.",
     "Upgrade your encryption": "Titkosításod fejlesztése",
-    "Securely cache encrypted messages locally for them to appear in search results.": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "A titkosított üzenetek biztonságos helyi tárolásához hiányzik néhány összetevő a(z) %(brand)s alkalmazásból. Ha kísérletezni szeretne ezzel a funkcióval, akkor állítson össze egy egyéni asztali %(brand)s alkalmazást, amely <nativeLink>tartalmazza a keresési összetevőket</nativeLink>.",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ez a szoba áthidalja az üzeneteket a felsorolt platformok felé. <a>Tudjon meg többet.</a>",
     "Bridges": "Hidak",
     "Restore your key backup to upgrade your encryption": "A titkosítás fejlesztéséhez allítsd vissza a kulcs mentést",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "A fiókjához tartozik egy eszközök közti hitelesítési identitás, de ez a munkamenet még nem jelölte megbízhatónak.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ez az munkamenet <b>nem menti el a kulcsait</b>, de van létező mentése, amelyből helyre tudja állítani, és amelyhez hozzá tudja adni a továbbiakban.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Csatlakoztassa ezt a munkamenetet a kulcsmentéshez kijelentkezés előtt, hogy ne veszítsen el olyan kulcsot, amely lehet, hogy csak ezen az eszközön van meg.",
     "Connect this session to Key Backup": "Munkamenet csatlakoztatása a kulcsmentéshez",
@@ -625,7 +621,6 @@
     "Clear cross-signing keys": "Eszközök közti hitelesítési kulcsok törlése",
     "You declined": "Elutasítottad",
     "%(name)s declined": "%(name)s elutasította",
-    "Your homeserver does not support cross-signing.": "A Matrix-kiszolgálója nem támogatja az eszközök közti hitelesítést.",
     "Accepting…": "Elfogadás…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
     "Mark all as read": "Összes megjelölése olvasottként",
@@ -642,7 +637,6 @@
     "Can't find this server or its room list": "A szerver vagy a szoba listája nem található",
     "Your server": "Matrix szervered",
     "Add a new server": "Új szerver hozzáadása",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "A felhasználó által használt munkamenetek ellenőrzése egyenként, nem bízva az eszközök közti aláírással rendelkező eszközökben.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Állíts be címet ehhez a szobához, hogy a felhasználók a matrix szervereden megtalálhassák (%(localDomain)s)",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "A titkosított szobákban az üzenete biztonságban van, és csak Ön és a címzettek rendelkeznek a visszafejtéshez szükséges egyedi kulcsokkal.",
     "Verify all users in a room to ensure it's secure.": "Ellenőrizze a szoba összes tagját, hogy meggyőződjön a biztonságáról.",
@@ -730,7 +724,6 @@
     "Favourited": "Kedvencnek jelölt",
     "Forget Room": "Szoba elfelejtése",
     "This room is public": "Ez egy nyilvános szoba",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
     "Edited at %(date)s": "Szerkesztve ekkor: %(date)s",
     "Click to view edits": "A szerkesztések megtekintéséhez kattints",
     "You're all caught up.": "Mindennel naprakész.",
@@ -751,8 +744,6 @@
     "Not encrypted": "Nem titkosított",
     "Room settings": "Szoba beállítások",
     "Take a picture": "Fénykép készítése",
-    "Cross-signing is ready for use.": "Az eszközök közti hitelesítés használatra kész.",
-    "Cross-signing is not set up.": "Az eszközök közti hitelesítés nincs beállítva.",
     "Backup version:": "Mentés verziója:",
     "Algorithm:": "Algoritmus:",
     "Backup key stored:": "Tárolt mentési kulcs:",
@@ -1049,10 +1040,6 @@
     "Reason (optional)": "Ok (opcionális)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
     "Server Options": "Szerver lehetőségek",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez.",
-        "other": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez."
-    },
     "Transfer": "Átadás",
     "A call can only be transferred to a single user.": "Csak egy felhasználónak lehet átadni a hívást.",
     "Open dial pad": "Számlap megnyitása",
@@ -1174,7 +1161,6 @@
     "Connecting": "Kapcsolódás",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "Add reaction": "Reakció hozzáadása",
-    "Message search initialisation failed": "Az üzenetkeresés előkészítése sikertelen",
     "Search names and descriptions": "Nevek és leírások keresése",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Currently joining %(count)s rooms": {
@@ -1300,7 +1286,6 @@
     "Send voice message": "Hang üzenet küldése",
     "Unknown failure: %(reason)s": "Ismeretlen hiba: %(reason)s",
     "No answer": "Nincs válasz",
-    "Cross-signing is ready but keys are not backed up.": "Az eszközök közti hitelesítés készen áll, de a kulcsokról nincs biztonsági mentés.",
     "Rooms and spaces": "Szobák és terek",
     "Results": "Eredmények",
     "Some encryption parameters have been changed.": "Néhány titkosítási paraméter megváltozott.",
@@ -1882,7 +1867,8 @@
         "all_rooms": "Összes szoba",
         "deselect_all": "Semmit nem jelöl ki",
         "select_all": "Mindet kijelöli",
-        "copied": "Másolva!"
+        "copied": "Másolva!",
+        "Advanced": "Speciális"
     },
     "action": {
         "continue": "Folytatás",
@@ -2435,7 +2421,16 @@
             "bulk_options_accept_all_invites": "Mind a(z) %(invitedRooms)s meghívó elfogadása",
             "bulk_options_reject_all_invites": "Mind a(z) %(invitedRooms)s meghívó elutasítása",
             "message_search_section": "Üzenet keresése",
-            "analytics_subsection_description": "Anonimizált adatok megosztása a problémák feltárásához. Semmi személyes. Nincs harmadik fél."
+            "analytics_subsection_description": "Anonimizált adatok megosztása a problémák feltárásához. Semmi személyes. Nincs harmadik fél.",
+            "encryption_individual_verification_mode": "A felhasználó által használt munkamenetek ellenőrzése egyenként, nem bízva az eszközök közti aláírással rendelkező eszközökben.",
+            "message_search_enabled": {
+                "one": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez.",
+                "other": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között, ehhez %(size)s helyet használ %(rooms)s szoba üzeneteihez."
+            },
+            "message_search_disabled": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között.",
+            "message_search_unsupported": "A titkosított üzenetek biztonságos helyi tárolásához hiányzik néhány összetevő a(z) %(brand)s alkalmazásból. Ha kísérletezni szeretne ezzel a funkcióval, akkor állítson össze egy egyéni asztali %(brand)s alkalmazást, amely <nativeLink>tartalmazza a keresési összetevőket</nativeLink>.",
+            "message_search_unsupported_web": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
+            "message_search_failed": "Az üzenetkeresés előkészítése sikertelen"
         },
         "preferences": {
             "room_list_heading": "Szobalista",
@@ -3278,7 +3273,6 @@
         "more_button": "Több"
     },
     "Other": "Egyéb",
-    "Advanced": "Speciális",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Tér profilképének megváltoztatása",
@@ -3417,7 +3411,13 @@
         "upgrade_toast_title": "A titkosítási fejlesztés elérhető",
         "verify_toast_title": "Munkamenet ellenőrzése",
         "set_up_toast_description": "Biztosíték a titkosított üzenetekhez és adatokhoz való hozzáférés elvesztése ellen",
-        "verify_toast_description": "Más felhasználók lehet, hogy nem bíznak benne"
+        "verify_toast_description": "Más felhasználók lehet, hogy nem bíznak benne",
+        "cross_signing_unsupported": "A Matrix-kiszolgálója nem támogatja az eszközök közti hitelesítést.",
+        "cross_signing_ready": "Az eszközök közti hitelesítés használatra kész.",
+        "cross_signing_ready_no_backup": "Az eszközök közti hitelesítés készen áll, de a kulcsokról nincs biztonsági mentés.",
+        "cross_signing_untrusted": "A fiókjához tartozik egy eszközök közti hitelesítési identitás, de ez a munkamenet még nem jelölte megbízhatónak.",
+        "cross_signing_not_ready": "Az eszközök közti hitelesítés nincs beállítva.",
+        "not_supported": "<nem támogatott>"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",

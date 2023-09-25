@@ -49,7 +49,6 @@
     "Moderator": "조정자",
     "New passwords must match each other.": "새 비밀번호는 서로 같아야 합니다.",
     "not specified": "지정되지 않음",
-    "<not supported>": "<지원하지 않음>",
     "No display name": "표시 이름 없음",
     "No more results": "더 이상 결과 없음",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "이메일을 확인하고 안의 링크를 클릭합니다. 모두 마치고 나서, 계속하기를 누르세요.",
@@ -681,7 +680,8 @@
         "on": "켜기",
         "off": "끄기",
         "all_rooms": "모든 방 목록",
-        "copied": "복사했습니다!"
+        "copied": "복사했습니다!",
+        "Advanced": "고급"
     },
     "action": {
         "continue": "계속하기",
@@ -1185,7 +1185,6 @@
         "no_media_perms_description": "수동으로 %(brand)s에 마이크와 카메라를 허용해야 함"
     },
     "Other": "기타",
-    "Advanced": "고급",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "방 아바타 변경",
@@ -1269,7 +1268,8 @@
         "import_invalid_keyfile": "올바른 %(brand)s 열쇠 파일이 아닙니다",
         "import_invalid_passphrase": "인증 확인 실패: 비밀번호를 틀리셨나요?",
         "upgrade_toast_title": "암호화 업그레이드 가능",
-        "verify_toast_title": "이 세션 검증"
+        "verify_toast_title": "이 세션 검증",
+        "not_supported": "<지원하지 않음>"
     },
     "emoji": {
         "category_frequently_used": "자주 사용함",

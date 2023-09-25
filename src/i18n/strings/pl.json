@@ -71,7 +71,6 @@
     "Moderator": "Moderator",
     "New passwords must match each other.": "Nowe hasła muszą się zgadzać.",
     "not specified": "nieokreślony",
-    "<not supported>": "<niewspierany>",
     "AM": "AM",
     "PM": "PM",
     "No display name": "Brak nazwy ekranowej",
@@ -901,7 +900,6 @@
         "other": "i %(count)s więcej"
     },
     "Upgrade required": "Aktualizacja wymagana",
-    "Message search initialisation failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
@@ -957,12 +955,6 @@
     "Copy room link": "Kopiuj link do pokoju",
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Indywidualnie weryfikuj każdą sesję używaną przez użytkownika, aby oznaczyć ją jako zaufaną, nie ufając urządzeniom weryfikowanym krzyżowo.",
-    "Cross-signing is not set up.": "Weryfikacja krzyżowa nie jest ustawiona.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Twoje konto ma tożsamość weryfikacji krzyżowej w sekretnej pamięci, ale nie jest jeszcze zaufane przez tę sesję.",
-    "Cross-signing is ready but keys are not backed up.": "Weryfikacja krzyżowa jest gotowa, ale klucze nie mają kopii zapasowej.",
-    "Cross-signing is ready for use.": "Weryfikacja krzyżowa jest gotowa do użycia.",
-    "Your homeserver does not support cross-signing.": "Twój serwer domowy nie obsługuje weryfikacji krzyżowej.",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Usunięcie kluczy weryfikacji krzyżowej jest trwałe. Każdy, z kim dokonano weryfikacji, zobaczy alerty bezpieczeństwa. Prawie na pewno nie chcesz tego robić, chyba że straciłeś każde urządzenie, z którego możesz weryfikować.",
     "Destroy cross-signing keys?": "Zniszczyć klucze weryfikacji krzyżowej?",
@@ -1033,13 +1025,6 @@
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",
     "Mark all as read": "Oznacz wszystko jako przeczytane",
     "Connecting to integration manager…": "Łączenie z menedżerem integracji…",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nie jest w stanie bezpiecznie przechowywać wiadomości szyfrowanych lokalnie, gdy działa w przeglądarce. Użyj <desktopLink> Desktop</desktopLink>, aby wiadomości pojawiły się w wynikach wyszukiwania.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s brakuje niektórych komponentów wymaganych do bezpiecznego przechowywania wiadomości szyfrowanych lokalnie. Jeśli chcesz eksperymentować z tą funkcją, zbuduj własny %(brand)s Desktop z <nativeLink> dodanymi komponentami wyszukiwania</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania. Zostanie użyte %(size)s do przechowywania wiadomości z %(rooms)s pokoju.",
-        "other": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania. Zostanie użyte %(size)s do przechowywania wiadomości z %(rooms)s pokoi."
-    },
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Home options": "Opcje głównej",
@@ -1923,7 +1908,8 @@
         "all_rooms": "Wszystkie pokoje",
         "deselect_all": "Odznacz wszystkie",
         "select_all": "Zaznacz wszystkie",
-        "copied": "Skopiowano!"
+        "copied": "Skopiowano!",
+        "Advanced": "Zaawansowane"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2487,7 +2473,16 @@
             "bulk_options_accept_all_invites": "Zaakceptuj wszystkie zaproszenia do %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
             "message_search_section": "Wyszukiwanie wiadomości",
-            "analytics_subsection_description": "Udostępnij anonimowe dane, aby wesprzeć nas w identyfikowaniu problemów. Nic osobistego. Żadnych podmiotów zewnętrznych."
+            "analytics_subsection_description": "Udostępnij anonimowe dane, aby wesprzeć nas w identyfikowaniu problemów. Nic osobistego. Żadnych podmiotów zewnętrznych.",
+            "encryption_individual_verification_mode": "Indywidualnie weryfikuj każdą sesję używaną przez użytkownika, aby oznaczyć ją jako zaufaną, nie ufając urządzeniom weryfikowanym krzyżowo.",
+            "message_search_enabled": {
+                "one": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania. Zostanie użyte %(size)s do przechowywania wiadomości z %(rooms)s pokoju.",
+                "other": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania. Zostanie użyte %(size)s do przechowywania wiadomości z %(rooms)s pokoi."
+            },
+            "message_search_disabled": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania.",
+            "message_search_unsupported": "%(brand)s brakuje niektórych komponentów wymaganych do bezpiecznego przechowywania wiadomości szyfrowanych lokalnie. Jeśli chcesz eksperymentować z tą funkcją, zbuduj własny %(brand)s Desktop z <nativeLink> dodanymi komponentami wyszukiwania</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s nie jest w stanie bezpiecznie przechowywać wiadomości szyfrowanych lokalnie, gdy działa w przeglądarce. Użyj <desktopLink> Desktop</desktopLink>, aby wiadomości pojawiły się w wynikach wyszukiwania.",
+            "message_search_failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się"
         },
         "preferences": {
             "room_list_heading": "Lista pokojów",
@@ -3351,7 +3346,6 @@
         "more_button": "Więcej"
     },
     "Other": "Inne",
-    "Advanced": "Zaawansowane",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Zmień awatar przestrzeni",
@@ -3491,7 +3485,13 @@
         "upgrade_toast_title": "Dostępne ulepszenie szyfrowania",
         "verify_toast_title": "Zweryfikuj tę sesję",
         "set_up_toast_description": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych",
-        "verify_toast_description": "Inni użytkownicy mogą temu nie ufać"
+        "verify_toast_description": "Inni użytkownicy mogą temu nie ufać",
+        "cross_signing_unsupported": "Twój serwer domowy nie obsługuje weryfikacji krzyżowej.",
+        "cross_signing_ready": "Weryfikacja krzyżowa jest gotowa do użycia.",
+        "cross_signing_ready_no_backup": "Weryfikacja krzyżowa jest gotowa, ale klucze nie mają kopii zapasowej.",
+        "cross_signing_untrusted": "Twoje konto ma tożsamość weryfikacji krzyżowej w sekretnej pamięci, ale nie jest jeszcze zaufane przez tę sesję.",
+        "cross_signing_not_ready": "Weryfikacja krzyżowa nie jest ustawiona.",
+        "not_supported": "<niewspierany>"
     },
     "emoji": {
         "category_frequently_used": "Często używane",

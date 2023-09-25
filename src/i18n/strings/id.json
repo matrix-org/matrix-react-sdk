@@ -13,7 +13,6 @@
     "Invalid Email Address": "Alamat Email Tidak Absah",
     "Invited": "Diundang",
     "Low priority": "Prioritas rendah",
-    "<not supported>": "<tidak didukung>",
     "Profile": "Profil",
     "Reason": "Alasan",
     "Return to login screen": "Kembali ke halaman masuk",
@@ -582,21 +581,7 @@
     "Upgrade required": "Peningkatan diperlukan",
     "The integration manager is offline or it cannot reach your homeserver.": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda.",
     "Cannot connect to integration manager": "Tidak dapat menghubungkan ke manajer integrasi",
-    "Message search initialisation failed": "Inisialisasi pencarian pesan gagal",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s tidak dapat menyimpan pesan terenkripsi secara lokal dengan aman saat dijalankan di browser. Gunakan <desktopLink>%(brand)s Desktop</desktopLink> supaya pesan terenkripsi dapat muncul di hasil pencarian.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s tidak memiliki beberapa komponen yang diperlukan untuk menyimpan pesan terenkripsi secara lokal dengan aman. Jika Anda ingin bereksperimen dengan fitur ini, buat %(brand)s Desktop yang khusus dengan <nativeLink>tambahan komponen penelusuran</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian, menggunakan %(size)s untuk menyimpan pesan dari %(rooms)s ruangan.",
-        "other": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian, menggunakan %(size)s untuk menyimpan pesan dari %(rooms)s ruangan."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifikasi setiap sesi yang digunakan oleh pengguna satu per satu untuk menandainya sebagai tepercaya, dan tidak memercayai perangkat yang ditandatangani silang.",
     "Failed to set display name": "Gagal untuk menetapkan nama tampilan",
-    "Cross-signing is not set up.": "Penandatanganan silang belum disiapkan.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Akun Anda mempunyai identitas penandatanganan silang di penyimpanan rahasia, tetapi belum dipercayai oleh sesi ini.",
-    "Cross-signing is ready but keys are not backed up.": "Penandatanganan silang telah siap tetapi kunci belum dicadangkan.",
-    "Cross-signing is ready for use.": "Penandatanganan silang siap digunakan.",
-    "Your homeserver does not support cross-signing.": "Homeserver Anda tidak mendukung penandatanganan silang.",
     "No display name": "Tidak ada nama tampilan",
     "Space options": "Opsi space",
     "Jump to first invite.": "Pergi ke undangan pertama.",
@@ -1938,7 +1923,8 @@
         "all_rooms": "Semua ruangan",
         "deselect_all": "Batalkan semua pilihan",
         "select_all": "Pilih semua",
-        "copied": "Disalin!"
+        "copied": "Disalin!",
+        "Advanced": "Tingkat Lanjut"
     },
     "action": {
         "continue": "Lanjut",
@@ -2503,7 +2489,16 @@
             "bulk_options_accept_all_invites": "Terima semua %(invitedRooms)s undangan",
             "bulk_options_reject_all_invites": "Tolak semua %(invitedRooms)s undangan",
             "message_search_section": "Pencarian pesan",
-            "analytics_subsection_description": "Bagikan data anonim untuk membantu kami mengidentifikasi masalah-masalah. Tidak ada yang pribadi. Tidak ada pihak ketiga."
+            "analytics_subsection_description": "Bagikan data anonim untuk membantu kami mengidentifikasi masalah-masalah. Tidak ada yang pribadi. Tidak ada pihak ketiga.",
+            "encryption_individual_verification_mode": "Verifikasi setiap sesi yang digunakan oleh pengguna satu per satu untuk menandainya sebagai tepercaya, dan tidak memercayai perangkat yang ditandatangani silang.",
+            "message_search_enabled": {
+                "one": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian, menggunakan %(size)s untuk menyimpan pesan dari %(rooms)s ruangan.",
+                "other": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian, menggunakan %(size)s untuk menyimpan pesan dari %(rooms)s ruangan."
+            },
+            "message_search_disabled": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian.",
+            "message_search_unsupported": "%(brand)s tidak memiliki beberapa komponen yang diperlukan untuk menyimpan pesan terenkripsi secara lokal dengan aman. Jika Anda ingin bereksperimen dengan fitur ini, buat %(brand)s Desktop yang khusus dengan <nativeLink>tambahan komponen penelusuran</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s tidak dapat menyimpan pesan terenkripsi secara lokal dengan aman saat dijalankan di browser. Gunakan <desktopLink>%(brand)s Desktop</desktopLink> supaya pesan terenkripsi dapat muncul di hasil pencarian.",
+            "message_search_failed": "Inisialisasi pencarian pesan gagal"
         },
         "preferences": {
             "room_list_heading": "Daftar ruangan",
@@ -3369,7 +3364,6 @@
         "more_button": "Lagi"
     },
     "Other": "Lainnya",
-    "Advanced": "Tingkat Lanjut",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ubah avatar space",
@@ -3509,7 +3503,13 @@
         "upgrade_toast_title": "Tersedia peningkatan enkripsi",
         "verify_toast_title": "Verifikasi sesi ini",
         "set_up_toast_description": "Lindungi dari kehilangan akses ke pesan & data terenkripsi",
-        "verify_toast_description": "Pengguna yang lain mungkin tidak mempercayainya"
+        "verify_toast_description": "Pengguna yang lain mungkin tidak mempercayainya",
+        "cross_signing_unsupported": "Homeserver Anda tidak mendukung penandatanganan silang.",
+        "cross_signing_ready": "Penandatanganan silang siap digunakan.",
+        "cross_signing_ready_no_backup": "Penandatanganan silang telah siap tetapi kunci belum dicadangkan.",
+        "cross_signing_untrusted": "Akun Anda mempunyai identitas penandatanganan silang di penyimpanan rahasia, tetapi belum dipercayai oleh sesi ini.",
+        "cross_signing_not_ready": "Penandatanganan silang belum disiapkan.",
+        "not_supported": "<tidak didukung>"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",

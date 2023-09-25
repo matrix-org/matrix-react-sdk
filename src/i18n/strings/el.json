@@ -37,7 +37,6 @@
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "New passwords must match each other.": "Οι νέοι κωδικοί πρόσβασης πρέπει να ταιριάζουν.",
-    "<not supported>": "<δεν υποστηρίζεται>",
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
     "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
@@ -567,11 +566,6 @@
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Είσαι σίγουρος? Θα χάσετε τα κρυπτογραφημένα μηνύματά σας εάν δε δημιουργηθούν σωστά αντίγραφα ασφαλείας των κλειδιών σας.",
     "Global": "Γενικές ρυθμίσεις",
     "Keyword": "Λέξη-κλειδί",
-    "Cross-signing is not set up.": "Η διασταυρούμενη υπογραφή δεν έχει ρυθμιστεί.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ο λογαριασμός σας έχει ταυτότητα διασταυρούμενης υπογραφής σε μυστικό χώρο αποθήκευσης, αλλά δεν είναι ακόμη αξιόπιστος από αυτήν την συνεδρία.",
-    "Cross-signing is ready but keys are not backed up.": "Η διασταυρούμενη υπογραφή είναι έτοιμη, αλλά δεν δημιουργούνται αντίγραφα ασφαλείας κλειδιών.",
-    "Cross-signing is ready for use.": "Η διασταυρούμενη υπογραφή είναι έτοιμη για χρήση.",
-    "Your homeserver does not support cross-signing.": "Ο κεντρικός σας διακομιστής δεν υποστηρίζει διασταυρούμενη σύνδεση.",
     "Jump to first invite.": "Μετάβαση στην πρώτη πρόσκληση.",
     "Jump to first unread room.": "Μετάβαση στο πρώτο μη αναγνωσμένο δωμάτιο.",
     "You can change these anytime.": "Μπορείτε να τα αλλάξετε ανά πάσα στιγμή.",
@@ -597,15 +591,6 @@
     "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "Your keys are <b>not being backed up from this session</b>.": "<b>Δεν δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας από αυτήν την συνεδρία</b>.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
-    "Message search initialisation failed": "Η αρχικοποίηση αναζήτησης μηνυμάτων απέτυχε",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Το %(brand)s δεν μπορεί να αποθηκεύσει με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά ενώ εκτελείται σε πρόγραμμα περιήγησης ιστού. Χρησιμοποιήστε την <desktopLink>%(brand)s Επιφάνεια εργασίας</desktopLink> για να εμφανίζονται κρυπτογραφημένα μηνύματα στα αποτελέσματα αναζήτησης.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Λείπουν ορισμένα στοιχεία από το %(brand)s που απαιτούνται για την ασφαλή αποθήκευση κρυπτογραφημένων μηνυμάτων τοπικά. Εάν θέλετε να πειραματιστείτε με αυτό το χαρακτηριστικό, δημιουργήστε μια προσαρμοσμένη %(brand)s επιφάνεια εργασίαςμε <nativeLink>προσθήκη στοιχείων αναζήτησης</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης, χρησιμοποιώντας %(size)s για αποθήκευση μηνυμάτων από το %(rooms)sδωμάτιο .",
-        "other": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης, χρησιμοποιώντας %(size)s για αποθήκευση μηνυμάτων από τα %(rooms)sδωμάτια ."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Επαληθεύστε μεμονωμένα κάθε συνεδρία που χρησιμοποιείται από έναν χρήστη για να την επισημάνετε ως αξιόπιστη, χωρίς να εμπιστεύεστε συσκευές με διασταυρούμενη υπογραφή.",
     "Display Name": "Εμφανιζόμενο όνομα",
     "Account management": "Διαχείριση λογαριασμών",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Αποδεχτείτε τους Όρους χρήσης του διακομιστή ταυτότητας (%(serverName)s), ώστε να μπορείτε να είστε ανιχνεύσιμοι μέσω της διεύθυνσης ηλεκτρονικού ταχυδρομείου ή του αριθμού τηλεφώνου.",
@@ -1657,7 +1642,8 @@
         "all_rooms": "Όλα τα δωμάτια",
         "deselect_all": "Αποεπιλογή όλων",
         "select_all": "Επιλογή όλων",
-        "copied": "Αντιγράφηκε!"
+        "copied": "Αντιγράφηκε!",
+        "Advanced": "Προχωρημένες"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2082,7 +2068,16 @@
             "bulk_options_accept_all_invites": "Αποδεχτείτε όλες τις %(invitedRooms)sπροσκλήσεις",
             "bulk_options_reject_all_invites": "Απόρριψη όλων των προσκλήσεων %(invitedRooms)s",
             "message_search_section": "Αναζήτηση μηνυμάτων",
-            "analytics_subsection_description": "Μοιραστείτε ανώνυμα δεδομένα για να μας βοηθήσετε να εντοπίσουμε προβλήματα. Δε συλλέγουμε προσωπικά δεδομένα. Δεν τα παρέχουμε σε τρίτους."
+            "analytics_subsection_description": "Μοιραστείτε ανώνυμα δεδομένα για να μας βοηθήσετε να εντοπίσουμε προβλήματα. Δε συλλέγουμε προσωπικά δεδομένα. Δεν τα παρέχουμε σε τρίτους.",
+            "encryption_individual_verification_mode": "Επαληθεύστε μεμονωμένα κάθε συνεδρία που χρησιμοποιείται από έναν χρήστη για να την επισημάνετε ως αξιόπιστη, χωρίς να εμπιστεύεστε συσκευές με διασταυρούμενη υπογραφή.",
+            "message_search_enabled": {
+                "one": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης, χρησιμοποιώντας %(size)s για αποθήκευση μηνυμάτων από το %(rooms)sδωμάτιο .",
+                "other": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης, χρησιμοποιώντας %(size)s για αποθήκευση μηνυμάτων από τα %(rooms)sδωμάτια ."
+            },
+            "message_search_disabled": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης.",
+            "message_search_unsupported": "Λείπουν ορισμένα στοιχεία από το %(brand)s που απαιτούνται για την ασφαλή αποθήκευση κρυπτογραφημένων μηνυμάτων τοπικά. Εάν θέλετε να πειραματιστείτε με αυτό το χαρακτηριστικό, δημιουργήστε μια προσαρμοσμένη %(brand)s επιφάνεια εργασίαςμε <nativeLink>προσθήκη στοιχείων αναζήτησης</nativeLink>.",
+            "message_search_unsupported_web": "Το %(brand)s δεν μπορεί να αποθηκεύσει με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά ενώ εκτελείται σε πρόγραμμα περιήγησης ιστού. Χρησιμοποιήστε την <desktopLink>%(brand)s Επιφάνεια εργασίας</desktopLink> για να εμφανίζονται κρυπτογραφημένα μηνύματα στα αποτελέσματα αναζήτησης.",
+            "message_search_failed": "Η αρχικοποίηση αναζήτησης μηνυμάτων απέτυχε"
         },
         "preferences": {
             "room_list_heading": "Λίστα δωματίων",
@@ -2779,7 +2774,6 @@
         "more_button": "Περισσότερα"
     },
     "Other": "Άλλα",
-    "Advanced": "Προχωρημένες",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Αλλαγή εικόνας Χώρου",
@@ -2908,7 +2902,13 @@
         "upgrade_toast_title": "Διατίθεται αναβάθμιση κρυπτογράφησης",
         "verify_toast_title": "Επαληθεύστε αυτήν τη συνεδρία",
         "set_up_toast_description": "Προστατευτείτε από την απώλεια πρόσβασης σε κρυπτογραφημένα μηνύματα και δεδομένα",
-        "verify_toast_description": "Άλλοι χρήστες μπορεί να μην το εμπιστεύονται"
+        "verify_toast_description": "Άλλοι χρήστες μπορεί να μην το εμπιστεύονται",
+        "cross_signing_unsupported": "Ο κεντρικός σας διακομιστής δεν υποστηρίζει διασταυρούμενη σύνδεση.",
+        "cross_signing_ready": "Η διασταυρούμενη υπογραφή είναι έτοιμη για χρήση.",
+        "cross_signing_ready_no_backup": "Η διασταυρούμενη υπογραφή είναι έτοιμη, αλλά δεν δημιουργούνται αντίγραφα ασφαλείας κλειδιών.",
+        "cross_signing_untrusted": "Ο λογαριασμός σας έχει ταυτότητα διασταυρούμενης υπογραφής σε μυστικό χώρο αποθήκευσης, αλλά δεν είναι ακόμη αξιόπιστος από αυτήν την συνεδρία.",
+        "cross_signing_not_ready": "Η διασταυρούμενη υπογραφή δεν έχει ρυθμιστεί.",
+        "not_supported": "<δεν υποστηρίζεται>"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",

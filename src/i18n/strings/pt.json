@@ -14,7 +14,6 @@
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "Novas palavras-passe devem coincidir.",
-    "<not supported>": "<não suportado>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "Profile": "Perfil",
     "Reject invitation": "Rejeitar convite",
@@ -450,7 +449,8 @@
         "unnamed_room": "Sala sem nome",
         "on": "Ativado",
         "off": "Desativado",
-        "copied": "Copiado!"
+        "copied": "Copiado!",
+        "Advanced": "Avançado"
     },
     "action": {
         "continue": "Continuar",
@@ -693,7 +693,6 @@
         "no_media_perms_description": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam"
     },
     "Other": "Outros",
-    "Advanced": "Avançado",
     "labs": {
         "group_profile": "Perfil",
         "group_rooms": "Salas"
@@ -884,7 +883,8 @@
         "bootstrap_title": "A configurar chaves",
         "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
         "import_invalid_keyfile": "Não é um ficheiro de chaves %(brand)s válido",
-        "import_invalid_passphrase": "Erro de autenticação: palavra-passe incorreta?"
+        "import_invalid_passphrase": "Erro de autenticação: palavra-passe incorreta?",
+        "not_supported": "<não suportado>"
     },
     "error": {
         "mixed_content": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",

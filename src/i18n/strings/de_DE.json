@@ -17,7 +17,6 @@
     "Forget room": "Raum entfernen",
     "Invalid Email Address": "Ungültige E-Mail-Adresse",
     "Moderator": "Moderator",
-    "<not supported>": "<nicht unterstützt>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
     "Profile": "Profil",
     "Reject invitation": "Einladung ablehnen",
@@ -385,7 +384,6 @@
     "You should:": "Du solltest:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "Überprüfe deinen Browser auf Erweiterungen, die den Identitäts-Server blockieren könnten (z. B. Privacy Badger)",
     "Lock": "Schloss",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Speichere verschlüsselte Nachrichten lokal, sodass sie deinen Suchergebnissen erscheinen können.",
     "Cannot connect to integration manager": "Verbindung zum Integrationsassistenten fehlgeschlagen",
     "The integration manager is offline or it cannot reach your homeserver.": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
     "not stored": "nicht gespeichert",
@@ -495,13 +493,9 @@
     "Uploaded sound": "Hochgeladener Ton",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "Your homeserver does not support cross-signing.": "Dein Heim-Server unterstützt keine Quersignierung.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Dein Konto hat eine Quersignaturidentität im sicheren Speicher, der von dieser Sitzung jedoch noch nicht vertraut wird.",
     "unexpected type": "unbekannter Typ",
     "Secret storage public key:": "Öffentlicher Schlüssel des sicheren Speichers:",
     "in account data": "in den Kontodaten",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Alle Sitzungen einzeln verifizieren, anstatt auch Sitzungen zu vertrauen, die durch Quersignierungen verifiziert sind.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Um verschlüsselte Nachrichten lokal zu durchsuchen, benötigt %(brand)s weitere Komponenten. Wenn du diese Funktion testen möchtest, kannst du dir deine eigene Version von %(brand)s Desktop mit der <nativeLink>integrierten Suchfunktion kompilieren</nativeLink>.",
     "Your keys are <b>not being backed up from this session</b>.": "Deine Schlüssel werden von dieser Sitzung <b>nicht gesichert</b>.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Zurzeit verwendest du <server></server>, um Kontakte zu finden und von anderen gefunden zu werden. Du kannst deinen Identitäts-Server nachfolgend wechseln.",
     "Error changing power level requirement": "Fehler beim Ändern der Anforderungen für Benutzerrechte",
@@ -714,7 +708,6 @@
     "Looks good!": "Sieht gut aus!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
     "Wrong file type": "Falscher Dateityp",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
     "Forget Room": "Raum vergessen",
     "Favourited": "Favorisiert",
     "This room is public": "Dieser Raum ist öffentlich",
@@ -751,8 +744,6 @@
     "Not encrypted": "Nicht verschlüsselt",
     "Room settings": "Raumeinstellungen",
     "Take a picture": "Bildschirmfoto",
-    "Cross-signing is ready for use.": "Quersignaturen sind bereits in Anwendung.",
-    "Cross-signing is not set up.": "Quersignierung wurde nicht eingerichtet.",
     "Backup version:": "Version der Sicherung:",
     "Algorithm:": "Algorithmus:",
     "Backup key stored:": "Sicherungsschlüssel gespeichert:",
@@ -789,10 +780,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "other": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten von %(rooms)s Räumen zu speichern.",
-        "one": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten vom Raum %(rooms)s zu speichern."
-    },
     "Invite by email": "Via Email einladen",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Beginne eine Konversation mittels Name, E-Mail-Adresse oder Matrix-ID (wie <userId/>).",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden mittels Name, E-Mail-Adresse oder Benutzername (wie <userId/>) ein, oder <a>teile diesen Raum</a>.",
@@ -1171,7 +1158,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Fehler beim Zugriff auf dein Mikrofon. Überprüfe deine Browsereinstellungen und versuche es nochmal.",
     "Unable to access your microphone": "Fehler beim Zugriff auf Mikrofon",
     "Connecting": "Verbinden",
-    "Message search initialisation failed": "Initialisierung der Nachrichtensuche fehlgeschlagen",
     "Search names and descriptions": "Nach Name und Beschreibung filtern",
     "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
     "Add reaction": "Reaktion hinzufügen",
@@ -1296,7 +1282,6 @@
     "You're removing all spaces. Access will default to invite only": "Du entfernst alle Spaces. Der Zutritt wird auf den Standard (Privat) zurückgesetzt",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Entscheide, welche Spaces auf den Raum zugreifen können. Mitglieder ausgewählter Spaces können <RoomName/> betreten.",
     "Their device couldn't start the camera or microphone": "Mikrofon oder Kamera des Gesprächspartners konnte nicht gestartet werden",
-    "Cross-signing is ready but keys are not backed up.": "Quersignatur ist bereit, die Schlüssel sind aber nicht gesichert.",
     "Role in <RoomName/>": "Rolle in <RoomName/>",
     "Results": "Ergebnisse",
     "Rooms and spaces": "Räume und Spaces",
@@ -1938,7 +1923,8 @@
         "all_rooms": "Alle Räume",
         "deselect_all": "Alle abwählen",
         "select_all": "Alle auswählen",
-        "copied": "Kopiert!"
+        "copied": "Kopiert!",
+        "Advanced": "Erweitert"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2503,7 +2489,16 @@
             "bulk_options_accept_all_invites": "Akzeptiere alle %(invitedRooms)s Einladungen",
             "bulk_options_reject_all_invites": "Alle %(invitedRooms)s Einladungen ablehnen",
             "message_search_section": "Nachrichtensuche",
-            "analytics_subsection_description": "Teile anonyme Nutzungsdaten mit uns, damit wir Probleme in Element finden können. Nichts Persönliches. Keine Drittparteien."
+            "analytics_subsection_description": "Teile anonyme Nutzungsdaten mit uns, damit wir Probleme in Element finden können. Nichts Persönliches. Keine Drittparteien.",
+            "encryption_individual_verification_mode": "Alle Sitzungen einzeln verifizieren, anstatt auch Sitzungen zu vertrauen, die durch Quersignierungen verifiziert sind.",
+            "message_search_enabled": {
+                "other": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten von %(rooms)s Räumen zu speichern.",
+                "one": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten vom Raum %(rooms)s zu speichern."
+            },
+            "message_search_disabled": "Speichere verschlüsselte Nachrichten lokal, sodass sie deinen Suchergebnissen erscheinen können.",
+            "message_search_unsupported": "Um verschlüsselte Nachrichten lokal zu durchsuchen, benötigt %(brand)s weitere Komponenten. Wenn du diese Funktion testen möchtest, kannst du dir deine eigene Version von %(brand)s Desktop mit der <nativeLink>integrierten Suchfunktion kompilieren</nativeLink>.",
+            "message_search_unsupported_web": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
+            "message_search_failed": "Initialisierung der Nachrichtensuche fehlgeschlagen"
         },
         "preferences": {
             "room_list_heading": "Raumliste",
@@ -3369,7 +3364,6 @@
         "more_button": "Mehr"
     },
     "Other": "Sonstiges",
-    "Advanced": "Erweitert",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Space-Icon ändern",
@@ -3509,7 +3503,13 @@
         "upgrade_toast_title": "Verschlüsselungsaktualisierung verfügbar",
         "verify_toast_title": "Sitzung verifizieren",
         "set_up_toast_description": "Schütze dich vor dem Verlust verschlüsselter Nachrichten und Daten",
-        "verify_toast_description": "Andere Benutzer vertrauen ihr vielleicht nicht"
+        "verify_toast_description": "Andere Benutzer vertrauen ihr vielleicht nicht",
+        "cross_signing_unsupported": "Dein Heim-Server unterstützt keine Quersignierung.",
+        "cross_signing_ready": "Quersignaturen sind bereits in Anwendung.",
+        "cross_signing_ready_no_backup": "Quersignatur ist bereit, die Schlüssel sind aber nicht gesichert.",
+        "cross_signing_untrusted": "Dein Konto hat eine Quersignaturidentität im sicheren Speicher, der von dieser Sitzung jedoch noch nicht vertraut wird.",
+        "cross_signing_not_ready": "Quersignierung wurde nicht eingerichtet.",
+        "not_supported": "<nicht unterstützt>"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",

@@ -384,7 +384,6 @@
     },
     "No answer": "Gan freagair",
     "Unknown failure: %(reason)s": "Teip anaithnid: %(reason)s",
-    "Cross-signing is ready but keys are not backed up.": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha.",
     "Failed to reject invitation": "Níorbh fhéidir an cuireadh a dhiúltú",
     "Failed to reject invite": "Níorbh fhéidir an cuireadh a dhiúltú",
     "Failed to mute user": "Níor ciúnaíodh an úsáideoir",
@@ -458,7 +457,8 @@
         "feedback": "Aiseolas",
         "on": "Ar siúl",
         "off": "Múchta",
-        "copied": "Cóipeáilte!"
+        "copied": "Cóipeáilte!",
+        "Advanced": "Forbartha"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -720,7 +720,6 @@
         "more_button": "Níos mó"
     },
     "Other": "Eile",
-    "Advanced": "Forbartha",
     "room_settings": {
         "permissions": {
             "m.room.power_levels": "Athraigh ceadanna",
@@ -756,7 +755,8 @@
             "complete_action": "Tuigthe",
             "cancelling": "ag Cealú…",
             "unverified_sessions_toast_reject": "Níos deireanaí"
-        }
+        },
+        "cross_signing_ready_no_backup": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha."
     },
     "emoji": {
         "category_activities": "Gníomhaíochtaí",

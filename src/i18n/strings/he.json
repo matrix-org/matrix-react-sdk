@@ -331,21 +331,9 @@
     "Failed to save your profile": "שמירת הפרופיל שלך נכשלה",
     "The integration manager is offline or it cannot reach your homeserver.": "מנהל האינטגרציה לא מקוון או שהוא לא יכול להגיע לשרת הבית שלך.",
     "Cannot connect to integration manager": "לא ניתן להתחבר אל מנהל האינטגרציה",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s אינם יכולים לשמור במטמון מאובטח הודעות מוצפנות באופן מקומי בזמן שהם פועלים בדפדפן אינטרנט. השתמש ב- <desktopLink>%(brand)s Desktop </desktopLink> כדי שהודעות מוצפנות יופיעו בתוצאות החיפוש.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s חסרים כמה רכיבים הנדרשים לצורך אחסון במטמון מאובטח של הודעות מוצפנות באופן מקומי. אם תרצה להתנסות בתכונה זו, בנה %(brand)s מותאם אישית לדסקטום עם <nativeLink>חפש רכיבים להוספה</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש באמצעות %(size)s לשמור הודעות מחדרים %(rooms)s.",
-        "other": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש באמצעות %(size)s לשמור הודעות מחדרים %(rooms)s."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "אמת בנפרד כל מושב שמשתמש בו כדי לסמן אותו כאמצעי מהימן, ולא אמון על מכשירים חתומים צולבים.",
     "Failed to set display name": "עדכון שם תצוגה נכשל",
     "Authentication": "אימות",
     "Set up": "הגדר",
-    "Cross-signing is not set up.": "חתימה צולבת אינה מוגדרת עדיין.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "לחשבונך זהות חתימה צולבת באחסון סודי, אך הפגישה זו אינה מהימנה עדיין.",
-    "Your homeserver does not support cross-signing.": "השרת שלכם אינו תומך בחתימות-צולבות.",
-    "Cross-signing is ready for use.": "חתימה צולבת מוכנה לשימוש.",
     "No display name": "אין שם לתצוגה",
     "Show more": "הצג יותר",
     "Folder": "תקיה",
@@ -731,7 +719,6 @@
     "Request media permissions": "בקש הרשאות למדיה",
     "Missing media permissions, click the button below to request.": "חסרות הרשאות מדיה, לחץ על הלחצן למטה כדי לבקש.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות.",
-    "<not supported>": "<לא נתמך>",
     "Unignore": "הסר התעלמות",
     "Ignored users": "משתמשים שהתעלמתם מהם",
     "None": "ללא",
@@ -1087,7 +1074,6 @@
     "Connection failed": "החיבור נכשל",
     "Failed to remove user": "הסרת המשתמש נכשלה",
     "Failed to send": "השליחה נכשלה",
-    "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Spaces": "מרחבי עבודה",
@@ -1358,7 +1344,8 @@
         "all_rooms": "כל החדרים",
         "deselect_all": "הסר סימון מהכל",
         "select_all": "בחר הכל",
-        "copied": "הועתק!"
+        "copied": "הועתק!",
+        "Advanced": "מתקדם"
     },
     "action": {
         "continue": "המשך",
@@ -1754,7 +1741,16 @@
             "bulk_options_section": "אפשרויות בתפזורת",
             "bulk_options_accept_all_invites": "קבל את כל ההזמנות של %(invitedRooms)s",
             "bulk_options_reject_all_invites": "דחה את כל ההזמנות של %(invitedRooms)s",
-            "message_search_section": "חיפוש הודעה"
+            "message_search_section": "חיפוש הודעה",
+            "encryption_individual_verification_mode": "אמת בנפרד כל מושב שמשתמש בו כדי לסמן אותו כאמצעי מהימן, ולא אמון על מכשירים חתומים צולבים.",
+            "message_search_enabled": {
+                "one": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש באמצעות %(size)s לשמור הודעות מחדרים %(rooms)s.",
+                "other": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש באמצעות %(size)s לשמור הודעות מחדרים %(rooms)s."
+            },
+            "message_search_disabled": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש.",
+            "message_search_unsupported": "%(brand)s חסרים כמה רכיבים הנדרשים לצורך אחסון במטמון מאובטח של הודעות מוצפנות באופן מקומי. אם תרצה להתנסות בתכונה זו, בנה %(brand)s מותאם אישית לדסקטום עם <nativeLink>חפש רכיבים להוספה</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s אינם יכולים לשמור במטמון מאובטח הודעות מוצפנות באופן מקומי בזמן שהם פועלים בדפדפן אינטרנט. השתמש ב- <desktopLink>%(brand)s Desktop </desktopLink> כדי שהודעות מוצפנות יופיעו בתוצאות החיפוש.",
+            "message_search_failed": "אתחול חיפוש הודעות נכשל"
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",
@@ -2338,7 +2334,6 @@
         "more_button": "יותר"
     },
     "Other": "אחר",
-    "Advanced": "מתקדם",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "שנה את דמות מרחב העבודה",
@@ -2454,7 +2449,12 @@
         "upgrade_toast_title": "שדרוג הצפנה קיים",
         "verify_toast_title": "אשרו את ההתחברות הזאת",
         "set_up_toast_description": "שמור מפני איבוד גישה אל הודעות ומידע מוצפן",
-        "verify_toast_description": "יתכן משתמשים אחרים לא יבטחו בזה"
+        "verify_toast_description": "יתכן משתמשים אחרים לא יבטחו בזה",
+        "cross_signing_unsupported": "השרת שלכם אינו תומך בחתימות-צולבות.",
+        "cross_signing_ready": "חתימה צולבת מוכנה לשימוש.",
+        "cross_signing_untrusted": "לחשבונך זהות חתימה צולבת באחסון סודי, אך הפגישה זו אינה מהימנה עדיין.",
+        "cross_signing_not_ready": "חתימה צולבת אינה מוגדרת עדיין.",
+        "not_supported": "<לא נתמך>"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",

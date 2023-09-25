@@ -46,7 +46,6 @@
     "Moderator": "Moderator",
     "New passwords must match each other.": "De nya lösenorden måste matcha.",
     "not specified": "inte specificerad",
-    "<not supported>": "<stöds inte>",
     "No display name": "Inget visningsnamn",
     "No more results": "Inga fler resultat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
@@ -482,16 +481,10 @@
     "Set up": "Sätt upp",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
-    "Your homeserver does not support cross-signing.": "Din hemserver stöder inte korssignering.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ditt konto har en korssigneringsidentitet i hemlig lagring, men den är inte betrodd av den här sessionen än.",
     "well formed": "välformaterad",
     "unexpected type": "oväntad typ",
     "Secret storage public key:": "Publik nyckel för hemlig lagring:",
     "in account data": "i kontodata",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifiera individuellt varje session som används av en användare för att markera den som betrodd, och lita inte på korssignerade enheter.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Cachar krypterade meddelanden säkert lokalt för att de ska visas i sökresultat.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s saknar vissa komponenter som krävs som krävs för att säkert cacha krypterade meddelanden lokalt. Om du vill experimentera med den här funktionen, bygg en anpassad %(brand)s Skrivbord med <nativeLink>sökkomponenter tillagda</nativeLink>.",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s kan inte säkert cacha krypterade meddelanden lokalt när den kör i en webbläsare. Använd <desktopLink>%(brand)s Skrivbord</desktopLink> för att krypterade meddelanden ska visas i sökresultaten.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Den här servern <b>säkerhetskopierar inte dina nycklar</b>, men du har en existerande säkerhetskopia du kan återställa ifrån och lägga till till i framtiden.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Anslut den här sessionen till nyckelsäkerhetskopiering innan du loggar ut för att undvika att du blir av med nycklar som kanske bara finns på den här sessionen.",
     "Connect this session to Key Backup": "Anslut den här sessionen till nyckelsäkerhetskopiering",
@@ -750,8 +743,6 @@
     "Not encrypted": "Inte krypterad",
     "Room settings": "Rumsinställningar",
     "Take a picture": "Ta en bild",
-    "Cross-signing is ready for use.": "Korssignering är klart att användas.",
-    "Cross-signing is not set up.": "Korssignering är inte inställt.",
     "Backup version:": "Version av säkerhetskopia:",
     "Algorithm:": "Algoritm:",
     "Backup key stored:": "Lagrad säkerhetskopieringsnyckel:",
@@ -1041,10 +1032,6 @@
     "Cape Verde": "Kap Verde",
     "Reason (optional)": "Orsak (valfritt)",
     "Server Options": "Serveralternativ",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Cacha på ett säkert sätt krypterade meddelanden lokalt för att de ska visas i sökresultat, och använd %(size)s för att lagra meddelanden från %(rooms)s rum.",
-        "other": "Cacha på ett säkert sätt krypterade meddelanden lokalt för att de ska visas i sökresultat, och använd %(size)s för att lagra meddelanden från %(rooms)s rum."
-    },
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
     "Continuing without email": "Fortsätter utan e-post",
     "Hold": "Parkera",
@@ -1158,7 +1145,6 @@
     "Failed to send": "Misslyckades att skicka",
     "Enter your Security Phrase a second time to confirm it.": "Ange din säkerhetsfras igen för att bekräfta den.",
     "You have no ignored users.": "Du har inga ignorerade användare.",
-    "Message search initialisation failed": "Initialisering av meddelandesökning misslyckades",
     "Search names and descriptions": "Sök namn och beskrivningar",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
@@ -1302,7 +1288,6 @@
     "Public room": "Offentligt rum",
     "Rooms and spaces": "Rum och utrymmen",
     "Results": "Resultat",
-    "Cross-signing is ready but keys are not backed up.": "Korssignering är klart, men nycklarna är inte säkerhetskopierade än.",
     "Some encryption parameters have been changed.": "Vissa krypteringsparametrar har ändrats.",
     "Role in <RoomName/>": "Roll i <RoomName/>",
     "Unknown failure": "Okänt fel",
@@ -1891,7 +1876,8 @@
         "all_rooms": "Alla rum",
         "deselect_all": "Välj bort alla",
         "select_all": "Välj alla",
-        "copied": "Kopierat!"
+        "copied": "Kopierat!",
+        "Advanced": "Avancerat"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2454,7 +2440,16 @@
             "bulk_options_accept_all_invites": "Acceptera alla %(invitedRooms)s inbjudningar",
             "bulk_options_reject_all_invites": "Avböj alla %(invitedRooms)s inbjudningar",
             "message_search_section": "Meddelandesök",
-            "analytics_subsection_description": "Dela anonyma data med oss för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter."
+            "analytics_subsection_description": "Dela anonyma data med oss för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter.",
+            "encryption_individual_verification_mode": "Verifiera individuellt varje session som används av en användare för att markera den som betrodd, och lita inte på korssignerade enheter.",
+            "message_search_enabled": {
+                "one": "Cacha på ett säkert sätt krypterade meddelanden lokalt för att de ska visas i sökresultat, och använd %(size)s för att lagra meddelanden från %(rooms)s rum.",
+                "other": "Cacha på ett säkert sätt krypterade meddelanden lokalt för att de ska visas i sökresultat, och använd %(size)s för att lagra meddelanden från %(rooms)s rum."
+            },
+            "message_search_disabled": "Cachar krypterade meddelanden säkert lokalt för att de ska visas i sökresultat.",
+            "message_search_unsupported": "%(brand)s saknar vissa komponenter som krävs som krävs för att säkert cacha krypterade meddelanden lokalt. Om du vill experimentera med den här funktionen, bygg en anpassad %(brand)s Skrivbord med <nativeLink>sökkomponenter tillagda</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s kan inte säkert cacha krypterade meddelanden lokalt när den kör i en webbläsare. Använd <desktopLink>%(brand)s Skrivbord</desktopLink> för att krypterade meddelanden ska visas i sökresultaten.",
+            "message_search_failed": "Initialisering av meddelandesökning misslyckades"
         },
         "preferences": {
             "room_list_heading": "Rumslista",
@@ -3305,7 +3300,6 @@
         "more_button": "Mer"
     },
     "Other": "Annat",
-    "Advanced": "Avancerat",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Byt utrymmesavatar",
@@ -3445,7 +3439,13 @@
         "upgrade_toast_title": "Krypteringsuppgradering tillgänglig",
         "verify_toast_title": "Verifiera denna session",
         "set_up_toast_description": "Skydda mot att förlora åtkomst till krypterade meddelanden och data",
-        "verify_toast_description": "Andra användare kanske inta litar på den"
+        "verify_toast_description": "Andra användare kanske inta litar på den",
+        "cross_signing_unsupported": "Din hemserver stöder inte korssignering.",
+        "cross_signing_ready": "Korssignering är klart att användas.",
+        "cross_signing_ready_no_backup": "Korssignering är klart, men nycklarna är inte säkerhetskopierade än.",
+        "cross_signing_untrusted": "Ditt konto har en korssigneringsidentitet i hemlig lagring, men den är inte betrodd av den här sessionen än.",
+        "cross_signing_not_ready": "Korssignering är inte inställt.",
+        "not_supported": "<stöds inte>"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",

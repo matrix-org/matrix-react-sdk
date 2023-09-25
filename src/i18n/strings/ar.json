@@ -356,17 +356,9 @@
     "Room Name": "اسم الغرفة",
     "The integration manager is offline or it cannot reach your homeserver.": "مدري التكامل غير متصل بالإنرتنت أو لا يمكنه الوصول إلى خادمك الوسيط.",
     "Cannot connect to integration manager": "لا يمكن الاتصال بمدير التكامل",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s لا يستطيع تخزين الرسائل المشفرة محليًّا (في cache) بشكل آمن طالما أنه يعمل على متصفح ويب. استخدم <desktopLink>%(brand)s على سطح المكتب</desktopLink> لتظهر لك الرسائل المشفرة في نتائج البحث.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s يفقد بعض المكونات المطلوبة لحفظ آمن محليًّا للرسائل المشفرة. إذا أدرت تجربة هذه الخاصية، فأنشئ %(brand)s على سطح المكتب مع <nativeLink>إضافة مكونات البحث</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "تخزين الرسائل المشفرة بشكل آمن (في cache) محليًا حتى تظهر في نتائج البحث.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "تحقق بشكل فردي من كل اتصال يستخدمه المستخدم لتمييزه أنه موثوق ، دون الوثوق بالأجهزة الموقعة بالتبادل.",
     "Failed to set display name": "تعذر تعيين الاسم الظاهر",
     "Authentication": "المصادقة",
     "Set up": "تأسيس",
-    "Cross-signing is not set up.": "لم يتم إعداد التوقيع المتبادل.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "يحتوي حسابك على هوية توقيع متبادل في وحدة تخزين سرية ، لكن هذا الاتصال لم يثق به بعد.",
-    "Cross-signing is ready for use.": "التوقيع المتبادل جاهز للاستخدام.",
-    "Your homeserver does not support cross-signing.": "خادوم المنزل الذي تستعمل لا يدعم التوقيع المتبادل (cross-signing).",
     "Warning!": "إنذار!",
     "No display name": "لا اسم ظاهر",
     "Show more": "أظهر أكثر",
@@ -427,7 +419,6 @@
     "Request media permissions": "اطلب الإذن للوسائط",
     "Missing media permissions, click the button below to request.": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
-    "<not supported>": "<غير معتمد>",
     "Ok": "حسنا",
     "Your homeserver has exceeded one of its resource limits.": "لقد تجاوز خادمك أحد حدود موارده.",
     "Your homeserver has exceeded its user limit.": "لقد تجاوز خادمك حد عدد المستخدمين.",
@@ -643,7 +634,8 @@
         "preview_message": "يا من ترى هذه الرسالة. أنت الأفضل!",
         "on": "مشتغل",
         "off": "مطفأ",
-        "copied": "نُسخ!"
+        "copied": "نُسخ!",
+        "Advanced": "متقدم"
     },
     "action": {
         "continue": "واصِل",
@@ -841,7 +833,11 @@
             "bulk_options_section": "خيارات مجمعة",
             "bulk_options_accept_all_invites": "قبول كل الدعوات (%(invitedRooms)s)",
             "bulk_options_reject_all_invites": "رفض كل الدعوات (%(invitedRooms)s)",
-            "message_search_section": "بحث الرسائل"
+            "message_search_section": "بحث الرسائل",
+            "encryption_individual_verification_mode": "تحقق بشكل فردي من كل اتصال يستخدمه المستخدم لتمييزه أنه موثوق ، دون الوثوق بالأجهزة الموقعة بالتبادل.",
+            "message_search_disabled": "تخزين الرسائل المشفرة بشكل آمن (في cache) محليًا حتى تظهر في نتائج البحث.",
+            "message_search_unsupported": "%(brand)s يفقد بعض المكونات المطلوبة لحفظ آمن محليًّا للرسائل المشفرة. إذا أدرت تجربة هذه الخاصية، فأنشئ %(brand)s على سطح المكتب مع <nativeLink>إضافة مكونات البحث</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s لا يستطيع تخزين الرسائل المشفرة محليًّا (في cache) بشكل آمن طالما أنه يعمل على متصفح ويب. استخدم <desktopLink>%(brand)s على سطح المكتب</desktopLink> لتظهر لك الرسائل المشفرة في نتائج البحث."
         },
         "preferences": {
             "room_list_heading": "قائمة الغرفة",
@@ -1137,7 +1133,6 @@
         "no_media_perms_description": "قد تحتاج إلى السماح يدويًا ل%(brand)s s بالوصول إلى الميكروفون / كاميرا الويب"
     },
     "Other": "أخرى",
-    "Advanced": "متقدم",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "تغيير صورة الغرفة",
@@ -1226,7 +1221,12 @@
         "upgrade_toast_title": "ترقية التشفير متاحة",
         "verify_toast_title": "تحقق من هذا الاتصال",
         "set_up_toast_description": "حماية ضد فقدان الوصول إلى الرسائل والبيانات المشفرة",
-        "verify_toast_description": "قد لا يثق به المستخدمون الآخرون"
+        "verify_toast_description": "قد لا يثق به المستخدمون الآخرون",
+        "cross_signing_unsupported": "خادوم المنزل الذي تستعمل لا يدعم التوقيع المتبادل (cross-signing).",
+        "cross_signing_ready": "التوقيع المتبادل جاهز للاستخدام.",
+        "cross_signing_untrusted": "يحتوي حسابك على هوية توقيع متبادل في وحدة تخزين سرية ، لكن هذا الاتصال لم يثق به بعد.",
+        "cross_signing_not_ready": "لم يتم إعداد التوقيع المتبادل.",
+        "not_supported": "<غير معتمد>"
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",

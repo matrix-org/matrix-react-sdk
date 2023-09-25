@@ -243,7 +243,6 @@
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
     "Authentication": "Autentisering",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifiser hver brukerøkt individuelt for å stemple den som at du stoler på den, ikke stol på kryss-signerte enheter.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
     "Your keys are <b>not being backed up from this session</b>.": "Dine nøkler <b>har ikke blitt sikkerhetskopiert fra denne økten</b>.",
     "Back up your keys before signing out to avoid losing them.": "Ta sikkerhetskopi av nøklene dine før du logger av for å unngå å miste dem.",
@@ -556,7 +555,6 @@
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
     "Failed to deactivate user": "Mislyktes i å deaktivere brukeren",
-    "<not supported>": "<ikke støttet>",
     "not ready": "ikke klar",
     "ready": "klar",
     "Algorithm:": "Algoritme:",
@@ -856,7 +854,8 @@
         "on": "På",
         "off": "Av",
         "all_rooms": "Alle rom",
-        "copied": "Kopiert!"
+        "copied": "Kopiert!",
+        "Advanced": "Avansert"
     },
     "action": {
         "continue": "Fortsett",
@@ -1122,7 +1121,8 @@
             "encryption_section": "Kryptering",
             "bulk_options_accept_all_invites": "Aksepter alle %(invitedRooms)s-invitasjoner",
             "bulk_options_reject_all_invites": "Avslå alle %(invitedRooms)s-invitasjoner",
-            "message_search_section": "Meldingssøk"
+            "message_search_section": "Meldingssøk",
+            "encryption_individual_verification_mode": "Verifiser hver brukerøkt individuelt for å stemple den som at du stoler på den, ikke stol på kryss-signerte enheter."
         },
         "preferences": {
             "room_list_heading": "Romliste",
@@ -1441,7 +1441,6 @@
         "more_button": "Mer"
     },
     "Other": "Andre",
-    "Advanced": "Avansert",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Endre rommets avatar",
@@ -1516,7 +1515,8 @@
         "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
         "upgrade_toast_title": "Krypteringsoppdatering tilgjengelig",
         "verify_toast_title": "Verifiser denne økten",
-        "verify_toast_description": "Andre brukere kan kanskje mistro den"
+        "verify_toast_description": "Andre brukere kan kanskje mistro den",
+        "not_supported": "<ikke støttet>"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",

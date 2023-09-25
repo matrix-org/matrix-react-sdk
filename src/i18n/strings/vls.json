@@ -128,7 +128,6 @@
     "Deactivate Account": "Account deactiveern",
     "General": "Algemeen",
     "Unignore": "Nie mi negeern",
-    "<not supported>": "<nie oundersteund>",
     "Ignored users": "Genegeerde gebruukers",
     "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
     "Request media permissions": "Mediatoestemmiengn verzoekn",
@@ -490,7 +489,8 @@
         "integration_manager": "Integroasjebeheerder",
         "on": "An",
         "off": "Uut",
-        "copied": "Gekopieerd!"
+        "copied": "Gekopieerd!",
+        "Advanced": "Geavanceerd"
     },
     "action": {
         "continue": "Verdergoan",
@@ -889,7 +889,6 @@
         "no_media_perms_description": "Je moe %(brand)s wellicht handmoatig toestoan van je microfoon/webcam te gebruukn"
     },
     "Other": "Overige",
-    "Advanced": "Geavanceerd",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Gespreksavatar wyzign",
@@ -961,7 +960,8 @@
         "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn.",
         "export_unsupported": "Je browser oundersteunt de benodigde cryptografie-extensies nie",
         "import_invalid_keyfile": "Geen geldig %(brand)s-sleuterbestand",
-        "import_invalid_passphrase": "Anmeldiengscontrole mislukt: verkeerd paswoord?"
+        "import_invalid_passphrase": "Anmeldiengscontrole mislukt: verkeerd paswoord?",
+        "not_supported": "<nie oundersteund>"
     },
     "auth": {
         "sign_in_with_sso": "Anmeldn met enkele anmeldienge",

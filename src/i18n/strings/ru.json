@@ -14,7 +14,6 @@
     "Low priority": "Маловажные",
     "Moderator": "Модератор",
     "New passwords must match each other.": "Новые пароли должны совпадать.",
-    "<not supported>": "<не поддерживается>",
     "Return to login screen": "Вернуться к экрану входа",
     "Unable to add email address": "Не удается добавить email",
     "Unable to remove contact information": "Не удалось удалить контактную информацию",
@@ -515,7 +514,6 @@
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
-    "Your homeserver does not support cross-signing.": "Ваш домашний сервер не поддерживает кросс-подписи.",
     "Secret storage public key:": "Публичный ключ секретного хранилища:",
     "in account data": "в данных учётной записи",
     "Cannot connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
@@ -532,7 +530,6 @@
     "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "У вашей учётной записи есть кросс-подпись в секретное хранилище, но она пока не является доверенной в этом сеансе.",
     "well formed": "корректный",
     "unexpected type": "непредвиденный тип",
     "Bridges": "Мосты",
@@ -614,9 +611,6 @@
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Установить адрес этой комнаты, чтобы пользователи могли найти ее на вашем сервере (%(localDomain)s)",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Отдельно подтверждать каждый сеанс пользователя как доверенный, не доверяя кросс-подписанным устройствам.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Безопасно кэшировать шифрованные сообщения локально, чтобы они появлялись в результатах поиска.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Отсутствуют некоторые необходимые компоненты для %(brand)s, чтобы безопасно кэшировать шифрованные сообщения локально. Если вы хотите попробовать эту возможность, соберите самостоятельно %(brand)s Desktop с <nativeLink>добавлением поисковых компонентов</nativeLink>.",
     "not stored": "не сохранено",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Эта комната пересылает сообщения с помощью моста на следующие платформы. <a>Подробнее</a>",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах.",
@@ -633,7 +627,6 @@
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s не может безопасно кэшировать зашифрованные сообщения локально во время работы в веб-браузере. Используйте <desktopLink>%(brand)s Desktop</desktopLink>, чтобы зашифрованные сообщения появились в результатах поиска.",
     "Remove for everyone": "Убрать для всех",
     "Country Dropdown": "Выпадающий список стран",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администратор вашего сервера отключил сквозное шифрование по умолчанию в приватных комнатах и диалогах.",
@@ -750,8 +743,6 @@
     "Not encrypted": "Не зашифровано",
     "Room settings": "Настройки комнаты",
     "Take a picture": "Сделать снимок",
-    "Cross-signing is ready for use.": "Кросс-подпись готова к использованию.",
-    "Cross-signing is not set up.": "Кросс-подпись не настроена.",
     "Backup version:": "Версия резервной копии:",
     "Algorithm:": "Алгоритм:",
     "Backup key stored:": "Резервный ключ сохранён:",
@@ -790,10 +781,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
-        "other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s)."
-    },
     "Continuing without email": "Продолжить без электронной почты",
     "Reason (optional)": "Причина (необязательно)",
     "Server Options": "Параметры сервера",
@@ -1283,7 +1270,6 @@
     "Global": "Глобально",
     "New keyword": "Новое ключевое слово",
     "Keyword": "Ключевое слово",
-    "Message search initialisation failed": "Инициализация поиска сообщений не удалась",
     "Recommended for public spaces.": "Рекомендуется для публичных пространств.",
     "Allow people to preview your space before they join.": "Дайте людям возможность предварительно ознакомиться с вашим пространством, прежде чем они присоединятся к нему.",
     "Preview Space": "Предварительный просмотр пространства",
@@ -1307,7 +1293,6 @@
     "Unknown failure": "Неизвестная ошибка",
     "Failed to update the join rules": "Не удалось обновить правила присоединения",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Любой человек в <spaceName/> может найти и присоединиться. Вы можете выбрать и другие пространства.",
-    "Cross-signing is ready but keys are not backed up.": "Кросс-подпись готова, но ключи не резервируются.",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -1779,7 +1764,8 @@
         "all_rooms": "Все комнаты",
         "deselect_all": "Отменить выбор",
         "select_all": "Выбрать все",
-        "copied": "Скопировано!"
+        "copied": "Скопировано!",
+        "Advanced": "Подробности"
     },
     "action": {
         "continue": "Продолжить",
@@ -2304,7 +2290,16 @@
             "bulk_options_accept_all_invites": "Принять все приглашения (%(invitedRooms)s)",
             "bulk_options_reject_all_invites": "Отклонить все %(invitedRooms)s приглашения",
             "message_search_section": "Поиск по сообщениям",
-            "analytics_subsection_description": "Поделитесь анонимными данными, чтобы помочь нам выявить проблемы. Никаких личных данных. Никаких третьих лиц."
+            "analytics_subsection_description": "Поделитесь анонимными данными, чтобы помочь нам выявить проблемы. Никаких личных данных. Никаких третьих лиц.",
+            "encryption_individual_verification_mode": "Отдельно подтверждать каждый сеанс пользователя как доверенный, не доверяя кросс-подписанным устройствам.",
+            "message_search_enabled": {
+                "one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
+                "other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s)."
+            },
+            "message_search_disabled": "Безопасно кэшировать шифрованные сообщения локально, чтобы они появлялись в результатах поиска.",
+            "message_search_unsupported": "Отсутствуют некоторые необходимые компоненты для %(brand)s, чтобы безопасно кэшировать шифрованные сообщения локально. Если вы хотите попробовать эту возможность, соберите самостоятельно %(brand)s Desktop с <nativeLink>добавлением поисковых компонентов</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s не может безопасно кэшировать зашифрованные сообщения локально во время работы в веб-браузере. Используйте <desktopLink>%(brand)s Desktop</desktopLink>, чтобы зашифрованные сообщения появились в результатах поиска.",
+            "message_search_failed": "Инициализация поиска сообщений не удалась"
         },
         "preferences": {
             "room_list_heading": "Список комнат",
@@ -3108,7 +3103,6 @@
         "more_button": "Больше"
     },
     "Other": "Другие",
-    "Advanced": "Подробности",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Изменить аватар пространства",
@@ -3242,7 +3236,13 @@
         "upgrade_toast_title": "Доступно обновление шифрования",
         "verify_toast_title": "Заверьте этот сеанс",
         "set_up_toast_description": "Защита от потери доступа к зашифрованным сообщениям и данным",
-        "verify_toast_description": "Другие пользователи могут не доверять этому сеансу"
+        "verify_toast_description": "Другие пользователи могут не доверять этому сеансу",
+        "cross_signing_unsupported": "Ваш домашний сервер не поддерживает кросс-подписи.",
+        "cross_signing_ready": "Кросс-подпись готова к использованию.",
+        "cross_signing_ready_no_backup": "Кросс-подпись готова, но ключи не резервируются.",
+        "cross_signing_untrusted": "У вашей учётной записи есть кросс-подпись в секретное хранилище, но она пока не является доверенной в этом сеансе.",
+        "cross_signing_not_ready": "Кросс-подпись не настроена.",
+        "not_supported": "<не поддерживается>"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",

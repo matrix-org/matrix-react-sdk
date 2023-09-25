@@ -148,7 +148,8 @@
         "not_trusted": "Pas securizat",
         "system_alerts": "Alèrtas sistèma",
         "feedback": "Comentaris",
-        "off": "Atudat"
+        "off": "Atudat",
+        "Advanced": "Avançat"
     },
     "action": {
         "continue": "Contunhar",
@@ -280,7 +281,6 @@
         "video_call": "Sonada vidèo"
     },
     "Other": "Autre",
-    "Advanced": "Avançat",
     "emoji": {
         "category_smileys_people": "Emoticònas e personatges",
         "category_animals_nature": "Animals e natura",

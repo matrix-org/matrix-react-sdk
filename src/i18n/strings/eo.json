@@ -129,7 +129,6 @@
     },
     "Uploading %(filename)s": "Alŝutante dosieron %(filename)s",
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
-    "<not supported>": "<nesubtenata>",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
     "Profile": "Profilo",
@@ -543,12 +542,8 @@
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
-    "Your homeserver does not support cross-signing.": "Via hejmservilo ne subtenas delegajn subskribojn.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Via konto havas identecon por delegaj subskriboj en sekreta deponejo, sed ĉi tiu salutaĵo ankoraŭ ne fidas ĝin.",
     "Secret storage public key:": "Publika ŝlosilo de sekreta deponejo:",
     "in account data": "en datumoj de konto",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Sekure kaŝmemori ĉifritajn mesaĝojn loke, por aperigi ilin en serĉrezultoj.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s malhavas kelkajn partojn bezonajn por sekura loka kaŝmemorado de ĉirfitaj mesaĝoj. Se vi volas eksperimenti pri ĉi tiu kapablo, kunmetu propran klienton «%(brand)s Dekstop» kun <nativeLink>aldonitaj serĉopartoj</nativeLink>.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ĉi tiu salutaĵo <b>ne savkopias viajn ŝlosilojn</b>, sed vi jam havas savkopion, el kiu vi povas rehavi datumojn, kaj ilin kreskigi plue.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Konektu ĉi tiun salutaĵon al savkopiado de ŝlosiloj antaŭ ol vi adiaŭos, por ne perdi ŝlosilojn, kiuj povus troviĝi nur en ĉi tiu salutaĵo.",
     "Connect this session to Key Backup": "Konekti ĉi tiun salutaĵon al Savkopiado de ŝlosiloj",
@@ -657,7 +652,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Konfirmu per komparo de la sekva kun la agardoj de uzanto en via alia salutaĵo:",
     "Confirm this user's session by comparing the following with their User Settings:": "Konfirmu la salutaĵon de ĉi tiu uzanto per komparo de la sekva kun ĝiaj agordoj de uzanto:",
     "If they don't match, the security of your communication may be compromised.": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
@@ -707,7 +701,6 @@
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "La administranto de via servilo malŝaltis implicitan tutvojan ĉifradon en privataj kaj individuaj ĉambroj.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
     "No recently visited rooms": "Neniuj freŝdate vizititaj ĉambroj",
@@ -784,8 +777,6 @@
     "Backup version:": "Repaŝa versio:",
     "The operation could not be completed": "La ago ne povis finiĝi",
     "Failed to save your profile": "Malsukcesis konservi vian profilon",
-    "Cross-signing is not set up.": "Delegaj subskriboj ne estas agorditaj.",
-    "Cross-signing is ready for use.": "Delegaj subskriboj estas pretaj por uzado.",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
@@ -1039,10 +1030,6 @@
     "Invite by email": "Inviti per retpoŝto",
     "Reason (optional)": "Kialo (malnepra)",
     "Server Options": "Elektebloj de servilo",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj.",
-        "other": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj."
-    },
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Tiu ĉi salutaĵo trovis, ke viaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj foriĝis.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Novaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj troviĝis.",
     "Confirm your Security Phrase": "Konfirmu vian Sekurecan frazon",
@@ -1158,7 +1145,6 @@
     "Connecting": "Konektante",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
-    "Message search initialisation failed": "Malsukcesis komenci serĉadon de mesaĝoj",
     "Enter your Security Phrase a second time to confirm it.": "Enigu vian Sekurecan frazon duafoje por ĝin konfirmi.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Kontrolu vian identecon por aliri ĉifritajn mesaĝojn kaj pruvi vian identecon al aliuloj.",
     "Search names and descriptions": "Serĉi nomojn kaj priskribojn",
@@ -1299,7 +1285,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se vi havas la bezonajn permesojn, malfermu la menuon sur ajna mesaĝo, kaj klaku al <b>Fiksi</b> por meti ĝin ĉi tien.",
     "Nothing pinned, yet": "Ankoraŭ nenio fiksita",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Agordu adresojn por ĉi tiu aro, por ke uzantoj trovu ĝin per via hejmservilo (%(localDomain)s)",
-    "Cross-signing is ready but keys are not backed up.": "Delegaj subskriboj pretas, sed ŝlosiloj ne estas savkopiitaj.",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Ĉiu en <spaceName/> povas trovi kaj aliĝi. Vi povas elekti ankaŭ aliajn arojn.",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Rooms and spaces": "Ĉambroj kaj aroj",
@@ -1450,7 +1435,8 @@
         "on": "Jes",
         "off": "Ne",
         "all_rooms": "Ĉiuj ĉambroj",
-        "copied": "Kopiita!"
+        "copied": "Kopiita!",
+        "Advanced": "Altnivela"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1843,7 +1829,16 @@
             "bulk_options_section": "Amasaj elektebloj",
             "bulk_options_accept_all_invites": "Akcepti ĉiujn %(invitedRooms)s invitojn",
             "bulk_options_reject_all_invites": "Rifuzi ĉiujn %(invitedRooms)s invitojn",
-            "message_search_section": "Serĉado de mesaĝoj"
+            "message_search_section": "Serĉado de mesaĝoj",
+            "encryption_individual_verification_mode": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
+            "message_search_enabled": {
+                "one": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj.",
+                "other": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj."
+            },
+            "message_search_disabled": "Sekure kaŝmemori ĉifritajn mesaĝojn loke, por aperigi ilin en serĉrezultoj.",
+            "message_search_unsupported": "%(brand)s malhavas kelkajn partojn bezonajn por sekura loka kaŝmemorado de ĉirfitaj mesaĝoj. Se vi volas eksperimenti pri ĉi tiu kapablo, kunmetu propran klienton «%(brand)s Dekstop» kun <nativeLink>aldonitaj serĉopartoj</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
+            "message_search_failed": "Malsukcesis komenci serĉadon de mesaĝoj"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",
@@ -2459,7 +2454,6 @@
         "more_button": "Pli"
     },
     "Other": "Alia",
-    "Advanced": "Altnivela",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ŝanĝi bildon de aro",
@@ -2576,7 +2570,13 @@
         "upgrade_toast_title": "Ĝisdatigo de ĉifrado haveblas",
         "verify_toast_title": "Kontroli ĉi tiun salutaĵon",
         "set_up_toast_description": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj",
-        "verify_toast_description": "Aliaj uzantoj eble ne kredas ĝin"
+        "verify_toast_description": "Aliaj uzantoj eble ne kredas ĝin",
+        "cross_signing_unsupported": "Via hejmservilo ne subtenas delegajn subskribojn.",
+        "cross_signing_ready": "Delegaj subskriboj estas pretaj por uzado.",
+        "cross_signing_ready_no_backup": "Delegaj subskriboj pretas, sed ŝlosiloj ne estas savkopiitaj.",
+        "cross_signing_untrusted": "Via konto havas identecon por delegaj subskriboj en sekreta deponejo, sed ĉi tiu salutaĵo ankoraŭ ne fidas ĝin.",
+        "cross_signing_not_ready": "Delegaj subskriboj ne estas agorditaj.",
+        "not_supported": "<nesubtenata>"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",

@@ -124,7 +124,6 @@
     },
     "Uploading %(filename)s": "Sendi inn %(filename)s",
     "Unable to remove contact information": "Ekki tókst að fjarlægja upplýsingar um tengilið",
-    "<not supported>": "<ekki stutt>",
     "No Microphones detected": "Engir hljóðnemar fundust",
     "No Webcams detected": "Engar vefmyndavélar fundust",
     "Passphrases must match": "Lykilfrasar verða að stemma",
@@ -882,17 +881,6 @@
     },
     "The integration manager is offline or it cannot reach your homeserver.": "Samþættingarstýringin er ekki nettengd og nær ekki að tengjast heimaþjóninum þínum.",
     "Cannot connect to integration manager": "Get ekki tengst samþættingarstýringu",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nær ekki að setja dulrituð skilaboð leynilega í skyndiminni á tækinu á meðan keyrt er í vafra. Notaðu <desktopLink>%(brand)s Desktop vinnutölvuútgáfuna</desktopLink> svo skilaboðin birtist í leitarniðurstöðum.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum, notar %(size)s til að geyma skilaboð frá %(rooms)s spjallrásum.",
-        "other": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum, notar %(size)s til að geyma skilaboð frá %(rooms)s spjallrásum."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Sannreyndu hverja setu sem notandinn notar til að merkja hana sem treysta, án þess að treyta kross-undirrituðum tækjum.",
-    "Cross-signing is not set up.": "Kross-undirritun er ekki uppsett.",
-    "Cross-signing is ready but keys are not backed up.": "Kross-undirritun er tilbúin en ekki er búið að öryggisafrita dulritunarlykla.",
-    "Cross-signing is ready for use.": "Kross-undirritun er tilbúin til notkunar.",
-    "Your homeserver does not support cross-signing.": "Heimaþjónninn þinn styður ekki kross-undirritun.",
     "IRC display name width": "Breidd IRC-birtingarnafns",
     "%(brand)s URL": "%(brand)s URL",
     "Cancel search": "Hætta við leitina",
@@ -1186,7 +1174,6 @@
     "Join the discussion": "Taktu þátt í umræðunni",
     "Missing media permissions, click the button below to request.": "Vantar heimildir fyrir margmiðlunarefni, smelltu á hnappinn hér fyrir neðan til að biðja um þær.",
     "Not a valid identity server (status code %(code)s)": "Ekki gildur auðkennisþjónn (stöðukóði %(code)s)",
-    "Message search initialisation failed": "Frumstilling leitar í skilaboðum mistókst",
     "This invite to %(roomName)s was sent to %(email)s": "Þetta boð í %(roomName)s var sent til %(email)s",
     "Try to join anyway": "Reyna samt að taka þátt",
     "You were removed from %(roomName)s by %(memberName)s": "Þú hefur verið fjarlægð/ur á %(roomName)s af %(memberName)s",
@@ -1266,7 +1253,6 @@
     "You seem to be uploading files, are you sure you want to quit?": "Það lítur út eins og þú sért að senda inn skrár, ertu viss um að þú viljir hætta?",
     "Adding spaces has moved.": "Aðgerðin til að bæta við svæðum hefur verið flutt.",
     "You are not allowed to view this server's rooms list": "Þú hefur ekki heimild til að skoða spjallrásalistann á þessum netþjóni",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Aðgangurinn þinn er með auðkenni kross-undirritunar í leynigeymslu, en þessu er ekki ennþá treyst í þessari setu.",
     "Unable to query secret storage status": "Tókst ekki að finna stöðu á leynigeymslu",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
@@ -1597,7 +1583,8 @@
         "all_rooms": "Allar spjallrásir",
         "deselect_all": "Afvelja allt",
         "select_all": "Velja allt",
-        "copied": "Afritað!"
+        "copied": "Afritað!",
+        "Advanced": "Nánar"
     },
     "action": {
         "continue": "Halda áfram",
@@ -2110,7 +2097,15 @@
             "bulk_options_accept_all_invites": "Samþykkja alla boðsgesti %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Hafna öllum boðsgestum %(invitedRooms)s",
             "message_search_section": "Leita í skilaboðum",
-            "analytics_subsection_description": "Deildu nafnlausum gögnum til að hjálpa okkur við að greina vandamál. Ekkert persónulegt. Engir utanaðkomandi."
+            "analytics_subsection_description": "Deildu nafnlausum gögnum til að hjálpa okkur við að greina vandamál. Ekkert persónulegt. Engir utanaðkomandi.",
+            "encryption_individual_verification_mode": "Sannreyndu hverja setu sem notandinn notar til að merkja hana sem treysta, án þess að treyta kross-undirrituðum tækjum.",
+            "message_search_enabled": {
+                "one": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum, notar %(size)s til að geyma skilaboð frá %(rooms)s spjallrásum.",
+                "other": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum, notar %(size)s til að geyma skilaboð frá %(rooms)s spjallrásum."
+            },
+            "message_search_disabled": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum.",
+            "message_search_unsupported_web": "%(brand)s nær ekki að setja dulrituð skilaboð leynilega í skyndiminni á tækinu á meðan keyrt er í vafra. Notaðu <desktopLink>%(brand)s Desktop vinnutölvuútgáfuna</desktopLink> svo skilaboðin birtist í leitarniðurstöðum.",
+            "message_search_failed": "Frumstilling leitar í skilaboðum mistókst"
         },
         "preferences": {
             "room_list_heading": "Spjallrásalisti",
@@ -2849,7 +2844,6 @@
         "more_button": "Meira"
     },
     "Other": "Annað",
-    "Advanced": "Nánar",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Skipta um táknmynd svæðis",
@@ -2973,7 +2967,13 @@
         "upgrade_toast_title": "Uppfærsla dulritunar tiltæk",
         "verify_toast_title": "Sannprófa þessa setu",
         "set_up_toast_description": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum",
-        "verify_toast_description": "Aðrir notendur gætu ekki treyst því"
+        "verify_toast_description": "Aðrir notendur gætu ekki treyst því",
+        "cross_signing_unsupported": "Heimaþjónninn þinn styður ekki kross-undirritun.",
+        "cross_signing_ready": "Kross-undirritun er tilbúin til notkunar.",
+        "cross_signing_ready_no_backup": "Kross-undirritun er tilbúin en ekki er búið að öryggisafrita dulritunarlykla.",
+        "cross_signing_untrusted": "Aðgangurinn þinn er með auðkenni kross-undirritunar í leynigeymslu, en þessu er ekki ennþá treyst í þessari setu.",
+        "cross_signing_not_ready": "Kross-undirritun er ekki uppsett.",
+        "not_supported": "<ekki stutt>"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",

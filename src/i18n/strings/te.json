@@ -70,7 +70,8 @@
         "camera": "కెమెరా",
         "microphone": "మైక్రోఫోన్",
         "on": "వేయుము",
-        "off": "ఆపు"
+        "off": "ఆపు",
+        "Advanced": "ఆధునిక"
     },
     "action": {
         "continue": "కొనసాగించు",
@@ -133,7 +134,6 @@
         "deop": "ఇచ్చిన ID తో వినియోగదారుని విడదీస్తుంది",
         "command_error": "కమాండ్ లోపం"
     },
-    "Advanced": "ఆధునిక",
     "voip": {
         "call_failed": "కాల్ విఫలమయింది",
         "cannot_call_yourself_description": "మీకు మీరే కాల్ చేయలేరు.",

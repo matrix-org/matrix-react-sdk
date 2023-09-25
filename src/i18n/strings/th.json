@@ -41,7 +41,6 @@
     "Moderator": "ผู้ช่วยดูแล",
     "New passwords must match each other.": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
     "not specified": "ไม่ได้ระบุ",
-    "<not supported>": "<ไม่รองรับ>",
     "No more results": "ไม่มีผลลัพธ์อื่น",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
     "Reject invitation": "ปฏิเสธคำเชิญ",
@@ -231,7 +230,8 @@
         "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
         "stickerpack": "ชุดสติ๊กเกอร์",
         "on": "เปิด",
-        "off": "ปิด"
+        "off": "ปิด",
+        "Advanced": "ขึ้นสูง"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -452,7 +452,6 @@
     "devtools": {
         "category_room": "ห้อง"
     },
-    "Advanced": "ขึ้นสูง",
     "labs": {
         "group_profile": "โปรไฟล์",
         "group_rooms": "ห้องสนทนา"
@@ -588,5 +587,8 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "การแจ้งเตือน"
+    },
+    "encryption": {
+        "not_supported": "<ไม่รองรับ>"
     }
 }

@@ -201,7 +201,6 @@
     },
     "Uploading %(filename)s": "%(filename)sをアップロードしています",
     "Unable to remove contact information": "連絡先の情報を削除できません",
-    "<not supported>": "<サポート対象外>",
     "No Audio Outputs detected": "音声出力が検出されません",
     "Audio Output": "音声出力",
     "Profile": "プロフィール",
@@ -294,7 +293,6 @@
     "You signed in to a new session without verifying it:": "あなたのこのセッションはまだ認証されていません：",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s（%(userId)s）は未認証のセッションにサインインしました：",
     "Recent Conversations": "最近会話したユーザー",
-    "Your homeserver does not support cross-signing.": "あなたのホームサーバーはクロス署名に対応していません。",
     "Secret storage public key:": "機密ストレージの公開鍵：",
     "in account data": "アカウントデータ内",
     "Account management": "アカウントの管理",
@@ -307,10 +305,8 @@
     "Your theme": "あなたのテーマ",
     "%(brand)s URL": "%(brand)sのURL",
     "Room ID": "ルームID",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "あなたのアカウントではクロス署名の認証情報が機密ストレージに保存されていますが、このセッションでは信頼されていません。",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "このセッションでは<b>鍵をバックアップしていません</b>が、復元に使用したり、今後鍵を追加したりできるバックアップがあります。",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "サインアウトする前に、このセッションにだけある鍵を失わないよう、セッションを鍵のバックアップに接続しましょう。",
     "Connect this session to Key Backup": "このセッションを鍵のバックアップに接続",
@@ -344,7 +340,6 @@
     "Upload all": "全てアップロード",
     "Add widgets, bridges & bots": "ウィジェット、ブリッジ、ボットの追加",
     "Widgets": "ウィジェット",
-    "Cross-signing is ready for use.": "クロス署名の使用準備が完了しました。",
     "Everyone in this room is verified": "このルーム内の全員を認証済",
     "Verify all users in a room to ensure it's secure.": "ルームの全てのユーザーを認証すると、ルームが安全であることを確認できます。",
     "You've successfully verified %(displayName)s!": "%(displayName)sは正常に認証されました！",
@@ -375,10 +370,6 @@
     "Room address": "ルームのアドレス",
     "New published address (e.g. #alias:server)": "新しい公開アドレス（例：#alias:server）",
     "No other published addresses yet, add one below": "他の公開アドレスはまだありません。以下から追加できます",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。現在、%(rooms)s個のルームのメッセージの保存に%(size)sを使用しています。",
-        "other": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。現在、%(rooms)s個のルームのメッセージの保存に%(size)sを使用しています。"
-    },
     "Security Key": "セキュリティーキー",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "IDサーバーの使用は任意です。IDサーバーを使用しない場合、他のユーザーによって見つけられず、また、メールアドレスや電話で他のユーザーを招待することもできません。",
     "Integrations not allowed": "インテグレーションは許可されていません",
@@ -471,11 +462,7 @@
     "The operation could not be completed": "操作を完了できませんでした",
     "Failed to save your profile": "プロフィールの保存に失敗しました",
     "The integration manager is offline or it cannot reach your homeserver.": "インテグレーションマネージャーがオフラインか、またはあなたのホームサーバーに到達できません。",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "Webブラウザー上で動作する%(brand)sは、暗号化メッセージの安全なキャッシュをローカルに保存できません。<desktopLink>%(brand)s デスクトップ</desktopLink>を使用すると、暗号化メッセージを検索結果に表示することができます。",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "暗号化されたメッセージの安全なキャッシュをローカルに保存するためのコンポーネントが%(brand)sにありません。この機能を試してみたい場合は、<nativeLink>検索コンポーネントが追加された</nativeLink>%(brand)sデスクトップのカスタム版をビルドしてください。",
-    "Securely cache encrypted messages locally for them to appear in search results.": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。",
     "Set up": "設定",
-    "Cross-signing is not set up.": "クロス署名が設定されていません。",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
     "Anchor": "いかり",
@@ -1026,7 +1013,6 @@
     "Invalid Security Key": "セキュリティーキーが正しくありません",
     "Wrong Security Key": "正しくないセキュリティーキー",
     "a key signature": "鍵の署名",
-    "Cross-signing is ready but keys are not backed up.": "クロス署名は準備できましたが、鍵はバックアップされていません。",
     "Sign in with SSO": "シングルサインオンでサインイン",
     "Join millions for free on the largest public server": "最大の公開サーバーで、数百万人に無料で参加",
     "This homeserver would like to make sure you are not a robot.": "このホームサーバーは、あなたがロボットではないことの確認を求めています。",
@@ -1321,7 +1307,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "マイクにアクセスできませんでした。ブラウザーの設定を確認して、もう一度やり直してください。",
     "Unable to access your microphone": "マイクを使用できません",
     "There was an error loading your notification settings.": "通知設定を読み込む際にエラーが発生しました。",
-    "Message search initialisation failed": "メッセージの検索機能の初期化に失敗しました",
     "Failed to update the visibility of this space": "このスペースの見え方の更新に失敗しました",
     "Unable to set up secret storage": "機密ストレージを設定できません",
     "Save your Security Key": "セキュリティーキーを保存",
@@ -1828,7 +1813,8 @@
         "all_rooms": "全てのルーム",
         "deselect_all": "全ての選択を解除",
         "select_all": "全て選択",
-        "copied": "コピーしました！"
+        "copied": "コピーしました！",
+        "Advanced": "詳細"
     },
     "action": {
         "continue": "続行",
@@ -2368,7 +2354,16 @@
             "bulk_options_accept_all_invites": "%(invitedRooms)sの全ての招待を承認",
             "bulk_options_reject_all_invites": "%(invitedRooms)sの全ての招待を拒否",
             "message_search_section": "メッセージの検索",
-            "analytics_subsection_description": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。"
+            "analytics_subsection_description": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。",
+            "encryption_individual_verification_mode": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
+            "message_search_enabled": {
+                "one": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。現在、%(rooms)s個のルームのメッセージの保存に%(size)sを使用しています。",
+                "other": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。現在、%(rooms)s個のルームのメッセージの保存に%(size)sを使用しています。"
+            },
+            "message_search_disabled": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。",
+            "message_search_unsupported": "暗号化されたメッセージの安全なキャッシュをローカルに保存するためのコンポーネントが%(brand)sにありません。この機能を試してみたい場合は、<nativeLink>検索コンポーネントが追加された</nativeLink>%(brand)sデスクトップのカスタム版をビルドしてください。",
+            "message_search_unsupported_web": "Webブラウザー上で動作する%(brand)sは、暗号化メッセージの安全なキャッシュをローカルに保存できません。<desktopLink>%(brand)s デスクトップ</desktopLink>を使用すると、暗号化メッセージを検索結果に表示することができます。",
+            "message_search_failed": "メッセージの検索機能の初期化に失敗しました"
         },
         "preferences": {
             "room_list_heading": "ルーム一覧",
@@ -3190,7 +3185,6 @@
         "more_button": "その他"
     },
     "Other": "その他",
-    "Advanced": "詳細",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "スペースのアバターの変更",
@@ -3326,7 +3320,13 @@
         "upgrade_toast_title": "暗号化のアップグレードが利用できます",
         "verify_toast_title": "このセッションを認証",
         "set_up_toast_description": "暗号化されたメッセージとデータへのアクセスが失われるのを防ぎましょう",
-        "verify_toast_description": "他のユーザーはこのセッションを信頼しない可能性があります"
+        "verify_toast_description": "他のユーザーはこのセッションを信頼しない可能性があります",
+        "cross_signing_unsupported": "あなたのホームサーバーはクロス署名に対応していません。",
+        "cross_signing_ready": "クロス署名の使用準備が完了しました。",
+        "cross_signing_ready_no_backup": "クロス署名は準備できましたが、鍵はバックアップされていません。",
+        "cross_signing_untrusted": "あなたのアカウントではクロス署名の認証情報が機密ストレージに保存されていますが、このセッションでは信頼されていません。",
+        "cross_signing_not_ready": "クロス署名が設定されていません。",
+        "not_supported": "<サポート対象外>"
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",

@@ -72,7 +72,6 @@
     "Failed to reject invite": "Dəvəti rədd etməyi bacarmadı",
     "Failed to load timeline position": "Xronologiyadan nişanı yükləməyi bacarmadı",
     "Unable to remove contact information": "Əlaqə məlumatlarının silməyi bacarmadı",
-    "<not supported>": "<dəstəklənmir>",
     "Profile": "Profil",
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
@@ -99,7 +98,8 @@
         "emoji": "Smaylar",
         "unnamed_room": "Adı açıqlanmayan otaq",
         "identity_server": "Eyniləşdirmənin serveri",
-        "on": "Qoşmaq"
+        "on": "Qoşmaq",
+        "Advanced": "Təfərrüatlar"
     },
     "action": {
         "continue": "Davam etmək",
@@ -252,7 +252,6 @@
         "category_other": "Digər"
     },
     "Other": "Digər",
-    "Advanced": "Təfərrüatlar",
     "labs": {
         "group_profile": "Profil"
     },
@@ -341,5 +340,8 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Xəbərdarlıqlar"
+    },
+    "encryption": {
+        "not_supported": "<dəstəklənmir>"
     }
 }

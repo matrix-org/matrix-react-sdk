@@ -121,7 +121,6 @@
     "Uploading %(filename)s": "Nahrávanie %(filename)s",
     "Failed to change password. Is your password correct?": "Nepodarilo sa zmeniť heslo. Zadali ste správne heslo?",
     "Unable to remove contact information": "Nie je možné odstrániť kontaktné informácie",
-    "<not supported>": "<nepodporované>",
     "No Microphones detected": "Neboli rozpoznané žiadne mikrofóny",
     "No Webcams detected": "Neboli rozpoznané žiadne kamery",
     "Profile": "Profil",
@@ -391,9 +390,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) sa prihlásil do novej relácie bez jej overenia:",
     "Ask this user to verify their session, or manually verify it below.": "Poproste tohto používateľa, aby si overil svoju reláciu alebo ju nižšie manuálne overte.",
     "Not Trusted": "Nedôveryhodné",
-    "Your homeserver does not support cross-signing.": "Váš domovský server nepodporuje krížové podpisovanie.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Váš účet má v tajnom úložisku krížovú podpisovú totožnosť, ale táto relácia jej ešte nedôveruje.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Individuálne overte každú používateľskú reláciu a označte ju za dôveryhodnú, bez dôvery krížovo podpísaných zariadení.",
     "Destroy cross-signing keys?": "Zničiť kľúče na krížové podpisovanie?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zmazanie kľúčov pre krížové podpisovanie je nenávratné. Každý, s kým ste sa overili, bude vidieť bezpečnostné upozornenia. Toto určite nechcete robiť, dokiaľ ste nestratili všetky zariadenia, s ktorými by ste mohli krížovo podpisovať.",
     "Clear cross-signing keys": "Vyčistiť kľúče na krížové podpisovanie",
@@ -410,8 +406,6 @@
     "Show more": "Zobraziť viac",
     "well formed": "správne vytvorené",
     "unexpected type": "neočakávaný typ",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Bezpečne lokálne ukladať zašifrované správy do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)su chýbajú niektoré komponenty potrebné na bezpečné cachovanie šifrovaných správ lokálne. Pokiaľ chcete experimentovať s touto funkciou, spravte si svoj vlastný %(brand)s Desktop s <nativeLink>pridanými vyhľadávacími komponentami</nativeLink>.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Táto relácia <b>nezálohuje vaše kľúče</b>, ale máte jednu existujúcu zálohu, ktorú môžete obnoviť a pridať do budúcnosti.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Pred odhlásením pripojte túto reláciu k zálohe kľúčov, aby ste predišli strate kľúčov, ktoré môžu byť len v tejto relácii.",
     "Connect this session to Key Backup": "Pripojiť túto reláciu k Zálohe kľúčov",
@@ -420,7 +414,6 @@
     "Your homeserver has exceeded its user limit.": "Na vašom domovskom serveri bol prekročený limit počtu používateľov.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašom domovskom serveri bol prekročený jeden z limitov systémových zdrojov.",
     "Ok": "Ok",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nedokáže bezpečne lokálne ukladať do vyrovnávacej pamäte zašifrované správy, keď je spustený vo webovom prehliadači. Na zobrazenie šifrovaných správ vo výsledkoch vyhľadávania použite <desktopLink>%(brand)s Desktop</desktopLink>.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Ak chcete nahlásiť bezpečnostný problém týkajúci sa Matrix-u, prečítajte si, prosím, <a>zásady zverejňovania informácií o bezpečnosti Matrix.org</a>.",
     "None": "Žiadne",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Správca vášho servera predvolene vypol end-to-end šifrovanie v súkromných miestnostiach a v priamych správach.",
@@ -778,7 +771,6 @@
     "Rooms and spaces": "Miestnosti a priestory",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
-    "Cross-signing is ready for use.": "Krížové podpisovanie je pripravené na použitie.",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Zálohujte si šifrovacie kľúče s údajmi o účte pre prípad, že stratíte prístup k reláciám. Vaše kľúče budú zabezpečené jedinečným bezpečnostným kľúčom.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
     "You're all caught up.": "Všetko ste už stihli.",
@@ -929,10 +921,6 @@
     "not ready": "nie je pripravené",
     "ready": "pripravené",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Bezpečné lokálne ukladanie zašifrovaných správ do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania, použijúc %(size)s na ukladanie správ z %(rooms)s miestnosti.",
-        "other": "Bezpečné lokálne ukladanie zašifrovaných správ do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania, použijúc %(size)s na ukladanie správ z %(rooms)s miestností."
-    },
     "Unable to set up secret storage": "Nie je možné nastaviť tajné úložisko",
     "Unable to query secret storage status": "Nie je možné vykonať dopyt na stav tajného úložiska",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
@@ -982,7 +970,6 @@
     "Search for rooms": "Hľadať miestnosti",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializácia vyhľadávania správ zlyhala, pre viac informácií skontrolujte <a>svoje nastavenia</a>",
     "Cancel search": "Zrušiť vyhľadávanie",
-    "Message search initialisation failed": "Inicializácia vyhľadávania správ zlyhala",
     "Search %(spaceName)s": "Hľadať %(spaceName)s",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Používanie tohto widgetu môže zdieľať údaje <helpIcon /> s %(widgetDomain)s.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Používanie tohto widgetu môže zdieľať údaje <helpIcon /> s %(widgetDomain)s a správcom integrácie.",
@@ -1376,7 +1363,6 @@
     "Failed to update the history visibility of this space": "Nepodarilo sa aktualizovať viditeľnosť histórie tohto priestoru",
     "Failed to update the guest access of this space": "Nepodarilo sa aktualizovať hosťovský prístup do tohto priestoru",
     "Invite with email or username": "Pozvať pomocou e-mailu alebo používateľského mena",
-    "Cross-signing is not set up.": "Krížové podpisovanie nie je nastavené.",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
@@ -1387,7 +1373,6 @@
         "other": "Môžete pripnúť iba %(count)s widgetov"
     },
     "No answer": "Žiadna odpoveď",
-    "Cross-signing is ready but keys are not backed up.": "Krížové podpisovanie je pripravené, ale kľúče nie sú zálohované.",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Ak to teraz zrušíte, môžete prísť o zašifrované správy a údaje, ak stratíte prístup k svojim prihlasovacím údajom.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
     "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
@@ -1934,7 +1919,8 @@
         "all_rooms": "Všetky miestnosti",
         "deselect_all": "Zrušiť výber všetkých",
         "select_all": "Vybrať všetky",
-        "copied": "Skopírované!"
+        "copied": "Skopírované!",
+        "Advanced": "Pokročilé"
     },
     "action": {
         "continue": "Pokračovať",
@@ -2498,7 +2484,16 @@
             "bulk_options_accept_all_invites": "Prijať všetkých %(invitedRooms)s pozvaní",
             "bulk_options_reject_all_invites": "Odmietnuť všetky %(invitedRooms)s pozvania",
             "message_search_section": "Vyhľadávanie v správach",
-            "analytics_subsection_description": "Zdieľajte anonymné údaje, ktoré nám pomôžu identifikovať problémy. Nič osobné. Žiadne tretie strany."
+            "analytics_subsection_description": "Zdieľajte anonymné údaje, ktoré nám pomôžu identifikovať problémy. Nič osobné. Žiadne tretie strany.",
+            "encryption_individual_verification_mode": "Individuálne overte každú používateľskú reláciu a označte ju za dôveryhodnú, bez dôvery krížovo podpísaných zariadení.",
+            "message_search_enabled": {
+                "one": "Bezpečné lokálne ukladanie zašifrovaných správ do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania, použijúc %(size)s na ukladanie správ z %(rooms)s miestnosti.",
+                "other": "Bezpečné lokálne ukladanie zašifrovaných správ do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania, použijúc %(size)s na ukladanie správ z %(rooms)s miestností."
+            },
+            "message_search_disabled": "Bezpečne lokálne ukladať zašifrované správy do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania.",
+            "message_search_unsupported": "%(brand)su chýbajú niektoré komponenty potrebné na bezpečné cachovanie šifrovaných správ lokálne. Pokiaľ chcete experimentovať s touto funkciou, spravte si svoj vlastný %(brand)s Desktop s <nativeLink>pridanými vyhľadávacími komponentami</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s nedokáže bezpečne lokálne ukladať do vyrovnávacej pamäte zašifrované správy, keď je spustený vo webovom prehliadači. Na zobrazenie šifrovaných správ vo výsledkoch vyhľadávania použite <desktopLink>%(brand)s Desktop</desktopLink>.",
+            "message_search_failed": "Inicializácia vyhľadávania správ zlyhala"
         },
         "preferences": {
             "room_list_heading": "Zoznam miestností",
@@ -3364,7 +3359,6 @@
         "more_button": "Viac"
     },
     "Other": "Ďalšie",
-    "Advanced": "Pokročilé",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Zmeniť obrázok priestoru",
@@ -3504,7 +3498,13 @@
         "upgrade_toast_title": "Je dostupná aktualizácia šifrovania",
         "verify_toast_title": "Overiť túto reláciu",
         "set_up_toast_description": "Zabezpečte sa proti strate šifrovaných správ a údajov",
-        "verify_toast_description": "Ostatní používatelia jej nemusia dôverovať"
+        "verify_toast_description": "Ostatní používatelia jej nemusia dôverovať",
+        "cross_signing_unsupported": "Váš domovský server nepodporuje krížové podpisovanie.",
+        "cross_signing_ready": "Krížové podpisovanie je pripravené na použitie.",
+        "cross_signing_ready_no_backup": "Krížové podpisovanie je pripravené, ale kľúče nie sú zálohované.",
+        "cross_signing_untrusted": "Váš účet má v tajnom úložisku krížovú podpisovú totožnosť, ale táto relácia jej ešte nedôveruje.",
+        "cross_signing_not_ready": "Krížové podpisovanie nie je nastavené.",
+        "not_supported": "<nepodporované>"
     },
     "emoji": {
         "category_frequently_used": "Často používané",

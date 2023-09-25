@@ -869,15 +869,6 @@
     "Failed to save your profile": "ذخیره‌ی تنظیمات شما موفقیت‌آمیز نبود",
     "The integration manager is offline or it cannot reach your homeserver.": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود.",
     "Cannot connect to integration manager": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
-    "Message search initialisation failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s نمی‌تواند پیام‌های رمزشده را به شکل امن و به صورت محلی در هنگامی که مرورگر در حال فعالیت است ذخیره کند. از <desktopLink>%(brand)s نسخه‌ی دسکتاپ</desktopLink> برای نمایش پیام‌های رمزشده در نتایج جستجو استفاده نمائید.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s بعضی از مولفه‌های مورد نیاز برای ذخیره امن پیام‌های رمزشده به صورت محلی را ندارد. اگر تمایل به استفاده از این قابلیت دارید، یک نسخه‌ی دلخواه از %(brand)s با <nativeLink> مولفه‌های مورد نظر</nativeLink> بسازید.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "other": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند، با استفاده از %(size)s برای ذخیره‌ی پیام‌ها از اتاق‌های %(rooms)s.",
-        "one": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند، با استفاده از %(size)s برای ذخیره‌ی پیام‌ها از اتاق %(rooms)s."
-    },
-    "Securely cache encrypted messages locally for them to appear in search results.": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "به صورت جداگانه هر نشستی که با بقیه‌ی کاربران دارید را تائید کنید تا به عنوان نشست قابل اعتماد نشانه‌گذاری شود، با این کار می‌توانید به دستگاه‌های امضاء متقابل اعتماد نکنید.",
     "You'll need to authenticate with the server to confirm the upgrade.": "برای تائید ارتقاء، نیاز به احراز هویت نزد سرور خواهید داشت.",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "برای اینکه بتوانید بقیه‌ی نشست‌ها را تائید کرده و به آن‌ها امکان مشاهده‌ی پیام‌های رمزشده را بدهید، ابتدا باید این نشست را ارتقاء دهید. بعد از تائیدشدن، به عنوان نشست‌ّای تائید‌شده به سایر کاربران نمایش داده خواهند شد.",
     "Unable to query secret storage status": "امکان جستجو و کنکاش وضعیت حافظه‌ی مخفی میسر نیست",
@@ -1027,10 +1018,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "این فضا عمومی نیست. امکان پیوستن مجدد بدون دعوتنامه امکان‌پذیر نخواهد بود.",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
     "Failed to reject invitation": "رد دعوتنامه موفقیت‌آمیز نبود",
-    "Cross-signing is not set up.": "امضاء متقابل تنظیم نشده‌است.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "حساب کاربری شما یک هویت برای امضاء متقابل در حافظه‌ی نهان دارد، اما این هویت هنوز توسط این نشست تائید نشده‌است.",
-    "Cross-signing is ready for use.": "امضاء متقابل برای استفاده در دسترس است.",
-    "Your homeserver does not support cross-signing.": "سرور شما امضاء متقابل را پشتیبانی نمی‌کند.",
     "Warning!": "هشدار!",
     "No display name": "هیچ نامی برای نمایش وجود ندارد",
     "Space options": "گزینه‌های انتخابی محیط",
@@ -1081,7 +1068,6 @@
     "Request media permissions": "درخواست دسترسی به رسانه",
     "Missing media permissions, click the button below to request.": "دسترسی به رسانه از دست رفت، برای درخواست مجدد بر روی دکمه‌ی زیر کلیک نمائید.",
     "You have no ignored users.": "شما هیچ کاربری را نادیده نگرفته‌اید.",
-    "<not supported>": "<پشتیبانی نمی‌شود>",
     "Unignore": "لغو نادیده‌گرفتن",
     "Ignored users": "کاربران نادیده‌گرفته‌شده",
     "None": "هیچ‌کدام",
@@ -1278,7 +1264,8 @@
         "on": "روشن",
         "off": "خاموش",
         "all_rooms": "همه اتاق‌ها",
-        "copied": "رونوشت گرفته شد!"
+        "copied": "رونوشت گرفته شد!",
+        "Advanced": "پیشرفته"
     },
     "action": {
         "continue": "ادامه",
@@ -1656,7 +1643,16 @@
             "bulk_options_section": "گزینه‌های دسته‌جمعی",
             "bulk_options_accept_all_invites": "همه‌ی دعوت‌های %(invitedRooms)s را قبول کن",
             "bulk_options_reject_all_invites": "همه‌ی دعوت‌های %(invitedRooms)s را رد کن",
-            "message_search_section": "جستجوی پیام‌ها"
+            "message_search_section": "جستجوی پیام‌ها",
+            "encryption_individual_verification_mode": "به صورت جداگانه هر نشستی که با بقیه‌ی کاربران دارید را تائید کنید تا به عنوان نشست قابل اعتماد نشانه‌گذاری شود، با این کار می‌توانید به دستگاه‌های امضاء متقابل اعتماد نکنید.",
+            "message_search_enabled": {
+                "other": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند، با استفاده از %(size)s برای ذخیره‌ی پیام‌ها از اتاق‌های %(rooms)s.",
+                "one": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند، با استفاده از %(size)s برای ذخیره‌ی پیام‌ها از اتاق %(rooms)s."
+            },
+            "message_search_disabled": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
+            "message_search_unsupported": "%(brand)s بعضی از مولفه‌های مورد نیاز برای ذخیره امن پیام‌های رمزشده به صورت محلی را ندارد. اگر تمایل به استفاده از این قابلیت دارید، یک نسخه‌ی دلخواه از %(brand)s با <nativeLink> مولفه‌های مورد نظر</nativeLink> بسازید.",
+            "message_search_unsupported_web": "%(brand)s نمی‌تواند پیام‌های رمزشده را به شکل امن و به صورت محلی در هنگامی که مرورگر در حال فعالیت است ذخیره کند. از <desktopLink>%(brand)s نسخه‌ی دسکتاپ</desktopLink> برای نمایش پیام‌های رمزشده در نتایج جستجو استفاده نمائید.",
+            "message_search_failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود"
         },
         "preferences": {
             "room_list_heading": "لیست اتاق‌ها",
@@ -2183,7 +2179,6 @@
         "show_sidebar_button": "نمایش نوار کناری"
     },
     "Other": "دیگر",
-    "Advanced": "پیشرفته",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "تغییر نمایه اتاق",
@@ -2282,7 +2277,12 @@
         "upgrade_toast_title": "ارتقای رمزنگاری ممکن است",
         "verify_toast_title": "تأیید این نشست",
         "set_up_toast_description": "محافظ در برابر از دست‌دادن داده‌ها و پیام‌های رمزشده",
-        "verify_toast_description": "ممکن است سایر کاربران به آن اعتماد نکنند"
+        "verify_toast_description": "ممکن است سایر کاربران به آن اعتماد نکنند",
+        "cross_signing_unsupported": "سرور شما امضاء متقابل را پشتیبانی نمی‌کند.",
+        "cross_signing_ready": "امضاء متقابل برای استفاده در دسترس است.",
+        "cross_signing_untrusted": "حساب کاربری شما یک هویت برای امضاء متقابل در حافظه‌ی نهان دارد، اما این هویت هنوز توسط این نشست تائید نشده‌است.",
+        "cross_signing_not_ready": "امضاء متقابل تنظیم نشده‌است.",
+        "not_supported": "<پشتیبانی نمی‌شود>"
     },
     "emoji": {
         "category_frequently_used": "متداول",

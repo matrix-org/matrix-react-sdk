@@ -353,11 +353,6 @@
     "Unignore": "ບໍ່ສົນໃຈ",
     "Ignored users": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
     "None": "ບໍ່ມີ",
-    "Cross-signing is not set up.": "ບໍ່ໄດ້ຕັ້ງຄ່າ Cross-signing.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "ບັນຊີຂອງທ່ານມີຂໍ້ມູນແບບ cross-signing ໃນການເກັບຮັກສາຄວາມລັບ, ແຕ່ວ່າຍັງບໍ່ມີຄວາມເຊື່ອຖືໃນລະບົບນີ້.",
-    "Cross-signing is ready but keys are not backed up.": "ການລົງຊື່ຂ້າມແມ່ນພ້ອມແລ້ວແຕ່ກະແຈບໍ່ໄດ້ສຳຮອງໄວ້.",
-    "Cross-signing is ready for use.": "ການລົງຊື່ຂ້າມແມ່ນກຽມພ້ອມສໍາລັບການໃຊ້ງານ.",
-    "Your homeserver does not support cross-signing.": "homeserverຂອງທ່ານບໍ່ຮອງຮັບການລົງຊື່ຂ້າມ.",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "No display name": "ບໍ່ມີຊື່ສະແດງຜົນ",
     "Space options": "ຕົວເລືອກພື້ນທີ່",
@@ -804,15 +799,6 @@
     "Upgrade required": "ຕ້ອງການບົກລະດັບ",
     "The integration manager is offline or it cannot reach your homeserver.": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້.",
     "Cannot connect to integration manager": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
-    "Message search initialisation failed": "ການເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບໍ່ສຳເລັດ",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ບໍ່ສາມາດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ ໃນຂະນະທີ່ກຳລັງດຳເນີນການໃນເວັບບຣາວເຊີ. ໃຊ້ <desktopLink>%(brand)s Desktop</desktopLink> ເພື່ອໃຫ້ຂໍ້ຄວາມເຂົ້າລະຫັດຈະປາກົດໃນຜົນການຊອກຫາ.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s ຂາດບາງອົງປະກອບທີ່ຕ້ອງການສໍາລັບການເກັບຂໍ້ຄວາມເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ. ຖ້າທ່ານຕ້ອງການທົດລອງໃຊ້ຄຸນສົມບັດນີ້, ສ້າງ %(brand)s Desktop ແບບກຳນົດເອງດ້ວຍການເພີ່ມ <nativeLink>ອົງປະກອບການຄົ້ນຫາ</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "ເກັບຮັກສາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຄົ້ນຫາ.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "ຈັດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຊອກຫາ, ໂດຍໃຊ້ %(size)s ເພື່ອເກັບຂໍ້ຄວາມຈາກຫ້ອງ %(rooms)s.",
-        "other": "ຈັດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຊອກຫາ, ໂດຍໃຊ້ %(size)s ເພື່ອເກັບຂໍ້ຄວາມຈາກ %(rooms)s ຫ້ອງ."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "ຢືນຢັນແຕ່ລະລະບົບທີ່ໃຊ້ໂດຍຜູ້ໃຊ້ເພື່ອໝາຍວ່າເປັນທີ່ໜ້າເຊື່ອຖືໄດ້, ບໍ່ໄວ້ໃຈອຸປະກອນທີ່ cross-signed.",
     "Display Name": "ຊື່ສະແດງ",
     "Failed to set display name": "ກຳນົດການສະເເດງຊື່ບໍ່ສຳເລັດ",
     "Reset event store": "ກູ້ຄືນທີ່ຈັດເກັບ",
@@ -1139,7 +1125,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ແລະ %(space2Name)s",
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
-    "<not supported>": "<ບໍ່ຮອງຮັບ>",
     "Suggested Rooms": "ຫ້ອງແນະນຳ",
     "Historical": "ປະຫວັດ",
     "Low priority": "ບູລິມະສິດຕໍ່າ",
@@ -1675,7 +1660,8 @@
         "all_rooms": "ຫ້ອງທັງໝົດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
         "select_all": "ເລືອກທັງຫມົດ",
-        "copied": "ສຳເນົາແລ້ວ!"
+        "copied": "ສຳເນົາແລ້ວ!",
+        "Advanced": "ຂັ້ນສູງ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2092,7 +2078,16 @@
             "bulk_options_accept_all_invites": "ຍອມຮັບການເຊີນທັງໝົດ %(invitedRooms)s",
             "bulk_options_reject_all_invites": "ປະຕິເສດການເຊີນທັງໝົດ %(invitedRooms)s",
             "message_search_section": "ຄົ້ນຫາຂໍ້ຄວາມ",
-            "analytics_subsection_description": "ແບ່ງປັນຂໍ້ມູນທີ່ບໍ່ເປີດເຜີຍຊື່ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາລະບຸບັນຫາ. ບໍ່ມີຫຍັງເປັນສ່ວນຕົວ. ບໍ່ມີພາກສ່ວນທີສາມ."
+            "analytics_subsection_description": "ແບ່ງປັນຂໍ້ມູນທີ່ບໍ່ເປີດເຜີຍຊື່ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາລະບຸບັນຫາ. ບໍ່ມີຫຍັງເປັນສ່ວນຕົວ. ບໍ່ມີພາກສ່ວນທີສາມ.",
+            "encryption_individual_verification_mode": "ຢືນຢັນແຕ່ລະລະບົບທີ່ໃຊ້ໂດຍຜູ້ໃຊ້ເພື່ອໝາຍວ່າເປັນທີ່ໜ້າເຊື່ອຖືໄດ້, ບໍ່ໄວ້ໃຈອຸປະກອນທີ່ cross-signed.",
+            "message_search_enabled": {
+                "one": "ຈັດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຊອກຫາ, ໂດຍໃຊ້ %(size)s ເພື່ອເກັບຂໍ້ຄວາມຈາກຫ້ອງ %(rooms)s.",
+                "other": "ຈັດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຊອກຫາ, ໂດຍໃຊ້ %(size)s ເພື່ອເກັບຂໍ້ຄວາມຈາກ %(rooms)s ຫ້ອງ."
+            },
+            "message_search_disabled": "ເກັບຮັກສາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຄົ້ນຫາ.",
+            "message_search_unsupported": "%(brand)s ຂາດບາງອົງປະກອບທີ່ຕ້ອງການສໍາລັບການເກັບຂໍ້ຄວາມເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ. ຖ້າທ່ານຕ້ອງການທົດລອງໃຊ້ຄຸນສົມບັດນີ້, ສ້າງ %(brand)s Desktop ແບບກຳນົດເອງດ້ວຍການເພີ່ມ <nativeLink>ອົງປະກອບການຄົ້ນຫາ</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s ບໍ່ສາມາດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ ໃນຂະນະທີ່ກຳລັງດຳເນີນການໃນເວັບບຣາວເຊີ. ໃຊ້ <desktopLink>%(brand)s Desktop</desktopLink> ເພື່ອໃຫ້ຂໍ້ຄວາມເຂົ້າລະຫັດຈະປາກົດໃນຜົນການຊອກຫາ.",
+            "message_search_failed": "ການເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບໍ່ສຳເລັດ"
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",
@@ -2788,7 +2783,6 @@
         "more_button": "ເພີ່ມເຕີມ"
     },
     "Other": "ອື່ນໆ",
-    "Advanced": "ຂັ້ນສູງ",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "ປ່ຽນຮູບ avatar",
@@ -2917,7 +2911,13 @@
         "upgrade_toast_title": "ມີການຍົກລະດັບການເຂົ້າລະຫັດ",
         "verify_toast_title": "ຢືນຢັນລະບົບນີ້",
         "set_up_toast_description": "ປ້ອງກັນການສູນເສຍການເຂົ້າເຖິງຂໍ້ຄວາມ ແລະຂໍ້ມູນທີ່ເຂົ້າລະຫັດ",
-        "verify_toast_description": "ຜູ້ໃຊ້ອື່ນໆອາດຈະບໍ່ໄວ້ວາງໃຈ"
+        "verify_toast_description": "ຜູ້ໃຊ້ອື່ນໆອາດຈະບໍ່ໄວ້ວາງໃຈ",
+        "cross_signing_unsupported": "homeserverຂອງທ່ານບໍ່ຮອງຮັບການລົງຊື່ຂ້າມ.",
+        "cross_signing_ready": "ການລົງຊື່ຂ້າມແມ່ນກຽມພ້ອມສໍາລັບການໃຊ້ງານ.",
+        "cross_signing_ready_no_backup": "ການລົງຊື່ຂ້າມແມ່ນພ້ອມແລ້ວແຕ່ກະແຈບໍ່ໄດ້ສຳຮອງໄວ້.",
+        "cross_signing_untrusted": "ບັນຊີຂອງທ່ານມີຂໍ້ມູນແບບ cross-signing ໃນການເກັບຮັກສາຄວາມລັບ, ແຕ່ວ່າຍັງບໍ່ມີຄວາມເຊື່ອຖືໃນລະບົບນີ້.",
+        "cross_signing_not_ready": "ບໍ່ໄດ້ຕັ້ງຄ່າ Cross-signing.",
+        "not_supported": "<ບໍ່ຮອງຮັບ>"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",

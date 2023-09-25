@@ -20,7 +20,6 @@
     "Failed to change password. Is your password correct?": "Wijzigen van wachtwoord is mislukt. Is je wachtwoord juist?",
     "Moderator": "Moderator",
     "not specified": "niet opgegeven",
-    "<not supported>": "<niet ondersteund>",
     "No display name": "Geen weergavenaam",
     "No more results": "Geen resultaten meer",
     "Profile": "Profiel",
@@ -491,7 +490,6 @@
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
     "Lock": "Hangslot",
     "Show more": "Meer tonen",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Sla versleutelde berichten veilig lokaal op om ze doorzoekbaar te maken.",
     "Cannot connect to integration manager": "Kan geen verbinding maken met de integratiebeheerder",
     "The integration manager is offline or it cannot reach your homeserver.": "De integratiebeheerder is offline of kan je homeserver niet bereiken.",
     "not stored": "niet opgeslagen",
@@ -510,7 +508,6 @@
     "This room is end-to-end encrypted": "Deze kamer is eind-tot-eind-versleuteld",
     "Everyone in this room is verified": "Iedereen in deze kamer is geverifieerd",
     "Direct Messages": "Direct gesprek",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Jouw account heeft een identiteit voor kruiselings ondertekenen in de sleutelopslag, maar die wordt nog niet vertrouwd door de huidige sessie.",
     "Secret storage public key:": "Sleutelopslag publieke sleutel:",
     "in account data": "in accountinformatie",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Verbind deze sessie met de sleutelback-up voordat je jezelf afmeldt. Dit voorkomt dat je sleutels verliest die alleen op deze sessie voorkomen.",
@@ -518,8 +515,6 @@
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Your keys are <b>not being backed up from this session</b>.": "Jouw sleutels worden <b>niet geback-upt van deze sessie</b>.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Je moet je <b>persoonlijke informatie</b> van de identiteitsserver <idserver /> <b>verwijderen</b> voordat je ontkoppelt. Helaas kan de identiteitsserver <idserver /> op dit moment niet worden bereikt. Mogelijk is hij offline.",
-    "Your homeserver does not support cross-signing.": "Jouw homeserver biedt geen ondersteuning voor kruiselings ondertekenen.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "In %(brand)s ontbreken enige modulen vereist voor het veilig lokaal bewaren van versleutelde berichten. Wil je deze functie uittesten, compileer dan een aangepaste versie van %(brand)s Desktop <nativeLink>die de zoekmodulen bevat</nativeLink>.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Deze sessie <b>maakt geen back-ups van je sleutels</b>, maar je beschikt over een reeds bestaande back-up waaruit je kan herstellen en waaraan je nieuwe sleutels vanaf nu kunt toevoegen.",
     "Encrypted by an unverified session": "Versleuteld door een niet-geverifieerde sessie",
     "Unencrypted": "Onversleuteld",
@@ -1069,14 +1064,6 @@
     "Backup key stored:": "Back-up sleutel bewaard:",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Maak een back-up van je versleutelingssleutels met je accountgegevens voor het geval je de toegang tot je sessies verliest. Je sleutels worden beveiligd met een unieke veiligheidssleutel.",
     "well formed": "goed gevormd",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s kan versleutelde berichten niet veilig lokaal opslaan in een webbrowser. Gebruik <desktopLink>%(brand)s Desktop</desktopLink> om versleutelde berichten in zoekresultaten te laten verschijnen.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Veilig lokaal opslaan van versleutelde berichten zodat ze in de zoekresultaten verschijnen, gebruik %(size)s voor het opslaan van berichten uit %(rooms)s kamer.",
-        "other": "Veilig lokaal opslaan van versleutelde berichten zodat ze in de zoekresultaten verschijnen, gebruik %(size)s voor het opslaan van berichten uit %(rooms)s kamers."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifieer elke sessie die door een persoon wordt gebruikt afzonderlijk. Dit markeert hen als vertrouwd zonder te vertrouwen op kruislings ondertekende apparaten.",
-    "Cross-signing is not set up.": "Kruiselings ondertekenen is niet ingesteld.",
-    "Cross-signing is ready for use.": "Kruiselings ondertekenen is klaar voor gebruik.",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Als je nu annuleert, kan je versleutelde berichten en gegevens verliezen als je geen toegang meer hebt tot je login.",
@@ -1171,7 +1158,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
     "Unable to access your microphone": "Geen toegang tot je microfoon",
     "Connecting": "Verbinden",
-    "Message search initialisation failed": "Zoeken in berichten opstarten is mislukt",
     "Search names and descriptions": "In namen en omschrijvingen zoeken",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
@@ -1302,7 +1288,6 @@
     "Unknown failure: %(reason)s": "Onbekende fout: %(reason)s",
     "Rooms and spaces": "Kamers en Spaces",
     "Results": "Resultaten",
-    "Cross-signing is ready but keys are not backed up.": "Kruiselings ondertekenen is klaar, maar de sleutels zijn nog niet geback-upt.",
     "Some encryption parameters have been changed.": "Enkele versleutingsparameters zijn gewijzigd.",
     "Role in <RoomName/>": "Rol in <RoomName/>",
     "Unknown failure": "Onbekende fout",
@@ -1766,7 +1751,8 @@
         "all_rooms": "Alle kamers",
         "deselect_all": "Allemaal deselecteren",
         "select_all": "Allemaal selecteren",
-        "copied": "Gekopieerd!"
+        "copied": "Gekopieerd!",
+        "Advanced": "Geavanceerd"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2269,7 +2255,16 @@
             "bulk_options_accept_all_invites": "Alle %(invitedRooms)s de uitnodigingen aannemen",
             "bulk_options_reject_all_invites": "Alle %(invitedRooms)s de uitnodigingen weigeren",
             "message_search_section": "Berichten zoeken",
-            "analytics_subsection_description": "Deel anonieme gedragsdata om ons te helpen problemen te identificeren. Geen persoonsgegevens. Geen derde partijen."
+            "analytics_subsection_description": "Deel anonieme gedragsdata om ons te helpen problemen te identificeren. Geen persoonsgegevens. Geen derde partijen.",
+            "encryption_individual_verification_mode": "Verifieer elke sessie die door een persoon wordt gebruikt afzonderlijk. Dit markeert hen als vertrouwd zonder te vertrouwen op kruislings ondertekende apparaten.",
+            "message_search_enabled": {
+                "one": "Veilig lokaal opslaan van versleutelde berichten zodat ze in de zoekresultaten verschijnen, gebruik %(size)s voor het opslaan van berichten uit %(rooms)s kamer.",
+                "other": "Veilig lokaal opslaan van versleutelde berichten zodat ze in de zoekresultaten verschijnen, gebruik %(size)s voor het opslaan van berichten uit %(rooms)s kamers."
+            },
+            "message_search_disabled": "Sla versleutelde berichten veilig lokaal op om ze doorzoekbaar te maken.",
+            "message_search_unsupported": "In %(brand)s ontbreken enige modulen vereist voor het veilig lokaal bewaren van versleutelde berichten. Wil je deze functie uittesten, compileer dan een aangepaste versie van %(brand)s Desktop <nativeLink>die de zoekmodulen bevat</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s kan versleutelde berichten niet veilig lokaal opslaan in een webbrowser. Gebruik <desktopLink>%(brand)s Desktop</desktopLink> om versleutelde berichten in zoekresultaten te laten verschijnen.",
+            "message_search_failed": "Zoeken in berichten opstarten is mislukt"
         },
         "preferences": {
             "room_list_heading": "Kamerslijst",
@@ -3036,7 +3031,6 @@
         "more_button": "Meer"
     },
     "Other": "Overige",
-    "Advanced": "Geavanceerd",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Space-afbeelding wijzigen",
@@ -3170,7 +3164,13 @@
         "upgrade_toast_title": "Versleutelingsupgrade beschikbaar",
         "verify_toast_title": "Verifieer deze sessie",
         "set_up_toast_description": "Beveiliging tegen verlies van toegang tot versleutelde berichten en gegevens",
-        "verify_toast_description": "Mogelijk wantrouwen anderen het"
+        "verify_toast_description": "Mogelijk wantrouwen anderen het",
+        "cross_signing_unsupported": "Jouw homeserver biedt geen ondersteuning voor kruiselings ondertekenen.",
+        "cross_signing_ready": "Kruiselings ondertekenen is klaar voor gebruik.",
+        "cross_signing_ready_no_backup": "Kruiselings ondertekenen is klaar, maar de sleutels zijn nog niet geback-upt.",
+        "cross_signing_untrusted": "Jouw account heeft een identiteit voor kruiselings ondertekenen in de sleutelopslag, maar die wordt nog niet vertrouwd door de huidige sessie.",
+        "cross_signing_not_ready": "Kruiselings ondertekenen is niet ingesteld.",
+        "not_supported": "<niet ondersteund>"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",

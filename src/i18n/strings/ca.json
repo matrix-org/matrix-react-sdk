@@ -239,7 +239,8 @@
         "integration_manager": "Gestor d'integracions",
         "on": "Engegat",
         "off": "Apagat",
-        "copied": "Copiat!"
+        "copied": "Copiat!",
+        "Advanced": "Avançat"
     },
     "action": {
         "continue": "Continua",
@@ -588,7 +589,6 @@
         "no_permission_conference_description": "No tens permís per iniciar una conferència telefònica en aquesta sala"
     },
     "Other": "Altres",
-    "Advanced": "Avançat",
     "composer": {
         "placeholder_reply_encrypted": "Envia una resposta xifrada…",
         "placeholder_encrypted": "Envia un missatge xifrat…"

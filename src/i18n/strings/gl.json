@@ -133,7 +133,6 @@
     "Uploading %(filename)s": "Subindo %(filename)s",
     "Failed to change password. Is your password correct?": "Fallo ao cambiar o contrasinal. É correcto o contrasinal?",
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
-    "<not supported>": "<non soportado>",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
     "Profile": "Perfil",
@@ -309,15 +308,10 @@
     "Headphones": "Auriculares",
     "Folder": "Cartafol",
     "Show more": "Mostrar máis",
-    "Your homeserver does not support cross-signing.": "O teu servidor non soporta a sinatura cruzada.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "A túa conta ten unha identidade de sinatura cruzada no almacenaxe segredo, pero aínda non confiaches nela nesta sesión.",
     "well formed": "ben formado",
     "unexpected type": "tipo non agardado",
     "Secret storage public key:": "Chave pública da almacenaxe segreda:",
     "in account data": "nos datos da conta",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verificar individualmente cada sesión utilizada pola usuaria para marcala como confiable, non confiando en dispositivos con sinatura cruzada.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Gardar de xeito seguro mensaxes cifradas na caché local para que aparezan nos resultados de buscas.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Falta un compoñente de %(brand)s requerido para almacenar localmente mensaxes cifradas na caché. Se queres experimentar con esta función, compila unha versión personalizada de %(brand)s Desktop <nativeLink>cos compoñentes de busca engadidos</nativeLink>.",
     "Cannot connect to integration manager": "Non se puido conectar co xestor de intregración",
     "The integration manager is offline or it cannot reach your homeserver.": "O xestor de integración non está en liña ou non é accesible desde o teu servidor.",
     "Delete Backup": "Borrar copia de apoio",
@@ -726,7 +720,6 @@
     "Set a Security Phrase": "Establece a Frase de Seguridade",
     "Confirm Security Phrase": "Confirma a Frase de Seguridade",
     "Save your Security Key": "Garda a Chave de Seguridade",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non pode por na caché local de xeito as mensaxes cifradas cando usa un navegador web. Usa <desktopLink>%(brand)s Desktop</desktopLink> para que as mensaxes cifradas aparezan nos resultados.",
     "Favourited": "Con marca de Favorita",
     "Forget Room": "Esquecer sala",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
@@ -751,8 +744,6 @@
     "Not encrypted": "Sen cifrar",
     "Room settings": "Axustes da sala",
     "Take a picture": "Tomar unha foto",
-    "Cross-signing is ready for use.": "A Sinatura-Cruzada está lista para usar.",
-    "Cross-signing is not set up.": "Non está configurada a Sinatura-Cruzada.",
     "Backup version:": "Versión da copia:",
     "Algorithm:": "Algoritmo:",
     "Backup key stored:": "Chave da copia gardada:",
@@ -1040,10 +1031,6 @@
     "Equatorial Guinea": "Guinea Ecuatorial",
     "El Salvador": "O Salvador",
     "Egypt": "Exipto",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Conservar na memoria local as mensaxes cifradas de xeito seguro para que aparezan nas buscas, usando %(size)s para gardar mensaxes de %(rooms)s salas.",
-        "other": "Conservar na memoria local as mensaxes cifradas de xeito seguro para que aparezan nas buscas, usando %(size)s para gardar mensaxes de %(rooms)s salas."
-    },
     "Decline All": "Rexeitar todo",
     "This widget would like to:": "O widget podería querer:",
     "Approve widget permissions": "Aprovar permisos do widget",
@@ -1176,7 +1163,6 @@
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Add reaction": "Engadir reacción",
-    "Message search initialisation failed": "Fallou a inicialización da busca de mensaxes",
     "Currently joining %(count)s rooms": {
         "one": "Neste intre estás en %(count)s sala",
         "other": "Neste intre estás en %(count)s salas"
@@ -1302,7 +1288,6 @@
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
     "Rooms and spaces": "Salas e espazos",
     "Results": "Resultados",
-    "Cross-signing is ready but keys are not backed up.": "A sinatura-cruzada está preparada pero non hai copia das chaves.",
     "Some encryption parameters have been changed.": "Algún dos parámetros de cifrado foron cambiados.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
     "Unknown failure": "Fallo descoñecido",
@@ -1726,7 +1711,8 @@
         "all_rooms": "Todas as salas",
         "deselect_all": "Retirar selección a todos",
         "select_all": "Seleccionar todos",
-        "copied": "Copiado!"
+        "copied": "Copiado!",
+        "Advanced": "Avanzado"
     },
     "action": {
         "continue": "Continuar",
@@ -2227,7 +2213,16 @@
             "bulk_options_accept_all_invites": "Aceptar os %(invitedRooms)s convites",
             "bulk_options_reject_all_invites": "Rexeitar todos os %(invitedRooms)s convites",
             "message_search_section": "Buscar mensaxe",
-            "analytics_subsection_description": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes."
+            "analytics_subsection_description": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
+            "encryption_individual_verification_mode": "Verificar individualmente cada sesión utilizada pola usuaria para marcala como confiable, non confiando en dispositivos con sinatura cruzada.",
+            "message_search_enabled": {
+                "one": "Conservar na memoria local as mensaxes cifradas de xeito seguro para que aparezan nas buscas, usando %(size)s para gardar mensaxes de %(rooms)s salas.",
+                "other": "Conservar na memoria local as mensaxes cifradas de xeito seguro para que aparezan nas buscas, usando %(size)s para gardar mensaxes de %(rooms)s salas."
+            },
+            "message_search_disabled": "Gardar de xeito seguro mensaxes cifradas na caché local para que aparezan nos resultados de buscas.",
+            "message_search_unsupported": "Falta un compoñente de %(brand)s requerido para almacenar localmente mensaxes cifradas na caché. Se queres experimentar con esta función, compila unha versión personalizada de %(brand)s Desktop <nativeLink>cos compoñentes de busca engadidos</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s non pode por na caché local de xeito as mensaxes cifradas cando usa un navegador web. Usa <desktopLink>%(brand)s Desktop</desktopLink> para que as mensaxes cifradas aparezan nos resultados.",
+            "message_search_failed": "Fallou a inicialización da busca de mensaxes"
         },
         "preferences": {
             "room_list_heading": "Listaxe de Salas",
@@ -2963,7 +2958,6 @@
         "more_button": "Máis"
     },
     "Other": "Outro",
-    "Advanced": "Avanzado",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Cambiar o avatar do espazo",
@@ -3095,7 +3089,13 @@
         "upgrade_toast_title": "Mellora do cifrado dispoñible",
         "verify_toast_title": "Verificar esta sesión",
         "set_up_toast_description": "Protéxete de perder o acceso a mensaxes e datos cifrados",
-        "verify_toast_description": "Outras usuarias poderían non confiar"
+        "verify_toast_description": "Outras usuarias poderían non confiar",
+        "cross_signing_unsupported": "O teu servidor non soporta a sinatura cruzada.",
+        "cross_signing_ready": "A Sinatura-Cruzada está lista para usar.",
+        "cross_signing_ready_no_backup": "A sinatura-cruzada está preparada pero non hai copia das chaves.",
+        "cross_signing_untrusted": "A túa conta ten unha identidade de sinatura cruzada no almacenaxe segredo, pero aínda non confiaches nela nesta sesión.",
+        "cross_signing_not_ready": "Non está configurada a Sinatura-Cruzada.",
+        "not_supported": "<non soportado>"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",

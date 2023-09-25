@@ -14,7 +14,6 @@
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "As novas senhas informadas precisam ser idênticas.",
-    "<not supported>": "<não suportado>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
     "Profile": "Perfil",
     "Reject invitation": "Recusar o convite",
@@ -341,16 +340,10 @@
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "Lock": "Cadeado",
     "Show more": "Mostrar mais",
-    "Your homeserver does not support cross-signing.": "Seu servidor não suporta a autoverificação.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Sua conta tem uma identidade autoverificada em armazenamento secreto, mas ainda não é considerada confiável por esta sessão.",
     "well formed": "bem formado",
     "unexpected type": "tipo inesperado",
     "Secret storage public key:": "Chave pública do armazenamento secreto:",
     "in account data": "nos dados de conta",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifique individualmente cada sessão usada por um usuário para marcá-la como confiável, em vez de confirmar em aparelhos autoverificados.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Armazene mensagens criptografadas de forma segura localmente para que possam aparecer nos resultados das buscas.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s precisa de componentes adicionais para pesquisar as mensagens criptografadas armazenadas localmente. Se quiser testar esse recurso, construa uma versão do %(brand)s para Computador com <nativeLink>componentes de busca ativados</nativeLink>.",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s não consegue pesquisar as mensagens criptografadas armazenadas localmente em um navegador de internet. Use o <desktopLink>%(brand)s para Computador</desktopLink> para que as mensagens criptografadas sejam exibidas nos resultados de buscas.",
     "Cannot connect to integration manager": "Não foi possível conectar ao gerenciador de integrações",
     "The integration manager is offline or it cannot reach your homeserver.": "Ou o gerenciador de integrações está indisponível, ou ele não conseguiu acessar o seu servidor.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Esta sessão <b>não está fazendo backup de suas chaves</b>, mas você tem um backup existente que pode restaurar para continuar.",
@@ -738,8 +731,6 @@
     "Backup key cached:": "Backup da chave em cache:",
     "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
-    "Cross-signing is ready for use.": "A autoverificação está pronta para uso.",
-    "Cross-signing is not set up.": "A autoverificação não está configurada.",
     "Failed to save your profile": "Houve uma falha ao salvar o seu perfil",
     "The operation could not be completed": "A operação não foi concluída",
     "Algorithm:": "Algoritmo:",
@@ -1039,10 +1030,6 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Armazene mensagens criptografadas de forma segura localmente para que apareçam nos resultados das buscas. %(size)s é necessário para armazenar mensagens de %(rooms)s sala.",
-        "other": "Armazene mensagens criptografadas de forma segura localmente para que apareçam nos resultados das buscas. %(size)s é necessário para armazenar mensagens de %(rooms)s salas."
-    },
     "Decline All": "Recusar tudo",
     "This widget would like to:": "Este widget gostaria de:",
     "Approve widget permissions": "Autorizar as permissões do widget",
@@ -1145,7 +1132,6 @@
     "unknown person": "pessoa desconhecida",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
-    "Message search initialisation failed": "Falha na inicialização da pesquisa de mensagens",
     "Allow people to preview your space before they join.": "Permite que pessoas vejam seu espaço antes de entrarem.",
     "Failed to update the visibility of this space": "Falha ao atualizar a visibilidade deste espaço",
     "Decide who can view and join %(spaceName)s.": "Decide quem pode ver e se juntar a %(spaceName)s.",
@@ -1234,7 +1220,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "Cross-signing is ready but keys are not backed up.": "A verificação está pronta mas as chaves não tem um backup configurado.",
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
     "Error - Mixed content": "Erro - Conteúdo misto",
     "Error loading Widget": "Erro ao carregar o Widget",
@@ -1448,7 +1433,8 @@
         "all_rooms": "Todas as salas",
         "deselect_all": "Desmarcar todos",
         "select_all": "Selecionar tudo",
-        "copied": "Copiado!"
+        "copied": "Copiado!",
+        "Advanced": "Avançado"
     },
     "action": {
         "continue": "Continuar",
@@ -1848,7 +1834,16 @@
             "bulk_options_accept_all_invites": "Aceite todos os convites de %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Recusar todos os %(invitedRooms)s convites",
             "message_search_section": "Pesquisa de mensagens",
-            "analytics_subsection_description": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros."
+            "analytics_subsection_description": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros.",
+            "encryption_individual_verification_mode": "Verifique individualmente cada sessão usada por um usuário para marcá-la como confiável, em vez de confirmar em aparelhos autoverificados.",
+            "message_search_enabled": {
+                "one": "Armazene mensagens criptografadas de forma segura localmente para que apareçam nos resultados das buscas. %(size)s é necessário para armazenar mensagens de %(rooms)s sala.",
+                "other": "Armazene mensagens criptografadas de forma segura localmente para que apareçam nos resultados das buscas. %(size)s é necessário para armazenar mensagens de %(rooms)s salas."
+            },
+            "message_search_disabled": "Armazene mensagens criptografadas de forma segura localmente para que possam aparecer nos resultados das buscas.",
+            "message_search_unsupported": "%(brand)s precisa de componentes adicionais para pesquisar as mensagens criptografadas armazenadas localmente. Se quiser testar esse recurso, construa uma versão do %(brand)s para Computador com <nativeLink>componentes de busca ativados</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s não consegue pesquisar as mensagens criptografadas armazenadas localmente em um navegador de internet. Use o <desktopLink>%(brand)s para Computador</desktopLink> para que as mensagens criptografadas sejam exibidas nos resultados de buscas.",
+            "message_search_failed": "Falha na inicialização da pesquisa de mensagens"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -2481,7 +2476,6 @@
         "more_button": "Mais"
     },
     "Other": "Outros",
-    "Advanced": "Avançado",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Alterar avatar do espaço",
@@ -2599,7 +2593,13 @@
         "upgrade_toast_title": "Atualização de criptografia disponível",
         "verify_toast_title": "Confirmar esta sessão",
         "set_up_toast_description": "Proteja-se contra a perda de acesso a mensagens e dados criptografados",
-        "verify_toast_description": "Outras(os) usuárias(os) podem não confiar nela"
+        "verify_toast_description": "Outras(os) usuárias(os) podem não confiar nela",
+        "cross_signing_unsupported": "Seu servidor não suporta a autoverificação.",
+        "cross_signing_ready": "A autoverificação está pronta para uso.",
+        "cross_signing_ready_no_backup": "A verificação está pronta mas as chaves não tem um backup configurado.",
+        "cross_signing_untrusted": "Sua conta tem uma identidade autoverificada em armazenamento secreto, mas ainda não é considerada confiável por esta sessão.",
+        "cross_signing_not_ready": "A autoverificação não está configurada.",
+        "not_supported": "<não suportado>"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",

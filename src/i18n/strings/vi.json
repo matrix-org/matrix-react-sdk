@@ -1062,23 +1062,8 @@
     "Upgrade required": "Yêu cầu nâng cấp",
     "The integration manager is offline or it cannot reach your homeserver.": "Trình quản lý tích hợp đang ngoại tuyến hoặc không thể kết nối với Máy chủ của bạn.",
     "Cannot connect to integration manager": "Không thể kết nối với trình quản lý tích hợp",
-    "Message search initialisation failed": "Khởi tạo tìm kiếm tin nhắn không thành công",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s không thể lưu trữ cục bộ an toàn các tin nhắn được mã hóa khi đang chạy trong trình duyệt web. Sử dụng <desktopLink>%(brand)s cho máy tính</desktopLink> để các tin nhắn được mã hóa xuất hiện trong kết quả tìm kiếm.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s thiếu một số thành phần thiết yếu để lưu trữ cục bộ an toàn các tin nhắn được mã hóa. Nếu bạn muốn thử nghiệm với tính năng này, hãy dựng một bản %(brand)s tùy chỉnh cho máy tính có thêm <nativeLink>các thành phần để tìm kiếm</nativeLink>.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Bộ nhớ cache an toàn các tin nhắn được mã hóa cục bộ để chúng xuất hiện trong kết quả tìm kiếm.",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Lưu trữ cục bộ an toàn các tin nhắn đã được mã hóa để chúng xuất hiện trong các kết quả tìm kiếm, sử dụng %(size)s để lưu trữ các tin nhắn từ %(rooms)s phòng.",
-        "other": "Lưu trữ an toàn các tin nhắn đã được mã hóa trên thiết bị để chúng xuất hiện trong các kết quả tìm kiếm, sử dụng %(size)s để lưu trữ các tin nhắn từ các %(rooms)s phòng."
-    },
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Xác thực riêng từng phiên được người dùng sử dụng để đánh dấu phiên đó là đáng tin cậy, không tin cậy vào các thiết bị được xác thực chéo.",
     "Failed to set display name": "Không đặt được tên hiển thị",
     "Authentication": "Đăng nhập",
-    "<not supported>": "<không được hỗ trợ>",
-    "Cross-signing is not set up.": "Tính năng xác thực chéo chưa được thiết lập.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Tài khoản của bạn có danh tính xác thực chéo trong vùng lưu trữ bí mật, nhưng chưa được phiên này tin cậy.",
-    "Cross-signing is ready but keys are not backed up.": "Xác thực chéo đã sẵn sàng nhưng các khóa chưa được sao lưu.",
-    "Cross-signing is ready for use.": "Xác thực chéo đã sẵn sàng để sử dụng.",
-    "Your homeserver does not support cross-signing.": "Máy chủ của bạn không hỗ trợ xác thực chéo.",
     "Warning!": "Cảnh báo!",
     "No display name": "Không có tên hiển thị",
     "Zimbabwe": "Zimbabwe",
@@ -1761,7 +1746,8 @@
         "all_rooms": "Tất cả các phòng",
         "deselect_all": "Bỏ chọn tất cả",
         "select_all": "Chọn tất cả",
-        "copied": "Đã sao chép!"
+        "copied": "Đã sao chép!",
+        "Advanced": "Nâng cao"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2292,7 +2278,16 @@
             "bulk_options_accept_all_invites": "Chấp nhận tất cả các lời mời từ %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Từ chối tất cả lời mời từ %(invitedRooms)s",
             "message_search_section": "Tìm kiếm tin nhắn",
-            "analytics_subsection_description": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba."
+            "analytics_subsection_description": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba.",
+            "encryption_individual_verification_mode": "Xác thực riêng từng phiên được người dùng sử dụng để đánh dấu phiên đó là đáng tin cậy, không tin cậy vào các thiết bị được xác thực chéo.",
+            "message_search_enabled": {
+                "one": "Lưu trữ cục bộ an toàn các tin nhắn đã được mã hóa để chúng xuất hiện trong các kết quả tìm kiếm, sử dụng %(size)s để lưu trữ các tin nhắn từ %(rooms)s phòng.",
+                "other": "Lưu trữ an toàn các tin nhắn đã được mã hóa trên thiết bị để chúng xuất hiện trong các kết quả tìm kiếm, sử dụng %(size)s để lưu trữ các tin nhắn từ các %(rooms)s phòng."
+            },
+            "message_search_disabled": "Bộ nhớ cache an toàn các tin nhắn được mã hóa cục bộ để chúng xuất hiện trong kết quả tìm kiếm.",
+            "message_search_unsupported": "%(brand)s thiếu một số thành phần thiết yếu để lưu trữ cục bộ an toàn các tin nhắn được mã hóa. Nếu bạn muốn thử nghiệm với tính năng này, hãy dựng một bản %(brand)s tùy chỉnh cho máy tính có thêm <nativeLink>các thành phần để tìm kiếm</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s không thể lưu trữ cục bộ an toàn các tin nhắn được mã hóa khi đang chạy trong trình duyệt web. Sử dụng <desktopLink>%(brand)s cho máy tính</desktopLink> để các tin nhắn được mã hóa xuất hiện trong kết quả tìm kiếm.",
+            "message_search_failed": "Khởi tạo tìm kiếm tin nhắn không thành công"
         },
         "preferences": {
             "room_list_heading": "Danh sách phòng",
@@ -3099,7 +3094,6 @@
         "more_button": "Thêm"
     },
     "Other": "Khác",
-    "Advanced": "Nâng cao",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Đổi ảnh đại diện của không gian",
@@ -3239,7 +3233,13 @@
         "upgrade_toast_title": "Nâng cấp mã hóa có sẵn",
         "verify_toast_title": "Xác thực phiên này",
         "set_up_toast_description": "Bảo vệ chống mất quyền truy cập vào tin nhắn và dữ liệu được mã hóa",
-        "verify_toast_description": "Những người dùng khác có thể không tin tưởng nó"
+        "verify_toast_description": "Những người dùng khác có thể không tin tưởng nó",
+        "cross_signing_unsupported": "Máy chủ của bạn không hỗ trợ xác thực chéo.",
+        "cross_signing_ready": "Xác thực chéo đã sẵn sàng để sử dụng.",
+        "cross_signing_ready_no_backup": "Xác thực chéo đã sẵn sàng nhưng các khóa chưa được sao lưu.",
+        "cross_signing_untrusted": "Tài khoản của bạn có danh tính xác thực chéo trong vùng lưu trữ bí mật, nhưng chưa được phiên này tin cậy.",
+        "cross_signing_not_ready": "Tính năng xác thực chéo chưa được thiết lập.",
+        "not_supported": "<không được hỗ trợ>"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",

@@ -159,7 +159,6 @@
         "other": "Dhe %(count)s të tjerë…"
     },
     "Connectivity to the server has been lost.": "Humbi lidhja me shërbyesin.",
-    "<not supported>": "<nuk mbulohet>",
     "A new password must be entered.": "Duhet dhënë një fjalëkalim i ri.",
     "%(roomName)s is not accessible at this time.": "Te %(roomName)s s’hyhet dot tani.",
     "Error decrypting attachment": "Gabim në shfshehtëzim bashkëngjitjeje",
@@ -568,9 +567,6 @@
     "Enter your account password to confirm the upgrade:": "Që të ripohohet përmirësimi, jepni fjalëkalimin e llogarisë tuaj:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Do t’ju duhet të bëni mirëfilltësimin me shërbyesin që të ripohohet përmirësimi.",
     "Upgrade your encryption": "Përmirësoni fshehtëzimin tuaj",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Ruaj lokalisht në mënyrë të sigurt në fshehtinë mesazhet që të shfaqen në përfundime kërkimi.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s-it i mungojnë disa përbërës të domosdoshëm për ruajtje lokalisht në mënyrë të sigurt në fshehtinë mesazhe. Nëse do të donit të eksperimentonit me këtë veçori, montoni një Desktop vetjak %(brand)s Desktop me <nativeLink>shtim përbërësish kërkimi</nativeLink>.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ky sesion <b>nuk po bën kopjeruajtje të kyçeve tuaja</b>, por keni një kopjeruajtje ekzistuese që mund ta përdorni për rimarrje dhe ta shtoni më tej.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Lidheni këtë sesion kopjeruajtje kyçesh, përpara se të dilni, që të shmangni humbje të çfarëdo kyçi që mund të gjendet vetëm në këtë pajisje.",
     "Connect this session to Key Backup": "Lidhe këtë sesion me Kopjeruajtje Kyçesh",
@@ -622,7 +618,6 @@
     "Verify by scanning": "Verifikoje me skanim",
     "You declined": "Hodhët poshtë",
     "%(name)s declined": "%(name)s hodhi poshtë",
-    "Your homeserver does not support cross-signing.": "Shërbyesi juaj Home nuk mbulon <em>cross-signing</em>.",
     "Accepting…": "Po pranohet…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
     "Mark all as read": "Vëru të tërave shenjë si të lexuara",
@@ -654,7 +649,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Ripohojeni duke krahasuar sa vijon me Rregullimet e Përdoruesit te sesioni juaj tjetër:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ripohojeni këtë sesion përdoruesi duke krahasuar sa vijon me Rregullimet e tij të Përdoruesit:",
     "If they don't match, the security of your communication may be compromised.": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifikoni individualisht çdo sesion të përdorur nga një përdorues, për t’i vënë shenjë si i besuar, duke mos besuar pajisje <em>cross-signed</em>.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Në dhoma të fshehtëzuara, mesazhet tuaj sigurohen dhe vetëm ju dhe marrësi ka kyçet unikë për shkyçjen e tyre.",
     "Verify all users in a room to ensure it's secure.": "Verifiko krejt përdoruesit në dhomë, për të garantuar se është e sigurt.",
     "Almost there! Is %(displayName)s showing the same shield?": "Thuaje mbërritëm! A shfaq %(displayName)s të njëjtën mburojë?",
@@ -726,7 +720,6 @@
     "Set a Security Phrase": "Caktoni një Frazë Sigurie",
     "Confirm Security Phrase": "Ripohoni Frazë Sigurie",
     "Save your Security Key": "Ruani Kyçin tuaj të Sigurisë",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s s’mund të ruajë lokalisht në fshehtinë në mënyrë të siguruar mesazhe të fshehtëzuar, teksa xhirohet në një shfletues. Që mesazhet e fshehtëzuar të shfaqen te përfundime kërkimi, përdorni <desktopLink>%(brand)s Desktop</desktopLink>.",
     "Forget Room": "Harroje Dhomën",
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
@@ -761,8 +754,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
-    "Cross-signing is ready for use.": "“Cross-signing” është gati për përdorim.",
-    "Cross-signing is not set up.": "“Cross-signing” s’është ujdisur.",
     "Ignored attempt to disable encryption": "U shpërfill përpjekje për të çaktivizuar fshehtëzimin",
     "Join the conference at the top of this room": "Merrni pjesë në konferencë, në krye të kësaj dhome",
     "Join the conference from the room information card on the right": "Merrni pjesë në konferencë që prej kartës së informacionit mbi dhomën, në të djathtë",
@@ -1037,10 +1028,6 @@
     "Bangladesh": "Bangladesh",
     "Falkland Islands": "Ishujt Falkland",
     "Sweden": "Suedi",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Ruajini lokalisht në fshehtinë në mënyrë të sigurt mesazhet e fshehtëzuar, që të shfaqen në përfundime kërkimi, duke përdorur %(size)s që të depozitoni mesazhe nga %(rooms)s dhomë.",
-        "other": "Ruajini lokalisht në fshehtinë në mënyrë të sigurt mesazhet e fshehtëzuar, që të shfaqen në përfundime kërkimi, duke përdorur %(size)s që të depozitoni mesazhe nga %(rooms)s dhoma."
-    },
     "Decline All": "Hidhi Krejt Poshtë",
     "This widget would like to:": "Ky widget do të donte të:",
     "Approve widget permissions": "Miratoni leje widget-i",
@@ -1171,7 +1158,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
     "Unable to access your microphone": "S’arrihet të përdoret mikrofoni juaj",
     "Connecting": "Po lidhet",
-    "Message search initialisation failed": "Dështoi gatitje kërkimi mesazhesh",
     "Currently joining %(count)s rooms": {
         "one": "Aktualisht duke hyrë në %(count)s dhomë",
         "other": "Aktualisht duke hyrë në %(count)s dhoma"
@@ -1295,7 +1281,6 @@
     "Stop recording": "Ndale regjistrimin",
     "Send voice message": "Dërgoni mesazh zanor",
     "Unknown failure: %(reason)s": "Dështim për arsye të panjohur: %(reason)s",
-    "Cross-signing is ready but keys are not backed up.": "“Cross-signing” është gati, por kyçet s’janë koperuajtur.",
     "Rooms and spaces": "Dhoma dhe hapësira",
     "Results": "Përfundime",
     "Thumbs up": "Thumbs up",
@@ -1883,7 +1868,8 @@
         "all_rooms": "Krejt dhomat",
         "deselect_all": "Shpërzgjidhi krejt",
         "select_all": "Përzgjidhi krejt",
-        "copied": "U kopjua!"
+        "copied": "U kopjua!",
+        "Advanced": "Të mëtejshme"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2433,7 +2419,16 @@
             "bulk_options_accept_all_invites": "Prano krejt ftesat prej %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Mos prano asnjë ftesë për në %(invitedRooms)s",
             "message_search_section": "Kërkim mesazhesh",
-            "analytics_subsection_description": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta."
+            "analytics_subsection_description": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta.",
+            "encryption_individual_verification_mode": "Verifikoni individualisht çdo sesion të përdorur nga një përdorues, për t’i vënë shenjë si i besuar, duke mos besuar pajisje <em>cross-signed</em>.",
+            "message_search_enabled": {
+                "one": "Ruajini lokalisht në fshehtinë në mënyrë të sigurt mesazhet e fshehtëzuar, që të shfaqen në përfundime kërkimi, duke përdorur %(size)s që të depozitoni mesazhe nga %(rooms)s dhomë.",
+                "other": "Ruajini lokalisht në fshehtinë në mënyrë të sigurt mesazhet e fshehtëzuar, që të shfaqen në përfundime kërkimi, duke përdorur %(size)s që të depozitoni mesazhe nga %(rooms)s dhoma."
+            },
+            "message_search_disabled": "Ruaj lokalisht në mënyrë të sigurt në fshehtinë mesazhet që të shfaqen në përfundime kërkimi.",
+            "message_search_unsupported": "%(brand)s-it i mungojnë disa përbërës të domosdoshëm për ruajtje lokalisht në mënyrë të sigurt në fshehtinë mesazhe. Nëse do të donit të eksperimentonit me këtë veçori, montoni një Desktop vetjak %(brand)s Desktop me <nativeLink>shtim përbërësish kërkimi</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s s’mund të ruajë lokalisht në fshehtinë në mënyrë të siguruar mesazhe të fshehtëzuar, teksa xhirohet në një shfletues. Që mesazhet e fshehtëzuar të shfaqen te përfundime kërkimi, përdorni <desktopLink>%(brand)s Desktop</desktopLink>.",
+            "message_search_failed": "Dështoi gatitje kërkimi mesazhesh"
         },
         "preferences": {
             "room_list_heading": "Listë dhomash",
@@ -3271,7 +3266,6 @@
         "more_button": "Më tepër"
     },
     "Other": "Tjetër",
-    "Advanced": "Të mëtejshme",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ndryshoni avatar hapësire",
@@ -3410,7 +3404,13 @@
         "upgrade_toast_title": "Ka të gatshëm përmirësim fshehtëzimi",
         "verify_toast_title": "Verifikoni këtë sesion",
         "set_up_toast_description": "Mbrohuni nga humbja e hyrjes te mesazhe & të dhëna të fshehtëzuara",
-        "verify_toast_description": "Përdorues të tjerë mund të mos e besojnë"
+        "verify_toast_description": "Përdorues të tjerë mund të mos e besojnë",
+        "cross_signing_unsupported": "Shërbyesi juaj Home nuk mbulon <em>cross-signing</em>.",
+        "cross_signing_ready": "“Cross-signing” është gati për përdorim.",
+        "cross_signing_ready_no_backup": "“Cross-signing” është gati, por kyçet s’janë koperuajtur.",
+        "cross_signing_untrusted": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
+        "cross_signing_not_ready": "“Cross-signing” s’është ujdisur.",
+        "not_supported": "<nuk mbulohet>"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",

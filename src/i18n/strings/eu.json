@@ -56,7 +56,6 @@
     "Invited": "Gonbidatuta",
     "New passwords must match each other.": "Pasahitz berriak berdinak izan behar dira.",
     "not specified": "zehaztu gabe",
-    "<not supported>": "<euskarririk gabe>",
     "No display name": "Pantaila izenik ez",
     "No more results": "Emaitza gehiagorik ez",
     "Profile": "Profila",
@@ -569,7 +568,6 @@
     "Enter your account password to confirm the upgrade:": "Sartu zure kontuaren pasa-hitza eguneraketa baieztatzeko:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Zerbitzariarekin autentifikatu beharko duzu eguneraketa baieztatzeko.",
     "Upgrade your encryption": "Eguneratu zure zifratzea",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Zure kontuak zeharkako sinatze identitate bat du biltegi sekretuan, baina saio honek ez du oraindik fidagarritzat.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Saio honek <b>ez du zure gakoen babes-kopia egiten</b>, baina badago berreskuratu eta gehitu deakezun aurreko babes-kopia bat.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Konektatu saio hau gakoen babes-kopiara saioa amaitu aurretik saio honetan bakarrik dauden gakoak ez galtzeko.",
     "Connect this session to Key Backup": "Konektatu saio hau gakoen babes-kopiara",
@@ -601,15 +599,12 @@
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Gorde zifratutako mezuak cachean modu seguruan bilaketen emaitzetan agertu daitezen.",
     "You have verified this user. This user has verified all of their sessions.": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
     "Waiting for %(displayName)s to accept…": "%(displayName)s(e)k onartu bitartean zain…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Zuen mezuak babestuta daude eta soilik zuk eta hartzaileak dituzue hauek desblokeatzeko gakoak.",
     "One of the following may be compromised:": "Hauetakoren bat konprometituta egon daiteke:",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
-    "Your homeserver does not support cross-signing.": "Zure hasiera-zerbitzariak ez du zeharkako sinatzea onartzen.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s-ek zifratutako mezuak cache lokalean modu seguruan gordetzeko elementu batzuk faltan ditu. Ezaugarri honekin esperimentatu nahi baduzu, konpilatu pertsonalizatutako %(brand)s Desktop <nativeLink> bilaketa osagaiekin</nativeLink>.",
     "Accepting…": "Onartzen…",
     "Not Trusted": "Ez konfiantzazkoa",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
@@ -655,7 +650,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
     "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
     "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Egiaztatu erabiltzaile baten saio bakoitza hau fidagarri gisa markatzeko, ez dira zeharka sinatutako gailuak fidagarritzat jotzen.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
@@ -784,7 +778,8 @@
         "on": "Bai",
         "off": "Ez",
         "all_rooms": "Gela guztiak",
-        "copied": "Kopiatuta!"
+        "copied": "Kopiatuta!",
+        "Advanced": "Aurreratua"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1071,7 +1066,10 @@
             "bulk_options_section": "Aukera masiboak",
             "bulk_options_accept_all_invites": "Onartu %(invitedRooms)s gelako gonbidapen guztiak",
             "bulk_options_reject_all_invites": "Baztertu %(invitedRooms)s gelarako gonbidapen guztiak",
-            "message_search_section": "Mezuen bilaketa"
+            "message_search_section": "Mezuen bilaketa",
+            "encryption_individual_verification_mode": "Egiaztatu erabiltzaile baten saio bakoitza hau fidagarri gisa markatzeko, ez dira zeharka sinatutako gailuak fidagarritzat jotzen.",
+            "message_search_disabled": "Gorde zifratutako mezuak cachean modu seguruan bilaketen emaitzetan agertu daitezen.",
+            "message_search_unsupported": "%(brand)s-ek zifratutako mezuak cache lokalean modu seguruan gordetzeko elementu batzuk faltan ditu. Ezaugarri honekin esperimentatu nahi baduzu, konpilatu pertsonalizatutako %(brand)s Desktop <nativeLink> bilaketa osagaiekin</nativeLink>."
         },
         "preferences": {
             "room_list_heading": "Gelen zerrenda",
@@ -1424,7 +1422,6 @@
         "no_media_perms_description": "Agian eskuz baimendu behar duzu %(brand)sek mikrofonoa edo kamera atzitzea"
     },
     "Other": "Beste bat",
-    "Advanced": "Aurreratua",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Aldatu gelaren abatarra",
@@ -1515,7 +1512,10 @@
         "import_invalid_passphrase": "Autentifikazio errorea: pasahitz okerra?",
         "upgrade_toast_title": "Zifratze eguneratzea eskuragarri",
         "verify_toast_title": "Egiaztatu saio hau",
-        "verify_toast_description": "Beste erabiltzaile batzuk ez fidagarritzat jo lezakete"
+        "verify_toast_description": "Beste erabiltzaile batzuk ez fidagarritzat jo lezakete",
+        "cross_signing_unsupported": "Zure hasiera-zerbitzariak ez du zeharkako sinatzea onartzen.",
+        "cross_signing_untrusted": "Zure kontuak zeharkako sinatze identitate bat du biltegi sekretuan, baina saio honek ez du oraindik fidagarritzat.",
+        "not_supported": "<euskarririk gabe>"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",

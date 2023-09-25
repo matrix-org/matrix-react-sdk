@@ -170,7 +170,8 @@
         "someone": "da",
         "trusted": "se lacri",
         "not_trusted": "na se lacri",
-        "unnamed_room": "na da cmene"
+        "unnamed_room": "na da cmene",
+        "Advanced": "macnu"
     },
     "action": {
         "continue": "",
@@ -398,7 +399,6 @@
         "widget_screenshots": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu"
     },
     "Other": "drata",
-    "Advanced": "macnu",
     "composer": {
         "placeholder_reply_encrypted": "nu pa mifra be pa jai te spuda cu zilbe'i",
         "placeholder_reply": "nu pa jai te spuda cu zilbe'i",

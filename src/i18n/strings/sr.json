@@ -135,7 +135,6 @@
     "Uploading %(filename)s": "Отпремам датотеку %(filename)s",
     "Failed to change password. Is your password correct?": "Нисам успео да променим лозинку. Да ли је ваша лозинка тачна?",
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
-    "<not supported>": "<није подржано>",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
     "Profile": "Профил",
@@ -499,7 +498,6 @@
     "United States": "Сједињене Америчке Државе",
     "United Kingdom": "Уједињено Краљевство",
     "Your homeserver": "Ваш домаћи сервер",
-    "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домаћи сервер је прекорачио ограничење неког ресурса.",
     "Your homeserver has exceeded its user limit.": "Ваш домаћи сервер је прекорачио ограничење корисника.",
     "Removing…": "Уклањам…",
@@ -584,7 +582,6 @@
     "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Cancel search": "Откажи претрагу",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге.",
     "Failed to save space settings.": "Чување подешавања простора није успело.",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
@@ -683,7 +680,8 @@
         "preview_message": "Хеј! Само напред!",
         "on": "Укључено",
         "off": "Искључено",
-        "copied": "Копирано!"
+        "copied": "Копирано!",
+        "Advanced": "Напредно"
     },
     "action": {
         "continue": "Настави",
@@ -858,7 +856,8 @@
             "encryption_section": "Шифровање",
             "bulk_options_accept_all_invites": "Прихвати све %(invitedRooms)s позивнице",
             "bulk_options_reject_all_invites": "Одбиј све позивнице за собе %(invitedRooms)s",
-            "message_search_section": "Претрага порука"
+            "message_search_section": "Претрага порука",
+            "message_search_disabled": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге."
         },
         "voip": {
             "mirror_local_feed": "Копирај довод локалног видеа"
@@ -1188,7 +1187,6 @@
         "no_media_perms_description": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери"
     },
     "Other": "Остало",
-    "Advanced": "Напредно",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Промените аватар собе",
@@ -1245,7 +1243,9 @@
         "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?",
         "upgrade_toast_title": "Надоградња шифровања је доступна",
         "set_up_toast_description": "Заштитите се од губитка приступа шифрованим порукама и подацима",
-        "verify_toast_description": "Други корисници можда немају поверења у то"
+        "verify_toast_description": "Други корисници можда немају поверења у то",
+        "cross_signing_unsupported": "Ваш домаћи сервер не подржава међу-потписивање.",
+        "not_supported": "<није подржано>"
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",

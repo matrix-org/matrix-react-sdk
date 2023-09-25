@@ -43,7 +43,6 @@
     "Moderator": "Moderators",
     "New passwords must match each other.": "Jaunajām parolēm ir jāsakrīt vienai ar otru.",
     "not specified": "nav noteikts",
-    "<not supported>": "<netiek atbalstīts>",
     "No display name": "Nav parādāmā vārda",
     "No more results": "Vairāk nekādu rezultātu nav",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
@@ -238,7 +237,6 @@
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Uzskatīt par uzticamām tikai individuāli verificētas lietotāja sesijas, nepaļaujoties uz ierīču cross-signing funkcionalitāti.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas alternatīvās adreses. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Izmantojiet identitātes serveri, lai uzaicinātu ar epastu. Pārvaldiet <settings>iestatījumos</settings>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Uzaiciniet kādu personu, izmantojot vārdu, epasta adresi, lietotājvārdu (piemēram, <userId/>) vai <a>dalieties ar šo istabu</a>.",
@@ -876,7 +874,8 @@
         "on": "Ieslēgt",
         "off": "Izslēgt",
         "all_rooms": "Visas istabas",
-        "copied": "Nokopēts!"
+        "copied": "Nokopēts!",
+        "Advanced": "Papildu"
     },
     "action": {
         "continue": "Turpināt",
@@ -1114,7 +1113,8 @@
             "bulk_options_section": "Lielapjoma opcijas",
             "bulk_options_accept_all_invites": "Pieņemt visus %(invitedRooms)s uzaicinājumus",
             "bulk_options_reject_all_invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
-            "message_search_section": "Ziņu meklēšana"
+            "message_search_section": "Ziņu meklēšana",
+            "encryption_individual_verification_mode": "Uzskatīt par uzticamām tikai individuāli verificētas lietotāja sesijas, nepaļaujoties uz ierīču cross-signing funkcionalitāti."
         },
         "preferences": {
             "room_list_heading": "Istabu saraksts",
@@ -1566,7 +1566,6 @@
         "no_media_perms_description": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai"
     },
     "Other": "Citi",
-    "Advanced": "Papildu",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Mainīt istabas avataru",
@@ -1657,7 +1656,8 @@
         "import_invalid_passphrase": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?",
         "set_up_toast_title": "Iestatīt drošu rezerves dublēšanu",
         "verify_toast_title": "Verificēt šo sesiju",
-        "verify_toast_description": "Citi lietotāji var neuzskatīt to par uzticamu"
+        "verify_toast_description": "Citi lietotāji var neuzskatīt to par uzticamu",
+        "not_supported": "<netiek atbalstīts>"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",

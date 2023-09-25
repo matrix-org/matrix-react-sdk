@@ -63,7 +63,6 @@
     "Moderator": "Moderátor",
     "New passwords must match each other.": "Nová hesla se musí shodovat.",
     "not specified": "neurčeno",
-    "<not supported>": "<nepodporováno>",
     "AM": "dop.",
     "PM": "odp.",
     "No display name": "Žádné zobrazované jméno",
@@ -551,10 +550,8 @@
     "Country Dropdown": "Menu států",
     "Lock": "Zámek",
     "Show more": "Více",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Váš účet má v bezpečném úložišti identitu pro křížový podpis, ale v této relaci jí zatím nevěříte.",
     "Secret storage public key:": "Veřejný klíč bezpečného úložiště:",
     "in account data": "v datech účtu",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Bezpečně uchovávat zprávy na tomto zařízení aby se v nich dalo vyhledávat.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Tato relace <b>nezálohuje vaše klíče</b>, ale už máte zálohu ze které je můžete obnovit.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Než se odhlásíte, připojte tuto relaci k záloze klíčů, abyste nepřišli o klíče, které mohou být jen v této relaci.",
     "Connect this session to Key Backup": "Připojit k zálohování klíčů",
@@ -606,7 +603,6 @@
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Následující uživatelé asi neexistují nebo jsou neplatní a nelze je pozvat: %(csvNames)s",
     "Recent Conversations": "Nedávné konverzace",
     "Recently Direct Messaged": "Nedávno kontaktovaní",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)su chybí nějaké komponenty, které jsou potřeba pro vyhledávání v zabezpečených místnostech. Pokud chcete s touto funkcí experimentovat, tak si pořiďte vlastní %(brand)s Desktop s <nativeLink>přidanými komponentami</nativeLink>.",
     "Restore your key backup to upgrade your encryption": "Pro aktualizaci šifrování obnovte klíče ze zálohy",
     "Enter your account password to confirm the upgrade:": "Potvrďte, že chcete aktualizaci provést zadáním svého uživatelského hesla:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Server si vás potřebuje ověřit, abychom mohli provést aktualizaci.",
@@ -624,10 +620,8 @@
     "Create key backup": "Vytvořit zálohu klíčů",
     "This session is encrypting history using the new recovery method.": "Tato relace šifruje historii zpráv s podporou nového způsobu obnovení.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Pokud se vám to stalo neúmyslně, můžete znovu nastavit zálohu zpráv pro tuto relaci. To znovu zašifruje historii zpráv novým způsobem.",
-    "Your homeserver does not support cross-signing.": "Váš domovský server nepodporuje křížové podepisování.",
     "Accepting…": "Přijímání…",
     "Mark all as read": "Označit vše jako přečtené",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Individuálně ověřit každou uživatelovu relaci a označit jí za důvěryhodnou, bez důvěry v křížový podpis.",
     "Scroll to most recent messages": "Přejít na poslední zprávy",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Nepovedlo se změnit alternativní adresy místnosti. Možná to server neumožňuje a nebo je to dočasná chyba.",
     "Local address": "Lokální adresa",
@@ -692,7 +686,6 @@
     "Signature upload success": "Podpis úspěšně nahrán",
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nemůže bezpečně ukládat šifrované zprávy lokálně v prohlížeči. Pro zobrazení šifrovaných zpráv ve výsledcích vyhledávání použijte <desktopLink>%(brand)s Desktop</desktopLink>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Správce vašeho serveru vypnul ve výchozím nastavení koncové šifrování v soukromých místnostech a přímých zprávách.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Pravost této šifrované zprávy nelze na tomto zařízení ověřit.",
     "No recently visited rooms": "Žádné nedávno navštívené místnosti",
@@ -724,8 +717,6 @@
     "Backup key stored:": "Klíč zálohy uložen:",
     "Backup version:": "Verze zálohy:",
     "Algorithm:": "Algoritmus:",
-    "Cross-signing is not set up.": "Křížové podepisování není nastaveno.",
-    "Cross-signing is ready for use.": "Křížové podepisování je připraveno k použití.",
     "Switch theme": "Přepnout téma",
     "Use a different passphrase?": "Použít jinou přístupovou frázi?",
     "Looks good!": "To vypadá dobře!",
@@ -1047,10 +1038,6 @@
     "Modal Widget": "Modální widget",
     "Join the conference from the room information card on the right": "Připojte se ke konferenci z informační karty místnosti napravo",
     "Join the conference at the top of this room": "Připojte se ke konferenci v horní části této místnosti",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Bezpečně uloží zašifrované zprávy v místním úložišti, aby se mohly objevit ve výsledcích vyhledávání, využívá se %(size)s k ukládání zpráv z %(rooms)s místnosti.",
-        "other": "Bezpečně uloží zašifrované zprávy v místním úložišti, aby se mohly objevit ve výsledcích vyhledávání, využívá se %(size)s k ukládání zpráv z %(rooms)s místností."
-    },
     "well formed": "ve správném tvaru",
     "Transfer": "Přepojit",
     "A call can only be transferred to a single user.": "Hovor lze přepojit pouze jednomu uživateli.",
@@ -1171,7 +1158,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nepodařilo se získat přístup k vašemu mikrofonu . Zkontrolujte prosím nastavení prohlížeče a zkuste to znovu.",
     "Unable to access your microphone": "Nelze získat přístup k mikrofonu",
     "Connecting": "Spojování",
-    "Message search initialisation failed": "Inicializace vyhledávání zpráv se nezdařila",
     "Search names and descriptions": "Hledat názvy a popisy",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
@@ -1302,7 +1288,6 @@
     "Unknown failure: %(reason)s": "Neznámá chyba: %(reason)s",
     "Rooms and spaces": "Místnosti a prostory",
     "Results": "Výsledky",
-    "Cross-signing is ready but keys are not backed up.": "Křížové podepisování je připraveno, ale klíče nejsou zálohovány.",
     "Some encryption parameters have been changed.": "Byly změněny některé parametry šifrování.",
     "Role in <RoomName/>": "Role v <RoomName/>",
     "Unknown failure": "Neznámá chyba",
@@ -1938,7 +1923,8 @@
         "all_rooms": "Všechny místnosti",
         "deselect_all": "Zrušit výběr všech",
         "select_all": "Vybrat všechny",
-        "copied": "Zkopírováno!"
+        "copied": "Zkopírováno!",
+        "Advanced": "Rozšířené"
     },
     "action": {
         "continue": "Pokračovat",
@@ -2503,7 +2489,16 @@
             "bulk_options_accept_all_invites": "Přijmout pozvání do všech těchto místností: %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Odmítnutí všech %(invitedRooms)s pozvání",
             "message_search_section": "Vyhledávání ve zprávách",
-            "analytics_subsection_description": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany."
+            "analytics_subsection_description": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany.",
+            "encryption_individual_verification_mode": "Individuálně ověřit každou uživatelovu relaci a označit jí za důvěryhodnou, bez důvěry v křížový podpis.",
+            "message_search_enabled": {
+                "one": "Bezpečně uloží zašifrované zprávy v místním úložišti, aby se mohly objevit ve výsledcích vyhledávání, využívá se %(size)s k ukládání zpráv z %(rooms)s místnosti.",
+                "other": "Bezpečně uloží zašifrované zprávy v místním úložišti, aby se mohly objevit ve výsledcích vyhledávání, využívá se %(size)s k ukládání zpráv z %(rooms)s místností."
+            },
+            "message_search_disabled": "Bezpečně uchovávat zprávy na tomto zařízení aby se v nich dalo vyhledávat.",
+            "message_search_unsupported": "%(brand)su chybí nějaké komponenty, které jsou potřeba pro vyhledávání v zabezpečených místnostech. Pokud chcete s touto funkcí experimentovat, tak si pořiďte vlastní %(brand)s Desktop s <nativeLink>přidanými komponentami</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s nemůže bezpečně ukládat šifrované zprávy lokálně v prohlížeči. Pro zobrazení šifrovaných zpráv ve výsledcích vyhledávání použijte <desktopLink>%(brand)s Desktop</desktopLink>.",
+            "message_search_failed": "Inicializace vyhledávání zpráv se nezdařila"
         },
         "preferences": {
             "room_list_heading": "Seznam místností",
@@ -3369,7 +3364,6 @@
         "more_button": "Více"
     },
     "Other": "Další možnosti",
-    "Advanced": "Rozšířené",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Změnit avatar prostoru",
@@ -3509,7 +3503,13 @@
         "upgrade_toast_title": "Je dostupná aktualizace šifrování",
         "verify_toast_title": "Ověřit tuto relaci",
         "set_up_toast_description": "Zabezpečení proti ztrátě přístupu k šifrovaným zprávám a datům",
-        "verify_toast_description": "Ostatní uživatelé této relaci nemusí věřit"
+        "verify_toast_description": "Ostatní uživatelé této relaci nemusí věřit",
+        "cross_signing_unsupported": "Váš domovský server nepodporuje křížové podepisování.",
+        "cross_signing_ready": "Křížové podepisování je připraveno k použití.",
+        "cross_signing_ready_no_backup": "Křížové podepisování je připraveno, ale klíče nejsou zálohovány.",
+        "cross_signing_untrusted": "Váš účet má v bezpečném úložišti identitu pro křížový podpis, ale v této relaci jí zatím nevěříte.",
+        "cross_signing_not_ready": "Křížové podepisování není nastaveno.",
+        "not_supported": "<nepodporováno>"
     },
     "emoji": {
         "category_frequently_used": "Často používané",

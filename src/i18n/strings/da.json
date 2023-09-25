@@ -361,7 +361,8 @@
         "matrix": "Matrix",
         "unnamed_room": "Unavngivet rum",
         "on": "Tændt",
-        "off": "Slukket"
+        "off": "Slukket",
+        "Advanced": "Avanceret"
     },
     "action": {
         "continue": "Fortsæt",
@@ -626,7 +627,6 @@
         "m.sticker": "%(senderName)s: %(stickerName)s"
     },
     "Other": "Andre",
-    "Advanced": "Avanceret",
     "composer": {
         "placeholder_reply": "Besvar…",
         "placeholder_encrypted": "Send en krypteret besked…",

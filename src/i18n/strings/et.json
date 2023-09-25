@@ -153,8 +153,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Turvaliselt puhverda krüptitud sõnumid kohalikku arvutisse ja võimalda kasutada neid otsingus.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s'is on puudu need komponendid, mis võimaldavad otsida kohalikest turvaliselt puhverdatud krüptitud sõnumitest. Kui sa tahaksid sellist funktsionaalsust katsetada, siis pead kompileerima %(brand)s'i variandi, kus <nativeLink>need komponendid on lisatud</nativeLink>.",
     "Search…": "Otsi…",
     "Cancel search": "Tühista otsing",
     "Search failed": "Otsing ebaõnnestus",
@@ -403,7 +401,6 @@
     "Sent messages will be stored until your connection has returned.": "Saadetud sõnumid salvestatakse seniks, kuni võrguühendus on taastunud.",
     "Your password has been reset.": "Sinu salasõna on muudetud.",
     "Unignore": "Lõpeta eiramine",
-    "<not supported>": "<ei ole toetatud>",
     "Uploaded sound": "Üleslaaditud heli",
     "Sounds": "Helid",
     "Notification sound": "Teavitusheli",
@@ -516,7 +513,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Ok": "Sobib",
     "IRC display name width": "IRC kuvatava nime laius",
-    "Your homeserver does not support cross-signing.": "Sinu koduserver ei toeta risttunnustamist.",
     "Cannot connect to integration manager": "Ei saa ühendust lõiminguhalduriga",
     "The integration manager is offline or it cannot reach your homeserver.": "Lõiminguhaldur kas ei tööta või ei õnnestu tal teha päringuid sinu koduserveri suunas.",
     "Delete Backup": "Kustuta varukoopia",
@@ -657,12 +653,10 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
     "Favourited": "Märgitud lemmikuks",
     "Forget Room": "Unusta jututuba ära",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Sinu kontol on turvahoidlas olemas risttunnustamise identiteet, kuid seda veel ei loeta antud sessioonis usaldusväärseks.",
     "well formed": "korrektses vormingus",
     "unexpected type": "tundmatut tüüpi",
     "in account data": "kasutajakonto andmete hulgas",
     "Authentication": "Autentimine",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ei võimalda veebibrauseris töötades krüptitud sõnumeid turvaliselt puhverdada. Selleks, et krüptitud sõnumeid saaks otsida, kasuta <desktopLink>%(brand)s Desktop</desktopLink> rakendust Matrix'i kliendina.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krüptitud sõnumid kasutavad läbivat krüptimist. Ainult sinul ja saaja(te)l on võtmed selliste sõnumite lugemiseks.",
     "Unable to load key backup status": "Võtmete varunduse oleku laadimine ei õnnestunud",
     "Restore from Backup": "Taasta varukoopiast",
@@ -716,7 +710,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Kui sa tegid seda juhuslikult, siis sa võid selles sessioonis uuesti seadistada sõnumite krüptimise, mille tulemusel krüptime uuesti kõik sõnumid ja loome uue taastamise meetodi.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Kui sa ei ole ise taastamise meetodeid eemaldanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod.",
     "Reason": "Põhjus",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Ära usalda risttunnustamist ning verifitseeri kasutaja iga sessioon eraldi.",
     "Connect this session to Key Backup": "Seo see sessioon krüptovõtmete varundusega",
     "not stored": "ei ole salvestatud",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Isikutuvastusserveri kasutamine ei ole kohustuslik. Kui sa seda ei tee, siis sa ei ole leitav teiste kasutajate poolt ega sulle ei saa telefoninumbri või e-posti aadressi alusel kutset saata. Küll aga saab kutset saata Matrix'i kasutajatunnuse alusel.",
@@ -751,8 +744,6 @@
     "Not encrypted": "Krüptimata",
     "Room settings": "Jututoa seadistused",
     "Take a picture": "Tee foto",
-    "Cross-signing is ready for use.": "Risttunnustamine on kasutamiseks valmis.",
-    "Cross-signing is not set up.": "Risttunnustamine on seadistamata.",
     "Backup version:": "Varukoopia versioon:",
     "Algorithm:": "Algoritm:",
     "Backup key stored:": "Varukoopia võti on salvestatud:",
@@ -1040,10 +1031,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Ameerika Ühendriigid",
     "United Kingdom": "Suurbritannia",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Selleks, et sisu saaks otsingus kasutada, puhverda krüptitud sõnumid kohalikus seadmes turvaliselt. %(rooms)s jututoa andmete salvestamiseks kulub hetkel %(size)s.",
-        "other": "Selleks, et sisu saaks otsingus kasutada, puhverda krüptitud sõnumid kohalikus seadmes turvaliselt. %(rooms)s jututoa andmete salvestamiseks kulub hetkel %(size)s."
-    },
     "This widget would like to:": "See vidin sooviks:",
     "Approve widget permissions": "Anna vidinale õigused",
     "Decline All": "Keeldu kõigist",
@@ -1176,7 +1163,6 @@
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Add reaction": "Lisa reaktsioon",
-    "Message search initialisation failed": "Sõnumite otsingu alustamine ei õnnestunud",
     "Currently joining %(count)s rooms": {
         "other": "Parasjagu liitun %(count)s jututoaga",
         "one": "Parasjagu liitun %(count)s jututoaga"
@@ -1282,7 +1268,6 @@
     "Stop recording": "Lõpeta salvestamine",
     "Add space": "Lisa kogukonnakeskus",
     "Unknown failure: %(reason)s": "Tundmatu viga: %(reason)s",
-    "Cross-signing is ready but keys are not backed up.": "Risttunnustamine on töövalmis, aga krüptovõtmed on varundamata.",
     "Rooms and spaces": "Jututoad ja kogukonnad",
     "Results": "Tulemused",
     "Error downloading audio": "Helifaili allalaadimine ei õnnestunud",
@@ -1934,7 +1919,8 @@
         "all_rooms": "Kõik jututoad",
         "deselect_all": "Eemalda kõik valikud",
         "select_all": "Vali kõik",
-        "copied": "Kopeeritud!"
+        "copied": "Kopeeritud!",
+        "Advanced": "Teave arendajatele"
     },
     "action": {
         "continue": "Jätka",
@@ -2498,7 +2484,16 @@
             "bulk_options_accept_all_invites": "Võta vastu kõik %(invitedRooms)s kutsed",
             "bulk_options_reject_all_invites": "Lükka tagasi kõik %(invitedRooms)s kutsed",
             "message_search_section": "Otsing sõnumite seast",
-            "analytics_subsection_description": "Võimalike vigade leidmiseks jaga meiega anonüümseid andmeid. Isiklikku teavet meie ei kogu ega jaga mitte midagi kolmandate osapooltega."
+            "analytics_subsection_description": "Võimalike vigade leidmiseks jaga meiega anonüümseid andmeid. Isiklikku teavet meie ei kogu ega jaga mitte midagi kolmandate osapooltega.",
+            "encryption_individual_verification_mode": "Ära usalda risttunnustamist ning verifitseeri kasutaja iga sessioon eraldi.",
+            "message_search_enabled": {
+                "one": "Selleks, et sisu saaks otsingus kasutada, puhverda krüptitud sõnumid kohalikus seadmes turvaliselt. %(rooms)s jututoa andmete salvestamiseks kulub hetkel %(size)s.",
+                "other": "Selleks, et sisu saaks otsingus kasutada, puhverda krüptitud sõnumid kohalikus seadmes turvaliselt. %(rooms)s jututoa andmete salvestamiseks kulub hetkel %(size)s."
+            },
+            "message_search_disabled": "Turvaliselt puhverda krüptitud sõnumid kohalikku arvutisse ja võimalda kasutada neid otsingus.",
+            "message_search_unsupported": "%(brand)s'is on puudu need komponendid, mis võimaldavad otsida kohalikest turvaliselt puhverdatud krüptitud sõnumitest. Kui sa tahaksid sellist funktsionaalsust katsetada, siis pead kompileerima %(brand)s'i variandi, kus <nativeLink>need komponendid on lisatud</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s ei võimalda veebibrauseris töötades krüptitud sõnumeid turvaliselt puhverdada. Selleks, et krüptitud sõnumeid saaks otsida, kasuta <desktopLink>%(brand)s Desktop</desktopLink> rakendust Matrix'i kliendina.",
+            "message_search_failed": "Sõnumite otsingu alustamine ei õnnestunud"
         },
         "preferences": {
             "room_list_heading": "Jututubade loend",
@@ -3364,7 +3359,6 @@
         "more_button": "Veel"
     },
     "Other": "Muud",
-    "Advanced": "Teave arendajatele",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Muuda kogukonna tunnuspilti",
@@ -3504,7 +3498,13 @@
         "upgrade_toast_title": "Krüptimise uuendus on saadaval",
         "verify_toast_title": "Verifitseeri see sessioon",
         "set_up_toast_description": "Hoia ära, et kaotad ligipääsu krüptitud sõnumitele ja andmetele",
-        "verify_toast_description": "Teised kasutajad ei pruugi seda usaldada"
+        "verify_toast_description": "Teised kasutajad ei pruugi seda usaldada",
+        "cross_signing_unsupported": "Sinu koduserver ei toeta risttunnustamist.",
+        "cross_signing_ready": "Risttunnustamine on kasutamiseks valmis.",
+        "cross_signing_ready_no_backup": "Risttunnustamine on töövalmis, aga krüptovõtmed on varundamata.",
+        "cross_signing_untrusted": "Sinu kontol on turvahoidlas olemas risttunnustamise identiteet, kuid seda veel ei loeta antud sessioonis usaldusväärseks.",
+        "cross_signing_not_ready": "Risttunnustamine on seadistamata.",
+        "not_supported": "<ei ole toetatud>"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",

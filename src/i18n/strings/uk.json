@@ -124,7 +124,6 @@
     "Join the conversation with an account": "Приєднатись до бесіди з обліковим записом",
     "Unable to restore session": "Не вдалося відновити сеанс",
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ваш обліковий запис має перехресне підписування особи у таємному сховищі, але цей сеанс йому ще не довіряє.",
     "in account data": "у даних облікового запису",
     "Email addresses": "Адреси е-пошти",
     "Phone numbers": "Номери телефонів",
@@ -250,7 +249,6 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "Your homeserver does not support cross-signing.": "Ваш домашній сервер не підтримує перехресного підписування.",
     "well formed": "добре сформований",
     "unexpected type": "несподіваний тип",
     "Cannot connect to integration manager": "Не вдалося з'єднатися з менеджером інтеграцій",
@@ -299,9 +297,6 @@
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Поліпшіть цей сеанс, щоб уможливити звірення інших сеансів, надаючи їм доступ до зашифрованих повідомлень та позначаючи їх довіреними для інших користувачів.",
     "Upgrade your encryption": "Поліпшити ваше шифрування",
     "IRC display name width": "Ширина псевдоніма IRC",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Безпечно локально кешувати зашифровані повідомлення щоб вони з'являлись у результатах пошуку.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s'ові бракує деяких складників, необхідних для безпечного локального кешування зашифрованих повідомлень. Якщо ви хочете поекспериментувати з цією властивістю, зберіть спеціальну збірку %(brand)s Desktop із <nativeLink>доданням пошукових складників</nativeLink>.",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s не може безпечно локально кешувати зашифровані повідомлення під час роботи у браузері. Користуйтесь <desktopLink>%(brand)s для комп'ютерів</desktopLink>, в якому зашифровані повідомлення з'являються у результатах пошуку.",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Ви впевнені? Ви втратите ваші зашифровані повідомлення якщо копія ключів не була створена коректно.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
     "Display Name": "Псевдонім",
@@ -604,7 +599,6 @@
     "Identity server (%(server)s)": "Сервер ідентифікації (%(server)s)",
     "Could not connect to identity server": "Не вдалося під'єднатися до сервера ідентифікації",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Індивідуально звіряйте кожен сеанс, який використовується користувачем, щоб позначити його довіреним, не довіряючи пристроям перехресного підписування.",
     "Room settings": "Налаштування кімнати",
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
@@ -801,14 +795,6 @@
         "other": "і ще %(count)s"
     },
     "Upgrade required": "Потрібне поліпшення",
-    "Message search initialisation failed": "Не вдалося ініціалізувати пошук повідомлень",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "other": "Безпечно кешуйте зашифровані повідомлення локально, щоб вони з'являлися в результатах пошуку, використовуючи %(size)s для зберігання повідомлень з %(rooms)s кімнат.",
-        "one": "Безпечно кешуйте зашифровані повідомлення локально, щоб вони з'являлися в результатах пошуку, використовуючи %(size)s для зберігання повідомлень з %(rooms)s кімнат."
-    },
-    "Cross-signing is not set up.": "Перехресне підписування не налаштовано.",
-    "Cross-signing is ready but keys are not backed up.": "Перехресне підписування готове, але резервна копія ключів не створюється.",
-    "Cross-signing is ready for use.": "Перехресне підписування готове до користування.",
     "Space options": "Параметри простору",
     "Recommended for public spaces.": "Рекомендовано для загальнодоступних просторів.",
     "Allow people to preview your space before they join.": "Дозвольте людям переглядати ваш простір, перш ніж вони приєднаються.",
@@ -1276,7 +1262,6 @@
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Слід <b>вилучити ваші особисті дані</b> з сервера ідентифікації <idserver />, перш ніж від'єднатися. На жаль, сервер ідентифікації <idserver /> зараз офлайн чи недоступний.",
     "Connect this session to Key Backup": "Налаштувати цьому сеансу резервне копіювання ключів",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
-    "<not supported>": "<не підтримується>",
     "Failed to re-authenticate due to a homeserver problem": "Не вдалося перезайти через проблему з домашнім сервером",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Скидання ключів звірки неможливо скасувати. Після скидання, ви втратите доступ до старих зашифрованих повідомлень, а всі друзі, які раніше вас звіряли, бачитимуть застереження безпеки, поки ви не проведете звірку з ними знову.",
     "I'll verify later": "Звірю пізніше",
@@ -1934,7 +1919,8 @@
         "all_rooms": "Усі кімнати",
         "deselect_all": "Скасувати вибір",
         "select_all": "Вибрати всі",
-        "copied": "Скопійовано!"
+        "copied": "Скопійовано!",
+        "Advanced": "Подробиці"
     },
     "action": {
         "continue": "Продовжити",
@@ -2498,7 +2484,16 @@
             "bulk_options_accept_all_invites": "Прийняти всі %(invitedRooms)s запрошення",
             "bulk_options_reject_all_invites": "Відхилити запрошення до усіх %(invitedRooms)s",
             "message_search_section": "Пошук повідомлень",
-            "analytics_subsection_description": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін."
+            "analytics_subsection_description": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін.",
+            "encryption_individual_verification_mode": "Індивідуально звіряйте кожен сеанс, який використовується користувачем, щоб позначити його довіреним, не довіряючи пристроям перехресного підписування.",
+            "message_search_enabled": {
+                "other": "Безпечно кешуйте зашифровані повідомлення локально, щоб вони з'являлися в результатах пошуку, використовуючи %(size)s для зберігання повідомлень з %(rooms)s кімнат.",
+                "one": "Безпечно кешуйте зашифровані повідомлення локально, щоб вони з'являлися в результатах пошуку, використовуючи %(size)s для зберігання повідомлень з %(rooms)s кімнат."
+            },
+            "message_search_disabled": "Безпечно локально кешувати зашифровані повідомлення щоб вони з'являлись у результатах пошуку.",
+            "message_search_unsupported": "%(brand)s'ові бракує деяких складників, необхідних для безпечного локального кешування зашифрованих повідомлень. Якщо ви хочете поекспериментувати з цією властивістю, зберіть спеціальну збірку %(brand)s Desktop із <nativeLink>доданням пошукових складників</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s не може безпечно локально кешувати зашифровані повідомлення під час роботи у браузері. Користуйтесь <desktopLink>%(brand)s для комп'ютерів</desktopLink>, в якому зашифровані повідомлення з'являються у результатах пошуку.",
+            "message_search_failed": "Не вдалося ініціалізувати пошук повідомлень"
         },
         "preferences": {
             "room_list_heading": "Перелік кімнат",
@@ -3364,7 +3359,6 @@
         "more_button": "Більше"
     },
     "Other": "Інше",
-    "Advanced": "Подробиці",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Змінити аватар простору",
@@ -3504,7 +3498,13 @@
         "upgrade_toast_title": "Доступне поліпшене шифрування",
         "verify_toast_title": "Звірити цей сеанс",
         "set_up_toast_description": "Захистіться від втрати доступу до зашифрованих повідомлень і даних",
-        "verify_toast_description": "Інші користувачі можуть не довіряти цьому"
+        "verify_toast_description": "Інші користувачі можуть не довіряти цьому",
+        "cross_signing_unsupported": "Ваш домашній сервер не підтримує перехресного підписування.",
+        "cross_signing_ready": "Перехресне підписування готове до користування.",
+        "cross_signing_ready_no_backup": "Перехресне підписування готове, але резервна копія ключів не створюється.",
+        "cross_signing_untrusted": "Ваш обліковий запис має перехресне підписування особи у таємному сховищі, але цей сеанс йому ще не довіряє.",
+        "cross_signing_not_ready": "Перехресне підписування не налаштовано.",
+        "not_supported": "<не підтримується>"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",

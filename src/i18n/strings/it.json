@@ -136,7 +136,6 @@
     },
     "Uploading %(filename)s": "Invio di %(filename)s",
     "Unable to remove contact information": "Impossibile rimuovere le informazioni di contatto",
-    "<not supported>": "<non supportato>",
     "Profile": "Profilo",
     "A new password must be entered.": "Deve essere inserita una nuova password.",
     "New passwords must match each other.": "Le nuove password devono coincidere.",
@@ -571,9 +570,6 @@
     "Enter your account password to confirm the upgrade:": "Inserisci la password del tuo account per confermare l'aggiornamento:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Dovrai autenticarti con il server per confermare l'aggiornamento.",
     "Upgrade your encryption": "Aggiorna la tua crittografia",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Tieni in cache localmente i messaggi cifrati in modo sicuro affinché appaiano nei risultati di ricerca.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "A %(brand)s mancano alcuni componenti richiesti per tenere in cache i messaggi cifrati in modo sicuro. Se vuoi sperimentare questa funzionalità, compila un %(brand)s Desktop personale con <nativeLink>i componenti di ricerca aggiunti</nativeLink>.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Il tuo account ha un'identità a firma incrociata nell'archivio segreto, ma non è ancora fidata da questa sessione.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Questa sessione <b>non sta facendo il backup delle tue chiavi</b>, ma hai un backup esistente dal quale puoi ripristinare e che puoi usare da ora in poi.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Connetti questa sessione al backup chiavi prima di disconnetterti per non perdere eventuali chiavi che possono essere solo in questa sessione.",
     "Connect this session to Key Backup": "Connetti questa sessione al backup chiavi",
@@ -625,7 +621,6 @@
     "Clear cross-signing keys": "Elimina chiavi di firma incrociata",
     "You declined": "Hai rifiutato",
     "%(name)s declined": "%(name)s ha rifiutato",
-    "Your homeserver does not support cross-signing.": "Il tuo homeserver non supporta la firma incrociata.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Per segnalare un problema di sicurezza relativo a Matrix, leggi la <a>Politica di divulgazione della sicurezza</a> di Matrix.org .",
     "Mark all as read": "Segna tutto come letto",
     "Accepting…": "Accettazione…",
@@ -657,7 +652,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Conferma confrontando il seguente con le impostazioni utente nell'altra sessione:",
     "Confirm this user's session by comparing the following with their User Settings:": "Conferma questa sessione confrontando il seguente con le sue impostazioni utente:",
     "If they don't match, the security of your communication may be compromised.": "Se non corrispondono, la sicurezza delle tue comunicazioni potrebbe essere compromessa.",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Verifica individualmente ogni sessione usata da un utente per segnarla come fidata, senza fidarsi dei dispositivi a firma incrociata.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Nelle stanze cifrate, i tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
     "Verify all users in a room to ensure it's secure.": "Verifica tutti gli utenti in una stanza per confermare che sia sicura.",
     "Sign in with SSO": "Accedi con SSO",
@@ -714,7 +708,6 @@
     "Room options": "Opzioni stanza",
     "Looks good!": "Sembra giusta!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
     "Favourited": "Preferito",
     "Forget Room": "Dimentica stanza",
     "Wrong file type": "Tipo di file errato",
@@ -748,8 +741,6 @@
     "Explore public rooms": "Esplora stanze pubbliche",
     "Preparing to download logs": "Preparazione al download dei log",
     "Information": "Informazione",
-    "Cross-signing is ready for use.": "La firma incrociata è pronta all'uso.",
-    "Cross-signing is not set up.": "La firma incrociata non è impostata.",
     "Backup version:": "Versione backup:",
     "Algorithm:": "Algoritmo:",
     "Backup key stored:": "Chiave di backup salvata:",
@@ -1040,10 +1031,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Stati Uniti",
     "United Kingdom": "Regno Unito",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "Salva in cache i messaggi cifrati localmente in modo che appaiano nei risultati di ricerca, usando %(size)s per salvarli da %(rooms)s stanza.",
-        "other": "Salva in cache i messaggi cifrati localmente in modo che appaiano nei risultati di ricerca, usando %(size)s per salvarli da %(rooms)s stanze."
-    },
     "Decline All": "Rifiuta tutti",
     "Approve widget permissions": "Approva permessi del widget",
     "This widget would like to:": "Il widget vorrebbe:",
@@ -1176,7 +1163,6 @@
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
     "Add reaction": "Aggiungi reazione",
-    "Message search initialisation failed": "Inizializzazione ricerca messaggi fallita",
     "Currently joining %(count)s rooms": {
         "one": "Stai entrando in %(count)s stanza",
         "other": "Stai entrando in %(count)s stanze"
@@ -1300,7 +1286,6 @@
     "Stop recording": "Ferma la registrazione",
     "Send voice message": "Invia messaggio vocale",
     "Unknown failure: %(reason)s": "Malfunzionamento sconosciuto: %(reason)s",
-    "Cross-signing is ready but keys are not backed up.": "La firma incrociata è pronta ma c'è un backup delle chiavi.",
     "Rooms and spaces": "Stanze e spazi",
     "Results": "Risultati",
     "Some encryption parameters have been changed.": "Alcuni parametri di crittografia sono stati modificati.",
@@ -1938,7 +1923,8 @@
         "all_rooms": "Tutte le stanze",
         "deselect_all": "Deseleziona tutti",
         "select_all": "Seleziona tutti",
-        "copied": "Copiato!"
+        "copied": "Copiato!",
+        "Advanced": "Avanzato"
     },
     "action": {
         "continue": "Continua",
@@ -2503,7 +2489,16 @@
             "bulk_options_accept_all_invites": "Accetta tutti i %(invitedRooms)s inviti",
             "bulk_options_reject_all_invites": "Rifiuta tutti gli inviti da %(invitedRooms)s",
             "message_search_section": "Ricerca messaggio",
-            "analytics_subsection_description": "Condividi dati anonimi per aiutarci a identificare problemi. Niente di personale. Niente terze parti."
+            "analytics_subsection_description": "Condividi dati anonimi per aiutarci a identificare problemi. Niente di personale. Niente terze parti.",
+            "encryption_individual_verification_mode": "Verifica individualmente ogni sessione usata da un utente per segnarla come fidata, senza fidarsi dei dispositivi a firma incrociata.",
+            "message_search_enabled": {
+                "one": "Salva in cache i messaggi cifrati localmente in modo che appaiano nei risultati di ricerca, usando %(size)s per salvarli da %(rooms)s stanza.",
+                "other": "Salva in cache i messaggi cifrati localmente in modo che appaiano nei risultati di ricerca, usando %(size)s per salvarli da %(rooms)s stanze."
+            },
+            "message_search_disabled": "Tieni in cache localmente i messaggi cifrati in modo sicuro affinché appaiano nei risultati di ricerca.",
+            "message_search_unsupported": "A %(brand)s mancano alcuni componenti richiesti per tenere in cache i messaggi cifrati in modo sicuro. Se vuoi sperimentare questa funzionalità, compila un %(brand)s Desktop personale con <nativeLink>i componenti di ricerca aggiunti</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
+            "message_search_failed": "Inizializzazione ricerca messaggi fallita"
         },
         "preferences": {
             "room_list_heading": "Elenco stanze",
@@ -3369,7 +3364,6 @@
         "more_button": "Altro"
     },
     "Other": "Altro",
-    "Advanced": "Avanzato",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Cambia avatar dello spazio",
@@ -3509,7 +3503,13 @@
         "upgrade_toast_title": "Aggiornamento crittografia disponibile",
         "verify_toast_title": "Verifica questa sessione",
         "set_up_toast_description": "Proteggiti dalla perdita dei messaggi e dati crittografati",
-        "verify_toast_description": "Altri utenti potrebbero non fidarsi"
+        "verify_toast_description": "Altri utenti potrebbero non fidarsi",
+        "cross_signing_unsupported": "Il tuo homeserver non supporta la firma incrociata.",
+        "cross_signing_ready": "La firma incrociata è pronta all'uso.",
+        "cross_signing_ready_no_backup": "La firma incrociata è pronta ma c'è un backup delle chiavi.",
+        "cross_signing_untrusted": "Il tuo account ha un'identità a firma incrociata nell'archivio segreto, ma non è ancora fidata da questa sessione.",
+        "cross_signing_not_ready": "La firma incrociata non è impostata.",
+        "not_supported": "<non supportato>"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",

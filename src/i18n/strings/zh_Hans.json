@@ -48,7 +48,6 @@
     "Invited": "已邀请",
     "Moderator": "协管员",
     "not specified": "未指定",
-    "<not supported>": "<不支持>",
     "No display name": "无显示名称",
     "Create new room": "创建新房间",
     "unknown error code": "未知错误代码",
@@ -372,14 +371,9 @@
     "Ok": "确定",
     "Lock": "锁",
     "Show more": "显示更多",
-    "Your homeserver does not support cross-signing.": "你的家服务器不支持交叉签名。",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "你的账户在秘密存储中有交叉签名身份，但并没有被此会话信任。",
     "unexpected type": "未预期的类型",
     "Secret storage public key:": "秘密存储公钥：",
     "in account data": "在账户数据中",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "逐一验证用户的每一个会话以将其标记为已信任，而不信任交叉签名的设备。",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s缺少安全地在本地缓存加密信息所必须的部件。如果你想实验此功能，请构建一个自定义的<nativeLink>带有搜索部件的</nativeLink>%(brand)s桌面版。",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s 在浏览器中运行时不能安全地在本地缓存加密信息。请使用<desktopLink>%(brand)s 桌面版</desktopLink>以使加密信息出现在搜索结果中。",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "在登出前连接此会话到密钥备份以避免丢失可能仅在此会话上的密钥。",
     "Connect this session to Key Backup": "将此会话连接到密钥备份",
     "This backup is trusted because it has been restored on this session": "此备份是受信任的因为它恢复到了此会话上",
@@ -432,7 +426,6 @@
     "This user has not verified all of their sessions.": "此用户没有验证其全部会话。",
     "You have not verified this user.": "你没有验证此用户。",
     "You have verified this user. This user has verified all of their sessions.": "你验证了此用户。此用户已验证了其全部会话。",
-    "Securely cache encrypted messages locally for them to appear in search results.": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
     "Cannot connect to integration manager": "不能连接到集成管理器",
     "The integration manager is offline or it cannot reach your homeserver.": "此集成管理器为离线状态或者其不能访问你的家服务器。",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "检查你的浏览器是否安装有可能屏蔽身份服务器的插件（例如 Privacy Badger）",
@@ -745,8 +738,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Country Dropdown": "国家下拉菜单",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
-    "Cross-signing is ready for use.": "交叉签名已可用。",
-    "Cross-signing is not set up.": "未设置交叉签名。",
     "Backup version:": "备份版本：",
     "Algorithm:": "算法：",
     "Backup key stored:": "备份密钥已保存：",
@@ -1152,11 +1143,6 @@
     "Unable to access your microphone": "无法访问你的麦克风",
     "Failed to send": "发送失败",
     "You have no ignored users.": "你没有设置忽略用户。",
-    "Message search initialisation failed": "消息搜索初始化失败",
-    "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
-        "one": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。",
-        "other": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。"
-    },
     "Connecting": "连接中",
     "unknown person": "陌生人",
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
@@ -1302,7 +1288,6 @@
     "Upgrade required": "需要升级",
     "Rooms and spaces": "房间与空间",
     "Results": "结果",
-    "Cross-signing is ready but keys are not backed up.": "交叉签名已就绪，但尚未备份密钥。",
     "Some encryption parameters have been changed.": "一些加密参数已更改。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
     "Unknown failure": "未知失败",
@@ -1730,7 +1715,8 @@
         "all_rooms": "所有房间",
         "deselect_all": "取消全选",
         "select_all": "全选",
-        "copied": "已复制！"
+        "copied": "已复制！",
+        "Advanced": "高级"
     },
     "action": {
         "continue": "继续",
@@ -2256,7 +2242,16 @@
             "bulk_options_accept_all_invites": "接受所有 %(invitedRooms)s 邀请",
             "bulk_options_reject_all_invites": "拒绝所有 %(invitedRooms)s 的邀请",
             "message_search_section": "消息搜索",
-            "analytics_subsection_description": "共享匿名数据以帮助我们发现问题。 与个人无关。 没有第三方。"
+            "analytics_subsection_description": "共享匿名数据以帮助我们发现问题。 与个人无关。 没有第三方。",
+            "encryption_individual_verification_mode": "逐一验证用户的每一个会话以将其标记为已信任，而不信任交叉签名的设备。",
+            "message_search_enabled": {
+                "one": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。",
+                "other": "使用%(size)s存储%(rooms)s个房间的消息。在本地安全地缓存已加密的消息以使其出现在搜索结果中。"
+            },
+            "message_search_disabled": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
+            "message_search_unsupported": "%(brand)s缺少安全地在本地缓存加密信息所必须的部件。如果你想实验此功能，请构建一个自定义的<nativeLink>带有搜索部件的</nativeLink>%(brand)s桌面版。",
+            "message_search_unsupported_web": "%(brand)s 在浏览器中运行时不能安全地在本地缓存加密信息。请使用<desktopLink>%(brand)s 桌面版</desktopLink>以使加密信息出现在搜索结果中。",
+            "message_search_failed": "消息搜索初始化失败"
         },
         "preferences": {
             "room_list_heading": "房间列表",
@@ -3006,7 +3001,6 @@
         "more_button": "更多"
     },
     "Other": "其他",
-    "Advanced": "高级",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "更改空间头像",
@@ -3141,7 +3135,13 @@
         "upgrade_toast_title": "提供加密升级",
         "verify_toast_title": "验证此会话",
         "set_up_toast_description": "防止丢失加密消息和数据的访问权",
-        "verify_toast_description": "其他用户可能不信任它"
+        "verify_toast_description": "其他用户可能不信任它",
+        "cross_signing_unsupported": "你的家服务器不支持交叉签名。",
+        "cross_signing_ready": "交叉签名已可用。",
+        "cross_signing_ready_no_backup": "交叉签名已就绪，但尚未备份密钥。",
+        "cross_signing_untrusted": "你的账户在秘密存储中有交叉签名身份，但并没有被此会话信任。",
+        "cross_signing_not_ready": "未设置交叉签名。",
+        "not_supported": "<不支持>"
     },
     "emoji": {
         "category_frequently_used": "经常使用",

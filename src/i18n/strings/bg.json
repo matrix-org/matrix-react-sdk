@@ -133,7 +133,6 @@
         "one": "Качване на %(filename)s и %(count)s друг"
     },
     "Uploading %(filename)s": "Качване на %(filename)s",
-    "<not supported>": "<не се поддържа>",
     "No Microphones detected": "Няма открити микрофони",
     "No Webcams detected": "Няма открити уеб камери",
     "Profile": "Профил",
@@ -562,13 +561,8 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
     "Lock": "Заключи",
-    "Your homeserver does not support cross-signing.": "Сървърът ви не поддържа кръстосано-подписване.",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Профилът ви има самоличност за кръстосано подписване в секретно складиране, но все още не е доверено от тази сесия.",
     "well formed": "коректен",
     "unexpected type": "непознат тип",
-    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Потвърждавай индивидуално всяка сесия на потребителите, маркирайки я като доверена и недоверявайки се на кръстосано-подписваните устройства.",
-    "Securely cache encrypted messages locally for them to appear in search results.": "Кеширай шифровани съобщения локално по сигурен начин за да се появяват в резултати от търсения.",
-    "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Липсват задължителни компоненти в %(brand)s, за да могат да бъдат складирани локално и по сигурен начин шифровани съобщения. Ако искате да експериментирате с тази функция, \"компилирайте\" версия на %(brand)s Desktop с <nativeLink>добавени компоненти за търсене</nativeLink>.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Тази сесия <b>не прави резервни копия на ключовете</b>, но имате съществуващо резервно копие, което да възстановите и към което да добавяте от тук нататък.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Свържете тази сесия с резервно копие на ключове преди да се отпишете от нея, за да не загубите ключове, които може би съществуват единствено в тази сесия.",
     "Connect this session to Key Backup": "Свържи тази сесия с резервно копие на ключовете",
@@ -779,9 +773,6 @@
     "Backup version:": "Версия на резервното копие:",
     "The operation could not be completed": "Операцията не можа да бъде завършена",
     "Failed to save your profile": "Неуспешно запазване на профила ви",
-    "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s не може да кешира шифровани съобщения локално по сигурен начин когато работи в уеб браузър. Използвайте <desktopLink>%(brand)s Desktop </desktopLink> за да можете да търсите шифровани съобщения.",
-    "Cross-signing is not set up.": "Кръстосаното-подписване не е настроено.",
-    "Cross-signing is ready for use.": "Кръстосаното-подписване е готово за използване.",
     "Save your Security Key": "Запази ключа за сигурност",
     "Confirm Security Phrase": "Потвърди фразата за сигурност",
     "Set a Security Phrase": "Настрой фраза за сигурност",
@@ -1128,7 +1119,8 @@
         "on": "Вкл.",
         "off": "Изкл.",
         "all_rooms": "Всички стаи",
-        "copied": "Копирано!"
+        "copied": "Копирано!",
+        "Advanced": "Разширени"
     },
     "action": {
         "continue": "Продължи",
@@ -1443,7 +1435,11 @@
             "bulk_options_section": "Масови действия",
             "bulk_options_accept_all_invites": "Приеми всички %(invitedRooms)s покани",
             "bulk_options_reject_all_invites": "Отхвърли всички %(invitedRooms)s покани",
-            "message_search_section": "Търсене на съобщения"
+            "message_search_section": "Търсене на съобщения",
+            "encryption_individual_verification_mode": "Потвърждавай индивидуално всяка сесия на потребителите, маркирайки я като доверена и недоверявайки се на кръстосано-подписваните устройства.",
+            "message_search_disabled": "Кеширай шифровани съобщения локално по сигурен начин за да се появяват в резултати от търсения.",
+            "message_search_unsupported": "Липсват задължителни компоненти в %(brand)s, за да могат да бъдат складирани локално и по сигурен начин шифровани съобщения. Ако искате да експериментирате с тази функция, \"компилирайте\" версия на %(brand)s Desktop с <nativeLink>добавени компоненти за търсене</nativeLink>.",
+            "message_search_unsupported_web": "%(brand)s не може да кешира шифровани съобщения локално по сигурен начин когато работи в уеб браузър. Използвайте <desktopLink>%(brand)s Desktop </desktopLink> за да можете да търсите шифровани съобщения."
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",
@@ -1851,7 +1847,6 @@
         "no_media_perms_description": "Може да се наложи ръчно да разрешите на %(brand)s да получи достъп до Вашия микрофон/уеб камера"
     },
     "Other": "Други",
-    "Advanced": "Разширени",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Промяна на снимката на стаята",
@@ -1948,7 +1943,12 @@
         "upgrade_toast_title": "Има обновление на шифроването",
         "verify_toast_title": "Потвърди тази сесия",
         "set_up_toast_description": "Защитете се срещу загуба на достъп до криптирани съобшения и информация",
-        "verify_toast_description": "Други потребители може да не се доверят"
+        "verify_toast_description": "Други потребители може да не се доверят",
+        "cross_signing_unsupported": "Сървърът ви не поддържа кръстосано-подписване.",
+        "cross_signing_ready": "Кръстосаното-подписване е готово за използване.",
+        "cross_signing_untrusted": "Профилът ви има самоличност за кръстосано подписване в секретно складиране, но все още не е доверено от тази сесия.",
+        "cross_signing_not_ready": "Кръстосаното-подписване не е настроено.",
+        "not_supported": "<не се поддържа>"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",

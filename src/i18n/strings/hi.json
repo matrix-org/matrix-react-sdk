@@ -156,7 +156,6 @@
     "Account management": "खाता प्रबंधन",
     "Deactivate Account": "खाता निष्क्रिय करें",
     "Scissors": "कैंची",
-    "<not supported>": "<समर्थित नहीं>",
     "Ignored users": "अनदेखी उपयोगकर्ताओं",
     "Missing media permissions, click the button below to request.": "मीडिया अनुमतियाँ गुम, अनुरोध करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
     "Request media permissions": "मीडिया अनुमति का अनुरोध करें",
@@ -339,7 +338,8 @@
         "someone": "कोई",
         "unnamed_room": "अनाम रूम",
         "on": "चालू",
-        "off": "बंद"
+        "off": "बंद",
+        "Advanced": "उन्नत"
     },
     "action": {
         "continue": "आगे बढ़ें",
@@ -595,7 +595,6 @@
         "default_device": "डिफ़ॉल्ट उपकरण",
         "no_media_perms_title": "मीडिया की अनुमति नहीं"
     },
-    "Advanced": "उन्नत",
     "composer": {
         "placeholder_reply_encrypted": "एक एन्क्रिप्टेड उत्तर भेजें …",
         "placeholder_encrypted": "एक एन्क्रिप्टेड संदेश भेजें …"
@@ -612,7 +611,8 @@
             "unsupported_method": "समर्थित सत्यापन विधि खोजने में असमर्थ।"
         },
         "export_unsupported": "आपका ब्राउज़र आवश्यक क्रिप्टोग्राफी एक्सटेंशन का समर्थन नहीं करता है",
-        "import_invalid_passphrase": "प्रमाणीकरण जांच विफल: गलत पासवर्ड?"
+        "import_invalid_passphrase": "प्रमाणीकरण जांच विफल: गलत पासवर्ड?",
+        "not_supported": "<समर्थित नहीं>"
     },
     "auth": {
         "sso": "केवल हस्ताक्षर के ऊपर",

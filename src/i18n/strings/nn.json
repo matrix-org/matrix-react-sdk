@@ -170,7 +170,6 @@
     },
     "Uploading %(filename)s": "Lastar opp %(filename)s",
     "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
-    "<not supported>": "<ikkje støtta>",
     "No Audio Outputs detected": "Ingen ljodavspelingseiningar funne",
     "No Microphones detected": "Ingen opptakseiningar funne",
     "No Webcams detected": "Ingen Nettkamera funne",
@@ -314,7 +313,6 @@
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Your theme": "Ditt tema",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
-    "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Kontoen din har ein kryss-signert identitet det hemmelege lageret, økta di stolar ikkje på denne enno.",
     "Secret storage public key:": "Public-nøkkel for hemmeleg lager:",
     "Ignored users": "Ignorerte brukarar",
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
@@ -446,7 +444,8 @@
         "feedback": "Tilbakemeldingar",
         "on": "På",
         "off": "Av",
-        "copied": "Kopiert!"
+        "copied": "Kopiert!",
+        "Advanced": "Avansert"
     },
     "action": {
         "continue": "Fortset",
@@ -991,7 +990,6 @@
         "show_sidebar_button": "Vis sidestolpen"
     },
     "Other": "Anna",
-    "Advanced": "Avansert",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Endre rom-avatar",
@@ -1201,7 +1199,9 @@
         "import_invalid_keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
         "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?",
         "upgrade_toast_title": "Kryptering kan oppgraderast",
-        "verify_toast_title": "Stadfest denne økta"
+        "verify_toast_title": "Stadfest denne økta",
+        "cross_signing_untrusted": "Kontoen din har ein kryss-signert identitet det hemmelege lageret, økta di stolar ikkje på denne enno.",
+        "not_supported": "<ikkje støtta>"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",
