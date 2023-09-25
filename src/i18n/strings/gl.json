@@ -94,10 +94,6 @@
     "Delete widget": "Eliminar widget",
     "Create new room": "Crear unha nova sala",
     "Home": "Inicio",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> e %(count)s outras",
-        "one": "<Items/> e outra máis"
-    },
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
@@ -143,7 +139,6 @@
     "<not supported>": "<non soportado>",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
-    "Notifications": "Notificacións",
     "Profile": "Perfil",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
@@ -207,7 +202,6 @@
     "Demote yourself?": "Baixarse a ti mesma de rango?",
     "Demote": "Baixar de rango",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Non vas poder enviar mensaxes ata que revises e aceptes <consentLink>os nosos termos e condicións</consentLink>.",
-    "Please contact your homeserver administrator.": "Por favor, contacte coa administración do seu servidor.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque este servidor acadou o Límite Mensual de Usuaria Activa. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "A súa mensaxe non foi enviada porque o servidor superou o límite de recursos. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
     "Sign Up": "Rexistro",
@@ -218,9 +212,6 @@
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Your password has been reset.": "Restableceuse o contrasinal.",
-    "Verify this session": "Verificar esta sesión",
-    "Encryption upgrade available": "Mellora do cifrado dispoñible",
-    "New login. Was this you?": "Nova sesión. Foches ti?",
     "General": "Xeral",
     "Discovery": "Descubrir",
     "Deactivate account": "Desactivar conta",
@@ -242,13 +233,10 @@
     "Not Trusted": "Non confiable",
     "Messages in this room are end-to-end encrypted.": "As mensaxes desta sala están cifradas de extremo-a-extremo.",
     "Messages in this room are not end-to-end encrypted.": "As mensaxes desta sala non están cifradas de extremo-a-extremo.",
-    "Later": "Máis tarde",
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
-    "Contact your <a>server admin</a>.": "Contacta coa <a>administración</a>.",
     "Ok": "Ok",
     "Set up": "Configurar",
-    "Other users may not trust it": "Outras usuarias poderían non confiar",
     "Join the conversation with an account": "Únete a conversa cunha conta",
     "Re-join": "Volta a unirte",
     "You can only join it with a working invite.": "Só podes unirte cun convite activo.",
@@ -768,7 +756,6 @@
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
     "Explore public rooms": "Explorar salas públicas",
     "Preparing to download logs": "Preparándose para descargar rexistro",
-    "Set up Secure Backup": "Configurar Copia de apoio Segura",
     "Information": "Información",
     "Not encrypted": "Sen cifrar",
     "Room settings": "Axustes da sala",
@@ -782,7 +769,6 @@
     "Secret storage:": "Almacenaxe segreda:",
     "ready": "lista",
     "not ready": "non lista",
-    "Safeguard against losing access to encrypted messages & data": "Protéxete de perder o acceso a mensaxes e datos cifrados",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Unable to set up keys": "Non se puideron configurar as chaves",
@@ -814,8 +800,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome, enderezo de email ou nome de usuaria (como <userId/>).",
     "Invite by email": "Convidar por email",
-    "Enable desktop notifications": "Activar notificacións de escritorio",
-    "Don't miss a reply": "Non perdas as réplicas",
     "Barbados": "Barbados",
     "Bangladesh": "Bangladesh",
     "Bahrain": "Bahrain",
@@ -1103,8 +1087,6 @@
     "Wrong Security Key": "Chave de Seguridade incorrecta",
     "Set my room layout for everyone": "Establecer a miña disposición da sala para todas",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Fai unha copia de apoio das chaves de cifrado da túa conta en caso de perder o acceso ás túas sesións. As chaves estarán seguras cunha única Chave de Seguridade.",
-    "Use app for a better experience": "Para ter unha mellor experiencia usa a app",
-    "Use app": "Usa a app",
     "Allow this widget to verify your identity": "Permitir a este widget verificar a túa identidade",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
     "Remember this": "Lembrar isto",
@@ -1153,7 +1135,6 @@
     "Edit devices": "Editar dispositivos",
     "Invite with email or username": "Convida con email ou nome de usuaria",
     "You can change these anytime.": "Poderás cambialo en calquera momento.",
-    "Review to ensure your account is safe": "Revisa para asegurarte de que a túa conta está protexida",
     "We couldn't create your DM.": "Non puidemos crear o teu MD.",
     "Invited people will be able to read old messages.": "As persoas convidadas poderán ler as mensaxes antigas.",
     "Reset event store?": "Restablecer almacenaxe do evento?",
@@ -1547,7 +1528,6 @@
     },
     "Unsent": "Sen enviar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
     "%(featureName)s Beta feedback": "Informe sobre %(featureName)s Beta",
     "%(count)s participants": {
@@ -1571,11 +1551,6 @@
     "Loading preview": "Cargando vista previa",
     "New video room": "Nova sala de vídeo",
     "New room": "Nova sala",
-    "Failed to join": "Non puideches entrar",
-    "The person who invited you has already left, or their server is offline.": "A persoa que te convidou xa saíu, ou o seu servidor non está conectado.",
-    "The person who invited you has already left.": "A persoa que te convidou xa deixou o lugar.",
-    "Sorry, your homeserver is too old to participate here.": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
-    "There was an error joining.": "Houbo un erro ao unirte.",
     "Live location ended": "Rematou a localización en directo",
     "View live location": "Ver localización en directo",
     "Live location enabled": "Activada a localización en directo",
@@ -1637,8 +1612,6 @@
         "other": "%(count)s persoas uníronse"
     },
     "Read receipts": "Resgados de lectura",
-    "You were disconnected from the call. (Error: %(message)s)": "Desconectouse a chamada. (Erro: %(message)s)",
-    "Connection lost": "Perdeuse a conexión",
     "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!",
     "Un-maximise": "Restablecer",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
@@ -3116,7 +3089,10 @@
             "waiting_other_device_details": "Agardando a que verifiques o teu outro dispositivo, %(deviceName)s %(deviceId)s …",
             "waiting_other_device": "Agardando a que verifiques no teu outro dispositivo…",
             "waiting_other_user": "Agardando por %(displayName)s para verificar…",
-            "cancelling": "Cancelando…"
+            "cancelling": "Cancelando…",
+            "unverified_sessions_toast_description": "Revisa para asegurarte de que a túa conta está protexida",
+            "unverified_sessions_toast_reject": "Máis tarde",
+            "unverified_session_toast_title": "Nova sesión. Foches ti?"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -3126,7 +3102,12 @@
         "bootstrap_title": "Configurando as chaves",
         "export_unsupported": "O seu navegador non soporta as extensións de criptografía necesarias",
         "import_invalid_keyfile": "Non é un ficheiro de chaves %(brand)s válido",
-        "import_invalid_passphrase": "Fallou a comprobación de autenticación: contrasinal incorrecto?"
+        "import_invalid_passphrase": "Fallou a comprobación de autenticación: contrasinal incorrecto?",
+        "set_up_toast_title": "Configurar Copia de apoio Segura",
+        "upgrade_toast_title": "Mellora do cifrado dispoñible",
+        "verify_toast_title": "Verificar esta sesión",
+        "set_up_toast_description": "Protéxete de perder o acceso a mensaxes e datos cifrados",
+        "verify_toast_description": "Outras usuarias poderían non confiar"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3401,7 +3382,9 @@
         "error_need_to_be_logged_in": "Tes que iniciar sesión.",
         "error_need_invite_permission": "Precisa autorización para convidar a outros usuarias para poder facer iso.",
         "error_need_kick_permission": "Tes que poder expulsar usuarias para facer eso.",
-        "no_name": "App descoñecida"
+        "no_name": "App descoñecida",
+        "error_hangup_title": "Perdeuse a conexión",
+        "error_hangup_description": "Desconectouse a chamada. (Erro: %(message)s)"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3607,7 +3590,13 @@
         "leave_error_title": "Erro ó saír da sala",
         "upgrade_error_title": "Fallo ao actualizar a sala",
         "upgrade_error_description": "Comproba ben que o servidor soporta a versión da sala escollida e inténtao outra vez.",
-        "leave_server_notices_description": "Esta sala emprégase para mensaxes importantes do servidor da sala, as que non pode saír dela."
+        "leave_server_notices_description": "Esta sala emprégase para mensaxes importantes do servidor da sala, as que non pode saír dela.",
+        "error_join_connection": "Houbo un erro ao unirte.",
+        "error_join_incompatible_version_1": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
+        "error_join_incompatible_version_2": "Por favor, contacte coa administración do seu servidor.",
+        "error_join_404_invite_same_hs": "A persoa que te convidou xa deixou o lugar.",
+        "error_join_404_invite": "A persoa que te convidou xa saíu, ou o seu servidor non está conectado.",
+        "error_join_title": "Non puideches entrar"
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3716,7 +3705,8 @@
         "admin_contact": "Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
         "connection": "Houbo un problema de comunicación co servidor de inicio, inténtao máis tarde.",
         "mixed_content": "Non se pode conectar ao servidor vía HTTP cando na barra de enderezos do navegador está HTTPS. Utiliza HTTPS ou <a>active scripts non seguros</a>.",
-        "tls": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións."
+        "tls": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións.",
+        "admin_contact_short": "Contacta coa <a>administración</a>."
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3724,5 +3714,19 @@
         "other": "No espazo %(spaceName)s e %(count)s outros espazos."
     },
     "in_space": "No espazo %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> e %(count)s outras",
+        "one": "<Items/> e outra máis"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Non perdas as réplicas",
+        "enable_prompt_toast_title": "Notificacións",
+        "enable_prompt_toast_description": "Activar notificacións de escritorio"
+    },
+    "mobile_guide": {
+        "toast_title": "Para ter unha mellor experiencia usa a app",
+        "toast_description": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
+        "toast_accept": "Usa a app"
+    }
 }

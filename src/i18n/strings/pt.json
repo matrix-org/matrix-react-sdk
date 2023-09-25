@@ -14,7 +14,6 @@
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "Novas palavras-passe devem coincidir.",
-    "Notifications": "Notificações",
     "<not supported>": "<não suportado>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "Profile": "Perfil",
@@ -891,5 +890,8 @@
     "error": {
         "mixed_content": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",
         "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede."
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notificações"
     }
 }

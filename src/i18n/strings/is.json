@@ -90,7 +90,6 @@
     "All messages": "Öll skilaboð",
     "Low Priority": "Lítill forgangur",
     "Invite to this room": "Bjóða inn á þessa spjallrás",
-    "Notifications": "Tilkynningar",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
     "Search failed": "Leit mistókst",
     "Profile": "Notandasnið",
@@ -478,8 +477,6 @@
     "Widgets": "Viðmótshlutar",
     "Room members": "Meðlimir spjallrásar",
     "Ok": "Í lagi",
-    "Use app": "Nota smáforrit",
-    "Later": "Seinna",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s og %(count)s til viðbótar",
         "one": "%(spaceName)s og %(count)s til viðbótar"
@@ -674,18 +671,8 @@
     "Loading new room": "Hleð inn nýrri spjallrás",
     "Upgrading room": "Uppfæri spjallrás",
     "Show all rooms": "Sýna allar spjallrásir",
-    "Encryption upgrade available": "Uppfærsla dulritunar tiltæk",
-    "Contact your <a>server admin</a>.": "Hafðu samband við <a>kerfisstjórann þinn</a>.",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
-    "Use app for a better experience": "Notaðu smáforritið til að njóta betur reynslunnar",
-    "Enable desktop notifications": "Virkja tilkynningar á skjáborði",
-    "Don't miss a reply": "Ekki missa af svari",
-    "Review to ensure your account is safe": "Yfirfarðu þetta til að tryggja að aðgangurinn þinn sé öruggur",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> og einn til viðbótar",
-        "other": "<Items/> og %(count)s til viðbótar"
-    },
     "Private space": "Einkasvæði",
     "Mentions only": "Aðeins minnst á",
     "Reset everything": "Frumstilla allt",
@@ -738,8 +725,6 @@
     "Set up": "Setja upp",
     "Back to chat": "Til baka í spjall",
     "%(deviceId)s from %(ip)s": "%(deviceId)s frá %(ip)s",
-    "New login. Was this you?": "Ný innskráning. Varst þetta þú?",
-    "Other users may not trust it": "Aðrir notendur gætu ekki treyst því",
     "Failed to set display name": "Mistókst að stilla birtingarnafn",
     "Show advanced": "Birta ítarlegt",
     "Hide advanced": "Fela ítarlegt",
@@ -796,7 +781,6 @@
     "No display name": "Ekkert birtingarnafn",
     "Access": "Aðgangur",
     "Back to thread": "Til baka í spjallþráð",
-    "Verify this session": "Sannprófa þessa setu",
     "Favourited": "Í eftirlætum",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
@@ -804,7 +788,6 @@
     "Your homeserver": "Heimaþjónninn þinn",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þessa spjallrás svo notendur geti fundið hana í gegnum heimaþjóninn þinn (%(localDomain)s)",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þetta svæði svo notendur geti fundið það í gegnum heimaþjóninn þinn (%(localDomain)s)",
-    "Please contact your homeserver administrator.": "Hafðu samband við kerfisstjóra heimaþjónsins þíns.",
     "Remove %(email)s?": "Fjarlægja %(email)s?",
     "Discovery options will appear once you have added a phone number above.": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn símanúmeri hér fyrir ofan.",
     "Discovery options will appear once you have added an email above.": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn tölvupóstfangi hér fyrir ofan.",
@@ -1077,7 +1060,6 @@
     "Unable to share phone number": "Ekki er hægt að deila símanúmeri",
     "Unable to revoke sharing for phone number": "Ekki er hægt að afturkalla að deila símanúmeri",
     "Verify the link in your inbox": "Athugaðu tengilinn í pósthólfinu þínu",
-    "Set up Secure Backup": "Setja upp varið öryggisafrit",
     "Message didn't send. Click for info.": "Mistókst að senda skilaboð. Smelltu til að fá nánari upplýsingar.",
     "That doesn't match.": "Þetta stemmir ekki.",
     "That matches!": "Þetta passar!",
@@ -1306,7 +1288,6 @@
     "Adding spaces has moved.": "Aðgerðin til að bæta við svæðum hefur verið flutt.",
     "You are not allowed to view this server's rooms list": "Þú hefur ekki heimild til að skoða spjallrásalistann á þessum netþjóni",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Aðgangurinn þinn er með auðkenni kross-undirritunar í leynigeymslu, en þessu er ekki ennþá treyst í þessari setu.",
-    "Safeguard against losing access to encrypted messages & data": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum",
     "Unable to query secret storage status": "Tókst ekki að finna stöðu á leynigeymslu",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
@@ -1342,11 +1323,6 @@
     "Automatically invite members from this room to the new one": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
-    "Failed to join": "Mistókst að taka þátt",
-    "The person who invited you has already left, or their server is offline.": "Aðilinn sem bauð þér er þegar farinn eða að netþjónninn hans/hennar er ekki tengdur.",
-    "The person who invited you has already left.": "Aðilinn sem bauð þér er þegar farinn.",
-    "Sorry, your homeserver is too old to participate here.": "Því miður, heimaþjónninn þinn er of gamall til að taka þátt í þessu.",
-    "There was an error joining.": "Það kom upp villa við að taka þátt.",
     "Request media permissions": "Biðja um heimildir fyrir myndefni",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
@@ -1389,13 +1365,11 @@
     "The identity server you have chosen does not have any terms of service.": "Auðkennisþjónninn sem þú valdir er ekki með neina þjónustuskilmála.",
     "Terms of service not accepted or the identity server is invalid.": "Þjónustuskilmálar eru ekki samþykktir eða að auðkennisþjónn er ógildur.",
     "Connect this session to Key Backup": "Tengja þessa setu við öryggisafrit af lykli",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
     "%(count)s people joined": {
         "one": "%(count)s aðili hefur tekið þátt",
         "other": "%(count)s aðilar hafa tekið þátt"
     },
-    "Connection lost": "Tenging rofnaði",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
@@ -1495,11 +1469,9 @@
     "Close this widget to view it in this panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi",
     "Unpin this widget to view it in this panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
-    "You were disconnected from the call. (Error: %(message)s)": "Þú varst aftengd/ur frá samtalinu. (Villa: %(message)s)",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
-    "Unknown room": "Óþekkt spjallrás",
     "Send email": "Senda tölvupóst",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Þú hefur verið skráður út úr öllum tækjum og munt ekki lengur fá ýti-tilkynningar. Til að endurvirkja tilkynningar, þarf að skrá sig aftur inn á hverju tæki fyrir sig.",
     "Sign out of all devices": "Skrá út af öllum tækjum",
@@ -1525,7 +1497,6 @@
     "Video settings": "Myndstillingar",
     "Voice settings": "Raddstillingar",
     "Search users in this room…": "Leita að notendum á þessari spjallrás…",
-    "You have unverified sessions": "Þú ert með óstaðfestar setur",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -2889,7 +2860,8 @@
         "no_permission_conference_description": "Þú hefur ekki aðgangsheimildir til að hefja fjarfund á þessari spjallrás",
         "default_device": "Sjálfgefið tæki",
         "failed_call_live_broadcast_title": "Get ekki hafið símtal",
-        "no_media_perms_title": "Engar heimildir fyrir myndefni"
+        "no_media_perms_title": "Engar heimildir fyrir myndefni",
+        "call_toast_unknown_room": "Óþekkt spjallrás"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -2995,7 +2967,11 @@
             "waiting_other_device_details": "Bíð eftir að þú staðfestir á hinu tækinu, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Bíð eftir að þú staðfestir á hinu tækinu…",
             "waiting_other_user": "Bíð eftir að %(displayName)s sannreyni…",
-            "cancelling": "Hætti við…"
+            "cancelling": "Hætti við…",
+            "unverified_sessions_toast_title": "Þú ert með óstaðfestar setur",
+            "unverified_sessions_toast_description": "Yfirfarðu þetta til að tryggja að aðgangurinn þinn sé öruggur",
+            "unverified_sessions_toast_reject": "Seinna",
+            "unverified_session_toast_title": "Ný innskráning. Varst þetta þú?"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -3004,7 +2980,12 @@
         "bootstrap_title": "Set upp dulritunarlykla",
         "export_unsupported": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
         "import_invalid_keyfile": "Er ekki gild %(brand)s lykilskrá",
-        "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?"
+        "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
+        "set_up_toast_title": "Setja upp varið öryggisafrit",
+        "upgrade_toast_title": "Uppfærsla dulritunar tiltæk",
+        "verify_toast_title": "Sannprófa þessa setu",
+        "set_up_toast_description": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum",
+        "verify_toast_description": "Aðrir notendur gætu ekki treyst því"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3279,7 +3260,9 @@
         "error_need_to_be_logged_in": "Þú þarft að vera skráð/ur inn.",
         "error_need_invite_permission": "Þú þarft að hafa heimild til að bjóða notendum til að gera þetta.",
         "error_need_kick_permission": "Þú þarft að hafa heimild til að sparka notendum til að gera þetta.",
-        "no_name": "Óþekkt forrit"
+        "no_name": "Óþekkt forrit",
+        "error_hangup_title": "Tenging rofnaði",
+        "error_hangup_description": "Þú varst aftengd/ur frá samtalinu. (Villa: %(message)s)"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3483,7 +3466,13 @@
         "leave_error_title": "Villa við að yfirgefa spjallrás",
         "upgrade_error_title": "Villa við að uppfæra spjallrás",
         "upgrade_error_description": "Athugaðu vandlega hvort netþjónninn styðji ekki valda útgáfu spjallrása og reyndu aftur.",
-        "leave_server_notices_description": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana."
+        "leave_server_notices_description": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
+        "error_join_connection": "Það kom upp villa við að taka þátt.",
+        "error_join_incompatible_version_1": "Því miður, heimaþjónninn þinn er of gamall til að taka þátt í þessu.",
+        "error_join_incompatible_version_2": "Hafðu samband við kerfisstjóra heimaþjónsins þíns.",
+        "error_join_404_invite_same_hs": "Aðilinn sem bauð þér er þegar farinn.",
+        "error_join_404_invite": "Aðilinn sem bauð þér er þegar farinn eða að netþjónninn hans/hennar er ekki tengdur.",
+        "error_join_title": "Mistókst að taka þátt"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3588,7 +3577,8 @@
         "hs_blocked": "Þessi heimaþjónn hefur verið útilokaður af kerfisstjóra hans.",
         "resource_limits": "Þessi heimaþjónn er kominn fram yfir takmörk á tilföngum sínum.",
         "admin_contact": "<a>Hafðu samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þessa þjónustu.",
-        "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar."
+        "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar.",
+        "admin_contact_short": "Hafðu samband við <a>kerfisstjórann þinn</a>."
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3596,5 +3586,19 @@
         "other": "Á %(spaceName)s og %(count)s svæðum til viðbótar."
     },
     "in_space": "Á svæðinu %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/> og einn til viðbótar",
+        "other": "<Items/> og %(count)s til viðbótar"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Ekki missa af svari",
+        "enable_prompt_toast_title": "Tilkynningar",
+        "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði"
+    },
+    "mobile_guide": {
+        "toast_title": "Notaðu smáforritið til að njóta betur reynslunnar",
+        "toast_description": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
+        "toast_accept": "Nota smáforrit"
+    }
 }

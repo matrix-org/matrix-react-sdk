@@ -17,7 +17,6 @@
     "Forget room": "Raum entfernen",
     "Invalid Email Address": "Ungültige E-Mail-Adresse",
     "Moderator": "Moderator",
-    "Notifications": "Benachrichtigungen",
     "<not supported>": "<nicht unterstützt>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
     "Profile": "Profil",
@@ -144,10 +143,6 @@
     },
     "Delete Widget": "Widget löschen",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Das Löschen des Widgets entfernt es für alle in diesem Raum. Wirklich löschen?",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> und %(count)s andere",
-        "one": "<Items/> und ein weiteres Raummitglied"
-    },
     "Restricted": "Eingeschränkt",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -215,7 +210,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "Zu Beginn des neuen Raumes einen Link zum alten Raum setzen, damit Personen die alten Nachrichten sehen können",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server sein Limit an monatlich aktiven Benutzern erreicht hat. Bitte <a>kontaktiere deine Systemadministration</a>, um diesen Dienst weiterzunutzen.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server ein Ressourcen-Limit erreicht hat. Bitte <a>kontaktiere deine Systemadministration</a>, um diesen Dienst weiterzunutzen.",
-    "Please contact your homeserver administrator.": "Bitte setze dich mit der Administration deines Heim-Servers in Verbindung.",
     "This room has been replaced and is no longer active.": "Dieser Raum wurde ersetzt und ist nicht länger aktiv.",
     "The conversation continues here.": "Die Konversation wird hier fortgesetzt.",
     "Failed to upgrade room": "Raumaktualisierung fehlgeschlagen",
@@ -395,9 +389,7 @@
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du solltest deine <b>persönlichen Daten</b> vom Identitäts-Server <idserver /> entfernen, bevor du die Verbindung trennst. Leider ist der Identitäts-Server <idserver /> derzeit außer Betrieb oder kann nicht erreicht werden.",
     "You should:": "Du solltest:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "Überprüfe deinen Browser auf Erweiterungen, die den Identitäts-Server blockieren könnten (z. B. Privacy Badger)",
-    "Verify this session": "Sitzung verifizieren",
     "Lock": "Schloss",
-    "Later": "Später",
     "Securely cache encrypted messages locally for them to appear in search results.": "Speichere verschlüsselte Nachrichten lokal, sodass sie deinen Suchergebnissen erscheinen können.",
     "Cannot connect to integration manager": "Verbindung zum Integrationsassistenten fehlgeschlagen",
     "The integration manager is offline or it cannot reach your homeserver.": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
@@ -413,7 +405,6 @@
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Zurzeit benutzt du keinen Identitäts-Server. Trage unten einen Server ein, um Kontakte zu finden und von anderen gefunden zu werden.",
     "Manage integrations": "Integrationen verwalten",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Stimme den Nutzungsbedingungen des Identitäts-Servers %(serverName)s zu, um per E-Mail-Adresse oder Telefonnummer auffindbar zu werden.",
-    "Encryption upgrade available": "Verschlüsselungsaktualisierung verfügbar",
     "Notification sound": "Benachrichtigungston",
     "Set a new custom sound": "Neuen individuellen Ton festlegen",
     "Browse": "Durchsuchen",
@@ -501,7 +492,6 @@
     "Confirm account deactivation": "Deaktivierung des Kontos bestätigen",
     "Enter your account password to confirm the upgrade:": "Gib dein Kontopasswort ein, um die Aktualisierung zu bestätigen:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Du musst dich authentifizieren, um die Aktualisierung zu bestätigen.",
-    "New login. Was this you?": "Neue Anmeldung. Warst du das?",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Gib den per SMS an +%(msisdn)s gesendeten Bestätigungscode ein.",
     "Someone is using an unknown session": "Jemand verwendet eine unbekannte Sitzung",
     "This room is end-to-end encrypted": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
@@ -511,7 +501,6 @@
     "Uploaded sound": "Hochgeladener Ton",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "Other users may not trust it": "Andere Benutzer vertrauen ihr vielleicht nicht",
     "Your homeserver does not support cross-signing.": "Dein Heim-Server unterstützt keine Quersignierung.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Dein Konto hat eine Quersignaturidentität im sicheren Speicher, der von dieser Sitzung jedoch noch nicht vertraut wird.",
     "unexpected type": "unbekannter Typ",
@@ -712,7 +701,6 @@
     "IRC display name width": "Breite des IRC-Anzeigenamens",
     "Your homeserver has exceeded its user limit.": "Dein Heim-Server hat den Benutzergrenzwert erreicht.",
     "Your homeserver has exceeded one of its resource limits.": "Dein Heim-Server hat einen seiner Ressourcengrenzwerte erreicht.",
-    "Contact your <a>server admin</a>.": "Kontaktiere deine <a>Heim-Server-Administration</a>.",
     "Ok": "Ok",
     "Error creating address": "Fehler beim Anlegen der Adresse",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Es gab einen Fehler beim Anlegen der Adresse. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
@@ -768,7 +756,6 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "Du kannst auch in den Einstellungen Sicherungen einrichten und deine Schlüssel verwalten.",
     "Explore public rooms": "Öffentliche Räume erkunden",
     "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
-    "Set up Secure Backup": "Schlüsselsicherung einrichten",
     "Information": "Information",
     "Not encrypted": "Nicht verschlüsselt",
     "Room settings": "Raumeinstellungen",
@@ -782,7 +769,6 @@
     "Secret storage:": "Sicherer Speicher:",
     "ready": "bereit",
     "not ready": "nicht bereit",
-    "Safeguard against losing access to encrypted messages & data": "Schütze dich vor dem Verlust verschlüsselter Nachrichten und Daten",
     "Widgets": "Widgets",
     "Edit widgets, bridges & bots": "Widgets, Brücken und Bots bearbeiten",
     "Add widgets, bridges & bots": "Widgets, Brücken und Bots hinzufügen",
@@ -812,8 +798,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
-    "Don't miss a reply": "Verpasse keine Antwort",
-    "Enable desktop notifications": "Aktiviere Desktopbenachrichtigungen",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten von %(rooms)s Räumen zu speichern.",
         "one": "Verschlüsselte Nachrichten sicher lokal zwischenspeichern, um sie in Suchergebnissen finden zu können. Es werden %(size)s benötigt, um die Nachrichten vom Raum %(rooms)s zu speichern."
@@ -1106,8 +1090,6 @@
     "Remember this": "Dies merken",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Das Widget überprüft deine Nutzer-ID, kann jedoch keine Aktionen für dich ausführen:",
     "Allow this widget to verify your identity": "Erlaube diesem Widget deine Identität zu überprüfen",
-    "Use app": "App verwenden",
-    "Use app for a better experience": "Nutze die App für eine bessere Erfahrung",
     "Recently visited rooms": "Kürzlich besuchte Räume",
     "%(count)s members": {
         "other": "%(count)s Mitglieder",
@@ -1160,7 +1142,6 @@
     "Space options": "Space-Optionen",
     "unknown person": "unbekannte Person",
     "%(deviceId)s from %(ip)s": "%(deviceId)s von %(ip)s",
-    "Review to ensure your account is safe": "Überprüfe sie, um ein sicheres Konto gewährleisten zu können",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
     "Consult first": "Zuerst Anfragen",
@@ -1545,12 +1526,6 @@
         "other": "Entferne Nachrichten in %(count)s Räumen"
     },
     "Share for %(duration)s": "Geteilt für %(duration)s",
-    "Failed to join": "Betreten fehlgeschlagen",
-    "The person who invited you has already left, or their server is offline.": "Die dich einladende Person hat den Raum verlassen oder ihr Heim-Server ist außer Betrieb.",
-    "The person who invited you has already left.": "Die Person, die dich eingeladen hat, hat den Raum wieder verlassen.",
-    "Sorry, your homeserver is too old to participate here.": "Verzeihung, dein Heim-Server ist hierfür zu alt.",
-    "There was an error joining.": "Es gab einen Fehler beim Betreten.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s ist in mobilen Browsern experimentell. Für eine bessere Erfahrung nutze unsere App.",
     "Live location sharing": "Echtzeit-Standortfreigabe",
     "View live location": "Echtzeit-Standort anzeigen",
     "Ban from room": "Bannen",
@@ -1610,8 +1585,6 @@
     "Private room": "Privater Raum",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server von dessen Administration gesperrt wurde. Bitte <a>kontaktiere deine Dienstadministration</a>, um den Dienst weiterzunutzen.",
-    "You were disconnected from the call. (Error: %(message)s)": "Du wurdest vom Anruf getrennt. (Error: %(message)s)",
-    "Connection lost": "Verbindung verloren",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
     "%(count)s people joined": {
         "one": "%(count)s Person beigetreten",
@@ -1689,7 +1662,6 @@
     "Failed to set pusher state": "Konfigurieren des Push-Dienstes fehlgeschlagen",
     "Video call ended": "Videoanruf beendet",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
-    "Unknown room": "Unbekannter Raum",
     "Freedom": "Freiraum",
     "Spotlight": "Rampenlicht",
     "Room info": "Raum-Info",
@@ -1737,7 +1709,6 @@
     "Error starting verification": "Verifizierungbeginn fehlgeschlagen",
     "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
-    "You have unverified sessions": "Du hast nicht verifizierte Sitzungen",
     "Change layout": "Anordnung ändern",
     "Add privileged users": "Berechtigten Benutzer hinzufügen",
     "Search users in this room…": "Benutzer im Raum suchen …",
@@ -1792,10 +1763,7 @@
     "The sender has blocked you from receiving this message": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
     "Due to decryption errors, some votes may not be counted": "Evtl. werden infolge von Entschlüsselungsfehlern einige Stimmen nicht gezählt",
     "Ended a poll": "Eine Umfrage beendet",
-    "Yes, it was me": "Ja, das war ich",
     "Answered elsewhere": "Anderswo beantwortet",
-    "If you know a room address, try joining through that instead.": "Falls du eine Adresse kennst, versuche den Raum mit dieser zu betreten.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Du hast versucht einen Raum via Raum-ID, aber ohne Angabe von Servern zu betreten. Raum-IDs sind interne Kennungen und können nicht ohne weitere Informationen zum Betreten von Räumen genutzt werden.",
     "View poll": "Umfrage ansehen",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
         "one": "Für den vergangenen Tag sind keine beendeten Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
@@ -1887,8 +1855,6 @@
     "Other spaces you know": "Andere dir bekannte Spaces",
     "Ask to join %(roomName)s?": "Beitrittsanfrage für %(roomName)s stellen?",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Du benötigst eine Beitrittsberechtigung, um den Raum betrachten oder an der Unterhaltung teilnehmen zu können. Du kannst nachstehend eine Beitrittsanfrage stellen.",
-    "You need an invite to access this room.": "Du kannst diesen Raum nur auf Einladung betreten.",
-    "Failed to cancel": "Abbrechen gescheitert",
     "Ask to join?": "Beitrittsanfrage stellen?",
     "Message (optional)": "Nachricht (optional)",
     "Request access": "Beitrittsanfrage stellen",
@@ -3418,7 +3384,8 @@
         "failed_call_live_broadcast_title": "Kann keinen Anruf beginnen",
         "failed_call_live_broadcast_description": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
         "no_media_perms_title": "Keine Medienberechtigungen",
-        "no_media_perms_description": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst"
+        "no_media_perms_description": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst",
+        "call_toast_unknown_room": "Unbekannter Raum"
     },
     "Other": "Sonstiges",
     "Advanced": "Erweitert",
@@ -3536,7 +3503,12 @@
             "waiting_other_device_details": "Warten, dass du auf deinem anderen Gerät %(deviceName)s (%(deviceId)s) verifizierst…",
             "waiting_other_device": "Warten darauf, dass du das auf deinem anderen Gerät bestätigst…",
             "waiting_other_user": "Warte darauf, dass %(displayName)s bestätigt…",
-            "cancelling": "Abbrechen…"
+            "cancelling": "Abbrechen…",
+            "unverified_sessions_toast_title": "Du hast nicht verifizierte Sitzungen",
+            "unverified_sessions_toast_description": "Überprüfe sie, um ein sicheres Konto gewährleisten zu können",
+            "unverified_sessions_toast_reject": "Später",
+            "unverified_session_toast_title": "Neue Anmeldung. Warst du das?",
+            "unverified_session_toast_accept": "Ja, das war ich"
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3546,7 +3518,12 @@
         "bootstrap_title": "Schlüssel werden eingerichtet",
         "export_unsupported": "Dein Browser unterstützt die benötigten Verschlüsselungserweiterungen nicht",
         "import_invalid_keyfile": "Keine gültige %(brand)s-Schlüsseldatei",
-        "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?"
+        "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?",
+        "set_up_toast_title": "Schlüsselsicherung einrichten",
+        "upgrade_toast_title": "Verschlüsselungsaktualisierung verfügbar",
+        "verify_toast_title": "Sitzung verifizieren",
+        "set_up_toast_description": "Schütze dich vor dem Verlust verschlüsselter Nachrichten und Daten",
+        "verify_toast_description": "Andere Benutzer vertrauen ihr vielleicht nicht"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3850,7 +3827,9 @@
         "error_need_to_be_logged_in": "Du musst angemeldet sein.",
         "error_need_invite_permission": "Du musst die Berechtigung \"Benutzer einladen\" haben, um diese Aktion ausführen zu können.",
         "error_need_kick_permission": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
-        "no_name": "Unbekannte App"
+        "no_name": "Unbekannte App",
+        "error_hangup_title": "Verbindung verloren",
+        "error_hangup_description": "Du wurdest vom Anruf getrennt. (Error: %(message)s)"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4091,7 +4070,17 @@
         "leave_error_title": "Fehler beim Verlassen des Raums",
         "upgrade_error_title": "Fehler bei Raumaktualisierung",
         "upgrade_error_description": "Überprüfe nochmal ob dein Server die ausgewählte Raumversion unterstützt und versuche es nochmal.",
-        "leave_server_notices_description": "Du kannst diesen Raum nicht verlassen, da dieser Raum für wichtige Mitteilungen vom Heim-Server verwendet wird."
+        "leave_server_notices_description": "Du kannst diesen Raum nicht verlassen, da dieser Raum für wichtige Mitteilungen vom Heim-Server verwendet wird.",
+        "error_join_connection": "Es gab einen Fehler beim Betreten.",
+        "error_join_incompatible_version_1": "Verzeihung, dein Heim-Server ist hierfür zu alt.",
+        "error_join_incompatible_version_2": "Bitte setze dich mit der Administration deines Heim-Servers in Verbindung.",
+        "error_join_404_invite_same_hs": "Die Person, die dich eingeladen hat, hat den Raum wieder verlassen.",
+        "error_join_404_invite": "Die dich einladende Person hat den Raum verlassen oder ihr Heim-Server ist außer Betrieb.",
+        "error_join_404_1": "Du hast versucht einen Raum via Raum-ID, aber ohne Angabe von Servern zu betreten. Raum-IDs sind interne Kennungen und können nicht ohne weitere Informationen zum Betreten von Räumen genutzt werden.",
+        "error_join_404_2": "Falls du eine Adresse kennst, versuche den Raum mit dieser zu betreten.",
+        "error_join_title": "Betreten fehlgeschlagen",
+        "error_join_403": "Du kannst diesen Raum nur auf Einladung betreten.",
+        "error_cancel_knock_title": "Abbrechen gescheitert"
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4207,7 +4196,8 @@
         "sync": "Verbindung mit Heim-Server fehlgeschlagen. Versuche es erneut …",
         "connection": "Es gab ein Problem bei der Kommunikation mit dem Heim-Server. Bitte versuche es später erneut.",
         "mixed_content": "Es kann keine Verbindung zum Heim-Server via HTTP aufgebaut werden, wenn die Adresszeile des Browsers eine HTTPS-URL enthält. Entweder HTTPS verwenden oder alternativ <a>unsichere Skripte erlauben</a>.",
-        "tls": "Verbindung zum Heim-Server fehlgeschlagen – bitte überprüfe die Internetverbindung und stelle sicher, dass dem <a>SSL-Zertifikat deines Heimservers</a> vertraut wird und dass Anfragen nicht durch eine Browser-Erweiterung blockiert werden."
+        "tls": "Verbindung zum Heim-Server fehlgeschlagen – bitte überprüfe die Internetverbindung und stelle sicher, dass dem <a>SSL-Zertifikat deines Heimservers</a> vertraut wird und dass Anfragen nicht durch eine Browser-Erweiterung blockiert werden.",
+        "admin_contact_short": "Kontaktiere deine <a>Heim-Server-Administration</a>."
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4215,5 +4205,19 @@
         "other": "In %(spaceName)s und %(count)s weiteren Spaces."
     },
     "in_space": "Im Space %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> und %(count)s andere",
+        "one": "<Items/> und ein weiteres Raummitglied"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Verpasse keine Antwort",
+        "enable_prompt_toast_title": "Benachrichtigungen",
+        "enable_prompt_toast_description": "Aktiviere Desktopbenachrichtigungen"
+    },
+    "mobile_guide": {
+        "toast_title": "Nutze die App für eine bessere Erfahrung",
+        "toast_description": "%(brand)s ist in mobilen Browsern experimentell. Für eine bessere Erfahrung nutze unsere App.",
+        "toast_accept": "App verwenden"
+    }
 }

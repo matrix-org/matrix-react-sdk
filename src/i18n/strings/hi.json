@@ -32,7 +32,6 @@
     "Moderator": "मध्यस्थ",
     "Reason": "कारण",
     "Send": "भेजें",
-    "Please contact your homeserver administrator.": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
     "Incorrect verification code": "गलत सत्यापन कोड",
     "No display name": "कोई प्रदर्शन नाम नहीं",
     "Warning!": "चेतावनी!",
@@ -156,7 +155,6 @@
     "Phone numbers": "फोन नंबर",
     "Account management": "खाता प्रबंधन",
     "Deactivate Account": "खाता निष्क्रिय करें",
-    "Notifications": "सूचनाएं",
     "Scissors": "कैंची",
     "<not supported>": "<समर्थित नहीं>",
     "Ignored users": "अनदेखी उपयोगकर्ताओं",
@@ -682,7 +680,8 @@
         "widget_screenshots": "समर्थित विजेट्स पर विजेट स्क्रीनशॉट सक्षम करें"
     },
     "room": {
-        "drop_file_prompt": "अपलोड करने के लिए यहां फ़ाइल ड्रॉप करें"
+        "drop_file_prompt": "अपलोड करने के लिए यहां फ़ाइल ड्रॉप करें",
+        "error_join_incompatible_version_2": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।"
     },
     "space": {
         "context_menu": {
@@ -756,5 +755,8 @@
     "error": {
         "mau": "इस होमसर्वर ने अपनी मासिक सक्रिय उपयोगकर्ता सीमा को प्राप्त कर लिया हैं।",
         "resource_limits": "यह होम सर्वर अपनी संसाधन सीमाओं में से एक से अधिक हो गया है।"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "सूचनाएं"
     }
 }

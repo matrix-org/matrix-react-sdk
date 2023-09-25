@@ -873,7 +873,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.ChooseKeyPassphrase:
-                return _t("Set up Secure Backup");
+                return _t("encryption|set_up_toast_title");
             case Phase.Migrate:
                 return _t("Upgrade your encryption");
             case Phase.Passphrase:

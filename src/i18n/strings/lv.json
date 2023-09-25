@@ -43,7 +43,6 @@
     "Moderator": "Moderators",
     "New passwords must match each other.": "Jaunajām parolēm ir jāsakrīt vienai ar otru.",
     "not specified": "nav noteikts",
-    "Notifications": "Paziņojumi",
     "<not supported>": "<netiek atbalstīts>",
     "No display name": "Nav parādāmā vārda",
     "No more results": "Vairāk nekādu rezultātu nav",
@@ -157,10 +156,6 @@
         "other": "Un par %(count)s vairāk..."
     },
     "This room is not public. You will not be able to rejoin without an invite.": "Šī istaba nav publiska un jūs nevarēsiet atkārtoti pievienoties bez uzaicinājuma.",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> un viens cits",
-        "other": "<Items/> un %(count)s citus"
-    },
     "Sunday": "Svētdiena",
     "Notification targets": "Paziņojumu adresāti",
     "Today": "Šodien",
@@ -341,15 +336,9 @@
     "Session key": "Sesijas atslēga",
     "Account management": "Konta pārvaldība",
     "Failed to save your profile": "Neizdevās salabāt jūsu profilu",
-    "New login. Was this you?": "Jauna pierakstīšanās. Vai tas bijāt jūs?",
-    "Set up Secure Backup": "Iestatīt drošu rezerves dublēšanu",
     "Ok": "Labi",
-    "Contact your <a>server admin</a>.": "Sazinieties ar <a>servera administratoru</a>.",
     "Your homeserver has exceeded one of its resource limits.": "Jūsu bāzes serverī ir pārsniegts limits kādam no resursiem.",
     "Your homeserver has exceeded its user limit.": "Jūsu bāzes serverī ir pārsniegts lietotāju limits.",
-    "Enable desktop notifications": "Iespējot darbvirsmas paziņojumus",
-    "Don't miss a reply": "Nepalaidiet garām atbildi",
-    "Later": "Vēlāk",
     "Malawi": "Malāvija",
     "Madagascar": "Madagaskara",
     "Macedonia": "Maķedonija",
@@ -435,8 +424,6 @@
     "Your message was sent": "Jūsu ziņa ir nosūtīta",
     "Remove %(phone)s?": "Dzēst %(phone)s?",
     "Remove %(email)s?": "Dēst %(email)s?",
-    "Other users may not trust it": "Citi lietotāji var neuzskatīt to par uzticamu",
-    "Verify this session": "Verificēt šo sesiju",
     "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(deviceId)s from %(ip)s": "%(deviceId)s no %(ip)s",
     "%(count)s people you know have already joined": {
@@ -1662,7 +1649,9 @@
             "complete_action": "Sapratu",
             "sas_emoji_caption_user": "Verificēt šo lietotāju, apstiprinot, ka sekojošās emocijzīmes pārādās lietotāja ekrānā.",
             "sas_caption_user": "Verificēt šo lietotāju, apstiprinot, ka šāds numurs pārādās lietotāja ekrānā.",
-            "waiting_other_user": "Gaida uz %(displayName)s, lai verificētu…"
+            "waiting_other_user": "Gaida uz %(displayName)s, lai verificētu…",
+            "unverified_sessions_toast_reject": "Vēlāk",
+            "unverified_session_toast_title": "Jauna pierakstīšanās. Vai tas bijāt jūs?"
         },
         "old_version_detected_title": "Tika uzieti novecojuši šifrēšanas dati",
         "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
@@ -1671,7 +1660,10 @@
         "bootstrap_title": "Atslēgu iestatīšana",
         "export_unsupported": "Jūsu pārlūks neatbalsta vajadzīgos kriptogrāfijas paplašinājumus",
         "import_invalid_keyfile": "Nederīgs %(brand)s atslēgfails",
-        "import_invalid_passphrase": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?"
+        "import_invalid_passphrase": "Autentifikācijas pārbaude neizdevās. Nepareiza parole?",
+        "set_up_toast_title": "Iestatīt drošu rezerves dublēšanu",
+        "verify_toast_title": "Verificēt šo sesiju",
+        "verify_toast_description": "Citi lietotāji var neuzskatīt to par uzticamu"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",
@@ -2021,7 +2013,17 @@
         "hs_blocked": "Šo bāzes serveri ir bloķējis tā administrators.",
         "resource_limits": "Šis bāzes serveris ir pārsniedzis vienu no tā resursu ierobežojumiem.",
         "mixed_content": "Neizdodas savienoties ar bāzes serveri izmantojot HTTP protokolu, kad pārlūka adreses laukā norādīts HTTPS protokols. Tā vietā izmanto HTTPS vai <a>iespējo nedrošos skriptus</a>.",
-        "tls": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus."
+        "tls": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus.",
+        "admin_contact_short": "Sazinieties ar <a>servera administratoru</a>."
     },
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/> un viens cits",
+        "other": "<Items/> un %(count)s citus"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Nepalaidiet garām atbildi",
+        "enable_prompt_toast_title": "Paziņojumi",
+        "enable_prompt_toast_description": "Iespējot darbvirsmas paziņojumus"
+    }
 }

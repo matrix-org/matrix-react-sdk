@@ -25,8 +25,6 @@
     "Moderator": "Aseɣyad",
     "Thank you!": "Tanemmirt!",
     "Reason": "Taɣẓint",
-    "Later": "Ticki",
-    "Notifications": "Ilɣa",
     "Ok": "Ih",
     "Cat": "Amcic",
     "Lion": "Izem",
@@ -103,8 +101,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "New login. Was this you?": "Anekcam amaynut. D kečč/kemm?",
-    "Please contact your homeserver administrator.": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
     "Restricted": "Yesεa tilas",
     "Set up": "Sbadu",
     "Pencil": "Akeryun",
@@ -115,14 +111,7 @@
     "Set up Secure Messages": "Sbadu iznan iɣelsanen",
     "Logs sent": "Iɣmisen ttewaznen",
     "Not Trusted": "Ur yettwattkal ara",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> d %(count)s wiyaḍ",
-        "one": "<Items/> d wayeḍ-nniḍen"
-    },
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
-    "Encryption upgrade available": "Yella uleqqem n uwgelhen",
-    "Verify this session": "Asenqed n tɣimit",
-    "Other users may not trust it": "Iseqdacen-nniḍen yezmer ur tettamnen ara",
     "Failed to set display name": "Asbadu n yisem yettwaskanen ur yeddi ara",
     "Cannot connect to integration manager": "Ur nessaweḍ ara ad neqqen ɣer umsefrak n useddu",
     "Delete Backup": "Kkes aḥraz",
@@ -453,7 +442,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
-    "Contact your <a>server admin</a>.": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
     "Discovery": "Tagrut",
     "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
     "Request media permissions": "Suter tisirag n umidyat",
@@ -704,7 +692,6 @@
     "Show advanced": "Sken talqayt",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
-    "Set up Secure Backup": "Sebadu aḥraz aɣelsan",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ma yella tgiḍ aya war ma tebniḍ, tzemreḍ ad tsewleḍ iznan uffiren deg tɣimit-a ayen ara yalsen awgelhen n umazray n yiznan n texxamt-a s tarrayt n tririt tamaynut.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ur tettizmireḍ ara ad tesfesxeḍ asnifel-a acku tettṣubbuḍ deg usellun-unek·inem, ma yella d kečč·kemm i d aseqdac aneglam n texxamt-a, d awezɣi ad d-terreḍ ula d yiwet n tseglut.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Aql-ak·akem ad tettuwellheḍ ɣer usmel n wis tlata i wakken ad tizmireḍ ad tsestbeḍ amiḍan-ik·im i useqdec d %(integrationsUrl)s. Tebɣiḍ ad tkemmleḍ?",
@@ -927,7 +914,6 @@
     "Pitcairn Islands": "Tigzirin n Pitkaṛn",
     "Malaysia": "Malizya",
     "Jordan": "Urdun",
-    "Safeguard against losing access to encrypted messages & data": "Seḥbiber iman-ik·im mgal asruḥu n unekcum ɣer yiznann & yisefka yettwawgelhen",
     "Kosovo": "Kuṣuvu",
     "South Korea": "Kuriya n uwezlu",
     "Dominica": "Dominique",
@@ -1879,7 +1865,9 @@
             "sas_caption_user": "Senqed aseqdac-a s usentem dakken amḍan-a ittban-d ɣef ugdil-is.",
             "unsupported_method": "D awezɣi ad d-naf tarrayt n usenqed yettusefraken.",
             "waiting_other_user": "Aṛaǧu n %(displayName)s i usenqed…",
-            "cancelling": "Asefsex…"
+            "cancelling": "Asefsex…",
+            "unverified_sessions_toast_reject": "Ticki",
+            "unverified_session_toast_title": "Anekcam amaynut. D kečč/kemm?"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1888,7 +1876,12 @@
         "bootstrap_title": "Asebded n tsura",
         "export_unsupported": "Iminig-ik·im ur issefrak ara iseɣzaf n uwgelhen yettusran",
         "import_invalid_keyfile": "Afaylu n tsarut %(brand)s d arameɣtu",
-        "import_invalid_passphrase": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?"
+        "import_invalid_passphrase": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?",
+        "set_up_toast_title": "Sebadu aḥraz aɣelsan",
+        "upgrade_toast_title": "Yella uleqqem n uwgelhen",
+        "verify_toast_title": "Asenqed n tɣimit",
+        "set_up_toast_description": "Seḥbiber iman-ik·im mgal asruḥu n unekcum ɣer yiznann & yisefka yettwawgelhen",
+        "verify_toast_description": "Iseqdacen-nniḍen yezmer ur tettamnen ara"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2128,7 +2121,8 @@
         "leave_error_title": "Tuccaḍa deg tuffɣa seg texxamt",
         "upgrade_error_title": "Tuccḍa deg uleqqem n texxamt",
         "upgrade_error_description": "Senqed akken ilaq ma yella aqeddac-inek·inem issefrak lqem n texxamtyettwafernen syen εreḍ tikkelt-nniḍen.",
-        "leave_server_notices_description": "Taxxamt-a tettuseqdac i yiznan yesɛan azal sɣur aqeddac agejdan, ɣef waya ur tezmireḍ ara ad tt-teǧǧeḍ."
+        "leave_server_notices_description": "Taxxamt-a tettuseqdac i yiznan yesɛan azal sɣur aqeddac agejdan, ɣef waya ur tezmireḍ ara ad tt-teǧǧeḍ.",
+        "error_join_incompatible_version_2": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan."
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",
@@ -2190,7 +2184,15 @@
         "resource_limits": "Aqeddac-a agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
         "admin_contact": "Ttxil-k·m <a>nermes anedbal-ik·im n uqeddac</a> i wakken ad tkemmleḍ aseqdec n yibenk-a.",
         "mixed_content": "Ur tessawḍeḍ ara ad teqqneḍ ɣer uqeddac agejdan s HTTP mi ara yili URL n HTTPS deg ufeggag n yiminig-ik·im. Seqdec HTTPS neɣ <a>sermed isekripten ariɣelsanen</a>.",
-        "tls": "Yegguma ad yeqqen ɣer uqeddac agejdan - ttxil-k·m senqed tuqqna-inek·inem, tḍemneḍ belli <a>aselken n SSL n uqeddac agejdan</a> yettwattkal, rnu aseɣzan n yiminig-nni ur issewḥal ara isutar."
+        "tls": "Yegguma ad yeqqen ɣer uqeddac agejdan - ttxil-k·m senqed tuqqna-inek·inem, tḍemneḍ belli <a>aselken n SSL n uqeddac agejdan</a> yettwattkal, rnu aseɣzan n yiminig-nni ur issewḥal ara isutar.",
+        "admin_contact_short": "Nermes anedbal-inek·inem <a>n uqeddac</a>."
     },
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> d %(count)s wiyaḍ",
+        "one": "<Items/> d wayeḍ-nniḍen"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Ilɣa"
+    }
 }

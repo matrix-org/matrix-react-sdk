@@ -48,7 +48,6 @@
     "Invited": "已邀请",
     "Moderator": "协管员",
     "not specified": "未指定",
-    "Notifications": "通知",
     "<not supported>": "<不支持>",
     "No display name": "无显示名称",
     "Create new room": "创建新房间",
@@ -123,10 +122,6 @@
     "Jump to read receipt": "跳到阅读回执",
     "Unnamed room": "未命名的房间",
     "Delete Widget": "删除挂件",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> 和其他 %(count)s 人",
-        "one": "<Items/> 与另一个人"
-    },
     "collapse": "折叠",
     "expand": "展开",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -220,7 +215,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "在新房间的开始处发送一条指回旧房间的链接，这样用户可以查看旧消息",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为本家服务器已达到其使用量限制之一。请 <a>联系你的服务管理员</a> 以继续使用本服务。",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为本家服务器已达到其每月活跃用户限制。请 <a>联系你的服务管理员</a> 以继续使用本服务。",
-    "Please contact your homeserver administrator.": "请 联系你的家服务器管理员。",
     "Delete Backup": "删除备份",
     "Set up": "设置",
     "Incompatible local cache": "本地缓存不兼容",
@@ -372,20 +366,14 @@
     "Revoke invite": "撤销邀请",
     "Invited by %(sender)s": "被 %(sender)s 邀请",
     "Remember my selection for this widget": "记住我对此挂件的选择",
-    "Verify this session": "验证此会话",
-    "Encryption upgrade available": "提供加密升级",
-    "New login. Was this you?": "现在登录。请问是你本人吗？",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s(%(userId)s)登录到未验证的新会话：",
     "Ask this user to verify their session, or manually verify it below.": "要求此用户验证其会话，或在下面手动进行验证。",
     "Not Trusted": "不可信任",
-    "Later": "稍后再说",
     "Your homeserver has exceeded its user limit.": "你的家服务器已超过用户限制。",
     "Your homeserver has exceeded one of its resource limits.": "你的家服务器已超过某项资源限制。",
-    "Contact your <a>server admin</a>.": "请联系你的<a>服务器管理员</a>。",
     "Ok": "确定",
-    "Other users may not trust it": "其他用户可能不信任它",
     "Change notification settings": "修改通知设置",
     "Lock": "锁",
     "Your server isn't responding to some <a>requests</a>.": "你的服务器没有响应一些<a>请求</a>。",
@@ -770,8 +758,6 @@
     "Cross-signing is not set up.": "未设置交叉签名。",
     "Backup version:": "备份版本：",
     "Algorithm:": "算法：",
-    "Set up Secure Backup": "设置安全备份",
-    "Safeguard against losing access to encrypted messages & data": "防止丢失加密消息和数据的访问权",
     "Backup key stored:": "备份密钥已保存：",
     "Backup key cached:": "备份密钥已缓存：",
     "Secret storage:": "秘密存储：",
@@ -838,10 +824,6 @@
     "Share invite link": "分享邀请链接",
     "Click to copy": "点击复制",
     "Dial pad": "拨号盘",
-    "Use app": "使用 app",
-    "Use app for a better experience": "使用 app 以获得更好的体验",
-    "Enable desktop notifications": "开启桌面通知",
-    "Don't miss a reply": "不要错过任何回复",
     "%(count)s members": {
         "one": "%(count)s 位成员",
         "other": "%(count)s 位成员"
@@ -1188,7 +1170,6 @@
     "Connecting": "连接中",
     "unknown person": "陌生人",
     "%(deviceId)s from %(ip)s": "来自 %(ip)s 的 %(deviceId)s",
-    "Review to ensure your account is safe": "检查以确保你的账户是安全的",
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -1476,14 +1457,6 @@
     "Back to thread": "返回消息列",
     "Room members": "房间成员",
     "Back to chat": "返回聊天",
-    "You were disconnected from the call. (Error: %(message)s)": "你已断开通话。（错误：%(message)s）",
-    "Connection lost": "连接丢失",
-    "Failed to join": "加入失败",
-    "The person who invited you has already left, or their server is offline.": "邀请你的人已经离开了，亦或是他们的家服务器离线了。",
-    "The person who invited you has already left.": "邀请你的人已经离开了。",
-    "Sorry, your homeserver is too old to participate here.": "抱歉，你的家服务器过旧，故无法参与其中。",
-    "There was an error joining.": "加入时发生错误。",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "在移动网页浏览器中 %(brand)s 是实验性功能。为了获取更好的体验和最新功能，请使用我们的免费原生应用。",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "Failed to remove user": "移除用户失败",
     "Pinned": "已固定",
@@ -1673,13 +1646,11 @@
     "You do not have permission to start voice calls": "你没有权限开始语音通话",
     "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
-    "You have unverified sessions": "你有未验证的会话",
     "Change layout": "更改布局",
     "Connection": "连接",
     "Voice processing": "语音处理",
     "Video settings": "视频设置",
     "Voice settings": "语音设置",
-    "Unknown room": "未知房间",
     "Automatically adjust the microphone volume": "自动调整话筒音量",
     "Search users in this room…": "搜索该房间内的用户……",
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
@@ -3046,7 +3017,8 @@
         "default_device": "默认设备",
         "failed_call_live_broadcast_title": "无法开始通话",
         "no_media_perms_title": "没有媒体存取权限",
-        "no_media_perms_description": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头"
+        "no_media_perms_description": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头",
+        "call_toast_unknown_room": "未知房间"
     },
     "Other": "其他",
     "Advanced": "高级",
@@ -3162,7 +3134,11 @@
             "waiting_other_device_details": "正等待你在其它设备上验证，%(deviceName)s（%(deviceId)s）……",
             "waiting_other_device": "正等待你在其它设备上验证……",
             "waiting_other_user": "正在等待%(displayName)s进行验证……",
-            "cancelling": "正在取消……"
+            "cancelling": "正在取消……",
+            "unverified_sessions_toast_title": "你有未验证的会话",
+            "unverified_sessions_toast_description": "检查以确保你的账户是安全的",
+            "unverified_sessions_toast_reject": "稍后再说",
+            "unverified_session_toast_title": "现在登录。请问是你本人吗？"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -3172,7 +3148,12 @@
         "bootstrap_title": "设置密钥",
         "export_unsupported": "你的浏览器不支持所需的密码学扩展",
         "import_invalid_keyfile": "不是有效的 %(brand)s 密钥文件",
-        "import_invalid_passphrase": "身份验证失败：密码错误？"
+        "import_invalid_passphrase": "身份验证失败：密码错误？",
+        "set_up_toast_title": "设置安全备份",
+        "upgrade_toast_title": "提供加密升级",
+        "verify_toast_title": "验证此会话",
+        "set_up_toast_description": "防止丢失加密消息和数据的访问权",
+        "verify_toast_description": "其他用户可能不信任它"
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3448,7 +3429,9 @@
         "error_need_to_be_logged_in": "你需要登录。",
         "error_need_invite_permission": "你需要有邀请用户的权限才能进行此操作。",
         "error_need_kick_permission": "你需要能够移除用户才能做到那件事。",
-        "no_name": "未知应用"
+        "no_name": "未知应用",
+        "error_hangup_title": "连接丢失",
+        "error_hangup_description": "你已断开通话。（错误：%(message)s）"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3674,7 +3657,13 @@
         "leave_error_title": "离开房间时出错",
         "upgrade_error_title": "升级房间时发生错误",
         "upgrade_error_description": "请再次检查你的服务器是否支持所选房间版本，然后再试一次。",
-        "leave_server_notices_description": "此房间是用于发布来自家服务器的重要讯息的，所以你不能退出它。"
+        "leave_server_notices_description": "此房间是用于发布来自家服务器的重要讯息的，所以你不能退出它。",
+        "error_join_connection": "加入时发生错误。",
+        "error_join_incompatible_version_1": "抱歉，你的家服务器过旧，故无法参与其中。",
+        "error_join_incompatible_version_2": "请 联系你的家服务器管理员。",
+        "error_join_404_invite_same_hs": "邀请你的人已经离开了。",
+        "error_join_404_invite": "邀请你的人已经离开了，亦或是他们的家服务器离线了。",
+        "error_join_title": "加入失败"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3785,7 +3774,8 @@
         "admin_contact": "请 <a>联系你的服务管理员</a> 以继续使用本服务。",
         "connection": "与家服务器通讯时出现问题，请稍后再试。",
         "mixed_content": "当浏览器地址栏里有 HTTPS 的 URL 时，不能使用 HTTP 连接家服务器。请使用 HTTPS 或者<a>允许不安全的脚本</a>。",
-        "tls": "无法连接家服务器 - 请检查网络连接，确保你的<a>家服务器 SSL 证书</a>被信任，且没有浏览器插件拦截请求。"
+        "tls": "无法连接家服务器 - 请检查网络连接，确保你的<a>家服务器 SSL 证书</a>被信任，且没有浏览器插件拦截请求。",
+        "admin_contact_short": "请联系你的<a>服务器管理员</a>。"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3793,5 +3783,19 @@
         "other": "在 %(spaceName)s 和其他 %(count)s 个空间。"
     },
     "in_space": "在 %(spaceName)s 空间。",
-    "name_and_id": "%(name)s%(userId)s"
+    "name_and_id": "%(name)s%(userId)s",
+    "items_and_n_others": {
+        "other": "<Items/> 和其他 %(count)s 人",
+        "one": "<Items/> 与另一个人"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "不要错过任何回复",
+        "enable_prompt_toast_title": "通知",
+        "enable_prompt_toast_description": "开启桌面通知"
+    },
+    "mobile_guide": {
+        "toast_title": "使用 app 以获得更好的体验",
+        "toast_description": "在移动网页浏览器中 %(brand)s 是实验性功能。为了获取更好的体验和最新功能，请使用我们的免费原生应用。",
+        "toast_accept": "使用 app"
+    }
 }

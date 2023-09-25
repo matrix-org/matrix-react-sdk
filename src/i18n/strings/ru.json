@@ -14,7 +14,6 @@
     "Low priority": "Маловажные",
     "Moderator": "Модератор",
     "New passwords must match each other.": "Новые пароли должны совпадать.",
-    "Notifications": "Уведомления",
     "<not supported>": "<не поддерживается>",
     "Return to login screen": "Вернуться к экрану входа",
     "Unable to add email address": "Не удается добавить email",
@@ -144,10 +143,6 @@
     },
     "Delete Widget": "Удалить виджет",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Удаление виджета действует для всех участников этой комнаты. Вы действительно хотите удалить этот виджет?",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> и ещё %(count)s участника(-ов)",
-        "one": "<Items/> и ещё кто-то"
-    },
     "Restricted": "Ограниченный пользователь",
     "%(duration)ss": "%(duration)s сек",
     "%(duration)sm": "%(duration)s мин",
@@ -213,7 +208,6 @@
     "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
-    "Please contact your homeserver administrator.": "Пожалуйста, свяжитесь с администратором вашего сервера.",
     "Email Address": "Адрес электронной почты",
     "Delete Backup": "Удалить резервную копию",
     "Unable to verify phone number.": "Невозможно проверить номер телефона.",
@@ -520,12 +514,8 @@
         "one": "%(count)s сеанс"
     },
     "Hide sessions": "Свернуть сеансы",
-    "Verify this session": "Заверьте этот сеанс",
     "Your keys are <b>not being backed up from this session</b>.": "Ваши ключи <b>не резервируются с этом сеансе</b>.",
-    "Encryption upgrade available": "Доступно обновление шифрования",
     "Lock": "Заблокировать",
-    "Other users may not trust it": "Другие пользователи могут не доверять этому сеансу",
-    "Later": "Позже",
     "Show more": "Показать больше",
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
@@ -648,9 +638,7 @@
     "Verify your other session using one of the options below.": "Подтвердите ваш другой сеанс, используя один из вариантов ниже.",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
-    "Contact your <a>server admin</a>.": "Обратитесь к <a>администратору сервера</a>.",
     "Ok": "Хорошо",
-    "New login. Was this you?": "Новый вход в вашу учётную запись. Это были Вы?",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s не может безопасно кэшировать зашифрованные сообщения локально во время работы в веб-браузере. Используйте <desktopLink>%(brand)s Desktop</desktopLink>, чтобы зашифрованные сообщения появились в результатах поиска.",
     "Remove for everyone": "Убрать для всех",
     "Country Dropdown": "Выпадающий список стран",
@@ -767,7 +755,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
     "Explore public rooms": "Просмотреть публичные комнаты",
     "Preparing to download logs": "Подготовка к загрузке журналов",
-    "Set up Secure Backup": "Настроить безопасное резервное копирование",
     "Information": "Информация",
     "Not encrypted": "Не зашифровано",
     "Room settings": "Настройки комнаты",
@@ -781,7 +768,6 @@
     "Secret storage:": "Секретное хранилище:",
     "ready": "готов",
     "not ready": "не готов",
-    "Safeguard against losing access to encrypted messages & data": "Защита от потери доступа к зашифрованным сообщениям и данным",
     "Widgets": "Виджеты",
     "Edit widgets, bridges & bots": "Редактировать виджеты, мосты и ботов",
     "Add widgets, bridges & bots": "Добавить виджеты, мосты и ботов",
@@ -813,8 +799,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
-    "Enable desktop notifications": "Включить уведомления на рабочем столе",
-    "Don't miss a reply": "Не пропустите ответ",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "one": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из %(rooms)s комнаты.",
         "other": "Надежно кэшируйте зашифрованные сообщения локально, чтобы они отображались в результатах поиска, используя %(size)s для хранения сообщений из комнат (%(rooms)s)."
@@ -1106,8 +1090,6 @@
     "Set my room layout for everyone": "Установить мой макет комнаты для всех",
     "Recently visited rooms": "Недавно посещённые комнаты",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Сделайте резервную копию ключей шифрования с данными вашей учетной записи на случай, если вы потеряете доступ к своим сеансам. Ваши ключи будут защищены уникальным ключом безопасности.",
-    "Use app": "Использовать приложение",
-    "Use app for a better experience": "Используйте приложение для лучшего опыта",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -1330,7 +1312,6 @@
     "More": "Больше",
     "Show sidebar": "Показать боковую панель",
     "Hide sidebar": "Скрыть боковую панель",
-    "Review to ensure your account is safe": "Проверьте, чтобы убедиться, что ваша учётная запись в безопасности",
     "Delete avatar": "Удалить аватар",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
@@ -1532,14 +1513,7 @@
     "Open thread": "Открыть ветку",
     "Match system": "Как в системе",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
-    "Failed to join": "Не удалось войти",
-    "Sorry, your homeserver is too old to participate here.": "К сожалению, ваш домашний сервер слишком старый для участия.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s работает в экспериментальном режиме в мобильном браузере. Для лучших впечатлений и новейших функций используйте наше родное бесплатное приложение.",
-    "The person who invited you has already left.": "Человек, который вас пригласил, уже ушёл.",
-    "There was an error joining.": "Ошибка при вступлении.",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
-    "Connection lost": "Соединение потеряно",
-    "The person who invited you has already left, or their server is offline.": "Пригласивший вас человек уже ушёл, или его сервер не подключён к сети.",
     "You were banned by %(memberName)s": "%(memberName)s заблокировал(а) вас",
     "Something went wrong with your invite.": "С приглашением произошла какая-то ошибка.",
     "You were removed by %(memberName)s": "%(memberName)s исключил(а) вас",
@@ -1549,7 +1523,6 @@
         "one": "Удаляются сообщения в %(count)s комнате",
         "other": "Удаляются сообщения в %(count)s комнатах"
     },
-    "You were disconnected from the call. (Error: %(message)s)": "Вас отключили от звонка. (Ошибка: %(message)s)",
     "New video room": "Новая видеокомната",
     "New room": "Новая комната",
     "Private room": "Приватная комната",
@@ -1684,11 +1657,9 @@
     "Failed to set pusher state": "Не удалось установить состояние push-службы",
     "Room info": "О комнате",
     "Video call (Jitsi)": "Видеозвонок (Jitsi)",
-    "Unknown room": "Неизвестная комната",
     "View chat timeline": "Посмотреть ленту сообщений",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
-    "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
     "Mark as read": "Отметить как прочитанное",
@@ -1722,7 +1693,6 @@
     "This message could not be decrypted": "Это сообщение не удалось расшифровать",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "Call type": "Тип звонка",
-    "Yes, it was me": "Да, это я",
     "Poll history": "Опросы",
     "Active polls": "Активные опросы",
     "Formatting": "Форматирование",
@@ -3151,7 +3121,8 @@
         "failed_call_live_broadcast_title": "Невозможно начать звонок",
         "failed_call_live_broadcast_description": "Вы не можете начать звонок, так как вы производите живое вещание. Пожалуйста, остановите вещание, чтобы начать звонок.",
         "no_media_perms_title": "Нет разрешённых носителей",
-        "no_media_perms_description": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную"
+        "no_media_perms_description": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную",
+        "call_toast_unknown_room": "Неизвестная комната"
     },
     "Other": "Другие",
     "Advanced": "Подробности",
@@ -3265,7 +3236,12 @@
             "waiting_other_device_details": "Ожидает проверки на другом устройстве, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Ожидает проверки на другом устройстве…",
             "waiting_other_user": "Ожидание %(displayName)s для проверки…",
-            "cancelling": "Отмена…"
+            "cancelling": "Отмена…",
+            "unverified_sessions_toast_title": "У вас есть незаверенные сеансы",
+            "unverified_sessions_toast_description": "Проверьте, чтобы убедиться, что ваша учётная запись в безопасности",
+            "unverified_sessions_toast_reject": "Позже",
+            "unverified_session_toast_title": "Новый вход в вашу учётную запись. Это были Вы?",
+            "unverified_session_toast_accept": "Да, это я"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3275,7 +3251,12 @@
         "bootstrap_title": "Настройка ключей",
         "export_unsupported": "Ваш браузер не поддерживает необходимые криптографические расширения",
         "import_invalid_keyfile": "Недействительный файл ключей %(brand)s",
-        "import_invalid_passphrase": "Ошибка аутентификации: возможно, неправильный пароль?"
+        "import_invalid_passphrase": "Ошибка аутентификации: возможно, неправильный пароль?",
+        "set_up_toast_title": "Настроить безопасное резервное копирование",
+        "upgrade_toast_title": "Доступно обновление шифрования",
+        "verify_toast_title": "Заверьте этот сеанс",
+        "set_up_toast_description": "Защита от потери доступа к зашифрованным сообщениям и данным",
+        "verify_toast_description": "Другие пользователи могут не доверять этому сеансу"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3554,7 +3535,9 @@
         "error_need_to_be_logged_in": "Вы должны войти в систему.",
         "error_need_invite_permission": "Для этого вы должны иметь возможность приглашать пользователей.",
         "error_need_kick_permission": "Вы должны иметь возможность пинать пользователей, чтобы сделать это.",
-        "no_name": "Неизвестное приложение"
+        "no_name": "Неизвестное приложение",
+        "error_hangup_title": "Соединение потеряно",
+        "error_hangup_description": "Вас отключили от звонка. (Ошибка: %(message)s)"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3782,7 +3765,13 @@
         "leave_error_title": "Ошибка при выходе из комнаты",
         "upgrade_error_title": "Ошибка обновления комнаты",
         "upgrade_error_description": "Убедитесь, что ваш сервер поддерживает выбранную версию комнаты и попробуйте снова.",
-        "leave_server_notices_description": "Эта комната используется для важных сообщений от сервера, поэтому вы не можете ее покинуть."
+        "leave_server_notices_description": "Эта комната используется для важных сообщений от сервера, поэтому вы не можете ее покинуть.",
+        "error_join_connection": "Ошибка при вступлении.",
+        "error_join_incompatible_version_1": "К сожалению, ваш домашний сервер слишком старый для участия.",
+        "error_join_incompatible_version_2": "Пожалуйста, свяжитесь с администратором вашего сервера.",
+        "error_join_404_invite_same_hs": "Человек, который вас пригласил, уже ушёл.",
+        "error_join_404_invite": "Пригласивший вас человек уже ушёл, или его сервер не подключён к сети.",
+        "error_join_title": "Не удалось войти"
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -3889,7 +3878,8 @@
         "admin_contact": "Пожалуйста, <a>обратитесь к вашему администратору</a>, чтобы продолжить использовать этот сервис.",
         "connection": "Возникла проблема при обмене данными с домашним сервером. Повторите попытку позже.",
         "mixed_content": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
-        "tls": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы."
+        "tls": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы.",
+        "admin_contact_short": "Обратитесь к <a>администратору сервера</a>."
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3897,5 +3887,19 @@
         "other": "В %(spaceName)s и %(count)s других пространствах."
     },
     "in_space": "В пространстве %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> и ещё %(count)s участника(-ов)",
+        "one": "<Items/> и ещё кто-то"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Не пропустите ответ",
+        "enable_prompt_toast_title": "Уведомления",
+        "enable_prompt_toast_description": "Включить уведомления на рабочем столе"
+    },
+    "mobile_guide": {
+        "toast_title": "Используйте приложение для лучшего опыта",
+        "toast_description": "%(brand)s работает в экспериментальном режиме в мобильном браузере. Для лучших впечатлений и новейших функций используйте наше родное бесплатное приложение.",
+        "toast_accept": "Использовать приложение"
+    }
 }

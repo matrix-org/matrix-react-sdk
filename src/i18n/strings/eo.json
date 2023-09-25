@@ -91,10 +91,6 @@
     "Delete widget": "Forigi fenestraĵon",
     "Create new room": "Krei novan ĉambron",
     "Home": "Hejmo",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> kaj %(count)s aliaj",
-        "one": "<Items/> kaj unu alia"
-    },
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
@@ -139,7 +135,6 @@
     "<not supported>": "<nesubtenata>",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
-    "Notifications": "Sciigoj",
     "Profile": "Profilo",
     "A new password must be entered.": "Vi devas enigi novan pasvorton.",
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
@@ -184,7 +179,6 @@
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
     "Permission Required": "Necesas permeso",
-    "Please contact your homeserver administrator.": "Bonvolu kontakti la administranton de via hejmservilo.",
     "Delete Backup": "Forigi savkopion",
     "General": "Ĝeneralaj",
     "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
@@ -532,8 +526,6 @@
     "Widget added by": "Fenestraĵon aldonis",
     "This widget may use cookies.": "Ĉi tiu fenestraĵo povas uzi kuketojn.",
     "Lock": "Seruro",
-    "Other users may not trust it": "Aliaj uzantoj eble ne kredas ĝin",
-    "Later": "Pli poste",
     "Cannot connect to integration manager": "Ne povas konektiĝi al kunigilo",
     "The integration manager is offline or it cannot reach your homeserver.": "La kunigilo estas eksterreta aŭ ne povas atingi vian hejmservilon.",
     "This room is end-to-end encrypted": "Ĉi tiu ĉambro uzas tutvojan ĉifradon",
@@ -553,8 +545,6 @@
     "Upgrade private room": "Gradaltigi privatan ĉambron",
     "Upgrade public room": "Gradaltigi publikan ĉambron",
     "Upgrade your encryption": "Gradaltigi vian ĉifradon",
-    "Verify this session": "Kontroli ĉi tiun salutaĵon",
-    "Encryption upgrade available": "Ĝisdatigo de ĉifrado haveblas",
     "Show more": "Montri pli",
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
@@ -676,7 +666,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Unuope kontroli ĉiun salutaĵon de uzanto por marki ĝin fidata, ne fidante delege subskribitajn aparatojn.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En ĉifritaj ĉambroj, viaj mesaĝoj estas sekurigitaj, kaj nur vi kaj la ricevanto havas la unikajn malĉifrajn ŝlosilojn.",
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
-    "New login. Was this you?": "Nova saluto. Ĉu tio estis vi?",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
     "well formed": "bone formita",
@@ -723,7 +712,6 @@
     "Use a different passphrase?": "Ĉu uzi alian pasfrazon?",
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
-    "Contact your <a>server admin</a>.": "Kontaktu <a>administranton de via servilo</a>.",
     "Ok": "Bone",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "La administranto de via servilo malŝaltis implicitan tutvojan ĉifradon en privataj kaj individuaj ĉambroj.",
@@ -807,8 +795,6 @@
     "Failed to save your profile": "Malsukcesis konservi vian profilon",
     "Cross-signing is not set up.": "Delegaj subskriboj ne estas agorditaj.",
     "Cross-signing is ready for use.": "Delegaj subskriboj estas pretaj por uzado.",
-    "Safeguard against losing access to encrypted messages & data": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj",
-    "Set up Secure Backup": "Agordi Sekuran savkopiadon",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
@@ -969,7 +955,6 @@
     "Burkina Faso": "Burkino",
     "Bouvet Island": "Buvet-Insulo",
     "Anguilla": "Angvilo",
-    "Enable desktop notifications": "Ŝalti labortablajn sciigojn",
     "Zimbabwe": "Zimbabvo",
     "Zambia": "Zambio",
     "Yemen": "Jemeno",
@@ -1095,9 +1080,6 @@
     "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
     "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
     "Recently visited rooms": "Freŝe vizititiaj ĉambroj",
-    "Use app": "Uzu aplikaĵon",
-    "Use app for a better experience": "Uzu aplikaĵon por pli bona sperto",
-    "Don't miss a reply": "Ne preterpasu respondon",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
@@ -1167,7 +1149,6 @@
     "Failed to send": "Malsukcesis sendi",
     "unknown person": "nekonata persono",
     "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
-    "Review to ensure your account is safe": "Kontrolu por certigi sekurecon de via konto",
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -1398,7 +1379,6 @@
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Konservu vian Sekurecan ŝlosilon ie sekure, kiel pasvortadministranto aŭ monŝranko, ĉar ĝi estas uzata por protekti viajn ĉifritajn datumojn.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Ni generos Sekurecan ŝlosilon por ke vi stoku ie sekura, kiel pasvort-administranto aŭ monŝranko.",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s aŭ %(copyButton)s",
-    "You have unverified sessions": "Vi havas nekontrolitajn salutaĵojn",
     "Export chat": "Eksporti babilejon",
     "Files": "Dosieroj",
     "Close sidebar": "Fermu la flanka kolumno",
@@ -1406,12 +1386,6 @@
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "Developer": "Programisto",
     "unknown": "nekonata",
-    "The person who invited you has already left, or their server is offline.": "Aŭ la persono, kiu vin invitis, jam foriris, aŭ ĝia servilo estas eksterreta.",
-    "Failed to join": "Malsukcesis aliĝi",
-    "Sorry, your homeserver is too old to participate here.": "Pardonon, via hejmservilo estas tro malnova por partopreni ĉi tie.",
-    "Yes, it was me": "Jes, estis mi",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s estas eksperimenta en poŝtelefona retumilo. Por pli bona sperto kaj freŝaj funkcioj, uzu nian senpagan malfremdan aplikaĵon.",
-    "Unknown room": "Nekonata ĉambro",
     "common": {
         "about": "Prio",
         "analytics": "Analizo",
@@ -2493,7 +2467,8 @@
         "failed_call_live_broadcast_title": "Ne povas komenci vokon",
         "failed_call_live_broadcast_description": "Vi ne povas komenci vokon ĉar vi nuntempe registras vivan elsendon. Bonvolu fini vian vivan elsendon por komenci vokon.",
         "no_media_perms_title": "Neniuj permesoj pri aŭdvidaĵoj",
-        "no_media_perms_description": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao"
+        "no_media_perms_description": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao",
+        "call_toast_unknown_room": "Nekonata ĉambro"
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -2590,7 +2565,12 @@
             "sas_caption_user": "Kontrolu ĉu tiun uzanton per konfirmo, ke la jena numero aperis sur ĝia ekrano.",
             "unsupported_method": "Ne povas trovi subtenatan metodon de kontrolo.",
             "waiting_other_user": "Atendas kontrolon de %(displayName)s…",
-            "cancelling": "Nuligante…"
+            "cancelling": "Nuligante…",
+            "unverified_sessions_toast_title": "Vi havas nekontrolitajn salutaĵojn",
+            "unverified_sessions_toast_description": "Kontrolu por certigi sekurecon de via konto",
+            "unverified_sessions_toast_reject": "Pli poste",
+            "unverified_session_toast_title": "Nova saluto. Ĉu tio estis vi?",
+            "unverified_session_toast_accept": "Jes, estis mi"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2600,7 +2580,12 @@
         "bootstrap_title": "Agordo de klavoj",
         "export_unsupported": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
         "import_invalid_keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
-        "import_invalid_passphrase": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?"
+        "import_invalid_passphrase": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
+        "set_up_toast_title": "Agordi Sekuran savkopiadon",
+        "upgrade_toast_title": "Ĝisdatigo de ĉifrado haveblas",
+        "verify_toast_title": "Kontroli ĉi tiun salutaĵon",
+        "set_up_toast_description": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj",
+        "verify_toast_description": "Aliaj uzantoj eble ne kredas ĝin"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -3076,7 +3061,11 @@
         "leave_error_title": "Eraro dum foriro de la ĉambro",
         "upgrade_error_title": "Eraris ĝisdatigo de la ĉambro",
         "upgrade_error_description": "Bone kontrolu, ĉu via servilo subtenas la elektitan version de ĉambro, kaj reprovu.",
-        "leave_server_notices_description": "Ĉi tiu ĉambro uziĝas por gravaj mesaĝoj de la hejmservilo, kaj tial vi ne povas foriri."
+        "leave_server_notices_description": "Ĉi tiu ĉambro uziĝas por gravaj mesaĝoj de la hejmservilo, kaj tial vi ne povas foriri.",
+        "error_join_incompatible_version_1": "Pardonon, via hejmservilo estas tro malnova por partopreni ĉi tie.",
+        "error_join_incompatible_version_2": "Bonvolu kontakti la administranton de via hejmservilo.",
+        "error_join_404_invite": "Aŭ la persono, kiu vin invitis, jam foriris, aŭ ĝia servilo estas eksterreta.",
+        "error_join_title": "Malsukcesis aliĝi"
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3176,7 +3165,8 @@
         "sync": "Ne povas konektiĝi al hejmservilo. Reprovante…",
         "connection": "Eraris komunikado kun la hejmservilo, bonvolu reprovi poste.",
         "mixed_content": "Hejmservilo ne alkonekteblas per HTTP kun HTTPS URL en via adresbreto. Aŭ uzu HTTPS aŭ <a>ŝaltu malsekurajn skriptojn</a>.",
-        "tls": "Ne eblas konekti al hejmservilo – bonvolu kontroli vian konekton, certigi ke <a>la SSL-atestilo de via hejmservilo</a> estas fidata, kaj ke neniu foliumila kromprogramo blokas petojn."
+        "tls": "Ne eblas konekti al hejmservilo – bonvolu kontroli vian konekton, certigi ke <a>la SSL-atestilo de via hejmservilo</a> estas fidata, kaj ke neniu foliumila kromprogramo blokas petojn.",
+        "admin_contact_short": "Kontaktu <a>administranton de via servilo</a>."
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3184,5 +3174,19 @@
         "other": "En %(spaceName)s kaj %(count)s aliaj aroj."
     },
     "in_space": "En aro %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> kaj %(count)s aliaj",
+        "one": "<Items/> kaj unu alia"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Ne preterpasu respondon",
+        "enable_prompt_toast_title": "Sciigoj",
+        "enable_prompt_toast_description": "Ŝalti labortablajn sciigojn"
+    },
+    "mobile_guide": {
+        "toast_title": "Uzu aplikaĵon por pli bona sperto",
+        "toast_description": "%(brand)s estas eksperimenta en poŝtelefona retumilo. Por pli bona sperto kaj freŝaj funkcioj, uzu nian senpagan malfremdan aplikaĵon.",
+        "toast_accept": "Uzu aplikaĵon"
+    }
 }

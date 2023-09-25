@@ -27,7 +27,6 @@
     "unknown error code": "קוד שגיאה לא מוכר",
     "Failed to forget room %(errCode)s": "נכשל בעת בקשה לשכוח חדר %(errCode)s",
     "Favourite": "מועדף",
-    "Notifications": "התראות",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
     "Notification targets": "יעדי התראה",
@@ -307,10 +306,6 @@
     "Vietnam": "וייטנאם",
     "Venezuela": "ונצואלה",
     "Vatican City": "ותיקן",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> ועוד אחד אחר",
-        "other": "<Items/> ו%(count)s אחרים"
-    },
     "Not Trusted": "לא אמין",
     "Ask this user to verify their session, or manually verify it below.": "בקש ממשתמש זה לאמת את ההתחברות שלו, או לאמת אותה באופן ידני למטה.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
@@ -424,20 +419,9 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "IRC display name width": "רוחב תצוגת השם של IRC",
     "Change notification settings": "שינוי הגדרת התרעות",
-    "Please contact your homeserver administrator.": "אנא צרו קשר עם מנהל השרת שלכם.",
-    "New login. Was this you?": "כניסה חדשה. האם זה אתם?",
-    "Other users may not trust it": "יתכן משתמשים אחרים לא יבטחו בזה",
-    "Safeguard against losing access to encrypted messages & data": "שמור מפני איבוד גישה אל הודעות ומידע מוצפן",
-    "Verify this session": "אשרו את ההתחברות הזאת",
-    "Encryption upgrade available": "שדרוג הצפנה קיים",
-    "Set up Secure Backup": "צור גיבוי מאובטח",
     "Ok": "בסדר",
-    "Contact your <a>server admin</a>.": "צרו קשר עם <a>מנהל השרת</a>.",
     "Your homeserver has exceeded one of its resource limits.": "השרת שלכם חרג מאחד או יותר משאבים אשר הוקצו לו.",
     "Your homeserver has exceeded its user limit.": "השרת שלכם חרג ממגבלות מספר המשתמשים שלו.",
-    "Enable desktop notifications": "אשרו התראות שולחן עבודה",
-    "Don't miss a reply": "אל תפספסו תגובה",
-    "Later": "מאוחר יותר",
     "Server did not return valid authentication information.": "השרת לא החזיר מידע אימות תקף.",
     "Server did not require any authentication": "השרת לא נדרש לאימות כלשהו",
     "There was a problem communicating with the server. Please try again.": "הייתה בעיה בתקשורת עם השרת. בבקשה נסה שוב.",
@@ -1092,8 +1076,6 @@
     "Remember this": "זכור את זה",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "היישומון יאמת את מזהה המשתמש שלך, אך לא יוכל לבצע פעולות עבורך:",
     "Allow this widget to verify your identity": "אפשר לווידג'ט זה לאמת את זהותך",
-    "Use app": "השתמש באפליקציה",
-    "Use app for a better experience": "השתמש באפליקציה לחוויה טובה יותר",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s ומנהל האינטגרציה שלך.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "מנהלי שילוב מקבלים נתוני תצורה ויכולים לשנות ווידג'טים, לשלוח הזמנות לחדר ולהגדיר רמות הספק מטעמכם.",
@@ -1207,7 +1189,6 @@
     "Decrypting": "מפענח",
     "Downloading": "מוריד",
     "Jump to date": "קיפצו לתאריך",
-    "Review to ensure your account is safe": "בידקו כדי לוודא שהחשבון שלך בטוח",
     "You may contact me if you have any follow up questions": "אתם יכולים לתקשר איתי אם יש לכם שאלות המשך",
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
     "Search for rooms or people": "חפשו אנשים או חדרים",
@@ -2468,7 +2449,10 @@
             "unsupported_method": "לא מצליח למצוא שיטות אימות נתמכות.",
             "waiting_other_device": "ממתין לאישור שלך במכשיר השני…",
             "waiting_other_user": "ממתין ל- %(displayName)s בכדי לאמת…",
-            "cancelling": "מבטל…"
+            "cancelling": "מבטל…",
+            "unverified_sessions_toast_description": "בידקו כדי לוודא שהחשבון שלך בטוח",
+            "unverified_sessions_toast_reject": "מאוחר יותר",
+            "unverified_session_toast_title": "כניסה חדשה. האם זה אתם?"
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2478,7 +2462,12 @@
         "bootstrap_title": "מגדיר מפתחות",
         "export_unsupported": "הדפדפן שלכם אינו תומך בהצפנה הדרושה",
         "import_invalid_keyfile": "קובץ מפתח של %(brand)s אינו תקין",
-        "import_invalid_passphrase": "האימות שלכם נכשל: סיסמא שגויה?"
+        "import_invalid_passphrase": "האימות שלכם נכשל: סיסמא שגויה?",
+        "set_up_toast_title": "צור גיבוי מאובטח",
+        "upgrade_toast_title": "שדרוג הצפנה קיים",
+        "verify_toast_title": "אשרו את ההתחברות הזאת",
+        "set_up_toast_description": "שמור מפני איבוד גישה אל הודעות ומידע מוצפן",
+        "verify_toast_description": "יתכן משתמשים אחרים לא יבטחו בזה"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2902,7 +2891,8 @@
         "leave_error_title": "שגיאת נסיון לצאת מהחדר",
         "upgrade_error_title": "שגיאה בשדרוג חדר",
         "upgrade_error_description": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
-        "leave_server_notices_description": "החדר הזה משמש להודעות חשובות מהשרת ולכן אינכם יכולים לעזוב אותו."
+        "leave_server_notices_description": "החדר הזה משמש להודעות חשובות מהשרת ולכן אינכם יכולים לעזוב אותו.",
+        "error_join_incompatible_version_2": "אנא צרו קשר עם מנהל השרת שלכם."
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
@@ -2982,7 +2972,8 @@
         "admin_contact": "אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות זה.",
         "connection": "הייתה תקשורת עם שרת הבית. נסה שוב מאוחר יותר.",
         "mixed_content": "לא ניתן להתחבר לשרת ביתי באמצעות HTTP כאשר כתובת HTTPS נמצאת בסרגל הדפדפן שלך. השתמש ב- HTTPS או <a> הפעל סקריפטים לא בטוחים </a>.",
-        "tls": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות."
+        "tls": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות.",
+        "admin_contact_short": "צרו קשר עם <a>מנהל השרת</a>."
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2990,5 +2981,18 @@
         "other": "%(spaceName)sו%(count)s מרחבי עבודה אחרים."
     },
     "in_space": "במרחבי עבודה%(spaceName)s.",
-    "name_and_id": "%(userId)s %(name)s"
+    "name_and_id": "%(userId)s %(name)s",
+    "items_and_n_others": {
+        "one": "<Items/> ועוד אחד אחר",
+        "other": "<Items/> ו%(count)s אחרים"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "אל תפספסו תגובה",
+        "enable_prompt_toast_title": "התראות",
+        "enable_prompt_toast_description": "אשרו התראות שולחן עבודה"
+    },
+    "mobile_guide": {
+        "toast_title": "השתמש באפליקציה לחוויה טובה יותר",
+        "toast_accept": "השתמש באפליקציה"
+    }
 }

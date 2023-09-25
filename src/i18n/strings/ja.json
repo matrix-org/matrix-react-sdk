@@ -2,7 +2,6 @@
     "Favourite": "お気に入り",
     "Invited": "招待済",
     "Low priority": "低優先度",
-    "Notifications": "通知",
     "Create new room": "新しいルームを作成",
     "Failed to change password. Is your password correct?": "パスワードの変更に失敗しました。パスワードは正しいですか？",
     "Filter room members": "ルームのメンバーを絞り込む",
@@ -70,7 +69,6 @@
     "Restricted": "制限",
     "Moderator": "モデレーター",
     "Reason": "理由",
-    "Please contact your homeserver administrator.": "ホームサーバー管理者に連絡してください。",
     "Incorrect verification code": "認証コードが誤っています",
     "No display name": "表示名がありません",
     "Warning!": "警告！",
@@ -135,10 +133,6 @@
     "Delete widget": "ウィジェットを削除",
     "Popout widget": "ウィジェットをポップアウト",
     "Home": "ホーム",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/>と他%(count)s人",
-        "one": "<Items/>ともう1人"
-    },
     "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",
     "collapse": "折りたたむ",
     "expand": "展開",
@@ -288,10 +282,7 @@
     "Italics": "斜字体",
     "Local address": "ローカルアドレス",
     "Email (optional)": "電子メール（任意）",
-    "Verify this session": "このセッションを認証",
-    "Encryption upgrade available": "暗号化のアップグレードが利用できます",
     "Not Trusted": "信頼されていません",
-    "Later": "後で",
     "%(count)s verified sessions": {
         "other": "%(count)s件の認証済のセッション",
         "one": "1件の認証済のセッション"
@@ -324,7 +315,6 @@
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
-    "Other users may not trust it": "他のユーザーはこのセッションを信頼しない可能性があります",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "あなたのアカウントではクロス署名の認証情報が機密ストレージに保存されていますが、このセッションでは信頼されていません。",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "このセッションでは<b>鍵をバックアップしていません</b>が、復元に使用したり、今後鍵を追加したりできるバックアップがあります。",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "サインアウトする前に、このセッションにだけある鍵を失わないよう、セッションを鍵のバックアップに接続しましょう。",
@@ -362,7 +352,6 @@
     "Add widgets, bridges & bots": "ウィジェット、ブリッジ、ボットの追加",
     "Widgets": "ウィジェット",
     "Cross-signing is ready for use.": "クロス署名の使用準備が完了しました。",
-    "Set up Secure Backup": "セキュアバックアップを設定",
     "Everyone in this room is verified": "このルーム内の全員を認証済",
     "Verify all users in a room to ensure it's secure.": "ルームの全てのユーザーを認証すると、ルームが安全であることを確認できます。",
     "You've successfully verified %(displayName)s!": "%(displayName)sは正常に認証されました！",
@@ -829,16 +818,9 @@
     "Dial pad": "ダイヤルパッド",
     "IRC display name width": "IRCの表示名の幅",
     "Change notification settings": "通知設定を変更",
-    "New login. Was this you?": "新しいログインです。ログインしましたか？",
-    "Safeguard against losing access to encrypted messages & data": "暗号化されたメッセージとデータへのアクセスが失われるのを防ぎましょう",
     "Ok": "OK",
-    "Contact your <a>server admin</a>.": "<a>サーバー管理者</a>に問い合わせてください。",
     "Your homeserver has exceeded one of its resource limits.": "あなたのホームサーバーはリソースの上限に達しました。",
     "Your homeserver has exceeded its user limit.": "あなたのホームサーバーはユーザー数の上限に達しました。",
-    "Use app": "アプリを使用",
-    "Use app for a better experience": "より良い体験のためにアプリケーションを使用",
-    "Enable desktop notifications": "デスクトップ通知を有効にする",
-    "Don't miss a reply": "返信をお見逃しなく",
     "%(name)s accepted": "%(name)sは受け付けました",
     "You accepted": "受け付けました",
     "%(name)s cancelled": "%(name)sは中止しました",
@@ -1062,7 +1044,6 @@
     "Verify this device": "この端末を認証",
     "Verify with another device": "別の端末で認証",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "復元方法を全て失ってしまいましたか？<a>リセットできます</a>",
-    "Review to ensure your account is safe": "アカウントが安全かどうか確認してください",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "セキュリティーキーは、暗号化されたデータを保護するために使用されます。パスワードマネージャーもしくは金庫のような安全な場所で保管してください。",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "あなただけが知っている秘密のパスワードを使用してください。また、バックアップ用にセキュリティーキーを保存することができます（任意）。",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "セキュリティーキーを生成します。パスワードマネージャーもしくは金庫のような安全な場所で保管してください。",
@@ -1485,11 +1466,6 @@
     "Ban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック",
     "Live location error": "位置情報（ライブ）のエラー",
     "View live location": "位置情報（ライブ）を表示",
-    "Failed to join": "参加に失敗しました",
-    "The person who invited you has already left, or their server is offline.": "招待した人が既に退出したか、サーバーがオフラインです。",
-    "The person who invited you has already left.": "招待した人は既に退出しました。",
-    "Sorry, your homeserver is too old to participate here.": "あなたのホームサーバーはここに参加するには古すぎます。",
-    "There was an error joining.": "参加する際にエラーが発生しました。",
     "Live location enabled": "位置情報（ライブ）が有効です",
     "Unban from space": "スペースからのブロックを解除",
     "Ban from space": "スペースからブロック",
@@ -1513,7 +1489,6 @@
         "other": "現在%(count)s個のスペースがアクセスできます",
         "one": "現在1個のスペースがアクセスできます"
     },
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)sは携帯端末のウェブブラウザーでは実験的です。よりよい使用経験や最新機能を求める場合は、フリーのネイティブアプリをご利用ください。",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
     "Loading preview": "プレビューを読み込んでいます",
     "You were removed by %(memberName)s": "%(memberName)sにより追放されました",
@@ -1529,12 +1504,9 @@
     "No live locations": "位置情報（ライブ）がありません",
     "View list": "一覧を表示",
     "View List": "一覧を表示",
-    "Unknown room": "不明のルーム",
     "Remember my selection for this widget": "このウィジェットに関する選択を記憶",
     "Unable to load commit detail: %(msg)s": "コミットの詳細を読み込めません：%(msg)s",
     "Explore public spaces in the new search dialog": "新しい検索ダイアログで公開スペースを探す",
-    "You were disconnected from the call. (Error: %(message)s)": "通話から切断されました。（エラー：%(message)s）",
-    "Connection lost": "接続が切断されました",
     "Room info": "ルームの情報",
     "Video room": "ビデオ通話ルーム",
     "Your password was successfully changed.": "パスワードを変更しました。",
@@ -1639,7 +1611,6 @@
     "Edit link": "リンクを編集",
     "Unable to decrypt message": "メッセージを復号化できません",
     "This message could not be decrypted": "このメッセージを復号化できませんでした",
-    "You have unverified sessions": "未認証のセッションがあります",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
     "An error occurred while stopping your live location, please try again": "位置情報（ライブ）を停止している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
@@ -3232,7 +3203,8 @@
         "failed_call_live_broadcast_title": "通話を開始できません",
         "failed_call_live_broadcast_description": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
         "no_media_perms_title": "メディア権限がありません",
-        "no_media_perms_description": "マイクまたはWebカメラにアクセスするために、手動で%(brand)sを許可する必要があるかもしれません"
+        "no_media_perms_description": "マイクまたはWebカメラにアクセスするために、手動で%(brand)sを許可する必要があるかもしれません",
+        "call_toast_unknown_room": "不明のルーム"
     },
     "Other": "その他",
     "Advanced": "詳細",
@@ -3349,7 +3321,11 @@
             "waiting_other_device_details": "端末 %(deviceName)s（%(deviceId)s）での認証を待機しています…",
             "waiting_other_device": "他の端末での認証を待機しています…",
             "waiting_other_user": "%(displayName)sによる認証を待機しています…",
-            "cancelling": "キャンセルしています…"
+            "cancelling": "キャンセルしています…",
+            "unverified_sessions_toast_title": "未認証のセッションがあります",
+            "unverified_sessions_toast_description": "アカウントが安全かどうか確認してください",
+            "unverified_sessions_toast_reject": "後で",
+            "unverified_session_toast_title": "新しいログインです。ログインしましたか？"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3359,7 +3335,12 @@
         "bootstrap_title": "鍵のセットアップ",
         "export_unsupported": "お使いのブラウザーは、必要な暗号化拡張機能をサポートしていません",
         "import_invalid_keyfile": "有効な%(brand)sキーファイルではありません",
-        "import_invalid_passphrase": "認証に失敗しました：間違ったパスワード？"
+        "import_invalid_passphrase": "認証に失敗しました：間違ったパスワード？",
+        "set_up_toast_title": "セキュアバックアップを設定",
+        "upgrade_toast_title": "暗号化のアップグレードが利用できます",
+        "verify_toast_title": "このセッションを認証",
+        "set_up_toast_description": "暗号化されたメッセージとデータへのアクセスが失われるのを防ぎましょう",
+        "verify_toast_description": "他のユーザーはこのセッションを信頼しない可能性があります"
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",
@@ -3652,7 +3633,9 @@
         "error_need_to_be_logged_in": "ログインする必要があります。",
         "error_need_invite_permission": "それを行うにはユーザーを招待する権限が必要です。",
         "error_need_kick_permission": "それを行うにはユーザーをキックする権限が必要です。",
-        "no_name": "不明なアプリ"
+        "no_name": "不明なアプリ",
+        "error_hangup_title": "接続が切断されました",
+        "error_hangup_description": "通話から切断されました。（エラー：%(message)s）"
     },
     "feedback": {
         "sent": "フィードバックを送信しました",
@@ -3891,7 +3874,13 @@
         "leave_error_title": "ルームを退出する際にエラーが発生しました",
         "upgrade_error_title": "ルームをアップグレードする際にエラーが発生しました",
         "upgrade_error_description": "選択したルームのバージョンをあなたのサーバーがサポートしているか改めて確認し、もう一度試してください。",
-        "leave_server_notices_description": "このルームはホームサーバーからの重要なメッセージに使用されるので、退出することはできません。"
+        "leave_server_notices_description": "このルームはホームサーバーからの重要なメッセージに使用されるので、退出することはできません。",
+        "error_join_connection": "参加する際にエラーが発生しました。",
+        "error_join_incompatible_version_1": "あなたのホームサーバーはここに参加するには古すぎます。",
+        "error_join_incompatible_version_2": "ホームサーバー管理者に連絡してください。",
+        "error_join_404_invite_same_hs": "招待した人は既に退出しました。",
+        "error_join_404_invite": "招待した人が既に退出したか、サーバーがオフラインです。",
+        "error_join_title": "参加に失敗しました"
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
@@ -4000,7 +3989,8 @@
         "sync": "ホームサーバーに接続できません。 再試行しています…",
         "connection": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
         "mixed_content": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
-        "tls": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。"
+        "tls": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
+        "admin_contact_short": "<a>サーバー管理者</a>に問い合わせてください。"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4008,5 +3998,19 @@
         "other": "スペース %(spaceName)s と他%(count)s個のスペース内。"
     },
     "in_space": "スペース %(spaceName)s内。",
-    "name_and_id": "%(name)s（%(userId)s）"
+    "name_and_id": "%(name)s（%(userId)s）",
+    "items_and_n_others": {
+        "other": "<Items/>と他%(count)s人",
+        "one": "<Items/>ともう1人"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "返信をお見逃しなく",
+        "enable_prompt_toast_title": "通知",
+        "enable_prompt_toast_description": "デスクトップ通知を有効にする"
+    },
+    "mobile_guide": {
+        "toast_title": "より良い体験のためにアプリケーションを使用",
+        "toast_description": "%(brand)sは携帯端末のウェブブラウザーでは実験的です。よりよい使用経験や最新機能を求める場合は、フリーのネイティブアプリをご利用ください。",
+        "toast_accept": "アプリを使用"
+    }
 }

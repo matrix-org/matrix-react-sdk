@@ -3,7 +3,6 @@
     "Notification targets": "Mål for varsel",
     "Today": "I dag",
     "Friday": "Fredag",
-    "Notifications": "Varsler",
     "Source URL": "Kilde URL",
     "Favourite": "Favoritt",
     "Tuesday": "Tirsdag",
@@ -147,7 +146,6 @@
     "Trophy": "Trofé",
     "Ball": "Ball",
     "Guitar": "Gitar",
-    "Later": "Senere",
     "Accept <policyLink /> to continue:": "Aksepter <policyLink /> for å fortsette:",
     "Profile picture": "Profilbilde",
     "Checking server": "Sjekker tjeneren",
@@ -245,12 +243,7 @@
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
     "File to import": "Filen som skal importeres",
     "Upgrade your encryption": "Oppgrader krypteringen din",
-    "Verify this session": "Verifiser denne økten",
     "Not Trusted": "Ikke betrodd",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> og %(count)s andre",
-        "one": "<Items/> og én annen"
-    },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
@@ -325,7 +318,6 @@
     "Unable to upload": "Mislyktes i å laste opp",
     "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
-    "New login. Was this you?": "En ny pålogging. Var det deg?",
     "Aeroplane": "Fly",
     "No display name": "Ingen visningsnavn",
     "unexpected type": "uventet type",
@@ -374,7 +366,6 @@
     "That matches!": "Det samsvarer!",
     "That doesn't match.": "Det samsvarer ikke.",
     "Go back to set it again.": "Gå tilbake for å velge på nytt.",
-    "Other users may not trust it": "Andre brukere kan kanskje mistro den",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
     "Messages in this room are end-to-end encrypted.": "Meldinger i dette rommet er start-til-slutt-kryptert.",
     "Messages in this room are not end-to-end encrypted.": "Meldinger i dette rommet er ikke start-til-slutt-kryptert.",
@@ -382,7 +373,6 @@
     "Jump to read receipt": "Hopp til lesekvitteringen",
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
-    "Encryption upgrade available": "Krypteringsoppdatering tilgjengelig",
     "Santa": "Julenisse",
     "wait and try again later": "vent og prøv igjen senere",
     "Remove %(phone)s?": "Vil du fjerne %(phone)s?",
@@ -551,8 +541,6 @@
     "New Recovery Method": "Ny gjenopprettingsmetode",
     "Generate a Security Key": "Generer en sikkerhetsnøkkel",
     "Confirm your Security Phrase": "Bekreft sikkerhetsfrasen din",
-    "Use app": "Bruk app",
-    "Use app for a better experience": "Bruk appen for en bedre opplevelse",
     "This address is already in use": "Denne adressen er allerede i bruk",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
     "Information": "Informasjon",
@@ -584,8 +572,6 @@
     "Show Widgets": "Vis moduler",
     "Hide Widgets": "Skjul moduler",
     "Dial pad": "Nummerpanel",
-    "Enable desktop notifications": "Aktiver skrivebordsvarsler",
-    "Don't miss a reply": "Ikke gå glipp av noen svar",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1526,11 +1512,16 @@
             "complete_description": "Du har vellykket verifisert denne brukeren.",
             "qr_prompt": "Skann denne unike koden",
             "complete_action": "Skjønner",
-            "cancelling": "Avbryter …"
+            "cancelling": "Avbryter …",
+            "unverified_sessions_toast_reject": "Senere",
+            "unverified_session_toast_title": "En ny pålogging. Var det deg?"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
-        "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil"
+        "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
+        "upgrade_toast_title": "Krypteringsoppdatering tilgjengelig",
+        "verify_toast_title": "Verifiser denne økten",
+        "verify_toast_description": "Andre brukere kan kanskje mistro den"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1768,5 +1759,18 @@
         "error_room_not_visible": "Rom %(roomId)s er ikke synlig",
         "error_missing_user_id_request": "Manglende user_id i forespørselen"
     },
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> og %(count)s andre",
+        "one": "<Items/> og én annen"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Ikke gå glipp av noen svar",
+        "enable_prompt_toast_title": "Varsler",
+        "enable_prompt_toast_description": "Aktiver skrivebordsvarsler"
+    },
+    "mobile_guide": {
+        "toast_title": "Bruk appen for en bedre opplevelse",
+        "toast_accept": "Bruk app"
+    }
 }

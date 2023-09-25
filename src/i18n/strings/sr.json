@@ -94,10 +94,6 @@
     "Delete widget": "Обриши виџет",
     "Create new room": "Направи нову собу",
     "Home": "Почетна",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> и %(count)s других",
-        "one": "<Items/> и још један"
-    },
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
@@ -145,7 +141,6 @@
     "<not supported>": "<није подржано>",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
-    "Notifications": "Обавештења",
     "Profile": "Профил",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
@@ -210,7 +205,6 @@
     "Create account": "Направи налог",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "Encryption upgrade available": "Надоградња шифровања је доступна",
     "Show more": "Прикажи више",
     "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
     "Email addresses": "Мејл адресе",
@@ -511,7 +505,6 @@
     "United Kingdom": "Уједињено Краљевство",
     "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver does not support cross-signing.": "Ваш домаћи сервер не подржава међу-потписивање.",
-    "Please contact your homeserver administrator.": "Контактирајте администратора вашег сервера.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домаћи сервер је прекорачио ограничење неког ресурса.",
     "Your homeserver has exceeded its user limit.": "Ваш домаћи сервер је прекорачио ограничење корисника.",
     "Removing…": "Уклањам…",
@@ -616,9 +609,6 @@
     "Enter your account password to confirm the upgrade:": "Унесите лозинку за налог да бисте потврдили надоградњу:",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Заштитите од губитка приступа шифрованим порукама и подацима је подржан сигурносном копијом кључева за шифровање на серверу.",
     "Clear all data": "Очисти све податке",
-    "New login. Was this you?": "Нова пријава. Да ли сте то били Ви?",
-    "Other users may not trust it": "Други корисници можда немају поверења у то",
-    "Safeguard against losing access to encrypted messages & data": "Заштитите се од губитка приступа шифрованим порукама и подацима",
     "Profile picture": "Слика профила",
     "Display Name": "Прикажи име",
     "Couldn't load page": "Учитавање странице није успело",
@@ -1246,7 +1236,8 @@
             "sas_match": "Поклапају се",
             "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације.",
             "complete_action": "Разумем",
-            "cancelling": "Отказујем…"
+            "cancelling": "Отказујем…",
+            "unverified_session_toast_title": "Нова пријава. Да ли сте то били Ви?"
         },
         "old_version_detected_title": "Нађени су стари криптографски подаци",
         "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
@@ -1255,7 +1246,10 @@
         "bootstrap_title": "Постављам кључеве",
         "export_unsupported": "Ваш прегледач не подржава потребна криптографска проширења",
         "import_invalid_keyfile": "Није исправана %(brand)s кључ-датотека",
-        "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?"
+        "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?",
+        "upgrade_toast_title": "Надоградња шифровања је доступна",
+        "set_up_toast_description": "Заштитите се од губитка приступа шифрованим порукама и подацима",
+        "verify_toast_description": "Други корисници можда немају поверења у то"
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1442,7 +1436,8 @@
         "leave_server_notices_title": "Не могу да напустим собу са напоменама сервера",
         "upgrade_error_title": "Грешка при надоградњи собе",
         "upgrade_error_description": "Добро проверите да ли сервер подржава изабрану верзију собе и пробајте поново.",
-        "leave_server_notices_description": "Ова соба се користи за важне поруке са сервера. Не можете напустити ову собу."
+        "leave_server_notices_description": "Ова соба се користи за важне поруке са сервера. Не можете напустити ову собу.",
+        "error_join_incompatible_version_2": "Контактирајте администратора вашег сервера."
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
@@ -1501,5 +1496,12 @@
         "resource_limits": "Овај сервер је достигао ограничење неког свог ресурса.",
         "mixed_content": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
         "tls": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве."
+    },
+    "items_and_n_others": {
+        "other": "<Items/> и %(count)s других",
+        "one": "<Items/> и још један"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Обавештења"
     }
 }

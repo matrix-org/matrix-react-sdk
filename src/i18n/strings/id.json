@@ -54,7 +54,6 @@
     "Sunday": "Minggu",
     "Notification targets": "Target notifikasi",
     "Today": "Hari Ini",
-    "Notifications": "Notifikasi",
     "Changelog": "Changelog",
     "This Room": "Ruangan ini",
     "Unavailable": "Tidak Tersedia",
@@ -356,7 +355,6 @@
     "Unencrypted": "Tidak Dienkripsi",
     "Bridges": "Jembatan",
     "Lock": "Gembok",
-    "Later": "Nanti",
     "Accepting…": "Menerima…",
     "Italics": "Miring",
     "None": "Tidak Ada",
@@ -525,10 +523,6 @@
     "Sending": "Mengirim",
     "Spaces": "Space",
     "Connecting": "Menghubungkan",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> dan satu lainnya",
-        "other": "<Items/> dan %(count)s lainnya"
-    },
     "Disconnect from the identity server <idserver />?": "Putuskan hubungan dari server identitas <idserver />?",
     "Disconnect identity server": "Putuskan hubungan server identitas",
     "The identity server you have chosen does not have any terms of service.": "Server identitas yang Anda pilih tidak memiliki persyaratan layanan.",
@@ -643,22 +637,9 @@
     "unknown person": "pengguna tidak dikenal",
     "IRC display name width": "Lebar nama tampilan IRC",
     "Change notification settings": "Ubah pengaturan notifikasi",
-    "Please contact your homeserver administrator.": "Mohon hubungi administrator homeserver Anda.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s dari %(ip)s",
-    "New login. Was this you?": "Login baru. Apakah itu Anda?",
-    "Other users may not trust it": "Pengguna yang lain mungkin tidak mempercayainya",
-    "Safeguard against losing access to encrypted messages & data": "Lindungi dari kehilangan akses ke pesan & data terenkripsi",
-    "Verify this session": "Verifikasi sesi ini",
-    "Encryption upgrade available": "Tersedia peningkatan enkripsi",
-    "Set up Secure Backup": "Siapkan Cadangan Aman",
-    "Contact your <a>server admin</a>.": "Hubungi <a>admin server</a> Anda.",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
-    "Use app": "Gunakan aplikasi",
-    "Use app for a better experience": "Gunakan aplikasi untuk pengalaman yang lebih baik",
-    "Enable desktop notifications": "Aktifkan notifikasi desktop",
-    "Don't miss a reply": "Jangan lewatkan sebuah balasan",
-    "Review to ensure your account is safe": "Periksa untuk memastikan akun Anda aman",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Manajer integrasi menerima data pengaturan, dan dapat mengubah widget, mengirimkan undangan ruangan, dan mengatur tingkat daya dengan sepengetahuan Anda.",
     "Manage integrations": "Kelola integrasi",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Gunakan sebuah manajer integrasi untuk mengelola bot, widget, dan paket stiker.",
@@ -1546,7 +1527,6 @@
     },
     "Share for %(duration)s": "Bagikan selama %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
     "Unsent": "Belum dikirim",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s didapatkan saat mencoba mengakses ruangan atau space. Jika Anda pikir Anda melihat pesan ini secara tidak benar, silakan <issueLink>kirim sebuah laporan kutu</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Coba ulang nanti, atau tanya kepada admin ruangan atau space untuk memeriksa jika Anda memiliki akses.",
@@ -1563,11 +1543,6 @@
     "Forget this space": "Lupakan space ini",
     "You were removed by %(memberName)s": "Anda telah dikeluarkan oleh %(memberName)s",
     "Loading preview": "Memuat tampilan",
-    "Failed to join": "Gagal untuk bergabung",
-    "The person who invited you has already left, or their server is offline.": "Orang yang mengundang Anda telah keluar, atau servernya sedang luring.",
-    "The person who invited you has already left.": "Orang yang mengundang Anda telah keluar.",
-    "Sorry, your homeserver is too old to participate here.": "Maaf, homeserver Anda terlalu usang untuk berpartisipasi di sini.",
-    "There was an error joining.": "Terjadi sebuah kesalahan bergabung.",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
         "one": "1 perserta",
@@ -1637,8 +1612,6 @@
     },
     "View related event": "Tampilkan peristiwa terkait",
     "Read receipts": "Laporan dibaca",
-    "You were disconnected from the call. (Error: %(message)s)": "Anda terputus dari panggilan. (Terjadi kesalahan: %(message)s)",
-    "Connection lost": "Koneksi putus",
     "Deactivating your account is a permanent action — be careful!": "Menonaktifkan akun Anda adalah aksi yang permanen — hati-hati!",
     "Un-maximise": "Minimalkan",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
@@ -1700,7 +1673,6 @@
     "You do not have sufficient permissions to change this.": "Anda tidak memiliki izin untuk mengubah ini.",
     "Enable %(brand)s as an additional calling option in this room": "Aktifkan %(brand)s sebagai opsi panggilan tambahan di ruangan ini",
     "Sorry — this call is currently full": "Maaf — panggilan ini saat ini penuh",
-    "Unknown room": "Ruangan yang tidak diketahui",
     "Completing set up of your new device": "Menyelesaikan penyiapan perangkat baru Anda",
     "Waiting for device to sign in": "Menunggu perangkat untuk masuk",
     "Review and approve the sign in": "Lihat dan perbolehkan pemasukan",
@@ -1737,7 +1709,6 @@
     "We were unable to start a chat with the other user.": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain.",
     "Error starting verification": "Terjadi kesalahan memulai verifikasi",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
-    "You have unverified sessions": "Anda memiliki sesi yang belum diverifikasi",
     "Change layout": "Ubah tata letak",
     "Search users in this room…": "Cari pengguna di ruangan ini…",
     "Give one or multiple users in this room more privileges": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
@@ -1792,10 +1763,7 @@
     "Ended a poll": "Mengakhiri sebuah pemungutan suara",
     "Due to decryption errors, some votes may not be counted": "Karena kesalahan pendekripsian, beberapa suara tidak dihitung",
     "The sender has blocked you from receiving this message": "Pengirim telah memblokir Anda supaya tidak menerima pesan ini",
-    "Yes, it was me": "Ya, itu saya",
     "Answered elsewhere": "Dijawab di tempat lain",
-    "If you know a room address, try joining through that instead.": "Jika Anda tahu sebuah alamat ruangan, coba bergabung melalui itu saja.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Anda mencoba untuk bergabung menggunakan sebuah ID ruangan tanpa menyediakan daftar server untuk bergabung melalui server. ID ruangan adalah pengenal internal dan tidak dapat digunakan untuk bergabung dengan sebuah ruangan tanpa informasi tambahan.",
     "View poll": "Tampilkan pemungutan suara",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
         "one": "Tidak ada pemungutan suara untuk hari terakhir. Muat lebih banyak pemungutan suara untuk melihat pemungutan suara untuk bulan-bulan terakhir",
@@ -1891,8 +1859,6 @@
     "Request access": "Minta akses",
     "Your request to join is pending.": "Permintaan Anda untuk bergabung sedang ditunda.",
     "Cancel request": "Batalkan permintaan",
-    "You need an invite to access this room.": "Anda memerlukan undangan untuk mengakses ruangan ini.",
-    "Failed to cancel": "Gagal membatalkan",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Anda memerlukan akses untuk mengakses ruangan ini supaya dapat melihat atau berpartisipasi dalam percakapan. Anda dapat mengirimkan permintaan untuk bergabung di bawah.",
     "Message (optional)": "Pesan (opsional)",
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
@@ -3418,7 +3384,8 @@
         "failed_call_live_broadcast_title": "Tidak dapat memulai panggilan",
         "failed_call_live_broadcast_description": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
         "no_media_perms_title": "Tidak ada izin media",
-        "no_media_perms_description": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam"
+        "no_media_perms_description": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam",
+        "call_toast_unknown_room": "Ruangan yang tidak diketahui"
     },
     "Other": "Lainnya",
     "Advanced": "Tingkat Lanjut",
@@ -3536,7 +3503,12 @@
             "waiting_other_device_details": "Menunggu Anda untuk memverifikasi perangkat Anda yang lain, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Menunggu Anda untuk verifikasi di perangkat Anda yang lain…",
             "waiting_other_user": "Menunggu %(displayName)s untuk memverifikasi…",
-            "cancelling": "Membatalkan…"
+            "cancelling": "Membatalkan…",
+            "unverified_sessions_toast_title": "Anda memiliki sesi yang belum diverifikasi",
+            "unverified_sessions_toast_description": "Periksa untuk memastikan akun Anda aman",
+            "unverified_sessions_toast_reject": "Nanti",
+            "unverified_session_toast_title": "Login baru. Apakah itu Anda?",
+            "unverified_session_toast_accept": "Ya, itu saya"
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3546,7 +3518,12 @@
         "bootstrap_title": "Menyiapkan kunci",
         "export_unsupported": "Browser Anda tidak mendukung ekstensi kriptografi yang dibutuhkan",
         "import_invalid_keyfile": "Bukan keyfile %(brand)s yang absah",
-        "import_invalid_passphrase": "Pemeriksaan autentikasi gagal: kata sandi salah?"
+        "import_invalid_passphrase": "Pemeriksaan autentikasi gagal: kata sandi salah?",
+        "set_up_toast_title": "Siapkan Cadangan Aman",
+        "upgrade_toast_title": "Tersedia peningkatan enkripsi",
+        "verify_toast_title": "Verifikasi sesi ini",
+        "set_up_toast_description": "Lindungi dari kehilangan akses ke pesan & data terenkripsi",
+        "verify_toast_description": "Pengguna yang lain mungkin tidak mempercayainya"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3850,7 +3827,9 @@
         "error_need_to_be_logged_in": "Anda harus masuk.",
         "error_need_invite_permission": "Anda harus dapat mengundang pengguna untuk melakukannya.",
         "error_need_kick_permission": "Anda harus dapat mengeluarkan pengguna untuk melakukan itu.",
-        "no_name": "Aplikasi Tidak Diketahui"
+        "no_name": "Aplikasi Tidak Diketahui",
+        "error_hangup_title": "Koneksi putus",
+        "error_hangup_description": "Anda terputus dari panggilan. (Terjadi kesalahan: %(message)s)"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -4091,7 +4070,17 @@
         "leave_error_title": "Terjadi kesalahan saat meninggalkan ruangan",
         "upgrade_error_title": "Gagal meningkatkan ruangan",
         "upgrade_error_description": "Periksa ulang jika server Anda mendukung versi ruangan ini dan coba lagi.",
-        "leave_server_notices_description": "Ruangan ini digunakan untuk pesan yang penting dari Homeservernya, jadi Anda tidak dapat meninggalkannya."
+        "leave_server_notices_description": "Ruangan ini digunakan untuk pesan yang penting dari Homeservernya, jadi Anda tidak dapat meninggalkannya.",
+        "error_join_connection": "Terjadi sebuah kesalahan bergabung.",
+        "error_join_incompatible_version_1": "Maaf, homeserver Anda terlalu usang untuk berpartisipasi di sini.",
+        "error_join_incompatible_version_2": "Mohon hubungi administrator homeserver Anda.",
+        "error_join_404_invite_same_hs": "Orang yang mengundang Anda telah keluar.",
+        "error_join_404_invite": "Orang yang mengundang Anda telah keluar, atau servernya sedang luring.",
+        "error_join_404_1": "Anda mencoba untuk bergabung menggunakan sebuah ID ruangan tanpa menyediakan daftar server untuk bergabung melalui server. ID ruangan adalah pengenal internal dan tidak dapat digunakan untuk bergabung dengan sebuah ruangan tanpa informasi tambahan.",
+        "error_join_404_2": "Jika Anda tahu sebuah alamat ruangan, coba bergabung melalui itu saja.",
+        "error_join_title": "Gagal untuk bergabung",
+        "error_join_403": "Anda memerlukan undangan untuk mengakses ruangan ini.",
+        "error_cancel_knock_title": "Gagal membatalkan"
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4207,7 +4196,8 @@
         "sync": "Tidak dapat menghubungkan ke Homeserver. Mencoba ulang…",
         "connection": "Terjadi sebuah masalah berkomunikasi dengan homeservernya, coba lagi nanti.",
         "mixed_content": "Tidak dapat terhubung ke homeserver melalui HTTP ketika URL di browser berupa HTTPS. Gunakan HTTPS atau <a>aktifkan skrip yang tidak aman</a>.",
-        "tls": "Tidak dapat terhubung ke homeserver — harap cek koneksi anda, pastikan <a>sertifikat SSL homeserver</a> Anda terpercaya, dan ekstensi browser tidak memblokir permintaan."
+        "tls": "Tidak dapat terhubung ke homeserver — harap cek koneksi anda, pastikan <a>sertifikat SSL homeserver</a> Anda terpercaya, dan ekstensi browser tidak memblokir permintaan.",
+        "admin_contact_short": "Hubungi <a>admin server</a> Anda."
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4215,5 +4205,19 @@
         "other": "Dalam %(spaceName)s dan %(count)s space lainnya."
     },
     "in_space": "Dalam space %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/> dan satu lainnya",
+        "other": "<Items/> dan %(count)s lainnya"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Jangan lewatkan sebuah balasan",
+        "enable_prompt_toast_title": "Notifikasi",
+        "enable_prompt_toast_description": "Aktifkan notifikasi desktop"
+    },
+    "mobile_guide": {
+        "toast_title": "Gunakan aplikasi untuk pengalaman yang lebih baik",
+        "toast_description": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
+        "toast_accept": "Gunakan aplikasi"
+    }
 }

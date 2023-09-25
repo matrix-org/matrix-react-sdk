@@ -109,10 +109,6 @@
     "Delete widget": "Slett widgeten",
     "Create new room": "Lag nytt rom",
     "Home": "Heim",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> og %(count)s til",
-        "one": "<Items/> og ein til"
-    },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
     "expand": "Utvid",
@@ -160,7 +156,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
     "Invite to this room": "Inviter til dette rommet",
-    "Notifications": "Varsel",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
     "Connectivity to the server has been lost.": "Tilkoplinga til tenaren vart tapt.",
     "Sent messages will be stored until your connection has returned.": "Sende meldingar vil lagrast lokalt fram til nettverket er oppe att.",
@@ -238,8 +233,6 @@
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
-    "Verify this session": "Stadfest denne økta",
-    "Encryption upgrade available": "Kryptering kan oppgraderast",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruka ein identitetstenar er frivillig. Om du vel å ikkje bruka dette, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan ikkje invitera andre med e-post eller telefonnummer.",
     "Email addresses": "E-postadresser",
@@ -334,7 +327,6 @@
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
-    "Later": "Seinare",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "wait and try again later": "vent og prøv om att seinare",
@@ -359,7 +351,6 @@
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
     "Change notification settings": "Endra varslingsinnstillingar",
-    "Enable desktop notifications": "Aktiver skrivebordsvarsel",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
@@ -404,7 +395,6 @@
     "Change identity server": "Endre identitetstenar",
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
     "Identity server URL must be HTTPS": "URL for identitetstenar må vera HTTPS",
-    "Review to ensure your account is safe": "Undersøk dette for å gjere kontoen trygg",
     "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
     "Hide sidebar": "Gøym sidestolpen",
     "Show sidebar": "Vis sidestolpen",
@@ -1208,13 +1198,17 @@
         "old_version_detected_description": "Data frå ein eldre versjon av %(brand)s er oppdaga. Dette kan ha gjort at ende-til-ende kryptering feilar i den eldre versjonen. Krypterte meldingar som er utveksla med den gamle versjonen er kanskje ikkje dekrypterbare i denne versjonen. Dette kan forårsake at meldingar utveksla mot denne versjonen vil feile. Opplever du problem med dette, kan du logge inn og ut igjen. For å behalde meldingshistorikk, eksporter og importer nøklane dine på nytt.",
         "verification": {
             "explainer": "Sikre meldingar med denne brukaren er ende-til-ende krypterte og kan ikkje lesast av tredjepart.",
-            "sas_caption_self": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen."
+            "sas_caption_self": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen.",
+            "unverified_sessions_toast_description": "Undersøk dette for å gjere kontoen trygg",
+            "unverified_sessions_toast_reject": "Seinare"
         },
         "cancel_entering_passphrase_title": "Avbryte inntasting av passfrase ?",
         "bootstrap_title": "Setter opp nøklar",
         "export_unsupported": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
         "import_invalid_keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
-        "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?"
+        "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?",
+        "upgrade_toast_title": "Kryptering kan oppgraderast",
+        "verify_toast_title": "Stadfest denne økta"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",
@@ -1260,5 +1254,13 @@
         "admin_contact": "<a>Kontakt din systemadministrator</a> for å vidare bruka tenesta.",
         "mixed_content": "Kan ikkje kobla til heimetenaren via HTTP fordi URL-adressa i nettlesaren er HTTPS. Bruk HTTPS, eller <a>aktiver usikre skript</a>.",
         "tls": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader."
+    },
+    "items_and_n_others": {
+        "other": "<Items/> og %(count)s til",
+        "one": "<Items/> og ein til"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Varsel",
+        "enable_prompt_toast_description": "Aktiver skrivebordsvarsel"
     }
 }

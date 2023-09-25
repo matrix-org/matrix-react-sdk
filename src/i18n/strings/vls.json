@@ -30,12 +30,7 @@
     "Restricted": "Beperkten toegank",
     "Moderator": "Moderator",
     "Reason": "Reedn",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> en %(count)s andere",
-        "one": "<Items/> en één ander"
-    },
     "%(items)s and %(lastItem)s": "%(items)s en %(lastItem)s",
-    "Please contact your homeserver administrator.": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
     "Dog": "Hound",
     "Cat": "Katte",
     "Lion": "Leeuw",
@@ -132,7 +127,6 @@
     "Account management": "Accountbeheer",
     "Deactivate Account": "Account deactiveern",
     "General": "Algemeen",
-    "Notifications": "Meldiengn",
     "Unignore": "Nie mi negeern",
     "<not supported>": "<nie oundersteund>",
     "Ignored users": "Genegeerde gebruukers",
@@ -1103,7 +1097,8 @@
             "one": "J’èt %(count)s oungeleezn meldieng in e voorgoande versie van dit gesprek."
         },
         "leave_server_notices_title": "Kostege nie deuregoan uut ’t servermeldiengsgesprek",
-        "leave_server_notices_description": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan."
+        "leave_server_notices_description": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan.",
+        "error_join_incompatible_version_2": "Gelieve contact ip te neemn me den beheerder van je thuusserver."
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1170,5 +1165,12 @@
         "admin_contact": "Gelieve <a>contact ip te neemn me je dienstbeheerder</a> vo deze dienst te bluuvn gebruukn.",
         "mixed_content": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
         "tls": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern."
+    },
+    "items_and_n_others": {
+        "other": "<Items/> en %(count)s andere",
+        "one": "<Items/> en één ander"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Meldiengn"
     }
 }

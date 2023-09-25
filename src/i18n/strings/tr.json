@@ -46,7 +46,6 @@
     "Moderator": "Moderatör",
     "New passwords must match each other.": "Yeni şifreler birbirleriyle eşleşmelidir.",
     "not specified": "Belirtilmemiş",
-    "Notifications": "Bildirimler",
     "<not supported>": "<Desteklenmiyor>",
     "No display name": "Görünür isim yok",
     "No more results": "Başka sonuç yok",
@@ -227,10 +226,6 @@
     "Your password has been reset.": "Parolanız sıfırlandı.",
     "General failure": "Genel başarısızlık",
     "Create account": "Yeni hesap",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> ve diğer %(count)s",
-        "one": "<Items/> ve bir diğeri"
-    },
     "Clear personal data": "Kişisel veri temizle",
     "That matches!": "Eşleşti!",
     "That doesn't match.": "Eşleşmiyor.",
@@ -279,7 +274,6 @@
     "Profile picture": "Profil resmi",
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
-    "Please contact your homeserver administrator.": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin.",
     "Dog": "Köpek",
     "Cat": "Kedi",
     "Lion": "Aslan",
@@ -448,8 +442,6 @@
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Kullanıcının güç düzeyini değiştirirken bir hata oluştu. Yeterli izinlere sahip olduğunuza emin olun ve yeniden deneyin.",
     "Click the link in the email you received to verify and then click continue again.": "Aldığınız e-postaki bağlantıyı tıklayarak doğrulayın ve sonra tekrar tıklayarak devam edin.",
-    "Verify this session": "Bu oturumu doğrula",
-    "Encryption upgrade available": "Şifreleme güncellemesi var",
     "Invalid homeserver discovery response": "Geçersiz anasunucu keşif yanıtı",
     "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
@@ -458,8 +450,6 @@
     "Upgrade your encryption": "Şifrelemenizi güncelleyin",
     "Create key backup": "Anahtar yedeği oluştur",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
-    "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
-    "Later": "Sonra",
     "Show more": "Daha fazla göster",
     "Secret storage public key:": "Sır deposu açık anahtarı:",
     "The integration manager is offline or it cannot reach your homeserver.": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor.",
@@ -555,13 +545,7 @@
     "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver'ınız kaynaklarından birisinin sınırını aştı.",
-    "Contact your <a>server admin</a>.": "<a>Sunucu yöneticinize</a> başvurun.",
     "Ok": "Tamam",
-    "New login. Was this you?": "Yeni giriş. Bu siz miydiniz?",
-    "Safeguard against losing access to encrypted messages & data": "Şifrelenmiş mesajlara ve verilere erişimi kaybetmemek için koruma sağlayın",
-    "Set up Secure Backup": "Güvenli Yedekleme kur",
-    "Enable desktop notifications": "Masaüstü bildirimlerini etkinleştir",
-    "Don't miss a reply": "Yanıtları kaçırma",
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambiya",
     "Yemen": "Yemen",
@@ -942,8 +926,6 @@
     "Cross-signing is not set up.": "Çapraz imzalama ayarlanmamış.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Hesabınız gizli belleğinde çapraz imzalama kimliği barındırıyor ancak bu oturumda daha kullanılmış değil.",
     "Cross-signing is ready for use.": "Çapraz imzalama zaten kullanılıyor.",
-    "Use app": "Uygulamayı kullan",
-    "Use app for a better experience": "Daha iyi bir deneyim için uygulamayı kullanın",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
@@ -1849,7 +1831,9 @@
             "sas_caption_user": "Aşağıdaki numaranın ekranlarında göründüğünü onaylayarak bu kullanıcıyı doğrulayın.",
             "unsupported_method": "Desteklenen doğrulama yöntemi bulunamadı.",
             "waiting_other_user": "%(displayName)s ın doğrulaması için bekleniyor…",
-            "cancelling": "İptal ediliyor…"
+            "cancelling": "İptal ediliyor…",
+            "unverified_sessions_toast_reject": "Sonra",
+            "unverified_session_toast_title": "Yeni giriş. Bu siz miydiniz?"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1857,7 +1841,12 @@
         "bootstrap_title": "Anahtarları ayarla",
         "export_unsupported": "Tarayıcınız gerekli şifreleme uzantılarını desteklemiyor",
         "import_invalid_keyfile": "Geçersiz bir %(brand)s anahtar dosyası",
-        "import_invalid_passphrase": "Kimlik doğrulama denetimi başarısız oldu : yanlış şifre ?"
+        "import_invalid_passphrase": "Kimlik doğrulama denetimi başarısız oldu : yanlış şifre ?",
+        "set_up_toast_title": "Güvenli Yedekleme kur",
+        "upgrade_toast_title": "Şifreleme güncellemesi var",
+        "verify_toast_title": "Bu oturumu doğrula",
+        "set_up_toast_description": "Şifrelenmiş mesajlara ve verilere erişimi kaybetmemek için koruma sağlayın",
+        "verify_toast_description": "Diğer kullanıcılar güvenmeyebilirler"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2154,7 +2143,8 @@
         "leave_error_title": "Odadan ayrılırken hata",
         "upgrade_error_title": "Oda güncellenirken hata",
         "upgrade_error_description": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
-        "leave_server_notices_description": "Bu oda, Ana Sunucudan gelen önemli mesajlar için kullanılır, bu yüzden ayrılamazsınız."
+        "leave_server_notices_description": "Bu oda, Ana Sunucudan gelen önemli mesajlar için kullanılır, bu yüzden ayrılamazsınız.",
+        "error_join_incompatible_version_2": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin."
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
@@ -2218,7 +2208,21 @@
         "resource_limits": "Bu anasunucu kaynak limitlerinden birini aştı.",
         "admin_contact": "Bu servisi kullanmaya devam etmek için lütfen <a>servis yöneticinizle bağlantı kurun</a>.",
         "mixed_content": "Tarayıcı çubuğunuzda bir HTTPS URL'si olduğunda Ana Sunusuna HTTP üzerinden bağlanılamıyor . Ya HTTPS kullanın veya <a> güvensiz komut dosyalarını</a> etkinleştirin.",
-        "tls": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun."
+        "tls": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun.",
+        "admin_contact_short": "<a>Sunucu yöneticinize</a> başvurun."
     },
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> ve diğer %(count)s",
+        "one": "<Items/> ve bir diğeri"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Yanıtları kaçırma",
+        "enable_prompt_toast_title": "Bildirimler",
+        "enable_prompt_toast_description": "Masaüstü bildirimlerini etkinleştir"
+    },
+    "mobile_guide": {
+        "toast_title": "Daha iyi bir deneyim için uygulamayı kullanın",
+        "toast_accept": "Uygulamayı kullan"
+    }
 }

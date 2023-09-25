@@ -232,9 +232,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
 
         // TODO: determine how better to expose this to users in addition to prompts at login/toast
         if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
-            let buttonCaption = _t("Set up Secure Backup");
+            let buttonCaption = _t("encryption|set_up_toast_title");
             if (crossSigningPrivateKeysInStorage) {
-                buttonCaption = _t("Verify this session");
+                buttonCaption = _t("encryption|verify_toast_title");
             }
             actions.push(
                 <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>

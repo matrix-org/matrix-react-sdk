@@ -206,7 +206,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
 
                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
                 }}
-                label={_t("Notifications")}
+                label={_t("notifications|enable_prompt_toast_title")}
                 iconClassName={iconClassName}
             >
                 <span className="mx_IconizedContextMenu_sublabel">{notificationLabel}</span>

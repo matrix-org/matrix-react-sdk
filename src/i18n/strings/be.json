@@ -3,7 +3,6 @@
     "All messages": "Усе паведамленні",
     "Notification targets": "Мэты апавяшчэння",
     "Favourite": "Улюбёнае",
-    "Notifications": "Апавяшчэнні",
     "Low Priority": "Нізкі прыярытэт",
     "Invite to this room": "Запрасіць у гэты пакой",
     "Source URL": "URL-адрас крыніцы",
@@ -36,5 +35,8 @@
     },
     "invite": {
         "failed_generic": "Не атрымалася выканаць аперацыю"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Апавяшчэнні"
     }
 }

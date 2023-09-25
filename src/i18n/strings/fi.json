@@ -2,7 +2,6 @@
     "Create new room": "Luo uusi huone",
     "Failed to forget room %(errCode)s": "Huoneen unohtaminen epäonnistui %(errCode)s",
     "Favourite": "Suosikki",
-    "Notifications": "Ilmoitukset",
     "unknown error code": "tuntematon virhekoodi",
     "Failed to change password. Is your password correct?": "Salasanan vaihtaminen epäonnistui. Onko salasanasi oikein?",
     "No Microphones detected": "Mikrofonia ei löytynyt",
@@ -150,10 +149,6 @@
     "expand": "laajenna",
     "collapse": "supista",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Sovelman poistaminen poistaa sen kaikilta huoneen käyttäjiltä. Haluatko varmasti poistaa tämän sovelman?",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> ja %(count)s muuta",
-        "one": "<Items/> ja yksi muu"
-    },
     "Sunday": "Sunnuntai",
     "Notification targets": "Ilmoituksen kohteet",
     "Today": "Tänään",
@@ -178,7 +173,6 @@
     "Thank you!": "Kiitos!",
     "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Tämä huone ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
-    "Please contact your homeserver administrator.": "Ota yhteyttä kotipalvelimesi ylläpitäjään.",
     "Dog": "Koira",
     "Cat": "Kissa",
     "Lion": "Leijona",
@@ -569,8 +563,6 @@
     "Recent Conversations": "Viimeaikaiset keskustelut",
     "Direct Messages": "Yksityisviestit",
     "Lock": "Lukko",
-    "Encryption upgrade available": "Salauksen päivitys saatavilla",
-    "Later": "Myöhemmin",
     "Bridges": "Sillat",
     "Waiting for %(displayName)s to accept…": "Odotetaan, että %(displayName)s hyväksyy…",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
@@ -597,11 +589,9 @@
     "Something went wrong trying to invite the users.": "Käyttäjien kutsumisessa meni jotain pieleen.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Emme voineet kutsua kyseisiä käyttäjiä. Tarkista käyttäjät, jotka haluat kutsua ja yritä uudelleen.",
     "Enter your account password to confirm the upgrade:": "Syötä tilisi salasana vahvistaaksesi päivityksen:",
-    "Verify this session": "Vahvista tämä istunto",
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
-    "Other users may not trust it": "Muut eivät välttämättä luota siihen",
     "Scroll to most recent messages": "Vieritä tuoreimpiin viesteihin",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Huoneen vaihtoehtoisten osoitteiden päivittämisessä tapahtui virhe. Palvelin ei ehkä salli sitä tai kyseessä oli tilapäinen virhe.",
     "Local address": "Paikallinen osoite",
@@ -624,7 +614,6 @@
     "Submit logs": "Lähetä lokit",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
-    "New login. Was this you?": "Uusi sisäänkirjautuminen. Olitko se sinä?",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
     "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
     "Almost there! Is %(displayName)s showing the same shield?": "Melkein valmista! Näyttääkö %(displayName)s saman kilven?",
@@ -691,7 +680,6 @@
     "Signature upload failed": "Allekirjoituksen lähettäminen epäonnistui",
     "Your homeserver has exceeded its user limit.": "Kotipalvelimesi on ylittänyt käyttäjärajansa.",
     "Your homeserver has exceeded one of its resource limits.": "Kotipalvelimesi on ylittänyt jonkin resurssirajansa.",
-    "Contact your <a>server admin</a>.": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>.",
     "Ok": "OK",
     "Error creating address": "Virhe osoitetta luotaessa",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Osoitetta luotaessa tapahtui virhe. Voi olla, että palvelin ei salli sitä tai kyseessä oli tilapäinen virhe.",
@@ -729,7 +717,6 @@
     "Algorithm:": "Algoritmi:",
     "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
     "Your server isn't responding to some <a>requests</a>.": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
-    "Enable desktop notifications": "Ota työpöytäilmoitukset käyttöön",
     "Decline All": "Kieltäydy kaikista",
     "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
     "The server is offline.": "Palvelin ei ole verkossa.",
@@ -1048,8 +1035,6 @@
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
     "Open dial pad": "Avaa näppäimistö",
     "Dial pad": "Näppäimistö",
-    "Use app": "Käytä sovellusta",
-    "Use app for a better experience": "Parempi kokemus sovelluksella",
     "Recently visited rooms": "Hiljattain vieraillut huoneet",
     "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
@@ -1171,8 +1156,6 @@
     "Delete avatar": "Poista avatar",
     "Show sidebar": "Näytä sivupalkki",
     "Hide sidebar": "Piilota sivupalkki",
-    "Set up Secure Backup": "Määritä turvallinen varmuuskopio",
-    "Review to ensure your account is safe": "Katselmoi varmistaaksesi, että tilisi on turvassa",
     "Decide who can view and join %(spaceName)s.": "Päätä ketkä voivat katsella avaruutta %(spaceName)s ja liittyä siihen.",
     "Space information": "Avaruuden tiedot",
     "Allow people to preview your space before they join.": "Salli ihmisten esikatsella avaruuttasi ennen liittymistä.",
@@ -1222,7 +1205,6 @@
     "There was an error loading your notification settings.": "Virhe ladatessa ilmoitusasetuksia.",
     "This may be useful for public spaces.": "Tämä voi olla hyödyllinen julkisille avaruuksille.",
     "Invite with email or username": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
-    "Don't miss a reply": "Älä jätä vastauksia huomiotta",
     "View in room": "Näytä huoneessa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
@@ -1398,11 +1380,6 @@
         "other": "Poistetaan parhaillaan viestejä %(count)s huoneesta"
     },
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
-    "Failed to join": "Liittyminen epäonnistui",
-    "The person who invited you has already left.": "Henkilö, joka kutsui sinut on jo poistunut.",
-    "The person who invited you has already left, or their server is offline.": "Henkilö, joka kutsui sinut on jo poistunut tai hänen palvelimensa on poissa verkosta.",
-    "There was an error joining.": "Liittymisessä tapahtui virhe.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s on mobiiliselaimissa kokeellinen. Paremman kokemuksen ja uusimmat ominaisuudet saat ilmaisella mobiilisovelluksellamme.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Your new device is now verified. Other users will see it as trusted.": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Uusi laitteesi on nyt vahvistettu. Laitteella on pääsy salattuihin viesteihisi, ja muut käyttäjät näkevät sen luotettuna.",
@@ -1465,8 +1442,6 @@
         "other": "%(count)s ihmistä liittyi"
     },
     "Developer": "Kehittäjä",
-    "Connection lost": "Yhteys menetettiin",
-    "Sorry, your homeserver is too old to participate here.": "Kotipalvelimesi on liian vanha osallistumaan tänne.",
     "Close sidebar": "Sulje sivupalkki",
     "Updated %(humanizedUpdateTime)s": "Päivitetty %(humanizedUpdateTime)s",
     "Mentions only": "Vain maininnat",
@@ -1537,7 +1512,6 @@
     "Remove server “%(roomServer)s”": "Poista palvelin ”%(roomServer)s”",
     "This room or space is not accessible at this time.": "Tämä huone tai avaruus ei ole käytettävissä juuri tällä hetkellä.",
     "Moderation": "Moderointi",
-    "You were disconnected from the call. (Error: %(message)s)": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s tai %(copyButton)s",
     "Waiting for device to sign in": "Odotetaan laitteen sisäänkirjautumista",
     "Review and approve the sign in": "Katselmoi ja hyväksy sisäänkirjautuminen",
@@ -1575,7 +1549,6 @@
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
     "Sorry — this call is currently full": "Pahoittelut — tämä puhelu on täynnä",
-    "Unknown room": "Tuntematon huone",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta.",
         "one": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta."
@@ -1617,7 +1590,6 @@
     "Change layout": "Vaihda asettelua",
     "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
     "Search users in this room…": "Etsi käyttäjiä tästä huoneesta…",
-    "You have unverified sessions": "Sinulla on vahvistamattomia istuntoja",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
@@ -1642,7 +1614,6 @@
     "unknown": "tuntematon",
     "Red": "Punainen",
     "Grey": "Harmaa",
-    "Yes, it was me": "Kyllä, se olin minä",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
     "Connecting…": "Yhdistetään…",
@@ -1688,8 +1659,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Tuntematon salasananvaihtovirhe (%(stringifiedError)s)",
     "Ignore (%(counter)s)": "Sivuuta (%(counter)s)",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
-    "If you know a room address, try joining through that instead.": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
-    "Safeguard against losing access to encrypted messages & data": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
     "Set a new account password…": "Aseta uusi tilin salasana…",
     "Encrypting your message…": "Salataan viestiäsi…",
     "Joining space…": "Liitytään avaruuteen…",
@@ -3076,7 +3045,8 @@
         "default_device": "Oletuslaite",
         "failed_call_live_broadcast_title": "Puhelua ei voi aloittaa",
         "no_media_perms_title": "Ei mediaoikeuksia",
-        "no_media_perms_description": "Voit joutua antamaan %(brand)sille luvan mikrofonin/kameran käyttöön"
+        "no_media_perms_description": "Voit joutua antamaan %(brand)sille luvan mikrofonin/kameran käyttöön",
+        "call_toast_unknown_room": "Tuntematon huone"
     },
     "Other": "Muut",
     "Advanced": "Lisäasetukset",
@@ -3191,7 +3161,12 @@
             "waiting_other_device_details": "Odotetaan vahvistustasi toiselta laitteelta, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Odotetaan vahvistustasi toiselta laitteelta…",
             "waiting_other_user": "Odotetaan käyttäjän %(displayName)s varmennusta…",
-            "cancelling": "Peruutetaan…"
+            "cancelling": "Peruutetaan…",
+            "unverified_sessions_toast_title": "Sinulla on vahvistamattomia istuntoja",
+            "unverified_sessions_toast_description": "Katselmoi varmistaaksesi, että tilisi on turvassa",
+            "unverified_sessions_toast_reject": "Myöhemmin",
+            "unverified_session_toast_title": "Uusi sisäänkirjautuminen. Olitko se sinä?",
+            "unverified_session_toast_accept": "Kyllä, se olin minä"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -3201,7 +3176,12 @@
         "bootstrap_title": "Otetaan avaimet käyttöön",
         "export_unsupported": "Selaimesi ei tue vaadittuja kryptografisia laajennuksia",
         "import_invalid_keyfile": "Ei kelvollinen %(brand)s-avaintiedosto",
-        "import_invalid_passphrase": "Autentikointi epäonnistui: virheellinen salasana?"
+        "import_invalid_passphrase": "Autentikointi epäonnistui: virheellinen salasana?",
+        "set_up_toast_title": "Määritä turvallinen varmuuskopio",
+        "upgrade_toast_title": "Salauksen päivitys saatavilla",
+        "verify_toast_title": "Vahvista tämä istunto",
+        "set_up_toast_description": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä",
+        "verify_toast_description": "Muut eivät välttämättä luota siihen"
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -3466,7 +3446,9 @@
         "error_need_to_be_logged_in": "Sinun pitää olla kirjautunut.",
         "error_need_invite_permission": "Sinun pitää pystyä kutsua käyttäjiä voidaksesi tehdä tuon.",
         "error_need_kick_permission": "Sinun täytyy pystyä potkia käyttäjiä voidaksesi tehdä tuon.",
-        "no_name": "Tuntematon sovellus"
+        "no_name": "Tuntematon sovellus",
+        "error_hangup_title": "Yhteys menetettiin",
+        "error_hangup_description": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)"
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3687,7 +3669,14 @@
         "leave_error_title": "Virhe poistuessa huoneesta",
         "upgrade_error_title": "Virhe päivitettäessä huonetta",
         "upgrade_error_description": "Tarkista, että palvelimesi tukee valittua huoneversiota ja yritä uudelleen.",
-        "leave_server_notices_description": "Tämä huone on kotipalvelimen tärkeille viesteille, joten ei voi poistua siitä."
+        "leave_server_notices_description": "Tämä huone on kotipalvelimen tärkeille viesteille, joten ei voi poistua siitä.",
+        "error_join_connection": "Liittymisessä tapahtui virhe.",
+        "error_join_incompatible_version_1": "Kotipalvelimesi on liian vanha osallistumaan tänne.",
+        "error_join_incompatible_version_2": "Ota yhteyttä kotipalvelimesi ylläpitäjään.",
+        "error_join_404_invite_same_hs": "Henkilö, joka kutsui sinut on jo poistunut.",
+        "error_join_404_invite": "Henkilö, joka kutsui sinut on jo poistunut tai hänen palvelimensa on poissa verkosta.",
+        "error_join_404_2": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
+        "error_join_title": "Liittyminen epäonnistui"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3799,7 +3788,8 @@
         "sync": "Kotipalvelimeen yhdistäminen ei onnistunut. Yritetään uudelleen…",
         "connection": "Yhteydessä kotipalvelimeen ilmeni ongelma, yritä myöhemmin uudelleen.",
         "mixed_content": "Yhdistäminen kotipalvelimeen HTTP:n avulla ei ole mahdollista, kun selaimen osoitepalkissa on HTTPS-osoite. Käytä joko HTTPS:ää tai <a>salli turvattomat komentosarjat</a>.",
-        "tls": "Kotipalvelimeen ei saada yhteyttä. Tarkista verkkoyhteytesi, varmista että <a>kotipalvelimesi SSL-sertifikaatti</a> on luotettu, ja että mikään selaimen lisäosa ei estä pyyntöjen lähettämistä."
+        "tls": "Kotipalvelimeen ei saada yhteyttä. Tarkista verkkoyhteytesi, varmista että <a>kotipalvelimesi SSL-sertifikaatti</a> on luotettu, ja että mikään selaimen lisäosa ei estä pyyntöjen lähettämistä.",
+        "admin_contact_short": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>."
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3807,5 +3797,19 @@
         "other": "Avaruudessa %(spaceName)s ja %(count)s muussa avaruudessa."
     },
     "in_space": "Avaruudessa %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> ja %(count)s muuta",
+        "one": "<Items/> ja yksi muu"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Älä jätä vastauksia huomiotta",
+        "enable_prompt_toast_title": "Ilmoitukset",
+        "enable_prompt_toast_description": "Ota työpöytäilmoitukset käyttöön"
+    },
+    "mobile_guide": {
+        "toast_title": "Parempi kokemus sovelluksella",
+        "toast_description": "%(brand)s on mobiiliselaimissa kokeellinen. Paremman kokemuksen ja uusimmat ominaisuudet saat ilmaisella mobiilisovelluksellamme.",
+        "toast_accept": "Käytä sovellusta"
+    }
 }

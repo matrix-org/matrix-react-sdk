@@ -47,7 +47,6 @@
     "Moderator": "Moderator",
     "New passwords must match each other.": "New passwords must match each other.",
     "not specified": "not specified",
-    "Notifications": "Notifications",
     "<not supported>": "<not supported>",
     "No more results": "No more results",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
@@ -582,5 +581,8 @@
     "error": {
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
         "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests."
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notifications"
     }
 }

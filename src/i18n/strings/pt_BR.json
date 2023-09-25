@@ -14,7 +14,6 @@
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "As novas senhas informadas precisam ser idênticas.",
-    "Notifications": "Notificações",
     "<not supported>": "<não suportado>",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
     "Profile": "Perfil",
@@ -150,10 +149,6 @@
     "Delete Widget": "Apagar widget",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Remover um widget o remove para todas as pessoas desta sala. Tem certeza que quer remover este widget?",
     "Delete widget": "Remover widget",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> e %(count)s outras",
-        "one": "<Items/> e uma outra"
-    },
     "collapse": "recolher",
     "expand": "expandir",
     "<a>In reply to</a> <pill>": "<a>Em resposta a</a> <pill>",
@@ -184,7 +179,6 @@
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
-    "Please contact your homeserver administrator.": "Por favor, entre em contato com o administrador do seu homeserver.",
     "Delete Backup": "Remover backup",
     "Unable to load key backup status": "Não foi possível carregar o status do backup da chave",
     "This event could not be displayed": "Este evento não pôde ser exibido",
@@ -344,15 +338,9 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
     "Ask this user to verify their session, or manually verify it below.": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
     "Not Trusted": "Não confiável",
-    "Later": "Mais tarde",
     "Your homeserver has exceeded its user limit.": "Seu servidor ultrapassou seu limite de usuárias(os).",
     "Your homeserver has exceeded one of its resource limits.": "Seu servidor local excedeu um de seus limites de recursos.",
-    "Contact your <a>server admin</a>.": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>.",
     "Ok": "Ok",
-    "Encryption upgrade available": "Atualização de criptografia disponível",
-    "Verify this session": "Confirmar esta sessão",
-    "Other users may not trust it": "Outras(os) usuárias(os) podem não confiar nela",
-    "New login. Was this you?": "Novo login. Foi você?",
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "Lock": "Cadeado",
     "Accept <policyLink /> to continue:": "Aceitar <policyLink /> para continuar:",
@@ -754,8 +742,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
     "This version of %(brand)s does not support searching encrypted messages": "Esta versão do %(brand)s não permite buscar mensagens criptografadas",
     "Information": "Informação",
-    "Set up Secure Backup": "Configurar o backup online",
-    "Safeguard against losing access to encrypted messages & data": "Proteja-se contra a perda de acesso a mensagens e dados criptografados",
     "Backup version:": "Versão do backup:",
     "Backup key stored:": "Backup da chave armazenada:",
     "Backup key cached:": "Backup da chave em cache:",
@@ -810,8 +796,6 @@
     "Hide Widgets": "Esconder widgets",
     "Modal Widget": "Popup do widget",
     "Data on this screen is shared with %(widgetDomain)s": "Dados nessa tela são compartilhados com %(widgetDomain)s",
-    "Don't miss a reply": "Não perca uma resposta",
-    "Enable desktop notifications": "Ativar notificações na área de trabalho",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, e-mail ou nome de usuário (por exemplo: <userId/>) ou <a>compartilhe esta sala</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Comece uma conversa, a partir do nome, e-mail ou nome de usuário de alguém (por exemplo: <userId/>).",
     "Invite by email": "Convidar por e-mail",
@@ -1106,8 +1090,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
     "Allow this widget to verify your identity": "Permitir que este widget verifique a sua identidade",
     "Recently visited rooms": "Salas visitadas recentemente",
-    "Use app": "Usar o aplicativo",
-    "Use app for a better experience": "Use o aplicativo para ter uma experiência melhor",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Adicionar sala existente",
     "%(count)s members": {
@@ -1172,7 +1154,6 @@
     "Connecting": "Conectando",
     "unknown person": "pessoa desconhecida",
     "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
-    "Review to ensure your account is safe": "Revise para assegurar que sua conta está segura",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
     "Message search initialisation failed": "Falha na inicialização da pesquisa de mensagens",
@@ -1385,7 +1366,6 @@
         "one": "Visto por %(count)s pessoa",
         "other": "Visto por %(count)s pessoas"
     },
-    "You were disconnected from the call. (Error: %(message)s)": "Você foi desconectado da chamada. (Erro: %(message)s)",
     "Remove messages sent by me": "",
     "%(count)s people joined": {
         "one": "%(count)s pessoa entrou",
@@ -1393,12 +1373,6 @@
     },
     "Room members": "Membros da sala",
     "Back to chat": "Voltar ao chat",
-    "Connection lost": "Conexão perdida",
-    "Failed to join": "Falha ao entrar",
-    "The person who invited you has already left, or their server is offline.": "A pessoa que o convidou já saiu ou o servidor dela está offline.",
-    "The person who invited you has already left.": "A pessoa que o convidou já saiu.",
-    "There was an error joining.": "Ocorreu um erro ao entrar.",
-    "Unknown room": "Sala desconhecida",
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -2516,7 +2490,8 @@
         "failed_call_live_broadcast_title": "Não é possível iniciar uma chamada",
         "failed_call_live_broadcast_description": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
         "no_media_perms_title": "Não tem permissões para acessar a mídia",
-        "no_media_perms_description": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera"
+        "no_media_perms_description": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera",
+        "call_toast_unknown_room": "Sala desconhecida"
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -2617,7 +2592,10 @@
             "sas_caption_user": "Confirme este usuário, comparando os números a seguir que serão exibidos na sua e na tela dele.",
             "unsupported_method": "Nenhuma opção de confirmação é suportada.",
             "waiting_other_user": "Aguardando %(displayName)s confirmar…",
-            "cancelling": "Cancelando…"
+            "cancelling": "Cancelando…",
+            "unverified_sessions_toast_description": "Revise para assegurar que sua conta está segura",
+            "unverified_sessions_toast_reject": "Mais tarde",
+            "unverified_session_toast_title": "Novo login. Foi você?"
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2626,7 +2604,12 @@
         "bootstrap_title": "Configurar chaves",
         "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
         "import_invalid_keyfile": "Não é um arquivo de chave válido do %(brand)s",
-        "import_invalid_passphrase": "Falha ao checar a autenticação: senha incorreta?"
+        "import_invalid_passphrase": "Falha ao checar a autenticação: senha incorreta?",
+        "set_up_toast_title": "Configurar o backup online",
+        "upgrade_toast_title": "Atualização de criptografia disponível",
+        "verify_toast_title": "Confirmar esta sessão",
+        "set_up_toast_description": "Proteja-se contra a perda de acesso a mensagens e dados criptografados",
+        "verify_toast_description": "Outras(os) usuárias(os) podem não confiar nela"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2869,7 +2852,9 @@
         "error_need_to_be_logged_in": "Você precisa estar logado.",
         "error_need_invite_permission": "Para fazer isso, precisa ter permissão para convidar outras pessoas.",
         "error_need_kick_permission": "Você precisa ter permissão de expulsar usuários para fazer isso.",
-        "no_name": "App desconhecido"
+        "no_name": "App desconhecido",
+        "error_hangup_title": "Conexão perdida",
+        "error_hangup_description": "Você foi desconectado da chamada. (Erro: %(message)s)"
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3029,7 +3014,12 @@
         "leave_error_title": "Erro ao sair da sala",
         "upgrade_error_title": "Erro atualizando a sala",
         "upgrade_error_description": "Verifique se seu servidor suporta a versão de sala escolhida e tente novamente.",
-        "leave_server_notices_description": "Esta sala é usada para mensagens importantes do Homeserver, então você não pode sair dela."
+        "leave_server_notices_description": "Esta sala é usada para mensagens importantes do Homeserver, então você não pode sair dela.",
+        "error_join_connection": "Ocorreu um erro ao entrar.",
+        "error_join_incompatible_version_2": "Por favor, entre em contato com o administrador do seu homeserver.",
+        "error_join_404_invite_same_hs": "A pessoa que o convidou já saiu.",
+        "error_join_404_invite": "A pessoa que o convidou já saiu ou o servidor dela está offline.",
+        "error_join_title": "Falha ao entrar"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -3117,7 +3107,8 @@
         "admin_contact": "Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando este serviço.",
         "connection": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
         "mixed_content": "Uma conexão com o servidor local via HTTP não pode ser estabelecida se a barra de endereços do navegador contiver um endereço HTTPS. Use HTTPS ou, em vez disso, permita ao navegador executar <a>scripts não seguros</a>.",
-        "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede."
+        "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
+        "admin_contact_short": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>."
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3125,5 +3116,18 @@
         "other": "Em %(spaceName)s e %(count)s outros espaços."
     },
     "in_space": "No espaço %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> e %(count)s outras",
+        "one": "<Items/> e uma outra"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Não perca uma resposta",
+        "enable_prompt_toast_title": "Notificações",
+        "enable_prompt_toast_description": "Ativar notificações na área de trabalho"
+    },
+    "mobile_guide": {
+        "toast_title": "Use o aplicativo para ter uma experiência melhor",
+        "toast_accept": "Usar o aplicativo"
+    }
 }

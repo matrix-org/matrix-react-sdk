@@ -5,7 +5,6 @@
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
     "Favourite": "Favorit",
     "Failed to change password. Is your password correct?": "S'ha produït un error en canviar la contrasenya. És correcta la teva contrasenya?",
-    "Notifications": "Notificacions",
     "unknown error code": "codi d'error desconegut",
     "Rooms": "Sales",
     "Warning!": "Avís!",
@@ -99,10 +98,6 @@
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "La supressió d'un giny l'elimina per a tots els usuaris d'aquesta sala. Esteu segur que voleu eliminar aquest giny?",
     "Delete widget": "Suprimeix el giny",
     "Home": "Inici",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> i %(count)s altres",
-        "one": "<Items/> i un altre"
-    },
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
@@ -176,7 +171,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
     "Invite anyway": "Convidar igualment",
-    "Please contact your homeserver administrator.": "Si us plau contacteu amb l'administrador del vostre homeserver.",
     "Email addresses": "Adreces de correu electrònic",
     "Phone numbers": "Números de telèfon",
     "Phone Number": "Número de telèfon",
@@ -720,7 +714,8 @@
         "leave_unexpected_error": "Error de servidor inesperat intentant sortir de la sala",
         "leave_error_title": "Error sortint de la sala",
         "upgrade_error_title": "Error actualitzant sala",
-        "upgrade_error_description": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar."
+        "upgrade_error_description": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar.",
+        "error_join_incompatible_version_2": "Si us plau contacteu amb l'administrador del vostre homeserver."
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -791,5 +786,12 @@
     "error": {
         "mau": "Aquest homeserver ha assolit el seu límit d'usuaris actius mensuals.",
         "resource_limits": "Aquest homeserver ha sobrepassat on dels seus límits de recursos."
+    },
+    "items_and_n_others": {
+        "other": "<Items/> i %(count)s altres",
+        "one": "<Items/> i un altre"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notificacions"
     }
 }

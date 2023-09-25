@@ -3,7 +3,6 @@
     "Notification targets": "هدف‌های آگاه‌سازی",
     "Today": "امروز",
     "Friday": "آدینه",
-    "Notifications": "آگاهی‌ها",
     "Changelog": "تغییراتِ به‌وجودآمده",
     "This Room": "این گپ",
     "Unavailable": "غیرقابل‌دسترسی",
@@ -26,11 +25,7 @@
     "Yesterday": "دیروز",
     "Low Priority": "کم اهمیت",
     "Failed to change password. Is your password correct?": "خطا در تغییر گذرواژه. آیا از درستی گذرواژه‌تان اطمینان دارید؟",
-    "Later": "بعداً",
-    "Contact your <a>server admin</a>.": "تماس با <a>مدیر کارسازتان</a>.",
     "Ok": "تأیید",
-    "Encryption upgrade available": "ارتقای رمزنگاری ممکن است",
-    "Verify this session": "تأیید این نشست",
     "Set up": "برپایی",
     "Forget room": "فراموش کردن اتاق",
     "Filter room members": "فیلتر کردن اعضای اتاق",
@@ -1008,10 +1003,6 @@
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "This event could not be displayed": "امکان نمایش این رخداد وجود ندارد",
     "Edit message": "ویرایش پیام",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> و یکی دیگر",
-        "other": "<Items/> و %(count)s دیگر"
-    },
     "Clear personal data": "پاک‌کردن داده‌های شخصی",
     "Verify your identity to access encrypted messages and prove your identity to others.": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
     "Create account": "ساختن حساب کاربری",
@@ -1108,19 +1099,9 @@
     "Account management": "مدیریت حساب کاربری",
     "Spaces": "محیط‌ها",
     "Change notification settings": "تنظیمات اعلان را تغییر دهید",
-    "Please contact your homeserver administrator.": "لطفاً با مدیر سرور خود تماس بگیرید.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s از %(ip)s",
-    "New login. Was this you?": "ورود جدید. آیا شما بودید؟",
-    "Other users may not trust it": "ممکن است سایر کاربران به آن اعتماد نکنند",
-    "Safeguard against losing access to encrypted messages & data": "محافظ در برابر از دست‌دادن داده‌ها و پیام‌های رمزشده",
-    "Set up Secure Backup": "پشتیبان‌گیری امن را انجام دهید",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
-    "Use app": "از برنامه استفاده کنید",
-    "Use app for a better experience": "برای تجربه بهتر از برنامه استفاده کنید",
-    "Enable desktop notifications": "فعال‌کردن اعلان‌های دسکتاپ",
-    "Don't miss a reply": "پاسخی را از دست ندهید",
-    "Review to ensure your account is safe": "برای کسب اطمینان از امن‌بودن حساب کاربری خود، لطفا بررسی فرمائید",
     "Phone numbers": "شماره تلفن",
     "Email addresses": "آدرس ایمیل",
     "Show advanced": "نمایش بخش پیشرفته",
@@ -1228,7 +1209,6 @@
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "مدیران ادغام داده‌های پیکربندی را دریافت می‌کنند و می‌توانند ویجت‌ها را تغییر دهند، دعوت‌نامه‌های اتاق ارسال کنند و سطوح قدرت را از طرف شما تنظیم کنند.",
     "Deactivating your account is a permanent action — be careful!": "غیرفعال سازی اکانت شما یک اقدام دائمی است - مراقب باشید!",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
-    "You were disconnected from the call. (Error: %(message)s)": "شما از تماس قطع شدید.(خطا: %(message)s)",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
     "Themes": "قالب ها",
@@ -1237,14 +1217,6 @@
     "Back to thread": "بازگشت به موضوع",
     "Room members": "اعضای اتاق",
     "Back to chat": "بازگشت به گفتگو",
-    "Connection lost": "از دست رفتن اتصال",
-    "Failed to join": "عدم موفقیت در پیوستن",
-    "The person who invited you has already left, or their server is offline.": "فردی که شما را دعوت کرده بود اینجا را ترک کرده، و یا سرور او خاموش شده است.",
-    "The person who invited you has already left.": "فردی که شما را دعوت کرده بود اینجا را ترک کرده است.",
-    "Sorry, your homeserver is too old to participate here.": "متاسفانه نسخه نرم افزار خانگی شما برای مشارکت در این بخش خیلی قدیمی است.",
-    "There was an error joining.": "خطایی در هنگام پیوستن رخ داده است.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
-    "Unknown room": "اتاق ناشناس",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "common": {
         "about": "درباره",
@@ -2218,7 +2190,8 @@
         "no_permission_conference_description": "شما اجازه‌ی شروع جلسه‌ی تصویری در این اتاق را ندارید",
         "default_device": "دستگاه پیشفرض",
         "no_media_perms_title": "عدم مجوز رسانه",
-        "no_media_perms_description": "ممکن است لازم باشد دسترسی %(brand)s به میکروفون/دوربین را به صورت دستی فعال کنید"
+        "no_media_perms_description": "ممکن است لازم باشد دسترسی %(brand)s به میکروفون/دوربین را به صورت دستی فعال کنید",
+        "call_toast_unknown_room": "اتاق ناشناس"
     },
     "Other": "دیگر",
     "Advanced": "پیشرفته",
@@ -2300,7 +2273,10 @@
             "sas_caption_user": "در صورتی که عدد بعدی بر روی صفحه‌ی کاربر نمایش داده می‌شود، او را تائید نمائید.",
             "unsupported_method": "روش پشتیبانی‌شده‌ای برای تائید پیدا نشد.",
             "waiting_other_user": "منتظر %(displayName)s برای تائید کردن…",
-            "cancelling": "در حال لغو…"
+            "cancelling": "در حال لغو…",
+            "unverified_sessions_toast_description": "برای کسب اطمینان از امن‌بودن حساب کاربری خود، لطفا بررسی فرمائید",
+            "unverified_sessions_toast_reject": "بعداً",
+            "unverified_session_toast_title": "ورود جدید. آیا شما بودید؟"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2310,7 +2286,12 @@
         "bootstrap_title": "تنظیم کلیدها",
         "export_unsupported": "مرورگر شما از افزونه‌های رمزنگاری مورد نیاز پشتیبانی نمی‌کند",
         "import_invalid_keyfile": "فایل کلید %(brand)s معتبر نیست",
-        "import_invalid_passphrase": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟"
+        "import_invalid_passphrase": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟",
+        "set_up_toast_title": "پشتیبان‌گیری امن را انجام دهید",
+        "upgrade_toast_title": "ارتقای رمزنگاری ممکن است",
+        "verify_toast_title": "تأیید این نشست",
+        "set_up_toast_description": "محافظ در برابر از دست‌دادن داده‌ها و پیام‌های رمزشده",
+        "verify_toast_description": "ممکن است سایر کاربران به آن اعتماد نکنند"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2561,7 +2542,9 @@
         "error_need_to_be_logged_in": "شما باید وارد شوید.",
         "error_need_invite_permission": "نیاز است که شما قادر به دعوت کاربران به آن باشید.",
         "error_need_kick_permission": "برای انجام این کار نیاز دارید که بتوانید کاربران را حذف کنید.",
-        "no_name": "برنامه ناشناخته"
+        "no_name": "برنامه ناشناخته",
+        "error_hangup_title": "از دست رفتن اتصال",
+        "error_hangup_description": "شما از تماس قطع شدید.(خطا: %(message)s)"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2748,7 +2731,13 @@
         "leave_error_title": "خطا در ترک اتاق",
         "upgrade_error_title": "خطا در ارتقاء نسخه اتاق",
         "upgrade_error_description": "بررسی کنید که کارگزار شما از نسخه اتاق انتخاب‌شده پشتیبانی کرده و دوباره امتحان کنید.",
-        "leave_server_notices_description": "این اتاق برای نمایش پیام‌های مهم سرور استفاده می‌شود، لذا امکان ترک آن وجود ندارد."
+        "leave_server_notices_description": "این اتاق برای نمایش پیام‌های مهم سرور استفاده می‌شود، لذا امکان ترک آن وجود ندارد.",
+        "error_join_connection": "خطایی در هنگام پیوستن رخ داده است.",
+        "error_join_incompatible_version_1": "متاسفانه نسخه نرم افزار خانگی شما برای مشارکت در این بخش خیلی قدیمی است.",
+        "error_join_incompatible_version_2": "لطفاً با مدیر سرور خود تماس بگیرید.",
+        "error_join_404_invite_same_hs": "فردی که شما را دعوت کرده بود اینجا را ترک کرده است.",
+        "error_join_404_invite": "فردی که شما را دعوت کرده بود اینجا را ترک کرده، و یا سرور او خاموش شده است.",
+        "error_join_title": "عدم موفقیت در پیوستن"
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2843,12 +2832,27 @@
         "admin_contact": "لطفاً برای ادامه استفاده از این سرویس <a> با مدیر سرور خود تماس بگیرید </a>.",
         "connection": "در برقراری ارتباط با سرور مشکلی پیش آمده، لطفاً چند لحظه‌ی دیگر مجددا امتحان کنید.",
         "mixed_content": "امکان اتصال به سرور از طریق پروتکل‌های HTTP و HTTPS در مروگر شما میسر نیست. یا از HTTPS استفاده کرده و یا <a>حالت اجرای غیرامن اسکریپت‌ها</a> را فعال کنید.",
-        "tls": "اتصال به سرور میسر نیست - لطفا اتصال اینترنت خود را بررسی کنید؛ اطمینان حاصل کنید <a>گواهینامه‌ی SSL سرور شما</a> قابل اعتماد است، و اینکه پلاگینی بر روی مرورگر شما مانع از ارسال درخواست به سرور نمی‌شود."
+        "tls": "اتصال به سرور میسر نیست - لطفا اتصال اینترنت خود را بررسی کنید؛ اطمینان حاصل کنید <a>گواهینامه‌ی SSL سرور شما</a> قابل اعتماد است، و اینکه پلاگینی بر روی مرورگر شما مانع از ارسال درخواست به سرور نمی‌شود.",
+        "admin_contact_short": "تماس با <a>مدیر کارسازتان</a>."
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
         "other": "در %(spaceName)s و %(count)s دیگر فضاها."
     },
     "in_space": "در فضای %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/> و یکی دیگر",
+        "other": "<Items/> و %(count)s دیگر"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "پاسخی را از دست ندهید",
+        "enable_prompt_toast_title": "آگاهی‌ها",
+        "enable_prompt_toast_description": "فعال‌کردن اعلان‌های دسکتاپ"
+    },
+    "mobile_guide": {
+        "toast_title": "برای تجربه بهتر از برنامه استفاده کنید",
+        "toast_description": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
+        "toast_accept": "از برنامه استفاده کنید"
+    }
 }

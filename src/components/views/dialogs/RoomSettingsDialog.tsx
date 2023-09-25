@@ -181,7 +181,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         tabs.push(
             new Tab(
                 RoomSettingsTab.Notifications,
-                _td("Notifications"),
+                _td("notifications|enable_prompt_toast_title"),
                 "mx_RoomSettingsDialog_notificationsIcon",
                 (
                     <NotificationSettingsTab

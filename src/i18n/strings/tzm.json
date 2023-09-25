@@ -77,7 +77,6 @@
     "Cat": "Amuc",
     "Dog": "Aydi",
     "Ok": "Wax",
-    "Notifications": "Tineɣmisin",
     "Feb": "Bṛa",
     "Jan": "Yen",
     "common": {
@@ -177,5 +176,8 @@
             "add_email_dialog_title": "Rnu tasna imayl",
             "add_msisdn_dialog_title": "Rnu uṭṭun n utilifun"
         }
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Tineɣmisin"
     }
 }

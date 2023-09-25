@@ -377,9 +377,6 @@
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "Change notification settings": "تغيير إعدادات الإشعار",
-    "Please contact your homeserver administrator.": "يُرجى تواصلك مع مدير خادمك.",
-    "New login. Was this you?": "تسجيل دخول جديد. هل كان ذاك أنت؟",
-    "Other users may not trust it": "قد لا يثق به المستخدمون الآخرون",
     "This event could not be displayed": "تعذر عرض هذا الحدث",
     "Edit message": "تعديل الرسالة",
     "Everyone in this room is verified": "تم التحقق من جميع من في هذه الغرفة",
@@ -436,18 +433,9 @@
     "Missing media permissions, click the button below to request.": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
     "<not supported>": "<غير معتمد>",
-    "Safeguard against losing access to encrypted messages & data": "حماية ضد فقدان الوصول إلى الرسائل والبيانات المشفرة",
-    "Verify this session": "تحقق من هذا الاتصال",
-    "Encryption upgrade available": "ترقية التشفير متاحة",
-    "Set up Secure Backup": "أعد النسخ الاحتياطي الآمن",
     "Ok": "حسنا",
-    "Contact your <a>server admin</a>.": "تواصل مع <a>مدير الخادم</a> الخاص بك.",
     "Your homeserver has exceeded one of its resource limits.": "لقد تجاوز خادمك أحد حدود موارده.",
     "Your homeserver has exceeded its user limit.": "لقد تجاوز خادمك حد عدد المستخدمين.",
-    "Enable desktop notifications": "تمكين إشعارات سطح المكتب",
-    "Notifications": "الإشعارات",
-    "Don't miss a reply": "لا تفوت أي رد",
-    "Later": "لاحقاً",
     "United States": "الولايات المتحدة",
     "Albania": "ألبانيا",
     "Afghanistan": "أفغانستان",
@@ -1232,11 +1220,18 @@
             "sas_caption_user": "تحقق من هذا المستخدم من خلال التأكد من ظهور الرقم التالي على شاشته.",
             "unsupported_method": "تعذر العثور على أحد طرق التحقق الممكنة.",
             "waiting_other_user": "بانتظار %(displayName)s للتحقق…",
-            "cancelling": "جارٍ الإلغاء…"
+            "cancelling": "جارٍ الإلغاء…",
+            "unverified_sessions_toast_reject": "لاحقاً",
+            "unverified_session_toast_title": "تسجيل دخول جديد. هل كان ذاك أنت؟"
         },
         "cancel_entering_passphrase_title": "هل تريد إلغاء إدخال عبارة المرور؟",
         "cancel_entering_passphrase_description": "هل أنت متأكد من أنك تريد إلغاء إدخال عبارة المرور؟",
-        "bootstrap_title": "إعداد المفاتيح"
+        "bootstrap_title": "إعداد المفاتيح",
+        "set_up_toast_title": "أعد النسخ الاحتياطي الآمن",
+        "upgrade_toast_title": "ترقية التشفير متاحة",
+        "verify_toast_title": "تحقق من هذا الاتصال",
+        "set_up_toast_description": "حماية ضد فقدان الوصول إلى الرسائل والبيانات المشفرة",
+        "verify_toast_description": "قد لا يثق به المستخدمون الآخرون"
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",
@@ -1460,7 +1455,8 @@
             "start_of_room": "هذه بداية <roomName/>."
         },
         "upgrade_error_title": "خطأ في ترقية الغرفة",
-        "upgrade_error_description": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى."
+        "upgrade_error_description": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
+        "error_join_incompatible_version_2": "يُرجى تواصلك مع مدير خادمك."
     },
     "space": {
         "context_menu": {
@@ -1508,5 +1504,13 @@
         "error_missing_user_id_request": "رقم المستخدم مفقود في الطلب"
     },
     "cannot_reach_homeserver": "لا يمكن الوصول إلى السيرفر",
-    "cannot_reach_homeserver_detail": "تأكد من أنك تملك اتصال بالانترنت مستقر أو تواصل مع مدير السيرفر"
+    "cannot_reach_homeserver_detail": "تأكد من أنك تملك اتصال بالانترنت مستقر أو تواصل مع مدير السيرفر",
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "لا تفوت أي رد",
+        "enable_prompt_toast_title": "الإشعارات",
+        "enable_prompt_toast_description": "تمكين إشعارات سطح المكتب"
+    },
+    "error": {
+        "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك."
+    }
 }

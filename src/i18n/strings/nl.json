@@ -16,7 +16,6 @@
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
     "Favourite": "Favoriet",
-    "Notifications": "Meldingen",
     "unknown error code": "onbekende foutcode",
     "Failed to change password. Is your password correct?": "Wijzigen van wachtwoord is mislukt. Is je wachtwoord juist?",
     "Moderator": "Moderator",
@@ -150,10 +149,6 @@
     "Replying": "Aan het beantwoorden",
     "Unnamed room": "Naamloze kamer",
     "Banned by %(displayName)s": "Verbannen door %(displayName)s",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> en %(count)s andere",
-        "one": "<Items/> en één ander"
-    },
     "collapse": "dichtvouwen",
     "expand": "uitvouwen",
     "And %(count)s more...": {
@@ -208,7 +203,6 @@
     "No Audio Outputs detected": "Geen geluidsuitgangen gedetecteerd",
     "Audio Output": "Geluidsuitgang",
     "Ignored users": "Genegeerde personen",
-    "Please contact your homeserver administrator.": "Gelieve contact op te nemen met de beheerder van jouw homeserver.",
     "Dog": "Hond",
     "Cat": "Kat",
     "Lion": "Leeuw",
@@ -500,11 +494,7 @@
     "Show advanced": "Geavanceerde info tonen",
     "Your email address hasn't been verified yet": "Jouw e-mailadres is nog niet geverifieerd",
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
-    "Verify this session": "Verifieer deze sessie",
-    "Encryption upgrade available": "Versleutelingsupgrade beschikbaar",
     "Lock": "Hangslot",
-    "Other users may not trust it": "Mogelijk wantrouwen anderen het",
-    "Later": "Later",
     "Show more": "Meer tonen",
     "Securely cache encrypted messages locally for them to appear in search results.": "Sla versleutelde berichten veilig lokaal op om ze doorzoekbaar te maken.",
     "Cannot connect to integration manager": "Kan geen verbinding maken met de integratiebeheerder",
@@ -645,7 +635,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
-    "New login. Was this you?": "Nieuwe login gevonden. Was jij dat?",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
     "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Bevestig de deactivering van je account door gebruik te maken van eenmalige aanmelding om je identiteit te bewijzen.",
@@ -980,13 +969,6 @@
     "Invite by email": "Via e-mail uitnodigen",
     "Click the button below to confirm your identity.": "Druk op de knop hieronder om je identiteit te bevestigen.",
     "Confirm to continue": "Bevestig om door te gaan",
-    "Safeguard against losing access to encrypted messages & data": "Beveiliging tegen verlies van toegang tot versleutelde berichten en gegevens",
-    "Set up Secure Backup": "Beveiligde back-up instellen",
-    "Contact your <a>server admin</a>.": "Neem contact op met je <a>serverbeheerder</a>.",
-    "Use app": "Gebruik app",
-    "Use app for a better experience": "Gebruik de app voor een betere ervaring",
-    "Enable desktop notifications": "Bureaubladmeldingen inschakelen",
-    "Don't miss a reply": "Mis geen antwoord",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -1167,7 +1149,6 @@
     },
     "unknown person": "onbekend persoon",
     "%(deviceId)s from %(ip)s": "%(deviceId)s van %(ip)s",
-    "Review to ensure your account is safe": "Controleer ze zodat jouw account veilig is",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Je bent de enige persoon hier. Als je weggaat, zal niemand in de toekomst kunnen toetreden, jij ook niet.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Als u alles reset zult u opnieuw opstarten zonder vertrouwde sessies, zonder vertrouwde personen, en zult u misschien geen oude berichten meer kunnen zien.",
     "Only do this if you have no other device to complete verification with.": "Doe dit alleen als u geen ander apparaat hebt om de verificatie mee uit te voeren.",
@@ -1568,12 +1549,6 @@
     "New video room": "Nieuwe video kamer",
     "New room": "Nieuwe kamer",
     "Match system": "Match systeem",
-    "Failed to join": "Kan niet deelnemen",
-    "The person who invited you has already left, or their server is offline.": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
-    "The person who invited you has already left.": "De persoon die je heeft uitgenodigd is al vertrokken.",
-    "Sorry, your homeserver is too old to participate here.": "Sorry, je server is te oud om hier aan deel te nemen.",
-    "There was an error joining.": "Er is een fout opgetreden bij het deelnemen.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s is experimenteel in een mobiele webbrowser. Gebruik onze gratis native app voor een betere ervaring en de nieuwste functies.",
     "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
     "You are sharing your live location": "Je deelt je live locatie",
     "Live location enabled": "Live locatie ingeschakeld",
@@ -1637,8 +1612,6 @@
         "one": "%(count)s persoon toegetreden",
         "other": "%(count)s mensen toegetreden"
     },
-    "You were disconnected from the call. (Error: %(message)s)": "De verbinding is verbroken van uw oproep. (Error: %(message)s)",
-    "Connection lost": "Verbinding verloren",
     "Un-maximise": "Maximaliseren ongedaan maken",
     "Deactivating your account is a permanent action — be careful!": "Het deactiveren van je account is een permanente actie - wees voorzichtig!",
     "Remove search filter for %(filter)s": "Verwijder zoekfilter voor %(filter)s",
@@ -1719,7 +1692,6 @@
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s is eind-tot-eind versleuteld, maar is momenteel beperkt tot kleinere aantallen gebruikers.",
     "Enable %(brand)s as an additional calling option in this room": "Schakel %(brand)s in als extra bel optie in deze kamer",
     "Sorry — this call is currently full": "Sorry — dit gesprek is momenteel vol",
-    "Unknown room": "Onbekende kamer",
     "common": {
         "about": "Over",
         "analytics": "Gebruiksgegevens",
@@ -3075,7 +3047,8 @@
         "no_permission_conference_description": "Je hebt geen rechten in deze kamer om een vergadering te starten",
         "default_device": "Standaardapparaat",
         "no_media_perms_title": "Geen mediatoestemmingen",
-        "no_media_perms_description": "Je moet %(brand)s wellicht handmatig toestaan je microfoon/webcam te gebruiken"
+        "no_media_perms_description": "Je moet %(brand)s wellicht handmatig toestaan je microfoon/webcam te gebruiken",
+        "call_toast_unknown_room": "Onbekende kamer"
     },
     "Other": "Overige",
     "Advanced": "Geavanceerd",
@@ -3191,7 +3164,10 @@
             "waiting_other_device_details": "Wachten op je verificatie op het andere apparaat, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Wachten op je verificatie op het andere apparaat…",
             "waiting_other_user": "Wachten tot %(displayName)s geverifieerd heeft…",
-            "cancelling": "Bezig met annuleren…"
+            "cancelling": "Bezig met annuleren…",
+            "unverified_sessions_toast_description": "Controleer ze zodat jouw account veilig is",
+            "unverified_sessions_toast_reject": "Later",
+            "unverified_session_toast_title": "Nieuwe login gevonden. Was jij dat?"
         },
         "old_version_detected_title": "Oude cryptografiegegevens gedetecteerd",
         "old_version_detected_description": "Er zijn gegevens van een oudere versie van %(brand)s gevonden, die problemen veroorzaakt hebben met de eind-tot-eind-versleuteling in de oude versie. Onlangs vanuit de oude versie verzonden eind-tot-eind-versleutelde berichten zijn mogelijk onontsleutelbaar in deze versie. Ook kunnen berichten die met deze versie uitgewisseld zijn falen. Mocht je problemen ervaren, log dan opnieuw in. Exporteer je sleutels en importeer ze weer om je berichtgeschiedenis te behouden.",
@@ -3201,7 +3177,12 @@
         "bootstrap_title": "Sleutelconfiguratie",
         "export_unsupported": "Jouw browser ondersteunt de benodigde cryptografie-extensies niet",
         "import_invalid_keyfile": "Geen geldig %(brand)s-sleutelbestand",
-        "import_invalid_passphrase": "Aanmeldingscontrole mislukt: onjuist wachtwoord?"
+        "import_invalid_passphrase": "Aanmeldingscontrole mislukt: onjuist wachtwoord?",
+        "set_up_toast_title": "Beveiligde back-up instellen",
+        "upgrade_toast_title": "Versleutelingsupgrade beschikbaar",
+        "verify_toast_title": "Verifieer deze sessie",
+        "set_up_toast_description": "Beveiliging tegen verlies van toegang tot versleutelde berichten en gegevens",
+        "verify_toast_description": "Mogelijk wantrouwen anderen het"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -3476,7 +3457,9 @@
         "error_need_to_be_logged_in": "Hiervoor dien je ingelogd te zijn.",
         "error_need_invite_permission": "Dit vereist de bevoegdheid om personen uit te nodigen.",
         "error_need_kick_permission": "U moet in staat zijn om gebruikers te verwijderen om dit te doen.",
-        "no_name": "Onbekende app"
+        "no_name": "Onbekende app",
+        "error_hangup_title": "Verbinding verloren",
+        "error_hangup_description": "De verbinding is verbroken van uw oproep. (Error: %(message)s)"
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3697,7 +3680,13 @@
         "leave_error_title": "Fout bij verlaten kamer",
         "upgrade_error_title": "Upgraden van kamer mislukt",
         "upgrade_error_description": "Ga nogmaals na dat de server de gekozen kamerversie ondersteunt, en probeer het dan opnieuw.",
-        "leave_server_notices_description": "Deze kamer is bedoeld voor belangrijke berichten van de homeserver, dus je kan het niet verlaten."
+        "leave_server_notices_description": "Deze kamer is bedoeld voor belangrijke berichten van de homeserver, dus je kan het niet verlaten.",
+        "error_join_connection": "Er is een fout opgetreden bij het deelnemen.",
+        "error_join_incompatible_version_1": "Sorry, je server is te oud om hier aan deel te nemen.",
+        "error_join_incompatible_version_2": "Gelieve contact op te nemen met de beheerder van jouw homeserver.",
+        "error_join_404_invite_same_hs": "De persoon die je heeft uitgenodigd is al vertrokken.",
+        "error_join_404_invite": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
+        "error_join_title": "Kan niet deelnemen"
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3801,7 +3790,8 @@
         "admin_contact": "Gelieve <a>contact op te nemen met je dienstbeheerder</a> om deze dienst te blijven gebruiken.",
         "connection": "Er was een communicatieprobleem met de homeserver, probeer het later opnieuw.",
         "mixed_content": "Kan geen verbinding maken met de homeserver via HTTP wanneer er een HTTPS-URL in je browserbalk staat. Gebruik HTTPS of <a>schakel onveilige scripts in</a>.",
-        "tls": "Geen verbinding met de homeserver - controleer je verbinding, zorg ervoor dat het <a>SSL-certificaat van de homeserver</a> vertrouwd is en dat er geen browserextensies verzoeken blokkeren."
+        "tls": "Geen verbinding met de homeserver - controleer je verbinding, zorg ervoor dat het <a>SSL-certificaat van de homeserver</a> vertrouwd is en dat er geen browserextensies verzoeken blokkeren.",
+        "admin_contact_short": "Neem contact op met je <a>serverbeheerder</a>."
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3809,5 +3799,19 @@
         "other": "In %(spaceName)s en %(count)s andere spaces."
     },
     "in_space": "In space %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> en %(count)s andere",
+        "one": "<Items/> en één ander"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Mis geen antwoord",
+        "enable_prompt_toast_title": "Meldingen",
+        "enable_prompt_toast_description": "Bureaubladmeldingen inschakelen"
+    },
+    "mobile_guide": {
+        "toast_title": "Gebruik de app voor een betere ervaring",
+        "toast_description": "%(brand)s is experimenteel in een mobiele webbrowser. Gebruik onze gratis native app voor een betere ervaring en de nieuwste functies.",
+        "toast_accept": "Gebruik app"
+    }
 }

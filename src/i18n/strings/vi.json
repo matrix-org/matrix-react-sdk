@@ -30,12 +30,7 @@
     "Restricted": "Bị hạn chế",
     "Moderator": "Điều phối viên",
     "Reason": "Lý do",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> và %(count)s mục khác",
-        "one": "<Items/> và một mục khác"
-    },
     "%(items)s and %(lastItem)s": "%(items)s và %(lastItem)s",
-    "Please contact your homeserver administrator.": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
     "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
     "Are you sure?": "Bạn có chắc không?",
@@ -1032,23 +1027,9 @@
     "Failed to update the join rules": "Cập nhật quy tắc tham gia thất bại",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
     "%(deviceId)s from %(ip)s": "%(deviceId)s từ %(ip)s",
-    "New login. Was this you?": "Đăng nhập mới. Đây có phải là bạn không?",
-    "Other users may not trust it": "Những người dùng khác có thể không tin tưởng nó",
-    "Safeguard against losing access to encrypted messages & data": "Bảo vệ chống mất quyền truy cập vào tin nhắn và dữ liệu được mã hóa",
-    "Verify this session": "Xác thực phiên này",
-    "Encryption upgrade available": "Nâng cấp mã hóa có sẵn",
-    "Set up Secure Backup": "Thiết lập Sao lưu Bảo mật",
     "Ok": "OK",
-    "Contact your <a>server admin</a>.": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn.",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
     "Your homeserver has exceeded its user limit.": "Máy chủ của bạn đã vượt quá giới hạn người dùng của nó.",
-    "Use app": "Sử dụng ứng dụng",
-    "Use app for a better experience": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",
-    "Enable desktop notifications": "Bật thông báo trên màn hình",
-    "Notifications": "Thông báo",
-    "Don't miss a reply": "Đừng bỏ lỡ một câu trả lời",
-    "Later": "Để sau",
-    "Review to ensure your account is safe": "Xem lại để đảm bảo tài khoản của bạn an toàn",
     "All keys backed up": "Tất cả các khóa được sao lưu",
     "Connect this session to Key Backup": "Kết nối phiên này với Khóa Sao lưu",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Kết nối phiên này với máy chủ sao lưu khóa trước khi đăng xuất để tránh mất bất kỳ khóa nào có thể chỉ có trong phiên này.",
@@ -1491,14 +1472,6 @@
     "Room members": "Thành viên phòng",
     "Back to chat": "Quay lại trò chuyện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
-    "You were disconnected from the call. (Error: %(message)s)": "Bạn bị mất kết nối đến cuộc gọi. (Lỗi: %(message)s)",
-    "Connection lost": "Mất kết nối",
-    "Failed to join": "Tham gia thất bại",
-    "The person who invited you has already left, or their server is offline.": "Người đã mời bạn vừa mới rời khỏi, hoặc thiết bị của họ đang ngoại tuyến.",
-    "The person who invited you has already left.": "Người đã mời bạn vừa mới rời khỏi.",
-    "Sorry, your homeserver is too old to participate here.": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
-    "There was an error joining.": "Đã xảy ra lỗi khi tham gia.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "Connection": "Kết nối",
@@ -1523,10 +1496,6 @@
     "unknown": "không rõ",
     "Red": "Đỏ",
     "Grey": "Xám",
-    "Yes, it was me": "Đó là tôi",
-    "You have unverified sessions": "Bạn có các phiên chưa được xác thực",
-    "If you know a room address, try joining through that instead.": "Nếu bạn biết địa chỉ phòng, hãy dùng nó để tham gia.",
-    "Unknown room": "Phòng không xác định",
     "Starting export process…": "Bắt đầu trích xuất…",
     "This invite was sent to %(email)s": "Lời mời này đã được gửi tới %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Lời mời này đã được gửi đến %(email)s nhưng không liên kết với tài khoản của bạn",
@@ -1549,7 +1518,6 @@
     "New video room": "Tạo phòng truyền hình",
     "New room": "Tạo phòng",
     "Connecting to integration manager…": "Đang kết nối tới quản lý tích hợp…",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Bạn tìm cách tham gia một phòng bằng định danh (ID) phòng nhưng không cung cấp danh sách các máy chủ để tham gia qua. Định danh phòng là nội bộ và không thể được dùng để tham gia phòng mà không có thông tin thêm.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "The scanned code is invalid.": "Mã vừa quét là không hợp lệ.",
@@ -1717,7 +1685,6 @@
     "Close call": "Đóng cuộc gọi",
     "Email Notifications": "Thông báo qua thư điện tử",
     "Reset to default settings": "Đặt lại về cài đặt mặc định",
-    "Failed to cancel": "Không hủy được",
     "This setting will be applied by default to all your rooms.": "Cài đặt này sẽ được áp dụng theo mặc định cho các tất cả các phòng của bạn.",
     "Notify when someone uses a keyword": "Thông báo khi có người dùng một từ khóa",
     "Ask to join": "Yêu cầu để tham gia",
@@ -1725,7 +1692,6 @@
     "Invited to a room": "Được mời vào phòng",
     "New room activity, upgrades and status messages occur": "Hoạt động mới trong phòng, nâng cấp và tin nhắn trạng thái",
     "Mark all messages as read": "Đánh dấu đã đọc cho mọi tin nhắn",
-    "You need an invite to access this room.": "Bạn cần được mời để truy cập phòng này.",
     "common": {
         "about": "Giới thiệu",
         "analytics": "Về dữ liệu phân tích",
@@ -3148,7 +3114,8 @@
         "failed_call_live_broadcast_title": "Không thể bắt đầu cuộc gọi",
         "failed_call_live_broadcast_description": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
         "no_media_perms_title": "Không có quyền sử dụng công cụ truyền thông",
-        "no_media_perms_description": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công"
+        "no_media_perms_description": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công",
+        "call_toast_unknown_room": "Phòng không xác định"
     },
     "Other": "Khác",
     "Advanced": "Nâng cao",
@@ -3266,7 +3233,12 @@
             "waiting_other_device_details": "Đang chờ bạn xác thực trên thiết bị khác của bạn, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Đang chờ bạn xác thực trên thiết bị khác của bạn…",
             "waiting_other_user": "Đang đợi %(displayName)s xác thực…",
-            "cancelling": "Đang hủy…"
+            "cancelling": "Đang hủy…",
+            "unverified_sessions_toast_title": "Bạn có các phiên chưa được xác thực",
+            "unverified_sessions_toast_description": "Xem lại để đảm bảo tài khoản của bạn an toàn",
+            "unverified_sessions_toast_reject": "Để sau",
+            "unverified_session_toast_title": "Đăng nhập mới. Đây có phải là bạn không?",
+            "unverified_session_toast_accept": "Đó là tôi"
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -3276,7 +3248,12 @@
         "bootstrap_title": "Đang thiết lập khóa bảo mật",
         "export_unsupported": "Trình duyệt của bạn không hỗ trợ chức năng mã hóa",
         "import_invalid_keyfile": "Tệp khóa %(brand)s không hợp lệ",
-        "import_invalid_passphrase": "Kiểm tra đăng nhập thất bại: sai mật khẩu?"
+        "import_invalid_passphrase": "Kiểm tra đăng nhập thất bại: sai mật khẩu?",
+        "set_up_toast_title": "Thiết lập Sao lưu Bảo mật",
+        "upgrade_toast_title": "Nâng cấp mã hóa có sẵn",
+        "verify_toast_title": "Xác thực phiên này",
+        "set_up_toast_description": "Bảo vệ chống mất quyền truy cập vào tin nhắn và dữ liệu được mã hóa",
+        "verify_toast_description": "Những người dùng khác có thể không tin tưởng nó"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3562,7 +3539,9 @@
         "error_need_to_be_logged_in": "Bạn phải đăng nhập.",
         "error_need_invite_permission": "Bạn cần mời được người dùng thì mới làm vậy được.",
         "error_need_kick_permission": "Bạn phải đuổi được người dùng thì mới làm vậy được.",
-        "no_name": "Ứng dụng không xác định"
+        "no_name": "Ứng dụng không xác định",
+        "error_hangup_title": "Mất kết nối",
+        "error_hangup_description": "Bạn bị mất kết nối đến cuộc gọi. (Lỗi: %(message)s)"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3794,7 +3773,17 @@
         "leave_error_title": "Lỗi khi rời khỏi phòng",
         "upgrade_error_title": "Lỗi khi nâng cấp phòng",
         "upgrade_error_description": "Kiểm tra kỹ xem máy chủ của bạn có hỗ trợ phiên bản phòng đã chọn hay không và thử lại.",
-        "leave_server_notices_description": "Phòng này được sử dụng cho các tin nhắn quan trọng từ máy chủ, vì vậy bạn không thể rời khỏi nó."
+        "leave_server_notices_description": "Phòng này được sử dụng cho các tin nhắn quan trọng từ máy chủ, vì vậy bạn không thể rời khỏi nó.",
+        "error_join_connection": "Đã xảy ra lỗi khi tham gia.",
+        "error_join_incompatible_version_1": "Xin lỗi, homeserver của bạn quá cũ để tham gia vào đây.",
+        "error_join_incompatible_version_2": "Vui lòng liên hệ quản trị viên homeserver của bạn.",
+        "error_join_404_invite_same_hs": "Người đã mời bạn vừa mới rời khỏi.",
+        "error_join_404_invite": "Người đã mời bạn vừa mới rời khỏi, hoặc thiết bị của họ đang ngoại tuyến.",
+        "error_join_404_1": "Bạn tìm cách tham gia một phòng bằng định danh (ID) phòng nhưng không cung cấp danh sách các máy chủ để tham gia qua. Định danh phòng là nội bộ và không thể được dùng để tham gia phòng mà không có thông tin thêm.",
+        "error_join_404_2": "Nếu bạn biết địa chỉ phòng, hãy dùng nó để tham gia.",
+        "error_join_title": "Tham gia thất bại",
+        "error_join_403": "Bạn cần được mời để truy cập phòng này.",
+        "error_cancel_knock_title": "Không hủy được"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3905,7 +3894,8 @@
         "sync": "Không kết nối được với máy chủ nhà. Đang thử lại…",
         "connection": "Đã xảy ra sự cố khi giao tiếp với máy chủ, vui lòng thử lại sau.",
         "mixed_content": "Không thể kết nối với máy chủ thông qua HTTP khi URL HTTPS nằm trong thanh trình duyệt của bạn. Sử dụng HTTPS hoặc bật các tập lệnh không an toàn <a>enable unsafe scripts</a>.",
-        "tls": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu."
+        "tls": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu.",
+        "admin_contact_short": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn."
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3913,5 +3903,19 @@
         "other": "Trong %(spaceName)s và %(count)s space khác."
     },
     "in_space": "Trong space %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> và %(count)s mục khác",
+        "one": "<Items/> và một mục khác"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Đừng bỏ lỡ một câu trả lời",
+        "enable_prompt_toast_title": "Thông báo",
+        "enable_prompt_toast_description": "Bật thông báo trên màn hình"
+    },
+    "mobile_guide": {
+        "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",
+        "toast_description": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
+        "toast_accept": "Sử dụng ứng dụng"
+    }
 }

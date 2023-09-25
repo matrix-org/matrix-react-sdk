@@ -1145,41 +1145,16 @@
     "You cancelled": "ທ່ານໄດ້ຍົກເລີກ",
     "You declined": "ທ່ານປະຕິເສດ",
     "Home": "ໜ້າຫຼັກ",
-    "Failed to join": "ການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
-    "The person who invited you has already left, or their server is offline.": "ບຸກຄົນທີ່ເຊີນທ່ານໄດ້ອອກໄປແລ້ວ, ຫຼືເຊີບເວີຂອງເຂົາເຈົ້າອອບລາຍຢູ່.",
-    "The person who invited you has already left.": "ຄົນທີ່ເຊີນເຈົ້າໄດ້ອອກໄປແລ້ວ.",
-    "Please contact your homeserver administrator.": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີຂອງທ່ານ.",
-    "Sorry, your homeserver is too old to participate here.": "ຂໍອະໄພ, homeserverຂອງທ່ານເກົ່າເກີນໄປທີ່ຈະເຂົ້າຮ່ວມທີ່ນີ້.",
-    "There was an error joining.": "ເກີດຄວາມຜິດພາດໃນການເຂົ້າຮ່ວມ.",
     "%(deviceId)s from %(ip)s": "%(deviceId)s ຈາກ %(ip)s",
-    "New login. Was this you?": "ເຂົ້າສູ່ລະບົບໃໝ່. ນີ້ແມ່ນທ່ານບໍ?",
-    "Other users may not trust it": "ຜູ້ໃຊ້ອື່ນໆອາດຈະບໍ່ໄວ້ວາງໃຈ",
-    "Safeguard against losing access to encrypted messages & data": "ປ້ອງກັນການສູນເສຍການເຂົ້າເຖິງຂໍ້ຄວາມ ແລະຂໍ້ມູນທີ່ເຂົ້າລະຫັດ",
-    "Verify this session": "ຢືນຢັນລະບົບນີ້",
-    "Encryption upgrade available": "ມີການຍົກລະດັບການເຂົ້າລະຫັດ",
-    "Set up Secure Backup": "ຕັ້ງຄ່າການສໍາຮອງຂໍ້ມູນທີ່ປອດໄພ",
     "Ok": "ຕົກລົງ",
-    "Contact your <a>server admin</a>.": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ.",
     "Your homeserver has exceeded one of its resource limits.": "homeserver ຂອງທ່ານເກີນຂີດຈຳກັດຊັບພະຍາກອນແລ້ວ.",
     "Your homeserver has exceeded its user limit.": "ເຊີບເວີຂອງທ່ານໃຊ້ເກີນຂີດຈຳກັດແລ້ວ.",
-    "Use app": "ໃຊ້ແອັບ",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s ແມ່ນທົດລອງຢູ່ໃນບຣາວຂອງມືຖື. ເພື່ອປະສົບການທີ່ດີກວ່າ ແລະ ຄຸນສົມບັດຫຼ້າສຸດ, ໃຫ້ໃຊ້ແອັບຟຣີຂອງພວກເຮົາ.",
-    "Use app for a better experience": "ໃຊ້ແອັບເພື່ອປະສົບການທີ່ດີກວ່າ",
-    "Enable desktop notifications": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບ",
-    "Notifications": "ການແຈ້ງເຕືອນ",
-    "Don't miss a reply": "ຢ່າພາດການຕອບກັບ",
-    "Later": "ຕໍ່ມາ",
-    "Review to ensure your account is safe": "ກວດສອບໃຫ້ແນ່ໃຈວ່າບັນຊີຂອງທ່ານປອດໄພ",
     "Unnamed room": "ບໍ່ມີຊື່ຫ້ອງ",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ແລະ %(count)s ອື່ນໆ",
         "other": "%(spaceName)s ແລະ %(count)s ອື່ນໆ"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ແລະ %(space2Name)s",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/> ແລະ ອີກນຶ່ງລາຍການ",
-        "other": "<Items/> ແລະ %(count)s ອື່ນໆ"
-    },
     "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
     "<not supported>": "<ບໍ່ຮອງຮັບ>",
@@ -2937,7 +2912,10 @@
             "waiting_other_device_details": "ກຳລັງລໍຖ້າໃຫ້ທ່ານກວດສອບໃນອຸປະກອນອື່ນຂອງທ່ານ, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "ກຳລັງລໍຖ້າໃຫ້ທ່ານຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ…",
             "waiting_other_user": "ກຳລັງລໍຖ້າ %(displayName)s ເພື່ອຢັ້ງຢືນ…",
-            "cancelling": "ກຳລັງຍົກເລີກ…"
+            "cancelling": "ກຳລັງຍົກເລີກ…",
+            "unverified_sessions_toast_description": "ກວດສອບໃຫ້ແນ່ໃຈວ່າບັນຊີຂອງທ່ານປອດໄພ",
+            "unverified_sessions_toast_reject": "ຕໍ່ມາ",
+            "unverified_session_toast_title": "ເຂົ້າສູ່ລະບົບໃໝ່. ນີ້ແມ່ນທ່ານບໍ?"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2947,7 +2925,12 @@
         "bootstrap_title": "ການຕັ້ງຄ່າກະແຈ",
         "export_unsupported": "ບຣາວເຊີຂອງທ່ານບໍ່ຮອງຮັບການເພິ່ມເຂົ້າລະຫັດລັບທີ່ຕ້ອງການ",
         "import_invalid_keyfile": "ບໍ່ແມ່ນ %(brand)s ຟຮາຍຫຼັກ ທີ່ຖືກຕ້ອງ",
-        "import_invalid_passphrase": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?"
+        "import_invalid_passphrase": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?",
+        "set_up_toast_title": "ຕັ້ງຄ່າການສໍາຮອງຂໍ້ມູນທີ່ປອດໄພ",
+        "upgrade_toast_title": "ມີການຍົກລະດັບການເຂົ້າລະຫັດ",
+        "verify_toast_title": "ຢືນຢັນລະບົບນີ້",
+        "set_up_toast_description": "ປ້ອງກັນການສູນເສຍການເຂົ້າເຖິງຂໍ້ຄວາມ ແລະຂໍ້ມູນທີ່ເຂົ້າລະຫັດ",
+        "verify_toast_description": "ຜູ້ໃຊ້ອື່ນໆອາດຈະບໍ່ໄວ້ວາງໃຈ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -3430,7 +3413,13 @@
         "leave_error_title": "ເກີດຄວາມຜິດພາດໃນຄະນະທີ່ອອກຈາກຫ້ອງ",
         "upgrade_error_title": "ເກີດຄວາມຜິດພາດໃນການຍົກລະດັບຫ້ອງ",
         "upgrade_error_description": "ກວດເບິ່ງຄືນວ່າເຊີບເວີຂອງທ່ານຮອງຮັບເວີຊັນຫ້ອງທີ່ເລືອກແລ້ວ ແລະ ລອງໃໝ່ອີກ.",
-        "leave_server_notices_description": "ຫ້ອງນີ້ໃຊ້ສໍາລັບຂໍ້ຄວາມທີ່ສໍາຄັນຈາກ Homeserver, ດັ່ງນັ້ນທ່ານບໍ່ສາມາດອອກຈາກມັນ."
+        "leave_server_notices_description": "ຫ້ອງນີ້ໃຊ້ສໍາລັບຂໍ້ຄວາມທີ່ສໍາຄັນຈາກ Homeserver, ດັ່ງນັ້ນທ່ານບໍ່ສາມາດອອກຈາກມັນ.",
+        "error_join_connection": "ເກີດຄວາມຜິດພາດໃນການເຂົ້າຮ່ວມ.",
+        "error_join_incompatible_version_1": "ຂໍອະໄພ, homeserverຂອງທ່ານເກົ່າເກີນໄປທີ່ຈະເຂົ້າຮ່ວມທີ່ນີ້.",
+        "error_join_incompatible_version_2": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີຂອງທ່ານ.",
+        "error_join_404_invite_same_hs": "ຄົນທີ່ເຊີນເຈົ້າໄດ້ອອກໄປແລ້ວ.",
+        "error_join_404_invite": "ບຸກຄົນທີ່ເຊີນທ່ານໄດ້ອອກໄປແລ້ວ, ຫຼືເຊີບເວີຂອງເຂົາເຈົ້າອອບລາຍຢູ່.",
+        "error_join_title": "ການເຂົ້າຮ່ວມບໍ່ສຳເລັດ"
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3523,7 +3512,22 @@
         "admin_contact": "ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການນີ້.",
         "connection": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
         "mixed_content": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
-        "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ."
+        "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ.",
+        "admin_contact_short": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ."
     },
-    "name_and_id": "%(name)s(%(userId)s)"
+    "name_and_id": "%(name)s(%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/> ແລະ ອີກນຶ່ງລາຍການ",
+        "other": "<Items/> ແລະ %(count)s ອື່ນໆ"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "ຢ່າພາດການຕອບກັບ",
+        "enable_prompt_toast_title": "ການແຈ້ງເຕືອນ",
+        "enable_prompt_toast_description": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບ"
+    },
+    "mobile_guide": {
+        "toast_title": "ໃຊ້ແອັບເພື່ອປະສົບການທີ່ດີກວ່າ",
+        "toast_description": "%(brand)s ແມ່ນທົດລອງຢູ່ໃນບຣາວຂອງມືຖື. ເພື່ອປະສົບການທີ່ດີກວ່າ ແລະ ຄຸນສົມບັດຫຼ້າສຸດ, ໃຫ້ໃຊ້ແອັບຟຣີຂອງພວກເຮົາ.",
+        "toast_accept": "ໃຊ້ແອັບ"
+    }
 }

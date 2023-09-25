@@ -67,7 +67,6 @@
     "Reject invitation": "Dəvəti rədd etmək",
     "Are you sure you want to reject the invitation?": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
     "Failed to reject invitation": "Dəvəti rədd etməyi bacarmadı",
-    "Notifications": "Xəbərdarlıqlar",
     "Connectivity to the server has been lost.": "Serverlə əlaqə itirilmişdir.",
     "Sent messages will be stored until your connection has returned.": "Hələ ki serverlə əlaqə bərpa olmayacaq, göndərilmiş mesajlar saxlanacaq.",
     "No more results": "Daha çox nəticə yoxdur",
@@ -339,5 +338,8 @@
     "room": {
         "upgrade_error_title": "Otaq yeniləmə xətası",
         "upgrade_error_description": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin."
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Xəbərdarlıqlar"
     }
 }

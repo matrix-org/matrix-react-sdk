@@ -4,7 +4,6 @@
     "Home": "Domov",
     "Jump to first unread message.": "Přejít na první nepřečtenou zprávu.",
     "Low priority": "Nízká priorita",
-    "Notifications": "Oznámení",
     "Rooms": "Místnosti",
     "Sun": "Ne",
     "Mon": "Po",
@@ -132,10 +131,6 @@
     "Invalid file%(extra)s": "Neplatný soubor%(extra)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete přesměrováni na stránku třetí strany k ověření svého účtu pro používání s %(integrationsUrl)s. Chcete pokračovat?",
     "Something went wrong!": "Něco se nepodařilo!",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> a %(count)s další",
-        "one": "<Items/> a jeden další"
-    },
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...": {
         "other": "A %(count)s dalších..."
@@ -253,7 +248,6 @@
     "Back up your keys before signing out to avoid losing them.": "Před odhlášením si zazálohujte klíče abyste o ně nepřišli.",
     "All keys backed up": "Všechny klíče jsou zazálohované",
     "Start using Key Backup": "Začít používat zálohu klíčů",
-    "Please contact your homeserver administrator.": "Kontaktujte prosím správce domovského serveru.",
     "Dog": "Pes",
     "Cat": "Kočka",
     "Lion": "Lev",
@@ -561,11 +555,7 @@
     },
     "Language Dropdown": "Menu jazyků",
     "Country Dropdown": "Menu států",
-    "Verify this session": "Ověřit tuto relaci",
-    "Encryption upgrade available": "Je dostupná aktualizace šifrování",
     "Lock": "Zámek",
-    "Other users may not trust it": "Ostatní uživatelé této relaci nemusí věřit",
-    "Later": "Později",
     "Show more": "Více",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Váš účet má v bezpečném úložišti identitu pro křížový podpis, ale v této relaci jí zatím nevěříte.",
     "Secret storage public key:": "Veřejný klíč bezpečného úložiště:",
@@ -659,7 +649,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
     "Almost there! Is %(displayName)s showing the same shield?": "Téměř hotovo! Je relace %(displayName)s také ověřená?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Ověřili jste %(deviceName)s (%(deviceId)s)!",
-    "New login. Was this you?": "Nové přihlášní. Jste to vy?",
     "You signed in to a new session without verifying it:": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
     "Verify your other session using one of the options below.": "Ověřte další relaci jedním z následujících způsobů.",
     "You've successfully verified your device!": "Úspěšně jste ověřili vaše zařízení!",
@@ -686,7 +675,6 @@
     "unexpected type": "neočekávaný typ",
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašem domovském serveru byl překročen limit systémových požadavků.",
-    "Contact your <a>server admin</a>.": "Kontaktujte <a>administrátora serveru</a>.",
     "Ok": "Ok",
     "Favourited": "Oblíbená",
     "Forget Room": "Zapomenout místnost",
@@ -760,9 +748,7 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Použijte tajnou frázi, kterou znáte pouze vy, a volitelně uložte bezpečnostní klíč, který použijete pro zálohování.",
     "Enter a Security Phrase": "Zadání bezpečnostní fráze",
     "Generate a Security Key": "Vygenerovat bezpečnostní klíč",
-    "Set up Secure Backup": "Nastavení zabezpečené zálohy",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Chraňte se před ztrátou přístupu k šifrovaným zprávám a datům zálohováním šifrovacích klíčů na serveru.",
-    "Safeguard against losing access to encrypted messages & data": "Zabezpečení proti ztrátě přístupu k šifrovaným zprávám a datům",
     "Invite by email": "Pozvat emailem",
     "Reason (optional)": "Důvod (volitelné)",
     "Sign in with SSO": "Přihlásit pomocí SSO",
@@ -924,7 +910,6 @@
     "Angola": "Angola",
     "Andorra": "Andorra",
     "American Samoa": "Americká Samoa",
-    "Enable desktop notifications": "Povolit oznámení na ploše",
     "Security Key": "Bezpečnostní klíč",
     "Use your Security Key to continue.": "Pokračujte pomocí bezpečnostního klíče.",
     "If they don't match, the security of your communication may be compromised.": "Pokud se neshodují, bezpečnost vaší komunikace může být kompromitována.",
@@ -935,7 +920,6 @@
     "Unable to set up keys": "Nepovedlo se nastavit klíče",
     "Save your Security Key": "Uložte svůj bezpečnostní klíč",
     "ready": "připraveno",
-    "Don't miss a reply": "Nezmeškejte odpovědět",
     "Move right": "Posunout doprava",
     "Move left": "Posunout doleva",
     "Not encrypted": "Není šifrováno",
@@ -1105,8 +1089,6 @@
     "Remember this": "Zapamatujte si toto",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget ověří vaše uživatelské ID, ale nebude za vás moci provádět akce:",
     "Allow this widget to verify your identity": "Povolte tomuto widgetu ověřit vaši identitu",
-    "Use app for a better experience": "Pro lepší zážitek použijte aplikaci",
-    "Use app": "Použijte aplikaci",
     "Recently visited rooms": "Nedávno navštívené místnosti",
     "%(count)s members": {
         "one": "%(count)s člen",
@@ -1158,7 +1140,6 @@
     },
     "Invited people will be able to read old messages.": "Pozvaní lidé budou moci číst staré zprávy.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Ověřte svou identitu, abyste získali přístup k šifrovaným zprávám a prokázali svou identitu ostatním.",
-    "Review to ensure your account is safe": "Zkontrolujte, zda je váš účet v bezpečí",
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "unknown person": "neznámá osoba",
     "Add existing rooms": "Přidat stávající místnosti",
@@ -1547,7 +1528,6 @@
     "Share for %(duration)s": "Sdílet na %(duration)s",
     "Unsent": "Neodeslané",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Při pokusu o přístup do místnosti nebo prostoru bylo vráceno %(errcode)s. Pokud si myslíte, že se vám tato zpráva zobrazuje chybně, pošlete prosím <issueLink>hlášení o chybě</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Zkuste to později nebo požádejte správce místnosti či prostoru, aby zkontroloval, zda máte přístup.",
     "This room or space is not accessible at this time.": "Tato místnost nebo prostor není v tuto chvíli přístupná.",
@@ -1563,11 +1543,6 @@
     "Forget this space": "Zapomenout tento prostor",
     "You were removed by %(memberName)s": "%(memberName)s vás odebral(a)",
     "Loading preview": "Načítání náhledu",
-    "Failed to join": "Nepodařilo se připojit",
-    "The person who invited you has already left, or their server is offline.": "Osoba, která vás pozvala, již odešla nebo je její server offline.",
-    "The person who invited you has already left.": "Osoba, která vás pozvala, již odešla.",
-    "Sorry, your homeserver is too old to participate here.": "Omlouváme se, ale váš domovský server je příliš zastaralý na to, aby se zde mohl účastnit.",
-    "There was an error joining.": "Došlo k chybě při připojování.",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "%(count)s participants": {
         "one": "1 účastník",
@@ -1637,8 +1612,6 @@
     "Unread email icon": "Ikona nepřečteného e-mailu",
     "View related event": "Zobrazit související událost",
     "Read receipts": "Potvrzení o přečtení",
-    "You were disconnected from the call. (Error: %(message)s)": "Hovor byl přerušen. (Chyba: %(message)s)",
-    "Connection lost": "Spojení ztraceno",
     "Deactivating your account is a permanent action — be careful!": "Deaktivace účtu je trvalá akce - buďte opatrní!",
     "Un-maximise": "Zrušit maximalizaci",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru.",
@@ -1694,7 +1667,6 @@
     "Close call": "Zavřít hovor",
     "Freedom": "Svoboda",
     "Spotlight": "Reflektor",
-    "Unknown room": "Neznámá místnost",
     "Video call (%(brand)s)": "Videohovor (%(brand)s)",
     "Call type": "Typ volání",
     "You do not have sufficient permissions to change this.": "Ke změně nemáte dostatečná oprávnění.",
@@ -1737,7 +1709,6 @@
     "We were unable to start a chat with the other user.": "Nepodařilo se zahájit chat s druhým uživatelem.",
     "Error starting verification": "Chyba při zahájení ověření",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
-    "You have unverified sessions": "Máte neověřené relace",
     "Change layout": "Změnit rozvržení",
     "Search users in this room…": "Hledání uživatelů v této místnosti…",
     "Give one or multiple users in this room more privileges": "Přidělit jednomu nebo více uživatelům v této místnosti více oprávnění",
@@ -1792,10 +1763,7 @@
     "The sender has blocked you from receiving this message": "Odesílatel vám zablokoval přijetí této zprávy",
     "Due to decryption errors, some votes may not be counted": "Kvůli chybám v dešifrování nemusí být některé hlasy započítány",
     "Ended a poll": "Ukončil hlasování",
-    "Yes, it was me": "Ano, to jsem byl já",
     "Answered elsewhere": "Hovor přijat jinde",
-    "If you know a room address, try joining through that instead.": "Pokud znáte adresu místnosti, zkuste se pomocí ní připojit.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Pokusili jste se připojit pomocí ID místnosti, aniž byste zadali seznam serverů, přes které se chcete připojit. ID místnosti jsou interní identifikátory a nelze je použít k připojení k místnosti bez dalších informací.",
     "View poll": "Zobrazit hlasování",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
         "one": "Za uplynulý den nejsou k dispozici žádná hlasování. Pro zobrazení hlasování z předchozích měsíců načtěte další hlasování",
@@ -1893,8 +1861,6 @@
     "Ask to join %(roomName)s?": "Požádat o vstup do %(roomName)s?",
     "Ask to join?": "Požádat o vstup?",
     "Cancel request": "Zrušit žádost",
-    "Failed to cancel": "Nepodařilo se zrušit",
-    "You need an invite to access this room.": "Pro vstup do této místnosti potřebujete pozvánku.",
     "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
     "See less": "Zobrazit méně",
     "See more": "Zobrazit více",
@@ -3418,7 +3384,8 @@
         "failed_call_live_broadcast_title": "Nelze zahájit hovor",
         "failed_call_live_broadcast_description": "Nemůžete zahájit hovor, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli zahájit hovor.",
         "no_media_perms_title": "Žádná oprávnění k médiím",
-        "no_media_perms_description": "Je možné, že budete potřebovat manuálně povolit %(brand)s přístup k mikrofonu/webkameře"
+        "no_media_perms_description": "Je možné, že budete potřebovat manuálně povolit %(brand)s přístup k mikrofonu/webkameře",
+        "call_toast_unknown_room": "Neznámá místnost"
     },
     "Other": "Další možnosti",
     "Advanced": "Rozšířené",
@@ -3536,7 +3503,12 @@
             "waiting_other_device_details": "Čekáme na ověření na vašem dalším zařízení, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Čekáme na ověření na jiném zařízení…",
             "waiting_other_user": "Čekám až nás %(displayName)s ověří…",
-            "cancelling": "Rušení…"
+            "cancelling": "Rušení…",
+            "unverified_sessions_toast_title": "Máte neověřené relace",
+            "unverified_sessions_toast_description": "Zkontrolujte, zda je váš účet v bezpečí",
+            "unverified_sessions_toast_reject": "Později",
+            "unverified_session_toast_title": "Nové přihlášní. Jste to vy?",
+            "unverified_session_toast_accept": "Ano, to jsem byl já"
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3546,7 +3518,12 @@
         "bootstrap_title": "Příprava klíčů",
         "export_unsupported": "Váš prohlížeč nepodporuje požadovaná kryptografická rozšíření",
         "import_invalid_keyfile": "Neplatný soubor s klíčem %(brand)s",
-        "import_invalid_passphrase": "Kontrola ověření selhala: špatné heslo?"
+        "import_invalid_passphrase": "Kontrola ověření selhala: špatné heslo?",
+        "set_up_toast_title": "Nastavení zabezpečené zálohy",
+        "upgrade_toast_title": "Je dostupná aktualizace šifrování",
+        "verify_toast_title": "Ověřit tuto relaci",
+        "set_up_toast_description": "Zabezpečení proti ztrátě přístupu k šifrovaným zprávám a datům",
+        "verify_toast_description": "Ostatní uživatelé této relaci nemusí věřit"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3850,7 +3827,9 @@
         "error_need_to_be_logged_in": "Musíte být přihlášeni.",
         "error_need_invite_permission": "Pro tuto akci musíte mít právo zvát uživatele.",
         "error_need_kick_permission": "Pro tuto akci musíte mít právo vyhodit uživatele.",
-        "no_name": "Neznámá aplikace"
+        "no_name": "Neznámá aplikace",
+        "error_hangup_title": "Spojení ztraceno",
+        "error_hangup_description": "Hovor byl přerušen. (Chyba: %(message)s)"
     },
     "feedback": {
         "sent": "Zpětná vazba byla odeslána",
@@ -4091,7 +4070,17 @@
         "leave_error_title": "Při opouštění místnosti došlo k chybě",
         "upgrade_error_title": "Chyba při aktualizaci místnosti",
         "upgrade_error_description": "Zkontrolujte, že váš server opravdu podporuje zvolenou verzi místnosti.",
-        "leave_server_notices_description": "Tato místnost je určena pro důležité zprávy od domovského serveru, a proto ji nelze opustit."
+        "leave_server_notices_description": "Tato místnost je určena pro důležité zprávy od domovského serveru, a proto ji nelze opustit.",
+        "error_join_connection": "Došlo k chybě při připojování.",
+        "error_join_incompatible_version_1": "Omlouváme se, ale váš domovský server je příliš zastaralý na to, aby se zde mohl účastnit.",
+        "error_join_incompatible_version_2": "Kontaktujte prosím správce domovského serveru.",
+        "error_join_404_invite_same_hs": "Osoba, která vás pozvala, již odešla.",
+        "error_join_404_invite": "Osoba, která vás pozvala, již odešla nebo je její server offline.",
+        "error_join_404_1": "Pokusili jste se připojit pomocí ID místnosti, aniž byste zadali seznam serverů, přes které se chcete připojit. ID místnosti jsou interní identifikátory a nelze je použít k připojení k místnosti bez dalších informací.",
+        "error_join_404_2": "Pokud znáte adresu místnosti, zkuste se pomocí ní připojit.",
+        "error_join_title": "Nepodařilo se připojit",
+        "error_join_403": "Pro vstup do této místnosti potřebujete pozvánku.",
+        "error_cancel_knock_title": "Nepodařilo se zrušit"
     },
     "file_panel": {
         "guest_note": "Pro využívání této funkce se <a>zaregistrujte</a>",
@@ -4207,7 +4196,8 @@
         "sync": "Nelze se připojit k domovskému serveru. Opakovaný pokus…",
         "connection": "Při komunikaci s domovským serverem došlo k potížím, zkuste to prosím později.",
         "mixed_content": "Nelze se připojit k domovskému serveru přes HTTP, pokud je v adresním řádku HTTPS. Buď použijte HTTPS, nebo <a>povolte nezabezpečené skripty</a>.",
-        "tls": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci."
+        "tls": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci.",
+        "admin_contact_short": "Kontaktujte <a>administrátora serveru</a>."
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4215,5 +4205,19 @@
         "other": "V %(spaceName)s a %(count)s ostatních prostorech."
     },
     "in_space": "V prostoru %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> a %(count)s další",
+        "one": "<Items/> a jeden další"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Nezmeškejte odpovědět",
+        "enable_prompt_toast_title": "Oznámení",
+        "enable_prompt_toast_description": "Povolit oznámení na ploše"
+    },
+    "mobile_guide": {
+        "toast_title": "Pro lepší zážitek použijte aplikaci",
+        "toast_description": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
+        "toast_accept": "Použijte aplikaci"
+    }
 }

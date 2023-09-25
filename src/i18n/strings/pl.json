@@ -24,7 +24,6 @@
     "Sun": "Nd",
     "Warning!": "Uwaga!",
     "Are you sure?": "Czy jesteś pewien?",
-    "Notifications": "Powiadomienia",
     "unknown error code": "nieznany kod błędu",
     "Failed to forget room %(errCode)s": "Nie mogłem zapomnieć o pokoju %(errCode)s",
     "Favourite": "Ulubiony",
@@ -195,7 +194,6 @@
     "Demote yourself?": "Zdegradować siebie?",
     "Demote": "Degraduj",
     "Permission Required": "Wymagane Uprawnienia",
-    "Please contact your homeserver administrator.": "Proszę o kontakt z administratorem serwera.",
     "This event could not be displayed": "Ten event nie może zostać wyświetlony",
     "This room has been replaced and is no longer active.": "Ten pokój został zamieniony i nie jest już aktywny.",
     "The conversation continues here.": "Konwersacja jest kontynuowana tutaj.",
@@ -209,10 +207,6 @@
         "other": "I %(count)s więcej…"
     },
     "Delete Backup": "Usuń kopię zapasową",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> i %(count)s innych",
-        "one": "<Items/> i jedna inna osoba"
-    },
     "Add some now": "Dodaj teraz kilka",
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
     "Unable to create key backup": "Nie można utworzyć kopii zapasowej klucza",
@@ -368,7 +362,6 @@
     "Rotate Left": "Obróć w lewo",
     "Rotate Right": "Obróć w prawo",
     "Direct Messages": "Wiadomości prywatne",
-    "Later": "Później",
     "Show more": "Pokaż więcej",
     "Ignored users": "Zignorowani użytkownicy",
     "Local address": "Lokalny adres",
@@ -405,7 +398,6 @@
     },
     "Hide sessions": "Ukryj sesje",
     "Integrations are disabled": "Integracje są wyłączone",
-    "Encryption upgrade available": "Dostępne ulepszenie szyfrowania",
     "Close preview": "Zamknij podgląd",
     "Cancel search": "Anuluj wyszukiwanie",
     "Your theme": "Twój motyw",
@@ -415,7 +407,6 @@
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Verify this session": "Zweryfikuj tę sesję",
     "Italics": "Kursywa",
     "Reason: %(reason)s": "Powód: %(reason)s",
     "Reject & Ignore user": "Odrzuć i zignoruj użytkownika",
@@ -462,10 +453,7 @@
     "Room options": "Ustawienia pokoju",
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
     "Use the <a>Desktop app</a> to search encrypted messages": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
-    "Set up Secure Backup": "Skonfiguruj bezpieczną kopię zapasową",
     "Ok": "OK",
-    "Enable desktop notifications": "Włącz powiadomienia na pulpicie",
-    "Don't miss a reply": "Nie przegap odpowiedzi",
     "Israel": "Izrael",
     "Isle of Man": "Man",
     "Ireland": "Irlandia",
@@ -801,8 +789,6 @@
     "Your server isn't responding to some <a>requests</a>.": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Change notification settings": "Zmień ustawienia powiadomień",
-    "New login. Was this you?": "Nowe logowanie. Czy to byłeś Ty?",
-    "Contact your <a>server admin</a>.": "Skontaktuj się ze swoim <a>administratorem serwera</a>.",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "Everyone in this room is verified": "Wszyscy w tym pokoju są zweryfikowani",
@@ -832,7 +818,6 @@
     "Create key backup": "Utwórz kopię zapasową klucza",
     "Generate a Security Key": "Wygeneruj klucz bezpieczeństwa",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych, tworząc kopię zapasową kluczy szyfrowania na naszym serwerze.",
-    "Safeguard against losing access to encrypted messages & data": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych",
     "Avatar": "Awatar",
     "Move right": "Przenieś w prawo",
     "Move left": "Przenieś w lewo",
@@ -883,10 +868,6 @@
     "Room members": "Członkowie pokoju",
     "Back to chat": "Wróć do chatu",
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
-    "Other users may not trust it": "Inni użytkownicy mogą temu nie ufać",
-    "Use app": "Użyj aplikacji",
-    "Use app for a better experience": "Użyj aplikacji by mieć lepsze doświadczenie",
-    "Review to ensure your account is safe": "Sprawdź, by upewnić się że Twoje konto jest bezpieczne",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
     "ready": "gotowy",
@@ -934,14 +915,6 @@
     },
     "Upgrade required": "Aktualizacja wymagana",
     "Message search initialisation failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się",
-    "You were disconnected from the call. (Error: %(message)s)": "Zostałeś rozłączony z rozmowy. (Błąd: %(message)s)",
-    "Connection lost": "Utracono połączenie",
-    "Failed to join": "Nie udało się dołączyć",
-    "The person who invited you has already left, or their server is offline.": "Osoba, która zaprosiła cię, już wyszła lub jej serwer jest offline.",
-    "The person who invited you has already left.": "Osoba, która zaprosiła cię, już wyszła.",
-    "Sorry, your homeserver is too old to participate here.": "Przykro nam, twój serwer domowy jest zbyt stary, by uczestniczyć tu.",
-    "There was an error joining.": "Wystąpił błąd podczas dołączania.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
@@ -1056,11 +1029,6 @@
     "Unsent": "Niewysłane",
     "Red": "Czerwony",
     "Grey": "Szary",
-    "If you know a room address, try joining through that instead.": "Jeśli znasz adres pokoju, spróbuj dołączyć za pomocą niego.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Spróbowałeś dołączyć za pomocą ID pokoju bez podania listy serwerów, z których można dołączyć. ID pokojów to wewnętrzne identyfikatory, których nie da się użyć bez dodatkowych informacji.",
-    "Yes, it was me": "Tak, to byłem ja",
-    "Unknown room": "Nieznany pokój",
-    "You have unverified sessions": "Masz niezweryfikowane sesje",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "Connection": "Połączenie",
     "Video settings": "Ustawienia wideo",
@@ -3398,7 +3366,8 @@
         "failed_call_live_broadcast_title": "Nie można rozpocząć połączenia",
         "failed_call_live_broadcast_description": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie.",
         "no_media_perms_title": "Brak uprawnień do mediów",
-        "no_media_perms_description": "Możliwe, że będziesz musiał ręcznie pozwolić %(brand)sowi na dostęp do twojego mikrofonu/kamerki internetowej"
+        "no_media_perms_description": "Możliwe, że będziesz musiał ręcznie pozwolić %(brand)sowi na dostęp do twojego mikrofonu/kamerki internetowej",
+        "call_toast_unknown_room": "Nieznany pokój"
     },
     "Other": "Inne",
     "Advanced": "Zaawansowane",
@@ -3516,7 +3485,12 @@
             "waiting_other_device_details": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Oczekiwanie na zweryfikowanie przez ciebie twojego innego urządzenia…",
             "waiting_other_user": "Oczekiwanie na weryfikację przez %(displayName)s…",
-            "cancelling": "Anulowanie…"
+            "cancelling": "Anulowanie…",
+            "unverified_sessions_toast_title": "Masz niezweryfikowane sesje",
+            "unverified_sessions_toast_description": "Sprawdź, by upewnić się że Twoje konto jest bezpieczne",
+            "unverified_sessions_toast_reject": "Później",
+            "unverified_session_toast_title": "Nowe logowanie. Czy to byłeś Ty?",
+            "unverified_session_toast_accept": "Tak, to byłem ja"
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3526,7 +3500,12 @@
         "bootstrap_title": "Konfigurowanie kluczy",
         "export_unsupported": "Twoja przeglądarka nie wspiera wymaganych rozszerzeń kryptograficznych",
         "import_invalid_keyfile": "Niepoprawny plik klucza %(brand)s",
-        "import_invalid_passphrase": "Próba autentykacji nieudana: nieprawidłowe hasło?"
+        "import_invalid_passphrase": "Próba autentykacji nieudana: nieprawidłowe hasło?",
+        "set_up_toast_title": "Skonfiguruj bezpieczną kopię zapasową",
+        "upgrade_toast_title": "Dostępne ulepszenie szyfrowania",
+        "verify_toast_title": "Zweryfikuj tę sesję",
+        "set_up_toast_description": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych",
+        "verify_toast_description": "Inni użytkownicy mogą temu nie ufać"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3829,7 +3808,9 @@
         "error_need_to_be_logged_in": "Musisz być zalogowany.",
         "error_need_invite_permission": "Aby to zrobić, musisz mieć możliwość zapraszania użytkowników.",
         "error_need_kick_permission": "Aby to zrobić, musisz móc wyrzucać użytkowników.",
-        "no_name": "Nieznana aplikacja"
+        "no_name": "Nieznana aplikacja",
+        "error_hangup_title": "Utracono połączenie",
+        "error_hangup_description": "Zostałeś rozłączony z rozmowy. (Błąd: %(message)s)"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4070,7 +4051,15 @@
         "leave_error_title": "Błąd opuszczania pokoju",
         "upgrade_error_title": "Błąd podczas aktualizacji pokoju",
         "upgrade_error_description": "Sprawdź ponownie czy Twój serwer wspiera wybraną wersję pokoju i spróbuj ponownie.",
-        "leave_server_notices_description": "Ten pokój jest używany do ważnych wiadomości z serwera domowego, więc nie możesz go opuścić."
+        "leave_server_notices_description": "Ten pokój jest używany do ważnych wiadomości z serwera domowego, więc nie możesz go opuścić.",
+        "error_join_connection": "Wystąpił błąd podczas dołączania.",
+        "error_join_incompatible_version_1": "Przykro nam, twój serwer domowy jest zbyt stary, by uczestniczyć tu.",
+        "error_join_incompatible_version_2": "Proszę o kontakt z administratorem serwera.",
+        "error_join_404_invite_same_hs": "Osoba, która zaprosiła cię, już wyszła.",
+        "error_join_404_invite": "Osoba, która zaprosiła cię, już wyszła lub jej serwer jest offline.",
+        "error_join_404_1": "Spróbowałeś dołączyć za pomocą ID pokoju bez podania listy serwerów, z których można dołączyć. ID pokojów to wewnętrzne identyfikatory, których nie da się użyć bez dodatkowych informacji.",
+        "error_join_404_2": "Jeśli znasz adres pokoju, spróbuj dołączyć za pomocą niego.",
+        "error_join_title": "Nie udało się dołączyć"
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4184,7 +4173,8 @@
         "sync": "Nie można połączyć się z serwerem domowym. Ponawianie…",
         "connection": "Wystąpił problem podczas łączenia się z serwerem domowym, spróbuj ponownie później.",
         "mixed_content": "Nie można nawiązać połączenia z serwerem przy użyciu HTTP podczas korzystania z HTTPS dla bieżącej strony. Użyj HTTPS lub <a>włącz niebezpieczne skrypty</a>.",
-        "tls": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania."
+        "tls": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania.",
+        "admin_contact_short": "Skontaktuj się ze swoim <a>administratorem serwera</a>."
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4192,5 +4182,19 @@
         "other": "W %(spaceName)s i %(count)s innych przestrzeniach."
     },
     "in_space": "W przestrzeni %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> i %(count)s innych",
+        "one": "<Items/> i jedna inna osoba"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Nie przegap odpowiedzi",
+        "enable_prompt_toast_title": "Powiadomienia",
+        "enable_prompt_toast_description": "Włącz powiadomienia na pulpicie"
+    },
+    "mobile_guide": {
+        "toast_title": "Użyj aplikacji by mieć lepsze doświadczenie",
+        "toast_description": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
+        "toast_accept": "Użyj aplikacji"
+    }
 }

@@ -15,7 +15,6 @@
     "PM": "PL",
     "AM": "EL",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Verify this session": "Verifitseeri see sessioon",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
     "Invite to this room": "Kutsu siia jututuppa",
     "The conversation continues here.": "Vestlus jätkub siin.",
@@ -156,8 +155,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Encryption upgrade available": "Krüptimise uuendus on saadaval",
-    "New login. Was this you?": "Uus sisselogimine. Kas see olid sina?",
     "Securely cache encrypted messages locally for them to appear in search results.": "Turvaliselt puhverda krüptitud sõnumid kohalikku arvutisse ja võimalda kasutada neid otsingus.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s'is on puudu need komponendid, mis võimaldavad otsida kohalikest turvaliselt puhverdatud krüptitud sõnumitest. Kui sa tahaksid sellist funktsionaalsust katsetada, siis pead kompileerima %(brand)s'i variandi, kus <nativeLink>need komponendid on lisatud</nativeLink>.",
     "Search…": "Otsi…",
@@ -195,7 +192,6 @@
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Saatsime tekstisõnumi numbrile +%(msisdn)s. Palun sisesta seal kuvatud kontrollkood.",
     "Phone Number": "Telefoninumber",
     "General": "Üldist",
-    "Notifications": "Teavitused",
     "No Audio Outputs detected": "Ei leidnud ühtegi heliväljundit",
     "No Microphones detected": "Ei leidnud ühtegi mikrofoni",
     "No Webcams detected": "Ei leidnud ühtegi veebikaamerat",
@@ -289,8 +285,6 @@
     "Anchor": "Ankur",
     "Headphones": "Kõrvaklapid",
     "Folder": "Kaust",
-    "Later": "Hiljem",
-    "Other users may not trust it": "Teised kasutajad ei pruugi seda usaldada",
     "Set up": "Võta kasutusele",
     "Accept <policyLink /> to continue:": "Jätkamiseks nõustu <policyLink />'ga:",
     "Show more": "Näita rohkem",
@@ -438,12 +432,7 @@
     "Identity server URL does not appear to be a valid identity server": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
     "Looks good!": "Tundub õige!",
     "Failed to re-authenticate due to a homeserver problem": "Uuesti autentimine ei õnnestunud koduserveri vea tõttu",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> ja %(count)s muud",
-        "one": "<Items/> ja üks muu"
-    },
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "Please contact your homeserver administrator.": "Palun võta ühendust koduserveri haldajaga.",
     "Checking server": "Kontrollin serverit",
     "Change identity server": "Muuda isikutuvastusserverit",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Kas katkestame ühenduse <current /> isikutuvastusserveriga ning selle asemel loome uue ühenduse serveriga <new />?",
@@ -532,7 +521,6 @@
     "Language Dropdown": "Keelevalik",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
-    "Contact your <a>server admin</a>.": "Võta ühendust <a>oma serveri haldajaga</a>.",
     "Ok": "Sobib",
     "IRC display name width": "IRC kuvatava nime laius",
     "Your homeserver does not support cross-signing.": "Sinu koduserver ei toeta risttunnustamist.",
@@ -768,7 +756,6 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
-    "Set up Secure Backup": "Võta kasutusele turvaline varundus",
     "Information": "Teave",
     "Not encrypted": "Krüptimata",
     "Room settings": "Jututoa seadistused",
@@ -784,7 +771,6 @@
     "not ready": "ei ole valmis",
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
-    "Safeguard against losing access to encrypted messages & data": "Hoia ära, et kaotad ligipääsu krüptitud sõnumitele ja andmetele",
     "Widgets": "Vidinad",
     "Edit widgets, bridges & bots": "Muuda vidinaid, võrgusildu ja roboteid",
     "Add widgets, bridges & bots": "Lisa vidinaid, võrgusildu ja roboteid",
@@ -811,8 +797,6 @@
     "Hide Widgets": "Peida vidinad",
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
-    "Enable desktop notifications": "Võta kasutusele töölauakeskkonna teavitused",
-    "Don't miss a reply": "Ära jäta vastust vahele",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime, e-posti aadressi või kasutajanime (näiteks <userId/>).",
     "Invite by email": "Saada kutse e-kirjaga",
@@ -1106,8 +1090,6 @@
     "Remember this": "Jäta see meelde",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
     "Allow this widget to verify your identity": "Luba sellel vidinal sinu isikut verifitseerida",
-    "Use app for a better experience": "Rakendusega saad Matrix'is suhelda parimal viisil",
-    "Use app": "Kasuta rakendust",
     "Recently visited rooms": "Hiljuti külastatud jututoad",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Kas oled kindel, et soovid lahkuda kogukonnakeskusest „%(spaceName)s“?",
     "This space is not public. You will not be able to rejoin without an invite.": "See ei ole avalik kogukonnakeskus. Ilma kutseta sa ei saa uuesti liituda.",
@@ -1155,7 +1137,6 @@
     "Private space": "Privaatne kogukonnakeskus",
     "unknown person": "tundmatu isik",
     "%(deviceId)s from %(ip)s": "%(deviceId)s ip-aadressil %(ip)s",
-    "Review to ensure your account is safe": "Tagamaks, et su konto on sinu kontrolli all, vaata andmed üle",
     "Add existing rooms": "Lisa olemasolevaid jututubasid",
     "%(count)s people you know have already joined": {
         "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
@@ -1547,7 +1528,6 @@
     "Share for %(duration)s": "Jaga nii kaua - %(duration)s",
     "Unsent": "Saatmata",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Astumisel jututuppa või liitumisel kogukonnaga tekkis viga %(errcode)s. Kui sa arvad, et sellise põhjusega viga ei tohiks tekkida, siis palun <issueLink>koosta veateade</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Proovi hiljem uuesti või küsi jututoa või kogukonna haldurilt, kas sul on ligipääs olemas.",
     "This room or space is not accessible at this time.": "See jututuba või kogukond pole hetkel ligipääsetav.",
@@ -1563,11 +1543,6 @@
     "Forget this space": "Unusta see kogukond",
     "You were removed by %(memberName)s": "%(memberName)s eemaldas sinu liikmelisuse",
     "Loading preview": "Laadin eelvaadet",
-    "Failed to join": "Liitumine ei õnnestunud",
-    "The person who invited you has already left, or their server is offline.": "See, sulle saatis kutse, kas juba on lahkunud või tema koduserver on võrgust väljas.",
-    "The person who invited you has already left.": "See, kes saatis sulle kutse, on juba lahkunud.",
-    "Sorry, your homeserver is too old to participate here.": "Vabandust, sinu koduserver on siin osalemiseks liiga vana.",
-    "There was an error joining.": "Liitumisel tekkis viga.",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
         "one": "1 osaleja",
@@ -1637,8 +1612,6 @@
     },
     "View related event": "Vaata seotud sündmust",
     "Read receipts": "Lugemisteatised",
-    "You were disconnected from the call. (Error: %(message)s)": "Kõne on katkenud. (Veateade: %(message)s)",
-    "Connection lost": "Ühendus on katkenud",
     "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!",
     "Un-maximise": "Lõpeta täisvaate kasutamine",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa.",
@@ -1694,7 +1667,6 @@
     "Close call": "Lõpeta kõne",
     "Spotlight": "Rambivalgus",
     "Freedom": "Vabadus",
-    "Unknown room": "Teadmata jututuba",
     "Video call (%(brand)s)": "Videokõne (%(brand)s)",
     "Call type": "Kõne tüüp",
     "You do not have sufficient permissions to change this.": "Sul pole piisavalt õigusi selle muutmiseks.",
@@ -1737,7 +1709,6 @@
     "We were unable to start a chat with the other user.": "Meil ei õnnestunud alustada vestlust teise kasutajaga.",
     "Error starting verification": "Viga verifitseerimise alustamisel",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
-    "You have unverified sessions": "Sul on verifitseerimata sessioone",
     "Change layout": "Muuda paigutust",
     "Search users in this room…": "Vali kasutajad sellest jututoast…",
     "Give one or multiple users in this room more privileges": "Lisa selles jututoas ühele või mitmele kasutajale täiendavaid õigusi",
@@ -1792,10 +1763,7 @@
     "Due to decryption errors, some votes may not be counted": "Dekrüptimisvigade tõttu jääb osa hääli lugemata",
     "The sender has blocked you from receiving this message": "Sõnumi saatja on keelanud sul selle sõnumi saamise",
     "Ended a poll": "Lõpetas küsitluse",
-    "Yes, it was me": "Jah, see olin mina",
     "Answered elsewhere": "Vastatud mujal",
-    "If you know a room address, try joining through that instead.": "Kui sa tead jututoa aadressi, siis proovi liitumiseks seda kasutada.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Sa proovisid liituda jututoaga tema tunnuse alusel nii, et serveri nime polnud näidatud. Jututoa tunnused on sisemised identifikaatorid ja ilma lisateabeta neid liitumiseks kasutada ei saa.",
     "Load more polls": "Laadi veel küsitlusi",
     "Past polls": "Varasemad küsitlused",
     "Active polls": "Käimasolevad küsitlused",
@@ -1887,8 +1855,6 @@
     "Other spaces you know": "Muud kogukonnad, mida sa tead",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Selle jututoa vestluste lugemiseks ja nendega liitumiseks on sul vaja luba. Vastava päringu võid saata alljärgnevalt.",
     "Message (optional)": "Sõnum (kui soovid lisada)",
-    "You need an invite to access this room.": "Ligipääsuks siia jututuppa on sul vaja kutset.",
-    "Failed to cancel": "Tühistamine ei õnnestunud",
     "Ask to join %(roomName)s?": "Küsi luba liitumiseks jututoaga %(roomName)s?",
     "Ask to join?": "Küsi võimalust liitumiseks?",
     "Request access": "Küsi ligipääsu",
@@ -3413,7 +3379,8 @@
         "failed_call_live_broadcast_title": "Kõne algatamine ei õnnestu",
         "failed_call_live_broadcast_description": "Kuna sa hetkel salvestad ringhäälingukõnet, siis tavakõne algatamine ei õnnestu. Kõne alustamiseks palun lõpeta ringhäälingukõne.",
         "no_media_perms_title": "Meediaõigused puuduvad",
-        "no_media_perms_description": "Sa võib-olla pead andma %(brand)s'ile loa mikrofoni ja veebikaamera kasutamiseks"
+        "no_media_perms_description": "Sa võib-olla pead andma %(brand)s'ile loa mikrofoni ja veebikaamera kasutamiseks",
+        "call_toast_unknown_room": "Teadmata jututuba"
     },
     "Other": "Muud",
     "Advanced": "Teave arendajatele",
@@ -3531,7 +3498,12 @@
             "waiting_other_device_details": "Ootan, et sa verifitseerid oma teises seadmes: %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Ootan, et sa verifitseeriksid oma teises seadmes…",
             "waiting_other_user": "Ootan kasutaja %(displayName)s verifitseerimist…",
-            "cancelling": "Tühistan…"
+            "cancelling": "Tühistan…",
+            "unverified_sessions_toast_title": "Sul on verifitseerimata sessioone",
+            "unverified_sessions_toast_description": "Tagamaks, et su konto on sinu kontrolli all, vaata andmed üle",
+            "unverified_sessions_toast_reject": "Hiljem",
+            "unverified_session_toast_title": "Uus sisselogimine. Kas see olid sina?",
+            "unverified_session_toast_accept": "Jah, see olin mina"
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3541,7 +3513,12 @@
         "bootstrap_title": "Võtame krüptovõtmed kasutusele",
         "export_unsupported": "Sinu brauser ei toeta vajalikke krüptoteeke",
         "import_invalid_keyfile": "See ei ole sobilik võtmefail %(brand)s'i jaoks",
-        "import_invalid_passphrase": "Autentimine ebaõnnestus: kas salasõna pole õige?"
+        "import_invalid_passphrase": "Autentimine ebaõnnestus: kas salasõna pole õige?",
+        "set_up_toast_title": "Võta kasutusele turvaline varundus",
+        "upgrade_toast_title": "Krüptimise uuendus on saadaval",
+        "verify_toast_title": "Verifitseeri see sessioon",
+        "set_up_toast_description": "Hoia ära, et kaotad ligipääsu krüptitud sõnumitele ja andmetele",
+        "verify_toast_description": "Teised kasutajad ei pruugi seda usaldada"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3845,7 +3822,9 @@
         "error_need_to_be_logged_in": "Sa peaksid olema sisse loginud.",
         "error_need_invite_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele kutse saatmiseks.",
         "error_need_kick_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks.",
-        "no_name": "Tundmatu rakendus"
+        "no_name": "Tundmatu rakendus",
+        "error_hangup_title": "Ühendus on katkenud",
+        "error_hangup_description": "Kõne on katkenud. (Veateade: %(message)s)"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -4086,7 +4065,17 @@
         "leave_error_title": "Viga jututoast lahkumisel",
         "upgrade_error_title": "Viga jututoa uuendamisel",
         "upgrade_error_description": "Kontrolli veel kord, kas sinu koduserver toetab seda jututoa versiooni ning proovi uuesti.",
-        "leave_server_notices_description": "Seda jututuba kasutatakse sinu koduserveri oluliste teadete jaoks ja seega sa ei saa sealt lahkuda."
+        "leave_server_notices_description": "Seda jututuba kasutatakse sinu koduserveri oluliste teadete jaoks ja seega sa ei saa sealt lahkuda.",
+        "error_join_connection": "Liitumisel tekkis viga.",
+        "error_join_incompatible_version_1": "Vabandust, sinu koduserver on siin osalemiseks liiga vana.",
+        "error_join_incompatible_version_2": "Palun võta ühendust koduserveri haldajaga.",
+        "error_join_404_invite_same_hs": "See, kes saatis sulle kutse, on juba lahkunud.",
+        "error_join_404_invite": "See, sulle saatis kutse, kas juba on lahkunud või tema koduserver on võrgust väljas.",
+        "error_join_404_1": "Sa proovisid liituda jututoaga tema tunnuse alusel nii, et serveri nime polnud näidatud. Jututoa tunnused on sisemised identifikaatorid ja ilma lisateabeta neid liitumiseks kasutada ei saa.",
+        "error_join_404_2": "Kui sa tead jututoa aadressi, siis proovi liitumiseks seda kasutada.",
+        "error_join_title": "Liitumine ei õnnestunud",
+        "error_join_403": "Ligipääsuks siia jututuppa on sul vaja kutset.",
+        "error_cancel_knock_title": "Tühistamine ei õnnestunud"
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -4202,7 +4191,8 @@
         "sync": "Ei saa ühendust koduserveriga. Proovin uuesti…",
         "connection": "Serveriühenduses tekkis viga. Palun proovi mõne aja pärast uuesti.",
         "mixed_content": "Kui aadressiribal on HTTPS-aadress, siis HTTP-protokolli kasutades ei saa ühendust koduserveriga. Palun pruugi HTTPS-protokolli või <a>luba brauseris ebaturvaliste skriptide kasutamine</a>.",
-        "tls": "Ei sa ühendust koduserveriga. Palun kontrolli, et sinu <a>koduserveri SSL sertifikaat</a> oleks usaldusväärne ning mõni brauseri lisamoodul ei blokeeri päringuid."
+        "tls": "Ei sa ühendust koduserveriga. Palun kontrolli, et sinu <a>koduserveri SSL sertifikaat</a> oleks usaldusväärne ning mõni brauseri lisamoodul ei blokeeri päringuid.",
+        "admin_contact_short": "Võta ühendust <a>oma serveri haldajaga</a>."
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4210,5 +4200,19 @@
         "other": "Kogukonnas %(spaceName)s ja %(count)s's muus kogukonnas."
     },
     "in_space": "Kogukonnas %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> ja %(count)s muud",
+        "one": "<Items/> ja üks muu"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Ära jäta vastust vahele",
+        "enable_prompt_toast_title": "Teavitused",
+        "enable_prompt_toast_description": "Võta kasutusele töölauakeskkonna teavitused"
+    },
+    "mobile_guide": {
+        "toast_title": "Rakendusega saad Matrix'is suhelda parimal viisil",
+        "toast_description": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
+        "toast_accept": "Kasuta rakendust"
+    }
 }

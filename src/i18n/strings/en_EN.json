@@ -747,6 +747,7 @@
         "change_input_device": "Change input device",
         "no_media_perms_title": "No media permissions",
         "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam",
+        "call_toast_unknown_room": "Unknown room",
         "video_call_started": "Video call started",
         "unsilence": "Sound on",
         "silence": "Silence call",
@@ -892,7 +893,9 @@
             "see_msgtype_sent_this_room": "See <b>%(msgtype)s</b> messages posted to this room",
             "see_msgtype_sent_active_room": "See <b>%(msgtype)s</b> messages posted to your active room"
         },
-        "no_name": "Unknown App"
+        "no_name": "Unknown App",
+        "error_hangup_title": "Connection lost",
+        "error_hangup_description": "You were disconnected from the call. (Error: %(message)s)"
     },
     "scalar": {
         "error_create": "Unable to create widget.",
@@ -916,6 +919,11 @@
         "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
         "import_invalid_passphrase": "Authentication check failed: incorrect password?",
         "verification": {
+            "unverified_sessions_toast_title": "You have unverified sessions",
+            "unverified_sessions_toast_description": "Review to ensure your account is safe",
+            "unverified_sessions_toast_reject": "Later",
+            "unverified_session_toast_title": "New login. Was this you?",
+            "unverified_session_toast_accept": "Yes, it was me",
             "other_party_cancelled": "The other party cancelled the verification.",
             "complete_title": "Verified!",
             "complete_description": "You've successfully verified this user.",
@@ -940,6 +948,11 @@
             "qr_or_sas": "%(qrCode)s or %(emojiCompare)s",
             "qr_or_sas_header": "Verify this device by completing one of the following:"
         },
+        "set_up_toast_title": "Set up Secure Backup",
+        "upgrade_toast_title": "Encryption upgrade available",
+        "verify_toast_title": "Verify this session",
+        "set_up_toast_description": "Safeguard against losing access to encrypted messages & data",
+        "verify_toast_description": "Other users may not trust it",
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
         "verification_requested_toast_title": "Verification requested"
@@ -1415,9 +1428,10 @@
         "sync": "Unable to connect to Homeserver. Retrying…",
         "connection": "There was a problem communicating with the homeserver, please try again later.",
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
-        "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests."
+        "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
+        "admin_contact_short": "Contact your <a>server admin</a>."
     },
-    "<Items/> and %(count)s others": {
+    "items_and_n_others": {
         "other": "<Items/> and %(count)s others",
         "one": "<Items/> and one other"
     },
@@ -1435,6 +1449,16 @@
         "leave_error_title": "Error leaving room",
         "upgrade_error_title": "Error upgrading room",
         "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
+        "error_join_connection": "There was an error joining.",
+        "error_join_incompatible_version_1": "Sorry, your homeserver is too old to participate here.",
+        "error_join_incompatible_version_2": "Please contact your homeserver administrator.",
+        "error_join_404_invite_same_hs": "The person who invited you has already left.",
+        "error_join_404_invite": "The person who invited you has already left, or their server is offline.",
+        "error_join_404_1": "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.",
+        "error_join_404_2": "If you know a room address, try joining through that instead.",
+        "error_join_title": "Failed to join",
+        "error_join_403": "You need an invite to access this room.",
+        "error_cancel_knock_title": "Failed to cancel",
         "intro": {
             "send_message_start_dm": "Send your first message to invite <displayName/> to chat",
             "encrypted_3pid_dm_pending_join": "Once everyone has joined, you’ll be able to chat",
@@ -1601,26 +1625,16 @@
         "bullet_2": "We <Bold>don't</Bold> share information with third parties",
         "disable_prompt": "You can turn this off anytime in settings"
     },
-    "You have unverified sessions": "You have unverified sessions",
-    "Review to ensure your account is safe": "Review to ensure your account is safe",
-    "Later": "Later",
-    "Don't miss a reply": "Don't miss a reply",
-    "Notifications": "Notifications",
-    "Enable desktop notifications": "Enable desktop notifications",
-    "Unknown room": "Unknown room",
-    "Use app for a better experience": "Use app for a better experience",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.",
-    "Use app": "Use app",
-    "Your homeserver has exceeded its user limit.": "Your homeserver has exceeded its user limit.",
-    "Your homeserver has exceeded one of its resource limits.": "Your homeserver has exceeded one of its resource limits.",
-    "Contact your <a>server admin</a>.": "Contact your <a>server admin</a>.",
-    "Set up Secure Backup": "Set up Secure Backup",
-    "Encryption upgrade available": "Encryption upgrade available",
-    "Verify this session": "Verify this session",
-    "Safeguard against losing access to encrypted messages & data": "Safeguard against losing access to encrypted messages & data",
-    "Other users may not trust it": "Other users may not trust it",
-    "New login. Was this you?": "New login. Was this you?",
-    "Yes, it was me": "Yes, it was me",
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Don't miss a reply",
+        "enable_prompt_toast_title": "Notifications",
+        "enable_prompt_toast_description": "Enable desktop notifications"
+    },
+    "mobile_guide": {
+        "toast_title": "Use app for a better experience",
+        "toast_description": "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.",
+        "toast_accept": "Use app"
+    },
     "update": {
         "see_changes_button": "What's new?",
         "release_notes_toast_title": "What's New",
@@ -1633,18 +1647,6 @@
         "new_version_available": "New version available. <a>Update now.</a>",
         "check_action": "Check for update"
     },
-    "There was an error joining.": "There was an error joining.",
-    "Sorry, your homeserver is too old to participate here.": "Sorry, your homeserver is too old to participate here.",
-    "Please contact your homeserver administrator.": "Please contact your homeserver administrator.",
-    "The person who invited you has already left.": "The person who invited you has already left.",
-    "The person who invited you has already left, or their server is offline.": "The person who invited you has already left, or their server is offline.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.",
-    "If you know a room address, try joining through that instead.": "If you know a room address, try joining through that instead.",
-    "Failed to join": "Failed to join",
-    "You need an invite to access this room.": "You need an invite to access this room.",
-    "Failed to cancel": "Failed to cancel",
-    "Connection lost": "Connection lost",
-    "You were disconnected from the call. (Error: %(message)s)": "You were disconnected from the call. (Error: %(message)s)",
     "Back to chat": "Back to chat",
     "Room information": "Room information",
     "Room members": "Room members",

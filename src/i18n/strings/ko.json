@@ -1,6 +1,5 @@
 {
     "Create new room": "새 방 만들기",
-    "Notifications": "알림",
     "unknown error code": "알 수 없는 오류 코드",
     "Admin Tools": "관리자 도구",
     "No Microphones detected": "마이크 감지 없음",
@@ -172,10 +171,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "자기 자신을 강등하는 것은 되돌릴 수 없고, 자신이 마지막으로 이 방에서 특권을 가진 사용자라면 다시 특권을 얻는 건 불가능합니다.",
     "Jump to read receipt": "읽은 기록으로 건너뛰기",
     "Share room": "방 공유하기",
-    "<Items/> and %(count)s others": {
-        "one": "<Items/>님 외 한 명",
-        "other": "<Items/>님 외 %(count)s명"
-    },
     "Permission Required": "권한 필요",
     "Copied!": "복사했습니다!",
     "Failed to copy": "복사 실패함",
@@ -202,7 +197,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "Please contact your homeserver administrator.": "홈서버 관리자에게 연락하세요.",
     "This room has been replaced and is no longer active.": "이 방은 대체되어서 더 이상 활동하지 않습니다.",
     "The conversation continues here.": "이 대화는 여기서 이어집니다.",
     "Only room administrators will see this warning": "방 관리자만이 이 경고를 볼 수 있음",
@@ -536,8 +530,6 @@
     "This widget may use cookies.": "이 위젯은 쿠키를 사용합니다.",
     "Cannot connect to integration manager": "통합 관리자에 연결할 수 없음",
     "The integration manager is offline or it cannot reach your homeserver.": "통합 관리자가 오프라인이거나 당신의 홈서버에서 접근할 수 없습니다.",
-    "Verify this session": "이 세션 검증",
-    "Encryption upgrade available": "암호화 업그레이드 가능",
     "Show more": "더 보기",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "이 위젯을 사용하면 <helpcon /> %(widgetDomain)s & 통합 관리자와 데이터를 공유합니다.",
     "Identity server (%(server)s)": "ID 서버 (%(server)s)",
@@ -1284,7 +1276,9 @@
         "bootstrap_title": "키 설정",
         "export_unsupported": "필요한 암호화 확장 기능을 브라우저가 지원하지 않습니다",
         "import_invalid_keyfile": "올바른 %(brand)s 열쇠 파일이 아닙니다",
-        "import_invalid_passphrase": "인증 확인 실패: 비밀번호를 틀리셨나요?"
+        "import_invalid_passphrase": "인증 확인 실패: 비밀번호를 틀리셨나요?",
+        "upgrade_toast_title": "암호화 업그레이드 가능",
+        "verify_toast_title": "이 세션 검증"
     },
     "emoji": {
         "category_frequently_used": "자주 사용함",
@@ -1502,7 +1496,8 @@
         "leave_server_notices_title": "서버 알림 방을 떠날 수는 없음",
         "upgrade_error_title": "방 업그레이드 오류",
         "upgrade_error_description": "서버가 선택한 방 버전을 지원하는지 확인한 뒤에 다시 시도해주세요.",
-        "leave_server_notices_description": "이 방은 홈서버로부터 중요한 메시지를 받는 데 쓰이므로 떠날 수 없습니다."
+        "leave_server_notices_description": "이 방은 홈서버로부터 중요한 메시지를 받는 데 쓰이므로 떠날 수 없습니다.",
+        "error_join_incompatible_version_2": "홈서버 관리자에게 연락하세요."
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",
@@ -1568,5 +1563,12 @@
         "mixed_content": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
         "tls": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요."
     },
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "one": "<Items/>님 외 한 명",
+        "other": "<Items/>님 외 %(count)s명"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "알림"
+    }
 }

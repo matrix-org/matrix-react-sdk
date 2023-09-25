@@ -208,7 +208,6 @@
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
     "Bridges": "Droichid",
-    "Later": "Níos deireanaí",
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
     "None": "Níl aon cheann",
@@ -251,7 +250,6 @@
     "Demote": "Bain ceadanna",
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
-    "Notifications": "Fógraí",
     "General": "Ginearálta",
     "Profile": "Próifíl",
     "Authentication": "Fíordheimhniú",
@@ -758,7 +756,8 @@
         "verification": {
             "complete_title": "Deimhnithe!",
             "complete_action": "Tuigthe",
-            "cancelling": "ag Cealú…"
+            "cancelling": "ag Cealú…",
+            "unverified_sessions_toast_reject": "Níos deireanaí"
         }
     },
     "emoji": {
@@ -871,5 +870,8 @@
     "error": {
         "mixed_content": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
         "tls": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais."
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Fógraí"
     }
 }

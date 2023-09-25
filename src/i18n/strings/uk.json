@@ -2,7 +2,6 @@
     "Create new room": "Створити нову кімнату",
     "Failed to forget room %(errCode)s": "Не вдалось видалити кімнату %(errCode)s",
     "Favourite": "Улюблені",
-    "Notifications": "Сповіщення",
     "unknown error code": "невідомий код помилки",
     "Failed to change password. Is your password correct?": "Не вдалось змінити пароль. Ви впевнені, що пароль введено правильно?",
     "Admin Tools": "Засоби адміністрування",
@@ -81,7 +80,6 @@
     "Moderator": "Модератор",
     "Reason": "Причина",
     "Default": "Типовий",
-    "Please contact your homeserver administrator.": "Будь ласка, зв'яжіться з адміністратором вашого домашнього сервера.",
     "Incorrect verification code": "Неправильний код перевірки",
     "No display name": "Немає псевдоніма",
     "Failed to set display name": "Не вдалося налаштувати псевдонім",
@@ -121,8 +119,6 @@
     "Failed to reject invitation": "Не вдалось відхилити запрошення",
     "This room is not public. You will not be able to rejoin without an invite.": "Ця кімната не загальнодоступна. Ви не зможете повторно приєднатися без запрошення.",
     "Enter passphrase": "Введіть парольну фразу",
-    "Verify this session": "Звірити цей сеанс",
-    "Later": "Пізніше",
     "Account management": "Керування обліковим записом",
     "Deactivate Account": "Деактивувати обліковий запис",
     "Deactivate account": "Деактивувати обліковий запис",
@@ -171,18 +167,10 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
     "Ask this user to verify their session, or manually verify it below.": "Попросіть цього користувача звірити сеанс, або звірте його власноруч унизу.",
     "Not Trusted": "Не довірений",
-    "<Items/> and %(count)s others": {
-        "other": "<Items/> та ще %(count)s учасників",
-        "one": "<Items/> і ще хтось"
-    },
     "Your homeserver has exceeded its user limit.": "Ваш домашній сервер перевищив свій ліміт користувачів.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
-    "Contact your <a>server admin</a>.": "Зверніться до <a>адміністратора сервера</a>.",
     "Ok": "Гаразд",
-    "Encryption upgrade available": "Доступне поліпшене шифрування",
     "Set up": "Налаштувати",
-    "Other users may not trust it": "Інші користувачі можуть не довіряти цьому",
-    "New login. Was this you?": "Новий вхід. Це були ви?",
     "General": "Загальні",
     "Discovery": "Виявлення",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Щоб повідомити про проблеми безпеки Matrix, будь ласка, прочитайте <a>Політику розкриття інформації</a> Matrix.org.",
@@ -348,8 +336,6 @@
     "Show advanced": "Показати розширені",
     "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
-    "Set up Secure Backup": "Налаштувати захищене резервне копіювання",
-    "Safeguard against losing access to encrypted messages & data": "Захистіться від втрати доступу до зашифрованих повідомлень і даних",
     "Change notification settings": "Змінити налаштування сповіщень",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -697,11 +683,6 @@
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Connecting": "З'єднання",
     "%(deviceId)s from %(ip)s": "%(deviceId)s з %(ip)s",
-    "Use app": "Використовувати застосунок",
-    "Use app for a better experience": "Використовуйте застосунок для зручності",
-    "Enable desktop notifications": "Увімкнути сповіщення стільниці",
-    "Don't miss a reply": "Не пропустіть відповідей",
-    "Review to ensure your account is safe": "Перевірте, щоб переконатися, що ваш обліковий запис у безпеці",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
     "Start Verification": "Почати перевірку",
@@ -1546,7 +1527,6 @@
     },
     "Share for %(duration)s": "Поділитися на %(duration)s",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
     "Unsent": "Не надіслано",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "Під час спроби отримати доступ до кімнати або простору було повернено помилку %(errcode)s. Якщо ви думаєте, що ви бачите це повідомлення помилково, будь ласка, <issueLink>надішліть звіт про помилку</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "Повторіть спробу пізніше, або запитайте у кімнати або простору перевірку, чи маєте ви доступ.",
@@ -1563,11 +1543,6 @@
     "Forget this space": "Забути цей простір",
     "You were removed by %(memberName)s": "Вас вилучено користувачем %(memberName)s",
     "Loading preview": "Завантаження попереднього перегляду",
-    "Failed to join": "Не вдалося приєднатися",
-    "The person who invited you has already left, or their server is offline.": "Особа, котра вас запросила, вже вийшла або її сервер офлайн.",
-    "The person who invited you has already left.": "Особа, котра вас запросила, вже вийшла.",
-    "Sorry, your homeserver is too old to participate here.": "На жаль, ваш домашній сервер застарий для участі тут.",
-    "There was an error joining.": "Сталася помилка під час приєднання.",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
     "%(count)s participants": {
         "one": "1 учасник",
@@ -1637,8 +1612,6 @@
     },
     "View related event": "Переглянути пов'язані події",
     "Read receipts": "Звіти про прочитання",
-    "You were disconnected from the call. (Error: %(message)s)": "Вас від'єднано від виклику. (Помилка: %(message)s)",
-    "Connection lost": "З'єднання розірвано",
     "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!",
     "Un-maximise": "Розгорнути",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
@@ -1689,7 +1662,6 @@
     "Failed to set pusher state": "Не вдалося встановити стан push-служби",
     "Video call ended": "Відеовиклик завершено",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
-    "Unknown room": "Невідома кімната",
     "Room info": "Відомості про кімнату",
     "View chat timeline": "Переглянути стрічку бесіди",
     "Close call": "Закрити виклик",
@@ -1737,7 +1709,6 @@
     "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
     "Error starting verification": "Помилка запуску перевірки",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
-    "You have unverified sessions": "У вас є неперевірені сеанси",
     "Change layout": "Змінити макет",
     "Search users in this room…": "Пошук користувачів у цій кімнаті…",
     "Give one or multiple users in this room more privileges": "Надайте одному або кільком користувачам у цій кімнаті більше повноважень",
@@ -1792,10 +1763,7 @@
     "Ended a poll": "Завершує опитування",
     "Due to decryption errors, some votes may not be counted": "Через помилки розшифрування деякі голоси можуть бути не враховані",
     "The sender has blocked you from receiving this message": "Відправник заблокував вам отримання цього повідомлення",
-    "Yes, it was me": "Так, це я",
     "Answered elsewhere": "Відповіли деінде",
-    "If you know a room address, try joining through that instead.": "Якщо ви знаєте адресу кімнати, спробуйте приєднатися через неї.",
-    "You attempted to join using a room ID without providing a list of servers to join through. Room IDs are internal identifiers and cannot be used to join a room without additional information.": "Ви спробували приєднатися, за допомогою ID кімнати, не вказавши список серверів, через які ви хочете приєднатися. ID кімнати — це внутрішній ідентифікатор і він не може бути використаний для приєднання до кімнати без додаткової інформації.",
     "View poll": "Переглянути опитування",
     "Past polls": "Минулі опитування",
     "Active polls": "Активні опитування",
@@ -1885,8 +1853,6 @@
     "Note that removing room changes like this could undo the change.": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Експортований файл дозволить будь-кому, хто зможе його прочитати, розшифрувати будь-які зашифровані повідомлення, які ви бачите, тому ви повинні бути обережними, щоб зберегти його в безпеці. Щоб зробити це, вам слід ввести унікальну парольну фразу нижче, яка буде використовуватися тільки для шифрування експортованих даних. Імпортувати дані можна буде лише за допомогою тієї ж самої парольної фрази.",
     "Other spaces you know": "Інші відомі вам простори",
-    "You need an invite to access this room.": "Для доступу до цієї кімнати потрібне запрошення.",
-    "Failed to cancel": "Не вдалося скасувати",
     "Ask to join %(roomName)s?": "Надіслати запит на приєднання до %(roomName)s?",
     "Cancel request": "Скасувати запит",
     "Ask to join?": "Надіслати запит на приєднання?",
@@ -3413,7 +3379,8 @@
         "failed_call_live_broadcast_title": "Не вдалося розпочати виклик",
         "failed_call_live_broadcast_description": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик.",
         "no_media_perms_title": "Немає медіадозволів",
-        "no_media_perms_description": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну"
+        "no_media_perms_description": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну",
+        "call_toast_unknown_room": "Невідома кімната"
     },
     "Other": "Інше",
     "Advanced": "Подробиці",
@@ -3531,7 +3498,12 @@
             "waiting_other_device_details": "Очікування вашої звірки на іншому пристрої, %(deviceName)s (%(deviceId)s)…",
             "waiting_other_device": "Очікування вашої звірки на іншому пристрої…",
             "waiting_other_user": "Очікування звірки %(displayName)s…",
-            "cancelling": "Скасування…"
+            "cancelling": "Скасування…",
+            "unverified_sessions_toast_title": "У вас є неперевірені сеанси",
+            "unverified_sessions_toast_description": "Перевірте, щоб переконатися, що ваш обліковий запис у безпеці",
+            "unverified_sessions_toast_reject": "Пізніше",
+            "unverified_session_toast_title": "Новий вхід. Це були ви?",
+            "unverified_session_toast_accept": "Так, це я"
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3541,7 +3513,12 @@
         "bootstrap_title": "Налаштовування ключів",
         "export_unsupported": "Ваш браузер не підтримує необхідних криптографічних функцій",
         "import_invalid_keyfile": "Файл ключа %(brand)s некоректний",
-        "import_invalid_passphrase": "Помилка автентифікації: неправильний пароль?"
+        "import_invalid_passphrase": "Помилка автентифікації: неправильний пароль?",
+        "set_up_toast_title": "Налаштувати захищене резервне копіювання",
+        "upgrade_toast_title": "Доступне поліпшене шифрування",
+        "verify_toast_title": "Звірити цей сеанс",
+        "set_up_toast_description": "Захистіться від втрати доступу до зашифрованих повідомлень і даних",
+        "verify_toast_description": "Інші користувачі можуть не довіряти цьому"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3845,7 +3822,9 @@
         "error_need_to_be_logged_in": "Вам потрібно увійти.",
         "error_need_invite_permission": "Для цього вам потрібен дозвіл запрошувати користувачів.",
         "error_need_kick_permission": "Для цього вам потрібен дозвіл вилучати користувачів.",
-        "no_name": "Невідомий додаток"
+        "no_name": "Невідомий додаток",
+        "error_hangup_title": "З'єднання розірвано",
+        "error_hangup_description": "Вас від'єднано від виклику. (Помилка: %(message)s)"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4086,7 +4065,17 @@
         "leave_error_title": "Помилка під час виходу з кімнати",
         "upgrade_error_title": "Помилка поліпшення кімнати",
         "upgrade_error_description": "Перевірте, чи підримує ваш сервер вказану версію кімнати та спробуйте ще.",
-        "leave_server_notices_description": "Ця кімната використовується для важливих повідомлень з домашнього сервера, тож ви не можете з неї вийти."
+        "leave_server_notices_description": "Ця кімната використовується для важливих повідомлень з домашнього сервера, тож ви не можете з неї вийти.",
+        "error_join_connection": "Сталася помилка під час приєднання.",
+        "error_join_incompatible_version_1": "На жаль, ваш домашній сервер застарий для участі тут.",
+        "error_join_incompatible_version_2": "Будь ласка, зв'яжіться з адміністратором вашого домашнього сервера.",
+        "error_join_404_invite_same_hs": "Особа, котра вас запросила, вже вийшла.",
+        "error_join_404_invite": "Особа, котра вас запросила, вже вийшла або її сервер офлайн.",
+        "error_join_404_1": "Ви спробували приєднатися, за допомогою ID кімнати, не вказавши список серверів, через які ви хочете приєднатися. ID кімнати — це внутрішній ідентифікатор і він не може бути використаний для приєднання до кімнати без додаткової інформації.",
+        "error_join_404_2": "Якщо ви знаєте адресу кімнати, спробуйте приєднатися через неї.",
+        "error_join_title": "Не вдалося приєднатися",
+        "error_join_403": "Для доступу до цієї кімнати потрібне запрошення.",
+        "error_cancel_knock_title": "Не вдалося скасувати"
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
@@ -4202,7 +4191,8 @@
         "sync": "Не вдалося під'єднатися до домашнього сервера. Повторна спроба…",
         "connection": "Не вдалося зв'язатися з домашнім сервером, повторіть спробу пізніше.",
         "mixed_content": "З'єднуватися з домашнім сервером через HTTP, коли в рядку адреси браузера введено HTTPS-адресу, не можна. Використовуйте HTTPS або <a>дозвольте небезпечні скрипти</a>.",
-        "tls": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити."
+        "tls": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити.",
+        "admin_contact_short": "Зверніться до <a>адміністратора сервера</a>."
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4210,5 +4200,19 @@
         "other": "У %(spaceName)s та %(count)s інших пристроях."
     },
     "in_space": "У просторі %(spaceName)s.",
-    "name_and_id": "%(name)s (%(userId)s)"
+    "name_and_id": "%(name)s (%(userId)s)",
+    "items_and_n_others": {
+        "other": "<Items/> та ще %(count)s учасників",
+        "one": "<Items/> і ще хтось"
+    },
+    "notifications": {
+        "enable_prompt_toast_title_from_message_send": "Не пропустіть відповідей",
+        "enable_prompt_toast_title": "Сповіщення",
+        "enable_prompt_toast_description": "Увімкнути сповіщення стільниці"
+    },
+    "mobile_guide": {
+        "toast_title": "Використовуйте застосунок для зручності",
+        "toast_description": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
+        "toast_accept": "Використовувати застосунок"
+    }
 }

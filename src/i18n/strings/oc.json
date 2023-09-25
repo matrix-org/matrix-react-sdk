@@ -43,7 +43,6 @@
     "Moderator": "Moderator",
     "Thank you!": "Mercés !",
     "Reason": "Rason",
-    "Notifications": "Notificacions",
     "Ok": "Validar",
     "Set up": "Parametrar",
     "Fish": "Pes",
@@ -384,5 +383,8 @@
     },
     "invite": {
         "failed_generic": "L'operacion a fracassat"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notificacions"
     }
 }
