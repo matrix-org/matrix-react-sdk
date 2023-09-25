@@ -49,7 +49,7 @@ import { SettingLevel } from "./settings/SettingLevel";
 import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
-import { formatCommaSeparatedList } from "./utils/FormattingUtils";
+import { formatList } from "./utils/FormattingUtils";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -357,9 +357,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return formatCommaSeparatedList(names);
+            return formatList(names);
         }
-        return formatCommaSeparatedList(names, 1);
+        return formatList(names, 1);
     }
 
     private inviteeNamesToRoomName(names: string[], count: number): string {

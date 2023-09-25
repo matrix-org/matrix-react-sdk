@@ -92,10 +92,10 @@ export function getUserNameColorClass(userId: string): string {
  * @returns {string} a string constructed by joining `items` with a comma
  * between each item, but with the last item appended as " and [lastItem]".
  */
-export function formatCommaSeparatedList(items: string[], itemLimit?: number): string;
-export function formatCommaSeparatedList(items: ReactElement[], itemLimit?: number): ReactElement;
-export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode;
-export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode {
+export function formatList(items: string[], itemLimit?: number): string;
+export function formatList(items: ReactElement[], itemLimit?: number): ReactElement;
+export function formatList(items: ReactNode[], itemLimit?: number): ReactNode;
+export function formatList(items: ReactNode[], itemLimit?: number): ReactNode {
     const remaining = itemLimit === undefined ? 0 : Math.max(items.length - itemLimit, 0);
     if (items.length <= 1) {
         return items[0] ?? "";

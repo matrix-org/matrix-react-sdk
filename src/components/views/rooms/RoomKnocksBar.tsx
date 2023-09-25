@@ -28,7 +28,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import { RoomSettingsTab } from "../dialogs/RoomSettingsDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Heading from "../typography/Heading";
-import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import { formatList } from "../../../utils/FormattingUtils";
 
 export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
     const [disabled, setDisabled] = useState(false);
@@ -83,7 +83,7 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
             {_t("action|view")}
         </AccessibleButton>
     );
-    let names = formatCommaSeparatedList(
+    let names = formatList(
         knockMembers.map((knockMember) => knockMember.name),
         2,
     );
