@@ -42,9 +42,9 @@ export const showToast = (fromMessageSend: boolean): void => {
         title: fromMessageSend ? _t("Don't miss a reply") : _t("Notifications"),
         props: {
             description: _t("Enable desktop notifications"),
-            acceptLabel: _t("Enable"),
+            acceptLabel: _t("action|enable"),
             onAccept,
-            rejectLabel: _t("Dismiss"),
+            rejectLabel: _t("action|dismiss"),
             onReject,
         },
         component: GenericToast,

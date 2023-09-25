@@ -25,11 +25,11 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     UNSTABLE_MSC3852_LAST_SEEN_UA,
+    MatrixError,
+    LocalNotificationSettings,
 } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";

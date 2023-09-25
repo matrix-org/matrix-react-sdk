@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -276,7 +276,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
 
     public render(): React.ReactNode {
         const secureBackup = (
-            <SettingsSubsection heading={_t("Secure Backup")}>
+            <SettingsSubsection heading={_t("common|secure_backup")}>
                 <SecureBackupPanel />
             </SettingsSubsection>
         );
@@ -292,7 +292,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         // in having advanced details here once all flows are implemented, we
         // can remove this.
         const crossSigning = (
-            <SettingsSubsection heading={_t("Cross-signing")}>
+            <SettingsSubsection heading={_t("common|cross_signing")}>
                 <CrossSigningPanel />
             </SettingsSubsection>
         );
@@ -302,8 +302,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             warning = (
                 <div className="mx_SecurityUserSettingsTab_warning">
                     {_t(
-                        "Your server admin has disabled end-to-end encryption by default " +
-                            "in private rooms & Direct Messages.",
+                        "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                     )}
                 </div>
             );
@@ -313,20 +312,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         if (PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = (): void => {
                 showAnalyticsLearnMoreDialog({
-                    primaryButton: _t("OK"),
+                    primaryButton: _t("action|ok"),
                     hasCancel: false,
                 });
             };
             privacySection = (
-                <SettingsSection heading={_t("Privacy")}>
+                <SettingsSection heading={_t("common|privacy")}>
                     <SettingsSubsection
-                        heading={_t("Analytics")}
+                        heading={_t("common|analytics")}
                         description={_t(
                             "Share anonymous data to help us identify issues. Nothing personal. No third parties.",
                         )}
                     >
                         <AccessibleButton kind="link" onClick={onClickAnalyticsLearnMore}>
-                            {_t("Learn more")}
+                            {_t("action|learn_more")}
                         </AccessibleButton>
                         {PosthogAnalytics.instance.isEnabled() && (
                             <SettingsFlag name="pseudonymousAnalyticsOptIn" level={SettingLevel.ACCOUNT} />
@@ -359,7 +358,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <SettingsTab>
                 {warning}
-                <SettingsSection heading={_t("Encryption")}>
+                <SettingsSection heading={_t("settings|security|encryption_section")}>
                     {secureBackup}
                     {eventIndex}
                     {crossSigning}

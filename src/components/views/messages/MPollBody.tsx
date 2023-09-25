@@ -16,14 +16,19 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { M_POLL_KIND_DISCLOSED, M_POLL_RESPONSE, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import {
+    MatrixEvent,
+    MatrixClient,
+    Relations,
+    Poll,
+    PollEvent,
+    M_POLL_KIND_DISCLOSED,
+    M_POLL_RESPONSE,
+    M_POLL_START,
+} from "matrix-js-sdk/src/matrix";
 import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import { PollStartEvent, PollAnswerSubevent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
 import { PollResponseEvent } from "matrix-js-sdk/src/extensible_events_v1/PollResponseEvent";
-import { Poll, PollEvent } from "matrix-js-sdk/src/models/poll";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";

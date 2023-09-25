@@ -15,10 +15,16 @@ limitations under the License.
 */
 
 import { useCallback, useEffect, useState } from "react";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Direction, EventTimeline, EventTimelineSet, Room } from "matrix-js-sdk/src/matrix";
-import { Filter, IFilterDefinition } from "matrix-js-sdk/src/filter";
+import {
+    M_POLL_START,
+    MatrixClient,
+    Direction,
+    EventTimeline,
+    EventTimelineSet,
+    Room,
+    Filter,
+    IFilterDefinition,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 const getOldestEventTimestamp = (timelineSet?: EventTimelineSet): number | undefined => {

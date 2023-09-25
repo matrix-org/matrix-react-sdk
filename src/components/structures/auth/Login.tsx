@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { SSOFlow, SSOAction } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td, UserFriendlyError } from "../../../languageHandler";
 import Login, { ClientLoginFlow, OidcNativeFlow } from "../../../Login";
@@ -224,7 +224,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 let errorText: ReactNode;
                 // Some error strings only apply for logging in
                 if (error.httpStatus === 400 && username && username.indexOf("@") > 0) {
-                    errorText = _t("This homeserver does not support login using email address.");
+                    errorText = _t("auth|unsupported_auth_email");
                 } else {
                     errorText = messageForLoginError(error, this.props.serverConfig);
                 }
@@ -273,7 +273,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             } catch (e) {
                 logger.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
 
-                let message = _t("Failed to perform homeserver discovery");
+                let message = _t("auth|failed_homeserver_discovery");
                 if (e instanceof UserFriendlyError && e.translatedMessage) {
                     message = e.translatedMessage;
                 }
@@ -398,9 +398,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
                     if (supportedFlows.length === 0) {
                         this.setState({
-                            errorText: _t(
-                                "This homeserver doesn't offer any login flows that are supported by this client.",
-                            ),
+                            errorText: _t("auth|unsupported_auth"),
                         });
                     }
                 },
@@ -481,13 +479,13 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     );
                 }}
             >
-                {_t("Continue")}
+                {_t("action|continue")}
             </AccessibleButton>
         );
     };
 
     private renderSsoStep = (loginType: "cas" | "sso"): JSX.Element => {
-        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as SSOFlow;
 
         return (
             <SSOButtons
@@ -532,12 +530,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <div className="mx_AuthBody_paddedFooter">
                     <div className="mx_AuthBody_paddedFooter_title">
                         <InlineSpinner w={20} h={20} />
-                        {this.props.isSyncing ? _t("Syncing…") : _t("Signing In…")}
+                        {this.props.isSyncing ? _t("auth|syncing") : _t("auth|signing_in")}
                     </div>
                     {this.props.isSyncing && (
-                        <div className="mx_AuthBody_paddedFooter_subtitle">
-                            {_t("If you've joined lots of rooms, this might take a while")}
-                        </div>
+                        <div className="mx_AuthBody_paddedFooter_subtitle">{_t("auth|sync_footer_subtitle")}</div>
                     )}
                 </div>
             );
@@ -545,7 +541,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             footer = (
                 <span className="mx_AuthBody_changeFlow">
                     {_t(
-                        "New? <a>Create account</a>",
+                        "auth|create_account_prompt",
                         {},
                         {
                             a: (sub) => (
@@ -564,7 +560,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        {_t("Sign in")}
+                        {_t("action|sign_in")}
                         {loader}
                     </h1>
                     {errorTextSection}

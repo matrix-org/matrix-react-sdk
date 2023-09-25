@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../languageHandler";
 import AutocompleteProvider from "./AutocompleteProvider";
@@ -104,7 +104,7 @@ export default class CommandProvider extends AutocompleteProvider {
     }
 
     public getName(): string {
-        return "*️⃣ " + _t("Commands");
+        return "*️⃣ " + _t("composer|autocomplete|command_description");
     }
 
     public renderCompletions(completions: React.ReactNode[]): React.ReactNode {
@@ -112,7 +112,7 @@ export default class CommandProvider extends AutocompleteProvider {
             <div
                 className="mx_Autocomplete_Completion_container_pill"
                 role="presentation"
-                aria-label={_t("Command Autocomplete")}
+                aria-label={_t("composer|autocomplete|command_a11y")}
             >
                 {completions}
             </div>

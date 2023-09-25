@@ -17,14 +17,17 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, RenderResult } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    MatrixClient,
+    PendingEventOrdering,
+    Room,
+    MatrixEvent,
+    RoomStateEvent,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
@@ -35,6 +38,7 @@ import {
     filterConsole,
     flushPromises,
     mkMessage,
+    useMockMediaDevices,
 } from "../../../test-utils";
 import { CallStore } from "../../../../src/stores/CallStore";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
@@ -50,6 +54,8 @@ import { SDKContext } from "../../../../src/contexts/SDKContext";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
 import { MessagePreviewStore } from "../../../../src/stores/room-list/MessagePreviewStore";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -131,6 +137,7 @@ describe("RoomTile", () => {
     };
 
     beforeEach(() => {
+        useMockMediaDevices();
         sdkContext = new TestSdkContext();
 
         client = mocked(stubClient());
@@ -149,14 +156,15 @@ describe("RoomTile", () => {
     afterEach(() => {
         // @ts-ignore
         MessagePreviewStore.instance.previews = new Map<string, Map<TagID | TAG_ANY, MessagePreview | null>>();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when message previews are not enabled", () => {
         it("should render the room", () => {
             mocked(shouldShowComponent).mockReturnValue(true);
-            const renderResult = renderRoomTile();
-            expect(renderResult.container).toMatchSnapshot();
+            const { container } = renderRoomTile();
+            expect(container).toMatchSnapshot();
+            expect(container.querySelector(".mx_RoomTile_sticky")).not.toBeInTheDocument();
         });
 
         it("does not render the room options context menu when UIComponent customisations disable room options", () => {
@@ -171,6 +179,31 @@ describe("RoomTile", () => {
             renderRoomTile();
             expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
             expect(screen.queryByRole("button", { name: "Room options" })).toBeInTheDocument();
+        });
+
+        it("does not render the room options context menu when knocked to the room", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "feature_ask_to_join";
+            });
+            mocked(shouldShowComponent).mockReturnValue(true);
+            jest.spyOn(room, "getMyMembership").mockReturnValue("knock");
+            const { container } = renderRoomTile();
+            expect(container.querySelector(".mx_RoomTile_sticky")).toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Room options" })).not.toBeInTheDocument();
+        });
+
+        it("does not render the room options context menu when knock has been denied", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "feature_ask_to_join";
+            });
+            mocked(shouldShowComponent).mockReturnValue(true);
+            const roomMember = mkRoomMember(room.roomId, MatrixClientPeg.get()!.getSafeUserId(), "leave", true, {
+                membership: "knock",
+            });
+            jest.spyOn(room, "getMember").mockReturnValue(roomMember);
+            const { container } = renderRoomTile();
+            expect(container.querySelector(".mx_RoomTile_sticky")).toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Room options" })).not.toBeInTheDocument();
         });
 
         describe("when a call starts", () => {

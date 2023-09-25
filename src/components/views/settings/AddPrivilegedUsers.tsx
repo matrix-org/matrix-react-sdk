@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { FormEvent, useCallback, useContext, useRef, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
@@ -55,7 +54,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         // `RoomPowerLevels` event should exist, but technically it is not guaranteed.
         if (powerLevelEvent === null) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
+                title: _t("common|error"),
                 description: _t("Failed to change power level"),
             });
 
@@ -68,7 +67,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
             setPowerLevel(defaultUserLevel);
         } catch (error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
+                title: _t("common|error"),
                 description: _t("Failed to change power level"),
             });
         } finally {
@@ -99,7 +98,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                     onClick={null}
                     data-testid="add-privileged-users-submit-button"
                 >
-                    {_t("Apply")}
+                    {_t("action|apply")}
                 </AccessibleButton>
             </SettingsFieldset>
         </form>

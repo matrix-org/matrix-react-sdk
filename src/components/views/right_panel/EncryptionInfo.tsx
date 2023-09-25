@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -82,8 +81,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                 <p>{_t("Messages in this room are end-to-end encrypted.")}</p>
                 <p>
                     {_t(
-                        "Your messages are secured and only you and the recipient have " +
-                            "the unique keys to unlock them.",
+                        "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
                     )}
                 </p>
             </div>
@@ -94,8 +92,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                 <p>{_t("Messages in this room are not end-to-end encrypted.")}</p>
                 <p>
                     {_t(
-                        "In encrypted rooms, your messages are secured and only you and the recipient have " +
-                            "the unique keys to unlock them.",
+                        "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
                     )}
                 </p>
             </div>
@@ -109,7 +106,7 @@ const EncryptionInfo: React.FC<IProps> = ({
     return (
         <React.Fragment>
             <div data-testid="encryption-info-description" className="mx_UserInfo_container">
-                <h3>{_t("Encryption")}</h3>
+                <h3>{_t("settings|security|encryption_section")}</h3>
                 {description}
             </div>
             <div className="mx_UserInfo_container">
@@ -120,7 +117,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                             "For extra security, verify this user by checking a one-time code on both of your devices.",
                         )}
                     </p>
-                    <p>{_t("To be secure, do this in person or use a trusted way to communicate.")}</p>
+                    <p>{_t("encryption|verification|in_person")}</p>
                     {content}
                 </div>
             </div>

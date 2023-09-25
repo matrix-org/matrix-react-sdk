@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, useContext, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -85,7 +84,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                     });
                 }}
             >
-                {_t("Leave")}
+                {_t("action|leave")}
             </AccessibleButton>
         );
     } else if (myMembership === "invite") {
@@ -96,7 +95,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
 
             inviterSection = (
                 <div className="mx_RoomPreviewCard_inviter">
-                    <MemberAvatar member={inviter} fallbackUserId={inviteSender} width={32} height={32} />
+                    <MemberAvatar member={inviter} fallbackUserId={inviteSender} size="32px" />
                     <div>
                         <div className="mx_RoomPreviewCard_inviter_name">
                             {_t(
@@ -122,7 +121,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                         onRejectButtonClicked();
                     }}
                 >
-                    {_t("Reject")}
+                    {_t("action|reject")}
                 </AccessibleButton>
                 <AccessibleButton
                     kind="primary"
@@ -131,7 +130,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                         onJoinButtonClicked();
                     }}
                 >
-                    {_t("Accept")}
+                    {_t("action|accept")}
                 </AccessibleButton>
             </>
         );
@@ -148,7 +147,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                 }}
                 disabled={cannotJoin}
             >
-                {_t("Join")}
+                {_t("action|join")}
             </AccessibleButton>
         );
     }
@@ -161,15 +160,15 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
     if (isVideoRoom) {
         avatarRow = (
             <>
-                <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />
+                <RoomAvatar room={room} size="50px" viewAvatarOnClick />
                 <div className="mx_RoomPreviewCard_video" />
-                <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
+                <BetaPill onClick={viewLabs} tooltipTitle={_t("labs|video_rooms_beta")} />
             </>
         );
     } else if (room.isSpaceRoom()) {
-        avatarRow = <RoomAvatar room={room} height={80} width={80} viewAvatarOnClick />;
+        avatarRow = <RoomAvatar room={room} size="80px" viewAvatarOnClick />;
     } else {
-        avatarRow = <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />;
+        avatarRow = <RoomAvatar room={room} size="50px" viewAvatarOnClick />;
     }
 
     let notice: string | null = null;

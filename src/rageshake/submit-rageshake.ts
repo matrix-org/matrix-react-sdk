@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { Method } from "matrix-js-sdk/src/http-api";
+import { Method } from "matrix-js-sdk/src/matrix";
 
 import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -40,7 +40,7 @@ interface IOpts {
 async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<FormData> {
     const progressCallback = opts.progressCallback || ((): void => {});
 
-    progressCallback(_t("Collecting app version information"));
+    progressCallback(_t("bug_reporting|collecting_information"));
     let version: string | undefined;
     try {
         version = await PlatformPeg.get()?.getAppVersion();
@@ -117,7 +117,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             );
 
             body.append("secret_storage_ready", String(await client.isSecretStorageReady()));
-            body.append("secret_storage_key_in_account", String(!!(await secretStorage.hasKey())));
+            body.append("secret_storage_key_in_account", String(await secretStorage.hasKey()));
 
             body.append("session_backup_key_in_secret_storage", String(!!(await client.isKeyBackupKeyStored())));
             const sessionBackupKeyFromCache = await client.crypto.getSessionBackupPrivateKey();
@@ -220,7 +220,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             pako = await import("pako");
         }
 
-        progressCallback(_t("Collecting logs"));
+        progressCallback(_t("bug_reporting|collecting_logs"));
         const logs = await rageshake.getLogsForReport();
         for (const entry of logs) {
             // encode as UTF-8
@@ -261,7 +261,7 @@ export default async function sendBugReport(bugReportEndpoint?: string, opts: IO
     const progressCallback = opts.progressCallback || ((): void => {});
     const body = await collectBugReport(opts);
 
-    progressCallback(_t("Uploading logs"));
+    progressCallback(_t("bug_reporting|uploading_logs"));
     return submitReport(bugReportEndpoint, body, progressCallback);
 }
 
@@ -284,7 +284,7 @@ export async function downloadBugReport(opts: IOpts = {}): Promise<void> {
     const progressCallback = opts.progressCallback || ((): void => {});
     const body = await collectBugReport(opts, false);
 
-    progressCallback(_t("Downloading logs"));
+    progressCallback(_t("bug_reporting|downloading_logs"));
     let metadata = "";
     const tape = new Tar();
     let i = 0;
@@ -363,7 +363,7 @@ function submitReport(endpoint: string, body: FormData, progressCallback: (str: 
         req.timeout = 5 * 60 * 1000;
         req.onreadystatechange = function (): void {
             if (req.readyState === XMLHttpRequest.LOADING) {
-                progressCallback(_t("Waiting for response from server"));
+                progressCallback(_t("bug_reporting|waiting_for_server"));
             } else if (req.readyState === XMLHttpRequest.DONE) {
                 // on done
                 if (req.status < 200 || req.status >= 400) {

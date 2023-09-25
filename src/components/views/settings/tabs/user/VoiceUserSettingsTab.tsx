@@ -169,10 +169,10 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             speakerDropdown = this.renderDropdown(MediaDeviceKindEnum.AudioOutput, _t("Audio Output")) || (
                 <p>{_t("No Audio Outputs detected")}</p>
             );
-            microphoneDropdown = this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("Microphone")) || (
+            microphoneDropdown = this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("common|microphone")) || (
                 <p>{_t("No Microphones detected")}</p>
             );
-            webcamDropdown = this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("Camera")) || (
+            webcamDropdown = this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("common|camera")) || (
                 <p>{_t("No Webcams detected")}</p>
             );
         }
@@ -208,7 +208,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                                 await MediaDeviceHandler.setAudioNoiseSuppression(v);
                                 this.setState({ audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression() });
                             }}
-                            label={_t("Noise suppression")}
+                            label={_t("settings|voip|noise_suppression")}
                             data-testid="voice-noise-suppression"
                         />
                         <LabelledToggleSwitch
@@ -217,7 +217,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                                 await MediaDeviceHandler.setAudioEchoCancellation(v);
                                 this.setState({ audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation() });
                             }}
-                            label={_t("Echo cancellation")}
+                            label={_t("settings|voip|echo_cancellation")}
                             data-testid="voice-echo-cancellation"
                         />
                     </SettingsSubsection>
@@ -229,7 +229,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
                         />
                         <SettingsFlag
                             name="fallbackICEServerAllowed"
-                            label={_t("Allow fallback call assist server (%(server)s)", {
+                            label={_t("settings|voip|enable_fallback_ice_server", {
                                 server: new URL(FALLBACK_ICE_SERVER).pathname,
                             })}
                             level={SettingLevel.DEVICE}

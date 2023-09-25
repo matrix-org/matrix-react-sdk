@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { TimestampToEventResponse } from "matrix-js-sdk/src/client";
-import { ConnectionError, HTTPError, MatrixError } from "matrix-js-sdk/src/http-api";
+import { TimestampToEventResponse, ConnectionError, HTTPError, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
@@ -61,11 +60,11 @@ describe("DateSeparator", () => {
 
     type TestCase = [string, number, string];
     const testCases: TestCase[] = [
-        ["the exact same moment", nowDate.getTime(), "Today"],
-        ["same day as current day", nowDate.getTime() - HOUR_MS, "Today"],
-        ["day before the current day", nowDate.getTime() - HOUR_MS * 12, "Yesterday"],
+        ["the exact same moment", nowDate.getTime(), "today"],
+        ["same day as current day", nowDate.getTime() - HOUR_MS, "today"],
+        ["day before the current day", nowDate.getTime() - HOUR_MS * 12, "yesterday"],
         ["2 days ago", nowDate.getTime() - DAY_MS * 2, "Wednesday"],
-        ["144 hours ago", nowDate.getTime() - HOUR_MS * 144, "Sat, Dec 11 2021"],
+        ["144 hours ago", nowDate.getTime() - HOUR_MS * 144, "Sat, Dec 11, 2021"],
         [
             "6 days ago, but less than 144h",
             new Date("Saturday Dec 11 2021 23:59:00 GMT+0100 (Central European Standard Time)").getTime(),

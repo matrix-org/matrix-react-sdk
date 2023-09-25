@@ -74,7 +74,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         const dialogAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
                 body: _t("Confirm your account deactivation by using Single Sign On to prove your identity."),
-                continueText: _t("Single Sign On"),
+                continueText: _t("auth|sso"),
                 continueKind: "danger",
             },
             [SSOAuthEntry.PHASE_POSTAUTH]: {
@@ -110,7 +110,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished: InteractiveAuthCallback<Awaited<ReturnType<MatrixClient["deactivateAccount"]>>> = (
+    private onUIAuthFinished: InteractiveAuthCallback<Awaited<ReturnType<MatrixClient["deactivateAccount"]>>> = async (
         success,
         result,
     ) => {
@@ -188,7 +188,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             error = <div className="error">{this.state.errStr}</div>;
         }
 
-        let auth = <div>{_t("Loading…")}</div>;
+        let auth = <div>{_t("common|loading")}</div>;
         if (this.state.authData && this.state.authEnabled) {
             auth = (
                 <div>

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -30,7 +30,12 @@ import {
     ListAlgorithm,
     SortAlgorithm,
 } from "./models";
-import { EffectiveMembership, getEffectiveMembership, splitRoomsByMembership } from "../../../utils/membership";
+import {
+    EffectiveMembership,
+    getEffectiveMembership,
+    getEffectiveMembershipTag,
+    splitRoomsByMembership,
+} from "../../../utils/membership";
 import { OrderingAlgorithm } from "./list-ordering/OrderingAlgorithm";
 import { getListAlgorithmInstance } from "./list-ordering";
 import { VisibilityProvider } from "../filters/VisibilityProvider";
@@ -88,10 +93,6 @@ export class Algorithm extends EventEmitter {
 
     public get stickyRoom(): Room | null {
         return this._stickyRoom ? this._stickyRoom.room : null;
-    }
-
-    public get knownRooms(): Room[] {
-        return this.rooms;
     }
 
     public get hasTagSortingMap(): boolean {
@@ -547,7 +548,10 @@ export class Algorithm extends EventEmitter {
     public getTagsForRoom(room: Room): TagID[] {
         const tags: TagID[] = [];
 
-        const membership = getEffectiveMembership(room.getMyMembership());
+        if (!getEffectiveMembership(room.getMyMembership())) return []; // peeked room has no tags
+
+        const membership = getEffectiveMembershipTag(room);
+
         if (membership === EffectiveMembership.Invite) {
             tags.push(DefaultTagID.Invite);
         } else if (membership === EffectiveMembership.Leave) {

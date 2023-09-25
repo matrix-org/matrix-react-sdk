@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { MatrixError, MatrixClient, EventType, HistoryVisibility } from "matrix-js-sdk/src/matrix";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
 import { AddressType, getAddressType } from "../UserAddress";
 import { _t } from "../languageHandler";
@@ -100,7 +97,7 @@ export default class MultiInviter {
                 this.completionStates[addr] = InviteState.Error;
                 this.errors[addr] = {
                     errcode: "M_INVALID",
-                    errorText: _t("Unrecognised address"),
+                    errorText: _t("invite|invalid_address"),
                 };
             }
         }
@@ -185,8 +182,8 @@ export default class MultiInviter {
                 ) {
                     const { finished } = Modal.createDialog(ConfirmUserActionDialog, {
                         member,
-                        action: _t("Unban"),
-                        title: _t("User cannot be invited until they are unbanned"),
+                        action: _t("action|unban"),
+                        title: _t("invite|unban_first_title"),
                     });
                     [proceed = false] = await finished;
                     if (proceed) {
@@ -256,24 +253,24 @@ export default class MultiInviter {
                     switch (err.errcode) {
                         case "M_FORBIDDEN":
                             if (isSpace) {
-                                errorText = _t("You do not have permission to invite people to this space.");
+                                errorText = _t("invite|error_permissions_space");
                             } else {
-                                errorText = _t("You do not have permission to invite people to this room.");
+                                errorText = _t("invite|error_permissions_room");
                             }
                             fatal = true;
                             break;
                         case USER_ALREADY_INVITED:
                             if (isSpace) {
-                                errorText = _t("User is already invited to the space");
+                                errorText = _t("invite|error_already_invited_space");
                             } else {
-                                errorText = _t("User is already invited to the room");
+                                errorText = _t("invite|error_already_invited_room");
                             }
                             break;
                         case USER_ALREADY_JOINED:
                             if (isSpace) {
-                                errorText = _t("User is already in the space");
+                                errorText = _t("invite|error_already_joined_space");
                             } else {
-                                errorText = _t("User is already in the room");
+                                errorText = _t("invite|error_already_joined_room");
                             }
                             break;
                         case "M_LIMIT_EXCEEDED":
@@ -284,10 +281,10 @@ export default class MultiInviter {
                             return;
                         case "M_NOT_FOUND":
                         case "M_USER_NOT_FOUND":
-                            errorText = _t("User does not exist");
+                            errorText = _t("invite|error_user_not_found");
                             break;
                         case "M_PROFILE_UNDISCLOSED":
-                            errorText = _t("User may or may not exist");
+                            errorText = _t("invite|error_profile_undisclosed");
                             break;
                         case "M_PROFILE_NOT_FOUND":
                             if (!ignoreProfile) {
@@ -299,26 +296,23 @@ export default class MultiInviter {
                             break;
                         case "M_BAD_STATE":
                         case USER_BANNED:
-                            errorText = _t("The user must be unbanned before they can be invited.");
+                            errorText = _t("invite|error_bad_state");
                             break;
                         case "M_UNSUPPORTED_ROOM_VERSION":
                             if (isSpace) {
-                                errorText = _t("The user's homeserver does not support the version of the space.");
+                                errorText = _t("invite|error_version_unsupported_space");
                             } else {
-                                errorText = _t("The user's homeserver does not support the version of the room.");
+                                errorText = _t("invite|error_version_unsupported_room");
                             }
                             break;
                         case "ORG.MATRIX.JSSDK_MISSING_PARAM":
                             if (getAddressType(address) === AddressType.Email) {
-                                errorText = _t(
-                                    "Cannot invite user by email without an identity server. " +
-                                        'You can connect to one under "Settings".',
-                                );
+                                errorText = _t("cannot_invite_without_identity_server");
                             }
                     }
 
                     if (!errorText) {
-                        errorText = _t("Unknown server error");
+                        errorText = _t("invite|error_unknown");
                     }
 
                     this.completionStates[address] = InviteState.Error;

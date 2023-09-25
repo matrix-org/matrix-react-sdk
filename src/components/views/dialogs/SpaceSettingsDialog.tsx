@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useMemo } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
@@ -68,7 +67,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
             ),
             new Tab(
                 SpaceSettingsTab.Roles,
-                _td("Roles & Permissions"),
+                _td("room_settings|permissions|title"),
                 "mx_RoomSettingsDialog_rolesIcon",
                 <RolesRoomSettingsTab room={space} />,
             ),
@@ -85,7 +84,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
 
     return (
         <BaseDialog
-            title={_t("Settings - %(spaceName)s", { spaceName: space.name || _t("Unnamed Space") })}
+            title={_t("space_settings|title", { spaceName: space.name || _t("common|unnamed_space") })}
             className="mx_SpaceSettingsDialog"
             contentId="mx_SpaceSettingsDialog"
             onFinished={onFinished}

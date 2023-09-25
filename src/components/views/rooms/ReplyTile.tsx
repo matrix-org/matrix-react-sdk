@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import classNames from "classnames";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MatrixEventEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -144,7 +143,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         if (!hasOwnSender) {
             sender = (
                 <div className="mx_ReplyTile_sender">
-                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} width={16} height={16} />
+                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} size="16px" />
                     <SenderProfile mxEvent={mxEvent} />
                 </div>
             );

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t } from "../languageHandler";
@@ -38,7 +38,7 @@ export default class SpaceProvider extends RoomProvider {
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"
                 role="listbox"
-                aria-label={_t("Space Autocomplete")}
+                aria-label={_t("composer|autocomplete|space_a11y")}
             >
                 {completions}
             </div>

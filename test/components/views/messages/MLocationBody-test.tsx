@@ -16,11 +16,9 @@ limitations under the License.
 
 import React, { ComponentProps } from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { ClientEvent, RoomMember } from "matrix-js-sdk/src/matrix";
+import { LocationAssetType, ClientEvent, RoomMember, SyncState } from "matrix-js-sdk/src/matrix";
 import * as maplibregl from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
-import { SyncState } from "matrix-js-sdk/src/sync";
 
 import MLocationBody from "../../../../src/components/views/messages/MLocationBody";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -31,13 +29,6 @@ import SdkConfig from "../../../../src/SdkConfig";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 import { makeLocationEvent } from "../../../test-utils/location";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
-
-// Fake random strings to give a predictable snapshot
-jest.mock("matrix-js-sdk/src/randomstring", () => {
-    return {
-        randomString: () => "abdefghi",
-    };
-});
 
 describe("MLocationBody", () => {
     const mapOptions = { container: {} as unknown as HTMLElement, style: "" };

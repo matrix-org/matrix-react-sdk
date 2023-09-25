@@ -17,9 +17,7 @@ limitations under the License.
 */
 
 import React, { ComponentProps, ReactNode } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
@@ -135,7 +133,7 @@ export default class EventListSummary extends React.Component<
 
             const desc = formatCommaSeparatedList(descs);
 
-            return _t("%(nameList)s %(transitionList)s", { nameList, transitionList: desc });
+            return _t("timeline|summary|format", { nameList, transitionList: desc });
         });
 
         if (!summaries) {
@@ -252,101 +250,101 @@ export default class EventListSummary extends React.Component<
             case TransitionType.Joined:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|joined_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|joined", { oneUser: "", count });
                 break;
             case TransitionType.Left:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|left_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|left", { oneUser: "", count });
                 break;
             case TransitionType.JoinedAndLeft:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|joined_and_left_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|joined_and_left", { oneUser: "", count });
                 break;
             case TransitionType.LeftAndJoined:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|rejoined_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|rejoined", { oneUser: "", count });
                 break;
             case TransitionType.InviteReject:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)srejected their invitations %(count)s times", {
+                        ? _t("timeline|summary|rejected_invite_multiple", {
                               severalUsers: "",
                               count,
                           })
-                        : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count });
+                        : _t("timeline|summary|rejected_invite", { oneUser: "", count });
                 break;
             case TransitionType.InviteWithdrawal:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)shad their invitations withdrawn %(count)s times", {
+                        ? _t("timeline|summary|invite_withdrawn_multiple", {
                               severalUsers: "",
                               count,
                           })
-                        : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count });
+                        : _t("timeline|summary|invite_withdrawn", { oneUser: "", count });
                 break;
             case TransitionType.Invited:
                 res =
                     userCount > 1
-                        ? _t("were invited %(count)s times", { count })
-                        : _t("was invited %(count)s times", { count });
+                        ? _t("timeline|summary|invited_multiple", { count })
+                        : _t("timeline|summary|invited", { count });
                 break;
             case TransitionType.Banned:
                 res =
                     userCount > 1
-                        ? _t("were banned %(count)s times", { count })
-                        : _t("was banned %(count)s times", { count });
+                        ? _t("timeline|summary|banned_multiple", { count })
+                        : _t("timeline|summary|banned", { count });
                 break;
             case TransitionType.Unbanned:
                 res =
                     userCount > 1
-                        ? _t("were unbanned %(count)s times", { count })
-                        : _t("was unbanned %(count)s times", { count });
+                        ? _t("timeline|summary|unbanned_multiple", { count })
+                        : _t("timeline|summary|unbanned", { count });
                 break;
             case TransitionType.Kicked:
                 res =
                     userCount > 1
-                        ? _t("were removed %(count)s times", { count })
-                        : _t("was removed %(count)s times", { count });
+                        ? _t("timeline|summary|kicked_multiple", { count })
+                        : _t("timeline|summary|kicked", { count });
                 break;
             case TransitionType.ChangedName:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|changed_name_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|changed_name", { oneUser: "", count });
                 break;
             case TransitionType.ChangedAvatar:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their profile picture %(count)s times", {
+                        ? _t("timeline|summary|changed_avatar_multiple", {
                               severalUsers: "",
                               count,
                           })
-                        : _t("%(oneUser)schanged their profile picture %(count)s times", { oneUser: "", count });
+                        : _t("timeline|summary|changed_avatar", { oneUser: "", count });
                 break;
             case TransitionType.NoChange:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|no_change_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|no_change", { oneUser: "", count });
                 break;
             case TransitionType.ServerAcl:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged the server ACLs %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|server_acls_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|server_acls", { oneUser: "", count });
                 break;
             case TransitionType.ChangedPins:
                 res =
                     userCount > 1
                         ? _t(
-                              "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              "timeline|summary|pinned_events_multiple",
                               { severalUsers: "", count },
                               {
                                   a: (sub) => (
@@ -357,7 +355,7 @@ export default class EventListSummary extends React.Component<
                               },
                           )
                         : _t(
-                              "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              "timeline|summary|pinned_events",
                               { oneUser: "", count },
                               {
                                   a: (sub) => (
@@ -371,14 +369,14 @@ export default class EventListSummary extends React.Component<
             case TransitionType.MessageRemoved:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sremoved a message %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sremoved a message %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|redacted_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|redacted", { oneUser: "", count });
                 break;
             case TransitionType.HiddenEvent:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)ssent %(count)s hidden messages", { severalUsers: "", count })
-                        : _t("%(oneUser)ssent %(count)s hidden messages", { oneUser: "", count });
+                        ? _t("timeline|summary|hidden_event_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|hidden_event", { oneUser: "", count });
                 break;
         }
 

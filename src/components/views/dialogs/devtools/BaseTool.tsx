@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createContext, ReactNode, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { _t } from "../../../../languageHandler";
@@ -77,7 +77,7 @@ const BaseTool: React.FC<XOR<IMinProps, IProps>> = ({
             <div className={classNames("mx_DevTools_content", className)}>{children}</div>
             <div className="mx_Dialog_buttons">
                 {extraButton}
-                <button onClick={onBackClick}>{_t("Back")}</button>
+                <button onClick={onBackClick}>{_t("action|back")}</button>
                 {actionButton}
             </div>
         </>

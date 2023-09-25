@@ -14,28 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
-import { logger } from "matrix-js-sdk/src/logger";
-import { randomString } from "matrix-js-sdk/src/randomstring";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
-import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
 import {
+    TypedEventEmitter,
+    RoomEvent,
+    RoomStateEvent,
+    EventType,
+    MatrixClient,
     GroupCall,
     GroupCallEvent,
     GroupCallIntent,
     GroupCallState,
     GroupCallType,
-} from "matrix-js-sdk/src/webrtc/groupCall";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+} from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
+import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
 
 import type EventEmitter from "events";
-import type { IMyDevice } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { IMyDevice, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import type { IApp } from "../stores/WidgetStore";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
@@ -159,7 +157,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.emit(CallEvent.Participants, value, prevValue);
     }
 
-    public constructor(
+    protected constructor(
         /**
          * The widget used to access this call.
          */
@@ -656,6 +654,7 @@ export class ElementCall extends Call {
             analyticsID,
         });
 
+        if (client.isRoomEncrypted(groupCall.room.roomId)) params.append("perParticipantE2EE", "");
         if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
         if (SettingsStore.getValue("feature_allow_screen_share_only_mode")) params.append("allowVoipWithNoMedia", "");
 

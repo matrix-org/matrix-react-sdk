@@ -133,9 +133,11 @@ describe("General user settings tab", () => {
                     cy.findByRole("button", { name: "Language Dropdown" }).click();
 
                     // Assert that the default option is rendered and highlighted
-                    cy.findByRole("option", { name: /Bahasa Indonesia/ })
+                    cy.findByRole("option", { name: /Albanian/ })
                         .should("be.visible")
                         .should("have.class", "mx_Dropdown_option_highlight");
+
+                    cy.findByRole("option", { name: /Deutsch/ }).should("be.visible");
 
                     // Click again to close the dropdown
                     cy.findByRole("button", { name: "Language Dropdown" }).click();
@@ -230,7 +232,7 @@ describe("General user settings tab", () => {
         cy.closeDialog();
 
         // Assert the avatar's initial characters are set
-        cy.get(".mx_UserMenu .mx_BaseAvatar_initial").findByText("A").should("exist"); // Alice
-        cy.get(".mx_RoomView_wrapper .mx_BaseAvatar_initial").findByText("A").should("exist"); // Alice
+        cy.get(".mx_UserMenu .mx_BaseAvatar").findByText("A").should("exist"); // Alice
+        cy.get(".mx_RoomView_wrapper .mx_BaseAvatar").findByText("A").should("exist"); // Alice
     });
 });

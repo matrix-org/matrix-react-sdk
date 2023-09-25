@@ -16,21 +16,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
-import encrypt from "matrix-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
-import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
-import { logger } from "matrix-js-sdk/src/logger";
 import {
+    MatrixClient,
+    MsgType,
+    IImageInfo,
     HTTPError,
     IEventRelation,
     ISendEventResponse,
     MatrixEvent,
     UploadOpts,
     UploadProgress,
+    THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import encrypt from "matrix-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
+import { logger } from "matrix-js-sdk/src/logger";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
 import {
@@ -536,7 +536,7 @@ export default class ContentMessages {
         replyToEvent: MatrixEvent | undefined,
         promBefore?: Promise<any>,
     ): Promise<void> {
-        const fileName = file.name || _t("Attachment");
+        const fileName = file.name || _t("common|attachment");
         const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
             body: fileName,
             info: {
@@ -639,14 +639,14 @@ export default class ContentMessages {
             }
 
             if (!upload.cancelled) {
-                let desc = _t("The file '%(fileName)s' failed to upload.", { fileName: upload.fileName });
+                let desc = _t("upload_failed_generic", { fileName: upload.fileName });
                 if (error instanceof HTTPError && error.httpStatus === 413) {
-                    desc = _t("The file '%(fileName)s' exceeds this homeserver's size limit for uploads", {
+                    desc = _t("upload_failed_size", {
                         fileName: upload.fileName,
                     });
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Upload Failed"),
+                    title: _t("upload_failed_title"),
                     description: desc,
                 });
                 dis.dispatch<UploadErrorPayload>({ action: Action.UploadFailed, upload, error });

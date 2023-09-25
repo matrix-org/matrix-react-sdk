@@ -22,6 +22,7 @@ import encrypt from "matrix-encrypt-attachment";
 import { mocked } from "jest-mock";
 import fs from "fs";
 import path from "path";
+import userEvent from "@testing-library/user-event";
 
 import MImageBody from "../../../../src/components/views/messages/MImageBody";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
@@ -56,7 +57,7 @@ describe("<MImageBody/>", () => {
             },
         }),
     });
-    const url = "https://server/_matrix/media/r0/download/server/encrypted-image";
+    const url = "https://server/_matrix/media/v3/download/server/encrypted-image";
     // eslint-disable-next-line no-restricted-properties
     cli.mxcUrlToHttp.mockImplementation(
         (mxcUrl: string, width?: number, height?: number, resizeMethod?: string, allowDirectLinks?: boolean) => {
@@ -179,8 +180,8 @@ describe("<MImageBody/>", () => {
     });
 
     it("should fall back to /download/ if /thumbnail/ fails", async () => {
-        const thumbUrl = "https://server/_matrix/media/r0/thumbnail/server/image?width=800&height=600&method=scale";
-        const downloadUrl = "https://server/_matrix/media/r0/download/server/image";
+        const thumbUrl = "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale";
+        const downloadUrl = "https://server/_matrix/media/v3/download/server/image";
 
         const event = new MatrixEvent({
             room_id: "!room:server",
@@ -227,7 +228,7 @@ describe("<MImageBody/>", () => {
         mocked(global.URL.createObjectURL).mockReturnValue("blob:generated-thumb");
 
         fetchMock.getOnce(
-            "https://server/_matrix/media/r0/download/server/image",
+            "https://server/_matrix/media/v3/download/server/image",
             {
                 body: fs.readFileSync(path.resolve(__dirname, "..", "..", "..", "images", "animated-logo.webp")),
             },
@@ -257,5 +258,30 @@ describe("<MImageBody/>", () => {
         await waitForElementToBeRemoved(screen.getAllByRole("progressbar"));
         // thumbnail with dimensions present
         expect(container).toMatchSnapshot();
+    });
+
+    it("should show banner on hover", async () => {
+        const event = new MatrixEvent({
+            room_id: "!room:server",
+            sender: userId,
+            type: EventType.RoomMessage,
+            content: {
+                body: "alt for a test image",
+                info: {
+                    w: 40,
+                    h: 50,
+                },
+                url: "mxc://server/image",
+            },
+        });
+
+        const { container } = render(
+            <MImageBody {...props} mxEvent={event} mediaEventHelper={new MediaEventHelper(event)} />,
+        );
+
+        const img = container.querySelector(".mx_MImageBody_thumbnail")!;
+        await userEvent.hover(img);
+
+        expect(container.querySelector(".mx_MImageBody_banner")).toHaveTextContent("...alt for a test image");
     });
 });

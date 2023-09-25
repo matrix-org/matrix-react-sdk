@@ -22,11 +22,9 @@ import {
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto-api";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, Device, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ShowQrCodeCallbacks, ShowSasCallbacks, VerifierEvent } from "matrix-js-sdk/src/crypto-api/verification";
-import { Device } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import VerificationQRCode from "../elements/crypto/VerificationQRCode";
@@ -92,16 +90,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
         const brand = SdkConfig.get().brand;
 
         const noCommonMethodError: JSX.Element | null =
-            !showSAS && !showQR ? (
-                <p>
-                    {_t(
-                        "The device you are trying to verify doesn't support scanning a " +
-                            "QR code or emoji verification, which is what %(brand)s supports. Try " +
-                            "with a different client.",
-                        { brand },
-                    )}
-                </p>
-            ) : null;
+            !showSAS && !showQR ? <p>{_t("encryption|verification|no_support_qr_emoji", { brand })}</p> : null;
 
         if (this.props.layout === "dialog") {
             // HACK: This is a terrible idea.
@@ -110,7 +99,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (showQR) {
                 qrBlockDialog = (
                     <div className="mx_VerificationPanel_QRPhase_startOption">
-                        <p>{_t("Scan this unique code")}</p>
+                        <p>{_t("encryption|verification|qr_prompt")}</p>
                         <VerificationQRCode qrCodeBytes={this.state.qrCodeBytes} />
                     </div>
                 );
@@ -118,16 +107,16 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             if (showSAS) {
                 sasBlockDialog = (
                     <div className="mx_VerificationPanel_QRPhase_startOption">
-                        <p>{_t("Compare unique emoji")}</p>
+                        <p>{_t("encryption|verification|sas_prompt")}</p>
                         <span className="mx_VerificationPanel_QRPhase_helpText">
-                            {_t("Compare a unique set of emoji if you don't have a camera on either device")}
+                            {_t("encryption|verification|sas_description")}
                         </span>
                         <AccessibleButton
                             disabled={this.state.emojiButtonClicked}
                             onClick={this.startSAS}
                             kind="primary"
                         >
-                            {_t("Start")}
+                            {_t("action|start")}
                         </AccessibleButton>
                     </div>
                 );
@@ -135,7 +124,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             const or =
                 qrBlockDialog && sasBlockDialog ? (
                     <div className="mx_VerificationPanel_QRPhase_betweenText">
-                        {_t("%(qrCode)s or %(emojiCompare)s", {
+                        {_t("encryption|verification|qr_or_sas", {
                             emojiCompare: "",
                             qrCode: "",
                         })}
@@ -143,7 +132,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 ) : null;
             return (
                 <div>
-                    {_t("Verify this device by completing one of the following:")}
+                    {_t("encryption|verification|qr_or_sas_header")}
                     <div className="mx_VerificationPanel_QRPhase_startOptions">
                         {qrBlockDialog}
                         {or}
@@ -258,14 +247,14 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateNoClick}
                         >
-                            {_t("No")}
+                            {_t("action|no")}
                         </AccessibleButton>
                         <AccessibleButton
                             kind="primary"
                             disabled={this.state.reciprocateButtonClicked}
                             onClick={this.onReciprocateYesClick}
                         >
-                            {_t("Yes")}
+                            {_t("action|yes")}
                         </AccessibleButton>
                     </div>
                 </React.Fragment>
@@ -323,7 +312,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
                 <E2EIcon isUser={true} status={E2EState.Verified} size={128} hideTooltip={true} />
                 {text ? <p>{text}</p> : null}
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    {_t("Got it")}
+                    {_t("action|got_it")}
                 </AccessibleButton>
             </div>
         );
@@ -357,11 +346,11 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
         return (
             <div className="mx_UserInfo_container">
-                <h3>{_t("Verification cancelled")}</h3>
+                <h3>{_t("common|verification_cancelled")}</h3>
                 <p>{text}</p>
 
                 <AccessibleButton kind="primary" className="mx_UserInfo_wideButton" onClick={this.props.onClose}>
-                    {_t("Got it")}
+                    {_t("action|got_it")}
                 </AccessibleButton>
             </div>
         );

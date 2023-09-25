@@ -172,12 +172,14 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             if (description === userId) {
                 const user = client.getUser(userId);
                 if (user && user.displayName) {
-                    description = _t("%(name)s (%(userId)s)", { name: user.displayName, userId });
+                    description = _t("name_and_id", { name: user.displayName, userId });
                 }
             }
         }
         const declineLabel =
-            this.state.counter === 0 ? _t("Ignore") : _t("Ignore (%(counter)s)", { counter: this.state.counter });
+            this.state.counter === 0
+                ? _t("action|ignore")
+                : _t("Ignore (%(counter)s)", { counter: this.state.counter });
 
         return (
             <GenericToast

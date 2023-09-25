@@ -17,12 +17,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICreateClientOpts, PendingEventOrdering, RoomNameState, RoomNameType } from "matrix-js-sdk/src/matrix";
-import { IStartClientOpts, MatrixClient } from "matrix-js-sdk/src/client";
-import { MemoryStore } from "matrix-js-sdk/src/store/memory";
+import {
+    ICreateClientOpts,
+    PendingEventOrdering,
+    RoomNameState,
+    RoomNameType,
+    EventTimeline,
+    EventTimelineSet,
+    IStartClientOpts,
+    MatrixClient,
+    MemoryStore,
+} from "matrix-js-sdk/src/matrix";
 import * as utils from "matrix-js-sdk/src/utils";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -144,7 +150,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     public safeGet(): MatrixClient {
         if (!this.matrixClient) {
-            throw new UserFriendlyError("User is not logged in");
+            throw new UserFriendlyError("error_user_not_logged_in");
         }
         return this.matrixClient;
     }
@@ -213,11 +219,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             // For guests this is likely to happen during e-mail verification as part of registration
 
             const { finished } = Modal.createDialog(ErrorDialog, {
-                title: _t("Database unexpectedly closed"),
-                description: _t(
-                    "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
-                ),
-                button: _t("Reload"),
+                title: _t("error_database_closed_title"),
+                description: _t("error_database_closed_description"),
+                button: _t("action|reload"),
             });
             const [reload] = await finished;
             if (!reload) return;
@@ -350,7 +354,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private namesToRoomName(names: string[], count: number): string | undefined {
         const countWithoutMe = count - 1;
         if (!names.length) {
-            return _t("Empty room");
+            return _t("empty_room");
         }
         if (names.length === 1 && countWithoutMe <= 1) {
             return names[0];
@@ -362,12 +366,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return _t("%(user1)s and %(user2)s", {
+            return _t("user1_and_user2", {
                 user1: names[0],
                 user2: names[1],
             });
         }
-        return _t("%(user)s and %(count)s others", {
+        return _t("user_and_n_others", {
             user: names[0],
             count: count - 1,
         });
@@ -378,12 +382,12 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return _t("Inviting %(user1)s and %(user2)s", {
+            return _t("inviting_user1_and_user2", {
                 user1: names[0],
                 user2: names[1],
             });
         }
-        return _t("Inviting %(user)s and %(count)s others", {
+        return _t("inviting_user_and_n_others", {
             user: names[0],
             count: count - 1,
         });
@@ -424,11 +428,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                         }
                     case RoomNameType.EmptyRoom:
                         if (state.oldName) {
-                            return _t("Empty room (was %(oldName)s)", {
+                            return _t("empty_room_was_name", {
                                 oldName: state.oldName,
                             });
                         } else {
-                            return _t("Empty room");
+                            return _t("empty_room");
                         }
                     default:
                         return null;
