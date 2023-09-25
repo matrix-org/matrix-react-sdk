@@ -609,17 +609,17 @@ const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): tok
  * Try to decrypt a token retrieved from storage
  * @param pickleKey pickle key used during encryption of token, or undefined
  * @param token
- * @param tokenName token name used during encryption of token eg ACCESS_TOKEN_IV
- * @returns the decrypted token, or the plain text token, returns undefined when token cannot be decrypted
+ * @param tokenIv initialization vector used during encryption of token eg ACCESS_TOKEN_IV
+ * @returns the decrypted token, or the plain text token. Returns undefined when token cannot be decrypted
  */
 async function tryDecryptToken(
     pickleKey: string | undefined,
     token: IEncryptedPayload | string | undefined,
-    tokenName: string,
+    tokenIv: string,
 ): Promise<string | undefined> {
     if (pickleKey && isEncryptedPayload(token)) {
         const encrKey = await pickleKeyToAesKey(pickleKey);
-        const decryptedToken = await decryptAES(token, encrKey, tokenName);
+        const decryptedToken = await decryptAES(token, encrKey, tokenIv);
         encrKey.fill(0);
         return decryptedToken;
     }
