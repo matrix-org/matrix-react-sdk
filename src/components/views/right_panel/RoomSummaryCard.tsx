@@ -306,7 +306,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
-        <React.Fragment>
+        <header className="mx_RoomSummaryCard_container">
             <div className="mx_RoomSummaryCard_avatar" role="presentation">
                 <RoomAvatar room={room} size="54px" viewAvatarOnClick />
                 <TextWithTooltip
@@ -329,7 +329,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             <div className="mx_RoomSummaryCard_alias" title={alias}>
                 {alias}
             </div>
-        </React.Fragment>
+        </header>
     );
 
     const memberCount = useRoomMemberCount(room);
@@ -337,7 +337,8 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
     return (
-        <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard header={<span />} className="mx_RoomSummaryCard" onClose={onClose}>
+            {header}
             <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
                     {_t("common|people")}
