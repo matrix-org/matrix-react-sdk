@@ -16,10 +16,6 @@
     "Tue": "Asn",
     "Mon": "Ayn",
     "Sun": "Asa",
-    "Add Phone Number": "Rnu uṭṭun n utilifun",
-    "Add Email Address": "Rnu tasna imayl",
-    "Permissions": "Tisirag",
-    "exists": "illa",
     "Santa": "Santa",
     "Pizza": "Tapizzat",
     "Corn": "Akbal",
@@ -44,8 +40,6 @@
     "Algeria": "Dzayer",
     "Albania": "Albanya",
     "Afghanistan": "Afɣanistan",
-    "Phone": "Atilifun",
-    "Email": "Imayl",
     "Send": "Azen",
     "edited": "infel",
     "Copied!": "inɣel!",
@@ -54,7 +48,6 @@
     "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
     "None": "Walu",
-    "Account": "Amiḍan",
     "Algorithm:": "Talguritmit:",
     "Profile": "Ifres",
     "Folder": "Asdaw",
@@ -165,6 +158,24 @@
         "sort_by_alphabet": "A-Ẓ"
     },
     "auth": {
-        "register_action": "senflul amiḍan"
+        "register_action": "senflul amiḍan",
+        "phone_label": "Atilifun",
+        "email_field_label": "Imayl",
+        "msisdn_field_label": "Atilifun"
+    },
+    "room_settings": {
+        "permissions": {
+            "permissions_section": "Tisirag"
+        }
+    },
+    "settings": {
+        "security": {
+            "cross_signing_homeserver_support_exists": "illa"
+        },
+        "general": {
+            "account_section": "Amiḍan",
+            "add_email_dialog_title": "Rnu tasna imayl",
+            "add_msisdn_dialog_title": "Rnu uṭṭun n utilifun"
+        }
     }
 }

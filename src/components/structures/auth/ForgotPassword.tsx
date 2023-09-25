@@ -177,10 +177,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
 
         if (err?.name === "ConnectionError") {
             this.setState({
-                errorText:
-                    _t("Cannot reach homeserver") +
-                    ": " +
-                    _t("Ensure you have a stable internet connection, or get in touch with the server admin"),
+                errorText: _t("cannot_reach_homeserver") + ": " + _t("cannot_reach_homeserver_detail"),
             });
             return;
         }
@@ -396,7 +393,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
                             <PassphraseField
                                 name="reset_password"
                                 type="password"
-                                label={_td("New Password")}
+                                label={_td("auth|change_password_new_label")}
                                 value={this.state.password}
                                 minScore={PASSWORD_MIN_SCORE}
                                 fieldRef={(field) => (this.fieldPassword = field)}

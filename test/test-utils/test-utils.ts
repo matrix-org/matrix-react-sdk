@@ -60,7 +60,7 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
  *
- * See also `getMockClientWithEventEmitter` which does something similar but different.
+ * See also {@link getMockClientWithEventEmitter} which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -249,6 +249,8 @@ export function createTestClient(): MatrixClient {
         addThreePidOnly: jest.fn(),
         requestMsisdnToken: jest.fn(),
         submitMsisdnToken: jest.fn(),
+        getMediaConfig: jest.fn(),
+        baseUrl: "https://matrix-client.matrix.org",
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
