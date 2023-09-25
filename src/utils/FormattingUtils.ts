@@ -18,7 +18,7 @@ limitations under the License.
 import { ReactElement, ReactNode } from "react";
 import { useIdColorHash } from "@vector-im/compound-web";
 
-import { _t, getCurrentLanguage } from "../languageHandler";
+import { _t, getCurrentLanguage, getUserLanguage } from "../languageHandler";
 import { jsxJoin } from "./ReactUtils";
 const locale = getCurrentLanguage();
 
@@ -97,29 +97,32 @@ export function formatCommaSeparatedList(items: ReactElement[], itemLimit?: numb
 export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode;
 export function formatCommaSeparatedList(items: ReactNode[], itemLimit?: number): ReactNode {
     const remaining = itemLimit === undefined ? 0 : Math.max(items.length - itemLimit, 0);
-    if (items.length === 0) {
-        return "";
-    } else if (items.length === 1) {
-        return items[0];
-    } else {
-        let lastItem;
-        if (remaining > 0) {
-            items = items.slice(0, itemLimit);
-        } else {
-            lastItem = items.pop();
-        }
+    if (items.length <= 1) {
+        return items[0] ?? "";
+    }
 
-        let joinedItems;
+    const formatter = new Intl.ListFormat(getUserLanguage(), { style: "long", type: "conjunction" });
+    if (remaining > 0) {
+        items = items.slice(0, itemLimit);
+        let joinedItems: ReactNode;
         if (items.every((e) => typeof e === "string")) {
             joinedItems = items.join(", ");
         } else {
             joinedItems = jsxJoin(items, ", ");
         }
 
-        if (remaining > 0) {
-            return _t("%(items)s and %(count)s others", { items: joinedItems, count: remaining });
-        } else {
-            return _t("%(items)s and %(lastItem)s", { items: joinedItems, lastItem });
-        }
+        return _t("<Items/> and %(count)s others", { count: remaining }, { Items: () => joinedItems });
     }
+
+    if (items.every((e) => typeof e === "string")) {
+        return formatter.format(items as string[]);
+    }
+
+    const parts = formatter.formatToParts(items.map((_, i) => `${i}`));
+    return jsxJoin(
+        parts.map((part) => {
+            if (part.type === "literal") return part.value;
+            return items[parseInt(part.value, 10)];
+        }),
+    );
 }
