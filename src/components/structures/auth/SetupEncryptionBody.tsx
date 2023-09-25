@@ -167,7 +167,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
 
                         <div className="mx_CompleteSecurity_actionRow">
                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                {_t("Proceed with reset")}
+                                {_t("encryption|verification|reset_proceed_prompt")}
                             </AccessibleButton>
                         </div>
                     </div>
@@ -176,9 +176,9 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 const store = SetupEncryptionStore.sharedInstance();
                 let recoveryKeyPrompt;
                 if (store.keyInfo && keyHasPassphrase(store.keyInfo)) {
-                    recoveryKeyPrompt = _t("Verify with Security Key or Phrase");
+                    recoveryKeyPrompt = _t("encryption|verification|verify_using_key_or_phrase");
                 } else if (store.keyInfo) {
-                    recoveryKeyPrompt = _t("Verify with Security Key");
+                    recoveryKeyPrompt = _t("encryption|verification|verify_using_key");
                 }
 
                 let useRecoveryKeyButton;
@@ -194,16 +194,14 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 if (store.hasDevicesToVerifyAgainst) {
                     verifyButton = (
                         <AccessibleButton kind="primary" onClick={this.onVerifyClick}>
-                            {_t("Verify with another device")}
+                            {_t("encryption|verification|verify_using_device")}
                         </AccessibleButton>
                     );
                 }
 
                 return (
                     <div>
-                        <p>
-                            {_t("Verify your identity to access encrypted messages and prove your identity to others.")}
-                        </p>
+                        <p>{_t("encryption|verification|verification_description")}</p>
 
                         <div className="mx_CompleteSecurity_actionRow">
                             {verifyButton}
@@ -236,7 +234,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                     </p>
                 );
             } else {
-                message = <p>{_t("Your new device is now verified. Other users will see it as trusted.")}</p>;
+                message = <p>{_t("encryption|verification|verification_success_without_backup")}</p>;
             }
             return (
                 <div>
@@ -259,7 +257,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                     </p>
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="danger_outline" onClick={this.onSkipConfirmClick}>
-                            {_t("I'll verify later")}
+                            {_t("encryption|verification|verify_later")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onSkipBackClick}>
                             {_t("action|go_back")}
@@ -283,7 +281,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
 
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton kind="danger_outline" onClick={this.onResetConfirmClick}>
-                            {_t("Proceed with reset")}
+                            {_t("encryption|verification|reset_proceed_prompt")}
                         </AccessibleButton>
                         <AccessibleButton kind="primary" onClick={this.onResetBackClick}>
                             {_t("action|go_back")}
