@@ -93,8 +93,6 @@
     "That matches!": "Điều đó phù hợp!",
     "Great! This Security Phrase looks strong enough.": "Tuyệt vời! Cụm từ bảo mật này trông đủ mạnh.",
     "Enter a Security Phrase": "Nhập cụm từ bảo mật",
-    "Clear personal data": "Xóa dữ liệu cá nhân",
-    "Failed to re-authenticate due to a homeserver problem": "Không xác thực lại được do sự cố máy chủ",
     "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
     "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
@@ -3440,7 +3438,9 @@
         "no_hs_url_provided": "Không có đường dẫn server",
         "autodiscovery_unexpected_error_hs": "Lỗi xảy ra khi xử lý thiết lập máy chủ",
         "autodiscovery_unexpected_error_is": "Lỗi xảy ra khi xử lý thiết lập máy chủ định danh",
-        "incorrect_credentials_detail": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org."
+        "incorrect_credentials_detail": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org.",
+        "failed_soft_logout_homeserver": "Không xác thực lại được do sự cố máy chủ",
+        "soft_logout_subheading": "Xóa dữ liệu cá nhân"
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",

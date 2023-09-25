@@ -734,8 +734,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
     "Invalid base_url for m.identity_server": "m.identity_server 的 base_url 无效",
     "Identity server URL does not appear to be a valid identity server": "身份服务器链接不像是有效的身份服务器",
-    "Failed to re-authenticate due to a homeserver problem": "由于家服务器的问题，重新认证失败",
-    "Clear personal data": "清除个人数据",
     "Confirm encryption setup": "确认加密设置",
     "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "通过在你的服务器上备份加密密钥来防止丢失你对加密消息和数据的访问权。",
@@ -3327,7 +3325,9 @@
         "no_hs_url_provided": "未输入家服务器链接",
         "autodiscovery_unexpected_error_hs": "解析家服务器配置时发生未知错误",
         "autodiscovery_unexpected_error_is": "解析身份服务器配置时发生未知错误",
-        "incorrect_credentials_detail": "请注意，你正在登录 %(hs)s，而非 matrix.org。"
+        "incorrect_credentials_detail": "请注意，你正在登录 %(hs)s，而非 matrix.org。",
+        "failed_soft_logout_homeserver": "由于家服务器的问题，重新认证失败",
+        "soft_logout_subheading": "清除个人数据"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",

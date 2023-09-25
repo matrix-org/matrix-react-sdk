@@ -368,7 +368,6 @@
     "Could not load user profile": "Klarte ikke å laste inn brukerprofilen",
     "A new password must be entered.": "Et nytt passord må bli skrevet inn.",
     "New passwords must match each other.": "De nye passordene må samsvare med hverandre.",
-    "Clear personal data": "Tøm personlige data",
     "Passphrases must match": "Passfrasene må samsvare",
     "Passphrase must not be empty": "Passfrasen kan ikke være tom",
     "Confirm passphrase": "Bekreft passfrasen",
@@ -1605,7 +1604,8 @@
             "error_title": "Vi kunne ikke logge deg inn"
         },
         "reset_password_email_not_found_title": "Denne e-postadressen ble ikke funnet",
-        "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt"
+        "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt",
+        "soft_logout_subheading": "Tøm personlige data"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",

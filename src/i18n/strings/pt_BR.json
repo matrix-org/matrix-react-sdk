@@ -567,7 +567,6 @@
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "All settings": "Todas as configurações",
-    "Clear personal data": "Limpar dados pessoais",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
     "None": "Nenhuma",
     "Message search": "Pesquisa de mensagens",
@@ -741,7 +740,6 @@
     "Message edits": "Edições na mensagem",
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
-    "Failed to re-authenticate due to a homeserver problem": "Falha em autenticar novamente devido à um problema no servidor local",
     "Enter a Security Phrase": "Digite uma frase de segurança",
     "Enter your account password to confirm the upgrade:": "Digite a senha da sua conta para confirmar a atualização:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Você precisará se autenticar no servidor para confirmar a atualização.",
@@ -2762,7 +2760,9 @@
         "no_hs_url_provided": "Nenhum endereço fornecido do servidor local",
         "autodiscovery_unexpected_error_hs": "Erro inesperado buscando a configuração do servidor",
         "autodiscovery_unexpected_error_is": "Erro inesperado buscando a configuração do servidor de identidade",
-        "incorrect_credentials_detail": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org."
+        "incorrect_credentials_detail": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org.",
+        "failed_soft_logout_homeserver": "Falha em autenticar novamente devido à um problema no servidor local",
+        "soft_logout_subheading": "Limpar dados pessoais"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",

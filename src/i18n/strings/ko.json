@@ -450,8 +450,6 @@
     "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
     "General failure": "일반적인 실패",
     "Create account": "계정 만들기",
-    "Failed to re-authenticate due to a homeserver problem": "홈서버 문제로 다시 인증에 실패함",
-    "Clear personal data": "개인 정보 지우기",
     "That matches!": "맞습니다!",
     "That doesn't match.": "맞지 않습니다.",
     "Go back to set it again.": "돌아가서 다시 설정하기.",
@@ -1367,7 +1365,9 @@
         "no_hs_url_provided": "홈서버 URL이 제공되지 않음",
         "autodiscovery_unexpected_error_hs": "홈서버 설정을 해결하는 중 예기치 않은 오류",
         "autodiscovery_unexpected_error_is": "ID 서버 설정을 해결하는 중 예기치 않은 오류",
-        "incorrect_credentials_detail": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다."
+        "incorrect_credentials_detail": "지금 %(hs)s 서버로 로그인하고 있는데, matrix.org로 로그인해야 합니다.",
+        "failed_soft_logout_homeserver": "홈서버 문제로 다시 인증에 실패함",
+        "soft_logout_subheading": "개인 정보 지우기"
     },
     "export_chat": {
         "title": "대화 내보내기",

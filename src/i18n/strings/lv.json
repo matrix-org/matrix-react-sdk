@@ -333,8 +333,6 @@
     "Go back to set it again.": "Atgriezties, lai iestatītu atkārtoti.",
     "That doesn't match.": "Nesakrīt.",
     "That matches!": "Sakrīt!",
-    "Clear personal data": "Dzēst personas datus",
-    "Failed to re-authenticate due to a homeserver problem": "Bāzes servera problēmas dēļ atkārtoti autentificēties neizdevās",
     "Create account": "Izveidot kontu",
     "Your password has been reset.": "Jūsu parole ir atiestatīta.",
     "Could not load user profile": "Nevarēja ielādēt lietotāja profilu",
@@ -1773,7 +1771,9 @@
         "no_hs_url_provided": "Nav iestatīts bāzes servera URL",
         "autodiscovery_unexpected_error_hs": "Negaidīta kļūme bāzes servera konfigurācijā",
         "autodiscovery_unexpected_error_is": "Negaidīta kļūda identitātes servera konfigurācijā",
-        "incorrect_credentials_detail": "Lūdzu ņem vērā, ka Tu pieraksties %(hs)s serverī, nevis matrix.org serverī."
+        "incorrect_credentials_detail": "Lūdzu ņem vērā, ka Tu pieraksties %(hs)s serverī, nevis matrix.org serverī.",
+        "failed_soft_logout_homeserver": "Bāzes servera problēmas dēļ atkārtoti autentificēties neizdevās",
+        "soft_logout_subheading": "Dzēst personas datus"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",

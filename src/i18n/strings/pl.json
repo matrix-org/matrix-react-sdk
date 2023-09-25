@@ -768,7 +768,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dla większej liczby wiadomości, może to zająć trochę czasu. Nie odświeżaj klienta w tym czasie.",
     "Remove recent messages by %(user)s": "Usuń ostatnie wiadomości od %(user)s",
     "No recent messages by %(user)s found": "Nie znaleziono ostatnich wiadomości od %(user)s",
-    "Clear personal data": "Wyczyść dane osobiste",
     "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
     "Clear all data": "Wyczyść wszystkie dane",
     "Please enter verification code sent via text.": "Wprowadź kod weryfikacyjny wysłany wiadomością tekstową.",
@@ -1077,7 +1076,6 @@
     "Saving…": "Zapisywanie…",
     "Creating…": "Tworzenie…",
     "Verify Session": "Zweryfikuj sesję",
-    "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Status HTTP %(httpStatus)s)",
@@ -1813,7 +1811,6 @@
     "Great! This Security Phrase looks strong enough.": "Wspaniale! Hasło bezpieczeństwa wygląda na silne.",
     "Enter a Security Phrase": "Wprowadź hasło bezpieczeństwa",
     "Send email": "Wyślij e-mail",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Ostrzeżenie: Twoje dane osobowe (włączając w to klucze szyfrujące) są wciąż przechowywane w tej sesji. Wyczyść je, jeśli chcesz zakończyć tę sesję lub chcesz zalogować się na inne konto.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
     "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
@@ -3703,7 +3700,10 @@
         "no_hs_url_provided": "Nie podano URL serwera głównego",
         "autodiscovery_unexpected_error_hs": "Nieoczekiwany błąd przy ustalaniu konfiguracji serwera domowego",
         "autodiscovery_unexpected_error_is": "Nieoczekiwany błąd przy ustalaniu konfiguracji serwera tożsamości",
-        "incorrect_credentials_detail": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org."
+        "incorrect_credentials_detail": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
+        "failed_soft_logout_homeserver": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
+        "soft_logout_subheading": "Wyczyść dane osobiste",
+        "soft_logout_warning": "Ostrzeżenie: Twoje dane osobowe (włączając w to klucze szyfrujące) są wciąż przechowywane w tej sesji. Wyczyść je, jeśli chcesz zakończyć tę sesję lub chcesz zalogować się na inne konto."
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",

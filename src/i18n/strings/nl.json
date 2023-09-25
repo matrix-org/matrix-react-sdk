@@ -433,8 +433,6 @@
     "Clear all data": "Alle gegevens wissen",
     "Your homeserver doesn't seem to support this feature.": "Jouw homeserver biedt geen ondersteuning voor deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
-    "Failed to re-authenticate due to a homeserver problem": "Opnieuw inloggen is mislukt wegens een probleem met de homeserver",
-    "Clear personal data": "Persoonlijke gegevens wissen",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Laat ons weten wat er verkeerd is gegaan, of nog beter, maak een foutrapport aan op GitHub, waarin je het probleem beschrijft.",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
@@ -3355,7 +3353,9 @@
         "no_hs_url_provided": "Geen homeserver-URL opgegeven",
         "autodiscovery_unexpected_error_hs": "Onverwachte fout bij het controleren van de homeserver-configuratie",
         "autodiscovery_unexpected_error_is": "Onverwachte fout bij het oplossen van de identiteitsserverconfiguratie",
-        "incorrect_credentials_detail": "Let op dat je inlogt bij de %(hs)s-server, niet matrix.org."
+        "incorrect_credentials_detail": "Let op dat je inlogt bij de %(hs)s-server, niet matrix.org.",
+        "failed_soft_logout_homeserver": "Opnieuw inloggen is mislukt wegens een probleem met de homeserver",
+        "soft_logout_subheading": "Persoonlijke gegevens wissen"
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",

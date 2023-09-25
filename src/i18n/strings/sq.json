@@ -442,8 +442,6 @@
     "Command Help": "Ndihmë Urdhri",
     "Find others by phone or email": "Gjeni të tjerë përmes telefoni ose email-i",
     "Be found by phone or email": "Bëhuni i gjetshëm përmes telefoni ose email-i",
-    "Failed to re-authenticate due to a homeserver problem": "S’u arrit të ribëhej mirëfilltësimi, për shkak të një problemi me shërbyesin Home",
-    "Clear personal data": "Spastro të dhëna personale",
     "Spanner": "Çelës",
     "Checking server": "Po kontrollohet shërbyesi",
     "Disconnect from the identity server <idserver />?": "Të shkëputet prej shërbyesit të identiteteve <idserver />?",
@@ -1770,7 +1768,6 @@
     "Your keys are now being backed up from this device.": "Kyçet tuaj tani po kopjeruhen nga kjo pajisje.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Jepni një Frazë Sigurie që e dini vetëm ju, ngaqë përdoret për të mbrojtur të dhënat tuaja. Që të jeni të sigurt, s’duhet të ripërdorni fjalëkalimin e llogarisë tuaj.",
     "Starting backup…": "Po fillohet kopjeruajtje…",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Kujdes: të dhënat tuaja personale (përfshi kyçe fshehtëzimi) janë ende të depozituara në këtë sesion. Spastrojini, nëse keni përfunduar së përdoruri këtë sesion, ose dëshironi të bëni hyrjen në një tjetër llogari.",
     "Connecting…": "Po lidhet…",
     "Scan QR code": "Skanoni kodin QR",
     "Select '%(scanQRCode)s'": "Përzgjidhni “%(scanQRCode)s”",
@@ -3620,7 +3617,10 @@
         "no_hs_url_provided": "S’u dha URL shërbyesi Home",
         "autodiscovery_unexpected_error_hs": "Gabim i papritur gjatë ftillimit të formësimit të shërbyesit Home",
         "autodiscovery_unexpected_error_is": "Gabim i papritur teksa ftillohej formësimi i shërbyesit të identiteteve",
-        "incorrect_credentials_detail": "Ju lutemi, kini parasysh se jeni futur te shërbyesi %(hs)s, jo te matrix.org."
+        "incorrect_credentials_detail": "Ju lutemi, kini parasysh se jeni futur te shërbyesi %(hs)s, jo te matrix.org.",
+        "failed_soft_logout_homeserver": "S’u arrit të ribëhej mirëfilltësimi, për shkak të një problemi me shërbyesin Home",
+        "soft_logout_subheading": "Spastro të dhëna personale",
+        "soft_logout_warning": "Kujdes: të dhënat tuaja personale (përfshi kyçe fshehtëzimi) janë ende të depozituara në këtë sesion. Spastrojini, nëse keni përfunduar së përdoruri këtë sesion, ose dëshironi të bëni hyrjen në një tjetër llogari."
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",

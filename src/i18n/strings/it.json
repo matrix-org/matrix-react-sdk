@@ -434,8 +434,6 @@
     "Clear all data": "Elimina tutti i dati",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Per favore dicci cos'è andato storto, o meglio, crea una segnalazione su GitHub che descriva il problema.",
     "Removing…": "Rimozione…",
-    "Failed to re-authenticate due to a homeserver problem": "Riautenticazione fallita per un problema dell'homeserver",
-    "Clear personal data": "Elimina dati personali",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
     "Checking server": "Controllo del server",
@@ -1767,7 +1765,6 @@
     "unknown": "sconosciuto",
     "Red": "Rosso",
     "Grey": "Grigio",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account.",
     "There are no past polls in this room": "In questa stanza non ci sono sondaggi passati",
     "There are no active polls in this room": "In questa stanza non ci sono sondaggi attivi",
     "Declining…": "Rifiuto…",
@@ -3724,7 +3721,10 @@
         "autodiscovery_unexpected_error_hs": "Errore inaspettato nella risoluzione della configurazione homeserver",
         "autodiscovery_unexpected_error_is": "Errore inaspettato risolvendo la configurazione del server identità",
         "autodiscovery_hs_incompatible": "Il tuo homeserver è troppo vecchio e non supporta la versione API minima richiesta. Contatta il proprietario del server o aggiornalo.",
-        "incorrect_credentials_detail": "Nota che stai accedendo nel server %(hs)s , non matrix.org."
+        "incorrect_credentials_detail": "Nota che stai accedendo nel server %(hs)s , non matrix.org.",
+        "failed_soft_logout_homeserver": "Riautenticazione fallita per un problema dell'homeserver",
+        "soft_logout_subheading": "Elimina dati personali",
+        "soft_logout_warning": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account."
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",

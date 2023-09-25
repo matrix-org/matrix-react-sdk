@@ -432,8 +432,6 @@
     "Your homeserver doesn't seem to support this feature.": "您的家伺服器似乎並不支援此功能。",
     "Clear all data": "清除所有資料",
     "Removing…": "正在刪除…",
-    "Failed to re-authenticate due to a homeserver problem": "因為家伺服器的問題，所以無法重新驗證",
-    "Clear personal data": "清除個人資料",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "請告訴我們發生了什麼錯誤，或更好的是，在 GitHub 上建立描述問題的議題。",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
@@ -1771,7 +1769,6 @@
     "There are no active polls in this room": "此聊天室沒有正在進行的投票",
     "Declining…": "正在拒絕…",
     "This session is backing up your keys.": "此工作階段正在備份您的金鑰。",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "警告：您的個人資料（包含加密金鑰）仍儲存於此工作階段。若您使用完此工作階段或想要登入其他帳號，請清除它。",
     "Scan QR code": "掃描 QR Code",
     "Select '%(scanQRCode)s'": "選取「%(scanQRCode)s」",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "在設定中啟用「%(manageIntegrations)s」來執行此動作。",
@@ -3719,7 +3716,10 @@
         "autodiscovery_unexpected_error_hs": "解析家伺服器設定時發生錯誤",
         "autodiscovery_unexpected_error_is": "解析身分伺服器設定時發生未預期的錯誤",
         "autodiscovery_hs_incompatible": "您的家伺服器太舊了，不支援所需的最低 API 版本。請聯絡您的伺服器擁有者，或是升級您的伺服器。",
-        "incorrect_credentials_detail": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。"
+        "incorrect_credentials_detail": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。",
+        "failed_soft_logout_homeserver": "因為家伺服器的問題，所以無法重新驗證",
+        "soft_logout_subheading": "清除個人資料",
+        "soft_logout_warning": "警告：您的個人資料（包含加密金鑰）仍儲存於此工作階段。若您使用完此工作階段或想要登入其他帳號，請清除它。"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",

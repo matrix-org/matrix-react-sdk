@@ -508,7 +508,6 @@
         "other": "و %(count)s مورد بیشتر ..."
     },
     "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
-    "Failed to re-authenticate due to a homeserver problem": "به دلیل مشکلی که در سرور وجود دارد ، احراز هویت مجدد انجام نشد",
     "Server Options": "گزینه های سرور",
     "This address is already in use": "این آدرس قبلاً استفاده شده‌است",
     "This address is available to use": "این آدرس برای استفاده در دسترس است",
@@ -1016,7 +1015,6 @@
         "one": "%(items)s و یکی دیگر",
         "other": "%(items)s و %(count)s دیگر"
     },
-    "Clear personal data": "پاک‌کردن داده‌های شخصی",
     "Create account": "ساختن حساب کاربری",
     "Return to login screen": "بازگشت به صفحه‌ی ورود",
     "Your password has been reset.": "گذرواژه‌ی شما با موفقیت تغییر کرد.",
@@ -2446,7 +2444,9 @@
         "no_hs_url_provided": "هیچ آدرس سروری وارد نشده‌است",
         "autodiscovery_unexpected_error_hs": "خطای غیر منتظره‌ای در حین بررسی پیکربندی سرور رخ داد",
         "autodiscovery_unexpected_error_is": "خطای غیر منتظره‌ای در حین بررسی پیکربندی سرور هویت‌سنجی رخ داد",
-        "incorrect_credentials_detail": "لطفا توجه کنید شما به سرور %(hs)s وارد شده‌اید، و نه سرور matrix.org."
+        "incorrect_credentials_detail": "لطفا توجه کنید شما به سرور %(hs)s وارد شده‌اید، و نه سرور matrix.org.",
+        "failed_soft_logout_homeserver": "به دلیل مشکلی که در سرور وجود دارد ، احراز هویت مجدد انجام نشد",
+        "soft_logout_subheading": "پاک‌کردن داده‌های شخصی"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",

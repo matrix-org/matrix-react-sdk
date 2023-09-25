@@ -389,7 +389,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Die Verwendung eines Identitäts-Servers ist optional. Solltest du dich dazu entschließen, keinen Identitäts-Server zu verwenden, kannst du von anderen Nutzern nicht gefunden werden und andere nicht per E-Mail-Adresse oder Telefonnummer einladen.",
     "Do not use an identity server": "Keinen Identitäts-Server verwenden",
     "Enter a new identity server": "Gib einen neuen Identitäts-Server ein",
-    "Clear personal data": "Persönliche Daten löschen",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Wenn du die Verbindung zu deinem Identitäts-Server trennst, kannst du nicht mehr von anderen Benutzern gefunden werden und andere nicht mehr per E-Mail oder Telefonnummer einladen.",
     "Disconnect from the identity server <idserver />?": "Verbindung zum Identitäts-Server <idserver /> trennen?",
     "Deactivate account": "Benutzerkonto deaktivieren",
@@ -697,7 +696,6 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Um diesen Raum zu aktualisieren, muss die aktuelle Instanz des Raums geschlossen und an ihrer Stelle ein neuer Raum erstellt werden. Um den Raummitgliedern die bestmögliche Erfahrung zu bieten, werden wir:",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Eine Raumaktualisierung ist ein komplexer Vorgang, der üblicherweise empfohlen wird, wenn ein Raum aufgrund von Fehlern, fehlenden Funktionen oder Sicherheitslücken instabil ist.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
-    "Failed to re-authenticate due to a homeserver problem": "Erneute Authentifizierung aufgrund eines Problems des Heim-Servers fehlgeschlagen",
     "Restore your key backup to upgrade your encryption": "Schlüsselsicherung wiederherstellen, um deine Verschlüsselung zu aktualisieren",
     "Upgrade your encryption": "Aktualisiere deine Verschlüsselung",
     "Unable to set up secret storage": "Sicherer Speicher kann nicht eingerichtet werden",
@@ -1771,7 +1769,6 @@
     "Declining…": "Ablehnen …",
     "There are no past polls in this room": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
     "There are no active polls in this room": "In diesem Raum gibt es keine aktiven Umfragen",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Achtung: Deine persönlichen Daten (einschließlich Verschlüsselungs-Schlüssel) sind noch in dieser Sitzung gespeichert. Lösche diese Daten, wenn du diese Sitzung nicht mehr benötigst, oder dich mit einem anderen Konto anmelden möchtest.",
     "Starting backup…": "Beginne Sicherung …",
     "Connecting…": "Verbinde …",
     "Scan QR code": "QR-Code einlesen",
@@ -3724,7 +3721,10 @@
         "autodiscovery_unexpected_error_hs": "Ein unerwarteter Fehler ist beim Laden der Heim-Server-Konfiguration aufgetreten",
         "autodiscovery_unexpected_error_is": "Ein unerwarteter Fehler ist beim Laden der Identitäts-Server-Konfiguration aufgetreten",
         "autodiscovery_hs_incompatible": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server.",
-        "incorrect_credentials_detail": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org."
+        "incorrect_credentials_detail": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org.",
+        "failed_soft_logout_homeserver": "Erneute Authentifizierung aufgrund eines Problems des Heim-Servers fehlgeschlagen",
+        "soft_logout_subheading": "Persönliche Daten löschen",
+        "soft_logout_warning": "Achtung: Deine persönlichen Daten (einschließlich Verschlüsselungs-Schlüssel) sind noch in dieser Sitzung gespeichert. Lösche diese Daten, wenn du diese Sitzung nicht mehr benötigst, oder dich mit einem anderen Konto anmelden möchtest."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",

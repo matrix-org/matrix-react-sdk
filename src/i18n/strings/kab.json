@@ -128,7 +128,6 @@
     "Delete Backup": "Kkes aḥraz",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
     "Connect this session to Key Backup": "Qqen tiɣimit-a ɣer uḥraz n tsarut",
-    "Clear personal data": "Sfeḍ isefka udmawanen",
     "Passphrases must match": "Tifyar tuffirin ilaq ad mṣadant",
     "Passphrase must not be empty": "Tafyirt tuffirt ur ilaq ara ad ilint d tilmawin",
     "Export room keys": "Sifeḍ tisura n texxamt",
@@ -633,7 +632,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
     "Invalid identity server discovery response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
     "Identity server URL does not appear to be a valid identity server": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
-    "Failed to re-authenticate due to a homeserver problem": "Allus n usesteb ur yeddi ara ssebbba n wugur deg uqeddac agejdan",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Seqdec tafyirt tuffirt i tessneḍ kan kečč·kemm, syen sekles ma tebɣiḍ tasarut n tɣellist i useqdec-ines i uḥraz.",
     "Restore your key backup to upgrade your encryption": "Err-d aḥraz n tsarut-ik·im akken ad tleqqmeḍ awgelhen-ik·im",
     "You'll need to authenticate with the server to confirm the upgrade.": "Ad teḥqiǧeḍ asesteb s uqeddac i wakken ad tesnetmeḍ lqem.",
@@ -1985,7 +1983,9 @@
         "no_hs_url_provided": "Ulac URL n uqeddac agejdan i d-yettunefken",
         "autodiscovery_unexpected_error_hs": "Tuccḍa ur nettwaṛǧa ara lawan n uṣeggem n twila n uqeddac agejdan",
         "autodiscovery_unexpected_error_is": "Tuccḍa ur nettwaṛǧa ara lawan n uṣeggem n uqeddac n timagit",
-        "incorrect_credentials_detail": "Ttxil-k·m gar tamawt aql-ak·akem tkecmeḍ ɣer uqeddac %(hs)s, neɣ matrix.org."
+        "incorrect_credentials_detail": "Ttxil-k·m gar tamawt aql-ak·akem tkecmeḍ ɣer uqeddac %(hs)s, neɣ matrix.org.",
+        "failed_soft_logout_homeserver": "Allus n usesteb ur yeddi ara ssebbba n wugur deg uqeddac agejdan",
+        "soft_logout_subheading": "Sfeḍ isefka udmawanen"
     },
     "export_chat": {
         "messages": "Iznan"

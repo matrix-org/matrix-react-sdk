@@ -433,8 +433,6 @@
     "Your homeserver doesn't seem to support this feature.": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité.",
     "Clear all data": "Supprimer toutes les données",
     "Removing…": "Suppression…",
-    "Failed to re-authenticate due to a homeserver problem": "Échec de la ré-authentification à cause d’un problème du serveur d’accueil",
-    "Clear personal data": "Supprimer les données personnelles",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Dites-nous ce qui s’est mal passé ou, encore mieux, créez un rapport d’erreur sur GitHub qui décrit le problème.",
     "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
     "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
@@ -1771,7 +1769,6 @@
     "Declining…": "Refus…",
     "There are no past polls in this room": "Il n’y a aucun ancien sondage dans ce salon",
     "There are no active polls in this room": "Il n’y a aucun sondage en cours dans ce salon",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte.",
     "Scan QR code": "Scanner le QR code",
     "Select '%(scanQRCode)s'": "Sélectionnez « %(scanQRCode)s »",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
@@ -3719,7 +3716,10 @@
         "autodiscovery_unexpected_error_hs": "Une erreur inattendue est survenue pendant la résolution de la configuration du serveur d’accueil",
         "autodiscovery_unexpected_error_is": "Une erreur inattendue est survenue pendant la résolution de la configuration du serveur d’identité",
         "autodiscovery_hs_incompatible": "Votre serveur d’accueil est trop ancien et ne prend pas en charge la version minimale requise de l’API. Veuillez contacter le propriétaire du serveur, ou bien mettez à jour votre serveur.",
-        "incorrect_credentials_detail": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org."
+        "incorrect_credentials_detail": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org.",
+        "failed_soft_logout_homeserver": "Échec de la ré-authentification à cause d’un problème du serveur d’accueil",
+        "soft_logout_subheading": "Supprimer les données personnelles",
+        "soft_logout_warning": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte."
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",

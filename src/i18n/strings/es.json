@@ -749,8 +749,6 @@
     "All settings": "Ajustes",
     "Switch theme": "Cambiar tema",
     "Create account": "Crear una cuenta",
-    "Failed to re-authenticate due to a homeserver problem": "No ha sido posible volver a autenticarse debido a un problema con el servidor base",
-    "Clear personal data": "Borrar datos personales",
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
     "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Protéjase contra la pérdida de acceso a los mensajes y datos cifrados haciendo una copia de seguridad de las claves de cifrado en su servidor.",
@@ -3541,7 +3539,9 @@
         "no_hs_url_provided": "No se ha indicado la URL del servidor local",
         "autodiscovery_unexpected_error_hs": "Error inesperado en la configuración del servidor",
         "autodiscovery_unexpected_error_is": "Error inesperado en la configuración del servidor de identidad",
-        "incorrect_credentials_detail": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org."
+        "incorrect_credentials_detail": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org.",
+        "failed_soft_logout_homeserver": "No ha sido posible volver a autenticarse debido a un problema con el servidor base",
+        "soft_logout_subheading": "Borrar datos personales"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",

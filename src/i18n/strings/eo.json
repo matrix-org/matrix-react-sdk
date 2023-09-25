@@ -412,7 +412,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vi ne povas sendi mesaĝojn ĝis vi tralegos kaj konsentos <consentLink>niajn uzokondiĉojn</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis rimedan limon. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
-    "Clear personal data": "Vakigi personajn datumojn",
     "New Recovery Method": "Nova rehava metodo",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se vi ne agordis la novan rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj.",
     "Set up Secure Messages": "Agordi Sekurajn mesaĝojn",
@@ -429,7 +428,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
     "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
     "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
-    "Failed to re-authenticate due to a homeserver problem": "Malsukcesis reaŭtentikigi pro hejmservila problemo",
     "Go back to set it again.": "Reiru por reagordi ĝin.",
     "Your keys are being backed up (the first backup could take a few minutes).": "Viaj ŝlosiloj estas savkopiataj (la unua savkopio povas daŭri kelkajn minutojn).",
     "Unable to create key backup": "Ne povas krei savkopion de ŝlosiloj",
@@ -2746,7 +2744,9 @@
         "no_hs_url_provided": "Neniu hejmservila URL donita",
         "autodiscovery_unexpected_error_hs": "Neatendita eraro eltrovi hejmservilajn agordojn",
         "autodiscovery_unexpected_error_is": "Neatendita eraro eltrovi agordojn de identiga servilo",
-        "incorrect_credentials_detail": "Rimarku ke vi salutas la servilon %(hs)s, ne matrix.org."
+        "incorrect_credentials_detail": "Rimarku ke vi salutas la servilon %(hs)s, ne matrix.org.",
+        "failed_soft_logout_homeserver": "Malsukcesis reaŭtentikigi pro hejmservila problemo",
+        "soft_logout_subheading": "Vakigi personajn datumojn"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",

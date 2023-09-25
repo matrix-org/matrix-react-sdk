@@ -434,10 +434,8 @@
     "Clear all data": "Alle gegeevns wissn",
     "Your homeserver doesn't seem to support this feature.": "Je thuusserver biedt geen oundersteunienge vo deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
-    "Failed to re-authenticate due to a homeserver problem": "’t Heranmeldn is mislukt omwille van e probleem me de thuusserver",
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
     "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
-    "Clear personal data": "Persoonlike gegeevns wissn",
     "Checking server": "Server wor gecontroleerd",
     "Disconnect from the identity server <idserver />?": "Wil je de verbindienge me den identiteitsserver <idserver /> verbreekn?",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Je makt vo de moment gebruuk van <server></server> vo deur je contactn gevoundn te kunn wordn, en von hunder te kunn viendn. Je kut hierounder jen identiteitsserver wyzign.",
@@ -1037,7 +1035,9 @@
         "no_hs_url_provided": "Geen thuusserver-URL ingegeevn",
         "autodiscovery_unexpected_error_hs": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
         "autodiscovery_unexpected_error_is": "Ounverwachte foute by ’t iplossn van d’identiteitsserverconfiguroasje",
-        "incorrect_credentials_detail": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org."
+        "incorrect_credentials_detail": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org.",
+        "failed_soft_logout_homeserver": "’t Heranmeldn is mislukt omwille van e probleem me de thuusserver",
+        "soft_logout_subheading": "Persoonlike gegeevns wissn"
     },
     "export_chat": {
         "messages": "Berichtn"

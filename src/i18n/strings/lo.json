@@ -788,9 +788,7 @@
     "That matches!": "ກົງກັນ!",
     "Great! This Security Phrase looks strong enough.": "ດີເລີດ! ປະໂຫຍກຄວາມປອດໄພນີ້ເບິ່ງຄືວ່າເຂັ້ມແຂງພຽງພໍ.",
     "Enter a Security Phrase": "ໃສ່ປະໂຫຍກເພື່ອຄວາມປອດໄພ",
-    "Clear personal data": "ລຶບຂໍ້ມູນສ່ວນຕົວ",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
-    "Failed to re-authenticate due to a homeserver problem": "ການພິສູດຢືນຢັນຄືນໃໝ່ເນື່ອງຈາກບັນຫາ homeserver ບໍ່ສຳເລັດ",
     "Create account": "ສ້າງບັນຊີ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
@@ -3102,7 +3100,9 @@
         "no_hs_url_provided": "ບໍ່ມີການສະໜອງ URL homeserver",
         "autodiscovery_unexpected_error_hs": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການຕັ້ງຄ່າ homeserver",
         "autodiscovery_unexpected_error_is": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການກຳນົດຄ່າເຊີບເວີ",
-        "incorrect_credentials_detail": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org."
+        "incorrect_credentials_detail": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org.",
+        "failed_soft_logout_homeserver": "ການພິສູດຢືນຢັນຄືນໃໝ່ເນື່ອງຈາກບັນຫາ homeserver ບໍ່ສຳເລັດ",
+        "soft_logout_subheading": "ລຶບຂໍ້ມູນສ່ວນຕົວ"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",

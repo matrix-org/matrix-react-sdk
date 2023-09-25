@@ -736,8 +736,6 @@
     "Invalid identity server discovery response": "Ogiltigt identitetsserverupptäcktssvar",
     "Invalid base_url for m.identity_server": "Ogiltig base_url för m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
-    "Failed to re-authenticate due to a homeserver problem": "Misslyckades att återautentisera p.g.a. ett hemserverproblem",
-    "Clear personal data": "Rensa personlig information",
     "Confirm encryption setup": "Bekräfta krypteringsinställning",
     "Click the button below to confirm setting up encryption.": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Skydda mot att förlora åtkomst till krypterade meddelanden och data genom att säkerhetskopiera krypteringsnycklar på din server.",
@@ -1769,7 +1767,6 @@
     "Grey": "Grå",
     "Declining…": "Nekar…",
     "This session is backing up your keys.": "Den här sessionen säkerhetskopierar dina nycklar.",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto.",
     "Scan QR code": "Skanna QR-kod",
     "Select '%(scanQRCode)s'": "Välj '%(scanQRCode)s'",
     "There are no past polls in this room": "Det finns inga gamla omröstningar i det här rummet",
@@ -3659,7 +3656,10 @@
         "autodiscovery_unexpected_error_hs": "Oväntat fel vid inläsning av hemserverkonfiguration",
         "autodiscovery_unexpected_error_is": "Oväntat fel vid inläsning av identitetsserverkonfiguration",
         "autodiscovery_hs_incompatible": "Din hemserver är för gammal och stöder inte minimum-API:t som krävs. Vänligen kontakta din serverägare, eller uppgradera din server.",
-        "incorrect_credentials_detail": "Observera att du loggar in på servern %(hs)s, inte matrix.org."
+        "incorrect_credentials_detail": "Observera att du loggar in på servern %(hs)s, inte matrix.org.",
+        "failed_soft_logout_homeserver": "Misslyckades att återautentisera p.g.a. ett hemserverproblem",
+        "soft_logout_subheading": "Rensa personlig information",
+        "soft_logout_warning": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",

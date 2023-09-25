@@ -1261,9 +1261,7 @@
     "Use a different passphrase?": "Gunakan frasa sandi yang berbeda?",
     "Great! This Security Phrase looks strong enough.": "Hebat! Frasa Keamanan ini kelihatannya kuat.",
     "Enter a Security Phrase": "Masukkan sebuah Frasa Keamanan",
-    "Clear personal data": "Hapus data personal",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Dapatkan kembali akses ke akun Anda dan pulihkan kunci enkripsi yang disimpan dalam sesi ini. Tanpa mereka, Anda tidak akan dapat membaca semua pesan aman Anda di sesi mana saja.",
-    "Failed to re-authenticate due to a homeserver problem": "Gagal untuk mengautentikasi ulang karena masalah homeserver",
     "Upload %(count)s other files": {
         "one": "Unggah %(count)s file lainnya",
         "other": "Unggah %(count)s file lainnya"
@@ -1771,7 +1769,6 @@
     "Declining…": "Menolak…",
     "There are no past polls in this room": "Tidak ada pemungutan suara sebelumnya di ruangan ini",
     "There are no active polls in this room": "Tidak ada pemungutan suara yang aktif di ruangan ini",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Peringatan: Data personal Anda (termasuk kunci enkripsi) masih disimpan di sesi ini. Hapus jika Anda selesai menggunakan sesi ini, atau jika ingin masuk ke akun yang lain.",
     "Scan QR code": "Pindai kode QR",
     "Select '%(scanQRCode)s'": "Pilih '%(scanQRCode)s'",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
@@ -3724,7 +3721,10 @@
         "autodiscovery_unexpected_error_hs": "Kesalahan tidak terduga saat menyelesaikan konfigurasi homeserver",
         "autodiscovery_unexpected_error_is": "Kesalahan tidak terduga saat menyelesaikan konfigurasi server identitas",
         "autodiscovery_hs_incompatible": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda.",
-        "incorrect_credentials_detail": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org."
+        "incorrect_credentials_detail": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org.",
+        "failed_soft_logout_homeserver": "Gagal untuk mengautentikasi ulang karena masalah homeserver",
+        "soft_logout_subheading": "Hapus data personal",
+        "soft_logout_warning": "Peringatan: Data personal Anda (termasuk kunci enkripsi) masih disimpan di sesi ini. Hapus jika Anda selesai menggunakan sesi ini, atau jika ingin masuk ke akun yang lain."
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",

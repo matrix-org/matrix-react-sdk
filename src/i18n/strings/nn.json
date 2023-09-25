@@ -224,8 +224,6 @@
     "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil",
     "Create account": "Lag konto",
-    "Failed to re-authenticate due to a homeserver problem": "Fekk ikkje til å re-authentisere grunna ein feil på heimetenaren",
-    "Clear personal data": "Fjern personlege data",
     "That matches!": "Dette stemmer!",
     "That doesn't match.": "Dette stemmer ikkje.",
     "Go back to set it again.": "Gå tilbake for å sette den på nytt.",
@@ -1115,7 +1113,9 @@
         },
         "reset_password_email_not_found_title": "Denne epostadressa var ikkje funnen",
         "misconfigured_title": "%(brand)s-klienten din er sett opp feil",
-        "incorrect_credentials_detail": "Merk deg at du loggar inn på %(hs)s-tenaren, ikkje matrix.org."
+        "incorrect_credentials_detail": "Merk deg at du loggar inn på %(hs)s-tenaren, ikkje matrix.org.",
+        "failed_soft_logout_homeserver": "Fekk ikkje til å re-authentisere grunna ein feil på heimetenaren",
+        "soft_logout_subheading": "Fjern personlege data"
     },
     "export_chat": {
         "messages": "Meldingar"

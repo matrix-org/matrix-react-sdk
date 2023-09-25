@@ -313,7 +313,6 @@
     "A new password must be entered.": "Palun sisesta uus salasõna.",
     "New passwords must match each other.": "Uued salasõnad peavad omavahel klappima.",
     "Create account": "Loo kasutajakonto",
-    "Clear personal data": "Kustuta privaatsed andmed",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Sa ei saa saata ühtego sõnumit enne, kui oled läbi lugenud ja nõustunud <consentLink>meie kasutustingimustega</consentLink>.",
     "Couldn't load page": "Lehe laadimine ei õnnestunud",
     "Upload avatar": "Laadi üles profiilipilt ehk avatar",
@@ -441,7 +440,6 @@
     "Not Trusted": "Ei ole usaldusväärne",
     "Identity server URL does not appear to be a valid identity server": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
     "Looks good!": "Tundub õige!",
-    "Failed to re-authenticate due to a homeserver problem": "Uuesti autentimine ei õnnestunud koduserveri vea tõttu",
     "%(items)s and %(count)s others": {
         "other": "%(items)s ja %(count)s muud",
         "one": "%(items)s ja üks muu"
@@ -1771,7 +1769,6 @@
     "Declining…": "Keeldumisel…",
     "There are no past polls in this room": "Selles jututoas pole varasemaid küsitlusi",
     "There are no active polls in this room": "Selles jututoas pole käimasolevaid küsitlusi",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Hoiatus: Sinu privaatsed andmed (sealhulgas krüptimisvõtmed) on jätkuvalt salvestatud selles sessioonis. Eemalda nad, kui oled lõpetanud selle sessiooni kasutamise või soovid sisse logida muu kasutajakontoga.",
     "Scan QR code": "Loe QR-koodi",
     "Select '%(scanQRCode)s'": "Vali „%(scanQRCode)s“",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
@@ -3719,7 +3716,10 @@
         "autodiscovery_unexpected_error_hs": "Koduserveri seadistustest selguse saamisel tekkis ootamatu viga",
         "autodiscovery_unexpected_error_is": "Isikutuvastusserveri seadistustest selguse saamisel tekkis ootamatu viga",
         "autodiscovery_hs_incompatible": "Sinu koduserver on liiga vana ega toeta vähimat nõutavat API versiooni. Lisateavet saad oma serveri haldajalt või kui ise oled haldaja, siis palun uuenda serverit.",
-        "incorrect_credentials_detail": "Sa kasutad sisselogimiseks serverit %(hs)s, mitte aga matrix.org'i."
+        "incorrect_credentials_detail": "Sa kasutad sisselogimiseks serverit %(hs)s, mitte aga matrix.org'i.",
+        "failed_soft_logout_homeserver": "Uuesti autentimine ei õnnestunud koduserveri vea tõttu",
+        "soft_logout_subheading": "Kustuta privaatsed andmed",
+        "soft_logout_warning": "Hoiatus: Sinu privaatsed andmed (sealhulgas krüptimisvõtmed) on jätkuvalt salvestatud selles sessioonis. Eemalda nad, kui oled lõpetanud selle sessiooni kasutamise või soovid sisse logida muu kasutajakontoga."
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",

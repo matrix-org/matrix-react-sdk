@@ -1096,7 +1096,6 @@
     "Message didn't send. Click for info.": "Mistókst að senda skilaboð. Smelltu til að fá nánari upplýsingar.",
     "That doesn't match.": "Þetta stemmir ekki.",
     "That matches!": "Þetta passar!",
-    "Clear personal data": "Hreinsa persónuleg gögn",
     "General failure": "Almenn bilun",
     "You don't have permission": "Þú hefur ekki heimild",
     "Retry all": "Prófa aftur allt",
@@ -1272,7 +1271,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Verið er að öryggisafrita dulritunarlyklana þína (öryggisafritun getur tekið dálítinn tíma í fyrsta skiptið).",
     "Go back to set it again.": "Farðu til baka til að setja hann aftur.",
     "Great! This Security Phrase looks strong enough.": "Frábært! Þessi öryggisfrasi virðist vera nógu sterkur.",
-    "Failed to re-authenticate due to a homeserver problem": "Tókst ekki að endurauðkenna vegna vandamála með heimaþjón",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
     "Really reset verification keys?": "Viltu í alvörunni endurstilla sannvottunarlyklana?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ertu viss um að þú viljir yfirgefa spjallrásina '%(roomName)s'?",
@@ -3160,7 +3158,9 @@
         "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
         "autodiscovery_unexpected_error_hs": "Óvænt villa kom upp við að lesa uppsetningu heimaþjóns",
         "autodiscovery_unexpected_error_is": "Óvænt villa kom upp við að lesa uppsetningu auðkenningarþjóns",
-        "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org."
+        "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
+        "failed_soft_logout_homeserver": "Tókst ekki að endurauðkenna vegna vandamála með heimaþjón",
+        "soft_logout_subheading": "Hreinsa persónuleg gögn"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",

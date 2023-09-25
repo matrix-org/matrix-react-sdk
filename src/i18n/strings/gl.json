@@ -708,8 +708,6 @@
     "Invalid base_url for m.identity_server": "base_url para m.identity_server non válida",
     "Identity server URL does not appear to be a valid identity server": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
     "Create account": "Crea unha conta",
-    "Failed to re-authenticate due to a homeserver problem": "Fallo ó reautenticar debido a un problema no servidor",
-    "Clear personal data": "Baleirar datos personais",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
     "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
     "Enter your account password to confirm the upgrade:": "Escribe o contrasinal para confirmar a actualización:",
@@ -3280,7 +3278,9 @@
         "no_hs_url_provided": "Non se estableceu URL do servidor",
         "autodiscovery_unexpected_error_hs": "Houbo un fallo ao acceder a configuración do servidor",
         "autodiscovery_unexpected_error_is": "Houbo un fallo ao acceder a configuración do servidor de identidade",
-        "incorrect_credentials_detail": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org."
+        "incorrect_credentials_detail": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org.",
+        "failed_soft_logout_homeserver": "Fallo ó reautenticar debido a un problema no servidor",
+        "soft_logout_subheading": "Baleirar datos personais"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",

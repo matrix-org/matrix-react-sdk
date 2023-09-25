@@ -434,8 +434,6 @@
     "Clear all data": "Изчисти всички данни",
     "Your homeserver doesn't seem to support this feature.": "Не изглежда сървърът ви да поддържа тази функция.",
     "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
-    "Failed to re-authenticate due to a homeserver problem": "Неуспешна повторна автентикация поради проблем със сървъра",
-    "Clear personal data": "Изчисти личните данни",
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
     "Checking server": "Проверка на сървъра",
@@ -2073,7 +2071,9 @@
         "no_hs_url_provided": "Не е указан адрес на сървър",
         "autodiscovery_unexpected_error_hs": "Неочаквана грешка в намирането на сървърната конфигурация",
         "autodiscovery_unexpected_error_is": "Неочаквана грешка при откриване на конфигурацията на сървъра за самоличност",
-        "incorrect_credentials_detail": "Моля, обърнете внимание, че влизате в %(hs)s сървър, а не в matrix.org."
+        "incorrect_credentials_detail": "Моля, обърнете внимание, че влизате в %(hs)s сървър, а не в matrix.org.",
+        "failed_soft_logout_homeserver": "Неуспешна повторна автентикация поради проблем със сървъра",
+        "soft_logout_subheading": "Изчисти личните данни"
     },
     "export_chat": {
         "messages": "Съобщения"

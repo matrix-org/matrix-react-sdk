@@ -436,8 +436,6 @@
     "Be found by phone or email": "Будут найдены по номеру телефона или email",
     "Upload all": "Загрузить всё",
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
-    "Failed to re-authenticate due to a homeserver problem": "Ошибка повторной аутентификации из-за проблем на сервере",
-    "Clear personal data": "Очистить персональные данные",
     "Accept <policyLink /> to continue:": "Примите <policyLink /> для продолжения:",
     "Checking server": "Проверка сервера",
     "Terms of service not accepted or the identity server is invalid.": "Условия использования не приняты или сервер идентификации недействителен.",
@@ -3433,7 +3431,9 @@
         "no_hs_url_provided": "URL-адрес домашнего сервера не указан",
         "autodiscovery_unexpected_error_hs": "Неожиданная ошибка в настройках домашнего сервера",
         "autodiscovery_unexpected_error_is": "Неопределённая ошибка при разборе параметра сервера идентификации",
-        "incorrect_credentials_detail": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org."
+        "incorrect_credentials_detail": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org.",
+        "failed_soft_logout_homeserver": "Ошибка повторной аутентификации из-за проблем на сервере",
+        "soft_logout_subheading": "Очистить персональные данные"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",

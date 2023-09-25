@@ -1045,8 +1045,6 @@
     "That doesn't match.": "זה לא תואם.",
     "Use a different passphrase?": "להשתמש בביטוי סיסמה אחר?",
     "That matches!": "זה מתאים!",
-    "Clear personal data": "נקה מידע אישי",
-    "Failed to re-authenticate due to a homeserver problem": "האימות מחדש נכשל עקב בעיית שרת בית",
     "Create account": "חשבון משתמש חדש",
     "General failure": "שגיאה כללית",
     "Identity server URL does not appear to be a valid identity server": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
@@ -2619,7 +2617,9 @@
         "no_hs_url_provided": "לא סופקה כתובת של שרת הראשי",
         "autodiscovery_unexpected_error_hs": "שגיאה לא צפוייה של התחברות לשרת הראשי",
         "autodiscovery_unexpected_error_is": "שגיאה לא צפויה בהתחברות אל שרת הזיהוי",
-        "incorrect_credentials_detail": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org."
+        "incorrect_credentials_detail": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org.",
+        "failed_soft_logout_homeserver": "האימות מחדש נכשל עקב בעיית שרת בית",
+        "soft_logout_subheading": "נקה מידע אישי"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",

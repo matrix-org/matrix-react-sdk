@@ -895,7 +895,6 @@
     "Show sidebar": "Показати бічну панель",
     "Hide sidebar": "Сховати бічну панель",
     "Success!": "Успішно!",
-    "Clear personal data": "Очистити особисті дані",
     "Verification Request": "Запит підтвердження",
     "Leave space": "Вийти з простору",
     "Sent": "Надіслано",
@@ -1321,7 +1320,6 @@
     "Connect this session to Key Backup": "Налаштувати цьому сеансу резервне копіювання ключів",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
     "<not supported>": "<не підтримується>",
-    "Failed to re-authenticate due to a homeserver problem": "Не вдалося перезайти через проблему з домашнім сервером",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Будь ласка, повідомте нам, що пішло не так; а ще краще створіть обговорення на GitHub із описом проблеми.",
@@ -1771,7 +1769,6 @@
     "This session is backing up your keys.": "Під час цього сеансу створюється резервна копія ваших ключів.",
     "There are no past polls in this room": "У цій кімнаті ще не проводилися опитувань",
     "There are no active polls in this room": "У цій кімнаті немає активних опитувань",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Попередження: ваші особисті дані ( включно з ключами шифрування) досі зберігаються в цьому сеансі. Очистьте їх, якщо ви завершили роботу в цьому сеансі або хочете увійти в інший обліковий запис.",
     "Scan QR code": "Скануйте QR-код",
     "Select '%(scanQRCode)s'": "Виберіть «%(scanQRCode)s»",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
@@ -3719,7 +3716,10 @@
         "autodiscovery_unexpected_error_hs": "Неочікувана помилка в налаштуваннях домашнього серверу",
         "autodiscovery_unexpected_error_is": "Незрозуміла помилка при розборі параметру сервера ідентифікації",
         "autodiscovery_hs_incompatible": "Ваш домашній сервер застарілий і не підтримує мінімально необхідну версію API. Будь ласка, зв'яжіться з власником вашого сервера або оновіть його.",
-        "incorrect_credentials_detail": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org."
+        "incorrect_credentials_detail": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org.",
+        "failed_soft_logout_homeserver": "Не вдалося перезайти через проблему з домашнім сервером",
+        "soft_logout_subheading": "Очистити особисті дані",
+        "soft_logout_warning": "Попередження: ваші особисті дані ( включно з ключами шифрування) досі зберігаються в цьому сеансі. Очистьте їх, якщо ви завершили роботу в цьому сеансі або хочете увійти в інший обліковий запис."
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",

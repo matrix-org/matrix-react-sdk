@@ -522,8 +522,6 @@
     "Explore rooms": "Procházet místnosti",
     "Jump to first unread room.": "Přejít na první nepřečtenou místnost.",
     "Jump to first invite.": "Přejít na první pozvánku.",
-    "Failed to re-authenticate due to a homeserver problem": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
-    "Clear personal data": "Smazat osobní data",
     "Cannot connect to integration manager": "Nepovedlo se připojení ke správci integrací",
     "The integration manager is offline or it cannot reach your homeserver.": "Správce integrací neběží nebo se nemůže připojit k vašemu domovskému serveru.",
     "Manage integrations": "Správa integrací",
@@ -1771,7 +1769,6 @@
     "Declining…": "Odmítání…",
     "There are no past polls in this room": "V této místnosti nejsou žádná minulá hlasování",
     "There are no active polls in this room": "V této místnosti nejsou žádná aktivní hlasování",
-    "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Upozornění: vaše osobní údaje (včetně šifrovacích klíčů) jsou v této relaci stále uloženy. Pokud jste s touto relací skončili nebo se chcete přihlásit k jinému účtu, vymažte ji.",
     "Scan QR code": "Skenovat QR kód",
     "Select '%(scanQRCode)s'": "Vybrat '%(scanQRCode)s'",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Pro provedení povolte v Nastavení položku '%(manageIntegrations)s'.",
@@ -3724,7 +3721,10 @@
         "autodiscovery_unexpected_error_hs": "Chyba při zjišťování konfigurace domovského serveru",
         "autodiscovery_unexpected_error_is": "Chyba při hledání konfigurace serveru identity",
         "autodiscovery_hs_incompatible": "Váš domovský server je příliš starý a nepodporuje minimální požadovanou verzi API. Obraťte se prosím na vlastníka serveru nebo proveďte aktualizaci serveru.",
-        "incorrect_credentials_detail": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org."
+        "incorrect_credentials_detail": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org.",
+        "failed_soft_logout_homeserver": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
+        "soft_logout_subheading": "Smazat osobní data",
+        "soft_logout_warning": "Upozornění: vaše osobní údaje (včetně šifrovacích klíčů) jsou v této relaci stále uloženy. Pokud jste s touto relací skončili nebo se chcete přihlásit k jinému účtu, vymažte ji."
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",

@@ -431,8 +431,6 @@
     "Clear all data": "Poista kaikki tiedot",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Kerro mikä meni pieleen, tai, mikä parempaa, luo GitHub-issue joka kuvailee ongelman.",
     "Removing…": "Poistetaan…",
-    "Failed to re-authenticate due to a homeserver problem": "Uudelleenautentikointi epäonnistui kotipalvelinongelmasta johtuen",
-    "Clear personal data": "Poista henkilökohtaiset tiedot",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
     "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
     "Unable to revoke sharing for email address": "Sähköpostiosoitteen jakamista ei voi perua",
@@ -3369,7 +3367,9 @@
         "no_hs_url_provided": "Kotipalvelimen osoite puuttuu",
         "autodiscovery_unexpected_error_hs": "Odottamaton virhe selvitettäessä kotipalvelimen asetuksia",
         "autodiscovery_unexpected_error_is": "Odottamaton virhe selvitettäessä identiteettipalvelimen asetuksia",
-        "incorrect_credentials_detail": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org."
+        "incorrect_credentials_detail": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org.",
+        "failed_soft_logout_homeserver": "Uudelleenautentikointi epäonnistui kotipalvelinongelmasta johtuen",
+        "soft_logout_subheading": "Poista henkilökohtaiset tiedot"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
