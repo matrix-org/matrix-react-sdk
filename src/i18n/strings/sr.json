@@ -143,7 +143,6 @@
     "Failed to change password. Is your password correct?": "Нисам успео да променим лозинку. Да ли је ваша лозинка тачна?",
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
     "<not supported>": "<није подржано>",
-    "Reject all %(invitedRooms)s invites": "Одбиј све позивнице за собе %(invitedRooms)s",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
     "Notifications": "Обавештења",
@@ -597,7 +596,6 @@
     "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Cancel search": "Откажи претрагу",
-    "Message search": "Претрага порука",
     "Securely cache encrypted messages locally for them to appear in search results.": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге.",
     "Failed to save space settings.": "Чување подешавања простора није успело.",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
@@ -651,7 +649,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
     "Verify your other session using one of the options below.": "Потврдите другу сесију помоћу једних од опција у испод.",
     "You signed in to a new session without verifying it:": "Пријавили сте се у нову сесију без потврђивања:",
-    "Accept all %(invitedRooms)s invites": "Прихвати све %(invitedRooms)s позивнице",
     "Réunion": "Реунион",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
     "common": {
@@ -873,7 +870,10 @@
             "export_megolm_keys": "Извези E2E кључеве собе",
             "import_megolm_keys": "Увези E2E кључеве собе",
             "cryptography_section": "Криптографија",
-            "encryption_section": "Шифровање"
+            "encryption_section": "Шифровање",
+            "bulk_options_accept_all_invites": "Прихвати све %(invitedRooms)s позивнице",
+            "bulk_options_reject_all_invites": "Одбиј све позивнице за собе %(invitedRooms)s",
+            "message_search_section": "Претрага порука"
         },
         "voip": {
             "mirror_local_feed": "Копирај довод локалног видеа"

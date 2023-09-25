@@ -98,7 +98,6 @@
     "File to import": "Arquivo para importar",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O ficheiro de exportação será protegido com uma frase-passe. Deve introduzir a frase-passe aqui, para desencriptar o ficheiro.",
-    "Reject all %(invitedRooms)s invites": "Rejeitar todos os %(invitedRooms)s convites",
     "Confirm Removal": "Confirmar Remoção",
     "Unknown error": "Erro desconhecido",
     "Unable to restore session": "Não foi possível restaurar a sessão",
@@ -556,7 +555,8 @@
         "security": {
             "export_megolm_keys": "Exportar chaves ponta-a-ponta da sala",
             "import_megolm_keys": "Importar chave de criptografia ponta-a-ponta (E2E) da sala",
-            "cryptography_section": "Criptografia"
+            "cryptography_section": "Criptografia",
+            "bulk_options_reject_all_invites": "Rejeitar todos os %(invitedRooms)s convites"
         },
         "general": {
             "account_section": "Conta",

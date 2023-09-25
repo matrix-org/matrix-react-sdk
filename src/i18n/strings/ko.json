@@ -117,7 +117,6 @@
     "Export room keys": "방 키 내보내기",
     "Confirm passphrase": "암호 확인",
     "File to import": "가져올 파일",
-    "Reject all %(invitedRooms)s invites": "모든 %(invitedRooms)s개의 초대를 거절",
     "Confirm Removal": "삭제 확인",
     "Unknown error": "알 수 없는 오류",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "이 과정으로 암호화한 방에서 받은 메시지의 키를 로컬 파일로 내보낼 수 있습니다. 그런 다음 나중에 다른 Matrix 클라이언트에서 파일을 가져와서, 해당 클라이언트에서도 이 메시지를 복호화할 수 있도록 할 수 있습니다.",
@@ -312,8 +311,6 @@
     "Discovery": "탐색",
     "Deactivate account": "계정 비활성화",
     "Ignored users": "무시한 사용자",
-    "Bulk options": "대량 설정",
-    "Accept all %(invitedRooms)s invites": "모든 %(invitedRooms)s개의 초대를 수락",
     "Missing media permissions, click the button below to request.": "미디어 권한이 없습니다, 권한 요청을 보내려면 아래 버튼을 클릭하세요.",
     "Request media permissions": "미디어 권한 요청",
     "Voice & Video": "음성 & 영상",
@@ -585,7 +582,6 @@
     "Private space (invite only)": "비공개 스페이스 (초대 필요)",
     "Private space": "비공개 스페이스",
     "Rooms and spaces": "방 및 스페이스 목록",
-    "Sidebar": "사이드바",
     "Leave all rooms": "모든 방에서 떠나기",
     "Show all rooms": "모든 방 목록 보기",
     "Create a new space": "새로운 스페이스 만들기",
@@ -645,7 +641,6 @@
     "Deactivating your account is a permanent action — be careful!": "계정을 비활성화 하는 것은 취소할 수 없습니다. 조심하세요!",
     "Room info": "방 정보",
     "Match system": "시스템 테마",
-    "Sessions": "세션목록",
     "Favourited": "즐겨찾기 됨",
     "common": {
         "analytics": "정보 분석",
@@ -884,7 +879,10 @@
             "export_megolm_keys": "종단간 암호화 방 열쇠 내보내기",
             "import_megolm_keys": "종단간 암호화 방 키 불러오기",
             "cryptography_section": "암호화",
-            "encryption_section": "암호화"
+            "encryption_section": "암호화",
+            "bulk_options_section": "대량 설정",
+            "bulk_options_accept_all_invites": "모든 %(invitedRooms)s개의 초대를 수락",
+            "bulk_options_reject_all_invites": "모든 %(invitedRooms)s개의 초대를 거절"
         },
         "preferences": {
             "room_list_heading": "방 목록",
@@ -905,7 +903,8 @@
             "unverified_session": "검증되지 않은 세션",
             "device_verified_description_current": "현재 세션에서 보안 메세지를 사용할 수 있습니다.",
             "verified_session": "검증된 세션",
-            "current_session": "현재 세션"
+            "current_session": "현재 세션",
+            "title": "세션목록"
         },
         "general": {
             "account_section": "계정",
@@ -916,6 +915,9 @@
             "add_email_dialog_title": "이메일 주소 추가",
             "add_email_failed_verification": "이메일 주소를 인증하지 못했습니다. 메일에 나온 주소를 눌렀는지 확인해 보세요",
             "add_msisdn_dialog_title": "전화번호 추가"
+        },
+        "sidebar": {
+            "title": "사이드바"
         }
     },
     "devtools": {

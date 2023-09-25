@@ -160,7 +160,6 @@
     "New login. Was this you?": "Uus sisselogimine. Kas see olid sina?",
     "Securely cache encrypted messages locally for them to appear in search results.": "Turvaliselt puhverda krüptitud sõnumid kohalikku arvutisse ja võimalda kasutada neid otsingus.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s'is on puudu need komponendid, mis võimaldavad otsida kohalikest turvaliselt puhverdatud krüptitud sõnumitest. Kui sa tahaksid sellist funktsionaalsust katsetada, siis pead kompileerima %(brand)s'i variandi, kus <nativeLink>need komponendid on lisatud</nativeLink>.",
-    "Message search": "Otsing sõnumite seast",
     "Search…": "Otsi…",
     "Cancel search": "Tühista otsing",
     "Search failed": "Otsing ebaõnnestus",
@@ -416,9 +415,6 @@
     "Your password has been reset.": "Sinu salasõna on muudetud.",
     "Unignore": "Lõpeta eiramine",
     "<not supported>": "<ei ole toetatud>",
-    "Bulk options": "Masstoimingute seadistused",
-    "Accept all %(invitedRooms)s invites": "Võta vastu kõik %(invitedRooms)s kutsed",
-    "Reject all %(invitedRooms)s invites": "Lükka tagasi kõik %(invitedRooms)s kutsed",
     "Uploaded sound": "Üleslaaditud heli",
     "Sounds": "Helid",
     "Notification sound": "Teavitusheli",
@@ -1407,12 +1403,7 @@
     "You do not have permission to start polls in this room.": "Sul ei ole õigusi küsitluste korraldamiseks siin jututoas.",
     "Copy link to thread": "Kopeeri jutulõnga link",
     "Thread options": "Jutulõnga valikud",
-    "Show all your rooms in Home, even if they're in a space.": "Näita kõiki oma jututubasid avalehel ka siis kui nad on osa mõnest kogukonnast.",
-    "Home is useful for getting an overview of everything.": "Avalehelt saad kõigest hea ülevaate.",
-    "Spaces to show": "Näidatavad kogukonnakeskused",
-    "Sidebar": "Külgpaan",
     "Reply in thread": "Vasta jutulõngas",
-    "Rooms outside of a space": "Jututoad väljaspool seda kogukonda",
     "Mentions only": "Ainult mainimised",
     "Forget": "Unusta",
     "Files": "Failid",
@@ -1459,7 +1450,6 @@
     "No votes cast": "Hääletanuid ei ole",
     "Chat": "Vestle",
     "Share location": "Jaga asukohta",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Võimalike vigade leidmiseks jaga meiega anonüümseid andmeid. Isiklikku teavet meie ei kogu ega jaga mitte midagi kolmandate osapooltega.",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Kas sa oled kindel, et soovid lõpetada küsitlust? Sellega on tulemused lõplikud ja rohkem osaleda ei saa.",
     "End Poll": "Lõpeta küsitlus",
     "Sorry, the poll did not end. Please try again.": "Vabandust, aga küsitlus jäi lõpetamata. Palun proovi uuesti.",
@@ -1510,10 +1500,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s eemaldas sind %(roomName)s jututoast",
     "Message pending moderation": "Sõnum on modereerimise ootel",
     "Message pending moderation: %(reason)s": "Sõnum on modereerimise ootel: %(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "Koonda ühte kohta kõik oma jututoad, mis ei kuulu mõnda kogukonda.",
-    "Group all your people in one place.": "Koonda oma olulised sõbrad ühte kohta.",
-    "Group all your favourite rooms and people in one place.": "Koonda oma olulised sõbrad ning lemmikjututoad ühte kohta.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Kogukonnakeskused on kasutajate ja jututubade koondamise viis. Lisaks kogukonnakeskustele, mille liiga sa oled, võid sa kasutada ka eelseadistatud kogukonnakeskusi.",
     "Pick a date to jump to": "Vali kuupäev, mida soovid vaadata",
     "Jump to date": "Vaata kuupäeva",
     "The beginning of the room": "Jututoa algus",
@@ -1690,8 +1676,6 @@
     "Choose a locale": "Vali lokaat",
     "Saved Items": "Salvestatud failid",
     "You're in": "Kõik on tehtud",
-    "Sessions": "Sessioonid",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Parima turvalisuse nimel verifitseeri kõik oma sessioonid ning logi välja neist, mida sa enam ei kasuta.",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
     "We're creating a room with %(names)s": "Me loome jututoa järgnevaist: %(names)s",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Skaneeritud QR-kood on vigane.",
     "The linking wasn't completed in the required time.": "Sidumine ei lõppenud etteantud aja jooksul.",
     "Sign in new device": "Logi sisse uus seade",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?",
-        "other": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?"
-    },
     "Show formatting": "Näita vormingut",
     "Hide formatting": "Peida vormindus",
     "Connection": "Ühendus",
@@ -2571,7 +2551,12 @@
             "cryptography_section": "Krüptimine",
             "session_id": "Sessiooni tunnus:",
             "session_key": "Sessiooni võti:",
-            "encryption_section": "Krüptimine"
+            "encryption_section": "Krüptimine",
+            "bulk_options_section": "Masstoimingute seadistused",
+            "bulk_options_accept_all_invites": "Võta vastu kõik %(invitedRooms)s kutsed",
+            "bulk_options_reject_all_invites": "Lükka tagasi kõik %(invitedRooms)s kutsed",
+            "message_search_section": "Otsing sõnumite seast",
+            "analytics_subsection_description": "Võimalike vigade leidmiseks jaga meiega anonüümseid andmeid. Isiklikku teavet meie ei kogu ega jaga mitte midagi kolmandate osapooltega."
         },
         "preferences": {
             "room_list_heading": "Jututubade loend",
@@ -2685,7 +2670,13 @@
                 "one": "Logi seade võrgust välja"
             },
             "security_recommendations": "Turvalisusega seotud soovitused",
-            "security_recommendations_description": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust."
+            "security_recommendations_description": "Kui järgid neid soovitusi, siis sa parandad oma kasutajakonto turvalisust.",
+            "title": "Sessioonid",
+            "sign_out_confirm_description": {
+                "one": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?",
+                "other": "Kas sa oled kindel et soovid %(count)s sessiooni võrgust välja logida?"
+            },
+            "other_sessions_subsection_description": "Parima turvalisuse nimel verifitseeri kõik oma sessioonid ning logi välja neist, mida sa enam ei kasuta."
         },
         "general": {
             "oidc_manage_button": "Halda kasutajakontot",
@@ -2705,6 +2696,17 @@
             "add_msisdn_confirm_button": "Kinnita telefoninumbri lisamine",
             "add_msisdn_confirm_body": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
             "add_msisdn_dialog_title": "Lisa telefoninumber"
+        },
+        "sidebar": {
+            "title": "Külgpaan",
+            "metaspaces_subsection": "Näidatavad kogukonnakeskused",
+            "metaspaces_description": "Kogukonnakeskused on kasutajate ja jututubade koondamise viis. Lisaks kogukonnakeskustele, mille liiga sa oled, võid sa kasutada ka eelseadistatud kogukonnakeskusi.",
+            "metaspaces_home_description": "Avalehelt saad kõigest hea ülevaate.",
+            "metaspaces_home_all_rooms": "Näita kõiki oma jututubasid avalehel ka siis kui nad on osa mõnest kogukonnast.",
+            "metaspaces_favourites_description": "Koonda oma olulised sõbrad ning lemmikjututoad ühte kohta.",
+            "metaspaces_people_description": "Koonda oma olulised sõbrad ühte kohta.",
+            "metaspaces_orphans": "Jututoad väljaspool seda kogukonda",
+            "metaspaces_orphans_description": "Koonda ühte kohta kõik oma jututoad, mis ei kuulu mõnda kogukonda."
         }
     },
     "devtools": {

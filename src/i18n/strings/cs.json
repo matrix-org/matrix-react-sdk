@@ -150,7 +150,6 @@
     "Connectivity to the server has been lost.": "Spojení se serverem bylo přerušeno.",
     "Sent messages will be stored until your connection has returned.": "Odeslané zprávy zůstanou uložené, dokud se spojení znovu neobnoví.",
     "Failed to load timeline position": "Nepodařilo se načíst pozici na časové ose",
-    "Reject all %(invitedRooms)s invites": "Odmítnutí všech %(invitedRooms)s pozvání",
     "Profile": "Profil",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
@@ -242,7 +241,6 @@
     "Display Name": "Zobrazované jméno",
     "Room Addresses": "Adresy místnosti",
     "Ignored users": "Ignorovaní uživatelé",
-    "Bulk options": "Hromadná možnost",
     "This room has been replaced and is no longer active.": "Tato místnost byla nahrazena a už není používaná.",
     "The conversation continues here.": "Konverzace pokračuje zde.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Poslali jsme vám ověřovací e-mail. Postupujte prosím podle instrukcí a pak klepněte na následující tlačítko.",
@@ -361,7 +359,6 @@
     "Your password has been reset.": "Heslo bylo resetováno.",
     "Create account": "Vytvořit účet",
     "Scissors": "Nůžky",
-    "Accept all %(invitedRooms)s invites": "Přijmout pozvání do všech těchto místností: %(invitedRooms)s",
     "Error updating main address": "Nepovedlo se změnit hlavní adresu",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Nastala chyba při pokusu o nastavení hlavní adresy místnosti. Mohl to zakázat server, nebo to může být dočasná chyba.",
     "Power level": "Úroveň oprávnění",
@@ -580,7 +577,6 @@
     "not stored": "není uložen",
     "This backup is trusted because it has been restored on this session": "Záloze věříme, protože už byla v této relaci načtena",
     "Your keys are <b>not being backed up from this session</b>.": "Vaše klíče <b>nejsou z této relace zálohovány</b>.",
-    "Message search": "Vyhledávání ve zprávách",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tato místnost je propojena s následujícími platformami. <a>Více informací</a>",
     "Bridges": "Propojení",
     "This user has not verified all of their sessions.": "Tento uživatel zatím neověřil všechny své relace.",
@@ -1408,11 +1404,6 @@
     "Copy link to thread": "Kopírovat odkaz na vlákno",
     "Thread options": "Možnosti vláken",
     "Reply in thread": "Odpovědět ve vlákně",
-    "Home is useful for getting an overview of everything.": "Domov je užitečný pro získání přehledu o všem.",
-    "Spaces to show": "Prostory pro zobrazení",
-    "Sidebar": "Postranní panel",
-    "Show all your rooms in Home, even if they're in a space.": "Zobrazit všechny místnosti v Domovu, i když jsou v prostoru.",
-    "Rooms outside of a space": "Místnosti mimo prostor",
     "Mentions only": "Pouze zmínky",
     "Forget": "Zapomenout",
     "Files": "Soubory",
@@ -1458,7 +1449,6 @@
         "one": "%(count)s hlas. Hlasujte a podívejte se na výsledky"
     },
     "No votes cast": "Nikdo nehlasoval",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany.",
     "Share location": "Sdílet polohu",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Chcete ukončit toto hlasování? Zobrazí se konečné výsledky hlasování a lidé nebudou moci dále hlasovat.",
     "End Poll": "Ukončit hlasování",
@@ -1510,10 +1500,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "Byl(a) jsi odebrán(a) z %(roomName)s uživatelem %(memberName)s",
     "Message pending moderation": "Zpráva čeká na moderaci",
     "Message pending moderation: %(reason)s": "Zpráva čeká na moderaci: %(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "Seskupte všechny místnosti, které nejsou součástí prostoru, na jednom místě.",
-    "Group all your people in one place.": "Seskupte všechny své kontakty na jednom místě.",
-    "Group all your favourite rooms and people in one place.": "Seskupte všechny své oblíbené místnosti a osoby na jednom místě.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Prostory jsou způsob seskupování místností a osob. Vedle prostorů, ve kterých se nacházíte, můžete použít i některé předpřipravené.",
     "Pick a date to jump to": "Vyberte datum, na které chcete přejít",
     "Jump to date": "Přejít na datum",
     "The beginning of the room": "Začátek místnosti",
@@ -1691,8 +1677,6 @@
     "Saved Items": "Uložené položky",
     "Choose a locale": "Zvolte jazyk",
     "We're creating a room with %(names)s": "Vytváříme místnost s %(names)s",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "V zájmu co nejlepšího zabezpečení ověřujte své relace a odhlašujte se ze všech relací, které již nepoznáváte nebo nepoužíváte.",
-    "Sessions": "Relace",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s nebo %(copyButton)s",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Naskenovaný kód je neplatný.",
     "The linking wasn't completed in the required time.": "Propojení nebylo dokončeno v požadovaném čase.",
     "Sign in new device": "Přihlásit nové zařízení",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "other": "Opravdu se chcete odhlásit z %(count)s relací?",
-        "one": "Opravdu se chcete odhlásit z %(count)s relace?"
-    },
     "Show formatting": "Zobrazit formátování",
     "Hide formatting": "Skrýt formátování",
     "Error downloading image": "Chyba při stahování obrázku",
@@ -2576,7 +2556,12 @@
             "cryptography_section": "Šifrování",
             "session_id": "ID relace:",
             "session_key": "Klíč relace:",
-            "encryption_section": "Šifrování"
+            "encryption_section": "Šifrování",
+            "bulk_options_section": "Hromadná možnost",
+            "bulk_options_accept_all_invites": "Přijmout pozvání do všech těchto místností: %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Odmítnutí všech %(invitedRooms)s pozvání",
+            "message_search_section": "Vyhledávání ve zprávách",
+            "analytics_subsection_description": "Sdílejte anonymní údaje, které nám pomohou identifikovat problémy. Nic osobního. Žádné třetí strany."
         },
         "preferences": {
             "room_list_heading": "Seznam místností",
@@ -2690,7 +2675,13 @@
                 "other": "Odhlášení zařízení"
             },
             "security_recommendations": "Bezpečnostní doporučení",
-            "security_recommendations_description": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení."
+            "security_recommendations_description": "Zlepšete zabezpečení svého účtu dodržováním těchto doporučení.",
+            "title": "Relace",
+            "sign_out_confirm_description": {
+                "other": "Opravdu se chcete odhlásit z %(count)s relací?",
+                "one": "Opravdu se chcete odhlásit z %(count)s relace?"
+            },
+            "other_sessions_subsection_description": "V zájmu co nejlepšího zabezpečení ověřujte své relace a odhlašujte se ze všech relací, které již nepoznáváte nebo nepoužíváte."
         },
         "general": {
             "oidc_manage_button": "Spravovat účet",
@@ -2710,6 +2701,17 @@
             "add_msisdn_confirm_button": "Potrvrdit přidání telefonního čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
             "add_msisdn_dialog_title": "Přidat telefonní číslo"
+        },
+        "sidebar": {
+            "title": "Postranní panel",
+            "metaspaces_subsection": "Prostory pro zobrazení",
+            "metaspaces_description": "Prostory jsou způsob seskupování místností a osob. Vedle prostorů, ve kterých se nacházíte, můžete použít i některé předpřipravené.",
+            "metaspaces_home_description": "Domov je užitečný pro získání přehledu o všem.",
+            "metaspaces_home_all_rooms": "Zobrazit všechny místnosti v Domovu, i když jsou v prostoru.",
+            "metaspaces_favourites_description": "Seskupte všechny své oblíbené místnosti a osoby na jednom místě.",
+            "metaspaces_people_description": "Seskupte všechny své kontakty na jednom místě.",
+            "metaspaces_orphans": "Místnosti mimo prostor",
+            "metaspaces_orphans_description": "Seskupte všechny místnosti, které nejsou součástí prostoru, na jednom místě."
         }
     },
     "devtools": {

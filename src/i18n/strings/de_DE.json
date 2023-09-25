@@ -94,7 +94,6 @@
     "Enter passphrase": "Passphrase eingeben",
     "Confirm passphrase": "Passphrase bestätigen",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Die exportierte Datei ist mit einer Passphrase geschützt. Du kannst die Passphrase hier eingeben, um die Datei zu entschlüsseln.",
-    "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s Einladungen ablehnen",
     "Confirm Removal": "Entfernen bestätigen",
     "Unknown error": "Unbekannter Fehler",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
@@ -360,10 +359,8 @@
     "Recovery Method Removed": "Wiederherstellungsmethode gelöscht",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Wenn du die Wiederherstellungsmethode nicht gelöscht hast, kann ein Angreifer versuchen, Zugang zu deinem Konto zu bekommen. Ändere dein Passwort und richte sofort eine neue Wiederherstellungsmethode in den Einstellungen ein.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
-    "Bulk options": "Sammeloptionen",
     "Join millions for free on the largest public server": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
     "Scissors": "Schere",
-    "Accept all %(invitedRooms)s invites": "Akzeptiere alle %(invitedRooms)s Einladungen",
     "Error updating main address": "Fehler beim Aktualisieren der Hauptadresse",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Es gab ein Problem beim Aktualisieren der Raum-Hauptadresse. Es kann sein, dass der Server dies verbietet oder ein temporäres Problem aufgetreten ist.",
     "Power level": "Berechtigungsstufe",
@@ -509,7 +506,6 @@
     "Someone is using an unknown session": "Jemand verwendet eine unbekannte Sitzung",
     "This room is end-to-end encrypted": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
     "None": "Nichts",
-    "Message search": "Nachrichtensuche",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Dieser Raum leitet Nachrichten von/an folgende(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "Bridges": "Brücken",
     "Uploaded sound": "Hochgeladener Ton",
@@ -1403,11 +1399,7 @@
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
     "Reply in thread": "In Thread antworten",
-    "Sidebar": "Seitenleiste",
-    "Show all your rooms in Home, even if they're in a space.": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
-    "Home is useful for getting an overview of everything.": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
     "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
-    "Spaces to show": "Anzuzeigende Spaces",
     "Mentions only": "Nur Erwähnungen",
     "Forget": "Vergessen",
     "Files": "Dateien",
@@ -1415,7 +1407,6 @@
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Nur bei Erwähnungen und Schlüsselwörtern benachrichtigen, die du in den <a>Einstellungen</a> konfigurieren kannst",
     "@mentions & keywords": "@Erwähnungen und Schlüsselwörter",
     "Get notified for every message": "Bei jeder Nachricht benachrichtigen",
-    "Rooms outside of a space": "Räume außerhalb von Spaces",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
         "other": "%(count)s Stimmen"
@@ -1475,7 +1466,6 @@
     "Ban them from everything I'm able to": "Überall wo ich die Rechte dazu habe bannen",
     "Unban them from everything I'm able to": "Überall wo ich die Rechte dazu habe, entbannen",
     "Copy room link": "Raumlink kopieren",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Teile anonyme Nutzungsdaten mit uns, damit wir Probleme in Element finden können. Nichts Persönliches. Keine Drittparteien.",
     "Messaging": "Kommunikation",
     "Close this widget to view it in this panel": "Widget schließen und in diesem Panel anzeigen",
     "Home options": "Startseiteneinstellungen",
@@ -1509,10 +1499,6 @@
     "Message pending moderation": "Nachricht erwartet Moderation",
     "toggle event": "Event umschalten",
     "This address had invalid server or is already in use": "Diese Adresse hat einen ungültigen Server oder wird bereits verwendet",
-    "Group all your rooms that aren't part of a space in one place.": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort.",
-    "Group all your people in one place.": "Gruppiere all deine Direktnachrichten an einem Ort.",
-    "Group all your favourite rooms and people in one place.": "Gruppiere all deine favorisierten Unterhaltungen an einem Ort.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Mit Spaces kannst du deine Unterhaltungen organisieren. Neben Spaces, in denen du dich befindest, kannst du dir auch dynamische anzeigen lassen.",
     "Wait!": "Warte!",
     "This address does not point at this room": "Diese Adresse verweist nicht auf diesen Raum",
     "Pick a date to jump to": "Wähle eine Datum aus",
@@ -1674,8 +1660,6 @@
     "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Für bestmögliche Sicherheit verifiziere deine Sitzungen und melde dich von allen ab, die du nicht erkennst oder nutzt.",
-    "Sessions": "Sitzungen",
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Un-maximise": "Maximieren rückgängig machen",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Der gescannte Code ist ungültig.",
     "The linking wasn't completed in the required time.": "Die Verbindung konnte nicht in der erforderlichen Zeit hergestellt werden.",
     "Sign in new device": "Neues Gerät anmelden",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Bist du sicher, dass du dich von %(count)s Sitzung abmelden möchtest?",
-        "other": "Bist du sicher, dass du dich von %(count)s Sitzungen abmelden möchtest?"
-    },
     "Show formatting": "Formatierung anzeigen",
     "Hide formatting": "Formatierung ausblenden",
     "Connection": "Verbindung",
@@ -2576,7 +2556,12 @@
             "cryptography_section": "Verschlüsselung",
             "session_id": "Sitzungs-ID:",
             "session_key": "Sitzungsschlüssel:",
-            "encryption_section": "Verschlüsselung"
+            "encryption_section": "Verschlüsselung",
+            "bulk_options_section": "Sammeloptionen",
+            "bulk_options_accept_all_invites": "Akzeptiere alle %(invitedRooms)s Einladungen",
+            "bulk_options_reject_all_invites": "Alle %(invitedRooms)s Einladungen ablehnen",
+            "message_search_section": "Nachrichtensuche",
+            "analytics_subsection_description": "Teile anonyme Nutzungsdaten mit uns, damit wir Probleme in Element finden können. Nichts Persönliches. Keine Drittparteien."
         },
         "preferences": {
             "room_list_heading": "Raumliste",
@@ -2690,7 +2675,13 @@
                 "other": "Geräte abmelden"
             },
             "security_recommendations": "Sicherheitsempfehlungen",
-            "security_recommendations_description": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst."
+            "security_recommendations_description": "Verbessere deine Kontosicherheit, indem du diese Empfehlungen beherzigst.",
+            "title": "Sitzungen",
+            "sign_out_confirm_description": {
+                "one": "Bist du sicher, dass du dich von %(count)s Sitzung abmelden möchtest?",
+                "other": "Bist du sicher, dass du dich von %(count)s Sitzungen abmelden möchtest?"
+            },
+            "other_sessions_subsection_description": "Für bestmögliche Sicherheit verifiziere deine Sitzungen und melde dich von allen ab, die du nicht erkennst oder nutzt."
         },
         "general": {
             "oidc_manage_button": "Konto verwalten",
@@ -2710,6 +2701,17 @@
             "add_msisdn_confirm_button": "Hinzugefügte Telefonnummer bestätigen",
             "add_msisdn_confirm_body": "Klicke unten die Schaltfläche, um die hinzugefügte Telefonnummer zu bestätigen.",
             "add_msisdn_dialog_title": "Telefonnummer hinzufügen"
+        },
+        "sidebar": {
+            "title": "Seitenleiste",
+            "metaspaces_subsection": "Anzuzeigende Spaces",
+            "metaspaces_description": "Mit Spaces kannst du deine Unterhaltungen organisieren. Neben Spaces, in denen du dich befindest, kannst du dir auch dynamische anzeigen lassen.",
+            "metaspaces_home_description": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
+            "metaspaces_home_all_rooms": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
+            "metaspaces_favourites_description": "Gruppiere all deine favorisierten Unterhaltungen an einem Ort.",
+            "metaspaces_people_description": "Gruppiere all deine Direktnachrichten an einem Ort.",
+            "metaspaces_orphans": "Räume außerhalb von Spaces",
+            "metaspaces_orphans_description": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort."
         }
     },
     "devtools": {

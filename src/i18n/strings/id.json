@@ -464,7 +464,6 @@
     "Phone Number": "Nomor Telepon",
     "Room Addresses": "Alamat Ruangan",
     "Room information": "Informasi ruangan",
-    "Bulk options": "Opsi massal",
     "Ignored users": "Pengguna yang diabaikan",
     "Account management": "Manajemen akun",
     "Phone numbers": "Nomor telepon",
@@ -679,18 +678,10 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "periksa plugin browser Anda untuk apa saja yang mungkin memblokir server identitasnya (seperti Privacy Badger)",
     "You should:": "Anda seharusnya:",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Anda seharusnya <b>menghapus data personal Anda</b> dari server identitas <idserver /> sebelum memutuskan hubungan. Sayangnya, server identitas <idserver /> saat ini sedang luring atau tidak dapat dicapai.",
-    "Show all your rooms in Home, even if they're in a space.": "Tampilkan semua ruangan di Beranda, walaupun mereka berada di sebuah space.",
-    "Home is useful for getting an overview of everything.": "Beranda berguna untuk mendapatkan ikhtisar tentang semuanya.",
-    "Spaces to show": "Space yang ditampilkan",
-    "Sidebar": "Bilah Samping",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Admin server Anda telah menonaktifkan enkripsi ujung ke ujung secara bawaan di ruangan privat & Pesan Langsung.",
-    "Message search": "Pencarian pesan",
-    "Reject all %(invitedRooms)s invites": "Tolak semua %(invitedRooms)s undangan",
-    "Accept all %(invitedRooms)s invites": "Terima semua %(invitedRooms)s undangan",
     "You have no ignored users.": "Anda tidak memiliki pengguna yang diabaikan.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Terima Ketentuan Layanannya server identitas %(serverName)s untuk mengizinkan Anda untuk dapat ditemukan dengan alamat email atau nomor telepon.",
-    "Rooms outside of a space": "Ruangan yang tidak berada di sebuah space",
     "Missing media permissions, click the button below to request.": "Membutuhkan izin media, klik tombol di bawah untuk meminta izin.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ruangan tidak ini menjembatani pesan-pesan ke platform apa pun. <a>Pelajari lebih lanjut.</a>",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ruangan ini menjembatani pesan-pesan ke platform berikut ini. <a>Pelajari lebih lanjut.</a>",
@@ -1458,7 +1449,6 @@
         "other": "%(count)s suara. Vote untuk melihat hasilnya"
     },
     "No votes cast": "Tidak ada suara",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bagikan data anonim untuk membantu kami mengidentifikasi masalah-masalah. Tidak ada yang pribadi. Tidak ada pihak ketiga.",
     "Share location": "Bagikan lokasi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Apakah Anda yakin untuk mengakhiri poll ini? Ini akan menampilkan hasil akhir dari poll dan orang-orang tidak dapat memberikan suara lagi.",
     "End Poll": "Akhiri Poll",
@@ -1510,10 +1500,6 @@
     "Remove them from everything I'm able to": "Keluarkan dari semuanya yang saya bisa",
     "Message pending moderation: %(reason)s": "Pesan akan dimoderasikan: %(reason)s",
     "Message pending moderation": "Pesan akan dimoderasikan",
-    "Group all your people in one place.": "Kelompokkan semua orang di satu tempat.",
-    "Group all your rooms that aren't part of a space in one place.": "Kelompokkan semua ruangan yang tidak ada di sebuah space di satu tempat.",
-    "Group all your favourite rooms and people in one place.": "Kelompokkan semua ruangan dan orang favorit Anda di satu tempat.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Space adalah cara untuk mengelompokkan ruangan dan orang. Di sampingnya space yang Anda berada, Anda dapat menggunakan space yang sudah dibuat.",
     "Pick a date to jump to": "Pilih sebuah tanggal untuk pergi ke tanggalnya",
     "Jump to date": "Pergi ke tanggal",
     "The beginning of the room": "Awalan ruangan",
@@ -1691,8 +1677,6 @@
     "Saved Items": "Item yang Tersimpan",
     "Choose a locale": "Pilih locale",
     "We're creating a room with %(names)s": "Kami sedang membuat sebuah ruangan dengan %(names)s",
-    "Sessions": "Sesi",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Untuk keamanan yang terbaik, verifikasi sesi Anda dan keluarkan dari sesi yang Anda tidak kenal atau tidak digunakan lagi.",
     "Interactively verify by emoji": "Verifikasi secara interaktif sengan emoji",
     "Manually verify by text": "Verifikasi secara manual dengan teks",
     "%(downloadButton)s or %(copyButton)s": "-%(downloadButton)s atau %(copyButton)s",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Kode yang dipindai tidak absah.",
     "The linking wasn't completed in the required time.": "Penautan tidak selesai dalam waktu yang dibutuhkan.",
     "Sign in new device": "Masuk perangkat baru",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?",
-        "other": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?"
-    },
     "Show formatting": "Tampilkan formatting",
     "Hide formatting": "Sembunyikan format",
     "Error downloading image": "Kesalahan mengunduh gambar",
@@ -2576,7 +2556,12 @@
             "cryptography_section": "Kriptografi",
             "session_id": "ID Sesi:",
             "session_key": "Kunci sesi:",
-            "encryption_section": "Enkripsi"
+            "encryption_section": "Enkripsi",
+            "bulk_options_section": "Opsi massal",
+            "bulk_options_accept_all_invites": "Terima semua %(invitedRooms)s undangan",
+            "bulk_options_reject_all_invites": "Tolak semua %(invitedRooms)s undangan",
+            "message_search_section": "Pencarian pesan",
+            "analytics_subsection_description": "Bagikan data anonim untuk membantu kami mengidentifikasi masalah-masalah. Tidak ada yang pribadi. Tidak ada pihak ketiga."
         },
         "preferences": {
             "room_list_heading": "Daftar ruangan",
@@ -2690,7 +2675,13 @@
                 "other": "Keluarkan perangkat"
             },
             "security_recommendations": "Saran keamanan",
-            "security_recommendations_description": "Tingkatkan keamanan akun Anda dengan mengikuti saran berikut."
+            "security_recommendations_description": "Tingkatkan keamanan akun Anda dengan mengikuti saran berikut.",
+            "title": "Sesi",
+            "sign_out_confirm_description": {
+                "one": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?",
+                "other": "Apakah Anda yakin untuk mengeluarkan %(count)s sesi?"
+            },
+            "other_sessions_subsection_description": "Untuk keamanan yang terbaik, verifikasi sesi Anda dan keluarkan dari sesi yang Anda tidak kenal atau tidak digunakan lagi."
         },
         "general": {
             "oidc_manage_button": "Kelola akun",
@@ -2710,6 +2701,17 @@
             "add_msisdn_confirm_button": "Konfirmasi penambahan nomor telepon",
             "add_msisdn_confirm_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
             "add_msisdn_dialog_title": "Tambahkan Nomor Telepon"
+        },
+        "sidebar": {
+            "title": "Bilah Samping",
+            "metaspaces_subsection": "Space yang ditampilkan",
+            "metaspaces_description": "Space adalah cara untuk mengelompokkan ruangan dan orang. Di sampingnya space yang Anda berada, Anda dapat menggunakan space yang sudah dibuat.",
+            "metaspaces_home_description": "Beranda berguna untuk mendapatkan ikhtisar tentang semuanya.",
+            "metaspaces_home_all_rooms": "Tampilkan semua ruangan di Beranda, walaupun mereka berada di sebuah space.",
+            "metaspaces_favourites_description": "Kelompokkan semua ruangan dan orang favorit Anda di satu tempat.",
+            "metaspaces_people_description": "Kelompokkan semua orang di satu tempat.",
+            "metaspaces_orphans": "Ruangan yang tidak berada di sebuah space",
+            "metaspaces_orphans_description": "Kelompokkan semua ruangan yang tidak ada di sebuah space di satu tempat."
         }
     },
     "devtools": {

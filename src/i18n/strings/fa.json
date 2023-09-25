@@ -821,9 +821,6 @@
     "Error changing power level requirement": "خطا در تغییر الزامات سطح دسترسی",
     "Banned by %(displayName)s": "توسط %(displayName)s تحریم شد",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "این اتاق، ارتباط بین پیام‌ها و پلتفورم‌های زیر را ایجاد می‌کند. <a>بیشتر بدانید.</a>",
-    "Accept all %(invitedRooms)s invites": "همه‌ی دعوت‌های %(invitedRooms)s را قبول کن",
-    "Reject all %(invitedRooms)s invites": "همه‌ی دعوت‌های %(invitedRooms)s را رد کن",
-    "Bulk options": "گزینه‌های دسته‌جمعی",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "با شرایط و ضوایط سرویس سرور هویت‌سنجی (%(serverName)s) موافقت کرده تا بتوانید از طریق آدرس ایمیل و شماره تلفن قابل یافته‌شدن باشید.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "استفاده از سرور هویت‌سنجی اختیاری است. اگر تصمیم بگیرید از سرور هویت‌سنجی استفاده نکنید، شما با استفاده از آدرس ایمیل و شماره تلفن قابل یافته‌شدن و دعوت‌شدن توسط سایر کاربران نخواهید بود.",
@@ -1100,7 +1097,6 @@
     "No Audio Outputs detected": "هیچ خروجی صدایی یافت نشد",
     "Request media permissions": "درخواست دسترسی به رسانه",
     "Missing media permissions, click the button below to request.": "دسترسی به رسانه از دست رفت، برای درخواست مجدد بر روی دکمه‌ی زیر کلیک نمائید.",
-    "Message search": "جستجوی پیام‌ها",
     "You have no ignored users.": "شما هیچ کاربری را نادیده نگرفته‌اید.",
     "<not supported>": "<پشتیبانی نمی‌شود>",
     "Unignore": "لغو نادیده‌گرفتن",
@@ -1222,11 +1218,9 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
     "Close sidebar": "بستن نوارکناری",
-    "Sidebar": "نوارکناری",
     "Show sidebar": "نمایش نوار کناری",
     "Hide sidebar": "پنهان سازی نوار کناری",
     "Hide stickers": "پنهان سازی استیکرها",
-    "Show all your rooms in Home, even if they're in a space.": "تمامی اتاق ها را در صفحه ی خانه نمایش بده، حتی آنهایی که در یک فضا هستند.",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "بنابر <a>تنظیمات</a> خودتان فقط با منشن ها و کلمات کلیدی مطلع شوید",
     "Mentions & keywords": "منشن ها و کلمات کلیدی",
     "New keyword": "کلمه کلیدی جدید",
@@ -1252,7 +1246,6 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
     "Unknown room": "اتاق ناشناس",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
-    "Home is useful for getting an overview of everything.": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
     "common": {
         "about": "درباره",
         "analytics": "تجزیه و تحلیل",
@@ -1701,7 +1694,11 @@
             "cryptography_section": "رمزنگاری",
             "session_id": "شناسه‌ی نشست:",
             "session_key": "کلید نشست:",
-            "encryption_section": "رمزنگاری"
+            "encryption_section": "رمزنگاری",
+            "bulk_options_section": "گزینه‌های دسته‌جمعی",
+            "bulk_options_accept_all_invites": "همه‌ی دعوت‌های %(invitedRooms)s را قبول کن",
+            "bulk_options_reject_all_invites": "همه‌ی دعوت‌های %(invitedRooms)s را رد کن",
+            "message_search_section": "جستجوی پیام‌ها"
         },
         "preferences": {
             "room_list_heading": "لیست اتاق‌ها",
@@ -1733,6 +1730,11 @@
             "add_msisdn_confirm_button": "تأیید افزودن شماره تلفن",
             "add_msisdn_confirm_body": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
             "add_msisdn_dialog_title": "افزودن شماره تلفن"
+        },
+        "sidebar": {
+            "title": "نوارکناری",
+            "metaspaces_home_description": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
+            "metaspaces_home_all_rooms": "تمامی اتاق ها را در صفحه ی خانه نمایش بده، حتی آنهایی که در یک فضا هستند."
         }
     },
     "devtools": {

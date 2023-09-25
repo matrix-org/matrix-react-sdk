@@ -134,7 +134,6 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Сървърът може би е недостъпен, претоварен или времето за търсене изтече :(",
     "No more results": "Няма повече резултати",
     "Failed to reject invite": "Неуспешно отхвърляне на поканата",
-    "Reject all %(invitedRooms)s invites": "Отхвърли всички %(invitedRooms)s покани",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Беше направен опит да се зареди конкретна точка в хронологията на тази стая, но нямате разрешение да разгледате въпросното съобщение.",
     "Failed to load timeline position": "Неуспешно зареждане на позицията в хронологията",
     "Uploading %(filename)s and %(count)s others": {
@@ -271,7 +270,6 @@
     "Phone numbers": "Телефонни номера",
     "Account management": "Управление на акаунта",
     "Ignored users": "Игнорирани потребители",
-    "Bulk options": "Масови действия",
     "Missing media permissions, click the button below to request.": "Липсва достъп до медийните устройства. Кликнете бутона по-долу за да поискате такъв.",
     "Request media permissions": "Поискай достъп до медийните устройства",
     "Voice & Video": "Глас и видео",
@@ -367,7 +365,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Случи се грешка при обновяването на основния адрес за стаята. Може да не е позволено от сървъра, или да се е случила друга временна грешка.",
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
     "Could not load user profile": "Неуспешно зареждане на потребителския профил",
-    "Accept all %(invitedRooms)s invites": "Приеми всички %(invitedRooms)s покани",
     "Power level": "Ниво на достъп",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
@@ -595,7 +592,6 @@
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "Your keys are <b>not being backed up from this session</b>.": "На ключовете ви <b>не се прави резервно копие от тази сесия</b>.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
-    "Message search": "Търсене на съобщения",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Тази стая препредава съобщения със следните платформи. <a>Научи повече.</a>",
     "Bridges": "Мостове",
     "This user has not verified all of their sessions.": "Този потребител не е верифицирал всичките си сесии.",
@@ -1472,7 +1468,11 @@
             "cryptography_section": "Криптография",
             "session_id": "Сесиен идентификатор:",
             "session_key": "Сесиен ключ:",
-            "encryption_section": "Шифроване"
+            "encryption_section": "Шифроване",
+            "bulk_options_section": "Масови действия",
+            "bulk_options_accept_all_invites": "Приеми всички %(invitedRooms)s покани",
+            "bulk_options_reject_all_invites": "Отхвърли всички %(invitedRooms)s покани",
+            "message_search_section": "Търсене на съобщения"
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",

@@ -118,7 +118,6 @@
     "Import room keys": "Szoba kulcsok betöltése",
     "File to import": "Fájl betöltése",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "A kimentett fájl jelmondattal van védve. A kibontáshoz add meg a jelmondatot.",
-    "Reject all %(invitedRooms)s invites": "Mind a(z) %(invitedRooms)s meghívó elutasítása",
     "Confirm Removal": "Törlés megerősítése",
     "Unknown error": "Ismeretlen hiba",
     "Unable to restore session": "A munkamenetet nem lehet helyreállítani",
@@ -271,7 +270,6 @@
     "Phone numbers": "Telefonszámok",
     "Account management": "Fiókkezelés",
     "Ignored users": "Mellőzött felhasználók",
-    "Bulk options": "Tömeges beállítások",
     "Missing media permissions, click the button below to request.": "Hiányzó média jogosultságok, kattintson a lenti gombra a jogosultságok megadásához.",
     "Request media permissions": "Média jogosultságok megkérése",
     "Voice & Video": "Hang és videó",
@@ -367,7 +365,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "A szoba elsődleges címének frissítésénél hiba történt. Vagy nincs engedélyezve a szerveren vagy átmeneti hiba történt.",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Could not load user profile": "A felhasználói profil nem tölthető be",
-    "Accept all %(invitedRooms)s invites": "Mind a(z) %(invitedRooms)s meghívó elfogadása",
     "Power level": "Hozzáférési szint",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A szoba verziója: <roomVersion />, amelyet a Matrix-kiszolgáló <i>instabilnak</i> tekint.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "A szoba fejlesztése bezárja ezt a szobát és új, frissített verzióval ugyanezen a néven létrehoz egy újat.",
@@ -592,7 +589,6 @@
     "Encryption upgrade available": "A titkosítási fejlesztés elérhető",
     "Securely cache encrypted messages locally for them to appear in search results.": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "A titkosított üzenetek biztonságos helyi tárolásához hiányzik néhány összetevő a(z) %(brand)s alkalmazásból. Ha kísérletezni szeretne ezzel a funkcióval, akkor állítson össze egy egyéni asztali %(brand)s alkalmazást, amely <nativeLink>tartalmazza a keresési összetevőket</nativeLink>.",
-    "Message search": "Üzenet keresése",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ez a szoba áthidalja az üzeneteket a felsorolt platformok felé. <a>Tudjon meg többet.</a>",
     "Bridges": "Hidak",
     "Restore your key backup to upgrade your encryption": "A titkosítás fejlesztéséhez allítsd vissza a kulcs mentést",
@@ -1408,10 +1404,6 @@
     "Yours, or the other users' internet connection": "Az ön vagy a másik felhasználó Internet kapcsolata",
     "The homeserver the user you're verifying is connected to": "Az ellenőrizendő felhasználó ehhez a Matrix-kiszolgálóhoz kapcsolódik:",
     "Reply in thread": "Válasz üzenetszálban",
-    "Spaces to show": "Megjelenítendő terek",
-    "Sidebar": "Oldalsáv",
-    "Show all your rooms in Home, even if they're in a space.": "Minden szoba megjelenítése a Kezdőlapon, akkor is ha egy tér része.",
-    "Home is useful for getting an overview of everything.": "A Kezdőlap áttekintést adhat mindenről.",
     "Mentions only": "Csak megemlítések",
     "Forget": "Elfelejtés",
     "Files": "Fájlok",
@@ -1422,7 +1414,6 @@
     "@mentions & keywords": "@megemlítések és kulcsszavak",
     "Get notified for every message": "Értesítés fogadása az összes üzenetről",
     "Get notifications as set up in your <a>settings</a>": "Értesítések fogadása a <a>beállításokban</a> megadottak szerint",
-    "Rooms outside of a space": "Téren kívüli szobák",
     "Based on %(count)s votes": {
         "one": "%(count)s szavazat alapján",
         "other": "%(count)s szavazat alapján"
@@ -1481,7 +1472,6 @@
     "Link to room": "Hivatkozás a szobához",
     "Including you, %(commaSeparatedMembers)s": "Önt is beleértve, %(commaSeparatedMembers)s",
     "Copy room link": "Szoba hivatkozásának másolása",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Anonimizált adatok megosztása a problémák feltárásához. Semmi személyes. Nincs harmadik fél.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
     "Your new device is now verified. Other users will see it as trusted.": "Az új eszköze ellenőrizve van. Mások megbízhatónak fogják látni.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Ez az eszköz hitelesítve van. A titkosított üzenetekhez hozzáférése van és más felhasználók megbízhatónak látják.",
@@ -1510,13 +1500,9 @@
     "Remove from %(roomName)s": "Eltávolít innen: %(roomName)s",
     "You were removed from %(roomName)s by %(memberName)s": "Önt %(memberName)s eltávolította ebből a szobából: %(roomName)s",
     "From a thread": "Az üzenetszálból",
-    "Group all your people in one place.": "Csoportosítsa az összes ismerősét egy helyre.",
-    "Group all your favourite rooms and people in one place.": "Csoportosítsa az összes kedvenc szobáját és ismerősét egy helyre.",
     "Pick a date to jump to": "Idő kiválasztása az ugráshoz",
     "Jump to date": "Ugrás időpontra",
     "The beginning of the room": "A szoba indulása",
-    "Group all your rooms that aren't part of a space in one place.": "Csoportosítsa egy helyre az összes olyan szobát, amely nem egy tér része.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "A terek a szobák és emberek csoportosítási módjainak egyike. Azokon kívül, amelyekben benne van, használhat néhány előre meghatározottat is.",
     "Wait!": "Várjon!",
     "This address does not point at this room": "Ez a cím nem erre a szobára mutat",
     "Location": "Földrajzi helyzet",
@@ -1691,8 +1677,6 @@
     "We're creating a room with %(names)s": "Szobát készítünk: %(names)s",
     "Choose a locale": "Válasszon nyelvet",
     "Saved Items": "Mentett elemek",
-    "Sessions": "Munkamenetek",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "A legjobb biztonság érdekében ellenőrizze a munkameneteit, és jelentkezzen ki azokból, amelyeket nem ismer fel, vagy már nem használ.",
     "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
     "Manually verify by text": "Kézi szöveges ellenőrzés",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s vagy %(copyButton)s",
@@ -1735,10 +1719,6 @@
     "The linking wasn't completed in the required time.": "Az összekötés az elvárt időn belül nem fejeződött be.",
     "Sign in new device": "Új eszköz bejelentkeztetése",
     "Review and approve the sign in": "Belépés áttekintése és engedélyezés",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?",
-        "other": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?"
-    },
     "Show formatting": "Formázás megjelenítése",
     "Error downloading image": "Kép letöltési hiba",
     "Unable to show image due to error": "Kép megjelenítése egy hiba miatt nem lehetséges",
@@ -2506,7 +2486,12 @@
             "cryptography_section": "Titkosítás",
             "session_id": "Munkamenetazonosító:",
             "session_key": "Munkamenetkulcs:",
-            "encryption_section": "Titkosítás"
+            "encryption_section": "Titkosítás",
+            "bulk_options_section": "Tömeges beállítások",
+            "bulk_options_accept_all_invites": "Mind a(z) %(invitedRooms)s meghívó elfogadása",
+            "bulk_options_reject_all_invites": "Mind a(z) %(invitedRooms)s meghívó elutasítása",
+            "message_search_section": "Üzenet keresése",
+            "analytics_subsection_description": "Anonimizált adatok megosztása a problémák feltárásához. Semmi személyes. Nincs harmadik fél."
         },
         "preferences": {
             "room_list_heading": "Szobalista",
@@ -2620,7 +2605,13 @@
                 "other": "Eszközökből való kijelentkezés"
             },
             "security_recommendations": "Biztonsági javaslatok",
-            "security_recommendations_description": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat."
+            "security_recommendations_description": "Javítsa a fiókja biztonságát azzal, hogy követi a következő javaslatokat.",
+            "title": "Munkamenetek",
+            "sign_out_confirm_description": {
+                "one": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?",
+                "other": "Biztos, hogy ki szeretne lépni %(count)s munkamenetből?"
+            },
+            "other_sessions_subsection_description": "A legjobb biztonság érdekében ellenőrizze a munkameneteit, és jelentkezzen ki azokból, amelyeket nem ismer fel, vagy már nem használ."
         },
         "general": {
             "oidc_manage_button": "Fiók kezelése",
@@ -2640,6 +2631,17 @@
             "add_msisdn_confirm_button": "Telefonszám hozzáadásának megerősítése",
             "add_msisdn_confirm_body": "A telefonszám hozzáadásának megerősítéséhez kattintson a lenti gombra.",
             "add_msisdn_dialog_title": "Telefonszám hozzáadása"
+        },
+        "sidebar": {
+            "title": "Oldalsáv",
+            "metaspaces_subsection": "Megjelenítendő terek",
+            "metaspaces_description": "A terek a szobák és emberek csoportosítási módjainak egyike. Azokon kívül, amelyekben benne van, használhat néhány előre meghatározottat is.",
+            "metaspaces_home_description": "A Kezdőlap áttekintést adhat mindenről.",
+            "metaspaces_home_all_rooms": "Minden szoba megjelenítése a Kezdőlapon, akkor is ha egy tér része.",
+            "metaspaces_favourites_description": "Csoportosítsa az összes kedvenc szobáját és ismerősét egy helyre.",
+            "metaspaces_people_description": "Csoportosítsa az összes ismerősét egy helyre.",
+            "metaspaces_orphans": "Téren kívüli szobák",
+            "metaspaces_orphans_description": "Csoportosítsa egy helyre az összes olyan szobát, amely nem egy tér része."
         }
     },
     "devtools": {

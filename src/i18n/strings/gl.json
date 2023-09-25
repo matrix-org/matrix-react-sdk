@@ -141,7 +141,6 @@
     "Failed to change password. Is your password correct?": "Fallo ao cambiar o contrasinal. É correcto o contrasinal?",
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
     "<not supported>": "<non soportado>",
-    "Reject all %(invitedRooms)s invites": "Rexeitar todos os %(invitedRooms)s convites",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
     "Notifications": "Notificacións",
@@ -383,9 +382,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "None": "Nada",
     "Ignored users": "Usuarias ignoradas",
-    "Bulk options": "Opcións agrupadas",
-    "Accept all %(invitedRooms)s invites": "Aceptar os %(invitedRooms)s convites",
-    "Message search": "Buscar mensaxe",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas.",
     "Missing media permissions, click the button below to request.": "Falta permiso acceso multimedia, preme o botón para solicitalo.",
     "Request media permissions": "Solicitar permiso a multimedia",
@@ -1408,11 +1404,6 @@
     "@mentions & keywords": "@mencións & palabras chave",
     "Get notified for every message": "Ter notificación de tódalas mensaxes",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala non está a reenviar mensaxes a ningún outro sistema. <a>Saber máis.</a>",
-    "Rooms outside of a space": "Salas fóra dun espazo",
-    "Show all your rooms in Home, even if they're in a space.": "Mostra tódalas túas salas en Inicio, incluso se están nun espazo.",
-    "Home is useful for getting an overview of everything.": "O Inicio é útil para ter unha visión xeral do que acontece.",
-    "Spaces to show": "Espazos a mostrar",
-    "Sidebar": "Barra lateral",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
@@ -1459,7 +1450,6 @@
     },
     "No votes cast": "Sen votos",
     "Share location": "Compartir localización",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes.",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
     "Other searches": "Outras buscas",
@@ -1501,10 +1491,6 @@
     "Voice Message": "Mensaxe de voz",
     "Hide stickers": "Agochar adhesivos",
     "From a thread": "Desde un fío",
-    "Group all your rooms that aren't part of a space in one place.": "Agrupa nun só lugar tódalas túas salas que non forman parte dun espazo.",
-    "Group all your people in one place.": "Agrupa tódalas persoas nun só lugar.",
-    "Group all your favourite rooms and people in one place.": "Agrupa tódalas túas salas favoritas e persoas nun só lugar.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Os Espazos son xeitos de agrupar salas e persoas. Xunto cos espazos nos que estás, tamén podes usar algún dos prestablecidos.",
     "Back to thread": "Volver ao fío",
     "Room members": "Membros da sala",
     "Back to chat": "Volver ao chat",
@@ -1691,8 +1677,6 @@
     "Saved Items": "Elementos gardados",
     "Choose a locale": "Elixe o idioma",
     "We're creating a room with %(names)s": "Estamos creando unha sala con %(names)s",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Para maior seguridade, verifica as túas sesións e pecha calquera sesión que non recoñezas como propia.",
-    "Sessions": "Sesións",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
     "Manually verify by text": "Verificar manualmente con texto",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
@@ -2284,7 +2268,12 @@
             "cryptography_section": "Criptografía",
             "session_id": "ID da sesión:",
             "session_key": "Chave da sesión:",
-            "encryption_section": "Cifrado"
+            "encryption_section": "Cifrado",
+            "bulk_options_section": "Opcións agrupadas",
+            "bulk_options_accept_all_invites": "Aceptar os %(invitedRooms)s convites",
+            "bulk_options_reject_all_invites": "Rexeitar todos os %(invitedRooms)s convites",
+            "message_search_section": "Buscar mensaxe",
+            "analytics_subsection_description": "Comparte datos anónimos para axudarnos a identificar os problemas. Nada persoal. Nen con terceiras partes."
         },
         "preferences": {
             "room_list_heading": "Listaxe de Salas",
@@ -2355,7 +2344,9 @@
                 "one": "Desconectar dispositivo",
                 "other": "Desconectar dispositivos"
             },
-            "security_recommendations": "Recomendacións de seguridade"
+            "security_recommendations": "Recomendacións de seguridade",
+            "title": "Sesións",
+            "other_sessions_subsection_description": "Para maior seguridade, verifica as túas sesións e pecha calquera sesión que non recoñezas como propia."
         },
         "general": {
             "account_section": "Conta",
@@ -2371,6 +2362,17 @@
             "add_msisdn_confirm_button": "Confirma a adición do teléfono",
             "add_msisdn_confirm_body": "Preme no botón inferior para confirmar que engades este número.",
             "add_msisdn_dialog_title": "Engadir novo Número"
+        },
+        "sidebar": {
+            "title": "Barra lateral",
+            "metaspaces_subsection": "Espazos a mostrar",
+            "metaspaces_description": "Os Espazos son xeitos de agrupar salas e persoas. Xunto cos espazos nos que estás, tamén podes usar algún dos prestablecidos.",
+            "metaspaces_home_description": "O Inicio é útil para ter unha visión xeral do que acontece.",
+            "metaspaces_home_all_rooms": "Mostra tódalas túas salas en Inicio, incluso se están nun espazo.",
+            "metaspaces_favourites_description": "Agrupa tódalas túas salas favoritas e persoas nun só lugar.",
+            "metaspaces_people_description": "Agrupa tódalas persoas nun só lugar.",
+            "metaspaces_orphans": "Salas fóra dun espazo",
+            "metaspaces_orphans_description": "Agrupa nun só lugar tódalas túas salas que non forman parte dun espazo."
         }
     },
     "devtools": {

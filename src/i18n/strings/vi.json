@@ -756,10 +756,6 @@
     "Request media permissions": "Yêu cầu quyền phương tiện",
     "Missing media permissions, click the button below to request.": "Thiếu quyền phương tiện, hãy nhấp vào nút bên dưới để yêu cầu.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Người quản trị máy chủ của bạn đã vô hiệu hóa mã hóa đầu cuối theo mặc định trong phòng riêng và Tin nhắn trực tiếp.",
-    "Message search": "Tìm kiếm tin nhắn",
-    "Reject all %(invitedRooms)s invites": "Từ chối tất cả lời mời từ %(invitedRooms)s",
-    "Accept all %(invitedRooms)s invites": "Chấp nhận tất cả các lời mời từ %(invitedRooms)s",
-    "Bulk options": "Tùy chọn hàng loạt",
     "You have no ignored users.": "Bạn không có người dùng bị bỏ qua.",
     "Unignore": "Hủy bỏ qua",
     "Ignored users": "Người dùng bị bỏ qua",
@@ -1442,12 +1438,6 @@
     "Get notified for every message": "Nhận thông báo cho mọi tin nhắn",
     "Get notifications as set up in your <a>settings</a>": "Nhận thông báo như được thiết lập trong <a>cài đặt</a> của bạn",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Phòng này không nối các tin nhắn đến bất kỳ nền tảng nào. <a>Tìm hiểu thêm</a>",
-    "Rooms outside of a space": "Các phòng bên ngoài một space",
-    "Show all your rooms in Home, even if they're in a space.": "Hiển thị tất cả các phòng trong Home, ngay cả nếu chúng ở trong space.",
-    "Home is useful for getting an overview of everything.": "Home rất hữu ích để có cái nhìn tổng quan về mọi thứ.",
-    "Spaces to show": "Space để hiển thị",
-    "Sidebar": "Thanh bên",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
     "Pin to sidebar": "Ghim vào sidebar",
     "Quick settings": "Cài đặt nhanh",
@@ -1515,12 +1505,6 @@
     "Voice processing": "Xử lý âm thanh",
     "Video settings": "Cài đặt truyền hình",
     "Voice settings": "Cài đặt âm thanh",
-    "Group all your people in one place.": "Đưa tất cả mọi người vào một chỗ.",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Bạn có muốn đăng xuất %(count)s phiên?",
-        "other": "Bạn có muốn đăng xuất %(count)s phiên?"
-    },
-    "Sessions": "Các phiên",
     "Deactivating your account is a permanent action — be careful!": "Vô hiệu hóa tài khoản của bạn là vĩnh viễn — hãy cẩn trọng!",
     "Set a new account password…": "Đặt mật khẩu tài khoản mới…",
     "Your password was successfully changed.": "Đã đổi mật khẩu thành công.",
@@ -1547,7 +1531,6 @@
     "This invite was sent to %(email)s": "Lời mời này đã được gửi tới %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Lời mời này đã được gửi đến %(email)s nhưng không liên kết với tài khoản của bạn",
     "Call type": "Loại cuộc gọi",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Để bảo mật nhất, hãy xác thực các phiên và đăng xuất khỏi phiên nào bạn không nhận ra hay dùng nữa.",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Trạng thái HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Lỗi không xác định khi đổi mật khẩu (%(stringifiedError)s)",
     "Ignore (%(counter)s)": "Ẩn (%(counter)s)",
@@ -1690,9 +1673,6 @@
     "Match default setting": "Theo cài đặt mặc định",
     "Mute room": "Tắt tiếng phòng",
     "Failed to download source media, no source url was found": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Không gian là cách để nhóm phòng và người. Bên cạnh các không gian bạn đang ở, bạn cũng có thể sử dụng một số không gian đã được xây dựng sẵn.",
-    "Group all your rooms that aren't part of a space in one place.": "Nhóm tất cả các phòng của bạn mà không phải là một phần của không gian ở một nơi.",
-    "Group all your favourite rooms and people in one place.": "Nhóm tất cả các phòng và người mà bạn yêu thích ở một nơi.",
     "Past polls": "Các cuộc bỏ phiếu trước",
     "Active polls": "Các cuộc bỏ phiếu hiện tại",
     "unavailable": "không có sẵn",
@@ -2365,7 +2345,12 @@
             "cryptography_section": "Mã hóa bảo mật",
             "session_id": "Định danh (ID) phiên:",
             "session_key": "Khóa phiên:",
-            "encryption_section": "Mã hóa"
+            "encryption_section": "Mã hóa",
+            "bulk_options_section": "Tùy chọn hàng loạt",
+            "bulk_options_accept_all_invites": "Chấp nhận tất cả các lời mời từ %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Từ chối tất cả lời mời từ %(invitedRooms)s",
+            "message_search_section": "Tìm kiếm tin nhắn",
+            "analytics_subsection_description": "Chia sẻ dữ liệu ẩn danh giúp chúng tôi xác định các sự cố. Không có thông tin cá nhân. Không có bên thứ ba."
         },
         "preferences": {
             "room_list_heading": "Danh sách phòng",
@@ -2478,7 +2463,13 @@
                 "other": "Đăng xuất các thiết bị"
             },
             "security_recommendations": "Đề xuất bảo mật",
-            "security_recommendations_description": "Tăng cường bảo mật cho tài khoản bằng cách làm theo các đề xuất này."
+            "security_recommendations_description": "Tăng cường bảo mật cho tài khoản bằng cách làm theo các đề xuất này.",
+            "title": "Các phiên",
+            "sign_out_confirm_description": {
+                "one": "Bạn có muốn đăng xuất %(count)s phiên?",
+                "other": "Bạn có muốn đăng xuất %(count)s phiên?"
+            },
+            "other_sessions_subsection_description": "Để bảo mật nhất, hãy xác thực các phiên và đăng xuất khỏi phiên nào bạn không nhận ra hay dùng nữa."
         },
         "general": {
             "oidc_manage_button": "Quản lý tài khoản",
@@ -2498,6 +2489,17 @@
             "add_msisdn_confirm_button": "Xác nhận thêm số điện thoại",
             "add_msisdn_confirm_body": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
             "add_msisdn_dialog_title": "Thêm Số Điện Thoại"
+        },
+        "sidebar": {
+            "title": "Thanh bên",
+            "metaspaces_subsection": "Space để hiển thị",
+            "metaspaces_description": "Không gian là cách để nhóm phòng và người. Bên cạnh các không gian bạn đang ở, bạn cũng có thể sử dụng một số không gian đã được xây dựng sẵn.",
+            "metaspaces_home_description": "Home rất hữu ích để có cái nhìn tổng quan về mọi thứ.",
+            "metaspaces_home_all_rooms": "Hiển thị tất cả các phòng trong Home, ngay cả nếu chúng ở trong space.",
+            "metaspaces_favourites_description": "Nhóm tất cả các phòng và người mà bạn yêu thích ở một nơi.",
+            "metaspaces_people_description": "Đưa tất cả mọi người vào một chỗ.",
+            "metaspaces_orphans": "Các phòng bên ngoài một space",
+            "metaspaces_orphans_description": "Nhóm tất cả các phòng của bạn mà không phải là một phần của không gian ở một nơi."
         }
     },
     "devtools": {

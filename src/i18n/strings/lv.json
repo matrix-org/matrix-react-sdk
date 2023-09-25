@@ -68,7 +68,6 @@
         "one": "(~%(count)s rezultāts)",
         "other": "(~%(count)s rezultāti)"
     },
-    "Reject all %(invitedRooms)s invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Notiek Tevis novirzīšana uz ārēju trešās puses vietni. Tu vari atļaut savam kontam piekļuvi ar %(integrationsUrl)s. Vai vēlies turpināt?",
     "Rooms": "Istabas",
     "Search failed": "Meklēšana neizdevās",
@@ -308,7 +307,6 @@
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Room settings": "Istabas iestatījumi",
     "Share room": "Dalīties ar istabu",
-    "Message search": "Ziņu meklēšana",
     "Cancel search": "Atcelt meklējumu",
     "Flag": "Karogs",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Šīs šifrētās ziņas autentiskums nevar tikt garantēts šajā ierīcē.",
@@ -341,8 +339,6 @@
     "Couldn't load page": "Neizdevās ielādēt lapu",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
     "Session key": "Sesijas atslēga",
-    "Accept all %(invitedRooms)s invites": "Pieņemt visus %(invitedRooms)s uzaicinājumus",
-    "Bulk options": "Lielapjoma opcijas",
     "Account management": "Konta pārvaldība",
     "Failed to save your profile": "Neizdevās salabāt jūsu profilu",
     "New login. Was this you?": "Jauna pierakstīšanās. Vai tas bijāt jūs?",
@@ -1135,7 +1131,11 @@
             "cryptography_section": "Kriptogrāfija",
             "session_id": "Sesijas ID:",
             "session_key": "Sesijas atslēga:",
-            "encryption_section": "Šifrēšana"
+            "encryption_section": "Šifrēšana",
+            "bulk_options_section": "Lielapjoma opcijas",
+            "bulk_options_accept_all_invites": "Pieņemt visus %(invitedRooms)s uzaicinājumus",
+            "bulk_options_reject_all_invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
+            "message_search_section": "Ziņu meklēšana"
         },
         "preferences": {
             "room_list_heading": "Istabu saraksts",

@@ -145,7 +145,6 @@
     "Uploading %(filename)s": "Invio di %(filename)s",
     "Unable to remove contact information": "Impossibile rimuovere le informazioni di contatto",
     "<not supported>": "<non supportato>",
-    "Reject all %(invitedRooms)s invites": "Rifiuta tutti gli inviti da %(invitedRooms)s",
     "Profile": "Profilo",
     "A new password must be entered.": "Deve essere inserita una nuova password.",
     "New passwords must match each other.": "Le nuove password devono coincidere.",
@@ -336,8 +335,6 @@
     "Account management": "Gestione account",
     "General": "Generale",
     "Ignored users": "Utenti ignorati",
-    "Bulk options": "Opzioni generali",
-    "Accept all %(invitedRooms)s invites": "Accetta tutti i %(invitedRooms)s inviti",
     "Missing media permissions, click the button below to request.": "Autorizzazione multimediale mancante, clicca il pulsante sotto per richiederla.",
     "Request media permissions": "Richiedi autorizzazioni multimediali",
     "Voice & Video": "Voce e video",
@@ -598,7 +595,6 @@
     "Connect this session to Key Backup": "Connetti questa sessione al backup chiavi",
     "This backup is trusted because it has been restored on this session": "Questo backup è fidato perchè è stato ripristinato in questa sessione",
     "Your keys are <b>not being backed up from this session</b>.": "Il backup chiavi <b>non viene fatto per questa sessione</b>.",
-    "Message search": "Ricerca messaggio",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Questa stanza fa un bridge dei messaggi con le seguenti piattaforme. <a>Maggiori informazioni.</a>",
     "Bridges": "Bridge",
     "This user has not verified all of their sessions.": "Questo utente non ha verificato tutte le sue sessioni.",
@@ -1407,11 +1403,6 @@
     "You do not have permission to start polls in this room.": "Non hai i permessi per creare sondaggi in questa stanza.",
     "Copy link to thread": "Copia link nella conversazione",
     "Thread options": "Opzioni conversazione",
-    "Rooms outside of a space": "Stanze fuori da uno spazio",
-    "Show all your rooms in Home, even if they're in a space.": "Mostra tutte le tue stanze nella pagina principale, anche se sono in uno spazio.",
-    "Home is useful for getting an overview of everything.": "La pagina principale è utile per avere una panoramica generale.",
-    "Spaces to show": "Spazi da mostrare",
-    "Sidebar": "Barra laterale",
     "Reply in thread": "Rispondi nella conversazione",
     "Mentions only": "Solo le citazioni",
     "Forget": "Dimentica",
@@ -1459,7 +1450,6 @@
     "No votes cast": "Nessun voto",
     "Recently viewed": "Visti di recente",
     "Share location": "Condividi posizione",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Condividi dati anonimi per aiutarci a identificare problemi. Niente di personale. Niente terze parti.",
     "End Poll": "Termina sondaggio",
     "Sorry, the poll did not end. Please try again.": "Spiacenti, il sondaggio non è terminato. Riprova.",
     "Failed to end poll": "Chiusura del sondaggio fallita",
@@ -1510,10 +1500,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "Sei stato rimosso da %(roomName)s da %(memberName)s",
     "Message pending moderation": "Messaggio in attesa di moderazione",
     "Message pending moderation: %(reason)s": "Messaggio in attesa di moderazione: %(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "Raggruppa tutte le tue stanze che non fanno parte di uno spazio in un unico posto.",
-    "Group all your people in one place.": "Raggruppa tutte le tue persone in un unico posto.",
-    "Group all your favourite rooms and people in one place.": "Raggruppa tutte le tue stanze e persone preferite in un unico posto.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Gli spazi sono modi per raggruppare stanze e persone. Oltre agli spazi in cui sei, puoi usarne anche altri di preimpostati.",
     "Pick a date to jump to": "Scegli una data in cui saltare",
     "Jump to date": "Salta alla data",
     "The beginning of the room": "L'inizio della stanza",
@@ -1691,8 +1677,6 @@
     "Saved Items": "Elementi salvati",
     "Choose a locale": "Scegli una lingua",
     "We're creating a room with %(names)s": "Stiamo creando una stanza con %(names)s",
-    "Sessions": "Sessioni",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Per una maggiore sicurezza, verifica le tue sessioni e disconnetti quelle che non riconosci o che non usi più.",
     "Interactively verify by emoji": "Verifica interattivamente con emoji",
     "Manually verify by text": "Verifica manualmente con testo",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s o %(copyButton)s",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Il codice scansionato non è valido.",
     "The linking wasn't completed in the required time.": "Il collegamento non è stato completato nel tempo previsto.",
     "Sign in new device": "Accedi nel nuovo dispositivo",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Vuoi davvero disconnetterti da %(count)s sessione?",
-        "other": "Vuoi davvero disconnetterti da %(count)s sessioni?"
-    },
     "Show formatting": "Mostra formattazione",
     "Error downloading image": "Errore di scaricamento dell'immagine",
     "Unable to show image due to error": "Impossibile mostrare l'immagine per un errore",
@@ -2576,7 +2556,12 @@
             "cryptography_section": "Crittografia",
             "session_id": "ID sessione:",
             "session_key": "Chiave sessione:",
-            "encryption_section": "Crittografia"
+            "encryption_section": "Crittografia",
+            "bulk_options_section": "Opzioni generali",
+            "bulk_options_accept_all_invites": "Accetta tutti i %(invitedRooms)s inviti",
+            "bulk_options_reject_all_invites": "Rifiuta tutti gli inviti da %(invitedRooms)s",
+            "message_search_section": "Ricerca messaggio",
+            "analytics_subsection_description": "Condividi dati anonimi per aiutarci a identificare problemi. Niente di personale. Niente terze parti."
         },
         "preferences": {
             "room_list_heading": "Elenco stanze",
@@ -2690,7 +2675,13 @@
                 "other": "Disconnetti dispositivi"
             },
             "security_recommendations": "Consigli di sicurezza",
-            "security_recommendations_description": "Migliora la sicurezza del tuo account seguendo questi consigli."
+            "security_recommendations_description": "Migliora la sicurezza del tuo account seguendo questi consigli.",
+            "title": "Sessioni",
+            "sign_out_confirm_description": {
+                "one": "Vuoi davvero disconnetterti da %(count)s sessione?",
+                "other": "Vuoi davvero disconnetterti da %(count)s sessioni?"
+            },
+            "other_sessions_subsection_description": "Per una maggiore sicurezza, verifica le tue sessioni e disconnetti quelle che non riconosci o che non usi più."
         },
         "general": {
             "oidc_manage_button": "Gestisci account",
@@ -2710,6 +2701,17 @@
             "add_msisdn_confirm_button": "Conferma aggiungendo un numero di telefono",
             "add_msisdn_confirm_body": "Clicca il pulsante sotto per confermare l'aggiunta di questo numero di telefono.",
             "add_msisdn_dialog_title": "Aggiungi numero di telefono"
+        },
+        "sidebar": {
+            "title": "Barra laterale",
+            "metaspaces_subsection": "Spazi da mostrare",
+            "metaspaces_description": "Gli spazi sono modi per raggruppare stanze e persone. Oltre agli spazi in cui sei, puoi usarne anche altri di preimpostati.",
+            "metaspaces_home_description": "La pagina principale è utile per avere una panoramica generale.",
+            "metaspaces_home_all_rooms": "Mostra tutte le tue stanze nella pagina principale, anche se sono in uno spazio.",
+            "metaspaces_favourites_description": "Raggruppa tutte le tue stanze e persone preferite in un unico posto.",
+            "metaspaces_people_description": "Raggruppa tutte le tue persone in un unico posto.",
+            "metaspaces_orphans": "Stanze fuori da uno spazio",
+            "metaspaces_orphans_description": "Raggruppa tutte le tue stanze che non fanno parte di uno spazio in un unico posto."
         }
     },
     "devtools": {

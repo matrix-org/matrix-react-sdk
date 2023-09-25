@@ -179,7 +179,6 @@
     "Uploading %(filename)s": "Lastar opp %(filename)s",
     "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
     "<not supported>": "<ikkje støtta>",
-    "Reject all %(invitedRooms)s invites": "Kanseller alle invitasjonar frå %(invitedRooms)s",
     "No Audio Outputs detected": "Ingen ljodavspelingseiningar funne",
     "No Microphones detected": "Ingen opptakseiningar funne",
     "No Webcams detected": "Ingen Nettkamera funne",
@@ -245,7 +244,6 @@
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruka ein identitetstenar er frivillig. Om du vel å ikkje bruka dette, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan ikkje invitera andre med e-post eller telefonnummer.",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnummer",
-    "Accept all %(invitedRooms)s invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
     "Error changing power level requirement": "Feil under endring av krav for tilgangsnivå",
     "Error changing power level": "Feil under endring av tilgangsnivå",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ein feil skjedde under endring av tilgangsnivå. Sjekk at du har lov til dette, deretter prøv på nytt.",
@@ -411,7 +409,6 @@
     "Hide sidebar": "Gøym sidestolpen",
     "Show sidebar": "Vis sidestolpen",
     "Close sidebar": "Lat att sidestolpen",
-    "Sidebar": "Sidestolpe",
     "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Enter a new identity server": "Skriv inn ein ny identitetstenar",
@@ -673,7 +670,9 @@
             "export_megolm_keys": "Hent E2E-romnøklar ut",
             "import_megolm_keys": "Hent E2E-romnøklar inn",
             "cryptography_section": "Kryptografi",
-            "encryption_section": "Kryptografi"
+            "encryption_section": "Kryptografi",
+            "bulk_options_accept_all_invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Kanseller alle invitasjonar frå %(invitedRooms)s"
         },
         "preferences": {
             "room_list_heading": "Romkatalog",
@@ -711,6 +710,9 @@
             "add_msisdn_confirm_button": "Stadfest tilleggjing av telefonnummeret",
             "add_msisdn_confirm_body": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
             "add_msisdn_dialog_title": "Legg til telefonnummer"
+        },
+        "sidebar": {
+            "title": "Sidestolpe"
         }
     },
     "devtools": {

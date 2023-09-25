@@ -210,7 +210,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
     "Sent messages will be stored until your connection has returned.": "Mesazhet e dërguar do të depozitohen deri sa lidhja juaj të jetë rikthyer.",
     "Server may be unavailable, overloaded, or search timed out :(": "Shërbyesi mund të jetë i pakapshëm, i mbingarkuar, ose kërkimit i mbaroi koha :(",
-    "Reject all %(invitedRooms)s invites": "Mos prano asnjë ftesë për në %(invitedRooms)s",
     "New passwords must match each other.": "Fjalëkalimet e rinj duhet të përputhen me njëri-tjetrin.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë, ngaqë po zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te dhoma do të jetë e pamundur të rifitoni privilegjet.",
     "Jump to read receipt": "Hidhuni te leximi i faturës",
@@ -268,7 +267,6 @@
     "Phone numbers": "Numra telefonash",
     "Account management": "Administrim llogarish",
     "Ignored users": "Përdorues të shpërfillur",
-    "Bulk options": "Veprime masive",
     "Missing media permissions, click the button below to request.": "Mungojnë leje mediash, klikoni mbi butonin më poshtë që të kërkohen.",
     "Request media permissions": "Kërko leje mediash",
     "Voice & Video": "Zë & Video",
@@ -364,7 +362,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Pati një gabim në përditësimin e adresës kryesore të dhomës. Mund të mos lejohet nga shërbyesi ose mund të ketë ndodhur një gabim i përkohshëm.",
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
     "Could not load user profile": "S’u ngarkua dot profili i përdoruesit",
-    "Accept all %(invitedRooms)s invites": "Prano krejt ftesat prej %(invitedRooms)s",
     "Power level": "Shkallë pushteti",
     "Join the conversation with an account": "Merrni pjesë në bisedë me një llogari",
     "Sign Up": "Regjistrohuni",
@@ -589,7 +586,6 @@
     "Encryption upgrade available": "Ka të gatshëm përmirësim fshehtëzimi",
     "Securely cache encrypted messages locally for them to appear in search results.": "Ruaj lokalisht në mënyrë të sigurt në fshehtinë mesazhet që të shfaqen në përfundime kërkimi.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s-it i mungojnë disa përbërës të domosdoshëm për ruajtje lokalisht në mënyrë të sigurt në fshehtinë mesazhe. Nëse do të donit të eksperimentonit me këtë veçori, montoni një Desktop vetjak %(brand)s Desktop me <nativeLink>shtim përbërësish kërkimi</nativeLink>.",
-    "Message search": "Kërkim mesazhesh",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Llogaria juaj ka një identitet <em>cross-signing</em> në depozitë të fshehtë, por s’është ende i besuar në këtë sesion.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ky sesion <b>nuk po bën kopjeruajtje të kyçeve tuaja</b>, por keni një kopjeruajtje ekzistuese që mund ta përdorni për rimarrje dhe ta shtoni më tej.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Lidheni këtë sesion kopjeruajtje kyçesh, përpara se të dilni, që të shmangni humbje të çfarëdo kyçi që mund të gjendet vetëm në këtë pajisje.",
@@ -1404,11 +1400,6 @@
     "Copy link to thread": "Kopjoje lidhjen te rrjedha",
     "Thread options": "Mundësi rrjedhe",
     "Reply in thread": "Përgjigjuni te rrjedha",
-    "Rooms outside of a space": "Dhoma jashtë një hapësire",
-    "Show all your rooms in Home, even if they're in a space.": "Shfaqni krejt dhomat tuaja te Kreu, edhe nëse gjenden në një hapësirë.",
-    "Home is useful for getting an overview of everything.": "Kreu është i dobishëm për të pasur një përmbledhje të gjithçkaje.",
-    "Spaces to show": "Hapësira për shfaqje",
-    "Sidebar": "Anështyllë",
     "Mentions only": "Vetëm përmendje",
     "Forget": "Harroje",
     "Files": "Kartela",
@@ -1469,7 +1460,6 @@
         "other": "Rezultati përfundimtar, bazua në %(count)s vota"
     },
     "Share location": "Jepe vendndodhjen",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta.",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
     "Other searches": "Kërkime të tjera",
@@ -1509,10 +1499,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "U hoqët %(roomName)s nga %(memberName)s",
     "Message pending moderation": "Mesazh në pritje të moderimit",
     "Message pending moderation: %(reason)s": "Mesazh në pritje të moderimit: %(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "Gruponi në një vend krejt dhomat tuaja që s’janë pjesë e një hapësire.",
-    "Group all your people in one place.": "Gruponi krejt personat tuaj në një vend.",
-    "Group all your favourite rooms and people in one place.": "Gruponi në një vend krejt dhomat tuaja të parapëlqyera dhe personat e parapëlqyer.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Hapësirat janë mënyra për të grupuar dhoma dhe njerëz. Tok me hapësirat ku gjendeni, mundeni të përdorni edhe disa të krijuara paraprakisht.",
     "Pick a date to jump to": "Zgjidhni një datë ku të kalohet",
     "Jump to date": "Kalo te datë",
     "The beginning of the room": "Fillimi i dhomës",
@@ -1717,8 +1703,6 @@
     "Show formatting": "Shfaq formatim",
     "Call type": "Lloj thirrjeje",
     "You do not have sufficient permissions to change this.": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Për sigurinë më të mirë, verifikoni sesionet tuaja dhe dilni nga çfarëdo sesioni që s’e njihni, ose s’e përdorni më.",
-    "Sessions": "Sesione",
     "Sorry — this call is currently full": "Na ndjeni — aktualisht kjo thirrje është plot",
     "Unknown room": "Dhomë e panjohur",
     "View List": "Shihni Listën",
@@ -1733,10 +1717,6 @@
     "toggle event": "shfaqe/fshihe aktin",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s është i fshehtëzuar skaj-më-skaj, por aktualisht është i kufizuar në numra më të vegjël përdoruesish.",
     "Enable %(brand)s as an additional calling option in this room": "Aktivizojeni %(brand)s si një mundësi shtesë thirrjesh në këtë dhomë",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Jeni i sigurt se doni të dilet nga %(count)s session?",
-        "other": "Jeni i sigurt se doni të dilet nga %(count)s sessione?"
-    },
     "Send email": "Dërgo email",
     "Sign out of all devices": "Dilni nga llogaria në krejt pajisjet",
     "Confirm new password": "Ripohoni fjalëkalimin e ri",
@@ -2504,7 +2484,12 @@
             "cryptography_section": "Kriptografi",
             "session_id": "ID sesioni:",
             "session_key": "Kyç sesioni:",
-            "encryption_section": "Fshehtëzim"
+            "encryption_section": "Fshehtëzim",
+            "bulk_options_section": "Veprime masive",
+            "bulk_options_accept_all_invites": "Prano krejt ftesat prej %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Mos prano asnjë ftesë për në %(invitedRooms)s",
+            "message_search_section": "Kërkim mesazhesh",
+            "analytics_subsection_description": "Ndani me ne të dhëna anonime, për të na ndihmuar të gjejmë problemet. Asgjë personale. Pa palë të treta."
         },
         "preferences": {
             "room_list_heading": "Listë dhomash",
@@ -2618,7 +2603,13 @@
                 "other": "Dil nga pajisje"
             },
             "security_recommendations": "Rekomandime sigurie",
-            "security_recommendations_description": "Përmirësoni sigurinë e llogarisë tuaj duke ndjekur këto rekomandime."
+            "security_recommendations_description": "Përmirësoni sigurinë e llogarisë tuaj duke ndjekur këto rekomandime.",
+            "title": "Sesione",
+            "sign_out_confirm_description": {
+                "one": "Jeni i sigurt se doni të dilet nga %(count)s session?",
+                "other": "Jeni i sigurt se doni të dilet nga %(count)s sessione?"
+            },
+            "other_sessions_subsection_description": "Për sigurinë më të mirë, verifikoni sesionet tuaja dhe dilni nga çfarëdo sesioni që s’e njihni, ose s’e përdorni më."
         },
         "general": {
             "oidc_manage_button": "Administroni llogari",
@@ -2637,6 +2628,17 @@
             "add_msisdn_confirm_button": "Ripohoni shtim numri telefoni",
             "add_msisdn_confirm_body": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
             "add_msisdn_dialog_title": "Shtoni Numër Telefoni"
+        },
+        "sidebar": {
+            "title": "Anështyllë",
+            "metaspaces_subsection": "Hapësira për shfaqje",
+            "metaspaces_description": "Hapësirat janë mënyra për të grupuar dhoma dhe njerëz. Tok me hapësirat ku gjendeni, mundeni të përdorni edhe disa të krijuara paraprakisht.",
+            "metaspaces_home_description": "Kreu është i dobishëm për të pasur një përmbledhje të gjithçkaje.",
+            "metaspaces_home_all_rooms": "Shfaqni krejt dhomat tuaja te Kreu, edhe nëse gjenden në një hapësirë.",
+            "metaspaces_favourites_description": "Gruponi në një vend krejt dhomat tuaja të parapëlqyera dhe personat e parapëlqyer.",
+            "metaspaces_people_description": "Gruponi krejt personat tuaj në një vend.",
+            "metaspaces_orphans": "Dhoma jashtë një hapësire",
+            "metaspaces_orphans_description": "Gruponi në një vend krejt dhomat tuaja që s’janë pjesë e një hapësire."
         }
     },
     "devtools": {

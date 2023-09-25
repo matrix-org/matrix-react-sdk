@@ -435,10 +435,6 @@
     "Request media permissions": "اطلب الإذن للوسائط",
     "Missing media permissions, click the button below to request.": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
-    "Message search": "بحث الرسائل",
-    "Reject all %(invitedRooms)s invites": "رفض كل الدعوات (%(invitedRooms)s)",
-    "Accept all %(invitedRooms)s invites": "قبول كل الدعوات (%(invitedRooms)s)",
-    "Bulk options": "خيارات مجمعة",
     "<not supported>": "<غير معتمد>",
     "Safeguard against losing access to encrypted messages & data": "حماية ضد فقدان الوصول إلى الرسائل والبيانات المشفرة",
     "Verify this session": "تحقق من هذا الاتصال",
@@ -858,7 +854,11 @@
             "cryptography_section": "التشفير",
             "session_id": "معرّف الاتصال:",
             "session_key": "مفتاح الاتصال:",
-            "encryption_section": "تشفير"
+            "encryption_section": "تشفير",
+            "bulk_options_section": "خيارات مجمعة",
+            "bulk_options_accept_all_invites": "قبول كل الدعوات (%(invitedRooms)s)",
+            "bulk_options_reject_all_invites": "رفض كل الدعوات (%(invitedRooms)s)",
+            "message_search_section": "بحث الرسائل"
         },
         "preferences": {
             "room_list_heading": "قائمة الغرفة",

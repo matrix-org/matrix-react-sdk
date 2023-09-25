@@ -99,7 +99,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ce processus vous permet d’exporter dans un fichier local les clés pour les messages que vous avez reçus dans des salons chiffrés. Il sera ensuite possible d’importer ce fichier dans un autre client Matrix, afin de permettre à ce client de pouvoir déchiffrer ces messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
-    "Reject all %(invitedRooms)s invites": "Rejeter la totalité des %(invitedRooms)s invitations",
     "Confirm Removal": "Confirmer la suppression",
     "Unknown error": "Erreur inconnue",
     "Unable to restore session": "Impossible de restaurer la session",
@@ -271,7 +270,6 @@
     "Phone numbers": "Numéros de téléphone",
     "Account management": "Gestion du compte",
     "Ignored users": "Utilisateurs ignorés",
-    "Bulk options": "Options de groupe",
     "Missing media permissions, click the button below to request.": "Permissions multimédia manquantes, cliquez sur le bouton ci-dessous pour la demander.",
     "Request media permissions": "Demander les permissions multimédia",
     "Voice & Video": "Audio et vidéo",
@@ -367,7 +365,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Une erreur est survenue lors de la mise à jour de l’adresse principale de salon. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
     "Could not load user profile": "Impossible de charger le profil de l’utilisateur",
-    "Accept all %(invitedRooms)s invites": "Accepter les %(invitedRooms)s invitations",
     "Power level": "Rang",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ce salon utilise la version <roomVersion />, que ce serveur d’accueil a marqué comme <i>instable</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "La mise à niveau du salon désactivera cette instance du salon et créera un salon mis à niveau avec le même nom.",
@@ -592,7 +589,6 @@
     "Encryption upgrade available": "Mise à niveau du chiffrement disponible",
     "Securely cache encrypted messages locally for them to appear in search results.": "Mettre en cache les messages chiffrés localement et de manière sécurisée pour qu’ils apparaissent dans les résultats de recherche.",
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "Il manque quelques composants à %(brand)s pour mettre en cache les messages chiffrés localement de manière sécurisée. Si vous voulez essayer cette fonctionnalité, construisez %(brand)s Desktop vous-même en <nativeLink>ajoutant les composants de recherche</nativeLink>.",
-    "Message search": "Recherche de message",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ce salon transmet les messages vers les plateformes suivantes. <a>En savoir plus.</a>",
     "Bridges": "Passerelles",
     "Waiting for %(displayName)s to accept…": "En attente d’acceptation par %(displayName)s…",
@@ -1418,11 +1414,6 @@
     "@mentions & keywords": "@mentions et mots-clés",
     "Get notified for every message": "Recevoir une notification pour chaque message",
     "Get notifications as set up in your <a>settings</a>": "Recevoir les notifications comme défini dans vos <a>paramètres</a>",
-    "Rooms outside of a space": "Salons en dehors d’un espace",
-    "Show all your rooms in Home, even if they're in a space.": "Affiche tous vos salons dans l’accueil, même s’ils font partis d’un espace.",
-    "Home is useful for getting an overview of everything.": "L’accueil permet d’avoir un aperçu global.",
-    "Spaces to show": "Espaces à afficher",
-    "Sidebar": "Barre latérale",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
     "Based on %(count)s votes": {
         "one": "Sur la base de %(count)s vote",
@@ -1470,7 +1461,6 @@
         "one": "Résultat final sur la base de %(count)s vote",
         "other": "Résultat final sur la base de %(count)s votes"
     },
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Partager des données anonymisées pour nous aider à identifier les problèmes. Rien de personnel. Aucune tierce partie.",
     "Recent searches": "Recherches récentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
     "Other searches": "Autres recherches",
@@ -1510,10 +1500,6 @@
     "Remove them from everything I'm able to": "Les expulser de partout où j’ai le droit de le faire",
     "You were removed from %(roomName)s by %(memberName)s": "Vous avez été expulsé(e) de %(roomName)s par %(memberName)s",
     "Remove from %(roomName)s": "Expulser de %(roomName)s",
-    "Group all your people in one place.": "Regrouper toutes vos connaissances au même endroit.",
-    "Group all your favourite rooms and people in one place.": "Regroupez tous vos salons et personnes préférés au même endroit.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Les espaces permettent de regrouper des salons et des personnes. En plus de ceux auxquels vous participez, vous pouvez également utiliser des espaces prédéfinis.",
-    "Group all your rooms that aren't part of a space in one place.": "Regroupe tous les salons n’appartenant pas à un espace au même endroit.",
     "Pick a date to jump to": "Choisissez vers quelle date aller",
     "Jump to date": "Aller à la date",
     "The beginning of the room": "Le début de ce salon",
@@ -1691,10 +1677,8 @@
     "Saved Items": "Éléments sauvegardés",
     "Choose a locale": "Choisir une langue",
     "We're creating a room with %(names)s": "Nous créons un salon avec %(names)s",
-    "Sessions": "Sessions",
     "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
     "Manually verify by text": "Vérifier manuellement avec un texte",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Pour une meilleure sécurité, vérifiez vos sessions et déconnectez toutes les sessions que vous ne connaissez pas ou que vous n’utilisez plus.",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "You do not have permission to start voice calls": "Vous n’avez pas la permission de démarrer un appel audio",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Le code scanné est invalide.",
     "The linking wasn't completed in the required time.": "L’appairage n’a pas été effectué dans le temps imparti.",
     "Sign in new device": "Connecter le nouvel appareil",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Voulez-vous vraiment déconnecter %(count)s session ?",
-        "other": "Voulez-vous vraiment déconnecter %(count)s de vos sessions ?"
-    },
     "Show formatting": "Afficher le formatage",
     "Hide formatting": "Masquer le formatage",
     "Error downloading image": "Erreur lors du téléchargement de l’image",
@@ -2571,7 +2551,12 @@
             "cryptography_section": "Chiffrement",
             "session_id": "Identifiant de session :",
             "session_key": "Clé de session :",
-            "encryption_section": "Chiffrement"
+            "encryption_section": "Chiffrement",
+            "bulk_options_section": "Options de groupe",
+            "bulk_options_accept_all_invites": "Accepter les %(invitedRooms)s invitations",
+            "bulk_options_reject_all_invites": "Rejeter la totalité des %(invitedRooms)s invitations",
+            "message_search_section": "Recherche de message",
+            "analytics_subsection_description": "Partager des données anonymisées pour nous aider à identifier les problèmes. Rien de personnel. Aucune tierce partie."
         },
         "preferences": {
             "room_list_heading": "Liste de salons",
@@ -2685,7 +2670,13 @@
                 "other": "Déconnecter les appareils"
             },
             "security_recommendations": "Recommandations de sécurité",
-            "security_recommendations_description": "Améliorez la sécurité de votre compte à l’aide de ces recommandations."
+            "security_recommendations_description": "Améliorez la sécurité de votre compte à l’aide de ces recommandations.",
+            "title": "Sessions",
+            "sign_out_confirm_description": {
+                "one": "Voulez-vous vraiment déconnecter %(count)s session ?",
+                "other": "Voulez-vous vraiment déconnecter %(count)s de vos sessions ?"
+            },
+            "other_sessions_subsection_description": "Pour une meilleure sécurité, vérifiez vos sessions et déconnectez toutes les sessions que vous ne connaissez pas ou que vous n’utilisez plus."
         },
         "general": {
             "oidc_manage_button": "Gérer le compte",
@@ -2705,6 +2696,17 @@
             "add_msisdn_confirm_button": "Confirmer l’ajout du numéro de téléphone",
             "add_msisdn_confirm_body": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de ce numéro de téléphone.",
             "add_msisdn_dialog_title": "Ajouter un numéro de téléphone"
+        },
+        "sidebar": {
+            "title": "Barre latérale",
+            "metaspaces_subsection": "Espaces à afficher",
+            "metaspaces_description": "Les espaces permettent de regrouper des salons et des personnes. En plus de ceux auxquels vous participez, vous pouvez également utiliser des espaces prédéfinis.",
+            "metaspaces_home_description": "L’accueil permet d’avoir un aperçu global.",
+            "metaspaces_home_all_rooms": "Affiche tous vos salons dans l’accueil, même s’ils font partis d’un espace.",
+            "metaspaces_favourites_description": "Regroupez tous vos salons et personnes préférés au même endroit.",
+            "metaspaces_people_description": "Regrouper toutes vos connaissances au même endroit.",
+            "metaspaces_orphans": "Salons en dehors d’un espace",
+            "metaspaces_orphans_description": "Regroupe tous les salons n’appartenant pas à un espace au même endroit."
         }
     },
     "devtools": {

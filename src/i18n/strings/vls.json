@@ -136,9 +136,6 @@
     "Unignore": "Nie mi negeern",
     "<not supported>": "<nie oundersteund>",
     "Ignored users": "Genegeerde gebruukers",
-    "Bulk options": "Bulkopties",
-    "Accept all %(invitedRooms)s invites": "Alle %(invitedRooms)s-uutnodigiengn anveirdn",
-    "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s-uutnodigiengn weigern",
     "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
     "Request media permissions": "Mediatoestemmiengn verzoekn",
     "No Audio Outputs detected": "Geen geluudsuutgangn gedetecteerd",
@@ -645,7 +642,10 @@
             "export_megolm_keys": "E2E-gesprekssleuters exporteern",
             "import_megolm_keys": "E2E-gesprekssleuters importeern",
             "cryptography_section": "Cryptografie",
-            "encryption_section": "Versleuterienge"
+            "encryption_section": "Versleuterienge",
+            "bulk_options_section": "Bulkopties",
+            "bulk_options_accept_all_invites": "Alle %(invitedRooms)s-uutnodigiengn anveirdn",
+            "bulk_options_reject_all_invites": "Alle %(invitedRooms)s-uutnodigiengn weigern"
         },
         "preferences": {
             "room_list_heading": "Gesprekslyste",

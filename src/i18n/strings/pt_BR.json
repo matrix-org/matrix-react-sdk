@@ -98,7 +98,6 @@
     "File to import": "Arquivo para importar",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O arquivo exportado será protegido com uma senha. Você deverá inserir a senha aqui para poder descriptografar o arquivo futuramente.",
-    "Reject all %(invitedRooms)s invites": "Recusar todos os %(invitedRooms)s convites",
     "Confirm Removal": "Confirmar a remoção",
     "Unknown error": "Erro desconhecido",
     "Unable to restore session": "Não foi possível restaurar a sessão",
@@ -335,8 +334,6 @@
     "Account management": "Gerenciamento da Conta",
     "General": "Geral",
     "Ignored users": "Usuários bloqueados",
-    "Bulk options": "Opções em massa",
-    "Accept all %(invitedRooms)s invites": "Aceite todos os convites de %(invitedRooms)s",
     "Missing media permissions, click the button below to request.": "Permissões de mídia ausentes, clique no botão abaixo para solicitar.",
     "Request media permissions": "Solicitar permissões de mídia",
     "Voice & Video": "Voz e vídeo",
@@ -570,7 +567,6 @@
     "Clear personal data": "Limpar dados pessoais",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
     "None": "Nenhuma",
-    "Message search": "Pesquisa de mensagens",
     "Set a new custom sound": "Definir um novo som personalizado",
     "Browse": "Buscar",
     "Your email address hasn't been verified yet": "Seu endereço de e-mail ainda não foi confirmado",
@@ -1353,12 +1349,6 @@
     "Get notified for every message": "Seja notificado para cada mensagem",
     "Get notifications as set up in your <a>settings</a>": "Receba notificações conforme configurado em suas <a>configurações</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala não está conectando mensagens a nenhuma plataforma. <a> Saiba mais. </a>",
-    "Rooms outside of a space": "Salas fora de um espaço",
-    "Show all your rooms in Home, even if they're in a space.": "Mostre todas as suas salas no Início, mesmo que elas estejam em um espaço.",
-    "Home is useful for getting an overview of everything.": "A página inicial é útil para obter uma visão geral de tudo.",
-    "Spaces to show": "Espaços para mostrar",
-    "Sidebar": "Barra lateral",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros.",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atualizando espaço...",
         "other": "Atualizando espaços... (%(progress)s de %(count)s)"
@@ -1395,7 +1385,6 @@
         "one": "Visto por %(count)s pessoa",
         "other": "Visto por %(count)s pessoas"
     },
-    "Sessions": "Sessões",
     "You were disconnected from the call. (Error: %(message)s)": "Você foi desconectado da chamada. (Erro: %(message)s)",
     "Remove messages sent by me": "",
     "%(count)s people joined": {
@@ -1897,7 +1886,12 @@
             "cryptography_section": "Criptografia",
             "session_id": "ID da sessão:",
             "session_key": "Chave da sessão:",
-            "encryption_section": "Criptografia"
+            "encryption_section": "Criptografia",
+            "bulk_options_section": "Opções em massa",
+            "bulk_options_accept_all_invites": "Aceite todos os convites de %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Recusar todos os %(invitedRooms)s convites",
+            "message_search_section": "Pesquisa de mensagens",
+            "analytics_subsection_description": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros."
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -1957,7 +1951,8 @@
                 "one": "Desconectar dispositivo",
                 "other": "Desconectar dispositivos"
             },
-            "security_recommendations": "Recomendações de segurança"
+            "security_recommendations": "Recomendações de segurança",
+            "title": "Sessões"
         },
         "general": {
             "account_section": "Conta",
@@ -1972,6 +1967,13 @@
             "add_msisdn_confirm_button": "Confirmar adição de número de telefone",
             "add_msisdn_confirm_body": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
             "add_msisdn_dialog_title": "Adicionar número de telefone"
+        },
+        "sidebar": {
+            "title": "Barra lateral",
+            "metaspaces_subsection": "Espaços para mostrar",
+            "metaspaces_home_description": "A página inicial é útil para obter uma visão geral de tudo.",
+            "metaspaces_home_all_rooms": "Mostre todas as suas salas no Início, mesmo que elas estejam em um espaço.",
+            "metaspaces_orphans": "Salas fora de um espaço"
         }
     },
     "devtools": {

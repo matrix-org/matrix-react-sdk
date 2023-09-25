@@ -97,7 +97,6 @@
     "Uploading %(filename)s": "Įkeliamas %(filename)s",
     "Unable to remove contact information": "Nepavyko pašalinti kontaktinės informacijos",
     "<not supported>": "<nepalaikoma>",
-    "Reject all %(invitedRooms)s invites": "Atmesti visus %(invitedRooms)s pakvietimus",
     "No Audio Outputs detected": "Neaptikta jokių garso išvesčių",
     "No Microphones detected": "Neaptikta jokių mikrofonų",
     "No Webcams detected": "Neaptikta jokių kamerų",
@@ -480,7 +479,6 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Šis seansas <b>nekuria atsarginių raktų kopijų</b>, bet jūs jau turite atsarginę kopiją iš kurios galite atkurti ir pridėti.",
     "All keys backed up": "Atsarginės kopijos sukurtos visiems raktams",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
-    "Message search": "Žinučių paieška",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Šio seanso duomenų išvalymas yra negrįžtamas. Šifruotos žinutės bus prarastos, nebent buvo sukurta jų raktų atsarginė kopija.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
     "Restoring keys from backup": "Raktų atkūrimas iš atsarginės kopijos",
@@ -611,8 +609,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
     "Verify the link in your inbox": "Patvirtinkite nuorodą savo el. pašto dėžutėje",
     "Click the link in the email you received to verify and then click continue again.": "Paspauskite nuorodą gautame el. laiške, kad patvirtintumėte, tada dar kartą spustelėkite tęsti.",
-    "Accept all %(invitedRooms)s invites": "Priimti visus %(invitedRooms)s pakvietimus",
-    "Bulk options": "Grupinės parinktys",
     "Confirm Security Phrase": "Patvirtinkite Slaptafrazę",
     "Set a Security Phrase": "Nustatyti Slaptafrazę",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Naudokite slaptafrazę, kurią žinote tik jūs ir pasirinktinai išsaugokite Apsaugos Raktą, naudoti kaip atsarginę kopiją.",
@@ -1034,18 +1030,6 @@
     "Space information": "Erdvės informacija",
     "Request media permissions": "Prašyti medijos leidimų",
     "Missing media permissions, click the button below to request.": "Trūksta medijos leidimų, spustelėkite toliau esantį mygtuką kad pateikti užklausą.",
-    "Group all your rooms that aren't part of a space in one place.": "Sugrupuokite visus kambarius, kurie nėra erdvės dalis, į vieną vietą.",
-    "Rooms outside of a space": "Kambariai nepriklausantys erdvei",
-    "Group all your people in one place.": "Sugrupuokite visus savo žmones vienoje vietoje.",
-    "Group all your favourite rooms and people in one place.": "Sugrupuokite visus mėgstamus kambarius ir žmones vienoje vietoje.",
-    "Show all your rooms in Home, even if they're in a space.": "Rodyti visus savo kambarius pradžioje, net jei jie yra erdvėje.",
-    "Home is useful for getting an overview of everything.": "Pradžia yra naudinga norint apžvelgti viską.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Erdvės - tai kambarių ir žmonių grupavimo būdai. Kartu su erdvėmis kuriose esate, galite naudoti ir kai kurias iš anksto sukurtas erdves.",
-    "Spaces to show": "Kurias erdves rodyti",
-    "Sidebar": "Šoninė juosta",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Kad užtikrintumėte geriausią saugumą, patikrinkite savo sesijas ir atsijunkite iš bet kurios sesijos, kurios neatpažįstate arba nebenaudojate.",
-    "Sessions": "Sesijos",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Bendrinti anoniminius duomenis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių.",
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Your password was successfully changed.": "Jūsų slaptažodis sėkmingai pakeistas.",
@@ -1681,7 +1665,12 @@
             "cryptography_section": "Kriptografija",
             "session_id": "Seanso ID:",
             "session_key": "Seanso raktas:",
-            "encryption_section": "Šifravimas"
+            "encryption_section": "Šifravimas",
+            "bulk_options_section": "Grupinės parinktys",
+            "bulk_options_accept_all_invites": "Priimti visus %(invitedRooms)s pakvietimus",
+            "bulk_options_reject_all_invites": "Atmesti visus %(invitedRooms)s pakvietimus",
+            "message_search_section": "Žinučių paieška",
+            "analytics_subsection_description": "Bendrinti anoniminius duomenis, kurie padės mums nustatyti problemas. Nieko asmeniško. Jokių trečiųjų šalių."
         },
         "preferences": {
             "room_list_heading": "Kambarių sąrašas",
@@ -1751,7 +1740,9 @@
                 "other": "Atjungti įrenginius",
                 "one": "Atjungti įrenginį"
             },
-            "security_recommendations": "Saugumo rekomendacijos"
+            "security_recommendations": "Saugumo rekomendacijos",
+            "title": "Sesijos",
+            "other_sessions_subsection_description": "Kad užtikrintumėte geriausią saugumą, patikrinkite savo sesijas ir atsijunkite iš bet kurios sesijos, kurios neatpažįstate arba nebenaudojate."
         },
         "general": {
             "account_section": "Paskyra",
@@ -1767,6 +1758,17 @@
             "add_msisdn_confirm_button": "Patvirtinkite telefono numerio pridėjimą",
             "add_msisdn_confirm_body": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
             "add_msisdn_dialog_title": "Pridėti Telefono Numerį"
+        },
+        "sidebar": {
+            "title": "Šoninė juosta",
+            "metaspaces_subsection": "Kurias erdves rodyti",
+            "metaspaces_description": "Erdvės - tai kambarių ir žmonių grupavimo būdai. Kartu su erdvėmis kuriose esate, galite naudoti ir kai kurias iš anksto sukurtas erdves.",
+            "metaspaces_home_description": "Pradžia yra naudinga norint apžvelgti viską.",
+            "metaspaces_home_all_rooms": "Rodyti visus savo kambarius pradžioje, net jei jie yra erdvėje.",
+            "metaspaces_favourites_description": "Sugrupuokite visus mėgstamus kambarius ir žmones vienoje vietoje.",
+            "metaspaces_people_description": "Sugrupuokite visus savo žmones vienoje vietoje.",
+            "metaspaces_orphans": "Kambariai nepriklausantys erdvei",
+            "metaspaces_orphans_description": "Sugrupuokite visus kambarius, kurie nėra erdvės dalis, į vieną vietą."
         }
     },
     "devtools": {

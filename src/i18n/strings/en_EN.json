@@ -159,6 +159,10 @@
             "session_id": "Session ID:",
             "session_key": "Session key:",
             "encryption_section": "Encryption",
+            "bulk_options_section": "Bulk options",
+            "bulk_options_accept_all_invites": "Accept all %(invitedRooms)s invites",
+            "bulk_options_reject_all_invites": "Reject all %(invitedRooms)s invites",
+            "message_search_section": "Message search",
             "message_search_disable_warning": "If disabled, messages from encrypted rooms won't appear in search results.",
             "message_search_indexing_idle": "Not currently indexing messages for any room.",
             "message_search_indexing": "Currently indexing: %(currentRoom)s",
@@ -183,6 +187,11 @@
             "title": "Keyboard"
         },
         "sessions": {
+            "title": "Sessions",
+            "sign_out_confirm_description": {
+                "other": "Are you sure you want to sign out of %(count)s sessions?",
+                "one": "Are you sure you want to sign out of %(count)s session?"
+            },
             "sign_out_all_other_sessions": "Sign out of all other sessions (%(otherSessionsCount)s)",
             "current_session": "Current session",
             "confirm_sign_out_sso": {
@@ -270,6 +279,16 @@
             "other_sessions_heading": "Other sessions",
             "security_recommendations": "Security recommendations",
             "security_recommendations_description": "Improve your account security by following these recommendations."
+        },
+        "sidebar": {
+            "title": "Sidebar",
+            "metaspaces_subsection": "Spaces to show",
+            "metaspaces_home_description": "Home is useful for getting an overview of everything.",
+            "metaspaces_home_all_rooms": "Show all your rooms in Home, even if they're in a space.",
+            "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
+            "metaspaces_people_description": "Group all your people in one place.",
+            "metaspaces_orphans": "Rooms outside of a space",
+            "metaspaces_orphans_description": "Group all your rooms that aren't part of a space in one place."
         }
     },
     "auth": {
@@ -2302,27 +2321,10 @@
     "Unignore": "Unignore",
     "You have no ignored users.": "You have no ignored users.",
     "Ignored users": "Ignored users",
-    "Bulk options": "Bulk options",
-    "Accept all %(invitedRooms)s invites": "Accept all %(invitedRooms)s invites",
-    "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
-    "Message search": "Message search",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
     "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Share anonymous data to help us identify issues. Nothing personal. No third parties.",
-    "Sessions": "Sessions",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "other": "Are you sure you want to sign out of %(count)s sessions?",
-        "one": "Are you sure you want to sign out of %(count)s session?"
-    },
     "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
-    "Sidebar": "Sidebar",
-    "Spaces to show": "Spaces to show",
     "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
-    "Home is useful for getting an overview of everything.": "Home is useful for getting an overview of everything.",
-    "Show all your rooms in Home, even if they're in a space.": "Show all your rooms in Home, even if they're in a space.",
-    "Group all your favourite rooms and people in one place.": "Group all your favourite rooms and people in one place.",
-    "Group all your people in one place.": "Group all your people in one place.",
-    "Rooms outside of a space": "Rooms outside of a space",
-    "Group all your rooms that aren't part of a space in one place.": "Group all your rooms that aren't part of a space in one place.",
     "Missing media permissions, click the button below to request.": "Missing media permissions, click the button below to request.",
     "Request media permissions": "Request media permissions",
     "Audio Output": "Audio Output",

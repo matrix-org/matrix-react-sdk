@@ -120,7 +120,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "這個過程讓您可以匯出您在加密聊天室裡收到訊息的金鑰到一個本機檔案。您將可以在未來匯入檔案到其他的 Matrix 客戶端，這樣客戶端就可以解密此訊息。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
-    "Reject all %(invitedRooms)s invites": "拒絕所有 %(invitedRooms)s 邀請",
     "Confirm Removal": "確認刪除",
     "Unknown error": "未知的錯誤",
     "Unable to restore session": "無法復原工作階段",
@@ -270,7 +269,6 @@
     "Phone numbers": "電話號碼",
     "Account management": "帳號管理",
     "Ignored users": "忽略使用者",
-    "Bulk options": "大量選項",
     "Missing media permissions, click the button below to request.": "尚未取得媒體權限，請點擊下方的按鈕來授權。",
     "Request media permissions": "請求媒體權限",
     "Voice & Video": "語音與視訊",
@@ -366,7 +364,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "更新聊天室的主要位址時發生錯誤。可能是不被伺服器允許或是遇到暫時性的錯誤。",
     "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
     "Could not load user profile": "無法載入使用者簡介",
-    "Accept all %(invitedRooms)s invites": "接受所有 %(invitedRooms)s 邀請",
     "Power level": "權限等級",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此聊天室正在執行聊天室版本 <roomVersion />，此家伺服器已標記為<i>不穩定</i>。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "升級此聊天室將會關閉聊天室目前的執行個體，並建立一個同名的升級版。",
@@ -597,7 +594,6 @@
     "Connect this session to Key Backup": "將此工作階段連結至金鑰備份",
     "This backup is trusted because it has been restored on this session": "此備份已受信任，因為它已在此工作階段上復原",
     "Your keys are <b>not being backed up from this session</b>.": "您<b>並未備份此裝置的金鑰</b>。",
-    "Message search": "訊息搜尋",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "此聊天室已橋接訊息到以下平臺。<a>取得更多詳細資訊。</a>",
     "Bridges": "橋接",
     "This user has not verified all of their sessions.": "此使用者尚未驗證他們的所有工作階段。",
@@ -1408,11 +1404,6 @@
     "Thread options": "討論串選項",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
     "Reply in thread": "在討論串中回覆",
-    "Rooms outside of a space": "聊天空間外的聊天室",
-    "Show all your rooms in Home, even if they're in a space.": "將您所有的聊天室顯示在首頁，即便它們位於同一個聊天空間。",
-    "Home is useful for getting an overview of everything.": "首頁對於取得所有內容的概覽很有用。",
-    "Spaces to show": "要顯示的聊天空間",
-    "Sidebar": "側邊欄",
     "Mentions only": "僅提及",
     "Forget": "忘記",
     "Files": "檔案",
@@ -1458,7 +1449,6 @@
         "other": "已投 %(count)s 票。投票後即可檢視結果"
     },
     "No votes cast": "尚無投票",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "分享匿名資料以協助我們識別問題。無個人資料。無第三方。",
     "Share location": "分享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您確定您想要結束此投票？這將會顯示最終投票結果並阻止人們投票。",
     "End Poll": "結束投票",
@@ -1510,10 +1500,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "您已被 %(memberName)s 從 %(roomName)s 中移除",
     "Message pending moderation": "待審核的訊息",
     "Message pending moderation: %(reason)s": "待審核的訊息：%(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "將所有不屬於某個聊天空間的聊天室集中在同一個地方。",
-    "Group all your people in one place.": "將您所有的夥伴集中在同一個地方。",
-    "Group all your favourite rooms and people in one place.": "將所有您最喜愛的聊天室與夥伴集中在同一個地方。",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "聊天空間是將聊天室與夥伴們分組的方式。除了您所在的聊天空間之外，還可以使用一些預設分類。",
     "Pick a date to jump to": "挑選要跳至的日期",
     "Jump to date": "跳至日期",
     "The beginning of the room": "聊天室開頭",
@@ -1691,8 +1677,6 @@
     "Saved Items": "已儲存的項目",
     "Choose a locale": "選擇語系",
     "We're creating a room with %(names)s": "正在建立包含 %(names)s 的聊天室",
-    "Sessions": "工作階段",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "為了最佳的安全性，請驗證您的工作階段並登出任何您無法識別或不再使用的工作階段。",
     "Interactively verify by emoji": "透過表情符號互動來驗證",
     "Manually verify by text": "透過文字手動驗證",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s 或 %(copyButton)s",
@@ -1736,10 +1720,6 @@
     "The linking wasn't completed in the required time.": "未在要求的時間內完成連結。",
     "Sign in new device": "登入新裝置",
     "Show formatting": "顯示格式",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "您確定您想要登出 %(count)s 個工作階段嗎？",
-        "other": "您確定您想要登出 %(count)s 個工作階段嗎？"
-    },
     "Hide formatting": "隱藏格式化",
     "Connection": "連線",
     "Voice processing": "語音處理",
@@ -2571,7 +2551,12 @@
             "cryptography_section": "加密",
             "session_id": "工作階段 ID：",
             "session_key": "工作階段金鑰：",
-            "encryption_section": "加密"
+            "encryption_section": "加密",
+            "bulk_options_section": "大量選項",
+            "bulk_options_accept_all_invites": "接受所有 %(invitedRooms)s 邀請",
+            "bulk_options_reject_all_invites": "拒絕所有 %(invitedRooms)s 邀請",
+            "message_search_section": "訊息搜尋",
+            "analytics_subsection_description": "分享匿名資料以協助我們識別問題。無個人資料。無第三方。"
         },
         "preferences": {
             "room_list_heading": "聊天室清單",
@@ -2685,7 +2670,13 @@
                 "other": "登出裝置"
             },
             "security_recommendations": "安全建議",
-            "security_recommendations_description": "透過以下的建議改善您的帳號安全性。"
+            "security_recommendations_description": "透過以下的建議改善您的帳號安全性。",
+            "title": "工作階段",
+            "sign_out_confirm_description": {
+                "one": "您確定您想要登出 %(count)s 個工作階段嗎？",
+                "other": "您確定您想要登出 %(count)s 個工作階段嗎？"
+            },
+            "other_sessions_subsection_description": "為了最佳的安全性，請驗證您的工作階段並登出任何您無法識別或不再使用的工作階段。"
         },
         "general": {
             "oidc_manage_button": "管理帳號",
@@ -2705,6 +2696,17 @@
             "add_msisdn_confirm_button": "確認新增電話號碼",
             "add_msisdn_confirm_body": "點擊下方按鈕以確認新增此電話號碼。",
             "add_msisdn_dialog_title": "新增電話號碼"
+        },
+        "sidebar": {
+            "title": "側邊欄",
+            "metaspaces_subsection": "要顯示的聊天空間",
+            "metaspaces_description": "聊天空間是將聊天室與夥伴們分組的方式。除了您所在的聊天空間之外，還可以使用一些預設分類。",
+            "metaspaces_home_description": "首頁對於取得所有內容的概覽很有用。",
+            "metaspaces_home_all_rooms": "將您所有的聊天室顯示在首頁，即便它們位於同一個聊天空間。",
+            "metaspaces_favourites_description": "將所有您最喜愛的聊天室與夥伴集中在同一個地方。",
+            "metaspaces_people_description": "將您所有的夥伴集中在同一個地方。",
+            "metaspaces_orphans": "聊天空間外的聊天室",
+            "metaspaces_orphans_description": "將所有不屬於某個聊天空間的聊天室集中在同一個地方。"
         }
     },
     "devtools": {

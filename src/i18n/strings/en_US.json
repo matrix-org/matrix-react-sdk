@@ -109,7 +109,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
-    "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
     "Confirm Removal": "Confirm Removal",
     "Unknown error": "Unknown error",
     "Unable to restore session": "Unable to restore session",
@@ -281,7 +280,8 @@
         "security": {
             "export_megolm_keys": "Export E2E room keys",
             "import_megolm_keys": "Import E2E room keys",
-            "cryptography_section": "Cryptography"
+            "cryptography_section": "Cryptography",
+            "bulk_options_reject_all_invites": "Reject all %(invitedRooms)s invites"
         },
         "general": {
             "account_section": "Account",

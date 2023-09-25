@@ -192,7 +192,6 @@
     "Deactivate account": "Sens amiḍan",
     "Ignored users": "Iseqdacen yettunfen",
     "<not supported>": "<not supported>",
-    "Message search": "Anadi n yizen",
     "Voice & Video": "Ameslaw & Tavidyut",
     "Notification sound": "Imesli i yilɣa",
     "Failed to unban": "Sefsex aḍraq yugi ad yeddu",
@@ -456,9 +455,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
     "Contact your <a>server admin</a>.": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
     "Discovery": "Tagrut",
-    "Bulk options": "Tixtiṛiyin s ubleɣ",
-    "Accept all %(invitedRooms)s invites": "Qbel akk tinubgiwin %(invitedRooms)s",
-    "Reject all %(invitedRooms)s invites": "Agi akk tinubgiwin %(invitedRooms)s",
     "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
     "Request media permissions": "Suter tisirag n umidyat",
     "No Audio Outputs detected": "Ulac tuffɣiwin n umeslaw i d-yettwafen",
@@ -1410,7 +1406,11 @@
             "cryptography_section": "Awgelhan",
             "session_id": "Asulay n tɣimit:",
             "session_key": "Tasarut n tɣimit:",
-            "encryption_section": "Awgelhen"
+            "encryption_section": "Awgelhen",
+            "bulk_options_section": "Tixtiṛiyin s ubleɣ",
+            "bulk_options_accept_all_invites": "Qbel akk tinubgiwin %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Agi akk tinubgiwin %(invitedRooms)s",
+            "message_search_section": "Anadi n yizen"
         },
         "preferences": {
             "room_list_heading": "Tabdart n texxamt",

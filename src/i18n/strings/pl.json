@@ -125,7 +125,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ten proces pozwala na eksport kluczy do wiadomości otrzymanych w zaszyfrowanych pokojach do pliku lokalnego. Wtedy będzie można importować plik do innego klienta Matrix w przyszłości, tak aby ów klient także mógł rozszyfrować te wiadomości.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ten proces pozwala na import zaszyfrowanych kluczy, które wcześniej zostały eksportowane z innego klienta Matrix. Będzie można odszyfrować każdą wiadomość, którą ów inny klient mógł odszyfrować.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportowany plik będzie chroniony hasłem szyfrującym. Aby odszyfrować plik, wpisz hasło szyfrujące tutaj.",
-    "Reject all %(invitedRooms)s invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
     "Confirm Removal": "Potwierdź usunięcie",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
@@ -407,7 +406,6 @@
     "Hide sessions": "Ukryj sesje",
     "Integrations are disabled": "Integracje są wyłączone",
     "Encryption upgrade available": "Dostępne ulepszenie szyfrowania",
-    "Accept all %(invitedRooms)s invites": "Zaakceptuj wszystkie zaproszenia do %(invitedRooms)s",
     "Close preview": "Zamknij podgląd",
     "Cancel search": "Anuluj wyszukiwanie",
     "Your theme": "Twój motyw",
@@ -464,7 +462,6 @@
     "Room options": "Ustawienia pokoju",
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
     "Use the <a>Desktop app</a> to search encrypted messages": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
-    "Message search": "Wyszukiwanie wiadomości",
     "Set up Secure Backup": "Skonfiguruj bezpieczną kopię zapasową",
     "Ok": "OK",
     "Enable desktop notifications": "Włącz powiadomienia na pulpicie",
@@ -614,7 +611,6 @@
     "General failure": "Ogólny błąd",
     "Removing…": "Usuwanie…",
     "Algorithm:": "Algorytm:",
-    "Bulk options": "Masowe działania",
     "Incompatible Database": "Niekompatybilna baza danych",
     "Information": "Informacje",
     "Accepting…": "Akceptowanie…",
@@ -903,7 +899,6 @@
     "Stop recording": "Skończ nagrywanie",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
     "No microphone found": "Nie znaleziono mikrofonu",
-    "Rooms outside of a space": "Pokoje poza przestrzenią",
     "Connect this session to Key Backup": "Połącz tę sesję z kopią zapasową kluczy",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Połącz tę sesję z kopią zapasową kluczy przed wylogowaniem, aby uniknąć utraty kluczy które mogą istnieć tylko w tej sesji.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ta sesja <b>nie wykonuje kopii zapasowej twoich kluczy</b>, ale masz istniejącą kopię którą możesz przywrócić i uzupełniać w przyszłości.",
@@ -948,7 +943,6 @@
     "There was an error joining.": "Wystąpił błąd podczas dołączania.",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
-    "Sessions": "Sesje",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
     "Space options": "Opcje przestrzeni",
@@ -1008,13 +1002,7 @@
         "other": "Odczytane przez %(count)s osób"
     },
     "New room": "Nowy pokój",
-    "Group all your rooms that aren't part of a space in one place.": "Pogrupuj wszystkie pokoje, które nie są częścią przestrzeni, w jednym miejscu.",
-    "Show all your rooms in Home, even if they're in a space.": "Pokaż wszystkie swoje pokoje na głównej, nawet jeśli znajdują się w przestrzeni.",
     "Copy room link": "Kopiuj link do pokoju",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Przestrzenie to sposób grupowania pokoi i osób. Oprócz przestrzeni, w których się znajdujesz, możesz też skorzystać z gotowych grupowań.",
-    "Spaces to show": "Wyświetlanie przestrzeni",
-    "Group all your favourite rooms and people in one place.": "Pogrupuj wszystkie swoje ulubione pokoje i osoby w jednym miejscu.",
-    "Sidebar": "Pasek boczny",
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Indywidualnie weryfikuj każdą sesję używaną przez użytkownika, aby oznaczyć ją jako zaufaną, nie ufając urządzeniom weryfikowanym krzyżowo.",
@@ -1113,12 +1101,6 @@
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Ignore (%(counter)s)": "Ignoruj (%(counter)s)",
     "Home options": "Opcje głównej",
-    "Home is useful for getting an overview of everything.": "Strona główna to przydatne miejsce dla podsumowania wszystkiego.",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Dla najlepszego bezpieczeństwa, zweryfikuj swoje sesje i wyloguj się ze wszystkich sesji, których nie rozpoznajesz lub nie używasz.",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Czy na pewno chcesz się wylogować z %(count)s sesji?",
-        "other": "Czy na pewno chcesz się wylogować z %(count)s sesji?"
-    },
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
     "You have no ignored users.": "Nie posiadasz ignorowanych użytkowników.",
     "Unable to revoke sharing for phone number": "Nie można odwołać udostępniania numeru telefonu",
@@ -1147,8 +1129,6 @@
     "Voice processing": "Procesowanie głosu",
     "Automatically adjust the microphone volume": "Automatycznie dostosuj głośność mikrofonu",
     "Voice settings": "Ustawienia głosu",
-    "Group all your people in one place.": "Pogrupuj wszystkie osoby w jednym miejscu.",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Udostępnij anonimowe dane, aby wesprzeć nas w identyfikowaniu problemów. Nic osobistego. Żadnych podmiotów zewnętrznych.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Wiadomość tekstowa wysłana do %(msisdn)s. Wprowadź kod weryfikacyjny w niej zawarty.",
     "Failed to set pusher state": "Nie udało się ustawić stanu pushera",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
@@ -2558,7 +2538,12 @@
             "cryptography_section": "Kryptografia",
             "session_id": "Identyfikator sesji:",
             "session_key": "Klucz sesji:",
-            "encryption_section": "Szyfrowanie"
+            "encryption_section": "Szyfrowanie",
+            "bulk_options_section": "Masowe działania",
+            "bulk_options_accept_all_invites": "Zaakceptuj wszystkie zaproszenia do %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
+            "message_search_section": "Wyszukiwanie wiadomości",
+            "analytics_subsection_description": "Udostępnij anonimowe dane, aby wesprzeć nas w identyfikowaniu problemów. Nic osobistego. Żadnych podmiotów zewnętrznych."
         },
         "preferences": {
             "room_list_heading": "Lista pokojów",
@@ -2672,7 +2657,13 @@
                 "other": "Wyloguj urządzenia"
             },
             "security_recommendations": "Rekomendacje bezpieczeństwa",
-            "security_recommendations_description": "Zwiększ bezpieczeństwo swojego konta kierując się tymi rekomendacjami."
+            "security_recommendations_description": "Zwiększ bezpieczeństwo swojego konta kierując się tymi rekomendacjami.",
+            "title": "Sesje",
+            "sign_out_confirm_description": {
+                "one": "Czy na pewno chcesz się wylogować z %(count)s sesji?",
+                "other": "Czy na pewno chcesz się wylogować z %(count)s sesji?"
+            },
+            "other_sessions_subsection_description": "Dla najlepszego bezpieczeństwa, zweryfikuj swoje sesje i wyloguj się ze wszystkich sesji, których nie rozpoznajesz lub nie używasz."
         },
         "general": {
             "oidc_manage_button": "Zarządzaj kontem",
@@ -2692,6 +2683,17 @@
             "add_msisdn_confirm_button": "Potwierdź dodanie numeru telefonu",
             "add_msisdn_confirm_body": "Naciśnij przycisk poniżej aby potwierdzić dodanie tego numeru telefonu.",
             "add_msisdn_dialog_title": "Dodaj numer telefonu"
+        },
+        "sidebar": {
+            "title": "Pasek boczny",
+            "metaspaces_subsection": "Wyświetlanie przestrzeni",
+            "metaspaces_description": "Przestrzenie to sposób grupowania pokoi i osób. Oprócz przestrzeni, w których się znajdujesz, możesz też skorzystać z gotowych grupowań.",
+            "metaspaces_home_description": "Strona główna to przydatne miejsce dla podsumowania wszystkiego.",
+            "metaspaces_home_all_rooms": "Pokaż wszystkie swoje pokoje na głównej, nawet jeśli znajdują się w przestrzeni.",
+            "metaspaces_favourites_description": "Pogrupuj wszystkie swoje ulubione pokoje i osoby w jednym miejscu.",
+            "metaspaces_people_description": "Pogrupuj wszystkie osoby w jednym miejscu.",
+            "metaspaces_orphans": "Pokoje poza przestrzenią",
+            "metaspaces_orphans_description": "Pogrupuj wszystkie pokoje, które nie są częścią przestrzeni, w jednym miejscu."
         }
     },
     "devtools": {

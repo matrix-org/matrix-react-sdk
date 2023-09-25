@@ -752,10 +752,6 @@
     "Request media permissions": "בקש הרשאות למדיה",
     "Missing media permissions, click the button below to request.": "חסרות הרשאות מדיה, לחץ על הלחצן למטה כדי לבקש.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות.",
-    "Message search": "חיפוש הודעה",
-    "Reject all %(invitedRooms)s invites": "דחה את כל ההזמנות של %(invitedRooms)s",
-    "Accept all %(invitedRooms)s invites": "קבל את כל ההזמנות של %(invitedRooms)s",
-    "Bulk options": "אפשרויות בתפזורת",
     "<not supported>": "<לא נתמך>",
     "Unignore": "הסר התעלמות",
     "Ignored users": "משתמשים שהתעלמתם מהם",
@@ -1224,14 +1220,6 @@
     "Show Labs settings": "הצג את אופציית מעבדת הפיתוח",
     "To join, please enable video rooms in Labs first": "כדי להצטרף, נא אפשר תחילה וידאו במעבדת הפיתוח",
     "To view, please enable video rooms in Labs first": "כדי לצפות, אנא הפעל תחילה חדרי וידאו במעבדת הפיתוח",
-    "Group all your rooms that aren't part of a space in one place.": "קבצו את כל החדרים שלכם שאינם משויכים למרחב עבודה במקום אחד.",
-    "Rooms outside of a space": "חדרים שמחוץ למרחב העבודה",
-    "Group all your people in one place.": "קבצו את כל אנשי הקשר שלכם במקום אחד.",
-    "Group all your favourite rooms and people in one place.": "קבצו את כל החדרים ואנשי הקשר האהובים עליכם במקום אחד.",
-    "Show all your rooms in Home, even if they're in a space.": "הצג את כל החדרים שלכם במסך הבית, אפילו אם הם משויכים למרחב עבודה.",
-    "Home is useful for getting an overview of everything.": "מסך הבית עוזר לסקירה כללית.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "מרחבי עבודה הם דרך לקבץ חדרים ואנשים. במקביל למרחבי העבודה בהם אתם נמצאים ניתן להשתמש גם בכאלה שנבנו מראש.",
-    "Spaces to show": "מרחבי עבודה להצגה",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "@mentions & keywords": "אזכורים ומילות מפתח",
     "Mentions & keywords": "אזכורים ומילות מפתח",
@@ -1313,7 +1301,6 @@
     "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
     "Voice settings": "הגדרות קול",
     "Close sidebar": "סגור סרגל צד",
-    "Sidebar": "סרגל צד",
     "Deactivating your account is a permanent action — be careful!": "סגירת החשבון הינה פעולה שלא ניתנת לביטול - שים לב!",
     "Room info": "מידע על החדר",
     "Search users in this room…": "חיפוש משתמשים בחדר זה…",
@@ -1800,7 +1787,11 @@
             "cryptography_section": "קריפטוגרפיה",
             "session_id": "מזהה מושב:",
             "session_key": "מפתח מושב:",
-            "encryption_section": "הצפנה"
+            "encryption_section": "הצפנה",
+            "bulk_options_section": "אפשרויות בתפזורת",
+            "bulk_options_accept_all_invites": "קבל את כל ההזמנות של %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "דחה את כל ההזמנות של %(invitedRooms)s",
+            "message_search_section": "חיפוש הודעה"
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",
@@ -1845,6 +1836,17 @@
             "add_msisdn_confirm_button": "אישור הוספת מספר טלפון",
             "add_msisdn_confirm_body": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
             "add_msisdn_dialog_title": "הוסף מספר טלפון"
+        },
+        "sidebar": {
+            "title": "סרגל צד",
+            "metaspaces_subsection": "מרחבי עבודה להצגה",
+            "metaspaces_description": "מרחבי עבודה הם דרך לקבץ חדרים ואנשים. במקביל למרחבי העבודה בהם אתם נמצאים ניתן להשתמש גם בכאלה שנבנו מראש.",
+            "metaspaces_home_description": "מסך הבית עוזר לסקירה כללית.",
+            "metaspaces_home_all_rooms": "הצג את כל החדרים שלכם במסך הבית, אפילו אם הם משויכים למרחב עבודה.",
+            "metaspaces_favourites_description": "קבצו את כל החדרים ואנשי הקשר האהובים עליכם במקום אחד.",
+            "metaspaces_people_description": "קבצו את כל אנשי הקשר שלכם במקום אחד.",
+            "metaspaces_orphans": "חדרים שמחוץ למרחב העבודה",
+            "metaspaces_orphans_description": "קבצו את כל החדרים שלכם שאינם משויכים למרחב עבודה במקום אחד."
         }
     },
     "devtools": {

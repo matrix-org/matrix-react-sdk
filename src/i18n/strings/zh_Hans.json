@@ -95,7 +95,6 @@
         "one": "（~%(count)s 个结果）",
         "other": "（~%(count)s 个结果）"
     },
-    "Reject all %(invitedRooms)s invites": "拒绝所有 %(invitedRooms)s 的邀请",
     "Sun": "周日",
     "Mon": "周一",
     "Tue": "周二",
@@ -314,7 +313,6 @@
     "Account management": "账户管理",
     "General": "通用",
     "Ignored users": "已忽略的用户",
-    "Bulk options": "批量选择",
     "Missing media permissions, click the button below to request.": "缺少媒体权限，点击下面的按钮以请求权限。",
     "Request media permissions": "请求媒体权限",
     "Voice & Video": "语音和视频",
@@ -366,7 +364,6 @@
     "Set up Secure Messages": "设置安全消息",
     "Recovery Method Removed": "恢复方式已移除",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果你没有移除此恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新的恢复方式。",
-    "Accept all %(invitedRooms)s invites": "接受所有 %(invitedRooms)s 邀请",
     "Power level": "权力级别",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
@@ -431,7 +428,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "同意身份服务器（%(serverName)s）的服务协议以允许自己被通过邮件地址或电话号码发现。",
     "Discovery": "发现",
     "None": "无",
-    "Message search": "消息搜索",
     "Uploaded sound": "已上传的声音",
     "Sounds": "声音",
     "Notification sound": "通知声音",
@@ -1408,11 +1404,6 @@
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
     "Reply in thread": "在消息列中回复",
-    "Spaces to show": "要显示的空间",
-    "Sidebar": "侧边栏",
-    "Rooms outside of a space": "空间之外的房间",
-    "Show all your rooms in Home, even if they're in a space.": "在主页展示你所有的房间，即使它们是在一个空间里。",
-    "Home is useful for getting an overview of everything.": "对于了解所有事情的概况来说，主页很有用。",
     "Mentions only": "仅提及",
     "Forget": "忘记",
     "Files": "文件",
@@ -1458,7 +1449,6 @@
         "other": "票数已达 %(count)s 票。要查看结果请亲自投票"
     },
     "No votes cast": "尚无投票",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "共享匿名数据以帮助我们发现问题。 与个人无关。 没有第三方。",
     "Share location": "共享位置",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。",
     "End Poll": "结束投票",
@@ -1548,10 +1538,6 @@
     "New room": "新房间",
     "Device verified": "设备已验证",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "你的新设备已通过验证。它现在可以访问你的加密消息，并且其它用户会将其视为受信任的。",
-    "Group all your rooms that aren't part of a space in one place.": "将所有你那些不属于某个空间的房间集中一处。",
-    "Group all your people in one place.": "将你所有的联系人集中一处。",
-    "Group all your favourite rooms and people in one place.": "将所有你最爱的房间和人集中在一处。",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "空间是将房间和人分组的方式。除了你所在的空间，你也可以使用预建的空间。",
     "Deactivating your account is a permanent action — be careful!": "停用你的账户是永久性动作——小心！",
     "Your password was successfully changed.": "你的密码已成功更改。",
     "Match system": "匹配系统",
@@ -1643,8 +1629,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "尝试验证你的邀请时返回错误（%(errcode)s）。你可以尝试把这个信息传给邀请你的人。",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "你的消息未被发送，因为此家服务器已被其管理员屏蔽。请<a>联系你的服务管理员</a>以继续使用服务。",
     "We're creating a room with %(names)s": "正在创建房间%(names)s",
-    "Sessions": "会话",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。",
     "Remove them from everything I'm able to": "",
     "Remove server “%(roomServer)s”": "移除服务器“%(roomServer)s”",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
@@ -1697,10 +1681,6 @@
     "Voice settings": "语音设置",
     "Unknown room": "未知房间",
     "Automatically adjust the microphone volume": "自动调整话筒音量",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "你确定要登出%(count)s个会话吗？",
-        "other": "你确定要退出这 %(count)s 个会话吗？"
-    },
     "Search users in this room…": "搜索该房间内的用户……",
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
     "Add privileged users": "添加特权用户",
@@ -2320,7 +2300,12 @@
             "cryptography_section": "加密",
             "session_id": "会话 ID：",
             "session_key": "会话密钥：",
-            "encryption_section": "加密"
+            "encryption_section": "加密",
+            "bulk_options_section": "批量选择",
+            "bulk_options_accept_all_invites": "接受所有 %(invitedRooms)s 邀请",
+            "bulk_options_reject_all_invites": "拒绝所有 %(invitedRooms)s 的邀请",
+            "message_search_section": "消息搜索",
+            "analytics_subsection_description": "共享匿名数据以帮助我们发现问题。 与个人无关。 没有第三方。"
         },
         "preferences": {
             "room_list_heading": "房间列表",
@@ -2390,7 +2375,13 @@
                 "one": "注销设备",
                 "other": "注销设备"
             },
-            "security_recommendations": "安全建议"
+            "security_recommendations": "安全建议",
+            "title": "会话",
+            "sign_out_confirm_description": {
+                "one": "你确定要登出%(count)s个会话吗？",
+                "other": "你确定要退出这 %(count)s 个会话吗？"
+            },
+            "other_sessions_subsection_description": "为了最佳的安全，请验证会话，登出任何不认识或不再使用的会话。"
         },
         "general": {
             "account_section": "账户",
@@ -2409,6 +2400,17 @@
             "add_msisdn_confirm_button": "确认添加电话号码",
             "add_msisdn_confirm_body": "点击下面的按钮，以确认添加此电话号码。",
             "add_msisdn_dialog_title": "添加电话号码"
+        },
+        "sidebar": {
+            "title": "侧边栏",
+            "metaspaces_subsection": "要显示的空间",
+            "metaspaces_description": "空间是将房间和人分组的方式。除了你所在的空间，你也可以使用预建的空间。",
+            "metaspaces_home_description": "对于了解所有事情的概况来说，主页很有用。",
+            "metaspaces_home_all_rooms": "在主页展示你所有的房间，即使它们是在一个空间里。",
+            "metaspaces_favourites_description": "将所有你最爱的房间和人集中在一处。",
+            "metaspaces_people_description": "将你所有的联系人集中一处。",
+            "metaspaces_orphans": "空间之外的房间",
+            "metaspaces_orphans_description": "将所有你那些不属于某个空间的房间集中一处。"
         }
     },
     "devtools": {

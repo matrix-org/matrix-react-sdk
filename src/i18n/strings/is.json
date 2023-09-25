@@ -601,8 +601,6 @@
     "Bridges": "Brýr",
     "Space information": "Upplýsingar um svæði",
     "Audio Output": "Hljóðúttak",
-    "Rooms outside of a space": "Spjallrásir utan svæðis",
-    "Sidebar": "Hliðarspjald",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Phone numbers": "Símanúmer",
     "Email addresses": "Tölvupóstföng",
@@ -673,8 +671,6 @@
     "Ignored attempt to disable encryption": "Hunsaði tilraun til að gera dulritun óvirka",
     "This client does not support end-to-end encryption.": "Þetta forrit styður ekki enda-í-enda dulritun.",
     "Room Addresses": "Vistföng spjallrása",
-    "Reject all %(invitedRooms)s invites": "Hafna öllum boðsgestum %(invitedRooms)s",
-    "Accept all %(invitedRooms)s invites": "Samþykkja alla boðsgesti %(invitedRooms)s",
     "Loading new room": "Hleð inn nýrri spjallrás",
     "Upgrading room": "Uppfæri spjallrás",
     "Show all rooms": "Sýna allar spjallrásir",
@@ -808,17 +804,10 @@
     "Your homeserver": "Heimaþjónninn þinn",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þessa spjallrás svo notendur geti fundið hana í gegnum heimaþjóninn þinn (%(localDomain)s)",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stilltu vistföng fyrir þetta svæði svo notendur geti fundið það í gegnum heimaþjóninn þinn (%(localDomain)s)",
-    "Show all your rooms in Home, even if they're in a space.": "Birtu allar spjallrásirnar þínar á forsíðunni, jafnvel þótt þær tilheyri svæði.",
-    "Home is useful for getting an overview of everything.": "Forsíðan nýtist til að hafa yfirsýn yfir allt.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Svæði eru leið til að hópa fólk og spjallrásir. Auk svæðanna sem þú ert á, geturðu líka notað nokkur forútbúin svæði.",
-    "Spaces to show": "Svæði sem á að birta",
     "Please contact your homeserver administrator.": "Hafðu samband við kerfisstjóra heimaþjónsins þíns.",
     "Remove %(email)s?": "Fjarlægja %(email)s?",
     "Discovery options will appear once you have added a phone number above.": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn símanúmeri hér fyrir ofan.",
     "Discovery options will appear once you have added an email above.": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn tölvupóstfangi hér fyrir ofan.",
-    "Group all your rooms that aren't part of a space in one place.": "Hópaðu allar spjallrásir sem ekki eru hluti af svæðum á einum stað.",
-    "Group all your people in one place.": "Hópaðu allt fólk á einum stað.",
-    "Group all your favourite rooms and people in one place.": "Hópaðu allar eftirlætisspjallrásir og fólk á einum stað.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
     "Account management": "Umsýsla notandaaðgangs",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Samþykktu þjónustuskilmála auðkennisþjónsins (%(serverName)s) svo hægt sé að finna þig með tölvupóstfangi eða símanúmeri.",
@@ -857,7 +846,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) skráði sig inn í nýja setu án þess að sannvotta hana:",
     "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
     "Your messages are not secure": "Skilaboðin þín eru ekki örugg",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Deildu nafnlausum gögnum til að hjálpa okkur við að greina vandamál. Ekkert persónulegt. Engir utanaðkomandi.",
     "Could not connect to identity server": "Gat ekki tengst við auðkennisþjón",
     "Secret storage:": "Leynigeymsla:",
     "in account data": "í gögnum notandaaðgangs",
@@ -912,7 +900,6 @@
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
     "Including you, %(commaSeparatedMembers)s": "Að þér meðtöldum, %(commaSeparatedMembers)s",
     "Only room administrators will see this warning": "Aðeins stjórnendur spjallrásar munu sjá þessa aðvörun",
-    "Bulk options": "Valkostir magnvinnslu",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
@@ -1075,7 +1062,6 @@
     "Get notified for every message": "Fáðu tilkynningu fyrir öll skilaboð",
     "Uploaded sound": "Innsent hljóð",
     "No Audio Outputs detected": "Engir hljóðútgangar fundust",
-    "Message search": "Leita í skilaboðum",
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "Call declined": "Símtali hafnað",
@@ -1464,7 +1450,6 @@
     "We'll help you get connected.": "Við munum hjálpa þér að tengjast.",
     "Choose a locale": "Veldu staðfærslu",
     "Video call ended": "Mynddsímtali lauk",
-    "Sessions": "Setur",
     "Deactivating your account is a permanent action — be careful!": "Að gera aðganginn þinn óvirkan er endanleg aðgerð - farðu varlega!",
     "Your password was successfully changed.": "Það tókst að breyta lykilorðinu þínu.",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eða %(copyButton)s",
@@ -1564,10 +1549,6 @@
     "Failed to update the join rules": "Mistókst að uppfæra reglur fyrir þátttöku",
     "Voice processing": "Meðhöndlun tals",
     "Automatically adjust the microphone volume": "Aðlaga hljóðstyrk hljóðnema sjálfvirkt",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Ertu viss um að þú viljir skrá þig út úr %(count)s setu?",
-        "other": "Ertu viss um að þú viljir skrá þig út úr %(count)s setum?"
-    },
     "Give one or multiple users in this room more privileges": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
     "Add privileged users": "Bæta við notendum með auknar heimildir",
     "Sorry — this call is currently full": "Því miður - þetta símtal er fullt í augnablikinu",
@@ -2173,7 +2154,12 @@
             "cryptography_section": "Dulritun",
             "session_id": "Auðkenni setu:",
             "session_key": "Setulykill:",
-            "encryption_section": "Dulritun"
+            "encryption_section": "Dulritun",
+            "bulk_options_section": "Valkostir magnvinnslu",
+            "bulk_options_accept_all_invites": "Samþykkja alla boðsgesti %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Hafna öllum boðsgestum %(invitedRooms)s",
+            "message_search_section": "Leita í skilaboðum",
+            "analytics_subsection_description": "Deildu nafnlausum gögnum til að hjálpa okkur við að greina vandamál. Ekkert persónulegt. Engir utanaðkomandi."
         },
         "preferences": {
             "room_list_heading": "Spjallrásalisti",
@@ -2264,7 +2250,12 @@
                 "one": "Skrá út tæki",
                 "other": "Skrá út tæki"
             },
-            "security_recommendations": "Ráðleggingar varðandi öryggi"
+            "security_recommendations": "Ráðleggingar varðandi öryggi",
+            "title": "Setur",
+            "sign_out_confirm_description": {
+                "one": "Ertu viss um að þú viljir skrá þig út úr %(count)s setu?",
+                "other": "Ertu viss um að þú viljir skrá þig út úr %(count)s setum?"
+            }
         },
         "general": {
             "account_section": "Notandaaðgangur",
@@ -2280,6 +2271,17 @@
             "add_msisdn_confirm_button": "Staðfestu að bæta við símanúmeri",
             "add_msisdn_confirm_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
             "add_msisdn_dialog_title": "Bæta við símanúmeri"
+        },
+        "sidebar": {
+            "title": "Hliðarspjald",
+            "metaspaces_subsection": "Svæði sem á að birta",
+            "metaspaces_description": "Svæði eru leið til að hópa fólk og spjallrásir. Auk svæðanna sem þú ert á, geturðu líka notað nokkur forútbúin svæði.",
+            "metaspaces_home_description": "Forsíðan nýtist til að hafa yfirsýn yfir allt.",
+            "metaspaces_home_all_rooms": "Birtu allar spjallrásirnar þínar á forsíðunni, jafnvel þótt þær tilheyri svæði.",
+            "metaspaces_favourites_description": "Hópaðu allar eftirlætisspjallrásir og fólk á einum stað.",
+            "metaspaces_people_description": "Hópaðu allt fólk á einum stað.",
+            "metaspaces_orphans": "Spjallrásir utan svæðis",
+            "metaspaces_orphans_description": "Hópaðu allar spjallrásir sem ekki eru hluti af svæðum á einum stað."
         }
     },
     "devtools": {

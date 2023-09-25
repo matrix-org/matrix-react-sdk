@@ -163,7 +163,6 @@
     "Deactivate account": "Deaktiver kontoen",
     "Ignored users": "Ignorerte brukere",
     "Unignore": "Opphev ignorering",
-    "Message search": "Meldingssøk",
     "Missing media permissions, click the button below to request.": "Manglende mediatillatelser, klikk på knappen nedenfor for å be om dem.",
     "Request media permissions": "Be om mediatillatelser",
     "No Audio Outputs detected": "Ingen lydutdataer ble oppdaget",
@@ -574,12 +573,10 @@
     "Explore public rooms": "Utforsk offentlige rom",
     "Verify the link in your inbox": "Verifiser lenken i innboksen din",
     "Bridges": "Broer",
-    "Reject all %(invitedRooms)s invites": "Avslå alle %(invitedRooms)s-invitasjoner",
     "Upgrade Room Version": "Oppgrader romversjon",
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
     "Failed to deactivate user": "Mislyktes i å deaktivere brukeren",
-    "Accept all %(invitedRooms)s invites": "Aksepter alle %(invitedRooms)s-invitasjoner",
     "<not supported>": "<ikke støttet>",
     "not ready": "ikke klar",
     "ready": "klar",
@@ -1146,7 +1143,10 @@
             "cryptography_section": "Kryptografi",
             "session_id": "Økt-ID:",
             "session_key": "Øktnøkkel:",
-            "encryption_section": "Kryptering"
+            "encryption_section": "Kryptering",
+            "bulk_options_accept_all_invites": "Aksepter alle %(invitedRooms)s-invitasjoner",
+            "bulk_options_reject_all_invites": "Avslå alle %(invitedRooms)s-invitasjoner",
+            "message_search_section": "Meldingssøk"
         },
         "preferences": {
             "room_list_heading": "Romliste",

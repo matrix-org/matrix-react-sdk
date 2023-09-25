@@ -137,7 +137,6 @@
     "Uploading %(filename)s": "Alŝutante dosieron %(filename)s",
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
     "<not supported>": "<nesubtenata>",
-    "Reject all %(invitedRooms)s invites": "Rifuzi ĉiujn %(invitedRooms)s invitojn",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
     "Notifications": "Sciigoj",
@@ -292,7 +291,6 @@
     "Back up your keys before signing out to avoid losing them.": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
     "Unable to verify phone number.": "Ne povas kontroli telefonnumeron.",
     "Verification code": "Kontrola kodo",
-    "Accept all %(invitedRooms)s invites": "Akcepti ĉiujn %(invitedRooms)s invitojn",
     "Missing media permissions, click the button below to request.": "Mankas aŭdovidaj permesoj; klaku al la suba butono por peti.",
     "Request media permissions": "Peti aŭdovidajn permesojn",
     "Audio Output": "Sona eligo",
@@ -433,7 +431,6 @@
     "Go back to set it again.": "Reiru por reagordi ĝin.",
     "Your keys are being backed up (the first backup could take a few minutes).": "Viaj ŝlosiloj estas savkopiataj (la unua savkopio povas daŭri kelkajn minutojn).",
     "Unable to create key backup": "Ne povas krei savkopion de ŝlosiloj",
-    "Bulk options": "Amasaj elektebloj",
     "Invalid base_url for m.homeserver": "Nevalida base_url por m.homeserver",
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
@@ -577,7 +574,6 @@
     "Manage integrations": "Administri kunigojn",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
     "None": "Neniu",
-    "Message search": "Serĉado de mesaĝoj",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ĉi tiu ĉambro transpontigas mesaĝojn al la jenaj platformoj. <a>Eksciu plion.</a>",
     "Bridges": "Pontoj",
     "This user has not verified all of their sessions.": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
@@ -1405,9 +1401,7 @@
     "You have unverified sessions": "Vi havas nekontrolitajn salutaĵojn",
     "Export chat": "Eksporti babilejon",
     "Files": "Dosieroj",
-    "Sessions": "Salutaĵoj",
     "Close sidebar": "Fermu la flanka kolumno",
-    "Sidebar": "Flanka kolumno",
     "Public rooms": "Publikajn ĉambrojn",
     "Add privileged users": "Aldoni rajtigitan uzanton",
     "Developer": "Programisto",
@@ -1887,7 +1881,11 @@
             "cryptography_section": "Ĉifroteĥnikaro",
             "session_id": "Identigilo de salutaĵo:",
             "session_key": "Ŝlosilo de salutaĵo:",
-            "encryption_section": "Ĉifrado"
+            "encryption_section": "Ĉifrado",
+            "bulk_options_section": "Amasaj elektebloj",
+            "bulk_options_accept_all_invites": "Akcepti ĉiujn %(invitedRooms)s invitojn",
+            "bulk_options_reject_all_invites": "Rifuzi ĉiujn %(invitedRooms)s invitojn",
+            "message_search_section": "Serĉado de mesaĝoj"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",
@@ -1935,7 +1933,8 @@
                 "one": "Elsaluti el %(count)s salutaĵo",
                 "other": "Elsaluti el %(count)s salutaĵoj"
             },
-            "other_sessions_heading": "Aliaj salutaĵoj"
+            "other_sessions_heading": "Aliaj salutaĵoj",
+            "title": "Salutaĵoj"
         },
         "general": {
             "account_section": "Konto",
@@ -1950,6 +1949,9 @@
             "add_msisdn_confirm_button": "Konfirmu aldonon de telefonnumero",
             "add_msisdn_confirm_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
             "add_msisdn_dialog_title": "Aldoni telefonnumeron"
+        },
+        "sidebar": {
+            "title": "Flanka kolumno"
         }
     },
     "devtools": {

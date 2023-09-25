@@ -48,7 +48,6 @@
     "Yesterday": "Вчора",
     "Low Priority": "Неважливі",
     "Thank you!": "Дякуємо!",
-    "Reject all %(invitedRooms)s invites": "Відхилити запрошення до усіх %(invitedRooms)s",
     "Profile": "Профіль",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
     "Warning!": "Увага!",
@@ -302,7 +301,6 @@
     "General failure": "Загальний збій",
     "Enter your account password to confirm the upgrade:": "Введіть пароль вашого облікового запису щоб підтвердити поліпшення:",
     "Secret storage public key:": "Таємне сховище відкритого ключа:",
-    "Message search": "Пошук повідомлень",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "Something went wrong!": "Щось пішло не так!",
     "expand": "розгорнути",
@@ -1029,11 +1027,6 @@
     "Discovery options will appear once you have added an email above.": "Опції знаходження з'являться тут, коли ви додасте е-пошту вгорі.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Після від'єднання від сервера ідентифікації вас більше не знаходитимуть інші користувачі, а ви не зможете запрошувати інших е-поштою чи телефоном.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Зараз <server></server> дозволяє вам знаходити контакти, а контактам вас. Можете змінити сервер ідентифікації нижче.",
-    "Rooms outside of a space": "Кімнати без просторів",
-    "Show all your rooms in Home, even if they're in a space.": "Показати всі кімнати в домівці, навіть ті, що належать до просторів.",
-    "Home is useful for getting an overview of everything.": "Домівка надає загальний огляд усього.",
-    "Spaces to show": "Показувати такі простори",
-    "Sidebar": "Бічна панель",
     "Pin to sidebar": "Закріплення на бічній панелі",
     "Quick settings": "Швидкі налаштування",
     "Home options": "Параметри домівки",
@@ -1065,7 +1058,6 @@
     "Join public room": "Приєднатись до загальнодоступної кімнати",
     "%(spaceName)s menu": "%(spaceName)s — меню",
     "No votes cast": "Жодного голосу",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін.",
     "Share location": "Поділитися місцеперебуванням",
     "Failed to end poll": "Не вдалося завершити опитування",
     "The poll has ended. No votes were cast.": "Опитування завершене. Жодного голосу не було.",
@@ -1163,7 +1155,6 @@
     "Something went wrong trying to invite the users.": "Щось пішло не так при запрошенні користувачів.",
     "Invite by email": "Запросити е-поштою",
     "Something went wrong with your invite to %(roomName)s": "Щось пішло не так з вашим запрошенням до %(roomName)s",
-    "Accept all %(invitedRooms)s invites": "Прийняти всі %(invitedRooms)s запрошення",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Запросіть когось за іменем, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цією кімнатою</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Запросіть когось за іменем, е-поштою, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цією кімнатою</a>.",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Додамо лінк старої кімнати нагорі нової, щоб люди могли бачити старі повідомлення",
@@ -1312,7 +1303,6 @@
     "Unable to verify phone number.": "Не вдалося перевірити номер телефону.",
     "Click the link in the email you received to verify and then click continue again.": "Для підтвердження перейдіть за посиланням в отриманому листі й знову натисніть «Продовжити».",
     "Your email address hasn't been verified yet": "Ваша адреса е-пошти ще не підтверджена",
-    "Bulk options": "Масові дії",
     "Unignore": "Рознехтувати",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Використовувати сервер ідентифікації необов'язково. Якщо ви вирішите не використовувати сервер ідентифікації, інші користувачі не зможуть вас знаходити, а ви не зможете запрошувати інших за е-поштою чи телефоном.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Зараз ви не використовуєте сервер ідентифікації. Щоб знайти наявні контакти й вони могли знайти вас, додайте його нижче.",
@@ -1510,10 +1500,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s вилучає вас із %(roomName)s",
     "Message pending moderation": "Повідомлення очікує модерування",
     "Message pending moderation: %(reason)s": "Повідомлення очікує модерування: %(reason)s",
-    "Group all your rooms that aren't part of a space in one place.": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці.",
-    "Group all your people in one place.": "Групуйте всіх своїх людей в одному місці.",
-    "Group all your favourite rooms and people in one place.": "Групуйте всі свої улюблені кімнати та людей в одному місці.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Простори — це спосіб групування кімнат і людей. Окрім просторів, до яких ви приєдналися, ви також можете використовувати деякі вбудовані.",
     "Pick a date to jump to": "Виберіть до якої дати перейти",
     "Jump to date": "Перейти до дати",
     "The beginning of the room": "Початок кімнати",
@@ -1691,8 +1677,6 @@
     "Saved Items": "Збережені елементи",
     "Choose a locale": "Вибрати локаль",
     "We're creating a room with %(names)s": "Ми створюємо кімнату з %(names)s",
-    "Sessions": "Сеанси",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для кращої безпеки звірте свої сеанси та вийдіть з усіх невикористовуваних або нерозпізнаних сеансів.",
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s або %(copyButton)s",
@@ -1735,10 +1719,6 @@
     "The scanned code is invalid.": "Сканований код недійсний.",
     "The linking wasn't completed in the required time.": "У встановлені терміни з'єднання не було виконано.",
     "Sign in new device": "Увійти на новому пристрої",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
-        "other": "Ви впевнені, що хочете вийти з %(count)s сеансів?"
-    },
     "Show formatting": "Показати форматування",
     "Hide formatting": "Сховати форматування",
     "Connection": "З'єднання",
@@ -2571,7 +2551,12 @@
             "cryptography_section": "Криптографія",
             "session_id": "ID сеансу:",
             "session_key": "Ключ сеансу:",
-            "encryption_section": "Шифрування"
+            "encryption_section": "Шифрування",
+            "bulk_options_section": "Масові дії",
+            "bulk_options_accept_all_invites": "Прийняти всі %(invitedRooms)s запрошення",
+            "bulk_options_reject_all_invites": "Відхилити запрошення до усіх %(invitedRooms)s",
+            "message_search_section": "Пошук повідомлень",
+            "analytics_subsection_description": "Збір анонімних даних дає нам змогу дізнаватися про збої. Жодних особистих даних. Жодних третіх сторін."
         },
         "preferences": {
             "room_list_heading": "Перелік кімнат",
@@ -2685,7 +2670,13 @@
                 "other": "Вийти з пристроїв"
             },
             "security_recommendations": "Поради щодо безпеки",
-            "security_recommendations_description": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад."
+            "security_recommendations_description": "Удоскональте безпеку свого облікового запису, дотримуючись цих порад.",
+            "title": "Сеанси",
+            "sign_out_confirm_description": {
+                "one": "Ви впевнені, що хочете вийти з %(count)s сеансів?",
+                "other": "Ви впевнені, що хочете вийти з %(count)s сеансів?"
+            },
+            "other_sessions_subsection_description": "Для кращої безпеки звірте свої сеанси та вийдіть з усіх невикористовуваних або нерозпізнаних сеансів."
         },
         "general": {
             "oidc_manage_button": "Керувати обліковим записом",
@@ -2705,6 +2696,17 @@
             "add_msisdn_confirm_button": "Підтвердьте додавання номера телефону",
             "add_msisdn_confirm_body": "Клацніть на кнопку внизу, щоб підтвердити додавання цього номера телефону.",
             "add_msisdn_dialog_title": "Додати номер телефону"
+        },
+        "sidebar": {
+            "title": "Бічна панель",
+            "metaspaces_subsection": "Показувати такі простори",
+            "metaspaces_description": "Простори — це спосіб групування кімнат і людей. Окрім просторів, до яких ви приєдналися, ви також можете використовувати деякі вбудовані.",
+            "metaspaces_home_description": "Домівка надає загальний огляд усього.",
+            "metaspaces_home_all_rooms": "Показати всі кімнати в домівці, навіть ті, що належать до просторів.",
+            "metaspaces_favourites_description": "Групуйте всі свої улюблені кімнати та людей в одному місці.",
+            "metaspaces_people_description": "Групуйте всіх своїх людей в одному місці.",
+            "metaspaces_orphans": "Кімнати без просторів",
+            "metaspaces_orphans_description": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці."
         }
     },
     "devtools": {

@@ -120,7 +120,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Bu işlem şifreli odalarda aldığınız iletilerin anahtarlarını yerel dosyaya vermenizi sağlar . Bundan sonra dosyayı ileride başka bir Matrix istemcisine de aktarabilirsiniz , böylece istemci bu mesajların şifresini çözebilir (decryption).",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
-    "Reject all %(invitedRooms)s invites": "Tüm %(invitedRooms)s davetlerini reddet",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unknown error": "Bilinmeyen Hata",
     "Unable to restore session": "Oturum geri yüklenemiyor",
@@ -412,8 +411,6 @@
     "Deactivate account": "Hesabı pasifleştir",
     "None": "Yok",
     "Ignored users": "Yoksayılan kullanıcılar",
-    "Bulk options": "Toplu işlem seçenekleri",
-    "Accept all %(invitedRooms)s invites": "Bütün %(invitedRooms)s davetlerini kabul et",
     "Request media permissions": "Medya izinleri talebi",
     "Set a new custom sound": "Özel bir ses ayarla",
     "Error changing power level requirement": "Güç düzey gereksinimi değiştirmede hata",
@@ -449,7 +446,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
-    "Message search": "Mesaj arama",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Kullanıcının güç düzeyini değiştirirken bir hata oluştu. Yeterli izinlere sahip olduğunuza emin olun ve yeniden deneyin.",
     "Click the link in the email you received to verify and then click continue again.": "Aldığınız e-postaki bağlantıyı tıklayarak doğrulayın ve sonra tekrar tıklayarak devam edin.",
     "Verify this session": "Bu oturumu doğrula",
@@ -1321,7 +1317,11 @@
             "cryptography_section": "Kriptografi",
             "session_id": "Oturum ID:",
             "session_key": "Oturum anahtarı:",
-            "encryption_section": "Şifreleme"
+            "encryption_section": "Şifreleme",
+            "bulk_options_section": "Toplu işlem seçenekleri",
+            "bulk_options_accept_all_invites": "Bütün %(invitedRooms)s davetlerini kabul et",
+            "bulk_options_reject_all_invites": "Tüm %(invitedRooms)s davetlerini reddet",
+            "message_search_section": "Mesaj arama"
         },
         "preferences": {
             "room_list_heading": "Oda listesi",

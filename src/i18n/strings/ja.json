@@ -211,7 +211,6 @@
     "Uploading %(filename)s": "%(filename)sをアップロードしています",
     "Unable to remove contact information": "連絡先の情報を削除できません",
     "<not supported>": "<サポート対象外>",
-    "Reject all %(invitedRooms)s invites": "%(invitedRooms)sの全ての招待を拒否",
     "No Audio Outputs detected": "音声出力が検出されません",
     "Audio Output": "音声出力",
     "Profile": "プロフィール",
@@ -313,7 +312,6 @@
     "in account data": "アカウントデータ内",
     "Account management": "アカウントの管理",
     "Deactivate account": "アカウントを無効化",
-    "Message search": "メッセージの検索",
     "Published Addresses": "公開アドレス",
     "Local Addresses": "ローカルアドレス",
     "Error changing power level": "権限レベルを変更する際にエラーが発生しました",
@@ -460,7 +458,6 @@
     "Bridges": "ブリッジ",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "このルームは以下のプラットフォームにメッセージをブリッジしています。<a>詳細</a>",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "サーバー管理者は、非公開のルームとダイレクトメッセージで既定でエンドツーエンド暗号化を無効にしています。",
-    "Accept all %(invitedRooms)s invites": "%(invitedRooms)sの全ての招待を承認",
     "None": "なし",
     "Discovery": "ディスカバリー（発見）",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "メールアドレスか電話番号でアカウントを検出可能にするには、IDサーバー（%(serverName)s）の利用規約への同意が必要です。",
@@ -942,15 +939,6 @@
     "Add space": "スペースを追加",
     "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Group all your rooms that aren't part of a space in one place.": "スペースに含まれない全てのルームを一箇所にまとめる。",
-    "Rooms outside of a space": "スペース外のルーム",
-    "Group all your people in one place.": "全ての連絡先を一箇所にまとめる。",
-    "Group all your favourite rooms and people in one place.": "お気に入りのルームと連絡先をまとめる。",
-    "Show all your rooms in Home, even if they're in a space.": "他のスペースに存在するルームを含めて、全てのルームをホームに表示。",
-    "Home is useful for getting an overview of everything.": "ホームは全体を把握するのに便利です。",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "スペースは、ルームや連絡先をまとめる方法です。いくつかの構築済スペースと、参加済のスペースを使用できます。",
-    "Spaces to show": "表示するスペース",
-    "Sidebar": "サイドバー",
     "Show all rooms": "全てのルームを表示",
     "Home options": "ホームのオプション",
     "Report": "報告",
@@ -978,7 +966,6 @@
     "Enter a server name": "サーバー名を入力",
     "Add existing space": "既存のスペースを追加",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。",
     "Hide sidebar": "サイドバーを表示しない",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
@@ -1550,7 +1537,6 @@
     "Connection lost": "接続が切断されました",
     "Room info": "ルームの情報",
     "Video room": "ビデオ通話ルーム",
-    "Sessions": "セッション",
     "Your password was successfully changed.": "パスワードを変更しました。",
     "Video settings": "ビデオの設定",
     "Voice settings": "音声の設定",
@@ -1640,12 +1626,6 @@
     "Connection": "接続",
     "Voice processing": "音声を処理しています",
     "Automatically adjust the microphone volume": "マイクの音量を自動的に調節",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "セキュリティーを最大限に高めるには、セッションを認証し、不明なセッションや使用していないセッションからサインアウトしてください。",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "%(count)s個のセッションからサインアウトしてよろしいですか？",
-        "other": "%(count)s個のセッションからサインアウトしてよろしいですか？"
-    },
-    "Bulk options": "一括オプション",
     "Ongoing call": "通話中",
     "Add privileged users": "特権ユーザーを追加",
     "Give one or multiple users in this room more privileges": "このルームのユーザーに権限を付与",
@@ -2434,7 +2414,12 @@
             "cryptography_section": "暗号",
             "session_id": "セッションID：",
             "session_key": "セッションキー：",
-            "encryption_section": "暗号化"
+            "encryption_section": "暗号化",
+            "bulk_options_section": "一括オプション",
+            "bulk_options_accept_all_invites": "%(invitedRooms)sの全ての招待を承認",
+            "bulk_options_reject_all_invites": "%(invitedRooms)sの全ての招待を拒否",
+            "message_search_section": "メッセージの検索",
+            "analytics_subsection_description": "匿名のデータを共有すると、問題の特定に役立ちます。個人データの収集や、第三者とのデータ共有はありません。"
         },
         "preferences": {
             "room_list_heading": "ルーム一覧",
@@ -2547,7 +2532,13 @@
                 "other": "端末からサインアウト"
             },
             "security_recommendations": "セキュリティーに関する勧告",
-            "security_recommendations_description": "以下の勧告に従い、アカウントのセキュリティーを改善しましょう。"
+            "security_recommendations_description": "以下の勧告に従い、アカウントのセキュリティーを改善しましょう。",
+            "title": "セッション",
+            "sign_out_confirm_description": {
+                "one": "%(count)s個のセッションからサインアウトしてよろしいですか？",
+                "other": "%(count)s個のセッションからサインアウトしてよろしいですか？"
+            },
+            "other_sessions_subsection_description": "セキュリティーを最大限に高めるには、セッションを認証し、不明なセッションや使用していないセッションからサインアウトしてください。"
         },
         "general": {
             "oidc_manage_button": "アカウントを管理",
@@ -2564,6 +2555,17 @@
             "add_msisdn_confirm_button": "電話番号の追加を承認",
             "add_msisdn_confirm_body": "下のボタンをクリックすると、この電話番号を追加します。",
             "add_msisdn_dialog_title": "電話番号を追加"
+        },
+        "sidebar": {
+            "title": "サイドバー",
+            "metaspaces_subsection": "表示するスペース",
+            "metaspaces_description": "スペースは、ルームや連絡先をまとめる方法です。いくつかの構築済スペースと、参加済のスペースを使用できます。",
+            "metaspaces_home_description": "ホームは全体を把握するのに便利です。",
+            "metaspaces_home_all_rooms": "他のスペースに存在するルームを含めて、全てのルームをホームに表示。",
+            "metaspaces_favourites_description": "お気に入りのルームと連絡先をまとめる。",
+            "metaspaces_people_description": "全ての連絡先を一箇所にまとめる。",
+            "metaspaces_orphans": "スペース外のルーム",
+            "metaspaces_orphans_description": "スペースに含まれない全てのルームを一箇所にまとめる。"
         }
     },
     "devtools": {

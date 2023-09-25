@@ -348,21 +348,7 @@
     "Audio Output": "ສຽງອອກ",
     "Request media permissions": "ຮ້ອງຂໍການອະນຸຍາດສື່ມວນຊົນ",
     "Missing media permissions, click the button below to request.": "ບໍ່ອະນຸຍາດສື່, ກົດໄປທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຮ້ອງຂໍ.",
-    "Group all your rooms that aren't part of a space in one place.": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ.",
-    "Rooms outside of a space": "ຫ້ອງຢູ່ນອກພື້ນທີ່",
-    "Group all your people in one place.": "ຈັດກຸ່ມຄົນທັງໝົດຂອງເຈົ້າຢູ່ບ່ອນດຽວ.",
-    "Group all your favourite rooms and people in one place.": "ຈັດກຸ່ມຫ້ອງ ແລະ ຄົນທີ່ທ່ານມັກທັງໝົດຢູ່ບ່ອນດຽວ.",
-    "Show all your rooms in Home, even if they're in a space.": "ສະແດງຫ້ອງທັງໝົດຂອງທ່ານໃນໜ້າຫຼັກ, ເຖິງແມ່ນວ່າພວກມັນຢູ່ໃນບ່ອນໃດນຶ່ງກໍ່ຕາມ.",
-    "Home is useful for getting an overview of everything.": "ຫນ້າHome ເປັນປະໂຫຍດສໍາລັບການເບິ່ງລາຍການລວມທັງໝົດ.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "ພຶ້ນທີ່ເປັນຊ່ອງທາງໃນການຈັດກຸ່ມຫ້ອງ ແລະ ຄົນ. ຄຽງຄູ່ກັບສະຖານທີ່ທີ່ທ່ານຢູ່ໃນ, ທ່ານສາມາດນໍາໃຊ້ບາງບ່ອນທີ່ສ້າງຂຶ້ນກ່ອນໄດ້ເຊັ່ນກັນ.",
-    "Spaces to show": "ພຶ້ນທີ່ຈະສະແດງ",
-    "Sidebar": "ແຖບດ້ານຂ້າງ",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "ແບ່ງປັນຂໍ້ມູນທີ່ບໍ່ເປີດເຜີຍຊື່ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາລະບຸບັນຫາ. ບໍ່ມີຫຍັງເປັນສ່ວນຕົວ. ບໍ່ມີພາກສ່ວນທີສາມ.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "ຜູ້ຄຸມເຊີບເວີຂອງທ່ານໄດ້ປິດການນຳໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງໂດຍຄ່າເລີ່ມຕົ້ນໃນຫ້ອງສ່ວນຕົວ ແລະ ຂໍ້ຄວາມໂດຍກົງ.",
-    "Message search": "ຄົ້ນຫາຂໍ້ຄວາມ",
-    "Reject all %(invitedRooms)s invites": "ປະຕິເສດການເຊີນທັງໝົດ %(invitedRooms)s",
-    "Accept all %(invitedRooms)s invites": "ຍອມຮັບການເຊີນທັງໝົດ %(invitedRooms)s",
-    "Bulk options": "ຕົວເລືອກຈຳນວນຫຼາຍ",
     "You have no ignored users.": "ທ່ານບໍ່ມີຜູ້ໃຊ້ທີ່ຖືກລະເລີຍ.",
     "Unignore": "ບໍ່ສົນໃຈ",
     "Ignored users": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
@@ -2146,7 +2132,12 @@
             "cryptography_section": "ການເຂົ້າລະຫັດລັບ",
             "session_id": "ID ລະບົບ:",
             "session_key": "ກະແຈລະບົບ:",
-            "encryption_section": "ການເຂົ້າລະຫັດ"
+            "encryption_section": "ການເຂົ້າລະຫັດ",
+            "bulk_options_section": "ຕົວເລືອກຈຳນວນຫຼາຍ",
+            "bulk_options_accept_all_invites": "ຍອມຮັບການເຊີນທັງໝົດ %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "ປະຕິເສດການເຊີນທັງໝົດ %(invitedRooms)s",
+            "message_search_section": "ຄົ້ນຫາຂໍ້ຄວາມ",
+            "analytics_subsection_description": "ແບ່ງປັນຂໍ້ມູນທີ່ບໍ່ເປີດເຜີຍຊື່ເພື່ອຊ່ວຍໃຫ້ພວກເຮົາລະບຸບັນຫາ. ບໍ່ມີຫຍັງເປັນສ່ວນຕົວ. ບໍ່ມີພາກສ່ວນທີສາມ."
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",
@@ -2201,6 +2192,17 @@
             "add_msisdn_confirm_button": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
             "add_msisdn_confirm_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
             "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ"
+        },
+        "sidebar": {
+            "title": "ແຖບດ້ານຂ້າງ",
+            "metaspaces_subsection": "ພຶ້ນທີ່ຈະສະແດງ",
+            "metaspaces_description": "ພຶ້ນທີ່ເປັນຊ່ອງທາງໃນການຈັດກຸ່ມຫ້ອງ ແລະ ຄົນ. ຄຽງຄູ່ກັບສະຖານທີ່ທີ່ທ່ານຢູ່ໃນ, ທ່ານສາມາດນໍາໃຊ້ບາງບ່ອນທີ່ສ້າງຂຶ້ນກ່ອນໄດ້ເຊັ່ນກັນ.",
+            "metaspaces_home_description": "ຫນ້າHome ເປັນປະໂຫຍດສໍາລັບການເບິ່ງລາຍການລວມທັງໝົດ.",
+            "metaspaces_home_all_rooms": "ສະແດງຫ້ອງທັງໝົດຂອງທ່ານໃນໜ້າຫຼັກ, ເຖິງແມ່ນວ່າພວກມັນຢູ່ໃນບ່ອນໃດນຶ່ງກໍ່ຕາມ.",
+            "metaspaces_favourites_description": "ຈັດກຸ່ມຫ້ອງ ແລະ ຄົນທີ່ທ່ານມັກທັງໝົດຢູ່ບ່ອນດຽວ.",
+            "metaspaces_people_description": "ຈັດກຸ່ມຄົນທັງໝົດຂອງເຈົ້າຢູ່ບ່ອນດຽວ.",
+            "metaspaces_orphans": "ຫ້ອງຢູ່ນອກພື້ນທີ່",
+            "metaspaces_orphans_description": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ."
         }
     },
     "devtools": {

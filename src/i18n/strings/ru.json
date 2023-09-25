@@ -104,7 +104,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Этот процесс позволяет вам экспортировать ключи для сообщений, которые вы получили в комнатах с шифрованием, в локальный файл. Вы сможете импортировать эти ключи в другой клиент Matrix чтобы расшифровать эти сообщения.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
-    "Reject all %(invitedRooms)s invites": "Отклонить все %(invitedRooms)s приглашения",
     "Confirm Removal": "Подтвердите удаление",
     "Unknown error": "Неизвестная ошибка",
     "Unable to restore session": "Восстановление сеанса не удалось",
@@ -328,7 +327,6 @@
     "Back up your keys before signing out to avoid losing them.": "Перед выходом сохраните резервную копию ключей шифрования, чтобы не потерять их.",
     "Start using Key Backup": "Использовать резервную копию ключей шифрования",
     "Profile picture": "Аватар",
-    "Accept all %(invitedRooms)s invites": "Принять все приглашения (%(invitedRooms)s)",
     "Missing media permissions, click the button below to request.": "Отсутствуют разрешения для доступа к камере/микрофону. Нажмите кнопку ниже, чтобы запросить их.",
     "Request media permissions": "Запросить доступ к медиа устройству",
     "Error updating main address": "Ошибка обновления основного адреса",
@@ -336,7 +334,6 @@
     "You'll lose access to your encrypted messages": "Вы потеряете доступ к вашим шифрованным сообщениям",
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
-    "Bulk options": "Основные опции",
     "This room has been replaced and is no longer active.": "Эта комната заменена и более неактивна.",
     "Join the conversation with an account": "Присоединиться к разговору с учётной записью",
     "Sign Up": "Зарегистрироваться",
@@ -553,7 +550,6 @@
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "У вашей учётной записи есть кросс-подпись в секретное хранилище, но она пока не является доверенной в этом сеансе.",
     "well formed": "корректный",
     "unexpected type": "непредвиденный тип",
-    "Message search": "Поиск по сообщениям",
     "Bridges": "Мосты",
     "This user has not verified all of their sessions.": "Этот пользователь не подтвердил все свои сеансы.",
     "You have not verified this user.": "Вы не подтвердили этого пользователя.",
@@ -1499,16 +1495,6 @@
     "Get notified for every message": "Получать уведомление о каждом сообщении",
     "Get notifications as set up in your <a>settings</a>": "Получать уведомления в соответствии с <a>настройками</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Эта комната не передаёт сообщения на какие-либо платформы <a>Узнать больше.</a>",
-    "Group all your rooms that aren't part of a space in one place.": "Сгруппируйте все комнаты, которые не являются частью пространства, в одном месте.",
-    "Rooms outside of a space": "Комнаты без пространства",
-    "Group all your people in one place.": "Сгруппируйте всех своих людей в одном месте.",
-    "Group all your favourite rooms and people in one place.": "Сгруппируйте все свои любимые комнаты и людей в одном месте.",
-    "Show all your rooms in Home, even if they're in a space.": "Показать все комнаты на Главной, даже если они находятся в пространстве.",
-    "Home is useful for getting an overview of everything.": "Раздел \"Главная\" полезен для получения общего вида.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Пространства — это способ группировки комнат и людей. Наряду с пространствами, в которых вы находитесь, вы также можете использовать некоторые предварительно созданные пространства.",
-    "Spaces to show": "Пространства для показа",
-    "Sidebar": "Боковая панель",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Поделитесь анонимными данными, чтобы помочь нам выявить проблемы. Никаких личных данных. Никаких третьих лиц.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
     "Pin to sidebar": "Закрепить на боковой панели",
     "Quick settings": "Быстрые настройки",
@@ -1683,7 +1669,6 @@
     "Stop and close": "Остановить и закрыть",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
-    "Sessions": "Сеансы",
     "We'll help you get connected.": "Мы поможем вам подключиться.",
     "Join the room to participate": "Присоединяйтесь к комнате для участия",
     "We're creating a room with %(names)s": "Мы создаем комнату с %(names)s",
@@ -1692,7 +1677,6 @@
     "Choose a locale": "Выберите регион",
     "You need to have the right permissions in order to share locations in this room.": "У вас должны быть определённые разрешения, чтобы делиться местоположениями в этой комнате.",
     "You don't have permission to share locations": "У вас недостаточно прав для публикации местоположений",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете.",
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
@@ -1704,10 +1688,6 @@
     "View chat timeline": "Посмотреть ленту сообщений",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
     "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
-        "other": "Вы уверены, что хотите выйти из %(count)s сеансов?"
-    },
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
@@ -2371,7 +2351,12 @@
             "cryptography_section": "Криптография",
             "session_id": "ID сеанса:",
             "session_key": "Ключ сеанса:",
-            "encryption_section": "Шифрование"
+            "encryption_section": "Шифрование",
+            "bulk_options_section": "Основные опции",
+            "bulk_options_accept_all_invites": "Принять все приглашения (%(invitedRooms)s)",
+            "bulk_options_reject_all_invites": "Отклонить все %(invitedRooms)s приглашения",
+            "message_search_section": "Поиск по сообщениям",
+            "analytics_subsection_description": "Поделитесь анонимными данными, чтобы помочь нам выявить проблемы. Никаких личных данных. Никаких третьих лиц."
         },
         "preferences": {
             "room_list_heading": "Список комнат",
@@ -2482,7 +2467,13 @@
                 "other": "Выйти из устройств"
             },
             "security_recommendations": "Рекомендации по безопасности",
-            "security_recommendations_description": "Усильте защиту учётной записи, следуя этим рекомендациям."
+            "security_recommendations_description": "Усильте защиту учётной записи, следуя этим рекомендациям.",
+            "title": "Сеансы",
+            "sign_out_confirm_description": {
+                "one": "Вы уверены, что хотите выйти из %(count)s сеанса?",
+                "other": "Вы уверены, что хотите выйти из %(count)s сеансов?"
+            },
+            "other_sessions_subsection_description": "Для лучшей безопасности заверьте свои сеансы и выйдите из тех, которые более не признаёте или не используете."
         },
         "general": {
             "account_section": "Учётная запись",
@@ -2498,6 +2489,17 @@
             "add_msisdn_confirm_button": "Подтвердите добавление номера телефона",
             "add_msisdn_confirm_body": "Нажмите кнопку ниже для добавления этого номера телефона.",
             "add_msisdn_dialog_title": "Добавить номер телефона"
+        },
+        "sidebar": {
+            "title": "Боковая панель",
+            "metaspaces_subsection": "Пространства для показа",
+            "metaspaces_description": "Пространства — это способ группировки комнат и людей. Наряду с пространствами, в которых вы находитесь, вы также можете использовать некоторые предварительно созданные пространства.",
+            "metaspaces_home_description": "Раздел \"Главная\" полезен для получения общего вида.",
+            "metaspaces_home_all_rooms": "Показать все комнаты на Главной, даже если они находятся в пространстве.",
+            "metaspaces_favourites_description": "Сгруппируйте все свои любимые комнаты и людей в одном месте.",
+            "metaspaces_people_description": "Сгруппируйте всех своих людей в одном месте.",
+            "metaspaces_orphans": "Комнаты без пространства",
+            "metaspaces_orphans_description": "Сгруппируйте все комнаты, которые не являются частью пространства, в одном месте."
         }
     },
     "devtools": {

@@ -172,7 +172,6 @@
     "Jump to read receipt": "Hoppa till läskvitto",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Denna process låter dig exportera nycklarna för meddelanden som du har fått i krypterade rum till en lokal fil. Du kommer sedan att kunna importera filen i en annan Matrix-klient i framtiden, så att den klienten också kan avkryptera meddelandena.",
     "Confirm Removal": "Bekräfta borttagning",
-    "Reject all %(invitedRooms)s invites": "Avböj alla %(invitedRooms)s inbjudningar",
     "<Items/> and %(count)s others": {
         "other": "<Items/> och %(count)s till",
         "one": "<Items/> och en till"
@@ -320,8 +319,6 @@
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Är du säker? Du kommer att förlora dina krypterade meddelanden om dina nycklar inte säkerhetskopieras ordentligt.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
     "Ignored users": "Ignorerade användare",
-    "Bulk options": "Massalternativ",
-    "Accept all %(invitedRooms)s invites": "Acceptera alla %(invitedRooms)s inbjudningar",
     "Failed to revoke invite": "Misslyckades att återkalla inbjudan",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Kunde inte återkalla inbjudan. Servern kan ha ett tillfälligt problem eller så har du inte tillräckliga behörigheter för att återkalla inbjudan.",
     "Revoke invite": "Återkalla inbjudan",
@@ -533,7 +530,6 @@
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Samtyck till identitetsserverns (%(serverName)s) användarvillkor för att låta dig själv vara upptäckbar med e-postadress eller telefonnummer.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "None": "Ingen",
-    "Message search": "Meddelandesök",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Din serveradministratör har inaktiverat totalsträckskryptering som förval för privata rum och direktmeddelanden.",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Det här rummet bryggar meddelanden till följande plattformar. <a>Lär dig mer.</a>",
     "Bridges": "Bryggor",
@@ -1418,10 +1414,6 @@
     "Messaging": "Meddelanden",
     "Pin to sidebar": "Fäst i sidopanelen",
     "Quick settings": "Snabbinställningar",
-    "Spaces to show": "Utrymmen att visa",
-    "Sidebar": "Sidofält",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Dela anonyma data med oss för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Utrymmen är sätt att gruppera rum och personer. Utöver utrymmena du är med i så kan du använda några färdiggjorda också.",
     "Back to thread": "Tillbaka till tråd",
     "Room members": "Rumsmedlemmar",
     "Back to chat": "Tillbaka till chatt",
@@ -1431,12 +1423,6 @@
     "@mentions & keywords": "@omnämnanden och nyckelord",
     "Get notifications as set up in your <a>settings</a>": "Få aviseringar i enlighet med dina <a>inställningar</a>",
     "Get notified for every message": "Bli aviserad för varje meddelande",
-    "Group all your rooms that aren't part of a space in one place.": "Gruppera alla dina rum som inte är en del av ett utrymme på ett ställe.",
-    "Rooms outside of a space": "Rum utanför ett utrymme",
-    "Group all your people in one place.": "Gruppera alla dina personer på ett ställe.",
-    "Group all your favourite rooms and people in one place.": "Gruppera alla dina favoritrum och -personer på ett ställe.",
-    "Show all your rooms in Home, even if they're in a space.": "Visa alla dina rum i Hem, även om de är i ett utrymme.",
-    "Home is useful for getting an overview of everything.": "Hem är användbar för att få en översikt över allt.",
     "Vote not registered": "Röst registrerades inte",
     "Reply in thread": "Svara i tråd",
     "Pick a date to jump to": "Välj ett datum att hoppa till",
@@ -1696,12 +1682,6 @@
     "Video settings": "Videoinställningar",
     "Automatically adjust the microphone volume": "Justera automatiskt mikrofonvolymen",
     "Voice settings": "Röstinställningar",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "För bäst säkerhet, verifiera dina sessioner och logga ut alla sessioner du inte känner igen eller använder längre.",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Är du säker på att du vill logga ut %(count)s session?",
-        "other": "Är du säker på att du vill logga ut %(count)s sessioner?"
-    },
-    "Sessions": "Sessioner",
     "Search users in this room…": "Sök efter användare i det här rummet…",
     "Give one or multiple users in this room more privileges": "Ge en eller flera användare i det här rummet fler privilegier",
     "Add privileged users": "Lägg till privilegierade användare",
@@ -2527,7 +2507,12 @@
             "cryptography_section": "Kryptografi",
             "session_id": "Sessions-ID:",
             "session_key": "Sessionsnyckel:",
-            "encryption_section": "Kryptering"
+            "encryption_section": "Kryptering",
+            "bulk_options_section": "Massalternativ",
+            "bulk_options_accept_all_invites": "Acceptera alla %(invitedRooms)s inbjudningar",
+            "bulk_options_reject_all_invites": "Avböj alla %(invitedRooms)s inbjudningar",
+            "message_search_section": "Meddelandesök",
+            "analytics_subsection_description": "Dela anonyma data med oss för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter."
         },
         "preferences": {
             "room_list_heading": "Rumslista",
@@ -2641,7 +2626,13 @@
                 "other": "Logga ut enheter"
             },
             "security_recommendations": "Säkerhetsrekommendationer",
-            "security_recommendations_description": "Förbättra din kontosäkerhet genom att följa dessa rekommendationer."
+            "security_recommendations_description": "Förbättra din kontosäkerhet genom att följa dessa rekommendationer.",
+            "title": "Sessioner",
+            "sign_out_confirm_description": {
+                "one": "Är du säker på att du vill logga ut %(count)s session?",
+                "other": "Är du säker på att du vill logga ut %(count)s sessioner?"
+            },
+            "other_sessions_subsection_description": "För bäst säkerhet, verifiera dina sessioner och logga ut alla sessioner du inte känner igen eller använder längre."
         },
         "general": {
             "oidc_manage_button": "Hantera konto",
@@ -2661,6 +2652,17 @@
             "add_msisdn_confirm_button": "Bekräfta tilläggning av telefonnumret",
             "add_msisdn_confirm_body": "Klicka på knappen nedan för att bekräfta tilläggning av telefonnumret.",
             "add_msisdn_dialog_title": "Lägg till telefonnummer"
+        },
+        "sidebar": {
+            "title": "Sidofält",
+            "metaspaces_subsection": "Utrymmen att visa",
+            "metaspaces_description": "Utrymmen är sätt att gruppera rum och personer. Utöver utrymmena du är med i så kan du använda några färdiggjorda också.",
+            "metaspaces_home_description": "Hem är användbar för att få en översikt över allt.",
+            "metaspaces_home_all_rooms": "Visa alla dina rum i Hem, även om de är i ett utrymme.",
+            "metaspaces_favourites_description": "Gruppera alla dina favoritrum och -personer på ett ställe.",
+            "metaspaces_people_description": "Gruppera alla dina personer på ett ställe.",
+            "metaspaces_orphans": "Rum utanför ett utrymme",
+            "metaspaces_orphans_description": "Gruppera alla dina rum som inte är en del av ett utrymme på ett ställe."
         }
     },
     "devtools": {

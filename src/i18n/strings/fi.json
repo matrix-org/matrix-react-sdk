@@ -88,7 +88,6 @@
     "Confirm passphrase": "Varmista salasana",
     "Import room keys": "Tuo huoneen avaimet",
     "File to import": "Tuotava tiedosto",
-    "Reject all %(invitedRooms)s invites": "Hylkää kaikki %(invitedRooms)s kutsua",
     "Confirm Removal": "Varmista poistaminen",
     "Unknown error": "Tuntematon virhe",
     "Unable to restore session": "Istunnon palautus epäonnistui",
@@ -307,7 +306,6 @@
     "Unable to verify phone number.": "Puhelinnumeron vahvistaminen epäonnistui.",
     "Verification code": "Varmennuskoodi",
     "Ignored users": "Sivuutetut käyttäjät",
-    "Bulk options": "Massatoimintoasetukset",
     "Missing media permissions, click the button below to request.": "Mediaoikeuksia puuttuu. Napsauta painikkeesta pyytääksesi oikeuksia.",
     "Request media permissions": "Pyydä mediaoikeuksia",
     "Manually export keys": "Vie avaimet käsin",
@@ -326,7 +324,6 @@
     "Error updating main address": "Pääosoitteen päivityksessä tapahtui virhe",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Huoneen pääosoitteen päivityksessä tapahtui virhe. Se ei välttämättä ole sallittua tällä palvelimella tai kyseessä on väliaikainen virhe.",
     "Popout widget": "Avaa sovelma omassa ikkunassaan",
-    "Accept all %(invitedRooms)s invites": "Hyväksy kaikki %(invitedRooms)s kutsua",
     "Power level": "Oikeuksien taso",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Tapahtuman, johon oli vastattu, lataaminen epäonnistui. Se joko ei ole olemassa tai sinulla ei ole oikeutta katsoa sitä.",
     "The following users may not exist": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
@@ -588,7 +585,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "Message search": "Viestihaku",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tämä huone siltaa viestejä seuraaville alustoille. <a>Lue lisää.</a>",
     "Mark all as read": "Merkitse kaikki luetuiksi",
     "Accepting…": "Hyväksytään…",
@@ -1260,8 +1256,6 @@
     "Upgrade required": "Päivitys vaaditaan",
     "Message search initialisation failed": "Viestihaun alustus epäonnistui",
     "More": "Lisää",
-    "Sidebar": "Sivupalkki",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Jaa anonyymia tietoa auttaaksesi ongelmien tunnistamisessa. Ei mitään henkilökohtaista. Ei kolmansia osapuolia.",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Päivitetään avaruutta...",
         "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
@@ -1287,9 +1281,6 @@
     "This space has no local addresses": "Tällä avaruudella ei ole paikallista osoitetta",
     "%(spaceName)s menu": "%(spaceName)s-valikko",
     "Invite to space": "Kutsu avaruuteen",
-    "Rooms outside of a space": "Huoneet, jotka eivät kuulu mihinkään avaruuteen",
-    "Show all your rooms in Home, even if they're in a space.": "Näytä kaikki huoneesi etusivulla, vaikka ne olisivat jossain muussa avaruudessa.",
-    "Spaces to show": "Näytettävät avaruudet",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Tämä päivitys antaa valittujen avaruuksien jäsenten liittyä tähän huoneeseen ilman kutsua.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Tämä huone on joissain avaruuksissa, joissa et ole ylläpitäjänä. Ne avaruudet tulevat edelleen näyttämään vanhan huoneen, mutta ihmisiä kehotetaan liittymään uuteen.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Kuka tahansa avaruudessa voi löytää ja liittyä. Voit valita monta avaruutta.",
@@ -1500,8 +1491,6 @@
     "%(members)s and more": "%(members)s ja enemmän",
     "Copy link to thread": "Kopioi linkki ketjuun",
     "From a thread": "Ketjusta",
-    "Group all your favourite rooms and people in one place.": "Ryhmitä kaikki suosimasi huoneet ja henkilöt yhteen paikkaan.",
-    "Home is useful for getting an overview of everything.": "Koti on hyödyllinen, sillä sieltä näet yleisnäkymän kaikkeen.",
     "Deactivating your account is a permanent action — be careful!": "Tilin deaktivointi on peruuttamaton toiminto — ole varovainen!",
     "Cross-signing is ready but keys are not backed up.": "Ristiinvarmennus on valmis, mutta avaimia ei ole varmuuskopioitu.",
     "Search %(spaceName)s": "Etsi %(spaceName)s",
@@ -1585,9 +1574,6 @@
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
-    "Group all your people in one place.": "Ryhmitä kaikki ihmiset yhteen paikkaan.",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Parhaan turvallisuuden varmistamiseksi vahvista istuntosi ja kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä.",
-    "Sessions": "Istunnot",
     "Sorry — this call is currently full": "Pahoittelut — tämä puhelu on täynnä",
     "Unknown room": "Tuntematon huone",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
@@ -1595,8 +1581,6 @@
         "one": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta."
     },
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Varmuuskopioi salausavaimesi tilisi datan kanssa siltä varalta, että menetät pääsyn istuntoihisi. Avaimesi turvataan yksilöllisellä turva-avaimella.",
-    "Group all your rooms that aren't part of a space in one place.": "Ryhmitä kaikki huoneesi, jotka eivät ole osa avaruutta, yhteen paikkaan.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Avaruudet ovat uusi tapa ryhmitellä huoneita ja ihmisiä. Voit käyttää esiluotuja avaruuksia niiden avaruuksien lisäksi, joissa jo olet.",
     "Get notifications as set up in your <a>settings</a>": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
@@ -1618,10 +1602,6 @@
     "Video settings": "Videoasetukset",
     "Automatically adjust the microphone volume": "Säädä mikrofonin äänenvoimakkuutta automaattisesti",
     "Voice settings": "Ääniasetukset",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?",
-        "other": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?"
-    },
     "Reply in thread": "Vastaa ketjuun",
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "Sign in new device": "Kirjaa sisään uusi laite",
@@ -2332,7 +2312,12 @@
             "cryptography_section": "Salaus",
             "session_id": "Istunnon tunnus:",
             "session_key": "Istunnon avain:",
-            "encryption_section": "Salaus"
+            "encryption_section": "Salaus",
+            "bulk_options_section": "Massatoimintoasetukset",
+            "bulk_options_accept_all_invites": "Hyväksy kaikki %(invitedRooms)s kutsua",
+            "bulk_options_reject_all_invites": "Hylkää kaikki %(invitedRooms)s kutsua",
+            "message_search_section": "Viestihaku",
+            "analytics_subsection_description": "Jaa anonyymia tietoa auttaaksesi ongelmien tunnistamisessa. Ei mitään henkilökohtaista. Ei kolmansia osapuolia."
         },
         "preferences": {
             "room_list_heading": "Huoneluettelo",
@@ -2434,7 +2419,13 @@
                 "other": "Kirjaa laitteet ulos"
             },
             "security_recommendations": "Turvallisuussuositukset",
-            "security_recommendations_description": "Paranna tilisi tietoturvaa seuraamalla näitä suosituksia."
+            "security_recommendations_description": "Paranna tilisi tietoturvaa seuraamalla näitä suosituksia.",
+            "title": "Istunnot",
+            "sign_out_confirm_description": {
+                "one": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?",
+                "other": "Haluatko varmasti kirjautua ulos %(count)s istunnosta?"
+            },
+            "other_sessions_subsection_description": "Parhaan turvallisuuden varmistamiseksi vahvista istuntosi ja kirjaudu ulos istunnoista, joita et tunnista tai et enää käytä."
         },
         "general": {
             "oidc_manage_button": "Hallitse tiliä",
@@ -2452,6 +2443,17 @@
             "add_msisdn_confirm_button": "Vahvista puhelinnumeron lisääminen",
             "add_msisdn_confirm_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
             "add_msisdn_dialog_title": "Lisää puhelinnumero"
+        },
+        "sidebar": {
+            "title": "Sivupalkki",
+            "metaspaces_subsection": "Näytettävät avaruudet",
+            "metaspaces_description": "Avaruudet ovat uusi tapa ryhmitellä huoneita ja ihmisiä. Voit käyttää esiluotuja avaruuksia niiden avaruuksien lisäksi, joissa jo olet.",
+            "metaspaces_home_description": "Koti on hyödyllinen, sillä sieltä näet yleisnäkymän kaikkeen.",
+            "metaspaces_home_all_rooms": "Näytä kaikki huoneesi etusivulla, vaikka ne olisivat jossain muussa avaruudessa.",
+            "metaspaces_favourites_description": "Ryhmitä kaikki suosimasi huoneet ja henkilöt yhteen paikkaan.",
+            "metaspaces_people_description": "Ryhmitä kaikki ihmiset yhteen paikkaan.",
+            "metaspaces_orphans": "Huoneet, jotka eivät kuulu mihinkään avaruuteen",
+            "metaspaces_orphans_description": "Ryhmitä kaikki huoneesi, jotka eivät ole osa avaruutta, yhteen paikkaan."
         }
     },
     "devtools": {

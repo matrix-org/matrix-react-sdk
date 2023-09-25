@@ -50,7 +50,6 @@
     "Confirm passphrase": "Confirmar frase de contraseña",
     "Import room keys": "Importar claves de sala",
     "File to import": "Fichero a importar",
-    "Reject all %(invitedRooms)s invites": "Rechazar todas las invitaciones a %(invitedRooms)s",
     "Unknown error": "Error desconocido",
     "Unable to restore session": "No se puede recuperar la sesión",
     "%(roomName)s does not exist.": "%(roomName)s no existe.",
@@ -309,7 +308,6 @@
     "Room Addresses": "Direcciones de la sala",
     "Account management": "Gestión de la cuenta",
     "Ignored users": "Usuarios ignorados",
-    "Bulk options": "Opciones generales",
     "Missing media permissions, click the button below to request.": "No hay permisos de medios, haz clic abajo para pedirlos.",
     "Request media permissions": "Pedir permisos de los medios",
     "Add some now": "Añadir alguno ahora",
@@ -395,7 +393,6 @@
     "Secret storage public key:": "Clave pública del almacén secreto:",
     "in account data": "en datos de cuenta",
     "not stored": "no almacenado",
-    "Message search": "Búsqueda de mensajes",
     "Sounds": "Sonidos",
     "Notification sound": "Sonido para las notificaciones",
     "Set a new custom sound": "Establecer sonido personalizado",
@@ -442,7 +439,6 @@
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Usted todavía está <b> compartiendo sus datos personales</b> en el servidor de identidad <idserver />.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Le recomendamos que elimine sus direcciones de correo electrónico y números de teléfono del servidor de identidad antes de desconectarse.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "Accept all %(invitedRooms)s invites": "Aceptar todas las invitaciones de %(invitedRooms)s",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está haciendo puente con las siguientes plataformas. <a>Aprende más.</a>",
     "Bridges": "Puentes",
     "Uploaded sound": "Sonido subido",
@@ -1402,12 +1398,7 @@
     "Thread options": "Ajustes del hilo",
     "You do not have permission to start polls in this room.": "No tienes permisos para empezar encuestas en esta sala.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
-    "Spaces to show": "Qué espacios mostrar",
-    "Home is useful for getting an overview of everything.": "La pantalla de Inicio es útil para tener una vista general de todas tus conversaciones.",
-    "Show all your rooms in Home, even if they're in a space.": "Incluir todas tus salas en inicio, aunque estén dentro de un espacio.",
     "Reply in thread": "Responder en hilo",
-    "Rooms outside of a space": "Salas fuera de un espacio",
-    "Sidebar": "Barra lateral",
     "Mentions only": "Solo menciones",
     "You won't get any notifications": "No recibirás ninguna notificación",
     "@mentions & keywords": "@menciones y palabras clave",
@@ -1468,7 +1459,6 @@
     "Start new chat": "Crear conversación",
     "Share location": "Compartir ubicación",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala no está conectada con ninguna otra plataforma de mensajería. <a>Más información.</a>",
-    "Share anonymous data to help us identify issues. Nothing personal. No third parties.": "Comparte datos anónimos para ayudarnos a descubrir fallos. No incluye nada personal, y no se comparten con terceros.",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -1535,10 +1525,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
     "Can't edit poll": "Encuesta no editable",
     "Open thread": "Abrir hilo",
-    "Group all your rooms that aren't part of a space in one place.": "Agrupa en un mismo sitio todas tus salas que no formen parte de un espacio.",
-    "Group all your people in one place.": "Agrupa a toda tu gente en un mismo sitio.",
-    "Group all your favourite rooms and people in one place.": "Agrupa en un mismo sitio todas tus salas y personas favoritas.",
-    "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.": "Los espacios permiten agrupar salas y personas. Además de los espacios de los que ya formes parte, puedes usar algunos que vienen incluidos.",
     "Match system": "Usar el del sistema",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
@@ -1690,8 +1676,6 @@
     "Saved Items": "Elementos guardados",
     "Messages in this chat will be end-to-end encrypted.": "Los mensajes en esta conversación serán cifrados de extremo a extremo.",
     "Choose a locale": "Elige un idioma",
-    "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.": "Para más seguridad, verifica tus sesiones y cierra cualquiera que no reconozcas o hayas dejado de usar.",
-    "Sessions": "Sesiones",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
     "We're creating a room with %(names)s": "Estamos creando una sala con %(names)s",
@@ -1732,10 +1716,6 @@
     "Start at the sign in screen": "Ve a la pantalla de inicio de sesión",
     "Automatically adjust the microphone volume": "Ajustar el volumen del micrófono automáticamente",
     "Voice settings": "Ajustes de voz",
-    "Are you sure you want to sign out of %(count)s sessions?": {
-        "one": "¿Seguro que quieres cerrar %(count)s sesión?",
-        "other": "¿Seguro que quieres cerrar %(count)s sesiones?"
-    },
     "Devices connected": "Dispositivos conectados",
     "An unexpected error occurred.": "Ha ocurrido un error inesperado.",
     "The request was cancelled.": "La solicitud ha sido cancelada.",
@@ -2469,7 +2449,12 @@
             "cryptography_section": "Criptografía",
             "session_id": "Identidad (ID) de sesión:",
             "session_key": "Código de sesión:",
-            "encryption_section": "Cifrado"
+            "encryption_section": "Cifrado",
+            "bulk_options_section": "Opciones generales",
+            "bulk_options_accept_all_invites": "Aceptar todas las invitaciones de %(invitedRooms)s",
+            "bulk_options_reject_all_invites": "Rechazar todas las invitaciones a %(invitedRooms)s",
+            "message_search_section": "Búsqueda de mensajes",
+            "analytics_subsection_description": "Comparte datos anónimos para ayudarnos a descubrir fallos. No incluye nada personal, y no se comparten con terceros."
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -2572,7 +2557,13 @@
                 "other": "Cerrar sesión en los dispositivos"
             },
             "security_recommendations": "Consejos de seguridad",
-            "security_recommendations_description": "Mejora la seguridad de tu cuenta siguiendo estas recomendaciones."
+            "security_recommendations_description": "Mejora la seguridad de tu cuenta siguiendo estas recomendaciones.",
+            "title": "Sesiones",
+            "sign_out_confirm_description": {
+                "one": "¿Seguro que quieres cerrar %(count)s sesión?",
+                "other": "¿Seguro que quieres cerrar %(count)s sesiones?"
+            },
+            "other_sessions_subsection_description": "Para más seguridad, verifica tus sesiones y cierra cualquiera que no reconozcas o hayas dejado de usar."
         },
         "general": {
             "oidc_manage_button": "Gestionar cuenta",
@@ -2590,6 +2581,17 @@
             "add_msisdn_confirm_button": "Confirmar nuevo número de teléfono",
             "add_msisdn_confirm_body": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
             "add_msisdn_dialog_title": "Añadir número de teléfono"
+        },
+        "sidebar": {
+            "title": "Barra lateral",
+            "metaspaces_subsection": "Qué espacios mostrar",
+            "metaspaces_description": "Los espacios permiten agrupar salas y personas. Además de los espacios de los que ya formes parte, puedes usar algunos que vienen incluidos.",
+            "metaspaces_home_description": "La pantalla de Inicio es útil para tener una vista general de todas tus conversaciones.",
+            "metaspaces_home_all_rooms": "Incluir todas tus salas en inicio, aunque estén dentro de un espacio.",
+            "metaspaces_favourites_description": "Agrupa en un mismo sitio todas tus salas y personas favoritas.",
+            "metaspaces_people_description": "Agrupa a toda tu gente en un mismo sitio.",
+            "metaspaces_orphans": "Salas fuera de un espacio",
+            "metaspaces_orphans_description": "Agrupa en un mismo sitio todas tus salas que no formen parte de un espacio."
         }
     },
     "devtools": {
