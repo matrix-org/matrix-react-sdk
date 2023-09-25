@@ -121,7 +121,6 @@
     "Error decrypting image": "Kļūda atšifrējot attēlu",
     "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
-    "Something went wrong!": "Kaut kas nogāja greizi!",
     "and %(count)s others...": {
         "other": "un vēl %(count)s citi...",
         "one": "un vēl viens cits..."
@@ -241,11 +240,8 @@
     "You verified %(name)s": "Jūs verificējāt %(name)s",
     "%(name)s accepted": "%(name)s akceptēja",
     "You accepted": "Jūs akceptējāt",
-    "Rotate Right": "Rotēt pa labi",
-    "Rotate Left": "Rotēt pa kreisi",
     "IRC display name width": "IRC parādāmā vārda platums",
     "%(displayName)s cancelled verification.": "%(displayName)s atcēla verificēšanu.",
-    "Your display name": "Jūsu parādāmais vārds",
     "Manage integrations": "Pārvaldīt integrācijas",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Pašlaik jūs izmantojat <server></server>, lai atklātu esošos kontaktus un jūs būtu atklājams citiem. Jūs varat mainīt identitātes serveri zemāk.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Pašlaik jūs neizmantojat nevienu identitātes serveri. Lai atklātu esošos kontaktus un jūs būtu atklājams citiem, pievienojiet kādu identitātes serveri zemāk.",
@@ -387,7 +383,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
     "Removing…": "Dzēš…",
     "Use the <a>Desktop app</a> to see all encrypted files": "Lietojiet <a>Desktop lietotni</a>, lai apskatītu visus šifrētos failus",
-    "Room ID": "Istabas ID",
     "edited": "rediģēts",
     "Edited at %(date)s. Click to view edits.": "Rediģēts %(date)s. Noklikšķiniet, lai skatītu redakcijas.",
     "Edited at %(date)s": "Rediģēts %(date)s",
@@ -418,7 +413,6 @@
         "other": "%(count)s dalībnieki"
     },
     "Save Changes": "Saglabāt izmaiņas",
-    "%(brand)s URL": "%(brand)s URL",
     "Upload files": "Failu augšupielāde",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Šie faili <b>pārsniedz</b> augšupielādes izmēra ierobežojumu %(limit)s.",
     "Upload files (%(current)s of %(total)s)": "Failu augšupielāde (%(current)s no %(total)s)",
@@ -673,9 +667,6 @@
     "Search for rooms": "Meklēt istabas",
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
-    "Share content": "Dalīties ar saturu",
-    "Your theme": "Jūsu tēma",
-    "Your user ID": "Jūsu lietotāja ID",
     "Show image": "Rādīt attēlu",
     "Call back": "Atzvanīt",
     "Call declined": "Zvans noraidīts",
@@ -1558,7 +1549,8 @@
         "no_permission_conference_description": "Šajā istabā nav atļaujas sākt konferences zvanu",
         "default_device": "Noklusējuma ierīce",
         "no_media_perms_title": "Nav datu nesēju, kuriem atļauta piekļuve",
-        "no_media_perms_description": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai"
+        "no_media_perms_description": "Jums varētu būt nepieciešams manuāli atļaut %(brand)s piekļuvi mikrofonam vai tīmekļa kamerai",
+        "screenshare_title": "Dalīties ar saturu"
     },
     "Other": "Citi",
     "room_settings": {
@@ -1855,7 +1847,12 @@
             "delete": "Dzēst vidžetu",
             "delete_warning": "Vidžeta dzēšana to dzēš visiem šīs istabas lietotājiem. Vai tiešām vēlies dzēst šo vidžetu?",
             "remove": "Dzēst visiem"
-        }
+        },
+        "shared_data_name": "Jūsu parādāmais vārds",
+        "shared_data_mxid": "Jūsu lietotāja ID",
+        "shared_data_theme": "Jūsu tēma",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "Istabas ID"
     },
     "feedback": {
         "sent": "Atsauksme nosūtīta",
@@ -2018,7 +2015,8 @@
         "mixed_content": "Neizdodas savienoties ar bāzes serveri izmantojot HTTP protokolu, kad pārlūka adreses laukā norādīts HTTPS protokols. Tā vietā izmanto HTTPS vai <a>iespējo nedrošos skriptus</a>.",
         "tls": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus.",
         "admin_contact_short": "Sazinieties ar <a>servera administratoru</a>.",
-        "failed_copy": "Nokopēt neizdevās"
+        "failed_copy": "Nokopēt neizdevās",
+        "something_went_wrong": "Kaut kas nogāja greizi!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2037,5 +2035,9 @@
     "quick_settings": {
         "all_settings": "Visi iestatījumi",
         "sidebar_settings": "Papildus iespējas"
+    },
+    "lightbox": {
+        "rotate_left": "Rotēt pa kreisi",
+        "rotate_right": "Rotēt pa labi"
     }
 }

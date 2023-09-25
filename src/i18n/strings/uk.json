@@ -280,7 +280,6 @@
     "Enter your account password to confirm the upgrade:": "Введіть пароль вашого облікового запису щоб підтвердити поліпшення:",
     "Secret storage public key:": "Таємне сховище відкритого ключа:",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
-    "Something went wrong!": "Щось пішло не так!",
     "expand": "розгорнути",
     "New Recovery Method": "Новий метод відновлення",
     "This session is encrypting history using the new recovery method.": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
@@ -303,7 +302,6 @@
     "Replying": "Відповідання",
     "Low priority": "Неважливі",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "У зашифрованих кімнатах ваші повідомлення є захищеними, тож тільки ви та отримувач маєте ключі для їх розблокування.",
-    "Your display name": "Ваш псевдонім",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Звірте цього користувача щоб позначити його довіреним. Довіряння користувачам додає спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
@@ -577,7 +575,6 @@
     "Hide verified sessions": "Сховати звірені сеанси",
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
     "Confirm encryption setup": "Підтвердити налаштування шифрування",
-    "Widgets do not use message encryption.": "Віджети не використовують шифрування повідомлень.",
     "The encryption used by this room isn't supported.": "Шифрування, використане цією кімнатою не підтримується.",
     "Encryption not enabled": "Шифрування не ввімкнено",
     "Ignored attempt to disable encryption": "Знехтувані спроби вимкнути шифрування",
@@ -587,7 +584,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
     "unknown person": "невідома особа",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Користування цим віджетом може призвести до поширення ваших даних <helpIcon /> через %(widgetDomain)s і ваш менеджер інтеграцій.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджери інтеграцій отримують дані конфігурації та можуть змінювати віджети, надсилати запрошення у кімнати й установлювати рівні повноважень від вашого імені.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Використовувати менеджер інтеграцій для керування ботами, віджетами й пакунками наліпок.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Використовувати менеджер інтеграцій <b>%(serverName)s</b> для керування ботами, віджетами й пакунками наліпок.",
@@ -611,15 +607,7 @@
     "Phone Number": "Телефонний номер",
     "Language Dropdown": "Спадне меню мов",
     "Information": "Відомості",
-    "Rotate Right": "Обернути праворуч",
-    "Rotate Left": "Обернути ліворуч",
     "collapse": "згорнути",
-    "Application window": "Вікно застосунку",
-    "Error - Mixed content": "Помилка — змішаний вміст",
-    "Widget ID": "ID віджету",
-    "%(brand)s URL": "URL-адреса %(brand)s",
-    "Your theme": "Ваша тема",
-    "Your user ID": "Ваш ID користувача",
     "Cancel search": "Скасувати пошук",
     "Failed to unban": "Не вдалося розблокувати",
     "Banned by %(displayName)s": "Блокує %(displayName)s",
@@ -637,11 +625,7 @@
     "Error downloading audio": "Помилка завантаження аудіо",
     "Preparing to download logs": "Приготування до завантаження журналів",
     "Download %(text)s": "Завантажити %(text)s",
-    "Room ID": "ID кімнати",
     "Share User": "Поділитися користувачем",
-    "Share content": "Поділитися вмістом",
-    "Share entire screen": "Поділитися всім екраном",
-    "Any of the following data may be shared:": "Можна поділитися будь-якими з цих даних:",
     "Unable to share phone number": "Не вдалося надіслати телефонний номер",
     "Unable to share email address": "Не вдалося надіслати адресу е-пошти",
     "Share invite link": "Надіслати запрошувальне посилання",
@@ -840,7 +824,6 @@
     "Sending": "Надсилання",
     "MB": "МБ",
     "In reply to <a>this message</a>": "У відповідь на <a>це повідомлення</a>",
-    "Widget added by": "Вджет додано",
     "Decrypt %(text)s": "Розшифрувати %(text)s",
     "Decrypting": "Розшифрування",
     "Downloading": "Завантаження",
@@ -931,9 +914,6 @@
         "one": "Переглянути 1 учасника",
         "other": "Переглянути усіх %(count)s учасників"
     },
-    "Popout widget": "Спливний віджет",
-    "This widget may use cookies.": "Цей віджет може використовувати куки.",
-    "Error loading Widget": "Помилка завантаження віджету",
     "This version of %(brand)s does not support searching encrypted messages": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень",
     "Keys restored": "Ключ відновлено",
     "Successfully restored %(sessionCount)s keys": "Успішно відновлено %(sessionCount)s ключів",
@@ -1124,7 +1104,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Скористайтеся <a>стільничним застосунком</a>, щоб пошукати серед зашифрованих повідомлень",
     "Use the <a>Desktop app</a> to see all encrypted files": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Не вдалося почати пошук, перевірте <a>налаштування</a>, щоб дізнатися більше",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Користування цим віджетом може призвести до поширення ваших даних <helpIcon /> через %(widgetDomain)s.",
     "Submit logs": "Надіслати журнали",
     "Click to view edits": "Натисніть, щоб переглянути зміни",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Ви будете спрямовані до стороннього сайту, щоб автентифікувати використання облікового запису в %(integrationsUrl)s. Продовжити?",
@@ -1557,7 +1536,6 @@
     },
     "Read receipts": "Звіти про прочитання",
     "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!",
-    "Un-maximise": "Розгорнути",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
     "Remove search filter for %(filter)s": "Вилучити фільтр пошуку для %(filter)s",
     "Start a group chat": "Розпочати нову бесіду",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
     "Formatting": "Форматування",
-    "Image view": "Перегляд зображення",
     "Upload custom sound": "Вивантажити власний звук",
     "Search all rooms": "Вибрати всі кімнати",
     "Search this room": "Шукати цю кімнату",
@@ -1749,8 +1726,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
-    "Your language": "Ваша мова",
-    "Your device ID": "ID вашого пристрою",
     "Ask to join": "Запит на приєднання",
     "Mentions and Keywords only": "Лише згадки та ключові слова",
     "This setting will be applied by default to all your rooms.": "Цей параметр буде застосовано усталеним до всіх ваших кімнат.",
@@ -1784,7 +1759,6 @@
     "Email Notifications": "Сповіщення е-поштою",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Повідомлення тут наскрізно зашифровані. Перевірте %(displayName)s у їхньому профілі - торкніться їхнього зображення профілю.",
     "Receive an email summary of missed notifications": "Отримуйте зведення пропущених сповіщень на електронну пошту",
-    "Your profile picture URL": "URL-адреса зображення вашого профілю",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Виберіть, на які адреси ви хочете отримувати зведення. Керуйте адресами в <button>Загальних</button> налаштуваннях.",
     "Note that removing room changes like this could undo the change.": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Експортований файл дозволить будь-кому, хто зможе його прочитати, розшифрувати будь-які зашифровані повідомлення, які ви бачите, тому ви повинні бути обережними, щоб зберегти його в безпеці. Щоб зробити це, вам слід ввести унікальну парольну фразу нижче, яка буде використовуватися тільки для шифрування експортованих даних. Імпортувати дані можна буде лише за допомогою тієї ж самої парольної фрази.",
@@ -3341,7 +3315,10 @@
         "join_button_tooltip_call_full": "Перепрошуємо, цей виклик заповнено",
         "hide_sidebar_button": "Сховати бічну панель",
         "show_sidebar_button": "Показати бічну панель",
-        "more_button": "Більше"
+        "more_button": "Більше",
+        "screenshare_monitor": "Поділитися всім екраном",
+        "screenshare_window": "Вікно застосунку",
+        "screenshare_title": "Поділитися вмістом"
     },
     "Other": "Інше",
     "room_settings": {
@@ -3513,7 +3490,8 @@
         "bullet_1": "Ми <Bold>не</Bold> зберігаємо й <Bold>не</Bold> аналізуємо жодних даних облікового запису",
         "bullet_2": "Ми <Bold>не</Bold> передаємо даних стороннім особам",
         "disable_prompt": "Можна вимкнути це коли завгодно в налаштуваннях",
-        "accept_button": "Гаразд"
+        "accept_button": "Гаразд",
+        "shared_data_heading": "Можна поділитися будь-якими з цих даних:"
     },
     "chat_effects": {
         "confetti_description": "Надсилає це повідомлення з конфеті",
@@ -3806,7 +3784,25 @@
             "revoke": "Відкликати дозвіл",
             "move_left": "Посунути ліворуч",
             "move_right": "Посунути праворуч"
-        }
+        },
+        "shared_data_name": "Ваш псевдонім",
+        "shared_data_avatar": "URL-адреса зображення вашого профілю",
+        "shared_data_mxid": "Ваш ID користувача",
+        "shared_data_device_id": "ID вашого пристрою",
+        "shared_data_theme": "Ваша тема",
+        "shared_data_lang": "Ваша мова",
+        "shared_data_url": "URL-адреса %(brand)s",
+        "shared_data_room_id": "ID кімнати",
+        "shared_data_widget_id": "ID віджету",
+        "shared_data_warning_im": "Користування цим віджетом може призвести до поширення ваших даних <helpIcon /> через %(widgetDomain)s і ваш менеджер інтеграцій.",
+        "shared_data_warning": "Користування цим віджетом може призвести до поширення ваших даних <helpIcon /> через %(widgetDomain)s.",
+        "unencrypted_warning": "Віджети не використовують шифрування повідомлень.",
+        "added_by": "Вджет додано",
+        "cookie_warning": "Цей віджет може використовувати куки.",
+        "error_loading": "Помилка завантаження віджету",
+        "error_mixed_content": "Помилка — змішаний вміст",
+        "unmaximise": "Розгорнути",
+        "popout": "Спливний віджет"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4190,7 +4186,8 @@
         "tls": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити.",
         "admin_contact_short": "Зверніться до <a>адміністратора сервера</a>.",
         "non_urgent_echo_failure_toast": "Ваш сервер не відповідає на деякі <a>запити</a>.",
-        "failed_copy": "Не вдалося скопіювати"
+        "failed_copy": "Не вдалося скопіювати",
+        "something_went_wrong": "Щось пішло не так!"
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4228,5 +4225,10 @@
         "all_settings": "Усі налаштування",
         "metaspace_section": "Закріплення на бічній панелі",
         "sidebar_settings": "Інші опції"
+    },
+    "lightbox": {
+        "title": "Перегляд зображення",
+        "rotate_left": "Обернути ліворуч",
+        "rotate_right": "Обернути праворуч"
     }
 }

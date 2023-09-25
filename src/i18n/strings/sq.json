@@ -85,7 +85,6 @@
     "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
     "Add an Integration": "Shtoni një Integrim",
     "Email address": "Adresë email",
-    "Something went wrong!": "Diçka shkoi ters!",
     "Create new room": "Krijoni dhomë të re",
     "Home": "Kreu",
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
@@ -167,7 +166,6 @@
     "This event could not be displayed": "Ky akt s’u shfaq dot",
     "The conversation continues here.": "Biseda vazhdon këtu.",
     "Only room administrators will see this warning": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
-    "Popout widget": "Widget flluskë",
     "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
     "Updating %(brand)s": "%(brand)s-i po përditësohet",
     "Failed to upgrade room": "S’u arrit të përmirësohej dhoma",
@@ -363,8 +361,6 @@
     "Revoke invite": "Shfuqizoje ftesën",
     "Invited by %(sender)s": "Ftuar nga %(sender)s",
     "edited": "e përpunuar",
-    "Rotate Left": "Rrotulloje Majtas",
-    "Rotate Right": "Rrotulloje Djathtas",
     "Edit message": "Përpunoni mesazhin",
     "Notes": "Shënime",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
@@ -507,21 +503,10 @@
     "None": "Asnjë",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "E keni shpërfillur këtë përdorues, ndaj mesazhi i tij është fshehur. <a>Shfaqe, sido qoftë.</a>",
     "Messages in this room are end-to-end encrypted.": "Mesazhet në këtë dhomë janë të fshehtëzuara skaj-më-skaj.",
-    "Any of the following data may be shared:": "Mund të ndahen me të tjerët cilado prej të dhënave vijuese:",
-    "Your display name": "Emri juaj në ekran",
-    "Your user ID": "ID-ja juaj e përdoruesit",
-    "Your theme": "Tema juaj",
-    "%(brand)s URL": "URL %(brand)s-i",
-    "Room ID": "ID dhome",
-    "Widget ID": "ID widget-i",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s.",
-    "Widget added by": "Widget i shtuar nga",
-    "This widget may use cookies.": "Ky <em>widget</em> mund të përdorë <em>cookies</em>.",
     "Cannot connect to integration manager": "S’lidhet dot te përgjegjës integrimesh",
     "The integration manager is offline or it cannot reach your homeserver.": "Përgjegjësi i integrimeve s’është në linjë ose s’kap dot shërbyesin tuaj Home.",
     "Manage integrations": "Administroni integrime",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
-    "Widgets do not use message encryption.": "Widget-et s’përdorin fshehtëzim mesazhesh.",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
     "Verification Request": "Kërkesë Verifikimi",
@@ -1154,8 +1139,6 @@
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
     "You don't have permission to do this": "S’keni leje ta bëni këtë",
-    "Error - Mixed content": "Gabim - Lëndë e përzierë",
-    "Error loading Widget": "Gabim në ngarkim Widget-i",
     "Pinned messages": "Mesazhe të fiksuar",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Nëse keni leje, hapni menunë për çfarëdo mesazhi dhe përzgjidhni <b>Fiksoje</b>, për ta ngjitur këtu.",
     "Nothing pinned, yet": "Ende pa fiksuar gjë",
@@ -1187,7 +1170,6 @@
         "other": "Shfaq %(count)s paraparje të tjera"
     },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s & përgjegjësin tuaj të integrimeve.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Përgjegjësit e integrimeve marrin të dhëna formësimi, dhe mund të ndryshojnë widget-e, të dërgojnë ftesa dhome, dhe të caktojnë shkallë pushteti në emër tuajin.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh që të administroni robotë, widget-e dhe paketa ngjitësish.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Përdorni një përgjegjës integrimesh <b>(%(serverName)s)</b> që të administroni robotë, widget-e dhe paketa ngjitësish.",
@@ -1236,9 +1218,6 @@
     "Upgrade required": "Lypset domosdo përmirësim",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ky përmirësim do t’u lejojë anëtarëve të hapësirave të përzgjedhura të hyjnë në këtë dhomë pa ndonjë ftesë.",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
-    "Share content": "Ndani lëndë",
-    "Application window": "Dritare aplikacioni",
-    "Share entire screen": "Nda krejt ekranin",
     "Add space": "Shtoni hapësirë",
     "Leave %(spaceName)s": "Braktise %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
@@ -1535,7 +1514,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Shfaq: Dhoma %(instance)s (%(server)s)",
     "Add new server…": "Shtoni shërbyes të ri…",
     "Remove server “%(roomServer)s”": "Hiqe shërbyesin “%(roomServer)s”",
-    "Un-maximise": "Çmaksimizoje",
     "View live location": "Shihni vendndodhje aty për aty",
     "Ban from room": "Dëboje nga dhomë",
     "Unban from room": "Hiqjani dëbimin nga dhoma",
@@ -1735,7 +1713,6 @@
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
-    "Image view": "Parje figure",
     "Search all rooms": "Kërko në krejt dhomat",
     "Search this room": "Kërko në këtë dhomë",
     "Formatting": "Formatim",
@@ -3248,7 +3225,10 @@
         "join_button_tooltip_call_full": "Na ndjeni — aktualisht kjo thirrje është plot",
         "hide_sidebar_button": "Fshihe anështyllën",
         "show_sidebar_button": "Shfaqe anështyllën",
-        "more_button": "Më tepër"
+        "more_button": "Më tepër",
+        "screenshare_monitor": "Nda krejt ekranin",
+        "screenshare_window": "Dritare aplikacioni",
+        "screenshare_title": "Ndani lëndë"
     },
     "Other": "Tjetër",
     "room_settings": {
@@ -3419,7 +3399,8 @@
         "bullet_1": "<Bold>Nuk</Bold> regjistrojmë ose profilizojmë ndonjë të dhënë llogarie",
         "bullet_2": "<Bold>Nuk</Bold> u japin hollësi palëve të treta",
         "disable_prompt": "Këtë mund të çaktivizoni në çfarëdo kohe që nga rregullimet",
-        "accept_button": "S’ka problem"
+        "accept_button": "S’ka problem",
+        "shared_data_heading": "Mund të ndahen me të tjerët cilado prej të dhënave vijuese:"
     },
     "chat_effects": {
         "confetti_description": "E dërgon mesazhin e dhënë me bonbone",
@@ -3709,7 +3690,22 @@
             "revoke": "Shfuqizoji lejet",
             "move_left": "Lëvize majtas",
             "move_right": "Lëvize djathtas"
-        }
+        },
+        "shared_data_name": "Emri juaj në ekran",
+        "shared_data_mxid": "ID-ja juaj e përdoruesit",
+        "shared_data_theme": "Tema juaj",
+        "shared_data_url": "URL %(brand)s-i",
+        "shared_data_room_id": "ID dhome",
+        "shared_data_widget_id": "ID widget-i",
+        "shared_data_warning_im": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s & përgjegjësin tuaj të integrimeve.",
+        "shared_data_warning": "Përdorimi i këtij widget-i mund të sjellë ndarje të dhënash <helpIcon /> me %(widgetDomain)s.",
+        "unencrypted_warning": "Widget-et s’përdorin fshehtëzim mesazhesh.",
+        "added_by": "Widget i shtuar nga",
+        "cookie_warning": "Ky <em>widget</em> mund të përdorë <em>cookies</em>.",
+        "error_loading": "Gabim në ngarkim Widget-i",
+        "error_mixed_content": "Gabim - Lëndë e përzierë",
+        "unmaximise": "Çmaksimizoje",
+        "popout": "Widget flluskë"
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -4083,7 +4079,8 @@
         "tls": "S’lidhet dot te shërbyes Home - ju lutemi, kontrolloni lidhjen tuaj, sigurohuni që <a>dëshmia SSL e shërbyesit tuaj Home</a> besohet, dhe që s’ka ndonjë zgjerim shfletuesi që po bllokon kërkesat tuaja.",
         "admin_contact_short": "Lidhuni me <a>përgjegjësin e shërbyesit tuaj</a>.",
         "non_urgent_echo_failure_toast": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
-        "failed_copy": "S’u arrit të kopjohej"
+        "failed_copy": "S’u arrit të kopjohej",
+        "something_went_wrong": "Diçka shkoi ters!"
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4121,5 +4118,10 @@
         "all_settings": "Krejt rregullimet",
         "metaspace_section": "Fiksoje në anështyllë",
         "sidebar_settings": "Më tepër mundësi"
+    },
+    "lightbox": {
+        "title": "Parje figure",
+        "rotate_left": "Rrotulloje Majtas",
+        "rotate_right": "Rrotulloje Djathtas"
     }
 }

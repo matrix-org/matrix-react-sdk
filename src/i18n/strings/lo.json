@@ -956,33 +956,13 @@
     "View live location": "ເບິ່ງສະຖານທີ່ປັດຈຸບັນ",
     "Language Dropdown": "ເລື່ອນພາສາລົງ",
     "Information": "ຂໍ້ມູນ",
-    "Rotate Right": "ໝຸນດ້ານຂວາ",
-    "Rotate Left": "ໝຸນດ້ານຊ້າຍ",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
-    "Something went wrong!": "ມີບາງຢ່າງຜິດພາດ!",
-    "Share content": "ແບ່ງປັນເນື້ອໃນ",
-    "Application window": "ປ່ອງຢ້ຽມຄໍາຮ້ອງສະຫມັກ",
-    "Share entire screen": "ແບ່ງປັນຫນ້າຈໍທັງໝົດ",
     "This version of %(brand)s does not support searching encrypted messages": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ",
     "This version of %(brand)s does not support viewing some encrypted files": "%(brand)s ລຸ້ນນີ້ບໍ່ຮອງຮັບການເບິ່ງບາງໄຟລ໌ທີ່ເຂົ້າລະຫັດໄວ້",
     "Use the <a>Desktop app</a> to search encrypted messages": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອຊອກຫາຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້",
     "Use the <a>Desktop app</a> to see all encrypted files": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອເບິ່ງໄຟລ໌ທີ່ຖືກເຂົ້າລະຫັດທັງໝົດ",
     "Message search initialisation failed, check <a>your settings</a> for more information": "ເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບ່ສຳເລັດ, ໃຫ້ກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ",
-    "Popout widget": "ວິດເຈັດ popout",
-    "Error - Mixed content": "ຂໍ້ຜິດພາດ - ເນື້ອຫາມີການປະສົມປະສານ",
-    "Error loading Widget": "ເກີດຄວາມຜິດພາດໃນການໂຫຼດ Widget",
-    "This widget may use cookies.": "widget ນີ້ອາດຈະໃຊ້ cookies.",
-    "Widget added by": "ເພີ່ມWidgetໂດຍ",
-    "Widgets do not use message encryption.": "Widgets ບໍ່ໄດ້ໃຊ້ໃນການເຂົ້າລະຫັດຂໍ້ຄວາມ.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "ການໃຊ້ວິດເຈັດນີ້ອາດຈະແບ່ງປັນຂໍ້ມູນ <helpIcon /> ກັບ %(widgetDomain)s.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "ການໃຊ້ວິດເຈັດນີ້ອາດຈະແບ່ງປັນຂໍ້ມູນ <helpIcon /> ກັບ %(widgetDomain)s & ຜູ້ຈັດການການເຊື່ອມໂຍງຂອງທ່ານ.",
-    "Widget ID": "ໄອດີວິດເຈັດ",
-    "Room ID": "ID ຫ້ອງ",
-    "Your theme": "ຫົວຂໍ້ຂອງທ່ານ",
-    "Your user ID": "ID ຂອງທ່ານ",
-    "Your display name": "ສະແດງຊື່ຂອງທ່ານ",
-    "Any of the following data may be shared:": "ຂໍ້ມູນຕໍ່ໄປນີ້ອາດຈະຖືກແບ່ງປັນ:",
     "Cancel search": "ຍົກເລີກການຄົ້ນຫາ",
     "MB": "ເມກາໄບ",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້.",
@@ -1491,7 +1471,6 @@
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
     },
-    "%(brand)s URL": "%(brand)s URL",
     "Failed to ban user": "ຫ້າມຜູ້ໃຊ້ບໍ່ສຳເລັດ",
     "They won't be able to access whatever you're not an admin of.": "ເຂົາເຈົ້າຈະບໍ່ສາມາດເຂົ້າເຖິງໄດ້ ຫາກທ່ານບໍ່ແມ່ນຜູ້ຄຸ້ມຄອງລະບົບ.",
     "Ban them from specific things I'm able to": "ຫ້າມພວກເຂົາອອຈາກສິ່ງທີ່ສະເພາະທີ່ຂ້ອຍສາມາດເຮັດໄດ້",
@@ -2768,7 +2747,10 @@
         "join_button_tooltip_connecting": "ກຳລັງເຊື່ອມຕໍ່",
         "hide_sidebar_button": "ເຊື່ອງແຖບດ້ານຂ້າງ",
         "show_sidebar_button": "ສະແດງແຖບດ້ານຂ້າງ",
-        "more_button": "ເພີ່ມເຕີມ"
+        "more_button": "ເພີ່ມເຕີມ",
+        "screenshare_monitor": "ແບ່ງປັນຫນ້າຈໍທັງໝົດ",
+        "screenshare_window": "ປ່ອງຢ້ຽມຄໍາຮ້ອງສະຫມັກ",
+        "screenshare_title": "ແບ່ງປັນເນື້ອໃນ"
     },
     "Other": "ອື່ນໆ",
     "room_settings": {
@@ -2929,7 +2911,8 @@
         "bullet_1": "ພວກເຮົາ <Bold>ບໍ່</Bold> ບັນທຶກ ຫຼື ປະຫວັດຂໍ້ມູນບັນຊີໃດໆ",
         "bullet_2": "ພວກເຮົາ <Bold>ບໍ່</Bold> ແບ່ງປັນຂໍ້ມູນກັບພາກສ່ວນທີສາມ",
         "disable_prompt": "ທ່ານສາມາດປິດຕັ້ງຄ່າໄດ້ທຸກເວລາ",
-        "accept_button": "ບໍ່ເປັນຫຍັງ"
+        "accept_button": "ບໍ່ເປັນຫຍັງ",
+        "shared_data_heading": "ຂໍ້ມູນຕໍ່ໄປນີ້ອາດຈະຖືກແບ່ງປັນ:"
     },
     "chat_effects": {
         "confetti_description": "ສົ່ງຂໍ້ຄວາມພ້ອມດ້ວຍ confetti",
@@ -3201,7 +3184,21 @@
             "revoke": "ຖອນການອະນຸຍາດ",
             "move_left": "ຍ້າຍໄປທາງຊ້າຍ",
             "move_right": "ຍ້າຍໄປທາງຂວາ"
-        }
+        },
+        "shared_data_name": "ສະແດງຊື່ຂອງທ່ານ",
+        "shared_data_mxid": "ID ຂອງທ່ານ",
+        "shared_data_theme": "ຫົວຂໍ້ຂອງທ່ານ",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "ID ຫ້ອງ",
+        "shared_data_widget_id": "ໄອດີວິດເຈັດ",
+        "shared_data_warning_im": "ການໃຊ້ວິດເຈັດນີ້ອາດຈະແບ່ງປັນຂໍ້ມູນ <helpIcon /> ກັບ %(widgetDomain)s & ຜູ້ຈັດການການເຊື່ອມໂຍງຂອງທ່ານ.",
+        "shared_data_warning": "ການໃຊ້ວິດເຈັດນີ້ອາດຈະແບ່ງປັນຂໍ້ມູນ <helpIcon /> ກັບ %(widgetDomain)s.",
+        "unencrypted_warning": "Widgets ບໍ່ໄດ້ໃຊ້ໃນການເຂົ້າລະຫັດຂໍ້ຄວາມ.",
+        "added_by": "ເພີ່ມWidgetໂດຍ",
+        "cookie_warning": "widget ນີ້ອາດຈະໃຊ້ cookies.",
+        "error_loading": "ເກີດຄວາມຜິດພາດໃນການໂຫຼດ Widget",
+        "error_mixed_content": "ຂໍ້ຜິດພາດ - ເນື້ອຫາມີການປະສົມປະສານ",
+        "popout": "ວິດເຈັດ popout"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3513,7 +3510,8 @@
         "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ.",
         "admin_contact_short": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ.",
         "non_urgent_echo_failure_toast": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງບາງ <a>ຄຳຮ້ອງຂໍ</a>.",
-        "failed_copy": "ສຳເນົາບໍ່ສຳເລັດ"
+        "failed_copy": "ສຳເນົາບໍ່ສຳເລັດ",
+        "something_went_wrong": "ມີບາງຢ່າງຜິດພາດ!"
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3543,5 +3541,9 @@
         "all_settings": "ການຕັ້ງຄ່າທັງໝົດ",
         "metaspace_section": "ປັກໝຸດໃສ່ແຖບດ້ານຂ້າງ",
         "sidebar_settings": "ທາງເລືອກເພີ່ມເຕີມ"
+    },
+    "lightbox": {
+        "rotate_left": "ໝຸນດ້ານຊ້າຍ",
+        "rotate_right": "ໝຸນດ້ານຂວາ"
     }
 }

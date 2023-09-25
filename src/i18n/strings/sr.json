@@ -84,7 +84,6 @@
     "Add an Integration": "Додај уградњу",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
     "Email address": "Мејл адреса",
-    "Something went wrong!": "Нешто је пошло наопако!",
     "Delete Widget": "Обриши виџет",
     "Create new room": "Направи нову собу",
     "Home": "Почетна",
@@ -169,7 +168,6 @@
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Thank you!": "Хвала вам!",
-    "Popout widget": "Виџет за искакање",
     "You don't currently have any stickerpacks enabled": "Тренутно немате омогућено било које паковање са налепницама",
     "Preparing to send logs": "Припремам се за слање записника",
     "Logs sent": "Записници су послати",
@@ -226,7 +224,6 @@
     "Remove recent messages": "Уклони недавне поруке",
     "Encryption not enabled": "Шифровање није омогућено",
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
-    "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "General failure": "Општа грешка",
@@ -237,7 +234,6 @@
     "No recently visited rooms": "Нема недавно посећених соба",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
-    "Your theme": "Ваша тема",
     "Looks good": "Изгледа добро",
     "Show advanced": "Прикажи напредно",
     "Recent Conversations": "Недавни разговори",
@@ -611,21 +607,12 @@
     "This room is public": "Ова соба је јавна",
     "Browse": "Прегледајте",
     "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
-    "This widget may use cookies.": "Овај виџет може користити колачиће.",
-    "Widget added by": "Додао је виџет",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s.",
-    "Widget ID": "ИД виџета",
-    "Room ID": "ИД собе",
-    "%(brand)s URL": "%(brand)s УРЛ",
-    "Your user ID": "Ваша корисничка ИД",
-    "Your display name": "Ваше име за приказ",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
     "Verify your other session using one of the options below.": "Потврдите другу сесију помоћу једних од опција у испод.",
     "You signed in to a new session without verifying it:": "Пријавили сте се у нову сесију без потврђивања:",
     "Réunion": "Реунион",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
     "common": {
         "about": "О програму",
         "analytics": "Аналитика",
@@ -1412,7 +1399,19 @@
         "context_menu": {
             "delete": "Обриши виџет",
             "delete_warning": "Брисање виџета уклања виџет за све чланове ове собе. Да ли сте сигурни да желите обрисати овај виџет?"
-        }
+        },
+        "shared_data_name": "Ваше име за приказ",
+        "shared_data_mxid": "Ваша корисничка ИД",
+        "shared_data_theme": "Ваша тема",
+        "shared_data_url": "%(brand)s УРЛ",
+        "shared_data_room_id": "ИД собе",
+        "shared_data_widget_id": "ИД виџета",
+        "shared_data_warning_im": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s и вашим интеграционим менаџером.",
+        "shared_data_warning": "Коришћење овог виџета може да дели податке <helpIcon /> са %(widgetDomain)s.",
+        "unencrypted_warning": "Виџети не користе шифровање порука.",
+        "added_by": "Додао је виџет",
+        "cookie_warning": "Овај виџет може користити колачиће.",
+        "popout": "Виџет за искакање"
     },
     "create_space": {
         "private_personal_heading": "Са ким радите?"
@@ -1501,7 +1500,8 @@
         "resource_limits": "Овај сервер је достигао ограничење неког свог ресурса.",
         "mixed_content": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
         "tls": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве.",
-        "failed_copy": "Нисам успео да ископирам"
+        "failed_copy": "Нисам успео да ископирам",
+        "something_went_wrong": "Нешто је пошло наопако!"
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",

@@ -436,8 +436,6 @@
     "Upload all": "Unggah semua",
     "Upload files": "Unggah file",
     "Power level": "Tingkat daya",
-    "Rotate Right": "Putar ke Kanan",
-    "Rotate Left": "Putar ke Kiri",
     "Revoke invite": "Hapus undangan",
     "Reason: %(reason)s": "Alasan: %(reason)s",
     "Sign Up": "Daftar",
@@ -477,7 +475,6 @@
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
     "Logs sent": "Catatan terkirim",
-    "Popout widget": "Widget popout",
     "Uploading %(filename)s": "Mengunggah %(filename)s",
     "Delete Widget": "Hapus Widget",
     "(~%(count)s results)": {
@@ -797,7 +794,6 @@
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dapatkan notifikasi hanya dengan sebutan dan kata kunci yang diatur di <a>pengaturan</a> Anda",
     "@mentions & keywords": "@sebutan & kata kunci",
     "Get notified for every message": "Dapatkan notifikasi untuk setiap pesan",
-    "Something went wrong!": "Ada sesuatu yang salah!",
     "Can't load this message": "Tidak dapat memuat pesan ini",
     "Submit logs": "Kirim catatan",
     "Edited at %(date)s. Click to view edits.": "Diedit di %(date)s. Klik untuk melihat editan.",
@@ -992,28 +988,11 @@
         "one": "Tampilkan 1 pengguna",
         "other": "Tampilkan semua %(count)s anggota"
     },
-    "Share content": "Bagikan konten",
-    "Application window": "Jendela aplikasi",
-    "Share entire screen": "Bagikan seluruh layar",
     "This version of %(brand)s does not support searching encrypted messages": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi",
     "This version of %(brand)s does not support viewing some encrypted files": "Versi %(brand)s ini tidak mendukung penampilan beberapa file terenkripsi",
     "Use the <a>Desktop app</a> to search encrypted messages": "Gunakan <a>aplikasi desktop</a> untuk mencari pesan-pesan terenkripsi",
     "Use the <a>Desktop app</a> to see all encrypted files": "Gunakan <a>aplikasi desktop</a> untuk melihat semua file terenkripsi",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisasi pencarian pesan gagal, periksa <a>pengaturan Anda</a> untuk informasi lanjut",
-    "Error - Mixed content": "Terjadi kesalahan — Konten tercampur",
-    "Error loading Widget": "Terjadi kesalahan saat memuat Widget",
-    "This widget may use cookies.": "Widget ini mungkin menggunakan kuki.",
-    "Widget added by": "Widget ditambahkan oleh",
-    "Widgets do not use message encryption.": "Widget tidak menggunakan enkripsi pesan.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Menggunakan widget ini mungkin membagikan data <helpIcon /> dengan %(widgetDomain)s.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Menggunakan widget ini mungkin membagikan data <helpIcon /> dengan %(widgetDomain)s & manajer integrasi Anda.",
-    "Widget ID": "ID Widget",
-    "Room ID": "ID Ruangan",
-    "%(brand)s URL": "URL %(brand)s",
-    "Your theme": "Tema Anda",
-    "Your user ID": "ID pengguna Anda",
-    "Your display name": "Nama tampilan Anda",
-    "Any of the following data may be shared:": "Data berikut ini mungkin dibagikan:",
     "Cancel search": "Batalkan pencarian",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />.",
     "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
@@ -1557,7 +1536,6 @@
     },
     "Read receipts": "Laporan dibaca",
     "Deactivating your account is a permanent action — be careful!": "Menonaktifkan akun Anda adalah aksi yang permanen — hati-hati!",
-    "Un-maximise": "Minimalkan",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
     "Remove search filter for %(filter)s": "Hapus saringan pencarian untuk %(filter)s",
     "Start a group chat": "Mulai sebuah grup obrolan",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
     "Formatting": "Format",
-    "Image view": "Tampilan gambar",
     "Search all rooms": "Cari semua ruangan",
     "Search this room": "Cari ruangan ini",
     "Upload custom sound": "Unggah suara kustom",
@@ -1749,8 +1726,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
     "You do not have permission to invite users": "Anda tidak memiliki izin untuk mengundang pengguna",
-    "Your language": "Bahasa Anda",
-    "Your device ID": "ID perangkat Anda",
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
     "Ask to join": "Bertanya untuk bergabung",
@@ -1778,7 +1753,6 @@
     "Mark all messages as read": "Tandai semua pesan sebagai dibaca",
     "Reset to default settings": "Atur ulang ke pengaturan bawaan",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Pesan-pesan di sini dienkripsi secara ujung ke ujung. Verifikasi %(displayName)s di profilnya — ketuk pada profilnya.",
-    "Your profile picture URL": "URL foto profil Anda",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Pilih surel mana yang ingin dikirimkan ikhtisar. Kelola surel Anda di <button>Umum</button>.",
     "Mentions and Keywords only": "Hanya Sebutan dan Kata Kunci",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Pembaruan:</strong>Kami telah menyederhanakan Pengaturan notifikasi untuk membuat opsi-opsi lebih mudah untuk dicari. Beberapa pengaturan kustom yang Anda pilih tidak ditampilkan di sini, tetapi masih aktif. Jika Anda lanjut, beberapa pengaturan Anda dapat berubah. <a>Pelajari lebih lanjut</a>",
@@ -3346,7 +3320,10 @@
         "join_button_tooltip_call_full": "Maaf — panggilan ini saat ini penuh",
         "hide_sidebar_button": "Sembunyikan sisi bilah",
         "show_sidebar_button": "Tampilkan sisi bilah",
-        "more_button": "Lagi"
+        "more_button": "Lagi",
+        "screenshare_monitor": "Bagikan seluruh layar",
+        "screenshare_window": "Jendela aplikasi",
+        "screenshare_title": "Bagikan konten"
     },
     "Other": "Lainnya",
     "room_settings": {
@@ -3518,7 +3495,8 @@
         "bullet_1": "Kami <Bold>tidak</Bold> merekam atau memprofil data akun apa pun",
         "bullet_2": "Kami <Bold>tidak</Bold> membagikan informasi ini dengan pihak ketiga",
         "disable_prompt": "Anda dapat mematikannya kapan saja di pengaturan",
-        "accept_button": "Saya tidak keberatan"
+        "accept_button": "Saya tidak keberatan",
+        "shared_data_heading": "Data berikut ini mungkin dibagikan:"
     },
     "chat_effects": {
         "confetti_description": "Kirim pesan dengan konfeti",
@@ -3811,7 +3789,25 @@
             "revoke": "Cabut izin",
             "move_left": "Pindah ke kiri",
             "move_right": "Pindah ke kanan"
-        }
+        },
+        "shared_data_name": "Nama tampilan Anda",
+        "shared_data_avatar": "URL foto profil Anda",
+        "shared_data_mxid": "ID pengguna Anda",
+        "shared_data_device_id": "ID perangkat Anda",
+        "shared_data_theme": "Tema Anda",
+        "shared_data_lang": "Bahasa Anda",
+        "shared_data_url": "URL %(brand)s",
+        "shared_data_room_id": "ID Ruangan",
+        "shared_data_widget_id": "ID Widget",
+        "shared_data_warning_im": "Menggunakan widget ini mungkin membagikan data <helpIcon /> dengan %(widgetDomain)s & manajer integrasi Anda.",
+        "shared_data_warning": "Menggunakan widget ini mungkin membagikan data <helpIcon /> dengan %(widgetDomain)s.",
+        "unencrypted_warning": "Widget tidak menggunakan enkripsi pesan.",
+        "added_by": "Widget ditambahkan oleh",
+        "cookie_warning": "Widget ini mungkin menggunakan kuki.",
+        "error_loading": "Terjadi kesalahan saat memuat Widget",
+        "error_mixed_content": "Terjadi kesalahan — Konten tercampur",
+        "unmaximise": "Minimalkan",
+        "popout": "Widget popout"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -4195,7 +4191,8 @@
         "tls": "Tidak dapat terhubung ke homeserver — harap cek koneksi anda, pastikan <a>sertifikat SSL homeserver</a> Anda terpercaya, dan ekstensi browser tidak memblokir permintaan.",
         "admin_contact_short": "Hubungi <a>admin server</a> Anda.",
         "non_urgent_echo_failure_toast": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
-        "failed_copy": "Gagal untuk menyalin"
+        "failed_copy": "Gagal untuk menyalin",
+        "something_went_wrong": "Ada sesuatu yang salah!"
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4233,5 +4230,10 @@
         "all_settings": "Semua pengaturan",
         "metaspace_section": "Pasang pin ke bilah samping",
         "sidebar_settings": "Opsi lebih banyak"
+    },
+    "lightbox": {
+        "title": "Tampilan gambar",
+        "rotate_left": "Putar ke Kiri",
+        "rotate_right": "Putar ke Kanan"
     }
 }

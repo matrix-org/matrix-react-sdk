@@ -124,7 +124,6 @@
     "Error decrypting video": "영상 복호화 중 오류",
     "Add an Integration": "통합 추가",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)s에서 쓸 수 있도록 계정을 인증하려고 다른 사이트로 이동하고 있습니다. 계속하겠습니까?",
-    "Something went wrong!": "문제가 생겼습니다!",
     "This will allow you to reset your password and receive notifications.": "이렇게 하면 비밀번호를 다시 설정하고 알림을 받을 수 있습니다.",
     "Sunday": "일요일",
     "Notification targets": "알림 대상",
@@ -170,7 +169,6 @@
     "You don't currently have any stickerpacks enabled": "현재 사용하고 있는 스티커 팩이 없음",
     "Filter results": "필터 결과",
     "Delete Widget": "위젯 삭제",
-    "Popout widget": "위젯 팝업",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
     "collapse": "접기",
     "expand": "펼치기",
@@ -352,8 +350,6 @@
     "Room Topic": "방 주제",
     "Edited at %(date)s. Click to view edits.": "%(date)s에 편집함. 클릭해서 편집 보기.",
     "edited": "편집됨",
-    "Rotate Left": "왼쪽으로 회전",
-    "Rotate Right": "오른쪽으로 회전",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
     "The following users may not exist": "다음 사용자는 존재하지 않을 수 있습니다",
@@ -507,20 +503,9 @@
     "None": "없음",
     "Messages in this room are end-to-end encrypted.": "이 방의 메시지는 종단간 암호화되었습니다.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "이 사용자를 무시했습니다. 사용자의 메시지는 숨겨집니다. <a>무시하고 보이기.</a>",
-    "Any of the following data may be shared:": "다음 데이터가 공유됩니다:",
-    "Your display name": "당신의 표시 이름",
-    "Your user ID": "당신의 사용자 ID",
-    "Your theme": "당신의 테마",
-    "%(brand)s URL": "%(brand)s URL",
-    "Room ID": "방 ID",
-    "Widget ID": "위젯 ID",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "이 위젯을 사용하면 <helpIcon /> %(widgetDomain)s와(과) 데이터를 공유합니다.",
-    "Widget added by": "위젯을 추가했습니다",
-    "This widget may use cookies.": "이 위젯은 쿠키를 사용합니다.",
     "Cannot connect to integration manager": "통합 관리자에 연결할 수 없음",
     "The integration manager is offline or it cannot reach your homeserver.": "통합 관리자가 오프라인이거나 당신의 홈서버에서 접근할 수 없습니다.",
     "Show more": "더 보기",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "이 위젯을 사용하면 <helpcon /> %(widgetDomain)s & 통합 관리자와 데이터를 공유합니다.",
     "Identity server (%(server)s)": "ID 서버 (%(server)s)",
     "Could not connect to identity server": "ID 서버에 연결할 수 없음",
     "Not a valid identity server (status code %(code)s)": "올바르지 않은 ID 서버 (상태 코드 %(code)s)",
@@ -1540,7 +1525,18 @@
         "context_menu": {
             "delete": "위젯 삭제",
             "delete_warning": "위젯을 삭제하면 이 방의 모든 사용자에게도 제거됩니다. 위젯을 삭제하겠습니까?"
-        }
+        },
+        "shared_data_name": "당신의 표시 이름",
+        "shared_data_mxid": "당신의 사용자 ID",
+        "shared_data_theme": "당신의 테마",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "방 ID",
+        "shared_data_widget_id": "위젯 ID",
+        "shared_data_warning_im": "이 위젯을 사용하면 <helpcon /> %(widgetDomain)s & 통합 관리자와 데이터를 공유합니다.",
+        "shared_data_warning": "이 위젯을 사용하면 <helpIcon /> %(widgetDomain)s와(과) 데이터를 공유합니다.",
+        "added_by": "위젯을 추가했습니다",
+        "cookie_warning": "이 위젯은 쿠키를 사용합니다.",
+        "popout": "위젯 팝업"
     },
     "scalar": {
         "error_create": "위젯을 만들지 못합니다.",
@@ -1562,7 +1558,8 @@
         "admin_contact": "이 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>하세요.",
         "mixed_content": "주소 창에 HTTPS URL이 있을 때는 HTTP로 홈서버를 연결할 수 없습니다. HTTPS를 쓰거나 <a>안전하지 않은 스크립트를 허용</a>해주세요.",
         "tls": "홈서버에 연결할 수 없음 - 연결 상태를 확인하거나, <a>홈서버의 SSL 인증서</a>가 믿을 수 있는지 확인하고, 브라우저 확장 기능이 요청을 막고 있는지 확인해주세요.",
-        "failed_copy": "복사 실패함"
+        "failed_copy": "복사 실패함",
+        "something_went_wrong": "문제가 생겼습니다!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1586,5 +1583,12 @@
     },
     "theme": {
         "match_system": "시스템 테마"
+    },
+    "analytics": {
+        "shared_data_heading": "다음 데이터가 공유됩니다:"
+    },
+    "lightbox": {
+        "rotate_left": "왼쪽으로 회전",
+        "rotate_right": "오른쪽으로 회전"
     }
 }

@@ -114,7 +114,6 @@
         "other": "Envoi de %(filename)s et %(count)s autres"
     },
     "Create new room": "Créer un nouveau salon",
-    "Something went wrong!": "Quelque chose s’est mal déroulé !",
     "No display name": "Pas de nom d’affichage",
     "%(roomName)s does not exist.": "%(roomName)s n’existe pas.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s n’est pas joignable pour le moment.",
@@ -173,7 +172,6 @@
     "Logs sent": "Journaux envoyés",
     "Failed to send logs: ": "Échec lors de l’envoi des journaux : ",
     "Preparing to send logs": "Préparation de l’envoi des journaux",
-    "Popout widget": "Détacher le widget",
     "Send Logs": "Envoyer les journaux",
     "Clear Storage and Sign Out": "Effacer le stockage et se déconnecter",
     "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
@@ -391,8 +389,6 @@
     "%(roomName)s can't be previewed. Do you want to join it?": "Vous ne pouvez pas avoir d’aperçu de %(roomName)s. Voulez-vous rejoindre le salon ?",
     "This room has already been upgraded.": "Ce salon a déjà été mis à niveau.",
     "edited": "modifié",
-    "Rotate Left": "Tourner à gauche",
-    "Rotate Right": "Tourner à droite",
     "Some characters not allowed": "Certains caractères ne sont pas autorisés",
     "Failed to get autodiscovery configuration from server": "Échec de la découverte automatique de la configuration depuis le serveur",
     "Invalid base_url for m.homeserver": "base_url pour m.homeserver non valide",
@@ -508,20 +504,9 @@
     "None": "Aucun",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vous avez ignoré cet utilisateur, donc ses messages sont cachés. <a>Les montrer quand même.</a>",
     "Messages in this room are end-to-end encrypted.": "Les messages dans ce salon sont chiffrés de bout en bout.",
-    "Any of the following data may be shared:": "Les données suivants peuvent être partagées :",
-    "Your display name": "Votre nom d’affichage",
-    "Your user ID": "Votre identifiant utilisateur",
-    "Your theme": "Votre thème",
-    "%(brand)s URL": "URL de %(brand)s",
-    "Room ID": "Identifiant du salon",
-    "Widget ID": "Identifiant du widget",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "L’utilisation de ce widget pourrait partager des données <helpIcon /> avec %(widgetDomain)s.",
-    "Widget added by": "Widget ajouté par",
-    "This widget may use cookies.": "Ce widget pourrait utiliser des cookies.",
     "Cannot connect to integration manager": "Impossible de se connecter au gestionnaire d’intégrations",
     "The integration manager is offline or it cannot reach your homeserver.": "Le gestionnaire d’intégrations est hors ligne ou il ne peut pas joindre votre serveur d’accueil.",
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
-    "Widgets do not use message encryption.": "Les widgets n’utilisent pas le chiffrement des messages.",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
     "Manage integrations": "Gérer les intégrations",
@@ -1159,8 +1144,6 @@
     "Search for rooms or people": "Rechercher des salons ou des gens",
     "Sent": "Envoyé",
     "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
-    "Error - Mixed content": "Erreur - Contenu mixte",
-    "Error loading Widget": "Erreur lors du chargement du widget",
     "Pinned messages": "Messages épinglés",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si vous avez les permissions, ouvrez le menu de n’importe quel message et sélectionnez <b>Épingler</b> pour les afficher ici.",
     "Nothing pinned, yet": "Rien d’épinglé, pour l’instant",
@@ -1185,7 +1168,6 @@
     "Failed to update the visibility of this space": "Échec de la mise à jour de la visibilité de cet espace",
     "Address": "Adresse",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "L’utilisation de ce widget pourrait partager des données <helpIcon /> avec %(widgetDomain)s et votre gestionnaire d’intégrations.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Les gestionnaires d’intégrations reçoivent les données de configuration et peuvent modifier les widgets, envoyer des invitations aux salons et définir les rangs à votre place.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Utilisez un gestionnaire d’intégrations pour gérer les robots, les widgets et les jeux d’autocollants.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Utilisez un gestionnaire d’intégrations <b>(%(serverName)s)</b> pour gérer les robots, les widgets et les jeux d’autocollants.",
@@ -1225,9 +1207,6 @@
     "Create a new space": "Créer un nouvel espace",
     "Want to add a new space instead?": "Vous voulez plutôt ajouter un nouvel espace ?",
     "Add existing space": "Ajouter un espace existant",
-    "Share content": "Partager le contenu",
-    "Application window": "Fenêtre d’application",
-    "Share entire screen": "Partager l’écran entier",
     "Decrypting": "Déchiffrement",
     "The call is in an unknown state!": "Cet appel est dans un état inconnu !",
     "An unknown error occurred": "Une erreur inconnue s’est produite",
@@ -1557,7 +1536,6 @@
         "other": "%(count)s personnes se sont jointes"
     },
     "Deactivating your account is a permanent action — be careful!": "La désactivation du compte est une action permanente. Soyez prudent !",
-    "Un-maximise": "Dé-maximiser",
     "Remove search filter for %(filter)s": "Supprimer le filtre de recherche pour %(filter)s",
     "Start a group chat": "Démarrer une conversation de groupe",
     "Other options": "Autres options",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
     "Formatting": "Formatage",
-    "Image view": "Vue d’image",
     "Upload custom sound": "Envoyer un son personnalisé",
     "Search all rooms": "Rechercher dans tous les salons",
     "Search this room": "Rechercher dans ce salon",
@@ -1749,8 +1726,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
     "Waiting for users to join %(brand)s": "En attente de connexion des utilisateurs à %(brand)s",
     "You do not have permission to invite users": "Vous n’avez pas la permission d’inviter des utilisateurs",
-    "Your language": "Votre langue",
-    "Your device ID": "Votre ID d’appareil",
     "Ask to join": "Demander à venir",
     "People cannot join unless access is granted.": "Les personnes ne peuvent pas venir tant que l’accès ne leur est pas autorisé.",
     "Receive an email summary of missed notifications": "Recevoir un résumé par courriel des notifications manquées",
@@ -1766,7 +1741,6 @@
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Le fichier exporté permettra à tous ceux qui peuvent le lire de déchiffrer tous les messages chiffrés auxquels vous avez accès, vous devez donc être vigilant et le stocker dans un endroit sûr. Afin de protéger ce fichier, saisissez ci-dessous une phrase secrète unique qui sera utilisée uniquement pour chiffrer les données exportées. Seule l’utilisation de la même phrase secrète permettra de déchiffrer et importer les données.",
     "Quick Actions": "Actions rapides",
     "Unable to find user by email": "Impossible de trouver un utilisateur avec son courriel",
-    "Your profile picture URL": "Votre URL d’image de profil",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Sélectionner les adresses auxquelles envoyer les résumés. Gérer vos courriels dans <button>Général</button>.",
     "Notify when someone mentions using @displayname or %(mxid)s": "Notifie lorsque quelqu’un utilise la mention @displayname ou %(mxid)s",
     "Enter keywords here, or use for spelling variations or nicknames": "Entrer des mots-clés ici, ou pour des orthographes alternatives ou des surnoms",
@@ -3341,7 +3315,10 @@
         "join_button_tooltip_call_full": "Désolé — Cet appel est actuellement complet",
         "hide_sidebar_button": "Masquer la barre latérale",
         "show_sidebar_button": "Afficher la barre latérale",
-        "more_button": "Plus"
+        "more_button": "Plus",
+        "screenshare_monitor": "Partager l’écran entier",
+        "screenshare_window": "Fenêtre d’application",
+        "screenshare_title": "Partager le contenu"
     },
     "Other": "Autre",
     "room_settings": {
@@ -3513,7 +3490,8 @@
         "bullet_1": "Nous n’enregistrons ou ne profilons <Bold>aucune</Bold> donnée du compte",
         "bullet_2": "Nous ne partageons <Bold>aucune</Bold> information avec des tiers",
         "disable_prompt": "Vous pouvez désactiver ceci à n’importe quel moment dans les paramètres",
-        "accept_button": "C’est bon"
+        "accept_button": "C’est bon",
+        "shared_data_heading": "Les données suivants peuvent être partagées :"
     },
     "chat_effects": {
         "confetti_description": "Envoie le message avec des confettis",
@@ -3806,7 +3784,25 @@
             "revoke": "Révoquer les permissions",
             "move_left": "Aller à gauche",
             "move_right": "Aller à droite"
-        }
+        },
+        "shared_data_name": "Votre nom d’affichage",
+        "shared_data_avatar": "Votre URL d’image de profil",
+        "shared_data_mxid": "Votre identifiant utilisateur",
+        "shared_data_device_id": "Votre ID d’appareil",
+        "shared_data_theme": "Votre thème",
+        "shared_data_lang": "Votre langue",
+        "shared_data_url": "URL de %(brand)s",
+        "shared_data_room_id": "Identifiant du salon",
+        "shared_data_widget_id": "Identifiant du widget",
+        "shared_data_warning_im": "L’utilisation de ce widget pourrait partager des données <helpIcon /> avec %(widgetDomain)s et votre gestionnaire d’intégrations.",
+        "shared_data_warning": "L’utilisation de ce widget pourrait partager des données <helpIcon /> avec %(widgetDomain)s.",
+        "unencrypted_warning": "Les widgets n’utilisent pas le chiffrement des messages.",
+        "added_by": "Widget ajouté par",
+        "cookie_warning": "Ce widget pourrait utiliser des cookies.",
+        "error_loading": "Erreur lors du chargement du widget",
+        "error_mixed_content": "Erreur - Contenu mixte",
+        "unmaximise": "Dé-maximiser",
+        "popout": "Détacher le widget"
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -4190,7 +4186,8 @@
         "tls": "Impossible de se connecter au serveur d’accueil - veuillez vérifier votre connexion, assurez-vous que le <a>certificat SSL de votre serveur d’accueil</a> est un certificat de confiance, et qu’aucune extension du navigateur ne bloque les requêtes.",
         "admin_contact_short": "Contactez <a>l’administrateur de votre serveur</a>.",
         "non_urgent_echo_failure_toast": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
-        "failed_copy": "Échec de la copie"
+        "failed_copy": "Échec de la copie",
+        "something_went_wrong": "Quelque chose s’est mal déroulé !"
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4228,5 +4225,10 @@
         "all_settings": "Tous les paramètres",
         "metaspace_section": "Épingler à la barre latérale",
         "sidebar_settings": "Plus d’options"
+    },
+    "lightbox": {
+        "title": "Vue d’image",
+        "rotate_left": "Tourner à gauche",
+        "rotate_right": "Tourner à droite"
     }
 }

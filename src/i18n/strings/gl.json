@@ -84,7 +84,6 @@
     "Add an Integration": "Engadir unha integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vai ser redirixido a unha web de terceiros para poder autenticar a súa conta e así utilizar %(integrationsUrl)s. Quere continuar?",
     "Email address": "Enderezo de correo",
-    "Something went wrong!": "Algo fallou!",
     "Delete Widget": "Eliminar widget",
     "Create new room": "Crear unha nova sala",
     "Home": "Inicio",
@@ -173,7 +172,6 @@
     "Logs sent": "Informes enviados",
     "Yesterday": "Onte",
     "Thank you!": "Grazas!",
-    "Popout widget": "trebello emerxente",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Non se cargou o evento ao que respondía, ou non existe ou non ten permiso para velo.",
     "Send Logs": "Enviar informes",
     "Clear Storage and Sign Out": "Limpar o almacenamento e Saír",
@@ -237,7 +235,6 @@
     "You're previewing %(roomName)s. Want to join it?": "Vista previa de %(roomName)s. Queres unirte?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s non ten vista previa. Queres unirte?",
     "Join millions for free on the largest public server": "Únete a millóns de persoas gratuitamente no maior servidor público",
-    "Your theme": "O teu decorado",
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "Dog": "Can",
     "Cat": "Gato",
@@ -520,18 +517,6 @@
     "Can't load this message": "Non se cargou a mensaxe",
     "Submit logs": "Enviar rexistro",
     "Cancel search": "Cancelar busca",
-    "Any of the following data may be shared:": "Calquera do seguinte podería ser compartido:",
-    "Your display name": "Nome mostrado",
-    "Your user ID": "ID de usuaria",
-    "%(brand)s URL": "URL %(brand)s",
-    "Room ID": "ID da sala",
-    "Widget ID": "ID do widget",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Ao utilizar este widget poderías compartir datos <helpIcon /> con %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Os Widgets non usan cifrado de mensaxes.",
-    "Widget added by": "Widget engadido por",
-    "This widget may use cookies.": "Este widget podería usar cookies.",
-    "Rotate Left": "Rotar á esquerda",
-    "Rotate Right": "Rotar á dereita",
     "Language Dropdown": "Selector de idioma",
     "Room address": "Enderezo da sala",
     "e.g. my-room": "ex. a-miña-sala",
@@ -1159,13 +1144,10 @@
     "Search for rooms or people": "Busca salas ou persoas",
     "Sent": "Enviado",
     "You don't have permission to do this": "Non tes permiso para facer isto",
-    "Error - Mixed content": "Erro - Contido variado",
-    "Error loading Widget": "Erro ao cargar o Widget",
     "Pinned messages": "Mensaxes fixadas",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se tes permisos, abre o menú en calquera mensaxe e elixe <b>Fixar</b> para pegalos aquí.",
     "Nothing pinned, yet": "Nada fixado, por agora",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Ao utilizar este widget poderías compartir datos <helpIcon /> con %(widgetDomain)s e o teu Xestor de integracións.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Os xestores de integracións reciben datos de configuración, e poden modificar os widgets, enviar convites das salas, e establecer roles no teu nome.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Usa un Xestor de Integracións para xestionar bots, widgets e paquetes de adhesivos.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Usa un Xestor de Integración <b>(%(serverName)s)</b> para xestionar bots, widgets e paquetes de adhesivos.",
@@ -1225,9 +1207,6 @@
     "Select spaces": "Elixe espazos",
     "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
     "Public room": "Sala pública",
-    "Share content": "Compartir contido",
-    "Application window": "Ventá da aplicación",
-    "Share entire screen": "Compartir pantalla completa",
     "Access": "Acceder",
     "Space members": "Membros do espazo",
     "Anyone in a space can find and join. You can select multiple spaces.": "Calquera nun espazo pode atopar e unirse. Podes elexir múltiples espazos.",
@@ -1557,7 +1536,6 @@
     },
     "Read receipts": "Resgados de lectura",
     "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!",
-    "Un-maximise": "Restablecer",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
     "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
     "Start a group chat": "Inicia un chat en grupo",
@@ -2943,7 +2921,10 @@
         "join_button_tooltip_connecting": "Conectando",
         "hide_sidebar_button": "Agochar barra lateral",
         "show_sidebar_button": "Mostrar a barra lateral",
-        "more_button": "Máis"
+        "more_button": "Máis",
+        "screenshare_monitor": "Compartir pantalla completa",
+        "screenshare_window": "Ventá da aplicación",
+        "screenshare_title": "Compartir contido"
     },
     "Other": "Outro",
     "room_settings": {
@@ -3107,7 +3088,8 @@
         "bullet_1": "<Bold>Non</Bold> rexistramos o teu perfil nin datos da conta",
         "bullet_2": "<Bold>Non</Bold> compartimos a información con terceiras partes",
         "disable_prompt": "Podes desactivar esto cando queiras non axustes",
-        "accept_button": "Iso está ben"
+        "accept_button": "Iso está ben",
+        "shared_data_heading": "Calquera do seguinte podería ser compartido:"
     },
     "chat_effects": {
         "confetti_description": "Envía a mensaxe con confetti",
@@ -3371,7 +3353,22 @@
             "revoke": "Revogar permisos",
             "move_left": "Mover á esquerda",
             "move_right": "Mover á dereita"
-        }
+        },
+        "shared_data_name": "Nome mostrado",
+        "shared_data_mxid": "ID de usuaria",
+        "shared_data_theme": "O teu decorado",
+        "shared_data_url": "URL %(brand)s",
+        "shared_data_room_id": "ID da sala",
+        "shared_data_widget_id": "ID do widget",
+        "shared_data_warning_im": "Ao utilizar este widget poderías compartir datos <helpIcon /> con %(widgetDomain)s e o teu Xestor de integracións.",
+        "shared_data_warning": "Ao utilizar este widget poderías compartir datos <helpIcon /> con %(widgetDomain)s.",
+        "unencrypted_warning": "Os Widgets non usan cifrado de mensaxes.",
+        "added_by": "Widget engadido por",
+        "cookie_warning": "Este widget podería usar cookies.",
+        "error_loading": "Erro ao cargar o Widget",
+        "error_mixed_content": "Erro - Contido variado",
+        "unmaximise": "Restablecer",
+        "popout": "trebello emerxente"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3706,7 +3703,8 @@
         "tls": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións.",
         "admin_contact_short": "Contacta coa <a>administración</a>.",
         "non_urgent_echo_failure_toast": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
-        "failed_copy": "Fallo ao copiar"
+        "failed_copy": "Fallo ao copiar",
+        "something_went_wrong": "Algo fallou!"
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3742,5 +3740,9 @@
         "all_settings": "Todos os axustes",
         "metaspace_section": "Fixar no lateral",
         "sidebar_settings": "Máis opcións"
+    },
+    "lightbox": {
+        "rotate_left": "Rotar á esquerda",
+        "rotate_right": "Rotar á dereita"
     }
 }

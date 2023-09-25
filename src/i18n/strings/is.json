@@ -62,7 +62,6 @@
     "Yesterday": "Í gær",
     "Error decrypting attachment": "Villa við afkóðun viðhengis",
     "Email address": "Tölvupóstfang",
-    "Something went wrong!": "Eitthvað fór úrskeiðis!",
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
@@ -529,9 +528,6 @@
     "Server name": "Heiti þjóns",
     "Looks good": "Lítur vel út",
     "Information": "Upplýsingar",
-    "Rotate Right": "Snúa til hægri",
-    "Rotate Left": "Snúa til vinstri",
-    "Application window": "Forritsgluggi",
     "Share location": "Deila staðsetningu",
     "Location": "Staðsetning",
     "%(count)s votes": {
@@ -662,13 +658,6 @@
     "Your server": "Netþjónninn þinn",
     "Can't find this server or its room list": "Fann ekki þennan netþjón eða spjallrásalista hans",
     "This address is already in use": "Þetta vistfang er nú þegar í notkun",
-    "Share content": "Deila efni",
-    "Share entire screen": "Deila öllum skjánum",
-    "Widget ID": "Auðkenni viðmótshluta",
-    "Room ID": "Auðkenni spjallrásar",
-    "Your theme": "Þemað þitt",
-    "Your user ID": "Notandaauðkennið þitt",
-    "Your display name": "Birtingarnafnið þitt",
     "No answer": "Ekkert svar",
     "Call back": "Hringja til baka",
     "Demote yourself?": "Lækka þig sjálfa/n í tign?",
@@ -854,7 +843,6 @@
     "a new cross-signing key signature": "ný kross-undirritun undirritunarlykils",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s leyfir þér ekki að nota samþættingarstýringu til að gera þetta. Hafðu samband við kerfisstjóra.",
     "Integrations not allowed": "Samþættingar eru ekki leyfðar",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Að nota þennan viðmótshluta gæti deilt gögnum <helpIcon /> með %(widgetDomain)s og samþættingarstýringunni þinni.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Verið er að beina þér á utanaðkomandi vefsvæði til að auðkenna aðganginn þinn til notkunar með %(integrationsUrl)s. Viltu halda áfram?",
     "Add an Integration": "Bæta við samþættingu",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
@@ -869,7 +857,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Samþættingarstýringin er ekki nettengd og nær ekki að tengjast heimaþjóninum þínum.",
     "Cannot connect to integration manager": "Get ekki tengst samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
-    "%(brand)s URL": "%(brand)s URL",
     "Cancel search": "Hætta við leitina",
     "Drop a Pin": "Sleppa pinna",
     "My live location": "Staðsetning mín í rauntíma",
@@ -1079,8 +1066,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "Find others by phone or email": "Finndu aðra með símanúmeri eða tölvupóstfangi",
     "Failed to upgrade room": "Mistókst að uppfæra spjallrás",
-    "Error - Mixed content": "Villa - blandað efni",
-    "Error loading Widget": "Villa við að hlaða inn viðmótshluta",
     "Error removing address": "Villa við að fjarlægja vistfang",
     "Error creating address": "Villa við að búa til vistfang",
     "Error updating main address": "Villa við uppfærslu á aðalvistfangi",
@@ -1105,8 +1090,6 @@
     "Use <arrows/> to scroll": "Notaðu <arrows/> til að skruna",
     "Spaces you're in": "Svæði sem þú tilheyrir",
     "Unable to upload": "Ekki tókst að senda inn",
-    "This widget may use cookies.": "Þessi viðmótshluti gæti notað vefkökur.",
-    "Widget added by": "Viðmótshluta bætt við af",
     "Share for %(duration)s": "Deila í %(duration)s",
     "Submit logs": "Senda inn atvikaskrár",
     "You sent a verification request": "Þú sendir beiðni um sannvottun",
@@ -1275,7 +1258,6 @@
     "Add a space to a space you manage.": "Bættu svæði við eitthvað svæði sem þú stýrir.",
     "Preserve system messages": "Geyma kerfisskilaboð",
     "To leave the beta, visit your settings.": "Til að hætta í beta-prófunarútgáfunni, skaltu fara í stillingarnar þínar.",
-    "Widgets do not use message encryption.": "Viðmótshlutar nota ekki dulritun skilaboða.",
     "What location type do you want to share?": "Hvaða gerð staðsetningar vilt þú deila?",
     "We couldn't send your location": "Við gátum ekki sent staðsetninguna þína",
     "They won't be able to access whatever you're not an admin of.": "Viðkomandi munu ekki hafa aðgang að því sem þú ert ekki stjórnandi fyrir.",
@@ -1382,8 +1364,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Sýna: %(instance)s spjallrásir (%(server)s)",
     "Who will you chat to the most?": "Við hverja muntu helst spjalla?",
     "You're in": "Þú ert inni",
-    "Popout widget": "Sprettviðmótshluti",
-    "Un-maximise": "Ekki-hámarka",
     "Live location sharing": "Deiling staðsetningar í rauntíma",
     "View live location": "Skoða staðsetningu í rauntíma",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
@@ -1401,8 +1381,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "Könnuninni er lokið. Efsta svarið: %(topAnswer)s",
     "You will no longer be able to log in": "Þú munt ekki lengur geta skráð þig inn",
     "You will not be able to reactivate your account": "Þú munt ekki geta endurvirkjað aðganginn þinn",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Að nota þennan viðmótshluta gæti deilt gögnum <helpIcon /> með %(widgetDomain)s.",
-    "Any of the following data may be shared:": "Eftirfarandi gögnum gæti verið deilt:",
     "You don't have permission to share locations": "Þú hefur ekki heimildir til að deila staðsetningum",
     "Enable live location sharing": "Virkja deilingu rauntímastaðsetninga",
     "Messages in this chat will be end-to-end encrypted.": "Skilaboð í þessu spjalli verða enda-í-enda dulrituð.",
@@ -2828,7 +2806,10 @@
         "join_button_tooltip_call_full": "Því miður - þetta símtal er fullt í augnablikinu",
         "hide_sidebar_button": "Fela hliðarspjald",
         "show_sidebar_button": "Sýna hliðarspjald",
-        "more_button": "Meira"
+        "more_button": "Meira",
+        "screenshare_monitor": "Deila öllum skjánum",
+        "screenshare_window": "Forritsgluggi",
+        "screenshare_title": "Deila efni"
     },
     "Other": "Annað",
     "room_settings": {
@@ -2984,7 +2965,8 @@
         "bullet_1": "Við skráum <Bold>ekki</Bold> eða búum til snið með gögnum notendaaðganga",
         "bullet_2": "Við deilum <Bold>ekki</Bold> upplýsingum með utanaðkomandi aðilum",
         "disable_prompt": "Þú getur slökkt á þessu hvenær sem er í stillingunum",
-        "accept_button": "Það er í góðu"
+        "accept_button": "Það er í góðu",
+        "shared_data_heading": "Eftirfarandi gögnum gæti verið deilt:"
     },
     "chat_effects": {
         "confetti_description": "Sendir skilaboðin með skrauti",
@@ -3248,7 +3230,22 @@
             "revoke": "Afturkalla heimildir",
             "move_left": "Færa til vinstri",
             "move_right": "Færa til hægri"
-        }
+        },
+        "shared_data_name": "Birtingarnafnið þitt",
+        "shared_data_mxid": "Notandaauðkennið þitt",
+        "shared_data_theme": "Þemað þitt",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "Auðkenni spjallrásar",
+        "shared_data_widget_id": "Auðkenni viðmótshluta",
+        "shared_data_warning_im": "Að nota þennan viðmótshluta gæti deilt gögnum <helpIcon /> með %(widgetDomain)s og samþættingarstýringunni þinni.",
+        "shared_data_warning": "Að nota þennan viðmótshluta gæti deilt gögnum <helpIcon /> með %(widgetDomain)s.",
+        "unencrypted_warning": "Viðmótshlutar nota ekki dulritun skilaboða.",
+        "added_by": "Viðmótshluta bætt við af",
+        "cookie_warning": "Þessi viðmótshluti gæti notað vefkökur.",
+        "error_loading": "Villa við að hlaða inn viðmótshluta",
+        "error_mixed_content": "Villa - blandað efni",
+        "unmaximise": "Ekki-hámarka",
+        "popout": "Sprettviðmótshluti"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3578,7 +3575,8 @@
         "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar.",
         "admin_contact_short": "Hafðu samband við <a>kerfisstjórann þinn</a>.",
         "non_urgent_echo_failure_toast": "Netþjónninn þinn er ekki að svara sumum <a>beiðnum</a>.",
-        "failed_copy": "Mistókst að afrita"
+        "failed_copy": "Mistókst að afrita",
+        "something_went_wrong": "Eitthvað fór úrskeiðis!"
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3614,5 +3612,9 @@
         "all_settings": "Allar stillingar",
         "metaspace_section": "Festa á hliðarspjald",
         "sidebar_settings": "Fleiri valkostir"
+    },
+    "lightbox": {
+        "rotate_left": "Snúa til vinstri",
+        "rotate_right": "Snúa til hægri"
     }
 }

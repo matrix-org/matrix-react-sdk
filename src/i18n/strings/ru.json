@@ -114,7 +114,6 @@
         "one": "Отправка %(filename)s и %(count)s другой",
         "other": "Отправка %(filename)s и %(count)s других"
     },
-    "Something went wrong!": "Что-то пошло не так!",
     "Home": "Главная",
     "Admin Tools": "Инструменты администратора",
     "No display name": "Нет отображаемого имени",
@@ -173,7 +172,6 @@
     "Wednesday": "Среда",
     "Thank you!": "Спасибо!",
     "You don't currently have any stickerpacks enabled": "У вас ещё нет наклеек",
-    "Popout widget": "Всплывающий виджет",
     "Send Logs": "Отправить логи",
     "Clear Storage and Sign Out": "Очистить хранилище и выйти",
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
@@ -345,8 +343,6 @@
     "Invited by %(sender)s": "Приглашен %(sender)s",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "При обновлении основного адреса комнаты произошла ошибка. Возможно, это не разрешено сервером или произошел временный сбой.",
     "edited": "изменено",
-    "Rotate Left": "Повернуть влево",
-    "Rotate Right": "Повернуть вправо",
     "Edit message": "Редактировать сообщение",
     "Power level": "Уровень прав",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не возможно найти профили для MatrixID, приведенных ниже — все равно желаете их пригласить?",
@@ -582,17 +578,8 @@
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
     "You sent a verification request": "Вы отправили запрос подтверждения",
-    "Your display name": "Отображаемое имя",
     "One of the following may be compromised:": "Что-то из этого может быть скомпрометировано:",
     "%(name)s cancelled verifying": "%(name)s отменил(а) подтверждение",
-    "Any of the following data may be shared:": "Следующие сведения могут быть переданы:",
-    "Your user ID": "ID пользователя",
-    "Your theme": "Ваша тема",
-    "%(brand)s URL": "Ссылка на %(brand)s",
-    "Room ID": "ID комнаты",
-    "Widget ID": "ID виджета",
-    "Widget added by": "Виджет добавлен",
-    "This widget may use cookies.": "Этот виджет может использовать куки.",
     "Language Dropdown": "Список языков",
     "Enter a server name": "Введите имя сервера",
     "Looks good": "В порядке",
@@ -638,7 +625,6 @@
     "Click to view edits": "Нажмите для просмотра правок",
     "Can't load this message": "Не удалось загрузить это сообщение",
     "Submit logs": "Отправить логи",
-    "Widgets do not use message encryption.": "Виджеты не используют шифрование сообщений.",
     "Room address": "Адрес комнаты",
     "This address is available to use": "Этот адрес доступен",
     "This address is already in use": "Этот адрес уже используется",
@@ -650,7 +636,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Произошла ошибка при обновлении альтернативных адресов комнаты. Это может быть запрещено сервером или произошел временный сбой.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "При создании этого адреса произошла ошибка. Это может быть запрещено сервером или произошел временный сбой.",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Произошла ошибка при удалении этого адреса. Возможно, он больше не существует или произошла временная ошибка.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s.",
     "Can't find this server or its room list": "Не можем найти этот сервер или его список комнат",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
@@ -1100,7 +1085,6 @@
     "No results found": "Результаты не найдены",
     "Connecting": "Подключение",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s и вашим Менеджером Интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджеры по интеграции получают данные конфигурации и могут изменять виджеты, отправлять приглашения в комнаты и устанавливать уровни доступа от вашего имени.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Используйте менеджер интеграций для управления ботами, виджетами и наклейками.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Используйте менеджер интеграций <b>%(serverName)s</b> для управления ботами, виджетами и наклейками.",
@@ -1194,12 +1178,7 @@
         "one": "Посмотреть 1 участника",
         "other": "Просмотреть всех %(count)s участников"
     },
-    "Share content": "Поделиться содержимым",
-    "Application window": "Окно приложения",
-    "Share entire screen": "Поделиться всем экраном",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
-    "Error - Mixed content": "Ошибка — Смешанное содержание",
-    "Error loading Widget": "Ошибка загрузки виджета",
     "Add reaction": "Отреагировать",
     "Error processing voice message": "Ошибка при обработке голосового сообщения",
     "Error processing audio message": "Ошибка обработки звукового сообщения",
@@ -1543,7 +1522,6 @@
     "Add new server…": "Добавить новый сервер…",
     "Remove server “%(roomServer)s”": "Удалить сервер «%(roomServer)s»",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
-    "Un-maximise": "Развернуть",
     "%(displayName)s's live location": "Местонахождение %(displayName)s в реальном времени",
     "Share for %(duration)s": "Поделиться на %(duration)s",
     "Live location sharing": "Отправка местонахождения в реальном времени",
@@ -1641,7 +1619,6 @@
     "Edit link": "Изменить ссылку",
     "There are no active polls in this room": "В этой комнате нет активных опросов",
     "View poll in timeline": "Посмотреть опрос в ленте сообщений",
-    "Your language": "Ваш язык",
     "Message in %(room)s": "Сообщение в %(room)s",
     "Message from %(user)s": "Сообщение от %(user)s",
     "Sign out of all devices": "Выйти из всех сеансов",
@@ -3087,7 +3064,10 @@
         "join_button_tooltip_call_full": "Извините — этот вызов в настоящее время заполнен",
         "hide_sidebar_button": "Скрыть боковую панель",
         "show_sidebar_button": "Показать боковую панель",
-        "more_button": "Больше"
+        "more_button": "Больше",
+        "screenshare_monitor": "Поделиться всем экраном",
+        "screenshare_window": "Окно приложения",
+        "screenshare_title": "Поделиться содержимым"
     },
     "Other": "Другие",
     "room_settings": {
@@ -3253,7 +3233,8 @@
         "bullet_1": "Мы <<Bold>не</Bold> записываем и <Bold>не</Bold> профилируем любые данные учетной записи",
         "bullet_2": "Мы <Bold>не</Bold> передаем информацию третьим лицам",
         "disable_prompt": "Вы можете отключить это в любое время в настройках",
-        "accept_button": "Всё в порядке"
+        "accept_button": "Всё в порядке",
+        "shared_data_heading": "Следующие сведения могут быть переданы:"
     },
     "chat_effects": {
         "confetti_description": "Отправляет данное сообщение с конфетти",
@@ -3521,7 +3502,23 @@
             "revoke": "Отозвать разрешения",
             "move_left": "Сдвинуть влево",
             "move_right": "Сдвинуть вправо"
-        }
+        },
+        "shared_data_name": "Отображаемое имя",
+        "shared_data_mxid": "ID пользователя",
+        "shared_data_theme": "Ваша тема",
+        "shared_data_lang": "Ваш язык",
+        "shared_data_url": "Ссылка на %(brand)s",
+        "shared_data_room_id": "ID комнаты",
+        "shared_data_widget_id": "ID виджета",
+        "shared_data_warning_im": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s и вашим Менеджером Интеграции.",
+        "shared_data_warning": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s.",
+        "unencrypted_warning": "Виджеты не используют шифрование сообщений.",
+        "added_by": "Виджет добавлен",
+        "cookie_warning": "Этот виджет может использовать куки.",
+        "error_loading": "Ошибка загрузки виджета",
+        "error_mixed_content": "Ошибка — Смешанное содержание",
+        "unmaximise": "Развернуть",
+        "popout": "Всплывающий виджет"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3877,7 +3874,8 @@
         "tls": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы.",
         "admin_contact_short": "Обратитесь к <a>администратору сервера</a>.",
         "non_urgent_echo_failure_toast": "Ваш сервер не отвечает на некоторые <a>запросы</a>.",
-        "failed_copy": "Не удалось скопировать"
+        "failed_copy": "Не удалось скопировать",
+        "something_went_wrong": "Что-то пошло не так!"
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3915,5 +3913,9 @@
         "all_settings": "Все настройки",
         "metaspace_section": "Закрепить на боковой панели",
         "sidebar_settings": "Дополнительные параметры"
+    },
+    "lightbox": {
+        "rotate_left": "Повернуть влево",
+        "rotate_right": "Повернуть вправо"
     }
 }

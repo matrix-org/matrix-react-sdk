@@ -99,7 +99,6 @@
     "Error decrypting image": "Noko gjekk gale med biletedekrypteringa",
     "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
     "Email address": "Epostadresse",
-    "Something went wrong!": "Noko gjekk gale!",
     "Delete Widget": "Slett Widgeten",
     "Create new room": "Lag nytt rom",
     "Home": "Heim",
@@ -181,7 +180,6 @@
     "Filter room members": "Filtrer rommedlemmar",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du held på å verta teken til ei tredje-partisside so du kan godkjenna brukaren din til bruk med %(integrationsUrl)s. Vil du gå fram?",
     "Add an Integration": "Legg tillegg til",
-    "Popout widget": "Popp widget ut",
     "Custom level": "Tilpassa nivå",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Klarte ikkje å lasta handlinga som vert svara til. Anten finst ho ikkje elles har du ikkje tilgang til å sjå ho.",
     "Filter results": "Filtrer resultat",
@@ -301,12 +299,10 @@
     "Room Addresses": "Romadresser",
     "Sounds": "Lydar",
     "Browse": "Bla gjennom",
-    "Your display name": "Ditt visningsnamn",
     "Can't find this server or its room list": "Klarde ikkje å finna tenaren eller romkatalogen til den",
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
-    "Your theme": "Ditt tema",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
     "Secret storage public key:": "Public-nøkkel for hemmeleg lager:",
     "Ignored users": "Ignorerte brukarar",
@@ -1233,7 +1229,10 @@
         "context_menu": {
             "delete": "Slett widgeten",
             "delete_warning": "Å sletta ein widget fjernar den for alle brukarane i rommet. Er du sikker på at du vil sletta denne widgeten?"
-        }
+        },
+        "shared_data_name": "Ditt visningsnamn",
+        "shared_data_theme": "Ditt tema",
+        "popout": "Popp widget ut"
     },
     "scalar": {
         "error_create": "Klarte ikkje å laga widget.",
@@ -1253,7 +1252,8 @@
         "admin_contact": "<a>Kontakt din systemadministrator</a> for å vidare bruka tenesta.",
         "mixed_content": "Kan ikkje kobla til heimetenaren via HTTP fordi URL-adressa i nettlesaren er HTTPS. Bruk HTTPS, eller <a>aktiver usikre skript</a>.",
         "tls": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader.",
-        "failed_copy": "Noko gjekk gale med kopieringa"
+        "failed_copy": "Noko gjekk gale med kopieringa",
+        "something_went_wrong": "Noko gjekk gale!"
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",

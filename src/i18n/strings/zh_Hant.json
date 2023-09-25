@@ -120,7 +120,6 @@
     "Unknown error": "未知的錯誤",
     "Unable to restore session": "無法復原工作階段",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
-    "Something went wrong!": "出了點問題！",
     "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
     "and %(count)s others...": {
         "other": "與另 %(count)s 個人…",
@@ -173,7 +172,6 @@
     "Yesterday": "昨天",
     "Wednesday": "星期三",
     "Thank you!": "感謝您！",
-    "Popout widget": "彈出式小工具",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "無法載入要回覆的活動，它可能不存在或是您沒有權限檢視它。",
     "Send Logs": "傳送紀錄檔",
     "Clear Storage and Sign Out": "清除儲存的東西並登出",
@@ -390,8 +388,6 @@
     "%(roomName)s can't be previewed. Do you want to join it?": "無法預覽 %(roomName)s。您想要加入嗎？",
     "This room has already been upgraded.": "此聊天室已升級。",
     "edited": "已編輯",
-    "Rotate Left": "向左旋轉",
-    "Rotate Right": "向右旋轉",
     "Edit message": "編輯訊息",
     "Some characters not allowed": "不允許某些字元",
     "Add room": "新增聊天室",
@@ -507,20 +503,9 @@
     "None": "無",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "您已忽略這個使用者，所以他們的訊息會隱藏。<a>無論如何都顯示。</a>",
     "Messages in this room are end-to-end encrypted.": "此聊天室內的訊息有端對端加密。",
-    "Any of the following data may be shared:": "可能會分享以下資料：",
-    "Your display name": "您的顯示名稱",
-    "Your user ID": "您的使用者 ID",
-    "Your theme": "您的主題",
-    "%(brand)s URL": "%(brand)s 網址",
-    "Room ID": "聊天室 ID",
-    "Widget ID": "小工具 ID",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "使用這個小工具可能會與 %(widgetDomain)s 分享資料 <helpIcon /> 。",
-    "Widget added by": "小工具新增者為",
-    "This widget may use cookies.": "這個小工具可能會使用 cookies。",
     "Cannot connect to integration manager": "無法連線到整合管理員",
     "The integration manager is offline or it cannot reach your homeserver.": "整合管理員已離線或無法存取您的家伺服器。",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
-    "Widgets do not use message encryption.": "小工具不使用訊息加密。",
     "Integrations are disabled": "整合已停用",
     "Integrations not allowed": "不允許整合",
     "Manage integrations": "管理整合功能",
@@ -1159,8 +1144,6 @@
     "Search for rooms or people": "搜尋聊天室或夥伴",
     "Sent": "已傳送",
     "You don't have permission to do this": "您沒有權限執行此動作",
-    "Error - Mixed content": "錯誤 - 混合內容",
-    "Error loading Widget": "載入小工具時發生錯誤",
     "Pinned messages": "已釘選的訊息",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "如果您有權限，請開啟任何訊息的選單，並選取<b>釘選</b>以將它們固定到這裡。",
     "Nothing pinned, yet": "尚未釘選任何東西",
@@ -1191,7 +1174,6 @@
         "other": "顯示 %(count)s 個其他預覽"
     },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "使用這個小工具可能會與 %(widgetDomain)s 以及您的整合管理員分享資料 <helpIcon />。",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "整合管理員會為您接收設定資料，修改小工具、傳送聊天室邀請並設定權限等級。",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "使用整合管理員以管理聊天機器人、小工具與貼圖包。",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "使用整合管理員 <b>(%(serverName)s) </b> 以管理聊天機器人、小工具與貼圖包。",
@@ -1240,9 +1222,6 @@
     },
     "Upgrade required": "必須升級",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "此升級讓特定聊天空間的成員不需要邀請就可以存取此聊天室。",
-    "Share content": "分享內容",
-    "Application window": "應用程式視窗",
-    "Share entire screen": "分享整個螢幕",
     "Want to add an existing space instead?": "想要新增既有的聊天空間嗎？",
     "Private space (invite only)": "私密聊天空間（邀請制）",
     "Space visibility": "空間能見度",
@@ -1557,7 +1536,6 @@
     },
     "Read receipts": "讀取回條",
     "Deactivating your account is a permanent action — be careful!": "停用帳號無法還原 — 請小心！",
-    "Un-maximise": "取消最大化",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
     "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
     "Start a group chat": "開始群組聊天",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "開始直接訊息且不要再次警告",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
     "Formatting": "格式化",
-    "Image view": "影像檢視",
     "Upload custom sound": "上傳自訂音效",
     "Search all rooms": "搜尋所有聊天室",
     "Search this room": "搜尋此聊天室",
@@ -1749,8 +1726,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
     "Waiting for users to join %(brand)s": "等待使用者加入 %(brand)s",
     "You do not have permission to invite users": "您沒有權限邀請使用者",
-    "Your language": "您的語言",
-    "Your device ID": "您的裝置 ID",
     "Ask to join": "要求加入",
     "People cannot join unless access is granted.": "除非授予存取權限，否則人們無法加入。",
     "Email summary": "電子郵件摘要",
@@ -1785,7 +1760,6 @@
     "New room activity, upgrades and status messages occur": "出現新的聊天室活動、升級與狀態訊息",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "此處的訊息為端到端加密。請在其個人檔案中驗證 %(displayName)s - 點擊其個人檔案圖片。",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "此聊天室中的訊息為端到端加密。當人們加入時，您可以在他們的個人檔案中驗證他們，點擊他們的個人檔案就可以了。",
-    "Your profile picture URL": "您的個人檔案圖片 URL",
     "Are you sure you wish to remove (delete) this event?": "您真的想要移除（刪除）此活動嗎？",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "匯出的檔案將允許任何可以讀取該檔案的人解密您可以看到的任何加密訊息，因此您應該小心確保其安全。為了協助解決此問題，您應該在下面輸入一個唯一的密碼，該密碼僅用於加密匯出的資料。只能使用相同的密碼匯入資料。",
     "Other spaces you know": "您知道的其他空間",
@@ -3341,7 +3315,10 @@
         "join_button_tooltip_call_full": "抱歉 — 此通話目前已滿",
         "hide_sidebar_button": "隱藏側邊欄",
         "show_sidebar_button": "顯示側邊欄",
-        "more_button": "更多"
+        "more_button": "更多",
+        "screenshare_monitor": "分享整個螢幕",
+        "screenshare_window": "應用程式視窗",
+        "screenshare_title": "分享內容"
     },
     "Other": "其他",
     "room_settings": {
@@ -3513,7 +3490,8 @@
         "bullet_1": "我們<Bold>不會</Bold>記錄或分析任何帳號資料",
         "bullet_2": "我們<Bold>不會</Bold>與第三方分享這些資訊",
         "disable_prompt": "您可以隨時在設定中關閉此功能",
-        "accept_button": "沒關係"
+        "accept_button": "沒關係",
+        "shared_data_heading": "可能會分享以下資料："
     },
     "chat_effects": {
         "confetti_description": "使用彩帶傳送訊息",
@@ -3806,7 +3784,25 @@
             "revoke": "撤銷權限",
             "move_left": "向左移動",
             "move_right": "向右移動"
-        }
+        },
+        "shared_data_name": "您的顯示名稱",
+        "shared_data_avatar": "您的個人檔案圖片 URL",
+        "shared_data_mxid": "您的使用者 ID",
+        "shared_data_device_id": "您的裝置 ID",
+        "shared_data_theme": "您的主題",
+        "shared_data_lang": "您的語言",
+        "shared_data_url": "%(brand)s 網址",
+        "shared_data_room_id": "聊天室 ID",
+        "shared_data_widget_id": "小工具 ID",
+        "shared_data_warning_im": "使用這個小工具可能會與 %(widgetDomain)s 以及您的整合管理員分享資料 <helpIcon />。",
+        "shared_data_warning": "使用這個小工具可能會與 %(widgetDomain)s 分享資料 <helpIcon /> 。",
+        "unencrypted_warning": "小工具不使用訊息加密。",
+        "added_by": "小工具新增者為",
+        "cookie_warning": "這個小工具可能會使用 cookies。",
+        "error_loading": "載入小工具時發生錯誤",
+        "error_mixed_content": "錯誤 - 混合內容",
+        "unmaximise": "取消最大化",
+        "popout": "彈出式小工具"
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -4190,7 +4186,8 @@
         "tls": "無法連線到家伺服器 - 請檢查您的連線，確保您的<a>家伺服器的 SSL 憑證</a>可被信任，而瀏覽器擴充套件也沒有阻擋請求。",
         "admin_contact_short": "聯絡您的<a>伺服器管理員</a>。",
         "non_urgent_echo_failure_toast": "您的伺服器未回應某些<a>請求</a>。",
-        "failed_copy": "無法複製"
+        "failed_copy": "無法複製",
+        "something_went_wrong": "出了點問題！"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4228,5 +4225,10 @@
         "all_settings": "所有設定",
         "metaspace_section": "釘選至側邊欄",
         "sidebar_settings": "更多選項"
+    },
+    "lightbox": {
+        "title": "影像檢視",
+        "rotate_left": "向左旋轉",
+        "rotate_right": "向右旋轉"
     }
 }

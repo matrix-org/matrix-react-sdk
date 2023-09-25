@@ -116,7 +116,6 @@
     "Error decrypting image": "Virhe purettaessa kuvan salausta",
     "Error decrypting video": "Virhe purettaessa videon salausta",
     "Add an Integration": "Lisää integraatio",
-    "Something went wrong!": "Jokin meni vikaan!",
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Et voi kumota tätä muutosta, koska olet ylentämässä käyttäjää samalle oikeustasolle kuin itsesi.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tämä prosessi mahdollistaa salatuissa huoneissa vastaanottamiesi viestien salausavainten viemisen tiedostoon. Voit myöhemmin tuoda ne toiseen Matrix-asiakasohjelmaan, jolloin myös se voi purkaa viestit.",
@@ -307,7 +306,6 @@
     "Add some now": "Lisää muutamia",
     "Error updating main address": "Pääosoitteen päivityksessä tapahtui virhe",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Huoneen pääosoitteen päivityksessä tapahtui virhe. Se ei välttämättä ole sallittua tällä palvelimella tai kyseessä on väliaikainen virhe.",
-    "Popout widget": "Avaa sovelma omassa ikkunassaan",
     "Power level": "Oikeuksien taso",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Tapahtuman, johon oli vastattu, lataaminen epäonnistui. Se joko ei ole olemassa tai sinulla ei ole oikeutta katsoa sitä.",
     "The following users may not exist": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
@@ -373,8 +371,6 @@
     "You're previewing %(roomName)s. Want to join it?": "Esikatselet huonetta %(roomName)s. Haluatko liittyä siihen?",
     "%(roomName)s can't be previewed. Do you want to join it?": "Huonetta %(roomName)s ei voi esikatsella. Haluatko liittyä siihen?",
     "This room has already been upgraded.": "Tämä huone on jo päivitetty.",
-    "Rotate Left": "Kierrä vasempaan",
-    "Rotate Right": "Kierrä oikeaan",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
@@ -485,16 +481,6 @@
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
     "Message Actions": "Viestitoiminnot",
     "None": "Ei mitään",
-    "Any of the following data may be shared:": "Seuraavat tiedot saatetaan jakaa:",
-    "Your display name": "Näyttönimesi",
-    "Your user ID": "Käyttäjätunnuksesi",
-    "Your theme": "Teemasi",
-    "%(brand)s URL": "%(brand)sin URL-osoite",
-    "Room ID": "Huoneen tunnus",
-    "Widget ID": "Sovelman tunnus",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Tämän sovelman käyttäminen voi jakaa tietoja <helpIcon /> verkkotunnukselle %(widgetDomain)s.",
-    "Widget added by": "Sovelman lisäsi",
-    "This widget may use cookies.": "Tämä sovelma saattaa käyttää evästeitä.",
     "Cannot connect to integration manager": "Integraatioiden lähteeseen yhdistäminen epäonnistui",
     "The integration manager is offline or it cannot reach your homeserver.": "Integraatioiden lähde on poissa verkosta, tai siihen ei voida yhdistää kotipalvelimeltasi.",
     "Manage integrations": "Integraatioiden hallinta",
@@ -517,7 +503,6 @@
     "%(name)s cancelled": "%(name)s peruutti",
     "%(name)s wants to verify": "%(name)s haluaa varmentaa",
     "You sent a verification request": "Lähetit varmennuspyynnön",
-    "Widgets do not use message encryption.": "Sovelmat eivät käytä viestien salausta.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
@@ -1069,7 +1054,6 @@
     "Connecting": "Yhdistetään",
     "unknown person": "tuntematon henkilö",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Tämän sovelman käyttäminen saattaa jakaa tietoa <helpIcon /> osoitteille %(widgetDomain)s ja käyttämällesi integraatioiden lähteelle.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integraatioiden lähteet vastaanottavat asetusdataa ja voivat muokata sovelmia, lähettää kutsuja huoneeseen ja asettaa oikeustasoja puolestasi.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Käytä integraatioiden lähdettä bottien, sovelmien ja tarrapakettien hallintaan.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Käytä integraatioiden lähdettä <b>(%(serverName)s)</b> bottien, sovelmien ja tarrapakettien hallintaan.",
@@ -1092,9 +1076,6 @@
     "Public space": "Julkinen avaruus",
     "Public room": "Julkinen huone",
     "Including %(commaSeparatedMembers)s": "Mukaan lukien %(commaSeparatedMembers)s",
-    "Share content": "Jaa sisältö",
-    "Application window": "Sovelluksen ikkuna",
-    "Share entire screen": "Jaa koko näyttö",
     "Error processing audio message": "Virhe ääniviestiä käsiteltäessä",
     "Decrypting": "Puretaan salausta",
     "The call is in an unknown state!": "Puhelu on tuntemattomassa tilassa!",
@@ -1176,8 +1157,6 @@
     "Don't leave any rooms": "Älä poistu mistään huoneesta",
     "Or send invite link": "Tai lähetä kutsulinkki",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Viestihaun alustus epäonnistui. Lisätietoa <a>asetuksissa</a>.",
-    "Error - Mixed content": "Virhe – sekasisältö",
-    "Error loading Widget": "Virhe sovelman lataamisessa",
     "Some encryption parameters have been changed.": "Joitakin salausparametreja on muutettu.",
     "Downloading": "Ladataan",
     "Ban from %(roomName)s": "Anna porttikielto huoneeseen %(roomName)s",
@@ -3009,7 +2988,10 @@
         "join_button_tooltip_call_full": "Pahoittelut — tämä puhelu on täynnä",
         "hide_sidebar_button": "Piilota sivupalkki",
         "show_sidebar_button": "Näytä sivupalkki",
-        "more_button": "Lisää"
+        "more_button": "Lisää",
+        "screenshare_monitor": "Jaa koko näyttö",
+        "screenshare_window": "Sovelluksen ikkuna",
+        "screenshare_title": "Jaa sisältö"
     },
     "Other": "Muut",
     "room_settings": {
@@ -3177,7 +3159,8 @@
         "bullet_1": "<Bold>Emme</Bold> tallenna tai profiloi tilin tietoja",
         "bullet_2": "<Bold>Emme</Bold> jaa tietoja kolmansille tahoille",
         "disable_prompt": "Tämän voi poistaa käytöstä koska tahansa asetuksista",
-        "accept_button": "Sopii"
+        "accept_button": "Sopii",
+        "shared_data_heading": "Seuraavat tiedot saatetaan jakaa:"
     },
     "chat_effects": {
         "confetti_description": "Lähettää viestin konfettien kera",
@@ -3432,7 +3415,21 @@
             "revoke": "Peruuta käyttöoikeudet",
             "move_left": "Siirry vasemmalle",
             "move_right": "Siirry oikealle"
-        }
+        },
+        "shared_data_name": "Näyttönimesi",
+        "shared_data_mxid": "Käyttäjätunnuksesi",
+        "shared_data_theme": "Teemasi",
+        "shared_data_url": "%(brand)sin URL-osoite",
+        "shared_data_room_id": "Huoneen tunnus",
+        "shared_data_widget_id": "Sovelman tunnus",
+        "shared_data_warning_im": "Tämän sovelman käyttäminen saattaa jakaa tietoa <helpIcon /> osoitteille %(widgetDomain)s ja käyttämällesi integraatioiden lähteelle.",
+        "shared_data_warning": "Tämän sovelman käyttäminen voi jakaa tietoja <helpIcon /> verkkotunnukselle %(widgetDomain)s.",
+        "unencrypted_warning": "Sovelmat eivät käytä viestien salausta.",
+        "added_by": "Sovelman lisäsi",
+        "cookie_warning": "Tämä sovelma saattaa käyttää evästeitä.",
+        "error_loading": "Virhe sovelman lataamisessa",
+        "error_mixed_content": "Virhe – sekasisältö",
+        "popout": "Avaa sovelma omassa ikkunassaan"
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3787,7 +3784,8 @@
         "tls": "Kotipalvelimeen ei saada yhteyttä. Tarkista verkkoyhteytesi, varmista että <a>kotipalvelimesi SSL-sertifikaatti</a> on luotettu, ja että mikään selaimen lisäosa ei estä pyyntöjen lähettämistä.",
         "admin_contact_short": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>.",
         "non_urgent_echo_failure_toast": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
-        "failed_copy": "Kopiointi epäonnistui"
+        "failed_copy": "Kopiointi epäonnistui",
+        "something_went_wrong": "Jokin meni vikaan!"
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3824,5 +3822,9 @@
         "all_settings": "Kaikki asetukset",
         "metaspace_section": "Kiinnitä sivupalkkiin",
         "sidebar_settings": "Lisää asetuksia"
+    },
+    "lightbox": {
+        "rotate_left": "Kierrä vasempaan",
+        "rotate_right": "Kierrä oikeaan"
     }
 }

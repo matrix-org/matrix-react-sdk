@@ -119,7 +119,6 @@
     "Error decrypting image": "Errorea audioa deszifratzean",
     "Error decrypting video": "Errorea bideoa deszifratzean",
     "Add an Integration": "Gehitu integrazioa",
-    "Something went wrong!": "Zerk edo zerk huts egin du!",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
     "and %(count)s others...": {
@@ -173,7 +172,6 @@
     "Logs sent": "Egunkariak bidalita",
     "Yesterday": "Atzo",
     "Thank you!": "Eskerrik asko!",
-    "Popout widget": "Laster-leiho trepeta",
     "Send Logs": "Bidali egunkariak",
     "Clear Storage and Sign Out": "Garbitu biltegiratzea eta amaitu saioa",
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
@@ -377,8 +375,6 @@
     "This room has already been upgraded.": "Gela hau dagoeneko eguneratu da.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Gela honek <roomVersion /> bertsioa du, eta hasiera-zerbitzariak<i>ez egonkor</i> gisa markatu du.",
     "edited": "editatua",
-    "Rotate Left": "Biratu ezkerrera",
-    "Rotate Right": "Biratu eskumara",
     "Edit message": "Editatu mezua",
     "Notes": "Oharrak",
     "Sign out and remove encryption keys?": "Amaitu saioa eta kendu zifratze gakoak?",
@@ -511,17 +507,6 @@
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
     "Messages in this room are end-to-end encrypted.": "Gela honetako mezuak muturretik muturrera zifratuta daude.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Erabiltzaile hau ezikusi duzu, beraz bere mezua ezkutatuta dago. <a>Erakutsi hala ere.</a>",
-    "Any of the following data may be shared:": "Datu hauetako edozein partekatu daiteke:",
-    "Your display name": "Zure pantaila-izena",
-    "Your user ID": "Zure erabiltzaile ID-a",
-    "Your theme": "Zure azala",
-    "%(brand)s URL": "%(brand)s URL-a",
-    "Room ID": "Gelaren ID-a",
-    "Widget ID": "Trepetaren ID-a",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Trepeta hau erabiltzean <helpIcon />  %(widgetDomain)s domeinuarekin datuak partekatu daitezke.",
-    "Widgets do not use message encryption.": "Trepetek ez dute mezuen zifratzea erabiltzen.",
-    "Widget added by": "Trepeta honek gehitu du:",
-    "This widget may use cookies.": "Trepeta honek cookieak erabili litzake.",
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
@@ -705,7 +690,6 @@
     "Wrong file type": "Okerreko fitxategi-mota",
     "Looks good!": "Itxura ona du!",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Zure %(brand)s aplikazioak ez dizu hau egiteko integrazio kudeatzaile bat erabiltzen uzten. Kontaktatu administratzaileren batekin.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Trepeta hau erabiltzean <helpIcon />  %(widgetDomain)s domeinuarekin eta zure integrazio kudeatzailearekin datuak partekatu daitezke.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integrazio kudeatzaileek konfigurazio datuak jasotzen dituzte, eta trepetak aldatu ditzakete, gelara gonbidapenak bidali, eta botere mailak zure izenean ezarri.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Erabili integrazio kudeatzaile bat botak, trepetak eta eranskailu multzoak kudeatzeko.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Erabili <b>(%(serverName)s)</b> integrazio kudeatzailea botak, trepetak eta eranskailu multzoak kudeatzeko.",
@@ -1782,7 +1766,19 @@
             "delete": "Ezabatu trepeta",
             "delete_warning": "Trepeta ezabatzean gelako kide guztientzat kentzen da. Ziur trepeta ezabatu nahi duzula?",
             "remove": "Kendu denentzat"
-        }
+        },
+        "shared_data_name": "Zure pantaila-izena",
+        "shared_data_mxid": "Zure erabiltzaile ID-a",
+        "shared_data_theme": "Zure azala",
+        "shared_data_url": "%(brand)s URL-a",
+        "shared_data_room_id": "Gelaren ID-a",
+        "shared_data_widget_id": "Trepetaren ID-a",
+        "shared_data_warning_im": "Trepeta hau erabiltzean <helpIcon />  %(widgetDomain)s domeinuarekin eta zure integrazio kudeatzailearekin datuak partekatu daitezke.",
+        "shared_data_warning": "Trepeta hau erabiltzean <helpIcon />  %(widgetDomain)s domeinuarekin datuak partekatu daitezke.",
+        "unencrypted_warning": "Trepetek ez dute mezuen zifratzea erabiltzen.",
+        "added_by": "Trepeta honek gehitu du:",
+        "cookie_warning": "Trepeta honek cookieak erabili litzake.",
+        "popout": "Laster-leiho trepeta"
     },
     "scalar": {
         "error_create": "Ezin izan da trepeta sortu.",
@@ -1805,7 +1801,8 @@
         "mixed_content": "Ezin zara hasiera zerbitzarira HTTP bidez konektatu zure nabigatzailearen barran dagoen URLa HTTS bada. Erabili HTTPS edo <a>gaitu script ez seguruak</a>.",
         "tls": "Ezin da hasiera zerbitzarira konektatu, egiaztatu zure konexioa, ziurtatu zure <a>hasiera zerbitzariaren SSL ziurtagiria</a> fidagarritzat jotzen duela zure gailuak, eta nabigatzailearen pluginen batek ez dituela eskaerak blokeatzen.",
         "admin_contact_short": "Jarri kontaktuan <a>zerbitzariaren administratzailearekin</a>.",
-        "failed_copy": "Kopiak huts egin du"
+        "failed_copy": "Kopiak huts egin du",
+        "something_went_wrong": "Zerk edo zerk huts egin du!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1822,5 +1819,12 @@
     "quick_settings": {
         "all_settings": "Ezarpen guztiak",
         "sidebar_settings": "Aukera gehiago"
+    },
+    "analytics": {
+        "shared_data_heading": "Datu hauetako edozein partekatu daiteke:"
+    },
+    "lightbox": {
+        "rotate_left": "Biratu ezkerrera",
+        "rotate_right": "Biratu eskumara"
     }
 }

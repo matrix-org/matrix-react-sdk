@@ -114,7 +114,6 @@
         "other": "%(filename)s und %(count)s weitere Dateien werden hochgeladen"
     },
     "Create new room": "Neuer Raum",
-    "Something went wrong!": "Etwas ist schiefgelaufen!",
     "Home": "Startseite",
     "Admin Tools": "Administrationswerkzeuge",
     "No display name": "Kein Anzeigename",
@@ -173,7 +172,6 @@
     "Logs sent": "Protokolldateien gesendet",
     "Yesterday": "Gestern",
     "Thank you!": "Danke!",
-    "Popout widget": "Widget in eigenem Fenster öffnen",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Das Ereignis, auf das geantwortet wurde, kann nicht geladen werden, da es entweder nicht existiert oder du keine Berechtigung zum Betrachten hast.",
     "Send Logs": "Sende Protokoll",
     "Clear Storage and Sign Out": "Speicher leeren und abmelden",
@@ -423,7 +421,6 @@
     "%(name)s declined": "%(name)s hat abgelehnt",
     "%(name)s cancelled": "%(name)s hat abgebrochen",
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
-    "Your display name": "Dein Anzeigename",
     "Hide advanced": "Erweiterte Einstellungen ausblenden",
     "Session name": "Sitzungsname",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Aktualisiere diese Sitzung, um mit ihr andere Sitzungen verifizieren zu können, damit sie Zugang zu verschlüsselten Nachrichten erhalten und für andere als vertrauenswürdig markiert werden.",
@@ -434,8 +431,6 @@
     "Verify by emoji": "Mit Emojis verifizieren",
     "Verify by comparing unique emoji.": "Durch den Vergleich einzigartiger Emojis verifizieren.",
     "You've successfully verified %(displayName)s!": "Du hast %(displayName)s erfolgreich verifiziert!",
-    "Widget added by": "Widget hinzugefügt von",
-    "This widget may use cookies.": "Dieses Widget kann Cookies verwenden.",
     "Explore rooms": "Räume erkunden",
     "Connect this session to Key Backup": "Verbinde diese Sitzung mit einer Schlüsselsicherung",
     "Discovery options will appear once you have added an email above.": "Entdeckungsoptionen werden angezeigt, sobald du eine E-Mail-Adresse hinzugefügt hast.",
@@ -563,16 +558,6 @@
     "Can't load this message": "Diese Nachricht kann nicht geladen werden",
     "Submit logs": "Protokolldateien senden",
     "Cancel search": "Suche abbrechen",
-    "Any of the following data may be shared:": "Die folgenden Informationen können geteilt werden:",
-    "Your user ID": "Deine Nutzer-ID",
-    "Your theme": "Dein Design",
-    "%(brand)s URL": "%(brand)s URL",
-    "Room ID": "Raum-ID",
-    "Widget ID": "Widget-ID",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s übertragen werden.",
-    "Widgets do not use message encryption.": "Widgets verwenden keine Nachrichtenverschlüsselung.",
-    "Rotate Left": "Nach links drehen",
-    "Rotate Right": "Nach rechts drehen",
     "Language Dropdown": "Sprachauswahl",
     "Some characters not allowed": "Einige Zeichen sind nicht erlaubt",
     "Enter a server name": "Gib einen Server-Namen ein",
@@ -1160,10 +1145,8 @@
     "Search for rooms or people": "Räume oder Leute suchen",
     "Sent": "Gesendet",
     "You don't have permission to do this": "Du bist dazu nicht berechtigt",
-    "Error loading Widget": "Fehler beim Laden des Widgets",
     "Pinned messages": "Angeheftete Nachrichten",
     "Nothing pinned, yet": "Es ist nichts angepinnt. Noch nicht.",
-    "Error - Mixed content": "Fehler - Uneinheitlicher Inhalt",
     "Please provide an address": "Bitte gib eine Adresse an",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Füge Adressen für diesen Space hinzu, damit andere Leute ihn über deinen Heim-Server (%(localDomain)s) finden können",
     "To publish an address, it needs to be set as a local address first.": "Damit du die Adresse veröffentlichen kannst, musst du sie zuerst als lokale Adresse hinzufügen.",
@@ -1193,7 +1176,6 @@
     "Unable to copy room link": "Raumlink konnte nicht kopiert werden",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s und deinem Integrationsmanager übertragen werden.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integrationsassistenten erhalten Konfigurationsdaten und können Widgets modifizieren, Raumeinladungen verschicken und in deinem Namen Berechtigungslevel setzen.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Verwende einen Integrations-Server, um Bots, Widgets und Sticker-Pakete zu verwalten.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Nutze einen Integrations-Server <b>(%(serverName)s)</b>, um Bots, Widgets und Sticker-Pakete zu verwalten.",
@@ -1220,9 +1202,6 @@
     "Create a new space": "Neuen Space erstellen",
     "Want to add a new space instead?": "Willst du stattdessen einen neuen Space hinzufügen?",
     "Add existing space": "Existierenden Space hinzufügen",
-    "Share content": "Inhalt teilen",
-    "Application window": "Anwendungsfenster",
-    "Share entire screen": "Vollständigen Bildschirm teilen",
     "Decrypting": "Entschlüsseln",
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
     "Stop recording": "Aufnahme beenden",
@@ -1580,7 +1559,6 @@
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
-    "Un-maximise": "Maximieren rückgängig machen",
     "Start a group chat": "Gruppenunterhaltung beginnen",
     "If you can't see who you're looking for, send them your invite link.": "Falls du nicht findest wen du suchst, send ihnen deinen Einladungslink.",
     "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
     "Formatting": "Formatierung",
-    "Image view": "Bildbetrachter",
     "Search all rooms": "Alle Räume durchsuchen",
     "Search this room": "Diesen Raum durchsuchen",
     "Upload custom sound": "Eigenen Ton hochladen",
@@ -1749,8 +1726,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
-    "Your language": "Deine Sprache",
-    "Your device ID": "Deine Geräte-ID",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
     "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
     "People, Mentions and Keywords": "Personen, Erwähnungen und Schlüsselwörter",
@@ -1782,7 +1757,6 @@
     "Unable to find user by email": "Kann Benutzer nicht via E-Mail-Adresse finden",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Nachrichten hier sind Ende-zu-Ende-verschlüsselt. Verifiziere %(displayName)s in deren Profil – klicke auf deren Profilbild.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Nachrichten in diesem Raum sind Ende-zu-Ende-verschlüsselt. Wenn Personen beitreten, kannst du sie in ihrem Profil verifizieren, indem du auf deren Profilbild klickst.",
-    "Your profile picture URL": "Deine Profilbild-URL",
     "Ask to join": "Beitrittsanfragen",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
     "People cannot join unless access is granted.": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
@@ -3346,7 +3320,10 @@
         "join_button_tooltip_call_full": "Entschuldigung — dieser Anruf ist aktuell besetzt",
         "hide_sidebar_button": "Seitenleiste verbergen",
         "show_sidebar_button": "Seitenleiste anzeigen",
-        "more_button": "Mehr"
+        "more_button": "Mehr",
+        "screenshare_monitor": "Vollständigen Bildschirm teilen",
+        "screenshare_window": "Anwendungsfenster",
+        "screenshare_title": "Inhalt teilen"
     },
     "Other": "Sonstiges",
     "room_settings": {
@@ -3518,7 +3495,8 @@
         "bullet_1": "Wir erfassen und analysieren <Bold>keine</Bold> Kontodaten",
         "bullet_2": "Wir teilen <Bold>keine</Bold> Informationen mit Dritten",
         "disable_prompt": "Du kannst dies jederzeit in den Einstellungen deaktivieren",
-        "accept_button": "Das ist okay"
+        "accept_button": "Das ist okay",
+        "shared_data_heading": "Die folgenden Informationen können geteilt werden:"
     },
     "chat_effects": {
         "confetti_description": "Sendet die Nachricht mit Konfetti",
@@ -3811,7 +3789,25 @@
             "revoke": "Berechtigungen widerrufen",
             "move_left": "Nach links schieben",
             "move_right": "Nach rechts schieben"
-        }
+        },
+        "shared_data_name": "Dein Anzeigename",
+        "shared_data_avatar": "Deine Profilbild-URL",
+        "shared_data_mxid": "Deine Nutzer-ID",
+        "shared_data_device_id": "Deine Geräte-ID",
+        "shared_data_theme": "Dein Design",
+        "shared_data_lang": "Deine Sprache",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "Raum-ID",
+        "shared_data_widget_id": "Widget-ID",
+        "shared_data_warning_im": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s und deinem Integrationsmanager übertragen werden.",
+        "shared_data_warning": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s übertragen werden.",
+        "unencrypted_warning": "Widgets verwenden keine Nachrichtenverschlüsselung.",
+        "added_by": "Widget hinzugefügt von",
+        "cookie_warning": "Dieses Widget kann Cookies verwenden.",
+        "error_loading": "Fehler beim Laden des Widgets",
+        "error_mixed_content": "Fehler - Uneinheitlicher Inhalt",
+        "unmaximise": "Maximieren rückgängig machen",
+        "popout": "Widget in eigenem Fenster öffnen"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4195,7 +4191,8 @@
         "tls": "Verbindung zum Heim-Server fehlgeschlagen – bitte überprüfe die Internetverbindung und stelle sicher, dass dem <a>SSL-Zertifikat deines Heimservers</a> vertraut wird und dass Anfragen nicht durch eine Browser-Erweiterung blockiert werden.",
         "admin_contact_short": "Kontaktiere deine <a>Heim-Server-Administration</a>.",
         "non_urgent_echo_failure_toast": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
-        "failed_copy": "Kopieren fehlgeschlagen"
+        "failed_copy": "Kopieren fehlgeschlagen",
+        "something_went_wrong": "Etwas ist schiefgelaufen!"
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4233,5 +4230,10 @@
         "all_settings": "Alle Einstellungen",
         "metaspace_section": "An Seitenleiste heften",
         "sidebar_settings": "Weitere Optionen"
+    },
+    "lightbox": {
+        "title": "Bildbetrachter",
+        "rotate_left": "Nach links drehen",
+        "rotate_right": "Nach rechts drehen"
     }
 }

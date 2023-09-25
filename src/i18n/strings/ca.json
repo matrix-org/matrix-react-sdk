@@ -89,7 +89,6 @@
     "Add an Integration": "Afegeix una integració",
     "Email address": "Correu electrònic",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
-    "Something went wrong!": "Alguna cosa ha anat malament!",
     "Delete Widget": "Suprimeix el giny",
     "Home": "Inici",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
@@ -789,7 +788,8 @@
     "error": {
         "mau": "Aquest homeserver ha assolit el seu límit d'usuaris actius mensuals.",
         "resource_limits": "Aquest homeserver ha sobrepassat on dels seus límits de recursos.",
-        "failed_copy": "No s'ha pogut copiar"
+        "failed_copy": "No s'ha pogut copiar",
+        "something_went_wrong": "Alguna cosa ha anat malament!"
     },
     "items_and_n_others": {
         "other": "<Items/> i %(count)s altres",

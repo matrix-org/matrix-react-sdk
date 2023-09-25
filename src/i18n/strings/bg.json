@@ -84,7 +84,6 @@
     "Error decrypting video": "Грешка при разшифроване на видео",
     "Add an Integration": "Добавяне на интеграция",
     "Email address": "Имейл адрес",
-    "Something went wrong!": "Нещо се обърка!",
     "Delete Widget": "Изтриване на приспособление",
     "Create new room": "Създай нова стая",
     "Home": "Начална страница",
@@ -174,7 +173,6 @@
     "Yesterday": "Вчера",
     "Thank you!": "Благодарим!",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
-    "Popout widget": "Изкарай в нов прозорец",
     "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
@@ -396,8 +394,6 @@
     "Browse": "Избор",
     "This room has already been upgraded.": "Тази стая вече е била обновена.",
     "edited": "редактирано",
-    "Rotate Left": "Завърти наляво",
-    "Rotate Right": "Завърти надясно",
     "Edit message": "Редактирай съобщението",
     "Some characters not allowed": "Някои символи не са позволени",
     "Add room": "Добави стая",
@@ -524,17 +520,6 @@
     },
     "Messages in this room are end-to-end encrypted.": "Съобщенията в тази стая са шифровани от край-до-край.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Игнорирали сте този потребител, така че съобщението им е скрито. <a>Покажи така или иначе.</a>",
-    "Any of the following data may be shared:": "Следните данни може да бъдат споделени:",
-    "Your display name": "Вашето име",
-    "Your user ID": "Потребителския ви идентификатор",
-    "Your theme": "Вашата тема",
-    "%(brand)s URL": "%(brand)s URL адрес",
-    "Room ID": "Идентификатор на стаята",
-    "Widget ID": "Идентификатор на приспособлението",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Приспособленията не използваш шифроване на съобщенията.",
-    "Widget added by": "Приспособлението е добавено от",
-    "This widget may use cookies.": "Това приспособление може да използва бисквитки.",
     "Language Dropdown": "Падащо меню за избор на език",
     "Integrations are disabled": "Интеграциите са изключени",
     "Integrations not allowed": "Интеграциите не са разрешени",
@@ -1034,7 +1019,6 @@
     "unknown person": "",
     "Spaces": "Пространства",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s и с мениджъра на интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Мениджърът на интеграции получава конфигурационни данни, може да модифицира приспособления, да изпраща покани за стаи и да настройва нива на достъп от ваше име.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Използвай мениджър на интеграции за управление на ботове, приспособления и стикери.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Използвай мениджър на интеграции <b>%(serverName)s</b> за управление на ботове, приспособления и стикери.",
@@ -2283,7 +2267,19 @@
             "revoke": "Оттеглете привилегии",
             "move_left": "Премести наляво",
             "move_right": "Премести надясно"
-        }
+        },
+        "shared_data_name": "Вашето име",
+        "shared_data_mxid": "Потребителския ви идентификатор",
+        "shared_data_theme": "Вашата тема",
+        "shared_data_url": "%(brand)s URL адрес",
+        "shared_data_room_id": "Идентификатор на стаята",
+        "shared_data_widget_id": "Идентификатор на приспособлението",
+        "shared_data_warning_im": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s и с мениджъра на интеграции.",
+        "shared_data_warning": "Използването на това приспособление може да сподели данни <helpIcon /> с %(widgetDomain)s.",
+        "unencrypted_warning": "Приспособленията не използваш шифроване на съобщенията.",
+        "added_by": "Приспособлението е добавено от",
+        "cookie_warning": "Това приспособление може да използва бисквитки.",
+        "popout": "Изкарай в нов прозорец"
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",
@@ -2308,7 +2304,8 @@
         "tls": "Няма връзка с Home сървъра. Моля, проверете Вашата връзка. Уверете се, че <a>SSL сертификатът на Home сървъра</a> е надежден и че някое разширение на браузъра не блокира заявките.",
         "admin_contact_short": "Свържете се със <a>сървърния администратор</a>.",
         "non_urgent_echo_failure_toast": "Сървърът ви не отговаря на някои <a>заявки</a>.",
-        "failed_copy": "Неуспешно копиране"
+        "failed_copy": "Неуспешно копиране",
+        "something_went_wrong": "Нещо се обърка!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2331,5 +2328,12 @@
     "quick_settings": {
         "all_settings": "Всички настройки",
         "sidebar_settings": "Още опции"
+    },
+    "analytics": {
+        "shared_data_heading": "Следните данни може да бъдат споделени:"
+    },
+    "lightbox": {
+        "rotate_left": "Завърти наляво",
+        "rotate_right": "Завърти надясно"
     }
 }

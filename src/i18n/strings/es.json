@@ -41,7 +41,6 @@
     "Home": "Inicio",
     "Invited": "Invitado",
     "Jump to first unread message.": "Ir al primer mensaje no leído.",
-    "Something went wrong!": "¡Algo ha fallado!",
     "Create new room": "Crear una nueva sala",
     "Passphrases must match": "Las contraseñas deben coincidir",
     "Passphrase must not be empty": "La contraseña no puede estar en blanco",
@@ -165,7 +164,6 @@
     "Add an Integration": "Añadir una Integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?",
     "Delete Widget": "Eliminar accesorio",
-    "Popout widget": "Abrir accesorio en una ventana emergente",
     "collapse": "encoger",
     "expand": "desplegar",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "No se pudo cargar el evento al que se respondió, bien porque no existe o no tiene permiso para verlo.",
@@ -433,7 +431,6 @@
     "This room is end-to-end encrypted": "Esta sala usa cifrado de extremo a extremo",
     "Everyone in this room is verified": "Todos los participantes en esta sala están verificados",
     "Edit message": "Editar mensaje",
-    "Rotate Right": "Girar a la derecha",
     "Language Dropdown": "Lista selección de idiomas",
     "Power level": "Nivel de poder",
     "e.g. my-room": "p.ej. mi-sala",
@@ -599,18 +596,6 @@
     "Can't load this message": "No se ha podido cargar este mensaje",
     "Submit logs": "Enviar registros",
     "Cancel search": "Cancelar búsqueda",
-    "Any of the following data may be shared:": "Cualquiera de los siguientes datos puede ser compartido:",
-    "Your display name": "Su nombre mostrado",
-    "Your user ID": "Tu ID de usuario",
-    "Your theme": "Su tema",
-    "%(brand)s URL": "URL de %(brand)s",
-    "Room ID": "ID de la sala",
-    "Widget ID": "ID del accesorios",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Usar este accesorios puede resultar en que se compartan datos <helpIcon /> con %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Los accesorios no utilizan el cifrado de mensajes.",
-    "Widget added by": "Accesorio añadido por",
-    "This widget may use cookies.": "Puede que el accesorio use cookies.",
-    "Rotate Left": "Girar a la izquierda",
     "Upload completed": "Subida completada",
     "Cancelled signature upload": "Subida de firma cancelada",
     "Unable to upload": "No se ha podido enviar",
@@ -1159,8 +1144,6 @@
     "Message preview": "Vista previa del mensaje",
     "Sent": "Enviado",
     "You don't have permission to do this": "No tienes permisos para hacer eso",
-    "Error - Mixed content": "Error - Contenido mezclado",
-    "Error loading Widget": "Error al cargar el accesorio",
     "Pinned messages": "Mensajes fijados",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si tienes permisos, abre el menú de cualquier mensaje y selecciona <b>Fijar</b> para colocarlo aquí.",
     "Nothing pinned, yet": "Ningún mensaje fijado… todavía",
@@ -1185,7 +1168,6 @@
     "Failed to update the visibility of this space": "No se ha podido cambiar la visibilidad del espacio",
     "Address": "Dirección",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Al usar este widget puede que se compartan datos <helpIcon /> con %(widgetDomain)s y tu gestor de integraciones.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Los gestores de integraciones reciben datos de configuración, y pueden modificar accesorios, enviar invitaciones de sala, y establecer niveles de poder en tu nombre.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Usa un gestor de integraciones para bots, accesorios y paquetes de pegatinas.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Usar un gestor de integraciones <b>(%(serverName)s)</b> para gestionar bots, accesorios y paquetes de pegatinas.",
@@ -1258,9 +1240,6 @@
     "Create a new space": "Crear un nuevo espacio",
     "Want to add a new space instead?": "¿Quieres añadir un espacio nuevo en su lugar?",
     "Add existing space": "Añadir un espacio ya existente",
-    "Share content": "Compartir contenido",
-    "Application window": "Ventana concreta",
-    "Share entire screen": "Compartir toda la pantalla",
     "Decrypting": "Descifrando",
     "Access": "Acceso",
     "Space members": "Miembros del espacio",
@@ -1557,7 +1536,6 @@
     },
     "Read receipts": "Acuses de recibo",
     "Deactivating your account is a permanent action — be careful!": "Desactivar tu cuenta es para siempre, ¡ten cuidado!",
-    "Un-maximise": "Dejar de maximizar",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Al cerrar sesión, estas claves serán eliminadas del dispositivo. Esto significa que no podrás leer mensajes cifrados salvo que tengas sus claves en otros dispositivos, o hayas hecho una copia de seguridad usando el servidor.",
     "%(count)s Members": {
         "one": "%(count)s miembro",
@@ -1703,7 +1681,6 @@
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Los detalles de tu cuenta los gestiona de forma separada <code>%(hostname)s</code>.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
     "Can't start voice message": "No se ha podido empezar el mensaje de voz",
-    "Your device ID": "ID de tu dispositivo",
     "You do not have permission to invite users": "No tienes permisos para invitar usuarios",
     "There are no active polls in this room": "Esta sala no tiene encuestas activas",
     "There are no past polls in this room": "Esta sala no tiene encuestas anteriores",
@@ -1711,7 +1688,6 @@
     "The sender has blocked you from receiving this message": "La persona que ha enviado este mensaje te ha bloqueado, no puedes recibir el mensaje",
     "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
     "Select '%(scanQRCode)s'": "Selecciona «%(scanQRCode)s»",
-    "Your language": "Tu idioma",
     "Error changing password": "Error al cambiar la contraseña",
     "Set a new account password…": "Elige una contraseña para la cuenta…",
     "Message from %(user)s": "Mensaje de %(user)s",
@@ -3181,7 +3157,10 @@
         "join_button_tooltip_call_full": "Lo sentimos — la llamada está llena",
         "hide_sidebar_button": "Ocultar menú lateral",
         "show_sidebar_button": "Ver menú lateral",
-        "more_button": "Más"
+        "more_button": "Más",
+        "screenshare_monitor": "Compartir toda la pantalla",
+        "screenshare_window": "Ventana concreta",
+        "screenshare_title": "Compartir contenido"
     },
     "Other": "Otros",
     "room_settings": {
@@ -3352,7 +3331,8 @@
         "bullet_1": "<Bold>No</Bold> guardamos ningún dato sobre tu cuenta o perfil",
         "bullet_2": "<Bold>No</Bold> compartimos información con terceros",
         "disable_prompt": "Puedes desactivar esto cuando quieras en tus ajustes",
-        "accept_button": "Vale"
+        "accept_button": "Vale",
+        "shared_data_heading": "Cualquiera de los siguientes datos puede ser compartido:"
     },
     "chat_effects": {
         "confetti_description": "Envía el mensaje con confeti",
@@ -3628,7 +3608,24 @@
             "revoke": "Quitar permisos",
             "move_left": "Mover a la izquierda",
             "move_right": "Mover a la derecha"
-        }
+        },
+        "shared_data_name": "Su nombre mostrado",
+        "shared_data_mxid": "Tu ID de usuario",
+        "shared_data_device_id": "ID de tu dispositivo",
+        "shared_data_theme": "Su tema",
+        "shared_data_lang": "Tu idioma",
+        "shared_data_url": "URL de %(brand)s",
+        "shared_data_room_id": "ID de la sala",
+        "shared_data_widget_id": "ID del accesorios",
+        "shared_data_warning_im": "Al usar este widget puede que se compartan datos <helpIcon /> con %(widgetDomain)s y tu gestor de integraciones.",
+        "shared_data_warning": "Usar este accesorios puede resultar en que se compartan datos <helpIcon /> con %(widgetDomain)s.",
+        "unencrypted_warning": "Los accesorios no utilizan el cifrado de mensajes.",
+        "added_by": "Accesorio añadido por",
+        "cookie_warning": "Puede que el accesorio use cookies.",
+        "error_loading": "Error al cargar el accesorio",
+        "error_mixed_content": "Error - Contenido mezclado",
+        "unmaximise": "Dejar de maximizar",
+        "popout": "Abrir accesorio en una ventana emergente"
     },
     "feedback": {
         "sent": "Comentarios enviados",
@@ -3992,7 +3989,8 @@
         "tls": "No se puede conectar al servidor base. Por favor, comprueba tu conexión, asegúrate de que el <a>certificado SSL del servidor</a> es de confiaza, y comprueba que no haya extensiones de navegador bloqueando las peticiones.",
         "admin_contact_short": "Contacta con el <a>administrador del servidor</a>.",
         "non_urgent_echo_failure_toast": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
-        "failed_copy": "Falló la copia"
+        "failed_copy": "Falló la copia",
+        "something_went_wrong": "¡Algo ha fallado!"
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4030,5 +4028,9 @@
         "all_settings": "Ajustes",
         "metaspace_section": "Fijar a la barra lateral",
         "sidebar_settings": "Mas opciones"
+    },
+    "lightbox": {
+        "rotate_left": "Girar a la izquierda",
+        "rotate_right": "Girar a la derecha"
     }
 }

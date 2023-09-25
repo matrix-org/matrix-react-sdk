@@ -81,7 +81,6 @@
     "You seem to be uploading files, are you sure you want to quit?": "你似乎正在上传文件，确定要退出吗？",
     "Error decrypting image": "解密图像时出错",
     "Error decrypting video": "解密视频时出错",
-    "Something went wrong!": "出了点问题！",
     "Verification Pending": "验证等待中",
     "Sent messages will be stored until your connection has returned.": "已发送的消息会被保存直到你的连接回来。",
     "(~%(count)s results)": {
@@ -168,7 +167,6 @@
     "Yesterday": "昨天",
     "Thank you!": "谢谢！",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "你将被带到一个第三方网站以便验证你的账户来使用 %(integrationsUrl)s 提供的集成。你希望继续吗？",
-    "Popout widget": "在弹出式窗口中打开挂件",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "无法加载被回复的事件，它可能不存在，也可能是你没有权限查看它。",
     "And %(count)s more...": {
         "other": "和 %(count)s 个其他…"
@@ -560,18 +558,6 @@
     "Can't load this message": "无法加载此消息",
     "Submit logs": "提交日志",
     "Cancel search": "取消搜索",
-    "Any of the following data may be shared:": "以下数据之一可能被分享：",
-    "Your display name": "你的显示名称",
-    "Your user ID": "你的用户 ID",
-    "Your theme": "你的主题",
-    "%(brand)s URL": "%(brand)s 的链接",
-    "Room ID": "房间 ID",
-    "Widget ID": "挂件 ID",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "使用此挂件可能会和 %(widgetDomain)s 共享数据 <helpIcon />。",
-    "Widgets do not use message encryption.": "挂件不适用消息加密。",
-    "This widget may use cookies.": "此挂件可能使用 cookie。",
-    "Rotate Left": "向左旋转",
-    "Rotate Right": "向右旋转",
     "Room address": "房间地址",
     "e.g. my-room": "例如 my-room",
     "Some characters not allowed": "不允许使用某些字符",
@@ -920,7 +906,6 @@
     "Approve widget permissions": "批准挂件权限",
     "Failed to save space settings.": "空间设置保存失败。",
     "Modal Widget": "模态框挂件（Modal Widget）",
-    "Widget added by": "挂件添加者",
     "Set my room layout for everyone": "将我的房间布局设置给所有人",
     "Edit widgets, bridges & bots": "编辑挂件、桥接和机器人",
     "Add widgets, bridges & bots": "添加挂件、桥接和机器人",
@@ -1159,8 +1144,6 @@
     "Message preview": "消息预览",
     "Sent": "已发送",
     "You don't have permission to do this": "你无权执行此操作",
-    "Error - Mixed content": "错误 - 混合内容",
-    "Error loading Widget": "加载挂件时发生错误",
     "Pinned messages": "已固定的消息",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "如果你拥有权限，请打开任何消息的菜单并选择<b>固定</b>将它们粘贴至此。",
     "Nothing pinned, yet": "尚无固定任何东西",
@@ -1185,7 +1168,6 @@
     "Failed to update the visibility of this space": "更新此空间的可见性失败",
     "Address": "地址",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "使用此挂件可能会与 %(widgetDomain)s 及您的集成管理器共享数据 <helpIcon />。",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "集成管理器接收配置数据，并可以以你的名义修改挂件、发送房间邀请及设置权力级别。",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "使用集成管理器管理机器人、挂件和贴纸包。",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "使用集成管理器<b>（%(serverName)s）</b>管理机器人、挂件和贴纸包。",
@@ -1235,9 +1217,6 @@
     "Create a new space": "创建新空间",
     "Want to add a new space instead?": "想要添加一个新空间？",
     "Add existing space": "增加现有的空间",
-    "Share content": "分享内容",
-    "Application window": "应用程序窗口",
-    "Share entire screen": "分享整个屏幕",
     "Error processing audio message": "处理音频消息时出错",
     "Decrypting": "解密中",
     "The call is in an unknown state!": "通话处于未知状态！",
@@ -1506,7 +1485,6 @@
         "one": "目前正在移除%(count)s个房间中的消息",
         "other": "目前正在移除%(count)s个房间中的消息"
     },
-    "Un-maximise": "取消最大化",
     "What location type do you want to share?": "你想分享什么位置类型？",
     "Drop a Pin": "放置图钉",
     "My live location": "我的实时位置",
@@ -2986,7 +2964,10 @@
         "join_button_tooltip_call_full": "抱歉——目前线路拥挤",
         "hide_sidebar_button": "隐藏侧边栏",
         "show_sidebar_button": "显示侧边栏",
-        "more_button": "更多"
+        "more_button": "更多",
+        "screenshare_monitor": "分享整个屏幕",
+        "screenshare_window": "应用程序窗口",
+        "screenshare_title": "分享内容"
     },
     "Other": "其他",
     "room_settings": {
@@ -3152,7 +3133,8 @@
         "bullet_1": "我们<Bold>不会</Bold>记录或配置任何账户数据",
         "bullet_2": "我们<Bold>不会</Bold>与第三方共享信息",
         "disable_prompt": "您可以随时在设置中关闭此功能",
-        "accept_button": "没问题"
+        "accept_button": "没问题",
+        "shared_data_heading": "以下数据之一可能被分享："
     },
     "chat_effects": {
         "confetti_description": "附加五彩纸屑发送",
@@ -3418,7 +3400,22 @@
             "revoke": "撤销权限",
             "move_left": "向左移动",
             "move_right": "向右移动"
-        }
+        },
+        "shared_data_name": "你的显示名称",
+        "shared_data_mxid": "你的用户 ID",
+        "shared_data_theme": "你的主题",
+        "shared_data_url": "%(brand)s 的链接",
+        "shared_data_room_id": "房间 ID",
+        "shared_data_widget_id": "挂件 ID",
+        "shared_data_warning_im": "使用此挂件可能会与 %(widgetDomain)s 及您的集成管理器共享数据 <helpIcon />。",
+        "shared_data_warning": "使用此挂件可能会和 %(widgetDomain)s 共享数据 <helpIcon />。",
+        "unencrypted_warning": "挂件不适用消息加密。",
+        "added_by": "挂件添加者",
+        "cookie_warning": "此挂件可能使用 cookie。",
+        "error_loading": "加载挂件时发生错误",
+        "error_mixed_content": "错误 - 混合内容",
+        "unmaximise": "取消最大化",
+        "popout": "在弹出式窗口中打开挂件"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3775,7 +3772,8 @@
         "tls": "无法连接家服务器 - 请检查网络连接，确保你的<a>家服务器 SSL 证书</a>被信任，且没有浏览器插件拦截请求。",
         "admin_contact_short": "请联系你的<a>服务器管理员</a>。",
         "non_urgent_echo_failure_toast": "你的服务器没有响应一些<a>请求</a>。",
-        "failed_copy": "复制失败"
+        "failed_copy": "复制失败",
+        "something_went_wrong": "出了点问题！"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3811,5 +3809,9 @@
         "all_settings": "所有设置",
         "metaspace_section": "固定到侧边栏",
         "sidebar_settings": "更多选项"
+    },
+    "lightbox": {
+        "rotate_left": "向左旋转",
+        "rotate_right": "向右旋转"
     }
 }

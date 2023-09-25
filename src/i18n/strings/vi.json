@@ -461,8 +461,6 @@
     "Reset event store?": "Đặt lại kho sự kiện?",
     "Language Dropdown": "Danh sách ngôn ngữ",
     "Information": "Thông tin",
-    "Rotate Right": "Xoay phải",
-    "Rotate Left": "Xoay trái",
     "%(count)s people you know have already joined": {
         "one": "%(count)s người bạn đã biết vừa tham gia",
         "other": "%(count)s người bạn đã biết vừa tham gia"
@@ -474,31 +472,12 @@
     },
     "expand": "mở rộng",
     "collapse": "thu hẹp",
-    "Share content": "Chia sẻ nội dung",
-    "Application window": "Cửa sổ ứng dụng",
-    "Share entire screen": "Chia sẻ toàn bộ màn hình",
     "This version of %(brand)s does not support searching encrypted messages": "Phiên bản %(brand)s này không hỗ trợ tìm kiếm tin nhắn được mã hóa",
     "This version of %(brand)s does not support viewing some encrypted files": "Phiên bản %(brand)s này không hỗ trợ xem một số tệp được mã hóa",
     "Use the <a>Desktop app</a> to search encrypted messages": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để tìm kiếm tin nhắn được mã hóa",
     "Use the <a>Desktop app</a> to see all encrypted files": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để xem tất cả các tệp được mã hóa",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Không thể khởi chạy tìm kiếm tin nhắn, hãy kiểm tra cài đặt của bạn <a>your settings</a> để biết thêm thông tin",
-    "Popout widget": "Tiện ích bật ra",
-    "Error - Mixed content": "Lỗi - Nội dung hỗn hợp",
-    "Error loading Widget": "Lỗi khi tải widget",
-    "This widget may use cookies.": "Tiện ích này có thể sử dụng cookie.",
-    "Widget added by": "widget được thêm bởi",
-    "Widgets do not use message encryption.": "Các widget không sử dụng mã hóa tin nhắn.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Sử dụng tiện ích này có thể chia sẻ dữ liệu <helpIcon /> với %(widgetDomain)s.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Sử dụng tiện ích này có thể chia sẻ dữ liệu <helpIcon /> với %(widgetDomain)s và trình quản lý tích hợp của bạn.",
-    "Widget ID": "Widget ID",
-    "Room ID": "ID phòng",
-    "%(brand)s URL": "%(brand)s URL",
-    "Your theme": "Chủ đề của bạn",
-    "Your user ID": "ID người dùng của bạn",
-    "Your display name": "Tên hiển thị của bạn",
-    "Any of the following data may be shared:": "Bất kỳ dữ liệu nào sau đây đều có thể được chia sẻ:",
     "Cancel search": "Hủy tìm kiếm",
-    "Something went wrong!": "Đã xảy ra lỗi!",
     "Can't load this message": "Không thể tải tin nhắn này",
     "Submit logs": "Gửi nhật ký",
     "edited": "đã chỉnh sửa",
@@ -1479,7 +1458,6 @@
     "Are you sure you're at the right place?": "Bạn có chắc là bạn đang ở đúng chỗ?",
     "To view %(roomName)s, you need an invite": "Để xem %(roomName)s, bạn cần một lời mời",
     "Disinvite from room": "Không mời vào phòng nữa",
-    "Your language": "Ngôn ngữ của bạn",
     "%(count)s participants": {
         "one": "1 người tham gia",
         "other": "%(count)s người tham gia"
@@ -1593,8 +1571,6 @@
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
     "Location": "Vị trí",
-    "Your device ID": "Định danh thiết bị của bạn",
-    "Un-maximise": "Hủy thu nhỏ",
     "This address does not point at this room": "Địa chỉ này không trỏ đến phòng này",
     "Choose a locale": "Chọn vùng miền",
     "Coworkers and teams": "Đồng nghiệp và nhóm",
@@ -1615,7 +1591,6 @@
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "Declining…": "Đang từ chối…",
-    "Image view": "Xem ảnh",
     "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
     "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
@@ -3076,7 +3051,10 @@
         "join_button_tooltip_call_full": "Xin lỗi — cuộc gọi này đang đầy",
         "hide_sidebar_button": "Ẩn thanh bên",
         "show_sidebar_button": "Hiển thị thanh bên",
-        "more_button": "Thêm"
+        "more_button": "Thêm",
+        "screenshare_monitor": "Chia sẻ toàn bộ màn hình",
+        "screenshare_window": "Cửa sổ ứng dụng",
+        "screenshare_title": "Chia sẻ nội dung"
     },
     "Other": "Khác",
     "room_settings": {
@@ -3247,7 +3225,8 @@
         "bullet_1": "Chúng tôi <Bold>không</Bold> thu thập hoặc lập hồ sơ bất kỳ dữ liệu tài khoản nào",
         "bullet_2": "Chúng tôi <Bold>không</Bold> chia sẻ thông tin với các bên thứ ba",
         "disable_prompt": "Bạn có thể tắt tính năng này bất cứ lúc nào trong cài đặt",
-        "accept_button": "Không sao cả"
+        "accept_button": "Không sao cả",
+        "shared_data_heading": "Bất kỳ dữ liệu nào sau đây đều có thể được chia sẻ:"
     },
     "chat_effects": {
         "confetti_description": "Gửi tin nhắn đã cho với hoa giấy",
@@ -3523,7 +3502,24 @@
             "revoke": "Thu hồi quyền",
             "move_left": "Di chuyển sang trái",
             "move_right": "Đi sang phải"
-        }
+        },
+        "shared_data_name": "Tên hiển thị của bạn",
+        "shared_data_mxid": "ID người dùng của bạn",
+        "shared_data_device_id": "Định danh thiết bị của bạn",
+        "shared_data_theme": "Chủ đề của bạn",
+        "shared_data_lang": "Ngôn ngữ của bạn",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "ID phòng",
+        "shared_data_widget_id": "Widget ID",
+        "shared_data_warning_im": "Sử dụng tiện ích này có thể chia sẻ dữ liệu <helpIcon /> với %(widgetDomain)s và trình quản lý tích hợp của bạn.",
+        "shared_data_warning": "Sử dụng tiện ích này có thể chia sẻ dữ liệu <helpIcon /> với %(widgetDomain)s.",
+        "unencrypted_warning": "Các widget không sử dụng mã hóa tin nhắn.",
+        "added_by": "widget được thêm bởi",
+        "cookie_warning": "Tiện ích này có thể sử dụng cookie.",
+        "error_loading": "Lỗi khi tải widget",
+        "error_mixed_content": "Lỗi - Nội dung hỗn hợp",
+        "unmaximise": "Hủy thu nhỏ",
+        "popout": "Tiện ích bật ra"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3893,7 +3889,8 @@
         "tls": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu.",
         "admin_contact_short": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn.",
         "non_urgent_echo_failure_toast": "Máy chủ của bạn không phản hồi một số yêu cầu <a>requests</a>.",
-        "failed_copy": "Sao chép không thành công"
+        "failed_copy": "Sao chép không thành công",
+        "something_went_wrong": "Đã xảy ra lỗi!"
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3931,5 +3928,10 @@
         "all_settings": "Tất cả cài đặt",
         "metaspace_section": "Ghim vào sidebar",
         "sidebar_settings": "Thêm tùy chọn"
+    },
+    "lightbox": {
+        "title": "Xem ảnh",
+        "rotate_left": "Xoay trái",
+        "rotate_right": "Xoay phải"
     }
 }

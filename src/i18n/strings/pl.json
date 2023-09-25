@@ -1,6 +1,5 @@
 {
     "This will allow you to reset your password and receive notifications.": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia.",
-    "Something went wrong!": "Coś poszło nie tak!",
     "Unknown error": "Nieznany błąd",
     "Create new room": "Utwórz nowy pokój",
     "Jan": "Sty",
@@ -349,8 +348,6 @@
     "e.g. my-room": "np. mój-pokój",
     "Some characters not allowed": "Niektóre znaki niedozwolone",
     "Remove recent messages": "Usuń ostatnie wiadomości",
-    "Rotate Left": "Obróć w lewo",
-    "Rotate Right": "Obróć w prawo",
     "Direct Messages": "Wiadomości prywatne",
     "Show more": "Pokaż więcej",
     "Ignored users": "Zignorowani użytkownicy",
@@ -388,7 +385,6 @@
     "Integrations are disabled": "Integracje są wyłączone",
     "Close preview": "Zamknij podgląd",
     "Cancel search": "Anuluj wyszukiwanie",
-    "Your theme": "Twój motyw",
     "Invite anyway": "Zaproś mimo to",
     "Notes": "Notatki",
     "Session name": "Nazwa sesji",
@@ -721,13 +717,6 @@
     "Bridges": "Mostki",
     "Verify User": "Weryfikuj użytkownika",
     "Verification Request": "Żądanie weryfikacji",
-    "Widgets do not use message encryption.": "Widżety nie używają szyfrowania wiadomości.",
-    "This widget may use cookies.": "Ten widżet może używać plików cookies.",
-    "Widget added by": "Widżet dodany przez",
-    "Widget ID": "ID widżetu",
-    "Room ID": "ID pokoju",
-    "Your user ID": "Twoje ID użytkownika",
-    "Your display name": "Twoja nazwa wyświetlana",
     "Jump to first unread room.": "Przejdź do pierwszego nieprzeczytanego pokoju.",
     "Jump to first invite.": "Przejdź do pierwszego zaproszenia.",
     "You verified %(name)s": "Zweryfikowałeś %(name)s",
@@ -821,8 +810,6 @@
     "Nothing pinned, yet": "Nie przypięto tu jeszcze niczego",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Jeżeli masz uprawnienia, przejdź do menu dowolnej wiadomości i wybierz <b>Przypnij</b>, aby przyczepić ją tutaj.",
     "Pinned messages": "Przypięte wiadomości",
-    "Error loading Widget": "Błąd ładowania widżetu",
-    "Error - Mixed content": "Błąd — zawartość mieszana",
     "You don't have permission to do this": "Nie masz uprawnień aby to zrobić",
     "Sent": "Wysłano",
     "Message preview": "Podgląd wiadomości",
@@ -1524,21 +1511,11 @@
     "Message from %(user)s": "Wiadomość od %(user)s",
     "Language Dropdown": "Rozwiń języki",
     "Message in %(room)s": "Wiadomość w %(room)s",
-    "Image view": "Widok obrazu",
-    "Popout widget": "Wyskakujący widżet",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s i Twoim menedżerem integracji.",
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
     "%(featureName)s Beta feedback": "%(featureName)s opinia Beta",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Jeśli anulujesz teraz, możesz stracić wiadomości szyfrowane i dane, jeśli stracisz dostęp do loginu i hasła.",
     "The request was cancelled.": "Żądanie zostało anulowane.",
     "Cancelled signature upload": "Przesyłanie sygnatury zostało anulowane",
-    "Any of the following data may be shared:": "Wszystkie wymienione dane mogą być udostępnione:",
-    "%(brand)s URL": "%(brand)s URL",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s.",
-    "Un-maximise": "Normalizuj",
-    "Share entire screen": "Udostępnij cały ekran",
-    "Application window": "Okno aplikacji",
-    "Share content": "Udostępnij zawartość",
     "What location type do you want to share?": "Jaki typ lokalizacji chcesz udostępnić?",
     "Drop a Pin": "Upuść przypinkę",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />.",
@@ -1749,8 +1726,6 @@
     "Error downloading audio": "Wystąpił błąd w trakcie pobierania audio",
     "Unnamed audio": "Audio bez nazwy",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
-    "Your language": "Twój język",
-    "Your device ID": "Twoje ID urządzenia",
     "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
     "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
     "Ask to join": "Poproś o dołączenie",
@@ -1773,7 +1748,6 @@
     "Messages sent by bots": "Wiadomości wysłane przez boty",
     "Mark all messages as read": "Oznacz wszystkie wiadomości jako przeczytane",
     "Other spaces you know": "Inne przestrzenie, które znasz",
-    "Your profile picture URL": "URL Twojego zdjęcia profilowego",
     "Reset to default settings": "Resetuj do ustawień domyślnych",
     "Unable to find user by email": "Nie udało się znaleźć użytkownika za pomocą e-maila",
     "Great! This passphrase looks strong enough": "Świetnie! To hasło wygląda na wystarczająco silne",
@@ -3328,7 +3302,10 @@
         "join_button_tooltip_call_full": "Przepraszamy — to połączenie jest już zapełnione",
         "hide_sidebar_button": "Ukryj pasek boczny",
         "show_sidebar_button": "Pokaż pasek boczny",
-        "more_button": "Więcej"
+        "more_button": "Więcej",
+        "screenshare_monitor": "Udostępnij cały ekran",
+        "screenshare_window": "Okno aplikacji",
+        "screenshare_title": "Udostępnij zawartość"
     },
     "Other": "Inne",
     "room_settings": {
@@ -3500,7 +3477,8 @@
         "bullet_1": "<Bold>Nie zapisujemy</Bold> żadnych danych, ani nie profilujemy twojego konta",
         "bullet_2": "<Bold>Nie udostępniamy</Bold> żadnych informacji podmiotom zewnętrznym",
         "disable_prompt": "Możesz to wyłączyć kiedy zechcesz w ustawieniach",
-        "accept_button": "To jest w porządku"
+        "accept_button": "To jest w porządku",
+        "shared_data_heading": "Wszystkie wymienione dane mogą być udostępnione:"
     },
     "chat_effects": {
         "confetti_description": "Wysyła podaną wiadomość z konfetti",
@@ -3792,7 +3770,25 @@
             "revoke": "Odwołaj uprawnienia",
             "move_left": "Przenieś w lewo",
             "move_right": "Przenieś w prawo"
-        }
+        },
+        "shared_data_name": "Twoja nazwa wyświetlana",
+        "shared_data_avatar": "URL Twojego zdjęcia profilowego",
+        "shared_data_mxid": "Twoje ID użytkownika",
+        "shared_data_device_id": "Twoje ID urządzenia",
+        "shared_data_theme": "Twój motyw",
+        "shared_data_lang": "Twój język",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "ID pokoju",
+        "shared_data_widget_id": "ID widżetu",
+        "shared_data_warning_im": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s i Twoim menedżerem integracji.",
+        "shared_data_warning": "Korzystanie z tego widżetu może współdzielić dane <helpIcon /> z %(widgetDomain)s.",
+        "unencrypted_warning": "Widżety nie używają szyfrowania wiadomości.",
+        "added_by": "Widżet dodany przez",
+        "cookie_warning": "Ten widżet może używać plików cookies.",
+        "error_loading": "Błąd ładowania widżetu",
+        "error_mixed_content": "Błąd — zawartość mieszana",
+        "unmaximise": "Normalizuj",
+        "popout": "Wyskakujący widżet"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4172,7 +4168,8 @@
         "tls": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania.",
         "admin_contact_short": "Skontaktuj się ze swoim <a>administratorem serwera</a>.",
         "non_urgent_echo_failure_toast": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
-        "failed_copy": "Kopiowanie nieudane"
+        "failed_copy": "Kopiowanie nieudane",
+        "something_went_wrong": "Coś poszło nie tak!"
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4210,5 +4207,10 @@
         "all_settings": "Wszystkie ustawienia",
         "metaspace_section": "Przypnij do paska bocznego",
         "sidebar_settings": "Więcej opcji"
+    },
+    "lightbox": {
+        "title": "Widok obrazu",
+        "rotate_left": "Obróć w lewo",
+        "rotate_right": "Obróć w prawo"
     }
 }

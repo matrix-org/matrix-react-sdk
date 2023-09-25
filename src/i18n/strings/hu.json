@@ -120,7 +120,6 @@
     "Error decrypting image": "Hiba a kép visszafejtésénél",
     "Error decrypting video": "Hiba a videó visszafejtésénél",
     "Add an Integration": "Integráció hozzáadása",
-    "Something went wrong!": "Valami rosszul sikerült.",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ezzel a folyamattal kimentheted a titkosított szobák üzeneteihez tartozó kulcsokat egy helyi fájlba. Ez után be tudod tölteni ezt a fájlt egy másik Matrix kliensbe, így az a kliens is vissza tudja fejteni az üzeneteket.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
@@ -173,7 +172,6 @@
     "Yesterday": "Tegnap",
     "Wednesday": "Szerda",
     "Thank you!": "Köszönjük!",
-    "Popout widget": "Kiugró kisalkalmazás",
     "Send Logs": "Naplók küldése",
     "Clear Storage and Sign Out": "Tárhely törlése és kijelentkezés",
     "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
@@ -390,8 +388,6 @@
     "You're previewing %(roomName)s. Want to join it?": "%(roomName)s szoba előnézetét látod. Belépsz?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s szobának nincs előnézete. Be szeretnél lépni?",
     "This room has already been upgraded.": "Ez a szoba már fejlesztve van.",
-    "Rotate Left": "Forgatás balra",
-    "Rotate Right": "Forgatás jobbra",
     "Some characters not allowed": "Néhány karakter nem engedélyezett",
     "Failed to get autodiscovery configuration from server": "Nem sikerült lekérni az automatikus felderítés beállításait a kiszolgálóról",
     "Invalid base_url for m.homeserver": "Hibás base_url az m.homeserver -hez",
@@ -508,20 +504,9 @@
     "None": "Semmi",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ezt a felhasználót figyelmen kívül hagyod, így az üzenetei el lesznek rejtve. <a>Megjelenítés mindenképpen.</a>",
     "Messages in this room are end-to-end encrypted.": "Az üzenetek a szobában végponttól végpontig titkosítottak.",
-    "Any of the following data may be shared:": "Az alábbi adatok közül bármelyik megosztásra kerülhet:",
-    "Your display name": "Saját megjelenítendő neve",
-    "Your user ID": "Saját felhasználói azonosítója",
-    "Your theme": "Saját témája",
-    "%(brand)s URL": "%(brand)s URL",
-    "Room ID": "Szobaazonosító",
-    "Widget ID": "Kisalkalmazás-azonosító",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Ennek a kisalkalmazásnak a használata adatot oszthat meg <helpIcon /> a(z) %(widgetDomain)s domainnel.",
-    "Widget added by": "A kisalkalmazást hozzáadta",
-    "This widget may use cookies.": "Ez a kisalkalmazás sütiket használhat.",
     "Cannot connect to integration manager": "Nem lehet kapcsolódni az integrációkezelőhöz",
     "The integration manager is offline or it cannot reach your homeserver.": "Az integrációkezelő nem működik, vagy nem éri el a Matrix-kiszolgálóját.",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
-    "Widgets do not use message encryption.": "A kisalkalmazások nem használnak üzenettitkosítást.",
     "Integrations are disabled": "Az integrációk le vannak tiltva",
     "Integrations not allowed": "Az integrációk nem engedélyezettek",
     "Manage integrations": "Integrációk kezelése",
@@ -1160,8 +1145,6 @@
     "Search for rooms or people": "Szobák vagy emberek keresése",
     "Sent": "Elküldve",
     "You don't have permission to do this": "Nincs jogosultsága ehhez",
-    "Error - Mixed content": "Hiba – Vegyes tartalom",
-    "Error loading Widget": "Hiba a kisalkalmazás betöltése során",
     "Pinned messages": "Kitűzött üzenetek",
     "Nothing pinned, yet": "Még semmi sincs kitűzve",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Üzenek keresés kezdő beállítása sikertelen, ellenőrizze a <a>beállításait</a> további információkért",
@@ -1191,7 +1174,6 @@
         "other": "%(count)s további előnézet megjelenítése"
     },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Ennek a kisalkalmazásnak a használata adatot oszthat meg <helpIcon /> a(z) %(widgetDomain)s oldallal és az integrációkezelőjével.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Az integrációkezelők megkapják a beállításokat, módosíthatják a kisalkalmazásokat, szobameghívókat küldhetnek és a hozzáférési szintet állíthatnak be az Ön nevében.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Integrációkezelő használata a botok, kisalkalmazások és matricacsomagok kezeléséhez.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Integrációkezelő használata <b>(%(serverName)s)</b> a botok, kisalkalmazások és matricacsomagok kezeléséhez.",
@@ -1212,9 +1194,6 @@
     "You're removing all spaces. Access will default to invite only": "Az összes teret törli. A hozzáférés alapállapota „csak meghívóval” lesz.",
     "User Directory": "Felhasználójegyzék",
     "Public room": "Nyilvános szoba",
-    "Share content": "Tartalom megosztása",
-    "Application window": "Alkalmazásablak",
-    "Share entire screen": "A teljes képernyő megosztása",
     "The call is in an unknown state!": "A hívás ismeretlen állapotban van!",
     "An unknown error occurred": "Ismeretlen hiba történt",
     "Their device couldn't start the camera or microphone": "A másik fél eszköze nem képes használni a kamerát vagy a mikrofont",
@@ -1556,7 +1535,6 @@
         "other": "%(count)s személy belépett"
     },
     "Read receipts": "Olvasási visszajelzés",
-    "Un-maximise": "Kicsinyítés",
     "Deactivating your account is a permanent action — be careful!": "A fiók felfüggesztése végleges — legyen óvatos!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
     "Remove search filter for %(filter)s": "Keresési szűrő eltávolítása innen: %(filter)s",
@@ -1738,7 +1716,6 @@
     "Start DM anyway and never warn me again": "Közvetlen beszélgetés indítása mindenképpen és később se figyelmeztessen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
     "Formatting": "Formázás",
-    "Image view": "Képnézet",
     "Search all rooms": "Keresés az összes szobában",
     "Search this room": "Keresés ebben a szobában",
     "Upload custom sound": "Egyéni hang feltöltése",
@@ -3255,7 +3232,10 @@
         "join_button_tooltip_call_full": "Bocsánat — ez a hívás betelt",
         "hide_sidebar_button": "Oldalsáv elrejtése",
         "show_sidebar_button": "Oldalsáv megjelenítése",
-        "more_button": "Több"
+        "more_button": "Több",
+        "screenshare_monitor": "A teljes képernyő megosztása",
+        "screenshare_window": "Alkalmazásablak",
+        "screenshare_title": "Tartalom megosztása"
     },
     "Other": "Egyéb",
     "room_settings": {
@@ -3426,7 +3406,8 @@
         "bullet_1": "<Bold>Nem</Bold> mentünk vagy analizálunk semmilyen felhasználói adatot",
         "bullet_2": "<Bold>Nem</Bold> osztunk meg információt harmadik féllel",
         "disable_prompt": "Ezt bármikor kikapcsolhatja a beállításokban",
-        "accept_button": "Rendben van"
+        "accept_button": "Rendben van",
+        "shared_data_heading": "Az alábbi adatok közül bármelyik megosztásra kerülhet:"
     },
     "chat_effects": {
         "confetti_description": "Konfettivel küldi el az üzenetet",
@@ -3716,7 +3697,22 @@
             "revoke": "Jogosultságok visszavonása",
             "move_left": "Mozgatás balra",
             "move_right": "Mozgatás jobbra"
-        }
+        },
+        "shared_data_name": "Saját megjelenítendő neve",
+        "shared_data_mxid": "Saját felhasználói azonosítója",
+        "shared_data_theme": "Saját témája",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "Szobaazonosító",
+        "shared_data_widget_id": "Kisalkalmazás-azonosító",
+        "shared_data_warning_im": "Ennek a kisalkalmazásnak a használata adatot oszthat meg <helpIcon /> a(z) %(widgetDomain)s oldallal és az integrációkezelőjével.",
+        "shared_data_warning": "Ennek a kisalkalmazásnak a használata adatot oszthat meg <helpIcon /> a(z) %(widgetDomain)s domainnel.",
+        "unencrypted_warning": "A kisalkalmazások nem használnak üzenettitkosítást.",
+        "added_by": "A kisalkalmazást hozzáadta",
+        "cookie_warning": "Ez a kisalkalmazás sütiket használhat.",
+        "error_loading": "Hiba a kisalkalmazás betöltése során",
+        "error_mixed_content": "Hiba – Vegyes tartalom",
+        "unmaximise": "Kicsinyítés",
+        "popout": "Kiugró kisalkalmazás"
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -4094,7 +4090,8 @@
         "tls": "Nem lehet kapcsolódni a Matrix-kiszolgálóhoz – ellenőrizze a kapcsolatot, győződjön meg arról, hogy a <a>Matrix-kiszolgáló tanúsítványa</a> hiteles, és hogy a böngészőkiegészítők nem blokkolják a kéréseket.",
         "admin_contact_short": "Vegye fel a kapcsolatot a <a>kiszolgáló rendszergazdájával</a>.",
         "non_urgent_echo_failure_toast": "A kiszolgálója nem válaszol néhány <a>kérésre</a>.",
-        "failed_copy": "Sikertelen másolás"
+        "failed_copy": "Sikertelen másolás",
+        "something_went_wrong": "Valami rosszul sikerült."
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4132,5 +4129,10 @@
         "all_settings": "Minden beállítás",
         "metaspace_section": "Kitűzés az oldalsávra",
         "sidebar_settings": "További beállítások"
+    },
+    "lightbox": {
+        "title": "Képnézet",
+        "rotate_left": "Forgatás balra",
+        "rotate_right": "Forgatás jobbra"
     }
 }

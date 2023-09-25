@@ -123,7 +123,6 @@
     "%(duration)sd": "%(duration)sd",
     "Invalid file%(extra)s": "Neplatný soubor%(extra)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete přesměrováni na stránku třetí strany k ověření svého účtu pro používání s %(integrationsUrl)s. Chcete pokračovat?",
-    "Something went wrong!": "Něco se nepodařilo!",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...": {
         "other": "A %(count)s dalších..."
@@ -175,7 +174,6 @@
     "Share room": "Sdílet místnost",
     "Only room administrators will see this warning": "Toto upozornění uvidí jen správci místnosti",
     "You don't currently have any stickerpacks enabled": "Momentálně nemáte aktivní žádné balíčky s nálepkami",
-    "Popout widget": "Otevřít widget v novém okně",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Není možné načíst událost, na kterou se odpovídalo. Buď neexistuje, nebo nemáte oprávnění ji zobrazit.",
     "<a>In reply to</a> <pill>": "<a>V odpovědi na</a> <pill>",
     "Preparing to send logs": "Příprava na odeslání záznamů",
@@ -372,8 +370,6 @@
     "Revoke invite": "Zrušit pozvání",
     "Invited by %(sender)s": "Pozván od uživatele %(sender)s",
     "edited": "upraveno",
-    "Rotate Left": "Otočit doleva",
-    "Rotate Right": "Otočit doprava",
     "Edit message": "Upravit zprávu",
     "Notes": "Poznámky",
     "Sign out and remove encryption keys?": "Odhlásit a odstranit šifrovací klíče?",
@@ -514,17 +510,6 @@
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
     "Messages in this room are end-to-end encrypted.": "Zprávy jsou v této místnosti koncově šifrované.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tohoto uživatele ignorujete, takže jsou jeho zprávy skryté. <a>Přesto zobrazit.</a>",
-    "Any of the following data may be shared:": "Následující data můžou být sdílena:",
-    "Your display name": "Vaše zobrazované jméno",
-    "Your user ID": "Vaše ID",
-    "Your theme": "Váš motiv vzhledu",
-    "%(brand)s URL": "URL %(brand)su",
-    "Room ID": "ID místnosti",
-    "Widget ID": "ID widgetu",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Použití tohoto widgetu může sdílet data <helpIcon /> s %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Widgety nepoužívají šifrování zpráv.",
-    "Widget added by": "Widget přidal",
-    "This widget may use cookies.": "Widget může používat cookies.",
     "Integrations are disabled": "Integrace jsou zakázané",
     "Integrations not allowed": "Integrace nejsou povolené",
     "Upgrade private room": "Aktualizovat soukromou místnost",
@@ -1159,8 +1144,6 @@
     "Message preview": "Náhled zprávy",
     "Sent": "Odesláno",
     "You don't have permission to do this": "K tomu nemáte povolení",
-    "Error - Mixed content": "Chyba - Smíšený obsah",
-    "Error loading Widget": "Chyba při načítání widgetu",
     "Pinned messages": "Připnuté zprávy",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Pokud máte oprávnění, otevřete nabídku na libovolné zprávě a výběrem možnosti <b>Připnout</b> je sem vložte.",
     "Nothing pinned, yet": "Zatím není nic připnuto",
@@ -1187,7 +1170,6 @@
     "Unnamed audio": "Nepojmenovaný audio soubor",
     "Error processing audio message": "Došlo k chybě při zpracovávání hlasové zprávy",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Použití tohoto widgetu může sdílet data <helpIcon /> s %(widgetDomain)s a vaším správcem integrací.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Správci integrace přijímají konfigurační data a mohou vaším jménem upravovat widgety, odesílat pozvánky do místností a nastavovat úrovně oprávnění.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Použít správce integrací na správu botů, widgetů a nálepek.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Použít správce integrací <b>(%(serverName)s)</b> na správu botů, widgetů a nálepek.",
@@ -1240,9 +1222,6 @@
     "Mentions & keywords": "Zmínky a klíčová slova",
     "New keyword": "Nové klíčové slovo",
     "Keyword": "Klíčové slovo",
-    "Share content": "Sdílet obsah",
-    "Application window": "Okno aplikace",
-    "Share entire screen": "Sdílet celou obrazovku",
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
@@ -1557,7 +1536,6 @@
     "Unread email icon": "Ikona nepřečteného e-mailu",
     "Read receipts": "Potvrzení o přečtení",
     "Deactivating your account is a permanent action — be careful!": "Deaktivace účtu je trvalá akce - buďte opatrní!",
-    "Un-maximise": "Zrušit maximalizaci",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru.",
     "If you can't see who you're looking for, send them your invite link.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
     "Some results may be hidden for privacy": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
@@ -1742,15 +1720,12 @@
     "Error changing password": "Chyba při změně hesla",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP stav %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Neznámá chyba při změně hesla (%(stringifiedError)s)",
-    "Image view": "Zobrazení obrázku",
     "Search all rooms": "Vyhledávat ve všech místnostech",
     "Search this room": "Vyhledávat v této místnosti",
     "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
     "Waiting for users to join %(brand)s": "Čekání na připojení uživatelů k %(brand)s",
     "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
-    "Your language": "Váš jazyk",
-    "Your device ID": "ID vašeho zařízení",
     "Great! This passphrase looks strong enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
     "Ask to join": "Požádat o vstup",
@@ -1767,7 +1742,6 @@
     "Quick Actions": "Rychlé akce",
     "Mark all messages as read": "Označit všechny zprávy jako přečtené",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Zprávy jsou zde koncově šifrovány. Ověřte %(displayName)s v jeho profilu - klepněte na jeho profilový obrázek.",
-    "Your profile picture URL": "URL vašeho profilového obrázku",
     "People cannot join unless access is granted.": "Lidé nemohou vstoupit, pokud jim není povolen přístup.",
     "Email Notifications": "E-mailová oznámení",
     "Unable to find user by email": "Nelze najít uživatele podle e-mailu",
@@ -3346,7 +3320,10 @@
         "join_button_tooltip_call_full": "Omlouváme se — tento hovor je v současné době plný",
         "hide_sidebar_button": "Skrýt postranní panel",
         "show_sidebar_button": "Zobrazit postranní panel",
-        "more_button": "Více"
+        "more_button": "Více",
+        "screenshare_monitor": "Sdílet celou obrazovku",
+        "screenshare_window": "Okno aplikace",
+        "screenshare_title": "Sdílet obsah"
     },
     "Other": "Další možnosti",
     "room_settings": {
@@ -3518,7 +3495,8 @@
         "bullet_1": "<Bold>Nezaznamenáváme ani neprofilujeme</Bold> žádné údaje o účtu",
         "bullet_2": "<Bold>Nesdílíme</Bold> informace s třetími stranami",
         "disable_prompt": "Tuto funkci můžete kdykoli vypnout v nastavení",
-        "accept_button": "To je v pořádku"
+        "accept_button": "To je v pořádku",
+        "shared_data_heading": "Následující data můžou být sdílena:"
     },
     "chat_effects": {
         "confetti_description": "Pošle zprávu s konfetami",
@@ -3811,7 +3789,25 @@
             "revoke": "Odvolat oprávnění",
             "move_left": "Posunout doleva",
             "move_right": "Posunout doprava"
-        }
+        },
+        "shared_data_name": "Vaše zobrazované jméno",
+        "shared_data_avatar": "URL vašeho profilového obrázku",
+        "shared_data_mxid": "Vaše ID",
+        "shared_data_device_id": "ID vašeho zařízení",
+        "shared_data_theme": "Váš motiv vzhledu",
+        "shared_data_lang": "Váš jazyk",
+        "shared_data_url": "URL %(brand)su",
+        "shared_data_room_id": "ID místnosti",
+        "shared_data_widget_id": "ID widgetu",
+        "shared_data_warning_im": "Použití tohoto widgetu může sdílet data <helpIcon /> s %(widgetDomain)s a vaším správcem integrací.",
+        "shared_data_warning": "Použití tohoto widgetu může sdílet data <helpIcon /> s %(widgetDomain)s.",
+        "unencrypted_warning": "Widgety nepoužívají šifrování zpráv.",
+        "added_by": "Widget přidal",
+        "cookie_warning": "Widget může používat cookies.",
+        "error_loading": "Chyba při načítání widgetu",
+        "error_mixed_content": "Chyba - Smíšený obsah",
+        "unmaximise": "Zrušit maximalizaci",
+        "popout": "Otevřít widget v novém okně"
     },
     "feedback": {
         "sent": "Zpětná vazba byla odeslána",
@@ -4195,7 +4191,8 @@
         "tls": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci.",
         "admin_contact_short": "Kontaktujte <a>administrátora serveru</a>.",
         "non_urgent_echo_failure_toast": "Váš server neodpovídá na některé <a>požadavky</a>.",
-        "failed_copy": "Nepodařilo se zkopírovat"
+        "failed_copy": "Nepodařilo se zkopírovat",
+        "something_went_wrong": "Něco se nepodařilo!"
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4233,5 +4230,10 @@
         "all_settings": "Všechna nastavení",
         "metaspace_section": "Připnout na postranní panel",
         "sidebar_settings": "Více možností"
+    },
+    "lightbox": {
+        "title": "Zobrazení obrázku",
+        "rotate_left": "Otočit doleva",
+        "rotate_right": "Otočit doprava"
     }
 }

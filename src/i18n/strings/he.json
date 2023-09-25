@@ -458,15 +458,12 @@
     "Power level": "דרגת מנהל",
     "Language Dropdown": "תפריט שפות",
     "Information": "מידע",
-    "Rotate Right": "סובב ימינה",
-    "Rotate Left": "סובב שמאלה",
     "collapse": "אחד",
     "expand": "הרחב",
     "This version of %(brand)s does not support searching encrypted messages": "גרסה זו של %(brand)s אינה תומכת בחיפוש הודעות מוצפנות",
     "This version of %(brand)s does not support viewing some encrypted files": "גרסה זו של %(brand)s אינה תומכת בצפייה בקבצים מוצפנים מסוימים",
     "Use the <a>Desktop app</a> to search encrypted messages": "השתמשו ב <a> אפליקציית שולחן העבודה </a> לחיפוש הודעות מוצפנות",
     "Use the <a>Desktop app</a> to see all encrypted files": "השתמשו ב <a> אפליקציית שולחן העבודה </a> כדי לראות את כל הקבצים המוצפנים",
-    "Popout widget": "יישומון קופץ",
     "Error decrypting video": "שגיאה בפענוח וידאו",
     "You sent a verification request": "שלחתם בקשה לקוד אימות",
     "%(name)s wants to verify": "%(name)s רוצה לאמת",
@@ -678,19 +675,7 @@
     "Error changing power level requirement": "שגיאה בשינוי דרישת דרגת ניהול",
     "Banned by %(displayName)s": "נחסם על ידי %(displayName)s",
     "Failed to unban": "שגיאה בהסרת חסימה",
-    "This widget may use cookies.": "יישומון זה עשוי להשתמש בעוגיות.",
-    "Widget added by": "ישומון נוסף על ידי",
-    "Widgets do not use message encryption.": "יישומונים אינם משתמשים בהצפנת הודעות.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s.",
-    "Widget ID": "קוד זהות הישומון",
-    "Room ID": "קוד זהות החדר",
-    "%(brand)s URL": "קישור %(brand)s",
-    "Your theme": "ערכת הנושא שלכם",
-    "Your user ID": "קוד זהות המשתמש שלכם",
-    "Your display name": "שם התצוגה שלך",
-    "Any of the following data may be shared:": "ניתן לשתף כל אחד מהנתונים הבאים:",
     "Cancel search": "בטל חיפוש",
-    "Something went wrong!": "משהו השתבש!",
     "Can't load this message": "לא ניתן לטעון הודעה זו",
     "Submit logs": "הגש יומנים",
     "edited": "נערך",
@@ -1044,7 +1029,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "היישומון יאמת את מזהה המשתמש שלך, אך לא יוכל לבצע פעולות עבורך:",
     "Allow this widget to verify your identity": "אפשר לווידג'ט זה לאמת את זהותך",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s ומנהל האינטגרציה שלך.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "מנהלי שילוב מקבלים נתוני תצורה ויכולים לשנות ווידג'טים, לשלוח הזמנות לחדר ולהגדיר רמות הספק מטעמכם.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "השתמש במנהל שילוב לניהול בוטים, ווידג'טים וחבילות מדבקות.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "השתמש במנהל שילוב <b> (%(serverName)s) </b> כדי לנהל בוטים, ווידג'טים וחבילות מדבקות.",
@@ -1094,7 +1078,6 @@
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
     "Confirm your Security Phrase": "אשר את ביטוי האבטחה שלך",
-    "Application window": "חלון אפליקציה",
     "Results will be visible when the poll is ended": "תוצאות יהיו זמינות כאשר הסקר יסתיים",
     "Sorry, you can't edit a poll after votes have been cast.": "סליחה, אתם לא יכולים לערוך את שאלות הסקר לאחר שבוצעו הצבעות.",
     "Can't edit poll": "לא ניתן לערוךסקר",
@@ -2321,7 +2304,8 @@
         "join_button_tooltip_connecting": "מקשר",
         "hide_sidebar_button": "הסתר סרגל צד",
         "show_sidebar_button": "הצג סרגל צד",
-        "more_button": "יותר"
+        "more_button": "יותר",
+        "screenshare_window": "חלון אפליקציה"
     },
     "Other": "אחר",
     "room_settings": {
@@ -2463,7 +2447,8 @@
         "enable_prompt": "עזרו בשיפור %(analyticsOwner)s",
         "consent_migration": "הסכמתם בעבר לשתף איתנו מידע אנונימי לגבי השימוש שלכם. אנחנו מעדכנים איך זה מתבצע.",
         "learn_more": "שתף נתונים אנונימיים כדי לעזור לנו לזהות בעיות. ללא אישי. אין צדדים שלישיים. <LearnMoreLink>למידע נוסף</LearnMoreLink>",
-        "accept_button": "זה בסדר"
+        "accept_button": "זה בסדר",
+        "shared_data_heading": "ניתן לשתף כל אחד מהנתונים הבאים:"
     },
     "chat_effects": {
         "confetti_description": "שולח הודעה זו ביחד עם קונפטי",
@@ -2703,7 +2688,19 @@
             "revoke": "שלילת הרשאות",
             "move_left": "הזז שמאלה",
             "move_right": "הזז ימינה"
-        }
+        },
+        "shared_data_name": "שם התצוגה שלך",
+        "shared_data_mxid": "קוד זהות המשתמש שלכם",
+        "shared_data_theme": "ערכת הנושא שלכם",
+        "shared_data_url": "קישור %(brand)s",
+        "shared_data_room_id": "קוד זהות החדר",
+        "shared_data_widget_id": "קוד זהות הישומון",
+        "shared_data_warning_im": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s ומנהל האינטגרציה שלך.",
+        "shared_data_warning": "שימוש ביישומון זה עשוי לשתף נתונים <helpIcon /> עם %(widgetDomain)s.",
+        "unencrypted_warning": "יישומונים אינם משתמשים בהצפנת הודעות.",
+        "added_by": "ישומון נוסף על ידי",
+        "cookie_warning": "יישומון זה עשוי להשתמש בעוגיות.",
+        "popout": "יישומון קופץ"
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -2972,7 +2969,8 @@
         "tls": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות.",
         "admin_contact_short": "צרו קשר עם <a>מנהל השרת</a>.",
         "non_urgent_echo_failure_toast": "השרת שלכם אינו מגיב לבקשות מסויימות <a>בקשות</a>.",
-        "failed_copy": "שגיאה בהעתקה"
+        "failed_copy": "שגיאה בהעתקה",
+        "something_went_wrong": "משהו השתבש!"
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3009,5 +3007,9 @@
     },
     "theme": {
         "match_system": "בהתאם למערכת"
+    },
+    "lightbox": {
+        "rotate_left": "סובב שמאלה",
+        "rotate_right": "סובב ימינה"
     }
 }

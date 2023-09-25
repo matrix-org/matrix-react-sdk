@@ -235,12 +235,8 @@
     "Add an Integration": "Voegt een integroasje toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
-    "Something went wrong!": "’t Es etwa misgegoan!",
     "Delete Widget": "Widget verwydern",
-    "Popout widget": "Widget in e nieuwe veinster openn",
     "Create new room": "E nieuw gesprek anmoakn",
-    "Rotate Left": "Links droain",
-    "Rotate Right": "Rechts droain",
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Edit message": "Bericht bewerkn",
@@ -1148,7 +1144,8 @@
         "context_menu": {
             "delete": "Widget verwydern",
             "delete_warning": "E widget verwydern doet da voor alle gebruukers in dit gesprek. Zy je zeker da je deze widget wil verwydern?"
-        }
+        },
+        "popout": "Widget in e nieuwe veinster openn"
     },
     "scalar": {
         "error_create": "Kostege de widget nie anmoakn.",
@@ -1170,7 +1167,8 @@
         "admin_contact": "Gelieve <a>contact ip te neemn me je dienstbeheerder</a> vo deze dienst te bluuvn gebruukn.",
         "mixed_content": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
         "tls": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
-        "failed_copy": "Kopieern mislukt"
+        "failed_copy": "Kopieern mislukt",
+        "something_went_wrong": "’t Es etwa misgegoan!"
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",
@@ -1182,5 +1180,9 @@
     "room_summary_card_back_action_label": "Gespreksinformoasje",
     "onboarding": {
         "create_account": "Account anmoakn"
+    },
+    "lightbox": {
+        "rotate_left": "Links droain",
+        "rotate_right": "Rechts droain"
     }
 }

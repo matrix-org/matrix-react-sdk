@@ -200,14 +200,7 @@
     "You declined": "Du avslo",
     "You cancelled": "Du avbrøt",
     "edited": "redigert",
-    "Your user ID": "Din bruker-ID",
-    "Your theme": "Ditt tema",
-    "%(brand)s URL": "%(brand)s-URL",
-    "Room ID": "Rom-ID",
-    "Widget ID": "Modul-ID",
     "Delete Widget": "Slett modul",
-    "Rotate Left": "Roter til venstre",
-    "Rotate Right": "Roter til høyre",
     "Power level": "Styrkenivå",
     "e.g. my-room": "f.eks. mitt-rom",
     "Enter a server name": "Skriv inn et tjenernavn",
@@ -260,9 +253,6 @@
     "Room Name": "Rommets navn",
     "Room Topic": "Rommets tema",
     "Encryption not enabled": "Kryptering er ikke skrudd på",
-    "Something went wrong!": "Noe gikk galt!",
-    "Your display name": "Ditt visningsnavn",
-    "Widget added by": "Modulen ble lagt til av",
     "Create new room": "Opprett et nytt rom",
     "Language Dropdown": "Språk-nedfallsmeny",
     "Custom level": "Tilpasset nivå",
@@ -378,7 +368,6 @@
     "Error decrypting video": "Feil under dekryptering av video",
     "Add an Integration": "Legg til en integrering",
     "Can't load this message": "Klarte ikke å laste inn denne meldingen",
-    "Popout widget": "Utsprettsmodul",
     "Room address": "Rommets adresse",
     "This address is available to use": "Denne adressen er allerede i bruk",
     "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
@@ -410,7 +399,6 @@
     "Your messages are not secure": "Dine meldinger er ikke sikre",
     "Edited at %(date)s": "Redigert den %(date)s",
     "Click to view edits": "Klikk for å vise redigeringer",
-    "This widget may use cookies.": "Denne modulen bruker kanskje infokapsler.",
     "Confirm account deactivation": "Bekreft deaktivering av kontoen",
     "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
@@ -1636,7 +1624,16 @@
             "revoke": "Trekk tilbake rettigheter",
             "move_left": "Gå til venstre",
             "move_right": "Gå til høyre"
-        }
+        },
+        "shared_data_name": "Ditt visningsnavn",
+        "shared_data_mxid": "Din bruker-ID",
+        "shared_data_theme": "Ditt tema",
+        "shared_data_url": "%(brand)s-URL",
+        "shared_data_room_id": "Rom-ID",
+        "shared_data_widget_id": "Modul-ID",
+        "added_by": "Modulen ble lagt til av",
+        "cookie_warning": "Denne modulen bruker kanskje infokapsler.",
+        "popout": "Utsprettsmodul"
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -1786,6 +1783,11 @@
         "sidebar_settings": "Flere alternativer"
     },
     "error": {
-        "failed_copy": "Mislyktes i å kopiere"
+        "failed_copy": "Mislyktes i å kopiere",
+        "something_went_wrong": "Noe gikk galt!"
+    },
+    "lightbox": {
+        "rotate_left": "Roter til venstre",
+        "rotate_right": "Roter til høyre"
     }
 }

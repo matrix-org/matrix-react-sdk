@@ -115,7 +115,6 @@
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
     },
     "Create new room": "Criar nova sala",
-    "Something went wrong!": "Não foi possível carregar!",
     "Admin Tools": "Ferramentas de administração",
     "No display name": "Nenhum nome e sobrenome",
     "%(roomName)s does not exist.": "%(roomName)s não existe.",
@@ -217,7 +216,6 @@
     "Unable to load backup status": "Não foi possível carregar o status do backup",
     "Unable to restore backup": "Não foi possível restaurar o backup",
     "No backup found!": "Nenhum backup encontrado!",
-    "Popout widget": "Widget Popout",
     "Send Logs": "Enviar relatórios",
     "Failed to decrypt %(failedCount)s sessions!": "Falha ao descriptografar as sessões de %(failedCount)s!",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Você não pode enviar nenhuma mensagem até revisar e concordar com <consentLink>nossos termos e condições</consentLink>.",
@@ -375,7 +373,6 @@
     "Encryption not enabled": "Criptografia desativada",
     "The encryption used by this room isn't supported.": "A criptografia usada nesta sala não é suportada.",
     "%(name)s wants to verify": "%(name)s solicita confirmação",
-    "Widgets do not use message encryption.": "Widgets não usam criptografia de mensagens.",
     "Enter the name of a new server you want to explore.": "Digite o nome do novo servidor que você deseja explorar.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
@@ -422,14 +419,6 @@
     "Can't load this message": "Não foi possível carregar esta mensagem",
     "Submit logs": "Enviar relatórios",
     "Cancel search": "Cancelar busca",
-    "Any of the following data may be shared:": "Qualquer um dos seguintes dados pode ser compartilhado:",
-    "Your theme": "Seu tema",
-    "Room ID": "ID da sala",
-    "Widget ID": "ID do widget",
-    "Widget added by": "Widget adicionado por",
-    "This widget may use cookies.": "Este widget pode usar cookies.",
-    "Rotate Left": "Girar para a esquerda",
-    "Rotate Right": "Girar para a direita",
     "Language Dropdown": "Menu suspenso de idiomas",
     "Room address": "Endereço da sala",
     "e.g. my-room": "por exemplo: minha-sala",
@@ -466,10 +455,6 @@
     "New published address (e.g. #alias:server)": "Novo endereço publicado (por exemplo, #nome:server)",
     "Local Addresses": "Endereços locais",
     "%(name)s cancelled verifying": "%(name)s cancelou a confirmação",
-    "Your display name": "Seu nome e sobrenome",
-    "Your user ID": "Sua ID de usuário",
-    "%(brand)s URL": "Link do %(brand)s",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Se você usar esse widget, os dados <helpIcon /> poderão ser compartilhados com %(widgetDomain)s.",
     "Power level": "Nível de permissão",
     "Looks good": "Muito bem",
     "Close dialog": "Fechar caixa de diálogo",
@@ -1080,7 +1065,6 @@
     "Share invite link": "Compartilhar link de convite",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Se você usar esse widget, os dados poderão ser compartilhados <helpIcon /> com %(widgetDomain)s & seu gerenciador de integrações.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "O gerenciador de integrações recebe dados de configuração e pode modificar widgets, enviar convites para salas e definir níveis de permissão em seu nome.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Use o gerenciador de integrações para gerenciar bots, widgets e pacotes de figurinhas.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Use o gerenciador de integrações em <b>(%(serverName)s)</b> para gerenciar bots, widgets e pacotes de figurinhas.",
@@ -1160,9 +1144,6 @@
         "one": "Ver 1 membro",
         "other": "Ver todos os %(count)s membros"
     },
-    "Share content": "Compatilhe conteúdo",
-    "Application window": "Janela da aplicação",
-    "Share entire screen": "Compartilhe a tela inteira",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
     "Add reaction": "Adicionar reação",
     "Error processing voice message": "Erro ao processar a mensagem de voz",
@@ -1209,8 +1190,6 @@
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
-    "Error - Mixed content": "Erro - Conteúdo misto",
-    "Error loading Widget": "Erro ao carregar o Widget",
     "Show %(count)s other previews": {
         "one": "Exibir a %(count)s outra prévia",
         "other": "Exibir as %(count)s outras prévias"
@@ -2463,7 +2442,10 @@
         "join_button_tooltip_connecting": "Conectando",
         "hide_sidebar_button": "Esconder a barra lateral",
         "show_sidebar_button": "Exibir a barra lateral",
-        "more_button": "Mais"
+        "more_button": "Mais",
+        "screenshare_monitor": "Compartilhe a tela inteira",
+        "screenshare_window": "Janela da aplicação",
+        "screenshare_title": "Compatilhe conteúdo"
     },
     "Other": "Outros",
     "room_settings": {
@@ -2608,7 +2590,8 @@
         "enable_prompt": "Ajude a melhorar %(analyticsOwner)s",
         "consent_migration": "Você consentiu anteriormente em compartilhar dados de uso anônimos conosco. Estamos atualizando como isso funciona.",
         "learn_more": "Compartilhe dados anônimos para nos ajudar a identificar problemas. Nada pessoal. Sem terceiros. <LearnMoreLink>Saiba mais</LearnMoreLink>",
-        "accept_button": "Isso é bom"
+        "accept_button": "Isso é bom",
+        "shared_data_heading": "Qualquer um dos seguintes dados pode ser compartilhado:"
     },
     "chat_effects": {
         "confetti_description": "Envia a mensagem com confetes",
@@ -2844,7 +2827,21 @@
             "revoke": "Revogar permissões",
             "move_left": "Mover para a esquerda",
             "move_right": "Mover para a direita"
-        }
+        },
+        "shared_data_name": "Seu nome e sobrenome",
+        "shared_data_mxid": "Sua ID de usuário",
+        "shared_data_theme": "Seu tema",
+        "shared_data_url": "Link do %(brand)s",
+        "shared_data_room_id": "ID da sala",
+        "shared_data_widget_id": "ID do widget",
+        "shared_data_warning_im": "Se você usar esse widget, os dados poderão ser compartilhados <helpIcon /> com %(widgetDomain)s & seu gerenciador de integrações.",
+        "shared_data_warning": "Se você usar esse widget, os dados <helpIcon /> poderão ser compartilhados com %(widgetDomain)s.",
+        "unencrypted_warning": "Widgets não usam criptografia de mensagens.",
+        "added_by": "Widget adicionado por",
+        "cookie_warning": "Este widget pode usar cookies.",
+        "error_loading": "Erro ao carregar o Widget",
+        "error_mixed_content": "Erro - Conteúdo misto",
+        "popout": "Widget Popout"
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3109,7 +3106,8 @@
         "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
         "admin_contact_short": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>.",
         "non_urgent_echo_failure_toast": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
-        "failed_copy": "Não foi possível copiar"
+        "failed_copy": "Não foi possível copiar",
+        "something_went_wrong": "Não foi possível carregar!"
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3142,5 +3140,9 @@
         "all_settings": "Todas as configurações",
         "metaspace_section": "Fixar na barra lateral",
         "sidebar_settings": "Mais opções"
+    },
+    "lightbox": {
+        "rotate_left": "Girar para a esquerda",
+        "rotate_right": "Girar para a direita"
     }
 }

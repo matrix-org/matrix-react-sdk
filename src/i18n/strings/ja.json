@@ -121,9 +121,7 @@
     "Add an Integration": "統合を追加",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？",
     "Email address": "メールアドレス",
-    "Something went wrong!": "問題が発生しました！",
     "Delete Widget": "ウィジェットを削除",
-    "Popout widget": "ウィジェットをポップアウト",
     "Home": "ホーム",
     "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",
     "collapse": "折りたたむ",
@@ -260,7 +258,6 @@
     "Encrypted by an unverified session": "未認証のセッションによる暗号化",
     "Close preview": "プレビューを閉じる",
     "Direct Messages": "ダイレクトメッセージ",
-    "Your display name": "あなたの表示名",
     "Power level": "権限レベル",
     "Removing…": "削除しています…",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
@@ -296,10 +293,6 @@
     "Local Addresses": "ローカルアドレス",
     "Error changing power level": "権限レベルを変更する際にエラーが発生しました",
     "Cancel search": "検索をキャンセル",
-    "Your user ID": "あなたのユーザーID",
-    "Your theme": "あなたのテーマ",
-    "%(brand)s URL": "%(brand)sのURL",
-    "Room ID": "ルームID",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "このセッションでは<b>鍵をバックアップしていません</b>が、復元に使用したり、今後鍵を追加したりできるバックアップがあります。",
@@ -922,10 +915,6 @@
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>アップグレードすると、このルームの新しいバージョンが作成されます。</b>今ある全てのメッセージは、アーカイブしたルームに残ります。",
     "Nothing pinned, yet": "固定メッセージはありません",
     "Pinned messages": "固定メッセージ",
-    "Widgets do not use message encryption.": "ウィジェットはメッセージの暗号化を行いません。",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "このウィジェットを使うと、データ<helpIcon />が%(widgetDomain)sと共有される可能性があります。",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "このウィジェットを使うと、データ<helpIcon />が%(widgetDomain)sとインテグレーションマネージャーと共有される可能性があります。",
-    "Widget ID": "ウィジェットID",
     "Use the <a>Desktop app</a> to see all encrypted files": "全ての暗号化されたファイルを表示するには<a>デスクトップ用のアプリ</a>を使用してください",
     "User Directory": "ユーザーディレクトリー",
     "Or send invite link": "もしくはリンクを送信",
@@ -1075,7 +1064,6 @@
     "Sent": "送信済",
     "You don't have permission to do this": "これを行う権限がありません",
     "Joining": "参加しています",
-    "Application window": "アプリケーションのウィンドウ",
     "Verification Request": "認証の要求",
     "Unable to copy a link to the room to the clipboard.": "ルームのリンクをクリップボードにコピーできませんでした。",
     "Unable to copy room link": "ルームのリンクをコピーできません",
@@ -1298,17 +1286,13 @@
     "Set a Security Phrase": "セキュリティーフレーズを設定",
     "Confirm your Security Phrase": "セキュリティーフレーズを確認",
     "Error processing voice message": "音声メッセージを処理する際にエラーが発生しました",
-    "Error loading Widget": "ウィジェットを読み込む際にエラーが発生しました",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "セキュリティーキーもしくは認証可能な端末が設定されていません。この端末では、以前暗号化されたメッセージにアクセスすることができません。この端末で本人確認を行うには、認証用の鍵を再設定する必要があります。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "Signature upload failed": "署名のアップロードに失敗しました",
     "toggle event": "イベントを切り替える",
     "%(spaceName)s menu": "%(spaceName)sのメニュー",
-    "Share content": "コンテンツを共有",
     "Search spaces": "スペースを検索",
     "Unnamed audio": "名前のない音声",
-    "Rotate Right": "右に回転",
-    "Rotate Left": "左に回転",
     "Other searches": "その他の検索",
     "To search messages, look for this icon at the top of a room <icon/>": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
@@ -1325,14 +1309,12 @@
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "アップロードしようとしているいくつかのファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "アップロードしようとしているファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "a new master key signature": "新しいマスターキーの署名",
-    "This widget may use cookies.": "このウィジェットはクッキーを使用する可能性があります。",
     "Search names and descriptions": "名前と説明文を検索",
     "Currently joining %(count)s rooms": {
         "one": "現在%(count)s個のルームに参加しています",
         "other": "現在%(count)s個のルームに参加しています"
     },
     "Error downloading audio": "音声をダウンロードする際にエラーが発生しました",
-    "Share entire screen": "全画面を共有",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s個のリアクションを再送信",
     "Enter your account password to confirm the upgrade:": "アップグレードを承認するには、アカウントのパスワードを入力してください：",
     "You'll need to authenticate with the server to confirm the upgrade.": "サーバーをアップグレードするには認証が必要です。",
@@ -1351,7 +1333,6 @@
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
     "Remember this": "これを記憶",
     "Message search initialisation failed, check <a>your settings</a> for more information": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
-    "Any of the following data may be shared:": "以下のデータが共有される可能性があります：",
     "%(count)s votes cast. Vote to see the results": {
         "one": "合計%(count)s票。投票すると結果を確認できます",
         "other": "合計%(count)s票。投票すると結果を確認できます"
@@ -1403,7 +1384,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
     "Including %(commaSeparatedMembers)s": "%(commaSeparatedMembers)sを含む",
-    "Error - Mixed content": "エラー - 混在コンテンツ",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "このルームは、あなたが管理者でないスペースの中にあります。そのスペースでは古いルームは表示され続けますが、参加者は新しいルームに参加するように求められます。",
     "Disinvite from %(roomName)s": "%(roomName)sへの招待を取り消す",
     "Unban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック解除",
@@ -1532,7 +1512,6 @@
     "Remove server “%(roomServer)s”": "サーバー“%(roomServer)s”を削除",
     "Coworkers and teams": "同僚とチーム",
     "Choose a locale": "ロケールを選択",
-    "Un-maximise": "最大化をやめる",
     "%(displayName)s's live location": "%(displayName)sの位置情報（ライブ）",
     "You need to have the right permissions in order to share locations in this room.": "このルームでの位置情報の共有には適切な権限が必要です。",
     "To view, please enable video rooms in Labs first": "表示するには、まずラボのビデオ通話ルームを有効にしてください",
@@ -1565,7 +1544,6 @@
     "Enable live location sharing": "位置情報（ライブ）の共有を有効にする",
     "Preserve system messages": "システムメッセージを保存",
     "Message pending moderation": "保留中のメッセージのモデレート",
-    "Widget added by": "ウィジェットの追加者",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Send email": "電子メールを送信",
     "Close call": "通話を終了",
@@ -3169,7 +3147,10 @@
         "join_button_tooltip_call_full": "すみません ― この通話は現在満員です",
         "hide_sidebar_button": "サイドバーを表示しない",
         "show_sidebar_button": "サイドバーを表示",
-        "more_button": "その他"
+        "more_button": "その他",
+        "screenshare_monitor": "全画面を共有",
+        "screenshare_window": "アプリケーションのウィンドウ",
+        "screenshare_title": "コンテンツを共有"
     },
     "Other": "その他",
     "room_settings": {
@@ -3337,7 +3318,8 @@
         "bullet_1": "私たちは、アカウントのいかなるデータも記録したり分析したりすることは<Bold>ありません</Bold>",
         "bullet_2": "私たちは、情報を第三者と共有することは<Bold>ありません</Bold>",
         "disable_prompt": "これはいつでも設定から無効にできます",
-        "accept_button": "問題ありません"
+        "accept_button": "問題ありません",
+        "shared_data_heading": "以下のデータが共有される可能性があります："
     },
     "chat_effects": {
         "confetti_description": "メッセージを紙吹雪と共に送信",
@@ -3619,7 +3601,22 @@
             "revoke": "権限を取り消す",
             "move_left": "左に移動",
             "move_right": "右に移動"
-        }
+        },
+        "shared_data_name": "あなたの表示名",
+        "shared_data_mxid": "あなたのユーザーID",
+        "shared_data_theme": "あなたのテーマ",
+        "shared_data_url": "%(brand)sのURL",
+        "shared_data_room_id": "ルームID",
+        "shared_data_widget_id": "ウィジェットID",
+        "shared_data_warning_im": "このウィジェットを使うと、データ<helpIcon />が%(widgetDomain)sとインテグレーションマネージャーと共有される可能性があります。",
+        "shared_data_warning": "このウィジェットを使うと、データ<helpIcon />が%(widgetDomain)sと共有される可能性があります。",
+        "unencrypted_warning": "ウィジェットはメッセージの暗号化を行いません。",
+        "added_by": "ウィジェットの追加者",
+        "cookie_warning": "このウィジェットはクッキーを使用する可能性があります。",
+        "error_loading": "ウィジェットを読み込む際にエラーが発生しました",
+        "error_mixed_content": "エラー - 混在コンテンツ",
+        "unmaximise": "最大化をやめる",
+        "popout": "ウィジェットをポップアウト"
     },
     "feedback": {
         "sent": "フィードバックを送信しました",
@@ -3988,7 +3985,8 @@
         "tls": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
         "admin_contact_short": "<a>サーバー管理者</a>に問い合わせてください。",
         "non_urgent_echo_failure_toast": "あなたのサーバーはいくつかの<a>リクエスト</a>に応答しません。",
-        "failed_copy": "コピーに失敗しました"
+        "failed_copy": "コピーに失敗しました",
+        "something_went_wrong": "問題が発生しました！"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4026,5 +4024,9 @@
         "all_settings": "全ての設定",
         "metaspace_section": "サイドバーに固定",
         "sidebar_settings": "他のオプション"
+    },
+    "lightbox": {
+        "rotate_left": "左に回転",
+        "rotate_right": "右に回転"
     }
 }

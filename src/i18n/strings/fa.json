@@ -719,8 +719,6 @@
     "Language Dropdown": "منو زبان",
     "View message": "مشاهده پیام",
     "Information": "اطلاعات",
-    "Rotate Right": "چرخش به راست",
-    "Rotate Left": "چرخش به چپ",
     "%(count)s people you know have already joined": {
         "one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
         "other": "%(count)s نفر از افرادی که می شناسید قبلاً به آن پیوسته‌اند"
@@ -740,23 +738,11 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "این فرآیند به شما اجازه می‌دهد تا کلیدهای امنیتی را وارد (Import) کنید، کلیدهایی که قبلا از کلاینت‌های دیگر خود استخراج (Export) کرده‌اید. پس از آن شما می‌توانید هر پیامی را که کلاینت دیگر قادر به رمزگشایی آن بوده را، رمزگشایی و مشاهده کنید.",
     "Use the <a>Desktop app</a> to search encrypted messages": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Use the <a>Desktop app</a> to see all encrypted files": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
-    "Widget added by": "ابزارک اضافه شده توسط",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "فایل استخراج‌شده با یک عبارت امنیتی محافظت می‌شود. برای رمزگشایی فایل باید عبارت امنیتی را وارد کنید.",
-    "Popout widget": "بیرون انداختن ابزارک",
-    "This widget may use cookies.": "این ابزارک ممکن است از کوکی استفاده کند.",
-    "Widgets do not use message encryption.": "ابزارک ها از رمزگذاری پیام استفاده نمی کنند.",
     "File to import": "فایل برای واردکردن (Import)",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s به اشتراک بگذارد.",
     "New Recovery Method": "روش بازیابی جدید",
     "A new Security Phrase and key for Secure Messages have been detected.": "یک عبارت امنیتی و کلید جدید برای پیام‌رسانی امن شناسایی شد.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر روش بازیابی جدیدی را تنظیم نکرده‌اید، ممکن است حمله‌کننده‌ای تلاش کند به حساب کاربری شما دسترسی پیدا کند. لطفا گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش جدیدِ بازیابی در بخش تنظیمات انتخاب کنید.",
-    "Widget ID": "شناسه ابزارک",
-    "Room ID": "شناسه اتاق",
-    "%(brand)s URL": "آدرس %(brand)s",
-    "Your theme": "پوسته شما",
-    "Your user ID": "شناسه کاربری شما",
-    "Your display name": "نام نمایشی شما",
-    "Any of the following data may be shared:": "هر یک از داده های زیر ممکن است به اشتراک گذاشته شود:",
     "This session is encrypting history using the new recovery method.": "این نشست تاریخچه‌ی پیام‌های رمزشده را با استفاده از روش جدیدِ بازیابی، رمز می‌کند.",
     "Cancel search": "لغو جستجو",
     "Go to Settings": "برو به تنظیمات",
@@ -765,7 +751,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "اگر این کار را به صورت تصادفی انجام دادید، می‌توانید سازوکار پیام امن را برای این نشست تنظیم کرده که باعث می‌شود تمام تاریخچه‌ی این نشست با استفاده از یک روش جدیدِ بازیابی، مجددا رمزشود.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید.",
-    "Something went wrong!": "مشکلی پیش آمد!",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
     "Can't load this message": "بارگیری این پیام امکان پذیر نیست",
     "Submit logs": "ارسال لاگ‌ها",
@@ -1149,7 +1134,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "با استفاده از نام یا نام کاربری (مانند <userId/>)، گفتگوی جدیدی را با دیگران شروع کنید.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "با استفاده از نام، آدرس ایمیل و یا نام کاربری (مانند <userId/>)، یک گفتگوی جدید را شروع کنید.",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s شما اجازهٔ استفاده از یک مدیر یکپارچگی را برای این کار نمی دهد. لطفاً با مدیری تماس بگیرید.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s و مدیر یکپارچگیتان هم رسانی کند.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "برای مدیریت بات‌ها، ابزارک‌ها و بسته‌های برچسب، از یک مدیر پکپارچه‌سازی استفاده کنید.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "برای مدیریت بات‌ها، ابزارک‌ها و بسته‌های برچسب، از یک مدیر پکپارچه‌سازی <b>(%(serverName)s)</b> استفاده کنید.",
     "Identity server (%(server)s)": "کارساز هویت (%(server)s)",
@@ -2291,7 +2275,8 @@
         "enable_prompt": "بهتر کردن راهنمای کاربری %(analyticsOwner)s",
         "consent_migration": "شما به ارسال گزارش چگونگی استفاده از سرویس رضایت داده بودید. ما نحوه استفاده از این اطلاعات را بروز میکنیم.",
         "learn_more": "اطلاعات خود را به صورت ناشناس با ما به اشتراک بگذارید تا متوجه مشکلات موجود شویم. بدون استفاده شخصی توسط خود و یا شرکا<LearnMoreLink>یادگیری بیشتر</LearnMoreLink>",
-        "accept_button": "بسیارعالی"
+        "accept_button": "بسیارعالی",
+        "shared_data_heading": "هر یک از داده های زیر ممکن است به اشتراک گذاشته شود:"
     },
     "chat_effects": {
         "confetti_description": "این پیام را با انیمیشن بارش کاغد شادی ارسال کن",
@@ -2537,7 +2522,19 @@
             "revoke": "دسترسی‌ها را لغو کنید",
             "move_left": "به سمت چپ ببر",
             "move_right": "به سمت راست ببر"
-        }
+        },
+        "shared_data_name": "نام نمایشی شما",
+        "shared_data_mxid": "شناسه کاربری شما",
+        "shared_data_theme": "پوسته شما",
+        "shared_data_url": "آدرس %(brand)s",
+        "shared_data_room_id": "شناسه اتاق",
+        "shared_data_widget_id": "شناسه ابزارک",
+        "shared_data_warning_im": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s و مدیر یکپارچگیتان هم رسانی کند.",
+        "shared_data_warning": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s به اشتراک بگذارد.",
+        "unencrypted_warning": "ابزارک ها از رمزگذاری پیام استفاده نمی کنند.",
+        "added_by": "ابزارک اضافه شده توسط",
+        "cookie_warning": "این ابزارک ممکن است از کوکی استفاده کند.",
+        "popout": "بیرون انداختن ابزارک"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2836,7 +2833,8 @@
         "tls": "اتصال به سرور میسر نیست - لطفا اتصال اینترنت خود را بررسی کنید؛ اطمینان حاصل کنید <a>گواهینامه‌ی SSL سرور شما</a> قابل اعتماد است، و اینکه پلاگینی بر روی مرورگر شما مانع از ارسال درخواست به سرور نمی‌شود.",
         "admin_contact_short": "تماس با <a>مدیر کارسازتان</a>.",
         "non_urgent_echo_failure_toast": "سرور شما به بعضی <a>درخواست‌ها</a> پاسخ نمی‌دهد.",
-        "failed_copy": "خطا در گرفتن رونوشت"
+        "failed_copy": "خطا در گرفتن رونوشت",
+        "something_went_wrong": "مشکلی پیش آمد!"
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2867,5 +2865,9 @@
     "thread_view_back_action_label": "بازگشت به موضوع",
     "quick_settings": {
         "all_settings": "همه تنظیمات"
+    },
+    "lightbox": {
+        "rotate_left": "چرخش به چپ",
+        "rotate_right": "چرخش به راست"
     }
 }

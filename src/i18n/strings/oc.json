@@ -92,8 +92,6 @@
     "Yesterday": "Ièr",
     "Show image": "Afichar l'imatge",
     "Cancel search": "Anullar la recèrca",
-    "Rotate Left": "Pivotar cap a èrra",
-    "Rotate Right": "Pivotar cap a drecha",
     "Server name": "Títol del servidor",
     "Notes": "Nòtas",
     "Unavailable": "Pas disponible",
@@ -394,5 +392,9 @@
             "favourite": "Favorit",
             "low_priority": "Prioritat bassa"
         }
+    },
+    "lightbox": {
+        "rotate_left": "Pivotar cap a èrra",
+        "rotate_right": "Pivotar cap a drecha"
     }
 }

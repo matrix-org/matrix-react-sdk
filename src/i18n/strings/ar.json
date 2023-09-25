@@ -1,5 +1,4 @@
 {
-    "Something went wrong!": "هناك خطأ ما!",
     "Create new room": "إنشاء غرفة جديدة",
     "Failed to change password. Is your password correct?": "فشلت عملية تعديل الكلمة السرية. هل كلمتك السرية صحيحة ؟",
     "Send": "إرسال",
@@ -46,26 +45,12 @@
     "Not Trusted": "غير موثوقة",
     "Language Dropdown": "قائمة اللغة المنسدلة",
     "Information": "المعلومات",
-    "Rotate Right": "أدر لليمين",
-    "Rotate Left": "أدر لليسار",
     "expand": "توسيع",
     "collapse": "تضييق",
     "This version of %(brand)s does not support searching encrypted messages": "لا يدعم هذا الإصدار من %(brand)s البحث في الرسائل المشفرة",
     "This version of %(brand)s does not support viewing some encrypted files": "لا يدعم هذا الإصدار من %(brand)s s عرض بعض الملفات المشفرة",
     "Use the <a>Desktop app</a> to search encrypted messages": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
     "Use the <a>Desktop app</a> to see all encrypted files": "استخدم <a> تطبيق سطح المكتب </a> لمشاهدة جميع الملفات المشفرة",
-    "Popout widget": "عنصر الواجهة المنبثق",
-    "This widget may use cookies.": "قد يستخدم عنصر الواجهة هذا ملفات تعريف الارتباط.",
-    "Widget added by": "عنصر واجهة أضافه",
-    "Widgets do not use message encryption.": "عناصر الواجهة لا تستخدم تشفير الرسائل.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "قد يؤدي استخدام هذه الأداة إلى مشاركة البيانات <helpIcon /> مع%(widgetDomain)s.",
-    "Widget ID": "معرّف عنصر واجهة",
-    "Room ID": "معرّف الغرفة",
-    "%(brand)s URL": "رابط %(brand)s",
-    "Your theme": "مظهر واجهتك",
-    "Your user ID": "معرّف مستخدمك",
-    "Your display name": "اسمك الظاهر",
-    "Any of the following data may be shared:": "يمكن أن تُشارَك أي من البيانات التالية:",
     "Cancel search": "إلغاء البحث",
     "Can't load this message": "تعذر تحميل هذه الرسالة",
     "Submit logs": "إرسال السجلات",
@@ -478,7 +463,6 @@
     "Algeria": "الجزائر",
     "Åland Islands": "جزر آلاند",
     "Explore rooms": "استكشِف الغرف",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "قد يؤدي استخدام عنصر واجهة المستخدم هذا إلى مشاركة البيانات <helpIcon /> مع %(widgetDomain)s ومدير التكامل الخاص بك.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "يتلقى مديرو التكامل بيانات الضبط، ويمكنهم تعديل عناصر واجهة المستخدم، وإرسال دعوات الغرف، وتعيين مستويات القوة نيابة عنك.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "استخدم مدير التكامل لإدارة البوتات وعناصر الواجهة وحزم الملصقات.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "استخدم مدير التكامل <b>(%(serverName)s)</b> لإدارة البوتات وعناصر الواجهة وحزم الملصقات.",
@@ -1357,7 +1341,19 @@
         },
         "error_need_to_be_logged_in": "عليك الولوج.",
         "error_need_invite_permission": "يجب أن تكون قادرًا على دعوة المستخدمين للقيام بذلك.",
-        "no_name": "تطبيق غير معروف"
+        "no_name": "تطبيق غير معروف",
+        "shared_data_name": "اسمك الظاهر",
+        "shared_data_mxid": "معرّف مستخدمك",
+        "shared_data_theme": "مظهر واجهتك",
+        "shared_data_url": "رابط %(brand)s",
+        "shared_data_room_id": "معرّف الغرفة",
+        "shared_data_widget_id": "معرّف عنصر واجهة",
+        "shared_data_warning_im": "قد يؤدي استخدام عنصر واجهة المستخدم هذا إلى مشاركة البيانات <helpIcon /> مع %(widgetDomain)s ومدير التكامل الخاص بك.",
+        "shared_data_warning": "قد يؤدي استخدام هذه الأداة إلى مشاركة البيانات <helpIcon /> مع%(widgetDomain)s.",
+        "unencrypted_warning": "عناصر الواجهة لا تستخدم تشفير الرسائل.",
+        "added_by": "عنصر واجهة أضافه",
+        "cookie_warning": "قد يستخدم عنصر الواجهة هذا ملفات تعريف الارتباط.",
+        "popout": "عنصر الواجهة المنبثق"
     },
     "zxcvbn": {
         "suggestions": {
@@ -1514,7 +1510,15 @@
     "error": {
         "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك.",
         "non_urgent_echo_failure_toast": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
-        "failed_copy": "تعذر النسخ"
+        "failed_copy": "تعذر النسخ",
+        "something_went_wrong": "هناك خطأ ما!"
     },
-    "room_summary_card_back_action_label": "معلومات الغرفة"
+    "room_summary_card_back_action_label": "معلومات الغرفة",
+    "analytics": {
+        "shared_data_heading": "يمكن أن تُشارَك أي من البيانات التالية:"
+    },
+    "lightbox": {
+        "rotate_left": "أدر لليسار",
+        "rotate_right": "أدر لليمين"
+    }
 }

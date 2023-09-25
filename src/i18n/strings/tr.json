@@ -124,7 +124,6 @@
     "Error decrypting video": "Video şifre çözme hatası",
     "Add an Integration": "Entegrasyon ekleyin",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
-    "Something went wrong!": "Bir şeyler yanlış gitti!",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Notification targets": "Bildirim hedefleri",
@@ -149,11 +148,7 @@
     "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
-    "%(brand)s URL": "%(brand)s Linki",
-    "Room ID": "Oda ID",
     "expand": "genişlet",
-    "Rotate Left": "Sola Döndür",
-    "Rotate Right": "Sağa Döndür",
     "Power level": "Güç düzeyi",
     "e.g. my-room": "örn. odam",
     "Some characters not allowed": "Bazı karakterlere izin verilmiyor",
@@ -419,7 +414,6 @@
     "And %(count)s more...": {
         "other": "ve %(count)s kez daha..."
     },
-    "Popout widget": "Görsel bileşeni göster",
     "Language Dropdown": "Dil Listesi",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
@@ -466,10 +460,6 @@
     },
     "%(name)s cancelled verifying": "%(name)s doğrulama iptal edildi",
     "Cancel search": "Aramayı iptal et",
-    "Your display name": "Ekran adınız",
-    "Your user ID": "Kullanıcı ID",
-    "Your theme": "Temanız",
-    "Widget ID": "Görsel Bileşen ID si",
     "Delete Widget": "Görsel Bileşen Sil",
     "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
@@ -2039,7 +2029,14 @@
         "context_menu": {
             "delete": "Görsel bileşen sil",
             "remove": "Herkes için sil"
-        }
+        },
+        "shared_data_name": "Ekran adınız",
+        "shared_data_mxid": "Kullanıcı ID",
+        "shared_data_theme": "Temanız",
+        "shared_data_url": "%(brand)s Linki",
+        "shared_data_room_id": "Oda ID",
+        "shared_data_widget_id": "Görsel Bileşen ID si",
+        "popout": "Görsel bileşeni göster"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2212,7 +2209,8 @@
         "tls": "Ana Sunucu'ya bağlanılamıyor - lütfen bağlantınızı kontrol edin ,<a> Ana Sunucu SSL sertifikanızın </a> güvenilir olduğundan ve bir tarayıcı uzantısının istekleri engellemiyor olduğundan emin olun.",
         "admin_contact_short": "<a>Sunucu yöneticinize</a> başvurun.",
         "non_urgent_echo_failure_toast": "Sunucunuz bası <a>istekler'e</a> onay vermiyor.",
-        "failed_copy": "Kopyalama başarısız"
+        "failed_copy": "Kopyalama başarısız",
+        "something_went_wrong": "Bir şeyler yanlış gitti!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2238,5 +2236,9 @@
     "quick_settings": {
         "all_settings": "Tüm ayarlar",
         "sidebar_settings": "Daha fazla seçenek"
+    },
+    "lightbox": {
+        "rotate_left": "Sola Döndür",
+        "rotate_right": "Sağa Döndür"
     }
 }

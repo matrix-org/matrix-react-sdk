@@ -260,10 +260,6 @@
     "Can't load this message": "Yegguma ad d-yali yizen-a",
     "Submit logs": "Azen iɣmisen",
     "Cancel search": "Sefsex anadi",
-    "Your user ID": "Asulay-ik·m n useqdac",
-    "Your theme": "Asentel-inek·inem",
-    "Room ID": "Asulay n texxamt",
-    "Widget ID": "Asulay n yiwiǧit",
     "Power level": "Sagen aswir",
     "Custom level": "Sagen aswir",
     "<a>In reply to</a> <pill>": "<a>Deg tririt i</a> <pill>",
@@ -353,17 +349,8 @@
     "Room avatar": "Avaṭar n texxamt",
     "Accepting…": "Aqbal…",
     "Your homeserver": "Aqeddac-ik·im agejdan",
-    "Your display name": "Isem-ik·im yettwaskanen",
-    "%(brand)s URL": "%(brand)s URL",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Aseqdec n uwiǧit-a yezmer ad bḍun yisefka <helpIcon /> d %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Iwiǧiten ur seqdacen ara awgelhen n yiznan.",
-    "Widget added by": "Awiǧit yettwarna sɣur",
-    "This widget may use cookies.": "Awiǧit-a yezmer ad iseqdec inagan n tuqqna.",
     "Delete Widget": "Kkes awiǧit",
-    "Popout widget": "Awiǧit attalan",
     "expand": "snefli",
-    "Rotate Left": "Zzi ɣer uzelmaḍ",
-    "Rotate Right": "Zzi ɣer uyeffus",
     "Language Dropdown": "Tabdart n udrurem n tutlayin",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
     "Room address": "Tansa n texxamt",
@@ -583,8 +570,6 @@
     "Edited at %(date)s": "Yettwaẓreg deg %(date)s",
     "Click to view edits": "Sit i wakken ad twaliḍ aseẓreg",
     "Edited at %(date)s. Click to view edits.": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag.",
-    "Something went wrong!": "Yella wayen ur nteddu ara akken iwata!",
-    "Any of the following data may be shared:": "Yal yiwen seg yisefka i d-iteddun zemren ad ttwabḍun:",
     "Invite anyway and never warn me again": "Ɣas akken nced-d yerna ur iyi-id-ttɛeggin ara akk",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Ttxil-k·m ini-aɣ-d acu ur nteddu ara akken ilaq neɣ, akken i igerrez, rnu ugur deg Github ara ad d-igelmen ugur.",
     "Preparing to download logs": "Aheyyi i usali n yiɣmisen",
@@ -995,7 +980,6 @@
     "United States": "Iwanaken-Yeddukklen-N-Temrikt",
     "New Caledonia": "Kaliduni amaynut",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Imsefrak n yimsidaf remmsen-d isefka n uswel, syen ad uɣalen zemren ad beddlen iwiǧiten, ad aznen tinubgiwin ɣer texxamin, ad yesbadu daɣen tazmert n yiswiren s yiswiren deg ubdil-ik·im.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Seqdec amsefrak n umsidef <b>(%(serverName)s)</b> i usefrek n yibuten, n yiwiǧiten d tɣawsiwin n usenteḍ.",
@@ -2022,7 +2006,19 @@
             "remove": "Kkes i meṛṛa",
             "move_left": "Mutti s azelmaḍ",
             "move_right": "Mutti s ayfus"
-        }
+        },
+        "shared_data_name": "Isem-ik·im yettwaskanen",
+        "shared_data_mxid": "Asulay-ik·m n useqdac",
+        "shared_data_theme": "Asentel-inek·inem",
+        "shared_data_url": "%(brand)s URL",
+        "shared_data_room_id": "Asulay n texxamt",
+        "shared_data_widget_id": "Asulay n yiwiǧit",
+        "shared_data_warning_im": "Aseqdec n uwiǧit-a yezmer ad yebḍu isefka <helpIcon/> d %(widgetDomain)s & amsefrak-inek·inem n umsidef.",
+        "shared_data_warning": "Aseqdec n uwiǧit-a yezmer ad bḍun yisefka <helpIcon /> d %(widgetDomain)s.",
+        "unencrypted_warning": "Iwiǧiten ur seqdacen ara awgelhen n yiznan.",
+        "added_by": "Awiǧit yettwarna sɣur",
+        "cookie_warning": "Awiǧit-a yezmer ad iseqdec inagan n tuqqna.",
+        "popout": "Awiǧit attalan"
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2189,7 +2185,8 @@
         "tls": "Yegguma ad yeqqen ɣer uqeddac agejdan - ttxil-k·m senqed tuqqna-inek·inem, tḍemneḍ belli <a>aselken n SSL n uqeddac agejdan</a> yettwattkal, rnu aseɣzan n yiminig-nni ur issewḥal ara isutar.",
         "admin_contact_short": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
         "non_urgent_echo_failure_toast": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n <a>yisuturen</a>.",
-        "failed_copy": "Anɣal ur yeddi ara"
+        "failed_copy": "Anɣal ur yeddi ara",
+        "something_went_wrong": "Yella wayen ur nteddu ara akken iwata!"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2206,5 +2203,12 @@
     "quick_settings": {
         "all_settings": "Akk iɣewwaren",
         "sidebar_settings": "Ugar n textiṛiyin"
+    },
+    "analytics": {
+        "shared_data_heading": "Yal yiwen seg yisefka i d-iteddun zemren ad ttwabḍun:"
+    },
+    "lightbox": {
+        "rotate_left": "Zzi ɣer uzelmaḍ",
+        "rotate_right": "Zzi ɣer uyeffus"
     }
 }

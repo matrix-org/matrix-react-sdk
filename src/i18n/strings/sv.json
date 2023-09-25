@@ -165,7 +165,6 @@
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "Something went wrong!": "Något gick fel!",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kommer inte att kunna ångra den här ändringen eftersom du degraderar dig själv. Om du är den sista privilegierade användaren i rummet blir det omöjligt att återfå behörigheter.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kommer inte att kunna ångra den här ändringen eftersom du höjer användaren till samma behörighetsnivå som dig själv.",
     "You don't currently have any stickerpacks enabled": "Du har för närvarande inga dekalpaket aktiverade",
@@ -173,7 +172,6 @@
     "Error decrypting video": "Fel vid avkryptering av video",
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
-    "Popout widget": "Poppa ut widget",
     "Passphrases must match": "Lösenfraser måste matcha",
     "Passphrase must not be empty": "Lösenfrasen får inte vara tom",
     "Confirm passphrase": "Bekräfta lösenfrasen",
@@ -418,19 +416,6 @@
     "%(name)s wants to verify": "%(name)s vill verifiera",
     "You sent a verification request": "Du skickade en verifieringsbegäran",
     "Cancel search": "Avbryt sökningen",
-    "Any of the following data may be shared:": "Vissa av följande data kan delas:",
-    "Your display name": "Ditt visningsnamn",
-    "Your user ID": "Ditt användar-ID",
-    "Your theme": "Ditt tema",
-    "%(brand)s URL": "%(brand)s-URL",
-    "Room ID": "Rums-ID",
-    "Widget ID": "Widget-ID",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s.",
-    "Widgets do not use message encryption.": "Widgets använder inte meddelandekryptering.",
-    "Widget added by": "Widget tillagd av",
-    "This widget may use cookies.": "Denna widget kan använda kakor.",
-    "Rotate Left": "Rotera vänster",
-    "Rotate Right": "Rotera höger",
     "Language Dropdown": "Språkmeny",
     "e.g. my-room": "t.ex. mitt-rum",
     "Some characters not allowed": "Vissa tecken är inte tillåtna",
@@ -1159,13 +1144,10 @@
     "Message preview": "Meddelandeförhandsgranskning",
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
-    "Error - Mixed content": "Fel - blandat innehåll",
-    "Error loading Widget": "Fel vid laddning av widget",
     "Pinned messages": "Fästa meddelanden",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Om du har behörighet, öppna menyn på ett meddelande och välj <b>Fäst</b> för att fösta dem här.",
     "Nothing pinned, yet": "Inget fäst än",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s och din integrationshanterare.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integrationshanterare får konfigurationsdata och kan ändra widgetar, skicka rumsinbjudningar och ställa in behörighetsnivåer å dina vägnar.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Använd en integrationshanterare för att hantera bottar, widgets och dekalpaket.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Använd en integrationshanterare <b>(%(serverName)s)</b> för att hantera bottar, widgets och dekalpaket.",
@@ -1231,9 +1213,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt rum.",
     "Published addresses can be used by anyone on any server to join your space.": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt utrymme.",
     "Please provide an address": "Ange en adress, tack",
-    "Share content": "Dela innehåll",
-    "Application window": "Programfönster",
-    "Share entire screen": "Dela hela skärmen",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisering av meddelandesök misslyckades, kolla <a>dina inställningar</a> för mer information",
     "Adding spaces has moved.": "Tilläggning av utrymmen har flyttats.",
     "Search for rooms": "Sök efter rum",
@@ -1556,7 +1535,6 @@
         "one": "%(count)s person gick med"
     },
     "Read receipts": "Läskvitton",
-    "Un-maximise": "Avmaximera",
     "Deactivating your account is a permanent action — be careful!": "Avaktivering av ditt konto är en permanent handling — var försiktig!",
     "Remove search filter for %(filter)s": "Ta bort sökfilter för %(filter)s",
     "Start a group chat": "Starta en gruppchatt",
@@ -1734,15 +1712,12 @@
     "Message from %(user)s": "Meddelande från %(user)s",
     "Answered elsewhere": "Besvarat på annat håll",
     "unknown status code": "okänd statuskod",
-    "Image view": "Bildvy",
     "Waiting for users to join %(brand)s": "Väntar på att användare går med i %(brand)s",
     "Error details": "Feldetaljer",
     "Desktop app logo": "Skrivbordsappslogga",
-    "Your device ID": "Ditt enhets-ID",
     "Message in %(room)s": "Meddelande i rum %(room)s",
     "The sender has blocked you from receiving this message": "Avsändaren har blockerat dig från att ta emot det här meddelandet",
     "Ended a poll": "Avslutade en omröstning",
-    "Your language": "Ditt språk",
     "Start DM anyway and never warn me again": "Starta DM ändå och varna mig aldrig igen",
     "Start DM anyway": "Starta DM ändå",
     "Server returned %(statusCode)s with error code %(errorCode)s": "Servern gav svar %(statusCode)s med felkoden %(errorCode)s",
@@ -3282,7 +3257,10 @@
         "join_button_tooltip_call_full": "Tyvärr - det här samtalet är för närvarande fullt",
         "hide_sidebar_button": "Göm sidopanel",
         "show_sidebar_button": "Visa sidopanel",
-        "more_button": "Mer"
+        "more_button": "Mer",
+        "screenshare_monitor": "Dela hela skärmen",
+        "screenshare_window": "Programfönster",
+        "screenshare_title": "Dela innehåll"
     },
     "Other": "Annat",
     "room_settings": {
@@ -3454,7 +3432,8 @@
         "bullet_1": "Vi spelar <Bold>inte</Bold> in eller profilerar någon kontodata",
         "bullet_2": "Vi delar <Bold>inte</Bold> information med tredje parter",
         "disable_prompt": "Du kan stänga av detta när som helst i inställningarna",
-        "accept_button": "Det är okej"
+        "accept_button": "Det är okej",
+        "shared_data_heading": "Vissa av följande data kan delas:"
     },
     "chat_effects": {
         "confetti_description": "Skickar det givna meddelandet med konfetti",
@@ -3746,7 +3725,24 @@
             "revoke": "Återkalla behörigheter",
             "move_left": "Flytta till vänster",
             "move_right": "Flytta till höger"
-        }
+        },
+        "shared_data_name": "Ditt visningsnamn",
+        "shared_data_mxid": "Ditt användar-ID",
+        "shared_data_device_id": "Ditt enhets-ID",
+        "shared_data_theme": "Ditt tema",
+        "shared_data_lang": "Ditt språk",
+        "shared_data_url": "%(brand)s-URL",
+        "shared_data_room_id": "Rums-ID",
+        "shared_data_widget_id": "Widget-ID",
+        "shared_data_warning_im": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s och din integrationshanterare.",
+        "shared_data_warning": "Att använda denna widget kan dela data <helpIcon /> med %(widgetDomain)s.",
+        "unencrypted_warning": "Widgets använder inte meddelandekryptering.",
+        "added_by": "Widget tillagd av",
+        "cookie_warning": "Denna widget kan använda kakor.",
+        "error_loading": "Fel vid laddning av widget",
+        "error_mixed_content": "Fel - blandat innehåll",
+        "unmaximise": "Avmaximera",
+        "popout": "Poppa ut widget"
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -4130,7 +4126,8 @@
         "tls": "Kan inte ansluta till hemservern - vänligen kolla din nätverksanslutning, se till att <a>hemserverns SSL-certifikat</a> är betrott, och att inget webbläsartillägg blockerar förfrågningar.",
         "admin_contact_short": "Kontakta din <a>serveradministratör</a>.",
         "non_urgent_echo_failure_toast": "Din server svarar inte på vissa <a>förfrågningar</a>.",
-        "failed_copy": "Misslyckades att kopiera"
+        "failed_copy": "Misslyckades att kopiera",
+        "something_went_wrong": "Något gick fel!"
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4168,5 +4165,10 @@
         "all_settings": "Alla inställningar",
         "metaspace_section": "Fäst i sidopanelen",
         "sidebar_settings": "Fler alternativ"
+    },
+    "lightbox": {
+        "title": "Bildvy",
+        "rotate_left": "Rotera vänster",
+        "rotate_right": "Rotera höger"
     }
 }
