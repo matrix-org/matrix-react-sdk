@@ -767,7 +767,7 @@
     "inviting_user1_and_user2": "Inviting %(user1)s and %(user2)s",
     "inviting_user_and_n_others": {
         "other": "Inviting %(user)s and %(count)s others",
-        "one": "Inviting %(user)s and 1 other"
+        "one": "Inviting %(user)s and one other"
     },
     "empty_room_was_name": "Empty room (was %(oldName)s)",
     "notifier": {
@@ -1405,7 +1405,7 @@
     "in_space1_and_space2": "In spaces %(space1Name)s and %(space2Name)s.",
     "in_space_and_n_other_spaces": {
         "other": "In %(spaceName)s and %(count)s other spaces.",
-        "one": "In %(spaceName)s and %(count)s other space."
+        "one": "In %(spaceName)s and one other space."
     },
     "in_space": "In %(spaceName)s.",
     "name_and_id": "%(name)s (%(userId)s)",

@@ -85,7 +85,8 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
     );
     let names = formatList(
         knockMembers.map((knockMember) => knockMember.name),
-        2,
+        3,
+        true,
     );
     let link: ReactNode = null;
     if (knockMembersCount === 1) {

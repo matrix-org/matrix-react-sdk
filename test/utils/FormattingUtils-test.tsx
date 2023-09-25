@@ -46,6 +46,7 @@ describe("FormattingUtils", () => {
     describe("formatList", () => {
         beforeEach(() => {
             jest.resetAllMocks();
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue("en-GB");
         });
 
         it("should return empty string when given empty list", () => {
@@ -57,7 +58,7 @@ describe("FormattingUtils", () => {
         });
 
         it("should return expected sentence in English without item limit", () => {
-            expect(formatList(["abc", "def", "ghi"])).toEqual("abc, def, and ghi");
+            expect(formatList(["abc", "def", "ghi"])).toEqual("abc, def and ghi");
         });
 
         it("should return expected sentence in German without item limit", () => {
@@ -68,6 +69,11 @@ describe("FormattingUtils", () => {
         it("should return expected sentence in English with item limit", () => {
             expect(formatList(["abc", "def", "ghi", "jkl"], 2)).toEqual("abc, def and 2 others");
             expect(formatList(["abc", "def", "ghi", "jkl"], 3)).toEqual("abc, def, ghi and one other");
+        });
+
+        it("should return expected sentence in English with item limit and includeCount", () => {
+            expect(formatList(["abc", "def", "ghi", "jkl"], 3, true)).toEqual("abc, def and 2 others");
+            expect(formatList(["abc", "def", "ghi", "jkl"], 4, true)).toEqual("abc, def, ghi and jkl");
         });
 
         it("should return expected sentence in ReactNode when given 2 React children", () => {

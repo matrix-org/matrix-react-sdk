@@ -92,17 +92,22 @@ export function getUserNameColorClass(userId: string): string {
  * @returns {string} a string constructed by joining `items` with a comma
  * between each item, but with the last item appended as " and [lastItem]".
  */
-export function formatList(items: string[], itemLimit?: number): string;
-export function formatList(items: ReactElement[], itemLimit?: number): ReactElement;
-export function formatList(items: ReactNode[], itemLimit?: number): ReactNode;
-export function formatList(items: ReactNode[], itemLimit?: number): ReactNode {
-    const remaining = itemLimit === undefined ? 0 : Math.max(items.length - itemLimit, 0);
+export function formatList(items: string[], itemLimit?: number, includeCount?: boolean): string;
+export function formatList(items: ReactElement[], itemLimit?: number, includeCount?: boolean): ReactElement;
+export function formatList(items: ReactNode[], itemLimit?: number, includeCount?: boolean): ReactNode;
+export function formatList(items: ReactNode[], itemLimit = items.length, includeCount = false): ReactNode {
+    let remaining = Math.max(items.length - itemLimit, 0);
     if (items.length <= 1) {
         return items[0] ?? "";
     }
 
     const formatter = new Intl.ListFormat(getUserLanguage(), { style: "long", type: "conjunction" });
     if (remaining > 0) {
+        if (includeCount) {
+            itemLimit--;
+            remaining++;
+        }
+
         items = items.slice(0, itemLimit);
         let joinedItems: ReactNode;
         if (items.every((e) => typeof e === "string")) {
