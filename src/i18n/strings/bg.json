@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "unknown error code": "неизвестен код за грешка",
     "Failed to forget room %(errCode)s": "Неуспешно забравяне на стаята %(errCode)s",
-    "Favourite": "Любим",
     "Rooms": "Стаи",
     "Unnamed room": "Стая без име",
     "Warning!": "Внимание!",
@@ -87,8 +86,6 @@
     "Email address": "Имейл адрес",
     "Something went wrong!": "Нещо се обърка!",
     "Delete Widget": "Изтриване на приспособление",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Изтриването на приспособление го премахва за всички потребители в тази стая. Сигурни ли сте, че искате да изтриете това приспособление?",
-    "Delete widget": "Изтрий приспособлението",
     "Create new room": "Създай нова стая",
     "Home": "Начална страница",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "Неуспешно изпращане на логове: ",
     "This Room": "В тази стая",
     "Unavailable": "Не е наличен",
-    "Source URL": "URL на източника",
     "Filter results": "Филтриране на резултати",
     "Search…": "Търсене…",
     "Tuesday": "Вторник",
@@ -176,7 +172,6 @@
     "Thursday": "Четвъртък",
     "Logs sent": "Логовете са изпратени",
     "Yesterday": "Вчера",
-    "Low Priority": "Нисък приоритет",
     "Thank you!": "Благодарим!",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
     "Popout widget": "Изкарай в нов прозорец",
@@ -548,7 +543,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Обновяването на стая е действие за напреднали и обикновено се препоръчва когато стаята е нестабилна поради бъгове, липсващи функции или проблеми със сигурността.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Това обикновено влия само на това как стаята се обработва на сървъра. Ако имате проблеми с %(brand)s, <a>съобщете за проблем</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ще обновите стаята от <oldVersion /> до <newVersion />.",
-    "Remove for everyone": "Премахни за всички",
     "Country Dropdown": "Падащо меню за избор на държава",
     "Verification Request": "Заявка за потвърждение",
     "Unable to set up secret storage": "Неуспешна настройка на секретно складиране",
@@ -708,10 +702,6 @@
     "Message preview": "Преглед на съобщението",
     "Room options": "Настройки на стаята",
     "This room is public": "Тази стая е публична",
-    "Move right": "Премести надясно",
-    "Move left": "Премести наляво",
-    "Revoke permissions": "Оттеглете привилегии",
-    "Take a picture": "Направете снимка",
     "Unable to set up keys": "Неуспешна настройка на ключовете",
     "Use your Security Key to continue.": "Използвайте ключа си за сигурност за да продължите.",
     "Security Key": "Ключ за сигурност",
@@ -759,8 +749,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Може да закачите максимум %(count)s приспособления"
     },
-    "Favourited": "В любими",
-    "Forget Room": "Забрави стаята",
     "Explore public rooms": "Прегледай публични стаи",
     "Show Widgets": "Покажи приспособленията",
     "Hide Widgets": "Скрий приспособленията",
@@ -1701,7 +1689,10 @@
             "changed_img": "%(senderDisplayName)s промени аватара на стаята на <img/>"
         },
         "creation_summary_dm": "%(creator)s създаде този директен чат.",
-        "creation_summary_room": "%(creator)s създаде и настрой стаята."
+        "creation_summary_room": "%(creator)s създаде и настрой стаята.",
+        "context_menu": {
+            "external_url": "URL на източника"
+        }
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",
@@ -2212,7 +2203,13 @@
         "upgrade_error_title": "Грешка при обновяване на стаята",
         "upgrade_error_description": "Проверете дали сървъра поддържа тази версия на стаята и опитайте пак.",
         "leave_server_notices_description": "Тази стая се използва за важни съобщения от сървъра, така че не можете да я напуснете.",
-        "error_join_incompatible_version_2": "Моля, свържете се със сървърния администратор."
+        "error_join_incompatible_version_2": "Моля, свържете се със сървърния администратор.",
+        "context_menu": {
+            "unfavourite": "В любими",
+            "favourite": "Любим",
+            "low_priority": "Нисък приоритет",
+            "forget": "Забрави стаята"
+        }
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
@@ -2277,7 +2274,16 @@
     "widget": {
         "error_need_to_be_logged_in": "Трябва да влезете в профила си.",
         "error_need_invite_permission": "За да извършите това, трябва да имате право да добавяте потребители.",
-        "no_name": "Неизвестно приложение"
+        "no_name": "Неизвестно приложение",
+        "context_menu": {
+            "screenshot": "Направете снимка",
+            "delete": "Изтрий приспособлението",
+            "delete_warning": "Изтриването на приспособление го премахва за всички потребители в тази стая. Сигурни ли сте, че искате да изтриете това приспособление?",
+            "remove": "Премахни за всички",
+            "revoke": "Оттеглете привилегии",
+            "move_left": "Премести наляво",
+            "move_right": "Премести надясно"
+        }
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",

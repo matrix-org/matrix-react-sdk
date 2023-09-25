@@ -2,7 +2,6 @@
     "Failed to forget room %(errCode)s": "Impossibile dimenticare la stanza %(errCode)s",
     "unknown error code": "codice errore sconosciuto",
     "Create new room": "Crea una nuova stanza",
-    "Favourite": "Preferito",
     "Failed to change password. Is your password correct?": "Modifica password fallita. La tua password è corretta?",
     "Admin Tools": "Strumenti di amministrazione",
     "No Microphones detected": "Nessun Microfono rilevato",
@@ -90,8 +89,6 @@
     "Email address": "Indirizzo email",
     "Something went wrong!": "Qualcosa è andato storto!",
     "Delete Widget": "Elimina widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "L'eliminazione di un widget lo rimuove per tutti gli utenti della stanza. Sei sicuro di eliminare il widget?",
-    "Delete widget": "Elimina widget",
     "Home": "Pagina iniziale",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
@@ -160,7 +157,6 @@
     "Failed to send logs: ": "Invio dei log fallito: ",
     "This Room": "Questa stanza",
     "Unavailable": "Non disponibile",
-    "Source URL": "URL d'origine",
     "Filter results": "Filtra risultati",
     "Tuesday": "Martedì",
     "Search…": "Cerca…",
@@ -175,7 +171,6 @@
     "Thursday": "Giovedì",
     "Logs sent": "Log inviati",
     "Yesterday": "Ieri",
-    "Low Priority": "Priorità bassa",
     "Thank you!": "Grazie!",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossibile caricare l'evento a cui si è risposto, o non esiste o non hai il permesso di visualizzarlo.",
     "We encountered an error trying to restore your previous session.": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
@@ -529,7 +524,6 @@
     "Widgets do not use message encryption.": "I widget non usano la crittografia dei messaggi.",
     "Integrations are disabled": "Le integrazioni sono disattivate",
     "Integrations not allowed": "Integrazioni non permesse",
-    "Remove for everyone": "Rimuovi per tutti",
     "Manage integrations": "Gestisci integrazioni",
     "Verification Request": "Richiesta verifica",
     "Unencrypted": "Non criptato",
@@ -708,8 +702,6 @@
     "Room options": "Opzioni stanza",
     "Looks good!": "Sembra giusta!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
-    "Favourited": "Preferito",
-    "Forget Room": "Dimentica stanza",
     "Wrong file type": "Tipo di file errato",
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
@@ -750,7 +742,6 @@
     "not ready": "non pronto",
     "Not encrypted": "Non cifrato",
     "Room settings": "Impostazioni stanza",
-    "Take a picture": "Scatta una foto",
     "Widgets": "Widget",
     "Edit widgets, bridges & bots": "Modifica widget, bridge e bot",
     "Add widgets, bridges & bots": "Aggiungi widget, bridge e bot",
@@ -769,9 +760,6 @@
     "Ignored attempt to disable encryption": "Tentativo di disattivare la crittografia ignorato",
     "Failed to save your profile": "Salvataggio del profilo fallito",
     "The operation could not be completed": "Impossibile completare l'operazione",
-    "Move right": "Sposta a destra",
-    "Move left": "Sposta a sinistra",
-    "Revoke permissions": "Revoca autorizzazioni",
     "You can only pin up to %(count)s widgets": {
         "other": "Puoi ancorare al massimo %(count)s widget"
     },
@@ -1075,7 +1063,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Vuoi veramente uscire dallo spazio '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Questo spazio non è pubblico. Non potrai rientrare senza un invito.",
-    "Start audio stream": "Avvia stream audio",
     "Failed to start livestream": "Impossibile avviare lo stream in diretta",
     "Unable to start audio streaming.": "Impossibile avviare lo streaming audio.",
     "Save Changes": "Salva modifiche",
@@ -1177,9 +1164,6 @@
     "Nothing pinned, yet": "Non c'è ancora nulla di ancorato",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se ne hai il permesso, apri il menu di qualsiasi messaggio e seleziona <b>Fissa</b> per ancorarlo qui.",
     "Pinned messages": "Messaggi ancorati",
-    "Report": "Segnala",
-    "Show preview": "Mostra anteprima",
-    "View source": "Visualizza sorgente",
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
     "Space information": "Informazioni spazio",
@@ -1190,7 +1174,6 @@
     "Guests can join a space without having an account.": "Gli ospiti possono entrare in uno spazio senza avere un account.",
     "Enable guest access": "Attiva accesso ospiti",
     "Address": "Indirizzo",
-    "Collapse reply thread": "Riduci conversazione di risposta",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
@@ -1355,7 +1338,6 @@
     "Copy link to thread": "Copia link nella conversazione",
     "Thread options": "Opzioni conversazione",
     "Reply in thread": "Rispondi nella conversazione",
-    "Mentions only": "Solo le citazioni",
     "Forget": "Dimentica",
     "Files": "File",
     "You won't get any notifications": "Non riceverai alcuna notifica",
@@ -1418,7 +1400,6 @@
     "Spaces you're in": "Spazi in cui sei",
     "Link to room": "Collegamento alla stanza",
     "Including you, %(commaSeparatedMembers)s": "Incluso te, %(commaSeparatedMembers)s",
-    "Copy room link": "Copia collegamento stanza",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s.",
     "Sections to show": "Sezioni da mostrare",
     "Open in OpenStreetMap": "Apri in OpenStreetMap",
@@ -1574,7 +1555,6 @@
         "one": "È entrata %(count)s persona",
         "other": "Sono entrate %(count)s persone"
     },
-    "View related event": "Vedi evento correlato",
     "Read receipts": "Ricevuta di lettura",
     "Deactivating your account is a permanent action — be careful!": "La disattivazione dell'account è permanente - attenzione!",
     "Un-maximise": "Demassimizza",
@@ -1678,7 +1658,6 @@
     "Add privileged users": "Aggiungi utenti privilegiati",
     "Unable to decrypt message": "Impossibile decifrare il messaggio",
     "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
-    "Mark as read": "Segna come letto",
     "Text": "Testo",
     "Create a link": "Crea un collegamento",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Non siamo riusciti a trovare un evento successivo al %(dateString)s. Prova con una data precedente.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Si è verificato un errore di rete tentando di trovare e saltare alla data scelta. Il tuo homeserver potrebbe essere irraggiungibile o c'è stato un problema temporaneo con la tua connessione. Riprova. Se persiste, contatta l'amministratore del tuo homeserver.",
     "Poll history": "Cronologia sondaggi",
-    "Mute room": "Silenzia stanza",
-    "Match default setting": "Corrispondi l'impostazione predefinita",
     "Start DM anyway": "Inizia il messaggio lo stesso",
     "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?",
@@ -3152,7 +3129,15 @@
             "user": "%(senderName)s ha terminato una <a>trasmissione vocale</a>"
         },
         "creation_summary_dm": "%(creator)s ha creato questo MD.",
-        "creation_summary_room": "%(creator)s ha creato e configurato la stanza."
+        "creation_summary_room": "%(creator)s ha creato e configurato la stanza.",
+        "context_menu": {
+            "view_source": "Visualizza sorgente",
+            "show_url_preview": "Mostra anteprima",
+            "external_url": "URL d'origine",
+            "collapse_reply_thread": "Riduci conversazione di risposta",
+            "view_related_event": "Vedi evento correlato",
+            "report": "Segnala"
+        }
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -3816,7 +3801,17 @@
         "error_need_kick_permission": "Devi poter cacciare via utenti per completare l'azione.",
         "no_name": "App sconosciuta",
         "error_hangup_title": "Connessione persa",
-        "error_hangup_description": "Sei stato disconnesso dalla chiamata. (Errore: %(message)s)"
+        "error_hangup_description": "Sei stato disconnesso dalla chiamata. (Errore: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Avvia stream audio",
+            "screenshot": "Scatta una foto",
+            "delete": "Elimina widget",
+            "delete_warning": "L'eliminazione di un widget lo rimuove per tutti gli utenti della stanza. Sei sicuro di eliminare il widget?",
+            "remove": "Rimuovi per tutti",
+            "revoke": "Revoca autorizzazioni",
+            "move_left": "Sposta a sinistra",
+            "move_right": "Sposta a destra"
+        }
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -4069,7 +4064,18 @@
         "error_join_404_2": "Se conosci un indirizzo della stanza, prova ad entrare tramite quello.",
         "error_join_title": "Entrata fallita",
         "error_join_403": "Ti serve un invito per entrare in questa stanza.",
-        "error_cancel_knock_title": "Annullamento fallito"
+        "error_cancel_knock_title": "Annullamento fallito",
+        "context_menu": {
+            "unfavourite": "Preferito",
+            "favourite": "Preferito",
+            "mentions_only": "Solo le citazioni",
+            "copy_link": "Copia collegamento stanza",
+            "low_priority": "Priorità bassa",
+            "forget": "Dimentica stanza",
+            "mark_read": "Segna come letto",
+            "notifications_default": "Corrispondi l'impostazione predefinita",
+            "notifications_mute": "Silenzia stanza"
+        }
     },
     "file_panel": {
         "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",

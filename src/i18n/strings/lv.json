@@ -28,7 +28,6 @@
     "Failed to reject invitation": "Neizdevās noraidīt uzaicinājumu",
     "Failed to set display name": "Neizdevās iestatīt parādāmo vārdu",
     "Failed to unban": "Neizdevās atbanot/atbloķēt (atcelt pieejas liegumu)",
-    "Favourite": "Izlase",
     "Filter room members": "Atfiltrēt istabas dalībniekus",
     "Forget room": "Aizmirst istabu",
     "Historical": "Bijušie",
@@ -127,7 +126,6 @@
         "other": "un vēl %(count)s citi...",
         "one": "un vēl viens cits..."
     },
-    "Delete widget": "Dzēst vidžetu",
     "AM": "AM",
     "PM": "PM",
     "Send": "Sūtīt",
@@ -144,7 +142,6 @@
     "Replying": "Atbildot uz",
     "Banned by %(displayName)s": "%(displayName)s liedzis pieeju",
     "Delete Widget": "Dzēst vidžetu",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Vidžeta dzēšana to dzēš visiem šīs istabas lietotājiem. Vai tiešām vēlies dzēst šo vidžetu?",
     "collapse": "sakļaut",
     "expand": "izvērst",
     "<a>In reply to</a> <pill>": "<a>Atbildē uz</a> <pill>",
@@ -160,7 +157,6 @@
     "Failed to send logs: ": "Neizdevās nosūtīt logfailus: ",
     "This Room": "Šajā istabā",
     "Unavailable": "Nesasniedzams",
-    "Source URL": "Avota URL adrese",
     "Filter results": "Filtrēt rezultātus",
     "Tuesday": "Otrdiena",
     "Search…": "Meklēt…",
@@ -175,7 +171,6 @@
     "Thursday": "Ceturtdiena",
     "Logs sent": "Logfaili nosūtīti",
     "Yesterday": "Vakardien",
-    "Low Priority": "Zema prioritāte",
     "Thank you!": "Tencinam!",
     "Permission Required": "Nepieciešama atļauja",
     "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
@@ -204,7 +199,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
     "None": "Neviena",
     "Room options": "Istabas opcijas",
-    "Favourited": "Izlasē",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
     "This room is end-to-end encrypted": "Šajā istabā tiek veikta pilnīga šifrēšana",
@@ -388,7 +382,6 @@
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
     "You don't have permission": "Jums nav atļaujas",
-    "Remove for everyone": "Dzēst visiem",
     "Share User": "Dalīties ar lietotāja kontaktdatiem",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
@@ -667,8 +660,6 @@
     "Can't load this message": "Nevar ielādēt šo ziņu",
     "Send voice message": "Sūtīt balss ziņu",
     "Address": "Adrese",
-    "Show preview": "Rādīt priekšskatījumu",
-    "View source": "Skatīt pirmkodu",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
@@ -688,7 +679,6 @@
     "Show image": "Rādīt attēlu",
     "Call back": "Atzvanīt",
     "Call declined": "Zvans noraidīts",
-    "Forget Room": "Aizmirst istabu",
     "Join the discussion": "Pievienoties diskusijai",
     "Forget this room": "Aizmirst šo istabu",
     "Explore public rooms": "Pārlūkot publiskas istabas",
@@ -1429,7 +1419,12 @@
             "changed_img": "%(senderDisplayName)s nomainīja istabas avataru uz <img/>"
         },
         "creation_summary_dm": "%(creator)s uzsāka šo tiešo saraksti.",
-        "creation_summary_room": "%(creator)s izveidoja un nokonfigurēja istabu."
+        "creation_summary_room": "%(creator)s izveidoja un nokonfigurēja istabu.",
+        "context_menu": {
+            "view_source": "Skatīt pirmkodu",
+            "show_url_preview": "Rādīt priekšskatījumu",
+            "external_url": "Avota URL adrese"
+        }
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
@@ -1855,7 +1850,12 @@
             "see_msgtype_sent_active_room": "Apskatīt <b>%(msgtype)s</b> ziņas, kas publicētas jūsu aktīvajā istabā"
         },
         "error_need_to_be_logged_in": "Tev ir jāpierakstās.",
-        "error_need_invite_permission": "Lai to darītu, Tev ir jāspēj uzaicināt lietotājus."
+        "error_need_invite_permission": "Lai to darītu, Tev ir jāspēj uzaicināt lietotājus.",
+        "context_menu": {
+            "delete": "Dzēst vidžetu",
+            "delete_warning": "Vidžeta dzēšana to dzēš visiem šīs istabas lietotājiem. Vai tiešām vēlies dzēst šo vidžetu?",
+            "remove": "Dzēst visiem"
+        }
     },
     "feedback": {
         "sent": "Atsauksme nosūtīta",
@@ -1943,7 +1943,13 @@
         },
         "leave_unexpected_error": "Mēģinot pamest istabu radās negaidīta servera kļūme",
         "leave_server_notices_title": "Nevar pamest Server Notices istabu",
-        "leave_server_notices_description": "Šī istaba tiek izmantota svarīgiem ziņojumiem no bāzes servera, tāpēc jūs nevarat to pamest."
+        "leave_server_notices_description": "Šī istaba tiek izmantota svarīgiem ziņojumiem no bāzes servera, tāpēc jūs nevarat to pamest.",
+        "context_menu": {
+            "unfavourite": "Izlasē",
+            "favourite": "Izlase",
+            "low_priority": "Zema prioritāte",
+            "forget": "Aizmirst istabu"
+        }
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",

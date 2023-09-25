@@ -125,23 +125,10 @@
     "This homeserver would like to make sure you are not a robot.": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy.",
     "This room is public": "Phòng này là công cộng",
     "Avatar": "Avatar",
-    "Move right": "Đi sang phải",
-    "Move left": "Di chuyển sang trái",
-    "Revoke permissions": "Thu hồi quyền",
-    "Remove for everyone": "Xóa cho mọi người",
-    "Delete widget": "Xóa Widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Xóa tiện ích widget sẽ xóa tiện ích widget đó cho tất cả người dùng khác trong phòng này. Bạn có chắc chắn muốn xóa tiện ích widget này không?",
     "Delete Widget": "Xóa Widget",
-    "Take a picture": "Chụp ảnh",
-    "Start audio stream": "Bắt đầu luồng âm thanh",
     "Failed to start livestream": "Không thể bắt đầu phát trực tiếp",
     "Unable to start audio streaming.": "Không thể bắt đầu phát trực tuyến âm thanh.",
     "Add space": "Thêm space",
-    "Report": "Bản báo cáo",
-    "Collapse reply thread": "Thu gọn chuỗi trả lời",
-    "Source URL": "URL nguồn",
-    "Show preview": "Hiển thị bản xem trước",
-    "View source": "Xem nguồn",
     "Resend %(unsentCount)s reaction(s)": "Gửi lại (các) phản ứng %(unsentCount)s",
     "Are you sure you want to reject the invitation?": "Bạn có chắc chắn muốn từ chối lời mời không?",
     "Reject invitation": "Từ chối lời mời",
@@ -660,10 +647,6 @@
     "This room has already been upgraded.": "Phòng này đã được nâng cấp.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
     "Room options": "Tùy chọn phòng",
-    "Low Priority": "Ưu tiên thấp",
-    "Favourite": "Yêu thích",
-    "Favourited": "Được yêu thích",
-    "Forget Room": "Quên phòng",
     "All messages": "Tất cả tin nhắn",
     "%(roomName)s is not accessible at this time.": "Không thể truy cập %(roomName)s vào lúc này.",
     "%(roomName)s does not exist.": "%(roomName)s không tồn tại.",
@@ -1337,7 +1320,6 @@
     "Joining": "Đang tham gia",
     "Copy link to thread": "Sao chép liên kết vào chủ đề",
     "Thread options": "Tùy chọn theo chủ đề",
-    "Mentions only": "Chỉ tin nhắn được đề cập",
     "Forget": "Quên",
     "View in room": "Xem phòng này",
     "Upload %(count)s other files": {
@@ -1435,7 +1417,6 @@
     "You cancelled verification on your other device.": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
     "Almost there! Is your other device showing the same shield?": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
     "To proceed, please accept the verification request on your other device.": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
-    "Copy room link": "Sao chép liên kết phòng",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
@@ -1578,12 +1559,10 @@
     "Waiting for partner to confirm…": "Đang đợi bên kia xác nhận…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Bật '%(manageIntegrations)s' trong cài đặt để thực hiện.",
     "Answered elsewhere": "Trả lời ở nơi khác",
-    "View related event": "Xem sự kiện liên quan",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Không thể tìm hồ sơ cho định danh Matrix được liệt kê - bạn có muốn tiếp tục tạo phòng nhắn tin riêng?",
     "Other options": "Lựa chọn khác",
     "Input devices": "Thiết bị đầu vào",
     "Output devices": "Thiết bị đầu ra",
-    "Mark as read": "Đánh dấu đã đọc",
     "%(count)s Members": {
         "one": "%(count)s thành viên",
         "other": "%(count)s thành viên"
@@ -1597,8 +1576,6 @@
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "Cameras": "Máy quay",
-    "Match default setting": "Theo cài đặt mặc định",
-    "Mute room": "Tắt tiếng phòng",
     "Failed to download source media, no source url was found": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url",
     "Past polls": "Các cuộc bỏ phiếu trước",
     "Active polls": "Các cuộc bỏ phiếu hiện tại",
@@ -2882,7 +2859,15 @@
             "user": "%(senderName)s đã kết thúc một <a>cuộc phát thanh</a>"
         },
         "creation_summary_dm": "%(creator)s đã tạo DM này.",
-        "creation_summary_room": "%(creator)s đã tạo và định cấu hình phòng."
+        "creation_summary_room": "%(creator)s đã tạo và định cấu hình phòng.",
+        "context_menu": {
+            "view_source": "Xem nguồn",
+            "show_url_preview": "Hiển thị bản xem trước",
+            "external_url": "URL nguồn",
+            "collapse_reply_thread": "Thu gọn chuỗi trả lời",
+            "view_related_event": "Xem sự kiện liên quan",
+            "report": "Bản báo cáo"
+        }
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3528,7 +3513,17 @@
         "error_need_kick_permission": "Bạn phải đuổi được người dùng thì mới làm vậy được.",
         "no_name": "Ứng dụng không xác định",
         "error_hangup_title": "Mất kết nối",
-        "error_hangup_description": "Bạn bị mất kết nối đến cuộc gọi. (Lỗi: %(message)s)"
+        "error_hangup_description": "Bạn bị mất kết nối đến cuộc gọi. (Lỗi: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Bắt đầu luồng âm thanh",
+            "screenshot": "Chụp ảnh",
+            "delete": "Xóa Widget",
+            "delete_warning": "Xóa tiện ích widget sẽ xóa tiện ích widget đó cho tất cả người dùng khác trong phòng này. Bạn có chắc chắn muốn xóa tiện ích widget này không?",
+            "remove": "Xóa cho mọi người",
+            "revoke": "Thu hồi quyền",
+            "move_left": "Di chuyển sang trái",
+            "move_right": "Đi sang phải"
+        }
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3772,7 +3767,18 @@
         "error_join_404_2": "Nếu bạn biết địa chỉ phòng, hãy dùng nó để tham gia.",
         "error_join_title": "Tham gia thất bại",
         "error_join_403": "Bạn cần được mời để truy cập phòng này.",
-        "error_cancel_knock_title": "Không hủy được"
+        "error_cancel_knock_title": "Không hủy được",
+        "context_menu": {
+            "unfavourite": "Được yêu thích",
+            "favourite": "Yêu thích",
+            "mentions_only": "Chỉ tin nhắn được đề cập",
+            "copy_link": "Sao chép liên kết phòng",
+            "low_priority": "Ưu tiên thấp",
+            "forget": "Quên phòng",
+            "mark_read": "Đánh dấu đã đọc",
+            "notifications_default": "Theo cài đặt mặc định",
+            "notifications_mute": "Tắt tiếng phòng"
+        }
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",

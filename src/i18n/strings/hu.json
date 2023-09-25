@@ -1,6 +1,5 @@
 {
     "Failed to forget room %(errCode)s": "A szobát nem sikerült elfelejtetni: %(errCode)s",
-    "Favourite": "Kedvencnek jelölés",
     "unknown error code": "ismeretlen hibakód",
     "Admin Tools": "Admin. Eszközök",
     "No Microphones detected": "Nem található mikrofon",
@@ -127,7 +126,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?",
-    "Delete widget": "Kisalkalmazás törlése",
     "AM": "de.",
     "PM": "du.",
     "Unignore": "Mellőzés feloldása",
@@ -138,7 +136,6 @@
         "other": "És még %(count)s..."
     },
     "Delete Widget": "Kisalkalmazás törlése",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "A kisalkalmazás törlése minden felhasználót érint a szobában. Biztos, hogy törli a kisalkalmazást?",
     "Restricted": "Korlátozott",
     "%(duration)ss": "%(duration)s mp",
     "%(duration)sm": "%(duration)s p",
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "Hiba a napló küldésénél: ",
     "This Room": "Ebben a szobában",
     "Unavailable": "Elérhetetlen",
-    "Source URL": "Forrás URL",
     "Filter results": "Találatok szűrése",
     "Tuesday": "Kedd",
     "Preparing to send logs": "Előkészülés napló küldéshez",
@@ -175,7 +171,6 @@
     "Search…": "Keresés…",
     "Logs sent": "Napló elküldve",
     "Yesterday": "Tegnap",
-    "Low Priority": "Alacsony prioritás",
     "Wednesday": "Szerda",
     "Thank you!": "Köszönjük!",
     "Popout widget": "Kiugró kisalkalmazás",
@@ -523,7 +518,6 @@
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "Ennek a kisalkalmazásnak a használata adatot oszthat meg <helpIcon /> a(z) %(widgetDomain)s domainnel.",
     "Widget added by": "A kisalkalmazást hozzáadta",
     "This widget may use cookies.": "Ez a kisalkalmazás sütiket használhat.",
-    "Remove for everyone": "Visszavonás mindenkitől",
     "Cannot connect to integration manager": "Nem lehet kapcsolódni az integrációkezelőhöz",
     "The integration manager is offline or it cannot reach your homeserver.": "Az integrációkezelő nem működik, vagy nem éri el a Matrix-kiszolgálóját.",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
@@ -721,8 +715,6 @@
     "Set a Security Phrase": "Biztonsági Jelmondat beállítása",
     "Confirm Security Phrase": "Biztonsági jelmondat megerősítése",
     "Save your Security Key": "Mentse el a biztonsági kulcsát",
-    "Favourited": "Kedvencnek jelölt",
-    "Forget Room": "Szoba elfelejtése",
     "This room is public": "Ez egy nyilvános szoba",
     "Edited at %(date)s": "Szerkesztve ekkor: %(date)s",
     "Click to view edits": "A szerkesztések megtekintéséhez kattints",
@@ -743,7 +735,6 @@
     "Preparing to download logs": "Napló előkészítése feltöltéshez",
     "Not encrypted": "Nem titkosított",
     "Room settings": "Szoba beállítások",
-    "Take a picture": "Fénykép készítése",
     "Backup version:": "Mentés verziója:",
     "Algorithm:": "Algoritmus:",
     "Backup key stored:": "Tárolt mentési kulcs:",
@@ -769,9 +760,6 @@
     "Video conference started by %(senderName)s": "A videókonferenciát elindította: %(senderName)s",
     "Failed to save your profile": "A saját profil mentése sikertelen",
     "The operation could not be completed": "A műveletet nem lehetett befejezni",
-    "Move right": "Mozgatás jobbra",
-    "Move left": "Mozgatás balra",
-    "Revoke permissions": "Jogosultságok visszavonása",
     "Data on this screen is shared with %(widgetDomain)s": "Az ezen a képernyőn látható adatok megosztásra kerülnek ezzel: %(widgetDomain)s",
     "Modal Widget": "Előugró kisalkalmazás",
     "You can only pin up to %(count)s widgets": {
@@ -1075,7 +1063,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Biztos, hogy elhagyja ezt a teret: %(spaceName)s?",
     "This space is not public. You will not be able to rejoin without an invite.": "Ez a tér nem nyilvános. Kilépés után csak újabb meghívóval lehet újra belépni.",
-    "Start audio stream": "Hang folyam indítása",
     "Failed to start livestream": "Az élő adás indítása sikertelen",
     "Unable to start audio streaming.": "A hang folyam indítása sikertelen.",
     "Save Changes": "Változtatások mentése",
@@ -1184,10 +1171,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "A nyilvánosságra hozott címet bárki bármelyik szerverről használhatja a szobához való belépéshez.",
     "Failed to update the history visibility of this space": "A tér régi üzeneteinek láthatóságának frissítése sikertelen",
     "Failed to update the guest access of this space": "A tér vendéghozzáférésének frissítése sikertelen",
-    "Report": "Jelentés",
-    "Collapse reply thread": "Üzenetszál összecsukása",
-    "Show preview": "Előnézet megjelenítése",
-    "View source": "Forrás megtekintése",
     "Please provide an address": "Kérem adja meg a címet",
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
     "Space information": "Tér információi",
@@ -1355,7 +1338,6 @@
     "Yours, or the other users' internet connection": "Az ön vagy a másik felhasználó Internet kapcsolata",
     "The homeserver the user you're verifying is connected to": "Az ellenőrizendő felhasználó ehhez a Matrix-kiszolgálóhoz kapcsolódik:",
     "Reply in thread": "Válasz üzenetszálban",
-    "Mentions only": "Csak megemlítések",
     "Forget": "Elfelejtés",
     "Files": "Fájlok",
     "Close this widget to view it in this panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez",
@@ -1420,7 +1402,6 @@
     "Sections to show": "Megjelenítendő részek",
     "Link to room": "Hivatkozás a szobához",
     "Including you, %(commaSeparatedMembers)s": "Önt is beleértve, %(commaSeparatedMembers)s",
-    "Copy room link": "Szoba hivatkozásának másolása",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
     "Your new device is now verified. Other users will see it as trusted.": "Az új eszköze ellenőrizve van. Mások megbízhatónak fogják látni.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Ez az eszköz hitelesítve van. A titkosított üzenetekhez hozzáférése van és más felhasználók megbízhatónak látják.",
@@ -1574,7 +1555,6 @@
         "one": "%(count)s személy belépett",
         "other": "%(count)s személy belépett"
     },
-    "View related event": "Kapcsolódó események megjelenítése",
     "Read receipts": "Olvasási visszajelzés",
     "Un-maximise": "Kicsinyítés",
     "Deactivating your account is a permanent action — be careful!": "A fiók felfüggesztése végleges — legyen óvatos!",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
-    "Mark as read": "Megjelölés olvasottként",
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nem lehet hang üzenetet indítani élő közvetítés felvétele közben. Az élő közvetítés bejezése szükséges a hang üzenet indításához.",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nem sikerült megtalálni az eseményt %(dateString)s után keresve. Próbáljon egy korábbi dátumot kiválasztani.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Hálózati hiba történt az adott dátum keresése és az ahhoz ugrás során. A Matrix-kiszolgálója lehet, hogy nem érhető el, vagy ideiglenes probléma van az internetkapcsolátával. Próbálja újra később. Ha ez továbbra is fennáll, akkor lépjen kapcsolatba a kiszolgáló rendszergazdájával.",
     "Poll history": "Szavazás előzményei",
-    "Mute room": "Szoba némítása",
-    "Match default setting": "Az alapértelmezett beállítások szerint",
     "Start DM anyway": "Közvetlen beszélgetés indítása mindenképpen",
     "Start DM anyway and never warn me again": "Közvetlen beszélgetés indítása mindenképpen és később se figyelmeztessen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
@@ -3066,7 +3043,15 @@
             "user": "%(senderName)s befejezte a <a>hangközvetítést</a>"
         },
         "creation_summary_dm": "%(creator)s hozta létre ezt az üzenetet.",
-        "creation_summary_room": "%(creator)s elkészítette és beállította a szobát."
+        "creation_summary_room": "%(creator)s elkészítette és beállította a szobát.",
+        "context_menu": {
+            "view_source": "Forrás megtekintése",
+            "show_url_preview": "Előnézet megjelenítése",
+            "external_url": "Forrás URL",
+            "collapse_reply_thread": "Üzenetszál összecsukása",
+            "view_related_event": "Kapcsolódó események megjelenítése",
+            "report": "Jelentés"
+        }
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -3721,7 +3706,17 @@
         "error_need_kick_permission": "Hogy ezt tegye, ahhoz ki kell tudnia rúgni felhasználókat.",
         "no_name": "Ismeretlen alkalmazás",
         "error_hangup_title": "A kapcsolat megszakadt",
-        "error_hangup_description": "A híváskapcsolat megszakadt (Hiba: %(message)s)"
+        "error_hangup_description": "A híváskapcsolat megszakadt (Hiba: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Hang folyam indítása",
+            "screenshot": "Fénykép készítése",
+            "delete": "Kisalkalmazás törlése",
+            "delete_warning": "A kisalkalmazás törlése minden felhasználót érint a szobában. Biztos, hogy törli a kisalkalmazást?",
+            "remove": "Visszavonás mindenkitől",
+            "revoke": "Jogosultságok visszavonása",
+            "move_left": "Mozgatás balra",
+            "move_right": "Mozgatás jobbra"
+        }
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -3972,7 +3967,18 @@
         "error_join_404_invite": "Aki meghívta a szobába már távozott, vagy a kiszolgálója nem érhető el.",
         "error_join_404_1": "A belépéshez csak a szoba azonosítóját adta meg a kiszolgáló nélkül. A szobaazonosító egy belső azonosító, amellyel további információk nélkül nem lehet belépni szobába.",
         "error_join_404_2": "Ha ismeri a szoba címét próbáljon inkább azzal belépni.",
-        "error_join_title": "Csatlakozás sikertelen"
+        "error_join_title": "Csatlakozás sikertelen",
+        "context_menu": {
+            "unfavourite": "Kedvencnek jelölt",
+            "favourite": "Kedvencnek jelölés",
+            "mentions_only": "Csak megemlítések",
+            "copy_link": "Szoba hivatkozásának másolása",
+            "low_priority": "Alacsony prioritás",
+            "forget": "Szoba elfelejtése",
+            "mark_read": "Megjelölés olvasottként",
+            "notifications_default": "Az alapértelmezett beállítások szerint",
+            "notifications_mute": "Szoba némítása"
+        }
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",

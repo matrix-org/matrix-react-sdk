@@ -3,8 +3,6 @@
     "Notification targets": "Mål for varsel",
     "Today": "I dag",
     "Friday": "Fredag",
-    "Source URL": "Kilde URL",
-    "Favourite": "Favoritt",
     "Tuesday": "Tirsdag",
     "Unnamed room": "Rom uten navn",
     "Monday": "Mandag",
@@ -16,7 +14,6 @@
     "Thursday": "Torsdag",
     "All messages": "Alle meldinger",
     "Yesterday": "I går",
-    "Low Priority": "Lav Prioritet",
     "Saturday": "Lørdag",
     "Permission Required": "Tillatelse kreves",
     "Send": "Send",
@@ -209,7 +206,6 @@
     "Room ID": "Rom-ID",
     "Widget ID": "Modul-ID",
     "Delete Widget": "Slett modul",
-    "Delete widget": "Slett modul",
     "Rotate Left": "Roter til venstre",
     "Rotate Right": "Roter til høyre",
     "Power level": "Styrkenivå",
@@ -309,7 +305,6 @@
     "Clear all data": "Tøm alle data",
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
-    "Remove for everyone": "Fjern for alle",
     "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
     "Aeroplane": "Fly",
     "No display name": "Ingen visningsnavn",
@@ -437,7 +432,6 @@
     "Security Key mismatch": "Sikkerhetsnøkkel uoverensstemmelse",
     "Unable to load backup status": "Klarte ikke å laste sikkerhetskopi-status",
     "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nøkler gjenopprettet",
-    "Revoke permissions": "Trekk tilbake rettigheter",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Klarte ikke å trekke tilbake invitasjonen. Tjener kan ha et forbigående problem, eller det kan hende at du ikke har tilstrekkelige rettigheter for å trekke tilbake invitasjonen.",
     "Failed to revoke invite": "Klarte ikke å trekke tilbake invitasjon",
     "Unable to revoke sharing for phone number": "Klarte ikke trekke tilbake deling for telefonnummer",
@@ -517,12 +511,9 @@
     "Malta": "Malta",
     "Uruguay": "Uruguay",
     "Remember this": "Husk dette",
-    "Move right": "Gå til høyre",
     "Security Phrase": "Sikkerhetsfrase",
     "Open dial pad": "Åpne nummerpanelet",
     "This room is public": "Dette rommet er offentlig",
-    "Move left": "Gå til venstre",
-    "Take a picture": "Ta et bilde",
     "Hold": "Hold",
     "Enter Security Phrase": "Skriv inn sikkerhetsfrase",
     "Security Key": "Sikkerhetsnøkkel",
@@ -541,8 +532,6 @@
     "Room settings": "Rominnstillinger",
     "Not encrypted": "Ikke kryptert",
     "Widgets": "Komponenter",
-    "Favourited": "Favorittmerket",
-    "Forget Room": "Glem rommet",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Transfer": "Overfør",
@@ -763,7 +752,6 @@
     "Could not connect to identity server": "Kunne ikke koble til identitetsserveren",
     "Results": "Resultat",
     "Retry all": "Prøv alle igjen",
-    "Report": "Rapporter",
     "Sent": "Sendt",
     "Sending": "Sender",
     "MB": "MB",
@@ -1338,7 +1326,11 @@
         "m.room.create": {
             "see_older_messages": "Klikk for å se eldre meldinger."
         },
-        "creation_summary_room": "%(creator)s opprettet og satte opp rommet."
+        "creation_summary_room": "%(creator)s opprettet og satte opp rommet.",
+        "context_menu": {
+            "external_url": "Kilde URL",
+            "report": "Rapporter"
+        }
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1636,7 +1628,15 @@
         },
         "error_need_to_be_logged_in": "Du må være logget inn.",
         "error_need_invite_permission": "Du må kunne invitere andre brukere for å gjøre det.",
-        "no_name": "Ukjent app"
+        "no_name": "Ukjent app",
+        "context_menu": {
+            "screenshot": "Ta et bilde",
+            "delete": "Slett modul",
+            "remove": "Fjern for alle",
+            "revoke": "Trekk tilbake rettigheter",
+            "move_left": "Gå til venstre",
+            "move_right": "Gå til høyre"
+        }
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -1713,6 +1713,12 @@
             "no_topic": "<a>Legg til et tema</a> for hjelpe folk å forstå hva dette handler om.",
             "you_created": "Du opprettet dette rommet.",
             "no_avatar_label": "Legg til et bilde så folk lettere kan finne rommet ditt."
+        },
+        "context_menu": {
+            "unfavourite": "Favorittmerket",
+            "favourite": "Favoritt",
+            "low_priority": "Lav Prioritet",
+            "forget": "Glem rommet"
         }
     },
     "file_panel": {

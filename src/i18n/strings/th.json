@@ -7,7 +7,6 @@
     "Profile": "โปรไฟล์",
     "Reason": "เหตุผล",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
-    "Favourite": "รายการโปรด",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
     "No Webcams detected": "ไม่พบกล้องเว็บแคม",
     "Authentication": "การยืนยันตัวตน",
@@ -108,7 +107,6 @@
     "This Room": "ห้องนี้",
     "Unavailable": "ไม่มี",
     "Send": "ส่ง",
-    "Source URL": "URL ต้นฉบับ",
     "Tuesday": "วันอังคาร",
     "Search…": "ค้นหา…",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
@@ -121,7 +119,6 @@
     "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
     "Yesterday": "เมื่อวานนี้",
-    "Low Priority": "ความสำคัญต่ำ",
     "Explore rooms": "สำรวจห้อง",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
     "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
@@ -395,6 +392,9 @@
         },
         "m.room.power_levels": {
             "user_from_to": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s"
+        },
+        "context_menu": {
+            "external_url": "URL ต้นฉบับ"
         }
     },
     "slash_command": {
@@ -543,6 +543,10 @@
     "room": {
         "intro": {
             "unencrypted_warning": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง"
+        },
+        "context_menu": {
+            "favourite": "รายการโปรด",
+            "low_priority": "ความสำคัญต่ำ"
         }
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",

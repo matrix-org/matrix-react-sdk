@@ -25,7 +25,6 @@
     "Failed to mute user": "Δεν ήταν δυνατή η σίγαση του χρήστη",
     "Failed to reject invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
     "Failed to reject invitation": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
-    "Favourite": "Αγαπημένο",
     "Filter room members": "Φιλτράρισμα μελών",
     "Forget room": "Αγνόηση δωματίου",
     "Historical": "Ιστορικό",
@@ -135,7 +134,6 @@
     "This Room": "Στο δωμάτιο",
     "Unavailable": "Μη διαθέσιμο",
     "Send": "Αποστολή",
-    "Source URL": "Πηγαίο URL",
     "Tuesday": "Τρίτη",
     "Unnamed room": "Ανώνυμο δωμάτιο",
     "Saturday": "Σάββατο",
@@ -148,7 +146,6 @@
     "Thursday": "Πέμπτη",
     "Search…": "Αναζήτηση…",
     "Yesterday": "Χθές",
-    "Low Priority": "Χαμηλή προτεραιότητα",
     "AM": "ΠΜ",
     "PM": "ΜΜ",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -805,9 +802,7 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Εμποδίστε τους χρήστες να συνομιλούν στην παλιά έκδοση του δωματίου και αναρτήστε ένα μήνυμα που να τους συμβουλεύει να μετακινηθούν στο νέο δωμάτιο",
     "Update any local room aliases to point to the new room": "Ενημερώστε τυχόν τοπικά ψευδώνυμα δωματίου για να οδηγούν στο νέο δωμάτιο",
     "Create a new room with the same name, description and avatar": "Δημιουργήστε ένα νέο δωμάτιο με το ίδιο όνομα, περιγραφή και avatar",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Η διαγραφή μιας μικροεφαρμογής την καταργεί για όλους τους χρήστες σε αυτό το δωμάτιο. Είστε βέβαιοι ότι θέλετε να τη διαγράψετε;",
     "Delete Widget": "Διαγραφή Μικροεφαρμογής",
-    "Delete widget": "Διαγραφή μικροεφαρμογής",
     "Unable to copy a link to the room to the clipboard.": "Αδυναμία αντιγραφής στο πρόχειρο του συνδέσμου δωματίου.",
     "Unable to copy room link": "Αδυναμία αντιγραφής του συνδέσμου δωματίου",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Είστε σίγουροι ότι θέλετε να αποχωρήσετε από τον χώρο %(spaceName)s;",
@@ -819,18 +814,8 @@
     "Error downloading audio": "Σφάλμα λήψης ήχου",
     "Sign in with SSO": "Συνδεθείτε με SSO",
     "This room is public": "Αυτό το δωμάτιο είναι δημόσιο",
-    "Move right": "Μετακίνηση δεξιά",
-    "Move left": "Μετακίνηση αριστερά",
-    "Revoke permissions": "Ανάκληση αδειών",
-    "Remove for everyone": "Κατάργηση για όλους",
-    "Take a picture": "Λήψη φωτογραφίας",
-    "Start audio stream": "Έναρξη ροής ήχου",
     "Unable to start audio streaming.": "Δεν είναι δυνατή η έναρξη ροής ήχου.",
     "Thread options": "Επιλογές νήματος συζήτησης",
-    "Report": "Αναφορά",
-    "Collapse reply thread": "Σύμπτυξη νήματος απάντησης",
-    "Show preview": "Εμφάνιση προεπισκόπησης",
-    "View source": "Προβολή πηγής",
     "Open in OpenStreetMap": "Άνοιγμα στο OpenStreetMap",
     "Not a valid Security Key": "Μη έγκυρο Κλειδί Ασφαλείας",
     "This looks like a valid Security Key!": "Αυτό φαίνεται να είναι ένα έγκυρο Κλειδί Ασφαλείας!",
@@ -901,8 +886,6 @@
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
     "Clear Storage and Sign Out": "Εκκαθάριση Χώρου αποθήκευσης και Αποσύνδεση",
     "Sign out and remove encryption keys?": "Αποσύνδεση και κατάργηση κλειδιών κρυπτογράφησης;",
-    "Copy room link": "Αντιγραφή συνδέσμου δωματίου",
-    "Forget Room": "Ξεχάστε το δωμάτιο",
     "%(roomName)s can't be previewed. Do you want to join it?": "Δεν είναι δυνατή η προεπισκόπηση του %(roomName)s. Θέλετε να συμμετάσχετε;",
     "You're previewing %(roomName)s. Want to join it?": "Κάνετε προεπισκόπηση στο %(roomName)s. Θέλετε να συμμετάσχετε;",
     "Reject & Ignore user": "Απόρριψη & Παράβλεψη χρήστη",
@@ -1247,7 +1230,6 @@
     "Remove them from everything I'm able to": "Αφαιρέστε τους από οτιδήποτε έχω δικαίωμα",
     "Demote yourself?": "Υποβιβάστε τον εαυτό σας;",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Η αναβάθμιση αυτού του δωματίου θα τερματίσει το δωμάτιο και θα δημιουργήσει ένα αναβαθμισμένο δωμάτιο με το ίδιο όνομα.",
-    "Favourited": "Αγαπημένα",
     "You can only join it with a working invite.": "Μπορείτε να συμμετάσχετε μόνο με ενεργή πρόσκληση.",
     "Home options": "Επιλογές αρχικής",
     "Unignore": "Αναίρεση αγνόησης",
@@ -1368,7 +1350,6 @@
     "General failure": "Γενική αποτυχία",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
-    "Mentions only": "Αναφορές μόνο",
     "Unsent": "Μη απεσταλμένα",
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
@@ -2588,7 +2569,14 @@
             "see_older_messages": "Κάντε κλικ εδώ για να δείτε παλαιότερα μηνύματα."
         },
         "creation_summary_dm": "Ο/η %(creator)s δημιούργησε αυτό το απευθείας μήνυμα.",
-        "creation_summary_room": "Ο/η %(creator)s δημιούργησε και διαμόρφωσε το δωμάτιο."
+        "creation_summary_room": "Ο/η %(creator)s δημιούργησε και διαμόρφωσε το δωμάτιο.",
+        "context_menu": {
+            "view_source": "Προβολή πηγής",
+            "show_url_preview": "Εμφάνιση προεπισκόπησης",
+            "external_url": "Πηγαίο URL",
+            "collapse_reply_thread": "Σύμπτυξη νήματος απάντησης",
+            "report": "Αναφορά"
+        }
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3189,7 +3177,17 @@
         "error_need_invite_permission": "Για να το κάνετε αυτό πρέπει να έχετε τη δυνατότητα να προσκαλέσετε χρήστες.",
         "no_name": "Άγνωστη εφαρμογή",
         "error_hangup_title": "Η σύνδεση χάθηκε",
-        "error_hangup_description": "Αποσυνδεθήκατε από την κλήση. (Σφάλμα: %(message)s)"
+        "error_hangup_description": "Αποσυνδεθήκατε από την κλήση. (Σφάλμα: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Έναρξη ροής ήχου",
+            "screenshot": "Λήψη φωτογραφίας",
+            "delete": "Διαγραφή μικροεφαρμογής",
+            "delete_warning": "Η διαγραφή μιας μικροεφαρμογής την καταργεί για όλους τους χρήστες σε αυτό το δωμάτιο. Είστε βέβαιοι ότι θέλετε να τη διαγράψετε;",
+            "remove": "Κατάργηση για όλους",
+            "revoke": "Ανάκληση αδειών",
+            "move_left": "Μετακίνηση αριστερά",
+            "move_right": "Μετακίνηση δεξιά"
+        }
     },
     "feedback": {
         "sent": "Τα σχόλια στάλθηκαν",
@@ -3394,7 +3392,15 @@
         "error_join_incompatible_version_2": "Επικοινωνήστε με τον διαχειριστή του κεντρικού σας διακομιστή.",
         "error_join_404_invite_same_hs": "Το άτομο που σας προσκάλεσε έχει ήδη φύγει.",
         "error_join_404_invite": "Το άτομο που σας προσκάλεσε έχει ήδη αποχωρήσει ή ο διακομιστής του είναι εκτός σύνδεσης.",
-        "error_join_title": "Αποτυχία συμμετοχής"
+        "error_join_title": "Αποτυχία συμμετοχής",
+        "context_menu": {
+            "unfavourite": "Αγαπημένα",
+            "favourite": "Αγαπημένο",
+            "mentions_only": "Αναφορές μόνο",
+            "copy_link": "Αντιγραφή συνδέσμου δωματίου",
+            "low_priority": "Χαμηλή προτεραιότητα",
+            "forget": "Ξεχάστε το δωμάτιο"
+        }
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",

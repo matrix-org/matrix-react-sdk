@@ -203,7 +203,6 @@
     "ready": "réidh",
     "Algorithm:": "Algartam:",
     "Information": "Eolas",
-    "Favourited": "Roghnaithe",
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
     "Bridges": "Droichid",
@@ -214,7 +213,6 @@
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
     "Home": "Tús",
-    "Favourite": "Cuir mar ceanán",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
     "Unavailable": "Níl sé ar fáil",
@@ -356,7 +354,6 @@
     "Access": "Rochtain",
     "Global": "Uilíoch",
     "Keyword": "Eochairfhocal",
-    "Report": "Tuairiscigh",
     "Visibility": "Léargas",
     "Address": "Seoladh",
     "Sent": "Seolta",
@@ -373,7 +370,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "Rooms and spaces": "Seomraí agus spásanna",
-    "Collapse reply thread": "Cuir na freagraí i bhfolach",
     "Low priority": "Tosaíocht íseal",
     "Share room": "Roinn seomra",
     "Forget room": "Déan dearmad ar an seomra",
@@ -645,6 +641,10 @@
         },
         "m.room.power_levels": {
             "changed": "D'athraigh %(senderName)s an leibhéal cumhachta %(powerLevelDiffText)s."
+        },
+        "context_menu": {
+            "collapse_reply_thread": "Cuir na freagraí i bhfolach",
+            "report": "Tuairiscigh"
         }
     },
     "slash_command": {
@@ -844,6 +844,10 @@
     "room": {
         "intro": {
             "enable_encryption_prompt": "Tosaigh criptiú sna socruithe."
+        },
+        "context_menu": {
+            "unfavourite": "Roghnaithe",
+            "favourite": "Cuir mar ceanán"
         }
     },
     "labs_mjolnir": {

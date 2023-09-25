@@ -4,7 +4,6 @@
     "Failed to change password. Is your password correct?": "Échec du changement de mot de passe. Votre mot de passe est-il correct ?",
     "Failed to change power level": "Échec du changement de rang",
     "Failed to forget room %(errCode)s": "Échec de l’oubli du salon %(errCode)s",
-    "Favourite": "Favoris",
     "%(items)s and %(lastItem)s": "%(items)s et %(lastItem)s",
     "and %(count)s others...": {
         "other": "et %(count)s autres…",
@@ -126,7 +125,6 @@
     "Home": "Accueil",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (rang %(powerLevelNumber)s)",
     "This will allow you to reset your password and receive notifications.": "Ceci vous permettra de réinitialiser votre mot de passe et de recevoir des notifications.",
-    "Delete widget": "Supprimer le widget",
     "AM": "AM",
     "PM": "PM",
     "Unignore": "Ne plus ignorer",
@@ -135,7 +133,6 @@
     "Banned by %(displayName)s": "Banni par %(displayName)s",
     "Jump to read receipt": "Aller à l’accusé de lecture",
     "Delete Widget": "Supprimer le widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Supprimer un widget le supprime pour tous les utilisateurs du salon. Voulez-vous vraiment supprimer ce widget ?",
     "And %(count)s more...": {
         "other": "Et %(count)s autres…"
     },
@@ -160,7 +157,6 @@
     "Changelog": "Journal des modifications",
     "This Room": "Ce salon",
     "Unavailable": "Indisponible",
-    "Source URL": "URL de la source",
     "Filter results": "Filtrer les résultats",
     "Tuesday": "Mardi",
     "Search…": "Rechercher…",
@@ -173,7 +169,6 @@
     "All Rooms": "Tous les salons",
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
-    "Low Priority": "Priorité basse",
     "Thank you!": "Merci !",
     "Logs sent": "Journaux envoyés",
     "Failed to send logs: ": "Échec lors de l’envoi des journaux : ",
@@ -529,7 +524,6 @@
     "Widgets do not use message encryption.": "Les widgets n’utilisent pas le chiffrement des messages.",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
-    "Remove for everyone": "Supprimer pour tout le monde",
     "Manage integrations": "Gérer les intégrations",
     "Verification Request": "Demande de vérification",
     "Unencrypted": "Non chiffré",
@@ -721,8 +715,6 @@
     "Set a Security Phrase": "Définir une phrase de sécurité",
     "Confirm Security Phrase": "Confirmer la phrase de sécurité",
     "Save your Security Key": "Sauvegarder votre clé de sécurité",
-    "Favourited": "Favori",
-    "Forget Room": "Oublier le salon",
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
@@ -758,10 +750,6 @@
     "Show Widgets": "Afficher les widgets",
     "Hide Widgets": "Masquer les widgets",
     "Algorithm:": "Algorithme :",
-    "Move right": "Aller à droite",
-    "Move left": "Aller à gauche",
-    "Revoke permissions": "Révoquer les permissions",
-    "Take a picture": "Prendre une photo",
     "Unable to set up keys": "Impossible de configurer les clés",
     "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
     "The server is not configured to indicate what the problem is (CORS).": "Le serveur n’est pas configuré pour indiquer quel est le problème (CORS).",
@@ -1077,7 +1065,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Êtes-vous sûr de vouloir quitter l’espace « %(spaceName)s » ?",
     "This space is not public. You will not be able to rejoin without an invite.": "Cet espace n’est pas public. Vous ne pourrez pas le rejoindre sans invitation.",
-    "Start audio stream": "Démarrer une diffusion audio",
     "Failed to start livestream": "Échec lors du démarrage de la diffusion en direct",
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
     "Save Changes": "Enregistrer les modifications",
@@ -1177,10 +1164,6 @@
     "Pinned messages": "Messages épinglés",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si vous avez les permissions, ouvrez le menu de n’importe quel message et sélectionnez <b>Épingler</b> pour les afficher ici.",
     "Nothing pinned, yet": "Rien d’épinglé, pour l’instant",
-    "Report": "Signaler",
-    "Collapse reply thread": "Masquer le fil de discussion",
-    "Show preview": "Afficher l’aperçu",
-    "View source": "Afficher la source",
     "Please provide an address": "Veuillez fournir une adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Définissez les adresses de cet espace pour que les utilisateurs puissent le trouver avec votre serveur d’accueil (%(localDomain)s)",
@@ -1354,7 +1337,6 @@
     "Copy link to thread": "Copier le lien du fil de discussion",
     "Thread options": "Options des fils de discussion",
     "You do not have permission to start polls in this room.": "Vous n’avez pas la permission de démarrer un sondage dans ce salon.",
-    "Mentions only": "Seulement les mentions",
     "Forget": "Oublier",
     "Files": "Fichiers",
     "Close this widget to view it in this panel": "Fermer ce widget pour l’afficher dans ce panneau",
@@ -1418,7 +1400,6 @@
     "Other rooms in %(spaceName)s": "Autres salons dans %(spaceName)s",
     "Spaces you're in": "Espaces où vous êtes",
     "Including you, %(commaSeparatedMembers)s": "Dont vous, %(commaSeparatedMembers)s",
-    "Copy room link": "Copier le lien du salon",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
     "Sections to show": "Sections à afficher",
     "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
@@ -1569,7 +1550,6 @@
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
-    "View related event": "Afficher les événements liés",
     "Joining…": "En train de rejoindre…",
     "Read receipts": "Accusés de réception",
     "%(count)s people joined": {
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Impossible de déchiffrer le message",
     "This message could not be decrypted": "Ce message n’a pas pu être déchiffré",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
-    "Mark as read": "Marquer comme lu",
     "Text": "Texte",
     "Create a link": "Crée un lien",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nous n’avons pas pu trouver d’événement à partir du %(dateString)s. Essayez avec une date antérieure.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Une erreur réseau s’est produite en tentant de chercher et d’aller à la date choisie. Votre serveur d’accueil est peut-être hors-ligne, ou bien c’est un problème temporaire avec connexion Internet. Veuillez réessayer. Si cela persiste, veuillez contacter l’administrateur de votre serveur d’accueil.",
     "Poll history": "Historique des sondages",
-    "Mute room": "Salon muet",
-    "Match default setting": "Réglage par défaut",
     "Start DM anyway": "Commencer la conversation privée quand même",
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
@@ -3147,7 +3124,15 @@
             "user": "%(senderName)s a terminé une <a>diffusion audio</a>"
         },
         "creation_summary_dm": "%(creator)s a créé cette conversation privée.",
-        "creation_summary_room": "%(creator)s a créé et configuré le salon."
+        "creation_summary_room": "%(creator)s a créé et configuré le salon.",
+        "context_menu": {
+            "view_source": "Afficher la source",
+            "show_url_preview": "Afficher l’aperçu",
+            "external_url": "URL de la source",
+            "collapse_reply_thread": "Masquer le fil de discussion",
+            "view_related_event": "Afficher les événements liés",
+            "report": "Signaler"
+        }
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -3811,7 +3796,17 @@
         "error_need_kick_permission": "Vous devez avoir l’autorisation d’expulser des utilisateurs pour faire ceci.",
         "no_name": "Application inconnue",
         "error_hangup_title": "Connexion perdue",
-        "error_hangup_description": "Vous avez déconnecté de l’appel. (Erreur : %(message)s)"
+        "error_hangup_description": "Vous avez déconnecté de l’appel. (Erreur : %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Démarrer une diffusion audio",
+            "screenshot": "Prendre une photo",
+            "delete": "Supprimer le widget",
+            "delete_warning": "Supprimer un widget le supprime pour tous les utilisateurs du salon. Voulez-vous vraiment supprimer ce widget ?",
+            "remove": "Supprimer pour tout le monde",
+            "revoke": "Révoquer les permissions",
+            "move_left": "Aller à gauche",
+            "move_right": "Aller à droite"
+        }
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -4064,7 +4059,18 @@
         "error_join_404_2": "Si vous connaissez l’adresse d’un salon, essayez de l’utiliser à la place pour rejoindre ce salon.",
         "error_join_title": "Impossible de rejoindre",
         "error_join_403": "Vous avez besoin d’une invitation pour accéder à ce salon.",
-        "error_cancel_knock_title": "Erreur lors de l’annulation"
+        "error_cancel_knock_title": "Erreur lors de l’annulation",
+        "context_menu": {
+            "unfavourite": "Favori",
+            "favourite": "Favoris",
+            "mentions_only": "Seulement les mentions",
+            "copy_link": "Copier le lien du salon",
+            "low_priority": "Priorité basse",
+            "forget": "Oublier le salon",
+            "mark_read": "Marquer comme lu",
+            "notifications_default": "Réglage par défaut",
+            "notifications_mute": "Salon muet"
+        }
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",

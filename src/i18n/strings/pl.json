@@ -26,7 +26,6 @@
     "Are you sure?": "Czy jesteś pewien?",
     "unknown error code": "nieznany kod błędu",
     "Failed to forget room %(errCode)s": "Nie mogłem zapomnieć o pokoju %(errCode)s",
-    "Favourite": "Ulubiony",
     "Failed to change password. Is your password correct?": "Zmiana hasła nie powiodła się. Czy Twoje hasło jest poprawne?",
     "Admin Tools": "Narzędzia Administracyjne",
     "No Microphones detected": "Nie wykryto żadnego mikrofonu",
@@ -44,7 +43,6 @@
     "Custom level": "Własny poziom",
     "Deactivate Account": "Dezaktywuj konto",
     "Decrypt %(text)s": "Odszyfruj %(text)s",
-    "Delete widget": "Usuń widżet",
     "Default": "Zwykły",
     "Download %(text)s": "Pobierz %(text)s",
     "Email address": "Adres e-mail",
@@ -143,7 +141,6 @@
     "Failed to send logs: ": "Nie udało się wysłać dzienników: ",
     "This Room": "Ten pokój",
     "Unavailable": "Niedostępny",
-    "Source URL": "Źródłowy URL",
     "Filter results": "Filtruj wyniki",
     "Tuesday": "Wtorek",
     "Preparing to send logs": "Przygotowuję do wysłania dzienników",
@@ -158,14 +155,12 @@
     "Search…": "Szukaj…",
     "Logs sent": "Wysłano dzienniki",
     "Yesterday": "Wczoraj",
-    "Low Priority": "Niski priorytet",
     "Thank you!": "Dziękujemy!",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sg",
     "%(duration)sd": "%(duration)sd",
     "Delete Widget": "Usuń widżet",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Usunięcie widżetu usuwa go dla wszystkich użytkowników w tym pokoju. Czy na pewno chcesz usunąć ten widżet?",
     "collapse": "Zwiń",
     "expand": "Rozwiń",
     "<a>In reply to</a> <pill>": "<a>W odpowiedzi do</a> <pill>",
@@ -377,7 +372,6 @@
     "Upload files": "Prześlij pliki",
     "Upload all": "Prześlij wszystko",
     "Cancel All": "Anuluj wszystko",
-    "Remove for everyone": "Usuń dla wszystkich",
     "Explore rooms": "Przeglądaj pokoje",
     "Success!": "Sukces!",
     "Manage integrations": "Zarządzaj integracjami",
@@ -411,7 +405,6 @@
         "one": "Prześlij %(count)s inny plik"
     },
     "Enter your account password to confirm the upgrade:": "Wprowadź hasło do konta, aby potwierdzić aktualizację:",
-    "Favourited": "Ulubiony",
     "This room is public": "Ten pokój jest publiczny",
     "Remove %(count)s messages": {
         "other": "Usuń %(count)s wiadomości",
@@ -809,8 +802,6 @@
     "Generate a Security Key": "Wygeneruj klucz bezpieczeństwa",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych, tworząc kopię zapasową kluczy szyfrowania na naszym serwerze.",
     "Avatar": "Awatar",
-    "Move right": "Przenieś w prawo",
-    "Move left": "Przenieś w lewo",
     "No results found": "Nie znaleziono wyników",
     "You can select all or individual messages to retry or delete": "Możesz zaznaczyć wszystkie lub wybrane wiadomości aby spróbować ponownie lub usunąć je",
     "Sending": "Wysyłanie",
@@ -952,7 +943,6 @@
         "other": "Odczytane przez %(count)s osób"
     },
     "New room": "Nowy pokój",
-    "Copy room link": "Kopiuj link do pokoju",
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
@@ -1158,7 +1148,6 @@
     "%(members)s and more": "%(members)s i więcej",
     "View message": "Wyświetl wiadomość",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
-    "Revoke permissions": "Odwołaj uprawnienia",
     "Failed to revoke invite": "Nie udało się odwołać zaproszenia",
     "Failed to connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
     "Search all rooms": "Wyszukaj wszystkie pokoje",
@@ -1383,7 +1372,6 @@
     "%(name)s wants to verify": "%(name)s chce weryfikacji",
     "Declining…": "Odrzucanie…",
     "%(name)s cancelled": "%(name)s anulował",
-    "Report": "Zgłoś",
     "Modal Widget": "Widżet modalny",
     "Your homeserver doesn't seem to support this feature.": "Wygląda na to, że Twój serwer domowy nie wspiera tej funkcji.",
     "If they don't match, the security of your communication may be compromised.": "Jeśli nie pasują, bezpieczeństwo twojego konta mogło zostać zdradzone.",
@@ -1676,21 +1664,10 @@
     "Loading live location…": "Wczytywanie lokalizacji na żywo…",
     "Live until %(expiryTime)s": "Na żywo do %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "Zaktualizowano %(humanizedUpdateTime)s",
-    "Take a picture": "Zrób zdjęcie",
-    "Start audio stream": "Rozpocznij transmisję audio",
     "Failed to start livestream": "Nie udało się rozpocząć transmisji na żywo",
     "Unable to start audio streaming.": "Nie można rozpocząć przesyłania strumienia audio.",
     "Thread options": "Opcje wątków",
-    "Mute room": "Wycisz pokój",
-    "Match default setting": "Dopasuj z ustawieniami domyślnymi",
-    "Mark as read": "Oznacz jako przeczytane",
-    "Forget Room": "Zapomnij pokój",
-    "Mentions only": "Tylko wzmianki",
     "Forget": "Zapomnij",
-    "View related event": "Wyświetl powiązane wydarzenie",
-    "Collapse reply thread": "Zwiń wątek odpowiedzi",
-    "Show preview": "Pokaż podgląd",
-    "View source": "Wyświetl źródło",
     "Open in OpenStreetMap": "Otwórz w OpenStreetMap",
     "Resend %(unsentCount)s reaction(s)": "Wyślij ponownie %(unsentCount)s reakcje",
     "Resume": "Wznów",
@@ -3134,7 +3111,15 @@
             "user": "%(senderName)s zakończył <a>transmisję głosową</a>"
         },
         "creation_summary_dm": "%(creator)s utworzył tę wiadomość prywatną.",
-        "creation_summary_room": "%(creator)s stworzył i skonfigurował pokój."
+        "creation_summary_room": "%(creator)s stworzył i skonfigurował pokój.",
+        "context_menu": {
+            "view_source": "Wyświetl źródło",
+            "show_url_preview": "Pokaż podgląd",
+            "external_url": "Źródłowy URL",
+            "collapse_reply_thread": "Zwiń wątek odpowiedzi",
+            "view_related_event": "Wyświetl powiązane wydarzenie",
+            "report": "Zgłoś"
+        }
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -3797,7 +3782,17 @@
         "error_need_kick_permission": "Aby to zrobić, musisz móc wyrzucać użytkowników.",
         "no_name": "Nieznana aplikacja",
         "error_hangup_title": "Utracono połączenie",
-        "error_hangup_description": "Zostałeś rozłączony z rozmowy. (Błąd: %(message)s)"
+        "error_hangup_description": "Zostałeś rozłączony z rozmowy. (Błąd: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Rozpocznij transmisję audio",
+            "screenshot": "Zrób zdjęcie",
+            "delete": "Usuń widżet",
+            "delete_warning": "Usunięcie widżetu usuwa go dla wszystkich użytkowników w tym pokoju. Czy na pewno chcesz usunąć ten widżet?",
+            "remove": "Usuń dla wszystkich",
+            "revoke": "Odwołaj uprawnienia",
+            "move_left": "Przenieś w lewo",
+            "move_right": "Przenieś w prawo"
+        }
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4048,7 +4043,18 @@
         "error_join_404_invite": "Osoba, która zaprosiła cię, już wyszła lub jej serwer jest offline.",
         "error_join_404_1": "Spróbowałeś dołączyć za pomocą ID pokoju bez podania listy serwerów, z których można dołączyć. ID pokojów to wewnętrzne identyfikatory, których nie da się użyć bez dodatkowych informacji.",
         "error_join_404_2": "Jeśli znasz adres pokoju, spróbuj dołączyć za pomocą niego.",
-        "error_join_title": "Nie udało się dołączyć"
+        "error_join_title": "Nie udało się dołączyć",
+        "context_menu": {
+            "unfavourite": "Ulubiony",
+            "favourite": "Ulubiony",
+            "mentions_only": "Tylko wzmianki",
+            "copy_link": "Kopiuj link do pokoju",
+            "low_priority": "Niski priorytet",
+            "forget": "Zapomnij pokój",
+            "mark_read": "Oznacz jako przeczytane",
+            "notifications_default": "Dopasuj z ustawieniami domyślnymi",
+            "notifications_mute": "Wycisz pokój"
+        }
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",

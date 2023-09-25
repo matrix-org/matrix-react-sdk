@@ -6,7 +6,6 @@
     "Failed to change password. Is your password correct?": "Falha ao alterar a palavra-passe. A sua palavra-passe está correta?",
     "Failed to reject invitation": "Falha ao tentar rejeitar convite",
     "Failed to unban": "Não foi possível desfazer o banimento",
-    "Favourite": "Favorito",
     "Filter room members": "Filtrar integrantes da sala",
     "Forget room": "Esquecer sala",
     "Historical": "Histórico",
@@ -126,7 +125,6 @@
     "Something went wrong!": "Algo deu errado!",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (nível de permissão %(powerLevelNumber)s)",
     "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
-    "Delete widget": "Apagar widget",
     "AM": "AM",
     "PM": "PM",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
@@ -139,7 +137,6 @@
     "Changelog": "Histórico de alterações",
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
-    "Source URL": "URL fonte",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Search…": "Pesquisar…",
@@ -153,7 +150,6 @@
     "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
-    "Low Priority": "Baixa prioridade",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Explore rooms": "Explorar rooms",
@@ -610,6 +606,9 @@
             "lightbox_title": "%(senderDisplayName)s alterou a imagem da sala %(roomName)s",
             "removed": "%(senderDisplayName)s removeu a imagem da sala.",
             "changed_img": "%(senderDisplayName)s alterou a imagem da sala para <img/>"
+        },
+        "context_menu": {
+            "external_url": "URL fonte"
         }
     },
     "slash_command": {
@@ -784,7 +783,11 @@
         }
     },
     "room": {
-        "drop_file_prompt": "Arraste um arquivo aqui para enviar"
+        "drop_file_prompt": "Arraste um arquivo aqui para enviar",
+        "context_menu": {
+            "favourite": "Favorito",
+            "low_priority": "Baixa prioridade"
+        }
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para poder usar esta funcionalidade",
@@ -861,7 +864,10 @@
     "widget": {
         "error_need_to_be_logged_in": "Você tem que estar logado.",
         "error_need_invite_permission": "Para fazer isso, você tem que ter permissão para convidar outras pessoas.",
-        "error_need_kick_permission": "Precisa ter permissão de expulsar utilizadores para fazer isso."
+        "error_need_kick_permission": "Precisa ter permissão de expulsar utilizadores para fazer isso.",
+        "context_menu": {
+            "delete": "Apagar widget"
+        }
     },
     "scalar": {
         "error_create": "Não foi possível criar o widget.",

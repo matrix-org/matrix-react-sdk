@@ -15,7 +15,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
-    "Favourite": "Favoriet",
     "unknown error code": "onbekende foutcode",
     "Failed to change password. Is your password correct?": "Wijzigen van wachtwoord is mislukt. Is je wachtwoord juist?",
     "Moderator": "Moderator",
@@ -127,10 +126,8 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "Something went wrong!": "Er is iets misgegaan!",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
-    "Delete widget": "Widget verwijderen",
     "AM": "AM",
     "PM": "PM",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Widgets verwijderen geldt voor alle deelnemers aan deze kamer. Weet je zeker dat je deze widget wilt verwijderen?",
     "Delete Widget": "Widget verwijderen",
     "Restricted": "Beperkte toegang",
     "Send": "Versturen",
@@ -160,7 +157,6 @@
     "Changelog": "Wijzigingslogboek",
     "This Room": "Deze kamer",
     "Unavailable": "Niet beschikbaar",
-    "Source URL": "Bron-URL",
     "Filter results": "Resultaten filteren",
     "Tuesday": "Dinsdag",
     "Search…": "Zoeken…",
@@ -172,7 +168,6 @@
     "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
     "Yesterday": "Gisteren",
-    "Low Priority": "Lage prioriteit",
     "Wednesday": "Woensdag",
     "Thank you!": "Bedankt!",
     "Logs sent": "Logs verstuurd",
@@ -609,7 +604,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Dit heeft meestal enkel een invloed op de manier waarop de kamer door de server verwerkt wordt. Als je problemen met je %(brand)s ondervindt, <a>dien dan een foutmelding in</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Je upgrade deze kamer van <oldVersion /> naar <newVersion />.",
     "Verification Request": "Verificatieverzoek",
-    "Remove for everyone": "Verwijderen voor iedereen",
     "Country Dropdown": "Landselectie",
     "Jump to first unread room.": "Ga naar het eerste ongelezen kamer.",
     "Jump to first invite.": "Ga naar de eerste uitnodiging.",
@@ -889,8 +883,6 @@
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het aanmaken van dit adres. Dit wordt mogelijk niet toegestaan door de server, of er is een tijdelijk probleem opgetreden.",
     "Error creating address": "Fout bij aanmaken van het adres",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van de bijnaam van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
-    "Favourited": "Favoriet",
-    "Forget Room": "Kamer vergeten",
     "Show Widgets": "Widgets tonen",
     "Hide Widgets": "Widgets verbergen",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken.",
@@ -990,10 +982,6 @@
     "Enter a Security Phrase": "Veiligheidswachtwoord invoeren",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
-    "Move right": "Ga naar rechts",
-    "Move left": "Ga naar links",
-    "Revoke permissions": "Machtigingen intrekken",
-    "Take a picture": "Neem een foto",
     "Hold": "Vasthouden",
     "Resume": "Hervatten",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Als u uw veiligheidssleutel bent vergeten, kunt u <button>nieuwe herstelopties instellen</button>",
@@ -1074,7 +1062,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Weet je zeker dat je de Space '%(spaceName)s' wilt verlaten?",
     "This space is not public. You will not be able to rejoin without an invite.": "Deze Space is niet publiek. Zonder uitnodiging zal je niet opnieuw kunnen toetreden.",
-    "Start audio stream": "Audiostream starten",
     "Failed to start livestream": "Starten van livestream is mislukt",
     "Unable to start audio streaming.": "Kan audiostream niet starten.",
     "Save Changes": "Wijzigingen opslaan",
@@ -1177,10 +1164,6 @@
     "Pinned messages": "Vastgeprikte berichten",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Als je de rechten hebt, open dan het menu op elk bericht en selecteer <b>Vastprikken</b> om ze hier te zetten.",
     "Nothing pinned, yet": "Nog niks vastgeprikt",
-    "Report": "Melden",
-    "Collapse reply thread": "Antwoorddraad invouwen",
-    "Show preview": "Preview weergeven",
-    "View source": "Bron bekijken",
     "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Stel adressen in voor deze Space zodat personen deze Space kunnen vinden via jouw homeserver (%(localDomain)s)",
@@ -1342,7 +1325,6 @@
     "Joining": "Toetreden",
     "Copy link to thread": "Kopieer link naar draad",
     "Thread options": "Draad opties",
-    "Mentions only": "Alleen vermeldingen",
     "Forget": "Vergeet",
     "If you can't see who you're looking for, send them your invite link below.": "Als je niet kan vinden wie je zoekt, stuur ze dan je uitnodigingslink hieronder.",
     "Based on %(count)s votes": {
@@ -1421,7 +1403,6 @@
     "Sections to show": "Te tonen secties",
     "Link to room": "Link naar kamer",
     "Including you, %(commaSeparatedMembers)s": "Inclusief jij, %(commaSeparatedMembers)s",
-    "Copy room link": "Kamerlink kopiëren",
     "Your new device is now verified. Other users will see it as trusted.": "Jouw nieuwe apparaat is nu geverifieerd. Andere personen zien het nu als vertrouwd.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Jouw nieuwe apparaat is nu geverifieerd. Het heeft toegang tot je versleutelde berichten en andere personen zien het als vertrouwd.",
     "Verify with another device": "Verifieer met andere apparaat",
@@ -1569,7 +1550,6 @@
     "Unread email icon": "Ongelezen e-mailpictogram",
     "An error occurred whilst sharing your live location, please try again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
     "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
-    "View related event": "Bekijk gerelateerde gebeurtenis",
     "Joining…": "Deelnemen…",
     "Read receipts": "Leesbevestigingen",
     "%(count)s people joined": {
@@ -2839,7 +2819,15 @@
             "see_older_messages": "Klik hier om oudere berichten te bekijken."
         },
         "creation_summary_dm": "%(creator)s maakte deze directe chat.",
-        "creation_summary_room": "Kamer gestart en ingesteld door %(creator)s."
+        "creation_summary_room": "Kamer gestart en ingesteld door %(creator)s.",
+        "context_menu": {
+            "view_source": "Bron bekijken",
+            "show_url_preview": "Preview weergeven",
+            "external_url": "Bron-URL",
+            "collapse_reply_thread": "Antwoorddraad invouwen",
+            "view_related_event": "Bekijk gerelateerde gebeurtenis",
+            "report": "Melden"
+        }
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3448,7 +3436,17 @@
         "error_need_kick_permission": "U moet in staat zijn om gebruikers te verwijderen om dit te doen.",
         "no_name": "Onbekende app",
         "error_hangup_title": "Verbinding verloren",
-        "error_hangup_description": "De verbinding is verbroken van uw oproep. (Error: %(message)s)"
+        "error_hangup_description": "De verbinding is verbroken van uw oproep. (Error: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Audiostream starten",
+            "screenshot": "Neem een foto",
+            "delete": "Widget verwijderen",
+            "delete_warning": "Widgets verwijderen geldt voor alle deelnemers aan deze kamer. Weet je zeker dat je deze widget wilt verwijderen?",
+            "remove": "Verwijderen voor iedereen",
+            "revoke": "Machtigingen intrekken",
+            "move_left": "Ga naar links",
+            "move_right": "Ga naar rechts"
+        }
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3677,7 +3675,15 @@
         "error_join_incompatible_version_2": "Gelieve contact op te nemen met de beheerder van jouw homeserver.",
         "error_join_404_invite_same_hs": "De persoon die je heeft uitgenodigd is al vertrokken.",
         "error_join_404_invite": "De persoon die je heeft uitgenodigd is al vertrokken, of zijn server is offline.",
-        "error_join_title": "Kan niet deelnemen"
+        "error_join_title": "Kan niet deelnemen",
+        "context_menu": {
+            "unfavourite": "Favoriet",
+            "favourite": "Favoriet",
+            "mentions_only": "Alleen vermeldingen",
+            "copy_link": "Kamerlink kopiëren",
+            "low_priority": "Lage prioriteit",
+            "forget": "Kamer vergeten"
+        }
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",

@@ -78,8 +78,6 @@
     "Italics": "Italicas",
     "Historical": "Istoric",
     "Sign Up": "S’inscriure",
-    "Favourite": "Favorit",
-    "Low Priority": "Prioritat bassa",
     "Mark all as read": "Tot marcar coma legit",
     "Demote": "Retrogradar",
     "Are you sure?": "O volètz vertadièrament ?",
@@ -390,5 +388,11 @@
     },
     "error": {
         "failed_copy": "Impossible de copiar"
+    },
+    "room": {
+        "context_menu": {
+            "favourite": "Favorit",
+            "low_priority": "Prioritat bassa"
+        }
     }
 }

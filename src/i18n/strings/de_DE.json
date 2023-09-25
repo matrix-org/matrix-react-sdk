@@ -13,7 +13,6 @@
     "Failed to change password. Is your password correct?": "Passwortänderung fehlgeschlagen. Ist dein Passwort richtig?",
     "Failed to reject invitation": "Einladung konnte nicht abgelehnt werden",
     "Failed to unban": "Aufheben der Verbannung fehlgeschlagen",
-    "Favourite": "Favorit",
     "Forget room": "Raum entfernen",
     "Invalid Email Address": "Ungültige E-Mail-Adresse",
     "Moderator": "Moderator",
@@ -127,7 +126,6 @@
         "other": "(~%(count)s Ergebnisse)"
     },
     "This will allow you to reset your password and receive notifications.": "Dies ermöglicht es dir, dein Passwort zurückzusetzen und Benachrichtigungen zu empfangen.",
-    "Delete widget": "Widget entfernen",
     "AM": "a. m.",
     "PM": "p. m.",
     "Unignore": "Nicht mehr blockieren",
@@ -138,7 +136,6 @@
         "other": "Und %(count)s weitere …"
     },
     "Delete Widget": "Widget löschen",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Das Löschen des Widgets entfernt es für alle in diesem Raum. Wirklich löschen?",
     "Restricted": "Eingeschränkt",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "Senden von Protokolldateien fehlgeschlagen: ",
     "This Room": "In diesem Raum",
     "Unavailable": "Nicht verfügbar",
-    "Source URL": "Quell-URL",
     "Filter results": "Ergebnisse filtern",
     "Tuesday": "Dienstag",
     "Preparing to send logs": "Senden von Protokolldateien wird vorbereitet",
@@ -176,7 +172,6 @@
     "Search…": "Suchen…",
     "Logs sent": "Protokolldateien gesendet",
     "Yesterday": "Gestern",
-    "Low Priority": "Niedrige Priorität",
     "Thank you!": "Danke!",
     "Popout widget": "Widget in eigenem Fenster öffnen",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Das Ereignis, auf das geantwortet wurde, kann nicht geladen werden, da es entweder nicht existiert oder du keine Berechtigung zum Betrachten hast.",
@@ -447,7 +442,6 @@
     "Discovery options will appear once you have added a phone number above.": "Entdeckungsoptionen werden angezeigt, sobald du eine Telefonnummer hinzugefügt hast.",
     "Close preview": "Vorschau schließen",
     "Join the discussion": "An Diskussion teilnehmen",
-    "Remove for everyone": "Für alle entfernen",
     "Remove %(email)s?": "%(email)s entfernen?",
     "Remove %(phone)s?": "%(phone)s entfernen?",
     "Remove recent messages by %(user)s": "Kürzlich gesendete Nachrichten von %(user)s entfernen",
@@ -708,8 +702,6 @@
     "Looks good!": "Sieht gut aus!",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
     "Wrong file type": "Falscher Dateityp",
-    "Forget Room": "Raum vergessen",
-    "Favourited": "Favorisiert",
     "This room is public": "Dieser Raum ist öffentlich",
     "Edited at %(date)s": "Geändert am %(date)s",
     "Click to view edits": "Klicke, um Änderungen anzuzeigen",
@@ -743,7 +735,6 @@
     "Information": "Information",
     "Not encrypted": "Nicht verschlüsselt",
     "Room settings": "Raumeinstellungen",
-    "Take a picture": "Bildschirmfoto",
     "Backup version:": "Version der Sicherung:",
     "Algorithm:": "Algorithmus:",
     "Backup key stored:": "Sicherungsschlüssel gespeichert:",
@@ -769,9 +760,6 @@
     "Ignored attempt to disable encryption": "Versuch, die Verschlüsselung zu deaktivieren, wurde ignoriert",
     "Failed to save your profile": "Speichern des Profils fehlgeschlagen",
     "The operation could not be completed": "Die Operation konnte nicht abgeschlossen werden",
-    "Move right": "Nach rechts schieben",
-    "Move left": "Nach links schieben",
-    "Revoke permissions": "Berechtigungen widerrufen",
     "You can only pin up to %(count)s widgets": {
         "other": "Du kannst nur %(count)s Widgets anheften"
     },
@@ -1092,7 +1080,6 @@
         "other": "%(count)s Räume"
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Bist du sicher, dass du den Space „%(spaceName)s“ verlassen möchtest?",
-    "Start audio stream": "Audiostream starten",
     "Failed to start livestream": "Livestream konnte nicht gestartet werden",
     "Unable to start audio streaming.": "Audiostream kann nicht gestartet werden.",
     "Leave Space": "Space verlassen",
@@ -1177,10 +1164,6 @@
     "Pinned messages": "Angeheftete Nachrichten",
     "Nothing pinned, yet": "Es ist nichts angepinnt. Noch nicht.",
     "Error - Mixed content": "Fehler - Uneinheitlicher Inhalt",
-    "View source": "Rohdaten anzeigen",
-    "Report": "Melden",
-    "Collapse reply thread": "Antworten verbergen",
-    "Show preview": "Vorschau zeigen",
     "Please provide an address": "Bitte gib eine Adresse an",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Füge Adressen für diesen Space hinzu, damit andere Leute ihn über deinen Heim-Server (%(localDomain)s) finden können",
     "To publish an address, it needs to be set as a local address first.": "Damit du die Adresse veröffentlichen kannst, musst du sie zuerst als lokale Adresse hinzufügen.",
@@ -1351,7 +1334,6 @@
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
     "Reply in thread": "In Thread antworten",
     "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
-    "Mentions only": "Nur Erwähnungen",
     "Forget": "Vergessen",
     "Files": "Dateien",
     "You won't get any notifications": "Du wirst keine Benachrichtigungen erhalten",
@@ -1414,7 +1396,6 @@
     "Unban them from specific things I'm able to": "In ausgewählten Räumen und Spaces entbannen",
     "Ban them from everything I'm able to": "Überall wo ich die Rechte dazu habe bannen",
     "Unban them from everything I'm able to": "Überall wo ich die Rechte dazu habe, entbannen",
-    "Copy room link": "Raumlink kopieren",
     "Messaging": "Kommunikation",
     "Close this widget to view it in this panel": "Widget schließen und in diesem Panel anzeigen",
     "Home options": "Startseiteneinstellungen",
@@ -1608,7 +1589,6 @@
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Verschlüsselungsschlüssel von einem deiner Geräte bevor du weiter machst.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Das Abmelden deines Geräts wird die Verschlüsselungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
     "To join, please enable video rooms in Labs first": "Zum Betreten, aktiviere bitte Videoräume in den Laboreinstellungen",
-    "View related event": "Zugehöriges Ereignis anzeigen",
     "Stop and close": "Beenden und schließen",
     "We'll help you get connected.": "Wir helfen dir, dich zu vernetzen.",
     "You're in": "Los gehts",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
     "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "Mark as read": "Als gelesen markieren",
     "Text": "Text",
     "Create a link": "Link erstellen",
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Wir konnten kein Ereignis nach dem %(dateString)s finden. Versuche, einen früheren Zeitpunkt zu wählen.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Während des Versuchs, zum Datum zu springen, trat ein Netzwerkfehler auf. Möglicherweise ist dein Heim-Server nicht erreichbar oder es liegt ein temporäres Problem mit deiner Internetverbindung vor. Bitte versuche es erneut. Falls dieser Fehler weiterhin auftritt, kontaktiere bitte deine Heim-Server-Administration.",
     "Poll history": "Umfrageverlauf",
-    "Mute room": "Raum stumm stellen",
-    "Match default setting": "Standardeinstellung verwenden",
     "Start DM anyway": "Dennoch DM beginnen",
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
@@ -3152,7 +3129,15 @@
             "user": "%(senderName)s beendete eine <a>Sprachübertragung</a>"
         },
         "creation_summary_dm": "%(creator)s hat diese Direktnachricht erstellt.",
-        "creation_summary_room": "%(creator)s hat den Raum erstellt und konfiguriert."
+        "creation_summary_room": "%(creator)s hat den Raum erstellt und konfiguriert.",
+        "context_menu": {
+            "view_source": "Rohdaten anzeigen",
+            "show_url_preview": "Vorschau zeigen",
+            "external_url": "Quell-URL",
+            "collapse_reply_thread": "Antworten verbergen",
+            "view_related_event": "Zugehöriges Ereignis anzeigen",
+            "report": "Melden"
+        }
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3816,7 +3801,17 @@
         "error_need_kick_permission": "Du musst in der Lage sein, Benutzer zu entfernen um das zu tun.",
         "no_name": "Unbekannte App",
         "error_hangup_title": "Verbindung verloren",
-        "error_hangup_description": "Du wurdest vom Anruf getrennt. (Error: %(message)s)"
+        "error_hangup_description": "Du wurdest vom Anruf getrennt. (Error: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Audiostream starten",
+            "screenshot": "Bildschirmfoto",
+            "delete": "Widget entfernen",
+            "delete_warning": "Das Löschen des Widgets entfernt es für alle in diesem Raum. Wirklich löschen?",
+            "remove": "Für alle entfernen",
+            "revoke": "Berechtigungen widerrufen",
+            "move_left": "Nach links schieben",
+            "move_right": "Nach rechts schieben"
+        }
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4069,7 +4064,18 @@
         "error_join_404_2": "Falls du eine Adresse kennst, versuche den Raum mit dieser zu betreten.",
         "error_join_title": "Betreten fehlgeschlagen",
         "error_join_403": "Du kannst diesen Raum nur auf Einladung betreten.",
-        "error_cancel_knock_title": "Abbrechen gescheitert"
+        "error_cancel_knock_title": "Abbrechen gescheitert",
+        "context_menu": {
+            "unfavourite": "Favorisiert",
+            "favourite": "Favorit",
+            "mentions_only": "Nur Erwähnungen",
+            "copy_link": "Raumlink kopieren",
+            "low_priority": "Niedrige Priorität",
+            "forget": "Raum vergessen",
+            "mark_read": "Als gelesen markieren",
+            "notifications_default": "Standardeinstellung verwenden",
+            "notifications_mute": "Raum stumm stellen"
+        }
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",

@@ -46,7 +46,6 @@
     "Banned by %(displayName)s": "%(displayName)s bloklanıb",
     "unknown error code": "naməlum səhv kodu",
     "Failed to forget room %(errCode)s": "Otağı unutmağı bacarmadı: %(errCode)s",
-    "Favourite": "Seçilmiş",
     "Sunday": "Bazar",
     "Friday": "Cümə",
     "Today": "Bu gün",
@@ -336,7 +335,10 @@
     },
     "room": {
         "upgrade_error_title": "Otaq yeniləmə xətası",
-        "upgrade_error_description": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin."
+        "upgrade_error_description": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin.",
+        "context_menu": {
+            "favourite": "Seçilmiş"
+        }
     },
     "notifications": {
         "enable_prompt_toast_title": "Xəbərdarlıqlar"

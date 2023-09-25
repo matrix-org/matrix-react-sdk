@@ -65,12 +65,8 @@
         "one": "Laadi üles %(count)s muu fail"
     },
     "Resend %(unsentCount)s reaction(s)": "Saada uuesti %(unsentCount)s reaktsioon(i)",
-    "Source URL": "Lähteaadress",
     "All messages": "Kõik sõnumid",
-    "Favourite": "Lemmik",
-    "Low Priority": "Vähetähtis",
     "Home": "Avaleht",
-    "Remove for everyone": "Eemalda kõigilt",
     "You seem to be uploading files, are you sure you want to quit?": "Tundub, et sa parasjagu laadid faile üles. Kas sa kindlasti soovid väljuda?",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Kui soovid teatada Matrix'iga seotud turvaveast, siis palun tutvu enne Matrix.org <a>Turvalisuse avalikustamise juhendiga</a>.",
     "Share Link to User": "Jaga viidet kasutaja kohta",
@@ -505,8 +501,6 @@
     "Widget added by": "Vidina lisaja",
     "This widget may use cookies.": "See vidin võib kasutada küpsiseid.",
     "Delete Widget": "Kustuta vidin",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Vidina kustutamisel eemaldatakse ta kõikide selle jututoa kasutajate jaoks. Kas sa kindlasti soovid seda vidinat eemaldada?",
-    "Delete widget": "Kustuta vidin",
     "Popout widget": "Ava rakendus eraldi aknas",
     "Language Dropdown": "Keelevalik",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
@@ -651,8 +645,6 @@
     "Save your Security Key": "Salvesta turvavõti",
     "Unable to set up secret storage": "Turvahoidla kasutuselevõtmine ei õnnestu",
     "Your keys are being backed up (the first backup could take a few minutes).": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
-    "Favourited": "Märgitud lemmikuks",
-    "Forget Room": "Unusta jututuba ära",
     "well formed": "korrektses vormingus",
     "unexpected type": "tundmatut tüüpi",
     "in account data": "kasutajakonto andmete hulgas",
@@ -743,7 +735,6 @@
     "Information": "Teave",
     "Not encrypted": "Krüptimata",
     "Room settings": "Jututoa seadistused",
-    "Take a picture": "Tee foto",
     "Backup version:": "Varukoopia versioon:",
     "Algorithm:": "Algoritm:",
     "Backup key stored:": "Varukoopia võti on salvestatud:",
@@ -769,9 +760,6 @@
     "Ignored attempt to disable encryption": "Eirasin katset lõpetada krüptimise kasutamine",
     "Failed to save your profile": "Sinu profiili salvestamine ei õnnestunud",
     "The operation could not be completed": "Toimingut ei õnnestunud lõpetada",
-    "Move right": "Liigu paremale",
-    "Move left": "Liigu vasakule",
-    "Revoke permissions": "Tühista õigused",
     "You can only pin up to %(count)s widgets": {
         "other": "Sa saad kinnitada kuni %(count)s vidinat"
     },
@@ -1071,7 +1059,6 @@
     "Recently visited rooms": "Hiljuti külastatud jututoad",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Kas oled kindel, et soovid lahkuda kogukonnakeskusest „%(spaceName)s“?",
     "This space is not public. You will not be able to rejoin without an invite.": "See ei ole avalik kogukonnakeskus. Ilma kutseta sa ei saa uuesti liituda.",
-    "Start audio stream": "Käivita audiovoog",
     "Failed to start livestream": "Videovoo käivitamine ei õnnestu",
     "Unable to start audio streaming.": "Audiovoo käivitamine ei õnnestu.",
     "Save Changes": "Salvesta muutused",
@@ -1196,10 +1183,6 @@
     "Decide who can view and join %(spaceName)s.": "Otsusta kes saada näha ja liituda %(spaceName)s kogukonnaga.",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Selleks et teised kasutajad saaks seda kogukonda leida oma koduserveri kaudu (%(localDomain)s) seadista talle aadressid",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
-    "Report": "Teata sisust",
-    "Collapse reply thread": "Ahenda vastuste jutulõnga",
-    "Show preview": "Näita eelvaadet",
-    "View source": "Vaata lähtekoodi",
     "Please provide an address": "Palun sisesta aadress",
     "Unnamed audio": "Nimetu helifail",
     "Show %(count)s other previews": {
@@ -1355,7 +1338,6 @@
     "Copy link to thread": "Kopeeri jutulõnga link",
     "Thread options": "Jutulõnga valikud",
     "Reply in thread": "Vasta jutulõngas",
-    "Mentions only": "Ainult mainimised",
     "Forget": "Unusta",
     "Files": "Failid",
     "You won't get any notifications": "Sa ei saa üldse teavitusi",
@@ -1418,7 +1400,6 @@
     "Spaces you're in": "Kogukonnad, mille liige sa oled",
     "Link to room": "Link jututoale",
     "Including you, %(commaSeparatedMembers)s": "Seahulgas Sina, %(commaSeparatedMembers)s",
-    "Copy room link": "Kopeeri jututoa link",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Sellega rühmitad selle kogukonna liikmetega peetavaid vestlusi. Kui seadistus pole kasutusel, siis on neid vestlusi %(spaceName)s kogukonna vaates ei kuvata.",
     "Sections to show": "Näidatavad valikud",
     "Open in OpenStreetMap": "Ava OpenStreetMap'is",
@@ -1574,7 +1555,6 @@
         "other": "%(count)s osalejat liitus",
         "one": "%(count)s osaleja liitus"
     },
-    "View related event": "Vaata seotud sündmust",
     "Read receipts": "Lugemisteatised",
     "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!",
     "Un-maximise": "Lõpeta täisvaate kasutamine",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Sõnumi dekrüptimine ei õnnestunud",
     "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
-    "Mark as read": "Märgi loetuks",
     "Text": "Tekst",
     "Create a link": "Tee link",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Alates %(dateString)s ei leidnud me sündmusi ega teateid. Palun proovi valida varasem kuupäev.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Valitud kuupäeva vaate otsimisel ja avamisel tekkis võrguühenduse viga. Kas näiteks sinu koduserver hetkel ei tööta või on ajutisi katkestusi sinu internetiühenduses. Palun proovi mõne aja pärast uuesti. Kui viga kordub veel hiljemgi, siis palun suhtle oma koduserveri haldajaga.",
     "Poll history": "Küsitluste ajalugu",
-    "Match default setting": "Sobita vaikimisi seadistusega",
-    "Mute room": "Summuta jututuba",
     "Start DM anyway": "Ikkagi alusta vestlust",
     "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
@@ -3147,7 +3124,15 @@
             "user": "%(senderName)s lõpetas <a>ringhäälingukõne</a>"
         },
         "creation_summary_dm": "%(creator)s alustas seda otsesuhtlust.",
-        "creation_summary_room": "%(creator)s lõi ja seadistas jututoa."
+        "creation_summary_room": "%(creator)s lõi ja seadistas jututoa.",
+        "context_menu": {
+            "view_source": "Vaata lähtekoodi",
+            "show_url_preview": "Näita eelvaadet",
+            "external_url": "Lähteaadress",
+            "collapse_reply_thread": "Ahenda vastuste jutulõnga",
+            "view_related_event": "Vaata seotud sündmust",
+            "report": "Teata sisust"
+        }
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -3811,7 +3796,17 @@
         "error_need_kick_permission": "Selle tegevuse jaoks peaks sul olema õigus teistele kasutajatele müksamiseks.",
         "no_name": "Tundmatu rakendus",
         "error_hangup_title": "Ühendus on katkenud",
-        "error_hangup_description": "Kõne on katkenud. (Veateade: %(message)s)"
+        "error_hangup_description": "Kõne on katkenud. (Veateade: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Käivita audiovoog",
+            "screenshot": "Tee foto",
+            "delete": "Kustuta vidin",
+            "delete_warning": "Vidina kustutamisel eemaldatakse ta kõikide selle jututoa kasutajate jaoks. Kas sa kindlasti soovid seda vidinat eemaldada?",
+            "remove": "Eemalda kõigilt",
+            "revoke": "Tühista õigused",
+            "move_left": "Liigu vasakule",
+            "move_right": "Liigu paremale"
+        }
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -4064,7 +4059,18 @@
         "error_join_404_2": "Kui sa tead jututoa aadressi, siis proovi liitumiseks seda kasutada.",
         "error_join_title": "Liitumine ei õnnestunud",
         "error_join_403": "Ligipääsuks siia jututuppa on sul vaja kutset.",
-        "error_cancel_knock_title": "Tühistamine ei õnnestunud"
+        "error_cancel_knock_title": "Tühistamine ei õnnestunud",
+        "context_menu": {
+            "unfavourite": "Märgitud lemmikuks",
+            "favourite": "Lemmik",
+            "mentions_only": "Ainult mainimised",
+            "copy_link": "Kopeeri jututoa link",
+            "low_priority": "Vähetähtis",
+            "forget": "Unusta jututuba ära",
+            "mark_read": "Märgi loetuks",
+            "notifications_default": "Sobita vaikimisi seadistusega",
+            "notifications_mute": "Summuta jututuba"
+        }
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",

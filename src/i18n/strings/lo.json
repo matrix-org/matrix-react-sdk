@@ -430,25 +430,11 @@
     "No live locations": "ບໍ່ມີສະຖານທີ່ປັດຈູບັນ",
     "Live location error": "ສະຖານທີ່ປັດຈຸບັນຜິດພາດ",
     "Live location ended": "ສະຖານທີ່ປັດຈຸບັນສິ້ນສຸດລົງແລ້ວ",
-    "Move right": "ຍ້າຍໄປທາງຂວາ",
-    "Move left": "ຍ້າຍໄປທາງຊ້າຍ",
-    "Revoke permissions": "ຖອນການອະນຸຍາດ",
-    "Remove for everyone": "ລຶບອອກສຳລັບທຸກຄົນ",
-    "Delete widget": "ລຶບ widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "ການລຶບwidget ຈະເປັນການລຶບອອກສຳລັບຜູ້ໃຊ້ທັງໝົດໃນຫ້ອງນີ້. ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບwidget ນີ້?",
     "Delete Widget": "ລຶບ Widget",
-    "Take a picture": "ຖ່າຍຮູບ",
-    "Start audio stream": "ເລີ່ມການຖ່າຍທອດສຽງ",
     "Failed to start livestream": "ການຖ່າຍທອດສົດບໍ່ສຳເລັດ",
     "Unable to start audio streaming.": "ບໍ່ສາມາດເລີ່ມການຖ່າຍທອດສຽງໄດ້.",
     "Thread options": "ຕົວເລືອກກະທູ້",
-    "Mentions only": "ກ່າວເຖິງເທົ່ານັ້ນ",
     "Forget": "ລືມ",
-    "Report": "ລາຍງານ",
-    "Collapse reply thread": "ຫຍໍ້ກະທູ້ຕອບກັບ",
-    "Source URL": "ແຫຼ່ງ URL",
-    "Show preview": "ສະແດງຕົວຢ່າງ",
-    "View source": "ເບິ່ງແຫຼ່ງທີ່ມາ",
     "Open in OpenStreetMap": "ເປີດໃນ OpenStreetMap",
     "Hold": "ຖື",
     "Resume": "ປະຫວັດຫຍໍ້",
@@ -700,11 +686,6 @@
         "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
         "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
     },
-    "Copy room link": "ສຳເນົາລິ້ງຫ້ອງ",
-    "Low Priority": "ຄວາມສຳຄັນຕໍ່າ",
-    "Favourite": "ສິ່ງທີ່ມັກ",
-    "Favourited": "ສີ່ງທີ່ມັກ",
-    "Forget Room": "ລືມຫ້ອງ",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s ຖືກສົ່ງຄືນໃນຂະນະທີ່ພະຍາຍາມເຂົ້າເຖິງຫ້ອງ ຫຼື ພື້ນທີ່. ຖ້າຫາກທ່ານຄິດວ່າທ່ານກໍາລັງເຫັນຂໍ້ຄວາມນີ້ຜິດພາດ, ກະລຸນາ <issueLink>ສົ່ງບົດລາຍງານ bug</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "ລອງໃໝ່ໃນພາຍຫຼັງ, ຫຼື ຂໍໃຫ້ຜູ້ຄຸ້ມຄອງຫ້ອງ ຫຼື ຜູ້ຄຸ້ມຄອງພື້ນທີ່ກວດເບິ່ງວ່າທ່ານມີການເຂົ້າເຖິງ ຫຼື ບໍ່.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "ຖ້າທ່ານບໍ່ໄດ້ລືບຂະບວນການກູ້ຄືນ, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະ ກຳນົດຂະບວນການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ.",
@@ -1573,7 +1554,6 @@
         "one": "%(count)s ຄົນເຂົ້າຮ່ວມ\"",
         "other": "%(count)s ຄົນເຂົ້າຮ່ວມ"
     },
-    "View related event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ",
     "Read receipts": "ຢັ້ງຢືນອ່ານແລ້ວ",
     "common": {
         "about": "ກ່ຽວກັບ",
@@ -2597,7 +2577,15 @@
             "see_older_messages": "ກົດທີ່ນີ້ເພື່ອເບິ່ງຂໍ້ຄວາມເກົ່າ."
         },
         "creation_summary_dm": "%(creator)s ສ້າງ DM ນີ້.",
-        "creation_summary_room": "%(creator)s ສ້າງ ແລະ ກຳນົດຄ່າຫ້ອງ."
+        "creation_summary_room": "%(creator)s ສ້າງ ແລະ ກຳນົດຄ່າຫ້ອງ.",
+        "context_menu": {
+            "view_source": "ເບິ່ງແຫຼ່ງທີ່ມາ",
+            "show_url_preview": "ສະແດງຕົວຢ່າງ",
+            "external_url": "ແຫຼ່ງ URL",
+            "collapse_reply_thread": "ຫຍໍ້ກະທູ້ຕອບກັບ",
+            "view_related_event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ",
+            "report": "ລາຍງານ"
+        }
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3203,7 +3191,17 @@
         },
         "error_need_to_be_logged_in": "ທ່ານຈໍາເປັນຕ້ອງເຂົ້າສູ່ລະບົບ.",
         "error_need_invite_permission": "ທ່ານຈະຕ້ອງເຊີນຜູ້ໃຊ້ໃຫ້ເຮັດແນວນັ້ນ.",
-        "no_name": "ແອັບທີ່ບໍ່ຮູ້ຈັກ"
+        "no_name": "ແອັບທີ່ບໍ່ຮູ້ຈັກ",
+        "context_menu": {
+            "start_audio_stream": "ເລີ່ມການຖ່າຍທອດສຽງ",
+            "screenshot": "ຖ່າຍຮູບ",
+            "delete": "ລຶບ widget",
+            "delete_warning": "ການລຶບwidget ຈະເປັນການລຶບອອກສຳລັບຜູ້ໃຊ້ທັງໝົດໃນຫ້ອງນີ້. ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບwidget ນີ້?",
+            "remove": "ລຶບອອກສຳລັບທຸກຄົນ",
+            "revoke": "ຖອນການອະນຸຍາດ",
+            "move_left": "ຍ້າຍໄປທາງຊ້າຍ",
+            "move_right": "ຍ້າຍໄປທາງຂວາ"
+        }
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3410,7 +3408,15 @@
         "error_join_incompatible_version_2": "ກະລຸນາຕິດຕໍ່ຜູ້ຄຸ້ມຄອງເຊີບເວີຂອງທ່ານ.",
         "error_join_404_invite_same_hs": "ຄົນທີ່ເຊີນເຈົ້າໄດ້ອອກໄປແລ້ວ.",
         "error_join_404_invite": "ບຸກຄົນທີ່ເຊີນທ່ານໄດ້ອອກໄປແລ້ວ, ຫຼືເຊີບເວີຂອງເຂົາເຈົ້າອອບລາຍຢູ່.",
-        "error_join_title": "ການເຂົ້າຮ່ວມບໍ່ສຳເລັດ"
+        "error_join_title": "ການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
+        "context_menu": {
+            "unfavourite": "ສີ່ງທີ່ມັກ",
+            "favourite": "ສິ່ງທີ່ມັກ",
+            "mentions_only": "ກ່າວເຖິງເທົ່ານັ້ນ",
+            "copy_link": "ສຳເນົາລິ້ງຫ້ອງ",
+            "low_priority": "ຄວາມສຳຄັນຕໍ່າ",
+            "forget": "ລືມຫ້ອງ"
+        }
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",

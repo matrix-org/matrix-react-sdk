@@ -1,7 +1,6 @@
 {
     "Create new room": "Luo uusi huone",
     "Failed to forget room %(errCode)s": "Huoneen unohtaminen epäonnistui %(errCode)s",
-    "Favourite": "Suosikki",
     "unknown error code": "tuntematon virhekoodi",
     "Failed to change password. Is your password correct?": "Salasanan vaihtaminen epäonnistui. Onko salasanasi oikein?",
     "No Microphones detected": "Mikrofonia ei löytynyt",
@@ -119,7 +118,6 @@
     "Add an Integration": "Lisää integraatio",
     "Something went wrong!": "Jokin meni vikaan!",
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
-    "Delete widget": "Poista sovelma",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Et voi kumota tätä muutosta, koska olet ylentämässä käyttäjää samalle oikeustasolle kuin itsesi.",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tämä prosessi mahdollistaa salatuissa huoneissa vastaanottamiesi viestien salausavainten viemisen tiedostoon. Voit myöhemmin tuoda ne toiseen Matrix-asiakasohjelmaan, jolloin myös se voi purkaa viestit.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tämä prosessi mahdollistaa aiemmin tallennettujen salausavainten tuominen toiseen Matrix-asiakasohjelmaan. Tämän jälkeen voit purkaa kaikki salatut viestit jotka toinen asiakasohjelma pystyisi purkamaan.",
@@ -144,7 +142,6 @@
     "Delete Widget": "Poista sovelma",
     "expand": "laajenna",
     "collapse": "supista",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Sovelman poistaminen poistaa sen kaikilta huoneen käyttäjiltä. Haluatko varmasti poistaa tämän sovelman?",
     "Sunday": "Sunnuntai",
     "Notification targets": "Ilmoituksen kohteet",
     "Today": "Tänään",
@@ -152,7 +149,6 @@
     "Changelog": "Muutosloki",
     "This Room": "Tämä huone",
     "Unavailable": "Ei saatavilla",
-    "Source URL": "Lähdeosoite",
     "Filter results": "Suodata tuloksia",
     "Tuesday": "Tiistai",
     "Search…": "Haku…",
@@ -164,7 +160,6 @@
     "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
     "Yesterday": "Eilen",
-    "Low Priority": "Matala prioriteetti",
     "Wednesday": "Keskiviikko",
     "Thank you!": "Kiitos!",
     "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
@@ -527,7 +522,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
     "Integrations not allowed": "Integraatioiden käyttö on kielletty",
-    "Remove for everyone": "Poista kaikilta",
     "Verification Request": "Varmennuspyyntö",
     "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
     "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
@@ -691,12 +685,10 @@
     "Add widgets, bridges & bots": "Lisää sovelmia, siltoja ja botteja",
     "Edit widgets, bridges & bots": "Muokkaa sovelmia, siltoja ja botteja",
     "Widgets": "Sovelmat",
-    "Take a picture": "Ota kuva",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
     "Edited at %(date)s": "Muokattu %(date)s",
-    "Forget Room": "Unohda huone",
     "not ready": "ei valmis",
     "ready": "valmis",
     "unexpected type": "odottamaton tyyppi",
@@ -972,9 +964,6 @@
     "Mongolia": "Mongolia",
     "Monaco": "Monaco",
     "Not encrypted": "Ei salattu",
-    "Move right": "Siirry oikealle",
-    "Move left": "Siirry vasemmalle",
-    "Revoke permissions": "Peruuta käyttöoikeudet",
     "You're all caught up.": "Olet ajan tasalla.",
     "This version of %(brand)s does not support searching encrypted messages": "Tämä %(brand)s-versio ei tue salattujen viestien hakua",
     "This version of %(brand)s does not support viewing some encrypted files": "Tämä %(brand)s-versio ei tue joidenkin salattujen tiedostojen katselua",
@@ -984,7 +973,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Voit kiinnittää enintään %(count)s sovelmaa"
     },
-    "Favourited": "Suositut",
     "Use a different passphrase?": "Käytä eri salalausetta?",
     "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
@@ -1094,8 +1082,6 @@
     "Unable to copy room link": "Huoneen linkin kopiointi ei onnistu",
     "Error downloading audio": "Virhe ääntä ladattaessa",
     "Avatar": "Avatar",
-    "Show preview": "Näytä esikatselu",
-    "View source": "Näytä lähde",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
     "Search for rooms or people": "Etsi huoneita tai ihmisiä",
@@ -1268,8 +1254,6 @@
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
     "@mentions & keywords": "@maininnat & asiasanat",
     "Forget": "Unohda",
-    "Report": "Ilmoita",
-    "Collapse reply thread": "Supista vastausketju",
     "Location": "Sijainti",
     "%(count)s votes": {
         "one": "%(count)s ääni",
@@ -1363,7 +1347,6 @@
     "Joining": "Liitytään",
     "Wait!": "Odota!",
     "Unnamed audio": "Nimetön ääni",
-    "Start audio stream": "Käynnistä äänen suoratoisto",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
     "Verify other device": "Vahvista toinen laite",
@@ -1379,7 +1362,6 @@
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
     },
-    "Copy room link": "Kopioi huoneen linkki",
     "New video room": "Uusi videohuone",
     "New room": "Uusi huone",
     "You don't have permission to do this": "Sinulla ei ole lupaa tehdä tätä",
@@ -1416,7 +1398,6 @@
     "Developer": "Kehittäjä",
     "Close sidebar": "Sulje sivupalkki",
     "Updated %(humanizedUpdateTime)s": "Päivitetty %(humanizedUpdateTime)s",
-    "Mentions only": "Vain maininnat",
     "Cameras": "Kamerat",
     "Output devices": "Ulostulolaitteet",
     "Input devices": "Sisääntulolaitteet",
@@ -1567,7 +1548,6 @@
     "Enable %(brand)s as an additional calling option in this room": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
-    "Mark as read": "Merkitse luetuksi",
     "Interactively verify by emoji": "Vahvista vuorovaikutteisesti emojilla",
     "Manually verify by text": "Vahvista manuaalisesti tekstillä",
     "Text": "Teksti",
@@ -1579,7 +1559,6 @@
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
     "Connecting…": "Yhdistetään…",
-    "Mute room": "Mykistä huone",
     "Fetching keys from server…": "Noudetaan avaimia palvelimelta…",
     "Checking…": "Tarkistetaan…",
     "Invites by email can only be sent one at a time": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
@@ -2828,7 +2807,14 @@
             "user": "%(senderName)s lopetti <a>äänen yleislähetyksen</a>"
         },
         "creation_summary_dm": "%(creator)s loi tämän yksityisviestin.",
-        "creation_summary_room": "%(creator)s loi ja määritti huoneen."
+        "creation_summary_room": "%(creator)s loi ja määritti huoneen.",
+        "context_menu": {
+            "view_source": "Näytä lähde",
+            "show_url_preview": "Näytä esikatselu",
+            "external_url": "Lähdeosoite",
+            "collapse_reply_thread": "Supista vastausketju",
+            "report": "Ilmoita"
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3436,7 +3422,17 @@
         "error_need_kick_permission": "Sinun täytyy pystyä potkia käyttäjiä voidaksesi tehdä tuon.",
         "no_name": "Tuntematon sovellus",
         "error_hangup_title": "Yhteys menetettiin",
-        "error_hangup_description": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)"
+        "error_hangup_description": "Yhteytesi puheluun katkaistiin. (Virhe: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Käynnistä äänen suoratoisto",
+            "screenshot": "Ota kuva",
+            "delete": "Poista sovelma",
+            "delete_warning": "Sovelman poistaminen poistaa sen kaikilta huoneen käyttäjiltä. Haluatko varmasti poistaa tämän sovelman?",
+            "remove": "Poista kaikilta",
+            "revoke": "Peruuta käyttöoikeudet",
+            "move_left": "Siirry vasemmalle",
+            "move_right": "Siirry oikealle"
+        }
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3665,7 +3661,17 @@
         "error_join_404_invite_same_hs": "Henkilö, joka kutsui sinut on jo poistunut.",
         "error_join_404_invite": "Henkilö, joka kutsui sinut on jo poistunut tai hänen palvelimensa on poissa verkosta.",
         "error_join_404_2": "Jos tiedät huoneen osoitteen, yritä liittyä sen kautta.",
-        "error_join_title": "Liittyminen epäonnistui"
+        "error_join_title": "Liittyminen epäonnistui",
+        "context_menu": {
+            "unfavourite": "Suositut",
+            "favourite": "Suosikki",
+            "mentions_only": "Vain maininnat",
+            "copy_link": "Kopioi huoneen linkki",
+            "low_priority": "Matala prioriteetti",
+            "forget": "Unohda huone",
+            "mark_read": "Merkitse luetuksi",
+            "notifications_mute": "Mykistä huone"
+        }
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",

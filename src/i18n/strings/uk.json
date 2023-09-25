@@ -1,7 +1,6 @@
 {
     "Create new room": "Створити нову кімнату",
     "Failed to forget room %(errCode)s": "Не вдалось видалити кімнату %(errCode)s",
-    "Favourite": "Улюблені",
     "unknown error code": "невідомий код помилки",
     "Failed to change password. Is your password correct?": "Не вдалось змінити пароль. Ви впевнені, що пароль введено правильно?",
     "Admin Tools": "Засоби адміністрування",
@@ -28,7 +27,6 @@
     "Failed to send logs: ": "Не вдалося надіслати журнали: ",
     "This Room": "Ця кімната",
     "Unavailable": "Недоступний",
-    "Source URL": "Початкова URL-адреса",
     "Filter results": "Відфільтрувати результати",
     "Tuesday": "Вівторок",
     "Preparing to send logs": "Приготування до надсилання журланла",
@@ -45,7 +43,6 @@
     "Search…": "Пошук…",
     "Logs sent": "Журнали надіслані",
     "Yesterday": "Вчора",
-    "Low Priority": "Неважливі",
     "Thank you!": "Дякуємо!",
     "Profile": "Профіль",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
@@ -268,8 +265,6 @@
     "Unable to revoke sharing for email address": "Не вдалось відкликати оприлюднювання адреси е-пошти",
     "Unable to revoke sharing for phone number": "Не вдалось відкликати оприлюднювання телефонного номеру",
     "Filter room members": "Відфільтрувати учасників кімнати",
-    "Forget Room": "Забути кімнату",
-    "Favourited": "В улюблених",
     "This room is public": "Ця кімната загальнодоступна",
     "Failed to revoke invite": "Не вдалось відкликати запрошення",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Не вдалось відкликати запрошення. Сервер може мати тимчасові збої або у вас немає достатніх дозволів щоб відкликати запрошення.",
@@ -643,8 +638,6 @@
     "Preparing to download logs": "Приготування до завантаження журналів",
     "Download %(text)s": "Завантажити %(text)s",
     "Room ID": "ID кімнати",
-    "View source": "Переглянути код",
-    "Report": "Поскаржитися",
     "Share User": "Поділитися користувачем",
     "Share content": "Поділитися вмістом",
     "Share entire screen": "Поділитися всім екраном",
@@ -677,14 +670,8 @@
     "Couldn't load page": "Не вдалося завантажити сторінку",
     "Country Dropdown": "Спадний список країн",
     "Avatar": "Аватар",
-    "Move right": "Посунути праворуч",
-    "Move left": "Посунути ліворуч",
-    "Revoke permissions": "Відкликати дозвіл",
-    "Remove for everyone": "Прибрати для всіх",
-    "Delete widget": "Видалити віджет",
     "Delete Widget": "Видалити віджет",
     "Add space": "Додати простір",
-    "Collapse reply thread": "Згорнути відповіді",
     "Public space": "Загальнодоступний простір",
     "Private space (invite only)": "Приватний простір (лише за запрошенням)",
     "Space visibility": "Видимість простору",
@@ -718,7 +705,6 @@
     "Server name": "Назва сервера",
     "Enter the name of a new server you want to explore.": "Введіть назву нового сервера, який ви хочете переглянути.",
     "Add a new server": "Додати новий сервер",
-    "Show preview": "Попередній перегляд",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
     "Your server": "Ваш сервер",
     "You are not allowed to view this server's rooms list": "Вам не дозволено переглядати список кімнат цього сервера",
@@ -956,7 +942,6 @@
     "This looks like a valid Security Key!": "Це схоже на дійсний ключ безпеки!",
     "Not a valid Security Key": "Хибний ключ безпеки",
     "No backup found!": "Резервних копій не знайдено!",
-    "Mentions only": "Лише згадки",
     "Forget": "Забути",
     "Modal Widget": "Модальний віджет",
     "Message edits": "Редагування повідомлення",
@@ -1359,10 +1344,7 @@
     "Integrations are disabled": "Інтеграції вимкнені",
     "Integrations not allowed": "Інтеграції не дозволені",
     "This homeserver would like to make sure you are not a robot.": "Домашній сервер бажає впевнитися, що ви не робот.",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Видалення віджету вилучить його в усіх користувачів кімнати. Точно видалити цей віджет?",
-    "Take a picture": "Зробити знімок",
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
-    "Start audio stream": "Почати аудіотрансляцію",
     "Failed to start livestream": "Не вдалося почати живу трансляцію",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Тут лише ви. Якщо ви вийдете, ніхто більше не зможе приєднатися, навіть ви самі.",
     "You don't have permission to do this": "У вас немає на це дозволу",
@@ -1372,7 +1354,6 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "Ввімкнути захищене резервне копіювання й керувати своїми ключами можна в налаштуваннях.",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Якщо скасуєте це й загубите пристрій, то втратите зашифровані повідомлення й дані.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Звірка цього користувача позначить його сеанс довіреним вам, а ваш йому.",
-    "Copy room link": "Скопіювати посилання на кімнату",
     "Joined": "Приєднано",
     "Joining": "Приєднання",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
@@ -1574,7 +1555,6 @@
         "one": "%(count)s осіб приєдналися",
         "other": "%(count)s людей приєдналися"
     },
-    "View related event": "Переглянути пов'язані події",
     "Read receipts": "Звіти про прочитання",
     "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!",
     "Un-maximise": "Розгорнути",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Не вдалося розшифрувати повідомлення",
     "This message could not be decrypted": "Не вдалося розшифрувати це повідомлення",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Mark as read": "Позначити прочитаним",
     "Text": "Текст",
     "Create a link": "Створити посилання",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Ми не змогли знайти подію, після %(dateString)s. Спробуйте вибрати ранішу дату.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Виникла помилка мережі під час спроби знайти та перейти до вказаної дати. Можливо, ваш домашній сервер не працює або виникли тимчасові проблеми з інтернет-з'єднанням. Повторіть спробу ще раз. Якщо це не допоможе, зверніться до адміністратора вашого домашнього сервера.",
     "Poll history": "Історія опитувань",
-    "Mute room": "Вимкнути сповіщення кімнати",
-    "Match default setting": "Збігається з типовим налаштуванням",
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
@@ -3147,7 +3124,15 @@
             "user": "%(senderName)s завершує <a>голосову трансляцію</a>"
         },
         "creation_summary_dm": "%(creator)s створює цю приватну розмову.",
-        "creation_summary_room": "%(creator)s створює й налаштовує кімнату."
+        "creation_summary_room": "%(creator)s створює й налаштовує кімнату.",
+        "context_menu": {
+            "view_source": "Переглянути код",
+            "show_url_preview": "Попередній перегляд",
+            "external_url": "Початкова URL-адреса",
+            "collapse_reply_thread": "Згорнути відповіді",
+            "view_related_event": "Переглянути пов'язані події",
+            "report": "Поскаржитися"
+        }
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -3811,7 +3796,17 @@
         "error_need_kick_permission": "Для цього вам потрібен дозвіл вилучати користувачів.",
         "no_name": "Невідомий додаток",
         "error_hangup_title": "З'єднання розірвано",
-        "error_hangup_description": "Вас від'єднано від виклику. (Помилка: %(message)s)"
+        "error_hangup_description": "Вас від'єднано від виклику. (Помилка: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Почати аудіотрансляцію",
+            "screenshot": "Зробити знімок",
+            "delete": "Видалити віджет",
+            "delete_warning": "Видалення віджету вилучить його в усіх користувачів кімнати. Точно видалити цей віджет?",
+            "remove": "Прибрати для всіх",
+            "revoke": "Відкликати дозвіл",
+            "move_left": "Посунути ліворуч",
+            "move_right": "Посунути праворуч"
+        }
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4064,7 +4059,18 @@
         "error_join_404_2": "Якщо ви знаєте адресу кімнати, спробуйте приєднатися через неї.",
         "error_join_title": "Не вдалося приєднатися",
         "error_join_403": "Для доступу до цієї кімнати потрібне запрошення.",
-        "error_cancel_knock_title": "Не вдалося скасувати"
+        "error_cancel_knock_title": "Не вдалося скасувати",
+        "context_menu": {
+            "unfavourite": "В улюблених",
+            "favourite": "Улюблені",
+            "mentions_only": "Лише згадки",
+            "copy_link": "Скопіювати посилання на кімнату",
+            "low_priority": "Неважливі",
+            "forget": "Забути кімнату",
+            "mark_read": "Позначити прочитаним",
+            "notifications_default": "Збігається з типовим налаштуванням",
+            "notifications_mute": "Вимкнути сповіщення кімнати"
+        }
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",

@@ -6,9 +6,7 @@
     "Changelog": "تغییراتِ به‌وجودآمده",
     "This Room": "این گپ",
     "Unavailable": "غیرقابل‌دسترسی",
-    "Favourite": "علاقه‌مندی‌ها",
     "All Rooms": "همه‌ی گپ‌ها",
-    "Source URL": "آدرس مبدا",
     "Tuesday": "سه‌شنبه",
     "Unnamed room": "گپ نام‌گذاری نشده",
     "Saturday": "شنبه",
@@ -23,7 +21,6 @@
     "Thursday": "پنج‌شنبه",
     "Search…": "جستجو…",
     "Yesterday": "دیروز",
-    "Low Priority": "کم اهمیت",
     "Failed to change password. Is your password correct?": "خطا در تغییر گذرواژه. آیا از درستی گذرواژه‌تان اطمینان دارید؟",
     "Ok": "تأیید",
     "Set up": "برپایی",
@@ -920,8 +917,6 @@
     "This room has already been upgraded.": "این اتاق قبلاً ارتقا یافته است.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
     "Room options": "تنظیمات اتاق",
-    "Favourited": "مورد علاقه",
-    "Forget Room": "اتاق را فراموش کن",
     "Create a space": "ساختن یک محیط",
     "Folder": "پوشه",
     "Headphones": "هدفون",
@@ -1032,15 +1027,7 @@
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "This room is public": "این اتاق عمومی است",
     "Avatar": "نمایه",
-    "Move right": "به سمت راست ببر",
-    "Move left": "به سمت چپ ببر",
-    "Revoke permissions": "دسترسی‌ها را لغو کنید",
-    "Remove for everyone": "حذف برای همه",
-    "Delete widget": "حذف ویجت",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "حذف یک ویجت، باعث حذف‌شدن آن برای همه‌ی کاربران این اتاق می‌شود. آیا از حذف این ویجت اطمینان دارید؟",
     "Delete Widget": "حذف ویجت",
-    "Take a picture": "عکس بگیرید",
-    "Start audio stream": "آغاز جریان صدا",
     "Failed to start livestream": "آغاز livestream با شکست همراه بود",
     "Unable to start audio streaming.": "شروع پخش جریان صدا امکان‌پذیر نیست.",
     "Reject invitation": "ردکردن دعوت",
@@ -2003,7 +1990,10 @@
             "see_older_messages": "برای دیدن پیام های قدیمی اینجا کلیک کنید."
         },
         "creation_summary_dm": "%(creator)s این گفتگو را ایجاد کرد.",
-        "creation_summary_room": "%(creator)s اتاق را ایجاد و پیکربندی کرد."
+        "creation_summary_room": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
+        "context_menu": {
+            "external_url": "آدرس مبدا"
+        }
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -2537,7 +2527,17 @@
         "error_need_kick_permission": "برای انجام این کار نیاز دارید که بتوانید کاربران را حذف کنید.",
         "no_name": "برنامه ناشناخته",
         "error_hangup_title": "از دست رفتن اتصال",
-        "error_hangup_description": "شما از تماس قطع شدید.(خطا: %(message)s)"
+        "error_hangup_description": "شما از تماس قطع شدید.(خطا: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "آغاز جریان صدا",
+            "screenshot": "عکس بگیرید",
+            "delete": "حذف ویجت",
+            "delete_warning": "حذف یک ویجت، باعث حذف‌شدن آن برای همه‌ی کاربران این اتاق می‌شود. آیا از حذف این ویجت اطمینان دارید؟",
+            "remove": "حذف برای همه",
+            "revoke": "دسترسی‌ها را لغو کنید",
+            "move_left": "به سمت چپ ببر",
+            "move_right": "به سمت راست ببر"
+        }
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2731,7 +2731,13 @@
         "error_join_incompatible_version_2": "لطفاً با مدیر سرور خود تماس بگیرید.",
         "error_join_404_invite_same_hs": "فردی که شما را دعوت کرده بود اینجا را ترک کرده است.",
         "error_join_404_invite": "فردی که شما را دعوت کرده بود اینجا را ترک کرده، و یا سرور او خاموش شده است.",
-        "error_join_title": "عدم موفقیت در پیوستن"
+        "error_join_title": "عدم موفقیت در پیوستن",
+        "context_menu": {
+            "unfavourite": "مورد علاقه",
+            "favourite": "علاقه‌مندی‌ها",
+            "low_priority": "کم اهمیت",
+            "forget": "اتاق را فراموش کن"
+        }
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",

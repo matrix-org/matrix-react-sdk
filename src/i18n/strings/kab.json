@@ -79,7 +79,6 @@
     "Session name": "Isem n tɣimit",
     "Email address": "Tansa n yimayl",
     "Upload files": "Sali-d ifuyla",
-    "Source URL": "URL aɣbalu",
     "Home": "Agejdan",
     "Email (optional)": "Imayl (Afrayan)",
     "Explore rooms": "Snirem tixxamin",
@@ -213,7 +212,6 @@
     "Jump to first invite.": "Ɛreddi ɣer tinnubga tamezwarut.",
     "Add room": "Rnu taxxamt",
     "All messages": "Iznan i meṛṛa",
-    "Forget Room": "Tettuḍ taxxamt",
     "This Room": "Taxxamt-a",
     "Search…": "Nadi…",
     "Add some now": "Rnu kra tura",
@@ -312,7 +310,6 @@
     "Unable to restore backup": "Tiririt n uḥraz tugi ad teddu",
     "Keys restored": "Tisura ttwaskelsent",
     "Reject invitation": "Agi tinnubga",
-    "Remove for everyone": "Kkes i meṛṛa",
     "Sign in with SSO": "Anekcum s SSO",
     "Couldn't load page": "Asali n usebter ur yeddi ara",
     "Failed to reject invitation": "Tigtin n tinnubga ur yeddi ara",
@@ -363,8 +360,6 @@
     "Widget added by": "Awiǧit yettwarna sɣur",
     "This widget may use cookies.": "Awiǧit-a yezmer ad iseqdec inagan n tuqqna.",
     "Delete Widget": "Kkes awiǧit",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Tukksan n uwiǧit, ad t-tekkes akk i yiseqdacen n texxamt-nni. D tidet tebɣiḍ ad tekkseḍ awiǧit-a?",
-    "Delete widget": "Kkes awiǧit",
     "Popout widget": "Awiǧit attalan",
     "expand": "snefli",
     "Rotate Left": "Zzi ɣer uzelmaḍ",
@@ -502,9 +497,6 @@
     "<userName/> invited you": "<userName/> inced-ik·im",
     "You're previewing %(roomName)s. Want to join it?": "Tessenqadeḍ %(roomName)s. Tebɣiḍ ad ternuḍ ɣur-s?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s ur tezmir ara ad tettwasenqed. Tebɣiḍ ad ternuḍ ɣer-s?",
-    "Favourited": "Yettusmenyaf",
-    "Favourite": "Asmenyif",
-    "Low Priority": "Tazwart taddayt",
     "This room has already been upgraded.": "Taxxamt-a tettuleqqam yakan.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Taxxamt-a tesedday lqem n texxamt <roomVersion />, i yecreḍ uqeddac-a agejdan <i>ur yerkid ara</i>.",
     "Only room administrators will see this warning": "Ala inedbalen kan n texxamt ara iwalin tuccḍa-a",
@@ -747,7 +739,6 @@
     "not ready": "ur yewjid ara",
     "Not encrypted": "Ur yettwawgelhen ara",
     "Room settings": "Iɣewwaṛen n texxamt",
-    "Take a picture": "Ṭṭef tawlaft",
     "Failed to save your profile": "Yecceḍ usekles n umaɣnu-ik•im",
     "The operation could not be completed": "Tamahilt ur tezmir ara ad tettwasmed",
     "Backup key cached:": "Tasarut n ukles tettwaffer:",
@@ -932,9 +923,7 @@
     "Vanuatu": "Vanuyatu",
     "Switzerland": "Sswis",
     "South Africa": "Tafriqt n Wenẓul",
-    "Move left": "Mutti s azelmaḍ",
     "Cayman Islands": "Tigzirin n Kayman",
-    "Move right": "Mutti s ayfus",
     "Romania": "Rumanya",
     "Western Sahara": "Ṣaḥṛa Tutrimt",
     "Sudan": "Sudan",
@@ -1646,7 +1635,10 @@
             "removed": "%(senderDisplayName)s yekkes avaṭar n texxamt.",
             "changed_img": "%(senderDisplayName)s ibeddel avaṭar n texxamt i <img/>"
         },
-        "creation_summary_room": "%(creator)s yerna-d taxxamt syen yeswel taxxamt."
+        "creation_summary_room": "%(creator)s yerna-d taxxamt syen yeswel taxxamt.",
+        "context_menu": {
+            "external_url": "URL aɣbalu"
+        }
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",
@@ -2022,7 +2014,15 @@
         },
         "error_need_to_be_logged_in": "Tesriḍ ad teqqneḍ.",
         "error_need_invite_permission": "Tesriḍ ad tizmireḍ ad d-tnecdeḍ iseqdacen ad gen ayagi.",
-        "no_name": "Asnas arussin"
+        "no_name": "Asnas arussin",
+        "context_menu": {
+            "screenshot": "Ṭṭef tawlaft",
+            "delete": "Kkes awiǧit",
+            "delete_warning": "Tukksan n uwiǧit, ad t-tekkes akk i yiseqdacen n texxamt-nni. D tidet tebɣiḍ ad tekkseḍ awiǧit-a?",
+            "remove": "Kkes i meṛṛa",
+            "move_left": "Mutti s azelmaḍ",
+            "move_right": "Mutti s ayfus"
+        }
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2117,7 +2117,13 @@
         "upgrade_error_title": "Tuccḍa deg uleqqem n texxamt",
         "upgrade_error_description": "Senqed akken ilaq ma yella aqeddac-inek·inem issefrak lqem n texxamtyettwafernen syen εreḍ tikkelt-nniḍen.",
         "leave_server_notices_description": "Taxxamt-a tettuseqdac i yiznan yesɛan azal sɣur aqeddac agejdan, ɣef waya ur tezmireḍ ara ad tt-teǧǧeḍ.",
-        "error_join_incompatible_version_2": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan."
+        "error_join_incompatible_version_2": "Ttxil-k/m nermes anedbal-ik/im n usebter agejdan.",
+        "context_menu": {
+            "unfavourite": "Yettusmenyaf",
+            "favourite": "Asmenyif",
+            "low_priority": "Tazwart taddayt",
+            "forget": "Tettuḍ taxxamt"
+        }
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",

@@ -14,7 +14,6 @@
     "Failed to reject invitation": "拒绝邀请失败",
     "Failed to set display name": "设置显示名称失败",
     "Failed to unban": "解除封禁失败",
-    "Favourite": "收藏",
     "Filter room members": "过滤房间成员",
     "Forget room": "忘记房间",
     "Historical": "历史",
@@ -65,7 +64,6 @@
     "File to import": "要导入的文件",
     "Unknown error": "未知错误",
     "Unable to restore session": "无法恢复会话",
-    "Delete widget": "删除挂件",
     "Failed to change power level": "权力级别修改失败",
     "New passwords must match each other.": "新密码必须互相匹配。",
     "%(roomName)s does not exist.": "%(roomName)s 不存在。",
@@ -146,7 +144,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "导出文件受口令词组保护。你应该在此输入口令词组以解密此文件。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "尝试加载此房间的时间线的特定时间点，但是无法找到。",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "删除挂件时将为房间中的所有成员删除。你确定要删除此挂件吗？",
     "Sunday": "星期日",
     "Notification targets": "通知目标",
     "Today": "今天",
@@ -155,7 +152,6 @@
     "Failed to send logs: ": "无法发送日志： ",
     "This Room": "此房间",
     "Unavailable": "无法获得",
-    "Source URL": "源网址",
     "Filter results": "过滤结果",
     "Tuesday": "星期二",
     "Preparing to send logs": "正在准备发送日志",
@@ -170,7 +166,6 @@
     "Search…": "搜索…",
     "Logs sent": "日志已发送",
     "Yesterday": "昨天",
-    "Low Priority": "低优先级",
     "Thank you!": "谢谢！",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "你将被带到一个第三方网站以便验证你的账户来使用 %(integrationsUrl)s 提供的集成。你希望继续吗？",
     "Popout widget": "在弹出式窗口中打开挂件",
@@ -473,8 +468,6 @@
     "Jump to first unread room.": "跳转至第一个未读房间。",
     "Jump to first invite.": "跳转至第一个邀请。",
     "Add room": "添加房间",
-    "Forget Room": "忘记房间",
-    "Favourited": "已收藏",
     "Room options": "房间选项",
     "This room is public": "此房间为公共的",
     "This room has already been upgraded.": "此房间已经被升级。",
@@ -693,7 +686,6 @@
     "Keys restored": "已恢复密钥",
     "Successfully restored %(sessionCount)s keys": "成功恢复了 %(sessionCount)s 个密钥",
     "Resend %(unsentCount)s reaction(s)": "重新发送%(unsentCount)s个反应",
-    "Remove for everyone": "为所有人删除",
     "Sign in with SSO": "使用单点登录",
     "Explore rooms": "探索房间",
     "Switch theme": "切换主题",
@@ -921,10 +913,6 @@
         "other": "%(count)s 个房间"
     },
     "You don't have permission": "你没有权限",
-    "Move right": "向右移动",
-    "Move left": "向左移动",
-    "Revoke permissions": "撤销权限",
-    "Take a picture": "拍照",
     "Enter Security Phrase": "输入安全短语",
     "Allow this widget to verify your identity": "允许此挂件验证你的身份",
     "Decline All": "全部拒绝",
@@ -1149,7 +1137,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
     "Avatar": "头像",
-    "Start audio stream": "开始音频流",
     "Failed to start livestream": "开始流直播失败",
     "Unable to start audio streaming.": "无法开始音频流媒体。",
     "Hold": "挂起",
@@ -1177,10 +1164,6 @@
     "Pinned messages": "已固定的消息",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "如果你拥有权限，请打开任何消息的菜单并选择<b>固定</b>将它们粘贴至此。",
     "Nothing pinned, yet": "尚无固定任何东西",
-    "Report": "举报",
-    "Collapse reply thread": "折叠回复消息列",
-    "Show preview": "显示预览",
-    "View source": "查看源代码",
     "Please provide an address": "请提供地址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "设置此空间的地址，这样用户就能通过你的家服务器找到此空间（%(localDomain)s）",
@@ -1355,7 +1338,6 @@
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
     "Reply in thread": "在消息列中回复",
-    "Mentions only": "仅提及",
     "Forget": "忘记",
     "Files": "文件",
     "You won't get any notifications": "你不会收到任何通知",
@@ -1418,7 +1400,6 @@
     "Other rooms in %(spaceName)s": "%(spaceName)s 中的其他房间",
     "Spaces you're in": "你所在的空间",
     "Including you, %(commaSeparatedMembers)s": "包括你，%(commaSeparatedMembers)s",
-    "Copy room link": "复制房间链接",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
@@ -1582,7 +1563,6 @@
     "Live location error": "实时位置错误",
     "Live location ended": "实时位置已结束",
     "Live until %(expiryTime)s": "实时分享直至%(expiryTime)s",
-    "View related event": "查看相关事件",
     "Cameras": "相机",
     "Unread email icon": "未读电子邮件图标",
     "An error occurred while stopping your live location, please try again": "停止你的实时位置时出错，请重试",
@@ -2803,7 +2783,15 @@
             "see_older_messages": "点击这里以查看更早的消息。"
         },
         "creation_summary_dm": "%(creator)s 创建了此私聊。",
-        "creation_summary_room": "%(creator)s 创建并配置了此房间。"
+        "creation_summary_room": "%(creator)s 创建并配置了此房间。",
+        "context_menu": {
+            "view_source": "查看源代码",
+            "show_url_preview": "显示预览",
+            "external_url": "源网址",
+            "collapse_reply_thread": "折叠回复消息列",
+            "view_related_event": "查看相关事件",
+            "report": "举报"
+        }
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -3420,7 +3408,17 @@
         "error_need_kick_permission": "你需要能够移除用户才能做到那件事。",
         "no_name": "未知应用",
         "error_hangup_title": "连接丢失",
-        "error_hangup_description": "你已断开通话。（错误：%(message)s）"
+        "error_hangup_description": "你已断开通话。（错误：%(message)s）",
+        "context_menu": {
+            "start_audio_stream": "开始音频流",
+            "screenshot": "拍照",
+            "delete": "删除挂件",
+            "delete_warning": "删除挂件时将为房间中的所有成员删除。你确定要删除此挂件吗？",
+            "remove": "为所有人删除",
+            "revoke": "撤销权限",
+            "move_left": "向左移动",
+            "move_right": "向右移动"
+        }
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3654,7 +3652,15 @@
         "error_join_incompatible_version_2": "请 联系你的家服务器管理员。",
         "error_join_404_invite_same_hs": "邀请你的人已经离开了。",
         "error_join_404_invite": "邀请你的人已经离开了，亦或是他们的家服务器离线了。",
-        "error_join_title": "加入失败"
+        "error_join_title": "加入失败",
+        "context_menu": {
+            "unfavourite": "已收藏",
+            "favourite": "收藏",
+            "mentions_only": "仅提及",
+            "copy_link": "复制房间链接",
+            "low_priority": "低优先级",
+            "forget": "忘记房间"
+        }
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",

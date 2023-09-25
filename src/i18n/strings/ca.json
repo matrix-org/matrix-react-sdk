@@ -3,7 +3,6 @@
     "No Webcams detected": "No s'ha detectat cap càmera web",
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
-    "Favourite": "Favorit",
     "Failed to change password. Is your password correct?": "S'ha produït un error en canviar la contrasenya. És correcta la teva contrasenya?",
     "unknown error code": "codi d'error desconegut",
     "Rooms": "Sales",
@@ -92,8 +91,6 @@
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "Something went wrong!": "Alguna cosa ha anat malament!",
     "Delete Widget": "Suprimeix el giny",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "La supressió d'un giny l'elimina per a tots els usuaris d'aquesta sala. Esteu segur que voleu eliminar aquest giny?",
-    "Delete widget": "Suprimeix el giny",
     "Home": "Inici",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
@@ -147,7 +144,6 @@
     "Failed to send logs: ": "No s'han pogut enviar els logs: ",
     "This Room": "Aquesta sala",
     "Unavailable": "No disponible",
-    "Source URL": "URL origen",
     "Filter results": "Resultats del filtre",
     "Search…": "Cerca…",
     "Tuesday": "Dimarts",
@@ -162,7 +158,6 @@
     "Thursday": "Dijous",
     "Logs sent": "Logs enviats",
     "Yesterday": "Ahir",
-    "Low Priority": "Baixa prioritat",
     "Thank you!": "Gràcies!",
     "Permission Required": "Es necessita permís",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
@@ -518,6 +513,9 @@
             "lightbox_title": "%(senderDisplayName)s ha canviat l'avatar de %(roomName)s",
             "removed": "%(senderDisplayName)s ha eliminat l'avatar de la sala.",
             "changed_img": "%(senderDisplayName)s ha canviat l'avatar de la sala a <img/>"
+        },
+        "context_menu": {
+            "external_url": "URL origen"
         }
     },
     "slash_command": {
@@ -712,7 +710,11 @@
         "leave_error_title": "Error sortint de la sala",
         "upgrade_error_title": "Error actualitzant sala",
         "upgrade_error_description": "Comprova que el teu servidor és compatible amb la versió de sala que has triat i torna-ho a intentar.",
-        "error_join_incompatible_version_2": "Si us plau contacteu amb l'administrador del vostre homeserver."
+        "error_join_incompatible_version_2": "Si us plau contacteu amb l'administrador del vostre homeserver.",
+        "context_menu": {
+            "favourite": "Favorit",
+            "low_priority": "Baixa prioritat"
+        }
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -766,7 +768,11 @@
     },
     "widget": {
         "error_need_to_be_logged_in": "Has d'haver iniciat sessió.",
-        "error_need_invite_permission": "Per fer això, necessites poder convidar a usuaris."
+        "error_need_invite_permission": "Per fer això, necessites poder convidar a usuaris.",
+        "context_menu": {
+            "delete": "Suprimeix el giny",
+            "delete_warning": "La supressió d'un giny l'elimina per a tots els usuaris d'aquesta sala. Esteu segur que voleu eliminar aquest giny?"
+        }
     },
     "scalar": {
         "error_create": "No s'ha pogut crear el giny.",

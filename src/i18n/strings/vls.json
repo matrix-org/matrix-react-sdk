@@ -237,8 +237,6 @@
     "edited": "bewerkt",
     "Something went wrong!": "’t Es etwa misgegoan!",
     "Delete Widget": "Widget verwydern",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "E widget verwydern doet da voor alle gebruukers in dit gesprek. Zy je zeker da je deze widget wil verwydern?",
-    "Delete widget": "Widget verwydern",
     "Popout widget": "Widget in e nieuwe veinster openn",
     "Create new room": "E nieuw gesprek anmoakn",
     "Rotate Left": "Links droain",
@@ -334,12 +332,9 @@
     "Reject invitation": "Uutnodigienge weigern",
     "Are you sure you want to reject the invitation?": "Zy je zeker da je d’uutnodigienge wil weigern?",
     "You cannot delete this message. (%(code)s)": "Je kut dit bericht nie verwydern. (%(code)s)",
-    "Source URL": "Bron-URL",
     "unknown error code": "ounbekende foutcode",
     "Failed to forget room %(errCode)s": "Vergeetn van gesprek is mislukt %(errCode)s",
     "All messages": "Alle berichtn",
-    "Favourite": "Favoriet",
-    "Low Priority": "Leige prioriteit",
     "Home": "Thuus",
     "This homeserver would like to make sure you are not a robot.": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
     "Some characters not allowed": "Sommige tekens zyn nie toegeloatn",
@@ -822,6 +817,9 @@
             "lightbox_title": "%(senderDisplayName)s èt den avatar van %(roomName)s veranderd",
             "removed": "%(senderDisplayName)s èt de gespreksavatar verwyderd.",
             "changed_img": "%(senderDisplayName)s èt de gespreksavatar angepast noa <img/>"
+        },
+        "context_menu": {
+            "external_url": "Bron-URL"
         }
     },
     "slash_command": {
@@ -1097,7 +1095,11 @@
         },
         "leave_server_notices_title": "Kostege nie deuregoan uut ’t servermeldiengsgesprek",
         "leave_server_notices_description": "Dit gesprek wor gebruukt vo belangryke berichtn van de thuusserver, dus je kut der nie uut deuregoan.",
-        "error_join_incompatible_version_2": "Gelieve contact ip te neemn me den beheerder van je thuusserver."
+        "error_join_incompatible_version_2": "Gelieve contact ip te neemn me den beheerder van je thuusserver.",
+        "context_menu": {
+            "favourite": "Favoriet",
+            "low_priority": "Leige prioriteit"
+        }
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1142,7 +1144,11 @@
     },
     "widget": {
         "error_need_to_be_logged_in": "Hiervoorn moe je angemeld zyn.",
-        "error_need_invite_permission": "Hiervoorn moe je gebruukers kunn uutnodign."
+        "error_need_invite_permission": "Hiervoorn moe je gebruukers kunn uutnodign.",
+        "context_menu": {
+            "delete": "Widget verwydern",
+            "delete_warning": "E widget verwydern doet da voor alle gebruukers in dit gesprek. Zy je zeker da je deze widget wil verwydern?"
+        }
     },
     "scalar": {
         "error_create": "Kostege de widget nie anmoakn.",

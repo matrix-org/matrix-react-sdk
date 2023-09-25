@@ -914,7 +914,17 @@
         },
         "no_name": "Unknown App",
         "error_hangup_title": "Connection lost",
-        "error_hangup_description": "You were disconnected from the call. (Error: %(message)s)"
+        "error_hangup_description": "You were disconnected from the call. (Error: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Start audio stream",
+            "screenshot": "Take a picture",
+            "delete": "Delete widget",
+            "delete_warning": "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?",
+            "remove": "Remove for everyone",
+            "revoke": "Revoke permissions",
+            "move_left": "Move left",
+            "move_right": "Move right"
+        }
     },
     "scalar": {
         "error_create": "Unable to create widget.",
@@ -1388,6 +1398,14 @@
                 "one": "%(oneUser)ssent a hidden message"
             }
         },
+        "context_menu": {
+            "view_source": "View source",
+            "show_url_preview": "Show preview",
+            "external_url": "Source URL",
+            "collapse_reply_thread": "Collapse reply thread",
+            "view_related_event": "View related event",
+            "report": "Report"
+        },
         "creation_summary_dm": "%(creator)s created this DM.",
         "creation_summary_room": "%(creator)s created and configured the room."
     },
@@ -1513,6 +1531,17 @@
         },
         "edit_topic": "Edit topic",
         "read_topic": "Click to read topic",
+        "context_menu": {
+            "forget": "Forget Room",
+            "unfavourite": "Favourited",
+            "favourite": "Favourite",
+            "mentions_only": "Mentions only",
+            "copy_link": "Copy room link",
+            "low_priority": "Low Priority",
+            "mark_read": "Mark as read",
+            "notifications_default": "Match default setting",
+            "notifications_mute": "Mute room"
+        },
         "drop_file_prompt": "Drop file here to upload",
         "unread_notifications_predecessor": {
             "other": "You have %(count)s unread notifications in a prior version of this room.",
@@ -3612,34 +3641,9 @@
     "Hold": "Hold",
     "Resend %(unsentCount)s reaction(s)": "Resend %(unsentCount)s reaction(s)",
     "Open in OpenStreetMap": "Open in OpenStreetMap",
-    "View source": "View source",
-    "Show preview": "Show preview",
-    "Source URL": "Source URL",
-    "Collapse reply thread": "Collapse reply thread",
-    "View related event": "View related event",
-    "Report": "Report",
-    "Forget": "Forget",
-    "Favourited": "Favourited",
-    "Favourite": "Favourite",
-    "Mentions only": "Mentions only",
-    "Copy room link": "Copy room link",
-    "Low Priority": "Low Priority",
-    "Forget Room": "Forget Room",
-    "Mark as read": "Mark as read",
-    "Match default setting": "Match default setting",
-    "Mute room": "Mute room",
     "Thread options": "Thread options",
     "Unable to start audio streaming.": "Unable to start audio streaming.",
     "Failed to start livestream": "Failed to start livestream",
-    "Start audio stream": "Start audio stream",
-    "Take a picture": "Take a picture",
-    "Delete Widget": "Delete Widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?",
-    "Delete widget": "Delete widget",
-    "Remove for everyone": "Remove for everyone",
-    "Revoke permissions": "Revoke permissions",
-    "Move left": "Move left",
-    "Move right": "Move right",
     "Updated %(humanizedUpdateTime)s": "Updated %(humanizedUpdateTime)s",
     "Live until %(expiryTime)s": "Live until %(expiryTime)s",
     "Loading live location…": "Loading live location…",

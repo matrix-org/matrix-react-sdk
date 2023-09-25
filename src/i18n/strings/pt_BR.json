@@ -6,7 +6,6 @@
     "Failed to change password. Is your password correct?": "Não foi possível alterar a senha. A sua senha está correta?",
     "Failed to reject invitation": "Falha ao tentar recusar o convite",
     "Failed to unban": "Não foi possível remover o banimento",
-    "Favourite": "Favoritar",
     "Filter room members": "Pesquisar participantes da sala",
     "Forget room": "Esquecer sala",
     "Historical": "Histórico",
@@ -143,8 +142,6 @@
     "Unnamed room": "Sala sem nome",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
     "Delete Widget": "Apagar widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Remover um widget o remove para todas as pessoas desta sala. Tem certeza que quer remover este widget?",
-    "Delete widget": "Remover widget",
     "collapse": "recolher",
     "expand": "expandir",
     "<a>In reply to</a> <pill>": "<a>Em resposta a</a> <pill>",
@@ -159,7 +156,6 @@
     "Changelog": "Registro de alterações",
     "This Room": "Esta sala",
     "Unavailable": "Indisponível",
-    "Source URL": "Link do código-fonte",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Search…": "Buscar…",
@@ -171,7 +167,6 @@
     "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
-    "Low Priority": "Baixa prioridade",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Permission Required": "Permissão necessária",
@@ -412,8 +407,6 @@
     "Create key backup": "Criar backup de chave",
     "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
-    "Forget Room": "Esquecer Sala",
-    "Favourited": "Favoritado",
     "You cancelled verifying %(name)s": "Você cancelou a confirmação de %(name)s",
     "You accepted": "Você aceitou",
     "%(name)s accepted": "%(name)s aceitou",
@@ -643,7 +636,6 @@
     "Verification Request": "Solicitação de confirmação",
     "Remember my selection for this widget": "Lembrar minha escolha para este widget",
     "Wrong file type": "Tipo errado de arquivo",
-    "Remove for everyone": "Remover para todos",
     "This homeserver would like to make sure you are not a robot.": "Este servidor local quer se certificar de que você não é um robô.",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
     "Couldn't load page": "Não foi possível carregar a página",
@@ -720,7 +712,6 @@
     "Edit widgets, bridges & bots": "Editar widgets, integrações e bots",
     "Add widgets, bridges & bots": "Adicionar widgets, integrações e bots",
     "Room settings": "Configurações da sala",
-    "Take a picture": "Tirar uma foto",
     "Use the <a>Desktop app</a> to see all encrypted files": "Use o <a>app para Computador</a> para ver todos os arquivos criptografados",
     "Use the <a>Desktop app</a> to search encrypted messages": "Use o <a>app para Computador</a> para buscar mensagens criptografadas",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
@@ -771,9 +762,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Você pode fixar até %(count)s widgets"
     },
-    "Move right": "Mover para a direita",
-    "Move left": "Mover para a esquerda",
-    "Revoke permissions": "Revogar permissões",
     "Show Widgets": "Mostrar widgets",
     "Hide Widgets": "Esconder widgets",
     "Modal Widget": "Popup do widget",
@@ -1316,7 +1304,6 @@
     "Jump to date": "Ir para Data",
     "Unable to copy a link to the room to the clipboard.": "Não foi possível copiar um link da sala para a área de transferência.",
     "Unable to copy room link": "Não foi possível copiar o link da sala",
-    "Copy room link": "Copiar link da sala",
     "Public rooms": "Salas públicas",
     "Add new server…": "Adicionar um novo servidor…",
     "%(count)s participants": {
@@ -2283,7 +2270,10 @@
             "user": "%(senderName)s encerrou uma <a>transmissão de voz</a>"
         },
         "creation_summary_dm": "%(creator)s criou esta conversa.",
-        "creation_summary_room": "%(creator)s criou e configurou esta sala."
+        "creation_summary_room": "%(creator)s criou e configurou esta sala.",
+        "context_menu": {
+            "external_url": "Link do código-fonte"
+        }
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2845,7 +2835,16 @@
         "error_need_kick_permission": "Você precisa ter permissão de expulsar usuários para fazer isso.",
         "no_name": "App desconhecido",
         "error_hangup_title": "Conexão perdida",
-        "error_hangup_description": "Você foi desconectado da chamada. (Erro: %(message)s)"
+        "error_hangup_description": "Você foi desconectado da chamada. (Erro: %(message)s)",
+        "context_menu": {
+            "screenshot": "Tirar uma foto",
+            "delete": "Remover widget",
+            "delete_warning": "Remover um widget o remove para todas as pessoas desta sala. Tem certeza que quer remover este widget?",
+            "remove": "Remover para todos",
+            "revoke": "Revogar permissões",
+            "move_left": "Mover para a esquerda",
+            "move_right": "Mover para a direita"
+        }
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3011,7 +3010,14 @@
         "error_join_incompatible_version_2": "Por favor, entre em contato com o administrador do seu homeserver.",
         "error_join_404_invite_same_hs": "A pessoa que o convidou já saiu.",
         "error_join_404_invite": "A pessoa que o convidou já saiu ou o servidor dela está offline.",
-        "error_join_title": "Falha ao entrar"
+        "error_join_title": "Falha ao entrar",
+        "context_menu": {
+            "unfavourite": "Favoritado",
+            "favourite": "Favoritar",
+            "copy_link": "Copiar link da sala",
+            "low_priority": "Baixa prioridade",
+            "forget": "Esquecer Sala"
+        }
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",

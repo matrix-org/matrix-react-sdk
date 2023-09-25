@@ -31,7 +31,6 @@
     "Failed to reject invitation": "Davetiyeyi reddetme başarısız oldu",
     "Failed to set display name": "Görünür ismi ayarlama başarısız oldu",
     "Failed to unban": "Yasağı kaldırmak başarısız oldu",
-    "Favourite": "Favori",
     "Filter room members": "Oda üyelerini Filtrele",
     "Forget room": "Odayı Unut",
     "Historical": "Tarihi",
@@ -134,7 +133,6 @@
     "Changelog": "Değişiklikler",
     "This Room": "Bu Oda",
     "Unavailable": "Kullanım dışı",
-    "Source URL": "Kaynak URL",
     "Tuesday": "Salı",
     "Unnamed room": "İsimsiz oda",
     "Saturday": "Cumartesi",
@@ -148,7 +146,6 @@
     "Thursday": "Perşembe",
     "Search…": "Arama…",
     "Yesterday": "Dün",
-    "Low Priority": "Düşük Öncelikli",
     "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
@@ -210,7 +207,6 @@
     "Unable to load backup status": "Yedek durumu yüklenemiyor",
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
     "No backup found!": "Yedek bulunamadı!",
-    "Remove for everyone": "Herkes için sil",
     "This homeserver would like to make sure you are not a robot.": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor.",
     "Country Dropdown": "Ülke Listesi",
     "Email (optional)": "E-posta (opsiyonel)",
@@ -475,7 +471,6 @@
     "Your theme": "Temanız",
     "Widget ID": "Görsel Bileşen ID si",
     "Delete Widget": "Görsel Bileşen Sil",
-    "Delete widget": "Görsel bileşen sil",
     "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Clear all data in this session?": "Bu oturumdaki tüm verileri temizle?",
@@ -847,7 +842,6 @@
     "Accepting…": "Kabul ediliyor…",
     "Room avatar": "Oda avatarı",
     "Room options": "Oda ayarları",
-    "Forget Room": "Odayı unut",
     "Open dial pad": "Arama tuşlarını aç",
     "You should:": "Şunu yapmalısınız:",
     "not ready": "hazır değil",
@@ -883,7 +877,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Odanın ana adresini güncellerken bir sorun oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
-    "Favourited": "Beğenilenler",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Doğrdan %(brand)s uygulamasından davet isteği almak için Ayarlardan bu e-posta adresini paylaşın.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Doğrudan %(brand)s uygulamasından davet isteği almak için Ayarlardan bir kimlik sunucusu belirleyin.",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Bu davet, %(roomName)s odasına %(email)s e-posta adresi üzerinden yollanmıştır ve sizinle ilgili değildir",
@@ -1597,7 +1590,10 @@
             "removed": "%(senderDisplayName)s odanın avatarını kaldırdı.",
             "changed_img": "%(senderDisplayName)s odanın avatarını <img/> olarak çevirdi"
         },
-        "creation_summary_room": "%(creator)s odayı oluşturdu ve yapılandırdı."
+        "creation_summary_room": "%(creator)s odayı oluşturdu ve yapılandırdı.",
+        "context_menu": {
+            "external_url": "Kaynak URL"
+        }
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",
@@ -2039,7 +2035,11 @@
         },
         "error_need_to_be_logged_in": "Oturum açmanız gerekiyor.",
         "error_need_invite_permission": "Bunu yapmak için kullanıcıları davet etmeye ihtiyacınız var.",
-        "no_name": "Bilinmeyen uygulama"
+        "no_name": "Bilinmeyen uygulama",
+        "context_menu": {
+            "delete": "Görsel bileşen sil",
+            "remove": "Herkes için sil"
+        }
     },
     "zxcvbn": {
         "suggestions": {
@@ -2138,7 +2138,13 @@
         "upgrade_error_title": "Oda güncellenirken hata",
         "upgrade_error_description": "Seçtiğiniz oda sürümünün sunucunuz tarafından desteklenip desteklenmediğini iki kez kontrol edin ve yeniden deneyin.",
         "leave_server_notices_description": "Bu oda, Ana Sunucudan gelen önemli mesajlar için kullanılır, bu yüzden ayrılamazsınız.",
-        "error_join_incompatible_version_2": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin."
+        "error_join_incompatible_version_2": "Lütfen anasunucu yöneticiniz ile bağlantıya geçin.",
+        "context_menu": {
+            "unfavourite": "Beğenilenler",
+            "favourite": "Favori",
+            "low_priority": "Düşük Öncelikli",
+            "forget": "Odayı unut"
+        }
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",

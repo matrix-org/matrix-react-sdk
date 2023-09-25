@@ -20,7 +20,6 @@
     "Failed to reject invitation": "無法拒絕邀請",
     "Failed to set display name": "無法設定顯示名稱",
     "Failed to unban": "無法解除封鎖",
-    "Favourite": "加入我的最愛",
     "Filter room members": "過濾聊天室成員",
     "Forget room": "忘記聊天室",
     "Historical": "歷史",
@@ -127,7 +126,6 @@
         "other": "與另 %(count)s 個人…",
         "one": "與另 1 個人…"
     },
-    "Delete widget": "刪除小工具",
     "AM": "上午",
     "PM": "下午",
     "Restricted": "已限制",
@@ -143,7 +141,6 @@
     "Unnamed room": "未命名的聊天室",
     "Banned by %(displayName)s": "被 %(displayName)s 封鎖",
     "Delete Widget": "刪除小工具",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "刪除小工具會將它從此聊天室中所有使用者的收藏中移除。您確定您要刪除這個小工具嗎？",
     "collapse": "收折",
     "expand": "展開",
     "And %(count)s more...": {
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "無法傳送除錯訊息： ",
     "This Room": "這個聊天室",
     "Unavailable": "無法取得",
-    "Source URL": "來源網址",
     "Filter results": "過濾結果",
     "Tuesday": "星期二",
     "Preparing to send logs": "準備傳送除錯訊息",
@@ -175,7 +171,6 @@
     "Search…": "搜尋…",
     "Logs sent": "記錄檔已經傳送",
     "Yesterday": "昨天",
-    "Low Priority": "低優先度",
     "Wednesday": "星期三",
     "Thank you!": "感謝您！",
     "Popout widget": "彈出式小工具",
@@ -528,7 +523,6 @@
     "Widgets do not use message encryption.": "小工具不使用訊息加密。",
     "Integrations are disabled": "整合已停用",
     "Integrations not allowed": "不允許整合",
-    "Remove for everyone": "為所有人移除",
     "Manage integrations": "管理整合功能",
     "Verification Request": "驗證請求",
     "Unencrypted": "未加密",
@@ -720,8 +714,6 @@
     "Set a Security Phrase": "設定安全密語",
     "Confirm Security Phrase": "確認安全密語",
     "Save your Security Key": "儲存您的安全金鑰",
-    "Favourited": "已加入我的最愛",
-    "Forget Room": "忘記聊天室",
     "This room is public": "此聊天室為公開聊天室",
     "Edited at %(date)s": "編輯於 %(date)s",
     "Click to view edits": "點擊以檢視編輯",
@@ -743,7 +735,6 @@
     "Information": "資訊",
     "Not encrypted": "未加密",
     "Room settings": "聊天室設定",
-    "Take a picture": "拍照",
     "Backup version:": "備份版本：",
     "Algorithm:": "演算法：",
     "Backup key stored:": "是否已儲存備份金鑰：",
@@ -769,9 +760,6 @@
     "Ignored attempt to disable encryption": "已忽略嘗試停用加密",
     "Failed to save your profile": "無法儲存您的設定檔",
     "The operation could not be completed": "無法完成操作",
-    "Move right": "向右移動",
-    "Move left": "向左移動",
-    "Revoke permissions": "撤銷權限",
     "You can only pin up to %(count)s widgets": {
         "other": "您最多只能釘選 %(count)s 個小工具"
     },
@@ -1075,7 +1063,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "您確定您要離開聊天空間「%(spaceName)s」？",
     "This space is not public. You will not be able to rejoin without an invite.": "此聊天空間並非公開。在無邀請的情況下，您將無法重新加入。",
-    "Start audio stream": "開始音訊串流",
     "Failed to start livestream": "無法開始直播",
     "Unable to start audio streaming.": "無法開始音訊串流。",
     "Save Changes": "儲存變更",
@@ -1177,10 +1164,6 @@
     "Pinned messages": "已釘選的訊息",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "如果您有權限，請開啟任何訊息的選單，並選取<b>釘選</b>以將它們固定到這裡。",
     "Nothing pinned, yet": "尚未釘選任何東西",
-    "Report": "回報",
-    "Collapse reply thread": "收折回覆討論串",
-    "Show preview": "顯示預覽",
-    "View source": "檢視原始碼",
     "Please provide an address": "請提供位址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "設定此聊天空間的位址，這樣使用者就能透過您的家伺服器找到此空間（%(localDomain)s）",
@@ -1355,7 +1338,6 @@
     "Thread options": "討論串選項",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
     "Reply in thread": "在討論串中回覆",
-    "Mentions only": "僅提及",
     "Forget": "忘記",
     "Files": "檔案",
     "You won't get any notifications": "不會收到任何通知",
@@ -1418,7 +1400,6 @@
     "Other rooms in %(spaceName)s": "其他在 %(spaceName)s 中的聊天室",
     "Spaces you're in": "您所在的聊天空間",
     "Including you, %(commaSeparatedMembers)s": "包含您，%(commaSeparatedMembers)s",
-    "Copy room link": "複製聊天室連結",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
     "Sections to show": "要顯示的部份",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
@@ -1574,7 +1555,6 @@
         "one": "%(count)s 個人已加入",
         "other": "%(count)s 個人已加入"
     },
-    "View related event": "檢視相關的事件",
     "Read receipts": "讀取回條",
     "Deactivating your account is a permanent action — be careful!": "停用帳號無法還原 — 請小心！",
     "Un-maximise": "取消最大化",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "無法解密訊息",
     "This message could not be decrypted": "此訊息無法解密",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
-    "Mark as read": "標示為已讀",
     "Text": "文字",
     "Create a link": "建立連結",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "我們無法從 %(dateString)s 中找到期待的事件。嘗試選擇一個較早的日期。",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "嘗試尋找並前往指定日期時發生網路錯誤。您的家伺服器可能已關閉，或者您的網際網路連線只是暫時出現問題。請再試一次。如果這種情況繼續存在，請聯絡您的家伺服器管理員。",
     "Poll history": "投票紀錄",
-    "Mute room": "聊天室靜音",
-    "Match default setting": "符合預設設定值",
     "Start DM anyway": "開始直接訊息",
     "Start DM anyway and never warn me again": "開始直接訊息且不要再次警告",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
@@ -3147,7 +3124,15 @@
             "user": "%(senderName)s 結束了<a>語音廣播</a>"
         },
         "creation_summary_dm": "%(creator)s 建立了此私人訊息。",
-        "creation_summary_room": "%(creator)s 建立並設定了聊天室。"
+        "creation_summary_room": "%(creator)s 建立並設定了聊天室。",
+        "context_menu": {
+            "view_source": "檢視原始碼",
+            "show_url_preview": "顯示預覽",
+            "external_url": "來源網址",
+            "collapse_reply_thread": "收折回覆討論串",
+            "view_related_event": "檢視相關的事件",
+            "report": "回報"
+        }
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3811,7 +3796,17 @@
         "error_need_kick_permission": "您必須可以踢除使用者才能作到這件事。",
         "no_name": "未知的應用程式",
         "error_hangup_title": "連線遺失",
-        "error_hangup_description": "您已斷開通話。（錯誤：%(message)s）"
+        "error_hangup_description": "您已斷開通話。（錯誤：%(message)s）",
+        "context_menu": {
+            "start_audio_stream": "開始音訊串流",
+            "screenshot": "拍照",
+            "delete": "刪除小工具",
+            "delete_warning": "刪除小工具會將它從此聊天室中所有使用者的收藏中移除。您確定您要刪除這個小工具嗎？",
+            "remove": "為所有人移除",
+            "revoke": "撤銷權限",
+            "move_left": "向左移動",
+            "move_right": "向右移動"
+        }
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -4064,7 +4059,18 @@
         "error_join_404_2": "若您知道聊天室地址，請嘗試透過該地址加入。",
         "error_join_title": "無法加入",
         "error_join_403": "您需要邀請才能存取此聊天室。",
-        "error_cancel_knock_title": "取消失敗"
+        "error_cancel_knock_title": "取消失敗",
+        "context_menu": {
+            "unfavourite": "已加入我的最愛",
+            "favourite": "加入我的最愛",
+            "mentions_only": "僅提及",
+            "copy_link": "複製聊天室連結",
+            "low_priority": "低優先度",
+            "forget": "忘記聊天室",
+            "mark_read": "標示為已讀",
+            "notifications_default": "符合預設設定值",
+            "notifications_mute": "聊天室靜音"
+        }
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",

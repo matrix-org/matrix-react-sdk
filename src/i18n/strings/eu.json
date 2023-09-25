@@ -2,7 +2,6 @@
     "Create new room": "Sortu gela berria",
     "Failed to change password. Is your password correct?": "Pasahitza aldatzean huts egin du. Zuzena da pasahitza?",
     "Failed to forget room %(errCode)s": "Huts egin du %(errCode)s gela ahaztean",
-    "Favourite": "Gogokoa",
     "unknown error code": "errore kode ezezaguna",
     "Historical": "Historiala",
     "Home": "Hasiera",
@@ -127,7 +126,6 @@
         "other": "eta beste %(count)s…",
         "one": "eta beste bat…"
     },
-    "Delete widget": "Ezabatu trepeta",
     "AM": "AM",
     "PM": "PM",
     "Unignore": "Ez ezikusi",
@@ -146,7 +144,6 @@
         "other": "Eta %(count)s gehiago…"
     },
     "Delete Widget": "Ezabatu trepeta",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Trepeta ezabatzean gelako kide guztientzat kentzen da. Ziur trepeta ezabatu nahi duzula?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ezin izango duzu hau aldatu zure burua mailaz jaisten ari zarelako, zu bazara gelan baimenak dituen azken erabiltzailea ezin izango dira baimenak berreskuratu.",
     "Replying": "Erantzuten",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s(e)ko %(monthName)sk %(day)sa",
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "Huts egin du egunkariak bidaltzean: ",
     "This Room": "Gela hau",
     "Unavailable": "Eskuraezina",
-    "Source URL": "Iturriaren URLa",
     "Filter results": "Iragazi emaitzak",
     "Tuesday": "Asteartea",
     "Preparing to send logs": "Egunkariak bidaltzeko prestatzen",
@@ -176,7 +172,6 @@
     "Search…": "Bilatu…",
     "Logs sent": "Egunkariak bidalita",
     "Yesterday": "Atzo",
-    "Low Priority": "Lehentasun baxua",
     "Thank you!": "Eskerrik asko!",
     "Popout widget": "Laster-leiho trepeta",
     "Send Logs": "Bidali egunkariak",
@@ -529,7 +524,6 @@
     "This widget may use cookies.": "Trepeta honek cookieak erabili litzake.",
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
-    "Remove for everyone": "Kendu denentzat",
     "Verification Request": "Egiaztaketa eskaria",
     "Secret storage public key:": "Biltegi sekretuko gako publikoa:",
     "in account data": "kontuaren datuetan",
@@ -704,7 +698,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
-    "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
     "Click to view edits": "Klik egin edizioak ikusteko",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
@@ -1318,7 +1311,10 @@
             "removed": "%(senderDisplayName)s erabiltzaileak gelaren abatarra ezabatu du.",
             "changed_img": "%(senderDisplayName)s erabiltzaileak gelaren abatarra aldatu du beste honetara: <img/>"
         },
-        "creation_summary_room": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du."
+        "creation_summary_room": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du.",
+        "context_menu": {
+            "external_url": "Iturriaren URLa"
+        }
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1732,7 +1728,12 @@
         "upgrade_error_title": "Errorea gela eguneratzean",
         "upgrade_error_description": "Egiaztatu zure zerbitzariak aukeratutako gela bertsioa onartzen duela eta saiatu berriro.",
         "leave_server_notices_description": "Gela hau mezu hasiera zerbitzariaren garrantzitsuak bidaltzeko erabiltzen da, eta ezin zara atera.",
-        "error_join_incompatible_version_2": "Jarri zure hasiera-zerbitzariaren administratzailearekin kontaktuan."
+        "error_join_incompatible_version_2": "Jarri zure hasiera-zerbitzariaren administratzailearekin kontaktuan.",
+        "context_menu": {
+            "favourite": "Gogokoa",
+            "low_priority": "Lehentasun baxua",
+            "forget": "Ahaztu gela"
+        }
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
@@ -1776,7 +1777,12 @@
     },
     "widget": {
         "error_need_to_be_logged_in": "Saioa hasi duzu.",
-        "error_need_invite_permission": "Erabiltzaileak gonbidatzeko baimena behar duzu hori egiteko."
+        "error_need_invite_permission": "Erabiltzaileak gonbidatzeko baimena behar duzu hori egiteko.",
+        "context_menu": {
+            "delete": "Ezabatu trepeta",
+            "delete_warning": "Trepeta ezabatzean gelako kide guztientzat kentzen da. Ziur trepeta ezabatu nahi duzula?",
+            "remove": "Kendu denentzat"
+        }
     },
     "scalar": {
         "error_create": "Ezin izan da trepeta sortu.",

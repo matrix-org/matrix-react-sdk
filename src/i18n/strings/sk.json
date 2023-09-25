@@ -63,7 +63,6 @@
     "Banned by %(displayName)s": "Vstup zakázal %(displayName)s",
     "unknown error code": "neznámy kód chyby",
     "Failed to forget room %(errCode)s": "Nepodarilo sa zabudnúť miestnosť %(errCode)s",
-    "Favourite": "Obľúbiť",
     "Jump to first unread message.": "Preskočiť na prvú neprečítanú správu.",
     "not specified": "nezadané",
     "This room has no local addresses": "Pre túto miestnosť nie sú žiadne lokálne adresy",
@@ -78,8 +77,6 @@
     "Email address": "Emailová adresa",
     "Something went wrong!": "Niečo sa pokazilo!",
     "Delete Widget": "Vymazať widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Týmto vymažete widget pre všetkých používateľov v tejto miestnosti. Ste si istí, že chcete vymazať tento widget?",
-    "Delete widget": "Vymazať widget",
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
@@ -160,7 +157,6 @@
     "Failed to send logs: ": "Nepodarilo sa odoslať záznamy: ",
     "This Room": "V tejto miestnosti",
     "Unavailable": "Nedostupné",
-    "Source URL": "Pôvodná URL",
     "Filter results": "Filtrovať výsledky",
     "Search…": "Hľadať…",
     "Tuesday": "Utorok",
@@ -175,7 +171,6 @@
     "Thursday": "Štvrtok",
     "Logs sent": "Záznamy boli odoslané",
     "Yesterday": "Včera",
-    "Low Priority": "Nízka priorita",
     "Thank you!": "Ďakujeme!",
     "Popout widget": "Otvoriť widget v novom okne",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie je možné načítať udalosť odkazovanú v odpovedi. Takáto udalosť buď neexistuje alebo nemáte povolenie na jej zobrazenie.",
@@ -715,7 +710,6 @@
     "You cancelled verifying %(name)s": "Zrušili ste overenie používateľa %(name)s",
     "You cancelled verification.": "Zrušili ste overenie.",
     "%(name)s wants to verify": "%(name)s chce overiť",
-    "View source": "Zobraziť zdroj",
     "Encryption not enabled": "Šifrovanie nie je zapnuté",
     "Unencrypted": "Nešifrované",
     "Search spaces": "Hľadať priestory",
@@ -858,7 +852,6 @@
     "Leave all rooms": "Opustiť všetky miestnosti",
     "Don't leave any rooms": "Neopustiť žiadne miestnosti",
     "Would you like to leave the rooms in this space?": "Chcete opustiť miestnosti v tomto priestore?",
-    "Favourited": "Obľúbené",
     "Error processing voice message": "Chyba pri spracovaní hlasovej správy",
     "Send voice message": "Odoslať hlasovú správu",
     "Invited people will be able to read old messages.": "Pozvaní ľudia si budú môcť prečítať staré správy.",
@@ -900,7 +893,6 @@
     "Published Addresses": "Zverejnené adresy",
     "Export chat": "Exportovať konverzáciu",
     "Copy link to thread": "Kopírovať odkaz na vlákno",
-    "Copy room link": "Kopírovať odkaz na miestnosť",
     "Widgets do not use message encryption.": "Widgety nepoužívajú šifrovanie správ.",
     "Add widgets, bridges & bots": "Pridať widgety, premostenia a boty",
     "Edit widgets, bridges & bots": "Upraviť widgety, premostenia a boty",
@@ -917,7 +909,6 @@
     "Upload files": "Nahrať súbory",
     "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
     "Files": "Súbory",
-    "Report": "Nahlásiť",
     "not ready": "nie je pripravené",
     "ready": "pripravené",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
@@ -945,7 +936,6 @@
     "Create key backup": "Vytvoriť zálohu kľúča",
     "Integrations not allowed": "Integrácie nie sú povolené",
     "Integrations are disabled": "Integrácie sú zakázané",
-    "Remove for everyone": "Odstrániť pre všetkých",
     "Widget added by": "Widget pridaný používateľom",
     "Your user ID": "Vaše ID používateľa",
     "Your display name": "Vaše zobrazované meno",
@@ -986,7 +976,6 @@
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Určite, ktoré priestory budú mať prístup do tejto miestnosti. Ak je vybraný priestor, jeho členovia môžu nájsť a pripojiť sa k <RoomName/>.",
     "Select spaces": "Vybrať priestory",
-    "Revoke permissions": "Odvolať oprávnenia",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Pozvánku nebolo možné odvolať. Na serveri môže byť dočasný problém alebo nemáte dostatočné oprávnenia na odvolanie pozvánky.",
     "Failed to revoke invite": "Nepodarilo sa odvolať pozvánku",
     "Set my room layout for everyone": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých",
@@ -1077,9 +1066,7 @@
         "one": "Momentálne ste pripojení k %(count)s miestnosti"
     },
     "Show all rooms": "Zobraziť všetky miestnosti",
-    "Forget Room": "Zabudnúť miestnosť",
     "Forget this room": "Zabudnúť túto miestnosť",
-    "Show preview": "Zobraziť náhľad",
     "Message preview": "Náhľad správy",
     "%(roomName)s can't be previewed. Do you want to join it?": "Nie je možné zobraziť náhľad miestnosti %(roomName)s. Chcete sa k nej pripojiť?",
     "You're previewing %(roomName)s. Want to join it?": "Zobrazujete náhľad %(roomName)s. Chcete sa k nej pripojiť?",
@@ -1098,9 +1085,7 @@
         "other": "& %(count)s viac"
     },
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
-    "Collapse reply thread": "Zbaliť vlákno odpovedí",
     "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
-    "Start audio stream": "Spustiť zvukový prenos",
     "Recently visited rooms": "Nedávno navštívené miestnosti",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
@@ -1110,12 +1095,10 @@
     "Wrong Security Key": "Nesprávny bezpečnostný kľúč",
     "Open dial pad": "Otvoriť číselník",
     "Continuing without email": "Pokračovanie bez e-mailu",
-    "Take a picture": "Urobiť fotografiu",
     "Wrong file type": "Nesprávny typ súboru",
     "Device verified": "Zariadenie overené",
     "End Poll": "Ukončiť anketu",
     "Share location": "Zdieľať polohu",
-    "Mentions only": "Iba zmienky",
     "%(count)s reply": {
         "one": "%(count)s odpoveď",
         "other": "%(count)s odpovedí"
@@ -1426,8 +1409,6 @@
     "From a thread": "Z vlákna",
     "Transfer": "Presmerovať",
     "A call can only be transferred to a single user.": "Hovor je možné presmerovať len na jedného používateľa.",
-    "Move right": "Presun doprava",
-    "Move left": "Presun doľava",
     "Unban from %(roomName)s": "Zrušiť zákaz vstup do %(roomName)s",
     "Ban from %(roomName)s": "Zakázať vstup do %(roomName)s",
     "Proceed with reset": "Pokračovať v obnovení",
@@ -1574,7 +1555,6 @@
         "one": "%(count)s človek sa pripojil",
         "other": "%(count)s ľudí sa pripojilo"
     },
-    "View related event": "Zobraziť súvisiacu udalosť",
     "Read receipts": "Potvrdenia o prečítaní",
     "Deactivating your account is a permanent action — be careful!": "Deaktivácia účtu je trvalý úkon — buďte opatrní!",
     "Un-maximise": "Zrušiť maximalizáciu",
@@ -1679,7 +1659,6 @@
     "Unable to decrypt message": "Nie je možné dešifrovať správu",
     "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
-    "Mark as read": "Označiť ako prečítané",
     "Text": "Text",
     "Create a link": "Vytvoriť odkaz",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
@@ -1755,8 +1734,6 @@
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nepodarilo sa nám nájsť udalosť od dátumu %(dateString)s. Skúste vybrať skorší dátum.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Pri pokuse nájsť a prejsť na daný dátum došlo k sieťovej chybe. Váš domovský server môže byť vypnutý alebo sa vyskytol len dočasný problém s internetovým pripojením. Skúste to prosím znova. Ak to bude pokračovať, obráťte sa na správcu domovského servera.",
     "Poll history": "História ankety",
-    "Mute room": "Stlmiť miestnosť",
-    "Match default setting": "Rovnaké ako predvolené nastavenie",
     "Start DM anyway": "Spustiť priamu správu aj tak",
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
@@ -3147,7 +3124,15 @@
             "user": "%(senderName)s ukončil/a <a>hlasové vysielanie</a>"
         },
         "creation_summary_dm": "%(creator)s vytvoril/a túto priamu správu.",
-        "creation_summary_room": "%(creator)s vytvoril a nastavil miestnosť."
+        "creation_summary_room": "%(creator)s vytvoril a nastavil miestnosť.",
+        "context_menu": {
+            "view_source": "Zobraziť zdroj",
+            "show_url_preview": "Zobraziť náhľad",
+            "external_url": "Pôvodná URL",
+            "collapse_reply_thread": "Zbaliť vlákno odpovedí",
+            "view_related_event": "Zobraziť súvisiacu udalosť",
+            "report": "Nahlásiť"
+        }
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -3811,7 +3796,17 @@
         "error_need_kick_permission": "Musíte mať oprávnenie vyhodiť používateľov, aby ste to mohli urobiť.",
         "no_name": "Neznáma aplikácia",
         "error_hangup_title": "Strata spojenia",
-        "error_hangup_description": "Boli ste odpojení od hovoru. (Chyba: %(message)s)"
+        "error_hangup_description": "Boli ste odpojení od hovoru. (Chyba: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Spustiť zvukový prenos",
+            "screenshot": "Urobiť fotografiu",
+            "delete": "Vymazať widget",
+            "delete_warning": "Týmto vymažete widget pre všetkých používateľov v tejto miestnosti. Ste si istí, že chcete vymazať tento widget?",
+            "remove": "Odstrániť pre všetkých",
+            "revoke": "Odvolať oprávnenia",
+            "move_left": "Presun doľava",
+            "move_right": "Presun doprava"
+        }
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -4064,7 +4059,18 @@
         "error_join_404_2": "Ak poznáte adresu miestnosti, skúste sa pripojiť prostredníctvom nej.",
         "error_join_title": "Nepodarilo sa pripojiť",
         "error_join_403": "Na prístup do tejto miestnosti potrebujete pozvánku.",
-        "error_cancel_knock_title": "Nepodarilo sa zrušiť"
+        "error_cancel_knock_title": "Nepodarilo sa zrušiť",
+        "context_menu": {
+            "unfavourite": "Obľúbené",
+            "favourite": "Obľúbiť",
+            "mentions_only": "Iba zmienky",
+            "copy_link": "Kopírovať odkaz na miestnosť",
+            "low_priority": "Nízka priorita",
+            "forget": "Zabudnúť miestnosť",
+            "mark_read": "Označiť ako prečítané",
+            "notifications_default": "Rovnaké ako predvolené nastavenie",
+            "notifications_mute": "Stlmiť miestnosť"
+        }
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",

@@ -77,7 +77,6 @@
     "Banned by %(displayName)s": "Stengd ute av %(displayName)s",
     "unknown error code": "ukjend feilkode",
     "Failed to forget room %(errCode)s": "Fekk ikkje til å gløyma rommet %(errCode)s",
-    "Favourite": "Yndling",
     "Search…": "Søk…",
     "This Room": "Dette rommet",
     "All Rooms": "Alle rom",
@@ -102,8 +101,6 @@
     "Email address": "Epostadresse",
     "Something went wrong!": "Noko gjekk gale!",
     "Delete Widget": "Slett Widgeten",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Å sletta ein widget fjernar den for alle brukarane i rommet. Er du sikker på at du vil sletta denne widgeten?",
-    "Delete widget": "Slett widgeten",
     "Create new room": "Lag nytt rom",
     "Home": "Heim",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
@@ -146,9 +143,7 @@
     "Reject invitation": "Sei nei til innbyding",
     "Are you sure you want to reject the invitation?": "Er du sikker på at du vil seia nei til innbydinga?",
     "You cannot delete this message. (%(code)s)": "Du kan ikkje sletta meldinga. (%(code)s)",
-    "Source URL": "Kjelde-URL",
     "All messages": "Alle meldingar",
-    "Low Priority": "Lågrett",
     "Failed to reject invitation": "Fekk ikkje til å seia nei til innbyding",
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
@@ -875,7 +870,10 @@
             "removed": "%(senderDisplayName)s fjerna romavataren.",
             "changed_img": "%(senderDisplayName)s endra romavataren til <img/>"
         },
-        "creation_summary_room": "%(creator)s oppretta og konfiguerte dette rommet."
+        "creation_summary_room": "%(creator)s oppretta og konfiguerte dette rommet.",
+        "context_menu": {
+            "external_url": "Kjelde-URL"
+        }
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",
@@ -1165,7 +1163,11 @@
         "leave_server_notices_title": "Kan ikkje forlate Systemvarsel-rommet",
         "upgrade_error_title": "Feil ved oppgradering av rom",
         "upgrade_error_description": "Sjekk at tenar støttar denne romversjonen, og prøv på nytt.",
-        "leave_server_notices_description": "Dette rommet er for viktige meldingar frå Heimtenaren, så du kan ikkje forlate det."
+        "leave_server_notices_description": "Dette rommet er for viktige meldingar frå Heimtenaren, så du kan ikkje forlate det.",
+        "context_menu": {
+            "favourite": "Yndling",
+            "low_priority": "Lågrett"
+        }
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1227,7 +1229,11 @@
     },
     "widget": {
         "error_need_to_be_logged_in": "Du må vera logga inn.",
-        "error_need_invite_permission": "Du må ha lov til å invitera brukarar for å gjera det."
+        "error_need_invite_permission": "Du må ha lov til å invitera brukarar for å gjera det.",
+        "context_menu": {
+            "delete": "Slett widgeten",
+            "delete_warning": "Å sletta ein widget fjernar den for alle brukarane i rommet. Er du sikker på at du vil sletta denne widgeten?"
+        }
     },
     "scalar": {
         "error_create": "Klarte ikkje å laga widget.",

@@ -42,13 +42,11 @@
     "unknown error code": "తెలియని కోడ్ లోపం",
     "Unable to restore session": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు",
     "Create new room": "క్రొత్త గది సృష్టించండి",
-    "Favourite": "గుర్తుంచు",
     "Sunday": "ఆదివారం",
     "Notification targets": "తాఖీదు లక్ష్యాలు",
     "Today": "ఈ రోజు",
     "Friday": "శుక్రువారం",
     "Changelog": "మార్పు వివరణ",
-    "Source URL": "మూల URL",
     "Tuesday": "మంగళవారం",
     "Monday": "సోమవారం",
     "All Rooms": "అన్ని గదులు",
@@ -59,7 +57,6 @@
     "Thursday": "గురువారం",
     "Search…": "శోధన…",
     "Yesterday": "నిన్న",
-    "Low Priority": "తక్కువ ప్రాధాన్యత",
     "Saturday": "శనివారం",
     "common": {
         "error": "లోపం",
@@ -124,6 +121,9 @@
     "timeline": {
         "m.room.name": {
             "remove": "%(senderDisplayName)s గది పేరు తొలగించబడింది."
+        },
+        "context_menu": {
+            "external_url": "మూల URL"
         }
     },
     "slash_command": {
@@ -187,5 +187,11 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "ప్రకటనలు"
+    },
+    "room": {
+        "context_menu": {
+            "favourite": "గుర్తుంచు",
+            "low_priority": "తక్కువ ప్రాధాన్యత"
+        }
     }
 }

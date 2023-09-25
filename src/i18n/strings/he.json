@@ -26,7 +26,6 @@
     "Failed to change password. Is your password correct?": "שינוי הסיסמה נכשל. האם הסיסמה שלך נכונה?",
     "unknown error code": "קוד שגיאה לא מוכר",
     "Failed to forget room %(errCode)s": "נכשל בעת בקשה לשכוח חדר %(errCode)s",
-    "Favourite": "מועדף",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
     "Notification targets": "יעדי התראה",
@@ -36,7 +35,6 @@
     "Failed to send logs: ": "כשל במשלוח יומנים: ",
     "This Room": "החדר הזה",
     "Unavailable": "לא זמין",
-    "Source URL": "כתובת URL אתר המקור",
     "Filter results": "סנן התוצאות",
     "Tuesday": "שלישי",
     "Preparing to send logs": "מתכונן לשלוח יומנים",
@@ -51,7 +49,6 @@
     "Search…": "חפש…",
     "Logs sent": "יומנים נשלחו",
     "Yesterday": "אתמול",
-    "Low Priority": "עדיפות נמוכה",
     "Thank you!": "רב תודות!",
     "Moderator": "מנהל",
     "Restricted": "מחוץ לתחום",
@@ -767,8 +764,6 @@
     "unexpected type": "סוג בלתי צפוי",
     "well formed": "מעוצב היטב",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
-    "Favourited": "מועדפים",
-    "Forget Room": "שכח חדר",
     "Jump to first invite.": "קפצו להזמנה ראשונה.",
     "Jump to first unread room.": "קפצו לחדר הראשון שלא נקרא.",
     "%(roomName)s is not accessible at this time.": "לא ניתן להכנס אל %(roomName)s בזמן הזה.",
@@ -803,14 +798,7 @@
     "Country Dropdown": "נפתח במדינה",
     "This homeserver would like to make sure you are not a robot.": "שרת בית זה רוצה לוודא שאתה לא רובוט.",
     "This room is public": "חדר זה ציבורי",
-    "Move right": "הזז ימינה",
-    "Move left": "הזז שמאלה",
-    "Revoke permissions": "שלילת הרשאות",
-    "Remove for everyone": "הסר לכולם",
-    "Delete widget": "מחק ישומון",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "מחיקת יישומון מסירה אותו לכל המשתמשים בחדר זה. האם אתה בטוח שברצונך למחוק את היישומון הזה?",
     "Delete Widget": "מחק ישומון",
-    "Take a picture": "צלם תמונה",
     "Resend %(unsentCount)s reaction(s)": "שלח שוב תגובות %(unsentCount)s",
     "Are you sure you want to reject the invitation?": "האם אתם בטוחים שברצונכם לדחות את ההזמנה?",
     "Reject invitation": "דחה הזמנה",
@@ -1145,7 +1133,6 @@
     "You may want to try a different search or check for typos.": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה.",
     "We're creating a room with %(names)s": "יצרנו חדר עם %(names)s",
     "Thread options": "אפשרויות שרשור",
-    "Collapse reply thread": "אחד שרשור של התשובות",
     "Can't create a thread from an event with an existing relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
     "Open thread": "פתיחת שרשור",
     "From a thread": "משרשור",
@@ -1243,7 +1230,6 @@
     "Get notifications as set up in your <a>settings</a>": "קבלת התראות על פי ההעדפות שלך במסך<a>הגדרות</a>",
     "Enable guest access": "אפשר גישה לאורחים",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
-    "Copy room link": "העתק קישור לחדר",
     "Voice processing": "עיבוד קול",
     "Video settings": "הגדרות וידאו",
     "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
@@ -2155,7 +2141,11 @@
             "see_older_messages": "לחץ כאן לראות הודעות ישנות."
         },
         "creation_summary_dm": "%(creator)s יצר את DM הזה.",
-        "creation_summary_room": "%(creator)s יצר/ה והגדיר/ה את החדר."
+        "creation_summary_room": "%(creator)s יצר/ה והגדיר/ה את החדר.",
+        "context_menu": {
+            "external_url": "כתובת URL אתר המקור",
+            "collapse_reply_thread": "אחד שרשור של התשובות"
+        }
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2704,7 +2694,16 @@
         },
         "error_need_to_be_logged_in": "עליכם להיות מחוברים.",
         "error_need_invite_permission": "עליכם להיות מאושרים להזמין משתמשים על מנת לבצע פעולה זו.",
-        "no_name": "אפליקציה לא ידועה"
+        "no_name": "אפליקציה לא ידועה",
+        "context_menu": {
+            "screenshot": "צלם תמונה",
+            "delete": "מחק ישומון",
+            "delete_warning": "מחיקת יישומון מסירה אותו לכל המשתמשים בחדר זה. האם אתה בטוח שברצונך למחוק את היישומון הזה?",
+            "remove": "הסר לכולם",
+            "revoke": "שלילת הרשאות",
+            "move_left": "הזז שמאלה",
+            "move_right": "הזז ימינה"
+        }
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -2882,7 +2881,14 @@
         "upgrade_error_title": "שגיאה בשדרוג חדר",
         "upgrade_error_description": "בדקו שהשרת תומך בגרסאת החדר ונסו שוב.",
         "leave_server_notices_description": "החדר הזה משמש להודעות חשובות מהשרת ולכן אינכם יכולים לעזוב אותו.",
-        "error_join_incompatible_version_2": "אנא צרו קשר עם מנהל השרת שלכם."
+        "error_join_incompatible_version_2": "אנא צרו קשר עם מנהל השרת שלכם.",
+        "context_menu": {
+            "unfavourite": "מועדפים",
+            "favourite": "מועדף",
+            "copy_link": "העתק קישור לחדר",
+            "low_priority": "עדיפות נמוכה",
+            "forget": "שכח חדר"
+        }
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",

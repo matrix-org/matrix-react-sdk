@@ -154,10 +154,6 @@
     "This room has already been upgraded.": "سبق وأن تمت ترقية هذه الغرفة.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
     "Room options": "خيارات الغرفة",
-    "Low Priority": "أولوية منخفضة",
-    "Favourite": "تفضيل",
-    "Favourited": "فُضلت",
-    "Forget Room": "انسَ الغرفة",
     "Jump to first invite.": "الانتقال لأول دعوة.",
     "Jump to first unread room.": "الانتقال لأول غرفة لم تقرأ.",
     "%(roomName)s is not accessible at this time.": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
@@ -1451,7 +1447,13 @@
         },
         "upgrade_error_title": "خطأ في ترقية الغرفة",
         "upgrade_error_description": "تحقق مرة أخرى من أن سيرفرك يدعم إصدار الغرفة المختار وحاول مرة أخرى.",
-        "error_join_incompatible_version_2": "يُرجى تواصلك مع مدير خادمك."
+        "error_join_incompatible_version_2": "يُرجى تواصلك مع مدير خادمك.",
+        "context_menu": {
+            "unfavourite": "فُضلت",
+            "favourite": "تفضيل",
+            "low_priority": "أولوية منخفضة",
+            "forget": "انسَ الغرفة"
+        }
     },
     "space": {
         "context_menu": {

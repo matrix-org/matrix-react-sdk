@@ -36,9 +36,7 @@
     "Failed to send logs: ": "S’u arrit të dërgoheshin regjistra: ",
     "This Room": "Këtë Dhomë",
     "Unavailable": "Jo i passhëm",
-    "Favourite": "Bëje të parapëlqyer",
     "All Rooms": "Krejt Dhomat",
-    "Source URL": "URL Burimi",
     "Filter results": "Filtroni përfundimet",
     "Search…": "Kërkoni…",
     "Tuesday": "E martë",
@@ -56,7 +54,6 @@
     "Thursday": "E enjte",
     "Logs sent": "Regjistrat u dërguan",
     "Yesterday": "Dje",
-    "Low Priority": "Përparësi e Ulët",
     "Rooms": "Dhoma",
     "PM": "PM",
     "AM": "AM",
@@ -154,7 +151,6 @@
     "Error decrypting image": "Gabim në shfshehtëzim figure",
     "Error decrypting video": "Gabim në shfshehtëzim videoje",
     "Delete Widget": "Fshije Widget-in",
-    "Delete widget": "Fshije widget-in",
     "And %(count)s more...": {
         "other": "Dhe %(count)s të tjerë…"
     },
@@ -187,7 +183,6 @@
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Fshirja e një widget-i e heq atë për krejt përdoruesit në këtë dhomë. Jeni i sigurt se doni të fshihet ky widget?",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
     "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
     "Audio Output": "Sinjal Audio",
@@ -529,7 +524,6 @@
     "Widgets do not use message encryption.": "Widget-et s’përdorin fshehtëzim mesazhesh.",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
-    "Remove for everyone": "Hiqe për këdo",
     "Verification Request": "Kërkesë Verifikimi",
     "Secret storage public key:": "Kyç publik depozite të fshehtë:",
     "in account data": "në të dhëna llogarie",
@@ -720,7 +714,6 @@
     "Set a Security Phrase": "Caktoni një Frazë Sigurie",
     "Confirm Security Phrase": "Ripohoni Frazë Sigurie",
     "Save your Security Key": "Ruani Kyçin tuaj të Sigurisë",
-    "Forget Room": "Harroje Dhomën",
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
@@ -739,7 +732,6 @@
     "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Not encrypted": "Jo e fshehtëzuar",
     "Room settings": "Rregullime dhome",
-    "Take a picture": "Bëni një foto",
     "Information": "Informacion",
     "Backup version:": "Version kopjeruajtjeje:",
     "Algorithm:": "Algoritëm:",
@@ -766,9 +758,6 @@
     "This version of %(brand)s does not support searching encrypted messages": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar",
     "Failed to save your profile": "S’u arrit të ruhej profili juaj",
     "The operation could not be completed": "Veprimi s’u plotësua dot",
-    "Move right": "Lëvize djathtas",
-    "Move left": "Lëvize majtas",
-    "Revoke permissions": "Shfuqizoji lejet",
     "You can only pin up to %(count)s widgets": {
         "other": "Mundeni të fiksoni deri në %(count)s widget-e"
     },
@@ -1072,7 +1061,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Jeni i sigurt se doni të dilni nga hapësira '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Kjo hapësirë s’është publike. S’do të jeni në gjendje të rihyni në të pa një ftesë.",
-    "Start audio stream": "Nisni transmetim audio",
     "Unable to start audio streaming.": "S’arrihet të niset transmetim audio.",
     "Save Changes": "Ruaji Ndryshimet",
     "Leave Space": "Braktiseni Hapësirën",
@@ -1171,10 +1159,6 @@
     "Pinned messages": "Mesazhe të fiksuar",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Nëse keni leje, hapni menunë për çfarëdo mesazhi dhe përzgjidhni <b>Fiksoje</b>, për ta ngjitur këtu.",
     "Nothing pinned, yet": "Ende pa fiksuar gjë",
-    "Report": "Raportoje",
-    "Collapse reply thread": "Tkurre rrjedhën e përgjigjeve",
-    "Show preview": "Shfaq paraparje",
-    "View source": "Shihni burimin",
     "Please provide an address": "Ju lutemi, jepni një adresë",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Caktoni adresa për këtë hapësirë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
@@ -1351,7 +1335,6 @@
     "Copy link to thread": "Kopjoje lidhjen te rrjedha",
     "Thread options": "Mundësi rrjedhe",
     "Reply in thread": "Përgjigjuni te rrjedha",
-    "Mentions only": "Vetëm përmendje",
     "Forget": "Harroje",
     "Files": "Kartela",
     "You won't get any notifications": "S’do të merrni ndonjë njoftim",
@@ -1362,7 +1345,6 @@
     "Reset event store": "Riktheje te parazgjedhjet arkivin e akteve",
     "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
     "Reset event store?": "Të rikthehet te parazgjedhjet arkivi i akteve?",
-    "Favourited": "U bë e parapëlqyer",
     "Close this widget to view it in this panel": "Mbylleni këtë widget, që ta shihni te ky panel",
     "Unpin this widget to view it in this panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
     "%(spaceName)s and %(count)s others": {
@@ -1418,7 +1400,6 @@
     "Spaces you're in": "Hapësira ku jeni i pranishëm",
     "Link to room": "Lidhje për te dhoma",
     "Including you, %(commaSeparatedMembers)s": "Përfshi ju, %(commaSeparatedMembers)s",
-    "Copy room link": "Kopjo lidhje dhome",
     "Open in OpenStreetMap": "Hape në OpenStreetMap",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s.",
     "Sections to show": "Ndarje për t’u shfaqur",
@@ -1526,7 +1507,6 @@
     "Live location error": "Gabim vendndodhjeje aty për aty",
     "Live location ended": "Vendndodhja “live” përfundoi",
     "Updated %(humanizedUpdateTime)s": "Përditësuar më %(humanizedUpdateTime)s",
-    "View related event": "Shihni veprimtari të afërt",
     "Cameras": "Kamera",
     "Remove search filter for %(filter)s": "Hiq filtër kërkimesh për %(filter)s",
     "Start a group chat": "Nisni një fjalosje grupi",
@@ -1678,7 +1658,6 @@
     "Unable to decrypt message": "S’arrihet të shfshehtëzohet mesazhi",
     "This message could not be decrypted": "Ky mesazh s’u shfshehtëzua dot",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
-    "Mark as read": "Vëri shenjë si të lexuar",
     "Text": "Tekst",
     "Create a link": "Krijoni një lidhje",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
@@ -1745,8 +1724,6 @@
     "Message from %(user)s": "Mesazh nga %(user)s",
     "Message in %(room)s": "Mesazh në %(room)s",
     "Requires your server to support the stable version of MSC3827": "Lyp që shërbyesi juaj të mbulojë versionin e qëndrueshëm të MSC3827",
-    "Mute room": "Heshtoni dhomën",
-    "Match default setting": "Kërko përputhje me rregullimin parazgjedhje",
     "Error details": "Hollësi gabimi",
     "Unable to find event at that date": "S’arrihet të gjendet veprimtari më atë datë",
     "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.": "Ju lutemi, parashtroni <debugLogsLink>regjistra diagnostikimi</debugLogsLink>, për të na ndihmuar të gjurmojnë problemin.",
@@ -3060,7 +3037,15 @@
             "user": "%(senderName)s përfundoi një <a>transmetim zanor</a>"
         },
         "creation_summary_dm": "%(creator)s krijoi këtë DM.",
-        "creation_summary_room": "%(creator)s krijoi dhe formësoi dhomën."
+        "creation_summary_room": "%(creator)s krijoi dhe formësoi dhomën.",
+        "context_menu": {
+            "view_source": "Shihni burimin",
+            "show_url_preview": "Shfaq paraparje",
+            "external_url": "URL Burimi",
+            "collapse_reply_thread": "Tkurre rrjedhën e përgjigjeve",
+            "view_related_event": "Shihni veprimtari të afërt",
+            "report": "Raportoje"
+        }
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3714,7 +3699,17 @@
         "error_need_kick_permission": "Që ta bëni këtë, lypset të jeni në gjendje të përzini përdorues.",
         "no_name": "Aplikacion i Panjohur",
         "error_hangup_title": "Humbi lidhja",
-        "error_hangup_description": "U shkëputët nga thirrja. (Gabim: %(message)s)"
+        "error_hangup_description": "U shkëputët nga thirrja. (Gabim: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Nisni transmetim audio",
+            "screenshot": "Bëni një foto",
+            "delete": "Fshije widget-in",
+            "delete_warning": "Fshirja e një widget-i e heq atë për krejt përdoruesit në këtë dhomë. Jeni i sigurt se doni të fshihet ky widget?",
+            "remove": "Hiqe për këdo",
+            "revoke": "Shfuqizoji lejet",
+            "move_left": "Lëvize majtas",
+            "move_right": "Lëvize djathtas"
+        }
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -3961,7 +3956,18 @@
         "error_join_404_invite": "Personi që ju ftoi, ka dalë tashmë, ose shërbyesi i tij është jashtë funksionimi.",
         "error_join_404_1": "U rrekët të hyni duke përdorur një ID dhome pa dhënë një listë shërbyesish përmes të cilëve të hyhet. ID-të e dhomave janë identifikues të brendshëm dhe s’mund të përdoren për të hyrë në një dhomë pa hollësi shtesë.",
         "error_join_404_2": "Nëse e dini një adresë dhome, provoni të hyni përmes saj, më miër.",
-        "error_join_title": "S’u arrit të hyhej"
+        "error_join_title": "S’u arrit të hyhej",
+        "context_menu": {
+            "unfavourite": "U bë e parapëlqyer",
+            "favourite": "Bëje të parapëlqyer",
+            "mentions_only": "Vetëm përmendje",
+            "copy_link": "Kopjo lidhje dhome",
+            "low_priority": "Përparësi e Ulët",
+            "forget": "Harroje Dhomën",
+            "mark_read": "Vëri shenjë si të lexuar",
+            "notifications_default": "Kërko përputhje me rregullimin parazgjedhje",
+            "notifications_mute": "Heshtoni dhomën"
+        }
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",

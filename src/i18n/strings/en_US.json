@@ -18,7 +18,6 @@
     "Deactivate Account": "Deactivate Account",
     "Decrypt %(text)s": "Decrypt %(text)s",
     "Default": "Default",
-    "Delete widget": "Delete widget",
     "Download %(text)s": "Download %(text)s",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
@@ -32,7 +31,6 @@
     "Failed to reject invitation": "Failed to reject invitation",
     "Failed to set display name": "Failed to set display name",
     "Failed to unban": "Failed to unban",
-    "Favourite": "Favorite",
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
     "Historical": "Historical",
@@ -139,7 +137,6 @@
     "Changelog": "Changelog",
     "This Room": "This Room",
     "Unavailable": "Unavailable",
-    "Source URL": "Source URL",
     "Tuesday": "Tuesday",
     "Search…": "Search…",
     "Unnamed room": "Unnamed room",
@@ -153,14 +150,12 @@
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
     "Yesterday": "Yesterday",
-    "Low Priority": "Low Priority",
     "Permission Required": "Permission Required",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Restricted",
     "Spanner": "Wrench",
     "Aeroplane": "Airplane",
     "Cat": "Cat",
-    "Favourited": "Favorited",
     "Explore rooms": "Explore rooms",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "common": {
@@ -350,6 +345,9 @@
             "lightbox_title": "%(senderDisplayName)s changed the avatar for %(roomName)s",
             "removed": "%(senderDisplayName)s removed the room avatar.",
             "changed_img": "%(senderDisplayName)s changed the room avatar to <img/>"
+        },
+        "context_menu": {
+            "external_url": "Source URL"
         }
     },
     "slash_command": {
@@ -498,7 +496,12 @@
     "room": {
         "drop_file_prompt": "Drop file here to upload",
         "upgrade_error_title": "Error upgrading room",
-        "upgrade_error_description": "Double check that your server supports the room version chosen and try again."
+        "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
+        "context_menu": {
+            "unfavourite": "Favorited",
+            "favourite": "Favorite",
+            "low_priority": "Low Priority"
+        }
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",
@@ -555,7 +558,10 @@
     },
     "widget": {
         "error_need_to_be_logged_in": "You need to be logged in.",
-        "error_need_invite_permission": "You need to be able to invite users to do that."
+        "error_need_invite_permission": "You need to be able to invite users to do that.",
+        "context_menu": {
+            "delete": "Delete widget"
+        }
     },
     "scalar": {
         "error_create": "Unable to create widget.",

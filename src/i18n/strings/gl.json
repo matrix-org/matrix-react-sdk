@@ -72,7 +72,6 @@
     "Banned by %(displayName)s": "Non aceptado por %(displayName)s",
     "unknown error code": "código de fallo descoñecido",
     "Failed to forget room %(errCode)s": "Fallo ao esquecer sala %(errCode)s",
-    "Favourite": "Favorita",
     "Jump to first unread message.": "Ir a primeira mensaxe non lida.",
     "not specified": "non indicado",
     "This room has no local addresses": "Esta sala non ten enderezos locais",
@@ -87,8 +86,6 @@
     "Email address": "Enderezo de correo",
     "Something went wrong!": "Algo fallou!",
     "Delete Widget": "Eliminar widget",
-    "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Quitando un trebello elimínalo para todas as usuarias desta sala. ¿tes certeza de querer eliminar este widget?",
-    "Delete widget": "Eliminar widget",
     "Create new room": "Crear unha nova sala",
     "Home": "Inicio",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
@@ -161,7 +158,6 @@
     "Failed to send logs: ": "Fallo ao enviar os informes: ",
     "This Room": "Esta sala",
     "Unavailable": "Non dispoñible",
-    "Source URL": "URL fonte",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
     "Search…": "Buscar…",
@@ -176,7 +172,6 @@
     "Thursday": "Xoves",
     "Logs sent": "Informes enviados",
     "Yesterday": "Onte",
-    "Low Priority": "Baixa prioridade",
     "Thank you!": "Grazas!",
     "Popout widget": "trebello emerxente",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Non se cargou o evento ao que respondía, ou non existe ou non ten permiso para velo.",
@@ -663,7 +658,6 @@
     "Successfully restored %(sessionCount)s keys": "Restablecidas correctamente %(sessionCount)s chaves",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Aviso</b>: só deberías realizar a copia de apoio desde un ordenador de confianza.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reacción(s)",
-    "Remove for everyone": "Eliminar para todas",
     "This homeserver would like to make sure you are not a robot.": "Este servidor quere asegurarse de que non es un robot.",
     "Country Dropdown": "Despregable de países",
     "Email (optional)": "Email (optativo)",
@@ -720,8 +714,6 @@
     "Set a Security Phrase": "Establece a Frase de Seguridade",
     "Confirm Security Phrase": "Confirma a Frase de Seguridade",
     "Save your Security Key": "Garda a Chave de Seguridade",
-    "Favourited": "Con marca de Favorita",
-    "Forget Room": "Esquecer sala",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
     "This room is public": "Esta é unha sala pública",
     "Edited at %(date)s": "Editado o %(date)s",
@@ -743,7 +735,6 @@
     "Information": "Información",
     "Not encrypted": "Sen cifrar",
     "Room settings": "Axustes da sala",
-    "Take a picture": "Tomar unha foto",
     "Backup version:": "Versión da copia:",
     "Algorithm:": "Algoritmo:",
     "Backup key stored:": "Chave da copia gardada:",
@@ -769,9 +760,6 @@
     "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
     "Failed to save your profile": "Non se gardaron os cambios",
     "The operation could not be completed": "Non se puido realizar a acción",
-    "Move right": "Mover á dereita",
-    "Move left": "Mover á esquerda",
-    "Revoke permissions": "Revogar permisos",
     "You can only pin up to %(count)s widgets": {
         "other": "Só podes fixar ata %(count)s widgets"
     },
@@ -1075,7 +1063,6 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Tes a certeza de querer deixar o espazo '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Este espazo non é público. Non poderás volver a unirte sen un convite.",
-    "Start audio stream": "Iniciar fluxo de audio",
     "Failed to start livestream": "Fallou o inicio da emisión en directo",
     "Unable to start audio streaming.": "Non se puido iniciar a retransmisión de audio.",
     "Save Changes": "Gardar cambios",
@@ -1220,10 +1207,6 @@
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
     "Unnamed audio": "Audio sen nome",
-    "Report": "Denunciar",
-    "Collapse reply thread": "Contraer fío de resposta",
-    "Show preview": "Ver vista previa",
-    "View source": "Ver fonte",
     "The call is in an unknown state!": "Esta chamada ten un estado descoñecido!",
     "Call back": "Devolver a chamada",
     "No answer": "Sen resposta",
@@ -1362,7 +1345,6 @@
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Sen verificación non poderás acceder a tódalas túas mensaxes e poderían aparecer como non confiables ante outras persoas.",
     "Copy link to thread": "Copiar ligazón da conversa",
     "Thread options": "Opcións da conversa",
-    "Mentions only": "Só mencións",
     "Forget": "Esquecer",
     "If you can't see who you're looking for, send them your invite link below.": "Se non atopas a quen buscas, envíalle a túa ligazón de convite.",
     "Based on %(count)s votes": {
@@ -1418,7 +1400,6 @@
         "one": "Resultado final baseado en %(count)s voto",
         "other": "Resultado final baseado en %(count)s votos"
     },
-    "Copy room link": "Copiar ligazón á sala",
     "Could not fetch location": "Non se obtivo a localización",
     "Location": "Localización",
     "toggle event": "activar evento",
@@ -1569,7 +1550,6 @@
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
-    "View related event": "Ver evento relacionado",
     "Joining…": "Entrando…",
     "%(count)s people joined": {
         "one": "uníuse %(count)s persoa",
@@ -2771,7 +2751,15 @@
             "see_older_messages": "Preme aquí para ver mensaxes antigas."
         },
         "creation_summary_dm": "%(creator)s creou esta MD.",
-        "creation_summary_room": "%(creator)s creou e configurou a sala."
+        "creation_summary_room": "%(creator)s creou e configurou a sala.",
+        "context_menu": {
+            "view_source": "Ver fonte",
+            "show_url_preview": "Ver vista previa",
+            "external_url": "URL fonte",
+            "collapse_reply_thread": "Contraer fío de resposta",
+            "view_related_event": "Ver evento relacionado",
+            "report": "Denunciar"
+        }
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -3373,7 +3361,17 @@
         "error_need_kick_permission": "Tes que poder expulsar usuarias para facer eso.",
         "no_name": "App descoñecida",
         "error_hangup_title": "Perdeuse a conexión",
-        "error_hangup_description": "Desconectouse a chamada. (Erro: %(message)s)"
+        "error_hangup_description": "Desconectouse a chamada. (Erro: %(message)s)",
+        "context_menu": {
+            "start_audio_stream": "Iniciar fluxo de audio",
+            "screenshot": "Tomar unha foto",
+            "delete": "Eliminar widget",
+            "delete_warning": "Quitando un trebello elimínalo para todas as usuarias desta sala. ¿tes certeza de querer eliminar este widget?",
+            "remove": "Eliminar para todas",
+            "revoke": "Revogar permisos",
+            "move_left": "Mover á esquerda",
+            "move_right": "Mover á dereita"
+        }
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3587,7 +3585,15 @@
         "error_join_incompatible_version_2": "Por favor, contacte coa administración do seu servidor.",
         "error_join_404_invite_same_hs": "A persoa que te convidou xa deixou o lugar.",
         "error_join_404_invite": "A persoa que te convidou xa saíu, ou o seu servidor non está conectado.",
-        "error_join_title": "Non puideches entrar"
+        "error_join_title": "Non puideches entrar",
+        "context_menu": {
+            "unfavourite": "Con marca de Favorita",
+            "favourite": "Favorita",
+            "mentions_only": "Só mencións",
+            "copy_link": "Copiar ligazón á sala",
+            "low_priority": "Baixa prioridade",
+            "forget": "Esquecer sala"
+        }
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
