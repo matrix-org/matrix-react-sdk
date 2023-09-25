@@ -233,8 +233,6 @@
     "Invalid file%(extra)s": "Oungeldig bestand %(extra)s",
     "Error decrypting image": "Foute by ’t ountsleutern van ’t fotootje",
     "Error decrypting video": "Foute by ’t ountsleutern van ’t filmtje",
-    "Copied!": "Gekopieerd!",
-    "Failed to copy": "Kopieern mislukt",
     "Add an Integration": "Voegt een integroasje toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
@@ -349,7 +347,6 @@
     "Email (optional)": "E-mailadresse (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
     "Couldn't load page": "Kostege ’t blad nie loadn",
-    "Upload avatar": "Avatar iploadn",
     "Failed to reject invitation": "Weigern van d’uutnodigienge is mislukt",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?",
@@ -386,7 +383,6 @@
     "Invalid base_url for m.identity_server": "Oungeldige base_url vo m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
     "General failure": "Algemene foute",
-    "Create account": "Account anmoakn",
     "Session ID": "Sessie-ID",
     "Passphrases must match": "Paswoordn moetn overeenkommn",
     "Passphrase must not be empty": "Paswoord meug nie leeg zyn",
@@ -493,7 +489,8 @@
         "identity_server": "Identiteitsserver",
         "integration_manager": "Integroasjebeheerder",
         "on": "An",
-        "off": "Uut"
+        "off": "Uut",
+        "copied": "Gekopieerd!"
     },
     "action": {
         "continue": "Verdergoan",
@@ -946,7 +943,8 @@
             "room_predecessor": "Bekykt oudere berichtn in %(roomName)s.",
             "room_version_section": "Gespreksversie",
             "room_version": "Gespreksversie:"
-        }
+        },
+        "upload_avatar_label": "Avatar iploadn"
     },
     "encryption": {
         "verification": {
@@ -1031,7 +1029,8 @@
         "no_hs_url_provided": "Geen thuusserver-URL ingegeevn",
         "autodiscovery_unexpected_error_hs": "Ounverwachte foute by ’t controleern van de thuusserverconfiguroasje",
         "autodiscovery_unexpected_error_is": "Ounverwachte foute by ’t iplossn van d’identiteitsserverconfiguroasje",
-        "incorrect_credentials_detail": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org."
+        "incorrect_credentials_detail": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org.",
+        "create_account_title": "Account anmoakn"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1164,7 +1163,8 @@
         "resource_limits": "Dezen thuusserver èt één van z’n systeembronlimietn overschreedn.",
         "admin_contact": "Gelieve <a>contact ip te neemn me je dienstbeheerder</a> vo deze dienst te bluuvn gebruukn.",
         "mixed_content": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
-        "tls": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern."
+        "tls": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
+        "failed_copy": "Kopieern mislukt"
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",
@@ -1173,5 +1173,8 @@
     "notifications": {
         "enable_prompt_toast_title": "Meldiengn"
     },
-    "room_summary_card_back_action_label": "Gespreksinformoasje"
+    "room_summary_card_back_action_label": "Gespreksinformoasje",
+    "onboarding": {
+        "create_account": "Account anmoakn"
+    }
 }

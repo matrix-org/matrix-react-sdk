@@ -20,7 +20,6 @@
     "Unable to remove contact information": "Не удалось удалить контактную информацию",
     "Unable to verify email address.": "Не удалось проверить email.",
     "unknown error code": "неизвестный код ошибки",
-    "Upload avatar": "Загрузить аватар",
     "Verification Pending": "В ожидании подтверждения",
     "Warning!": "Внимание!",
     "You do not have permission to post to this room": "Вы не можете писать в эту комнату",
@@ -132,8 +131,6 @@
     "Delete widget": "Удалить виджет",
     "AM": "ДП",
     "PM": "ПП",
-    "Copied!": "Скопировано!",
-    "Failed to copy": "Не удалось скопировать",
     "Unignore": "Перестать игнорировать",
     "Banned by %(displayName)s": "Заблокирован(а) %(displayName)s",
     "Jump to read receipt": "Перейти к последнему прочтённому",
@@ -403,7 +400,6 @@
     "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
     "General failure": "Общая ошибка",
-    "Create account": "Создать учётную запись",
     "That matches!": "Они совпадают!",
     "That doesn't match.": "Они не совпадают.",
     "Uploaded sound": "Загруженный звук",
@@ -429,7 +425,6 @@
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Failed to re-authenticate due to a homeserver problem": "Ошибка повторной аутентификации из-за проблем на сервере",
     "Clear personal data": "Очистить персональные данные",
-    "Accept <policyLink /> to continue:": "Примите <policyLink /> для продолжения:",
     "Checking server": "Проверка сервера",
     "Terms of service not accepted or the identity server is invalid.": "Условия использования не приняты или сервер идентификации недействителен.",
     "The identity server you have chosen does not have any terms of service.": "Сервер идентификации, который вы выбрали, не имеет никаких условий обслуживания.",
@@ -606,7 +601,6 @@
     "Widget ID": "ID виджета",
     "Widget added by": "Виджет добавлен",
     "This widget may use cookies.": "Этот виджет может использовать куки.",
-    "More options": "Дополнительные параметры",
     "Language Dropdown": "Список языков",
     "Enter a server name": "Введите имя сервера",
     "Looks good": "В порядке",
@@ -645,7 +639,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администратор вашего сервера отключил сквозное шифрование по умолчанию в приватных комнатах и диалогах.",
     "Favourited": "В избранном",
     "Room options": "Настройки комнаты",
-    "All settings": "Все настройки",
     "Forget Room": "Забыть комнату",
     "This room is public": "Это публичная комната",
     "Error creating address": "Ошибка при создании адреса",
@@ -667,7 +660,6 @@
     "Enter the name of a new server you want to explore.": "Введите имя нового сервера для просмотра.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
     "IRC display name width": "Ширина отображаемого имени IRC",
-    "Your server isn't responding to some <a>requests</a>.": "Ваш сервер не отвечает на некоторые <a>запросы</a>.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Подлинность этого зашифрованного сообщения не может быть гарантирована на этом устройстве.",
     "No recently visited rooms": "Нет недавно посещенных комнат",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Произошла ошибка при обновлении альтернативных адресов комнаты. Это может быть запрещено сервером или произошел временный сбой.",
@@ -1125,7 +1117,6 @@
     "Invite with email or username": "Пригласить по электронной почте или имени пользователя",
     "Invite people": "Пригласить людей",
     "Share invite link": "Поделиться ссылкой на приглашение",
-    "Click to copy": "Нажмите, чтобы скопировать",
     "You can change these anytime.": "Вы можете изменить их в любое время.",
     "Create a space": "Создать пространство",
     "Private space": "Приватное пространство",
@@ -1134,7 +1125,6 @@
     "You may want to try a different search or check for typos.": "Вы можете попробовать другой поиск или проверить опечатки.",
     "No results found": "Результаты не найдены",
     "Connecting": "Подключение",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s с %(ip)s",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Используя этот виджет, вы можете делиться данными <helpIcon /> с %(widgetDomain)s и вашим Менеджером Интеграции.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджеры по интеграции получают данные конфигурации и могут изменять виджеты, отправлять приглашения в комнаты и устанавливать уровни доступа от вашего имени.",
@@ -1308,10 +1298,6 @@
     "Show all rooms": "Показать все комнаты",
     "Address": "Адрес",
     "unknown person": "Неизвестное лицо",
-    "More": "Больше",
-    "Show sidebar": "Показать боковую панель",
-    "Hide sidebar": "Скрыть боковую панель",
-    "Delete avatar": "Удалить аватар",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
     "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
@@ -1475,8 +1461,6 @@
     "Get notifications as set up in your <a>settings</a>": "Получать уведомления в соответствии с <a>настройками</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Эта комната не передаёт сообщения на какие-либо платформы <a>Узнать больше.</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
-    "Pin to sidebar": "Закрепить на боковой панели",
-    "Quick settings": "Быстрые настройки",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -1507,7 +1491,6 @@
     "Can't create a thread from an event with an existing relation": "Невозможно создать обсуждение из события с существующей связью",
     "Pinned": "Закреплено",
     "Open thread": "Открыть ветку",
-    "Match system": "Как в системе",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "You were banned by %(memberName)s": "%(memberName)s заблокировал(а) вас",
@@ -1655,7 +1638,6 @@
     "Video call (Jitsi)": "Видеозвонок (Jitsi)",
     "View chat timeline": "Посмотреть ленту сообщений",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
-    "Sorry — this call is currently full": "Извините — этот вызов в настоящее время заполнен",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
     "Mark as read": "Отметить как прочитанное",
@@ -1796,7 +1778,8 @@
         "off": "Выключить",
         "all_rooms": "Все комнаты",
         "deselect_all": "Отменить выбор",
-        "select_all": "Выбрать все"
+        "select_all": "Выбрать все",
+        "copied": "Скопировано!"
     },
     "action": {
         "continue": "Продолжить",
@@ -1897,7 +1880,8 @@
         "clear": "Очистить",
         "exit_fullscreeen": "Выйти из полноэкранного режима",
         "enter_fullscreen": "Перейти в полноэкранный режим",
-        "unban": "Разблокировать"
+        "unban": "Разблокировать",
+        "click_to_copy": "Нажмите, чтобы скопировать"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -2179,7 +2163,8 @@
         "intro_byline": "Владейте своими разговорами.",
         "send_dm": "Отправить личное сообщение",
         "explore_rooms": "Просмотреть публичные комнаты",
-        "create_room": "Создать комнату"
+        "create_room": "Создать комнату",
+        "create_account": "Создать учётную запись"
     },
     "settings": {
         "show_breadcrumbs": "Показывать ссылки на недавние комнаты над списком комнат",
@@ -3115,7 +3100,12 @@
         "failed_call_live_broadcast_description": "Вы не можете начать звонок, так как вы производите живое вещание. Пожалуйста, остановите вещание, чтобы начать звонок.",
         "no_media_perms_title": "Нет разрешённых носителей",
         "no_media_perms_description": "Вам необходимо предоставить %(brand)s доступ к микрофону или веб-камере вручную",
-        "call_toast_unknown_room": "Неизвестная комната"
+        "call_toast_unknown_room": "Неизвестная комната",
+        "join_button_tooltip_connecting": "Подключение",
+        "join_button_tooltip_call_full": "Извините — этот вызов в настоящее время заполнен",
+        "hide_sidebar_button": "Скрыть боковую панель",
+        "show_sidebar_button": "Показать боковую панель",
+        "more_button": "Больше"
     },
     "Other": "Другие",
     "Advanced": "Подробности",
@@ -3203,7 +3193,9 @@
             "room_id": "Внутренний ID комнаты",
             "room_version_section": "Версия комнаты",
             "room_version": "Версия комнаты:"
-        }
+        },
+        "delete_avatar_label": "Удалить аватар",
+        "upload_avatar_label": "Загрузить аватар"
     },
     "encryption": {
         "verification": {
@@ -3234,7 +3226,8 @@
             "unverified_sessions_toast_description": "Проверьте, чтобы убедиться, что ваша учётная запись в безопасности",
             "unverified_sessions_toast_reject": "Позже",
             "unverified_session_toast_title": "Новый вход в вашу учётную запись. Это были Вы?",
-            "unverified_session_toast_accept": "Да, это я"
+            "unverified_session_toast_accept": "Да, это я",
+            "request_toast_detail": "%(deviceId)s с %(ip)s"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3409,7 +3402,8 @@
         "no_hs_url_provided": "URL-адрес домашнего сервера не указан",
         "autodiscovery_unexpected_error_hs": "Неожиданная ошибка в настройках домашнего сервера",
         "autodiscovery_unexpected_error_is": "Неопределённая ошибка при разборе параметра сервера идентификации",
-        "incorrect_credentials_detail": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org."
+        "incorrect_credentials_detail": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org.",
+        "create_account_title": "Создать учётную запись"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3618,7 +3612,8 @@
         "empty_heading": "Организуйте обсуждения с помощью обсуждений"
     },
     "theme": {
-        "light_high_contrast": "Контрастная светлая"
+        "light_high_contrast": "Контрастная светлая",
+        "match_system": "Как в системе"
     },
     "space": {
         "landing_welcome": "Добро пожаловать в <name/>",
@@ -3721,7 +3716,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Переключить в светлый режим",
-        "switch_theme_dark": "Переключить в тёмный режим"
+        "switch_theme_dark": "Переключить в тёмный режим",
+        "settings": "Все настройки"
     },
     "notif_panel": {
         "empty_heading": "Вы в курсе всего",
@@ -3784,7 +3780,8 @@
         "tac_button": "Просмотр условий и положений",
         "identity_server_no_terms_title": "Сервер идентификации не имеет условий предоставления услуг",
         "identity_server_no_terms_description_1": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
-        "identity_server_no_terms_description_2": "Продолжайте, только если доверяете владельцу сервера."
+        "identity_server_no_terms_description_2": "Продолжайте, только если доверяете владельцу сервера.",
+        "inline_intro_text": "Примите <policyLink /> для продолжения:"
     },
     "space_settings": {
         "title": "Настройки — %(spaceName)s"
@@ -3872,7 +3869,9 @@
         "connection": "Возникла проблема при обмене данными с домашним сервером. Повторите попытку позже.",
         "mixed_content": "Не удается подключиться к домашнему серверу через HTTP, так как в адресной строке браузера указан адрес HTTPS. Используйте HTTPS или <a>включите небезопасные скрипты</a>.",
         "tls": "Не удается подключиться к домашнему серверу — проверьте подключение, убедитесь, что ваш <a>SSL-сертификат домашнего сервера</a> является доверенным и что расширение браузера не блокирует запросы.",
-        "admin_contact_short": "Обратитесь к <a>администратору сервера</a>."
+        "admin_contact_short": "Обратитесь к <a>администратору сервера</a>.",
+        "non_urgent_echo_failure_toast": "Ваш сервер не отвечает на некоторые <a>запросы</a>.",
+        "failed_copy": "Не удалось скопировать"
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3904,5 +3903,11 @@
     "chat_card_back_action_label": "Назад в чат",
     "room_summary_card_back_action_label": "Информация о комнате",
     "member_list_back_action_label": "Участники комнаты",
-    "thread_view_back_action_label": "Вернуться к обсуждению"
+    "thread_view_back_action_label": "Вернуться к обсуждению",
+    "quick_settings": {
+        "title": "Быстрые настройки",
+        "all_settings": "Все настройки",
+        "metaspace_section": "Закрепить на боковой панели",
+        "sidebar_settings": "Дополнительные параметры"
+    }
 }

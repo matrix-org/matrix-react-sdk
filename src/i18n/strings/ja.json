@@ -5,7 +5,6 @@
     "Create new room": "新しいルームを作成",
     "Failed to change password. Is your password correct?": "パスワードの変更に失敗しました。パスワードは正しいですか？",
     "Filter room members": "ルームのメンバーを絞り込む",
-    "Upload avatar": "アバターをアップロード",
     "No Microphones detected": "マイクが検出されません",
     "No Webcams detected": "Webカメラが検出されません",
     "Are you sure?": "よろしいですか？",
@@ -122,8 +121,6 @@
     "Invalid file%(extra)s": "無効なファイル %(extra)s",
     "Error decrypting image": "画像を復号化する際にエラーが発生しました",
     "Error decrypting video": "動画を復号化する際にエラーが発生しました",
-    "Copied!": "コピーしました！",
-    "Failed to copy": "コピーに失敗しました",
     "Add an Integration": "統合を追加",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？",
     "Email address": "メールアドレス",
@@ -240,7 +237,6 @@
     "Error changing power level requirement": "必要な権限レベルを変更する際にエラーが発生しました",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "ルームで必要な権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認したうえで、もう一度やり直してください。",
     "Room Topic": "ルームのトピック",
-    "Create account": "アカウントを作成",
     "Delete Backup": "バックアップを削除",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Restore from Backup": "バックアップから復元",
@@ -311,7 +307,6 @@
     "Your theme": "あなたのテーマ",
     "%(brand)s URL": "%(brand)sのURL",
     "Room ID": "ルームID",
-    "More options": "他のオプション",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "クロス署名された端末を信頼せず、ユーザーが使用する各セッションを個別に認証し、信頼済に設定。",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
@@ -329,12 +324,10 @@
     "%(displayName)s cancelled verification.": "%(displayName)sが認証をキャンセルしました。",
     "You cancelled verification.": "認証をキャンセルしました。",
     "Switch theme": "テーマを切り替える",
-    "All settings": "全ての設定",
     "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
     "Do not use an identity server": "IDサーバーを使用しない",
-    "Accept <policyLink /> to continue:": "<policyLink />に同意して続行：",
     "Favourited": "お気に入り登録中",
     "Room options": "ルームの設定",
     "Ignored users": "無視しているユーザー",
@@ -483,7 +476,6 @@
     "Securely cache encrypted messages locally for them to appear in search results.": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。",
     "Set up": "設定",
     "Cross-signing is not set up.": "クロス署名が設定されていません。",
-    "Your server isn't responding to some <a>requests</a>.": "あなたのサーバーはいくつかの<a>リクエスト</a>に応答しません。",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
     "Anchor": "いかり",
@@ -880,7 +872,6 @@
     "Leave space": "スペースから退出",
     "Invite people": "連絡先を招待",
     "Share invite link": "招待リンクを共有",
-    "Click to copy": "クリックでコピー",
     "Create a space": "スペースを作成",
     "Edit devices": "端末を編集",
     "You have no ignored users.": "無視しているユーザーはいません。",
@@ -947,7 +938,6 @@
     "Enter a server name": "サーバー名を入力",
     "Add existing space": "既存のスペースを追加",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
-    "Hide sidebar": "サイドバーを表示しない",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
         "other": "%(spaceName)sと他%(count)s個"
@@ -1073,8 +1063,6 @@
     "Missed call": "不在着信",
     "Call back": "かけ直す",
     "Search for rooms or people": "ルームと連絡先を検索",
-    "Pin to sidebar": "サイドバーに固定",
-    "Quick settings": "クイック設定",
     "Invite anyway": "招待",
     "Invite anyway and never warn me again": "招待し、再び警告しない",
     "Recovery Method Removed": "復元方法を削除しました",
@@ -1220,7 +1208,6 @@
     "Clear personal data": "個人データを消去",
     "Your password has been reset.": "パスワードを再設定しました。",
     "Couldn't load page": "ページを読み込めませんでした",
-    "Show sidebar": "サイドバーを表示",
     "We couldn't create your DM.": "ダイレクトメッセージを作成できませんでした。",
     "Confirm to continue": "確認して続行",
     "Failed to find the following users": "次のユーザーの発見に失敗しました",
@@ -1262,7 +1249,6 @@
     "My current location": "自分の現在の位置情報",
     "My live location": "自分の位置情報（ライブ）",
     "What location type do you want to share?": "どのような種類の位置情報を共有したいですか？",
-    "Match system": "システムに合致",
     "We couldn't send your location": "位置情報を送信できませんでした",
     "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。",
     "Could not fetch location": "位置情報を取得できませんでした",
@@ -1350,7 +1336,6 @@
     "Remove for everyone": "全員から削除",
     "toggle event": "イベントを切り替える",
     "%(spaceName)s menu": "%(spaceName)sのメニュー",
-    "Delete avatar": "アバターを削除",
     "Share content": "コンテンツを共有",
     "Search spaces": "スペースを検索",
     "Unnamed audio": "名前のない音声",
@@ -1427,7 +1412,6 @@
     "Yours, or the other users' internet connection": "あなた、もしくは他のユーザーのインターネット接続",
     "The homeserver the user you're verifying is connected to": "認証しようとしているユーザーが接続しているホームサーバー",
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
-    "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Some characters not allowed": "使用できない文字が含まれています",
     "Collapse quotes": "引用を折りたたむ",
@@ -1548,7 +1532,6 @@
     "You do not have permission to start voice calls": "音声通話を開始する権限がありません",
     "You do not have permission to start video calls": "ビデオ通話を開始する権限がありません",
     "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
-    "Sorry — this call is currently full": "すみません ― この通話は現在満員です",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
     "Reset event store?": "イベントストアをリセットしますか？",
@@ -1704,7 +1687,6 @@
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
     "Failed to set pusher state": "プッシュサービスの設定に失敗しました",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "あなたのアカウントの詳細は<code>%(hostname)s</code>で管理されています。",
-    "More": "その他",
     "Some results may be hidden for privacy": "プライバシーの観点から表示していない結果があります",
     "You cannot search for rooms that are neither a room nor a space": "ルームまたはスペースではないルームを探すことはできません",
     "Allow this widget to verify your identity": "このウィジェットに本人確認を許可",
@@ -1845,7 +1827,8 @@
         "off": "オフ",
         "all_rooms": "全てのルーム",
         "deselect_all": "全ての選択を解除",
-        "select_all": "全て選択"
+        "select_all": "全て選択",
+        "copied": "コピーしました！"
     },
     "action": {
         "continue": "続行",
@@ -1946,7 +1929,8 @@
         "clear": "消去",
         "exit_fullscreeen": "フルスクリーンを解除",
         "enter_fullscreen": "フルスクリーンにする",
-        "unban": "ブロックを解除"
+        "unban": "ブロックを解除",
+        "click_to_copy": "クリックでコピー"
     },
     "a11y": {
         "user_menu": "ユーザーメニュー",
@@ -2242,7 +2226,8 @@
         "intro_byline": "自分の会話は、自分のもの。",
         "send_dm": "ダイレクトメッセージを送信",
         "explore_rooms": "公開ルームを探す",
-        "create_room": "グループチャットを作成"
+        "create_room": "グループチャットを作成",
+        "create_account": "アカウントを作成"
     },
     "settings": {
         "show_breadcrumbs": "ルームの一覧の上に、最近表示したルームのショートカットを表示",
@@ -3197,7 +3182,12 @@
         "failed_call_live_broadcast_description": "ライブ配信を録音しているため、通話を開始できません。通話を開始するには、ライブ配信を終了してください。",
         "no_media_perms_title": "メディア権限がありません",
         "no_media_perms_description": "マイクまたはWebカメラにアクセスするために、手動で%(brand)sを許可する必要があるかもしれません",
-        "call_toast_unknown_room": "不明のルーム"
+        "call_toast_unknown_room": "不明のルーム",
+        "join_button_tooltip_connecting": "接続しています",
+        "join_button_tooltip_call_full": "すみません ― この通話は現在満員です",
+        "hide_sidebar_button": "サイドバーを表示しない",
+        "show_sidebar_button": "サイドバーを表示",
+        "more_button": "その他"
     },
     "Other": "その他",
     "Advanced": "詳細",
@@ -3288,7 +3278,9 @@
             "room_id": "内部ルームID：",
             "room_version_section": "ルームのバージョン",
             "room_version": "ルームのバージョン："
-        }
+        },
+        "delete_avatar_label": "アバターを削除",
+        "upload_avatar_label": "アバターをアップロード"
     },
     "encryption": {
         "verification": {
@@ -3318,7 +3310,8 @@
             "unverified_sessions_toast_title": "未認証のセッションがあります",
             "unverified_sessions_toast_description": "アカウントが安全かどうか確認してください",
             "unverified_sessions_toast_reject": "後で",
-            "unverified_session_toast_title": "新しいログインです。ログインしましたか？"
+            "unverified_session_toast_title": "新しいログインです。ログインしましたか？",
+            "request_toast_detail": "%(ip)sの%(deviceId)s"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3508,7 +3501,8 @@
         "no_hs_url_provided": "ホームサーバーのURLが指定されていません",
         "autodiscovery_unexpected_error_hs": "ホームサーバーの設定の解釈中に予期しないエラーが発生しました",
         "autodiscovery_unexpected_error_is": "IDサーバーの設定の解釈中に予期しないエラーが発生しました",
-        "incorrect_credentials_detail": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。"
+        "incorrect_credentials_detail": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。",
+        "create_account_title": "アカウントを作成"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3725,7 +3719,8 @@
         "empty_heading": "スレッド機能を使って、会話をまとめましょう"
     },
     "theme": {
-        "light_high_contrast": "ライト（高コントラスト）"
+        "light_high_contrast": "ライト（高コントラスト）",
+        "match_system": "システムに合致"
     },
     "space": {
         "landing_welcome": "<name/>にようこそ",
@@ -3830,7 +3825,8 @@
     },
     "user_menu": {
         "switch_theme_light": "ライトテーマに切り替える",
-        "switch_theme_dark": "ダークテーマに切り替える"
+        "switch_theme_dark": "ダークテーマに切り替える",
+        "settings": "全ての設定"
     },
     "notif_panel": {
         "empty_heading": "未読はありません",
@@ -3893,7 +3889,8 @@
         "tac_button": "利用規約を確認",
         "identity_server_no_terms_title": "IDサーバーには利用規約がありません",
         "identity_server_no_terms_description_1": "このアクションを行うには、既定のIDサーバー <server /> にアクセスしてメールアドレスまたは電話番号を認証する必要がありますが、サーバーには利用規約がありません。",
-        "identity_server_no_terms_description_2": "サーバーの所有者を信頼する場合のみ続行してください。"
+        "identity_server_no_terms_description_2": "サーバーの所有者を信頼する場合のみ続行してください。",
+        "inline_intro_text": "<policyLink />に同意して続行："
     },
     "space_settings": {
         "title": "設定 - %(spaceName)s"
@@ -3983,7 +3980,9 @@
         "connection": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
         "mixed_content": "HTTPSのURLがブラウザーのバーにある場合、HTTP経由でホームサーバーに接続することはできません。HTTPSを使用するか<a>安全でないスクリプトを有効にしてください</a>。",
         "tls": "ホームサーバーに接続できません。接続を確認し、<a>ホームサーバーのSSL証明書</a>が信頼できるものであり、ブラウザーの拡張機能が要求をブロックしていないことを確認してください。",
-        "admin_contact_short": "<a>サーバー管理者</a>に問い合わせてください。"
+        "admin_contact_short": "<a>サーバー管理者</a>に問い合わせてください。",
+        "non_urgent_echo_failure_toast": "あなたのサーバーはいくつかの<a>リクエスト</a>に応答しません。",
+        "failed_copy": "コピーに失敗しました"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4015,5 +4014,11 @@
     "chat_card_back_action_label": "チャットに戻る",
     "room_summary_card_back_action_label": "ルームの情報",
     "member_list_back_action_label": "ルームのメンバー",
-    "thread_view_back_action_label": "スレッドに戻る"
+    "thread_view_back_action_label": "スレッドに戻る",
+    "quick_settings": {
+        "title": "クイック設定",
+        "all_settings": "全ての設定",
+        "metaspace_section": "サイドバーに固定",
+        "sidebar_settings": "他のオプション"
+    }
 }

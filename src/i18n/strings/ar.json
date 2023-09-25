@@ -75,8 +75,6 @@
     "Edited at %(date)s": "عدل في %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "أنت على وشك الانتقال إلى موقع تابع لجهة خارجية حتى تتمكن من مصادقة حسابك لاستخدامه مع %(integrationsUrl)s. هل ترغب في الاستمرار؟",
     "Add an Integration": "أضف تكاملاً",
-    "Failed to copy": "تعذر النسخ",
-    "Copied!": "نُسخ!",
     "Error decrypting video": "تعذر فك تشفير الفيديو",
     "You sent a verification request": "أنت أرسلت طلب تحقق",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
@@ -372,8 +370,6 @@
     "Warning!": "إنذار!",
     "No display name": "لا اسم ظاهر",
     "Show more": "أظهر أكثر",
-    "Accept <policyLink /> to continue:": "قبول <policyLink /> للمتابعة:",
-    "Your server isn't responding to some <a>requests</a>.": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
     "This event could not be displayed": "تعذر عرض هذا الحدث",
@@ -646,7 +642,8 @@
         "identity_server": "خادوم الهوية",
         "preview_message": "يا من ترى هذه الرسالة. أنت الأفضل!",
         "on": "مشتغل",
-        "off": "مطفأ"
+        "off": "مطفأ",
+        "copied": "نُسخ!"
     },
     "action": {
         "continue": "واصِل",
@@ -1473,7 +1470,8 @@
     "terms": {
         "identity_server_no_terms_title": "ليس لخادوم الهويّة أيّ شروط خدمة",
         "identity_server_no_terms_description_1": "يطلب هذا الإجراء الوصول إلى خادوم الهويّات المبدئي<server />للتثبّت من عنوان البريد الإلكتروني أو رقم الهاتف، ولكن ليس للخادوم أيّ شروط خدمة.",
-        "identity_server_no_terms_description_2": "لا تُواصل لو لم تكن تثق بمالك الخادوم."
+        "identity_server_no_terms_description_2": "لا تُواصل لو لم تكن تثق بمالك الخادوم.",
+        "inline_intro_text": "قبول <policyLink /> للمتابعة:"
     },
     "empty_room": "غرفة فارغة",
     "user1_and_user2": "%(user1)s و %(user2)s",
@@ -1512,7 +1510,9 @@
         "error_change_title": "تغيير إعدادات الإشعار"
     },
     "error": {
-        "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك."
+        "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك.",
+        "non_urgent_echo_failure_toast": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
+        "failed_copy": "تعذر النسخ"
     },
     "room_summary_card_back_action_label": "معلومات الغرفة"
 }

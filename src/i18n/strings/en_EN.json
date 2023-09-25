@@ -336,6 +336,7 @@
         "account_deactivated": "This account has been deactivated.",
         "incorrect_credentials": "Incorrect username and/or password.",
         "incorrect_credentials_detail": "Please note you are logging into the %(hs)s server, not matrix.org.",
+        "create_account_title": "Create account",
         "change_password_error": "Error while changing password: %(error)s",
         "change_password_mismatch": "New passwords don't match",
         "change_password_empty": "Passwords can't be empty",
@@ -466,6 +467,7 @@
         "create": "Create",
         "expand": "Expand",
         "collapse": "Collapse",
+        "click_to_copy": "Click to copy",
         "apply": "Apply",
         "remove": "Remove",
         "reset": "Reset",
@@ -561,6 +563,7 @@
         "public": "Public",
         "private": "Private",
         "options": "Options",
+        "copied": "Copied!",
         "preview_message": "Hey you. You're the best!",
         "integration_manager": "Integration manager",
         "message_layout": "Message layout",
@@ -697,6 +700,7 @@
         "identity_server_no_terms_title": "Identity server has no terms of service",
         "identity_server_no_terms_description_1": "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.",
         "identity_server_no_terms_description_2": "Only continue if you trust the owner of the server.",
+        "inline_intro_text": "Accept <policyLink /> to continue:",
         "integration_manager": "Use bots, bridges, widgets and sticker packs",
         "tos": "Terms of Service",
         "intro": "To continue you need to accept the terms of this service.",
@@ -755,6 +759,8 @@
         "unknown_caller": "Unknown caller",
         "voice_call": "Voice call",
         "video_call": "Video call",
+        "join_button_tooltip_connecting": "Connecting",
+        "join_button_tooltip_call_full": "Sorry — this call is currently full",
         "audio_devices": "Audio devices",
         "disable_microphone": "Mute microphone",
         "enable_microphone": "Unmute microphone",
@@ -773,6 +779,9 @@
         "dialpad": "Dialpad",
         "stop_screenshare": "Stop sharing your screen",
         "start_screenshare": "Start sharing your screen",
+        "hide_sidebar_button": "Hide sidebar",
+        "show_sidebar_button": "Show sidebar",
+        "more_button": "More",
         "hangup": "Hangup",
         "maximise": "Fill screen",
         "expand": "Return to call",
@@ -941,6 +950,9 @@
             "sas_no_match": "They don't match",
             "sas_match": "They match",
             "in_person": "To be secure, do this in person or use a trusted way to communicate.",
+            "request_toast_detail": "%(deviceId)s from %(ip)s",
+            "request_toast_decline_counter": "Ignore (%(counter)s)",
+            "request_toast_accept": "Verify Session",
             "no_support_qr_emoji": "The device you are trying to verify doesn't support scanning a QR code or emoji verification, which is what %(brand)s supports. Try with a different client.",
             "qr_prompt": "Scan this unique code",
             "sas_prompt": "Compare unique emoji",
@@ -1364,7 +1376,8 @@
         "creation_summary_room": "%(creator)s created and configured the room."
     },
     "theme": {
-        "light_high_contrast": "Light high contrast"
+        "light_high_contrast": "Light high contrast",
+        "match_system": "Match system"
     },
     "voice_broadcast": {
         "failed_already_recording_title": "Can't start a new voice broadcast",
@@ -1433,7 +1446,9 @@
         "connection": "There was a problem communicating with the homeserver, please try again later.",
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
         "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
-        "admin_contact_short": "Contact your <a>server admin</a>."
+        "admin_contact_short": "Contact your <a>server admin</a>.",
+        "non_urgent_echo_failure_toast": "Your server isn't responding to some <a>requests</a>.",
+        "failed_copy": "Failed to copy"
     },
     "items_and_n_others": {
         "other": "<Items/> and %(count)s others",
@@ -1777,6 +1792,8 @@
             "encryption_permanent": "Once enabled, encryption cannot be disabled.",
             "encryption_forced": "Your server requires encryption to be disabled."
         },
+        "delete_avatar_label": "Delete avatar",
+        "upload_avatar_label": "Upload avatar",
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers",
             "room_upgrade_warning": "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.",
@@ -1991,10 +2008,7 @@
         "lists_description_2": "If this isn't what you want, please use a different tool to ignore users.",
         "lists_new_label": "Room ID or address of ban list"
     },
-    "Connecting": "Connecting",
-    "Sorry — this call is currently full": "Sorry — this call is currently full",
     "Join Room": "Join Room",
-    "Create account": "Create account",
     "onboarding": {
         "you_made_it": "You made it!",
         "find_friends": "Find and invite your friends",
@@ -2065,27 +2079,18 @@
         "hearts_message": "sends hearts"
     },
     "Failed to download source media, no source url was found": "Failed to download source media, no source url was found",
+    "Connecting": "Connecting",
     "%(count)s people joined": {
         "other": "%(count)s people joined",
         "one": "%(count)s person joined"
     },
     "unknown person": "unknown person",
-    "Hide sidebar": "Hide sidebar",
-    "Show sidebar": "Show sidebar",
-    "More": "More",
-    "Your server isn't responding to some <a>requests</a>.": "Your server isn't responding to some <a>requests</a>.",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s from %(ip)s",
-    "Ignore (%(counter)s)": "Ignore (%(counter)s)",
-    "Verify Session": "Verify Session",
-    "Accept <policyLink /> to continue:": "Accept <policyLink /> to continue:",
-    "Quick settings": "Quick settings",
-    "All settings": "All settings",
-    "Pin to sidebar": "Pin to sidebar",
-    "More options": "More options",
-    "Match system": "Match system",
-    "Space selection": "Space selection",
-    "Delete avatar": "Delete avatar",
-    "Upload avatar": "Upload avatar",
+    "quick_settings": {
+        "title": "Quick settings",
+        "all_settings": "All settings",
+        "metaspace_section": "Pin to sidebar",
+        "sidebar_settings": "More options"
+    },
     "Search %(spaceName)s": "Search %(spaceName)s",
     "create_space": {
         "name_required": "Please enter a name for the space",
@@ -2129,9 +2134,6 @@
     "Creating…": "Creating…",
     "Show all rooms": "Show all rooms",
     "Spaces": "Spaces",
-    "Click to copy": "Click to copy",
-    "Copied!": "Copied!",
-    "Failed to copy": "Failed to copy",
     "Share invite link": "Share invite link",
     "Invite people": "Invite people",
     "Invite with email or username": "Invite with email or username",
@@ -3211,6 +3213,7 @@
         "one": "Adding room..."
     },
     "Direct Messages": "Direct Messages",
+    "Space selection": "Space selection",
     "Add existing rooms": "Add existing rooms",
     "Want to add a new room instead?": "Want to add a new room instead?",
     "Create a new room": "Create a new room",
@@ -3752,6 +3755,7 @@
     },
     "Uploading %(filename)s": "Uploading %(filename)s",
     "user_menu": {
+        "settings": "All settings",
         "switch_theme_light": "Switch to light mode",
         "switch_theme_dark": "Switch to dark mode"
     },

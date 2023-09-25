@@ -1,6 +1,5 @@
 {
     "Show more": "Taispeáin níos mó",
-    "All settings": "Gach Socrú",
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
     "Are you sure you want to leave the room '%(roomName)s'?": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?",
     "Are you sure?": "An bhfuil tú cinnte?",
@@ -223,7 +222,6 @@
     "expand": "méadaigh",
     "collapse": "cumaisc",
     "edited": "curtha in eagar",
-    "Copied!": "Cóipeáilte!",
     "Yesterday": "Inné",
     "Today": "Inniu",
     "Saturday": "Dé Sathairn",
@@ -344,7 +342,6 @@
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Create account": "Déan cuntas a chruthú",
     "Deactivate Account": "Cuir cuntas as feidhm",
     "Account management": "Bainistíocht cuntais",
     "Phone numbers": "Uimhreacha guthán",
@@ -355,7 +352,6 @@
     "Verification code": "Cód fíoraithe",
     "Notification targets": "Spriocanna fógraí",
     "Results": "Torthaí",
-    "More": "Níos mó",
     "Decrypting": "Ag Díchriptiú",
     "Access": "Rochtain",
     "Global": "Uilíoch",
@@ -461,7 +457,8 @@
         "cross_signing": "Cros-síniú",
         "feedback": "Aiseolas",
         "on": "Ar siúl",
-        "off": "Múchta"
+        "off": "Múchta",
+        "copied": "Cóipeáilte!"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -718,7 +715,9 @@
         "no_permission_conference": "Is Teastáil Cead",
         "no_permission_conference_description": "Níl cead agat glao comhdhála a thosú sa seomra seo",
         "default_device": "Gléas Réamhshocraithe",
-        "no_media_perms_title": "Gan cheadanna meáin"
+        "no_media_perms_title": "Gan cheadanna meáin",
+        "join_button_tooltip_connecting": "Ag Ceangal",
+        "more_button": "Níos mó"
     },
     "Other": "Eile",
     "Advanced": "Forbartha",
@@ -791,7 +790,8 @@
         "uia": {
             "sso_title": "Lean ar aghaidh le SSO",
             "sso_body": "Deimhnigh an seoladh ríomhphoist seo le SSO mar cruthúnas céannachta."
-        }
+        },
+        "create_account_title": "Déan cuntas a chruthú"
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"
@@ -826,7 +826,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Athraigh go mód geal",
-        "switch_theme_dark": "Athraigh go mód dorcha"
+        "switch_theme_dark": "Athraigh go mód dorcha",
+        "settings": "Gach Socrú"
     },
     "space": {
         "suggested": "Moltaí",
@@ -874,5 +875,11 @@
         "enable_prompt_toast_title": "Fógraí",
         "colour_none": "Níl aon cheann",
         "colour_bold": "Trom"
+    },
+    "onboarding": {
+        "create_account": "Déan cuntas a chruthú"
+    },
+    "quick_settings": {
+        "all_settings": "Gach Socrú"
     }
 }

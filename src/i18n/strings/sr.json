@@ -62,7 +62,6 @@
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Приступи соби",
-    "Upload avatar": "Отпреми аватар",
     "Forget room": "Заборави собу",
     "Rooms": "Собе",
     "Low priority": "Ниска важност",
@@ -83,8 +82,6 @@
     "Invalid file%(extra)s": "Неисправна датотека %(extra)s",
     "Error decrypting image": "Грешка при дешифровању слике",
     "Error decrypting video": "Грешка при дешифровању видеа",
-    "Copied!": "Копирано!",
-    "Failed to copy": "Нисам успео да ископирам",
     "Add an Integration": "Додај уградњу",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
     "Email address": "Мејл адреса",
@@ -202,7 +199,6 @@
     "Demote yourself?": "Рашчињавате себе?",
     "Demote": "Рашчини",
     "Join millions for free on the largest public server": "Придружите се милионима других бесплатно на највећем јавном серверу",
-    "Create account": "Направи налог",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Show more": "Прикажи више",
@@ -240,7 +236,6 @@
     "Widgets do not use message encryption.": "Виџети не користе шифровање порука.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
-    "All settings": "Сва подешавања",
     "General failure": "Општа грешка",
     "Light bulb": "сијалица",
     "Voice & Video": "Глас и видео",
@@ -687,7 +682,8 @@
         "all_rooms": "Све собе",
         "preview_message": "Хеј! Само напред!",
         "on": "Укључено",
-        "off": "Искључено"
+        "off": "Искључено",
+        "copied": "Копирано!"
     },
     "action": {
         "continue": "Настави",
@@ -1227,7 +1223,8 @@
         },
         "advanced": {
             "unfederated": "Ова соба није доступна са удаљених Матрикс сервера"
-        }
+        },
+        "upload_avatar_label": "Отпреми аватар"
     },
     "encryption": {
         "verification": {
@@ -1316,7 +1313,8 @@
         "failed_connect_identity_server": "Није могуће приступити серверу идентитета",
         "no_hs_url_provided": "Није наведен УРЛ сервера",
         "autodiscovery_unexpected_error_hs": "Неочекивана грешка при откривању подешавања сервера",
-        "incorrect_credentials_detail": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org."
+        "incorrect_credentials_detail": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org.",
+        "create_account_title": "Направи налог"
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1336,7 +1334,8 @@
         "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"
     },
     "onboarding": {
-        "send_dm": "Пошаљи директну поруку"
+        "send_dm": "Пошаљи директну поруку",
+        "create_account": "Направи налог"
     },
     "setting": {
         "help_about": {
@@ -1428,7 +1427,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Пребаци на светлу тему",
-        "switch_theme_dark": "Пребаци на тамну тему"
+        "switch_theme_dark": "Пребаци на тамну тему",
+        "settings": "Сва подешавања"
     },
     "room": {
         "drop_file_prompt": "Превуци датотеку овде да би је отпремио",
@@ -1494,7 +1494,8 @@
     "error": {
         "resource_limits": "Овај сервер је достигао ограничење неког свог ресурса.",
         "mixed_content": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
-        "tls": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве."
+        "tls": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве.",
+        "failed_copy": "Нисам успео да ископирам"
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",
@@ -1504,5 +1505,8 @@
         "enable_prompt_toast_title": "Обавештења",
         "colour_none": "Ништа",
         "error_change_title": "Промените подешавања обавештења"
+    },
+    "quick_settings": {
+        "all_settings": "Сва подешавања"
     }
 }

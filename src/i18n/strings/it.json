@@ -68,7 +68,6 @@
         "one": "(~%(count)s risultato)"
     },
     "Join Room": "Entra nella stanza",
-    "Upload avatar": "Invia avatar",
     "Forget room": "Dimentica la stanza",
     "Low priority": "Bassa priorità",
     "Historical": "Cronologia",
@@ -86,8 +85,6 @@
     "Invalid file%(extra)s": "File non valido %(extra)s",
     "Error decrypting image": "Errore decifratura immagine",
     "Error decrypting video": "Errore decifratura video",
-    "Copied!": "Copiato!",
-    "Failed to copy": "Copia fallita",
     "Add an Integration": "Aggiungi un'integrazione",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Stai per essere portato in un sito di terze parti per autenticare il tuo account da usare con %(integrationsUrl)s. Vuoi continuare?",
     "Email address": "Indirizzo email",
@@ -355,7 +352,6 @@
     "Couldn't load page": "Caricamento pagina fallito",
     "Could not load user profile": "Impossibile caricare il profilo utente",
     "Your password has been reset.": "La tua password è stata reimpostata.",
-    "Create account": "Crea account",
     "Your keys are being backed up (the first backup could take a few minutes).": "Il backup delle chiavi è in corso (il primo backup potrebbe richiedere qualche minuto).",
     "Success!": "Completato!",
     "Recovery Method Removed": "Metodo di ripristino rimosso",
@@ -445,7 +441,6 @@
     "Discovery options will appear once you have added a phone number above.": "Le opzioni di scoperta appariranno dopo aver aggiunto un numero di telefono sopra.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "È stato inviato un SMS a +%(msisdn)s. Inserisci il codice di verifica contenuto.",
     "Command Help": "Aiuto comando",
-    "Accept <policyLink /> to continue:": "Accetta la <policyLink /> per continuare:",
     "The identity server you have chosen does not have any terms of service.": "Il server di identità che hai scelto non ha alcuna condizione di servizio.",
     "Terms of service not accepted or the identity server is invalid.": "Condizioni di servizio non accettate o server di identità non valido.",
     "Enter a new identity server": "Inserisci un nuovo server di identità",
@@ -533,7 +528,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Il gestore di integrazioni è offline o non riesce a raggiungere il tuo homeserver.",
     "Failed to connect to integration manager": "Connessione al gestore di integrazioni fallita",
     "Widgets do not use message encryption.": "I widget non usano la crittografia dei messaggi.",
-    "More options": "Altre opzioni",
     "Integrations are disabled": "Le integrazioni sono disattivate",
     "Integrations not allowed": "Integrazioni non permesse",
     "Remove for everyone": "Rimuovi per tutti",
@@ -715,7 +709,6 @@
     "Ok": "Ok",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "L'amministratore del server ha disattivato la crittografia end-to-end in modo predefinito nelle stanze private e nei messaggi diretti.",
     "Switch theme": "Cambia tema",
-    "All settings": "Tutte le impostazioni",
     "No recently visited rooms": "Nessuna stanza visitata di recente",
     "Message preview": "Anteprima messaggio",
     "Room options": "Opzioni stanza",
@@ -740,7 +733,6 @@
     "This room is public": "Questa stanza è pubblica",
     "Edited at %(date)s": "Modificato il %(date)s",
     "Click to view edits": "Clicca per vedere le modifiche",
-    "Your server isn't responding to some <a>requests</a>.": "Il tuo server non sta rispondendo ad alcune <a>richieste</a>.",
     "You're all caught up.": "Non hai nulla di nuovo da vedere.",
     "Server isn't responding": "Il server non risponde",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Il tuo server non sta rispondendo ad alcune tue richieste. Sotto trovi alcuni probabili motivi.",
@@ -1117,7 +1109,6 @@
     "Leave space": "Esci dallo spazio",
     "Invite people": "Invita persone",
     "Share invite link": "Condividi collegamento di invito",
-    "Click to copy": "Clicca per copiare",
     "Create a space": "Crea uno spazio",
     "Private space": "Spazio privato",
     "Public space": "Spazio pubblico",
@@ -1135,7 +1126,6 @@
     "Invite with email or username": "Invita con email o nome utente",
     "You can change these anytime.": "Puoi cambiarli in qualsiasi momento.",
     "unknown person": "persona sconosciuta",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s da %(ip)s",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
@@ -1309,11 +1299,7 @@
     "Call declined": "Chiamata rifiutata",
     "Stop recording": "Ferma la registrazione",
     "Send voice message": "Invia messaggio vocale",
-    "More": "Altro",
-    "Show sidebar": "Mostra barra laterale",
-    "Hide sidebar": "Nascondi barra laterale",
     "Unknown failure: %(reason)s": "Malfunzionamento sconosciuto: %(reason)s",
-    "Delete avatar": "Elimina avatar",
     "Cross-signing is ready but keys are not backed up.": "La firma incrociata è pronta ma c'è un backup delle chiavi.",
     "Rooms and spaces": "Stanze e spazi",
     "Results": "Risultati",
@@ -1414,8 +1400,6 @@
     "Themes": "Temi",
     "Moderation": "Moderazione",
     "Spaces you know that contain this space": "Spazi di cui sai che contengono questo spazio",
-    "Pin to sidebar": "Fissa nella barra laterale",
-    "Quick settings": "Impostazioni rapide",
     "Chat": "Chat",
     "Home options": "Opzioni pagina iniziale",
     "%(spaceName)s menu": "Menu di %(spaceName)s",
@@ -1500,7 +1484,6 @@
     "My live location": "La mia posizione in tempo reale",
     "My current location": "La mia posizione attuale",
     "Pinned": "Fissato",
-    "Match system": "Sistema di corrispondenza",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
     "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione",
     "Click to drop a pin": "Clicca per lasciare una puntina",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "Non hai autorizzazioni sufficienti per cambiarlo.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s è crittografato end-to-end, ma attualmente è limitato ad un minore numero di utenti.",
     "Enable %(brand)s as an additional calling option in this room": "Attiva %(brand)s come opzione di chiamata aggiuntiva in questa stanza",
-    "Sorry — this call is currently full": "Spiacenti — questa chiamata è piena",
     "Completing set up of your new device": "Completamento configurazione nuovo dispositivo",
     "Waiting for device to sign in": "In attesa che il dispositivo acceda",
     "Review and approve the sign in": "Verifica e approva l'accesso",
@@ -1773,8 +1755,6 @@
     "Past polls": "Sondaggi passati",
     "Active polls": "Sondaggi attivi",
     "View poll in timeline": "Vedi sondaggio nella linea temporale",
-    "Verify Session": "Verifica sessione",
-    "Ignore (%(counter)s)": "Ignora (%(counter)s)",
     "Invites by email can only be sent one at a time": "Gli inviti per email possono essere inviati uno per volta",
     "Desktop app logo": "Logo app desktop",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Si è verificato un errore aggiornando le tue preferenze di notifica. Prova ad attivare/disattivare di nuovo l'opzione.",
@@ -1957,7 +1937,8 @@
         "off": "Spento",
         "all_rooms": "Tutte le stanze",
         "deselect_all": "Deseleziona tutti",
-        "select_all": "Seleziona tutti"
+        "select_all": "Seleziona tutti",
+        "copied": "Copiato!"
     },
     "action": {
         "continue": "Continua",
@@ -2061,7 +2042,8 @@
         "clear": "Svuota",
         "exit_fullscreeen": "Esci da schermo intero",
         "enter_fullscreen": "Attiva schermo intero",
-        "unban": "Togli ban"
+        "unban": "Togli ban",
+        "click_to_copy": "Clicca per copiare"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -2374,7 +2356,8 @@
         "intro_byline": "Prendi il controllo delle tue conversazioni.",
         "send_dm": "Invia un messaggio diretto",
         "explore_rooms": "Esplora le stanze pubbliche",
-        "create_room": "Crea una chat di gruppo"
+        "create_room": "Crea una chat di gruppo",
+        "create_account": "Crea account"
     },
     "settings": {
         "show_breadcrumbs": "Mostra scorciatoie per le stanze viste di recente sopra l'elenco stanze",
@@ -3378,7 +3361,12 @@
         "failed_call_live_broadcast_description": "Non puoi avviare una chiamata perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare una chiamata.",
         "no_media_perms_title": "Nessuna autorizzazione per i media",
         "no_media_perms_description": "Potresti dover permettere manualmente a %(brand)s di accedere al tuo microfono/webcam",
-        "call_toast_unknown_room": "Stanza sconosciuta"
+        "call_toast_unknown_room": "Stanza sconosciuta",
+        "join_button_tooltip_connecting": "In connessione",
+        "join_button_tooltip_call_full": "Spiacenti — questa chiamata è piena",
+        "hide_sidebar_button": "Nascondi barra laterale",
+        "show_sidebar_button": "Mostra barra laterale",
+        "more_button": "Altro"
     },
     "Other": "Altro",
     "Advanced": "Avanzato",
@@ -3470,7 +3458,9 @@
             "room_id": "ID interno stanza",
             "room_version_section": "Versione stanza",
             "room_version": "Versione stanza:"
-        }
+        },
+        "delete_avatar_label": "Elimina avatar",
+        "upload_avatar_label": "Invia avatar"
     },
     "encryption": {
         "verification": {
@@ -3501,7 +3491,10 @@
             "unverified_sessions_toast_description": "Controlla per assicurarti che l'account sia sicuro",
             "unverified_sessions_toast_reject": "Più tardi",
             "unverified_session_toast_title": "Nuovo accesso. Eri tu?",
-            "unverified_session_toast_accept": "Sì, ero io"
+            "unverified_session_toast_accept": "Sì, ero io",
+            "request_toast_detail": "%(deviceId)s da %(ip)s",
+            "request_toast_decline_counter": "Ignora (%(counter)s)",
+            "request_toast_accept": "Verifica sessione"
         },
         "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
         "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
@@ -3696,7 +3689,8 @@
         "autodiscovery_unexpected_error_hs": "Errore inaspettato nella risoluzione della configurazione homeserver",
         "autodiscovery_unexpected_error_is": "Errore inaspettato risolvendo la configurazione del server identità",
         "autodiscovery_hs_incompatible": "Il tuo homeserver è troppo vecchio e non supporta la versione API minima richiesta. Contatta il proprietario del server o aggiornalo.",
-        "incorrect_credentials_detail": "Nota che stai accedendo nel server %(hs)s , non matrix.org."
+        "incorrect_credentials_detail": "Nota che stai accedendo nel server %(hs)s , non matrix.org.",
+        "create_account_title": "Crea account"
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -3919,7 +3913,8 @@
         "empty_heading": "Tieni le discussioni organizzate in conversazioni"
     },
     "theme": {
-        "light_high_contrast": "Alto contrasto chiaro"
+        "light_high_contrast": "Alto contrasto chiaro",
+        "match_system": "Sistema di corrispondenza"
     },
     "space": {
         "landing_welcome": "Ti diamo il benvenuto in <name/>",
@@ -4025,7 +4020,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Passa alla modalità chiara",
-        "switch_theme_dark": "Passa alla modalità scura"
+        "switch_theme_dark": "Passa alla modalità scura",
+        "settings": "Tutte le impostazioni"
     },
     "notif_panel": {
         "empty_heading": "Non hai nulla di nuovo da vedere",
@@ -4093,7 +4089,8 @@
         "tac_button": "Leggi i termini e condizioni",
         "identity_server_no_terms_title": "Il server di identità non ha condizioni di servizio",
         "identity_server_no_terms_description_1": "Questa azione richiede l'accesso al server di identità predefinito <server /> per verificare un indirizzo email o numero di telefono, ma il server non ha termini di servizio.",
-        "identity_server_no_terms_description_2": "Continua solo se ti fidi del proprietario del server."
+        "identity_server_no_terms_description_2": "Continua solo se ti fidi del proprietario del server.",
+        "inline_intro_text": "Accetta la <policyLink /> per continuare:"
     },
     "space_settings": {
         "title": "Impostazioni - %(spaceName)s"
@@ -4190,7 +4187,9 @@
         "connection": "C'è stato un problema nella comunicazione con l'homeserver, riprova più tardi.",
         "mixed_content": "Impossibile connettersi all'homeserver via HTTP quando c'è un URL HTTPS nella barra del tuo browser. Usa HTTPS o <a>attiva gli script non sicuri</a>.",
         "tls": "Impossibile connettersi all'homeserver - controlla la tua connessione, assicurati che il <a>certificato SSL dell'homeserver</a> sia fidato e che un'estensione del browser non stia bloccando le richieste.",
-        "admin_contact_short": "Contatta il tuo <a>amministratore del server</a>."
+        "admin_contact_short": "Contatta il tuo <a>amministratore del server</a>.",
+        "non_urgent_echo_failure_toast": "Il tuo server non sta rispondendo ad alcune <a>richieste</a>.",
+        "failed_copy": "Copia fallita"
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4222,5 +4221,11 @@
     "chat_card_back_action_label": "Torna alla chat",
     "room_summary_card_back_action_label": "Informazioni stanza",
     "member_list_back_action_label": "Membri stanza",
-    "thread_view_back_action_label": "Torna alla conversazione"
+    "thread_view_back_action_label": "Torna alla conversazione",
+    "quick_settings": {
+        "title": "Impostazioni rapide",
+        "all_settings": "Tutte le impostazioni",
+        "metaspace_section": "Fissa nella barra laterale",
+        "sidebar_settings": "Altre opzioni"
+    }
 }

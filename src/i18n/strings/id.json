@@ -342,7 +342,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)sd",
     "Unignore": "Hilangkan Abaian",
-    "Copied!": "Disalin!",
     "Historical": "Riwayat",
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
@@ -451,7 +450,6 @@
     "Edit message": "Edit pesan",
     "Notification sound": "Suara notifikasi",
     "Uploaded sound": "Suara terunggah",
-    "Create account": "Buat akun",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
@@ -497,7 +495,6 @@
     "Invalid file%(extra)s": "File tidak absah%(extra)s",
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
-    "Upload avatar": "Unggah avatar",
     "Report": "Laporkan",
     "Confirm passphrase": "Konfirmasi frasa sandi",
     "Enter passphrase": "Masukkan frasa sandi",
@@ -516,7 +513,6 @@
     "Keyword": "Kata kunci",
     "Visibility": "Visibilitas",
     "Address": "Alamat",
-    "More": "Lagi",
     "Avatar": "Avatar",
     "Hold": "Jeda",
     "Transfer": "Pindah",
@@ -622,21 +618,13 @@
     "Invite with email or username": "Undang dengan email atau nama pengguna",
     "Invite people": "Undang pengguna",
     "Share invite link": "Bagikan tautan undangan",
-    "Failed to copy": "Gagal untuk menyalin",
-    "Click to copy": "Klik untuk menyalin",
     "Show all rooms": "Tampilkan semua ruangan",
     "You can change these anytime.": "Anda dapat mengubahnya kapan saja.",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
     "Create a space": "Buat space",
     "Search %(spaceName)s": "Cari %(spaceName)s",
-    "Delete avatar": "Hapus avatar",
-    "Accept <policyLink /> to continue:": "Terima <policyLink /> untuk melanjutkan:",
-    "Your server isn't responding to some <a>requests</a>.": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
-    "Show sidebar": "Tampilkan sisi bilah",
-    "Hide sidebar": "Sembunyikan sisi bilah",
     "unknown person": "pengguna tidak dikenal",
     "IRC display name width": "Lebar nama tampilan IRC",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s dari %(ip)s",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Manajer integrasi menerima data pengaturan, dan dapat mengubah widget, mengirimkan undangan ruangan, dan mengatur tingkat daya dengan sepengetahuan Anda.",
@@ -769,7 +757,6 @@
     "You do not have permission to post to this room": "Anda tidak memiliki izin untuk mengirim ke ruangan ini",
     "This room has been replaced and is no longer active.": "Ruangan ini telah diganti dan tidak aktif lagi.",
     "The conversation continues here.": "Obrolannya dilanjutkan di sini.",
-    "More options": "Opsi lebih banyak",
     "Send voice message": "Kirim sebuah pesan suara",
     "You do not have permission to start polls in this room.": "Anda tidak memiliki izin untuk memulai sebuah poll di ruangan ini.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tingkat daya %(powerLevelNumber)s)",
@@ -1103,7 +1090,6 @@
         "other": "Saat ini bergabung dengan %(count)s ruangan"
     },
     "Switch theme": "Ubah tema",
-    "All settings": "Semua pengaturan",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Mengunggah %(filename)s dan %(count)s lainnya",
         "other": "Mengunggah %(filename)s dan %(count)s lainnya"
@@ -1413,8 +1399,6 @@
     "Upgrade your encryption": "Tingkatkan enkripsi Anda",
     "You can also set up Secure Backup & manage your keys in Settings.": "Anda juga dapat menyiapkan Cadangan Aman & kelola kunci Anda di Pengaturan.",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Jika Anda batalkan sekarang, Anda mungkin kehilangan pesan & data terenkripsi jika Anda kehilangan akses ke login Anda.",
-    "Pin to sidebar": "Pasang pin ke bilah samping",
-    "Quick settings": "Pengaturan cepat",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
     "Chat": "Obrolan",
     "Home options": "Opsi Beranda",
@@ -1502,7 +1486,6 @@
     "My current location": "Lokasi saya saat ini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s tidak dapat mengirimkan lokasi Anda. Silakan coba lagi nanti.",
     "We couldn't send your location": "Kami tidak dapat mengirimkan lokasi Anda",
-    "Match system": "Cocokkan dengan sistem",
     "Click": "Klik",
     "Expand quotes": "Buka kutip",
     "Collapse quotes": "Tutup kutip",
@@ -1668,7 +1651,6 @@
     "Call type": "Jenis panggilan",
     "You do not have sufficient permissions to change this.": "Anda tidak memiliki izin untuk mengubah ini.",
     "Enable %(brand)s as an additional calling option in this room": "Aktifkan %(brand)s sebagai opsi panggilan tambahan di ruangan ini",
-    "Sorry — this call is currently full": "Maaf — panggilan ini saat ini penuh",
     "Completing set up of your new device": "Menyelesaikan penyiapan perangkat baru Anda",
     "Waiting for device to sign in": "Menunggu perangkat untuk masuk",
     "Review and approve the sign in": "Lihat dan perbolehkan pemasukan",
@@ -1773,8 +1755,6 @@
     "Past polls": "Pemungutan suara sebelumnya",
     "Active polls": "Pemungutan suara yang aktif",
     "View poll in timeline": "Tampilkan pemungutan suara di lini masa",
-    "Verify Session": "Verifikasi Sesi",
-    "Ignore (%(counter)s)": "Abaikan (%(counter)s)",
     "Invites by email can only be sent one at a time": "Undangan lewat surel hanya dapat dikirim satu-satu",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Sebuah kesalahan terjadi saat memperbarui preferensi notifikasi Anda. Silakan coba mengubah opsi Anda lagi.",
     "Desktop app logo": "Logo aplikasi desktop",
@@ -1957,7 +1937,8 @@
         "off": "Mati",
         "all_rooms": "Semua ruangan",
         "deselect_all": "Batalkan semua pilihan",
-        "select_all": "Pilih semua"
+        "select_all": "Pilih semua",
+        "copied": "Disalin!"
     },
     "action": {
         "continue": "Lanjut",
@@ -2061,7 +2042,8 @@
         "clear": "Hapus",
         "exit_fullscreeen": "Keluar dari layar penuh",
         "enter_fullscreen": "Masuki layar penuh",
-        "unban": "Hilangkan Cekalan"
+        "unban": "Hilangkan Cekalan",
+        "click_to_copy": "Klik untuk menyalin"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -2374,7 +2356,8 @@
         "intro_byline": "Miliki percakapan Anda.",
         "send_dm": "Kirim sebuah Pesan Langsung",
         "explore_rooms": "Jelajahi Ruangan Publik",
-        "create_room": "Buat sebuah Obrolan Grup"
+        "create_room": "Buat sebuah Obrolan Grup",
+        "create_account": "Buat akun"
     },
     "settings": {
         "show_breadcrumbs": "Tampilkan jalan pintas ke ruangan yang baru saja ditampilkan di atas daftar ruangan",
@@ -3378,7 +3361,12 @@
         "failed_call_live_broadcast_description": "Anda tidak dapat memulai sebuah panggilan karena Anda saat ini merekam sebuah siaran langsung. Mohon akhiri siaran langsung Anda untuk memulai sebuah panggilan.",
         "no_media_perms_title": "Tidak ada izin media",
         "no_media_perms_description": "Anda mungkin perlu mengizinkan %(brand)s secara manual untuk mengakses mikrofon/webcam",
-        "call_toast_unknown_room": "Ruangan yang tidak diketahui"
+        "call_toast_unknown_room": "Ruangan yang tidak diketahui",
+        "join_button_tooltip_connecting": "Menghubungkan",
+        "join_button_tooltip_call_full": "Maaf — panggilan ini saat ini penuh",
+        "hide_sidebar_button": "Sembunyikan sisi bilah",
+        "show_sidebar_button": "Tampilkan sisi bilah",
+        "more_button": "Lagi"
     },
     "Other": "Lainnya",
     "Advanced": "Tingkat Lanjut",
@@ -3470,7 +3458,9 @@
             "room_id": "ID ruangan internal",
             "room_version_section": "Versi ruangan",
             "room_version": "Versi ruangan:"
-        }
+        },
+        "delete_avatar_label": "Hapus avatar",
+        "upload_avatar_label": "Unggah avatar"
     },
     "encryption": {
         "verification": {
@@ -3501,7 +3491,10 @@
             "unverified_sessions_toast_description": "Periksa untuk memastikan akun Anda aman",
             "unverified_sessions_toast_reject": "Nanti",
             "unverified_session_toast_title": "Login baru. Apakah itu Anda?",
-            "unverified_session_toast_accept": "Ya, itu saya"
+            "unverified_session_toast_accept": "Ya, itu saya",
+            "request_toast_detail": "%(deviceId)s dari %(ip)s",
+            "request_toast_decline_counter": "Abaikan (%(counter)s)",
+            "request_toast_accept": "Verifikasi Sesi"
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3696,7 +3689,8 @@
         "autodiscovery_unexpected_error_hs": "Kesalahan tidak terduga saat menyelesaikan konfigurasi homeserver",
         "autodiscovery_unexpected_error_is": "Kesalahan tidak terduga saat menyelesaikan konfigurasi server identitas",
         "autodiscovery_hs_incompatible": "Homeserver Anda terlalu lawas dan tidak mendukung versi API minimum yang diperlukan. Silakan menghubungi pemilik server Anda, atau tingkatkan server Anda.",
-        "incorrect_credentials_detail": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org."
+        "incorrect_credentials_detail": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org.",
+        "create_account_title": "Buat akun"
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -3919,7 +3913,8 @@
         "empty_heading": "Buat diskusi tetap teratur dengan utasan"
     },
     "theme": {
-        "light_high_contrast": "Kontras tinggi terang"
+        "light_high_contrast": "Kontras tinggi terang",
+        "match_system": "Cocokkan dengan sistem"
     },
     "space": {
         "landing_welcome": "Selamat datang di <name/>",
@@ -4025,7 +4020,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Ubah ke mode terang",
-        "switch_theme_dark": "Ubah ke mode gelap"
+        "switch_theme_dark": "Ubah ke mode gelap",
+        "settings": "Semua pengaturan"
     },
     "notif_panel": {
         "empty_heading": "Anda selesai",
@@ -4093,7 +4089,8 @@
         "tac_button": "Lihat syarat dan ketentuan",
         "identity_server_no_terms_title": "Identitas server ini tidak memiliki syarat layanan",
         "identity_server_no_terms_description_1": "Aksi ini memerlukan mengakses server identitas bawaan <server /> untuk memvalidasi sebuah alamat email atau nomor telepon, tetapi server ini tidak memiliki syarat layanan apa pun.",
-        "identity_server_no_terms_description_2": "Hanya lanjutkan jika Anda mempercayai pemilik server ini."
+        "identity_server_no_terms_description_2": "Hanya lanjutkan jika Anda mempercayai pemilik server ini.",
+        "inline_intro_text": "Terima <policyLink /> untuk melanjutkan:"
     },
     "space_settings": {
         "title": "Pengaturan — %(spaceName)s"
@@ -4190,7 +4187,9 @@
         "connection": "Terjadi sebuah masalah berkomunikasi dengan homeservernya, coba lagi nanti.",
         "mixed_content": "Tidak dapat terhubung ke homeserver melalui HTTP ketika URL di browser berupa HTTPS. Gunakan HTTPS atau <a>aktifkan skrip yang tidak aman</a>.",
         "tls": "Tidak dapat terhubung ke homeserver — harap cek koneksi anda, pastikan <a>sertifikat SSL homeserver</a> Anda terpercaya, dan ekstensi browser tidak memblokir permintaan.",
-        "admin_contact_short": "Hubungi <a>admin server</a> Anda."
+        "admin_contact_short": "Hubungi <a>admin server</a> Anda.",
+        "non_urgent_echo_failure_toast": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
+        "failed_copy": "Gagal untuk menyalin"
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4222,5 +4221,11 @@
     "chat_card_back_action_label": "Kembali ke obrolan",
     "room_summary_card_back_action_label": "Informasi ruangan",
     "member_list_back_action_label": "Anggota ruangan",
-    "thread_view_back_action_label": "Kembali ke utasan"
+    "thread_view_back_action_label": "Kembali ke utasan",
+    "quick_settings": {
+        "title": "Pengaturan cepat",
+        "all_settings": "Semua pengaturan",
+        "metaspace_section": "Pasang pin ke bilah samping",
+        "sidebar_settings": "Opsi lebih banyak"
+    }
 }

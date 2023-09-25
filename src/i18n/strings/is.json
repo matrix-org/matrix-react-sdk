@@ -62,7 +62,6 @@
     "Today": "Í dag",
     "Yesterday": "Í gær",
     "Error decrypting attachment": "Villa við afkóðun viðhengis",
-    "Copied!": "Afritað!",
     "Email address": "Tölvupóstfang",
     "Something went wrong!": "Eitthvað fór úrskeiðis!",
     "Home": "Forsíða",
@@ -143,7 +142,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Kerfisstjóri netþjónsins þíns hefur lokað á sjálfvirka dulritun í einkaspjallrásum og beinum skilaboðum.",
     "Voice & Video": "Tal og myndmerki",
     "Reject & Ignore user": "Hafna og hunsa notanda",
-    "All settings": "Allar stillingar",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
     "Ignored users": "Hunsaðir notendur",
     "Use the <a>Desktop app</a> to search encrypted messages": "Notaðu <a>tölvuforritið</a> til að sía dulrituð skilaboð",
@@ -467,7 +465,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Bandaríkin",
     "United Kingdom": "Stóra Bretland",
-    "More": "Meira",
     "Connecting": "Tengist",
     "Developer": "Forritari",
     "Experimental": "Á tilraunastigi",
@@ -491,7 +488,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
     "Success!": "Tókst!",
     "Use a different passphrase?": "Nota annan lykilfrasa?",
-    "Create account": "Stofna notandaaðgang",
     "Your password has been reset.": "Lykilorðið þitt hefur verið endursett.",
     "Results": "Niðurstöður",
     "No results found": "Engar niðurstöður fundust",
@@ -619,11 +615,8 @@
     "Visibility": "Sýnileiki",
     "Leave Space": "Yfirgefa svæði",
     "Save Changes": "Vista breytingar",
-    "Click to copy": "Smelltu til að afrita",
     "Address": "Vistfang",
-    "Delete avatar": "Eyða auðkennismynd",
     "Space selection": "Val svæðis",
-    "More options": "Fleiri valkostir",
     "Folder": "Mappa",
     "Headphones": "Heyrnartól",
     "Anchor": "Akkeri",
@@ -643,8 +636,6 @@
     "Cake": "Kökur",
     "Pizza": "Flatbökur",
     "Apple": "Epli",
-    "Show sidebar": "Sýna hliðarspjald",
-    "Hide sidebar": "Fela hliðarspjald",
     "Messaging": "Skilaboð",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
@@ -721,24 +712,16 @@
     "Close preview": "Loka forskoðun",
     "View in room": "Skoða á spjallrás",
     "Set up": "Setja upp",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s frá %(ip)s",
     "Failed to set display name": "Mistókst að stilla birtingarnafn",
     "Show advanced": "Birta ítarlegt",
     "Hide advanced": "Fela ítarlegt",
     "Edit settings relating to your space.": "Breyta stillingum viðkomandi svæðinu þínu.",
     "Failed to save space settings.": "Mistókst að vista stillingar svæðis.",
     "Share invite link": "Deila boðstengli",
-    "Failed to copy": "Mistókst að afrita",
     "Copy link to thread": "Afrita tengil á spjallþráð",
     "You can change these anytime.": "Þú getur breytt þessu hvenær sem er.",
     "Create a space": "Búa til svæði",
     "Search %(spaceName)s": "Leita í %(spaceName)s",
-    "Upload avatar": "Senda inn auðkennismynd",
-    "Match system": "Samsvara kerfinu",
-    "Pin to sidebar": "Festa á hliðarspjald",
-    "Quick settings": "Flýtistillingar",
-    "Accept <policyLink /> to continue:": "Samþykktu <policyLink /> til að halda áfram:",
-    "Your server isn't responding to some <a>requests</a>.": "Netþjónninn þinn er ekki að svara sumum <a>beiðnum</a>.",
     "Guitar": "Gítar",
     "Ball": "Bolti",
     "Trophy": "Verðlaun",
@@ -1518,7 +1501,6 @@
     "Automatically adjust the microphone volume": "Aðlaga hljóðstyrk hljóðnema sjálfvirkt",
     "Give one or multiple users in this room more privileges": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
     "Add privileged users": "Bæta við notendum með auknar heimildir",
-    "Sorry — this call is currently full": "Því miður - þetta símtal er fullt í augnablikinu",
     "common": {
         "about": "Um hugbúnaðinn",
         "analytics": "Greiningar",
@@ -1614,7 +1596,8 @@
         "off": "Slökkt",
         "all_rooms": "Allar spjallrásir",
         "deselect_all": "Afvelja allt",
-        "select_all": "Velja allt"
+        "select_all": "Velja allt",
+        "copied": "Afritað!"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1715,7 +1698,8 @@
         "clear": "Hreinsa",
         "exit_fullscreeen": "Fara úr fullskjásstillingu",
         "enter_fullscreen": "Fara í fullskjásstillingu",
-        "unban": "Afbanna"
+        "unban": "Afbanna",
+        "click_to_copy": "Smelltu til að afrita"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -1987,7 +1971,8 @@
         "intro_byline": "Eigðu samtölin þín.",
         "send_dm": "Senda bein skilaboð",
         "explore_rooms": "Kanna almenningsspjallrásir",
-        "create_room": "Búa til hópspjall"
+        "create_room": "Búa til hópspjall",
+        "create_account": "Stofna notandaaðgang"
     },
     "settings": {
         "show_breadcrumbs": "Sýna flýtileiðir í nýskoðaðar spjallrásir fyrir ofan listann yfir spjallrásir",
@@ -2856,7 +2841,12 @@
         "default_device": "Sjálfgefið tæki",
         "failed_call_live_broadcast_title": "Get ekki hafið símtal",
         "no_media_perms_title": "Engar heimildir fyrir myndefni",
-        "call_toast_unknown_room": "Óþekkt spjallrás"
+        "call_toast_unknown_room": "Óþekkt spjallrás",
+        "join_button_tooltip_connecting": "Tengist",
+        "join_button_tooltip_call_full": "Því miður - þetta símtal er fullt í augnablikinu",
+        "hide_sidebar_button": "Fela hliðarspjald",
+        "show_sidebar_button": "Sýna hliðarspjald",
+        "more_button": "Meira"
     },
     "Other": "Annað",
     "Advanced": "Nánar",
@@ -2937,7 +2927,9 @@
             "room_id": "Innra auðkenni spjallrásar",
             "room_version_section": "Útgáfa spjallrásar",
             "room_version": "Útgáfa spjallrásar:"
-        }
+        },
+        "delete_avatar_label": "Eyða auðkennismynd",
+        "upload_avatar_label": "Senda inn auðkennismynd"
     },
     "encryption": {
         "verification": {
@@ -2966,7 +2958,8 @@
             "unverified_sessions_toast_title": "Þú ert með óstaðfestar setur",
             "unverified_sessions_toast_description": "Yfirfarðu þetta til að tryggja að aðgangurinn þinn sé öruggur",
             "unverified_sessions_toast_reject": "Seinna",
-            "unverified_session_toast_title": "Ný innskráning. Varst þetta þú?"
+            "unverified_session_toast_title": "Ný innskráning. Varst þetta þú?",
+            "request_toast_detail": "%(deviceId)s frá %(ip)s"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -3137,7 +3130,8 @@
         "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
         "autodiscovery_unexpected_error_hs": "Óvænt villa kom upp við að lesa uppsetningu heimaþjóns",
         "autodiscovery_unexpected_error_is": "Óvænt villa kom upp við að lesa uppsetningu auðkenningarþjóns",
-        "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org."
+        "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
+        "create_account_title": "Stofna notandaaðgang"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3339,7 +3333,8 @@
         "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum"
     },
     "theme": {
-        "light_high_contrast": "Ljóst með mikil birtuskil"
+        "light_high_contrast": "Ljóst með mikil birtuskil",
+        "match_system": "Samsvara kerfinu"
     },
     "space": {
         "landing_welcome": "Velkomin í <name/>",
@@ -3428,7 +3423,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Skiptu yfir í ljósan ham",
-        "switch_theme_dark": "Skiptu yfir í dökkan ham"
+        "switch_theme_dark": "Skiptu yfir í dökkan ham",
+        "settings": "Allar stillingar"
     },
     "notif_panel": {
         "empty_heading": "Þú hefur klárað að lesa allt",
@@ -3487,7 +3483,8 @@
         "tac_button": "Yfirfara skilmála og kvaðir",
         "identity_server_no_terms_title": "Auðkennisþjónninn er ekki með neina þjónustuskilmála",
         "identity_server_no_terms_description_1": "Þessi aðgerð krefst þess að til að fá aðgang að sjálfgefna auðkennisþjóninum <server /> þurfi að sannreyna tölvupóstfang eða símanúmer, en netþjónninn er hins vegar ekki með neina þjónustuskilmála.",
-        "identity_server_no_terms_description_2": "Ekki halda áfram nema þú treystir eiganda netþjónsins."
+        "identity_server_no_terms_description_2": "Ekki halda áfram nema þú treystir eiganda netþjónsins.",
+        "inline_intro_text": "Samþykktu <policyLink /> til að halda áfram:"
     },
     "space_settings": {
         "title": "Stillingar - %(spaceName)s"
@@ -3573,7 +3570,9 @@
         "resource_limits": "Þessi heimaþjónn er kominn fram yfir takmörk á tilföngum sínum.",
         "admin_contact": "<a>Hafðu samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þessa þjónustu.",
         "connection": "Vandamál kom upp í samskiptunum við heimaþjóninn, reyndu aftur síðar.",
-        "admin_contact_short": "Hafðu samband við <a>kerfisstjórann þinn</a>."
+        "admin_contact_short": "Hafðu samband við <a>kerfisstjórann þinn</a>.",
+        "non_urgent_echo_failure_toast": "Netþjónninn þinn er ekki að svara sumum <a>beiðnum</a>.",
+        "failed_copy": "Mistókst að afrita"
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3603,5 +3602,11 @@
     "chat_card_back_action_label": "Til baka í spjall",
     "room_summary_card_back_action_label": "Upplýsingar um spjallrás",
     "member_list_back_action_label": "Meðlimir spjallrásar",
-    "thread_view_back_action_label": "Til baka í spjallþráð"
+    "thread_view_back_action_label": "Til baka í spjallþráð",
+    "quick_settings": {
+        "title": "Flýtistillingar",
+        "all_settings": "Allar stillingar",
+        "metaspace_section": "Festa á hliðarspjald",
+        "sidebar_settings": "Fleiri valkostir"
+    }
 }

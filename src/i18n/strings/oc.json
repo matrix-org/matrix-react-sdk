@@ -93,9 +93,7 @@
     "Today": "Uèi",
     "Yesterday": "Ièr",
     "Show image": "Afichar l'imatge",
-    "Failed to copy": "Impossible de copiar",
     "Cancel search": "Anullar la recèrca",
-    "More options": "Autras opcions",
     "Rotate Left": "Pivotar cap a èrra",
     "Rotate Right": "Pivotar cap a drecha",
     "Server name": "Títol del servidor",
@@ -386,5 +384,11 @@
     "notifications": {
         "enable_prompt_toast_title": "Notificacions",
         "colour_bold": "Gras"
+    },
+    "quick_settings": {
+        "sidebar_settings": "Autras opcions"
+    },
+    "error": {
+        "failed_copy": "Impossible de copiar"
     }
 }

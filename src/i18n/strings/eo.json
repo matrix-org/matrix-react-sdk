@@ -60,7 +60,6 @@
         "one": "(~%(count)s rezulto)"
     },
     "Join Room": "Aliĝi al ĉambro",
-    "Upload avatar": "Alŝuti profilbildon",
     "Forget room": "Forgesi ĉambron",
     "Rooms": "Ĉambroj",
     "Low priority": "Malpli gravaj",
@@ -81,8 +80,6 @@
     "Invalid file%(extra)s": "Malvalida dosiero%(extra)s",
     "Error decrypting image": "Malĉifro de bildo eraris",
     "Error decrypting video": "Malĉifro de filmo eraris",
-    "Copied!": "Kopiita!",
-    "Failed to copy": "Malsukcesis kopii",
     "Add an Integration": "Aldoni kunigon",
     "Failed to change password. Is your password correct?": "Malsukcesis ŝanĝi la pasvorton. Ĉu via pasvorto estas ĝusta?",
     "Email address": "Retpoŝtadreso",
@@ -269,7 +266,6 @@
     "Could not load user profile": "Ne povis enlegi profilon de uzanto",
     "Your password has been reset.": "Vi reagordis vian pasvorton.",
     "General failure": "Ĝenerala fiasko",
-    "Create account": "Krei konton",
     "That matches!": "Tio akordas!",
     "That doesn't match.": "Tio ne akordas.",
     "Success!": "Sukceso!",
@@ -431,7 +427,6 @@
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
     "Do not use an identity server": "Ne uzi identigan servilon",
     "Enter a new identity server": "Enigi novan identigan servilon",
-    "Accept <policyLink /> to continue:": "Akceptu <policyLink /> por daŭrigi:",
     "Checking server": "Kontrolante servilon",
     "Change identity server": "Ŝanĝi identigan servilon",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Ĉu malkonekti de la nuna identiga servilo <current /> kaj konekti anstataŭe al <new />?",
@@ -539,7 +534,6 @@
     "Verify User": "Kontroli uzanton",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Por plia sekureco, kontrolu ĉi tiun uzanton per unufoja kodo aperonta sur ambaŭ el viaj aparatoj.",
     "Start Verification": "Komenci kontrolon",
-    "More options": "Pliaj elektebloj",
     "Integrations are disabled": "Kunigoj estas malŝaltitaj",
     "Integrations not allowed": "Kunigoj ne estas permesitaj",
     "Upgrade private room": "Gradaltigi privatan ĉambron",
@@ -727,7 +721,6 @@
     "Security Key": "Sekureca ŝlosilo",
     "Use your Security Key to continue.": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
     "Switch theme": "Ŝalti haŭton",
-    "All settings": "Ĉiuj agordoj",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Malhelpu perdon de aliro al ĉifritaj mesaĝoj kaj datumoj per savkopiado de ĉifraj ŝlosiloj al via servilo.",
     "Generate a Security Key": "Generi sekurecan ŝlosilon",
     "Enter a Security Phrase": "Enigiu sekurecan frazon",
@@ -740,7 +733,6 @@
     "This room is public": "Ĉi tiu ĉambro estas publika",
     "Edited at %(date)s": "Redaktita je %(date)s",
     "Click to view edits": "Klaku por vidi redaktojn",
-    "Your server isn't responding to some <a>requests</a>.": "Via servilo ne respondas al iuj <a>petoj</a>.",
     "Server isn't responding": "Servilo ne respondas",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
     "The server (%(serverName)s) took too long to respond.": "La servilo (%(serverName)s) tro longe ne respondis.",
@@ -1127,7 +1119,6 @@
     "Invite with email or username": "Inviti per retpoŝtadreso aŭ uzantonomo",
     "Invite people": "Inviti personojn",
     "Share invite link": "Diskonigi invitan ligilon",
-    "Click to copy": "Klaku por kopii",
     "You can change these anytime.": "Vi povas ŝanĝi ĉi tiujn kiam ajn vi volas.",
     "Create a space": "Krei aron",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
@@ -1147,7 +1138,6 @@
     },
     "Failed to send": "Malsukcesis sendi",
     "unknown person": "nekonata persono",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -1210,10 +1200,6 @@
     "Failed to update the visibility of this space": "Malsukcesis ĝisdatigi la videblecon de ĉi tiu aro",
     "Show all rooms": "Montri ĉiujn ĉambrojn",
     "Address": "Adreso",
-    "Delete avatar": "Forigi profilbildon",
-    "More": "Pli",
-    "Show sidebar": "Montri flankan breton",
-    "Hide sidebar": "Kaŝi flankan breton",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
     "Send voice message": "Sendi voĉmesaĝon",
@@ -1328,8 +1314,6 @@
     "Message didn't send. Click for info.": "Mesaĝo ne sendiĝis. Klaku por akiri informojn.",
     "Unknown failure": "Nekonata malsukceso",
     "Failed to update the join rules": "Malsukcesis ĝisdatigi regulojn pri aliĝo",
-    "Pin to sidebar": "Fiksi al flanka breto",
-    "Quick settings": "Rapidaj agordoj",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ĉu vi certas, ke vi volas fini ĉi tiun balotenketon? Ĉi tio montros la finajn rezultojn de la balotenketo kaj malhelpos personojn povi voĉdoni.",
     "End Poll": "Finu Balotenketon",
     "Sorry, the poll did not end. Please try again.": "Pardonu, la balotenketo ne finiĝis. Bonvolu reprovi.",
@@ -1465,7 +1449,8 @@
         "orphan_rooms": "Aliaj ĉambroj",
         "on": "Jes",
         "off": "Ne",
-        "all_rooms": "Ĉiuj ĉambroj"
+        "all_rooms": "Ĉiuj ĉambroj",
+        "copied": "Kopiita!"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1557,7 +1542,8 @@
         "send_report": "Sendi raporton",
         "exit_fullscreeen": "Eliru plenekrano",
         "enter_fullscreen": "Plenekrano",
-        "unban": "Malforbari"
+        "unban": "Malforbari",
+        "click_to_copy": "Klaku por kopii"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -2466,7 +2452,11 @@
         "failed_call_live_broadcast_description": "Vi ne povas komenci vokon ĉar vi nuntempe registras vivan elsendon. Bonvolu fini vian vivan elsendon por komenci vokon.",
         "no_media_perms_title": "Neniuj permesoj pri aŭdvidaĵoj",
         "no_media_perms_description": "Eble vi devos permane permesi al %(brand)s atingon de viaj mikrofono/kamerao",
-        "call_toast_unknown_room": "Nekonata ĉambro"
+        "call_toast_unknown_room": "Nekonata ĉambro",
+        "join_button_tooltip_connecting": "Konektante",
+        "hide_sidebar_button": "Kaŝi flankan breton",
+        "show_sidebar_button": "Montri flankan breton",
+        "more_button": "Pli"
     },
     "Other": "Alia",
     "Advanced": "Altnivela",
@@ -2544,7 +2534,9 @@
             "room_predecessor": "Montri pli malnovajn mesaĝojn en %(roomName)s.",
             "room_version_section": "Ĉambra versio",
             "room_version": "Ĉambra versio:"
-        }
+        },
+        "delete_avatar_label": "Forigi profilbildon",
+        "upload_avatar_label": "Alŝuti profilbildon"
     },
     "encryption": {
         "verification": {
@@ -2568,7 +2560,8 @@
             "unverified_sessions_toast_description": "Kontrolu por certigi sekurecon de via konto",
             "unverified_sessions_toast_reject": "Pli poste",
             "unverified_session_toast_title": "Nova saluto. Ĉu tio estis vi?",
-            "unverified_session_toast_accept": "Jes, estis mi"
+            "unverified_session_toast_accept": "Jes, estis mi",
+            "request_toast_detail": "%(deviceId)s de %(ip)s"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2731,7 +2724,8 @@
         "no_hs_url_provided": "Neniu hejmservila URL donita",
         "autodiscovery_unexpected_error_hs": "Neatendita eraro eltrovi hejmservilajn agordojn",
         "autodiscovery_unexpected_error_is": "Neatendita eraro eltrovi agordojn de identiga servilo",
-        "incorrect_credentials_detail": "Rimarku ke vi salutas la servilon %(hs)s, ne matrix.org."
+        "incorrect_credentials_detail": "Rimarku ke vi salutas la servilon %(hs)s, ne matrix.org.",
+        "create_account_title": "Krei konton"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -2773,7 +2767,8 @@
         "intro_welcome": "Bonvenu al %(appName)s",
         "send_dm": "Sendi rektan mesaĝon",
         "explore_rooms": "Esplori publikajn ĉambrojn",
-        "create_room": "Krei grupan babilon"
+        "create_room": "Krei grupan babilon",
+        "create_account": "Krei konton"
     },
     "setting": {
         "help_about": {
@@ -3028,7 +3023,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Ŝalti helan reĝimon",
-        "switch_theme_dark": "Ŝalti malhelan reĝimon"
+        "switch_theme_dark": "Ŝalti malhelan reĝimon",
+        "settings": "Ĉiuj agordoj"
     },
     "notif_panel": {
         "empty_description": "Vi havas neniujn videblajn sciigojn."
@@ -3083,7 +3079,8 @@
         "tac_button": "Tralegi uzokondiĉojn",
         "identity_server_no_terms_title": "Identiga servilo havas neniujn uzkondiĉojn",
         "identity_server_no_terms_description_1": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
-        "identity_server_no_terms_description_2": "Nur daŭrigu se vi fidas al la posedanto de la servilo."
+        "identity_server_no_terms_description_2": "Nur daŭrigu se vi fidas al la posedanto de la servilo.",
+        "inline_intro_text": "Akceptu <policyLink /> por daŭrigi:"
     },
     "space_settings": {
         "title": "Agordoj – %(spaceName)s"
@@ -3164,7 +3161,9 @@
         "connection": "Eraris komunikado kun la hejmservilo, bonvolu reprovi poste.",
         "mixed_content": "Hejmservilo ne alkonekteblas per HTTP kun HTTPS URL en via adresbreto. Aŭ uzu HTTPS aŭ <a>ŝaltu malsekurajn skriptojn</a>.",
         "tls": "Ne eblas konekti al hejmservilo – bonvolu kontroli vian konekton, certigi ke <a>la SSL-atestilo de via hejmservilo</a> estas fidata, kaj ke neniu foliumila kromprogramo blokas petojn.",
-        "admin_contact_short": "Kontaktu <a>administranton de via servilo</a>."
+        "admin_contact_short": "Kontaktu <a>administranton de via servilo</a>.",
+        "non_urgent_echo_failure_toast": "Via servilo ne respondas al iuj <a>petoj</a>.",
+        "failed_copy": "Malsukcesis kopii"
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3190,5 +3189,11 @@
         "toast_description": "%(brand)s estas eksperimenta en poŝtelefona retumilo. Por pli bona sperto kaj freŝaj funkcioj, uzu nian senpagan malfremdan aplikaĵon.",
         "toast_accept": "Uzu aplikaĵon"
     },
-    "room_summary_card_back_action_label": "Informoj pri ĉambro"
+    "room_summary_card_back_action_label": "Informoj pri ĉambro",
+    "quick_settings": {
+        "title": "Rapidaj agordoj",
+        "all_settings": "Ĉiuj agordoj",
+        "metaspace_section": "Fiksi al flanka breto",
+        "sidebar_settings": "Pliaj elektebloj"
+    }
 }

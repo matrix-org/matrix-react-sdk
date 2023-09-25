@@ -57,7 +57,6 @@
     "Unable to add email address": "Impossible d'ajouter l’adresse e-mail",
     "Unable to remove contact information": "Impossible de supprimer les informations du contact",
     "Unable to verify email address.": "Impossible de vérifier l’adresse e-mail.",
-    "Upload avatar": "Envoyer un avatar",
     "Verification Pending": "Vérification en attente",
     "Warning!": "Attention !",
     "You do not have permission to post to this room": "Vous n’avez pas la permission de poster dans ce salon",
@@ -131,8 +130,6 @@
     "Delete widget": "Supprimer le widget",
     "AM": "AM",
     "PM": "PM",
-    "Copied!": "Copié !",
-    "Failed to copy": "Échec de la copie",
     "Unignore": "Ne plus ignorer",
     "Admin Tools": "Outils d’administration",
     "Unnamed room": "Salon sans nom",
@@ -275,7 +272,6 @@
     "Incoming Verification Request": "Demande de vérification entrante",
     "Email (optional)": "E-mail (facultatif)",
     "Join millions for free on the largest public server": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
-    "Create account": "Créer un compte",
     "Recovery Method Removed": "Méthode de récupération supprimée",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si vous n’avez pas supprimé la méthode de récupération, un attaquant peut être en train d’essayer d’accéder à votre compte. Modifiez le mot de passe de votre compte et configurez une nouvelle méthode de récupération dans les réglages.",
     "Dog": "Chien",
@@ -450,7 +446,6 @@
     "Enter a new identity server": "Saisissez un nouveau serveur d’identité",
     "Remove %(email)s?": "Supprimer %(email)s ?",
     "Remove %(phone)s?": "Supprimer %(phone)s ?",
-    "Accept <policyLink /> to continue:": "Acceptez <policyLink /> pour continuer :",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Acceptez les conditions de service du serveur d’identité (%(serverName)s) pour vous permettre d’être découvrable par votre adresse e-mail ou votre numéro de téléphone.",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Si vous ne voulez pas utiliser <server /> pour découvrir et être découvrable par les contacts que vous connaissez, saisissez un autre serveur d’identité ci-dessous.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "L’utilisation d’un serveur d’identité est optionnelle. Si vous ne choisissez pas d’utiliser un serveur d’identité, les autres utilisateurs ne pourront pas vous découvrir et vous ne pourrez pas en inviter par e-mail ou par téléphone.",
@@ -533,7 +528,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Le gestionnaire d’intégrations est hors ligne ou il ne peut pas joindre votre serveur d’accueil.",
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
     "Widgets do not use message encryption.": "Les widgets n’utilisent pas le chiffrement des messages.",
-    "More options": "Plus d’options",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
     "Remove for everyone": "Supprimer pour tout le monde",
@@ -715,7 +709,6 @@
     "Ok": "OK",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "L’administrateur de votre serveur a désactivé le chiffrement de bout en bout par défaut dans les salons privés et les conversations privées.",
     "Switch theme": "Changer le thème",
-    "All settings": "Tous les paramètres",
     "No recently visited rooms": "Aucun salon visité récemment",
     "Message preview": "Aperçu de message",
     "Room options": "Options du salon",
@@ -739,7 +732,6 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "Your server isn't responding to some <a>requests</a>.": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne peut actuellement mettre en cache vos messages chiffrés localement de manière sécurisée via le navigateur Web. Utilisez <desktopLink>%(brand)s Desktop</desktopLink> pour que les messages chiffrés apparaissent dans vos résultats de recherche.",
     "ready": "prêt",
     "The operation could not be completed": "L’opération n’a pas pu être terminée",
@@ -1116,7 +1108,6 @@
     "Leave space": "Quitter l’espace",
     "Invite people": "Inviter des personnes",
     "Share invite link": "Partager le lien d’invitation",
-    "Click to copy": "Cliquez pour copier",
     "Create a space": "Créer un espace",
     "Space selection": "Sélection d’un espace",
     "Private space": "Espace privé",
@@ -1148,7 +1139,6 @@
         "other": "%(count)s personnes que vous connaissez en font déjà partie"
     },
     "unknown person": "personne inconnue",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s depuis %(ip)s",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Vous êtes la seule personne ici. Si vous partez, plus personne ne pourra rejoindre cette conversation, y compris vous.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Si vous réinitialisez tout, vous allez repartir sans session et utilisateur de confiance. Vous pourriez ne pas voir certains messages passés.",
     "Only do this if you have no other device to complete verification with.": "Poursuivez seulement si vous n’avez aucun autre appareil avec lequel procéder à la vérification.",
@@ -1308,12 +1298,8 @@
     "Call declined": "Appel rejeté",
     "Stop recording": "Arrêter l’enregistrement",
     "Send voice message": "Envoyer un message vocal",
-    "More": "Plus",
-    "Show sidebar": "Afficher la barre latérale",
-    "Hide sidebar": "Masquer la barre latérale",
     "Unknown failure: %(reason)s": "Erreur inconnue : %(reason)s",
     "No answer": "Pas de réponse",
-    "Delete avatar": "Supprimer l’avatar",
     "Rooms and spaces": "Salons et espaces",
     "Results": "Résultats",
     "Cross-signing is ready but keys are not backed up.": "La signature croisée est prête mais les clés ne sont pas sauvegardées.",
@@ -1413,8 +1399,6 @@
     "Invite to space": "Inviter dans l’espace",
     "Start new chat": "Commencer une nouvelle conversation privée",
     "Recently viewed": "Affiché récemment",
-    "Pin to sidebar": "Épingler à la barre latérale",
-    "Quick settings": "Paramètres rapides",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
     "Themes": "Thèmes",
@@ -1502,7 +1486,6 @@
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s n'a pas pu envoyer votre position. Veuillez réessayer plus tard.",
     "We couldn't send your location": "Nous n'avons pas pu envoyer votre position",
-    "Match system": "S’adapter au système",
     "Click to drop a pin": "Cliquer pour mettre un marqueur",
     "Click to move the pin": "Cliquer pour déplacer le marqueur",
     "Click": "Clic",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "Vous n’avez pas assez de permissions pour changer ceci.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s est chiffré de bout en bout, mais n’est actuellement utilisable qu’avec un petit nombre d’utilisateurs.",
     "Enable %(brand)s as an additional calling option in this room": "Activer %(brand)s comme une option supplémentaire d’appel dans ce salon",
-    "Sorry — this call is currently full": "Désolé — Cet appel est actuellement complet",
     "Completing set up of your new device": "Fin de la configuration de votre nouvel appareil",
     "Waiting for device to sign in": "En attente de connexion de l’appareil",
     "Review and approve the sign in": "Vérifier et autoriser la connexion",
@@ -1773,8 +1755,6 @@
     "Past polls": "Anciens sondages",
     "Active polls": "Sondages en cours",
     "View poll in timeline": "Consulter la chronologie des sondages",
-    "Verify Session": "Vérifier la session",
-    "Ignore (%(counter)s)": "Ignorer (%(counter)s)",
     "Invites by email can only be sent one at a time": "Les invitations par e-mail ne peuvent être envoyées qu’une par une",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Nous avons rencontré une erreur lors de la mise-à-jour de vos préférences de notification. Veuillez essayer de réactiver l’option.",
     "Desktop app logo": "Logo de l’application de bureau",
@@ -1953,7 +1933,8 @@
         "off": "Désactivé",
         "all_rooms": "Tous les salons",
         "deselect_all": "Tout désélectionner",
-        "select_all": "Tout sélectionner"
+        "select_all": "Tout sélectionner",
+        "copied": "Copié !"
     },
     "action": {
         "continue": "Continuer",
@@ -2056,7 +2037,8 @@
         "clear": "Effacer",
         "exit_fullscreeen": "Quitter le plein écran",
         "enter_fullscreen": "Afficher en plein écran",
-        "unban": "Révoquer le bannissement"
+        "unban": "Révoquer le bannissement",
+        "click_to_copy": "Cliquez pour copier"
     },
     "a11y": {
         "user_menu": "Menu utilisateur",
@@ -2369,7 +2351,8 @@
         "intro_byline": "Contrôlez vos conversations.",
         "send_dm": "Envoyez un message privé",
         "explore_rooms": "Explorez les salons publics",
-        "create_room": "Créez une discussion de groupe"
+        "create_room": "Créez une discussion de groupe",
+        "create_account": "Créer un compte"
     },
     "settings": {
         "show_breadcrumbs": "Afficher les raccourcis vers les salons vus récemment au-dessus de la liste des salons",
@@ -3373,7 +3356,12 @@
         "failed_call_live_broadcast_description": "Vous ne pouvez pas démarrer un appel car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour démarrer un appel.",
         "no_media_perms_title": "Pas de permission pour les médias",
         "no_media_perms_description": "Il est possible que vous deviez manuellement autoriser %(brand)s à accéder à votre micro/caméra",
-        "call_toast_unknown_room": "Salon inconnu"
+        "call_toast_unknown_room": "Salon inconnu",
+        "join_button_tooltip_connecting": "Connexion",
+        "join_button_tooltip_call_full": "Désolé — Cet appel est actuellement complet",
+        "hide_sidebar_button": "Masquer la barre latérale",
+        "show_sidebar_button": "Afficher la barre latérale",
+        "more_button": "Plus"
     },
     "Other": "Autre",
     "Advanced": "Avancé",
@@ -3465,7 +3453,9 @@
             "room_id": "Identifiant interne du salon",
             "room_version_section": "Version du salon",
             "room_version": "Version du salon :"
-        }
+        },
+        "delete_avatar_label": "Supprimer l’avatar",
+        "upload_avatar_label": "Envoyer un avatar"
     },
     "encryption": {
         "verification": {
@@ -3496,7 +3486,10 @@
             "unverified_sessions_toast_description": "Vérifiez pour assurer la sécurité de votre compte",
             "unverified_sessions_toast_reject": "Plus tard",
             "unverified_session_toast_title": "Nouvelle connexion. Était-ce vous ?",
-            "unverified_session_toast_accept": "Oui, c’était moi"
+            "unverified_session_toast_accept": "Oui, c’était moi",
+            "request_toast_detail": "%(deviceId)s depuis %(ip)s",
+            "request_toast_decline_counter": "Ignorer (%(counter)s)",
+            "request_toast_accept": "Vérifier la session"
         },
         "old_version_detected_title": "Anciennes données de chiffrement détectées",
         "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
@@ -3691,7 +3684,8 @@
         "autodiscovery_unexpected_error_hs": "Une erreur inattendue est survenue pendant la résolution de la configuration du serveur d’accueil",
         "autodiscovery_unexpected_error_is": "Une erreur inattendue est survenue pendant la résolution de la configuration du serveur d’identité",
         "autodiscovery_hs_incompatible": "Votre serveur d’accueil est trop ancien et ne prend pas en charge la version minimale requise de l’API. Veuillez contacter le propriétaire du serveur, ou bien mettez à jour votre serveur.",
-        "incorrect_credentials_detail": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org."
+        "incorrect_credentials_detail": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org.",
+        "create_account_title": "Créer un compte"
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -3914,7 +3908,8 @@
         "empty_heading": "Garde les discussions organisées à l’aide de fils de discussion"
     },
     "theme": {
-        "light_high_contrast": "Contraste élevé clair"
+        "light_high_contrast": "Contraste élevé clair",
+        "match_system": "S’adapter au système"
     },
     "space": {
         "landing_welcome": "Bienvenue dans <name/>",
@@ -4020,7 +4015,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Passer au mode clair",
-        "switch_theme_dark": "Passer au mode sombre"
+        "switch_theme_dark": "Passer au mode sombre",
+        "settings": "Tous les paramètres"
     },
     "notif_panel": {
         "empty_heading": "Vous êtes à jour",
@@ -4088,7 +4084,8 @@
         "tac_button": "Voir les conditions générales",
         "identity_server_no_terms_title": "Le serveur d’identité n’a pas de conditions de service",
         "identity_server_no_terms_description_1": "Cette action nécessite l’accès au serveur d’identité par défaut <server /> afin de valider une adresse e-mail ou un numéro de téléphone, mais le serveur n’a aucune condition de service.",
-        "identity_server_no_terms_description_2": "Continuez seulement si vous faites confiance au propriétaire du serveur."
+        "identity_server_no_terms_description_2": "Continuez seulement si vous faites confiance au propriétaire du serveur.",
+        "inline_intro_text": "Acceptez <policyLink /> pour continuer :"
     },
     "space_settings": {
         "title": "Paramètres - %(spaceName)s"
@@ -4185,7 +4182,9 @@
         "connection": "Il y a eu un problème lors de la communication avec le serveur d’accueil, veuillez réessayer ultérieurement.",
         "mixed_content": "Impossible de se connecter au serveur d'accueil en HTTP si l’URL dans la barre de votre explorateur est en HTTPS. Utilisez HTTPS ou <a>activez la prise en charge des scripts non-vérifiés</a>.",
         "tls": "Impossible de se connecter au serveur d’accueil - veuillez vérifier votre connexion, assurez-vous que le <a>certificat SSL de votre serveur d’accueil</a> est un certificat de confiance, et qu’aucune extension du navigateur ne bloque les requêtes.",
-        "admin_contact_short": "Contactez <a>l’administrateur de votre serveur</a>."
+        "admin_contact_short": "Contactez <a>l’administrateur de votre serveur</a>.",
+        "non_urgent_echo_failure_toast": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
+        "failed_copy": "Échec de la copie"
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4217,5 +4216,11 @@
     "chat_card_back_action_label": "Retour à la conversation",
     "room_summary_card_back_action_label": "Information du salon",
     "member_list_back_action_label": "Membres du salon",
-    "thread_view_back_action_label": "Retour au fil de discussion"
+    "thread_view_back_action_label": "Retour au fil de discussion",
+    "quick_settings": {
+        "title": "Paramètres rapides",
+        "all_settings": "Tous les paramètres",
+        "metaspace_section": "Épingler à la barre latérale",
+        "sidebar_settings": "Plus d’options"
+    }
 }

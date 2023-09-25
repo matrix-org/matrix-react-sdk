@@ -42,7 +42,6 @@
     "Afghanistan": "Afɣanistan",
     "Send": "Azen",
     "edited": "infel",
-    "Copied!": "inɣel!",
     "Home": "Asnubeg",
     "Search…": "Arezzu…",
     "Re-join": "als-lkem",
@@ -92,7 +91,8 @@
         "camera": "Takamiṛa",
         "microphone": "Amikṛu",
         "emoji": "Imuji",
-        "space": "Space"
+        "space": "Space",
+        "copied": "inɣel!"
     },
     "action": {
         "continue": "Kemmel",

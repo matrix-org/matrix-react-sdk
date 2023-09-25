@@ -803,7 +803,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                                 onClick={this.onCopyClick}
                                 disabled={this.state.phase === Phase.Storing}
                             >
-                                {this.state.copied ? _t("Copied!") : _t("action|copy")}
+                                {this.state.copied ? _t("common|copied") : _t("action|copy")}
                             </AccessibleButton>
                         </div>
                     </div>

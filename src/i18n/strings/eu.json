@@ -77,7 +77,6 @@
         "one": "%(filename)s eta beste %(count)s igotzen",
         "other": "%(filename)s eta beste %(count)s igotzen"
     },
-    "Upload avatar": "Igo abatarra",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "You seem to be in a call, are you sure you want to quit?": "Badirudi dei batean zaudela, ziur irten nahi duzula?",
     "You seem to be uploading files, are you sure you want to quit?": "Badirudi fitxategiak iotzen zaudela, ziur irten nahi duzula?",
@@ -132,8 +131,6 @@
     "Delete widget": "Ezabatu trepeta",
     "AM": "AM",
     "PM": "PM",
-    "Copied!": "Kopiatuta!",
-    "Failed to copy": "Kopiak huts egin du",
     "Unignore": "Ez ezikusi",
     "Banned by %(displayName)s": "%(displayName)s erabiltzaileak debekatuta",
     "Restricted": "Mugatua",
@@ -309,7 +306,6 @@
     "Voice & Video": "Ahotsa eta bideoa",
     "Main address": "Helbide nagusia",
     "Your password has been reset.": "Zure pasahitza berrezarri da.",
-    "Create account": "Sortu kontua",
     "Recovery Method Removed": "Berreskuratze metodoa kendu da",
     "Missing media permissions, click the button below to request.": "Multimedia baimenak falda dira, sakatu beheko botoia baimenak eskatzeko.",
     "Request media permissions": "Eskatu multimedia baimenak",
@@ -444,7 +440,6 @@
     "Discovery options will appear once you have added a phone number above.": "Aurkitze aukerak behin goian telefono zenbaki bat gehitu duzunean agertuko dira.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "SMS mezu bat bidali zaizu +%(msisdn)s zenbakira. Sartu hemen mezu horrek daukan egiaztatze-kodea.",
     "Command Help": "Aginduen laguntza",
-    "Accept <policyLink /> to continue:": "Onartu <policyLink /> jarraitzeko:",
     "Terms of service not accepted or the identity server is invalid.": "Ez dira erabilera baldintzak onartu edo identitate zerbitzari baliogabea da.",
     "Do not use an identity server": "Ez erabili identitate-zerbitzaririk",
     "Enter a new identity server": "Sartu identitate-zerbitzari berri bat",
@@ -533,7 +528,6 @@
     "Widgets do not use message encryption.": "Trepetek ez dute mezuen zifratzea erabiltzen.",
     "Widget added by": "Trepeta honek gehitu du:",
     "This widget may use cookies.": "Trepeta honek cookieak erabili litzake.",
-    "More options": "Aukera gehiago",
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Remove for everyone": "Kendu denentzat",
@@ -715,7 +709,6 @@
     "This address is already in use": "Gelaren helbide hau erabilita dago",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
-    "All settings": "Ezarpen guztiak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
@@ -790,7 +783,8 @@
         "preview_message": "Aupa txo. Onena zara!",
         "on": "Bai",
         "off": "Ez",
-        "all_rooms": "Gela guztiak"
+        "all_rooms": "Gela guztiak",
+        "copied": "Kopiatuta!"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1488,7 +1482,8 @@
             "room_predecessor": "Ikusi %(roomName)s gelako mezu zaharragoak.",
             "room_version_section": "Gela bertsioa",
             "room_version": "Gela bertsioa:"
-        }
+        },
+        "upload_avatar_label": "Igo abatarra"
     },
     "encryption": {
         "verification": {
@@ -1608,7 +1603,8 @@
         "no_hs_url_provided": "Ez da hasiera-zerbitzariaren URL-a eman",
         "autodiscovery_unexpected_error_hs": "Ustekabeko errorea hasiera-zerbitzariaren konfigurazioa ebaztean",
         "autodiscovery_unexpected_error_is": "Ustekabeko errorea identitate-zerbitzariaren konfigurazioa ebaztean",
-        "incorrect_credentials_detail": "Kontuan izan %(hs)s zerbitzarira elkartu zarela, ez matrix.org."
+        "incorrect_credentials_detail": "Kontuan izan %(hs)s zerbitzarira elkartu zarela, ez matrix.org.",
+        "create_account_title": "Sortu kontua"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1636,7 +1632,8 @@
         "intro_welcome": "Ongi etorri %(appName)s-era",
         "send_dm": "Bidali mezu zuzena",
         "explore_rooms": "Arakatu gela publikoak",
-        "create_room": "Sortu talde-txata"
+        "create_room": "Sortu talde-txata",
+        "create_account": "Sortu kontua"
     },
     "setting": {
         "help_about": {
@@ -1722,7 +1719,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Aldatu modu argira",
-        "switch_theme_dark": "Aldatu modu ilunera"
+        "switch_theme_dark": "Aldatu modu ilunera",
+        "settings": "Ezarpen guztiak"
     },
     "room": {
         "drop_file_prompt": "Jaregin fitxategia hona igotzeko",
@@ -1757,7 +1755,8 @@
         "tac_button": "Irakurri termino eta baldintzak",
         "identity_server_no_terms_title": "Identitate-zerbitzariak ez du erabilera baldintzarik",
         "identity_server_no_terms_description_1": "Ekintza honek lehenetsitako <server /> identitate-zerbitzaria atzitzea eskatzen du, e-mail helbidea edo telefono zenbakia balioztatzeko, baina zerbitzariak ez du erabilera baldintzarik.",
-        "identity_server_no_terms_description_2": "Jarraitu soilik zerbitzariaren jabea fidagarritzat jotzen baduzu."
+        "identity_server_no_terms_description_2": "Jarraitu soilik zerbitzariaren jabea fidagarritzat jotzen baduzu.",
+        "inline_intro_text": "Onartu <policyLink /> jarraitzeko:"
     },
     "failed_load_async_component": "Ezin da kargatu! Egiaztatu sare konexioa eta saiatu berriro.",
     "upload_failed_generic": "Huts egin du '%(fileName)s' fitxategia igotzean.",
@@ -1799,7 +1798,8 @@
         "admin_contact": "<a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzu hau erabiltzen jarraitzeko.",
         "mixed_content": "Ezin zara hasiera zerbitzarira HTTP bidez konektatu zure nabigatzailearen barran dagoen URLa HTTS bada. Erabili HTTPS edo <a>gaitu script ez seguruak</a>.",
         "tls": "Ezin da hasiera zerbitzarira konektatu, egiaztatu zure konexioa, ziurtatu zure <a>hasiera zerbitzariaren SSL ziurtagiria</a> fidagarritzat jotzen duela zure gailuak, eta nabigatzailearen pluginen batek ez dituela eskaerak blokeatzen.",
-        "admin_contact_short": "Jarri kontaktuan <a>zerbitzariaren administratzailearekin</a>."
+        "admin_contact_short": "Jarri kontaktuan <a>zerbitzariaren administratzailearekin</a>.",
+        "failed_copy": "Kopiak huts egin du"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1812,5 +1812,9 @@
         "colour_bold": "Lodia",
         "error_change_title": "Aldatu jakinarazpenen ezarpenak"
     },
-    "room_summary_card_back_action_label": "Gelako informazioa"
+    "room_summary_card_back_action_label": "Gelako informazioa",
+    "quick_settings": {
+        "all_settings": "Ezarpen guztiak",
+        "sidebar_settings": "Aukera gehiago"
+    }
 }

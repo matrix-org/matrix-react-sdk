@@ -61,7 +61,6 @@
         "one": "(~%(count)s resultado)"
     },
     "Join Room": "Unirse a sala",
-    "Upload avatar": "Subir avatar",
     "Forget room": "Esquecer sala",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Non poderá desfacer este cambio xa que está a diminuír a súa autoridade, se é a única persoa con autorización na sala será imposible volver a obter privilexios.",
     "Rooms": "Salas",
@@ -83,8 +82,6 @@
     "Invalid file%(extra)s": "Ficheiro non válido %(extra)s",
     "Error decrypting image": "Fallo ao descifrar a imaxe",
     "Error decrypting video": "Fallo descifrando vídeo",
-    "Copied!": "Copiado!",
-    "Failed to copy": "Fallo ao copiar",
     "Add an Integration": "Engadir unha integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vai ser redirixido a unha web de terceiros para poder autenticar a súa conta e así utilizar %(integrationsUrl)s. Quere continuar?",
     "Email address": "Enderezo de correo",
@@ -311,7 +308,6 @@
     "Anchor": "Áncora",
     "Headphones": "Auriculares",
     "Folder": "Cartafol",
-    "Accept <policyLink /> to continue:": "Acepta <policyLink /> para continuar:",
     "Show more": "Mostrar máis",
     "Your homeserver does not support cross-signing.": "O teu servidor non soporta a sinatura cruzada.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "A túa conta ten unha identidade de sinatura cruzada no almacenaxe segredo, pero aínda non confiaches nela nesta sesión.",
@@ -545,7 +541,6 @@
     "Widgets do not use message encryption.": "Os Widgets non usan cifrado de mensaxes.",
     "Widget added by": "Widget engadido por",
     "This widget may use cookies.": "Este widget podería usar cookies.",
-    "More options": "Máis opcións",
     "Rotate Left": "Rotar á esquerda",
     "Rotate Right": "Rotar á dereita",
     "Language Dropdown": "Selector de idioma",
@@ -682,7 +677,6 @@
     "Jump to first unread room.": "Vaite a primeira sala non lida.",
     "Jump to first invite.": "Vai ó primeiro convite.",
     "Switch theme": "Cambiar decorado",
-    "All settings": "Todos os axustes",
     "Could not load user profile": "Non se cargou o perfil da usuaria",
     "Invalid homeserver discovery response": "Resposta de descubrimento do servidor non válida",
     "Failed to get autodiscovery configuration from server": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
@@ -691,7 +685,6 @@
     "Invalid identity server discovery response": "Resposta de descubrimento de identidade do servidor non válida",
     "Invalid base_url for m.identity_server": "base_url para m.identity_server non válida",
     "Identity server URL does not appear to be a valid identity server": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
-    "Create account": "Crea unha conta",
     "Failed to re-authenticate due to a homeserver problem": "Fallo ó reautenticar debido a un problema no servidor",
     "Clear personal data": "Baleirar datos personais",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
@@ -740,7 +733,6 @@
     "This room is public": "Esta é unha sala pública",
     "Edited at %(date)s": "Editado o %(date)s",
     "Click to view edits": "Preme para ver as edicións",
-    "Your server isn't responding to some <a>requests</a>.": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
     "You're all caught up.": "Xa estás ó día.",
     "Server isn't responding": "O servidor non responde",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "O servidor non responde a algunhas peticións. Aquí tes algunha das razóns máis probables.",
@@ -1117,7 +1109,6 @@
     "Leave space": "Saír do espazo",
     "Invite people": "Convidar persoas",
     "Share invite link": "Compartir ligazón do convite",
-    "Click to copy": "Click para copiar",
     "Create a space": "Crear un espazo",
     "Private space": "Espazo privado",
     "Public space": "Espazo público",
@@ -1140,7 +1131,6 @@
     "You most likely do not want to reset your event index store": "Probablemente non queiras restablecer o índice de almacenaxe do evento",
     "Avatar": "Avatar",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifica a túa identidade para acceder a mensaxes cifradas e acreditar a túa identidade ante outras.",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s desde %(ip)s",
     "unknown person": "persoa descoñecida",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persoas que coñeces xa se uniron",
@@ -1309,10 +1299,6 @@
     "Call declined": "Chamada rexeitada",
     "Stop recording": "Deter a gravación",
     "Send voice message": "Enviar mensaxe de voz",
-    "More": "Máis",
-    "Show sidebar": "Mostrar a barra lateral",
-    "Hide sidebar": "Agochar barra lateral",
-    "Delete avatar": "Eliminar avatar",
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
     "Rooms and spaces": "Salas e espazos",
     "Results": "Resultados",
@@ -1413,8 +1399,6 @@
     "Themes": "Decorados",
     "Moderation": "Moderación",
     "Messaging": "Conversando",
-    "Pin to sidebar": "Fixar no lateral",
-    "Quick settings": "Axustes rápidos",
     "Spaces you know that contain this space": "Espazos que sabes conteñen este espazo",
     "Chat": "Chat",
     "Home options": "Opcións de Incio",
@@ -1502,7 +1486,6 @@
     "We couldn't send your location": "Non puidemos enviar a túa localización",
     "Pinned": "Fixado",
     "Open thread": "Abrir fío",
-    "Match system": "Seguir o sistema",
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
@@ -1742,7 +1725,8 @@
         "off": "Off",
         "all_rooms": "Todas as salas",
         "deselect_all": "Retirar selección a todos",
-        "select_all": "Seleccionar todos"
+        "select_all": "Seleccionar todos",
+        "copied": "Copiado!"
     },
     "action": {
         "continue": "Continuar",
@@ -1842,7 +1826,8 @@
         "clear": "Limpar",
         "exit_fullscreeen": "Saír de pantalla completa",
         "enter_fullscreen": "Ir a pantalla completa",
-        "unban": "Non bloquear"
+        "unban": "Non bloquear",
+        "click_to_copy": "Click para copiar"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -2110,7 +2095,8 @@
         "intro_byline": "As túas conversas son túas.",
         "send_dm": "Envía unha Mensaxe Directa",
         "explore_rooms": "Explorar Salas Públicas",
-        "create_room": "Crear unha Conversa en Grupo"
+        "create_room": "Crear unha Conversa en Grupo",
+        "create_account": "Crea unha conta"
     },
     "settings": {
         "show_breadcrumbs": "Mostrar atallos a salas vistas recentemente enriba da lista de salas",
@@ -2970,7 +2956,11 @@
         "no_permission_conference_description": "Non tes permisos para comezar unha chamada de conferencia nesta sala",
         "default_device": "Dispositivo por defecto",
         "no_media_perms_title": "Sen permisos de medios",
-        "no_media_perms_description": "Igual ten que permitir manualmente a %(brand)s acceder ao seus micrófono e cámara"
+        "no_media_perms_description": "Igual ten que permitir manualmente a %(brand)s acceder ao seus micrófono e cámara",
+        "join_button_tooltip_connecting": "Conectando",
+        "hide_sidebar_button": "Agochar barra lateral",
+        "show_sidebar_button": "Mostrar a barra lateral",
+        "more_button": "Máis"
     },
     "Other": "Outro",
     "Advanced": "Avanzado",
@@ -3058,7 +3048,9 @@
             "room_id": "ID interno da sala",
             "room_version_section": "Versión da sala",
             "room_version": "Versión da sala:"
-        }
+        },
+        "delete_avatar_label": "Eliminar avatar",
+        "upload_avatar_label": "Subir avatar"
     },
     "encryption": {
         "verification": {
@@ -3087,7 +3079,8 @@
             "cancelling": "Cancelando…",
             "unverified_sessions_toast_description": "Revisa para asegurarte de que a túa conta está protexida",
             "unverified_sessions_toast_reject": "Máis tarde",
-            "unverified_session_toast_title": "Nova sesión. Foches ti?"
+            "unverified_session_toast_title": "Nova sesión. Foches ti?",
+            "request_toast_detail": "%(deviceId)s desde %(ip)s"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -3258,7 +3251,8 @@
         "no_hs_url_provided": "Non se estableceu URL do servidor",
         "autodiscovery_unexpected_error_hs": "Houbo un fallo ao acceder a configuración do servidor",
         "autodiscovery_unexpected_error_is": "Houbo un fallo ao acceder a configuración do servidor de identidade",
-        "incorrect_credentials_detail": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org."
+        "incorrect_credentials_detail": "Ten en conta que estás accedendo ao servidor %(hs)s, non a matrix.org.",
+        "create_account_title": "Crea unha conta"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3446,7 +3440,8 @@
         "empty_heading": "Manter as conversas organizadas con fíos"
     },
     "theme": {
-        "light_high_contrast": "Alto contraste claro"
+        "light_high_contrast": "Alto contraste claro",
+        "match_system": "Seguir o sistema"
     },
     "space": {
         "landing_welcome": "Benvida a <name/>",
@@ -3548,7 +3543,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Cambiar a decorado claro",
-        "switch_theme_dark": "Cambiar a decorado escuro"
+        "switch_theme_dark": "Cambiar a decorado escuro",
+        "settings": "Todos os axustes"
     },
     "notif_panel": {
         "empty_heading": "Xa remataches",
@@ -3611,7 +3607,8 @@
         "tac_button": "Revise os termos e condicións",
         "identity_server_no_terms_title": "O servidor de identidade non ten termos dos servizo",
         "identity_server_no_terms_description_1": "Esta acción precisa acceder ao servidor de indentidade <server /> para validar o enderezo de email ou o número de teléfono, pero o servidor non publica os seus termos do servizo.",
-        "identity_server_no_terms_description_2": "Continúa se realmente confías no dono do servidor."
+        "identity_server_no_terms_description_2": "Continúa se realmente confías no dono do servidor.",
+        "inline_intro_text": "Acepta <policyLink /> para continuar:"
     },
     "space_settings": {
         "title": "Axustes - %(spaceName)s"
@@ -3701,7 +3698,9 @@
         "connection": "Houbo un problema de comunicación co servidor de inicio, inténtao máis tarde.",
         "mixed_content": "Non se pode conectar ao servidor vía HTTP cando na barra de enderezos do navegador está HTTPS. Utiliza HTTPS ou <a>active scripts non seguros</a>.",
         "tls": "Non se conectou ao servidor - por favor comprobe a conexión, asegúrese de que o<a>certificado SSL do servidor</a> sexa de confianza, e que ningún engadido do navegador estea bloqueando as peticións.",
-        "admin_contact_short": "Contacta coa <a>administración</a>."
+        "admin_contact_short": "Contacta coa <a>administración</a>.",
+        "non_urgent_echo_failure_toast": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
+        "failed_copy": "Fallo ao copiar"
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3731,5 +3730,11 @@
     "chat_card_back_action_label": "Volver ao chat",
     "room_summary_card_back_action_label": "Información da sala",
     "member_list_back_action_label": "Membros da sala",
-    "thread_view_back_action_label": "Volver ao fío"
+    "thread_view_back_action_label": "Volver ao fío",
+    "quick_settings": {
+        "title": "Axustes rápidos",
+        "all_settings": "Todos os axustes",
+        "metaspace_section": "Fixar no lateral",
+        "sidebar_settings": "Máis opcións"
+    }
 }

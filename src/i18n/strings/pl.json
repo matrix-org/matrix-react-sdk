@@ -98,7 +98,6 @@
         "one": "Przesyłanie %(filename)s oraz %(count)s innych",
         "other": "Przesyłanie %(filename)s oraz %(count)s innych"
     },
-    "Upload avatar": "Prześlij awatar",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (moc uprawnień administratorskich %(powerLevelNumber)s)",
     "Verification Pending": "Oczekiwanie weryfikacji",
     "You do not have permission to post to this room": "Nie masz uprawnień do pisania w tym pokoju",
@@ -166,8 +165,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sg",
     "%(duration)sd": "%(duration)sd",
-    "Copied!": "Skopiowano!",
-    "Failed to copy": "Kopiowanie nieudane",
     "Delete Widget": "Usuń widżet",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Usunięcie widżetu usuwa go dla wszystkich użytkowników w tym pokoju. Czy na pewno chcesz usunąć ten widżet?",
     "collapse": "Zwiń",
@@ -304,7 +301,6 @@
     "Browse": "Przeglądaj",
     "Thumbs up": "Kciuk w górę",
     "Ball": "Piłka",
-    "Accept <policyLink /> to continue:": "Zaakceptuj <policyLink /> aby kontynuować:",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Czy jesteś pewien? Stracisz dostęp do wszystkich swoich zaszyfrowanych wiadomości, jeżeli nie utworzyłeś poprawnej kopii zapasowej kluczy.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
     "Unable to load key backup status": "Nie można załadować stanu kopii zapasowej klucza",
@@ -369,7 +365,6 @@
     "Local Addresses": "Lokalne adresy",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Ustaw adresy tego pokoju, aby użytkownicy mogli go znaleźć za pośrednictwem Twojego serwera domowego (%(localDomain)s)",
     "Couldn't load page": "Nie można załadować strony",
-    "Create account": "Utwórz konto",
     "Edited at %(date)s. Click to view edits.": "Edytowano w %(date)s. Kliknij, aby zobaczyć zmiany.",
     "Looks good": "Wygląda dobrze",
     "Your server": "Twój serwer",
@@ -401,7 +396,6 @@
     "Close preview": "Zamknij podgląd",
     "Cancel search": "Anuluj wyszukiwanie",
     "Your theme": "Twój motyw",
-    "More options": "Więcej opcji",
     "Invite anyway": "Zaproś mimo to",
     "Notes": "Notatki",
     "Session name": "Nazwa sesji",
@@ -425,7 +419,6 @@
         "one": "Usuń 1 wiadomość"
     },
     "Switch theme": "Przełącz motyw",
-    "All settings": "Wszystkie ustawienia",
     "That matches!": "Zgadza się!",
     "New Recovery Method": "Nowy sposób odzyskiwania",
     "Join millions for free on the largest public server": "Dołącz do milionów za darmo na największym publicznym serwerze",
@@ -786,7 +779,6 @@
     "The operation could not be completed": "To działanie nie mogło być ukończone",
     "Failed to save your profile": "Nie udało się zapisać profilu",
     "Set up": "Konfiguruj",
-    "Your server isn't responding to some <a>requests</a>.": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
@@ -863,7 +855,6 @@
     "Themes": "Motywy",
     "Moderation": "Moderacja",
     "Messaging": "Wiadomości",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
     "ready": "gotowy",
@@ -934,21 +925,13 @@
     "Invite with email or username": "Zaproś przy użyciu adresu email lub nazwy użytkownika",
     "Invite people": "Zaproś ludzi",
     "Share invite link": "Udostępnij link zaproszenia",
-    "Click to copy": "Kliknij aby skopiować",
     "Show all rooms": "Pokaż wszystkie pokoje",
     "You can change these anytime.": "Możesz to zmienić w każdej chwili.",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
     "Address": "Adres",
     "Search %(spaceName)s": "Przeszukaj %(spaceName)s",
-    "Delete avatar": "Usuń awatar",
     "Space selection": "Wybór przestrzeni",
-    "Match system": "Dopasuj do systemu",
-    "Pin to sidebar": "Przypnij do paska bocznego",
-    "Quick settings": "Szybkie ustawienia",
-    "More": "Więcej",
-    "Show sidebar": "Pokaż pasek boczny",
-    "Hide sidebar": "Ukryj pasek boczny",
     "unknown person": "nieznana osoba",
     "%(count)s people joined": {
         "one": "%(count)s osoba dołączyła",
@@ -1019,7 +1002,6 @@
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Brakuje niektórych danych sesji, w tym zaszyfrowanych kluczy wiadomości. Wyloguj się i zaloguj, aby to naprawić, przywracając klucze z kopii zapasowej.",
     "Backup key stored:": "Klucz zapasowy zapisany:",
     "Backup key cached:": "Klucz zapasowy zapisany w pamięci podręcznej:",
-    "Sorry — this call is currently full": "Przepraszamy — to połączenie jest już zapełnione",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Unsent": "Niewysłane",
@@ -1031,7 +1013,6 @@
     "Search users in this room…": "Szukaj użytkowników w tym pokoju…",
     "Saving…": "Zapisywanie…",
     "Creating…": "Tworzenie…",
-    "Verify Session": "Zweryfikuj sesję",
     "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
@@ -1061,7 +1042,6 @@
     },
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
-    "Ignore (%(counter)s)": "Ignoruj (%(counter)s)",
     "Home options": "Opcje głównej",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
     "You have no ignored users.": "Nie posiadasz ignorowanych użytkowników.",
@@ -1942,7 +1922,8 @@
         "off": "Wyłącz",
         "all_rooms": "Wszystkie pokoje",
         "deselect_all": "Odznacz wszystkie",
-        "select_all": "Zaznacz wszystkie"
+        "select_all": "Zaznacz wszystkie",
+        "copied": "Skopiowano!"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2045,7 +2026,8 @@
         "clear": "Wyczyść",
         "exit_fullscreeen": "Wyjdź z trybu pełnoekranowego",
         "enter_fullscreen": "Otwórz w trybie pełnoekranowym",
-        "unban": "Odbanuj"
+        "unban": "Odbanuj",
+        "click_to_copy": "Kliknij aby skopiować"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -2358,7 +2340,8 @@
         "intro_byline": "Bądź właścicielem swoich konwersacji.",
         "send_dm": "Wyślij wiadomość prywatną",
         "explore_rooms": "Przeglądaj pokoje publiczne",
-        "create_room": "Utwórz czat grupowy"
+        "create_room": "Utwórz czat grupowy",
+        "create_account": "Utwórz konto"
     },
     "settings": {
         "show_breadcrumbs": "Pokazuj skróty do ostatnio wyświetlonych pokojów nad listą pokojów",
@@ -3360,7 +3343,12 @@
         "failed_call_live_broadcast_description": "Nie możesz rozpocząć połączenia, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć połączenie.",
         "no_media_perms_title": "Brak uprawnień do mediów",
         "no_media_perms_description": "Możliwe, że będziesz musiał ręcznie pozwolić %(brand)sowi na dostęp do twojego mikrofonu/kamerki internetowej",
-        "call_toast_unknown_room": "Nieznany pokój"
+        "call_toast_unknown_room": "Nieznany pokój",
+        "join_button_tooltip_connecting": "Łączenie",
+        "join_button_tooltip_call_full": "Przepraszamy — to połączenie jest już zapełnione",
+        "hide_sidebar_button": "Ukryj pasek boczny",
+        "show_sidebar_button": "Pokaż pasek boczny",
+        "more_button": "Więcej"
     },
     "Other": "Inne",
     "Advanced": "Zaawansowane",
@@ -3452,7 +3440,9 @@
             "room_id": "Wewnętrzne ID pokoju",
             "room_version_section": "Wersja pokoju",
             "room_version": "Wersja pokoju:"
-        }
+        },
+        "delete_avatar_label": "Usuń awatar",
+        "upload_avatar_label": "Prześlij awatar"
     },
     "encryption": {
         "verification": {
@@ -3483,7 +3473,10 @@
             "unverified_sessions_toast_description": "Sprawdź, by upewnić się że Twoje konto jest bezpieczne",
             "unverified_sessions_toast_reject": "Później",
             "unverified_session_toast_title": "Nowe logowanie. Czy to byłeś Ty?",
-            "unverified_session_toast_accept": "Tak, to byłem ja"
+            "unverified_session_toast_accept": "Tak, to byłem ja",
+            "request_toast_detail": "%(deviceId)s z %(ip)s",
+            "request_toast_decline_counter": "Ignoruj (%(counter)s)",
+            "request_toast_accept": "Zweryfikuj sesję"
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3677,7 +3670,8 @@
         "no_hs_url_provided": "Nie podano URL serwera głównego",
         "autodiscovery_unexpected_error_hs": "Nieoczekiwany błąd przy ustalaniu konfiguracji serwera domowego",
         "autodiscovery_unexpected_error_is": "Nieoczekiwany błąd przy ustalaniu konfiguracji serwera tożsamości",
-        "incorrect_credentials_detail": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org."
+        "incorrect_credentials_detail": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
+        "create_account_title": "Utwórz konto"
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -3900,7 +3894,8 @@
         "empty_heading": "Organizuj dyskusje za pomocą wątków"
     },
     "theme": {
-        "light_high_contrast": "Jasny z wysokim kontrastem"
+        "light_high_contrast": "Jasny z wysokim kontrastem",
+        "match_system": "Dopasuj do systemu"
     },
     "space": {
         "landing_welcome": "Witamy w <name/>",
@@ -4006,7 +4001,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Przełącz na tryb jasny",
-        "switch_theme_dark": "Przełącz na tryb ciemny"
+        "switch_theme_dark": "Przełącz na tryb ciemny",
+        "settings": "Wszystkie ustawienia"
     },
     "notif_panel": {
         "empty_heading": "Jesteś na bieżąco",
@@ -4072,7 +4068,8 @@
         "tac_button": "Przejrzyj warunki użytkowania",
         "identity_server_no_terms_title": "Serwer tożsamości nie posiada warunków użytkowania",
         "identity_server_no_terms_description_1": "Ta czynność wymaga dostępu do domyślnego serwera tożsamości <server /> do walidacji adresu e-mail, czy numeru telefonu, ale serwer nie określa warunków korzystania z usługi.",
-        "identity_server_no_terms_description_2": "Kontynuj tylko wtedy, gdy ufasz właścicielowi serwera."
+        "identity_server_no_terms_description_2": "Kontynuj tylko wtedy, gdy ufasz właścicielowi serwera.",
+        "inline_intro_text": "Zaakceptuj <policyLink /> aby kontynuować:"
     },
     "space_settings": {
         "title": "Ustawienia - %(spaceName)s"
@@ -4167,7 +4164,9 @@
         "connection": "Wystąpił problem podczas łączenia się z serwerem domowym, spróbuj ponownie później.",
         "mixed_content": "Nie można nawiązać połączenia z serwerem przy użyciu HTTP podczas korzystania z HTTPS dla bieżącej strony. Użyj HTTPS lub <a>włącz niebezpieczne skrypty</a>.",
         "tls": "Nie można nawiązać połączenia z serwerem - proszę sprawdź twoje połączenie, upewnij się, że <a>certyfikat SSL serwera</a> jest zaufany, i że dodatki przeglądarki nie blokują żądania.",
-        "admin_contact_short": "Skontaktuj się ze swoim <a>administratorem serwera</a>."
+        "admin_contact_short": "Skontaktuj się ze swoim <a>administratorem serwera</a>.",
+        "non_urgent_echo_failure_toast": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
+        "failed_copy": "Kopiowanie nieudane"
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4199,5 +4198,11 @@
     "chat_card_back_action_label": "Wróć do chatu",
     "room_summary_card_back_action_label": "Informacje pokoju",
     "member_list_back_action_label": "Członkowie pokoju",
-    "thread_view_back_action_label": "Wróć do wątku"
+    "thread_view_back_action_label": "Wróć do wątku",
+    "quick_settings": {
+        "title": "Szybkie ustawienia",
+        "all_settings": "Wszystkie ustawienia",
+        "metaspace_section": "Przypnij do paska bocznego",
+        "sidebar_settings": "Więcej opcji"
+    }
 }

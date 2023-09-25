@@ -385,25 +385,13 @@
     "Invite with email or username": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້",
     "Invite people": "ເຊີນຜູ້ຄົນ",
     "Share invite link": "ແບ່ງປັນລິ້ງເຊີນ",
-    "Failed to copy": "ສຳເນົາບໍ່ສຳເລັດ",
-    "Copied!": "ສຳເນົາແລ້ວ!",
-    "Click to copy": "ກົດເພື່ອສຳເນົາ",
     "Show all rooms": "ສະແດງຫ້ອງທັງໝົດ",
     "You can change these anytime.": "ທ່ານສາມາດປ່ຽນສິ່ງເຫຼົ່ານີ້ໄດ້ທຸກເວລາ.",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
     "Address": "ທີ່ຢູ່",
     "Search %(spaceName)s": "ຊອກຫາ %(spaceName)s",
-    "Upload avatar": "ອັບໂຫຼດອາວາຕ້າ",
-    "Delete avatar": "ລືບອາວາຕ້າ",
     "Space selection": "ການເລືອກພື້ນທີ່",
-    "Match system": "ລະບົບການຈັບຄູ່",
-    "More options": "ທາງເລືອກເພີ່ມເຕີມ",
-    "Pin to sidebar": "ປັກໝຸດໃສ່ແຖບດ້ານຂ້າງ",
-    "All settings": "ການຕັ້ງຄ່າທັງໝົດ",
-    "Quick settings": "ການຕັ້ງຄ່າດ່ວນ",
-    "Accept <policyLink /> to continue:": "ຍອມຮັບ <policyLink /> ເພື່ອສືບຕໍ່:",
-    "Your server isn't responding to some <a>requests</a>.": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງບາງ <a>ຄຳຮ້ອງຂໍ</a>.",
     "Folder": "ໂຟນເດີ",
     "Headphones": "ຫູຟັງ",
     "Anchor": "ສະມໍ",
@@ -788,7 +776,6 @@
     "Verify with Security Key or Phrase": "ຢືນຢັນດ້ວຍກະແຈຄວາມປອດໄພ ຫຼືປະໂຫຍກ",
     "Proceed with reset": "ດຳເນີນການຕັ້ງຄ່າໃໝ່",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "ເບິ່ງຄືວ່າທ່ານບໍ່ມີກະແຈຄວາມປອດໄພ ຫຼື ອຸປະກອນອື່ນໆທີ່ທ່ານສາມາດຢືນຢັນໄດ້. ອຸປະກອນນີ້ຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້. ເພື່ອຢືນຢັນຕົວຕົນຂອງທ່ານໃນອຸປະກອນນີ້, ທ່ານຈຳເປັນຕ້ອງຕັ້ງລະຫັດຢືນຢັນຂອງທ່ານ.",
-    "Create account": "ສ້າງບັນຊີ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
         "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
@@ -1141,7 +1128,6 @@
     "You cancelled": "ທ່ານໄດ້ຍົກເລີກ",
     "You declined": "ທ່ານປະຕິເສດ",
     "Home": "ໜ້າຫຼັກ",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s ຈາກ %(ip)s",
     "Ok": "ຕົກລົງ",
     "Your homeserver has exceeded one of its resource limits.": "homeserver ຂອງທ່ານເກີນຂີດຈຳກັດຊັບພະຍາກອນແລ້ວ.",
     "Your homeserver has exceeded its user limit.": "ເຊີບເວີຂອງທ່ານໃຊ້ເກີນຂີດຈຳກັດແລ້ວ.",
@@ -1397,9 +1383,6 @@
     "Lion": "ຊ້າງ",
     "Cat": "ແມວ",
     "Dog": "ໝາ",
-    "More": "ເພີ່ມເຕີມ",
-    "Show sidebar": "ສະແດງແຖບດ້ານຂ້າງ",
-    "Hide sidebar": "ເຊື່ອງແຖບດ້ານຂ້າງ",
     "Error processing audio message": "ການປະມວນຜົນຂໍ້ຄວາມສຽງຜິດພາດ",
     "Pick a date to jump to": "ເລືອກວັນທີເພື່ອໄປຫາ",
     "Message pending moderation": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ",
@@ -1691,7 +1674,8 @@
         "off": "ປິດ",
         "all_rooms": "ຫ້ອງທັງໝົດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
-        "select_all": "ເລືອກທັງຫມົດ"
+        "select_all": "ເລືອກທັງຫມົດ",
+        "copied": "ສຳເນົາແລ້ວ!"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1786,7 +1770,8 @@
         "submit": "ສົ່ງ",
         "send_report": "ສົ່ງບົດລາຍງານ",
         "clear": "ຈະແຈ້ງ",
-        "unban": "ຍົກເລີກການຫ້າມ"
+        "unban": "ຍົກເລີກການຫ້າມ",
+        "click_to_copy": "ກົດເພື່ອສຳເນົາ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -2796,7 +2781,11 @@
         "no_permission_conference_description": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລິເລີ່ມການໂທປະຊຸມໃນຫ້ອງນີ້",
         "default_device": "ອຸປະກອນເລີ່ມຕົ້ນ",
         "no_media_perms_title": "ບໍ່ມີການອະນຸຍາດສື່",
-        "no_media_perms_description": "ທ່ານອາດຈະຈໍາເປັນຕ້ອງໄດ້ອະນຸຍາດໃຫ້ %(brand)sເຂົ້າເຖິງໄມໂຄຣໂຟນ/ເວັບແຄມຂອງທ່ານ"
+        "no_media_perms_description": "ທ່ານອາດຈະຈໍາເປັນຕ້ອງໄດ້ອະນຸຍາດໃຫ້ %(brand)sເຂົ້າເຖິງໄມໂຄຣໂຟນ/ເວັບແຄມຂອງທ່ານ",
+        "join_button_tooltip_connecting": "ກຳລັງເຊື່ອມຕໍ່",
+        "hide_sidebar_button": "ເຊື່ອງແຖບດ້ານຂ້າງ",
+        "show_sidebar_button": "ສະແດງແຖບດ້ານຂ້າງ",
+        "more_button": "ເພີ່ມເຕີມ"
     },
     "Other": "ອື່ນໆ",
     "Advanced": "ຂັ້ນສູງ",
@@ -2882,7 +2871,9 @@
             "room_id": "ID ຫ້ອງພາຍໃນ",
             "room_version_section": "ເວີຊັ້ນຫ້ອງ",
             "room_version": "ເວີຊັ້ນຫ້ອງ:"
-        }
+        },
+        "delete_avatar_label": "ລືບອາວາຕ້າ",
+        "upload_avatar_label": "ອັບໂຫຼດອາວາຕ້າ"
     },
     "encryption": {
         "verification": {
@@ -2910,7 +2901,8 @@
             "cancelling": "ກຳລັງຍົກເລີກ…",
             "unverified_sessions_toast_description": "ກວດສອບໃຫ້ແນ່ໃຈວ່າບັນຊີຂອງທ່ານປອດໄພ",
             "unverified_sessions_toast_reject": "ຕໍ່ມາ",
-            "unverified_session_toast_title": "ເຂົ້າສູ່ລະບົບໃໝ່. ນີ້ແມ່ນທ່ານບໍ?"
+            "unverified_session_toast_title": "ເຂົ້າສູ່ລະບົບໃໝ່. ນີ້ແມ່ນທ່ານບໍ?",
+            "request_toast_detail": "%(deviceId)s ຈາກ %(ip)s"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -3081,7 +3073,8 @@
         "no_hs_url_provided": "ບໍ່ມີການສະໜອງ URL homeserver",
         "autodiscovery_unexpected_error_hs": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການຕັ້ງຄ່າ homeserver",
         "autodiscovery_unexpected_error_is": "ເກີດຄວາມຜິດພາດທີ່ບໍ່ຄາດຄິດໃນການແກ້ໄຂການກຳນົດຄ່າເຊີບເວີ",
-        "incorrect_credentials_detail": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org."
+        "incorrect_credentials_detail": "ກະລຸນາຮັບຊາບວ່າທ່ານກຳລັງເຂົ້າສູ່ລະບົບເຊີບເວີ %(hs)s, ບໍ່ແມ່ນ matrix.org.",
+        "create_account_title": "ສ້າງບັນຊີ"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3126,7 +3119,8 @@
         "intro_byline": "ເປັນເຈົ້າຂອງການສົນທະນາຂອງທ່ານ.",
         "send_dm": "ສົ່ງຂໍ້ຄວາມໂດຍກົງ",
         "explore_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
-        "create_room": "ສ້າງກຸ່ມສົນທະນາ"
+        "create_room": "ສ້າງກຸ່ມສົນທະນາ",
+        "create_account": "ສ້າງບັນຊີ"
     },
     "setting": {
         "help_about": {
@@ -3276,7 +3270,8 @@
         "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ"
     },
     "theme": {
-        "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ"
+        "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
+        "match_system": "ລະບົບການຈັບຄູ່"
     },
     "space": {
         "landing_welcome": "ຍິນດີຕ້ອນຮັບສູ່ <name/>",
@@ -3372,7 +3367,8 @@
     },
     "user_menu": {
         "switch_theme_light": "ສະຫຼັບໄປໂໝດແສງ",
-        "switch_theme_dark": "ສະຫຼັບໄປໂໝດມືດ"
+        "switch_theme_dark": "ສະຫຼັບໄປໂໝດມືດ",
+        "settings": "ການຕັ້ງຄ່າທັງໝົດ"
     },
     "notif_panel": {
         "empty_heading": "ໝົດແລ້ວໝົດເລີຍ",
@@ -3434,7 +3430,8 @@
         "tac_button": "ກວດເບິ່ງຂໍ້ກໍານົດ ແລະ ເງື່ອນໄຂ",
         "identity_server_no_terms_title": "ຂໍ້ມູນເຊີບເວີ ບໍ່ມີໃຫ້ບໍລິການ",
         "identity_server_no_terms_description_1": "ການດຳເນິນການນີ້ຕ້ອງໄດ້ມີການເຂົ້າເຖິງຂໍ້ມູນການຢັ້ງຢືນຕົວຕົນທີ່ <server /> ເພື່ອກວດສອບອີເມວ ຫຼື ເບີໂທລະສັບ, ແຕ່ເຊີບເວີບໍ່ມີເງື່ອນໄຂໃນບໍລິການໃດໆ.",
-        "identity_server_no_terms_description_2": "ຖ້າທ່ານໄວ້ວາງໃຈເຈົ້າຂອງເຊີບເວີດັ່ງກ່າວແລ້ວ ໃຫ້ສືບຕໍ່."
+        "identity_server_no_terms_description_2": "ຖ້າທ່ານໄວ້ວາງໃຈເຈົ້າຂອງເຊີບເວີດັ່ງກ່າວແລ້ວ ໃຫ້ສືບຕໍ່.",
+        "inline_intro_text": "ຍອມຮັບ <policyLink /> ເພື່ອສືບຕໍ່:"
     },
     "space_settings": {
         "title": "ການຕັ້ງຄ່າ - %(spaceName)s"
@@ -3508,7 +3505,9 @@
         "connection": "ມີບັນຫາໃນການສື່ສານກັບ homeserver, ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
         "mixed_content": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ຜ່ານ HTTP ເມື່ອ HTTPS URL ຢູ່ໃນບຣາວເຊີຂອງທ່ານ. ໃຊ້ HTTPS ຫຼື <a>ເປີດໃຊ້ສະຄຣິບທີ່ບໍ່ປອດໄພ</a>.",
         "tls": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບ homeserver ໄດ້ - ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ, ໃຫ້ແນ່ໃຈວ່າ <a>ການຢັ້ງຢືນ SSL ຂອງ homeserver</a> ຂອງທ່ານແມ່ນເຊື່ອຖືໄດ້ ແລະ ການຂະຫຍາຍບຣາວເຊີບໍ່ໄດ້ປິດບັງການຮ້ອງຂໍ.",
-        "admin_contact_short": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ."
+        "admin_contact_short": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ.",
+        "non_urgent_echo_failure_toast": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງບາງ <a>ຄຳຮ້ອງຂໍ</a>.",
+        "failed_copy": "ສຳເນົາບໍ່ສຳເລັດ"
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3532,5 +3531,11 @@
     "chat_card_back_action_label": "ກັບໄປທີ່ການສົນທະນາ",
     "room_summary_card_back_action_label": "ຂໍ້ມູນຫ້ອງ",
     "member_list_back_action_label": "ສະມາຊິກຫ້ອງ",
-    "thread_view_back_action_label": "ກັບໄປທີ່ຫົວຂໍ້"
+    "thread_view_back_action_label": "ກັບໄປທີ່ຫົວຂໍ້",
+    "quick_settings": {
+        "title": "ການຕັ້ງຄ່າດ່ວນ",
+        "all_settings": "ການຕັ້ງຄ່າທັງໝົດ",
+        "metaspace_section": "ປັກໝຸດໃສ່ແຖບດ້ານຂ້າງ",
+        "sidebar_settings": "ທາງເລືອກເພີ່ມເຕີມ"
+    }
 }

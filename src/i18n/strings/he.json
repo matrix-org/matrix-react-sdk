@@ -348,8 +348,6 @@
     "Cross-signing is ready for use.": "חתימה צולבת מוכנה לשימוש.",
     "No display name": "אין שם לתצוגה",
     "Show more": "הצג יותר",
-    "Accept <policyLink /> to continue:": "קבל <policyLink /> להמשך:",
-    "Your server isn't responding to some <a>requests</a>.": "השרת שלכם אינו מגיב לבקשות מסויימות <a>בקשות</a>.",
     "Folder": "תקיה",
     "Headphones": "אוזניות",
     "Anchor": "עוגן",
@@ -716,8 +714,6 @@
     "Edited at %(date)s": "נערך ב-%(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "אתה עומד להועבר לאתר של צד שלישי כדי שתוכל לאמת את חשבונך לשימוש עם %(integrationsUrl)s. האם אתה מקווה להמשיך?",
     "Add an Integration": "הוסף אינטגרציה",
-    "Failed to copy": "שגיאה בהעתקה",
-    "Copied!": "הועתק!",
     "Browse": "דפדף",
     "Set a new custom sound": "הגדר צליל מותאם אישי",
     "Notification sound": "צליל התראה",
@@ -815,7 +811,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה.",
     "Failed to reject invitation": "דחיית ההזמנה נכשלה",
     "Explore rooms": "גלה חדרים",
-    "Upload avatar": "העלה אוואטר",
     "Couldn't load page": "לא ניתן לטעון את הדף",
     "Sign in with SSO": "היכנס באמצעות SSO",
     "Country Dropdown": "נפתח במדינה",
@@ -1025,7 +1020,6 @@
     "That matches!": "זה מתאים!",
     "Clear personal data": "נקה מידע אישי",
     "Failed to re-authenticate due to a homeserver problem": "האימות מחדש נכשל עקב בעיית שרת בית",
-    "Create account": "חשבון משתמש חדש",
     "General failure": "שגיאה כללית",
     "Identity server URL does not appear to be a valid identity server": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
     "Invalid base_url for m.identity_server": "Base_url לא חוקי עבור m.identity_server",
@@ -1040,7 +1034,6 @@
     "A new password must be entered.": "יש להזין סיסמה חדשה.",
     "Could not load user profile": "לא ניתן לטעון את פרופיל המשתמש",
     "Switch theme": "שנה ערכת נושא",
-    "All settings": "כל ההגדרות",
     "Uploading %(filename)s and %(count)s others": {
         "one": "מעלה %(filename)s ו-%(count)s אחרים",
         "other": "מעלה %(filename)s ו-%(count)s אחרים"
@@ -1118,16 +1111,9 @@
     "Leave Space": "עזוב את מרחב העבודה",
     "Access": "גישה",
     "Save Changes": "שמור שינוייים",
-    "Click to copy": "לחץ להעתקה",
     "Show all rooms": "הצג את כל החדרים",
     "Create a space": "צור מרחב עבודה",
     "Address": "כתובת",
-    "Pin to sidebar": "הצמד לסרגל הצד",
-    "More options": "אפשרויות נוספות",
-    "Quick settings": "הגדרות מהירות",
-    "More": "יותר",
-    "Show sidebar": "הצג סרגל צד",
-    "Hide sidebar": "הסתר סרגל צד",
     "Connecting": "מקשר",
     "unknown person": "אדם לא ידוע",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
@@ -1272,7 +1258,6 @@
     "Enable guest access": "אפשר גישה לאורחים",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Copy room link": "העתק קישור לחדר",
-    "Match system": "בהתאם למערכת",
     "Voice processing": "עיבוד קול",
     "Video settings": "הגדרות וידאו",
     "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
@@ -1372,7 +1357,8 @@
         "off": "ללא",
         "all_rooms": "כל החדרים",
         "deselect_all": "הסר סימון מהכל",
-        "select_all": "בחר הכל"
+        "select_all": "בחר הכל",
+        "copied": "הועתק!"
     },
     "action": {
         "continue": "המשך",
@@ -1463,7 +1449,8 @@
         "send_report": "שלח דיווח",
         "exit_fullscreeen": "יציאה ממסך מלא",
         "enter_fullscreen": "עברו למסך מלא",
-        "unban": "הסר חסימה"
+        "unban": "הסר חסימה",
+        "click_to_copy": "לחץ להעתקה"
     },
     "a11y": {
         "user_menu": "תפריט משתמש",
@@ -2344,7 +2331,11 @@
         "no_permission_conference_description": "אין לכם הרשאות להתחיל ועידה בחדר זה",
         "default_device": "התקן ברירת מחדל",
         "no_media_perms_title": "אין הרשאות מדיה",
-        "no_media_perms_description": "ייתכן שיהיה עליך לאפשר ידנית ל-%(brand)s גישה למיקרופון / מצלמת האינטרנט שלך"
+        "no_media_perms_description": "ייתכן שיהיה עליך לאפשר ידנית ל-%(brand)s גישה למיקרופון / מצלמת האינטרנט שלך",
+        "join_button_tooltip_connecting": "מקשר",
+        "hide_sidebar_button": "הסתר סרגל צד",
+        "show_sidebar_button": "הצג סרגל צד",
+        "more_button": "יותר"
     },
     "Other": "אחר",
     "Advanced": "מתקדם",
@@ -2422,7 +2413,8 @@
             "room_predecessor": "צפה בהודעות ישנות ב-%(roomName)s.",
             "room_version_section": "גרסאת חדר",
             "room_version": "גרסאת חדש:"
-        }
+        },
+        "upload_avatar_label": "העלה אוואטר"
     },
     "encryption": {
         "verification": {
@@ -2604,7 +2596,8 @@
         "no_hs_url_provided": "לא סופקה כתובת של שרת הראשי",
         "autodiscovery_unexpected_error_hs": "שגיאה לא צפוייה של התחברות לשרת הראשי",
         "autodiscovery_unexpected_error_is": "שגיאה לא צפויה בהתחברות אל שרת הזיהוי",
-        "incorrect_credentials_detail": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org."
+        "incorrect_credentials_detail": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org.",
+        "create_account_title": "חשבון משתמש חדש"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2635,7 +2628,8 @@
         "intro_welcome": "ברוכים הבאים אל %(appName)s",
         "send_dm": "שלח הודעה ישירה",
         "explore_rooms": "חקור חדרים ציבוריים",
-        "create_room": "צור צ'אט קבוצתי"
+        "create_room": "צור צ'אט קבוצתי",
+        "create_account": "חשבון משתמש חדש"
     },
     "setting": {
         "help_about": {
@@ -2857,7 +2851,8 @@
     },
     "user_menu": {
         "switch_theme_light": "שנה למצב בהיר",
-        "switch_theme_dark": "שנה למצב כהה"
+        "switch_theme_dark": "שנה למצב כהה",
+        "settings": "כל ההגדרות"
     },
     "notif_panel": {
         "empty_heading": "אתם כבר מעודכנים בהכל",
@@ -2907,7 +2902,8 @@
         "tac_button": "עיין בתנאים ובהגבלות",
         "identity_server_no_terms_title": "לשרת הזיהוי אין כללי שרות",
         "identity_server_no_terms_description_1": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
-        "identity_server_no_terms_description_2": "המשיכו רק אם הנכם בוטחים בבעלים של השרת."
+        "identity_server_no_terms_description_2": "המשיכו רק אם הנכם בוטחים בבעלים של השרת.",
+        "inline_intro_text": "קבל <policyLink /> להמשך:"
     },
     "poll": {
         "create_poll_title": "צרו סקר",
@@ -2968,7 +2964,9 @@
         "connection": "הייתה תקשורת עם שרת הבית. נסה שוב מאוחר יותר.",
         "mixed_content": "לא ניתן להתחבר לשרת ביתי באמצעות HTTP כאשר כתובת HTTPS נמצאת בסרגל הדפדפן שלך. השתמש ב- HTTPS או <a> הפעל סקריפטים לא בטוחים </a>.",
         "tls": "לא ניתן להתחבר לשרת בית - אנא בדוק את הקישוריות שלך, וודא ש- <a> תעודת ה- SSL של שרת הביתה </a> שלך מהימנה ושהסיומת לדפדפן אינה חוסמת בקשות.",
-        "admin_contact_short": "צרו קשר עם <a>מנהל השרת</a>."
+        "admin_contact_short": "צרו קשר עם <a>מנהל השרת</a>.",
+        "non_urgent_echo_failure_toast": "השרת שלכם אינו מגיב לבקשות מסויימות <a>בקשות</a>.",
+        "failed_copy": "שגיאה בהעתקה"
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2996,5 +2994,14 @@
     "chat_card_back_action_label": "חזרה לצ'אט",
     "room_summary_card_back_action_label": "מידע החדר",
     "member_list_back_action_label": "חברי החדר",
-    "thread_view_back_action_label": "חזרה לשרשור"
+    "thread_view_back_action_label": "חזרה לשרשור",
+    "quick_settings": {
+        "title": "הגדרות מהירות",
+        "all_settings": "כל ההגדרות",
+        "metaspace_section": "הצמד לסרגל הצד",
+        "sidebar_settings": "אפשרויות נוספות"
+    },
+    "theme": {
+        "match_system": "בהתאם למערכת"
+    }
 }

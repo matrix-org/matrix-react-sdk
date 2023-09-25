@@ -53,7 +53,6 @@
         "one": "(~%(count)s výsledok)"
     },
     "Join Room": "Vstúpiť do miestnosti",
-    "Upload avatar": "Nahrať obrázok",
     "Forget room": "Zabudnúť miestnosť",
     "Rooms": "Miestnosti",
     "Low priority": "Nízka priorita",
@@ -74,8 +73,6 @@
     "Invalid file%(extra)s": "Neplatný súbor%(extra)s",
     "Error decrypting image": "Chyba pri dešifrovaní obrázka",
     "Error decrypting video": "Chyba pri dešifrovaní videa",
-    "Copied!": "Skopírované!",
-    "Failed to copy": "Nepodarilo sa skopírovať",
     "Add an Integration": "Pridať integráciu",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete presmerovaní na stránku tretej strany, aby ste mohli overiť svoj účet na použitie s %(integrationsUrl)s. Chcete pokračovať?",
     "Email address": "Emailová adresa",
@@ -354,12 +351,10 @@
     "Couldn't load page": "Nie je možné načítať stránku",
     "Could not load user profile": "Nie je možné načítať profil používateľa",
     "Your password has been reset.": "Vaše heslo bolo obnovené.",
-    "Create account": "Vytvoriť účet",
     "Your keys are being backed up (the first backup could take a few minutes).": "Zálohovanie kľúčov máte aktívne (prvé zálohovanie môže trvať niekoľko minút).",
     "Success!": "Úspech!",
     "Recovery Method Removed": "Odstránený spôsob obnovenia",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
-    "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
@@ -464,7 +459,6 @@
     "Hide advanced": "Skryť pokročilé možnosti",
     "Show advanced": "Ukázať pokročilé možnosti",
     "Explore rooms": "Preskúmať miestnosti",
-    "All settings": "Všetky nastavenia",
     "Italics": "Kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -837,7 +831,6 @@
     "Downloading": "Preberanie",
     "MB": "MB",
     "Results": "Výsledky",
-    "More": "Viac",
     "Decrypting": "Dešifrovanie",
     "Visibility": "Viditeľnosť",
     "Sent": "Odoslané",
@@ -1146,9 +1139,6 @@
     },
     "Upgrading room": "Aktualizácia miestnosti",
     "Unknown failure": "Neznáme zlyhanie",
-    "Delete avatar": "Vymazať obrázok",
-    "Show sidebar": "Zobraziť bočný panel",
-    "Hide sidebar": "Skryť bočný panel",
     "Stop recording": "Zastaviť nahrávanie",
     "Missed call": "Zmeškaný hovor",
     "Call declined": "Hovor odmietnutý",
@@ -1183,7 +1173,6 @@
     "View message": "Zobraziť správu",
     "We couldn't create your DM.": "Nemohli sme vytvoriť vašu priamu správu.",
     "unknown person": "neznáma osoba",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "<inviter/> invites you": "<inviter/> vás pozýva",
     "No results found": "Nenašli sa žiadne výsledky",
     "%(count)s rooms": {
@@ -1205,7 +1194,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v priestore, nebude možné získať oprávnenia späť.",
     "Suggested Rooms": "Navrhované miestnosti",
     "Share invite link": "Zdieľať odkaz na pozvánku",
-    "Click to copy": "Kliknutím skopírujete",
     "Other rooms in %(spaceName)s": "Ostatné miestnosti v %(spaceName)s",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Pri vytváraní tejto adresy došlo k chybe. Je možné, že ju server nepovoľuje alebo došlo k dočasnému zlyhaniu.",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
@@ -1256,9 +1244,6 @@
     "Thread options": "Možnosti vlákna",
     "Server Options": "Možnosti servera",
     "Space options": "Možnosti priestoru",
-    "More options": "Ďalšie možnosti",
-    "Pin to sidebar": "Pripnúť na bočný panel",
-    "Quick settings": "Rýchle nastavenia",
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
@@ -1364,7 +1349,6 @@
     "Reset event store": "Obnoviť úložisko udalostí",
     "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
     "Reset event store?": "Obnoviť úložisko udalostí?",
-    "Your server isn't responding to some <a>requests</a>.": "Váš server neodpovedá na niektoré <a>požiadavky</a>.",
     "Error loading Widget": "Chyba pri načítaní widgetu",
     "Can't load this message": "Nemožno načítať túto správu",
     "Error processing audio message": "Chyba pri spracovaní hlasovej správy",
@@ -1504,7 +1488,6 @@
     "Unban them from specific things I'm able to": "Zrušiť im zákaz z konkrétnych právomocí, na ktoré mám oprávnenie",
     "Ban them from specific things I'm able to": "Zakázať im konkrétne právomoci, na ktoré mám oprávnenie",
     "Can't create a thread from an event with an existing relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
-    "Match system": "Zhoda so systémom",
     "Joined": "Ste pripojený",
     "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
     "Consult first": "Najprv konzultovať",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "Nemáte dostatočné oprávnenia na to, aby ste toto mohli zmeniť.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je end-to-end šifrovaný, ale v súčasnosti je obmedzený pre menší počet používateľov.",
     "Enable %(brand)s as an additional calling option in this room": "Zapnúť %(brand)s ako ďalšiu možnosť volania v tejto miestnosti",
-    "Sorry — this call is currently full": "Prepáčte — tento hovor je momentálne obsadený",
     "Completing set up of your new device": "Dokončenie nastavenia nového zariadenia",
     "Waiting for device to sign in": "Čaká sa na prihlásenie zariadenia",
     "Review and approve the sign in": "Skontrolujte a schváľte prihlásenie",
@@ -1773,8 +1755,6 @@
     "Past polls": "Predchádzajúce ankety",
     "Active polls": "Aktívne ankety",
     "View poll in timeline": "Zobraziť anketu na časovej osi",
-    "Verify Session": "Overiť reláciu",
-    "Ignore (%(counter)s)": "Ignorovať (%(counter)s)",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailom sa môžu posielať len po jednej",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Pri aktualizácii vašich predvolieb oznámení došlo k chybe. Skúste prosím prepnúť možnosť znova.",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
@@ -1953,7 +1933,8 @@
         "off": "Zakázané",
         "all_rooms": "Všetky miestnosti",
         "deselect_all": "Zrušiť výber všetkých",
-        "select_all": "Vybrať všetky"
+        "select_all": "Vybrať všetky",
+        "copied": "Skopírované!"
     },
     "action": {
         "continue": "Pokračovať",
@@ -2056,7 +2037,8 @@
         "clear": "Vyčistiť",
         "exit_fullscreeen": "Ukončiť režim celej obrazovky",
         "enter_fullscreen": "Prejsť na celú obrazovku",
-        "unban": "Povoliť vstup"
+        "unban": "Povoliť vstup",
+        "click_to_copy": "Kliknutím skopírujete"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -2369,7 +2351,8 @@
         "intro_byline": "Vlastnite svoje konverzácie.",
         "send_dm": "Poslať priamu správu",
         "explore_rooms": "Preskúmať verejné miestnosti",
-        "create_room": "Vytvoriť skupinovú konverzáciu"
+        "create_room": "Vytvoriť skupinovú konverzáciu",
+        "create_account": "Vytvoriť účet"
     },
     "settings": {
         "show_breadcrumbs": "Zobraziť skratky nedávno zobrazených miestnosti nad zoznamom miestností",
@@ -3373,7 +3356,12 @@
         "failed_call_live_broadcast_description": "Nemôžete spustiť hovor, pretože práve nahrávate živé vysielanie. Ukončite živé vysielanie, aby ste mohli začať hovor.",
         "no_media_perms_title": "Nepovolený prístup k médiám",
         "no_media_perms_description": "Mali by ste aplikácii %(brand)s ručne udeliť právo pristupovať k mikrofónu a kamere",
-        "call_toast_unknown_room": "Neznáma miestnosť"
+        "call_toast_unknown_room": "Neznáma miestnosť",
+        "join_button_tooltip_connecting": "Pripájanie",
+        "join_button_tooltip_call_full": "Prepáčte — tento hovor je momentálne obsadený",
+        "hide_sidebar_button": "Skryť bočný panel",
+        "show_sidebar_button": "Zobraziť bočný panel",
+        "more_button": "Viac"
     },
     "Other": "Ďalšie",
     "Advanced": "Pokročilé",
@@ -3465,7 +3453,9 @@
             "room_id": "Interné ID miestnosti",
             "room_version_section": "Verzia miestnosti",
             "room_version": "Verzia miestnosti:"
-        }
+        },
+        "delete_avatar_label": "Vymazať obrázok",
+        "upload_avatar_label": "Nahrať obrázok"
     },
     "encryption": {
         "verification": {
@@ -3496,7 +3486,10 @@
             "unverified_sessions_toast_description": "Skontrolujte, či je vaše konto bezpečné",
             "unverified_sessions_toast_reject": "Neskôr",
             "unverified_session_toast_title": "Nové prihlásenie. Boli ste to vy?",
-            "unverified_session_toast_accept": "Áno, bol som to ja"
+            "unverified_session_toast_accept": "Áno, bol som to ja",
+            "request_toast_detail": "%(deviceId)s z %(ip)s",
+            "request_toast_decline_counter": "Ignorovať (%(counter)s)",
+            "request_toast_accept": "Overiť reláciu"
         },
         "old_version_detected_title": "Nájdené zastaralé kryptografické údaje",
         "old_version_detected_description": "Boli zistené údaje zo staršej verzie %(brand)s. To spôsobilo nefunkčnosť end-to-end kryptografie v staršej verzii. End-to-end šifrované správy, ktoré boli nedávno vymenené pri používaní staršej verzie, sa v tejto verzii nemusia dať dešifrovať. To môže spôsobiť aj zlyhanie správ vymenených pomocou tejto verzie. Ak sa vyskytnú problémy, odhláste sa a znova sa prihláste. Ak chcete zachovať históriu správ, exportujte a znovu importujte svoje kľúče.",
@@ -3691,7 +3684,8 @@
         "autodiscovery_unexpected_error_hs": "Neočakávaná chyba pri zisťovaní nastavení domovského servera",
         "autodiscovery_unexpected_error_is": "Neočakávaná chyba pri zisťovaní nastavení servera totožností",
         "autodiscovery_hs_incompatible": "Váš domovský server je príliš starý a nepodporuje minimálnu požadovanú verziu API. Obráťte sa na vlastníka servera alebo aktualizujte svoj server.",
-        "incorrect_credentials_detail": "Všimnite si: Práve sa prihlasujete na server %(hs)s, nie na server matrix.org."
+        "incorrect_credentials_detail": "Všimnite si: Práve sa prihlasujete na server %(hs)s, nie na server matrix.org.",
+        "create_account_title": "Vytvoriť účet"
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -3914,7 +3908,8 @@
         "empty_heading": "Udržujte diskusie organizované pomocou vlákien"
     },
     "theme": {
-        "light_high_contrast": "Ľahký vysoký kontrast"
+        "light_high_contrast": "Ľahký vysoký kontrast",
+        "match_system": "Zhoda so systémom"
     },
     "space": {
         "landing_welcome": "Vitajte v <name/>",
@@ -4020,7 +4015,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Prepnúť na svetlý režim",
-        "switch_theme_dark": "Prepnúť na tmavý režim"
+        "switch_theme_dark": "Prepnúť na tmavý režim",
+        "settings": "Všetky nastavenia"
     },
     "notif_panel": {
         "empty_heading": "Všetko ste už stihli",
@@ -4088,7 +4084,8 @@
         "tac_button": "Prečítať zmluvné podmienky",
         "identity_server_no_terms_title": "Server totožností nemá žiadne podmienky poskytovania služieb",
         "identity_server_no_terms_description_1": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
-        "identity_server_no_terms_description_2": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera."
+        "identity_server_no_terms_description_2": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera.",
+        "inline_intro_text": "Ak chcete pokračovať, musíte prijať <policyLink />:"
     },
     "space_settings": {
         "title": "Nastavenia - %(spaceName)s"
@@ -4185,7 +4182,9 @@
         "connection": "Nastal problém pri komunikácii s domovským serverom. Skúste to prosím znova.",
         "mixed_content": "K domovskému serveru nie je možné pripojiť sa použitím protokolu HTTP keďže v adresnom riadku prehliadača máte HTTPS adresu. Použite protokol HTTPS alebo <a>povolte nezabezpečené skripty</a>.",
         "tls": "Nie je možné pripojiť sa k domovskému serveru - skontrolujte prosím funkčnosť vášho pripojenia na internet. Uistite sa že <a>certifikát domovského servera</a> je dôveryhodný a že žiaden doplnok nainštalovaný v prehliadači nemôže blokovať požiadavky.",
-        "admin_contact_short": "Kontaktujte svojho <a>administrátora serveru</a>."
+        "admin_contact_short": "Kontaktujte svojho <a>administrátora serveru</a>.",
+        "non_urgent_echo_failure_toast": "Váš server neodpovedá na niektoré <a>požiadavky</a>.",
+        "failed_copy": "Nepodarilo sa skopírovať"
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4217,5 +4216,11 @@
     "chat_card_back_action_label": "Späť na konverzáciu",
     "room_summary_card_back_action_label": "Informácie o miestnosti",
     "member_list_back_action_label": "Členovia miestnosti",
-    "thread_view_back_action_label": "Späť na vlákno"
+    "thread_view_back_action_label": "Späť na vlákno",
+    "quick_settings": {
+        "title": "Rýchle nastavenia",
+        "all_settings": "Všetky nastavenia",
+        "metaspace_section": "Pripnúť na bočný panel",
+        "sidebar_settings": "Ďalšie možnosti"
+    }
 }

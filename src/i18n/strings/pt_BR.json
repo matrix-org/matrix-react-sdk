@@ -26,7 +26,6 @@
     "Unable to remove contact information": "Não foi possível remover informação de contato",
     "Unable to verify email address.": "Não foi possível confirmar o endereço de e-mail.",
     "unknown error code": "código de erro desconhecido",
-    "Upload avatar": "Enviar uma foto de perfil",
     "Verification Pending": "Confirmação pendente",
     "You do not have permission to post to this room": "Você não tem permissão para digitar nesta sala",
     "Sun": "Dom",
@@ -144,8 +143,6 @@
     "Replying": "Em resposta a",
     "Unnamed room": "Sala sem nome",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
-    "Copied!": "Copiado!",
-    "Failed to copy": "Não foi possível copiar",
     "Delete Widget": "Apagar widget",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Remover um widget o remove para todas as pessoas desta sala. Tem certeza que quer remover este widget?",
     "Delete widget": "Remover widget",
@@ -343,7 +340,6 @@
     "Ok": "Ok",
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "Lock": "Cadeado",
-    "Accept <policyLink /> to continue:": "Aceitar <policyLink /> para continuar:",
     "Show more": "Mostrar mais",
     "Your homeserver does not support cross-signing.": "Seu servidor não suporta a autoverificação.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Sua conta tem uma identidade autoverificada em armazenamento secreto, mas ainda não é considerada confiável por esta sessão.",
@@ -410,7 +406,6 @@
     "Use your Security Key to continue.": "Use sua Chave de Segurança para continuar.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Atenção</b>: você só deve configurar o backup de chave em um computador de sua confiança.",
     "Explore rooms": "Explorar salas",
-    "Create account": "Criar conta",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Proteja-se contra a perda de acesso a mensagens e dados criptografados fazendo backup das chaves de criptografia no seu servidor.",
@@ -447,7 +442,6 @@
     "Widget ID": "ID do widget",
     "Widget added by": "Widget adicionado por",
     "This widget may use cookies.": "Este widget pode usar cookies.",
-    "More options": "Mais opções",
     "Rotate Left": "Girar para a esquerda",
     "Rotate Right": "Girar para a direita",
     "Language Dropdown": "Menu suspenso de idiomas",
@@ -551,7 +545,6 @@
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s não pode ser visualizado. Deseja participar?",
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
-    "All settings": "Todas as configurações",
     "Clear personal data": "Limpar dados pessoais",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
     "None": "Nenhuma",
@@ -666,7 +659,6 @@
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
     "Success!": "Pronto!",
-    "Your server isn't responding to some <a>requests</a>.": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
     "Uploaded sound": "Som enviado",
     "Sounds": "Sons",
     "Notification sound": "Som de notificação",
@@ -1111,7 +1103,6 @@
     "Space options": "Opções do espaço",
     "Invite people": "Convidar pessoas",
     "Share invite link": "Compartilhar link de convite",
-    "Click to copy": "Clique para copiar",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Se você usar esse widget, os dados poderão ser compartilhados <helpIcon /> com %(widgetDomain)s & seu gerenciador de integrações.",
@@ -1152,7 +1143,6 @@
     "Address": "Endereço",
     "Connecting": "Conectando",
     "unknown person": "pessoa desconhecida",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s de %(ip)s",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
     "Message search initialisation failed": "Falha na inicialização da pesquisa de mensagens",
@@ -1163,10 +1153,6 @@
     "Failed to update the history visibility of this space": "Falha ao atualizar a visibilidade do histórico deste espaço",
     "Failed to update the guest access of this space": "Falha ao atualizar o acesso de convidados a este espaço",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
-    "Delete avatar": "Remover foto de perfil",
-    "More": "Mais",
-    "Show sidebar": "Exibir a barra lateral",
-    "Hide sidebar": "Esconder a barra lateral",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
     "Search for rooms or people": "Procurar por salas ou pessoas",
     "Sent": "Enviado",
@@ -1250,8 +1236,6 @@
     "Messaging": "Mensagens",
     "Cross-signing is ready but keys are not backed up.": "A verificação está pronta mas as chaves não tem um backup configurado.",
     "Search %(spaceName)s": "Pesquisar %(spaceName)s",
-    "Pin to sidebar": "Fixar na barra lateral",
-    "Quick settings": "Configurações rápidas",
     "Error - Mixed content": "Erro - Conteúdo misto",
     "Error loading Widget": "Erro ao carregar o Widget",
     "Show %(count)s other previews": {
@@ -1463,7 +1447,8 @@
         "off": "Desativado",
         "all_rooms": "Todas as salas",
         "deselect_all": "Desmarcar todos",
-        "select_all": "Selecionar tudo"
+        "select_all": "Selecionar tudo",
+        "copied": "Copiado!"
     },
     "action": {
         "continue": "Continuar",
@@ -1553,7 +1538,8 @@
         "send_report": "Enviar relatório",
         "exit_fullscreeen": "Sair da tela cheia",
         "enter_fullscreen": "Entrar em tela cheia",
-        "unban": "Remover banimento"
+        "unban": "Remover banimento",
+        "click_to_copy": "Clique para copiar"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1735,7 +1721,8 @@
         "intro_welcome": "Boas-vindas ao %(appName)s",
         "send_dm": "Enviar uma mensagem",
         "explore_rooms": "Explorar salas públicas",
-        "create_room": "Criar um chat de grupo"
+        "create_room": "Criar um chat de grupo",
+        "create_account": "Criar conta"
     },
     "settings": {
         "show_breadcrumbs": "Mostrar atalhos para salas recentemente visualizadas acima da lista de salas",
@@ -2487,7 +2474,11 @@
         "failed_call_live_broadcast_description": "Você não pode iniciar uma chamada porque está gravando uma transmissão ao vivo. Termine sua transmissão ao vivo para iniciar uma chamada.",
         "no_media_perms_title": "Não tem permissões para acessar a mídia",
         "no_media_perms_description": "Pode ser necessário permitir manualmente ao %(brand)s acessar seu microfone ou sua câmera",
-        "call_toast_unknown_room": "Sala desconhecida"
+        "call_toast_unknown_room": "Sala desconhecida",
+        "join_button_tooltip_connecting": "Conectando",
+        "hide_sidebar_button": "Esconder a barra lateral",
+        "show_sidebar_button": "Exibir a barra lateral",
+        "more_button": "Mais"
     },
     "Other": "Outros",
     "Advanced": "Avançado",
@@ -2568,7 +2559,9 @@
             "room_predecessor": "Ler mensagens antigas em %(roomName)s.",
             "room_version_section": "Versão da sala",
             "room_version": "Versão da sala:"
-        }
+        },
+        "delete_avatar_label": "Remover foto de perfil",
+        "upload_avatar_label": "Enviar uma foto de perfil"
     },
     "encryption": {
         "verification": {
@@ -2591,7 +2584,8 @@
             "cancelling": "Cancelando…",
             "unverified_sessions_toast_description": "Revise para assegurar que sua conta está segura",
             "unverified_sessions_toast_reject": "Mais tarde",
-            "unverified_session_toast_title": "Novo login. Foi você?"
+            "unverified_session_toast_title": "Novo login. Foi você?",
+            "request_toast_detail": "%(deviceId)s de %(ip)s"
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2743,7 +2737,8 @@
         "no_hs_url_provided": "Nenhum endereço fornecido do servidor local",
         "autodiscovery_unexpected_error_hs": "Erro inesperado buscando a configuração do servidor",
         "autodiscovery_unexpected_error_is": "Erro inesperado buscando a configuração do servidor de identidade",
-        "incorrect_credentials_detail": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org."
+        "incorrect_credentials_detail": "Note que você está se conectando ao servidor %(hs)s, e não ao servidor matrix.org.",
+        "create_account_title": "Criar conta"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -2979,7 +2974,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Alternar para o modo claro",
-        "switch_theme_dark": "Alternar para o modo escuro"
+        "switch_theme_dark": "Alternar para o modo escuro",
+        "settings": "Todas as configurações"
     },
     "notif_panel": {
         "empty_description": "Não há notificações."
@@ -3035,7 +3031,8 @@
         "tac_button": "Revise os termos e condições",
         "identity_server_no_terms_title": "O servidor de identidade não tem termos de serviço",
         "identity_server_no_terms_description_1": "Esta ação requer acesso ao servidor de identidade padrão <server /> para poder validar um endereço de e-mail ou número de telefone, mas este servidor não tem nenhum termo de uso.",
-        "identity_server_no_terms_description_2": "Continue apenas se você confia em quem possui este servidor."
+        "identity_server_no_terms_description_2": "Continue apenas se você confia em quem possui este servidor.",
+        "inline_intro_text": "Aceitar <policyLink /> para continuar:"
     },
     "poll": {
         "create_poll_title": "Criar enquete"
@@ -3104,7 +3101,9 @@
         "connection": "Ocorreu um problema de comunicação com o servidor local. Tente novamente mais tarde.",
         "mixed_content": "Uma conexão com o servidor local via HTTP não pode ser estabelecida se a barra de endereços do navegador contiver um endereço HTTPS. Use HTTPS ou, em vez disso, permita ao navegador executar <a>scripts não seguros</a>.",
         "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
-        "admin_contact_short": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>."
+        "admin_contact_short": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>.",
+        "non_urgent_echo_failure_toast": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
+        "failed_copy": "Não foi possível copiar"
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3131,5 +3130,11 @@
     },
     "chat_card_back_action_label": "Voltar ao chat",
     "room_summary_card_back_action_label": "Informação da sala",
-    "member_list_back_action_label": "Membros da sala"
+    "member_list_back_action_label": "Membros da sala",
+    "quick_settings": {
+        "title": "Configurações rápidas",
+        "all_settings": "Todas as configurações",
+        "metaspace_section": "Fixar na barra lateral",
+        "sidebar_settings": "Mais opções"
+    }
 }

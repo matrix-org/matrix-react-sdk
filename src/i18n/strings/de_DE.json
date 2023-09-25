@@ -27,7 +27,6 @@
     "Unable to remove contact information": "Die Kontaktinformationen können nicht gelöscht werden",
     "Unable to verify email address.": "Die E-Mail-Adresse konnte nicht verifiziert werden.",
     "unknown error code": "Unbekannter Fehlercode",
-    "Upload avatar": "Profilbild hochladen",
     "Verification Pending": "Verifizierung ausstehend",
     "You do not have permission to post to this room": "Du hast keine Berechtigung, etwas in diesen Raum zu senden",
     "Sun": "So",
@@ -132,8 +131,6 @@
     "Delete widget": "Widget entfernen",
     "AM": "a. m.",
     "PM": "p. m.",
-    "Copied!": "Kopiert!",
-    "Failed to copy": "Kopieren fehlgeschlagen",
     "Unignore": "Nicht mehr blockieren",
     "Banned by %(displayName)s": "Verbannt von %(displayName)s",
     "Jump to read receipt": "Zur Lesebestätigung springen",
@@ -349,7 +346,6 @@
     "Email (optional)": "E-Mail-Adresse (optional)",
     "Couldn't load page": "Konnte Seite nicht laden",
     "Your password has been reset.": "Dein Passwort wurde zurückgesetzt.",
-    "Create account": "Konto anlegen",
     "Recovery Method Removed": "Wiederherstellungsmethode gelöscht",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Wenn du die Wiederherstellungsmethode nicht gelöscht hast, kann ein Angreifer versuchen, Zugang zu deinem Konto zu bekommen. Ändere dein Passwort und richte sofort eine neue Wiederherstellungsmethode in den Einstellungen ein.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
@@ -384,7 +380,6 @@
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Wenn du die Verbindung zu deinem Identitäts-Server trennst, kannst du nicht mehr von anderen Benutzern gefunden werden und andere nicht mehr per E-Mail oder Telefonnummer einladen.",
     "Disconnect from the identity server <idserver />?": "Verbindung zum Identitäts-Server <idserver /> trennen?",
     "Deactivate account": "Benutzerkonto deaktivieren",
-    "Accept <policyLink /> to continue:": "Akzeptiere <policyLink />, um fortzufahren:",
     "Change identity server": "Identitäts-Server wechseln",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Du solltest deine <b>persönlichen Daten</b> vom Identitäts-Server <idserver /> entfernen, bevor du die Verbindung trennst. Leider ist der Identitäts-Server <idserver /> derzeit außer Betrieb oder kann nicht erreicht werden.",
     "You should:": "Du solltest:",
@@ -448,7 +443,6 @@
     "You've successfully verified %(displayName)s!": "Du hast %(displayName)s erfolgreich verifiziert!",
     "Widget added by": "Widget hinzugefügt von",
     "This widget may use cookies.": "Dieses Widget kann Cookies verwenden.",
-    "More options": "Weitere Optionen",
     "Explore rooms": "Räume erkunden",
     "Connect this session to Key Backup": "Verbinde diese Sitzung mit einer Schlüsselsicherung",
     "Discovery options will appear once you have added an email above.": "Entdeckungsoptionen werden angezeigt, sobald du eine E-Mail-Adresse hinzugefügt hast.",
@@ -714,7 +708,6 @@
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Beim Entfernen dieser Adresse ist ein Fehler aufgetreten. Vielleicht existiert sie nicht mehr oder es kam zu einem temporären Fehler.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du hast für diese Sitzung zuvor eine neuere Version von %(brand)s verwendet. Um diese Version mit Ende-zu-Ende-Verschlüsselung wieder zu benutzen, musst du dich erst ab- und dann wieder anmelden.",
     "Switch theme": "Design wechseln",
-    "All settings": "Alle Einstellungen",
     "No recently visited rooms": "Keine kürzlich besuchten Räume",
     "Message preview": "Nachrichtenvorschau",
     "Room options": "Raumoptionen",
@@ -728,7 +721,6 @@
     "Edited at %(date)s": "Geändert am %(date)s",
     "Click to view edits": "Klicke, um Änderungen anzuzeigen",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
-    "Your server isn't responding to some <a>requests</a>.": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
     "Server isn't responding": "Server reagiert nicht",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server reagiert auf einige deiner Anfragen nicht. Folgend sind einige der wahrscheinlichsten Gründe aufgeführt.",
     "The server (%(serverName)s) took too long to respond.": "Die Reaktionszeit des Servers (%(serverName)s) war zu hoch.",
@@ -1099,7 +1091,6 @@
     "Suggested Rooms": "Vorgeschlagene Räume",
     "Add existing room": "Existierenden Raum hinzufügen",
     "Share invite link": "Einladungslink teilen",
-    "Click to copy": "Klicken um zu kopieren",
     "Create a space": "Neuen Space erstellen",
     "Invite people": "Personen einladen",
     "Your message was sent": "Die Nachricht wurde gesendet",
@@ -1140,7 +1131,6 @@
     },
     "Space options": "Space-Optionen",
     "unknown person": "unbekannte Person",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s von %(ip)s",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
     "Consult first": "Zuerst Anfragen",
@@ -1253,9 +1243,6 @@
     "Connection failed": "Verbindung fehlgeschlagen",
     "Error downloading audio": "Fehler beim Herunterladen der Audiodatei",
     "An unknown error occurred": "Ein unbekannter Fehler ist aufgetreten",
-    "More": "Mehr",
-    "Show sidebar": "Seitenleiste anzeigen",
-    "Hide sidebar": "Seitenleiste verbergen",
     "Missed call": "Verpasster Anruf",
     "Call declined": "Anruf abgelehnt",
     "Adding spaces has moved.": "Das Hinzufügen von Spaces ist umgezogen.",
@@ -1287,7 +1274,6 @@
     "Upgrade required": "Aktualisierung erforderlich",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
     "Show all rooms": "Alle Räume anzeigen",
-    "Delete avatar": "Avatar löschen",
     "Public room": "Öffentlicher Raum",
     "Add space": "Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
@@ -1398,8 +1384,6 @@
     "Invite to space": "In Space einladen",
     "Start new chat": "Neue Direktnachricht",
     "Recently viewed": "Kürzlich besucht",
-    "Pin to sidebar": "An Seitenleiste heften",
-    "Quick settings": "Schnelleinstellungen",
     "Developer": "Entwickler",
     "Experimental": "Experimentell",
     "Themes": "Themen",
@@ -1502,7 +1486,6 @@
     "Expand quotes": "Zitate ausklappen",
     "Collapse quotes": "Zitate einklappen",
     "Can't create a thread from an event with an existing relation": "Du kannst keinen Thread in einem Thread starten",
-    "Match system": "An System anpassen",
     "What location type do you want to share?": "Wie willst du deinen Standort teilen?",
     "Drop a Pin": "Standort setzen",
     "My live location": "Mein Echtzeit-Standort",
@@ -1668,7 +1651,6 @@
     "Video call (%(brand)s)": "Videoanruf (%(brand)s)",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s ist Ende-zu-Ende-verschlüsselt, allerdings noch auf eine geringere Anzahl Benutzer beschränkt.",
     "Enable %(brand)s as an additional calling option in this room": "Verwende %(brand)s als alternative Anrufoption in diesem Raum",
-    "Sorry — this call is currently full": "Entschuldigung — dieser Anruf ist aktuell besetzt",
     "Completing set up of your new device": "Schließe Anmeldung deines neuen Gerätes ab",
     "Waiting for device to sign in": "Warte auf Anmeldung des Gerätes",
     "Review and approve the sign in": "Überprüfe und genehmige die Anmeldung",
@@ -1773,8 +1755,6 @@
     "Past polls": "Vergangene Umfragen",
     "Active polls": "Aktive Umfragen",
     "View poll in timeline": "Umfrage im Verlauf anzeigen",
-    "Verify Session": "Sitzung verifizieren",
-    "Ignore (%(counter)s)": "Ignorieren (%(counter)s)",
     "Invites by email can only be sent one at a time": "E-Mail-Einladungen können nur nacheinander gesendet werden",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ein Fehler ist während der Aktualisierung deiner Benachrichtigungseinstellungen aufgetreten. Bitte versuche die Option erneut umzuschalten.",
     "Desktop app logo": "Desktop-App-Logo",
@@ -1957,7 +1937,8 @@
         "off": "Aus",
         "all_rooms": "Alle Räume",
         "deselect_all": "Alle abwählen",
-        "select_all": "Alle auswählen"
+        "select_all": "Alle auswählen",
+        "copied": "Kopiert!"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2061,7 +2042,8 @@
         "clear": "Löschen",
         "exit_fullscreeen": "Vollbild verlassen",
         "enter_fullscreen": "Vollbild",
-        "unban": "Verbannung aufheben"
+        "unban": "Verbannung aufheben",
+        "click_to_copy": "Klicken um zu kopieren"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -2374,7 +2356,8 @@
         "intro_byline": "Besitze deine Unterhaltungen.",
         "send_dm": "Direkt­­nachricht senden",
         "explore_rooms": "Öffentliche Räume erkunden",
-        "create_room": "Gruppenraum erstellen"
+        "create_room": "Gruppenraum erstellen",
+        "create_account": "Konto anlegen"
     },
     "settings": {
         "show_breadcrumbs": "Kürzlich besuchte Räume anzeigen",
@@ -3378,7 +3361,12 @@
         "failed_call_live_broadcast_description": "Du kannst keinen Anruf beginnen, da du im Moment eine Sprachübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
         "no_media_perms_title": "Keine Medienberechtigungen",
         "no_media_perms_description": "Gegebenenfalls kann es notwendig sein, dass du %(brand)s manuell den Zugriff auf dein Mikrofon bzw. deine Webcam gewähren musst",
-        "call_toast_unknown_room": "Unbekannter Raum"
+        "call_toast_unknown_room": "Unbekannter Raum",
+        "join_button_tooltip_connecting": "Verbinden",
+        "join_button_tooltip_call_full": "Entschuldigung — dieser Anruf ist aktuell besetzt",
+        "hide_sidebar_button": "Seitenleiste verbergen",
+        "show_sidebar_button": "Seitenleiste anzeigen",
+        "more_button": "Mehr"
     },
     "Other": "Sonstiges",
     "Advanced": "Erweitert",
@@ -3470,7 +3458,9 @@
             "room_id": "Interne Raum-ID",
             "room_version_section": "Raumversion",
             "room_version": "Raumversion:"
-        }
+        },
+        "delete_avatar_label": "Avatar löschen",
+        "upload_avatar_label": "Profilbild hochladen"
     },
     "encryption": {
         "verification": {
@@ -3501,7 +3491,10 @@
             "unverified_sessions_toast_description": "Überprüfe sie, um ein sicheres Konto gewährleisten zu können",
             "unverified_sessions_toast_reject": "Später",
             "unverified_session_toast_title": "Neue Anmeldung. Warst du das?",
-            "unverified_session_toast_accept": "Ja, das war ich"
+            "unverified_session_toast_accept": "Ja, das war ich",
+            "request_toast_detail": "%(deviceId)s von %(ip)s",
+            "request_toast_decline_counter": "Ignorieren (%(counter)s)",
+            "request_toast_accept": "Sitzung verifizieren"
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3696,7 +3689,8 @@
         "autodiscovery_unexpected_error_hs": "Ein unerwarteter Fehler ist beim Laden der Heim-Server-Konfiguration aufgetreten",
         "autodiscovery_unexpected_error_is": "Ein unerwarteter Fehler ist beim Laden der Identitäts-Server-Konfiguration aufgetreten",
         "autodiscovery_hs_incompatible": "Dein Heim-Server ist zu alt und unterstützt nicht die benötigte API-Version. Bitte kontaktiere deine Server-Administration oder aktualisiere deinen Server.",
-        "incorrect_credentials_detail": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org."
+        "incorrect_credentials_detail": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org.",
+        "create_account_title": "Konto anlegen"
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -3919,7 +3913,8 @@
         "empty_heading": "Organisiere Diskussionen mit Threads"
     },
     "theme": {
-        "light_high_contrast": "Hell kontrastreich"
+        "light_high_contrast": "Hell kontrastreich",
+        "match_system": "An System anpassen"
     },
     "space": {
         "landing_welcome": "Willkommen bei <name/>",
@@ -4025,7 +4020,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Zum hellen Thema wechseln",
-        "switch_theme_dark": "Zum dunklen Thema wechseln"
+        "switch_theme_dark": "Zum dunklen Thema wechseln",
+        "settings": "Alle Einstellungen"
     },
     "notif_panel": {
         "empty_heading": "Du bist auf dem neuesten Stand",
@@ -4093,7 +4089,8 @@
         "tac_button": "Geschäftsbedingungen anzeigen",
         "identity_server_no_terms_title": "Der Identitäts-Server hat keine Nutzungsbedingungen",
         "identity_server_no_terms_description_1": "Diese Handlung erfordert es, auf den Standard-Identitäts-Server <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
-        "identity_server_no_terms_description_2": "Fahre nur fort, wenn du den Server-Betreibenden vertraust."
+        "identity_server_no_terms_description_2": "Fahre nur fort, wenn du den Server-Betreibenden vertraust.",
+        "inline_intro_text": "Akzeptiere <policyLink />, um fortzufahren:"
     },
     "space_settings": {
         "title": "Einstellungen - %(spaceName)s"
@@ -4190,7 +4187,9 @@
         "connection": "Es gab ein Problem bei der Kommunikation mit dem Heim-Server. Bitte versuche es später erneut.",
         "mixed_content": "Es kann keine Verbindung zum Heim-Server via HTTP aufgebaut werden, wenn die Adresszeile des Browsers eine HTTPS-URL enthält. Entweder HTTPS verwenden oder alternativ <a>unsichere Skripte erlauben</a>.",
         "tls": "Verbindung zum Heim-Server fehlgeschlagen – bitte überprüfe die Internetverbindung und stelle sicher, dass dem <a>SSL-Zertifikat deines Heimservers</a> vertraut wird und dass Anfragen nicht durch eine Browser-Erweiterung blockiert werden.",
-        "admin_contact_short": "Kontaktiere deine <a>Heim-Server-Administration</a>."
+        "admin_contact_short": "Kontaktiere deine <a>Heim-Server-Administration</a>.",
+        "non_urgent_echo_failure_toast": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
+        "failed_copy": "Kopieren fehlgeschlagen"
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4222,5 +4221,11 @@
     "chat_card_back_action_label": "Zurück zur Unterhaltung",
     "room_summary_card_back_action_label": "Rauminformationen",
     "member_list_back_action_label": "Raummitglieder",
-    "thread_view_back_action_label": "Zurück zum Thread"
+    "thread_view_back_action_label": "Zurück zum Thread",
+    "quick_settings": {
+        "title": "Schnelleinstellungen",
+        "all_settings": "Alle Einstellungen",
+        "metaspace_section": "An Seitenleiste heften",
+        "sidebar_settings": "Weitere Optionen"
+    }
 }

@@ -66,9 +66,7 @@
     "Today": "Ass-a",
     "Yesterday": "Iḍelli",
     "Error decrypting attachment": "Tuccḍa deg uwgelhen n tceqquft yeddan",
-    "Copied!": "Yettwanɣel!",
     "edited": "yettwaẓreg",
-    "More options": "Ugar n textiṛiyin",
     "collapse": "fneẓ",
     "Server name": "Isem n uqeddac",
     "Close dialog": "Mdel adiwenni",
@@ -87,7 +85,6 @@
     "Explore rooms": "Snirem tixxamin",
     "Unknown error": "Tuccḍa tarussint",
     "Your password has been reset.": "Awal uffir-inek/inem yettuwennez.",
-    "Create account": "Rnu amiḍan",
     "Success!": "Tammug akken iwata!",
     "Updating %(brand)s": "Leqqem %(brand)s",
     "I don't want my encrypted messages": "Ur bɣiɣ ara izan-inu iwgelhanen",
@@ -163,7 +160,6 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Accept <policyLink /> to continue:": "Qbel <policyLink /> i wakken ad tkemmleḍ:",
     "in account data": "deg yisefka n umiḍan",
     "Restore from Backup": "Tiririt seg uḥraz",
     "All keys backed up": "Akk tisura ttwaḥerzent",
@@ -323,7 +319,6 @@
     "Failed to reject invitation": "Tigtin n tinnubga ur yeddi ara",
     "Failed to reject invite": "Tigtin n tinnubga ur yeddi ara",
     "Switch theme": "Abeddel n usentel",
-    "All settings": "Akk iɣewwaren",
     "A new password must be entered.": "Awal uffir amaynut ilaq ad yettusekcem.",
     "General failure": "Tuccḍa tamatut",
     "Unicorn": "Azara",
@@ -342,7 +337,6 @@
     "Guitar": "Tagitaṛt",
     "Trumpet": "Lɣiḍa",
     "Bell": "Anayna",
-    "Your server isn't responding to some <a>requests</a>.": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n <a>yisuturen</a>.",
     "No display name": "Ulac meffer isem",
     "Your homeserver does not support cross-signing.": "Aqeddac-ik·im agejdan ur yessefrak ara azmul anmidag.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Amiḍan-inek·inem ɣer-s timagit n uzmul anmidag deg uklas uffir, maca mazal ur yettwaman ara sɣur taxxamt-a.",
@@ -566,7 +560,6 @@
     "Resend %(unsentCount)s reaction(s)": "Ales tuzna n tsedmirt (tsedmirin) %(unsentCount)s",
     "This homeserver would like to make sure you are not a robot.": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ.",
     "Country Dropdown": "Tabdart n udrurem n tmura",
-    "Upload avatar": "Sali-d avaṭar",
     "Failed to forget room %(errCode)s": "Tatut n texxamt %(errCode)s ur teddi ara",
     "Search failed": "Ur iddi ara unadi",
     "No more results": "Ulac ugar n yigmaḍ",
@@ -599,7 +592,6 @@
     "You cancelled verifying %(name)s": "Tesfesxeḍ asenqed n %(name)s",
     "You sent a verification request": "Tuzneḍ asuter n usenqed",
     "Error decrypting video": "Tuccḍa deg uwgelhen n tvidyut",
-    "Failed to copy": "Anɣal ur yeddi ara",
     "Edited at %(date)s": "Yettwaẓreg deg %(date)s",
     "Click to view edits": "Sit i wakken ad twaliḍ aseẓreg",
     "Edited at %(date)s. Click to view edits.": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag.",
@@ -1092,7 +1084,8 @@
         "preview_message": "Kečč·kemm. Ulac win i ak·akem-yifen!",
         "on": "Yermed",
         "off": "Insa",
-        "all_rooms": "Akk tixxamin"
+        "all_rooms": "Akk tixxamin",
+        "copied": "Yettwanɣel!"
     },
     "action": {
         "continue": "Kemmel",
@@ -1844,7 +1837,8 @@
             "room_predecessor": "Senqed iznan iqburen deg %(roomName)s.",
             "room_version_section": "Lqem n texxamt",
             "room_version": "Lqem n texxamt:"
-        }
+        },
+        "upload_avatar_label": "Sali-d avaṭar"
     },
     "encryption": {
         "verification": {
@@ -1976,7 +1970,8 @@
         "no_hs_url_provided": "Ulac URL n uqeddac agejdan i d-yettunefken",
         "autodiscovery_unexpected_error_hs": "Tuccḍa ur nettwaṛǧa ara lawan n uṣeggem n twila n uqeddac agejdan",
         "autodiscovery_unexpected_error_is": "Tuccḍa ur nettwaṛǧa ara lawan n uṣeggem n uqeddac n timagit",
-        "incorrect_credentials_detail": "Ttxil-k·m gar tamawt aql-ak·akem tkecmeḍ ɣer uqeddac %(hs)s, neɣ matrix.org."
+        "incorrect_credentials_detail": "Ttxil-k·m gar tamawt aql-ak·akem tkecmeḍ ɣer uqeddac %(hs)s, neɣ matrix.org.",
+        "create_account_title": "Rnu amiḍan"
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2006,7 +2001,8 @@
         "intro_welcome": "Ansuf ɣer %(appName)s",
         "send_dm": "Azen izen uslig",
         "explore_rooms": "Snirem tixxamin tizuyaz",
-        "create_room": "Rnu adiwenni n ugraw"
+        "create_room": "Rnu adiwenni n ugraw",
+        "create_account": "Rnu amiḍan"
     },
     "setting": {
         "help_about": {
@@ -2106,7 +2102,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Uɣal ɣer uskar aceɛlal",
-        "switch_theme_dark": "Uɣal ɣer uskar aberkan"
+        "switch_theme_dark": "Uɣal ɣer uskar aberkan",
+        "settings": "Akk iɣewwaren"
     },
     "room": {
         "drop_file_prompt": "Eǧǧ afaylu dagi i usali",
@@ -2145,7 +2142,8 @@
         "tac_button": "Senqed tiwtilin d tfadiwin",
         "identity_server_no_terms_title": "Timagit n uqeddac ulac ɣer-sen iferdisen n umeẓlu",
         "identity_server_no_terms_description_1": "Tigawt-a tesra anekcum ɣer uqeddac n tmagit tamezwert <server /> i usentem n tansa n yimayl neɣ uṭṭun n tiliɣri, maca aqeddac ur yesεi ula d yiwet n twali n umeẓlu.",
-        "identity_server_no_terms_description_2": "Ala ma tettekleḍ ɣef bab n uqeddac ara tkemmleḍ."
+        "identity_server_no_terms_description_2": "Ala ma tettekleḍ ɣef bab n uqeddac ara tkemmleḍ.",
+        "inline_intro_text": "Qbel <policyLink /> i wakken ad tkemmleḍ:"
     },
     "failed_load_async_component": "Yegguma ad d-yali! Senqed tuqqna-inek.inem ɣer uzeṭṭa syen tεerḍeḍ tikkelt-nniḍen.",
     "upload_failed_generic": "Yegguma ad d-yali '%(fileName)s' ufaylu.",
@@ -2183,7 +2181,9 @@
         "admin_contact": "Ttxil-k·m <a>nermes anedbal-ik·im n uqeddac</a> i wakken ad tkemmleḍ aseqdec n yibenk-a.",
         "mixed_content": "Ur tessawḍeḍ ara ad teqqneḍ ɣer uqeddac agejdan s HTTP mi ara yili URL n HTTPS deg ufeggag n yiminig-ik·im. Seqdec HTTPS neɣ <a>sermed isekripten ariɣelsanen</a>.",
         "tls": "Yegguma ad yeqqen ɣer uqeddac agejdan - ttxil-k·m senqed tuqqna-inek·inem, tḍemneḍ belli <a>aselken n SSL n uqeddac agejdan</a> yettwattkal, rnu aseɣzan n yiminig-nni ur issewḥal ara isutar.",
-        "admin_contact_short": "Nermes anedbal-inek·inem <a>n uqeddac</a>."
+        "admin_contact_short": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
+        "non_urgent_echo_failure_toast": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n <a>yisuturen</a>.",
+        "failed_copy": "Anɣal ur yeddi ara"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2196,5 +2196,9 @@
         "colour_bold": "Azuran",
         "error_change_title": "Snifel iɣewwaren n yilɣa"
     },
-    "room_summary_card_back_action_label": "Talɣut n texxamt"
+    "room_summary_card_back_action_label": "Talɣut n texxamt",
+    "quick_settings": {
+        "all_settings": "Akk iɣewwaren",
+        "sidebar_settings": "Ugar n textiṛiyin"
+    }
 }

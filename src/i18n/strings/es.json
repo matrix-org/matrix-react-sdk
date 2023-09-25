@@ -85,7 +85,6 @@
         "one": "Subiendo %(filename)s y otros %(count)s",
         "other": "Subiendo %(filename)s y otros %(count)s"
     },
-    "Upload avatar": "Adjuntar avatar",
     "Verification Pending": "Verificación Pendiente",
     "Warning!": "¡Advertencia!",
     "AM": "AM",
@@ -168,8 +167,6 @@
     "You don't currently have any stickerpacks enabled": "Actualmente no tienes ningún paquete de pegatinas activado",
     "Error decrypting image": "Error al descifrar imagen",
     "Error decrypting video": "Error al descifrar el vídeo",
-    "Copied!": "¡Copiado!",
-    "Failed to copy": "Falló la copia",
     "Add an Integration": "Añadir una Integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?",
     "Delete Widget": "Eliminar accesorio",
@@ -320,7 +317,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica a este usuario para marcarlo como de confianza. Confiar en usuarios aporta tranquilidad en los mensajes cifrados de extremo a extremo.",
     "Incoming Verification Request": "Petición de verificación entrante",
     "Scissors": "Tijeras",
-    "Accept <policyLink /> to continue:": "<policyLink />, acepta para continuar:",
     "Cannot connect to integration manager": "No se puede conectar al gestor de integraciones",
     "The integration manager is offline or it cannot reach your homeserver.": "El gestor de integraciones está desconectado o no puede conectar con su servidor.",
     "Jump to first unread room.": "Saltar a la primera sala sin leer.",
@@ -625,7 +621,6 @@
     "Widgets do not use message encryption.": "Los accesorios no utilizan el cifrado de mensajes.",
     "Widget added by": "Accesorio añadido por",
     "This widget may use cookies.": "Puede que el accesorio use cookies.",
-    "More options": "Mas opciones",
     "Rotate Left": "Girar a la izquierda",
     "Upload completed": "Subida completada",
     "Cancelled signature upload": "Subida de firma cancelada",
@@ -672,7 +667,6 @@
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
     "Your homeserver has exceeded one of its resource limits.": "Tú servidor ha excedido el limite de sus recursos.",
     "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
-    "Your server isn't responding to some <a>requests</a>.": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "El administrador de tu servidor base ha desactivado el cifrado de extremo a extremo en salas privadas y mensajes directos.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
     "No recently visited rooms": "No hay salas visitadas recientemente",
@@ -729,9 +723,7 @@
     "Security Key": "Clave de seguridad",
     "Use your Security Key to continue.": "Usa tu llave de seguridad para continuar.",
     "This room is public": "Esta sala es pública",
-    "All settings": "Ajustes",
     "Switch theme": "Cambiar tema",
-    "Create account": "Crear una cuenta",
     "Failed to re-authenticate due to a homeserver problem": "No ha sido posible volver a autenticarse debido a un problema con el servidor base",
     "Clear personal data": "Borrar datos personales",
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
@@ -1116,7 +1108,6 @@
     "Leave space": "Salir del espacio",
     "Invite people": "Invitar gente",
     "Share invite link": "Compartir enlace de invitación",
-    "Click to copy": "Haz clic para copiar",
     "Create a space": "Crear un espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
     "Private space": "Espacio privado",
@@ -1143,7 +1134,6 @@
         "other": "%(count)s personas que ya conoces se han unido"
     },
     "unknown person": "persona desconocida",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s desde %(ip)s",
     "Reset event store?": "¿Restablecer almacenamiento de eventos?",
     "You most likely do not want to reset your event index store": "Lo más probable es que no quieras restablecer tu almacenamiento de índice de ecentos",
     "Reset event store": "Restablecer el almacenamiento de eventos",
@@ -1309,11 +1299,7 @@
     "Call declined": "Llamada rechazada",
     "Stop recording": "Dejar de grabar",
     "Send voice message": "Enviar un mensaje de voz",
-    "More": "Más",
-    "Show sidebar": "Ver menú lateral",
-    "Hide sidebar": "Ocultar menú lateral",
     "Unknown failure: %(reason)s": "Fallo desconocido: %(reason)s",
-    "Delete avatar": "Borrar avatar",
     "Cross-signing is ready but keys are not backed up.": "La firma cruzada está lista, pero no hay copia de seguridad de las claves.",
     "Rooms and spaces": "Salas y espacios",
     "Results": "Resultados",
@@ -1394,13 +1380,11 @@
         "one": "%(spaceName)s y %(count)s más"
     },
     "Messaging": "Mensajería",
-    "Quick settings": "Ajustes rápidos",
     "Developer": "Desarrollo",
     "Experimental": "Experimentos",
     "Themes": "Temas",
     "Moderation": "Moderación",
     "Files": "Archivos",
-    "Pin to sidebar": "Fijar a la barra lateral",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "Si decides no verificar, no tendrás acceso a todos tus mensajes y puede que le aparezcas a los demás como «no confiado».",
     "Recent searches": "Búsquedas recientes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar contenido de mensajes, usa este icono en la parte de arriba de una sala: <icon/>",
@@ -1502,7 +1486,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
     "Can't edit poll": "Encuesta no editable",
     "Open thread": "Abrir hilo",
-    "Match system": "Usar el del sistema",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
     "Click to drop a pin": "Haz clic para colocar un marcador",
@@ -1668,7 +1651,6 @@
     "Video call (%(brand)s)": "Videollamada (%(brand)s)",
     "Video call (Jitsi)": "Videollamada (Jitsi)",
     "Call type": "Tipo de llamada",
-    "Sorry — this call is currently full": "Lo sentimos — la llamada está llena",
     "Completing set up of your new device": "Terminando de configurar tu nuevo dispositivo",
     "Waiting for device to sign in": "Esperando a que el dispositivo inicie sesión",
     "Review and approve the sign in": "Revisar y aprobar inicio de sesión",
@@ -1746,8 +1728,6 @@
     "Connecting to integration manager…": "Conectando al gestor de integraciones…",
     "Saving…": "Guardando…",
     "Creating…": "Creando…",
-    "Verify Session": "Verificar sesión",
-    "Ignore (%(counter)s)": "Ignorar (%(counter)s)",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -1869,7 +1849,8 @@
         "off": "Apagado",
         "all_rooms": "Todas las salas",
         "deselect_all": "Deseleccionar todo",
-        "select_all": "Seleccionar todo"
+        "select_all": "Seleccionar todo",
+        "copied": "¡Copiado!"
     },
     "action": {
         "continue": "Continuar",
@@ -1971,7 +1952,8 @@
         "clear": "Borrar",
         "exit_fullscreeen": "Salir de pantalla completa",
         "enter_fullscreen": "Pantalla completa",
-        "unban": "Quitar Veto"
+        "unban": "Quitar Veto",
+        "click_to_copy": "Haz clic para copiar"
     },
     "a11y": {
         "user_menu": "Menú del Usuario",
@@ -2273,7 +2255,8 @@
         "intro_byline": "Toma el control de tus conversaciones.",
         "send_dm": "Envía un mensaje directo",
         "explore_rooms": "Explora las salas públicas",
-        "create_room": "Crea un grupo"
+        "create_room": "Crea un grupo",
+        "create_account": "Crear una cuenta"
     },
     "settings": {
         "show_breadcrumbs": "Incluir encima de la lista de salas unos atajos a las últimas salas que hayas visto",
@@ -3212,7 +3195,12 @@
         "failed_call_live_broadcast_description": "No puedes empezar una llamada, porque estás grabando una retransmisión en directo. Por favor, finaliza tu retransmisión en directo para empezar la llamada.",
         "no_media_perms_title": "Sin permisos para el medio",
         "no_media_perms_description": "Probablemente necesites dar permisos manualmente a %(brand)s para tu micrófono/cámara",
-        "call_toast_unknown_room": "Sala desconocida"
+        "call_toast_unknown_room": "Sala desconocida",
+        "join_button_tooltip_connecting": "Conectando",
+        "join_button_tooltip_call_full": "Lo sentimos — la llamada está llena",
+        "hide_sidebar_button": "Ocultar menú lateral",
+        "show_sidebar_button": "Ver menú lateral",
+        "more_button": "Más"
     },
     "Other": "Otros",
     "Advanced": "Avanzado",
@@ -3303,7 +3291,9 @@
             "room_id": "ID interna de la sala",
             "room_version_section": "Versión de la sala",
             "room_version": "Versión de la sala:"
-        }
+        },
+        "delete_avatar_label": "Borrar avatar",
+        "upload_avatar_label": "Adjuntar avatar"
     },
     "encryption": {
         "verification": {
@@ -3334,7 +3324,10 @@
             "unverified_sessions_toast_description": "Revisa que tu cuenta esté segura",
             "unverified_sessions_toast_reject": "Más tarde",
             "unverified_session_toast_title": "Nuevo inicio de sesión. ¿Fuiste tú?",
-            "unverified_session_toast_accept": "Sí, fui yo"
+            "unverified_session_toast_accept": "Sí, fui yo",
+            "request_toast_detail": "%(deviceId)s desde %(ip)s",
+            "request_toast_decline_counter": "Ignorar (%(counter)s)",
+            "request_toast_accept": "Verificar sesión"
         },
         "old_version_detected_title": "Se detectó información de criptografía antigua",
         "old_version_detected_description": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
@@ -3516,7 +3509,8 @@
         "no_hs_url_provided": "No se ha indicado la URL del servidor local",
         "autodiscovery_unexpected_error_hs": "Error inesperado en la configuración del servidor",
         "autodiscovery_unexpected_error_is": "Error inesperado en la configuración del servidor de identidad",
-        "incorrect_credentials_detail": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org."
+        "incorrect_credentials_detail": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org.",
+        "create_account_title": "Crear una cuenta"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -3727,7 +3721,8 @@
         "empty_heading": "Organiza los temas de conversación en hilos"
     },
     "theme": {
-        "light_high_contrast": "Claro con contraste alto"
+        "light_high_contrast": "Claro con contraste alto",
+        "match_system": "Usar el del sistema"
     },
     "space": {
         "landing_welcome": "Te damos la bienvenida a <name/>",
@@ -3832,7 +3827,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Cambiar al tema claro",
-        "switch_theme_dark": "Cambiar al tema oscuro"
+        "switch_theme_dark": "Cambiar al tema oscuro",
+        "settings": "Ajustes"
     },
     "notif_panel": {
         "empty_heading": "Estás al día",
@@ -3897,7 +3893,8 @@
         "tac_button": "Revisar términos y condiciones",
         "identity_server_no_terms_title": "El servidor de identidad no tiene términos de servicio",
         "identity_server_no_terms_description_1": "Esta acción necesita acceder al servidor de identidad por defecto <server /> para validar un correo o un teléfono, pero el servidor no tiene términos de servicio.",
-        "identity_server_no_terms_description_2": "Continúa solamente si confías en el propietario del servidor."
+        "identity_server_no_terms_description_2": "Continúa solamente si confías en el propietario del servidor.",
+        "inline_intro_text": "<policyLink />, acepta para continuar:"
     },
     "space_settings": {
         "title": "Ajustes - %(spaceName)s"
@@ -3987,7 +3984,9 @@
         "connection": "Ha ocurrido un error al conectarse a tu servidor base, inténtalo de nuevo más tarde.",
         "mixed_content": "No se ha podido conectar al servidor base a través de HTTP, cuando es necesario un enlace HTTPS en la barra de direcciones de tu navegador. Ya sea usando HTTPS o <a>activando los scripts inseguros</a>.",
         "tls": "No se puede conectar al servidor base. Por favor, comprueba tu conexión, asegúrate de que el <a>certificado SSL del servidor</a> es de confiaza, y comprueba que no haya extensiones de navegador bloqueando las peticiones.",
-        "admin_contact_short": "Contacta con el <a>administrador del servidor</a>."
+        "admin_contact_short": "Contacta con el <a>administrador del servidor</a>.",
+        "non_urgent_echo_failure_toast": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
+        "failed_copy": "Falló la copia"
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4019,5 +4018,11 @@
     "chat_card_back_action_label": "Volver a la conversación",
     "room_summary_card_back_action_label": "Información de la sala",
     "member_list_back_action_label": "Miembros de la sala",
-    "thread_view_back_action_label": "Volver al hilo"
+    "thread_view_back_action_label": "Volver al hilo",
+    "quick_settings": {
+        "title": "Ajustes rápidos",
+        "all_settings": "Ajustes",
+        "metaspace_section": "Fijar a la barra lateral",
+        "sidebar_settings": "Mas opciones"
+    }
 }

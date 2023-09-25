@@ -77,7 +77,6 @@
         "one": "正在上傳 %(filename)s 與另 %(count)s 個檔案",
         "other": "正在上傳 %(filename)s 與另 %(count)s 個檔案"
     },
-    "Upload avatar": "上傳大頭照",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s（權限等級 %(powerLevelNumber)s）",
     "Verification Pending": "等待驗證",
     "Warning!": "警告！",
@@ -132,8 +131,6 @@
     "Delete widget": "刪除小工具",
     "AM": "上午",
     "PM": "下午",
-    "Copied!": "已複製！",
-    "Failed to copy": "無法複製",
     "Restricted": "已限制",
     "Send": "傳送",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "您正在將自己降級，如果您是聊天室中最後一位有特殊權限的使用者，您將無法復原此變更，因為無法再獲得特定權限。",
@@ -274,7 +271,6 @@
     "Incoming Verification Request": "收到的驗證請求",
     "Email (optional)": "電子郵件（選擇性）",
     "Join millions for free on the largest public server": "在最大的公開伺服器上，免費與數百萬人一起交流",
-    "Create account": "建立帳號",
     "Recovery Method Removed": "已移除復原方法",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果您沒有移除復原方法，攻擊者可能會試圖存取您的帳號。請立刻在設定中變更您帳號的密碼並設定新的復原方式。",
     "Dog": "狗",
@@ -449,7 +445,6 @@
     "Enter a new identity server": "輸入新的身分伺服器",
     "Remove %(email)s?": "移除 %(email)s？",
     "Remove %(phone)s?": "移除 %(phone)s？",
-    "Accept <policyLink /> to continue:": "接受 <policyLink /> 以繼續：",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "需同意身分伺服器（%(serverName)s）的使用條款，讓其他人可以使用電子郵件地址或電話號碼找到您。",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "如果您不想要使用 <server /> 來探索與被您現有的聯絡人探索，在下方輸入其他身分伺服器。",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "使用身分伺服器是選擇性的。如果您選擇不要使用身分伺服器，您將無法被其他使用者探索，您也不能透過電子郵件或電話邀請其他人。",
@@ -532,7 +527,6 @@
     "The integration manager is offline or it cannot reach your homeserver.": "整合管理員已離線或無法存取您的家伺服器。",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
     "Widgets do not use message encryption.": "小工具不使用訊息加密。",
-    "More options": "更多選項",
     "Integrations are disabled": "整合已停用",
     "Integrations not allowed": "不允許整合",
     "Remove for everyone": "為所有人移除",
@@ -714,7 +708,6 @@
     "Ok": "確定",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "您的伺服器管理員已停用在私密聊天室與私人訊息中預設的端對端加密。",
     "Switch theme": "切換佈景主題",
-    "All settings": "所有設定",
     "No recently visited rooms": "沒有最近造訪過的聊天室",
     "Message preview": "訊息預覽",
     "Room options": "聊天室選項",
@@ -740,7 +733,6 @@
     "Edited at %(date)s": "編輯於 %(date)s",
     "Click to view edits": "點擊以檢視編輯",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
-    "Your server isn't responding to some <a>requests</a>.": "您的伺服器未回應某些<a>請求</a>。",
     "You're all caught up.": "您已完成。",
     "Server isn't responding": "伺服器沒有回應",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "您的伺服器未對您的某些請求回應。下列是可能的原因。",
@@ -1117,7 +1109,6 @@
     "Leave space": "離開聊天空間",
     "Invite people": "邀請夥伴",
     "Share invite link": "分享邀請連結",
-    "Click to copy": "點擊複製",
     "Create a space": "建立聊天空間",
     "Private space": "私密聊天空間",
     "Public space": "公開聊天空間",
@@ -1136,7 +1127,6 @@
     "You can change these anytime.": "您隨時可以變更這些。",
     "unknown person": "不明身份的人",
     "Verify your identity to access encrypted messages and prove your identity to others.": "驗證您的身分來存取已加密的訊息並對其他人證明您的身分。",
-    "%(deviceId)s from %(ip)s": "從 %(ip)s 來的 %(deviceId)s",
     "%(count)s people you know have already joined": {
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
@@ -1309,10 +1299,6 @@
     "Call declined": "已拒絕通話",
     "Stop recording": "停止錄製",
     "Send voice message": "傳送語音訊息",
-    "More": "更多",
-    "Show sidebar": "顯示側邊欄",
-    "Hide sidebar": "隱藏側邊欄",
-    "Delete avatar": "刪除大頭照",
     "Unknown failure: %(reason)s": "未知錯誤：%(reason)s",
     "Rooms and spaces": "聊天室與聊天空間",
     "Results": "結果",
@@ -1413,8 +1399,6 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "Pin to sidebar": "釘選至側邊欄",
-    "Quick settings": "快速設定",
     "Spaces you know that contain this space": "您知道的包含此聊天空間的聊天空間",
     "Chat": "聊天",
     "Home options": "家選項",
@@ -1502,7 +1486,6 @@
     "My current location": "我目前的位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s 無法傳送您的位置。請稍後再試。",
     "We couldn't send your location": "我們無法傳送您的位置",
-    "Match system": "符合系統色彩",
     "Click to drop a pin": "點擊以放置圖釘",
     "Click to move the pin": "點擊以移動圖釘",
     "Click": "點擊",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "您沒有足夠的權限來變更此設定。",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s 提供端對端加密，但目前使用者數量較少。",
     "Enable %(brand)s as an additional calling option in this room": "啟用 %(brand)s 作為此聊天室的額外通話選項",
-    "Sorry — this call is currently full": "抱歉 — 此通話目前已滿",
     "Completing set up of your new device": "完成您新裝置的設定",
     "Waiting for device to sign in": "正在等待裝置登入",
     "Review and approve the sign in": "審閱並批准登入",
@@ -1773,8 +1755,6 @@
     "Active polls": "進行中的投票",
     "View poll in timeline": "在時間軸中檢視投票",
     "Answered elsewhere": "在別處回答",
-    "Verify Session": "驗證工作階段",
-    "Ignore (%(counter)s)": "忽略（%(counter)s）",
     "Invites by email can only be sent one at a time": "透過電子郵件傳送的邀請一次只能傳送一個",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "更新您的通知偏好設定時發生錯誤。請再試一次。",
     "Desktop app logo": "桌面應用程式標誌",
@@ -1953,7 +1933,8 @@
         "off": "關閉",
         "all_rooms": "所有聊天室",
         "deselect_all": "取消選取",
-        "select_all": "全部選取"
+        "select_all": "全部選取",
+        "copied": "已複製！"
     },
     "action": {
         "continue": "繼續",
@@ -2056,7 +2037,8 @@
         "clear": "清除",
         "exit_fullscreeen": "離開全螢幕",
         "enter_fullscreen": "進入全螢幕",
-        "unban": "解除封鎖"
+        "unban": "解除封鎖",
+        "click_to_copy": "點擊複製"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -2369,7 +2351,8 @@
         "intro_byline": "擁有您的對話。",
         "send_dm": "傳送私人訊息",
         "explore_rooms": "探索公開聊天室",
-        "create_room": "建立群組聊天"
+        "create_room": "建立群組聊天",
+        "create_account": "建立帳號"
     },
     "settings": {
         "show_breadcrumbs": "在聊天室清單上方顯示最近看過的聊天室的捷徑",
@@ -3373,7 +3356,12 @@
         "failed_call_live_broadcast_description": "您無法開始通話，因為您正在錄製直播。請結束您的直播以便開始通話。",
         "no_media_perms_title": "沒有媒體權限",
         "no_media_perms_description": "您可能需要手動允許 %(brand)s 存取您的麥克風／網路攝影機",
-        "call_toast_unknown_room": "未知的聊天室"
+        "call_toast_unknown_room": "未知的聊天室",
+        "join_button_tooltip_connecting": "連線中",
+        "join_button_tooltip_call_full": "抱歉 — 此通話目前已滿",
+        "hide_sidebar_button": "隱藏側邊欄",
+        "show_sidebar_button": "顯示側邊欄",
+        "more_button": "更多"
     },
     "Other": "其他",
     "Advanced": "進階",
@@ -3465,7 +3453,9 @@
             "room_id": "內部聊天室 ID",
             "room_version_section": "聊天室版本",
             "room_version": "聊天室版本："
-        }
+        },
+        "delete_avatar_label": "刪除大頭照",
+        "upload_avatar_label": "上傳大頭照"
     },
     "encryption": {
         "verification": {
@@ -3496,7 +3486,10 @@
             "unverified_sessions_toast_description": "請確認您的帳號安全",
             "unverified_sessions_toast_reject": "稍後",
             "unverified_session_toast_title": "新登入。這是您嗎？",
-            "unverified_session_toast_accept": "是的，是我"
+            "unverified_session_toast_accept": "是的，是我",
+            "request_toast_detail": "從 %(ip)s 來的 %(deviceId)s",
+            "request_toast_decline_counter": "忽略（%(counter)s）",
+            "request_toast_accept": "驗證工作階段"
         },
         "old_version_detected_title": "偵測到舊的加密資料",
         "old_version_detected_description": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
@@ -3691,7 +3684,8 @@
         "autodiscovery_unexpected_error_hs": "解析家伺服器設定時發生錯誤",
         "autodiscovery_unexpected_error_is": "解析身分伺服器設定時發生未預期的錯誤",
         "autodiscovery_hs_incompatible": "您的家伺服器太舊了，不支援所需的最低 API 版本。請聯絡您的伺服器擁有者，或是升級您的伺服器。",
-        "incorrect_credentials_detail": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。"
+        "incorrect_credentials_detail": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。",
+        "create_account_title": "建立帳號"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -3914,7 +3908,8 @@
         "empty_heading": "使用「討論串」功能，讓討論保持有條不紊"
     },
     "theme": {
-        "light_high_contrast": "亮色高對比"
+        "light_high_contrast": "亮色高對比",
+        "match_system": "符合系統色彩"
     },
     "space": {
         "landing_welcome": "歡迎加入 <name/>",
@@ -4020,7 +4015,8 @@
     },
     "user_menu": {
         "switch_theme_light": "切換至淺色模式",
-        "switch_theme_dark": "切換至深色模式"
+        "switch_theme_dark": "切換至深色模式",
+        "settings": "所有設定"
     },
     "notif_panel": {
         "empty_heading": "您已完成",
@@ -4088,7 +4084,8 @@
         "tac_button": "審閱條款與細則",
         "identity_server_no_terms_title": "身分伺服器無使用條款",
         "identity_server_no_terms_description_1": "此動作需要存取預設的身分伺服器 <server /> 以驗證電子郵件或電話號碼，但伺服器沒有任何服務條款。",
-        "identity_server_no_terms_description_2": "僅在您信任伺服器擁有者時才繼續。"
+        "identity_server_no_terms_description_2": "僅在您信任伺服器擁有者時才繼續。",
+        "inline_intro_text": "接受 <policyLink /> 以繼續："
     },
     "space_settings": {
         "title": "設定 - %(spaceName)s"
@@ -4185,7 +4182,9 @@
         "connection": "與家伺服器通訊時出現問題，請再試一次。",
         "mixed_content": "當瀏覽器網址列使用的是 HTTPS 網址時，不能使用 HTTP 連線到家伺服器。請改用 HTTPS 連線或<a>允許不安全的指令碼</a>。",
         "tls": "無法連線到家伺服器 - 請檢查您的連線，確保您的<a>家伺服器的 SSL 憑證</a>可被信任，而瀏覽器擴充套件也沒有阻擋請求。",
-        "admin_contact_short": "聯絡您的<a>伺服器管理員</a>。"
+        "admin_contact_short": "聯絡您的<a>伺服器管理員</a>。",
+        "non_urgent_echo_failure_toast": "您的伺服器未回應某些<a>請求</a>。",
+        "failed_copy": "無法複製"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4217,5 +4216,11 @@
     "chat_card_back_action_label": "回到聊天",
     "room_summary_card_back_action_label": "聊天室資訊",
     "member_list_back_action_label": "聊天室成員",
-    "thread_view_back_action_label": "回到討論串"
+    "thread_view_back_action_label": "回到討論串",
+    "quick_settings": {
+        "title": "快速設定",
+        "all_settings": "所有設定",
+        "metaspace_section": "釘選至側邊欄",
+        "sidebar_settings": "更多選項"
+    }
 }

@@ -91,7 +91,6 @@
     "Clear personal data": "Xóa dữ liệu cá nhân",
     "Failed to re-authenticate due to a homeserver problem": "Không xác thực lại được do sự cố máy chủ",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Xác thực danh tính của bạn để truy cập các tin nhắn được mã hóa và chứng minh danh tính của bạn với người khác.",
-    "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
     "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
     "Invalid base_url for m.identity_server": "Base_url không hợp lệ cho m.identity_server",
@@ -106,7 +105,6 @@
     "A new password must be entered.": "Mật khẩu mới phải được nhập.",
     "Could not load user profile": "Không thể tải hồ sơ người dùng",
     "Switch theme": "Chuyển đổi chủ đề",
-    "All settings": "Tất cả cài đặt",
     "Failed to load timeline position": "Không tải được vị trí dòng thời gian",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng không thể tìm thấy nó.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng bạn không có quyền xem tin nhắn được đề cập.",
@@ -725,7 +723,6 @@
     "You do not have permission to post to this room": "Bạn không có quyền đăng lên phòng này",
     "This room has been replaced and is no longer active.": "Phòng này đã được thay thế và không còn hoạt động nữa.",
     "The conversation continues here.": "Cuộc trò chuyện tiếp tục tại đây.",
-    "More options": "Thêm tùy chọn",
     "Send voice message": "Gửi tin nhắn thoại",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi mức năng lượng của người dùng. Đảm bảo bạn có đủ quyền và thử lại.",
     "Error changing power level": "Lỗi khi thay đổi mức công suất",
@@ -882,9 +879,6 @@
     "Invite with email or username": "Mời bằng thư điện tử hoặc tên người dùng",
     "Invite people": "Mời mọi người",
     "Share invite link": "Chia sẻ liên kết mời",
-    "Failed to copy": "Sao chép không thành công",
-    "Copied!": "Đã sao chép!",
-    "Click to copy": "Bấm để sao chép",
     "Spaces": "Không gian",
     "Show all rooms": "Hiển thị tất cả các phòng",
     "Home": "Nhà",
@@ -893,10 +887,6 @@
     "Create a space": "Tạo một Space",
     "Address": "Địa chỉ",
     "Search %(spaceName)s": "Tìm kiếm %(spaceName)s",
-    "Upload avatar": "Tải lên hình đại diện",
-    "Delete avatar": "Xoá ảnh đại diện",
-    "Accept <policyLink /> to continue:": "Chấp nhận <policyLink /> để tiếp tục:",
-    "Your server isn't responding to some <a>requests</a>.": "Máy chủ của bạn không phản hồi một số yêu cầu <a>requests</a>.",
     "Folder": "Thư mục",
     "Headphones": "Tai nghe",
     "Anchor": "Mỏ neo",
@@ -960,9 +950,6 @@
     "Lion": "Sư tử",
     "Cat": "Con mèo",
     "Dog": "Chó",
-    "More": "Thêm",
-    "Show sidebar": "Hiển thị thanh bên",
-    "Hide sidebar": "Ẩn thanh bên",
     "Connecting": "Đang kết nối",
     "unknown person": "người không rõ",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (chỉ số %(powerLevelNumber)s)",
@@ -1026,7 +1013,6 @@
     "Unknown failure": "Thất bại không xác định",
     "Failed to update the join rules": "Cập nhật quy tắc tham gia thất bại",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s từ %(ip)s",
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
     "Your homeserver has exceeded its user limit.": "Máy chủ của bạn đã vượt quá giới hạn người dùng của nó.",
@@ -1419,8 +1405,6 @@
     "Get notifications as set up in your <a>settings</a>": "Nhận thông báo như được thiết lập trong <a>cài đặt</a> của bạn",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Phòng này không nối các tin nhắn đến bất kỳ nền tảng nào. <a>Tìm hiểu thêm</a>",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
-    "Pin to sidebar": "Ghim vào sidebar",
-    "Quick settings": "Cài đặt nhanh",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -1487,7 +1471,6 @@
         "one": "%(count)s người đã tham gia",
         "other": "%(count)s người đã tham gia"
     },
-    "Sorry — this call is currently full": "Xin lỗi — cuộc gọi này đang đầy",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
@@ -1496,8 +1479,6 @@
     "Call type": "Loại cuộc gọi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Trạng thái HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Lỗi không xác định khi đổi mật khẩu (%(stringifiedError)s)",
-    "Ignore (%(counter)s)": "Ẩn (%(counter)s)",
-    "Match system": "Theo hệ thống",
     "Search users in this room…": "Tìm người trong phòng…",
     "Give one or multiple users in this room more privileges": "Cho người trong phòng này nhiều quyền hơn",
     "Unsent": "Chưa gửi",
@@ -1505,7 +1486,6 @@
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
     "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
-    "Verify Session": "Xác thực phiên",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
@@ -1780,7 +1760,8 @@
         "off": "Tắt",
         "all_rooms": "Tất cả các phòng",
         "deselect_all": "Bỏ chọn tất cả",
-        "select_all": "Chọn tất cả"
+        "select_all": "Chọn tất cả",
+        "copied": "Đã sao chép!"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1883,7 +1864,8 @@
         "clear": "Xoá",
         "exit_fullscreeen": "Thoát toàn màn hình",
         "enter_fullscreen": "Vào toàn màn hình",
-        "unban": "Bỏ cấm"
+        "unban": "Bỏ cấm",
+        "click_to_copy": "Bấm để sao chép"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -2163,7 +2145,8 @@
         "intro_byline": "Sở hữu các cuộc trò chuyện của bạn.",
         "send_dm": "Gửi tin nhắn trực tiếp",
         "explore_rooms": "Khám phá các phòng chung",
-        "create_room": "Tạo một cuộc trò chuyện nhóm"
+        "create_room": "Tạo một cuộc trò chuyện nhóm",
+        "create_account": "Tạo tài khoản"
     },
     "settings": {
         "show_breadcrumbs": "Hiển thị shortcuts cho các phòng đã xem gần đây phía trên danh sách phòng",
@@ -3108,7 +3091,12 @@
         "failed_call_live_broadcast_description": "Bạn không thể bắt đầu gọi vì bạn đang ghi âm để cuộc phát thanh trực tiếp. Hãy ngừng phát thanh để bắt đầu gọi.",
         "no_media_perms_title": "Không có quyền sử dụng công cụ truyền thông",
         "no_media_perms_description": "Bạn có thể cần phải cho phép %(brand)s truy cập vào micrô/webcam của mình theo cách thủ công",
-        "call_toast_unknown_room": "Phòng không xác định"
+        "call_toast_unknown_room": "Phòng không xác định",
+        "join_button_tooltip_connecting": "Đang kết nối",
+        "join_button_tooltip_call_full": "Xin lỗi — cuộc gọi này đang đầy",
+        "hide_sidebar_button": "Ẩn thanh bên",
+        "show_sidebar_button": "Hiển thị thanh bên",
+        "more_button": "Thêm"
     },
     "Other": "Khác",
     "Advanced": "Nâng cao",
@@ -3200,7 +3188,9 @@
             "room_id": "Định danh riêng của phòng",
             "room_version_section": "Phiên bản phòng",
             "room_version": "Phiên bản phòng:"
-        }
+        },
+        "delete_avatar_label": "Xoá ảnh đại diện",
+        "upload_avatar_label": "Tải lên hình đại diện"
     },
     "encryption": {
         "verification": {
@@ -3231,7 +3221,10 @@
             "unverified_sessions_toast_description": "Xem lại để đảm bảo tài khoản của bạn an toàn",
             "unverified_sessions_toast_reject": "Để sau",
             "unverified_session_toast_title": "Đăng nhập mới. Đây có phải là bạn không?",
-            "unverified_session_toast_accept": "Đó là tôi"
+            "unverified_session_toast_accept": "Đó là tôi",
+            "request_toast_detail": "%(deviceId)s từ %(ip)s",
+            "request_toast_decline_counter": "Ẩn (%(counter)s)",
+            "request_toast_accept": "Xác thực phiên"
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -3412,7 +3405,8 @@
         "no_hs_url_provided": "Không có đường dẫn server",
         "autodiscovery_unexpected_error_hs": "Lỗi xảy ra khi xử lý thiết lập máy chủ",
         "autodiscovery_unexpected_error_is": "Lỗi xảy ra khi xử lý thiết lập máy chủ định danh",
-        "incorrect_credentials_detail": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org."
+        "incorrect_credentials_detail": "Xin lưu ý rằng bạn đang đăng nhập vào máy chủ %(hs)s, không phải matrix.org.",
+        "create_account_title": "Tạo tài khoản"
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3628,7 +3622,8 @@
         "empty_heading": "Giữ các cuộc thảo luận được tổ chức với các chủ đề này"
     },
     "theme": {
-        "light_high_contrast": "Độ tương phản ánh sáng cao"
+        "light_high_contrast": "Độ tương phản ánh sáng cao",
+        "match_system": "Theo hệ thống"
     },
     "space": {
         "landing_welcome": "Chào mừng đến với <name />",
@@ -3730,7 +3725,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Chuyển sang chế độ ánh sáng",
-        "switch_theme_dark": "Chuyển sang chế độ tối"
+        "switch_theme_dark": "Chuyển sang chế độ tối",
+        "settings": "Tất cả cài đặt"
     },
     "notif_panel": {
         "empty_heading": "Tất cả các bạn đều bị bắt",
@@ -3796,7 +3792,8 @@
         "tac_button": "Xem lại các điều khoản và điều kiện",
         "identity_server_no_terms_title": "Máy chủ định danh này không có điều khoản dịch vụ",
         "identity_server_no_terms_description_1": "Hành động này yêu cầu truy cập máy chủ định danh mặc định <server /> để xác thực địa chỉ thư điện tử hoặc số điện thoại, nhưng máy chủ không có bất kỳ điều khoản dịch vụ nào.",
-        "identity_server_no_terms_description_2": "Chỉ tiếp tục nếu bạn tin tưởng chủ sở hữu máy chủ."
+        "identity_server_no_terms_description_2": "Chỉ tiếp tục nếu bạn tin tưởng chủ sở hữu máy chủ.",
+        "inline_intro_text": "Chấp nhận <policyLink /> để tiếp tục:"
     },
     "space_settings": {
         "title": "Cài đặt - %(spaceName)s"
@@ -3888,7 +3885,9 @@
         "connection": "Đã xảy ra sự cố khi giao tiếp với máy chủ, vui lòng thử lại sau.",
         "mixed_content": "Không thể kết nối với máy chủ thông qua HTTP khi URL HTTPS nằm trong thanh trình duyệt của bạn. Sử dụng HTTPS hoặc bật các tập lệnh không an toàn <a>enable unsafe scripts</a>.",
         "tls": "Không thể kết nối với máy chủ - vui lòng kiểm tra kết nối của bạn, đảm bảo rằng chứng chỉ SSL của máy chủ nhà <a>homeserver's SSL certificate</a> của bạn được tin cậy và tiện ích mở rộng của trình duyệt không chặn các yêu cầu.",
-        "admin_contact_short": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn."
+        "admin_contact_short": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn.",
+        "non_urgent_echo_failure_toast": "Máy chủ của bạn không phản hồi một số yêu cầu <a>requests</a>.",
+        "failed_copy": "Sao chép không thành công"
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3920,5 +3919,11 @@
     "chat_card_back_action_label": "Quay lại trò chuyện",
     "room_summary_card_back_action_label": "Thông tin phòng",
     "member_list_back_action_label": "Thành viên phòng",
-    "thread_view_back_action_label": "Quay lại luồng"
+    "thread_view_back_action_label": "Quay lại luồng",
+    "quick_settings": {
+        "title": "Cài đặt nhanh",
+        "all_settings": "Tất cả cài đặt",
+        "metaspace_section": "Ghim vào sidebar",
+        "sidebar_settings": "Thêm tùy chọn"
+    }
 }

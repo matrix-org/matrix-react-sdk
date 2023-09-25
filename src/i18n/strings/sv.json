@@ -121,7 +121,6 @@
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
     },
-    "Upload avatar": "Ladda upp avatar",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (behörighet %(powerLevelNumber)s)",
     "And %(count)s more...": {
         "other": "Och %(count)s till…"
@@ -150,8 +149,6 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Försökte ladda en viss punkt i det här rummets tidslinje, men du är inte behörig att visa det aktuella meddelandet.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Försökte ladda en specifik punkt i det här rummets tidslinje, men kunde inte hitta den.",
     "Unable to remove contact information": "Kunde inte ta bort kontaktuppgifter",
-    "Copied!": "Kopierat!",
-    "Failed to copy": "Misslyckades att kopiera",
     "Delete Widget": "Radera widget",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Att radera en widget tar bort den för alla användare i rummet. Är du säker på att du vill radera den?",
     "This room is not public. You will not be able to rejoin without an invite.": "Det här rummet är inte offentligt. Du kommer inte kunna gå med igen utan en inbjudan.",
@@ -299,7 +296,6 @@
     "Join millions for free on the largest public server": "Gå med miljontals användare gratis på den största publika servern",
     "Your password has been reset.": "Ditt lösenord har återställts.",
     "General failure": "Allmänt fel",
-    "Create account": "Skapa konto",
     "Missing media permissions, click the button below to request.": "Saknar mediebehörigheter, klicka på knappen nedan för att begära.",
     "Request media permissions": "Begär mediebehörigheter",
     "Error updating main address": "Fel vid uppdatering av huvudadress",
@@ -352,7 +348,6 @@
     },
     "Cancel All": "Avbryt alla",
     "Upload Error": "Uppladdningsfel",
-    "Accept <policyLink /> to continue:": "Acceptera <policyLink /> för att fortsätta:",
     "Checking server": "Kontrollerar servern",
     "Change identity server": "Byt identitetsserver",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Koppla ifrån från identitetsservern <current /> och anslut till <new /> istället?",
@@ -440,7 +435,6 @@
     "Widgets do not use message encryption.": "Widgets använder inte meddelandekryptering.",
     "Widget added by": "Widget tillagd av",
     "This widget may use cookies.": "Denna widget kan använda kakor.",
-    "More options": "Fler alternativ",
     "Rotate Left": "Rotera vänster",
     "Rotate Right": "Rotera höger",
     "Language Dropdown": "Språkmeny",
@@ -488,7 +482,6 @@
     "Set up": "Sätt upp",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
-    "Your server isn't responding to some <a>requests</a>.": "Din server svarar inte på vissa <a>förfrågningar</a>.",
     "Your homeserver does not support cross-signing.": "Din hemserver stöder inte korssignering.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Ditt konto har en korssigneringsidentitet i hemlig lagring, men den är inte betrodd av den här sessionen än.",
     "well formed": "välformaterad",
@@ -710,7 +703,6 @@
     "Country Dropdown": "Land-dropdown",
     "Sign in with SSO": "Logga in med SSO",
     "Explore rooms": "Utforska rum",
-    "All settings": "Alla inställningar",
     "Switch theme": "Byt tema",
     "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
     "Failed to get autodiscovery configuration from server": "Misslyckades att få konfiguration för autoupptäckt från servern",
@@ -1116,7 +1108,6 @@
     "Leave space": "Lämna utrymmet",
     "Invite people": "Bjud in folk",
     "Share invite link": "Skapa inbjudningslänk",
-    "Click to copy": "Klicka för att kopiera",
     "Create a space": "Skapa ett utrymme",
     "Private space": "Privat utrymme",
     "Public space": "Offentligt utrymme",
@@ -1137,7 +1128,6 @@
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
     },
-    "%(deviceId)s from %(ip)s": "%(deviceId)s från %(ip)s",
     "unknown person": "okänd person",
     "Add existing rooms": "Lägg till existerande rum",
     "We couldn't create your DM.": "Vi kunde inte skapa ditt DM.",
@@ -1216,10 +1206,6 @@
     "Failed to update the visibility of this space": "Misslyckades att uppdatera synligheten för det här utrymmet",
     "Show all rooms": "Visa alla rum",
     "Address": "Adress",
-    "Delete avatar": "Radera avatar",
-    "More": "Mer",
-    "Show sidebar": "Visa sidopanel",
-    "Hide sidebar": "Göm sidopanel",
     "Space information": "Utrymmesinfo",
     "There was an error loading your notification settings.": "Ett fel inträffade när dina aviseringsinställningar laddades.",
     "Mentions & keywords": "Omnämnanden & nyckelord",
@@ -1392,8 +1378,6 @@
     "Themes": "Teman",
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
-    "Pin to sidebar": "Fäst i sidopanelen",
-    "Quick settings": "Snabbinställningar",
     "From a thread": "Från en tråd",
     "You won't get any notifications": "Du får inga aviseringar",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Bli endast aviserad om omnämnanden och nyckelord i enlighet med dina <a>inställningar</a>",
@@ -1496,7 +1480,6 @@
     "Results will be visible when the poll is ended": "Resultat kommer att visas när omröstningen avslutas",
     "Pinned": "Fäst",
     "Open thread": "Öppna tråd",
-    "Match system": "Matcha systemet",
     "This invite was sent to %(email)s": "Denna inbjudan skickades till %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Denna inbjudan skickades till %(email)s vilken inte är associerad med ditt konto",
     "You can still join here.": "Du kan fortfarande gå med här.",
@@ -1644,7 +1627,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Meddelanden i den här chatten kommer att vara totalsträckskypterade.",
     "Join the room to participate": "Gå med i rummet för att delta",
     "Saved Items": "Sparade föremål",
-    "Sorry — this call is currently full": "Tyvärr - det här samtalet är för närvarande fullt",
     "Connection": "Anslutning",
     "Voice processing": "Röstbearbetning",
     "Video settings": "Videoinställningar",
@@ -1755,8 +1737,6 @@
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
-    "Verify Session": "Verifiera session",
-    "Ignore (%(counter)s)": "Ignorera (%(counter)s)",
     "View poll": "Visa omröstning",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
         "one": "Det finns inga tidigare omröstningar för det senaste dygnet. Ladda fler omröstningar för att se omröstningar för tidigare månader",
@@ -1910,7 +1890,8 @@
         "off": "Av",
         "all_rooms": "Alla rum",
         "deselect_all": "Välj bort alla",
-        "select_all": "Välj alla"
+        "select_all": "Välj alla",
+        "copied": "Kopierat!"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2012,7 +1993,8 @@
         "clear": "Rensa",
         "exit_fullscreeen": "Gå ur fullskärm",
         "enter_fullscreen": "Gå till fullskärm",
-        "unban": "Avblockera"
+        "unban": "Avblockera",
+        "click_to_copy": "Klicka för att kopiera"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -2325,7 +2307,8 @@
         "intro_byline": "Äg dina konversationer.",
         "send_dm": "Skicka ett direktmeddelande",
         "explore_rooms": "Utforska offentliga rum",
-        "create_room": "Skapa en gruppchatt"
+        "create_room": "Skapa en gruppchatt",
+        "create_account": "Skapa konto"
     },
     "settings": {
         "show_breadcrumbs": "Visa genvägar till nyligen visade rum över rumslistan",
@@ -3314,7 +3297,12 @@
         "failed_call_live_broadcast_description": "Du kan inte starta ett samtal eftersom att du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta ett samtal.",
         "no_media_perms_title": "Inga mediebehörigheter",
         "no_media_perms_description": "Du behöver manuellt tillåta %(brand)s att komma åt din mikrofon/kamera",
-        "call_toast_unknown_room": "Okänt rum"
+        "call_toast_unknown_room": "Okänt rum",
+        "join_button_tooltip_connecting": "Ansluter",
+        "join_button_tooltip_call_full": "Tyvärr - det här samtalet är för närvarande fullt",
+        "hide_sidebar_button": "Göm sidopanel",
+        "show_sidebar_button": "Visa sidopanel",
+        "more_button": "Mer"
     },
     "Other": "Annat",
     "Advanced": "Avancerat",
@@ -3406,7 +3394,9 @@
             "room_id": "Internt rums-ID",
             "room_version_section": "Rumsversion",
             "room_version": "Rumsversion:"
-        }
+        },
+        "delete_avatar_label": "Radera avatar",
+        "upload_avatar_label": "Ladda upp avatar"
     },
     "encryption": {
         "verification": {
@@ -3437,7 +3427,10 @@
             "unverified_sessions_toast_description": "Granska för att försäkra dig om att ditt konto är säkert",
             "unverified_sessions_toast_reject": "Senare",
             "unverified_session_toast_title": "Ny inloggning. Var det du?",
-            "unverified_session_toast_accept": "Ja, det var jag"
+            "unverified_session_toast_accept": "Ja, det var jag",
+            "request_toast_detail": "%(deviceId)s från %(ip)s",
+            "request_toast_decline_counter": "Ignorera (%(counter)s)",
+            "request_toast_accept": "Verifiera session"
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3631,7 +3624,8 @@
         "autodiscovery_unexpected_error_hs": "Oväntat fel vid inläsning av hemserverkonfiguration",
         "autodiscovery_unexpected_error_is": "Oväntat fel vid inläsning av identitetsserverkonfiguration",
         "autodiscovery_hs_incompatible": "Din hemserver är för gammal och stöder inte minimum-API:t som krävs. Vänligen kontakta din serverägare, eller uppgradera din server.",
-        "incorrect_credentials_detail": "Observera att du loggar in på servern %(hs)s, inte matrix.org."
+        "incorrect_credentials_detail": "Observera att du loggar in på servern %(hs)s, inte matrix.org.",
+        "create_account_title": "Skapa konto"
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -3854,7 +3848,8 @@
         "empty_heading": "Håll diskussioner organiserade med trådar"
     },
     "theme": {
-        "light_high_contrast": "Ljust högkontrast"
+        "light_high_contrast": "Ljust högkontrast",
+        "match_system": "Matcha systemet"
     },
     "space": {
         "landing_welcome": "Välkommen till <name/>",
@@ -3960,7 +3955,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Byt till ljust läge",
-        "switch_theme_dark": "Byt till mörkt läge"
+        "switch_theme_dark": "Byt till mörkt läge",
+        "settings": "Alla inställningar"
     },
     "notif_panel": {
         "empty_heading": "Du är ikapp",
@@ -4028,7 +4024,8 @@
         "tac_button": "Granska villkoren",
         "identity_server_no_terms_title": "Identitetsservern har inga användarvillkor",
         "identity_server_no_terms_description_1": "Den här åtgärden kräver åtkomst till standardidentitetsservern <server /> för att validera en e-postadress eller ett telefonnummer, men servern har inga användarvillkor.",
-        "identity_server_no_terms_description_2": "Fortsätt endast om du litar på serverns ägare."
+        "identity_server_no_terms_description_2": "Fortsätt endast om du litar på serverns ägare.",
+        "inline_intro_text": "Acceptera <policyLink /> för att fortsätta:"
     },
     "space_settings": {
         "title": "Inställningar - %(spaceName)s"
@@ -4125,7 +4122,9 @@
         "connection": "Ett problem inträffade vi kommunikation med hemservern, vänligen försök igen senare.",
         "mixed_content": "Kan inte ansluta till en hemserver via HTTP då adressen i webbläsaren är HTTPS. Använd HTTPS, eller <a>aktivera osäkra skript</a>.",
         "tls": "Kan inte ansluta till hemservern - vänligen kolla din nätverksanslutning, se till att <a>hemserverns SSL-certifikat</a> är betrott, och att inget webbläsartillägg blockerar förfrågningar.",
-        "admin_contact_short": "Kontakta din <a>serveradministratör</a>."
+        "admin_contact_short": "Kontakta din <a>serveradministratör</a>.",
+        "non_urgent_echo_failure_toast": "Din server svarar inte på vissa <a>förfrågningar</a>.",
+        "failed_copy": "Misslyckades att kopiera"
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4157,5 +4156,11 @@
     "chat_card_back_action_label": "Tillbaka till chatt",
     "room_summary_card_back_action_label": "Rumsinformation",
     "member_list_back_action_label": "Rumsmedlemmar",
-    "thread_view_back_action_label": "Tillbaka till tråd"
+    "thread_view_back_action_label": "Tillbaka till tråd",
+    "quick_settings": {
+        "title": "Snabbinställningar",
+        "all_settings": "Alla inställningar",
+        "metaspace_section": "Fäst i sidopanelen",
+        "sidebar_settings": "Fler alternativ"
+    }
 }

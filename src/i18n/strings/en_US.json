@@ -66,7 +66,6 @@
     "Unable to remove contact information": "Unable to remove contact information",
     "Unable to verify email address.": "Unable to verify email address.",
     "unknown error code": "unknown error code",
-    "Upload avatar": "Upload avatar",
     "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
     "You do not have permission to post to this room": "You do not have permission to post to this room",
@@ -530,7 +529,8 @@
         },
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"
-        }
+        },
+        "upload_avatar_label": "Upload avatar"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",

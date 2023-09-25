@@ -66,7 +66,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Bli med i rom",
-    "Upload avatar": "Last avatar opp",
     "Forget room": "Gløym rom",
     "Share room": "Del rom",
     "Rooms": "Rom",
@@ -100,8 +99,6 @@
     "Invalid file%(extra)s": "Ugangbar fil%(extra)s",
     "Error decrypting image": "Noko gjekk gale med biletedekrypteringa",
     "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
-    "Copied!": "Kopiert!",
-    "Failed to copy": "Noko gjekk gale med kopieringa",
     "Email address": "Epostadresse",
     "Something went wrong!": "Noko gjekk gale!",
     "Delete Widget": "Slett Widgeten",
@@ -217,7 +214,6 @@
     "Invalid base_url for m.identity_server": "Feil base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil",
-    "Create account": "Lag konto",
     "Failed to re-authenticate due to a homeserver problem": "Fekk ikkje til å re-authentisere grunna ein feil på heimetenaren",
     "Clear personal data": "Fjern personlege data",
     "That matches!": "Dette stemmer!",
@@ -347,7 +343,6 @@
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
-    "All settings": "Alle innstillingar",
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
@@ -395,16 +390,10 @@
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
     "Identity server URL must be HTTPS": "URL for identitetstenar må vera HTTPS",
     "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
-    "Hide sidebar": "Gøym sidestolpen",
-    "Show sidebar": "Vis sidestolpen",
     "Close sidebar": "Lat att sidestolpen",
     "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Enter a new identity server": "Skriv inn ein ny identitetstenar",
-    "Quick settings": "Hurtigval",
-    "More options": "Fleire val",
-    "Pin to sidebar": "Fest til sidestolpen",
-    "Match system": "Følg systemet",
     "Room settings": "Rominnstillingar",
     "Join the conference from the room information card on the right": "Bli med i konferanse frå rominfo-kortet til høgre",
     "Final result based on %(count)s votes": {
@@ -456,7 +445,8 @@
         "identity_server": "Identitetstenar",
         "feedback": "Tilbakemeldingar",
         "on": "På",
-        "off": "Av"
+        "off": "Av",
+        "copied": "Kopiert!"
     },
     "action": {
         "continue": "Fortset",
@@ -996,7 +986,9 @@
         "no_permission_conference_description": "Du har ikkje tillating til å starta ei gruppesamtale i dette rommet",
         "default_device": "Eininga som brukast i utgangspunktet",
         "no_media_perms_title": "Ingen mediatilgang",
-        "no_media_perms_description": "Det kan henda at du må gje %(brand)s tilgang til mikrofonen/nettkameraet for hand"
+        "no_media_perms_description": "Det kan henda at du må gje %(brand)s tilgang til mikrofonen/nettkameraet for hand",
+        "hide_sidebar_button": "Gøym sidestolpen",
+        "show_sidebar_button": "Vis sidestolpen"
     },
     "Other": "Anna",
     "Advanced": "Avansert",
@@ -1051,7 +1043,8 @@
         "advanced": {
             "unfederated": "Rommet er ikkje tilgjengeleg for andre Matrix-heimtenarar",
             "room_upgrade_button": "Oppgrader dette rommet til anbefalt romversjon"
-        }
+        },
+        "upload_avatar_label": "Last avatar opp"
     },
     "auth": {
         "sign_in_with_sso": "Logg på med Single-Sign-On",
@@ -1105,7 +1098,8 @@
         },
         "reset_password_email_not_found_title": "Denne epostadressa var ikkje funnen",
         "misconfigured_title": "%(brand)s-klienten din er sett opp feil",
-        "incorrect_credentials_detail": "Merk deg at du loggar inn på %(hs)s-tenaren, ikkje matrix.org."
+        "incorrect_credentials_detail": "Merk deg at du loggar inn på %(hs)s-tenaren, ikkje matrix.org.",
+        "create_account_title": "Lag konto"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1128,7 +1122,8 @@
         "unread_messages": "Uleste meldingar."
     },
     "onboarding": {
-        "explore_rooms": "Utforsk offentlege rom"
+        "explore_rooms": "Utforsk offentlege rom",
+        "create_account": "Lag konto"
     },
     "setting": {
         "help_about": {
@@ -1251,7 +1246,8 @@
         "resource_limits": "Heimtenaren har gått over ei av ressursgrensene sine.",
         "admin_contact": "<a>Kontakt din systemadministrator</a> for å vidare bruka tenesta.",
         "mixed_content": "Kan ikkje kobla til heimetenaren via HTTP fordi URL-adressa i nettlesaren er HTTPS. Bruk HTTPS, eller <a>aktiver usikre skript</a>.",
-        "tls": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader."
+        "tls": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader.",
+        "failed_copy": "Noko gjekk gale med kopieringa"
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",
@@ -1263,5 +1259,17 @@
         "colour_bold": "Feit",
         "error_change_title": "Endra varslingsinnstillingar"
     },
-    "room_summary_card_back_action_label": "Rominformasjon"
+    "room_summary_card_back_action_label": "Rominformasjon",
+    "quick_settings": {
+        "title": "Hurtigval",
+        "all_settings": "Alle innstillingar",
+        "metaspace_section": "Fest til sidestolpen",
+        "sidebar_settings": "Fleire val"
+    },
+    "user_menu": {
+        "settings": "Alle innstillingar"
+    },
+    "theme": {
+        "match_system": "Følg systemet"
+    }
 }

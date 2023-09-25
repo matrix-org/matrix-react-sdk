@@ -73,8 +73,6 @@
     "Thu": "to",
     "Fri": "pe",
     "Sat": "la",
-    "Copied!": "Kopioitu!",
-    "Failed to copy": "Kopiointi epäonnistui",
     "Connectivity to the server has been lost.": "Yhteys palvelimeen menetettiin.",
     "Sent messages will be stored until your connection has returned.": "Lähetetyt viestit tallennetaan kunnes yhteys on taas muodostettu.",
     "(~%(count)s results)": {
@@ -131,7 +129,6 @@
     "Jump to read receipt": "Hyppää lukukuittaukseen",
     "Admin Tools": "Ylläpitotyökalut",
     "Unnamed room": "Nimetön huone",
-    "Upload avatar": "Lähetä profiilikuva",
     "Banned by %(displayName)s": "%(displayName)s antoi porttikiellon",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "And %(count)s more...": {
@@ -253,7 +250,6 @@
     "Audio Output": "Äänen ulostulo",
     "Go to Settings": "Siirry asetuksiin",
     "Success!": "Onnistui!",
-    "Create account": "Luo tili",
     "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
     "This homeserver would like to make sure you are not a robot.": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
@@ -434,7 +430,6 @@
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Käytät palvelinta <server></server> tuntemiesi henkilöiden löytämiseen ja löydetyksi tulemiseen. Voit vaihtaa identiteettipalvelintasi alla.",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Et käytä tällä hetkellä identiteettipalvelinta. Lisää identiteettipalvelin alle löytääksesi tuntemiasi henkilöitä ja tullaksesi löydetyksi.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Yhteyden katkaiseminen identiteettipalvelimeesi tarkoittaa, että muut käyttäjät eivät löydä sinua etkä voi kutsua muita sähköpostin tai puhelinnumeron perusteella.",
-    "Accept <policyLink /> to continue:": "Hyväksy <policyLink /> jatkaaksesi:",
     "The identity server you have chosen does not have any terms of service.": "Valitsemallasi identiteettipalvelimella ei ole käyttöehtoja.",
     "Terms of service not accepted or the identity server is invalid.": "Käyttöehtoja ei ole hyväksytty tai identiteettipalvelin ei ole kelvollinen.",
     "Enter a new identity server": "Syötä uusi identiteettipalvelin",
@@ -529,7 +524,6 @@
     "%(name)s wants to verify": "%(name)s haluaa varmentaa",
     "You sent a verification request": "Lähetit varmennuspyynnön",
     "Widgets do not use message encryption.": "Sovelmat eivät käytä viestien salausta.",
-    "More options": "Lisää asetuksia",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
@@ -690,7 +684,6 @@
     "This address is already in use": "Tämä osoite on jo käytössä",
     "No recently visited rooms": "Ei hiljattain vierailtuja huoneita",
     "Switch theme": "Vaihda teemaa",
-    "All settings": "Kaikki asetukset",
     "Looks good!": "Hyvältä näyttää!",
     "Room options": "Huoneen asetukset",
     "This room is public": "Tämä huone on julkinen",
@@ -715,7 +708,6 @@
     "unexpected type": "odottamaton tyyppi",
     "Algorithm:": "Algoritmi:",
     "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
-    "Your server isn't responding to some <a>requests</a>.": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
     "Decline All": "Kieltäydy kaikista",
     "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
     "The server is offline.": "Palvelin ei ole verkossa.",
@@ -1058,7 +1050,6 @@
     "Your message was sent": "Viestisi lähetettiin",
     "Invite people": "Kutsu ihmisiä",
     "Share invite link": "Jaa kutsulinkki",
-    "Click to copy": "Kopioi napsauttamalla",
     "You can change these anytime.": "Voit muuttaa näitä koska tahansa.",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
@@ -1097,7 +1088,6 @@
     "You have no ignored users.": "Et ole sivuuttanut käyttäjiä.",
     "Connecting": "Yhdistetään",
     "unknown person": "tuntematon henkilö",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s osoitteesta %(ip)s",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s & your integration manager.": "Tämän sovelman käyttäminen saattaa jakaa tietoa <helpIcon /> osoitteille %(widgetDomain)s ja käyttämällesi integraatioiden lähteelle.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integraatioiden lähteet vastaanottavat asetusdataa ja voivat muokata sovelmia, lähettää kutsuja huoneeseen ja asettaa oikeustasoja puolestasi.",
@@ -1152,9 +1142,6 @@
     "Guests can join a space without having an account.": "Vieraat voivat liittyä avaruuteen ilman tiliä.",
     "Enable guest access": "Ota käyttöön vieraiden pääsy",
     "Failed to save space settings.": "Avaruuden asetusten tallentaminen epäonnistui.",
-    "Delete avatar": "Poista avatar",
-    "Show sidebar": "Näytä sivupalkki",
-    "Hide sidebar": "Piilota sivupalkki",
     "Decide who can view and join %(spaceName)s.": "Päätä ketkä voivat katsella avaruutta %(spaceName)s ja liittyä siihen.",
     "Space information": "Avaruuden tiedot",
     "Allow people to preview your space before they join.": "Salli ihmisten esikatsella avaruuttasi ennen liittymistä.",
@@ -1236,13 +1223,10 @@
     "Upgrading room": "Päivitetään huonetta",
     "Upgrade required": "Päivitys vaaditaan",
     "Message search initialisation failed": "Viestihaun alustus epäonnistui",
-    "More": "Lisää",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Päivitetään avaruutta...",
         "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
     },
-    "Pin to sidebar": "Kiinnitä sivupalkkiin",
-    "Quick settings": "Pika-asetukset",
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "Files": "Tiedostot",
@@ -1544,7 +1528,6 @@
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
-    "Sorry — this call is currently full": "Pahoittelut — tämä puhelu on täynnä",
     "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.": {
         "other": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta.",
         "one": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa. Käytössä %(size)s, talletetaan viestit %(rooms)s huoneesta."
@@ -1606,7 +1589,6 @@
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "Saving…": "Tallennetaan…",
     "Creating…": "Luodaan…",
-    "Verify Session": "Vahvista istunto",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
@@ -1651,7 +1633,6 @@
     "You do not have permission to invite users": "Sinulla ei ole lupaa kutsua käyttäjiä",
     "Error changing password": "Virhe salasanan vaihtamisessa",
     "Unknown password change error (%(stringifiedError)s)": "Tuntematon salasananvaihtovirhe (%(stringifiedError)s)",
-    "Ignore (%(counter)s)": "Sivuuta (%(counter)s)",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "Set a new account password…": "Aseta uusi tilin salasana…",
     "Encrypting your message…": "Salataan viestiäsi…",
@@ -1755,7 +1736,8 @@
         "off": "Ei päällä",
         "all_rooms": "Kaikki huoneet",
         "deselect_all": "Älä valitse mitään",
-        "select_all": "Valitse kaikki"
+        "select_all": "Valitse kaikki",
+        "copied": "Kopioitu!"
     },
     "action": {
         "continue": "Jatka",
@@ -1857,7 +1839,8 @@
         "clear": "Tyhjennä",
         "exit_fullscreeen": "Poistu koko näytön tilasta",
         "enter_fullscreen": "Siirry koko näytön tilaan",
-        "unban": "Poista porttikielto"
+        "unban": "Poista porttikielto",
+        "click_to_copy": "Kopioi napsauttamalla"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -2141,7 +2124,8 @@
         "intro_byline": "Omista keskustelusi.",
         "send_dm": "Lähetä yksityisviesti",
         "explore_rooms": "Selaa julkisia huoneita",
-        "create_room": "Luo huone"
+        "create_room": "Luo huone",
+        "create_account": "Luo tili"
     },
     "settings": {
         "show_breadcrumbs": "Näytä oikotiet viimeksi katsottuihin huoneisiin huoneluettelon yläpuolella",
@@ -3039,7 +3023,12 @@
         "failed_call_live_broadcast_title": "Puhelua ei voi aloittaa",
         "no_media_perms_title": "Ei mediaoikeuksia",
         "no_media_perms_description": "Voit joutua antamaan %(brand)sille luvan mikrofonin/kameran käyttöön",
-        "call_toast_unknown_room": "Tuntematon huone"
+        "call_toast_unknown_room": "Tuntematon huone",
+        "join_button_tooltip_connecting": "Yhdistetään",
+        "join_button_tooltip_call_full": "Pahoittelut — tämä puhelu on täynnä",
+        "hide_sidebar_button": "Piilota sivupalkki",
+        "show_sidebar_button": "Näytä sivupalkki",
+        "more_button": "Lisää"
     },
     "Other": "Muut",
     "Advanced": "Lisäasetukset",
@@ -3129,7 +3118,9 @@
             "room_id": "Sisäinen huoneen ID-tunniste",
             "room_version_section": "Huoneen versio",
             "room_version": "Huoneen versio:"
-        }
+        },
+        "delete_avatar_label": "Poista avatar",
+        "upload_avatar_label": "Lähetä profiilikuva"
     },
     "encryption": {
         "verification": {
@@ -3159,7 +3150,10 @@
             "unverified_sessions_toast_description": "Katselmoi varmistaaksesi, että tilisi on turvassa",
             "unverified_sessions_toast_reject": "Myöhemmin",
             "unverified_session_toast_title": "Uusi sisäänkirjautuminen. Olitko se sinä?",
-            "unverified_session_toast_accept": "Kyllä, se olin minä"
+            "unverified_session_toast_accept": "Kyllä, se olin minä",
+            "request_toast_detail": "%(deviceId)s osoitteesta %(ip)s",
+            "request_toast_decline_counter": "Sivuuta (%(counter)s)",
+            "request_toast_accept": "Vahvista istunto"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -3344,7 +3338,8 @@
         "no_hs_url_provided": "Kotipalvelimen osoite puuttuu",
         "autodiscovery_unexpected_error_hs": "Odottamaton virhe selvitettäessä kotipalvelimen asetuksia",
         "autodiscovery_unexpected_error_is": "Odottamaton virhe selvitettäessä identiteettipalvelimen asetuksia",
-        "incorrect_credentials_detail": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org."
+        "incorrect_credentials_detail": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org.",
+        "create_account_title": "Luo tili"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3625,7 +3620,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Vaihda vaaleaan teemaan",
-        "switch_theme_dark": "Vaihda tummaan teemaan"
+        "switch_theme_dark": "Vaihda tummaan teemaan",
+        "settings": "Kaikki asetukset"
     },
     "notif_panel": {
         "empty_heading": "Olet ajan tasalla",
@@ -3689,7 +3685,8 @@
         "tac_button": "Lue käyttöehdot",
         "identity_server_no_terms_title": "Identiteettipalvelimella ei ole käyttöehtoja",
         "identity_server_no_terms_description_1": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
-        "identity_server_no_terms_description_2": "Jatka vain, jos luotat palvelimen omistajaan."
+        "identity_server_no_terms_description_2": "Jatka vain, jos luotat palvelimen omistajaan.",
+        "inline_intro_text": "Hyväksy <policyLink /> jatkaaksesi:"
     },
     "space_settings": {
         "title": "Asetukset - %(spaceName)s"
@@ -3782,7 +3779,9 @@
         "connection": "Yhteydessä kotipalvelimeen ilmeni ongelma, yritä myöhemmin uudelleen.",
         "mixed_content": "Yhdistäminen kotipalvelimeen HTTP:n avulla ei ole mahdollista, kun selaimen osoitepalkissa on HTTPS-osoite. Käytä joko HTTPS:ää tai <a>salli turvattomat komentosarjat</a>.",
         "tls": "Kotipalvelimeen ei saada yhteyttä. Tarkista verkkoyhteytesi, varmista että <a>kotipalvelimesi SSL-sertifikaatti</a> on luotettu, ja että mikään selaimen lisäosa ei estä pyyntöjen lähettämistä.",
-        "admin_contact_short": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>."
+        "admin_contact_short": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>.",
+        "non_urgent_echo_failure_toast": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
+        "failed_copy": "Kopiointi epäonnistui"
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3813,5 +3812,11 @@
     "chat_card_back_action_label": "Takaisin keskusteluun",
     "room_summary_card_back_action_label": "Huoneen tiedot",
     "member_list_back_action_label": "Huoneen jäsenet",
-    "thread_view_back_action_label": "Takaisin ketjuun"
+    "thread_view_back_action_label": "Takaisin ketjuun",
+    "quick_settings": {
+        "title": "Pika-asetukset",
+        "all_settings": "Kaikki asetukset",
+        "metaspace_section": "Kiinnitä sivupalkkiin",
+        "sidebar_settings": "Lisää asetuksia"
+    }
 }

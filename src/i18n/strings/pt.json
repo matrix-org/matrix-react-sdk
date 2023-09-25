@@ -26,7 +26,6 @@
     "Unable to remove contact information": "Não foi possível remover informação de contato",
     "Unable to verify email address.": "Não foi possível verificar o endereço de email.",
     "unknown error code": "código de erro desconhecido",
-    "Upload avatar": "Enviar icone de perfil de usuário",
     "Verification Pending": "Verificação pendente",
     "You do not have permission to post to this room": "Você não tem permissão de postar nesta sala",
     "Sun": "Dom",
@@ -131,8 +130,6 @@
     "Delete widget": "Apagar widget",
     "AM": "AM",
     "PM": "PM",
-    "Copied!": "Copiado!",
-    "Failed to copy": "Falha ao copiar",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
     "Unignore": "Deixar de ignorar",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
@@ -296,7 +293,6 @@
     "Discovery options will appear once you have added an email above.": "As opções de descoberta vão aparecer assim que adicione um e-mail acima.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Enviámos-lhe um email para confirmar o seu endereço. Por favor siga as instruções no email e depois clique no botão abaixo.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>.",
-    "Create account": "Criar conta",
     "Invite with email or username": "Convidar com email ou nome de utilizador",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de email, nome de utilizador (como <userId/>) ou <a>partilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, email ou nome de utilizador (como <userId/>) ou <a>partilhe esta sala</a>.",
@@ -453,7 +449,8 @@
         "someone": "Alguém",
         "unnamed_room": "Sala sem nome",
         "on": "Ativado",
-        "off": "Desativado"
+        "off": "Desativado",
+        "copied": "Copiado!"
     },
     "action": {
         "continue": "Continuar",
@@ -752,7 +749,8 @@
             "error_title": "Não foi possível fazer login"
         },
         "reset_password_email_not_found_title": "Este endereço de email não foi encontrado",
-        "reset_password_email_not_associated": "O seu endereço de email não parece estar associado a um Matrix ID neste homeserver."
+        "reset_password_email_not_associated": "O seu endereço de email não parece estar associado a um Matrix ID neste homeserver.",
+        "create_account_title": "Criar conta"
     },
     "export_chat": {
         "messages": "Mensagens"
@@ -817,7 +815,8 @@
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos"
-        }
+        },
+        "upload_avatar_label": "Enviar icone de perfil de usuário"
     },
     "failed_load_async_component": "Impossível carregar! Verifique a sua ligação de rede e tente novamente.",
     "upload_failed_generic": "O carregamento do ficheiro '%(fileName)s' falhou.",
@@ -889,9 +888,13 @@
     },
     "error": {
         "mixed_content": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",
-        "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede."
+        "tls": "Não foi possível conectar ao Servidor de Base. Por favor, confira sua conectividade à internet, garanta que o <a>certificado SSL do Servidor de Base</a> é confiável, e que uma extensão do navegador não esteja bloqueando as requisições de rede.",
+        "failed_copy": "Falha ao copiar"
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificações"
+    },
+    "onboarding": {
+        "create_account": "Criar conta"
     }
 }

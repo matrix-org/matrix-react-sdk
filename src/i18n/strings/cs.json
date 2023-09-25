@@ -100,8 +100,6 @@
     "Delete Widget": "Smazat widget",
     "Error decrypting image": "Chyba při dešifrování obrázku",
     "Error decrypting video": "Chyba při dešifrování videa",
-    "Copied!": "Zkopírováno!",
-    "Failed to copy": "Nepodařilo se zkopírovat",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Smazáním widgetu ho odstraníte všem uživatelům v této místnosti. Opravdu chcete tento widget smazat?",
     "Jump to read receipt": "Přejít na poslední potvrzení o přečtení",
     "You seem to be uploading files, are you sure you want to quit?": "Zřejmě právě nahráváte soubory. Chcete přesto odejít?",
@@ -111,7 +109,6 @@
         "other": "(~%(count)s výsledků)",
         "one": "(~%(count)s výsledek)"
     },
-    "Upload avatar": "Nahrát avatar",
     "Invited": "Pozvaní",
     "Search failed": "Vyhledávání selhalo",
     "Banned by %(displayName)s": "Vykázán(a) uživatelem %(displayName)s",
@@ -351,7 +348,6 @@
     "Join millions for free on the largest public server": "Přidejte k miliónům registrovaným na největším veřejném serveru",
     "Couldn't load page": "Nepovedlo se načíst stránku",
     "Your password has been reset.": "Heslo bylo resetováno.",
-    "Create account": "Vytvořit účet",
     "Scissors": "Nůžky",
     "Error updating main address": "Nepovedlo se změnit hlavní adresu",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Nastala chyba při pokusu o nastavení hlavní adresy místnosti. Mohl to zakázat server, nebo to může být dočasná chyba.",
@@ -415,7 +411,6 @@
     "Notification sound": "Zvuk oznámení",
     "Set a new custom sound": "Nastavit vlastní zvuk",
     "Browse": "Procházet",
-    "Accept <policyLink /> to continue:": "Pro pokračování odsouhlaste <policyLink />:",
     "Checking server": "Kontrolování serveru",
     "Change identity server": "Změnit server identit",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Odpojit se ze serveru <current /> a připojit na <new />?",
@@ -536,7 +531,6 @@
     "Widgets do not use message encryption.": "Widgety nepoužívají šifrování zpráv.",
     "Widget added by": "Widget přidal",
     "This widget may use cookies.": "Widget může používat cookies.",
-    "More options": "Více možností",
     "Integrations are disabled": "Integrace jsou zakázané",
     "Integrations not allowed": "Integrace nejsou povolené",
     "Upgrade private room": "Aktualizovat soukromou místnost",
@@ -698,7 +692,6 @@
     "Signature upload success": "Podpis úspěšně nahrán",
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
-    "Your server isn't responding to some <a>requests</a>.": "Váš server neodpovídá na některé <a>požadavky</a>.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nemůže bezpečně ukládat šifrované zprávy lokálně v prohlížeči. Pro zobrazení šifrovaných zpráv ve výsledcích vyhledávání použijte <desktopLink>%(brand)s Desktop</desktopLink>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Správce vašeho serveru vypnul ve výchozím nastavení koncové šifrování v soukromých místnostech a přímých zprávách.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Pravost této šifrované zprávy nelze na tomto zařízení ověřit.",
@@ -712,7 +705,6 @@
     "Cancelled signature upload": "Nahrávání podpisu zrušeno",
     "Unable to upload": "Nelze nahrát",
     "Server isn't responding": "Server neodpovídá",
-    "All settings": "Všechna nastavení",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Napište jméno nebo emailovou adresu uživatele se kterým chcete začít konverzaci (např. <userId/>).",
     "Czech Republic": "Česká republika",
     "Algeria": "Alžírsko",
@@ -1115,7 +1107,6 @@
     "Leave space": "Opusit prostor",
     "Invite people": "Pozvat lidi",
     "Share invite link": "Sdílet odkaz na pozvánku",
-    "Click to copy": "Kliknutím zkopírujte",
     "Create a space": "Vytvořit prostor",
     "Save Changes": "Uložit změny",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
@@ -1139,7 +1130,6 @@
     },
     "Invited people will be able to read old messages.": "Pozvaní lidé budou moci číst staré zprávy.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Ověřte svou identitu, abyste získali přístup k šifrovaným zprávám a prokázali svou identitu ostatním.",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "unknown person": "neznámá osoba",
     "Add existing rooms": "Přidat stávající místnosti",
     "We couldn't create your DM.": "Nemohli jsme vytvořit vaši přímou zprávu.",
@@ -1309,10 +1299,6 @@
     "Call declined": "Hovor odmítnut",
     "Stop recording": "Zastavit nahrávání",
     "Send voice message": "Odeslat hlasovou zprávu",
-    "More": "Více",
-    "Show sidebar": "Zobrazit postranní panel",
-    "Hide sidebar": "Skrýt postranní panel",
-    "Delete avatar": "Smazat avatar",
     "Unknown failure: %(reason)s": "Neznámá chyba: %(reason)s",
     "Rooms and spaces": "Místnosti a prostory",
     "Results": "Výsledky",
@@ -1413,8 +1399,6 @@
     "Themes": "Motivy vzhledu",
     "Moderation": "Moderování",
     "Messaging": "Zprávy",
-    "Pin to sidebar": "Připnout na postranní panel",
-    "Quick settings": "Rychlá nastavení",
     "Spaces you know that contain this space": "Prostory, které znáte obsahující tento prostor",
     "Chat": "Chat",
     "Home options": "Možnosti domovské obrazovky",
@@ -1502,7 +1486,6 @@
     "My current location": "Moje současná poloha",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
     "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
-    "Match system": "Podle systému",
     "Click": "Kliknutí",
     "Expand quotes": "Rozbalit citace",
     "Collapse quotes": "Sbalit citace",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "Ke změně nemáte dostatečná oprávnění.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s je koncově šifrovaný, ale v současné době je omezen na menší počet uživatelů.",
     "Enable %(brand)s as an additional calling option in this room": "Povolit %(brand)s jako další možnost volání v této místnosti",
-    "Sorry — this call is currently full": "Omlouváme se — tento hovor je v současné době plný",
     "Completing set up of your new device": "Dokončování nastavení nového zařízení",
     "Waiting for device to sign in": "Čekání na přihlášení zařízení",
     "Review and approve the sign in": "Zkontrolovat a schválit přihlášení",
@@ -1773,8 +1755,6 @@
     "Past polls": "Minulá hlasování",
     "Active polls": "Aktivní hlasování",
     "View poll in timeline": "Zobrazit hlasování na časové ose",
-    "Verify Session": "Ověřit relaci",
-    "Ignore (%(counter)s)": "Ignorovat (%(counter)s)",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailem lze zasílat pouze po jedné",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Při aktualizaci předvoleb oznámení došlo k chybě. Zkuste prosím přepnout volbu znovu.",
     "Desktop app logo": "Logo desktopové aplikace",
@@ -1957,7 +1937,8 @@
         "off": "Vypnout",
         "all_rooms": "Všechny místnosti",
         "deselect_all": "Zrušit výběr všech",
-        "select_all": "Vybrat všechny"
+        "select_all": "Vybrat všechny",
+        "copied": "Zkopírováno!"
     },
     "action": {
         "continue": "Pokračovat",
@@ -2061,7 +2042,8 @@
         "clear": "Smazat",
         "exit_fullscreeen": "Ukončení režimu celé obrazovky",
         "enter_fullscreen": "Vstup do režimu celé obrazovky",
-        "unban": "Zrušit vykázání"
+        "unban": "Zrušit vykázání",
+        "click_to_copy": "Kliknutím zkopírujte"
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka",
@@ -2374,7 +2356,8 @@
         "intro_byline": "Vlastněte svoje konverzace.",
         "send_dm": "Poslat přímou zprávu",
         "explore_rooms": "Prozkoumat veřejné místnosti",
-        "create_room": "Vytvořit skupinový chat"
+        "create_room": "Vytvořit skupinový chat",
+        "create_account": "Vytvořit účet"
     },
     "settings": {
         "show_breadcrumbs": "Zobrazovat zkratky do nedávno zobrazených místností navrchu",
@@ -3378,7 +3361,12 @@
         "failed_call_live_broadcast_description": "Nemůžete zahájit hovor, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli zahájit hovor.",
         "no_media_perms_title": "Žádná oprávnění k médiím",
         "no_media_perms_description": "Je možné, že budete potřebovat manuálně povolit %(brand)s přístup k mikrofonu/webkameře",
-        "call_toast_unknown_room": "Neznámá místnost"
+        "call_toast_unknown_room": "Neznámá místnost",
+        "join_button_tooltip_connecting": "Spojování",
+        "join_button_tooltip_call_full": "Omlouváme se — tento hovor je v současné době plný",
+        "hide_sidebar_button": "Skrýt postranní panel",
+        "show_sidebar_button": "Zobrazit postranní panel",
+        "more_button": "Více"
     },
     "Other": "Další možnosti",
     "Advanced": "Rozšířené",
@@ -3470,7 +3458,9 @@
             "room_id": "Interní ID místnosti",
             "room_version_section": "Verze místnosti",
             "room_version": "Verze místnosti:"
-        }
+        },
+        "delete_avatar_label": "Smazat avatar",
+        "upload_avatar_label": "Nahrát avatar"
     },
     "encryption": {
         "verification": {
@@ -3501,7 +3491,10 @@
             "unverified_sessions_toast_description": "Zkontrolujte, zda je váš účet v bezpečí",
             "unverified_sessions_toast_reject": "Později",
             "unverified_session_toast_title": "Nové přihlášní. Jste to vy?",
-            "unverified_session_toast_accept": "Ano, to jsem byl já"
+            "unverified_session_toast_accept": "Ano, to jsem byl já",
+            "request_toast_detail": "%(deviceId)s z %(ip)s",
+            "request_toast_decline_counter": "Ignorovat (%(counter)s)",
+            "request_toast_accept": "Ověřit relaci"
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3696,7 +3689,8 @@
         "autodiscovery_unexpected_error_hs": "Chyba při zjišťování konfigurace domovského serveru",
         "autodiscovery_unexpected_error_is": "Chyba při hledání konfigurace serveru identity",
         "autodiscovery_hs_incompatible": "Váš domovský server je příliš starý a nepodporuje minimální požadovanou verzi API. Obraťte se prosím na vlastníka serveru nebo proveďte aktualizaci serveru.",
-        "incorrect_credentials_detail": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org."
+        "incorrect_credentials_detail": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org.",
+        "create_account_title": "Vytvořit účet"
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -3919,7 +3913,8 @@
         "empty_heading": "Udržujte diskuse organizované pomocí vláken"
     },
     "theme": {
-        "light_high_contrast": "Světlý vysoký kontrast"
+        "light_high_contrast": "Světlý vysoký kontrast",
+        "match_system": "Podle systému"
     },
     "space": {
         "landing_welcome": "Vítejte v <name/>",
@@ -4025,7 +4020,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Přepnout do světlého režimu",
-        "switch_theme_dark": "Přepnout do tmavého režimu"
+        "switch_theme_dark": "Přepnout do tmavého režimu",
+        "settings": "Všechna nastavení"
     },
     "notif_panel": {
         "empty_heading": "Vše je vyřešeno",
@@ -4093,7 +4089,8 @@
         "tac_button": "Přečíst smluvní podmínky",
         "identity_server_no_terms_title": "Server identit nemá žádné podmínky použití",
         "identity_server_no_terms_description_1": "Tato akce vyžaduje přístup k výchozímu serveru identity <server /> aby šlo ověřit e-mail a telefon, ale server nemá podmínky použití.",
-        "identity_server_no_terms_description_2": "Pokračujte pouze pokud věříte provozovateli serveru."
+        "identity_server_no_terms_description_2": "Pokračujte pouze pokud věříte provozovateli serveru.",
+        "inline_intro_text": "Pro pokračování odsouhlaste <policyLink />:"
     },
     "space_settings": {
         "title": "Nastavení - %(spaceName)s"
@@ -4190,7 +4187,9 @@
         "connection": "Při komunikaci s domovským serverem došlo k potížím, zkuste to prosím později.",
         "mixed_content": "Nelze se připojit k domovskému serveru přes HTTP, pokud je v adresním řádku HTTPS. Buď použijte HTTPS, nebo <a>povolte nezabezpečené skripty</a>.",
         "tls": "Nelze se připojit k domovskému serveru – zkontrolujte prosím své připojení, prověřte, zda je <a>SSL certifikát</a> vašeho domovského serveru důvěryhodný, a že některé z rozšíření prohlížeče neblokuje komunikaci.",
-        "admin_contact_short": "Kontaktujte <a>administrátora serveru</a>."
+        "admin_contact_short": "Kontaktujte <a>administrátora serveru</a>.",
+        "non_urgent_echo_failure_toast": "Váš server neodpovídá na některé <a>požadavky</a>.",
+        "failed_copy": "Nepodařilo se zkopírovat"
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4222,5 +4221,11 @@
     "chat_card_back_action_label": "Zpět do chatu",
     "room_summary_card_back_action_label": "Informace o místnosti",
     "member_list_back_action_label": "Členové místnosti",
-    "thread_view_back_action_label": "Zpět do vlákna"
+    "thread_view_back_action_label": "Zpět do vlákna",
+    "quick_settings": {
+        "title": "Rychlá nastavení",
+        "all_settings": "Všechna nastavení",
+        "metaspace_section": "Připnout na postranní panel",
+        "sidebar_settings": "Více možností"
+    }
 }

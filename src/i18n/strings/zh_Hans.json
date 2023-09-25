@@ -72,7 +72,6 @@
     "%(roomName)s does not exist.": "%(roomName)s 不存在。",
     "This room has no local addresses": "此房间没有本地地址",
     "This doesn't appear to be a valid email address": "这似乎不是有效的邮箱地址",
-    "Upload avatar": "上传头像",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
@@ -87,8 +86,6 @@
     "Error decrypting video": "解密视频时出错",
     "Something went wrong!": "出了点问题！",
     "Verification Pending": "验证等待中",
-    "Copied!": "已复制！",
-    "Failed to copy": "复制失败",
     "Sent messages will be stored until your connection has returned.": "已发送的消息会被保存直到你的连接回来。",
     "(~%(count)s results)": {
         "one": "（~%(count)s 个结果）",
@@ -346,7 +343,6 @@
     "Invalid homeserver discovery response": "无效的家服务器搜索响应",
     "Invalid identity server discovery response": "无效的身份服务器搜索响应",
     "General failure": "一般错误",
-    "Create account": "创建账户",
     "That matches!": "匹配成功！",
     "That doesn't match.": "不匹配。",
     "Go back to set it again.": "返回重新设置。",
@@ -375,8 +371,6 @@
     "Your homeserver has exceeded one of its resource limits.": "你的家服务器已超过某项资源限制。",
     "Ok": "确定",
     "Lock": "锁",
-    "Your server isn't responding to some <a>requests</a>.": "你的服务器没有响应一些<a>请求</a>。",
-    "Accept <policyLink /> to continue:": "接受 <policyLink /> 以继续：",
     "Show more": "显示更多",
     "Your homeserver does not support cross-signing.": "你的家服务器不支持交叉签名。",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "你的账户在秘密存储中有交叉签名身份，但并没有被此会话信任。",
@@ -590,7 +584,6 @@
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "使用此挂件可能会和 %(widgetDomain)s 共享数据 <helpIcon />。",
     "Widgets do not use message encryption.": "挂件不适用消息加密。",
     "This widget may use cookies.": "此挂件可能使用 cookie。",
-    "More options": "更多选项",
     "Rotate Left": "向左旋转",
     "Rotate Right": "向右旋转",
     "Room address": "房间地址",
@@ -711,7 +704,6 @@
     "Sign in with SSO": "使用单点登录",
     "Explore rooms": "探索房间",
     "Switch theme": "切换主题",
-    "All settings": "所有设置",
     "Failed to get autodiscovery configuration from server": "从服务器获取自动发现配置时失败",
     "Invalid base_url for m.homeserver": "m.homeserver 的 base_url 无效",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
@@ -821,7 +813,6 @@
     "United Kingdom": "英国",
     "Room settings": "房间设置",
     "Share invite link": "分享邀请链接",
-    "Click to copy": "点击复制",
     "Dial pad": "拨号盘",
     "%(count)s members": {
         "one": "%(count)s 位成员",
@@ -1168,7 +1159,6 @@
     },
     "Connecting": "连接中",
     "unknown person": "陌生人",
-    "%(deviceId)s from %(ip)s": "来自 %(ip)s 的 %(deviceId)s",
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -1241,10 +1231,6 @@
     "New keyword": "新的关键词",
     "Keyword": "关键词",
     "Show all rooms": "显示所有房间",
-    "Delete avatar": "删除头像",
-    "More": "更多",
-    "Show sidebar": "显示侧边栏",
-    "Hide sidebar": "隐藏侧边栏",
     "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
@@ -1413,8 +1399,6 @@
     "Themes": "主题",
     "Moderation": "审核",
     "Messaging": "消息传递",
-    "Pin to sidebar": "固定到侧边栏",
-    "Quick settings": "快速设置",
     "Spaces you know that contain this space": "你知道的包含这个空间的空间",
     "Chat": "聊天",
     "Home options": "主页选项",
@@ -1509,7 +1493,6 @@
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "你的新设备已通过验证。它现在可以访问你的加密消息，并且其它用户会将其视为受信任的。",
     "Deactivating your account is a permanent action — be careful!": "停用你的账户是永久性动作——小心！",
     "Your password was successfully changed.": "你的密码已成功更改。",
-    "Match system": "匹配系统",
     "%(count)s people joined": {
         "one": "%(count)s个人已加入",
         "other": "%(count)s个人已加入"
@@ -1651,7 +1634,6 @@
     "Search users in this room…": "搜索该房间内的用户……",
     "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
     "Add privileged users": "添加特权用户",
-    "Sorry — this call is currently full": "抱歉——目前线路拥挤",
     "Call type": "通话类型",
     "You do not have sufficient permissions to change this.": "你没有足够的权限更改这个。",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",
@@ -1747,7 +1729,8 @@
         "off": "关闭",
         "all_rooms": "所有房间",
         "deselect_all": "取消全选",
-        "select_all": "全选"
+        "select_all": "全选",
+        "copied": "已复制！"
     },
     "action": {
         "continue": "继续",
@@ -1849,7 +1832,8 @@
         "clear": "清除",
         "exit_fullscreeen": "退出全屏",
         "enter_fullscreen": "进入全屏",
-        "unban": "解除封禁"
+        "unban": "解除封禁",
+        "click_to_copy": "点击复制"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -2130,7 +2114,8 @@
         "intro_byline": "拥有您的对话。",
         "send_dm": "发送私聊",
         "explore_rooms": "探索公共房间",
-        "create_room": "创建一个群聊"
+        "create_room": "创建一个群聊",
+        "create_account": "创建账户"
     },
     "settings": {
         "show_breadcrumbs": "在房间列表上方显示最近浏览过的房间的快捷方式",
@@ -3013,7 +2998,12 @@
         "failed_call_live_broadcast_title": "无法开始通话",
         "no_media_perms_title": "没有媒体存取权限",
         "no_media_perms_description": "你可能需要手动授权 %(brand)s 使用你的麦克风或摄像头",
-        "call_toast_unknown_room": "未知房间"
+        "call_toast_unknown_room": "未知房间",
+        "join_button_tooltip_connecting": "连接中",
+        "join_button_tooltip_call_full": "抱歉——目前线路拥挤",
+        "hide_sidebar_button": "隐藏侧边栏",
+        "show_sidebar_button": "显示侧边栏",
+        "more_button": "更多"
     },
     "Other": "其他",
     "Advanced": "高级",
@@ -3103,7 +3093,9 @@
             "room_id": "内部房间ID",
             "room_version_section": "房间版本",
             "room_version": "房间版本："
-        }
+        },
+        "delete_avatar_label": "删除头像",
+        "upload_avatar_label": "上传头像"
     },
     "encryption": {
         "verification": {
@@ -3133,7 +3125,8 @@
             "unverified_sessions_toast_title": "你有未验证的会话",
             "unverified_sessions_toast_description": "检查以确保你的账户是安全的",
             "unverified_sessions_toast_reject": "稍后再说",
-            "unverified_session_toast_title": "现在登录。请问是你本人吗？"
+            "unverified_session_toast_title": "现在登录。请问是你本人吗？",
+            "request_toast_detail": "来自 %(ip)s 的 %(deviceId)s"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -3305,7 +3298,8 @@
         "no_hs_url_provided": "未输入家服务器链接",
         "autodiscovery_unexpected_error_hs": "解析家服务器配置时发生未知错误",
         "autodiscovery_unexpected_error_is": "解析身份服务器配置时发生未知错误",
-        "incorrect_credentials_detail": "请注意，你正在登录 %(hs)s，而非 matrix.org。"
+        "incorrect_credentials_detail": "请注意，你正在登录 %(hs)s，而非 matrix.org。",
+        "create_account_title": "创建账户"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3514,7 +3508,8 @@
         "empty_heading": "用消息列使讨论井然有序"
     },
     "theme": {
-        "light_high_contrast": "浅色高对比"
+        "light_high_contrast": "浅色高对比",
+        "match_system": "匹配系统"
     },
     "space": {
         "landing_welcome": "欢迎来到 <name/>",
@@ -3615,7 +3610,8 @@
     },
     "user_menu": {
         "switch_theme_light": "切换到浅色模式",
-        "switch_theme_dark": "切换到深色模式"
+        "switch_theme_dark": "切换到深色模式",
+        "settings": "所有设置"
     },
     "notif_panel": {
         "empty_heading": "一切完毕",
@@ -3678,7 +3674,8 @@
         "tac_button": "浏览条款与要求",
         "identity_server_no_terms_title": "身份服务器无服务条款",
         "identity_server_no_terms_description_1": "此操作需要访问默认的身份服务器 <server /> 以验证邮箱或电话号码，但此服务器无任何服务条款。",
-        "identity_server_no_terms_description_2": "只有在你信任服务器所有者后才能继续。"
+        "identity_server_no_terms_description_2": "只有在你信任服务器所有者后才能继续。",
+        "inline_intro_text": "接受 <policyLink /> 以继续："
     },
     "space_settings": {
         "title": "设置 - %(spaceName)s"
@@ -3770,7 +3767,9 @@
         "connection": "与家服务器通讯时出现问题，请稍后再试。",
         "mixed_content": "当浏览器地址栏里有 HTTPS 的 URL 时，不能使用 HTTP 连接家服务器。请使用 HTTPS 或者<a>允许不安全的脚本</a>。",
         "tls": "无法连接家服务器 - 请检查网络连接，确保你的<a>家服务器 SSL 证书</a>被信任，且没有浏览器插件拦截请求。",
-        "admin_contact_short": "请联系你的<a>服务器管理员</a>。"
+        "admin_contact_short": "请联系你的<a>服务器管理员</a>。",
+        "non_urgent_echo_failure_toast": "你的服务器没有响应一些<a>请求</a>。",
+        "failed_copy": "复制失败"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3800,5 +3799,11 @@
     "chat_card_back_action_label": "返回聊天",
     "room_summary_card_back_action_label": "房间信息",
     "member_list_back_action_label": "房间成员",
-    "thread_view_back_action_label": "返回消息列"
+    "thread_view_back_action_label": "返回消息列",
+    "quick_settings": {
+        "title": "快速设置",
+        "all_settings": "所有设置",
+        "metaspace_section": "固定到侧边栏",
+        "sidebar_settings": "更多选项"
+    }
 }

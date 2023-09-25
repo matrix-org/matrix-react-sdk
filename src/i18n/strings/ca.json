@@ -71,7 +71,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Entra a la sala",
-    "Upload avatar": "Puja l'avatar",
     "Forget room": "Oblida la sala",
     "Low priority": "Baixa prioritat",
     "Historical": "Històric",
@@ -88,8 +87,6 @@
     "Invalid file%(extra)s": "Fitxer invàlid%(extra)s",
     "Error decrypting image": "Error desxifrant imatge",
     "Error decrypting video": "Error desxifrant video",
-    "Copied!": "Copiat!",
-    "Failed to copy": "No s'ha pogut copiar",
     "Add an Integration": "Afegeix una integració",
     "Email address": "Correu electrònic",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
@@ -209,7 +206,6 @@
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, utilitza un servidor d'identitat a Configuració.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
     "Go to Settings": "Ves a Configuració",
-    "All settings": "Totes les configuracions",
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
     "Explore rooms": "Explora sales",
@@ -242,7 +238,8 @@
         "identity_server": "Servidor d'identitat",
         "integration_manager": "Gestor d'integracions",
         "on": "Engegat",
-        "off": "Apagat"
+        "off": "Apagat",
+        "copied": "Copiat!"
     },
     "action": {
         "continue": "Continua",
@@ -622,7 +619,8 @@
         },
         "advanced": {
             "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
-        }
+        },
+        "upload_avatar_label": "Puja l'avatar"
     },
     "auth": {
         "sign_in_with_sso": "Inicia sessió mitjançant la inscripció única (SSO)",
@@ -784,7 +782,8 @@
     },
     "error": {
         "mau": "Aquest homeserver ha assolit el seu límit d'usuaris actius mensuals.",
-        "resource_limits": "Aquest homeserver ha sobrepassat on dels seus límits de recursos."
+        "resource_limits": "Aquest homeserver ha sobrepassat on dels seus límits de recursos.",
+        "failed_copy": "No s'ha pogut copiar"
     },
     "items_and_n_others": {
         "other": "<Items/> i %(count)s altres",
@@ -793,5 +792,11 @@
     "notifications": {
         "enable_prompt_toast_title": "Notificacions",
         "error_change_title": "Canvia la configuració de notificacions"
+    },
+    "user_menu": {
+        "settings": "Totes les configuracions"
+    },
+    "quick_settings": {
+        "all_settings": "Totes les configuracions"
     }
 }

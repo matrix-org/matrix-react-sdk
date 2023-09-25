@@ -932,8 +932,6 @@
     "Favourited": "مورد علاقه",
     "Forget Room": "اتاق را فراموش کن",
     "Create a space": "ساختن یک محیط",
-    "Accept <policyLink /> to continue:": "برای ادامه <policyLink /> را بپذیرید:",
-    "Your server isn't responding to some <a>requests</a>.": "سرور شما به بعضی <a>درخواست‌ها</a> پاسخ نمی‌دهد.",
     "Folder": "پوشه",
     "Headphones": "هدفون",
     "Anchor": "لنگر",
@@ -1005,13 +1003,11 @@
     "Edit message": "ویرایش پیام",
     "Clear personal data": "پاک‌کردن داده‌های شخصی",
     "Verify your identity to access encrypted messages and prove your identity to others.": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
-    "Create account": "ساختن حساب کاربری",
     "Return to login screen": "بازگشت به صفحه‌ی ورود",
     "Your password has been reset.": "گذرواژه‌ی شما با موفقیت تغییر کرد.",
     "New passwords must match each other.": "گذرواژه‌ی جدید باید مطابقت داشته باشند.",
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
     "Switch theme": "تعویض پوسته",
-    "All settings": "همه تنظیمات",
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
     "Private space": "محیط خصوصی",
     "Public space": "محیط عمومی",
@@ -1044,11 +1040,7 @@
     "Invite with email or username": "دعوت با ایمیل یا نام‌کاربری",
     "Invite people": "دعوت کاربران",
     "Share invite link": "به اشتراک‌گذاری لینک دعوت",
-    "Failed to copy": "خطا در گرفتن رونوشت",
-    "Copied!": "رونوشت گرفته شد!",
-    "Click to copy": "برای گرفتن رونوشت کلیک کنید",
     "You can change these anytime.": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید.",
-    "Upload avatar": "بارگذاری نمایه",
     "Couldn't load page": "نمایش صفحه امکان‌پذیر نبود",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "This room is public": "این اتاق عمومی است",
@@ -1098,7 +1090,6 @@
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Account management": "مدیریت حساب کاربری",
     "Spaces": "محیط‌ها",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s از %(ip)s",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
     "Phone numbers": "شماره تلفن",
@@ -1198,8 +1189,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
     "Close sidebar": "بستن نوارکناری",
-    "Show sidebar": "نمایش نوار کناری",
-    "Hide sidebar": "پنهان سازی نوار کناری",
     "Hide stickers": "پنهان سازی استیکرها",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "بنابر <a>تنظیمات</a> خودتان فقط با منشن ها و کلمات کلیدی مطلع شوید",
     "Mentions & keywords": "منشن ها و کلمات کلیدی",
@@ -1288,7 +1277,8 @@
         "orphan_rooms": "دیگر اتاق ها",
         "on": "روشن",
         "off": "خاموش",
-        "all_rooms": "همه اتاق‌ها"
+        "all_rooms": "همه اتاق‌ها",
+        "copied": "رونوشت گرفته شد!"
     },
     "action": {
         "continue": "ادامه",
@@ -1377,7 +1367,8 @@
         "send_report": "ارسال گزارش",
         "exit_fullscreeen": "خروج از نمایش تمام صفحه",
         "enter_fullscreen": "نمایش تمام صفحه",
-        "unban": "رفع تحریم"
+        "unban": "رفع تحریم",
+        "click_to_copy": "برای گرفتن رونوشت کلیک کنید"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -2186,7 +2177,10 @@
         "default_device": "دستگاه پیشفرض",
         "no_media_perms_title": "عدم مجوز رسانه",
         "no_media_perms_description": "ممکن است لازم باشد دسترسی %(brand)s به میکروفون/دوربین را به صورت دستی فعال کنید",
-        "call_toast_unknown_room": "اتاق ناشناس"
+        "call_toast_unknown_room": "اتاق ناشناس",
+        "join_button_tooltip_connecting": "در حال اتصال",
+        "hide_sidebar_button": "پنهان سازی نوار کناری",
+        "show_sidebar_button": "نمایش نوار کناری"
     },
     "Other": "دیگر",
     "Advanced": "پیشرفته",
@@ -2249,7 +2243,8 @@
             "room_predecessor": "پیام‌های قدیمی اتاق %(roomName)s را مشاهده کنید.",
             "room_version_section": "نسخه‌ی اتاق",
             "room_version": "نسخه‌ی اتاق:"
-        }
+        },
+        "upload_avatar_label": "بارگذاری نمایه"
     },
     "encryption": {
         "verification": {
@@ -2271,7 +2266,8 @@
             "cancelling": "در حال لغو…",
             "unverified_sessions_toast_description": "برای کسب اطمینان از امن‌بودن حساب کاربری خود، لطفا بررسی فرمائید",
             "unverified_sessions_toast_reject": "بعداً",
-            "unverified_session_toast_title": "ورود جدید. آیا شما بودید؟"
+            "unverified_session_toast_title": "ورود جدید. آیا شما بودید؟",
+            "request_toast_detail": "%(deviceId)s از %(ip)s"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2423,7 +2419,8 @@
         "no_hs_url_provided": "هیچ آدرس سروری وارد نشده‌است",
         "autodiscovery_unexpected_error_hs": "خطای غیر منتظره‌ای در حین بررسی پیکربندی سرور رخ داد",
         "autodiscovery_unexpected_error_is": "خطای غیر منتظره‌ای در حین بررسی پیکربندی سرور هویت‌سنجی رخ داد",
-        "incorrect_credentials_detail": "لطفا توجه کنید شما به سرور %(hs)s وارد شده‌اید، و نه سرور matrix.org."
+        "incorrect_credentials_detail": "لطفا توجه کنید شما به سرور %(hs)s وارد شده‌اید، و نه سرور matrix.org.",
+        "create_account_title": "ساختن حساب کاربری"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2454,7 +2451,8 @@
         "intro_welcome": "به %(appName)s خوش‌آمدید",
         "send_dm": "ارسال یک پیام مستقیم",
         "explore_rooms": "جستجوی اتاق‌های عمومی",
-        "create_room": "ساختن یک گروه"
+        "create_room": "ساختن یک گروه",
+        "create_account": "ساختن حساب کاربری"
     },
     "setting": {
         "help_about": {
@@ -2698,7 +2696,8 @@
     },
     "user_menu": {
         "switch_theme_light": "انتخاب حالت روشن",
-        "switch_theme_dark": "انتخاب حالت تاریک"
+        "switch_theme_dark": "انتخاب حالت تاریک",
+        "settings": "همه تنظیمات"
     },
     "notif_panel": {
         "empty_description": "اعلان قابل مشاهده‌ای ندارید."
@@ -2752,7 +2751,8 @@
         "tac_button": "مرور شرایط و ضوابط",
         "identity_server_no_terms_title": "سرور هویت هیچگونه شرایط خدمات ندارد",
         "identity_server_no_terms_description_1": "این اقدام نیاز به دسترسی به سرور هویت‌سنجی پیش‌فرض <server /> برای تایید آدرس ایمیل یا شماره تماس دارد، اما کارگزار هیچ گونه شرایط خدماتی (terms of service) ندارد.",
-        "identity_server_no_terms_description_2": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید."
+        "identity_server_no_terms_description_2": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
+        "inline_intro_text": "برای ادامه <policyLink /> را بپذیرید:"
     },
     "poll": {
         "failed_send_poll_title": "ارسال نظرسنجی انجام نشد",
@@ -2828,7 +2828,9 @@
         "connection": "در برقراری ارتباط با سرور مشکلی پیش آمده، لطفاً چند لحظه‌ی دیگر مجددا امتحان کنید.",
         "mixed_content": "امکان اتصال به سرور از طریق پروتکل‌های HTTP و HTTPS در مروگر شما میسر نیست. یا از HTTPS استفاده کرده و یا <a>حالت اجرای غیرامن اسکریپت‌ها</a> را فعال کنید.",
         "tls": "اتصال به سرور میسر نیست - لطفا اتصال اینترنت خود را بررسی کنید؛ اطمینان حاصل کنید <a>گواهینامه‌ی SSL سرور شما</a> قابل اعتماد است، و اینکه پلاگینی بر روی مرورگر شما مانع از ارسال درخواست به سرور نمی‌شود.",
-        "admin_contact_short": "تماس با <a>مدیر کارسازتان</a>."
+        "admin_contact_short": "تماس با <a>مدیر کارسازتان</a>.",
+        "non_urgent_echo_failure_toast": "سرور شما به بعضی <a>درخواست‌ها</a> پاسخ نمی‌دهد.",
+        "failed_copy": "خطا در گرفتن رونوشت"
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2856,5 +2858,8 @@
     "chat_card_back_action_label": "بازگشت به گفتگو",
     "room_summary_card_back_action_label": "اطلاعات اتاق",
     "member_list_back_action_label": "اعضای اتاق",
-    "thread_view_back_action_label": "بازگشت به موضوع"
+    "thread_view_back_action_label": "بازگشت به موضوع",
+    "quick_settings": {
+        "all_settings": "همه تنظیمات"
+    }
 }

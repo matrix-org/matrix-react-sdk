@@ -115,7 +115,6 @@
         "one": "Вивантажити %(count)s інший файл"
     },
     "Upload Error": "Помилка вивантаження",
-    "Upload avatar": "Вивантажити аватар",
     "Failed to reject invitation": "Не вдалось відхилити запрошення",
     "This room is not public. You will not be able to rejoin without an invite.": "Ця кімната не загальнодоступна. Ви не зможете повторно приєднатися без запрошення.",
     "Enter passphrase": "Введіть парольну фразу",
@@ -186,7 +185,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Використовуйте сервер ідентифікації щоб запрошувати через е-пошту. Керується у <settings>налаштуваннях</settings>.",
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
     "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
-    "All settings": "Усі налаштування",
     "Go to Settings": "Перейти до налаштувань",
     "Dog": "Пес",
     "Cat": "Кіт",
@@ -240,7 +238,6 @@
     "Anchor": "Якір",
     "Headphones": "Навушники",
     "Folder": "Тека",
-    "Accept <policyLink /> to continue:": "Погодьтеся з <policyLink /> для продовження:",
     "Flower": "Квітка",
     "Unicorn": "Єдиноріг",
     "Butterfly": "Метелик",
@@ -316,7 +313,6 @@
     "Replying": "Відповідання",
     "Low priority": "Неважливі",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "У зашифрованих кімнатах ваші повідомлення є захищеними, тож тільки ви та отримувач маєте ключі для їх розблокування.",
-    "Failed to copy": "Не вдалося скопіювати",
     "Your display name": "Ваш псевдонім",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Звірте цього користувача щоб позначити його довіреним. Довіряння користувачам додає спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
@@ -334,7 +330,6 @@
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
     "Add an Integration": "Додати інтеграцію",
     "Show advanced": "Показати розширені",
-    "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -681,7 +676,6 @@
     "<userName/> invited you": "<userName/> запрошує вас",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Connecting": "З'єднання",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s з %(ip)s",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
     "Start Verification": "Почати перевірку",
@@ -833,14 +827,10 @@
     "Edit settings relating to your space.": "Змінити налаштування, що стосуються вашого простору.",
     "Failed to save space settings.": "Не вдалося зберегти налаштування простору.",
     "Invite with email or username": "Запросити за допомогою е-пошти або імені користувача",
-    "Copied!": "Скопійовано!",
-    "Click to copy": "Клацніть, щоб скопіювати",
     "Show all rooms": "Показати всі кімнати",
     "You can change these anytime.": "Ви можете змінити це будь-коли.",
     "Create a space": "Створити простір",
     "Address": "Адреса",
-    "Delete avatar": "Видалити аватар",
-    "Your server isn't responding to some <a>requests</a>.": "Ваш сервер не відповідає на деякі <a>запити</a>.",
     "Cancel All": "Скасувати все",
     "Send Logs": "Надіслати журнали",
     "Email (optional)": "Е-пошта (необов'язково)",
@@ -870,9 +860,6 @@
     "Search %(spaceName)s": "Пошук %(spaceName)s",
     "Leave some rooms": "Вийте з кількох кімнат",
     "Leave all rooms": "Вийти з кімнати",
-    "More": "Більше",
-    "Show sidebar": "Показати бічну панель",
-    "Hide sidebar": "Сховати бічну панель",
     "Success!": "Успішно!",
     "Clear personal data": "Очистити особисті дані",
     "Verification Request": "Запит підтвердження",
@@ -934,7 +921,6 @@
     "%(duration)ss": "%(duration)s с",
     "View message": "Переглянути повідомлення",
     "Italics": "Курсив",
-    "More options": "Інші опції",
     "Invited": "Запрошено",
     "Invite to this space": "Запросити до цього простору",
     "Failed to send": "Не вдалося надіслати",
@@ -1007,8 +993,6 @@
     "Discovery options will appear once you have added an email above.": "Опції знаходження з'являться тут, коли ви додасте е-пошту вгорі.",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Після від'єднання від сервера ідентифікації вас більше не знаходитимуть інші користувачі, а ви не зможете запрошувати інших е-поштою чи телефоном.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Зараз <server></server> дозволяє вам знаходити контакти, а контактам вас. Можете змінити сервер ідентифікації нижче.",
-    "Pin to sidebar": "Закріплення на бічній панелі",
-    "Quick settings": "Швидкі налаштування",
     "Home options": "Параметри домівки",
     "Files": "Файли",
     "Export chat": "Експортувати бесіду",
@@ -1502,7 +1486,6 @@
     "My current location": "Лише поточне місцеперебування",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s не вдалося надіслати ваше місцеперебування. Повторіть спробу пізніше.",
     "We couldn't send your location": "Не вдалося надіслати ваше місцеперебування",
-    "Match system": "Як у системі",
     "Click": "Клацнути",
     "Expand quotes": "Розгорнути цитати",
     "Collapse quotes": "Згорнути цитати",
@@ -1668,7 +1651,6 @@
     "You do not have sufficient permissions to change this.": "Ви не маєте достатніх повноважень, щоб змінити це.",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s наскрізно зашифровано, але наразі обмежений меншою кількістю користувачів.",
     "Enable %(brand)s as an additional calling option in this room": "Увімкнути %(brand)s додатковою опцією викликів у цій кімнаті",
-    "Sorry — this call is currently full": "Перепрошуємо, цей виклик заповнено",
     "Completing set up of your new device": "Завершення налаштування нового пристрою",
     "Waiting for device to sign in": "Очікування входу з пристрою",
     "Review and approve the sign in": "Розглянути та схвалити вхід",
@@ -1773,8 +1755,6 @@
     "There are no past polls. Load more polls to view polls for previous months": "Немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
     "There are no active polls. Load more polls to view polls for previous months": "Немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
     "Load more polls": "Завантажити більше опитувань",
-    "Verify Session": "Звірити сеанс",
-    "Ignore (%(counter)s)": "Ігнорувати (%(counter)s)",
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Сталася помилка під час оновлення налаштувань сповіщень. Спробуйте змінити налаштування ще раз.",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
@@ -1953,7 +1933,8 @@
         "off": "Вимкнено",
         "all_rooms": "Усі кімнати",
         "deselect_all": "Скасувати вибір",
-        "select_all": "Вибрати всі"
+        "select_all": "Вибрати всі",
+        "copied": "Скопійовано!"
     },
     "action": {
         "continue": "Продовжити",
@@ -2056,7 +2037,8 @@
         "clear": "Очистити",
         "exit_fullscreeen": "Вийти з повноекранного режиму",
         "enter_fullscreen": "Перейти у повноекранний режим",
-        "unban": "Розблокувати"
+        "unban": "Розблокувати",
+        "click_to_copy": "Клацніть, щоб скопіювати"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -2369,7 +2351,8 @@
         "intro_byline": "Володійте своїми розмовами.",
         "send_dm": "Надіслати особисте повідомлення",
         "explore_rooms": "Переглянути загальнодоступні кімнати",
-        "create_room": "Створити групову бесіду"
+        "create_room": "Створити групову бесіду",
+        "create_account": "Створити обліковий запис"
     },
     "settings": {
         "show_breadcrumbs": "Показувати нещодавно переглянуті кімнати над списком кімнат",
@@ -3373,7 +3356,12 @@
         "failed_call_live_broadcast_description": "Ви не можете розпочати виклик, оскільки зараз ведеться запис прямої трансляції. Будь ласка, заверште її, щоб розпочати виклик.",
         "no_media_perms_title": "Немає медіадозволів",
         "no_media_perms_description": "Можливо, вам треба дозволити %(brand)s використання мікрофону/камери вручну",
-        "call_toast_unknown_room": "Невідома кімната"
+        "call_toast_unknown_room": "Невідома кімната",
+        "join_button_tooltip_connecting": "З'єднання",
+        "join_button_tooltip_call_full": "Перепрошуємо, цей виклик заповнено",
+        "hide_sidebar_button": "Сховати бічну панель",
+        "show_sidebar_button": "Показати бічну панель",
+        "more_button": "Більше"
     },
     "Other": "Інше",
     "Advanced": "Подробиці",
@@ -3465,7 +3453,9 @@
             "room_id": "Внутрішній ID кімнати",
             "room_version_section": "Версія кімнати",
             "room_version": "Версія кімнати:"
-        }
+        },
+        "delete_avatar_label": "Видалити аватар",
+        "upload_avatar_label": "Вивантажити аватар"
     },
     "encryption": {
         "verification": {
@@ -3496,7 +3486,10 @@
             "unverified_sessions_toast_description": "Перевірте, щоб переконатися, що ваш обліковий запис у безпеці",
             "unverified_sessions_toast_reject": "Пізніше",
             "unverified_session_toast_title": "Новий вхід. Це були ви?",
-            "unverified_session_toast_accept": "Так, це я"
+            "unverified_session_toast_accept": "Так, це я",
+            "request_toast_detail": "%(deviceId)s з %(ip)s",
+            "request_toast_decline_counter": "Ігнорувати (%(counter)s)",
+            "request_toast_accept": "Звірити сеанс"
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3691,7 +3684,8 @@
         "autodiscovery_unexpected_error_hs": "Неочікувана помилка в налаштуваннях домашнього серверу",
         "autodiscovery_unexpected_error_is": "Незрозуміла помилка при розборі параметру сервера ідентифікації",
         "autodiscovery_hs_incompatible": "Ваш домашній сервер застарілий і не підтримує мінімально необхідну версію API. Будь ласка, зв'яжіться з власником вашого сервера або оновіть його.",
-        "incorrect_credentials_detail": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org."
+        "incorrect_credentials_detail": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org.",
+        "create_account_title": "Створити обліковий запис"
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -3914,7 +3908,8 @@
         "empty_heading": "Упорядкуйте обговорення за допомогою гілок"
     },
     "theme": {
-        "light_high_contrast": "Контрастна світла"
+        "light_high_contrast": "Контрастна світла",
+        "match_system": "Як у системі"
     },
     "space": {
         "landing_welcome": "Вітаємо у <name/>",
@@ -4020,7 +4015,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Світла тема",
-        "switch_theme_dark": "Темна тема"
+        "switch_theme_dark": "Темна тема",
+        "settings": "Усі налаштування"
     },
     "notif_panel": {
         "empty_heading": "Ви в курсі всього",
@@ -4088,7 +4084,8 @@
         "tac_button": "Переглянути умови користування",
         "identity_server_no_terms_title": "Сервер ідентифікації не має умов надання послуг",
         "identity_server_no_terms_description_1": "Щоб підтвердити адресу е-пошти або телефон ця дія потребує доступу до типового серверу ідентифікації <server />, але сервер не має жодних умов надання послуг.",
-        "identity_server_no_terms_description_2": "Продовжуйте лише якщо довіряєте власнику сервера."
+        "identity_server_no_terms_description_2": "Продовжуйте лише якщо довіряєте власнику сервера.",
+        "inline_intro_text": "Погодьтеся з <policyLink /> для продовження:"
     },
     "space_settings": {
         "title": "Налаштування — %(spaceName)s"
@@ -4185,7 +4182,9 @@
         "connection": "Не вдалося зв'язатися з домашнім сервером, повторіть спробу пізніше.",
         "mixed_content": "З'єднуватися з домашнім сервером через HTTP, коли в рядку адреси браузера введено HTTPS-адресу, не можна. Використовуйте HTTPS або <a>дозвольте небезпечні скрипти</a>.",
         "tls": "Не вдалося під'єднатися до домашнього сервера — перевірте з'єднання, переконайтесь, що ваш <a>SSL-сертифікат домашнього сервера</a> довірений і що розширення браузера не блокує запити.",
-        "admin_contact_short": "Зверніться до <a>адміністратора сервера</a>."
+        "admin_contact_short": "Зверніться до <a>адміністратора сервера</a>.",
+        "non_urgent_echo_failure_toast": "Ваш сервер не відповідає на деякі <a>запити</a>.",
+        "failed_copy": "Не вдалося скопіювати"
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4217,5 +4216,11 @@
     "chat_card_back_action_label": "Назад у бесіду",
     "room_summary_card_back_action_label": "Відомості про кімнату",
     "member_list_back_action_label": "Учасники кімнати",
-    "thread_view_back_action_label": "Назад у гілку"
+    "thread_view_back_action_label": "Назад у гілку",
+    "quick_settings": {
+        "title": "Швидкі налаштування",
+        "all_settings": "Усі налаштування",
+        "metaspace_section": "Закріплення на бічній панелі",
+        "sidebar_settings": "Інші опції"
+    }
 }

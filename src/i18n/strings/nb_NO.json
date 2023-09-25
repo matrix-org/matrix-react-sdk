@@ -101,9 +101,7 @@
     "All Rooms": "Alle rom",
     "Search…": "Søk …",
     "Download %(text)s": "Last ned %(text)s",
-    "Copied!": "Kopiert!",
     "Cancel search": "Avbryt søket",
-    "More options": "Flere alternativer",
     "collapse": "skjul",
     "expand": "utvid",
     "Close dialog": "Lukk dialog",
@@ -121,7 +119,6 @@
     "Home": "Hjem",
     "Explore rooms": "Se alle rom",
     "Your password has been reset.": "Passordet ditt har blitt tilbakestilt.",
-    "Create account": "Opprett konto",
     "Success!": "Suksess!",
     "Set up": "Sett opp",
     "Lion": "Løve",
@@ -146,7 +143,6 @@
     "Trophy": "Trofé",
     "Ball": "Ball",
     "Guitar": "Gitar",
-    "Accept <policyLink /> to continue:": "Aksepter <policyLink /> for å fortsette:",
     "Profile picture": "Profilbilde",
     "Checking server": "Sjekker tjeneren",
     "Change identity server": "Bytt ut identitetstjener",
@@ -236,7 +232,6 @@
     "No backup found!": "Ingen sikkerhetskopier ble funnet!",
     "Country Dropdown": "Nedfallsmeny over land",
     "Email (optional)": "E-post (valgfritt)",
-    "Upload avatar": "Last opp en avatar",
     "Add room": "Legg til et rom",
     "Search failed": "Søket mislyktes",
     "No more results": "Ingen flere resultater",
@@ -311,7 +306,6 @@
     "%(name)s declined": "%(name)s avslo",
     "%(name)s cancelled": "%(name)s avbrøt",
     "%(name)s wants to verify": "%(name)s ønsker å verifisere",
-    "Failed to copy": "Mislyktes i å kopiere",
     "Submit logs": "Send inn loggføringer",
     "Clear all data": "Tøm alle data",
     "Upload completed": "Opplasting fullført",
@@ -413,7 +407,6 @@
     "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
     "Switch theme": "Bytt tema",
-    "All settings": "Alle innstillinger",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "Create key backup": "Opprett nøkkelsikkerhetskopi",
     "Set up Secure Messages": "Sett opp sikre meldinger",
@@ -502,7 +495,6 @@
     "No results found": "Ingen resultater ble funnet",
     "Public space": "Offentlig område",
     "Private space": "Privat område",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s fra %(ip)s",
     "Leave Space": "Forlat området",
     "Save Changes": "Lagre endringer",
     "You don't have permission": "Du har ikke tillatelse",
@@ -511,7 +503,6 @@
         "one": "%(count)s rom"
     },
     "unknown person": "ukjent person",
-    "Click to copy": "Klikk for å kopiere",
     "Share invite link": "Del invitasjonslenke",
     "Leave space": "Forlat området",
     "%(count)s people you know have already joined": {
@@ -785,10 +776,8 @@
     "Keyword": "Nøkkelord",
     "Visibility": "Synlighet",
     "Address": "Adresse",
-    "Delete avatar": "Slett profilbilde",
     "Corn": "Mais",
     "Cloud": "Sky",
-    "More": "Mer",
     "Connecting": "Kobler til",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
     "St. Martin": "Saint Martin",
@@ -866,7 +855,8 @@
         "preview_message": "Hei der. Du er fantastisk!",
         "on": "På",
         "off": "Av",
-        "all_rooms": "Alle rom"
+        "all_rooms": "Alle rom",
+        "copied": "Kopiert!"
     },
     "action": {
         "continue": "Fortsett",
@@ -953,7 +943,8 @@
         "mention": "Nevn",
         "submit": "Send",
         "send_report": "Send inn rapport",
-        "unban": "Opphev utestengelse"
+        "unban": "Opphev utestengelse",
+        "click_to_copy": "Klikk for å kopiere"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -1445,7 +1436,9 @@
         "no_permission_conference": "Tillatelse kreves",
         "no_permission_conference_description": "Du har ikke tillatelse til å starte en konferansesamtale i dette rommet",
         "default_device": "Standardenhet",
-        "no_media_perms_title": "Ingen mediatillatelser"
+        "no_media_perms_title": "Ingen mediatillatelser",
+        "join_button_tooltip_connecting": "Kobler til",
+        "more_button": "Mer"
     },
     "Other": "Andre",
     "Advanced": "Avansert",
@@ -1501,7 +1494,9 @@
         "advanced": {
             "room_version_section": "Romversjon",
             "room_version": "Romversjon:"
-        }
+        },
+        "delete_avatar_label": "Slett profilbilde",
+        "upload_avatar_label": "Last opp en avatar"
     },
     "encryption": {
         "verification": {
@@ -1513,7 +1508,8 @@
             "complete_action": "Skjønner",
             "cancelling": "Avbryter …",
             "unverified_sessions_toast_reject": "Senere",
-            "unverified_session_toast_title": "En ny pålogging. Var det deg?"
+            "unverified_session_toast_title": "En ny pålogging. Var det deg?",
+            "request_toast_detail": "%(deviceId)s fra %(ip)s"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
@@ -1595,7 +1591,8 @@
             "error_title": "Vi kunne ikke logge deg inn"
         },
         "reset_password_email_not_found_title": "Denne e-postadressen ble ikke funnet",
-        "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt"
+        "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt",
+        "create_account_title": "Opprett konto"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1618,7 +1615,8 @@
         "intro_welcome": "Velkommen til %(appName)s",
         "send_dm": "Send en direktemelding",
         "explore_rooms": "Utforsk offentlige rom",
-        "create_room": "Opprett en gruppechat"
+        "create_room": "Opprett en gruppechat",
+        "create_account": "Opprett konto"
     },
     "setting": {
         "help_about": {
@@ -1700,7 +1698,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Bytt til lys modus",
-        "switch_theme_dark": "Bytt til mørk modus"
+        "switch_theme_dark": "Bytt til mørk modus",
+        "settings": "Alle innstillinger"
     },
     "space": {
         "suggested": "Anbefalte",
@@ -1729,7 +1728,8 @@
         "tac_button": "Gå gjennom betingelser og vilkår",
         "identity_server_no_terms_title": "Identitetstjeneren har ingen brukervilkår",
         "identity_server_no_terms_description_1": "Denne handlingen krever tilgang til standard identitetsserver <server /> for å kunne validere en epostaddresse eller telefonnummer, men serveren har ikke bruksvilkår.",
-        "identity_server_no_terms_description_2": "Fortsett kun om du stoler på eieren av serveren."
+        "identity_server_no_terms_description_2": "Fortsett kun om du stoler på eieren av serveren.",
+        "inline_intro_text": "Aksepter <policyLink /> for å fortsette:"
     },
     "failed_load_async_component": "Klarte ikke laste! Sjekk nettverstilkoblingen din og prøv igjen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunne ikke lastes opp.",
@@ -1774,5 +1774,12 @@
         "toast_title": "Bruk appen for en bedre opplevelse",
         "toast_accept": "Bruk app"
     },
-    "room_summary_card_back_action_label": "Rominformasjon"
+    "room_summary_card_back_action_label": "Rominformasjon",
+    "quick_settings": {
+        "all_settings": "Alle innstillinger",
+        "sidebar_settings": "Flere alternativer"
+    },
+    "error": {
+        "failed_copy": "Mislyktes i å kopiere"
+    }
 }

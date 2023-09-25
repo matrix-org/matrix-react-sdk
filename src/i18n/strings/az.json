@@ -39,7 +39,6 @@
     "Filter room members": "İştirakçılara görə axtarış",
     "You do not have permission to post to this room": "Siz bu otağa yaza bilmirsiniz",
     "Join Room": "Otağa girmək",
-    "Upload avatar": "Avatar-ı yükləmək",
     "Forget room": "Otağı unutmaq",
     "Low priority": "Əhəmiyyətsizlər",
     "Historical": "Arxiv",
@@ -299,7 +298,8 @@
         },
         "security": {
             "history_visibility_legend": "Kim tarixi oxuya bilər?"
-        }
+        },
+        "upload_avatar_label": "Avatar-ı yükləmək"
     },
     "failed_load_async_component": "Yükləmək olmur! Şəbəkə bağlantınızı yoxlayın və yenidən cəhd edin.",
     "upload_failed_generic": "'%(fileName)s' faylı yüklənə bilmədi.",

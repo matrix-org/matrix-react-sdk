@@ -81,13 +81,11 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
-    "Upload avatar": "Ngarkoni avatar",
     "Forget room": "Harroje dhomën",
     "Low priority": "Me përparësi të ulët",
     "%(roomName)s does not exist.": "%(roomName)s s’ekziston.",
     "Banned by %(displayName)s": "Dëbuar nga %(displayName)s",
     "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
-    "Copied!": "U kopjua!",
     "Add an Integration": "Shtoni një Integrim",
     "Email address": "Adresë email",
     "Something went wrong!": "Diçka shkoi ters!",
@@ -137,7 +135,6 @@
     "Replying": "Po përgjigjet",
     "Failed to unban": "S’u arrit t’i hiqej dëbimi",
     "Jump to first unread message.": "Hidhu te mesazhi i parë i palexuar.",
-    "Failed to copy": "S’u arrit të kopjohej",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
     "Unable to add email address": "S’arrihet të shtohet adresë email",
@@ -274,7 +271,6 @@
     "Email (optional)": "Email (në daçi)",
     "Join millions for free on the largest public server": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
     "General failure": "Dështim i përgjithshëm",
-    "Create account": "Krijoni llogari",
     "Recovery Method Removed": "U hoq Metodë Rimarrje",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nëse metodën e re të rimarrjeve s’e keni hequr ju, dikush mund të jetë duke u rrekur të hyjë në llogarinë tuaj. Ndryshoni menjëherë fjalëkalimin e llogarisë tuaj, te Rregullimet, dhe caktoni një metodë të re rimarrjesh.",
     "Dog": "Qen",
@@ -448,7 +444,6 @@
     "Enter a new identity server": "Jepni një shërbyes të ri identitetesh",
     "Remove %(email)s?": "Të hiqet %(email)s?",
     "Remove %(phone)s?": "Të hiqet %(phone)s?",
-    "Accept <policyLink /> to continue:": "Që të vazhdohet, pranoni <policyLink />:",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Nëse s’doni të përdoret <server /> për të zbuluar dhe për të qenë i zbulueshëm nga kontakte ekzistuese që njihni, jepni më poshtë një tjetër shërbyes identitetesh.",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Përdorimi i një shërbyesi identitetesh është opsional. Nëse zgjidhni të mos përdoret një shërbyes identitetesh, s’do të jeni i zbulueshëm nga përdorues të tjerë dhe s’do të jeni në gjendje të ftoni të tjerë me anë email-esh apo telefoni.",
     "Do not use an identity server": "Mos përdor shërbyes identitetesh",
@@ -533,7 +528,6 @@
     "Manage integrations": "Administroni integrime",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
     "Widgets do not use message encryption.": "Widget-et s’përdorin fshehtëzim mesazhesh.",
-    "More options": "Më tepër mundësi",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
     "Remove for everyone": "Hiqe për këdo",
@@ -714,7 +708,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Përgjegjësi i shërbyesit tuaj ka çaktivizuar fshehtëzimin skaj-më-skaj, si parazgjedhje, në dhoma private & Mesazhe të Drejtpërdrejtë.",
     "Recently Direct Messaged": "Me Mesazhe të Drejtpërdrejtë Së Fundi",
     "Switch theme": "Ndërroni temën",
-    "All settings": "Krejt rregullimet",
     "No recently visited rooms": "S’ka dhoma të vizituara së fundi",
     "Message preview": "Paraparje mesazhi",
     "Room options": "Mundësi dhome",
@@ -738,7 +731,6 @@
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
-    "Your server isn't responding to some <a>requests</a>.": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
     "Server isn't responding": "Shërbyesi s’po përgjigjet",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Shërbyesi juaj s’po u përgjigjet disa kërkesave nga ju. Më poshtë gjenden disa nga arsyet më të mundshme.",
     "The server (%(serverName)s) took too long to respond.": "Shërbyesi (%(serverName)s) e zgjati shumë përgjigjen.",
@@ -1113,7 +1105,6 @@
     "Leave space": "Braktiseni hapësirën",
     "Invite people": "Ftoni njerëz",
     "Share invite link": "Jepuni lidhje ftese",
-    "Click to copy": "Klikoni që të kopjohet",
     "Create a space": "Krijoni një hapësirë",
     "Private space": "Hapësirë private",
     "Public space": "Hapësirë publike",
@@ -1143,7 +1134,6 @@
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
     },
     "unknown person": "person i panjohur",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s prej %(ip)s",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Jeni i vetmi person këtu. Nëse e braktisni, askush s’do të jetë në gjendje të hyjë në të ardhmen, përfshi ju.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Nëse riktheni gjithçka te parazgjedhjet, do të rifilloni pa sesione të besuara, pa përdorues të besuar, dhe mund të mos jeni në gjendje të shihni mesazhe të dikurshëm.",
     "Only do this if you have no other device to complete verification with.": "Bëjeni këtë vetëm nëse s’keni pajisje tjetër me të cilën të plotësoni verifikimin.",
@@ -1304,10 +1294,6 @@
     "Call declined": "Thirrja u hodh poshtë",
     "Stop recording": "Ndale regjistrimin",
     "Send voice message": "Dërgoni mesazh zanor",
-    "More": "Më tepër",
-    "Show sidebar": "Shfaqe anështyllën",
-    "Hide sidebar": "Fshihe anështyllën",
-    "Delete avatar": "Fshije avatarin",
     "Unknown failure: %(reason)s": "Dështim për arsye të panjohur: %(reason)s",
     "Cross-signing is ready but keys are not backed up.": "“Cross-signing” është gati, por kyçet s’janë koperuajtur.",
     "Rooms and spaces": "Dhoma dhe hapësira",
@@ -1421,8 +1407,6 @@
     "Add people": "Shtoni njerëz",
     "Invite to space": "Ftoni në hapësirë",
     "Start new chat": "Filloni fjalosje të re",
-    "Pin to sidebar": "Fiksoje në anështyllë",
-    "Quick settings": "Rregullime të shpejta",
     "Recently viewed": "Parë së fundi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit.",
     "End Poll": "Përfundoje Pyetësorin",
@@ -1499,7 +1483,6 @@
     "My current location": "Vendndodhja ime e tanishme",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s s’dërgoi dot vendndodhjen tuaj. Ju lutemi, riprovoni.",
     "We couldn't send your location": "S’e dërguam dot vendndodhjen tuaj",
-    "Match system": "Përputhe me sistemin",
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
     "Expand quotes": "Zgjeroji thonjëzat",
     "Collapse quotes": "Tkurri thonjëzat",
@@ -1672,7 +1655,6 @@
     "Show formatting": "Shfaq formatim",
     "Call type": "Lloj thirrjeje",
     "You do not have sufficient permissions to change this.": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
-    "Sorry — this call is currently full": "Na ndjeni — aktualisht kjo thirrje është plot",
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "Hide formatting": "Fshihe formatimin",
@@ -1772,8 +1754,6 @@
     "Past polls": "Pyetësorë të kaluar",
     "Active polls": "Pyetësorë aktivë",
     "View poll in timeline": "Shiheni pyetësorin në rrjedhë kohore",
-    "Verify Session": "Verifiko Sesion",
-    "Ignore (%(counter)s)": "Shpërfill (%(counter)s)",
     "Invites by email can only be sent one at a time": "Ftesat me email mund të dërgohen vetëm një në herë",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ndodhi një gabim teksa përditësoheshin parapëlqimet tuaja për njoftime. Ju lutemi, provoni ta riaktivizoni mundësinë tuaj.",
     "Desktop app logo": "Stemë aplikacioni Desktop",
@@ -1902,7 +1882,8 @@
         "off": "Off",
         "all_rooms": "Krejt dhomat",
         "deselect_all": "Shpërzgjidhi krejt",
-        "select_all": "Përzgjidhi krejt"
+        "select_all": "Përzgjidhi krejt",
+        "copied": "U kopjua!"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2004,7 +1985,8 @@
         "clear": "Spastroje",
         "exit_fullscreeen": "Dil nga mënyra “Sa krejt ekrani”",
         "enter_fullscreen": "Kalo në mënyrën “Sa krejt ekrani”",
-        "unban": "Hiqja dëbimin"
+        "unban": "Hiqja dëbimin",
+        "click_to_copy": "Klikoni që të kopjohet"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -2307,7 +2289,8 @@
         "intro_byline": "Jini zot i bisedave tuaja.",
         "send_dm": "Dërgoni Mesazh të Drejtpërdrejtë",
         "explore_rooms": "Eksploroni Dhoma Publike",
-        "create_room": "Krijoni një Fjalosje Grupi"
+        "create_room": "Krijoni një Fjalosje Grupi",
+        "create_account": "Krijoni llogari"
     },
     "settings": {
         "show_breadcrumbs": "Shfaq te lista e dhomave shkurtore për te dhoma të para së fundi",
@@ -3280,7 +3263,12 @@
         "failed_call_live_broadcast_description": "S’mund të nisni një thirrje, ngaqë aktualisht jeni duke regjistruar një transmetim të drejtpërdrejtë. Që të mund të nisni një thirrje, ju lutemi, përfundoni transmetimin tuaj të drejtpërdrejtë.",
         "no_media_perms_title": "S’ka leje mediash",
         "no_media_perms_description": "Lypset të lejoni dorazi %(brand)s-in të përdorë mikrofonin/kamerën tuaj web",
-        "call_toast_unknown_room": "Dhomë e panjohur"
+        "call_toast_unknown_room": "Dhomë e panjohur",
+        "join_button_tooltip_connecting": "Po lidhet",
+        "join_button_tooltip_call_full": "Na ndjeni — aktualisht kjo thirrje është plot",
+        "hide_sidebar_button": "Fshihe anështyllën",
+        "show_sidebar_button": "Shfaqe anështyllën",
+        "more_button": "Më tepër"
     },
     "Other": "Tjetër",
     "Advanced": "Të mëtejshme",
@@ -3371,7 +3359,9 @@
             "room_id": "ID e brendshme dhome",
             "room_version_section": "Version dhome",
             "room_version": "Version dhome:"
-        }
+        },
+        "delete_avatar_label": "Fshije avatarin",
+        "upload_avatar_label": "Ngarkoni avatar"
     },
     "encryption": {
         "verification": {
@@ -3402,7 +3392,10 @@
             "unverified_sessions_toast_description": "Shqyrtojeni për t’u siguruar se llogaria është e parrezik",
             "unverified_sessions_toast_reject": "Më vonë",
             "unverified_session_toast_title": "Hyrje e re. Ju qetë?",
-            "unverified_session_toast_accept": "Po, unë qeshë"
+            "unverified_session_toast_accept": "Po, unë qeshë",
+            "request_toast_detail": "%(deviceId)s prej %(ip)s",
+            "request_toast_decline_counter": "Shpërfill (%(counter)s)",
+            "request_toast_accept": "Verifiko Sesion"
         },
         "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
         "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
@@ -3594,7 +3587,8 @@
         "no_hs_url_provided": "S’u dha URL shërbyesi Home",
         "autodiscovery_unexpected_error_hs": "Gabim i papritur gjatë ftillimit të formësimit të shërbyesit Home",
         "autodiscovery_unexpected_error_is": "Gabim i papritur teksa ftillohej formësimi i shërbyesit të identiteteve",
-        "incorrect_credentials_detail": "Ju lutemi, kini parasysh se jeni futur te shërbyesi %(hs)s, jo te matrix.org."
+        "incorrect_credentials_detail": "Ju lutemi, kini parasysh se jeni futur te shërbyesi %(hs)s, jo te matrix.org.",
+        "create_account_title": "Krijoni llogari"
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -3815,7 +3809,8 @@
         "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha"
     },
     "theme": {
-        "light_high_contrast": "Kontrast i fortë drite"
+        "light_high_contrast": "Kontrast i fortë drite",
+        "match_system": "Përputhe me sistemin"
     },
     "space": {
         "landing_welcome": "Mirë se vini te <name/>",
@@ -3919,7 +3914,8 @@
     },
     "user_menu": {
         "switch_theme_light": "Kalo nën mënyrën e çelët",
-        "switch_theme_dark": "Kalo nën mënyrën e errët"
+        "switch_theme_dark": "Kalo nën mënyrën e errët",
+        "settings": "Krejt rregullimet"
     },
     "notif_panel": {
         "empty_heading": "Po ecni mirë",
@@ -3985,7 +3981,8 @@
         "tac_button": "Shqyrtoni terma & kushte",
         "identity_server_no_terms_title": "Shërbyesi i identiteteve s’ka kushte shërbimi",
         "identity_server_no_terms_description_1": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
-        "identity_server_no_terms_description_2": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit."
+        "identity_server_no_terms_description_2": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit.",
+        "inline_intro_text": "Që të vazhdohet, pranoni <policyLink />:"
     },
     "space_settings": {
         "title": "Rregullime - %(spaceName)s"
@@ -4078,7 +4075,9 @@
         "connection": "Pati një problem në komunikimin me shërbyesin Home, ju lutemi, riprovoni më vonë.",
         "mixed_content": "S’lidhet dot te shërbyes Home përmes HTTP-je, kur te shtylla e shfletuesit tuaj jepet një URL HTTPS. Ose përdorni HTTPS-në, ose <a>aktivizoni përdorimin e programtheve jo të sigurt</a>.",
         "tls": "S’lidhet dot te shërbyes Home - ju lutemi, kontrolloni lidhjen tuaj, sigurohuni që <a>dëshmia SSL e shërbyesit tuaj Home</a> besohet, dhe që s’ka ndonjë zgjerim shfletuesi që po bllokon kërkesat tuaja.",
-        "admin_contact_short": "Lidhuni me <a>përgjegjësin e shërbyesit tuaj</a>."
+        "admin_contact_short": "Lidhuni me <a>përgjegjësin e shërbyesit tuaj</a>.",
+        "non_urgent_echo_failure_toast": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
+        "failed_copy": "S’u arrit të kopjohej"
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4110,5 +4109,11 @@
     "chat_card_back_action_label": "Mbrapsht te fjalosja",
     "room_summary_card_back_action_label": "Të dhëna dhome",
     "member_list_back_action_label": "Anëtarë dhome",
-    "thread_view_back_action_label": "Mbrapsht te rrjedha"
+    "thread_view_back_action_label": "Mbrapsht te rrjedha",
+    "quick_settings": {
+        "title": "Rregullime të shpejta",
+        "all_settings": "Krejt rregullimet",
+        "metaspace_section": "Fiksoje në anështyllë",
+        "sidebar_settings": "Më tepër mundësi"
+    }
 }

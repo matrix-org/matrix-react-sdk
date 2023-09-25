@@ -66,7 +66,6 @@
         "other": "(~%(count)s rezultatų(-ai))",
         "one": "(~%(count)s rezultatas)"
     },
-    "Upload avatar": "Įkelti pseudoportretą",
     "%(roomName)s does not exist.": "%(roomName)s neegzistuoja.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s šiuo metu nėra pasiekiamas.",
     "This room has no local addresses": "Šis kambarys neturi jokių vietinių adresų",
@@ -75,8 +74,6 @@
     "Download %(text)s": "Atsisiųsti %(text)s",
     "Error decrypting image": "Klaida iššifruojant vaizdą",
     "Error decrypting video": "Klaida iššifruojant vaizdo įrašą",
-    "Copied!": "Nukopijuota!",
-    "Failed to copy": "Nepavyko nukopijuoti",
     "Email address": "El. pašto adresas",
     "Something went wrong!": "Kažkas nutiko!",
     "Delete Widget": "Ištrinti valdiklį",
@@ -204,7 +201,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Ar tikrai norite išeiti iš kambario %(roomName)s?",
     "General failure": "Bendras triktis",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (galia %(powerLevelNumber)s)",
-    "Create account": "Sukurti paskyrą",
     "Change identity server": "Pakeisti tapatybės serverį",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs žeminate savo privilegijas kambaryje. Jei jūs esate paskutinis privilegijuotas vartotojas kambaryje, atgauti privilegijas bus neįmanoma.",
     "Failed to change power level": "Nepavyko pakeisti galios lygio",
@@ -293,7 +289,6 @@
     "%(displayName)s cancelled verification.": "%(displayName)s atšaukė patvirtinimą.",
     "You cancelled verification.": "Jūs atšaukėte patvirtinimą.",
     "Encryption not enabled": "Šifravimas neįjungtas",
-    "More options": "Daugiau parinkčių",
     "Are you sure you want to deactivate your account? This is irreversible.": "Ar tikrai norite deaktyvuoti savo paskyrą? Tai yra negrįžtama.",
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Are you sure you want to reject the invitation?": "Ar tikrai norite atmesti pakvietimą?",
@@ -386,7 +381,6 @@
     "Anchor": "Inkaras",
     "Headphones": "Ausinės",
     "Folder": "Aplankas",
-    "Accept <policyLink /> to continue:": "Sutikite su <policyLink />, kad tęstumėte:",
     "Your homeserver does not support cross-signing.": "Jūsų serveris nepalaiko kryžminio pasirašymo.",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Jūsų paskyra slaptoje saugykloje turi kryžminio pasirašymo tapatybę, bet šis seansas dar ja nepasitiki.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Individualiai patikrinkite kiekvieną vartotojo naudojamą seansą, kad pažymėtumėte jį kaip patikimą, nepasitikint kryžminiu pasirašymu patvirtintais įrenginiais.",
@@ -493,7 +487,6 @@
     "This session is encrypting history using the new recovery method.": "Šis seansas šifruoja istoriją naudodamas naują atgavimo metodą.",
     "Recovery Method Removed": "Atgavimo Metodas Pašalintas",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
-    "All settings": "Visi nustatymai",
     "Room information": "Kambario informacija",
     "Browse": "Naršyti",
     "Set a new custom sound": "Nustatyti naują pasirinktinį garsą",
@@ -587,7 +580,6 @@
     "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.": "%(brand)s trūksta kai kurių komponentų, reikalingų saugiai talpinti šifruotas žinutes lokaliai. Jei norite eksperimentuoti su šia funkcija, sukurkite pasirinktinį %(brand)s Desktop (darbastalio versiją), su <nativeLink>pridėtais paieškos komponentais</nativeLink>.",
     "Cross-signing is not set up.": "Kryžminis pasirašymas nenustatytas.",
     "Cross-signing is ready for use.": "Kryžminis pasirašymas yra paruoštas naudoti.",
-    "Your server isn't responding to some <a>requests</a>.": "Jūsų serveris neatsako į kai kurias <a>užklausas</a>.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
     "You don't currently have any stickerpacks enabled": "Jūs šiuo metu neturite jokių įjungtų lipdukų paketų",
@@ -882,8 +874,6 @@
     "Invite people": "Pakviesti žmonių",
     "Address": "Adresas",
     "Search %(spaceName)s": "Ieškoti %(spaceName)s",
-    "Delete avatar": "Ištrinti avatarą",
-    "More": "Daugiau",
     "Connecting": "Jungiamasi",
     "Their device couldn't start the camera or microphone": "Jų įrenginys negalėjo įjungti kameros arba mikrofono",
     "Connection failed": "Nepavyko prisijungti",
@@ -1053,7 +1043,6 @@
     "Moderation": "Moderavimas",
     "Spaces": "Erdvės",
     "Messaging": "Žinučių siuntimas",
-    "%(deviceId)s from %(ip)s": "%(deviceId)s iš %(ip)s",
     "Preview Space": "Peržiūrėti erdvę",
     "Failed to update the visibility of this space": "Nepavyko atnaujinti šios erdvės matomumo",
     "Access": "Prieiga",
@@ -1066,17 +1055,11 @@
     "Failed to save space settings.": "Nepavyko išsaugoti erdvės nustatymų.",
     "Invite with email or username": "Pakviesti su el. paštu arba naudotojo vardu",
     "Share invite link": "Bendrinti pakvietimo nuorodą",
-    "Click to copy": "Spustelėkite kad nukopijuoti",
     "Show all rooms": "Rodyti visus kambarius",
     "You can change these anytime.": "Jūs tai galite pakeisti bet kada.",
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
     "Create a space": "Sukurti erdvę",
     "Space selection": "Erdvės pasirinkimas",
-    "Match system": "Atitikti sistemą",
-    "Pin to sidebar": "Prisegti prie šoninės juostos",
-    "Quick settings": "Greiti nustatymai",
-    "Show sidebar": "Rodyti šoninę juostą",
-    "Hide sidebar": "Slėpti šoninę juostą",
     "unknown person": "nežinomas asmuo",
     "%(count)s people joined": {
         "one": "%(count)s žmogus prisijungė",
@@ -1243,7 +1226,8 @@
         "off": "Išjungta",
         "all_rooms": "Visi kambariai",
         "deselect_all": "Nuimti pasirinkimą nuo visko",
-        "select_all": "Pasirinkti viską"
+        "select_all": "Pasirinkti viską",
+        "copied": "Nukopijuota!"
     },
     "action": {
         "continue": "Tęsti",
@@ -1333,7 +1317,8 @@
         "mention": "Paminėti",
         "submit": "Pateikti",
         "send_report": "Siųsti pranešimą",
-        "unban": "Atblokuoti"
+        "unban": "Atblokuoti",
+        "click_to_copy": "Spustelėkite kad nukopijuoti"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1515,7 +1500,8 @@
         "intro_welcome": "Sveiki prisijungę į %(appName)s",
         "send_dm": "Siųsti tiesioginę žinutę",
         "explore_rooms": "Žvalgyti viešus kambarius",
-        "create_room": "Sukurti grupės pokalbį"
+        "create_room": "Sukurti grupės pokalbį",
+        "create_account": "Sukurti paskyrą"
     },
     "settings": {
         "show_breadcrumbs": "Rodyti neseniai peržiūrėtų kambarių nuorodas virš kambarių sąrašo",
@@ -2191,7 +2177,11 @@
         "no_permission_conference_description": "Jūs neturite leidimo šiame kambaryje pradėti konferencinį pokalbį",
         "default_device": "Numatytasis įrenginys",
         "no_media_perms_title": "Nėra medijos leidimų",
-        "no_media_perms_description": "Jums gali tekti rankiniu būdu duoti leidimą %(brand)s prieigai prie mikrofono/kameros"
+        "no_media_perms_description": "Jums gali tekti rankiniu būdu duoti leidimą %(brand)s prieigai prie mikrofono/kameros",
+        "join_button_tooltip_connecting": "Jungiamasi",
+        "hide_sidebar_button": "Slėpti šoninę juostą",
+        "show_sidebar_button": "Rodyti šoninę juostą",
+        "more_button": "Daugiau"
     },
     "Other": "Kitas",
     "Advanced": "Išplėstiniai",
@@ -2278,7 +2268,9 @@
             "room_id": "Vidinis kambario ID",
             "room_version_section": "Kambario versija",
             "room_version": "Kambario versija:"
-        }
+        },
+        "delete_avatar_label": "Ištrinti avatarą",
+        "upload_avatar_label": "Įkelti pseudoportretą"
     },
     "encryption": {
         "verification": {
@@ -2307,7 +2299,8 @@
             "cancelling": "Atšaukiama…",
             "unverified_sessions_toast_description": "Peržiūrėkite, ar jūsų paskyra yra saugi",
             "unverified_sessions_toast_reject": "Vėliau",
-            "unverified_session_toast_title": "Naujas prisijungimas. Ar tai jūs?"
+            "unverified_session_toast_title": "Naujas prisijungimas. Ar tai jūs?",
+            "request_toast_detail": "%(deviceId)s iš %(ip)s"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2433,7 +2426,8 @@
         "no_hs_url_provided": "Nepateiktas serverio URL",
         "autodiscovery_unexpected_error_hs": "Netikėta klaida nusistatant serverio konfigūraciją",
         "autodiscovery_unexpected_error_is": "Netikėta klaida nusistatant tapatybės serverio konfigūraciją",
-        "incorrect_credentials_detail": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org."
+        "incorrect_credentials_detail": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org.",
+        "create_account_title": "Sukurti paskyrą"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2569,7 +2563,8 @@
         "check_action": "Tikrinti, ar yra atnaujinimų"
     },
     "theme": {
-        "light_high_contrast": "Šviesi didelio kontrasto"
+        "light_high_contrast": "Šviesi didelio kontrasto",
+        "match_system": "Atitikti sistemą"
     },
     "labs_mjolnir": {
         "room_name": "Mano Draudimų Sąrašas",
@@ -2666,7 +2661,8 @@
         "tac_title": "Taisyklės ir Sąlygos",
         "identity_server_no_terms_title": "Tapatybės serveris neturi paslaugų teikimo sąlygų",
         "identity_server_no_terms_description_1": "Šiam veiksmui reikalinga pasiekti numatytąjį tapatybės serverį <server />, kad patvirtinti el. pašto adresą arba telefono numerį, bet serveris neturi jokių paslaugos teikimo sąlygų.",
-        "identity_server_no_terms_description_2": "Tęskite tik tuo atveju, jei pasitikite serverio savininku."
+        "identity_server_no_terms_description_2": "Tęskite tik tuo atveju, jei pasitikite serverio savininku.",
+        "inline_intro_text": "Sutikite su <policyLink />, kad tęstumėte:"
     },
     "failed_load_async_component": "Nepavyko įkelti! Patikrinkite savo tinklo ryšį ir bandykite dar kartą.",
     "upload_failed_generic": "Failo '%(fileName)s' nepavyko įkelti.",
@@ -2717,7 +2713,9 @@
         "resource_limits": "Šis serveris viršijo vieno iš savo išteklių limitą.",
         "mixed_content": "Neįmanoma prisijungti prie serverio per HTTP, kai naršyklės juostoje yra HTTPS URL. Naudokite HTTPS arba <a>įjunkite nesaugias rašmenas</a>.",
         "tls": "Nepavyksta prisijungti prie serverio - patikrinkite savo ryšį, įsitikinkite, kad jūsų <a>serverio SSL sertifikatas</a> yra patikimas ir, kad naršyklės plėtinys neužblokuoja užklausų.",
-        "admin_contact_short": "Susisiekite su savo <a>serverio administratoriumi</a>."
+        "admin_contact_short": "Susisiekite su savo <a>serverio administratoriumi</a>.",
+        "non_urgent_echo_failure_toast": "Jūsų serveris neatsako į kai kurias <a>užklausas</a>.",
+        "failed_copy": "Nepavyko nukopijuoti"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2740,5 +2738,14 @@
     "chat_card_back_action_label": "Grįžti į pokalbį",
     "room_summary_card_back_action_label": "Kambario informacija",
     "member_list_back_action_label": "Kambario nariai",
-    "thread_view_back_action_label": "Grįžti prie temos"
+    "thread_view_back_action_label": "Grįžti prie temos",
+    "quick_settings": {
+        "title": "Greiti nustatymai",
+        "all_settings": "Visi nustatymai",
+        "metaspace_section": "Prisegti prie šoninės juostos",
+        "sidebar_settings": "Daugiau parinkčių"
+    },
+    "user_menu": {
+        "settings": "Visi nustatymai"
+    }
 }
