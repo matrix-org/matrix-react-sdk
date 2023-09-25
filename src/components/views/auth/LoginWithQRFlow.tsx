@@ -54,7 +54,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
 
     private cancelButton = (): JSX.Element => (
         <AccessibleButton data-testid="cancel-button" kind="primary_outline" onClick={this.handleClick(Click.Cancel)}>
-            {_t("Cancel")}
+            {_t("action|cancel")}
         </AccessibleButton>
     );
 
@@ -124,7 +124,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             kind="primary"
                             onClick={this.handleClick(Click.TryAgain)}
                         >
-                            {_t("Try again")}
+                            {_t("action|try_again")}
                         </AccessibleButton>
                         {this.cancelButton()}
                     </>
@@ -156,20 +156,20 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             kind="primary_outline"
                             onClick={this.handleClick(Click.Decline)}
                         >
-                            {_t("Cancel")}
+                            {_t("action|cancel")}
                         </AccessibleButton>
                         <AccessibleButton
                             data-testid="approve-login-button"
                             kind="primary"
                             onClick={this.handleClick(Click.Approve)}
                         >
-                            {_t("Approve")}
+                            {_t("action|approve")}
                         </AccessibleButton>
                     </>
                 );
                 break;
             case Phase.ShowingQR:
-                title = _t("Sign in with QR code");
+                title = _t("settings|sessions|sign_in_with_qr");
                 if (this.props.code) {
                     const code = (
                         <div className="mx_LoginWithQR_qrWrapper">
@@ -211,7 +211,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 buttons = this.cancelButton();
                 break;
             case Phase.Verifying:
-                title = _t("Success");
+                title = _t("common|success");
                 centreTitle = true;
                 main = this.simpleSpinner(_t("Completing set up of your new device"));
                 break;

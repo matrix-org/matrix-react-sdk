@@ -18,7 +18,12 @@ import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
-import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
+import {
+    flushPromises,
+    getMockClientWithEventEmitter,
+    mockClientMethodsCrypto,
+    mockClientMethodsUser,
+} from "../../../test-utils";
 import SecureBackupPanel from "../../../../src/components/views/settings/SecureBackupPanel";
 import { accessSecretStorage } from "../../../../src/SecurityManager";
 
@@ -30,42 +35,32 @@ describe("<SecureBackupPanel />", () => {
     const userId = "@alice:server.org";
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
-        checkKeyBackup: jest.fn(),
-        isKeyBackupKeyStored: jest.fn(),
-        getKeyBackupEnabled: jest.fn(),
+        ...mockClientMethodsCrypto(),
         getKeyBackupVersion: jest.fn().mockReturnValue("1"),
-        isKeyBackupTrusted: jest.fn().mockResolvedValue(true),
         getClientWellKnown: jest.fn(),
-        deleteKeyBackupVersion: jest.fn(),
-        secretStorage: { hasKey: jest.fn() },
     });
-    // @ts-ignore allow it
-    client.crypto = {
-        getSessionBackupPrivateKey: jest.fn(),
-        isSecretStorageReady: jest.fn(),
-    } as unknown as Crypto;
 
     const getComponent = () => render(<SecureBackupPanel />);
 
     beforeEach(() => {
-        client.checkKeyBackup.mockResolvedValue({
-            backupInfo: {
-                version: "1",
-                algorithm: "test",
-                auth_data: {
-                    public_key: "1234",
-                },
+        client.getKeyBackupVersion.mockResolvedValue({
+            version: "1",
+            algorithm: "test",
+            auth_data: {
+                public_key: "1234",
             },
-            trustInfo: {
-                usable: false,
-                sigs: [],
-            },
+        });
+        Object.assign(client.getCrypto()!, {
+            isKeyBackupTrusted: jest.fn().mockResolvedValue({
+                trusted: false,
+                matchesDecryptionKey: false,
+            }),
+            getActiveSessionBackupVersion: jest.fn().mockResolvedValue(null),
+            deleteKeyBackupVersion: jest.fn().mockResolvedValue(undefined),
         });
 
         mocked(client.secretStorage.hasKey).mockClear().mockResolvedValue(false);
-        client.deleteKeyBackupVersion.mockClear().mockResolvedValue();
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
 
         mocked(accessSecretStorage).mockClear().mockResolvedValue();
     });
@@ -77,14 +72,21 @@ describe("<SecureBackupPanel />", () => {
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
     });
 
-    it("handles null backup info", async () => {
-        // checkKeyBackup can fail and return null for various reasons
-        client.checkKeyBackup.mockResolvedValue(null);
-        getComponent();
-        // flush checkKeyBackup promise
-        await flushPromises();
+    it("handles error fetching backup", async () => {
+        // getKeyBackupVersion can fail for various reasons
+        client.getKeyBackupVersion.mockImplementation(async () => {
+            throw new Error("beep beep");
+        });
+        const renderResult = getComponent();
+        await renderResult.findByText("Unable to load key backup status");
+        expect(renderResult.container).toMatchSnapshot();
+    });
 
-        // no backup info
+    it("handles absence of backup", async () => {
+        client.getKeyBackupVersion.mockResolvedValue(null);
+        getComponent();
+        // flush getKeyBackupVersion promise
+        await flushPromises();
         expect(screen.getByText("Back up your keys before signing out to avoid losing them.")).toBeInTheDocument();
     });
 
@@ -97,7 +99,7 @@ describe("<SecureBackupPanel />", () => {
     });
 
     it("displays when session is connected to key backup", async () => {
-        client.getKeyBackupEnabled.mockReturnValue(true);
+        mocked(client.getCrypto()!).getActiveSessionBackupVersion.mockResolvedValue("1");
         getComponent();
         // flush checkKeyBackup promise
         await flushPromises();
@@ -122,22 +124,16 @@ describe("<SecureBackupPanel />", () => {
 
         fireEvent.click(within(dialog).getByText("Cancel"));
 
-        expect(client.deleteKeyBackupVersion).not.toHaveBeenCalled();
+        expect(client.getCrypto()!.deleteKeyBackupVersion).not.toHaveBeenCalled();
     });
 
     it("deletes backup after confirmation", async () => {
-        client.checkKeyBackup
+        client.getKeyBackupVersion
             .mockResolvedValueOnce({
-                backupInfo: {
-                    version: "1",
-                    algorithm: "test",
-                    auth_data: {
-                        public_key: "1234",
-                    },
-                },
-                trustInfo: {
-                    usable: false,
-                    sigs: [],
+                version: "1",
+                algorithm: "test",
+                auth_data: {
+                    public_key: "1234",
                 },
             })
             .mockResolvedValue(null);
@@ -157,7 +153,7 @@ describe("<SecureBackupPanel />", () => {
 
         fireEvent.click(within(dialog).getByTestId("dialog-primary-button"));
 
-        expect(client.deleteKeyBackupVersion).toHaveBeenCalledWith("1");
+        expect(client.getCrypto()!.deleteKeyBackupVersion).toHaveBeenCalledWith("1");
 
         // delete request
         await flushPromises();
@@ -172,7 +168,7 @@ describe("<SecureBackupPanel />", () => {
         await flushPromises();
 
         client.getKeyBackupVersion.mockClear();
-        client.isKeyBackupTrusted.mockClear();
+        mocked(client.getCrypto()!).isKeyBackupTrusted.mockClear();
 
         fireEvent.click(screen.getByText("Reset"));
 
@@ -182,6 +178,6 @@ describe("<SecureBackupPanel />", () => {
 
         // backup status refreshed
         expect(client.getKeyBackupVersion).toHaveBeenCalled();
-        expect(client.isKeyBackupTrusted).toHaveBeenCalled();
+        expect(client.getCrypto()!.isKeyBackupTrusted).toHaveBeenCalled();
     });
 });

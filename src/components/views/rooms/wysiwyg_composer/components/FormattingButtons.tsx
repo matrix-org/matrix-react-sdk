@@ -34,7 +34,7 @@ import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
 import { Alignment } from "../../../elements/Tooltip";
 import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
 import { KeyCombo } from "../../../../../KeyBindingsManager";
-import { _td } from "../../../../../languageHandler";
+import { _t } from "../../../../../languageHandler";
 import { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
 import { useComposerContext } from "../ComposerContext";
@@ -93,47 +93,47 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
         <div className="mx_FormattingButtons">
             <Button
                 actionState={actionStates.bold}
-                label={_td("Bold")}
+                label={_t("composer|format_bold")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "b" }}
                 onClick={() => composer.bold()}
                 icon={<BoldIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.italic}
-                label={_td("Italic")}
+                label={_t("composer|format_italic")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "i" }}
                 onClick={() => composer.italic()}
                 icon={<ItalicIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.underline}
-                label={_td("Underline")}
+                label={_t("composer|format_underline")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "u" }}
                 onClick={() => composer.underline()}
                 icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.strikeThrough}
-                label={_td("Strikethrough")}
+                label={_t("composer|format_strikethrough")}
                 onClick={() => composer.strikeThrough()}
                 icon={<StrikeThroughIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.unorderedList}
-                label={_td("Bulleted list")}
+                label={_t("composer|format_unordered_list")}
                 onClick={() => composer.unorderedList()}
                 icon={<BulletedListIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.orderedList}
-                label={_td("Numbered list")}
+                label={_t("composer|format_ordered_list")}
                 onClick={() => composer.orderedList()}
                 icon={<NumberedListIcon className="mx_FormattingButtons_Icon" />}
             />
             {isInList && (
                 <Button
                     actionState={actionStates.indent}
-                    label={_td("Indent increase")}
+                    label={_t("composer|format_increase_indent")}
                     onClick={() => composer.indent()}
                     icon={<IndentIcon className="mx_FormattingButtons_Icon" />}
                 />
@@ -141,33 +141,33 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             {isInList && (
                 <Button
                     actionState={actionStates.unindent}
-                    label={_td("Indent decrease")}
+                    label={_t("composer|format_decrease_indent")}
                     onClick={() => composer.unindent()}
                     icon={<UnIndentIcon className="mx_FormattingButtons_Icon" />}
                 />
             )}
             <Button
                 actionState={actionStates.quote}
-                label={_td("Quote")}
+                label={_t("action|quote")}
                 onClick={() => composer.quote()}
                 icon={<QuoteIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.inlineCode}
-                label={_td("Code")}
+                label={_t("composer|format_inline_code")}
                 keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.codeBlock}
-                label={_td("Code block")}
+                label={_t("composer|format_code_block")}
                 onClick={() => composer.codeBlock()}
                 icon={<CodeBlockIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.link}
-                label={_td("Link")}
+                label={_t("composer|format_link")}
                 onClick={() => openLinkModal(composer, composerContext, actionStates.link === "reversed")}
                 icon={<LinkIcon className="mx_FormattingButtons_Icon" />}
             />

@@ -20,7 +20,7 @@ import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
+import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 
 import MFileBody from "./MFileBody";
 import Modal from "../../../Modal";
@@ -107,7 +107,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("common|attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -395,7 +395,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             return null;
         }
 
-        return <span className="mx_MImageBody_banner">{presentableTextForFile(content, _t("Image"), true, true)}</span>;
+        return (
+            <span className="mx_MImageBody_banner">
+                {presentableTextForFile(content, _t("common|image"), true, true)}
+            </span>
+        );
     }
 
     protected messageContent(

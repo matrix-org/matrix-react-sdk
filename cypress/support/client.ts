@@ -16,12 +16,18 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { FileType, Upload, UploadOpts } from "matrix-js-sdk/src/http-api";
-import type { ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import type {
+    MatrixClient,
+    Room,
+    MatrixEvent,
+    IContent,
+    FileType,
+    Upload,
+    UploadOpts,
+    ICreateRoomOpts,
+    ISendEventResponse,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
 import Chainable = Cypress.Chainable;
 import { UserCredentials } from "./login";
 

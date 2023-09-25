@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { useCallback, useEffect, useState } from "react";
 import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
@@ -111,7 +110,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             if (!roomId) {
                 throw new Error("Unable to create Room for verification");
             }
-            verificationRequest_ = await cli.requestVerificationDM(member.userId, roomId);
+            verificationRequest_ = await cli.getCrypto()!.requestVerificationDM(member.userId, roomId);
         } catch (e) {
             console.error("Error starting verification", e);
             setRequesting(false);

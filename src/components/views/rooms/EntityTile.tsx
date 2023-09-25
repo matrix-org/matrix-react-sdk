@@ -20,7 +20,7 @@ import React from "react";
 import classNames from "classnames";
 
 import AccessibleButton from "../elements/AccessibleButton";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import E2EIcon, { E2EState } from "./E2EIcon";
 import BaseAvatar from "../avatars/BaseAvatar";
 import PresenceLabel from "./PresenceLabel";
@@ -30,9 +30,9 @@ export enum PowerStatus {
     Moderator = "moderator",
 }
 
-const PowerLabel: Record<PowerStatus, string> = {
-    [PowerStatus.Admin]: _td("Admin"),
-    [PowerStatus.Moderator]: _td("Mod"),
+const PowerLabel: Record<PowerStatus, TranslationKey> = {
+    [PowerStatus.Admin]: _td("power_level|admin"),
+    [PowerStatus.Moderator]: _td("power_level|mod"),
 };
 
 export type PresenceState = "offline" | "online" | "unavailable";
@@ -162,7 +162,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
             inviteButton = (
                 <div className="mx_EntityTile_invite">
                     <img
-                        alt={_t("Invite")}
+                        alt={_t("action|invite")}
                         src={require("../../../../res/img/plus.svg").default}
                         width="16"
                         height="16"
@@ -184,9 +184,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
             e2eIcon = <E2EIcon status={e2eStatus} isUser={true} bordered={true} />;
         }
 
-        const av = this.props.avatarJsx || (
-            <BaseAvatar name={this.props.name} width={36} height={36} aria-hidden="true" />
-        );
+        const av = this.props.avatarJsx || <BaseAvatar name={this.props.name} size="36px" aria-hidden="true" />;
 
         // The wrapping div is required to make the magic mouse listener work, for some reason.
         return (

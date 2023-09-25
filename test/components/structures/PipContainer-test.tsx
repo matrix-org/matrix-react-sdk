@@ -18,14 +18,11 @@ import React from "react";
 import { mocked, Mocked } from "jest-mock";
 import { screen, render, act, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixClient, PendingEventOrdering, Room, MatrixEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget, ClientWidgetApi } from "matrix-widget-api";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,
@@ -38,6 +35,7 @@ import {
     mkRoomCreateEvent,
     mockPlatformPeg,
     flushPromises,
+    useMockMediaDevices,
 } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { CallStore } from "../../../src/stores/CallStore";
@@ -87,6 +85,8 @@ describe("PipContainer", () => {
     };
 
     beforeEach(async () => {
+        useMockMediaDevices();
+
         user = userEvent.setup();
 
         stubClient();
@@ -136,7 +136,7 @@ describe("PipContainer", () => {
         cleanup();
         await Promise.all([CallStore.instance, WidgetMessagingStore.instance].map(resetAsyncStoreWithClient));
         client.reEmitter.stopReEmitting(room, [RoomStateEvent.Events]);
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     const renderPip = () => {

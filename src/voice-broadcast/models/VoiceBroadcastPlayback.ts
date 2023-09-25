@@ -21,8 +21,8 @@ import {
     MatrixEventEvent,
     MsgType,
     RelationType,
+    TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 import { SimpleObservable } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
@@ -637,8 +637,8 @@ export class VoiceBroadcastPlayback
 
     public get errorMessage(): string {
         if (this.getState() !== VoiceBroadcastPlaybackState.Error) return "";
-        if (this.utdChunkEvents.size) return _t("Unable to decrypt voice broadcast");
-        return _t("Unable to play this voice broadcast");
+        if (this.utdChunkEvents.size) return _t("voice_broadcast|failed_decrypt");
+        return _t("voice_broadcast|failed_generic");
     }
 
     public destroy(): void {

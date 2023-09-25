@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 import React, { useCallback } from "react";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { Device } from "matrix-js-sdk/src/matrix";
 
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import { _t } from "../../../languageHandler";
@@ -88,9 +88,9 @@ export function ManualDeviceKeyVerificationDialog({
 
     return (
         <QuestionDialog
-            title={_t("Verify session")}
+            title={_t("settings|sessions|verify_session")}
             description={body}
-            button={_t("Verify session")}
+            button={_t("settings|sessions|verify_session")}
             onFinished={onLegacyFinished}
         />
     );

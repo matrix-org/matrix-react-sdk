@@ -31,7 +31,7 @@ export const showToast = (
 ): void => {
     const errorText = messageForResourceLimitError(limitType, adminContact, {
         "monthly_active_user": _td("Your homeserver has exceeded its user limit."),
-        "hs_blocked": _td("This homeserver has been blocked by its administrator."),
+        "hs_blocked": _td("error|hs_blocked"),
         "": _td("Your homeserver has exceeded one of its resource limits."),
     });
     const contactText = messageForResourceLimitError(limitType, adminContact, {
@@ -40,14 +40,14 @@ export const showToast = (
 
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
-        title: _t("Warning"),
+        title: _t("common|warning"),
         props: {
             description: (
                 <React.Fragment>
                     {errorText} {contactText}
                 </React.Fragment>
             ),
-            acceptLabel: _t("Ok"),
+            acceptLabel: _t("action|ok"),
             onAccept: () => {
                 hideToast();
                 if (onHideToast) onHideToast();

@@ -15,17 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import {
+    MatrixClient,
+    ClientEvent,
+    Room,
+    EventType,
+    RoomCreateTypeField,
+    RoomType,
+    ICreateRoomOpts,
     HistoryVisibility,
     JoinRule,
     Preset,
     RestrictedAllowType,
     Visibility,
-} from "matrix-js-sdk/src/@types/partials";
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Modal, { IHandle } from "./Modal";
@@ -124,10 +127,7 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
             case "email": {
                 const isUrl = client.getIdentityServerUrl(true);
                 if (!isUrl) {
-                    throw new UserFriendlyError(
-                        "Cannot invite user by email without an identity server. " +
-                            'You can connect to one under "Settings".',
-                    );
+                    throw new UserFriendlyError("cannot_invite_without_identity_server");
                 }
                 createOpts.invite_3pid = [
                     {
@@ -388,15 +388,15 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
                     roomId,
                 });
                 logger.error("Failed to create room " + roomId + " " + err);
-                let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
+                let description = _t("create_room|generic_error");
                 if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
                     // Technically not possible with the UI as of April 2019 because there's no
                     // options for the user to change this. However, it's not a bad thing to report
                     // the error to the user for if/when the UI is available.
-                    description = _t("The server does not support the room version specified.");
+                    description = _t("create_room|unsupported_version");
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failure to create room"),
+                    title: _t("create_room|error_title"),
                     description,
                 });
                 return null;

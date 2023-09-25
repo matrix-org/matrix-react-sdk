@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import {
+    GuestAccess,
+    HistoryVisibility,
+    JoinRule,
+    MatrixEvent,
+    RoomStateEvent,
+    Room,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { Room } from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/warning.svg";
 import { _t } from "../../../../../languageHandler";
@@ -112,17 +116,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     private onEncryptionChange = async (): Promise<void> => {
         if (this.props.room.getJoinRule() === JoinRule.Public) {
             const dialog = Modal.createDialog(QuestionDialog, {
-                title: _t("Are you sure you want to add encryption to this public room?"),
+                title: _t("room_settings|security|enable_encryption_public_room_confirm_title"),
                 description: (
                     <div>
                         <p>
                             {" "}
                             {_t(
-                                "<b>It's not recommended to add encryption to public rooms.</b> " +
-                                    "Anyone can find and join public rooms, so anyone can read messages in them. " +
-                                    "You'll get none of the benefits of encryption, and you won't be able to turn it " +
-                                    "off later. Encrypting messages in a public room will make receiving and sending " +
-                                    "messages slower.",
+                                "room_settings|security|enable_encryption_public_room_confirm_description_1",
                                 undefined,
                                 { b: (sub) => <b>{sub}</b> },
                             )}{" "}
@@ -130,8 +130,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         <p>
                             {" "}
                             {_t(
-                                "To avoid these issues, create a <a>new encrypted room</a> for " +
-                                    "the conversation you plan to have.",
+                                "room_settings|security|enable_encryption_public_room_confirm_description_2",
                                 undefined,
                                 {
                                     a: (sub) => (
@@ -159,11 +158,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         }
 
         Modal.createDialog(QuestionDialog, {
-            title: _t("Enable encryption?"),
+            title: _t("room_settings|security|enable_encryption_confirm_title"),
             description: _t(
-                "Once enabled, encryption for a room cannot be disabled. Messages sent in an encrypted " +
-                    "room cannot be seen by the server, only by the participants of the room. Enabling encryption " +
-                    "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
+                "room_settings|security|enable_encryption_confirm_description",
                 {},
                 {
                     a: (sub) => <ExternalLink href={SdkConfig.get("help_encryption_url")}>{sub}</ExternalLink>,
@@ -262,11 +259,11 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             aliasWarning = (
                 <div className="mx_SecurityRoomSettingsTab_warning">
                     <WarningIcon width={15} height={15} />
-                    <span>{_t("To link to this room, please add an address.")}</span>
+                    <span>{_t("room_settings|security|public_without_alias_warning")}</span>
                 </div>
             );
         }
-        const description = _t("Decide who can join %(roomName)s.", {
+        const description = _t("room_settings|security|join_rule_description", {
             roomName: room.name,
         });
 
@@ -312,41 +309,31 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     private onBeforeJoinRuleChange = async (joinRule: JoinRule): Promise<boolean> => {
         if (this.state.encrypted && joinRule === JoinRule.Public) {
             const dialog = Modal.createDialog(QuestionDialog, {
-                title: _t("Are you sure you want to make this encrypted room public?"),
+                title: _t("room_settings|security|encrypted_room_public_confirm_title"),
                 description: (
                     <div>
                         <p>
                             {" "}
-                            {_t(
-                                "<b>It's not recommended to make encrypted rooms public.</b> " +
-                                    "It will mean anyone can find and join the room, so anyone can read messages. " +
-                                    "You'll get none of the benefits of encryption. Encrypting messages in a public " +
-                                    "room will make receiving and sending messages slower.",
-                                undefined,
-                                { b: (sub) => <b>{sub}</b> },
-                            )}{" "}
+                            {_t("room_settings|security|encrypted_room_public_confirm_description_1", undefined, {
+                                b: (sub) => <b>{sub}</b>,
+                            })}{" "}
                         </p>
                         <p>
                             {" "}
-                            {_t(
-                                "To avoid these issues, create a <a>new public room</a> for the conversation " +
-                                    "you plan to have.",
-                                undefined,
-                                {
-                                    a: (sub) => (
-                                        <AccessibleButton
-                                            kind="link_inline"
-                                            onClick={(): void => {
-                                                dialog.close();
-                                                this.createNewRoom(true, false);
-                                            }}
-                                        >
-                                            {" "}
-                                            {sub}{" "}
-                                        </AccessibleButton>
-                                    ),
-                                },
-                            )}{" "}
+                            {_t("room_settings|security|encrypted_room_public_confirm_description_2", undefined, {
+                                a: (sub) => (
+                                    <AccessibleButton
+                                        kind="link_inline"
+                                        onClick={(): void => {
+                                            dialog.close();
+                                            this.createNewRoom(true, false);
+                                        }}
+                                    >
+                                        {" "}
+                                        {sub}{" "}
+                                    </AccessibleButton>
+                                ),
+                            })}{" "}
                         </p>
                     </div>
                 ),
@@ -373,15 +360,15 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         const options = [
             {
                 value: HistoryVisibility.Shared,
-                label: _t("Members only (since the point in time of selecting this option)"),
+                label: _t("room_settings|security|history_visibility_shared"),
             },
             {
                 value: HistoryVisibility.Invited,
-                label: _t("Members only (since they were invited)"),
+                label: _t("room_settings|security|history_visibility_invited"),
             },
             {
                 value: HistoryVisibility.Joined,
-                label: _t("Members only (since they joined)"),
+                label: _t("room_settings|security|history_visibility_joined"),
             },
         ];
 
@@ -389,17 +376,14 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         if (!this.state.encrypted || history === HistoryVisibility.WorldReadable) {
             options.unshift({
                 value: HistoryVisibility.WorldReadable,
-                label: _t("Anyone"),
+                label: _t("room_settings|security|history_visibility_world_readable"),
             });
         }
 
-        const description = _t(
-            "Changes to who can read history will only apply to future messages in this room. " +
-                "The visibility of existing history will be unchanged.",
-        );
+        const description = _t("room_settings|security|history_visibility_warning");
 
         return (
-            <SettingsFieldset legend={_t("Who can read history?")} description={description}>
+            <SettingsFieldset legend={_t("room_settings|security|history_visibility_legend")} description={description}>
                 <StyledRadioGroup
                     name="historyVis"
                     value={history}
@@ -429,12 +413,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                     disabled={!canSetGuestAccess}
                     label={_t("Enable guest access")}
                 />
-                <p>
-                    {_t(
-                        "People with supported clients will be able to join " +
-                            "the room without having a registered account.",
-                    )}
-                </p>
+                <p>{_t("room_settings|security|guest_access_warning")}</p>
             </div>
         );
     }
@@ -463,23 +442,23 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         return (
             <SettingsTab>
-                <SettingsSection heading={_t("Security & Privacy")}>
+                <SettingsSection heading={_t("room_settings|security|title")}>
                     <SettingsFieldset
-                        legend={_t("Encryption")}
+                        legend={_t("settings|security|encryption_section")}
                         description={
                             isEncryptionForceDisabled && !isEncrypted
                                 ? undefined
-                                : _t("Once enabled, encryption cannot be disabled.")
+                                : _t("room_settings|security|encryption_permanent")
                         }
                     >
                         <LabelledToggleSwitch
                             value={isEncrypted}
                             onChange={this.onEncryptionChange}
-                            label={_t("Encrypted")}
+                            label={_t("common|encrypted")}
                             disabled={!canEnableEncryption}
                         />
                         {isEncryptionForceDisabled && !isEncrypted && (
-                            <Caption>{_t("Your server requires encryption to be disabled.")}</Caption>
+                            <Caption>{_t("room_settings|security|encryption_forced")}</Caption>
                         )}
                         {encryptionSettings}
                     </SettingsFieldset>

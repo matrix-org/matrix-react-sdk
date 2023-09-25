@@ -1,5 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<RoomPreviewBar /> message case AskToJoin renders the corresponding actions 1`] = `
+<div
+  class="mx_RoomPreviewBar_actions mx_RoomPreviewBar_fullWidth"
+>
+  <div
+    class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+    role="button"
+    tabindex="0"
+  >
+    Request access
+  </div>
+</div>
+`;
+
+exports[`<RoomPreviewBar /> message case AskToJoin renders the corresponding message 1`] = `
+<div
+  class="mx_RoomPreviewBar_message"
+>
+  <h3>
+    Ask to join RoomPreviewBar-test-room?
+  </h3>
+  <p>
+    <span
+      class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+      data-color="4"
+      data-testid="avatar-img"
+      data-type="round"
+      role="presentation"
+      style="--cpd-avatar-size: 36px;"
+    >
+      R
+    </span>
+  </p>
+  <p>
+    You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.
+  </p>
+</div>
+`;
+
+exports[`<RoomPreviewBar /> message case AskToJoin renders the corresponding message with a generic title 1`] = `
+<div
+  class="mx_RoomPreviewBar_message"
+>
+  <h3>
+    Ask to join?
+  </h3>
+  <p>
+    <span
+      class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+      data-color="1"
+      data-testid="avatar-img"
+      data-type="round"
+      role="presentation"
+      style="--cpd-avatar-size: 36px;"
+    >
+      ?
+    </span>
+  </p>
+  <p>
+    You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.
+  </p>
+</div>
+`;
+
+exports[`<RoomPreviewBar /> message case Knocked renders the corresponding actions 1`] = `
+<div
+  class="mx_RoomPreviewBar_actions"
+>
+  <div
+    class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_secondary"
+    role="button"
+    tabindex="0"
+  >
+    Cancel request
+  </div>
+</div>
+`;
+
+exports[`<RoomPreviewBar /> message case Knocked renders the corresponding message 1`] = `
+<div
+  class="mx_RoomPreviewBar_message"
+>
+  <h3>
+    Request to join sent
+  </h3>
+  <p>
+    <div
+      class="mx_Icon mx_Icon_16 mx_RoomPreviewBar_icon"
+    />
+    Your request to join is pending.
+  </p>
+</div>
+`;
+
 exports[`<RoomPreviewBar /> renders banned message 1`] = `
 <div
   class="mx_RoomPreviewBar_message"
@@ -9,6 +103,19 @@ exports[`<RoomPreviewBar /> renders banned message 1`] = `
   </h3>
   <p>
     Reason: test reason
+  </p>
+</div>
+`;
+
+exports[`<RoomPreviewBar /> renders denied request message 1`] = `
+<div
+  class="mx_RoomPreviewBar_message"
+>
+  <h3>
+    You have been denied access
+  </h3>
+  <p>
+    As you have been denied access, you cannot rejoin unless you are invited by the admin or moderator of the group.
   </p>
 </div>
 `;
@@ -120,25 +227,14 @@ exports[`<RoomPreviewBar /> with an invite with an invited email when client has
   </h3>
   <p>
     <span
-      class="mx_BaseAvatar"
+      class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+      data-color="4"
+      data-testid="avatar-img"
+      data-type="round"
       role="presentation"
+      style="--cpd-avatar-size: 36px;"
     >
-      <span
-        aria-hidden="true"
-        class="mx_BaseAvatar_initial"
-        style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
-      >
-        R
-      </span>
-      <img
-        alt=""
-        aria-hidden="true"
-        class="mx_BaseAvatar_image"
-        data-testid="avatar-img"
-        loading="lazy"
-        src="data:image/png;base64,00"
-        style="width: 36px; height: 36px;"
-      />
+      R
     </span>
   </p>
   <p>
@@ -189,25 +285,14 @@ exports[`<RoomPreviewBar /> with an invite without an invited email for a dm roo
   </h3>
   <p>
     <span
-      class="mx_BaseAvatar"
+      class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+      data-color="4"
+      data-testid="avatar-img"
+      data-type="round"
       role="presentation"
+      style="--cpd-avatar-size: 36px;"
     >
-      <span
-        aria-hidden="true"
-        class="mx_BaseAvatar_initial"
-        style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
-      >
-        R
-      </span>
-      <img
-        alt=""
-        aria-hidden="true"
-        class="mx_BaseAvatar_image"
-        data-testid="avatar-img"
-        loading="lazy"
-        src="data:image/png;base64,00"
-        style="width: 36px; height: 36px;"
-      />
+      R
     </span>
   </p>
   <p>
@@ -265,25 +350,14 @@ exports[`<RoomPreviewBar /> with an invite without an invited email for a non-dm
   </h3>
   <p>
     <span
-      class="mx_BaseAvatar"
+      class="_avatar_2lhia_17 mx_BaseAvatar _avatar-imageless_2lhia_56"
+      data-color="4"
+      data-testid="avatar-img"
+      data-type="round"
       role="presentation"
+      style="--cpd-avatar-size: 36px;"
     >
-      <span
-        aria-hidden="true"
-        class="mx_BaseAvatar_initial"
-        style="font-size: 23.400000000000002px; width: 36px; line-height: 36px;"
-      >
-        R
-      </span>
-      <img
-        alt=""
-        aria-hidden="true"
-        class="mx_BaseAvatar_image"
-        data-testid="avatar-img"
-        loading="lazy"
-        src="data:image/png;base64,00"
-        style="width: 36px; height: 36px;"
-      />
+      R
     </span>
   </p>
   <p>

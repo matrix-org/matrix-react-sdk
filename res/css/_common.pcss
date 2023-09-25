@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 @import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
 @import "./_spacing.pcss";
@@ -131,6 +132,22 @@ code {
 
 .text-muted {
     color: $muted-fg-color;
+}
+
+.text-primary {
+    color: $primary-content;
+}
+
+.text-secondary {
+    color: $secondary-content;
+}
+
+.mx_Verified {
+    color: $e2e-verified-color;
+}
+
+.mx_Untrusted {
+    color: $e2e-warning-color;
 }
 
 b {
@@ -419,6 +436,7 @@ legend {
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }

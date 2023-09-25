@@ -18,13 +18,12 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { MINIMUM_MATRIX_VERSION } from "matrix-js-sdk/src/version-support";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -67,23 +66,24 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
 import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import GenericToast from "./components/views/toasts/GenericToast";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
 
-/**
- * Used as storage key
+/*
+ * Keys used when storing the tokens in indexeddb or localstorage
  */
 const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
 const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
-/**
+/*
  * Used as initialization vector during encryption in persistTokenInStorage
  * And decryption in restoreFromLocalStorage
  */
-const ACCESS_TOKEN_NAME = "access_token";
-const REFRESH_TOKEN_NAME = "refresh_token";
-/**
- * Used in localstorage to store whether we expect a token in idb
+const ACCESS_TOKEN_IV = "access_token";
+const REFRESH_TOKEN_IV = "refresh_token";
+/*
+ * Keys for localstorage items which indicate whether we expect a token in indexeddb.
  */
 const HAS_ACCESS_TOKEN_STORAGE_KEY = "mx_has_access_token";
 const HAS_REFRESH_TOKEN_STORAGE_KEY = "mx_has_refresh_token";
@@ -98,6 +98,41 @@ dis.register((payload) => {
         doSetLoggedIn(typed.credentials, true);
     }
 });
+
+/**
+ * This is set to true by {@link #onSessionLockStolen}.
+ *
+ * It is used in various of the async functions to prevent races where we initialise a client after the lock is stolen.
+ */
+let sessionLockStolen = false;
+
+// this is exposed solely for unit tests.
+// ts-prune-ignore-next
+export function setSessionLockNotStolen(): void {
+    sessionLockStolen = false;
+}
+
+/**
+ * Handle the session lock being stolen. Stops any active Matrix Client, and aborts any ongoing client initialisation.
+ */
+export async function onSessionLockStolen(): Promise<void> {
+    sessionLockStolen = true;
+    stopMatrixClient();
+}
+
+/**
+ * Check if we still hold the session lock.
+ *
+ * If not, raises a {@link SessionLockStolenError}.
+ */
+function checkSessionLock(): void {
+    if (sessionLockStolen) {
+        throw new SessionLockStolenError("session lock has been released");
+    }
+}
+
+/** Error type raised by various functions in the Lifecycle workflow if session lock is stolen during execution */
+class SessionLockStolenError extends Error {}
 
 interface ILoadSessionOpts {
     enableGuest?: boolean;
@@ -170,6 +205,9 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
         if (success) {
             return true;
         }
+        if (sessionLockStolen) {
+            return false;
+        }
 
         if (enableGuest && guestHsUrl) {
             return registerAsGuest(guestHsUrl, guestIsUrl, defaultDeviceDisplayName);
@@ -183,6 +221,12 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
             // need to show the general failure dialog. Instead, just go back to welcome.
             return false;
         }
+
+        // likewise, if the session lock has been stolen while we've been trying to start
+        if (sessionLockStolen) {
+            return false;
+        }
+
         return handleLoadSessionFailure(e);
     }
 }
@@ -220,6 +264,7 @@ export async function attemptDelegatedAuthLogin(
     fragmentAfterLogin?: string,
 ): Promise<boolean> {
     if (queryParams.code && queryParams.state) {
+        console.log("We have OIDC params - attempting OIDC login");
         return attemptOidcNativeLogin(queryParams);
     }
 
@@ -261,7 +306,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         logger.error("Failed to login via OIDC", error);
 
         // TODO(kerrya) nice error messages https://github.com/vector-im/element-web/issues/25665
-        await onFailedDelegatedAuthLogin(_t("Something went wrong."));
+        await onFailedDelegatedAuthLogin(_t("auth|oidc|error_generic"));
         return false;
     }
 }
@@ -313,16 +358,13 @@ export function attemptTokenLogin(
         return Promise.resolve(false);
     }
 
+    console.log("We have token login params - attempting token login");
+
     const homeserver = localStorage.getItem(SSO_HOMESERVER_URL_KEY);
     const identityServer = localStorage.getItem(SSO_ID_SERVER_URL_KEY) ?? undefined;
     if (!homeserver) {
         logger.warn("Cannot log in with token: can't determine HS URL to use");
-        onFailedDelegatedAuthLogin(
-            _t(
-                "We asked the browser to remember which homeserver you use to let you sign in, " +
-                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
-            ),
-        );
+        onFailedDelegatedAuthLogin(_t("auth|sso_failed_missing_storage"));
         return Promise.resolve(false);
     }
 
@@ -377,9 +419,9 @@ type TryAgainFunction = () => void;
  */
 async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAgain?: TryAgainFunction): Promise<void> {
     Modal.createDialog(ErrorDialog, {
-        title: _t("We couldn't log you in"),
+        title: _t("auth|oidc|error_title"),
         description,
-        button: _t("Try again"),
+        button: _t("action|try_again"),
         // if we have a tryAgain callback, call it the primary 'try again' button was clicked in the dialog
         onFinished: tryAgain ? (shouldTryAgain?: boolean) => shouldTryAgain && tryAgain() : undefined,
     });
@@ -567,7 +609,7 @@ const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): tok
  * Try to decrypt a token retrieved from storage
  * @param pickleKey pickle key used during encryption of token, or undefined
  * @param token
- * @param tokenName token name used during encryption of token eg ACCESS_TOKEN_NAME
+ * @param tokenName token name used during encryption of token eg ACCESS_TOKEN_IV
  * @returns the decrypted token, or the plain text token, returns undefined when token cannot be decrypted
  */
 async function tryDecryptToken(
@@ -624,8 +666,8 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         } else {
             logger.log("No pickle key available");
         }
-        const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_NAME);
-        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_NAME);
+        const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_IV);
+        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV);
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -645,11 +687,38 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             },
             false,
         );
+        checkServerVersions();
         return true;
     } else {
         logger.log("No previous session found.");
         return false;
     }
+}
+
+async function checkServerVersions(): Promise<void> {
+    MatrixClientPeg.get()
+        ?.getVersions()
+        .then((response) => {
+            if (!response.versions.includes(MINIMUM_MATRIX_VERSION)) {
+                const toastKey = "LEGACY_SERVER";
+                ToastStore.sharedInstance().addOrReplaceToast({
+                    key: toastKey,
+                    title: _t("unsupported_server_title"),
+                    props: {
+                        description: _t("unsupported_server_description", {
+                            version: MINIMUM_MATRIX_VERSION,
+                            brand: SdkConfig.get().brand,
+                        }),
+                        acceptLabel: _t("action|ok"),
+                        onAccept: () => {
+                            ToastStore.sharedInstance().dismissToast(toastKey);
+                        },
+                    },
+                    component: GenericToast,
+                    priority: 98,
+                });
+            }
+        });
 }
 
 async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
@@ -747,6 +816,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
 async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
+    checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
     const softLogout = isSoftLogout();
@@ -777,6 +847,8 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
+    // check the session lock just before creating the new client
+    checkSessionLock();
     MatrixClientPeg.replaceUsingCreds(credentials);
     const client = MatrixClientPeg.safeGet();
 
@@ -809,6 +881,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     } else {
         logger.warn("No local storage available: can't persist session!");
     }
+    checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
     await startMatrixClient(client, /*startSyncing=*/ !softLogout);
@@ -832,17 +905,16 @@ class AbortLoginAndRebuildStorage extends Error {}
  * Stores in idb, falling back to localStorage
  *
  * @param storageKey key used to store the token
- * @param name eg "access_token" used as initialization vector during encryption
- *              only used when pickleKey is present to encrypt with
+ * @param initializationVector Initialization vector for encrypting the token. Only used when `pickleKey` is present
  * @param token the token to store, when undefined any existing token at the storageKey is removed from storage
  * @param pickleKey optional pickle key used to encrypt token
- * @param hasTokenStorageKey used to store in localstorage whether we expect to have a token in idb, eg "mx_has_access_token"
+ * @param hasTokenStorageKey Localstorage key for an item which stores whether we expect to have a token in indexeddb, eg "mx_has_access_token".
  */
 async function persistTokenInStorage(
     storageKey: string,
-    name: string,
+    initializationVector: string,
     token: string | undefined,
-    pickleKey: IMatrixClientCreds["pickleKey"],
+    pickleKey: string | undefined,
     hasTokenStorageKey: string,
 ): Promise<void> {
     // store whether we expect to find a token, to detect the case
@@ -861,7 +933,7 @@ async function persistTokenInStorage(
             }
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(pickleKey);
-            encryptedToken = await encryptAES(token, encrKey, name);
+            encryptedToken = await encryptAES(token, encrKey, initializationVector);
             encrKey.fill(0);
         } catch (e) {
             logger.warn("Could not encrypt access token", e);
@@ -904,14 +976,14 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 
     await persistTokenInStorage(
         ACCESS_TOKEN_STORAGE_KEY,
-        ACCESS_TOKEN_NAME,
+        ACCESS_TOKEN_IV,
         credentials.accessToken,
         credentials.pickleKey,
         HAS_ACCESS_TOKEN_STORAGE_KEY,
     );
     await persistTokenInStorage(
         REFRESH_TOKEN_STORAGE_KEY,
-        REFRESH_TOKEN_NAME,
+        REFRESH_TOKEN_IV,
         credentials.refreshToken,
         credentials.pickleKey,
         HAS_REFRESH_TOKEN_STORAGE_KEY,
@@ -1045,6 +1117,8 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
         logger.warn("Caller requested only auxiliary services be started");
         await MatrixClientPeg.assign();
     }
+
+    checkSessionLock();
 
     // Run the migrations after the MatrixClientPeg has been assigned
     SettingsStore.runMigrations();

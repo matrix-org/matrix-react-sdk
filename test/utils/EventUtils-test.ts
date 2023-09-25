@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import {
+    M_LOCATION,
     EventStatus,
     EventType,
     IEvent,
@@ -25,8 +25,8 @@ import {
     PendingEventOrdering,
     RelationType,
     Room,
+    Thread,
 } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import {
