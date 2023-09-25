@@ -380,8 +380,8 @@ describe("Read receipts", () => {
                     "Root",
                     threadedOff("Root", "ThreadMsg1"),
                     threadedOff("Root", "ThreadMsg2"),
-                    "Root2",
-                    threadedOff("Root2", "Root2->A"),
+                    "SecondRoot",
+                    threadedOff("SecondRoot", "SecondRoot->A"),
                 ]);
                 assertUnread(room2, 5);
 
@@ -390,7 +390,7 @@ describe("Read receipts", () => {
                 assertUnreadThread("Root");
                 openThread("Root");
                 assertUnreadLessThan(room2, 4);
-                openThread("Root2");
+                openThread("SecondRoot");
                 assertRead(room2);
                 closeThreadsPanel();
                 goTo(room1);
@@ -677,15 +677,15 @@ describe("Read receipts", () => {
                     "Root",
                     threadedOff("Root", "ThreadMsg1"),
                     threadedOff("Root", "ThreadMsg2"),
-                    "Root2",
-                    threadedOff("Root2", "Root2->A"),
+                    "SecondRoot",
+                    threadedOff("SecondRoot", "SecondRoot->A"),
                 ]);
                 assertUnread(room2, 5);
                 goTo(room2);
                 assertUnreadThread("Root");
                 openThread("Root");
                 assertUnreadLessThan(room2, 4);
-                openThread("Root2");
+                openThread("SecondRoot");
                 assertRead(room2);
                 closeThreadsPanel();
                 goTo(room1);
