@@ -1017,7 +1017,6 @@
             "user_description": "Brukere"
         }
     },
-    "Bold": "Fet",
     "Code": "Kode",
     "power_level": {
         "default": "Standard",
@@ -1767,10 +1766,13 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ikke gå glipp av noen svar",
         "enable_prompt_toast_title": "Varsler",
-        "enable_prompt_toast_description": "Aktiver skrivebordsvarsler"
+        "enable_prompt_toast_description": "Aktiver skrivebordsvarsler",
+        "colour_none": "Ingen",
+        "colour_bold": "Fet"
     },
     "mobile_guide": {
         "toast_title": "Bruk appen for en bedre opplevelse",
         "toast_accept": "Bruk app"
-    }
+    },
+    "room_summary_card_back_action_label": "Rominformasjon"
 }

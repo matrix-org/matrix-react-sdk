@@ -144,7 +144,6 @@
     "Voice & Video": "Tal og myndmerki",
     "Reject & Ignore user": "Hafna og hunsa notanda",
     "All settings": "Allar stillingar",
-    "Change notification settings": "Breytta tilkynningastillingum",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
     "Ignored users": "Hunsaðir notendur",
     "Use the <a>Desktop app</a> to search encrypted messages": "Notaðu <a>tölvuforritið</a> til að sía dulrituð skilaboð",
@@ -475,7 +474,6 @@
     "Themes": "Þemu",
     "Moderation": "Umsjón",
     "Widgets": "Viðmótshlutar",
-    "Room members": "Meðlimir spjallrásar",
     "Ok": "Í lagi",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s og %(count)s til viðbótar",
@@ -723,7 +721,6 @@
     "Close preview": "Loka forskoðun",
     "View in room": "Skoða á spjallrás",
     "Set up": "Setja upp",
-    "Back to chat": "Til baka í spjall",
     "%(deviceId)s from %(ip)s": "%(deviceId)s frá %(ip)s",
     "Failed to set display name": "Mistókst að stilla birtingarnafn",
     "Show advanced": "Birta ítarlegt",
@@ -780,7 +777,6 @@
     },
     "No display name": "Ekkert birtingarnafn",
     "Access": "Aðgangur",
-    "Back to thread": "Til baka í spjallþráð",
     "Favourited": "Í eftirlætum",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
@@ -1889,7 +1885,6 @@
             "user_a11y": "Orðaklárun notanda"
         }
     },
-    "Bold": "Feitletrað",
     "Link": "Tengill",
     "Code": "Kóði",
     "power_level": {
@@ -3594,11 +3589,19 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ekki missa af svari",
         "enable_prompt_toast_title": "Tilkynningar",
-        "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði"
+        "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði",
+        "colour_none": "Ekkert",
+        "colour_bold": "Feitletrað",
+        "colour_unsent": "Ósent",
+        "error_change_title": "Breytta tilkynningastillingum"
     },
     "mobile_guide": {
         "toast_title": "Notaðu smáforritið til að njóta betur reynslunnar",
         "toast_description": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
         "toast_accept": "Nota smáforrit"
-    }
+    },
+    "chat_card_back_action_label": "Til baka í spjall",
+    "room_summary_card_back_action_label": "Upplýsingar um spjallrás",
+    "member_list_back_action_label": "Meðlimir spjallrásar",
+    "thread_view_back_action_label": "Til baka í spjallþráð"
 }

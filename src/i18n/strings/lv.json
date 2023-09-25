@@ -209,7 +209,6 @@
     "None": "Neviena",
     "Room options": "Istabas opcijas",
     "All settings": "Visi iestatījumi",
-    "Change notification settings": "Mainīt paziņojumu iestatījumus",
     "Favourited": "Izlasē",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
@@ -831,7 +830,6 @@
     "Start a group chat": "Uzsākt grupas čatu",
     "Messages in this chat will be end-to-end encrypted.": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
     "Export chat": "Eksportēt čatu",
-    "Back to chat": "Atgriezties uz čatu",
     "common": {
         "about": "Par",
         "analytics": "Analītika",
@@ -2024,6 +2022,10 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Nepalaidiet garām atbildi",
         "enable_prompt_toast_title": "Paziņojumi",
-        "enable_prompt_toast_description": "Iespējot darbvirsmas paziņojumus"
-    }
+        "enable_prompt_toast_description": "Iespējot darbvirsmas paziņojumus",
+        "colour_none": "Neviena",
+        "error_change_title": "Mainīt paziņojumu iestatījumus"
+    },
+    "chat_card_back_action_label": "Atgriezties uz čatu",
+    "room_summary_card_back_action_label": "Informācija par istabu"
 }

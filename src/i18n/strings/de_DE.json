@@ -728,7 +728,6 @@
     "Edited at %(date)s": "Geändert am %(date)s",
     "Click to view edits": "Klicke, um Änderungen anzuzeigen",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
-    "Change notification settings": "Benachrichtigungseinstellungen ändern",
     "Your server isn't responding to some <a>requests</a>.": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
     "Server isn't responding": "Server reagiert nicht",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server reagiert auf einige deiner Anfragen nicht. Folgend sind einige der wahrscheinlichsten Gründe aufgeführt.",
@@ -1454,9 +1453,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
     "Device verified": "Gerät verifiziert",
-    "Room members": "Raummitglieder",
-    "Back to thread": "Zurück zum Thread",
-    "Back to chat": "Zurück zur Unterhaltung",
     "Could not fetch location": "Standort konnte nicht abgerufen werden",
     "You cancelled verification on your other device.": "Verifizierung am anderen Gerät abgebrochen.",
     "Almost there! Is your other device showing the same shield?": "Fast geschafft! Zeigen beide Geräte das selbe Wappen an?",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alle Nachrichten und Einladungen der Person werden verborgen. Bist du sicher, dass du sie ignorieren möchtest?",
     "Ignore %(user)s": "%(user)s ignorieren",
     "unknown": "unbekannt",
-    "Red": "Rot",
-    "Grey": "Grau",
     "This session is backing up your keys.": "Diese Sitzung sichert deine Schlüssel.",
     "Declining…": "Ablehnen …",
     "There are no past polls in this room": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
@@ -2273,7 +2267,6 @@
             "user_a11y": "Nutzer-Auto-Vervollständigung"
         }
     },
-    "Bold": "Fett",
     "Link": "Link",
     "Code": "Code",
     "power_level": {
@@ -4213,11 +4206,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Verpasse keine Antwort",
         "enable_prompt_toast_title": "Benachrichtigungen",
-        "enable_prompt_toast_description": "Aktiviere Desktopbenachrichtigungen"
+        "enable_prompt_toast_description": "Aktiviere Desktopbenachrichtigungen",
+        "colour_none": "Nichts",
+        "colour_bold": "Fett",
+        "colour_grey": "Grau",
+        "colour_red": "Rot",
+        "colour_unsent": "Nicht gesendet",
+        "error_change_title": "Benachrichtigungseinstellungen ändern"
     },
     "mobile_guide": {
         "toast_title": "Nutze die App für eine bessere Erfahrung",
         "toast_description": "%(brand)s ist in mobilen Browsern experimentell. Für eine bessere Erfahrung nutze unsere App.",
         "toast_accept": "App verwenden"
-    }
+    },
+    "chat_card_back_action_label": "Zurück zur Unterhaltung",
+    "room_summary_card_back_action_label": "Rauminformationen",
+    "member_list_back_action_label": "Raummitglieder",
+    "thread_view_back_action_label": "Zurück zum Thread"
 }

@@ -825,7 +825,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Amerika Birleşik Devletleri",
     "United Kingdom": "Birleşik Krallık",
-    "Change notification settings": "Bildirim ayarlarını değiştir",
     "Your server isn't responding to some <a>requests</a>.": "Sunucunuz bası <a>istekler'e</a> onay vermiyor.",
     "Thumbs up": "Başparmak havaya",
     "Santa": "Noel Baba",
@@ -1162,7 +1161,6 @@
             "user_a11y": "Kullanıcı Otomatik Tamamlama"
         }
     },
-    "Bold": "Kalın",
     "Code": "Kod",
     "power_level": {
         "default": "Varsayılan",
@@ -2219,10 +2217,14 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Yanıtları kaçırma",
         "enable_prompt_toast_title": "Bildirimler",
-        "enable_prompt_toast_description": "Masaüstü bildirimlerini etkinleştir"
+        "enable_prompt_toast_description": "Masaüstü bildirimlerini etkinleştir",
+        "colour_none": "Yok",
+        "colour_bold": "Kalın",
+        "error_change_title": "Bildirim ayarlarını değiştir"
     },
     "mobile_guide": {
         "toast_title": "Daha iyi bir deneyim için uygulamayı kullanın",
         "toast_accept": "Uygulamayı kullan"
-    }
+    },
+    "room_summary_card_back_action_label": "Oda bilgisi"
 }

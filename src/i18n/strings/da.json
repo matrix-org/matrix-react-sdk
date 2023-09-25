@@ -79,7 +79,6 @@
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
-    "Change notification settings": "Skift notifikations indstillinger",
     "Profile picture": "Profil billede",
     "Checking server": "Tjekker server",
     "Profile": "Profil",
@@ -854,6 +853,7 @@
         "one": "<Items/> og en anden"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Notifikationer"
+        "enable_prompt_toast_title": "Notifikationer",
+        "error_change_title": "Skift notifikations indstillinger"
     }
 }

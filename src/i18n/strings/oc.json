@@ -243,7 +243,6 @@
             "user_description": "Utilizaires"
         }
     },
-    "Bold": "Gras",
     "power_level": {
         "default": "Predefinit",
         "moderator": "Moderator",
@@ -385,6 +384,7 @@
         "failed_generic": "L'operacion a fracassat"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Notificacions"
+        "enable_prompt_toast_title": "Notificacions",
+        "colour_bold": "Gras"
     }
 }

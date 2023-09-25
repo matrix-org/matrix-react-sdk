@@ -572,7 +572,6 @@
             "user_description": "Úsáideoirí"
         }
     },
-    "Bold": "Trom",
     "Code": "Cód",
     "power_level": {
         "default": "Réamhshocrú",
@@ -872,6 +871,8 @@
         "tls": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais."
     },
     "notifications": {
-        "enable_prompt_toast_title": "Fógraí"
+        "enable_prompt_toast_title": "Fógraí",
+        "colour_none": "Níl aon cheann",
+        "colour_bold": "Trom"
     }
 }

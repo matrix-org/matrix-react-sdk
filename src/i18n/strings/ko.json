@@ -792,7 +792,6 @@
             "user_a11y": "사용자 자동 완성"
         }
     },
-    "Bold": "굵게",
     "Code": "코드",
     "power_level": {
         "default": "기본",
@@ -1569,6 +1568,9 @@
         "other": "<Items/>님 외 %(count)s명"
     },
     "notifications": {
-        "enable_prompt_toast_title": "알림"
-    }
+        "enable_prompt_toast_title": "알림",
+        "colour_none": "없음",
+        "colour_bold": "굵게"
+    },
+    "room_summary_card_back_action_label": "방 정보"
 }

@@ -720,7 +720,6 @@
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
     "Room options": "Настройки на стаята",
-    "Change notification settings": "Промяна на настройките за уведомление",
     "This room is public": "Тази стая е публична",
     "Move right": "Премести надясно",
     "Move left": "Премести наляво",
@@ -1305,7 +1304,6 @@
             "user_a11y": "Подсказка за потребители"
         }
     },
-    "Bold": "Удебелено",
     "Code": "Код",
     "power_level": {
         "default": "По подразбиране",
@@ -2314,10 +2312,14 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Не пропускайте отговор",
         "enable_prompt_toast_title": "Известия",
-        "enable_prompt_toast_description": "Включете уведомления на работния плот"
+        "enable_prompt_toast_description": "Включете уведомления на работния плот",
+        "colour_none": "Няма нищо",
+        "colour_bold": "Удебелено",
+        "error_change_title": "Промяна на настройките за уведомление"
     },
     "mobile_guide": {
         "toast_title": "Използвайте приложението за по-добра работа",
         "toast_accept": "Използване на приложението"
-    }
+    },
+    "room_summary_card_back_action_label": "Информация за стаята"
 }

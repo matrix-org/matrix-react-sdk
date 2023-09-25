@@ -915,7 +915,6 @@
     "Backup version:": "Versie reservekopie:",
     "The operation could not be completed": "De handeling kon niet worden voltooid",
     "Failed to save your profile": "Profiel opslaan mislukt",
-    "Change notification settings": "Meldingsinstellingen wijzigen",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
     "Server name": "Servernaam",
@@ -1468,9 +1467,6 @@
     "You cancelled verification on your other device.": "Je hebt de verificatie geannuleerd op het andere apparaat.",
     "Almost there! Is your other device showing the same shield?": "Je bent er bijna! Toont het andere apparaat hetzelfde schild?",
     "To proceed, please accept the verification request on your other device.": "Om door te gaan, accepteer het verificatie verzoek op je andere apparaat.",
-    "Back to thread": "Terug naar draad",
-    "Room members": "Kamerleden",
-    "Back to chat": "Terug naar chat",
     "Could not fetch location": "Kan locatie niet ophalen",
     "Message pending moderation": "Bericht in afwachting van moderatie",
     "Message pending moderation: %(reason)s": "Bericht in afwachting van moderatie: %(reason)s",
@@ -2052,7 +2048,6 @@
             "user_a11y": "Personen autoaanvullen"
         }
     },
-    "Bold": "Vet",
     "Code": "Code",
     "power_level": {
         "default": "Standaard",
@@ -3807,11 +3802,19 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Mis geen antwoord",
         "enable_prompt_toast_title": "Meldingen",
-        "enable_prompt_toast_description": "Bureaubladmeldingen inschakelen"
+        "enable_prompt_toast_description": "Bureaubladmeldingen inschakelen",
+        "colour_none": "Geen",
+        "colour_bold": "Vet",
+        "colour_unsent": "niet verstuurd",
+        "error_change_title": "Meldingsinstellingen wijzigen"
     },
     "mobile_guide": {
         "toast_title": "Gebruik de app voor een betere ervaring",
         "toast_description": "%(brand)s is experimenteel in een mobiele webbrowser. Gebruik onze gratis native app voor een betere ervaring en de nieuwste functies.",
         "toast_accept": "Gebruik app"
-    }
+    },
+    "chat_card_back_action_label": "Terug naar chat",
+    "room_summary_card_back_action_label": "Kamerinformatie",
+    "member_list_back_action_label": "Kamerleden",
+    "thread_view_back_action_label": "Terug naar draad"
 }

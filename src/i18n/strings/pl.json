@@ -788,7 +788,6 @@
     "Set up": "Konfiguruj",
     "Your server isn't responding to some <a>requests</a>.": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
-    "Change notification settings": "Zmień ustawienia powiadomień",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "Everyone in this room is verified": "Wszyscy w tym pokoju są zweryfikowani",
@@ -864,9 +863,6 @@
     "Themes": "Motywy",
     "Moderation": "Moderacja",
     "Messaging": "Wiadomości",
-    "Back to thread": "Wróć do wątku",
-    "Room members": "Członkowie pokoju",
-    "Back to chat": "Wróć do chatu",
     "%(deviceId)s from %(ip)s": "%(deviceId)s z %(ip)s",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
@@ -1027,8 +1023,6 @@
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Unsent": "Niewysłane",
-    "Red": "Czerwony",
-    "Grey": "Szary",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "Connection": "Połączenie",
     "Video settings": "Ustawienia wideo",
@@ -2257,7 +2251,6 @@
             "user_a11y": "Autouzupełnianie użytkowników"
         }
     },
-    "Bold": "Pogrubienie",
     "Link": "Link",
     "Code": "Kod",
     "power_level": {
@@ -4190,11 +4183,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Nie przegap odpowiedzi",
         "enable_prompt_toast_title": "Powiadomienia",
-        "enable_prompt_toast_description": "Włącz powiadomienia na pulpicie"
+        "enable_prompt_toast_description": "Włącz powiadomienia na pulpicie",
+        "colour_none": "Brak",
+        "colour_bold": "Pogrubienie",
+        "colour_grey": "Szary",
+        "colour_red": "Czerwony",
+        "colour_unsent": "Niewysłane",
+        "error_change_title": "Zmień ustawienia powiadomień"
     },
     "mobile_guide": {
         "toast_title": "Użyj aplikacji by mieć lepsze doświadczenie",
         "toast_description": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
         "toast_accept": "Użyj aplikacji"
-    }
+    },
+    "chat_card_back_action_label": "Wróć do chatu",
+    "room_summary_card_back_action_label": "Informacje pokoju",
+    "member_list_back_action_label": "Członkowie pokoju",
+    "thread_view_back_action_label": "Wróć do wątku"
 }

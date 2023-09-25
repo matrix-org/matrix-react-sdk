@@ -178,6 +178,7 @@
         }
     },
     "notifications": {
-        "enable_prompt_toast_title": "Tineɣmisin"
+        "enable_prompt_toast_title": "Tineɣmisin",
+        "colour_none": "Walu"
     }
 }

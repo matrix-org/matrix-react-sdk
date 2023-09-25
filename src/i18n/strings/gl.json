@@ -740,7 +740,6 @@
     "This room is public": "Esta é unha sala pública",
     "Edited at %(date)s": "Editado o %(date)s",
     "Click to view edits": "Preme para ver as edicións",
-    "Change notification settings": "Cambiar os axustes das notificacións",
     "Your server isn't responding to some <a>requests</a>.": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
     "You're all caught up.": "Xa estás ó día.",
     "Server isn't responding": "O servidor non responde",
@@ -1472,9 +1471,6 @@
     "Voice Message": "Mensaxe de voz",
     "Hide stickers": "Agochar adhesivos",
     "From a thread": "Desde un fío",
-    "Back to thread": "Volver ao fío",
-    "Room members": "Membros da sala",
-    "Back to chat": "Volver ao chat",
     "Wait!": "Agarda!",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
@@ -2008,7 +2004,6 @@
             "user_a11y": "Autocompletados de Usuaria"
         }
     },
-    "Bold": "Resaltado",
     "Code": "Código",
     "power_level": {
         "default": "Por defecto",
@@ -3722,11 +3717,19 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Non perdas as réplicas",
         "enable_prompt_toast_title": "Notificacións",
-        "enable_prompt_toast_description": "Activar notificacións de escritorio"
+        "enable_prompt_toast_description": "Activar notificacións de escritorio",
+        "colour_none": "Nada",
+        "colour_bold": "Resaltado",
+        "colour_unsent": "Sen enviar",
+        "error_change_title": "Cambiar os axustes das notificacións"
     },
     "mobile_guide": {
         "toast_title": "Para ter unha mellor experiencia usa a app",
         "toast_description": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
         "toast_accept": "Usa a app"
-    }
+    },
+    "chat_card_back_action_label": "Volver ao chat",
+    "room_summary_card_back_action_label": "Información da sala",
+    "member_list_back_action_label": "Membros da sala",
+    "thread_view_back_action_label": "Volver ao fío"
 }

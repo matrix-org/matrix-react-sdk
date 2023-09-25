@@ -817,7 +817,6 @@
     "United Kingdom": "イギリス",
     "Dial pad": "ダイヤルパッド",
     "IRC display name width": "IRCの表示名の幅",
-    "Change notification settings": "通知設定を変更",
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "あなたのホームサーバーはリソースの上限に達しました。",
     "Your homeserver has exceeded its user limit.": "あなたのホームサーバーはユーザー数の上限に達しました。",
@@ -1096,9 +1095,6 @@
     "Themes": "テーマ",
     "Developer": "開発者",
     "Experimental": "実験的",
-    "Back to chat": "チャットに戻る",
-    "Room members": "ルームのメンバー",
-    "Back to thread": "スレッドに戻る",
     "View all %(count)s members": {
         "one": "1人のメンバーを表示",
         "other": "全%(count)s人のメンバーを表示"
@@ -1692,8 +1688,6 @@
     "Share for %(duration)s": "%(duration)sの間共有",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "このユーザーのメッセージと招待を非表示にします。無視してよろしいですか？",
     "unknown": "不明",
-    "Red": "赤色",
-    "Grey": "灰色",
     "Too many attempts in a short time. Retry after %(timeout)s.": "再試行の数が多すぎます。%(timeout)s後に再度試してください。",
     "Start at the sign in screen": "サインインの画面で開始",
     "Linking with this device is not supported.": "この端末とのリンクはサポートしていません。",
@@ -2141,7 +2135,6 @@
             "user_a11y": "ユーザーの自動補完"
         }
     },
-    "Bold": "太字",
     "Link": "リンク",
     "Code": "コード",
     "power_level": {
@@ -4006,11 +3999,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "返信をお見逃しなく",
         "enable_prompt_toast_title": "通知",
-        "enable_prompt_toast_description": "デスクトップ通知を有効にする"
+        "enable_prompt_toast_description": "デスクトップ通知を有効にする",
+        "colour_none": "なし",
+        "colour_bold": "太字",
+        "colour_grey": "灰色",
+        "colour_red": "赤色",
+        "colour_unsent": "未送信",
+        "error_change_title": "通知設定を変更"
     },
     "mobile_guide": {
         "toast_title": "より良い体験のためにアプリケーションを使用",
         "toast_description": "%(brand)sは携帯端末のウェブブラウザーでは実験的です。よりよい使用経験や最新機能を求める場合は、フリーのネイティブアプリをご利用ください。",
         "toast_accept": "アプリを使用"
-    }
+    },
+    "chat_card_back_action_label": "チャットに戻る",
+    "room_summary_card_back_action_label": "ルームの情報",
+    "member_list_back_action_label": "ルームのメンバー",
+    "thread_view_back_action_label": "スレッドに戻る"
 }

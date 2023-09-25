@@ -374,7 +374,6 @@
     "Your homeserver has exceeded its user limit.": "你的家服务器已超过用户限制。",
     "Your homeserver has exceeded one of its resource limits.": "你的家服务器已超过某项资源限制。",
     "Ok": "确定",
-    "Change notification settings": "修改通知设置",
     "Lock": "锁",
     "Your server isn't responding to some <a>requests</a>.": "你的服务器没有响应一些<a>请求</a>。",
     "Accept <policyLink /> to continue:": "接受 <policyLink /> 以继续：",
@@ -1454,9 +1453,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
-    "Back to thread": "返回消息列",
-    "Room members": "房间成员",
-    "Back to chat": "返回聊天",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "Failed to remove user": "移除用户失败",
     "Pinned": "已固定",
@@ -2030,7 +2026,6 @@
             "user_a11y": "用户自动补全"
         }
     },
-    "Bold": "粗体",
     "Code": "代码",
     "power_level": {
         "default": "默认",
@@ -3791,11 +3786,19 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "不要错过任何回复",
         "enable_prompt_toast_title": "通知",
-        "enable_prompt_toast_description": "开启桌面通知"
+        "enable_prompt_toast_description": "开启桌面通知",
+        "colour_none": "无",
+        "colour_bold": "粗体",
+        "colour_unsent": "未发送",
+        "error_change_title": "修改通知设置"
     },
     "mobile_guide": {
         "toast_title": "使用 app 以获得更好的体验",
         "toast_description": "在移动网页浏览器中 %(brand)s 是实验性功能。为了获取更好的体验和最新功能，请使用我们的免费原生应用。",
         "toast_accept": "使用 app"
-    }
+    },
+    "chat_card_back_action_label": "返回聊天",
+    "room_summary_card_back_action_label": "房间信息",
+    "member_list_back_action_label": "房间成员",
+    "thread_view_back_action_label": "返回消息列"
 }

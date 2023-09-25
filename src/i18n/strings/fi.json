@@ -704,7 +704,6 @@
     "Add widgets, bridges & bots": "Lisää sovelmia, siltoja ja botteja",
     "Edit widgets, bridges & bots": "Muokkaa sovelmia, siltoja ja botteja",
     "Widgets": "Sovelmat",
-    "Change notification settings": "Muokkaa ilmoitusasetuksia",
     "Take a picture": "Ota kuva",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
@@ -1339,8 +1338,6 @@
     "Hide stickers": "Piilota tarrat",
     "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
     "Access": "Pääsy",
-    "Room members": "Huoneen jäsenet",
-    "Back to chat": "Takaisin keskusteluun",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
@@ -1470,7 +1467,6 @@
     "Cross-signing is ready but keys are not backed up.": "Ristiinvarmennus on valmis, mutta avaimia ei ole varmuuskopioitu.",
     "Search %(spaceName)s": "Etsi %(spaceName)s",
     "Messaging": "Viestintä",
-    "Back to thread": "Takaisin ketjuun",
     "Confirm your Security Phrase": "Vahvista turvalause",
     "Enter your Security Phrase a second time to confirm it.": "Kirjoita turvalause toistamiseen vahvistaaksesi sen.",
     "Great! This Security Phrase looks strong enough.": "Hienoa! Tämä turvalause vaikuttaa riittävän vahvalta.",
@@ -1612,8 +1608,6 @@
     "Creating…": "Luodaan…",
     "Verify Session": "Vahvista istunto",
     "unknown": "tuntematon",
-    "Red": "Punainen",
-    "Grey": "Harmaa",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
     "Connecting…": "Yhdistetään…",
@@ -2041,7 +2035,6 @@
             "user_a11y": "Käyttäjien automaattinen täydennys"
         }
     },
-    "Bold": "Lihavoitu",
     "Link": "Linkki",
     "Code": "Koodi",
     "power_level": {
@@ -3805,11 +3798,20 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Älä jätä vastauksia huomiotta",
         "enable_prompt_toast_title": "Ilmoitukset",
-        "enable_prompt_toast_description": "Ota työpöytäilmoitukset käyttöön"
+        "enable_prompt_toast_description": "Ota työpöytäilmoitukset käyttöön",
+        "colour_none": "Ei mitään",
+        "colour_bold": "Lihavoitu",
+        "colour_grey": "Harmaa",
+        "colour_red": "Punainen",
+        "error_change_title": "Muokkaa ilmoitusasetuksia"
     },
     "mobile_guide": {
         "toast_title": "Parempi kokemus sovelluksella",
         "toast_description": "%(brand)s on mobiiliselaimissa kokeellinen. Paremman kokemuksen ja uusimmat ominaisuudet saat ilmaisella mobiilisovelluksellamme.",
         "toast_accept": "Käytä sovellusta"
-    }
+    },
+    "chat_card_back_action_label": "Takaisin keskusteluun",
+    "room_summary_card_back_action_label": "Huoneen tiedot",
+    "member_list_back_action_label": "Huoneen jäsenet",
+    "thread_view_back_action_label": "Takaisin ketjuun"
 }

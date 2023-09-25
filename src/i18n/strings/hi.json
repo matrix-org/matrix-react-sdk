@@ -758,5 +758,6 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "सूचनाएं"
-    }
+    },
+    "room_summary_card_back_action_label": "रूम जानकारी"
 }

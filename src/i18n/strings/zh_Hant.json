@@ -740,7 +740,6 @@
     "Edited at %(date)s": "編輯於 %(date)s",
     "Click to view edits": "點擊以檢視編輯",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
-    "Change notification settings": "變更通知設定",
     "Your server isn't responding to some <a>requests</a>.": "您的伺服器未回應某些<a>請求</a>。",
     "You're all caught up.": "您已完成。",
     "Server isn't responding": "伺服器沒有回應",
@@ -1458,9 +1457,6 @@
     "This address had invalid server or is already in use": "此位址的伺服器無效或已被使用",
     "Missing room name or separator e.g. (my-room:domain.org)": "缺少聊天室名稱或分隔符號，例如 (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "缺少網域名分隔符號，例如 (:domain.org)",
-    "Back to thread": "回到討論串",
-    "Room members": "聊天室成員",
-    "Back to chat": "回到聊天",
     "Your new device is now verified. Other users will see it as trusted.": "您的新裝置已通過驗證。其他使用者也會看到其為受信任的裝置。",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "您的新裝置已通過驗證。其可以存取您的加密訊息，其他使用者也會看到其為受信任的裝置。",
     "Verify with another device": "用另一台裝置驗證",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "來自該使用者的所有訊息與邀請都將被隱藏。您確定要忽略它們嗎？",
     "Ignore %(user)s": "忽略 %(user)s",
     "unknown": "未知",
-    "Red": "紅",
-    "Grey": "灰",
     "There are no past polls in this room": "此聊天室沒有過去的投票",
     "There are no active polls in this room": "此聊天室沒有正在進行的投票",
     "Declining…": "正在拒絕…",
@@ -2268,7 +2262,6 @@
             "user_a11y": "使用者自動完成"
         }
     },
-    "Bold": "粗體",
     "Link": "連結",
     "Code": "代碼",
     "power_level": {
@@ -4208,11 +4201,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "不要錯過回覆",
         "enable_prompt_toast_title": "通知",
-        "enable_prompt_toast_description": "啟用桌面通知"
+        "enable_prompt_toast_description": "啟用桌面通知",
+        "colour_none": "無",
+        "colour_bold": "粗體",
+        "colour_grey": "灰",
+        "colour_red": "紅",
+        "colour_unsent": "未傳送",
+        "error_change_title": "變更通知設定"
     },
     "mobile_guide": {
         "toast_title": "使用應用程式以取得更好的體驗",
         "toast_description": "%(brand)s 的行動裝置的網頁版仍為實驗性質版本。為了有更好的使用體驗與最新功能，請使用我們的免費原生應用程式。",
         "toast_accept": "使用應用程式"
-    }
+    },
+    "chat_card_back_action_label": "回到聊天",
+    "room_summary_card_back_action_label": "聊天室資訊",
+    "member_list_back_action_label": "聊天室成員",
+    "thread_view_back_action_label": "回到討論串"
 }

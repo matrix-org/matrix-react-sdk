@@ -418,7 +418,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s - %(day)s - %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "IRC display name width": "רוחב תצוגת השם של IRC",
-    "Change notification settings": "שינוי הגדרת התרעות",
     "Ok": "בסדר",
     "Your homeserver has exceeded one of its resource limits.": "השרת שלכם חרג מאחד או יותר משאבים אשר הוקצו לו.",
     "Your homeserver has exceeded its user limit.": "השרת שלכם חרג ממגבלות מספר המשתמשים שלו.",
@@ -1101,9 +1100,6 @@
     "Spaces": "מרחבי עבודה",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
-    "Back to thread": "חזרה לשרשור",
-    "Room members": "חברי החדר",
-    "Back to chat": "חזרה לצ'אט",
     "Voice Message": "הודעה קולית",
     "Send voice message": "שלח הודעה קולית",
     "Your message was sent": "ההודעה שלך נשלחה",
@@ -1591,7 +1587,6 @@
             "user_a11y": "השלמה אוטומטית למשתמשים"
         }
     },
-    "Bold": "מודגש",
     "Code": "קוד",
     "power_level": {
         "default": "ברירת מחדל",
@@ -2989,10 +2984,17 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "אל תפספסו תגובה",
         "enable_prompt_toast_title": "התראות",
-        "enable_prompt_toast_description": "אשרו התראות שולחן עבודה"
+        "enable_prompt_toast_description": "אשרו התראות שולחן עבודה",
+        "colour_none": "ללא",
+        "colour_bold": "מודגש",
+        "error_change_title": "שינוי הגדרת התרעות"
     },
     "mobile_guide": {
         "toast_title": "השתמש באפליקציה לחוויה טובה יותר",
         "toast_accept": "השתמש באפליקציה"
-    }
+    },
+    "chat_card_back_action_label": "חזרה לצ'אט",
+    "room_summary_card_back_action_label": "מידע החדר",
+    "member_list_back_action_label": "חברי החדר",
+    "thread_view_back_action_label": "חזרה לשרשור"
 }

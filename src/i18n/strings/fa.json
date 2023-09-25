@@ -1098,7 +1098,6 @@
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Account management": "مدیریت حساب کاربری",
     "Spaces": "محیط‌ها",
-    "Change notification settings": "تنظیمات اعلان را تغییر دهید",
     "%(deviceId)s from %(ip)s": "%(deviceId)s از %(ip)s",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
@@ -1214,9 +1213,6 @@
     "Themes": "قالب ها",
     "Moderation": "اعتدال",
     "Messaging": "پیام رسانی",
-    "Back to thread": "بازگشت به موضوع",
-    "Room members": "اعضای اتاق",
-    "Back to chat": "بازگشت به گفتگو",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "common": {
         "about": "درباره",
@@ -1510,7 +1506,6 @@
             "user_a11y": "تکمیل خودکار کاربر"
         }
     },
-    "Bold": "پررنگ",
     "Code": "کد",
     "power_level": {
         "default": "پیشفرض",
@@ -2848,11 +2843,18 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "پاسخی را از دست ندهید",
         "enable_prompt_toast_title": "آگاهی‌ها",
-        "enable_prompt_toast_description": "فعال‌کردن اعلان‌های دسکتاپ"
+        "enable_prompt_toast_description": "فعال‌کردن اعلان‌های دسکتاپ",
+        "colour_none": "هیچ‌کدام",
+        "colour_bold": "پررنگ",
+        "error_change_title": "تنظیمات اعلان را تغییر دهید"
     },
     "mobile_guide": {
         "toast_title": "برای تجربه بهتر از برنامه استفاده کنید",
         "toast_description": "%(brand)s در مرورگر موبایل بدرستی نمایش داده نمی‌شود، پیشنهاد میکنیم از نرم افزار موبایل رایگان ما در این‌باره استفاده نمایید.",
         "toast_accept": "از برنامه استفاده کنید"
-    }
+    },
+    "chat_card_back_action_label": "بازگشت به گفتگو",
+    "room_summary_card_back_action_label": "اطلاعات اتاق",
+    "member_list_back_action_label": "اعضای اتاق",
+    "thread_view_back_action_label": "بازگشت به موضوع"
 }

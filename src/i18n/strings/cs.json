@@ -698,7 +698,6 @@
     "Signature upload success": "Podpis úspěšně nahrán",
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
-    "Change notification settings": "Upravit nastavení oznámení",
     "Your server isn't responding to some <a>requests</a>.": "Váš server neodpovídá na některé <a>požadavky</a>.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s nemůže bezpečně ukládat šifrované zprávy lokálně v prohlížeči. Pro zobrazení šifrovaných zpráv ve výsledcích vyhledávání použijte <desktopLink>%(brand)s Desktop</desktopLink>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Správce vašeho serveru vypnul ve výchozím nastavení koncové šifrování v soukromých místnostech a přímých zprávách.",
@@ -1458,9 +1457,6 @@
     "This address had invalid server or is already in use": "Tato adresa měla neplatný server nebo je již používána",
     "Missing domain separator e.g. (:domain.org)": "Chybí oddělovač domény, např. (:domain.org)",
     "Missing room name or separator e.g. (my-room:domain.org)": "Chybí název místnosti nebo oddělovač, např. (my-room:domain.org)",
-    "Back to thread": "Zpět do vlákna",
-    "Room members": "Členové místnosti",
-    "Back to chat": "Zpět do chatu",
     "Your new device is now verified. Other users will see it as trusted.": "Vaše nové zařízení je nyní ověřeno. Ostatní uživatelé jej uvidí jako důvěryhodné.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Vaše nové zařízení je nyní ověřeno. Má přístup k vašim zašifrovaným zprávám a ostatní uživatelé jej budou považovat za důvěryhodné.",
     "Verify with another device": "Ověřit pomocí jiného zařízení",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Všechny zprávy a pozvánky od tohoto uživatele budou skryty. Opravdu je chcete ignorovat?",
     "Ignore %(user)s": "Ignorovat %(user)s",
     "unknown": "neznámé",
-    "Red": "Červená",
-    "Grey": "Šedá",
     "This session is backing up your keys.": "Tato relace zálohuje vaše klíče.",
     "Declining…": "Odmítání…",
     "There are no past polls in this room": "V této místnosti nejsou žádná minulá hlasování",
@@ -2273,7 +2267,6 @@
             "user_a11y": "Automatické doplňování uživatelů"
         }
     },
-    "Bold": "Tučně",
     "Link": "Odkaz",
     "Code": "Kód",
     "power_level": {
@@ -4213,11 +4206,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Nezmeškejte odpovědět",
         "enable_prompt_toast_title": "Oznámení",
-        "enable_prompt_toast_description": "Povolit oznámení na ploše"
+        "enable_prompt_toast_description": "Povolit oznámení na ploše",
+        "colour_none": "Žádné",
+        "colour_bold": "Tučně",
+        "colour_grey": "Šedá",
+        "colour_red": "Červená",
+        "colour_unsent": "Neodeslané",
+        "error_change_title": "Upravit nastavení oznámení"
     },
     "mobile_guide": {
         "toast_title": "Pro lepší zážitek použijte aplikaci",
         "toast_description": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
         "toast_accept": "Použijte aplikaci"
-    }
+    },
+    "chat_card_back_action_label": "Zpět do chatu",
+    "room_summary_card_back_action_label": "Informace o místnosti",
+    "member_list_back_action_label": "Členové místnosti",
+    "thread_view_back_action_label": "Zpět do vlákna"
 }

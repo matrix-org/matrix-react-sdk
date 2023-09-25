@@ -1247,7 +1247,6 @@
     "Haiti": "Haiti",
     "Guyana": "Guyana",
     "Guinea-Bissau": "Guinea-Bissau",
-    "Change notification settings": "Thay đổi cài đặt thông báo",
     "Guinea": "Guinea",
     "Guernsey": "Guernsey",
     "Guatemala": "Guatemala",
@@ -1468,9 +1467,6 @@
     "Almost there! Is your other device showing the same shield?": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
     "To proceed, please accept the verification request on your other device.": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
     "Copy room link": "Sao chép liên kết phòng",
-    "Back to thread": "Quay lại luồng",
-    "Room members": "Thành viên phòng",
-    "Back to chat": "Quay lại trò chuyện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
@@ -1494,8 +1490,6 @@
     "Sorry — this call is currently full": "Xin lỗi — cuộc gọi này đang đầy",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
-    "Red": "Đỏ",
-    "Grey": "Xám",
     "Starting export process…": "Bắt đầu trích xuất…",
     "This invite was sent to %(email)s": "Lời mời này đã được gửi tới %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Lời mời này đã được gửi đến %(email)s nhưng không liên kết với tài khoản của bạn",
@@ -2068,7 +2062,6 @@
             "user_a11y": "Người dùng tự động hoàn thành"
         }
     },
-    "Bold": "In đậm",
     "Link": "Liên kết",
     "Code": "Mã",
     "power_level": {
@@ -3911,11 +3904,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Đừng bỏ lỡ một câu trả lời",
         "enable_prompt_toast_title": "Thông báo",
-        "enable_prompt_toast_description": "Bật thông báo trên màn hình"
+        "enable_prompt_toast_description": "Bật thông báo trên màn hình",
+        "colour_none": "Không có",
+        "colour_bold": "In đậm",
+        "colour_grey": "Xám",
+        "colour_red": "Đỏ",
+        "colour_unsent": "Chưa gửi",
+        "error_change_title": "Thay đổi cài đặt thông báo"
     },
     "mobile_guide": {
         "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",
         "toast_description": "%(brand)s đang thử nghiệm trên trình duyệt web di động. Để có trải nghiệm tốt hơn và các tính năng mới nhất, hãy sử dụng ứng dụng gốc miễn phí của chúng tôi.",
         "toast_accept": "Sử dụng ứng dụng"
-    }
+    },
+    "chat_card_back_action_label": "Quay lại trò chuyện",
+    "room_summary_card_back_action_label": "Thông tin phòng",
+    "member_list_back_action_label": "Thành viên phòng",
+    "thread_view_back_action_label": "Quay lại luồng"
 }

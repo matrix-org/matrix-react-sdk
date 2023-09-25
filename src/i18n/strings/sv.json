@@ -486,7 +486,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Din hemserver har överskridit en av sina resursgränser.",
     "Ok": "OK",
     "Set up": "Sätt upp",
-    "Change notification settings": "Ändra aviseringsinställningar",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
     "Your server isn't responding to some <a>requests</a>.": "Din server svarar inte på vissa <a>förfrågningar</a>.",
@@ -1395,9 +1394,6 @@
     "Messaging": "Meddelanden",
     "Pin to sidebar": "Fäst i sidopanelen",
     "Quick settings": "Snabbinställningar",
-    "Back to thread": "Tillbaka till tråd",
-    "Room members": "Rumsmedlemmar",
-    "Back to chat": "Tillbaka till chatt",
     "From a thread": "Från en tråd",
     "You won't get any notifications": "Du får inga aviseringar",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Bli endast aviserad om omnämnanden och nyckelord i enlighet med dina <a>inställningar</a>",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Alla meddelanden och inbjudningar från den här användaren kommer att döljas. Är du säker på att du vill ignorera denne?",
     "Ignore %(user)s": "Ignorera %(user)s",
     "unknown": "okänd",
-    "Red": "Röd",
-    "Grey": "Grå",
     "Declining…": "Nekar…",
     "This session is backing up your keys.": "Den här sessionen säkerhetskopierar dina nycklar.",
     "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto.",
@@ -2224,7 +2218,6 @@
             "user_a11y": "Autokomplettering av användare"
         }
     },
-    "Bold": "Fet",
     "Link": "Länk",
     "Code": "Kod",
     "power_level": {
@@ -4148,11 +4141,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Missa inte ett svar",
         "enable_prompt_toast_title": "Aviseringar",
-        "enable_prompt_toast_description": "Aktivera skrivbordsaviseringar"
+        "enable_prompt_toast_description": "Aktivera skrivbordsaviseringar",
+        "colour_none": "Ingen",
+        "colour_bold": "Fet",
+        "colour_grey": "Grå",
+        "colour_red": "Röd",
+        "colour_unsent": "Ej skickat",
+        "error_change_title": "Ändra aviseringsinställningar"
     },
     "mobile_guide": {
         "toast_title": "Använd appen för en bättre upplevelse",
         "toast_description": "%(brand)s är experimentell i mobila webbläsare. För en bättre upplevelse och de senaste funktionerna använd våran nativa app.",
         "toast_accept": "Använd app"
-    }
+    },
+    "chat_card_back_action_label": "Tillbaka till chatt",
+    "room_summary_card_back_action_label": "Rumsinformation",
+    "member_list_back_action_label": "Rumsmedlemmar",
+    "thread_view_back_action_label": "Tillbaka till tråd"
 }

@@ -672,7 +672,6 @@
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
     "Your homeserver has exceeded one of its resource limits.": "Tú servidor ha excedido el limite de sus recursos.",
     "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
-    "Change notification settings": "Cambiar los ajustes de notificaciones",
     "Your server isn't responding to some <a>requests</a>.": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "El administrador de tu servidor base ha desactivado el cifrado de extremo a extremo en salas privadas y mensajes directos.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
@@ -1450,8 +1449,6 @@
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar otro dispositivo",
     "Missing domain separator e.g. (:domain.org)": "Falta el separador de dominio, ej.: (:dominio.org)",
-    "Room members": "Miembros de la sala",
-    "Back to chat": "Volver a la conversación",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Guarda tu clave de seguridad en un lugar seguro (por ejemplo, un gestor de contraseñas o una caja fuerte) porque sirve para proteger tus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Vamos a generar una clave de seguridad para que la guardes en un lugar seguro, como un gestor de contraseñas o una caja fuerte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera acceso a tu cuenta y a las claves de cifrado almacenadas en esta sesión. Sin ellas, no podrás leer todos tus mensajes seguros en ninguna sesión.",
@@ -1477,7 +1474,6 @@
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s te ha sacado de %(roomName)s",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
     "From a thread": "Desde un hilo",
-    "Back to thread": "Volver al hilo",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
     "Pick a date to jump to": "Elige la fecha a la que saltar",
@@ -1753,8 +1749,6 @@
     "Verify Session": "Verificar sesión",
     "Ignore (%(counter)s)": "Ignorar (%(counter)s)",
     "unknown": "desconocido",
-    "Red": "Rojo",
-    "Grey": "Gris",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
@@ -2172,7 +2166,6 @@
             "user_a11y": "Autocompletar de usuario"
         }
     },
-    "Bold": "Negrita",
     "Link": "Enlace",
     "Code": "Código",
     "power_level": {
@@ -4010,11 +4003,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "No te pierdas ninguna respuesta",
         "enable_prompt_toast_title": "Notificaciones",
-        "enable_prompt_toast_description": "Activar las notificaciones de escritorio"
+        "enable_prompt_toast_description": "Activar las notificaciones de escritorio",
+        "colour_none": "Ninguno",
+        "colour_bold": "Negrita",
+        "colour_grey": "Gris",
+        "colour_red": "Rojo",
+        "colour_unsent": "No enviado",
+        "error_change_title": "Cambiar los ajustes de notificaciones"
     },
     "mobile_guide": {
         "toast_title": "Usa la aplicación para una experiencia mejor",
         "toast_description": "%(brand)s en navegadores para móviles está en prueba. Para una mejor experiencia y para poder usar las últimas funcionalidades, usa nuestra aplicación nativa gratuita.",
         "toast_accept": "Usar la aplicación"
-    }
+    },
+    "chat_card_back_action_label": "Volver a la conversación",
+    "room_summary_card_back_action_label": "Información de la sala",
+    "member_list_back_action_label": "Miembros de la sala",
+    "thread_view_back_action_label": "Volver al hilo"
 }

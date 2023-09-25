@@ -336,7 +336,6 @@
     "Show advanced": "Показати розширені",
     "Create account": "Створити обліковий запис",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
-    "Change notification settings": "Змінити налаштування сповіщень",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
     "Cocos (Keeling) Islands": "Кокосові (Кілінг) Острови",
@@ -1458,9 +1457,6 @@
     "This address had invalid server or is already in use": "Ця адреса містить хибний сервер чи вже використовується",
     "Missing room name or separator e.g. (my-room:domain.org)": "Бракує назви кімнати чи розділювача (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Бракує розділювача домену (:domain.org)",
-    "Back to thread": "Назад у гілку",
-    "Room members": "Учасники кімнати",
-    "Back to chat": "Назад у бесіду",
     "Your new device is now verified. Other users will see it as trusted.": "Ваш новий пристрій звірено. Інші користувачі бачитимуть його довіреним.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Ваш новий пристрій звірено. Він має доступ до ваших зашифрованих повідомлень, а інші користувачі бачитимуть його довіреним.",
     "Verify with another device": "Звірити за допомогою іншого пристрою",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Усі повідомлення та запрошення від цього користувача будуть приховані. Ви впевнені, що хочете їх нехтувати?",
     "Ignore %(user)s": "Нехтувати %(user)s",
     "unknown": "невідомо",
-    "Red": "Червоний",
-    "Grey": "Сірий",
     "Declining…": "Відхилення…",
     "This session is backing up your keys.": "Під час цього сеансу створюється резервна копія ваших ключів.",
     "There are no past polls in this room": "У цій кімнаті ще не проводилися опитувань",
@@ -2268,7 +2262,6 @@
             "user_a11y": "Автозаповнення користувача"
         }
     },
-    "Bold": "Жирний",
     "Link": "Посилання",
     "Code": "Код",
     "power_level": {
@@ -4208,11 +4201,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Не пропустіть відповідей",
         "enable_prompt_toast_title": "Сповіщення",
-        "enable_prompt_toast_description": "Увімкнути сповіщення стільниці"
+        "enable_prompt_toast_description": "Увімкнути сповіщення стільниці",
+        "colour_none": "Вимкнено",
+        "colour_bold": "Жирний",
+        "colour_grey": "Сірий",
+        "colour_red": "Червоний",
+        "colour_unsent": "Не надіслано",
+        "error_change_title": "Змінити налаштування сповіщень"
     },
     "mobile_guide": {
         "toast_title": "Використовуйте застосунок для зручності",
         "toast_description": "%(brand)s у мобільних браузерах ще випробовується. Поки що кращі враження й новіші функції — у нашому вільному мобільному застосунку.",
         "toast_accept": "Використовувати застосунок"
-    }
+    },
+    "chat_card_back_action_label": "Назад у бесіду",
+    "room_summary_card_back_action_label": "Відомості про кімнату",
+    "member_list_back_action_label": "Учасники кімнати",
+    "thread_view_back_action_label": "Назад у гілку"
 }

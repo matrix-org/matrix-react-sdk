@@ -740,7 +740,6 @@
     "This room is public": "Questa stanza è pubblica",
     "Edited at %(date)s": "Modificato il %(date)s",
     "Click to view edits": "Clicca per vedere le modifiche",
-    "Change notification settings": "Cambia impostazioni di notifica",
     "Your server isn't responding to some <a>requests</a>.": "Il tuo server non sta rispondendo ad alcune <a>richieste</a>.",
     "You're all caught up.": "Non hai nulla di nuovo da vedere.",
     "Server isn't responding": "Il server non risponde",
@@ -1468,9 +1467,6 @@
     "You cancelled verification on your other device.": "Hai annullato la verifica nell'altro dispositivo.",
     "Almost there! Is your other device showing the same shield?": "Quasi fatto! L'altro dispositivo sta mostrando lo stesso scudo?",
     "To proceed, please accept the verification request on your other device.": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
-    "Back to thread": "Torna alla conversazione",
-    "Room members": "Membri stanza",
-    "Back to chat": "Torna alla chat",
     "Could not fetch location": "Impossibile rilevare la posizione",
     "From a thread": "Da una conversazione",
     "Remove from room": "Rimuovi dalla stanza",
@@ -1727,8 +1723,6 @@
     "Ignore %(user)s": "Ignora %(user)s",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "I dettagli del tuo account sono gestiti separatamente su <code>%(hostname)s</code>.",
     "unknown": "sconosciuto",
-    "Red": "Rosso",
-    "Grey": "Grigio",
     "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account.",
     "There are no past polls in this room": "In questa stanza non ci sono sondaggi passati",
     "There are no active polls in this room": "In questa stanza non ci sono sondaggi attivi",
@@ -2273,7 +2267,6 @@
             "user_a11y": "Autocompletamento utenti"
         }
     },
-    "Bold": "Grassetto",
     "Link": "Collegamento",
     "Code": "Codice",
     "power_level": {
@@ -4213,11 +4206,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Non perdere una risposta",
         "enable_prompt_toast_title": "Notifiche",
-        "enable_prompt_toast_description": "Attiva le notifiche desktop"
+        "enable_prompt_toast_description": "Attiva le notifiche desktop",
+        "colour_none": "Nessuno",
+        "colour_bold": "Grassetto",
+        "colour_grey": "Grigio",
+        "colour_red": "Rosso",
+        "colour_unsent": "Non inviato",
+        "error_change_title": "Cambia impostazioni di notifica"
     },
     "mobile_guide": {
         "toast_title": "Usa l'app per un'esperienza migliore",
         "toast_description": "%(brand)s è sperimentale su un browser web mobile. Per un'esperienza migliore e le ultime funzionalità, usa la nostra app nativa gratuita.",
         "toast_accept": "Usa l'app"
-    }
+    },
+    "chat_card_back_action_label": "Torna alla chat",
+    "room_summary_card_back_action_label": "Informazioni stanza",
+    "member_list_back_action_label": "Membri stanza",
+    "thread_view_back_action_label": "Torna alla conversazione"
 }

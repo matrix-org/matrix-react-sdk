@@ -717,7 +717,6 @@
     "Switch theme": "Aldatu azala",
     "All settings": "Ezarpen guztiak",
     "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
-    "Change notification settings": "Aldatu jakinarazpenen ezarpenak",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
     "Click to view edits": "Klik egin edizioak ikusteko",
@@ -947,7 +946,6 @@
             "user_a11y": "Erabiltzaile osatze automatikoa"
         }
     },
-    "Bold": "Lodia",
     "Code": "Kodea",
     "power_level": {
         "default": "Lehenetsia",
@@ -1809,6 +1807,10 @@
         "one": "<Items/> eta beste bat"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Jakinarazpenak"
-    }
+        "enable_prompt_toast_title": "Jakinarazpenak",
+        "colour_none": "Bat ere ez",
+        "colour_bold": "Lodia",
+        "error_change_title": "Aldatu jakinarazpenen ezarpenak"
+    },
+    "room_summary_card_back_action_label": "Gelako informazioa"
 }

@@ -599,7 +599,6 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Користите сервер за идентитет у Подешавањима за директно примање позивница %(brand)s.",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
-    "Change notification settings": "Промените подешавања обавештења",
     "Verification code": "Верификациони код",
     "Please enter verification code sent via text.": "Унесите верификациони код послат путем текста.",
     "Unable to verify phone number.": "Није могуће верификовати број телефона.",
@@ -1502,6 +1501,8 @@
         "one": "<Items/> и још један"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Обавештења"
+        "enable_prompt_toast_title": "Обавештења",
+        "colour_none": "Ништа",
+        "error_change_title": "Промените подешавања обавештења"
     }
 }

@@ -504,11 +504,7 @@
     "Widgets": "Μικροεφαρμογές",
     "Spaces": "Χώροι",
     "Messaging": "Μηνύματα",
-    "Change notification settings": "Αλλάξτε τις ρυθμίσεις ειδοποιήσεων",
-    "Back to thread": "Επιστροφή στο νήμα εκτέλεσης",
-    "Room members": "Μέλη δωματίου",
     "Room information": "Πληροφορίες δωματίου",
-    "Back to chat": "Επιστροφή στη συνομιλία",
     "%(deviceId)s from %(ip)s": "%(deviceId)s από %(ip)s",
     "Your homeserver has exceeded one of its resource limits.": "Ο κεντρικός σας διακομιστής έχει υπερβεί ένα από τα όρια πόρων του.",
     "IRC display name width": "Πλάτος εμφανιζόμενου ονόματος IRC",
@@ -1922,7 +1918,6 @@
             "user_a11y": "Αυτόματη συμπλήρωση Χρήστη"
         }
     },
-    "Bold": "Έντονα",
     "Code": "Κωδικός",
     "power_level": {
         "default": "Προεπιλογή",
@@ -3507,11 +3502,19 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Μην χάσετε καμία απάντηση",
         "enable_prompt_toast_title": "Ειδοποιήσεις",
-        "enable_prompt_toast_description": "Ενεργοποίηση ειδοποιήσεων επιφάνειας εργασίας"
+        "enable_prompt_toast_description": "Ενεργοποίηση ειδοποιήσεων επιφάνειας εργασίας",
+        "colour_none": "Κανένα",
+        "colour_bold": "Έντονα",
+        "colour_unsent": "Μη απεσταλμένα",
+        "error_change_title": "Αλλάξτε τις ρυθμίσεις ειδοποιήσεων"
     },
     "mobile_guide": {
         "toast_title": "Χρησιμοποιήστε την εφαρμογή για καλύτερη εμπειρία",
         "toast_description": "Το %(brand)s είναι πειραματικό σε πρόγραμμα περιήγησης για κινητά. Για καλύτερη εμπειρία και τις πιο πρόσφατες δυνατότητες, χρησιμοποιήστε τη δωρεάν εφαρμογή μας για κινητά.",
         "toast_accept": "Χρησιμοποιήστε την εφαρμογή"
-    }
+    },
+    "chat_card_back_action_label": "Επιστροφή στη συνομιλία",
+    "room_summary_card_back_action_label": "Πληροφορίες δωματίου",
+    "member_list_back_action_label": "Μέλη δωματίου",
+    "thread_view_back_action_label": "Επιστροφή στο νήμα εκτέλεσης"
 }

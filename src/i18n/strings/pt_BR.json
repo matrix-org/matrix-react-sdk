@@ -666,7 +666,6 @@
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
     "Success!": "Pronto!",
-    "Change notification settings": "Alterar configuração de notificações",
     "Your server isn't responding to some <a>requests</a>.": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
     "Uploaded sound": "Som enviado",
     "Sounds": "Sons",
@@ -1371,8 +1370,6 @@
         "one": "%(count)s pessoa entrou",
         "other": "%(count)s pessoas entraram"
     },
-    "Room members": "Membros da sala",
-    "Back to chat": "Voltar ao chat",
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -1669,7 +1666,6 @@
             "user_a11y": "Preenchimento automático de usuário"
         }
     },
-    "Bold": "Negrito",
     "Link": "Ligação",
     "Code": "Código",
     "power_level": {
@@ -3124,10 +3120,16 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Não perca uma resposta",
         "enable_prompt_toast_title": "Notificações",
-        "enable_prompt_toast_description": "Ativar notificações na área de trabalho"
+        "enable_prompt_toast_description": "Ativar notificações na área de trabalho",
+        "colour_none": "Nenhuma",
+        "colour_bold": "Negrito",
+        "error_change_title": "Alterar configuração de notificações"
     },
     "mobile_guide": {
         "toast_title": "Use o aplicativo para ter uma experiência melhor",
         "toast_accept": "Usar o aplicativo"
-    }
+    },
+    "chat_card_back_action_label": "Voltar ao chat",
+    "room_summary_card_back_action_label": "Informação da sala",
+    "member_list_back_action_label": "Membros da sala"
 }

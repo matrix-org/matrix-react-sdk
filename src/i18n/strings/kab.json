@@ -163,7 +163,6 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Change notification settings": "Snifel iɣewwaren n yilɣa",
     "Accept <policyLink /> to continue:": "Qbel <policyLink /> i wakken ad tkemmleḍ:",
     "in account data": "deg yisefka n umiḍan",
     "Restore from Backup": "Tiririt seg uḥraz",
@@ -1256,7 +1255,6 @@
             "user_a11y": "Asmad awurman n useqdac"
         }
     },
-    "Bold": "Azuran",
     "Code": "Tangalt",
     "power_level": {
         "default": "Amezwer",
@@ -2193,6 +2191,10 @@
         "one": "<Items/> d wayeḍ-nniḍen"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Ilɣa"
-    }
+        "enable_prompt_toast_title": "Ilɣa",
+        "colour_none": "Ula yiwen",
+        "colour_bold": "Azuran",
+        "error_change_title": "Snifel iɣewwaren n yilɣa"
+    },
+    "room_summary_card_back_action_label": "Talɣut n texxamt"
 }

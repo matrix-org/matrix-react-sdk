@@ -738,7 +738,6 @@
     "This room is public": "Kjo dhomë është publike",
     "Edited at %(date)s": "Përpunuar më %(date)s",
     "Click to view edits": "Klikoni që të shihni përpunime",
-    "Change notification settings": "Ndryshoni rregullime njoftimesh",
     "Your server isn't responding to some <a>requests</a>.": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
     "Server isn't responding": "Shërbyesi s’po përgjigjet",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Shërbyesi juaj s’po u përgjigjet disa kërkesave nga ju. Më poshtë gjenden disa nga arsyet më të mundshme.",
@@ -1457,9 +1456,6 @@
     "This address had invalid server or is already in use": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë",
     "Missing room name or separator e.g. (my-room:domain.org)": "Mungon emër ose ndarës dhome, p.sh. (dhoma-ime:përkatësi.org)",
     "Missing domain separator e.g. (:domain.org)": "Mungon ndarë përkatësie, p.sh. (:domain.org)",
-    "Back to thread": "Mbrapsht te rrjedha",
-    "Room members": "Anëtarë dhome",
-    "Back to chat": "Mbrapsht te fjalosja",
     "Your new device is now verified. Other users will see it as trusted.": "Pajisja juaj e re tani është e verifikuar. Përdorues të tjerë do ta shohin si të besuar.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Pajisja juaj e re tani është e verifikuar. Ajo ka hyrje te mesazhet tuaja të fshehtëzuara dhe përdorues të tjerë do ta shohin si të besuar.",
     "Verify with another device": "Verifikojeni me pajisje tjetër",
@@ -1726,8 +1722,6 @@
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Hollësitë e llogarisë tuaj administrohen ndarazi te <code>%(hostname)s</code>.",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "e panjohur",
-    "Red": "E kuqe",
-    "Grey": "Gri",
     "Secure Backup successful": "Kopjeruajtje e Sigurt e susksesshme",
     "Your keys are now being backed up from this device.": "Kyçet tuaj tani po kopjeruhen nga kjo pajisje.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Jepni një Frazë Sigurie që e dini vetëm ju, ngaqë përdoret për të mbrojtur të dhënat tuaja. Që të jeni të sigurt, s’duhet të ripërdorni fjalëkalimin e llogarisë tuaj.",
@@ -2206,7 +2200,6 @@
             "user_a11y": "Vetëplotësim Përdoruesish"
         }
     },
-    "Bold": "Të trasha",
     "Link": "Lidhje",
     "Code": "Kod",
     "power_level": {
@@ -4101,11 +4094,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Mos humbni asnjë përgjigje",
         "enable_prompt_toast_title": "Njoftime",
-        "enable_prompt_toast_description": "Aktivizoni njoftime desktopi"
+        "enable_prompt_toast_description": "Aktivizoni njoftime desktopi",
+        "colour_none": "Asnjë",
+        "colour_bold": "Të trasha",
+        "colour_grey": "Gri",
+        "colour_red": "E kuqe",
+        "colour_unsent": "Të padërguar",
+        "error_change_title": "Ndryshoni rregullime njoftimesh"
     },
     "mobile_guide": {
         "toast_title": "Për një punim më të mirë, përdorni aplikacionin",
         "toast_description": "%(brand)s është eksperimental në një shfletues telefoni celular. Për punimin më të mirë dhe veçoritë më të reja, përdorni aplikacionin tonë falas.",
         "toast_accept": "Përdorni aplikacionin"
-    }
+    },
+    "chat_card_back_action_label": "Mbrapsht te fjalosja",
+    "room_summary_card_back_action_label": "Të dhëna dhome",
+    "member_list_back_action_label": "Anëtarë dhome",
+    "thread_view_back_action_label": "Mbrapsht te rrjedha"
 }

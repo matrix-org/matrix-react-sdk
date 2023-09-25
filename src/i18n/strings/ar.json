@@ -376,7 +376,6 @@
     "Your server isn't responding to some <a>requests</a>.": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
-    "Change notification settings": "تغيير إعدادات الإشعار",
     "This event could not be displayed": "تعذر عرض هذا الحدث",
     "Edit message": "تعديل الرسالة",
     "Everyone in this room is verified": "تم التحقق من جميع من في هذه الغرفة",
@@ -733,7 +732,6 @@
         "placeholder_encrypted": "أرسل رسالة مشفرة …",
         "placeholder": "أرسل رسالة …"
     },
-    "Bold": "ثخين",
     "power_level": {
         "default": "المبدئي",
         "restricted": "مقيد",
@@ -1508,9 +1506,13 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "لا تفوت أي رد",
         "enable_prompt_toast_title": "الإشعارات",
-        "enable_prompt_toast_description": "تمكين إشعارات سطح المكتب"
+        "enable_prompt_toast_description": "تمكين إشعارات سطح المكتب",
+        "colour_none": "لا شيء",
+        "colour_bold": "ثخين",
+        "error_change_title": "تغيير إعدادات الإشعار"
     },
     "error": {
         "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك."
-    }
+    },
+    "room_summary_card_back_action_label": "معلومات الغرفة"
 }

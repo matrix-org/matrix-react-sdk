@@ -738,7 +738,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Sa oled selle sessiooni jaoks varem kasutanud %(brand)s'i uuemat versiooni. Selle versiooni kasutamiseks läbiva krüptimisega, pead sa esmalt logima välja ja siis uuesti logima tagasi sisse.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Kui sa ei ole ise uusi taastamise meetodeid lisanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Enne väljalogimist seo see sessioon krüptovõtmete varundusega. Kui sa seda ei tee, siis võid kaotada võtmed, mida kasutatakse vaid siin sessioonis.",
-    "Change notification settings": "Muuda teavituste seadistusi",
     "Your server isn't responding to some <a>requests</a>.": "Sinu koduserver ei vasta mõnedele <a>päringutele</a>.",
     "Server isn't responding": "Server ei vasta päringutele",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Sinu koduserver ei vasta mõnedele sinu päringutele. Alljärgnevalt on mõned võimalikud põhjused.",
@@ -1458,9 +1457,6 @@
     "This address had invalid server or is already in use": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel",
     "Missing room name or separator e.g. (my-room:domain.org)": "Jututoa nimi või eraldaja on puudu (näiteks jututuba:domeen.ee)",
     "Missing domain separator e.g. (:domain.org)": "Domeeni eraldaja on puudu (näiteks :domeen.ee)",
-    "Back to thread": "Tagasi jutulõnga manu",
-    "Room members": "Jututoa liikmed",
-    "Back to chat": "Tagasi vestluse manu",
     "Your new device is now verified. Other users will see it as trusted.": "Sinu uus seade on nüüd verifitseeritud. Teiste kasutajate jaoks on ta usaldusväärne.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Sinu uus seade on nüüd verifitseeritud. Selles seadmes saad lugeda oma krüptitud sõnumeid ja teiste kasutajate jaoks on ta usaldusväärne.",
     "Verify with another device": "Verifitseeri teise seadmega",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Kõik selle kasutaja sõnumid ja kutsed saava olema peidetud. Kas sa oled kindel, et soovid teda eirata?",
     "Ignore %(user)s": "Eira kasutajat %(user)s",
     "unknown": "teadmata",
-    "Red": "Punane",
-    "Grey": "Hall",
     "This session is backing up your keys.": "See sessioon varundab sinu krüptovõtmeid.",
     "Declining…": "Keeldumisel…",
     "There are no past polls in this room": "Selles jututoas pole varasemaid küsitlusi",
@@ -2268,7 +2262,6 @@
             "user_a11y": "Kasutajanimede automaatne lõpetamine"
         }
     },
-    "Bold": "Paks kiri",
     "Link": "Link",
     "Code": "Kood",
     "power_level": {
@@ -4208,11 +4201,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ära jäta vastust vahele",
         "enable_prompt_toast_title": "Teavitused",
-        "enable_prompt_toast_description": "Võta kasutusele töölauakeskkonna teavitused"
+        "enable_prompt_toast_description": "Võta kasutusele töölauakeskkonna teavitused",
+        "colour_none": "Ei ühelgi juhul",
+        "colour_bold": "Paks kiri",
+        "colour_grey": "Hall",
+        "colour_red": "Punane",
+        "colour_unsent": "Saatmata",
+        "error_change_title": "Muuda teavituste seadistusi"
     },
     "mobile_guide": {
         "toast_title": "Rakendusega saad Matrix'is suhelda parimal viisil",
         "toast_description": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
         "toast_accept": "Kasuta rakendust"
-    }
+    },
+    "chat_card_back_action_label": "Tagasi vestluse manu",
+    "room_summary_card_back_action_label": "Info jututoa kohta",
+    "member_list_back_action_label": "Jututoa liikmed",
+    "thread_view_back_action_label": "Tagasi jutulõnga manu"
 }

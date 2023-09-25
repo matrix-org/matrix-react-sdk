@@ -350,7 +350,6 @@
     "All settings": "Alle innstillingar",
     "Delete Backup": "Slett sikkerheitskopi",
     "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
-    "Change notification settings": "Endra varslingsinnstillingar",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
@@ -546,7 +545,6 @@
             "user_description": "Brukarar"
         }
     },
-    "Bold": "Feit",
     "Code": "Kode",
     "power_level": {
         "default": "Opphavleg innstilling",
@@ -1261,6 +1259,9 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Varsel",
-        "enable_prompt_toast_description": "Aktiver skrivebordsvarsel"
-    }
+        "enable_prompt_toast_description": "Aktiver skrivebordsvarsel",
+        "colour_bold": "Feit",
+        "error_change_title": "Endra varslingsinnstillingar"
+    },
+    "room_summary_card_back_action_label": "Rominformasjon"
 }

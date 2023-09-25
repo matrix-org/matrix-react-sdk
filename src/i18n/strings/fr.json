@@ -739,7 +739,6 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "Change notification settings": "Modifier les paramètres de notification",
     "Your server isn't responding to some <a>requests</a>.": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "%(brand)s ne peut actuellement mettre en cache vos messages chiffrés localement de manière sécurisée via le navigateur Web. Utilisez <desktopLink>%(brand)s Desktop</desktopLink> pour que les messages chiffrés apparaissent dans vos résultats de recherche.",
     "ready": "prêt",
@@ -1469,9 +1468,6 @@
     "Almost there! Is your other device showing the same shield?": "On y est presque ! Votre autre appareil affiche-t-il le même bouclier ?",
     "To proceed, please accept the verification request on your other device.": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
     "From a thread": "Depuis un fil de discussion",
-    "Back to thread": "Retour au fil de discussion",
-    "Room members": "Membres du salon",
-    "Back to chat": "Retour à la conversation",
     "Could not fetch location": "Impossible de récupérer la position",
     "Message pending moderation": "Message en attente de modération",
     "Message pending moderation: %(reason)s": "Message en attente de modération : %(reason)s",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Tous les messages et invitations de cette utilisateur seront cachés. Êtes-vous sûr de vouloir les ignorer ?",
     "Ignore %(user)s": "Ignorer %(user)s",
     "unknown": "inconnu",
-    "Red": "Rouge",
-    "Grey": "Gris",
     "This session is backing up your keys.": "Cette session sauvegarde vos clés.",
     "Declining…": "Refus…",
     "There are no past polls in this room": "Il n’y a aucun ancien sondage dans ce salon",
@@ -2268,7 +2262,6 @@
             "user_a11y": "Autocomplétion d’utilisateur"
         }
     },
-    "Bold": "Gras",
     "Link": "Lien",
     "Code": "Code",
     "power_level": {
@@ -4208,11 +4201,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ne ratez pas une réponse",
         "enable_prompt_toast_title": "Notifications",
-        "enable_prompt_toast_description": "Activer les notifications sur le bureau"
+        "enable_prompt_toast_description": "Activer les notifications sur le bureau",
+        "colour_none": "Aucun",
+        "colour_bold": "Gras",
+        "colour_grey": "Gris",
+        "colour_red": "Rouge",
+        "colour_unsent": "Non envoyé",
+        "error_change_title": "Modifier les paramètres de notification"
     },
     "mobile_guide": {
         "toast_title": "Utilisez une application pour une meilleure expérience",
         "toast_description": "%(brand)s est expérimental sur un navigateur mobile. Pour une meilleure expérience et bénéficier des dernières fonctionnalités, utilisez notre application native gratuite.",
         "toast_accept": "Utiliser l’application"
-    }
+    },
+    "chat_card_back_action_label": "Retour à la conversation",
+    "room_summary_card_back_action_label": "Information du salon",
+    "member_list_back_action_label": "Membres du salon",
+    "thread_view_back_action_label": "Retour au fil de discussion"
 }

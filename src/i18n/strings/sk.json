@@ -458,7 +458,6 @@
     "This room is end-to-end encrypted": "Táto miestnosť je end-to-end šifrovaná",
     "Everyone in this room is verified": "Všetci v tejto miestnosti sú overení",
     "Edit message": "Upraviť správu",
-    "Change notification settings": "Upraviť nastavenia upozornení",
     "Discovery options will appear once you have added an email above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní e-mailovej adresy vyššie.",
     "Discovery options will appear once you have added a phone number above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní telefónneho čísla vyššie.",
     "No recently visited rooms": "Žiadne nedávno navštívené miestnosti",
@@ -1134,7 +1133,6 @@
     "Take a picture": "Urobiť fotografiu",
     "Wrong file type": "Nesprávny typ súboru",
     "Device verified": "Zariadenie overené",
-    "Room members": "Členovia miestnosti",
     "End Poll": "Ukončiť anketu",
     "Share location": "Zdieľať polohu",
     "Mentions only": "Iba zmienky",
@@ -1323,8 +1321,6 @@
     "Missing domain separator e.g. (:domain.org)": "Chýbajúci oddeľovač domény, napr. (:domena.sk)",
     "Missing room name or separator e.g. (my-room:domain.org)": "Chýbajúci názov miestnosti alebo oddeľovač, napr. (moja-miestnost:domena.sk)",
     "This address had invalid server or is already in use": "Táto adresa mala neplatný server alebo sa už používa",
-    "Back to chat": "Späť na konverzáciu",
-    "Back to thread": "Späť na vlákno",
     "Almost there! Is your other device showing the same shield?": "Už je to takmer hotové! Zobrazuje vaše druhé zariadenie rovnaký štít?",
     "You cancelled verification on your other device.": "Zrušili ste overovanie na vašom druhom zariadení.",
     "Unable to verify this device": "Nie je možné overiť toto zariadenie",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Všetky správy a pozvánky od tohto používateľa budú skryté. Ste si istí, že ich chcete ignorovať?",
     "Ignore %(user)s": "Ignorovať %(user)s",
     "unknown": "neznáme",
-    "Red": "Červená",
-    "Grey": "Sivá",
     "This session is backing up your keys.": "Táto relácia zálohuje vaše kľúče.",
     "Declining…": "Odmietanie …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadajte bezpečnostnú frázu, ktorú poznáte len vy, keďže sa používa na ochranu vašich údajov. V záujme bezpečnosti by ste nemali heslo k účtu používať opakovane.",
@@ -2268,7 +2262,6 @@
             "user_a11y": "Automatické dopĺňanie používateľov"
         }
     },
-    "Bold": "Tučné",
     "Link": "Odkaz",
     "Code": "Kód",
     "power_level": {
@@ -4208,11 +4201,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Nezmeškajte odpoveď",
         "enable_prompt_toast_title": "Oznámenia",
-        "enable_prompt_toast_description": "Povoliť oznámenia na ploche"
+        "enable_prompt_toast_description": "Povoliť oznámenia na ploche",
+        "colour_none": "Žiadne",
+        "colour_bold": "Tučné",
+        "colour_grey": "Sivá",
+        "colour_red": "Červená",
+        "colour_unsent": "Neodoslané",
+        "error_change_title": "Upraviť nastavenia upozornení"
     },
     "mobile_guide": {
         "toast_title": "Použite aplikáciu pre lepší zážitok",
         "toast_description": "%(brand)s je v mobilnej verzii experimentálny. Ak chcete získať lepší zážitok a najnovšie funkcie, použite našu bezplatnú natívnu aplikáciu.",
         "toast_accept": "Použiť aplikáciu"
-    }
+    },
+    "chat_card_back_action_label": "Späť na konverzáciu",
+    "room_summary_card_back_action_label": "Informácie o miestnosti",
+    "member_list_back_action_label": "Členovia miestnosti",
+    "thread_view_back_action_label": "Späť na vlákno"
 }

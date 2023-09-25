@@ -740,7 +740,6 @@
     "This room is public": "Ĉi tiu ĉambro estas publika",
     "Edited at %(date)s": "Redaktita je %(date)s",
     "Click to view edits": "Klaku por vidi redaktojn",
-    "Change notification settings": "Ŝanĝi agordojn pri sciigoj",
     "Your server isn't responding to some <a>requests</a>.": "Via servilo ne respondas al iuj <a>petoj</a>.",
     "Server isn't responding": "Servilo ne respondas",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
@@ -1689,7 +1688,6 @@
             "user_a11y": "Memkompletigo de uzantoj"
         }
     },
-    "Bold": "Grase",
     "Code": "Kodo",
     "power_level": {
         "default": "Ordinara",
@@ -3182,11 +3180,15 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ne preterpasu respondon",
         "enable_prompt_toast_title": "Sciigoj",
-        "enable_prompt_toast_description": "Ŝalti labortablajn sciigojn"
+        "enable_prompt_toast_description": "Ŝalti labortablajn sciigojn",
+        "colour_none": "Neniu",
+        "colour_bold": "Grase",
+        "error_change_title": "Ŝanĝi agordojn pri sciigoj"
     },
     "mobile_guide": {
         "toast_title": "Uzu aplikaĵon por pli bona sperto",
         "toast_description": "%(brand)s estas eksperimenta en poŝtelefona retumilo. Por pli bona sperto kaj freŝaj funkcioj, uzu nian senpagan malfremdan aplikaĵon.",
         "toast_accept": "Uzu aplikaĵon"
-    }
+    },
+    "room_summary_card_back_action_label": "Informoj pri ĉambro"
 }

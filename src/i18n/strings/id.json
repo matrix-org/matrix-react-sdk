@@ -636,7 +636,6 @@
     "Hide sidebar": "Sembunyikan sisi bilah",
     "unknown person": "pengguna tidak dikenal",
     "IRC display name width": "Lebar nama tampilan IRC",
-    "Change notification settings": "Ubah pengaturan notifikasi",
     "%(deviceId)s from %(ip)s": "%(deviceId)s dari %(ip)s",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
@@ -1458,9 +1457,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Kurang pemisah domain mis. (:domain.org)",
     "This address had invalid server or is already in use": "Alamat ini memiliki server yang tidak absah atau telah digunakan",
-    "Back to thread": "Kembali ke utasan",
-    "Room members": "Anggota ruangan",
-    "Back to chat": "Kembali ke obrolan",
     "Your new device is now verified. Other users will see it as trusted.": "Perangkat baru Anda telah diverifikasi. Pengguna lain akan melihat perangkat baru Anda sebagai dipercayai.",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "Perangkat baru Anda telah diverifikasi. Perangkat baru Anda dapat mengakses pesan-pesan terenkripsi Anda, dan pengguna lain akan melihat perangkat baru Anda sebagai dipercayai.",
     "Verify with another device": "Verifikasi dengan perangkat lain",
@@ -1727,8 +1723,6 @@
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Semua pesan dan undangan dari pengguna ini akan disembunyikan. Apakah Anda yakin ingin mengabaikan?",
     "Ignore %(user)s": "Abaikan %(user)s",
     "unknown": "tidak diketahui",
-    "Red": "Merah",
-    "Grey": "Abu-Abu",
     "This session is backing up your keys.": "Sesi ini mencadangkan kunci Anda.",
     "Declining…": "Menolak…",
     "There are no past polls in this room": "Tidak ada pemungutan suara sebelumnya di ruangan ini",
@@ -2273,7 +2267,6 @@
             "user_a11y": "Penyelesaian Pengguna Otomatis"
         }
     },
-    "Bold": "Tebal",
     "Link": "Tautan",
     "Code": "Kode",
     "power_level": {
@@ -4213,11 +4206,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Jangan lewatkan sebuah balasan",
         "enable_prompt_toast_title": "Notifikasi",
-        "enable_prompt_toast_description": "Aktifkan notifikasi desktop"
+        "enable_prompt_toast_description": "Aktifkan notifikasi desktop",
+        "colour_none": "Tidak Ada",
+        "colour_bold": "Tebal",
+        "colour_grey": "Abu-Abu",
+        "colour_red": "Merah",
+        "colour_unsent": "Belum dikirim",
+        "error_change_title": "Ubah pengaturan notifikasi"
     },
     "mobile_guide": {
         "toast_title": "Gunakan aplikasi untuk pengalaman yang lebih baik",
         "toast_description": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami.",
         "toast_accept": "Gunakan aplikasi"
-    }
+    },
+    "chat_card_back_action_label": "Kembali ke obrolan",
+    "room_summary_card_back_action_label": "Informasi ruangan",
+    "member_list_back_action_label": "Anggota ruangan",
+    "thread_view_back_action_label": "Kembali ke utasan"
 }

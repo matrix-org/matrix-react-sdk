@@ -740,7 +740,6 @@
     "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
     "Edited at %(date)s": "Szerkesztve ekkor: %(date)s",
     "Click to view edits": "A szerkesztések megtekintéséhez kattints",
-    "Change notification settings": "Értesítési beállítások megváltoztatása",
     "Your server isn't responding to some <a>requests</a>.": "A kiszolgálója nem válaszol néhány <a>kérésre</a>.",
     "You're all caught up.": "Mindennel naprakész.",
     "Server isn't responding": "A kiszolgáló nem válaszol",
@@ -1468,9 +1467,6 @@
     "You cancelled verification on your other device.": "Az ellenőrzést megszakította a másik eszközön.",
     "Almost there! Is your other device showing the same shield?": "Majdnem kész! A többi eszköze is ugyanazt a pajzsot mutatja?",
     "To proceed, please accept the verification request on your other device.": "A folytatáshoz fogadja el az ellenőrzés kérést a másik eszközről.",
-    "Back to thread": "Vissza az üzenetszálhoz",
-    "Room members": "Szobatagok",
-    "Back to chat": "Vissza a csevegéshez",
     "Could not fetch location": "Nem lehet elérni a földrajzi helyzetét",
     "Message pending moderation": "Üzenet moderálásra vár",
     "Message pending moderation: %(reason)s": "Az üzenet moderálásra vár, ok: %(reason)s",
@@ -1727,8 +1723,6 @@
     "Ignore %(user)s": "%(user)s figyelmen kívül hagyása",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "A fiókadatok külön vannak kezelve itt: <code>%(hostname)s</code>.",
     "unknown": "ismeretlen",
-    "Red": "Piros",
-    "Grey": "Szürke",
     "Starting backup…": "Mentés indul…",
     "Secure Backup successful": "Biztonsági mentés sikeres",
     "Your keys are now being backed up from this device.": "A kulcsai nem kerülnek elmentésre erről az eszközről.",
@@ -2208,7 +2202,6 @@
             "user_a11y": "Felhasználó automatikus kiegészítése"
         }
     },
-    "Bold": "Félkövér",
     "Link": "Hivatkozás",
     "Code": "Kód",
     "power_level": {
@@ -4112,11 +4105,21 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Ne szalasszon el egy választ se",
         "enable_prompt_toast_title": "Értesítések",
-        "enable_prompt_toast_description": "Asztali értesítések engedélyezése"
+        "enable_prompt_toast_description": "Asztali értesítések engedélyezése",
+        "colour_none": "Semmi",
+        "colour_bold": "Félkövér",
+        "colour_grey": "Szürke",
+        "colour_red": "Piros",
+        "colour_unsent": "Elküldetlen",
+        "error_change_title": "Értesítési beállítások megváltoztatása"
     },
     "mobile_guide": {
         "toast_title": "A jobb élmény érdekében használjon alkalmazást",
         "toast_description": "A(z) %(brand)s kísérleti állapotban van a mobilos webböngészőkben. A jobb élmény és a legújabb funkciók használatához használja az ingyenes natív alkalmazásunkat.",
         "toast_accept": "Alkalmazás használata"
-    }
+    },
+    "chat_card_back_action_label": "Vissza a csevegéshez",
+    "room_summary_card_back_action_label": "Szobainformációk",
+    "member_list_back_action_label": "Szobatagok",
+    "thread_view_back_action_label": "Vissza az üzenetszálhoz"
 }

@@ -494,7 +494,6 @@
     "Recovery Method Removed": "Atgavimo Metodas Pašalintas",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
     "All settings": "Visi nustatymai",
-    "Change notification settings": "Keisti pranešimų nustatymus",
     "Room information": "Kambario informacija",
     "Browse": "Naršyti",
     "Set a new custom sound": "Nustatyti naują pasirinktinį garsą",
@@ -1054,9 +1053,6 @@
     "Moderation": "Moderavimas",
     "Spaces": "Erdvės",
     "Messaging": "Žinučių siuntimas",
-    "Back to thread": "Grįžti prie temos",
-    "Room members": "Kambario nariai",
-    "Back to chat": "Grįžti į pokalbį",
     "%(deviceId)s from %(ip)s": "%(deviceId)s iš %(ip)s",
     "Preview Space": "Peržiūrėti erdvę",
     "Failed to update the visibility of this space": "Nepavyko atnaujinti šios erdvės matomumo",
@@ -1431,7 +1427,6 @@
             "user_description": "Naudotojai"
         }
     },
-    "Bold": "Pusjuodis",
     "Code": "Kodas",
     "power_level": {
         "default": "Numatytas",
@@ -2732,11 +2727,18 @@
     "notifications": {
         "enable_prompt_toast_title_from_message_send": "Nepraleiskite atsakymų",
         "enable_prompt_toast_title": "Pranešimai",
-        "enable_prompt_toast_description": "Įjungti darbalaukio pranešimus"
+        "enable_prompt_toast_description": "Įjungti darbalaukio pranešimus",
+        "colour_none": "Nė vienas",
+        "colour_bold": "Pusjuodis",
+        "error_change_title": "Keisti pranešimų nustatymus"
     },
     "mobile_guide": {
         "toast_title": "Naudokite programėlę geresnei patirčiai",
         "toast_description": "%(brand)s yra eksperimentinis mobiliojoje žiniatinklio naršyklėje. Jei norite geresnės patirties ir naujausių funkcijų, naudokitės nemokama vietine programėle.",
         "toast_accept": "Naudoti programėlę"
-    }
+    },
+    "chat_card_back_action_label": "Grįžti į pokalbį",
+    "room_summary_card_back_action_label": "Kambario informacija",
+    "member_list_back_action_label": "Kambario nariai",
+    "thread_view_back_action_label": "Grįžti prie temos"
 }
