@@ -185,7 +185,7 @@ describe("<GeneralUserSettingsTab />", () => {
             );
             render(getComponent());
 
-            expect(screen.getByText("Deactivate Account").parentElement!).toMatchSnapshot();
+            expect(screen.getByText("Deactivate Account", { selector: "h2" }).parentElement!).toMatchSnapshot();
         });
     });
 
