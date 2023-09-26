@@ -33,7 +33,6 @@
     "Wednesday": "Середа",
     "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
-    "All messages": "Усі повідомлення",
     "Invite to this room": "Запросити до цієї кімнати",
     "Thursday": "Четвер",
     "Search…": "Пошук…",
@@ -71,7 +70,6 @@
     "Restricted": "Обмежено",
     "Moderator": "Модератор",
     "Reason": "Причина",
-    "Default": "Типовий",
     "Incorrect verification code": "Неправильний код перевірки",
     "Failed to set display name": "Не вдалося налаштувати псевдонім",
     "This event could not be displayed": "Неможливо показати цю подію",
@@ -548,7 +546,6 @@
     "Share Room": "Поділитись кімнатою",
     "Share room": "Поділитись кімнатою",
     "Join the conference from the room information card on the right": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
-    "Room information": "Відомості про кімнату",
     "Send voice message": "Надіслати голосове повідомлення",
     "edited": "змінено",
     "Edited at %(date)s. Click to view edits.": "Змінено %(date)s. Натисніть, щоб переглянути зміни.",
@@ -570,7 +567,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Загальнодоступні адреси можуть бути використані будь-ким на будь-якому сервері для приєднання до вашої кімнати.",
     "Published addresses can be used by anyone on any server to join your space.": "Загальнодоступні адреси можуть бути використані будь-ким на будь-якому сервері для приєднання до вашого простору.",
     "Published Addresses": "Загальнодоступні адреси",
-    "Room Addresses": "Адреси кімнати",
     "Error downloading audio": "Помилка завантаження аудіо",
     "Preparing to download logs": "Приготування до завантаження журналів",
     "Download %(text)s": "Завантажити %(text)s",
@@ -779,14 +775,6 @@
     "Unable to verify email address.": "Не вдалося перевірити адресу е-пошти.",
     "Unknown failure": "Невідомий збій",
     "Failed to update the join rules": "Не вдалося оновити правила приєднання",
-    "Browse": "Огляд",
-    "Set a new custom sound": "Указати нові власні звуки",
-    "Notification sound": "Звуки сповіщень",
-    "Sounds": "Звуки",
-    "Uploaded sound": "Вивантажені звуки",
-    "Bridges": "Мости",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ця кімната передає повідомлення на такі платформи. <a>Докладніше.</a>",
-    "Space information": "Відомості про простір",
     "%(count)s people you know have already joined": {
         "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
         "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
@@ -836,7 +824,6 @@
     "Messaging": "Спілкування",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Зберігайте ключ безпеки в надійному місці, скажімо в менеджері паролів чи сейфі, бо ключ оберігає ваші зашифровані дані.",
     "You do not have permission to start polls in this room.": "Ви не маєте дозволу створювати опитування в цій кімнаті.",
-    "You won't get any notifications": "Ви не отримуватимете жодних сповіщень",
     "Unpin this widget to view it in this panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
     "Vote not registered": "Голос не зареєстрований",
     "Sorry, your vote was not registered. Please try again.": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
@@ -910,11 +897,6 @@
     "Reset event store": "Очистити сховище подій",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Якщо таки бажаєте, зауважте, що жодні ваші повідомлення не видаляться, проте пошук сповільниться, поки індекс буде перестворюватись",
     "You most likely do not want to reset your event index store": "Сумніваємось, що ви бажаєте очистити своє сховище подій",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ця кімната не передає повідомлень на жодні платформи. <a>Докладніше.</a>",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Отримувати лише вказані у ваших <a>налаштуваннях</a> згадки й ключові слова",
-    "@mentions & keywords": "@згадки й ключові слова",
-    "Get notified for every message": "Отримувати сповіщення про кожне повідомлення",
-    "Get notifications as set up in your <a>settings</a>": "Отримувати сповіщення відповідно до ваших <a>налаштувань</a>",
     "Start a conversation with someone using their name or username (like <userId/>).": "Почніть розмову з кимось, ввівши їхнє ім'я чи користувацьке ім'я (вигляду <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Почніть розмову з кимось, ввівши їхнє ім'я, е-пошту чи користувацьке ім'я (вигляду <userId/>).",
     "If you can't see who you're looking for, send them your invite link below.": "Якщо тут немає тих, кого шукаєте, надішліть їм запрошувальне посилання внизу.",
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
     "Formatting": "Форматування",
-    "Upload custom sound": "Вивантажити власний звук",
     "Search all rooms": "Вибрати всі кімнати",
     "Search this room": "Шукати цю кімнату",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
@@ -3328,7 +3309,9 @@
             "error_save_space_settings": "Не вдалося зберегти налаштування простору.",
             "description_space": "Змінити налаштування, що стосуються вашого простору.",
             "save": "Зберегти зміни",
-            "leave_space": "Вийти з простору"
+            "leave_space": "Вийти з простору",
+            "aliases_section": "Адреси кімнати",
+            "other_section": "Інше"
         },
         "advanced": {
             "unfederated": "Ця кімната недоступна для віддалених серверів Matrix",
@@ -3339,7 +3322,9 @@
             "room_predecessor": "Перегляд давніших повідомлень у %(roomName)s.",
             "room_id": "Внутрішній ID кімнати",
             "room_version_section": "Версія кімнати",
-            "room_version": "Версія кімнати:"
+            "room_version": "Версія кімнати:",
+            "information_section_space": "Відомості про простір",
+            "information_section_room": "Відомості про кімнату"
         },
         "delete_avatar_label": "Видалити аватар",
         "upload_avatar_label": "Вивантажити аватар",
@@ -3359,6 +3344,20 @@
         "access": {
             "title": "Доступ",
             "description_space": "Визначте хто може переглядати та приєднатися до %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ця кімната передає повідомлення на такі платформи. <a>Докладніше.</a>",
+            "empty": "Ця кімната не передає повідомлень на жодні платформи. <a>Докладніше.</a>",
+            "title": "Мости"
+        },
+        "notifications": {
+            "uploaded_sound": "Вивантажені звуки",
+            "settings_link": "Отримувати сповіщення відповідно до ваших <a>налаштувань</a>",
+            "sounds_section": "Звуки",
+            "notification_sound": "Звуки сповіщень",
+            "custom_sound_prompt": "Указати нові власні звуки",
+            "upload_sound_label": "Вивантажити власний звук",
+            "browse_button": "Огляд"
         }
     },
     "encryption": {
@@ -4183,7 +4182,13 @@
         "keyword_new": "Нове ключове слово",
         "class_global": "Глобально",
         "class_other": "Інше",
-        "mentions_keywords": "Згадки та ключові слова"
+        "mentions_keywords": "Згадки та ключові слова",
+        "default": "Типовий",
+        "all_messages": "Усі повідомлення",
+        "all_messages_description": "Отримувати сповіщення про кожне повідомлення",
+        "mentions_and_keywords": "@згадки й ключові слова",
+        "mentions_and_keywords_description": "Отримувати лише вказані у ваших <a>налаштуваннях</a> згадки й ключові слова",
+        "mute_description": "Ви не отримуватимете жодних сповіщень"
     },
     "mobile_guide": {
         "toast_title": "Використовуйте застосунок для зручності",

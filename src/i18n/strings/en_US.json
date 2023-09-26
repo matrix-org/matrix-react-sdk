@@ -14,7 +14,6 @@
     "Are you sure you want to reject the invitation?": "Are you sure you want to reject the invitation?",
     "Custom level": "Custom level",
     "Decrypt %(text)s": "Decrypt %(text)s",
-    "Default": "Default",
     "Download %(text)s": "Download %(text)s",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
@@ -134,7 +133,6 @@
     "All Rooms": "All Rooms",
     "Wednesday": "Wednesday",
     "Send": "Send",
-    "All messages": "All messages",
     "Invite to this room": "Invite to this room",
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
@@ -526,7 +524,8 @@
             "publish_toggle": "Publish this room to the public in %(domain)s's room directory?",
             "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
             "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
-            "url_previews_section": "URL Previews"
+            "url_previews_section": "URL Previews",
+            "other_section": "Other"
         },
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"
@@ -592,6 +591,8 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Notifications",
-        "class_other": "Other"
+        "class_other": "Other",
+        "default": "Default",
+        "all_messages": "All messages"
     }
 }

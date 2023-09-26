@@ -39,7 +39,6 @@
     "Dec": "Dec",
     "PM": "PM",
     "AM": "AM",
-    "Default": "Predefinit",
     "Moderator": "Moderator",
     "Thank you!": "Mercés !",
     "Reason": "Rason",
@@ -64,9 +63,6 @@
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
     "Authentication": "Autentificacion",
-    "Bridges": "Bridges",
-    "Sounds": "Sons",
-    "Browse": "Percórrer",
     "Phone Number": "Numèro de telefòn",
     "Unencrypted": "Pas chifrat",
     "Italics": "Italicas",
@@ -367,6 +363,16 @@
         },
         "security": {
             "title": "Seguretat e vida privada"
+        },
+        "bridges": {
+            "title": "Bridges"
+        },
+        "general": {
+            "other_section": "Autre"
+        },
+        "notifications": {
+            "sounds_section": "Sons",
+            "browse_button": "Percórrer"
         }
     },
     "encryption": {
@@ -381,7 +387,8 @@
         "enable_prompt_toast_title": "Notificacions",
         "colour_bold": "Gras",
         "mark_all_read": "Tot marcar coma legit",
-        "class_other": "Autre"
+        "class_other": "Autre",
+        "default": "Predefinit"
     },
     "quick_settings": {
         "sidebar_settings": "Autras opcions"

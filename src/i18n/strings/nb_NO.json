@@ -11,7 +11,6 @@
     "Invite to this room": "Inviter til dette rommet",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne meldingen. (%(code)s)",
     "Thursday": "Torsdag",
-    "All messages": "Alle meldinger",
     "Yesterday": "I går",
     "Saturday": "Lørdag",
     "Permission Required": "Tillatelse kreves",
@@ -41,7 +40,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s kl. %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s kl. %(time)s",
-    "Default": "Standard",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
     "Reason": "Årsak",
@@ -76,7 +74,6 @@
     "Anchor": "Anker",
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
-    "Browse": "Bla",
     "Unable to verify phone number.": "Klarte ikke å verifisere telefonnummeret.",
     "Verification code": "Verifikasjonskode",
     "Email Address": "E-postadresse",
@@ -133,11 +130,6 @@
     "Ball": "Ball",
     "Guitar": "Gitar",
     "Deactivate account": "Deaktiver kontoen",
-    "Room information": "Rominformasjon",
-    "Room Addresses": "Rom-adresser",
-    "Sounds": "Lyder",
-    "Notification sound": "Varslingslyd",
-    "Set a new custom sound": "Velg en ny selvvalgt lyd",
     "Banned by %(displayName)s": "Bannlyst av %(displayName)s",
     "Edit message": "Rediger meldingen",
     "Unencrypted": "Ukryptert",
@@ -261,7 +253,6 @@
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Aeroplane": "Fly",
-    "Uploaded sound": "Lastet opp lyd",
     "Incorrect verification code": "Ugyldig verifiseringskode",
     "Unable to add email address": "Klarte ikke å legge til E-postadressen",
     "Close preview": "Lukk forhåndsvisning",
@@ -480,7 +471,6 @@
     "Reason (optional)": "Årsak (valgfritt)",
     "Explore public rooms": "Utforsk offentlige rom",
     "Verify the link in your inbox": "Verifiser lenken i innboksen din",
-    "Bridges": "Broer",
     "Upgrade Room Version": "Oppgrader romversjon",
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
@@ -1445,17 +1435,30 @@
             "url_preview_explainer": "Når noen legger til en URL i meldingene deres, kan en URL-forhåndsvisning bli vist for å gi mere informasjonen om den lenken, f.eks. tittelen, beskrivelsen, og et bilde fra nettstedet.",
             "url_previews_section": "URL-forhåndsvisninger",
             "save": "Lagre endringer",
-            "leave_space": "Forlat området"
+            "leave_space": "Forlat området",
+            "aliases_section": "Rom-adresser",
+            "other_section": "Andre"
         },
         "advanced": {
             "room_version_section": "Romversjon",
-            "room_version": "Romversjon:"
+            "room_version": "Romversjon:",
+            "information_section_room": "Rominformasjon"
         },
         "delete_avatar_label": "Slett profilbilde",
         "upload_avatar_label": "Last opp en avatar",
         "visibility": {
             "title": "Synlighet",
             "alias_section": "Adresse"
+        },
+        "bridges": {
+            "title": "Broer"
+        },
+        "notifications": {
+            "uploaded_sound": "Lastet opp lyd",
+            "sounds_section": "Lyder",
+            "notification_sound": "Varslingslyd",
+            "custom_sound_prompt": "Velg en ny selvvalgt lyd",
+            "browse_button": "Bla"
         }
     },
     "encryption": {
@@ -1760,7 +1763,9 @@
         "mark_all_read": "Merk alle som lest",
         "keyword": "Nøkkelord",
         "class_global": "Globalt",
-        "class_other": "Andre"
+        "class_other": "Andre",
+        "default": "Standard",
+        "all_messages": "Alle meldinger"
     },
     "mobile_guide": {
         "toast_title": "Bruk appen for en bedre opplevelse",

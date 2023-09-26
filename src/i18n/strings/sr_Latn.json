@@ -22,7 +22,6 @@
     "Dec": "Dec",
     "PM": "poslepodne",
     "AM": "prepodne",
-    "Default": "Podrazumevano",
     "Restricted": "Ograničeno",
     "Moderator": "Moderator",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "",
@@ -147,5 +146,8 @@
     "error": {
         "admin_contact": "Molim Vas da <a>kontaktirate administratora</a> kako bi ste nastavili sa korištenjem usluge.",
         "connection": "Postoji problem u komunikaciji sa privatnim/javnim serverom. Molim Vas pokušajte kasnije."
+    },
+    "notifications": {
+        "default": "Podrazumevano"
     }
 }

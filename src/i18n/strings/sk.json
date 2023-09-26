@@ -24,7 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Default": "Predvolené",
     "Moderator": "Moderátor",
     "Reason": "Dôvod",
     "Incorrect verification code": "Nesprávny overovací kód",
@@ -154,7 +153,6 @@
     "Monday": "Pondelok",
     "All Rooms": "Vo všetkých miestnostiach",
     "Wednesday": "Streda",
-    "All messages": "Všetky správy",
     "Invite to this room": "Pozvať do tejto miestnosti",
     "You cannot delete this message. (%(code)s)": "Nemôžete vymazať túto správu. (%(code)s)",
     "Thursday": "Štvrtok",
@@ -293,8 +291,6 @@
     "Unable to verify phone number.": "Nie je možné overiť telefónne číslo.",
     "Verification code": "Overovací kód",
     "Phone Number": "Telefónne číslo",
-    "Room information": "Informácie o miestnosti",
-    "Room Addresses": "Adresy miestnosti",
     "Error updating main address": "Chyba pri aktualizácii hlavnej adresy",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Pri aktualizácii hlavnej adresy miestnosti došlo k chybe. Server to nemusí povoliť alebo došlo k dočasnému zlyhaniu.",
     "Main address": "Hlavná adresa",
@@ -345,13 +341,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Na vašom domovskom serveri bol prekročený jeden z limitov systémových zdrojov.",
     "Ok": "Ok",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Ak chcete nahlásiť bezpečnostný problém týkajúci sa Matrix-u, prečítajte si, prosím, <a>zásady zverejňovania informácií o bezpečnosti Matrix.org</a>.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Táto miestnosť premosťuje správy s nasledujúcimi platformami. <a>Viac informácií</a>",
-    "Bridges": "Premostenia",
-    "Uploaded sound": "Nahratý zvuk",
-    "Sounds": "Zvuky",
-    "Notification sound": "Zvuk oznámenia",
-    "Set a new custom sound": "Nastaviť vlastný zvuk",
-    "Browse": "Prechádzať",
     "Error changing power level requirement": "Chyba pri zmene požiadavky na úroveň oprávnenia",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Došlo k chybe pri zmene požiadaviek na úroveň oprávnenia miestnosti. Uistite sa, že na to máte dostatočné povolenia a skúste to znovu.",
     "Error changing power level": "Chyba pri zmene úrovne oprávnenia",
@@ -637,7 +626,6 @@
     "Encryption not enabled": "Šifrovanie nie je zapnuté",
     "Unencrypted": "Nešifrované",
     "Search spaces": "Hľadať priestory",
-    "@mentions & keywords": "@zmienky a kľúčové slová",
     "Room options": "Možnosti miestnosti",
     "Search for spaces": "Hľadať priestory",
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
@@ -770,14 +758,9 @@
     },
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
     "Information": "Informácie",
-    "Space information": "Informácie o priestore",
     "Room settings": "Nastavenia miestnosti",
     "Room address": "Adresa miestnosti",
-    "Get notifications as set up in your <a>settings</a>": "Dostávajte oznámenia podľa nastavenia v <a>nastaveniach</a>",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Nastavte adresy pre túto miestnosť, aby ju používatelia mohli nájsť prostredníctvom vášho domovského servera (%(localDomain)s)",
-    "You won't get any notifications": "Nebudete dostávať žiadne oznámenia",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dostávajte upozornenia len na zmienky a kľúčové slová nastavené vo vašich <a>nastaveniach</a>",
-    "Get notified for every message": "Dostávajte upozornenia na každú správu",
     "Local Addresses": "Lokálne adresy",
     "This space has no local addresses": "Tento priestor nemá žiadne lokálne adresy",
     "No other published addresses yet, add one below": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
@@ -880,7 +863,6 @@
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
     "Preparing to download logs": "Príprava na prevzatie záznamov",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Táto miestnosť nepremosťuje správy so žiadnymi platformami. <a>Viac informácií</a>",
     "Home options": "Možnosti domovskej obrazovky",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
     "You accepted": "Prijali ste",
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
     "Formatting": "Formátovanie",
-    "Upload custom sound": "Nahrať vlastný zvuk",
     "Search all rooms": "Vyhľadávať vo všetkých miestnostiach",
     "Search this room": "Vyhľadávať v tejto miestnosti",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná",
@@ -3328,7 +3309,9 @@
             "error_save_space_settings": "Nepodarilo sa uložiť nastavenia priestoru.",
             "description_space": "Upravte nastavenia týkajúce sa vášho priestoru.",
             "save": "Uložiť zmeny",
-            "leave_space": "Opustiť priestor"
+            "leave_space": "Opustiť priestor",
+            "aliases_section": "Adresy miestnosti",
+            "other_section": "Ďalšie"
         },
         "advanced": {
             "unfederated": "Táto miestnosť nie je prístupná zo vzdialených Matrix serverov",
@@ -3339,7 +3322,9 @@
             "room_predecessor": "Zobraziť staršie správy v miestnosti %(roomName)s.",
             "room_id": "Interné ID miestnosti",
             "room_version_section": "Verzia miestnosti",
-            "room_version": "Verzia miestnosti:"
+            "room_version": "Verzia miestnosti:",
+            "information_section_space": "Informácie o priestore",
+            "information_section_room": "Informácie o miestnosti"
         },
         "delete_avatar_label": "Vymazať obrázok",
         "upload_avatar_label": "Nahrať obrázok",
@@ -3359,6 +3344,20 @@
         "access": {
             "title": "Prístup",
             "description_space": "Určite, kto môže zobrazovať a pripájať sa k %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Táto miestnosť premosťuje správy s nasledujúcimi platformami. <a>Viac informácií</a>",
+            "empty": "Táto miestnosť nepremosťuje správy so žiadnymi platformami. <a>Viac informácií</a>",
+            "title": "Premostenia"
+        },
+        "notifications": {
+            "uploaded_sound": "Nahratý zvuk",
+            "settings_link": "Dostávajte oznámenia podľa nastavenia v <a>nastaveniach</a>",
+            "sounds_section": "Zvuky",
+            "notification_sound": "Zvuk oznámenia",
+            "custom_sound_prompt": "Nastaviť vlastný zvuk",
+            "upload_sound_label": "Nahrať vlastný zvuk",
+            "browse_button": "Prechádzať"
         }
     },
     "encryption": {
@@ -4183,7 +4182,13 @@
         "keyword_new": "Nové kľúčové slovo",
         "class_global": "Celosystémové",
         "class_other": "Ďalšie",
-        "mentions_keywords": "Zmienky a kľúčové slová"
+        "mentions_keywords": "Zmienky a kľúčové slová",
+        "default": "Predvolené",
+        "all_messages": "Všetky správy",
+        "all_messages_description": "Dostávajte upozornenia na každú správu",
+        "mentions_and_keywords": "@zmienky a kľúčové slová",
+        "mentions_and_keywords_description": "Dostávajte upozornenia len na zmienky a kľúčové slová nastavené vo vašich <a>nastaveniach</a>",
+        "mute_description": "Nebudete dostávať žiadne oznámenia"
     },
     "mobile_guide": {
         "toast_title": "Použite aplikáciu pre lepší zážitok",

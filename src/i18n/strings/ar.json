@@ -3,7 +3,6 @@
     "Send": "إرسال",
     "Unavailable": "غير متوفر",
     "All Rooms": "كل الغُرف",
-    "All messages": "كل الرسائل",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
     "Permission Required": "التصريح مطلوب",
@@ -32,7 +31,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s ‏%(time)s",
-    "Default": "المبدئي",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
     "Logs sent": "تم ارسال سجل الاحداث",
@@ -317,15 +315,6 @@
     "Error changing power level requirement": "تعذر تغيير متطلبات مستوى القوة",
     "Banned by %(displayName)s": "حظره %(displayName)s",
     "Failed to unban": "تعذر فك الحظر",
-    "Browse": "تصفح",
-    "Set a new custom sound": "تعيين صوت مخصص جديد",
-    "Notification sound": "صوت الإشعار",
-    "Sounds": "الأصوات",
-    "Uploaded sound": "صوت تمام الرفع",
-    "Room Addresses": "عناوين الغرف",
-    "Bridges": "الجسور",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "تعمل هذه الغرفة على توصيل الرسائل بالمنصات التالية. <a> اعرف المزيد. </a>",
-    "Room information": "معلومات الغرفة",
     "Ok": "حسنا",
     "Your homeserver has exceeded one of its resource limits.": "لقد تجاوز خادمك أحد حدود موارده.",
     "Your homeserver has exceeded its user limit.": "لقد تجاوز خادمك حد عدد المستخدمين.",
@@ -1127,14 +1116,28 @@
             "default_url_previews_off": "معاينات URL معطلة بشكل أصلي للمشاركين في هذه الغرفة.",
             "url_preview_encryption_warning": "في الغرف المشفرة ، مثل هذه الغرفة ، يتم تعطيل معاينات URL أصلاً للتأكد من أن خادمك الوسيط (حيث يتم إنشاء المعاينات) لا يمكنه جمع معلومات حول الروابط التي تراها في هذه الغرفة.",
             "url_preview_explainer": "عندما يضع شخص ما عنوان URL في رسالته ، يمكن عرض معاينة عنوان URL لإعطاء مزيد من المعلومات حول هذا الرابط مثل العنوان والوصف وصورة من موقع الويب.",
-            "url_previews_section": "معاينة الروابط"
+            "url_previews_section": "معاينة الروابط",
+            "aliases_section": "عناوين الغرف",
+            "other_section": "أخرى"
         },
         "advanced": {
             "unfederated": "لا يمكن الوصول إلى هذه الغرفة بواسطة خوادم Matrix البعيدة",
             "room_upgrade_button": "قم بترقية هذه الغرفة إلى إصدار الغرفة الموصى به",
             "room_predecessor": "عرض رسائل أقدم في %(roomName)s.",
             "room_version_section": "إصدار الغرفة",
-            "room_version": "إصدار الغرفة:"
+            "room_version": "إصدار الغرفة:",
+            "information_section_room": "معلومات الغرفة"
+        },
+        "bridges": {
+            "description": "تعمل هذه الغرفة على توصيل الرسائل بالمنصات التالية. <a> اعرف المزيد. </a>",
+            "title": "الجسور"
+        },
+        "notifications": {
+            "uploaded_sound": "صوت تمام الرفع",
+            "sounds_section": "الأصوات",
+            "notification_sound": "صوت الإشعار",
+            "custom_sound_prompt": "تعيين صوت مخصص جديد",
+            "browse_button": "تصفح"
         }
     },
     "encryption": {
@@ -1473,7 +1476,9 @@
         "colour_bold": "ثخين",
         "error_change_title": "تغيير إعدادات الإشعار",
         "mark_all_read": "أشر عليها بأنها قرأت",
-        "class_other": "أخرى"
+        "class_other": "أخرى",
+        "default": "المبدئي",
+        "all_messages": "كل الرسائل"
     },
     "error": {
         "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك.",

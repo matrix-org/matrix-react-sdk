@@ -29,7 +29,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s %(time)s",
-    "Default": "Predeterminat",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
     "Reason": "Raó",
@@ -142,7 +141,6 @@
     "Monday": "Dilluns",
     "All Rooms": "Totes les sales",
     "Wednesday": "Dimecres",
-    "All messages": "Tots els missatges",
     "Invite to this room": "Convida a aquesta sala",
     "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
@@ -607,7 +605,8 @@
             "user_url_previews_default_off": "Heu <a>inhabilitat</a> les previsualitzacions per defecte dels URL.",
             "default_url_previews_on": "Les previsualitzacions dels URL estan habilitades per defecte per als membres d'aquesta sala.",
             "default_url_previews_off": "Les previsualitzacions dels URL estan inhabilitades per defecte per als membres d'aquesta sala.",
-            "url_previews_section": "Previsualitzacions dels URL"
+            "url_previews_section": "Previsualitzacions dels URL",
+            "other_section": "Altres"
         },
         "advanced": {
             "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
@@ -795,7 +794,9 @@
     "notifications": {
         "enable_prompt_toast_title": "Notificacions",
         "error_change_title": "Canvia la configuració de notificacions",
-        "class_other": "Altres"
+        "class_other": "Altres",
+        "default": "Predeterminat",
+        "all_messages": "Tots els missatges"
     },
     "user_menu": {
         "settings": "Totes les configuracions"

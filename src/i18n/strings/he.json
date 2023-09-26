@@ -40,7 +40,6 @@
     "Monday": "שני",
     "All Rooms": "כל החדרים",
     "Wednesday": "רביעי",
-    "All messages": "כל ההודעות",
     "Invite to this room": "הזמן לחדר זה",
     "You cannot delete this message. (%(code)s)": "לא ניתן למחוק הודעה זו. (%(code)s)",
     "Thursday": "חמישי",
@@ -292,7 +291,6 @@
     "Tonga": "טונגה",
     "Tokelau": "טוקלאו",
     "Vanuatu": "ונואטו",
-    "Default": "ברירת מחדל",
     "Zimbabwe": "זימבבואה",
     "Zambia": "זמביה",
     "Yemen": "תימן",
@@ -662,15 +660,6 @@
     "Edited at %(date)s": "נערך ב-%(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "אתה עומד להועבר לאתר של צד שלישי כדי שתוכל לאמת את חשבונך לשימוש עם %(integrationsUrl)s. האם אתה מקווה להמשיך?",
     "Add an Integration": "הוסף אינטגרציה",
-    "Browse": "דפדף",
-    "Set a new custom sound": "הגדר צליל מותאם אישי",
-    "Notification sound": "צליל התראה",
-    "Sounds": "צלילים",
-    "Uploaded sound": "צלילים שהועלו",
-    "Room Addresses": "כתובות חדרים",
-    "Bridges": "גשרים",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "חדר זה מגשר בין מסרים לפלטפורמות הבאות. <a> למידע נוסף. </a>",
-    "Room information": "מידע החדר",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
     "Deactivate account": "סגור חשבון",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
@@ -1031,7 +1020,6 @@
     "To join, please enable video rooms in Labs first": "כדי להצטרף, נא אפשר תחילה וידאו במעבדת הפיתוח",
     "To view, please enable video rooms in Labs first": "כדי לצפות, אנא הפעל תחילה חדרי וידאו במעבדת הפיתוח",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
-    "@mentions & keywords": "אזכורים ומילות מפתח",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
     "Adding spaces has moved.": "הוספת מרחבי עבודה הוזז.",
@@ -1057,7 +1045,6 @@
     "Private space": "מרחב עבודה פרטי",
     "Public space": "מרחב עבודה ציבורי",
     "Invite to this space": "הזמינו למרחב עבודה זה",
-    "Space information": "מידע על מרחב העבודה",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -1067,13 +1054,9 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
     "Location": "מיקום",
     "Edit devices": "הגדרת מכשירים",
     "Role in <RoomName/>": "תפקיד בחדר <RoomName/>",
-    "You won't get any notifications": "לא תקבל שום התראה",
-    "Get notified for every message": "קבלת התראות על כל הודעה",
-    "Get notifications as set up in your <a>settings</a>": "קבלת התראות על פי ההעדפות שלך במסך<a>הגדרות</a>",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Close sidebar": "סגור סרגל צד",
     "Room info": "מידע על החדר",
@@ -2313,7 +2296,9 @@
             "error_save_space_settings": "כישלון בשמירת הגדרות מרחב העבודה.",
             "description_space": "שינוי הגדרות הנוגעות למרחב העבודה שלכם.",
             "save": "שמור שינוייים",
-            "leave_space": "עזוב את מרחב העבודה"
+            "leave_space": "עזוב את מרחב העבודה",
+            "aliases_section": "כתובות חדרים",
+            "other_section": "אחר"
         },
         "advanced": {
             "unfederated": "לא ניתן לגשת לחדר זה באמצעות שרתי מטריקס מרוחקים",
@@ -2322,7 +2307,9 @@
             "space_predecessor": "צפו בגירסא ישנה יותר של %(spaceName)s.",
             "room_predecessor": "צפה בהודעות ישנות ב-%(roomName)s.",
             "room_version_section": "גרסאת חדר",
-            "room_version": "גרסאת חדש:"
+            "room_version": "גרסאת חדש:",
+            "information_section_space": "מידע על מרחב העבודה",
+            "information_section_room": "מידע החדר"
         },
         "upload_avatar_label": "העלה אוואטר",
         "visibility": {
@@ -2341,6 +2328,18 @@
         "access": {
             "title": "גישה",
             "description_space": "החליטו מי יכול לראות ולהצטרף אל %(spaceName)s."
+        },
+        "bridges": {
+            "description": "חדר זה מגשר בין מסרים לפלטפורמות הבאות. <a> למידע נוסף. </a>",
+            "title": "גשרים"
+        },
+        "notifications": {
+            "uploaded_sound": "צלילים שהועלו",
+            "settings_link": "קבלת התראות על פי ההעדפות שלך במסך<a>הגדרות</a>",
+            "sounds_section": "צלילים",
+            "notification_sound": "צליל התראה",
+            "custom_sound_prompt": "הגדר צליל מותאם אישי",
+            "browse_button": "דפדף"
         }
     },
     "encryption": {
@@ -2964,7 +2963,13 @@
         "keyword_new": "מילת מפתח חדשה",
         "class_global": "כללי",
         "class_other": "אחר",
-        "mentions_keywords": "אזכורים ומילות מפתח"
+        "mentions_keywords": "אזכורים ומילות מפתח",
+        "default": "ברירת מחדל",
+        "all_messages": "כל ההודעות",
+        "all_messages_description": "קבלת התראות על כל הודעה",
+        "mentions_and_keywords": "אזכורים ומילות מפתח",
+        "mentions_and_keywords_description": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
+        "mute_description": "לא תקבל שום התראה"
     },
     "mobile_guide": {
         "toast_title": "השתמש באפליקציה לחוויה טובה יותר",

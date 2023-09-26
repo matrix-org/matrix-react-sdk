@@ -25,7 +25,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Default": "Sjálfgefið",
     "Restricted": "Takmarkað",
     "Moderator": "Umsjónarmaður",
     "Reason": "Ástæða",
@@ -78,7 +77,6 @@
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
     "You cannot delete this message. (%(code)s)": "Þú getur ekki eytt þessum skilaboðum. (%(code)s)",
-    "All messages": "Öll skilaboð",
     "Invite to this room": "Bjóða inn á þessa spjallrás",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
     "Search failed": "Leit mistókst",
@@ -117,7 +115,6 @@
     "Passphrase must not be empty": "Lykilfrasi má ekki vera auður",
     "Explore rooms": "Kanna spjallrásir",
     "Add room": "Bæta við spjallrás",
-    "Room information": "Upplýsingar um spjallrás",
     "Room options": "Valkostir spjallrásar",
     "Finland": "Finnland",
     "Norway": "Noreg",
@@ -154,8 +151,6 @@
     "Messages in this room are not end-to-end encrypted.": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
     "Italics": "Skáletrað",
     "Removing…": "Er að fjarlægja…",
-    "Browse": "Skoða",
-    "Sounds": "Hljóð",
     "edited": "breytti",
     "Re-join": "Taka þátt aftur",
     "Banana": "Banani",
@@ -551,10 +546,6 @@
     "Email Address": "Tölvupóstfang",
     "Verification code": "Sannvottunarkóði",
     "Unknown failure": "Óþekkt bilun",
-    "Notification sound": "Hljóð með tilkynningu",
-    "@mentions & keywords": "@minnst á og stikkorð",
-    "Bridges": "Brýr",
-    "Space information": "Upplýsingar um svæði",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -596,7 +587,6 @@
     "Encryption not enabled": "Dulritun ekki virk",
     "Ignored attempt to disable encryption": "Hunsaði tilraun til að gera dulritun óvirka",
     "This client does not support end-to-end encryption.": "Þetta forrit styður ekki enda-í-enda dulritun.",
-    "Room Addresses": "Vistföng spjallrása",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Private space": "Einkasvæði",
@@ -861,10 +851,6 @@
     "Error changing power level requirement": "Villa við að breyta kröfum um valdastig",
     "Banned by %(displayName)s": "Bannaður af %(displayName)s",
     "Failed to unban": "Tókst ekki að taka úr banni",
-    "Set a new custom sound": "Stilla nýtt sérsniðið hljóð",
-    "You won't get any notifications": "Þú munt ekki fá neinar tilkynningar",
-    "Get notified for every message": "Fáðu tilkynningu fyrir öll skilaboð",
-    "Uploaded sound": "Innsent hljóð",
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "Call declined": "Símtali hafnað",
@@ -2814,7 +2800,9 @@
             "error_save_space_settings": "Mistókst að vista stillingar svæðis.",
             "description_space": "Breyta stillingum viðkomandi svæðinu þínu.",
             "save": "Vista breytingar",
-            "leave_space": "Yfirgefa svæði"
+            "leave_space": "Yfirgefa svæði",
+            "aliases_section": "Vistföng spjallrása",
+            "other_section": "Annað"
         },
         "advanced": {
             "unfederated": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
@@ -2824,7 +2812,9 @@
             "room_predecessor": "Skoða eldri skilaboð í %(roomName)s.",
             "room_id": "Innra auðkenni spjallrásar",
             "room_version_section": "Útgáfa spjallrásar",
-            "room_version": "Útgáfa spjallrásar:"
+            "room_version": "Útgáfa spjallrásar:",
+            "information_section_space": "Upplýsingar um svæði",
+            "information_section_room": "Upplýsingar um spjallrás"
         },
         "delete_avatar_label": "Eyða auðkennismynd",
         "upload_avatar_label": "Senda inn auðkennismynd",
@@ -2844,6 +2834,16 @@
         "access": {
             "title": "Aðgangur",
             "description_space": "Veldu hverjir geta skoðað og tekið þátt í %(spaceName)s."
+        },
+        "bridges": {
+            "title": "Brýr"
+        },
+        "notifications": {
+            "uploaded_sound": "Innsent hljóð",
+            "sounds_section": "Hljóð",
+            "notification_sound": "Hljóð með tilkynningu",
+            "custom_sound_prompt": "Stilla nýtt sérsniðið hljóð",
+            "browse_button": "Skoða"
         }
     },
     "encryption": {
@@ -3572,7 +3572,12 @@
         "keyword_new": "Nýtt stikkorð",
         "class_global": "Víðvært",
         "class_other": "Annað",
-        "mentions_keywords": "Tilvísanir og stikkorð"
+        "mentions_keywords": "Tilvísanir og stikkorð",
+        "default": "Sjálfgefið",
+        "all_messages": "Öll skilaboð",
+        "all_messages_description": "Fáðu tilkynningu fyrir öll skilaboð",
+        "mentions_and_keywords": "@minnst á og stikkorð",
+        "mute_description": "Þú munt ekki fá neinar tilkynningar"
     },
     "mobile_guide": {
         "toast_title": "Notaðu smáforritið til að njóta betur reynslunnar",

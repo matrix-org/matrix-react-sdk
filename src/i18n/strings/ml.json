@@ -16,7 +16,6 @@
     "Wednesday": "ബുധന്‍",
     "You cannot delete this message. (%(code)s)": "നിങ്ങള്‍ക്ക് ഈ സന്ദേശം നീക്കം ചെയ്യാനാകില്ല. (%(code)s)",
     "Send": "അയയ്ക്കുക",
-    "All messages": "എല്ലാ സന്ദേശങ്ങളും",
     "Invite to this room": "ഈ റൂമിലേക്ക് ക്ഷണിക്കുക",
     "Thursday": "വ്യാഴം",
     "Search…": "തിരയുക…",
@@ -96,7 +95,8 @@
         "failed_generic": "ശ്രമം പരാജയപ്പെട്ടു"
     },
     "notifications": {
-        "enable_prompt_toast_title": "നോട്ടിഫിക്കേഷനുകള്‍"
+        "enable_prompt_toast_title": "നോട്ടിഫിക്കേഷനുകള്‍",
+        "all_messages": "എല്ലാ സന്ദേശങ്ങളും"
     },
     "timeline": {
         "context_menu": {

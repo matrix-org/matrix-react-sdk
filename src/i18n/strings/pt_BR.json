@@ -1,7 +1,6 @@
 {
     "A new password must be entered.": "Uma nova senha precisa ser inserida.",
     "Are you sure you want to reject the invitation?": "Tem certeza de que deseja recusar o convite?",
-    "Default": "Padrão",
     "Failed to reject invitation": "Falha ao tentar recusar o convite",
     "Failed to unban": "Não foi possível remover o banimento",
     "Filter room members": "Pesquisar participantes da sala",
@@ -151,7 +150,6 @@
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
     "Invite to this room": "Convidar para esta sala",
-    "All messages": "Todas as mensagens novas",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
@@ -294,8 +292,6 @@
     "Unable to verify phone number.": "Não foi possível confirmar o número de telefone.",
     "Verification code": "Código de confirmação",
     "Phone Number": "Número de telefone",
-    "Room information": "Informação da sala",
-    "Room Addresses": "Endereços da sala",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
     "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
@@ -450,8 +446,6 @@
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "Clear personal data": "Limpar dados pessoais",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
-    "Set a new custom sound": "Definir um novo som personalizado",
-    "Browse": "Buscar",
     "Your email address hasn't been verified yet": "Seu endereço de e-mail ainda não foi confirmado",
     "Unable to revoke sharing for phone number": "Não foi possível revogar o compartilhamento do número de celular",
     "Unable to share phone number": "Não foi possível compartilhar o número de celular",
@@ -559,9 +553,6 @@
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
     "Success!": "Pronto!",
-    "Uploaded sound": "Som enviado",
-    "Sounds": "Sons",
-    "Notification sound": "Som de notificação",
     "Unable to revoke sharing for email address": "Não foi possível revogar o compartilhamento do endereço de e-mail",
     "Unable to share email address": "Não foi possível compartilhar o endereço de e-mail",
     "Incoming Verification Request": "Recebendo solicitação de confirmação",
@@ -635,8 +626,6 @@
     "Backup version:": "Versão do backup:",
     "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está integrando mensagens com as seguintes plataformas. <a>Saiba mais.</a>",
-    "Bridges": "Integrações",
     "Error changing power level requirement": "Houve um erro ao alterar o nível de permissão do contato",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ocorreu um erro ao alterar os níveis de permissão da sala. Certifique-se de que você tem o nível suficiente e tente novamente.",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ocorreu um erro ao alterar o nível de permissão de um contato. Certifique-se de que você tem o nível suficiente e tente novamente.",
@@ -983,7 +972,6 @@
     "Unable to access your microphone": "Não foi possível acessar seu microfone",
     "View message": "Ver mensagem",
     "Failed to send": "Falhou a enviar",
-    "Space information": "Informações do espaço",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
     "Search for rooms or people": "Procurar por salas ou pessoas",
@@ -1124,12 +1112,6 @@
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
     },
-    "You won't get any notifications": "Você não receberá nenhuma notificação",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Receba notificações apenas com menções e palavras-chave conforme definido em suas <a>configurações</a>",
-    "@mentions & keywords": "@menções e palavras-chave",
-    "Get notified for every message": "Seja notificado para cada mensagem",
-    "Get notifications as set up in your <a>settings</a>": "Receba notificações conforme configurado em suas <a>configurações</a>",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala não está conectando mensagens a nenhuma plataforma. <a> Saiba mais. </a>",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
@@ -2457,14 +2439,18 @@
             "error_save_space_settings": "Falha ao salvar as configurações desse espaço.",
             "description_space": "Editar configurações relacionadas ao seu espaço.",
             "save": "Salvar alterações",
-            "leave_space": "Sair desse espaço"
+            "leave_space": "Sair desse espaço",
+            "aliases_section": "Endereços da sala",
+            "other_section": "Outros"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos",
             "room_upgrade_button": "Atualizar a versão desta sala",
             "room_predecessor": "Ler mensagens antigas em %(roomName)s.",
             "room_version_section": "Versão da sala",
-            "room_version": "Versão da sala:"
+            "room_version": "Versão da sala:",
+            "information_section_space": "Informações do espaço",
+            "information_section_room": "Informação da sala"
         },
         "delete_avatar_label": "Remover foto de perfil",
         "upload_avatar_label": "Enviar uma foto de perfil",
@@ -2484,6 +2470,19 @@
         "access": {
             "title": "Acesso",
             "description_space": "Decide quem pode ver e se juntar a %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Esta sala está integrando mensagens com as seguintes plataformas. <a>Saiba mais.</a>",
+            "empty": "Esta sala não está conectando mensagens a nenhuma plataforma. <a> Saiba mais. </a>",
+            "title": "Integrações"
+        },
+        "notifications": {
+            "uploaded_sound": "Som enviado",
+            "settings_link": "Receba notificações conforme configurado em suas <a>configurações</a>",
+            "sounds_section": "Sons",
+            "notification_sound": "Som de notificação",
+            "custom_sound_prompt": "Definir um novo som personalizado",
+            "browse_button": "Buscar"
         }
     },
     "encryption": {
@@ -3101,7 +3100,13 @@
         "keyword_new": "Nova palavra-chave",
         "class_global": "Global",
         "class_other": "Outros",
-        "mentions_keywords": "Menções e palavras-chave"
+        "mentions_keywords": "Menções e palavras-chave",
+        "default": "Padrão",
+        "all_messages": "Todas as mensagens novas",
+        "all_messages_description": "Seja notificado para cada mensagem",
+        "mentions_and_keywords": "@menções e palavras-chave",
+        "mentions_and_keywords_description": "Receba notificações apenas com menções e palavras-chave conforme definido em suas <a>configurações</a>",
+        "mute_description": "Você não receberá nenhuma notificação"
     },
     "mobile_guide": {
         "toast_title": "Use o aplicativo para ter uma experiência melhor",

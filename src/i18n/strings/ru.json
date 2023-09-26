@@ -1,7 +1,6 @@
 {
     "A new password must be entered.": "Введите новый пароль.",
     "Are you sure you want to reject the invitation?": "Уверены, что хотите отклонить приглашение?",
-    "Default": "По умолчанию",
     "Failed to reject invitation": "Не удалось отклонить приглашение",
     "Failed to unban": "Не удалось разблокировать",
     "Filter room members": "Поиск по участникам",
@@ -153,7 +152,6 @@
     "Saturday": "Суббота",
     "Monday": "Понедельник",
     "Invite to this room": "Пригласить в комнату",
-    "All messages": "Все сообщения",
     "All Rooms": "Везде",
     "You cannot delete this message. (%(code)s)": "Это сообщение нельзя удалить. (%(code)s)",
     "Thursday": "Четверг",
@@ -189,8 +187,6 @@
     "Unable to verify phone number.": "Невозможно проверить номер телефона.",
     "Verification code": "Код подтверждения",
     "Phone Number": "Номер телефона",
-    "Room information": "Информация о комнате",
-    "Room Addresses": "Адреса комнаты",
     "The conversation continues here.": "Разговор продолжается здесь.",
     "Set up": "Настроить",
     "Main address": "Главный адрес",
@@ -365,11 +361,6 @@
     "General failure": "Общая ошибка",
     "That matches!": "Они совпадают!",
     "That doesn't match.": "Они не совпадают.",
-    "Uploaded sound": "Загруженный звук",
-    "Sounds": "Звук",
-    "Notification sound": "Звук уведомления",
-    "Set a new custom sound": "Установка нового пользовательского звука",
-    "Browse": "Просматривать",
     "Go back to set it again.": "Задать другой пароль.",
     "Success!": "Успешно!",
     "Unable to create key backup": "Невозможно создать резервную копию ключа",
@@ -456,7 +447,6 @@
     "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
-    "Bridges": "Мосты",
     "This user has not verified all of their sessions.": "Этот пользователь не подтвердил все свои сеансы.",
     "You have not verified this user.": "Вы не подтвердили этого пользователя.",
     "You have verified this user. This user has verified all of their sessions.": "Вы подтвердили этого пользователя. Пользователь подтвердил все свои сеансы.",
@@ -525,7 +515,6 @@
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Установить адрес этой комнаты, чтобы пользователи могли найти ее на вашем сервере (%(localDomain)s)",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Эта комната пересылает сообщения с помощью моста на следующие платформы. <a>Подробнее</a>",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах.",
     "Start verification again from their profile.": "Начните подтверждение заново в профиле пользователя.",
     "Recent Conversations": "Недавние Диалоги",
@@ -1112,7 +1101,6 @@
         "other": "Показать %(count)s других предварительных просмотров"
     },
     "Failed to send": "Не удалось отправить",
-    "Space information": "Информация о пространстве",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
     "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
@@ -1254,12 +1242,6 @@
     "Hide stickers": "Скрыть наклейки",
     "Copy link to thread": "Копировать ссылку на обсуждение",
     "From a thread": "Из обсуждения",
-    "You won't get any notifications": "Вы не будете получать никаких уведомлений",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Получать уведомления только по упоминаниям и ключевым словам, установленным в ваших <a>настройках</a>",
-    "@mentions & keywords": "@упоминания и ключевые слова",
-    "Get notified for every message": "Получать уведомление о каждом сообщении",
-    "Get notifications as set up in your <a>settings</a>": "Получать уведомления в соответствии с <a>настройками</a>",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Эта комната не передаёт сообщения на какие-либо платформы <a>Узнать больше.</a>",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -3077,7 +3059,9 @@
             "error_save_space_settings": "Не удалось сохранить настройки пространства.",
             "description_space": "Редактировать настройки, относящиеся к вашему пространству.",
             "save": "Сохранить изменения",
-            "leave_space": "Покинуть пространство"
+            "leave_space": "Покинуть пространство",
+            "aliases_section": "Адреса комнаты",
+            "other_section": "Другие"
         },
         "advanced": {
             "unfederated": "Это комната недоступна из других серверов Matrix",
@@ -3087,7 +3071,9 @@
             "room_predecessor": "Просмотр старых сообщений в %(roomName)s.",
             "room_id": "Внутренний ID комнаты",
             "room_version_section": "Версия комнаты",
-            "room_version": "Версия комнаты:"
+            "room_version": "Версия комнаты:",
+            "information_section_space": "Информация о пространстве",
+            "information_section_room": "Информация о комнате"
         },
         "delete_avatar_label": "Удалить аватар",
         "upload_avatar_label": "Загрузить аватар",
@@ -3107,6 +3093,19 @@
         "access": {
             "title": "Доступ",
             "description_space": "Определите, кто может просматривать и присоединяться к %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Эта комната пересылает сообщения с помощью моста на следующие платформы. <a>Подробнее</a>",
+            "empty": "Эта комната не передаёт сообщения на какие-либо платформы <a>Узнать больше.</a>",
+            "title": "Мосты"
+        },
+        "notifications": {
+            "uploaded_sound": "Загруженный звук",
+            "settings_link": "Получать уведомления в соответствии с <a>настройками</a>",
+            "sounds_section": "Звук",
+            "notification_sound": "Звук уведомления",
+            "custom_sound_prompt": "Установка нового пользовательского звука",
+            "browse_button": "Просматривать"
         }
     },
     "encryption": {
@@ -3872,7 +3871,13 @@
         "keyword_new": "Новое ключевое слово",
         "class_global": "Глобально",
         "class_other": "Другие",
-        "mentions_keywords": "Упоминания и ключевые слова"
+        "mentions_keywords": "Упоминания и ключевые слова",
+        "default": "По умолчанию",
+        "all_messages": "Все сообщения",
+        "all_messages_description": "Получать уведомление о каждом сообщении",
+        "mentions_and_keywords": "@упоминания и ключевые слова",
+        "mentions_and_keywords_description": "Получать уведомления только по упоминаниям и ключевым словам, установленным в ваших <a>настройках</a>",
+        "mute_description": "Вы не будете получать никаких уведомлений"
     },
     "mobile_guide": {
         "toast_title": "Используйте приложение для лучшего опыта",

@@ -199,7 +199,6 @@
     "Permission Required": "ຕ້ອງການອະນຸຍາດ",
     "Moderator": "ຜູ້ດຳເນິນລາຍການ",
     "Restricted": "ຖືກຈຳກັດ",
-    "Default": "ຄ່າເລີ່ມຕົ້ນ",
     "Zimbabwe": "ຊິມບັບເວ",
     "Zambia": "ແຊມເບຍ",
     "Yemen": "ເຢເມນ",
@@ -325,22 +324,6 @@
     "Reason": "ເຫດຜົນ",
     "Banned by %(displayName)s": "ຫ້າມໂດຍ %(displayName)s",
     "Failed to unban": "ຍົກເລີກບໍ່ສໍາເລັດ",
-    "Browse": "ຄົ້ນຫາ",
-    "Set a new custom sound": "ຕັ້ງສຽງແບບກຳນົດເອງ",
-    "Notification sound": "ສຽງແຈ້ງເຕຶອນ",
-    "Sounds": "ສຽງ",
-    "You won't get any notifications": "ທ່ານຈະບໍ່ໄດ້ຮັບການແຈ້ງເຕືອນໃດໆ",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "ຮັບການແຈ້ງເຕືອນພຽງແຕ່ມີການກ່າວເຖິງ ແລະ ຄໍາທີ່ກຳນົດໄວ້ໃນ<a>settings</a>ຂອງທ່ານ",
-    "@mentions & keywords": "@ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
-    "Get notified for every message": "ໄດ້ຮັບການແຈ້ງເຕືອນສໍາລັບທຸກໆຂໍ້ຄວາມ",
-    "All messages": "ຂໍ້ຄວາມທັງໝົດ",
-    "Get notifications as set up in your <a>settings</a>": "ຮັບການແຈ້ງເຕືອນຕາມທີ່ກຳນົດໄວ້ໃນ <a>ການຕັ້ງຄ່າ</a> ຂອງທ່ານ",
-    "Uploaded sound": "ອັບໂຫຼດສຽງ",
-    "Room Addresses": "ທີ່ຢູ່ຂອງຫ້ອງ",
-    "Bridges": "ເປັນຂົວຕໍ່",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "ຫ້ອງນີ້ບໍ່ໄດ້ເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມໃດໆ. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "ຫ້ອງນີ້ກໍາລັງເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມຕໍ່ໄປນີ້. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
-    "Space information": "ຂໍ້ມູນພື້ນທີ່",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
@@ -934,7 +917,6 @@
     "Moderation": "ປານກາງ",
     "Rooms": "ຫ້ອງ",
     "Widgets": "ວິດເຈັດ",
-    "Room information": "ຂໍ້ມູນຫ້ອງ",
     "Replying": "ກຳລັງຕອບກັບ",
     "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
     "Seen by %(count)s people": {
@@ -2758,7 +2740,9 @@
             "error_save_space_settings": "ບັນທຶກການຕັ້ງຄ່າພື້ນທີ່ບໍ່ສຳເລັດ.",
             "description_space": "ແກ້ໄຂການຕັ້ງຄ່າທີ່ກ່ຽວຂ້ອງກັບພື້ນທີ່ຂອງທ່ານ.",
             "save": "ບັນທຶກການປ່ຽນແປງ",
-            "leave_space": "ອອກຈາກພື້ນທີ່"
+            "leave_space": "ອອກຈາກພື້ນທີ່",
+            "aliases_section": "ທີ່ຢູ່ຂອງຫ້ອງ",
+            "other_section": "ອື່ນໆ"
         },
         "advanced": {
             "unfederated": "ຫ້ອງນີ້ບໍ່ສາມາດເຂົ້າເຖິງໄດ້ໂດຍເຊີບເວີ Matrix ໄລຍະໄກ",
@@ -2768,7 +2752,9 @@
             "room_predecessor": "ບິ່ງຂໍ້ຄວາມເກົ່າໃນ %(roomName)s.",
             "room_id": "ID ຫ້ອງພາຍໃນ",
             "room_version_section": "ເວີຊັ້ນຫ້ອງ",
-            "room_version": "ເວີຊັ້ນຫ້ອງ:"
+            "room_version": "ເວີຊັ້ນຫ້ອງ:",
+            "information_section_space": "ຂໍ້ມູນພື້ນທີ່",
+            "information_section_room": "ຂໍ້ມູນຫ້ອງ"
         },
         "delete_avatar_label": "ລືບອາວາຕ້າ",
         "upload_avatar_label": "ອັບໂຫຼດອາວາຕ້າ",
@@ -2788,6 +2774,19 @@
         "access": {
             "title": "ການເຂົ້າເຖິງ",
             "description_space": "ຕັດສິນໃຈວ່າໃຜສາມາດເບິ່ງ ແລະ ເຂົ້າຮ່ວມ %(spaceName)s."
+        },
+        "bridges": {
+            "description": "ຫ້ອງນີ້ກໍາລັງເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມຕໍ່ໄປນີ້. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
+            "empty": "ຫ້ອງນີ້ບໍ່ໄດ້ເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມໃດໆ. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
+            "title": "ເປັນຂົວຕໍ່"
+        },
+        "notifications": {
+            "uploaded_sound": "ອັບໂຫຼດສຽງ",
+            "settings_link": "ຮັບການແຈ້ງເຕືອນຕາມທີ່ກຳນົດໄວ້ໃນ <a>ການຕັ້ງຄ່າ</a> ຂອງທ່ານ",
+            "sounds_section": "ສຽງ",
+            "notification_sound": "ສຽງແຈ້ງເຕຶອນ",
+            "custom_sound_prompt": "ຕັ້ງສຽງແບບກຳນົດເອງ",
+            "browse_button": "ຄົ້ນຫາ"
         }
     },
     "encryption": {
@@ -3500,7 +3499,13 @@
         "keyword_new": "ຄໍາສໍາຄັນໃຫມ່",
         "class_global": "ທົ່ວໂລກ",
         "class_other": "ອື່ນໆ",
-        "mentions_keywords": "ກ່າວເຖິງ & ຄໍາສໍາຄັນ"
+        "mentions_keywords": "ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
+        "default": "ຄ່າເລີ່ມຕົ້ນ",
+        "all_messages": "ຂໍ້ຄວາມທັງໝົດ",
+        "all_messages_description": "ໄດ້ຮັບການແຈ້ງເຕືອນສໍາລັບທຸກໆຂໍ້ຄວາມ",
+        "mentions_and_keywords": "@ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
+        "mentions_and_keywords_description": "ຮັບການແຈ້ງເຕືອນພຽງແຕ່ມີການກ່າວເຖິງ ແລະ ຄໍາທີ່ກຳນົດໄວ້ໃນ<a>settings</a>ຂອງທ່ານ",
+        "mute_description": "ທ່ານຈະບໍ່ໄດ້ຮັບການແຈ້ງເຕືອນໃດໆ"
     },
     "mobile_guide": {
         "toast_title": "ໃຊ້ແອັບເພື່ອປະສົບການທີ່ດີກວ່າ",

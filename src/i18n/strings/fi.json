@@ -14,7 +14,6 @@
         "one": "ja yksi muu..."
     },
     "Custom level": "Mukautettu taso",
-    "Default": "Oletus",
     "Download %(text)s": "Lataa %(text)s",
     "Email address": "Sähköpostiosoite",
     "Enter passphrase": "Syötä salalause",
@@ -144,7 +143,6 @@
     "Saturday": "Lauantai",
     "Monday": "Maanantai",
     "All Rooms": "Kaikki huoneet",
-    "All messages": "Kaikki viestit",
     "Invite to this room": "Kutsu käyttäjiä",
     "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
@@ -214,8 +212,6 @@
     "Folder": "Kansio",
     "Room Name": "Huoneen nimi",
     "Room Topic": "Huoneen aihe",
-    "Room information": "Huoneen tiedot",
-    "Room Addresses": "Huoneen osoitteet",
     "Share room": "Jaa huone",
     "Share Room": "Jaa huone",
     "Room avatar": "Huoneen kuva",
@@ -367,11 +363,6 @@
     "Edit message": "Muokkaa viestiä",
     "Notes": "Huomautukset",
     "Add room": "Lisää huone",
-    "Uploaded sound": "Asetettu ääni",
-    "Sounds": "Äänet",
-    "Notification sound": "Ilmoitusääni",
-    "Set a new custom sound": "Aseta uusi mukautettu ääni",
-    "Browse": "Selaa",
     "Edited at %(date)s. Click to view edits.": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset.",
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
@@ -473,7 +464,6 @@
     "Recent Conversations": "Viimeaikaiset keskustelut",
     "Direct Messages": "Yksityisviestit",
     "Lock": "Lukko",
-    "Bridges": "Sillat",
     "Waiting for %(displayName)s to accept…": "Odotetaan, että %(displayName)s hyväksyy…",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
     "Upgrade your encryption": "Päivitä salauksesi",
@@ -487,7 +477,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tämä huone siltaa viestejä seuraaville alustoille. <a>Lue lisää.</a>",
     "Accepting…": "Hyväksytään…",
     "One of the following may be compromised:": "Jokin seuraavista saattaa olla vaarantunut:",
     "Your homeserver": "Kotipalvelimesi",
@@ -999,7 +988,6 @@
     "Send voice message": "Lähetä ääniviesti",
     "Invite to this space": "Kutsu tähän avaruuteen",
     "Unknown failure": "Tuntematon virhe",
-    "Space information": "Avaruuden tiedot",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
@@ -1087,9 +1075,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Haluatko varmasti päättää tämän kyselyn? Päättäminen näyttää lopulliset tulokset ja estää äänestämisen.",
     "End Poll": "Päätä kysely",
     "Sorry, the poll did not end. Please try again.": "Valitettavasti kysely ei päättynyt. Yritä uudelleen.",
-    "You won't get any notifications": "Et saa ilmoituksia",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
-    "@mentions & keywords": "@maininnat & asiasanat",
     "Forget": "Unohda",
     "Location": "Sijainti",
     "%(count)s votes": {
@@ -1132,7 +1117,6 @@
     "You do not have permission to start polls in this room.": "Sinulla ei ole oikeutta aloittaa kyselyitä tässä huoneessa.",
     "Voice Message": "Ääniviesti",
     "Hide stickers": "Piilota tarrat",
-    "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
@@ -1146,7 +1130,6 @@
     "Unpin this widget to view it in this panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
     "Chat": "Keskustelu",
     "Add people": "Lisää ihmisiä",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tämä huone ei siltaa viestejä millekään alustalle. <a>Lue lisää.</a>",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -1324,7 +1307,6 @@
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
-    "Get notifications as set up in your <a>settings</a>": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
     "Home options": "Etusivun valinnat",
@@ -3006,7 +2988,9 @@
             "error_save_space_settings": "Avaruuden asetusten tallentaminen epäonnistui.",
             "description_space": "Muokkaa avaruuteesi liittyviä asetuksia.",
             "save": "Tallenna muutokset",
-            "leave_space": "Poistu avaruudesta"
+            "leave_space": "Poistu avaruudesta",
+            "aliases_section": "Huoneen osoitteet",
+            "other_section": "Muut"
         },
         "advanced": {
             "unfederated": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
@@ -3016,7 +3000,9 @@
             "room_predecessor": "Näytä vanhemmat viestit huoneessa %(roomName)s.",
             "room_id": "Sisäinen huoneen ID-tunniste",
             "room_version_section": "Huoneen versio",
-            "room_version": "Huoneen versio:"
+            "room_version": "Huoneen versio:",
+            "information_section_space": "Avaruuden tiedot",
+            "information_section_room": "Huoneen tiedot"
         },
         "delete_avatar_label": "Poista avatar",
         "upload_avatar_label": "Lähetä profiilikuva",
@@ -3036,6 +3022,19 @@
         "access": {
             "title": "Pääsy",
             "description_space": "Päätä ketkä voivat katsella avaruutta %(spaceName)s ja liittyä siihen."
+        },
+        "bridges": {
+            "description": "Tämä huone siltaa viestejä seuraaville alustoille. <a>Lue lisää.</a>",
+            "empty": "Tämä huone ei siltaa viestejä millekään alustalle. <a>Lue lisää.</a>",
+            "title": "Sillat"
+        },
+        "notifications": {
+            "uploaded_sound": "Asetettu ääni",
+            "settings_link": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
+            "sounds_section": "Äänet",
+            "notification_sound": "Ilmoitusääni",
+            "custom_sound_prompt": "Aseta uusi mukautettu ääni",
+            "browse_button": "Selaa"
         }
     },
     "encryption": {
@@ -3781,7 +3780,13 @@
         "keyword_new": "Uusi avainsana",
         "class_global": "Yleiset",
         "class_other": "Muut",
-        "mentions_keywords": "Maininnat ja avainsanat"
+        "mentions_keywords": "Maininnat ja avainsanat",
+        "default": "Oletus",
+        "all_messages": "Kaikki viestit",
+        "all_messages_description": "Vastaanota ilmoitus joka viestistä",
+        "mentions_and_keywords": "@maininnat & asiasanat",
+        "mentions_and_keywords_description": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
+        "mute_description": "Et saa ilmoituksia"
     },
     "mobile_guide": {
         "toast_title": "Parempi kokemus sovelluksella",

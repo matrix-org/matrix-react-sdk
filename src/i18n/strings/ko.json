@@ -7,7 +7,6 @@
     "An error has occurred.": "오류가 발생했습니다.",
     "Are you sure?": "확신합니까?",
     "Are you sure you want to leave the room '%(roomName)s'?": "%(roomName)s 방을 떠나겠습니까?",
-    "Default": "기본",
     "Email address": "이메일 주소",
     "Failed to forget room %(errCode)s": "%(errCode)s 방 지우기에 실패함",
     "%(items)s and %(lastItem)s": "%(items)s님과 %(lastItem)s님",
@@ -130,7 +129,6 @@
     "Saturday": "토요일",
     "Monday": "월요일",
     "All Rooms": "모든 방",
-    "All messages": "모든 메시지",
     "Invite to this room": "이 방에 초대",
     "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
@@ -256,13 +254,6 @@
     "Back up your keys before signing out to avoid losing them.": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
-    "Room information": "방 정보",
-    "Room Addresses": "방 주소",
-    "Uploaded sound": "업로드된 소리",
-    "Sounds": "소리",
-    "Notification sound": "알림 소리",
-    "Set a new custom sound": "새 맞춤 소리 설정",
-    "Browse": "찾기",
     "Unable to revoke sharing for email address": "이메일 주소 공유를 취소할 수 없음",
     "Unable to share email address": "이메일 주소를 공유할 수 없음",
     "Discovery options will appear once you have added an email above.": "위에 이메일을 추가하면 검색 옵션에 나타납니다.",
@@ -452,10 +443,6 @@
     "New room": "새로운 방 만들기",
     "Start new chat": "새로운 대화 시작하기",
     "Room options": "방 옵션",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "<a>설정</a>에서 지정한 멘션과 키워드인 경우에만 알림을 받습니다",
-    "Get notifications as set up in your <a>settings</a>": "<a>설정</a>에서 지정한 알림만 받습니다",
-    "Get notified for every message": "모든 메세지 알림을 받습니다",
-    "You won't get any notifications": "어떤 알람도 받지 않습니다",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
     "Search for rooms": "방 검색",
@@ -495,7 +482,6 @@
     "Some suggestions may be hidden for privacy.": "일부 추천 목록은 개인 정보 보호를 위해 보이지 않을 수 있습니다.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "이름, 이메일, 사용자명(<userId/>) 으로 대화를 시작하세요.",
     "Search names and descriptions": "이름 및 설명 검색",
-    "@mentions & keywords": "@멘션(언급) & 키워드",
     "Add space": "스페이스 추가하기",
     "Add existing rooms": "기존 방 추가",
     "Add existing room": "기존 방 목록에서 추가하기",
@@ -1178,14 +1164,17 @@
             "default_url_previews_off": "기본으로 URL 미리 보기가 이 방에 참여한 사람들 모두에게 꺼졌습니다.",
             "url_preview_encryption_warning": "지금 이 방처럼, 암호화된 방에서는 홈서버 (미리 보기가 만들어지는 곳)에서 이 방에서 보여지는 링크에 대해 알 수 없도록 기본으로 URL 미리 보기가 꺼집니다.",
             "url_preview_explainer": "누군가 메시지에 URL을 넣으면, URL 미리 보기로 웹사이트에서 온 제목, 설명, 그리고 이미지 등 그 링크에 대한 정보가 표시됩니다.",
-            "url_previews_section": "URL 미리보기"
+            "url_previews_section": "URL 미리보기",
+            "aliases_section": "방 주소",
+            "other_section": "기타"
         },
         "advanced": {
             "unfederated": "이 방은 원격 Matrix 서버로 접근할 수 없음",
             "room_upgrade_button": "추천하는 방 버전으로 이 방 업그레이드",
             "room_predecessor": "%(roomName)s 방에서 오래된 메시지를 봅니다.",
             "room_version_section": "방 버전",
-            "room_version": "방 버전:"
+            "room_version": "방 버전:",
+            "information_section_room": "방 정보"
         },
         "delete_avatar_label": "아바타 삭제",
         "upload_avatar_label": "아바타 업로드",
@@ -1198,6 +1187,14 @@
         "access": {
             "title": "접근",
             "description_space": "누가 %(spaceName)s를 보거나 참여할 수 있는지 설정합니다."
+        },
+        "notifications": {
+            "uploaded_sound": "업로드된 소리",
+            "settings_link": "<a>설정</a>에서 지정한 알림만 받습니다",
+            "sounds_section": "소리",
+            "notification_sound": "알림 소리",
+            "custom_sound_prompt": "새 맞춤 소리 설정",
+            "browse_button": "찾기"
         }
     },
     "encryption": {
@@ -1547,7 +1544,13 @@
         "colour_bold": "굵게",
         "mark_all_read": "모두 읽음으로 표시",
         "class_other": "기타",
-        "mentions_keywords": "멘션 및 키워드"
+        "mentions_keywords": "멘션 및 키워드",
+        "default": "기본",
+        "all_messages": "모든 메시지",
+        "all_messages_description": "모든 메세지 알림을 받습니다",
+        "mentions_and_keywords": "@멘션(언급) & 키워드",
+        "mentions_and_keywords_description": "<a>설정</a>에서 지정한 멘션과 키워드인 경우에만 알림을 받습니다",
+        "mute_description": "어떤 알람도 받지 않습니다"
     },
     "room_summary_card_back_action_label": "방 정보",
     "quick_settings": {

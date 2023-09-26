@@ -1,6 +1,5 @@
 {
     "Failed to forget room %(errCode)s": "Не атрымалася забыць пакой %(errCode)s",
-    "All messages": "Усе паведамленні",
     "Invite to this room": "Запрасіць у гэты пакой",
     "common": {
         "error": "Памылка",
@@ -34,7 +33,8 @@
         "failed_generic": "Не атрымалася выканаць аперацыю"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Апавяшчэнні"
+        "enable_prompt_toast_title": "Апавяшчэнні",
+        "all_messages": "Усе паведамленні"
     },
     "timeline": {
         "context_menu": {

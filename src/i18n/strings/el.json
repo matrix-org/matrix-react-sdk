@@ -14,7 +14,6 @@
     },
     "Custom level": "Προσαρμοσμένο επίπεδο",
     "Decrypt %(text)s": "Αποκρυπτογράφηση %(text)s",
-    "Default": "Προεπιλογή",
     "Download %(text)s": "Λήψη %(text)s",
     "Email address": "Ηλεκτρονική διεύθυνση",
     "Error decrypting attachment": "Σφάλμα κατά την αποκρυπτογράφηση της επισύναψης",
@@ -130,7 +129,6 @@
     "Monday": "Δευτέρα",
     "All Rooms": "Όλα τα δωμάτια",
     "Wednesday": "Τετάρτη",
-    "All messages": "Όλα τα μηνύματα",
     "Invite to this room": "Πρόσκληση σε αυτό το δωμάτιο",
     "You cannot delete this message. (%(code)s)": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
     "Thursday": "Πέμπτη",
@@ -439,7 +437,6 @@
     "Themes": "Θέματα",
     "Widgets": "Μικροεφαρμογές",
     "Messaging": "Μηνύματα",
-    "Room information": "Πληροφορίες δωματίου",
     "Your homeserver has exceeded one of its resource limits.": "Ο κεντρικός σας διακομιστής έχει υπερβεί ένα από τα όρια πόρων του.",
     "IRC display name width": "Πλάτος εμφανιζόμενου ονόματος IRC",
     "Pizza": "Πίτσα",
@@ -559,19 +556,6 @@
     "Discovery options will appear once you have added an email above.": "Οι επιλογές εντοπισμού θα εμφανιστούν μόλις προσθέσετε ένα email παραπάνω.",
     "Unknown failure": "Άγνωστο σφάλμα",
     "Failed to update the join rules": "Αποτυχία ενημέρωσης των κανόνων συμμετοχής",
-    "Browse": "Εξερεύνηση",
-    "Set a new custom sound": "Ορίστε έναν νέο προσαρμοσμένο ήχο",
-    "Notification sound": "Ήχος ειδοποίησης",
-    "Sounds": "Ήχοι",
-    "You won't get any notifications": "Δεν θα λαμβάνετε ειδοποιήσεις",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Λάβετε ειδοποιήσεις μόνο με αναφορές και λέξεις-κλειδιά όπως έχουν ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
-    "@mentions & keywords": "@αναφορές & λέξεις-κλειδιά",
-    "Get notified for every message": "Λάβετε ειδοποιήσεις για κάθε μήνυμα",
-    "Room Addresses": "Διευθύνσεις δωματίων",
-    "Bridges": "Γέφυρες",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Αυτό το δωμάτιο δε γεφυρώνει μηνύματα σε καμία πλατφόρμα. <a>Μάθετε περισσότερα.</a>",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Αυτό το δωμάτιο γεφυρώνει μηνύματα στις ακόλουθες πλατφόρμες. <a>Μάθετε περισσότερα.</a>",
-    "Space information": "Πληροφορίες Χώρου",
     "Click the link in the email you received to verify and then click continue again.": "Κάντε κλικ στον σύνδεσμο ηλεκτρονικής διεύθυνσης που λάβατε για επαλήθευση και μετα, κάντε ξανά κλικ στη συνέχεια.",
     "Unable to revoke sharing for email address": "Δεν είναι δυνατή η ανάκληση της κοινής χρήσης για τη διεύθυνση ηλεκτρονικού ταχυδρομείου",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Παρουσιάστηκε σφάλμα κατά την αλλαγή του επιπέδου ισχύος του χρήστη. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
@@ -579,7 +563,6 @@
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Παρουσιάστηκε σφάλμα κατά την αλλαγή των απαιτήσεων επιπέδου ισχύος του δωματίου. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
     "Error changing power level requirement": "Σφάλμα αλλαγής της απαίτησης επιπέδου ισχύος",
     "Banned by %(displayName)s": "Αποκλείστηκε από %(displayName)s",
-    "Get notifications as set up in your <a>settings</a>": "Λάβετε ειδοποιήσεις όπως έχoyn ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
     "Session key": "Κλειδί συνεδρίας",
@@ -762,7 +745,6 @@
     "Join the discussion": "Λάβετε μέρος στη συζήτηση",
     "Try to join anyway": "Προσπαθήστε να συμμετάσχετε ούτως ή άλλως",
     "Something went wrong with your invite to %(roomName)s": "Κάτι πήγε στραβά με την πρόσκλησή σας στο %(roomName)s",
-    "Uploaded sound": "Μεταφορτωμένος ήχος",
     "Room Topic": "Θέμα Δωματίου",
     "Room Name": "Όνομα Δωματίου",
     "Failed to send logs: ": "Αποτυχία αποστολής αρχείων καταγραφής: ",
@@ -2752,7 +2734,9 @@
             "error_save_space_settings": "Αποτυχία αποθήκευσης ρυθμίσεων χώρου.",
             "description_space": "Επεξεργαστείτε τις ρυθμίσεις που σχετίζονται με τον χώρο σας.",
             "save": "Αποθήκευση Αλλαγών",
-            "leave_space": "Αποχώρηση από τον Χώρο"
+            "leave_space": "Αποχώρηση από τον Χώρο",
+            "aliases_section": "Διευθύνσεις δωματίων",
+            "other_section": "Άλλα"
         },
         "advanced": {
             "unfederated": "Αυτό το δωμάτιο δεν είναι προσβάσιμο από απομακρυσμένους διακομιστές Matrix",
@@ -2762,7 +2746,9 @@
             "room_predecessor": "Προβολή παλαιότερων μηνυμάτων στο %(roomName)s.",
             "room_id": "Εσωτερικό ID δωματίου",
             "room_version_section": "Έκδοση δωματίου",
-            "room_version": "Έκδοση δωματίου:"
+            "room_version": "Έκδοση δωματίου:",
+            "information_section_space": "Πληροφορίες Χώρου",
+            "information_section_room": "Πληροφορίες δωματίου"
         },
         "delete_avatar_label": "Διαγραφή avatar",
         "upload_avatar_label": "Αποστολή προσωπικής εικόνας",
@@ -2782,6 +2768,19 @@
         "access": {
             "title": "Πρόσβαση",
             "description_space": "Αποφασίστε ποιος μπορεί να δει και να συμμετάσχει %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Αυτό το δωμάτιο γεφυρώνει μηνύματα στις ακόλουθες πλατφόρμες. <a>Μάθετε περισσότερα.</a>",
+            "empty": "Αυτό το δωμάτιο δε γεφυρώνει μηνύματα σε καμία πλατφόρμα. <a>Μάθετε περισσότερα.</a>",
+            "title": "Γέφυρες"
+        },
+        "notifications": {
+            "uploaded_sound": "Μεταφορτωμένος ήχος",
+            "settings_link": "Λάβετε ειδοποιήσεις όπως έχoyn ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
+            "sounds_section": "Ήχοι",
+            "notification_sound": "Ήχος ειδοποίησης",
+            "custom_sound_prompt": "Ορίστε έναν νέο προσαρμοσμένο ήχο",
+            "browse_button": "Εξερεύνηση"
         }
     },
     "encryption": {
@@ -3484,7 +3483,13 @@
         "keyword_new": "Νέα λέξη-κλειδί",
         "class_global": "Γενικές ρυθμίσεις",
         "class_other": "Άλλα",
-        "mentions_keywords": "Αναφορές & λέξεις-κλειδιά"
+        "mentions_keywords": "Αναφορές & λέξεις-κλειδιά",
+        "default": "Προεπιλογή",
+        "all_messages": "Όλα τα μηνύματα",
+        "all_messages_description": "Λάβετε ειδοποιήσεις για κάθε μήνυμα",
+        "mentions_and_keywords": "@αναφορές & λέξεις-κλειδιά",
+        "mentions_and_keywords_description": "Λάβετε ειδοποιήσεις μόνο με αναφορές και λέξεις-κλειδιά όπως έχουν ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
+        "mute_description": "Δεν θα λαμβάνετε ειδοποιήσεις"
     },
     "mobile_guide": {
         "toast_title": "Χρησιμοποιήστε την εφαρμογή για καλύτερη εμπειρία",

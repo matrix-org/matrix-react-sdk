@@ -1828,7 +1828,13 @@
         "keyword": "Keyword",
         "keyword_new": "New keyword",
         "class_global": "Global",
-        "mentions_keywords": "Mentions & keywords"
+        "mentions_keywords": "Mentions & keywords",
+        "default": "Default",
+        "all_messages": "All messages",
+        "all_messages_description": "Get notified for every message",
+        "mentions_and_keywords": "@mentions & keywords",
+        "mentions_and_keywords_description": "Get notified only with mentions and keywords as set up in your <a>settings</a>",
+        "mute_description": "You won't get any notifications"
     },
     "mobile_guide": {
         "toast_title": "Use app for a better experience",
@@ -2010,7 +2016,9 @@
             "default_url_previews_off": "URL previews are disabled by default for participants in this room.",
             "url_preview_encryption_warning": "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.",
             "url_preview_explainer": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
-            "url_previews_section": "URL Previews"
+            "url_previews_section": "URL Previews",
+            "aliases_section": "Room Addresses",
+            "other_section": "Other"
         },
         "visibility": {
             "error_update_guest_access": "Failed to update the guest access of this space",
@@ -2081,7 +2089,23 @@
             "room_predecessor": "View older messages in %(roomName)s.",
             "room_id": "Internal room ID",
             "room_version_section": "Room version",
-            "room_version": "Room version:"
+            "room_version": "Room version:",
+            "information_section_space": "Space information",
+            "information_section_room": "Room information"
+        },
+        "bridges": {
+            "description": "This room is bridging messages to the following platforms. <a>Learn more.</a>",
+            "empty": "This room isn't bridging messages to any platforms. <a>Learn more.</a>",
+            "title": "Bridges"
+        },
+        "notifications": {
+            "uploaded_sound": "Uploaded sound",
+            "settings_link": "Get notifications as set up in your <a>settings</a>",
+            "sounds_section": "Sounds",
+            "notification_sound": "Notification sound",
+            "custom_sound_prompt": "Set a new custom sound",
+            "upload_sound_label": "Upload custom sound",
+            "browse_button": "Browse"
         }
     },
     "devtools": {
@@ -2421,26 +2445,7 @@
         "twemoji_colr": "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.",
         "twemoji": "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>."
     },
-    "Space information": "Space information",
-    "Room information": "Room information",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "This room is bridging messages to the following platforms. <a>Learn more.</a>",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "This room isn't bridging messages to any platforms. <a>Learn more.</a>",
-    "Bridges": "Bridges",
-    "Room Addresses": "Room Addresses",
     "Other": "Other",
-    "Uploaded sound": "Uploaded sound",
-    "Default": "Default",
-    "Get notifications as set up in your <a>settings</a>": "Get notifications as set up in your <a>settings</a>",
-    "All messages": "All messages",
-    "Get notified for every message": "Get notified for every message",
-    "@mentions & keywords": "@mentions & keywords",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Get notified only with mentions and keywords as set up in your <a>settings</a>",
-    "You won't get any notifications": "You won't get any notifications",
-    "Sounds": "Sounds",
-    "Notification sound": "Notification sound",
-    "Set a new custom sound": "Set a new custom sound",
-    "Upload custom sound": "Upload custom sound",
-    "Browse": "Browse",
     "See less": "See less",
     "See more": "See more",
     "Asking to join": "Asking to join",

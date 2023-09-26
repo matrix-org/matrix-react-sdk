@@ -25,7 +25,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Default": "Opphavleg innstilling",
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
     "Reason": "Grunnlag",
@@ -135,7 +134,6 @@
     "Reject invitation": "Sei nei til innbyding",
     "Are you sure you want to reject the invitation?": "Er du sikker på at du vil seia nei til innbydinga?",
     "You cannot delete this message. (%(code)s)": "Du kan ikkje sletta meldinga. (%(code)s)",
-    "All messages": "Alle meldingar",
     "Failed to reject invitation": "Fekk ikkje til å seia nei til innbyding",
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
@@ -275,10 +273,6 @@
     "Power level": "Tilgangsnivå",
     "Show more": "Vis meir",
     "Invalid theme schema.": "",
-    "Room information": "Rominformasjon",
-    "Room Addresses": "Romadresser",
-    "Sounds": "Lydar",
-    "Browse": "Bla gjennom",
     "Can't find this server or its room list": "Klarde ikkje å finna tenaren eller romkatalogen til den",
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
@@ -290,7 +284,6 @@
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
-    "Set a new custom sound": "Set ein ny tilpassa lyd",
     "This room is end-to-end encrypted": "Dette rommet er ende-til-ende kryptert",
     "Encrypted by an unverified session": "Kryptert av ein ikkje-verifisert sesjon",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
@@ -1012,13 +1005,21 @@
             "default_url_previews_off": "URL-førehandsvisingar er skrudd av i utgangspunktet for dette rommet.",
             "url_preview_encryption_warning": "I krypterte rom, slik som denne, er URL-førehandsvisingar skrudd av i utgangspunktet for å forsikra at heimtenaren din (der førehandsvisinger lagast) ikkje kan samla informasjon om lenkjer som du ser i dette rommet.",
             "url_preview_explainer": "Når nokon legg ein URL med i meldinga si, kan ei URL-førehandsvising visast for å gje meir info om lenkja slik som tittelen, skildringa, og eit bilete frå nettsida.",
-            "url_previews_section": "URL-førehandsvisingar"
+            "url_previews_section": "URL-førehandsvisingar",
+            "aliases_section": "Romadresser",
+            "other_section": "Anna"
         },
         "advanced": {
             "unfederated": "Rommet er ikkje tilgjengeleg for andre Matrix-heimtenarar",
-            "room_upgrade_button": "Oppgrader dette rommet til anbefalt romversjon"
+            "room_upgrade_button": "Oppgrader dette rommet til anbefalt romversjon",
+            "information_section_room": "Rominformasjon"
         },
-        "upload_avatar_label": "Last avatar opp"
+        "upload_avatar_label": "Last avatar opp",
+        "notifications": {
+            "sounds_section": "Lydar",
+            "custom_sound_prompt": "Set ein ny tilpassa lyd",
+            "browse_button": "Bla gjennom"
+        }
     },
     "auth": {
         "sign_in_with_sso": "Logg på med Single-Sign-On",
@@ -1253,7 +1254,9 @@
         "keyword": "Nøkkelord",
         "keyword_new": "Nytt nøkkelord",
         "class_other": "Anna",
-        "mentions_keywords": "Nemningar & nøkkelord"
+        "mentions_keywords": "Nemningar & nøkkelord",
+        "default": "Opphavleg innstilling",
+        "all_messages": "Alle meldingar"
     },
     "room_summary_card_back_action_label": "Rominformasjon",
     "quick_settings": {

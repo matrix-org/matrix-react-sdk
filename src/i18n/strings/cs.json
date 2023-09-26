@@ -35,7 +35,6 @@
     "Are you sure you want to reject the invitation?": "Opravdu chcete odmítnout pozvání?",
     "Custom level": "Vlastní úroveň",
     "Decrypt %(text)s": "Dešifrovat %(text)s",
-    "Default": "Výchozí",
     "Download %(text)s": "Stáhnout %(text)s",
     "Email address": "E-mailová adresa",
     "Enter passphrase": "Zadejte přístupovou frázi",
@@ -145,7 +144,6 @@
     "Saturday": "Sobota",
     "Monday": "Pondělí",
     "Invite to this room": "Pozvat do této místnosti",
-    "All messages": "Všechny zprávy",
     "All Rooms": "Všechny místnosti",
     "You cannot delete this message. (%(code)s)": "Tuto zprávu nemůžete smazat. (%(code)s)",
     "Thursday": "Čtvrtek",
@@ -198,11 +196,9 @@
     "Room Name": "Název místnosti",
     "Room Topic": "Téma místnosti",
     "Room avatar": "Avatar místnosti",
-    "Room information": "Informace o místnosti",
     "Phone Number": "Telefonní číslo",
     "Unable to verify phone number.": "Nepovedlo se ověřit telefonní číslo.",
     "Verification code": "Ověřovací kód",
-    "Room Addresses": "Adresy místnosti",
     "This room has been replaced and is no longer active.": "Tato místnost byla nahrazena a už není používaná.",
     "The conversation continues here.": "Konverzace pokračuje zde.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Poslali jsme vám ověřovací e-mail. Postupujte prosím podle instrukcí a pak klepněte na následující tlačítko.",
@@ -369,11 +365,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Na URL domovského serveru asi není funkční Matrix server",
     "Invalid base_url for m.identity_server": "Neplatná base_url pro m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Na URL serveru identit asi není funkční Matrix server",
-    "Uploaded sound": "Zvuk nahrán",
-    "Sounds": "Zvuky",
-    "Notification sound": "Zvuk oznámení",
-    "Set a new custom sound": "Nastavit vlastní zvuk",
-    "Browse": "Procházet",
     "Deactivate account": "Deaktivace účtu",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. <default>Použít výchozí (%(defaultIdentityServerName)s)</default> nebo přenastavit <settings>Nastavení</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. Přenastavit v <settings>Nastavení</settings>.",
@@ -471,8 +462,6 @@
     "Lock": "Zámek",
     "Show more": "Více",
     "This backup is trusted because it has been restored on this session": "Záloze věříme, protože už byla v této relaci načtena",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tato místnost je propojena s následujícími platformami. <a>Více informací</a>",
-    "Bridges": "Propojení",
     "This user has not verified all of their sessions.": "Tento uživatel zatím neověřil všechny své relace.",
     "You have not verified this user.": "Tohoto uživatele jste neověřili.",
     "You have verified this user. This user has verified all of their sessions.": "Tohoto uživatele jste ověřili a on ověřil všechny své relace.",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Zveřejněné adresy může použít kdokoli na jakémkoli serveru, aby se připojil k vaší místnosti.",
     "Published addresses can be used by anyone on any server to join your space.": "Zveřejněné adresy může použít kdokoli na jakémkoli serveru, aby se připojil k vašemu prostoru.",
     "This space has no local addresses": "Tento prostor nemá žádné místní adresy",
-    "Space information": "Informace o prostoru",
     "Unnamed audio": "Nepojmenovaný audio soubor",
     "Error processing audio message": "Došlo k chybě při zpracovávání hlasové zprávy",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
@@ -1167,18 +1155,12 @@
     "Yours, or the other users' session": "Vaše relace nebo relace ostatních uživatelů",
     "Yours, or the other users' internet connection": "Vaše internetové připojení nebo připojení ostatních uživatelů",
     "The homeserver the user you're verifying is connected to": "Domovský server, ke kterému je ověřovaný uživatel připojen",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tato místnost nepropojuje zprávy s žádnou platformou. <a>Zjistit více.</a>",
     "You do not have permission to start polls in this room.": "Nemáte oprávnění zahajovat hlasování v této místnosti.",
     "Copy link to thread": "Kopírovat odkaz na vlákno",
     "Thread options": "Možnosti vláken",
     "Reply in thread": "Odpovědět ve vlákně",
     "Forget": "Zapomenout",
     "Files": "Soubory",
-    "You won't get any notifications": "Nebudete dostávat žádná oznámení",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dostávat oznámení pouze o zmínkách a klíčových slovech podle <a>nastavení</a>",
-    "@mentions & keywords": "@zmínky a klíčová slova",
-    "Get notified for every message": "Dostávat oznámení o každé zprávě",
-    "Get notifications as set up in your <a>settings</a>": "Dostávat oznámení podle <a>nastavení</a>",
     "Close this widget to view it in this panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
     "Unpin this widget to view it in this panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
     "Based on %(count)s votes": {
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
     "Formatting": "Formátování",
-    "Upload custom sound": "Nahrát vlastní zvuk",
     "Search all rooms": "Vyhledávat ve všech místnostech",
     "Search this room": "Vyhledávat v této místnosti",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
@@ -3333,7 +3314,9 @@
             "error_save_space_settings": "Nastavení prostoru se nepodařilo uložit.",
             "description_space": "Upravte nastavení týkající se vašeho prostoru.",
             "save": "Uložit změny",
-            "leave_space": "Opustit prostor"
+            "leave_space": "Opustit prostor",
+            "aliases_section": "Adresy místnosti",
+            "other_section": "Další možnosti"
         },
         "advanced": {
             "unfederated": "Tato místnost není přístupná vzdáleným Matrix serverům",
@@ -3344,7 +3327,9 @@
             "room_predecessor": "Zobrazit starší zprávy v %(roomName)s.",
             "room_id": "Interní ID místnosti",
             "room_version_section": "Verze místnosti",
-            "room_version": "Verze místnosti:"
+            "room_version": "Verze místnosti:",
+            "information_section_space": "Informace o prostoru",
+            "information_section_room": "Informace o místnosti"
         },
         "delete_avatar_label": "Smazat avatar",
         "upload_avatar_label": "Nahrát avatar",
@@ -3364,6 +3349,20 @@
         "access": {
             "title": "Přístup",
             "description_space": "Rozhodněte, kdo může prohlížet a připojovat se k %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Tato místnost je propojena s následujícími platformami. <a>Více informací</a>",
+            "empty": "Tato místnost nepropojuje zprávy s žádnou platformou. <a>Zjistit více.</a>",
+            "title": "Propojení"
+        },
+        "notifications": {
+            "uploaded_sound": "Zvuk nahrán",
+            "settings_link": "Dostávat oznámení podle <a>nastavení</a>",
+            "sounds_section": "Zvuky",
+            "notification_sound": "Zvuk oznámení",
+            "custom_sound_prompt": "Nastavit vlastní zvuk",
+            "upload_sound_label": "Nahrát vlastní zvuk",
+            "browse_button": "Procházet"
         }
     },
     "encryption": {
@@ -4188,7 +4187,13 @@
         "keyword_new": "Nové klíčové slovo",
         "class_global": "Globální",
         "class_other": "Další možnosti",
-        "mentions_keywords": "Zmínky a klíčová slova"
+        "mentions_keywords": "Zmínky a klíčová slova",
+        "default": "Výchozí",
+        "all_messages": "Všechny zprávy",
+        "all_messages_description": "Dostávat oznámení o každé zprávě",
+        "mentions_and_keywords": "@zmínky a klíčová slova",
+        "mentions_and_keywords_description": "Dostávat oznámení pouze o zmínkách a klíčových slovech podle <a>nastavení</a>",
+        "mute_description": "Nebudete dostávat žádná oznámení"
     },
     "mobile_guide": {
         "toast_title": "Pro lepší zážitek použijte aplikaci",

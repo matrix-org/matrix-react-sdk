@@ -1,5 +1,4 @@
 {
-    "All messages": "सारे संदेश",
     "All Rooms": "सारे कमरे",
     "Permission Required": "अनुमति आवश्यक है",
     "Sun": "रवि",
@@ -27,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Default": "डिफ़ॉल्ट",
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
     "Reason": "कारण",
@@ -135,8 +133,6 @@
     "Unable to verify phone number.": "फ़ोन नंबर सत्यापित करने में असमर्थ।",
     "Verification code": "पुष्टि संख्या",
     "Phone Number": "फ़ोन नंबर",
-    "Room information": "रूम जानकारी",
-    "Room Addresses": "रूम का पता",
     "Scissors": "कैंची",
     "Failed to unban": "अप्रतिबंधित करने में विफल",
     "Banned by %(displayName)s": "%(displayName)s द्वारा प्रतिबंधित",
@@ -696,12 +692,14 @@
         },
         "general": {
             "publish_toggle": "इस कमरे को %(domain)s के कमरे की निर्देशिका में जनता के लिए प्रकाशित करें?",
-            "url_previews_section": "URL पूर्वावलोकन"
+            "url_previews_section": "URL पूर्वावलोकन",
+            "aliases_section": "रूम का पता"
         },
         "advanced": {
             "unfederated": "यह रूम रिमोट मैट्रिक्स सर्वर द्वारा सुलभ नहीं है",
             "room_version_section": "रूम का संस्करण",
-            "room_version": "रूम का संस्करण:"
+            "room_version": "रूम का संस्करण:",
+            "information_section_room": "रूम जानकारी"
         }
     },
     "update": {
@@ -757,7 +755,9 @@
         "update_power_level": "पावर स्तर बदलने में विफल"
     },
     "notifications": {
-        "enable_prompt_toast_title": "सूचनाएं"
+        "enable_prompt_toast_title": "सूचनाएं",
+        "default": "डिफ़ॉल्ट",
+        "all_messages": "सारे संदेश"
     },
     "room_summary_card_back_action_label": "रूम जानकारी"
 }

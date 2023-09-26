@@ -10,7 +10,6 @@
     "Are you sure?": "¿Estás seguro?",
     "Are you sure you want to reject the invitation?": "¿Estás seguro que quieres rechazar la invitación?",
     "Decrypt %(text)s": "Descifrar %(text)s",
-    "Default": "Por defecto",
     "Download %(text)s": "Descargar %(text)s",
     "Email address": "Dirección de correo electrónico",
     "Error decrypting attachment": "Error al descifrar adjunto",
@@ -117,7 +116,6 @@
     "Monday": "Lunes",
     "Invite to this room": "Invitar a la sala",
     "Send": "Enviar",
-    "All messages": "Todos los mensajes",
     "Thank you!": "¡Gracias!",
     "All Rooms": "Todas las salas",
     "You cannot delete this message. (%(code)s)": "No puedes eliminar este mensaje. (%(code)s)",
@@ -194,7 +192,6 @@
     "Upgrade this room to version %(version)s": "Actualiza esta sala a la versión %(version)s",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s ahora utiliza de 3 a 5 veces menos memoria, porque solo carga información sobre otros usuarios cuando es necesario. Por favor, ¡aguarda mientras volvemos a sincronizar con el servidor!",
     "Updating %(brand)s": "Actualizando %(brand)s",
-    "Room information": "Información de la sala",
     "Room Topic": "Asunto de la sala",
     "Dog": "Perro",
     "Cat": "Gato",
@@ -265,7 +262,6 @@
     "Unable to verify phone number.": "No se pudo verificar el número de teléfono.",
     "Verification code": "Código de verificación",
     "Phone Number": "Número de teléfono",
-    "Room Addresses": "Direcciones de la sala",
     "Add some now": "Añadir alguno ahora",
     "Main address": "Dirección principal",
     "Room avatar": "Avatar de la sala",
@@ -327,10 +323,6 @@
     "Upload Error": "Error de subida",
     "Remember my selection for this widget": "Recordar mi selección para este accesorio",
     "Deactivate account": "Desactivar cuenta",
-    "Sounds": "Sonidos",
-    "Notification sound": "Sonido para las notificaciones",
-    "Set a new custom sound": "Establecer sonido personalizado",
-    "Browse": "Seleccionar",
     "Error changing power level requirement": "Error al cambiar el requerimiento de nivel de poder",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ocurrió un error cambiando los requerimientos de nivel de poder de la sala. Asegúrate de tener los permisos suficientes e inténtalo de nuevo.",
     "Error changing power level": "Error al cambiar nivel de poder",
@@ -346,9 +338,6 @@
     "Not Trusted": "No es de confianza",
     "Set up": "Configurar",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está haciendo puente con las siguientes plataformas. <a>Aprende más.</a>",
-    "Bridges": "Puentes",
-    "Uploaded sound": "Sonido subido",
     "Unable to revoke sharing for email address": "No se logró revocar el compartir para la dirección de correo electrónico",
     "Unable to share email address": "No se logró compartir la dirección de correo electrónico",
     "Click the link in the email you received to verify and then click continue again.": "Haz clic en el enlace del correo electrónico para verificar, y luego nuevamente haz clic en continuar.",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Las direcciones publicadas pueden usarse por cualquiera para unirse a tu sala, independientemente de su servidor base.",
     "Published addresses can be used by anyone on any server to join your space.": "Los espacios publicados pueden usarse por cualquiera, independientemente de su servidor base.",
     "This space has no local addresses": "Este espacio no tiene direcciones locales",
-    "Space information": "Información del espacio",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "Unable to copy a link to the room to the clipboard.": "No se ha podido copiar el enlace a la sala.",
     "Unable to copy room link": "No se ha podido copiar el enlace a la sala",
@@ -1167,10 +1155,6 @@
     "Thread options": "Ajustes del hilo",
     "You do not have permission to start polls in this room.": "No tienes permisos para empezar encuestas en esta sala.",
     "Reply in thread": "Responder en hilo",
-    "You won't get any notifications": "No recibirás ninguna notificación",
-    "@mentions & keywords": "@menciones y palabras clave",
-    "Get notified for every message": "Recibe notificaciones para todos los mensajes",
-    "Get notifications as set up in your <a>settings</a>": "Recibe notificaciones según tus <a>ajustes</a>",
     "Forget": "Olvidar",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -1221,7 +1205,6 @@
     "Add people": "Añadir gente",
     "Invite to space": "Invitar al espacio",
     "Start new chat": "Crear conversación",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala no está conectada con ninguna otra plataforma de mensajería. <a>Más información.</a>",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -1255,7 +1238,6 @@
     "Unpin this widget to view it in this panel": "Deja de fijar este accesorio para verlo en este panel",
     "To proceed, please accept the verification request on your other device.": "Para continuar, acepta la solicitud de verificación en tu otro dispositivo.",
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s te ha sacado de %(roomName)s",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
     "From a thread": "Desde un hilo",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
@@ -1494,7 +1476,6 @@
     "Formatting": "Formato",
     "Encrypting your message…": "Cifrando tu mensaje…",
     "Sending your message…": "Enviando tu mensaje…",
-    "Upload custom sound": "Subir archivo personalizado",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -3171,7 +3152,9 @@
             "error_save_space_settings": "No se han podido guardar los ajustes del espacio.",
             "description_space": "Edita los ajustes de tu espacio.",
             "save": "Guardar cambios",
-            "leave_space": "Salir del espacio"
+            "leave_space": "Salir del espacio",
+            "aliases_section": "Direcciones de la sala",
+            "other_section": "Otros"
         },
         "advanced": {
             "unfederated": "Esta sala no es accesible desde otros servidores de Matrix",
@@ -3181,7 +3164,9 @@
             "room_predecessor": "Ver mensajes antiguos en %(roomName)s.",
             "room_id": "ID interna de la sala",
             "room_version_section": "Versión de la sala",
-            "room_version": "Versión de la sala:"
+            "room_version": "Versión de la sala:",
+            "information_section_space": "Información del espacio",
+            "information_section_room": "Información de la sala"
         },
         "delete_avatar_label": "Borrar avatar",
         "upload_avatar_label": "Adjuntar avatar",
@@ -3201,6 +3186,20 @@
         "access": {
             "title": "Acceso",
             "description_space": "Decide quién puede ver y unirse a %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Esta sala está haciendo puente con las siguientes plataformas. <a>Aprende más.</a>",
+            "empty": "Esta sala no está conectada con ninguna otra plataforma de mensajería. <a>Más información.</a>",
+            "title": "Puentes"
+        },
+        "notifications": {
+            "uploaded_sound": "Sonido subido",
+            "settings_link": "Recibe notificaciones según tus <a>ajustes</a>",
+            "sounds_section": "Sonidos",
+            "notification_sound": "Sonido para las notificaciones",
+            "custom_sound_prompt": "Establecer sonido personalizado",
+            "upload_sound_label": "Subir archivo personalizado",
+            "browse_button": "Seleccionar"
         }
     },
     "encryption": {
@@ -3986,7 +3985,13 @@
         "keyword_new": "Nueva palabra clave",
         "class_global": "Global",
         "class_other": "Otros",
-        "mentions_keywords": "Menciones y palabras clave"
+        "mentions_keywords": "Menciones y palabras clave",
+        "default": "Por defecto",
+        "all_messages": "Todos los mensajes",
+        "all_messages_description": "Recibe notificaciones para todos los mensajes",
+        "mentions_and_keywords": "@menciones y palabras clave",
+        "mentions_and_keywords_description": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
+        "mute_description": "No recibirás ninguna notificación"
     },
     "mobile_guide": {
         "toast_title": "Usa la aplicación para una experiencia mejor",

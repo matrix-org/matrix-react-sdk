@@ -13,7 +13,6 @@
     "Are you sure you want to reject the invitation?": "Daveti reddetmek istediğinizden emin misiniz ?",
     "Custom level": "Özel seviye",
     "Decrypt %(text)s": "%(text)s metninin şifresini çöz",
-    "Default": "Varsayılan",
     "Download %(text)s": "%(text)s metnini indir",
     "Email address": "E-posta Adresi",
     "Enter passphrase": "Şifre deyimi Girin",
@@ -130,7 +129,6 @@
     "All Rooms": "Tüm Odalar",
     "Wednesday": "Çarşamba",
     "Send": "Gönder",
-    "All messages": "Tüm mesajlar",
     "Invite to this room": "Bu odaya davet et",
     "You cannot delete this message. (%(code)s)": "Bu mesajı silemezsiniz (%(code)s)",
     "Thursday": "Perşembe",
@@ -266,12 +264,6 @@
     "Cake": "Kek",
     "Heart": "Kalp",
     "Trophy": "Ödül",
-    "Room information": "Oda bilgisi",
-    "Room Addresses": "Oda Adresleri",
-    "Uploaded sound": "Yüklenen ses",
-    "Sounds": "Sesler",
-    "Notification sound": "Bildirim sesi",
-    "Browse": "Gözat",
     "Banned by %(displayName)s": "%(displayName)s tarafından yasaklandı",
     "Unable to share email address": "E-posta adresi paylaşılamıyor",
     "Your email address hasn't been verified yet": "E-posta adresiniz henüz doğrulanmadı",
@@ -343,7 +335,6 @@
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "Set a new custom sound": "Özel bir ses ayarla",
     "Error changing power level requirement": "Güç düzey gereksinimi değiştirmede hata",
     "Error changing power level": "Güç düzeyi değiştirme hatası",
     "This event could not be displayed": "Bu olay görüntülenemedi",
@@ -395,7 +386,6 @@
         "one": "%(count)s dosyayı sağla"
     },
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
-    "Bridges": "Köprüler",
     "Direct Messages": "Doğrudan Mesajlar",
     "Start Verification": "Doğrulamayı Başlat",
     "Verify User": "Kullanıcı Doğrula",
@@ -807,7 +797,6 @@
     "Discovery options will appear once you have added a phone number above.": "Bulunulabilirlik seçenekleri, yukarıya bir telefon numarası ekleyince ortaya çıkacaktır.",
     "Discovery options will appear once you have added an email above.": "Bulunulabilirlik seçenekleri, yukarıya bir e-posta adresi ekleyince ortaya çıkacaktır.",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Odanın güç düzeyi gereksinimlerini değiştirirken bir hata ile karşılaşıldı. Yeterince yetkiniz olduğunuzdan emin olup yeniden deyin.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Bu oda, iletileri sözü edilen platformlara köprülüyor. <a>Daha fazla bilgi için.</a>",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
@@ -1737,18 +1726,32 @@
             "user_url_previews_default_off": "URL önizlemelerini varsayılan olarak <a> devre dışı </a> bıraktınız.",
             "default_url_previews_off": "URL ön izlemeleri, bu odadaki kullanıcılar için varsayılan olarak devre dışı bıraktırılmıştır.",
             "url_previews_section": "URL önizlemeleri",
-            "save": "Değişiklikleri Kaydet"
+            "save": "Değişiklikleri Kaydet",
+            "aliases_section": "Oda Adresleri",
+            "other_section": "Diğer"
         },
         "advanced": {
             "unfederated": "Bu oda uzak Matrix Sunucuları tarafından erişilebilir değil",
             "room_upgrade_button": "Bu odayı önerilen oda sürümüne yükselt",
             "room_predecessor": "%(roomName)s odasında daha eski mesajları göster.",
             "room_version_section": "Oda sürümü",
-            "room_version": "Oda versiyonu:"
+            "room_version": "Oda versiyonu:",
+            "information_section_room": "Oda bilgisi"
         },
         "upload_avatar_label": "Avatar yükle",
         "visibility": {
             "title": "Görünürlük"
+        },
+        "bridges": {
+            "description": "Bu oda, iletileri sözü edilen platformlara köprülüyor. <a>Daha fazla bilgi için.</a>",
+            "title": "Köprüler"
+        },
+        "notifications": {
+            "uploaded_sound": "Yüklenen ses",
+            "sounds_section": "Sesler",
+            "notification_sound": "Bildirim sesi",
+            "custom_sound_prompt": "Özel bir ses ayarla",
+            "browse_button": "Gözat"
         }
     },
     "encryption": {
@@ -2195,7 +2198,9 @@
         "colour_bold": "Kalın",
         "error_change_title": "Bildirim ayarlarını değiştir",
         "mark_all_read": "Tümünü okunmuş olarak işaretle",
-        "class_other": "Diğer"
+        "class_other": "Diğer",
+        "default": "Varsayılan",
+        "all_messages": "Tüm mesajlar"
     },
     "mobile_guide": {
         "toast_title": "Daha iyi bir deneyim için uygulamayı kullanın",

@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Default": "Mặc định",
     "Restricted": "Bị hạn chế",
     "Moderator": "Điều phối viên",
     "Reason": "Lý do",
@@ -623,7 +622,6 @@
     "This room has already been upgraded.": "Phòng này đã được nâng cấp.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
     "Room options": "Tùy chọn phòng",
-    "All messages": "Tất cả tin nhắn",
     "%(roomName)s is not accessible at this time.": "Không thể truy cập %(roomName)s vào lúc này.",
     "%(roomName)s does not exist.": "%(roomName)s không tồn tại.",
     "%(roomName)s can't be previewed. Do you want to join it?": "Không thể xem trước %(roomName)s. Bạn có muốn tham gia nó không?",
@@ -689,16 +687,6 @@
     "Error changing power level requirement": "Lỗi khi thay đổi yêu cầu mức nguồn",
     "Banned by %(displayName)s": "Bị cấm bởi %(displayName)s",
     "Failed to unban": "Không thể bỏ cấm",
-    "Browse": "Duyệt qua",
-    "Set a new custom sound": "Đặt âm thanh tùy chỉnh mới",
-    "Notification sound": "Âm thanh thông báo",
-    "Sounds": "Âm thanh",
-    "Uploaded sound": "Đã tải lên âm thanh",
-    "Room Addresses": "Các địa chỉ Phòng",
-    "Bridges": "Cầu nối",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Căn phòng này là cầu nối thông điệp đến các nền tảng sau. Tìm hiểu thêm <a>Learn more.</a>",
-    "Room information": "Thông tin phòng",
-    "Space information": "Thông tin Space",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
     "They'll still be able to access whatever you're not an admin of.": "Họ sẽ vẫn có thể truy cập vào bất cứ gì mà bạn không phải là quản trị viên.",
@@ -1199,12 +1187,6 @@
     "Recently viewed": "Được xem gần đây",
     "You do not have permission to start polls in this room.": "Bạn không có quyền để bắt đầu các cuộc thăm dò trong phòng này.",
     "Reply in thread": "Trả lời theo chủ đề",
-    "You won't get any notifications": "Bạn sẽ không nhận bất kỳ thông báo nào",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
-    "@mentions & keywords": "@đề cập & từ khóa",
-    "Get notified for every message": "Nhận thông báo cho mọi tin nhắn",
-    "Get notifications as set up in your <a>settings</a>": "Nhận thông báo như được thiết lập trong <a>cài đặt</a> của bạn",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Phòng này không nối các tin nhắn đến bất kỳ nền tảng nào. <a>Tìm hiểu thêm</a>",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -1372,7 +1354,6 @@
     },
     "Manually verify by text": "Xác thực thủ công bằng văn bản",
     "Show rooms": "Hiện phòng",
-    "Upload custom sound": "Tải lên âm thanh tùy chỉnh",
     "Start a group chat": "Bắt đầu cuộc trò chuyện nhóm",
     "Copy invite link": "Sao chép liên kết mời",
     "Interactively verify by emoji": "Xác thực có tương tác bằng biểu tượng cảm xúc",
@@ -3070,7 +3051,9 @@
             "error_save_space_settings": "Không thể lưu cài đặt space.",
             "description_space": "Chỉnh sửa cài đặt liên quan đến space của bạn.",
             "save": "Lưu thay đổi",
-            "leave_space": "Rời khỏi Space"
+            "leave_space": "Rời khỏi Space",
+            "aliases_section": "Các địa chỉ Phòng",
+            "other_section": "Khác"
         },
         "advanced": {
             "unfederated": "Phòng này không thể truy cập từ xa bằng máy chủ Matrix",
@@ -3081,7 +3064,9 @@
             "room_predecessor": "Xem các tin nhắn cũ hơn trong %(roomName)s.",
             "room_id": "Định danh riêng của phòng",
             "room_version_section": "Phiên bản phòng",
-            "room_version": "Phiên bản phòng:"
+            "room_version": "Phiên bản phòng:",
+            "information_section_space": "Thông tin Space",
+            "information_section_room": "Thông tin phòng"
         },
         "delete_avatar_label": "Xoá ảnh đại diện",
         "upload_avatar_label": "Tải lên hình đại diện",
@@ -3101,6 +3086,20 @@
         "access": {
             "title": "Truy cập",
             "description_space": "Lựa chọn ai được xem và tham gia %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Căn phòng này là cầu nối thông điệp đến các nền tảng sau. Tìm hiểu thêm <a>Learn more.</a>",
+            "empty": "Phòng này không nối các tin nhắn đến bất kỳ nền tảng nào. <a>Tìm hiểu thêm</a>",
+            "title": "Cầu nối"
+        },
+        "notifications": {
+            "uploaded_sound": "Đã tải lên âm thanh",
+            "settings_link": "Nhận thông báo như được thiết lập trong <a>cài đặt</a> của bạn",
+            "sounds_section": "Âm thanh",
+            "notification_sound": "Âm thanh thông báo",
+            "custom_sound_prompt": "Đặt âm thanh tùy chỉnh mới",
+            "upload_sound_label": "Tải lên âm thanh tùy chỉnh",
+            "browse_button": "Duyệt qua"
         }
     },
     "encryption": {
@@ -3886,7 +3885,13 @@
         "keyword_new": "Từ khóa mới",
         "class_global": "Toàn cầu",
         "class_other": "Khác",
-        "mentions_keywords": "Đề cập & từ khóa"
+        "mentions_keywords": "Đề cập & từ khóa",
+        "default": "Mặc định",
+        "all_messages": "Tất cả tin nhắn",
+        "all_messages_description": "Nhận thông báo cho mọi tin nhắn",
+        "mentions_and_keywords": "@đề cập & từ khóa",
+        "mentions_and_keywords_description": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
+        "mute_description": "Bạn sẽ không nhận bất kỳ thông báo nào"
     },
     "mobile_guide": {
         "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",

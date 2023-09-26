@@ -24,7 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Default": "Подразумевано",
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -152,7 +151,6 @@
     "Monday": "Понедељак",
     "All Rooms": "Све собе",
     "Wednesday": "Среда",
-    "All messages": "Све поруке",
     "Invite to this room": "Позови у ову собу",
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
@@ -579,7 +577,6 @@
     "Add a new server": "Додајте нови сервер",
     "Your server": "Ваш сервер",
     "This room is public": "Ова соба је јавна",
-    "Browse": "Прегледајте",
     "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
@@ -1197,12 +1194,16 @@
             "default_url_previews_off": "УРЛ прегледи су подразумевано искључени за чланове ове собе.",
             "url_previews_section": "УРЛ прегледи",
             "error_save_space_settings": "Чување подешавања простора није успело.",
-            "description_space": "Уредите поставке које се односе на ваш простор."
+            "description_space": "Уредите поставке које се односе на ваш простор.",
+            "other_section": "Остало"
         },
         "advanced": {
             "unfederated": "Ова соба није доступна са удаљених Матрикс сервера"
         },
-        "upload_avatar_label": "Отпреми аватар"
+        "upload_avatar_label": "Отпреми аватар",
+        "notifications": {
+            "browse_button": "Прегледајте"
+        }
     },
     "encryption": {
         "verification": {
@@ -1511,7 +1512,9 @@
         "colour_none": "Ништа",
         "error_change_title": "Промените подешавања обавештења",
         "mark_all_read": "Означи све као прочитано",
-        "class_other": "Остало"
+        "class_other": "Остало",
+        "default": "Подразумевано",
+        "all_messages": "Све поруке"
     },
     "quick_settings": {
         "all_settings": "Сва подешавања"

@@ -197,7 +197,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             tabs.push(
                 new Tab(
                     RoomSettingsTab.Bridges,
-                    _td("Bridges"),
+                    _td("room_settings|bridges|title"),
                     "mx_RoomSettingsDialog_bridgesIcon",
                     <BridgeSettingsTab room={this.state.room} />,
                     "RoomSettingsBridges",

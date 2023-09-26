@@ -24,7 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Default": "Ordinara",
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
     "Reason": "Kialo",
@@ -150,7 +149,6 @@
     "Invite to this room": "Inviti al ĉi tiu ĉambro",
     "Wednesday": "Merkredo",
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
-    "All messages": "Ĉiuj mesaĝoj",
     "All Rooms": "Ĉiuj ĉambroj",
     "Thursday": "Ĵaŭdo",
     "Yesterday": "Hieraŭ",
@@ -221,8 +219,6 @@
     "Folder": "Dosierujo",
     "Email Address": "Retpoŝtadreso",
     "Phone Number": "Telefonnumero",
-    "Room information": "Informoj pri ĉambro",
-    "Room Addresses": "Adresoj de ĉambro",
     "Share Link to User": "Kunhavigi ligilon al uzanto",
     "Share room": "Kunhavigi ĉambron",
     "Main address": "Ĉefa adreso",
@@ -317,11 +313,6 @@
     "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
     "Add room": "Aldoni ĉambron",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
-    "Uploaded sound": "Alŝutita sono",
-    "Sounds": "Sonoj",
-    "Notification sound": "Sono de sciigo",
-    "Set a new custom sound": "Agordi novan propran sonon",
-    "Browse": "Foliumi",
     "Edited at %(date)s. Click to view edits.": "Redaktita je %(date)s. Klaku por vidi redaktojn.",
     "The following users may not exist": "La jenaj uzantoj eble ne ekzistas",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ne povas trovi profilojn de la ĉi-subaj Matrix-identigilojn – ĉu vi tamen volas inviti ilin?",
@@ -469,8 +460,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ĉi tiu ĉambro transpontigas mesaĝojn al la jenaj platformoj. <a>Eksciu plion.</a>",
-    "Bridges": "Pontoj",
     "This user has not verified all of their sessions.": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
     "You have not verified this user.": "Vi ne kontrolis tiun ĉi uzanton.",
     "You have verified this user. This user has verified all of their sessions.": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
@@ -1055,7 +1044,6 @@
         "one": "Montri %(count)s alian antaŭrigardon",
         "other": "Montri %(count)s aliajn antaŭrigardojn"
     },
-    "Space information": "Informoj pri aro",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -2432,14 +2420,18 @@
             "error_save_space_settings": "Malsukcesis konservi agordojn de aro.",
             "description_space": "Redaktu agordojn pri via aro.",
             "save": "Konservi ŝanĝojn",
-            "leave_space": "Forlasi aron"
+            "leave_space": "Forlasi aron",
+            "aliases_section": "Adresoj de ĉambro",
+            "other_section": "Alia"
         },
         "advanced": {
             "unfederated": "Ĉi tiu ĉambro ne atingeblas por foraj serviloj de Matrix",
             "room_upgrade_button": "Gradaltigi ĉi tiun ĉambron al rekomendata ĉambra versio",
             "room_predecessor": "Montri pli malnovajn mesaĝojn en %(roomName)s.",
             "room_version_section": "Ĉambra versio",
-            "room_version": "Ĉambra versio:"
+            "room_version": "Ĉambra versio:",
+            "information_section_space": "Informoj pri aro",
+            "information_section_room": "Informoj pri ĉambro"
         },
         "delete_avatar_label": "Forigi profilbildon",
         "upload_avatar_label": "Alŝuti profilbildon",
@@ -2459,6 +2451,17 @@
         "access": {
             "title": "Aliro",
             "description_space": "Decidu, kiu povas rigardi kaj aliĝi aron %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ĉi tiu ĉambro transpontigas mesaĝojn al la jenaj platformoj. <a>Eksciu plion.</a>",
+            "title": "Pontoj"
+        },
+        "notifications": {
+            "uploaded_sound": "Alŝutita sono",
+            "sounds_section": "Sonoj",
+            "notification_sound": "Sono de sciigo",
+            "custom_sound_prompt": "Agordi novan propran sonon",
+            "browse_button": "Foliumi"
         }
     },
     "encryption": {
@@ -3161,7 +3164,9 @@
         "keyword_new": "Nova ĉefvorto",
         "class_global": "Ĉie",
         "class_other": "Alia",
-        "mentions_keywords": "Mencioj kaj ĉefvortoj"
+        "mentions_keywords": "Mencioj kaj ĉefvortoj",
+        "default": "Ordinara",
+        "all_messages": "Ĉiuj mesaĝoj"
     },
     "mobile_guide": {
         "toast_title": "Uzu aplikaĵon por pli bona sperto",

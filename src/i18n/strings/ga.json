@@ -198,7 +198,6 @@
     "Information": "Eolas",
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
-    "Bridges": "Droichid",
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
     "Italics": "Iodálach",
@@ -234,8 +233,6 @@
     "Thumbs up": "Ordógí suas",
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
-    "Browse": "Brabhsáil",
-    "Sounds": "Fuaimeanna",
     "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
@@ -301,7 +298,6 @@
     "Reason": "Cúis",
     "Moderator": "Modhnóir",
     "Restricted": "Teoranta",
-    "Default": "Réamhshocrú",
     "AM": "RN",
     "PM": "IN",
     "Dec": "Nol",
@@ -338,9 +334,6 @@
     "Unnamed room": "Seomra gan ainm",
     "Admin Tools": "Uirlisí Riaracháin",
     "Demote yourself?": "Tabhair ísliú céime duit féin?",
-    "Notification sound": "Fuaim fógra",
-    "Uploaded sound": "Fuaim uaslódáilte",
-    "Room Addresses": "Seoltaí Seomra",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
@@ -738,7 +731,9 @@
             "history_visibility_world_readable": "Aon duine"
         },
         "general": {
-            "url_previews_section": "Réamhamhairc URL"
+            "url_previews_section": "Réamhamhairc URL",
+            "aliases_section": "Seoltaí Seomra",
+            "other_section": "Eile"
         },
         "advanced": {
             "room_version_section": "Leagan seomra",
@@ -750,6 +745,15 @@
         },
         "access": {
             "title": "Rochtain"
+        },
+        "bridges": {
+            "title": "Droichid"
+        },
+        "notifications": {
+            "uploaded_sound": "Fuaim uaslódáilte",
+            "sounds_section": "Fuaimeanna",
+            "notification_sound": "Fuaim fógra",
+            "browse_button": "Brabhsáil"
         }
     },
     "encryption": {
@@ -886,7 +890,8 @@
         "colour_bold": "Trom",
         "keyword": "Eochairfhocal",
         "class_global": "Uilíoch",
-        "class_other": "Eile"
+        "class_other": "Eile",
+        "default": "Réamhshocrú"
     },
     "onboarding": {
         "create_account": "Déan cuntas a chruthú"

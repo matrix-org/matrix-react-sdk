@@ -1,6 +1,5 @@
 {
     "Decrypt %(text)s": "解密 %(text)s",
-    "Default": "默认",
     "Download %(text)s": "下载 %(text)s",
     "Email address": "邮箱地址",
     "Error decrypting attachment": "解密附件时出错",
@@ -149,7 +148,6 @@
     "All Rooms": "全部房间",
     "Wednesday": "星期三",
     "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
-    "All messages": "全部消息",
     "Invite to this room": "邀请到此房间",
     "Thursday": "星期四",
     "Search…": "搜索…",
@@ -272,8 +270,6 @@
     "Unable to verify phone number.": "无法验证电话号码。",
     "Verification code": "验证码",
     "Phone Number": "电话号码",
-    "Room information": "房间信息",
-    "Room Addresses": "房间地址",
     "Add some now": "立即添加",
     "Error updating main address": "更新主要地址时发生错误",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "更新房间的主要地址时发生错误。可能是此服务器不允许，也可能是出现了一个临时错误。",
@@ -338,11 +334,6 @@
     "Lock": "锁",
     "Show more": "显示更多",
     "This backup is trusted because it has been restored on this session": "此备份是受信任的因为它恢复到了此会话上",
-    "Uploaded sound": "已上传的声音",
-    "Sounds": "声音",
-    "Notification sound": "通知声音",
-    "Set a new custom sound": "设置新的自定义声音",
-    "Browse": "浏览",
     "Error changing power level requirement": "更改权力级别需求时出错",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "更改此房间的权力级别需求时出错。请确保你有足够的权限后重试。",
     "Error changing power level": "更改权力级别时出错",
@@ -363,8 +354,6 @@
     "You have verified this user. This user has verified all of their sessions.": "你验证了此用户。此用户已验证了其全部会话。",
     "Deactivate account": "停用账户",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要报告 Matrix 相关的安全问题，请阅读 Matrix.org 的<a>安全公开策略</a>。",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "此房间正桥接消息到以下平台。<a>了解更多。</a>",
-    "Bridges": "桥接",
     "Someone is using an unknown session": "有人在使用未知会话",
     "This room is end-to-end encrypted": "此房间是端到端加密的",
     "Everyone in this room is verified": "房间中所有人都已被验证",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "任何服务器上的人均可通过公布的地址加入你的房间。",
     "Published addresses can be used by anyone on any server to join your space.": "任何服务器上的人均可通过公布的地址加入你的空间。",
     "This space has no local addresses": "此空间没有本地地址",
-    "Space information": "空间信息",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
@@ -1167,18 +1155,12 @@
     "Yours, or the other users' session": "你或其他用户的会话",
     "Yours, or the other users' internet connection": "你或其他用户的互联网连接",
     "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
     "You do not have permission to start polls in this room.": "你无权在此房间启动投票。",
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
     "Reply in thread": "在消息列中回复",
     "Forget": "忘记",
     "Files": "文件",
-    "You won't get any notifications": "你不会收到任何通知",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "如<a>设置</a>中设定的那样仅通知提及和关键词",
-    "@mentions & keywords": "@提及和关键词",
-    "Get notified for every message": "获得每条消息的通知",
-    "Get notifications as set up in your <a>settings</a>": "如<a>设置</a>中设定的那样获取通知",
     "Close this widget to view it in this panel": "关闭此小部件以在此面板中查看",
     "Unpin this widget to view it in this panel": "取消固定此小部件以在此面板中查看",
     "%(spaceName)s and %(count)s others": {
@@ -2979,7 +2961,9 @@
             "error_save_space_settings": "空间设置保存失败。",
             "description_space": "编辑关于你的空间的设置。",
             "save": "保存修改",
-            "leave_space": "离开空间"
+            "leave_space": "离开空间",
+            "aliases_section": "房间地址",
+            "other_section": "其他"
         },
         "advanced": {
             "unfederated": "此房间无法被远程 Matrix 服务器访问",
@@ -2989,7 +2973,9 @@
             "room_predecessor": "查看%(roomName)s里更旧的消息。",
             "room_id": "内部房间ID",
             "room_version_section": "房间版本",
-            "room_version": "房间版本："
+            "room_version": "房间版本：",
+            "information_section_space": "空间信息",
+            "information_section_room": "房间信息"
         },
         "delete_avatar_label": "删除头像",
         "upload_avatar_label": "上传头像",
@@ -3009,6 +2995,19 @@
         "access": {
             "title": "访问",
             "description_space": "决定谁可以查看和加入 %(spaceName)s。"
+        },
+        "bridges": {
+            "description": "此房间正桥接消息到以下平台。<a>了解更多。</a>",
+            "empty": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
+            "title": "桥接"
+        },
+        "notifications": {
+            "uploaded_sound": "已上传的声音",
+            "settings_link": "如<a>设置</a>中设定的那样获取通知",
+            "sounds_section": "声音",
+            "notification_sound": "通知声音",
+            "custom_sound_prompt": "设置新的自定义声音",
+            "browse_button": "浏览"
         }
     },
     "encryption": {
@@ -3768,7 +3767,13 @@
         "keyword_new": "新的关键词",
         "class_global": "全局",
         "class_other": "其他",
-        "mentions_keywords": "提及&关键词"
+        "mentions_keywords": "提及&关键词",
+        "default": "默认",
+        "all_messages": "全部消息",
+        "all_messages_description": "获得每条消息的通知",
+        "mentions_and_keywords": "@提及和关键词",
+        "mentions_and_keywords_description": "如<a>设置</a>中设定的那样仅通知提及和关键词",
+        "mute_description": "你不会收到任何通知"
     },
     "mobile_guide": {
         "toast_title": "使用 app 以获得更好的体验",

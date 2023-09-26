@@ -45,7 +45,6 @@
     "Download %(text)s": "%(text)s downloaden",
     "Email address": "E-mailadres",
     "Custom level": "Aangepast niveau",
-    "Default": "Standaard",
     "Enter passphrase": "Wachtwoord invoeren",
     "Error decrypting attachment": "Fout bij het ontsleutelen van de bijlage",
     "Failed to ban user": "Verbannen van persoon is mislukt",
@@ -152,7 +151,6 @@
     "Saturday": "Zaterdag",
     "Monday": "Maandag",
     "Invite to this room": "Uitnodigen voor deze kamer",
-    "All messages": "Alle berichten",
     "All Rooms": "Alle kamers",
     "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
@@ -249,8 +247,6 @@
     "Unable to verify phone number.": "Kan telefoonnummer niet verifiëren.",
     "Verification code": "Verificatiecode",
     "Phone Number": "Telefoonnummer",
-    "Room information": "Kamerinformatie",
-    "Room Addresses": "Kameradressen",
     "This room has been replaced and is no longer active.": "Deze kamer is vervangen en niet langer actief.",
     "The conversation continues here.": "Het gesprek gaat hier verder.",
     "Only room administrators will see this warning": "Enkel kamerbeheerders zullen deze waarschuwing zien",
@@ -370,11 +366,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "De homeserver-URL lijkt geen geldige Matrix-homeserver",
     "Invalid base_url for m.identity_server": "Ongeldige base_url voor m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lijkt geen geldige identiteitsserver",
-    "Uploaded sound": "Geüpload-geluid",
-    "Sounds": "Geluiden",
-    "Notification sound": "Meldingsgeluid",
-    "Set a new custom sound": "Stel een nieuw aangepast geluid in",
-    "Browse": "Bladeren",
     "Upload all": "Alles versturen",
     "Edited at %(date)s. Click to view edits.": "Bewerkt op %(date)s. Klik om de bewerkingen te bekijken.",
     "Message edits": "Berichtbewerkingen",
@@ -433,8 +424,6 @@
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
     "Lock": "Hangslot",
     "Show more": "Meer tonen",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Deze kamer wordt overbrugd naar de volgende platformen. <a>Lees meer</a>",
-    "Bridges": "Bruggen",
     "This user has not verified all of their sessions.": "Deze persoon heeft niet al zijn sessies geverifieerd.",
     "You have not verified this user.": "Je hebt deze persoon niet geverifieerd.",
     "You have verified this user. This user has verified all of their sessions.": "Je hebt deze persoon geverifieerd. Deze persoon heeft al zijn sessies geverifieerd.",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Gepubliceerde adressen kunnen door iedereen op elke server gebruikt worden om bij jouw kamer te komen.",
     "Published addresses can be used by anyone on any server to join your space.": "Gepubliceerde adressen kunnen door iedereen op elke server gebruikt worden om jouw Space te betreden.",
     "This space has no local addresses": "Deze Space heeft geen lokaaladres",
-    "Space information": "Space-informatie",
     "Unnamed audio": "Naamloze audio",
     "Error processing audio message": "Fout bij verwerking audiobericht",
     "Show %(count)s other previews": {
@@ -1179,12 +1167,6 @@
     "The homeserver the user you're verifying is connected to": "De homeserver waarmee de persoon die jij verifieert verbonden is",
     "You do not have permission to start polls in this room.": "Je hebt geen toestemming om polls te starten in deze kamer.",
     "Reply in thread": "Reageer in draad",
-    "You won't get any notifications": "Je krijgt geen meldingen",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Krijg alleen meldingen met vermeldingen en trefwoorden zoals ingesteld in je <a>instellingen</a>",
-    "@mentions & keywords": "@vermeldingen & trefwoorden",
-    "Get notified for every message": "Ontvang een melding bij elk bericht",
-    "Get notifications as set up in your <a>settings</a>": "Ontvang de meldingen zoals ingesteld in uw <a>instellingen</a>",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Deze kamer overbrugt geen berichten naar platformen. <a>Lees meer.</a>",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -3009,7 +2991,9 @@
             "error_save_space_settings": "Het opslaan van de space-instellingen is mislukt.",
             "description_space": "Bewerk instellingen gerelateerd aan jouw space.",
             "save": "Wijzigingen opslaan",
-            "leave_space": "Space verlaten"
+            "leave_space": "Space verlaten",
+            "aliases_section": "Kameradressen",
+            "other_section": "Overige"
         },
         "advanced": {
             "unfederated": "Deze kamer is niet toegankelijk vanaf externe Matrix-servers",
@@ -3019,7 +3003,9 @@
             "room_predecessor": "Bekijk oudere berichten in %(roomName)s.",
             "room_id": "Interne ruimte ID",
             "room_version_section": "Kamerversie",
-            "room_version": "Kamerversie:"
+            "room_version": "Kamerversie:",
+            "information_section_space": "Space-informatie",
+            "information_section_room": "Kamerinformatie"
         },
         "delete_avatar_label": "Afbeelding verwijderen",
         "upload_avatar_label": "Afbeelding uploaden",
@@ -3039,6 +3025,19 @@
         "access": {
             "title": "Toegang",
             "description_space": "Bepaal wie kan lezen en deelnemen aan %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Deze kamer wordt overbrugd naar de volgende platformen. <a>Lees meer</a>",
+            "empty": "Deze kamer overbrugt geen berichten naar platformen. <a>Lees meer.</a>",
+            "title": "Bruggen"
+        },
+        "notifications": {
+            "uploaded_sound": "Geüpload-geluid",
+            "settings_link": "Ontvang de meldingen zoals ingesteld in uw <a>instellingen</a>",
+            "sounds_section": "Geluiden",
+            "notification_sound": "Meldingsgeluid",
+            "custom_sound_prompt": "Stel een nieuw aangepast geluid in",
+            "browse_button": "Bladeren"
         }
     },
     "encryption": {
@@ -3784,7 +3783,13 @@
         "keyword_new": "Nieuw trefwoord",
         "class_global": "Overal",
         "class_other": "Overige",
-        "mentions_keywords": "Vermeldingen & trefwoorden"
+        "mentions_keywords": "Vermeldingen & trefwoorden",
+        "default": "Standaard",
+        "all_messages": "Alle berichten",
+        "all_messages_description": "Ontvang een melding bij elk bericht",
+        "mentions_and_keywords": "@vermeldingen & trefwoorden",
+        "mentions_and_keywords_description": "Krijg alleen meldingen met vermeldingen en trefwoorden zoals ingesteld in je <a>instellingen</a>",
+        "mute_description": "Je krijgt geen meldingen"
     },
     "mobile_guide": {
         "toast_title": "Gebruik de app voor een betere ervaring",

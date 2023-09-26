@@ -61,7 +61,6 @@
         "one": "Laadi üles %(count)s muu fail"
     },
     "Resend %(unsentCount)s reaction(s)": "Saada uuesti %(unsentCount)s reaktsioon(i)",
-    "All messages": "Kõik sõnumid",
     "Home": "Avaleht",
     "You seem to be uploading files, are you sure you want to quit?": "Tundub, et sa parasjagu laadid faile üles. Kas sa kindlasti soovid väljuda?",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Kui soovid teatada Matrix'iga seotud turvaveast, siis palun tutvu enne Matrix.org <a>Turvalisuse avalikustamise juhendiga</a>.",
@@ -176,7 +175,6 @@
     "Email Address": "E-posti aadress",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Saatsime tekstisõnumi numbrile +%(msisdn)s. Palun sisesta seal kuvatud kontrollkood.",
     "Phone Number": "Telefoninumber",
-    "Room information": "Info jututoa kohta",
     "Room Name": "Jututoa nimi",
     "Room Topic": "Jututoa teema",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
@@ -319,10 +317,6 @@
     "Verify the link in your inbox": "Verifitseeri klõpsides viidet saabunud e-kirjas",
     "Logs sent": "Logikirjed saadetud",
     "Thank you!": "Suur tänu!",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "See jututuba kasutab sõnumisildasid liidestamiseks järgmiste süsteemidega. <a>Lisateave.</a>",
-    "Bridges": "Sõnumisillad",
-    "Room Addresses": "Jututubade aadressid",
-    "Browse": "Sirvi",
     "Unable to revoke sharing for phone number": "Telefoninumbri jagamist ei õnnestunud tühistada",
     "Unable to share phone number": "Telefoninumbri jagamine ei õnnestunud",
     "Unable to verify phone number.": "Telefoninumbri verifitseerimine ei õnnestunud.",
@@ -365,10 +359,6 @@
     "Connectivity to the server has been lost.": "Ühendus sinu serveriga on katkenud.",
     "Sent messages will be stored until your connection has returned.": "Saadetud sõnumid salvestatakse seniks, kuni võrguühendus on taastunud.",
     "Your password has been reset.": "Sinu salasõna on muudetud.",
-    "Uploaded sound": "Üleslaaditud heli",
-    "Sounds": "Helid",
-    "Notification sound": "Teavitusheli",
-    "Set a new custom sound": "Seadista uus kohandatud heli",
     "Permission Required": "Vaja on täiendavaid õigusi",
     "Enter passphrase": "Sisesta paroolifraas",
     "Enter a server name": "Sisesta serveri nimi",
@@ -440,7 +430,6 @@
     "Upload all": "Laadi kõik üles",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
     "Switch theme": "Vaheta teemat",
-    "Default": "Tavaline",
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Sa ei saa seda muudatust hiljem tagasi pöörata, sest annad teisele kasutajale samad õigused, mis sinul on.",
@@ -1059,7 +1048,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu jututoaga.",
     "Published addresses can be used by anyone on any server to join your space.": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu kogukonnakeskusega.",
     "This space has no local addresses": "Sellel kogukonnakeskusel puuduvad kohalikud aadressid",
-    "Space information": "Kogukonnakeskuse teave",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Selleks et teised kasutajad saaks seda kogukonda leida oma koduserveri kaudu (%(localDomain)s) seadista talle aadressid",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
     "Please provide an address": "Palun sisesta aadress",
@@ -1167,18 +1155,12 @@
     "Yours, or the other users' session": "Sinu või teise kasutaja sessioon",
     "Yours, or the other users' internet connection": "Sinu või teise kasutaja internetiühendus",
     "The homeserver the user you're verifying is connected to": "Sinu poolt verifitseeritava kasutaja koduserver",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "See jututuba ei kasuta sõnumisildasid liidestamiseks muude süsteemidega. <a>Lisateave.</a>",
     "You do not have permission to start polls in this room.": "Sul ei ole õigusi küsitluste korraldamiseks siin jututoas.",
     "Copy link to thread": "Kopeeri jutulõnga link",
     "Thread options": "Jutulõnga valikud",
     "Reply in thread": "Vasta jutulõngas",
     "Forget": "Unusta",
     "Files": "Failid",
-    "You won't get any notifications": "Sa ei saa üldse teavitusi",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Soovin teavitusi sellisena mainimiste ja võtmesõnade puhul, nagu ma neid olen <a>seadistanud</a>",
-    "@mentions & keywords": "@mainimiste ja võtmesõnade puhul",
-    "Get notified for every message": "Soovin teavitusi iga sõnumi puhul",
-    "Get notifications as set up in your <a>settings</a>": "Soovin teavitusi sellisena, nagu ma neid olen <a>seadistanud</a>",
     "Close this widget to view it in this panel": "Sellel paneelil kuvamiseks sulge see vidin",
     "Unpin this widget to view it in this panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
     "%(spaceName)s and %(count)s others": {
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
     "Formatting": "Vormindame andmeid",
-    "Upload custom sound": "Laadi üles oma helifail",
     "Search all rooms": "Otsi kõikidest jututubadest",
     "Search this room": "Otsi sellest jututoast",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Kui kutse saanud kasutajad on liitunud %(brand)s'ga, siis saad sa nendega suhelda ja jututuba on läbivalt krüptitud",
@@ -3328,7 +3309,9 @@
             "error_save_space_settings": "Kogukonnakeskuse seadistuste salvestamine ei õnnestunud.",
             "description_space": "Muuda oma kogukonnakeskuse seadistusi.",
             "save": "Salvesta muutused",
-            "leave_space": "Lahku kogukonnakeskusest"
+            "leave_space": "Lahku kogukonnakeskusest",
+            "aliases_section": "Jututubade aadressid",
+            "other_section": "Muud"
         },
         "advanced": {
             "unfederated": "See jututuba ei ole leitav teiste Matrix'i serverite jaoks",
@@ -3339,7 +3322,9 @@
             "room_predecessor": "Näita vanemat tüüpi sõnumeid jututoas %(roomName)s.",
             "room_id": "Jututoa tehniline tunnus",
             "room_version_section": "Jututoa versioon",
-            "room_version": "Jututoa versioon:"
+            "room_version": "Jututoa versioon:",
+            "information_section_space": "Kogukonnakeskuse teave",
+            "information_section_room": "Info jututoa kohta"
         },
         "delete_avatar_label": "Kustuta tunnuspilt",
         "upload_avatar_label": "Laadi üles profiilipilt ehk avatar",
@@ -3359,6 +3344,20 @@
         "access": {
             "title": "Ligipääs",
             "description_space": "Otsusta kes saada näha ja liituda %(spaceName)s kogukonnaga."
+        },
+        "bridges": {
+            "description": "See jututuba kasutab sõnumisildasid liidestamiseks järgmiste süsteemidega. <a>Lisateave.</a>",
+            "empty": "See jututuba ei kasuta sõnumisildasid liidestamiseks muude süsteemidega. <a>Lisateave.</a>",
+            "title": "Sõnumisillad"
+        },
+        "notifications": {
+            "uploaded_sound": "Üleslaaditud heli",
+            "settings_link": "Soovin teavitusi sellisena, nagu ma neid olen <a>seadistanud</a>",
+            "sounds_section": "Helid",
+            "notification_sound": "Teavitusheli",
+            "custom_sound_prompt": "Seadista uus kohandatud heli",
+            "upload_sound_label": "Laadi üles oma helifail",
+            "browse_button": "Sirvi"
         }
     },
     "encryption": {
@@ -4183,7 +4182,13 @@
         "keyword_new": "Uus märksõna",
         "class_global": "Üldised",
         "class_other": "Muud",
-        "mentions_keywords": "Mainimised ja märksõnad"
+        "mentions_keywords": "Mainimised ja märksõnad",
+        "default": "Tavaline",
+        "all_messages": "Kõik sõnumid",
+        "all_messages_description": "Soovin teavitusi iga sõnumi puhul",
+        "mentions_and_keywords": "@mainimiste ja võtmesõnade puhul",
+        "mentions_and_keywords_description": "Soovin teavitusi sellisena mainimiste ja võtmesõnade puhul, nagu ma neid olen <a>seadistanud</a>",
+        "mute_description": "Sa ei saa üldse teavitusi"
     },
     "mobile_guide": {
         "toast_title": "Rakendusega saad Matrix'is suhelda parimal viisil",

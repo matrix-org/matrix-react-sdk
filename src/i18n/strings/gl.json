@@ -24,7 +24,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Default": "Por defecto",
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
     "Reason": "Razón",
@@ -155,7 +154,6 @@
     "Monday": "Luns",
     "All Rooms": "Todas as Salas",
     "Wednesday": "Mércores",
-    "All messages": "Todas as mensaxes",
     "Invite to this room": "Convidar a esta sala",
     "You cannot delete this message. (%(code)s)": "Non pode eliminar esta mensaxe. (%(code)s)",
     "Thursday": "Xoves",
@@ -197,7 +195,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
     "Explore rooms": "Explorar salas",
     "General failure": "Fallo xeral",
-    "Room Addresses": "Enderezos da sala",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Algo fallou ao actualizar os enderezos alternativos da sala. É posible que o servidor non o permita ou acontecese un fallo temporal.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Establecer enderezos para a sala para que poida ser atopada no teu servidor local (%(localDomain)s)",
     "Room Settings - %(roomName)s": "Axustes da sala - %(roomName)s",
@@ -291,14 +288,6 @@
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
-    "Room information": "Información da sala",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está enviando mensaxes ás seguintes plataformas. <a>Coñece máis.</a>",
-    "Bridges": "Pontes",
-    "Uploaded sound": "Audio subido",
-    "Sounds": "Audios",
-    "Notification sound": "Ton de notificación",
-    "Set a new custom sound": "Establecer novo ton personalizado",
-    "Browse": "Buscar",
     "Error changing power level requirement": "Erro ao cambiar o requerimento de nivel de responsabilidade",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Algo fallou ao cambiar os requerimentos de nivel de responsabilidade na sala. Asegúrate de ter os permisos suficientes e volve a intentalo.",
     "Error changing power level": "Erro ao cambiar nivel de responsabilidade",
@@ -1069,7 +1058,6 @@
         "one": "Mostrar %(count)s outra vista previa",
         "other": "Mostrar outras %(count)s vistas previas"
     },
-    "Space information": "Información do Espazo",
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
     "Unnamed audio": "Audio sen nome",
@@ -1167,12 +1155,6 @@
     "The homeserver the user you're verifying is connected to": "O servidor ao que está conectado a persoa que estás verificando",
     "You do not have permission to start polls in this room.": "Non tes permiso para publicar enquisas nesta sala.",
     "Reply in thread": "Responder nun fío",
-    "You won't get any notifications": "Non recibirás ningunha notificación",
-    "Get notifications as set up in your <a>settings</a>": "Ter notificacións tal como se indica nos <a>axustes</a>",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Ter notificacións só cando te mencionan e con palabras chave que indiques nos <a>axustes</a>",
-    "@mentions & keywords": "@mencións & palabras chave",
-    "Get notified for every message": "Ter notificación de tódalas mensaxes",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala non está a reenviar mensaxes a ningún outro sistema. <a>Saber máis.</a>",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
@@ -2934,7 +2916,9 @@
             "error_save_space_settings": "Fallo ao gardar os axustes do espazo.",
             "description_space": "Editar os axustes relativos ao teu espazo.",
             "save": "Gardar cambios",
-            "leave_space": "Deixar o Espazo"
+            "leave_space": "Deixar o Espazo",
+            "aliases_section": "Enderezos da sala",
+            "other_section": "Outro"
         },
         "advanced": {
             "unfederated": "Esta sala non é accesible por servidores Matrix remotos",
@@ -2944,7 +2928,9 @@
             "room_predecessor": "Ver mensaxes antigas en %(roomName)s.",
             "room_id": "ID interno da sala",
             "room_version_section": "Versión da sala",
-            "room_version": "Versión da sala:"
+            "room_version": "Versión da sala:",
+            "information_section_space": "Información do Espazo",
+            "information_section_room": "Información da sala"
         },
         "delete_avatar_label": "Eliminar avatar",
         "upload_avatar_label": "Subir avatar",
@@ -2964,6 +2950,19 @@
         "access": {
             "title": "Acceder",
             "description_space": "Decidir quen pode ver e unirse a %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Esta sala está enviando mensaxes ás seguintes plataformas. <a>Coñece máis.</a>",
+            "empty": "Esta sala non está a reenviar mensaxes a ningún outro sistema. <a>Saber máis.</a>",
+            "title": "Pontes"
+        },
+        "notifications": {
+            "uploaded_sound": "Audio subido",
+            "settings_link": "Ter notificacións tal como se indica nos <a>axustes</a>",
+            "sounds_section": "Audios",
+            "notification_sound": "Ton de notificación",
+            "custom_sound_prompt": "Establecer novo ton personalizado",
+            "browse_button": "Buscar"
         }
     },
     "encryption": {
@@ -3699,7 +3698,13 @@
         "keyword_new": "Nova palabra chave",
         "class_global": "Global",
         "class_other": "Outro",
-        "mentions_keywords": "Mencións e palabras chave"
+        "mentions_keywords": "Mencións e palabras chave",
+        "default": "Por defecto",
+        "all_messages": "Todas as mensaxes",
+        "all_messages_description": "Ter notificación de tódalas mensaxes",
+        "mentions_and_keywords": "@mencións & palabras chave",
+        "mentions_and_keywords_description": "Ter notificacións só cando te mencionan e con palabras chave que indiques nos <a>axustes</a>",
+        "mute_description": "Non recibirás ningunha notificación"
     },
     "mobile_guide": {
         "toast_title": "Para ter unha mellor experiencia usa a app",

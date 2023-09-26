@@ -8,7 +8,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "మీరు ఖచ్చితంగా గది '%(roomName)s' వదిలివేయాలనుకుంటున్నారా?",
     "Are you sure you want to reject the invitation?": "మీరు ఖచ్చితంగా ఆహ్వానాన్ని తిరస్కరించాలనుకుంటున్నారా?",
     "Custom level": "అనుకూల స్థాయి",
-    "Default": "డిఫాల్ట్",
     "Sun": "ఆదివారం",
     "Mon": "సోమవారం",
     "Tue": "మంగళవారం",
@@ -48,7 +47,6 @@
     "All Rooms": "అన్ని గదులు",
     "Wednesday": "బుధవారం",
     "Send": "పంపండి",
-    "All messages": "అన్ని సందేశాలు",
     "Invite to this room": "ఈ గదికి ఆహ్వానించండి",
     "Thursday": "గురువారం",
     "Search…": "శోధన…",
@@ -188,7 +186,9 @@
         "tls": "గృహనిర్వాహకులకు కనెక్ట్ చేయలేరు - దయచేసి మీ కనెక్టివిటీని తనిఖీ చేయండి, మీ <a> 1 హోమరుసు యొక్క ఎస్ఎస్ఎల్ సర్టిఫికేట్ </a> 2 ని విశ్వసనీయపరుచుకొని, బ్రౌజర్ పొడిగింపు అభ్యర్థనలను నిరోధించబడదని నిర్ధారించుకోండి."
     },
     "notifications": {
-        "enable_prompt_toast_title": "ప్రకటనలు"
+        "enable_prompt_toast_title": "ప్రకటనలు",
+        "default": "డిఫాల్ట్",
+        "all_messages": "అన్ని సందేశాలు"
     },
     "room": {
         "context_menu": {

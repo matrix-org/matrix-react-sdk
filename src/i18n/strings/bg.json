@@ -30,7 +30,6 @@
     "Warning!": "Внимание!",
     "PM": "PM",
     "AM": "AM",
-    "Default": "По подразбиране",
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
     "Reason": "Причина",
@@ -155,7 +154,6 @@
     "Monday": "Понеделник",
     "All Rooms": "Във всички стаи",
     "Wednesday": "Сряда",
-    "All messages": "Всички съобщения",
     "Invite to this room": "Покани в тази стая",
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
@@ -229,8 +227,6 @@
     "Unable to verify phone number.": "Неуспешно потвърждение на телефонния номер.",
     "Verification code": "Код за потвърждение",
     "Phone Number": "Телефонен номер",
-    "Room information": "Информация за стаята",
-    "Room Addresses": "Адреси на стаята",
     "Main address": "Основен адрес",
     "Room avatar": "Снимка на стаята",
     "Room Name": "Име на стаята",
@@ -360,11 +356,6 @@
     "<userName/> invited you": "<userName/> ви покани",
     "You're previewing %(roomName)s. Want to join it?": "Предварителен преглед на %(roomName)s. Желаете ли да се влезете?",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s не може да бъде прегледана предварително. Желаете ли да се влезете?",
-    "Uploaded sound": "Качен звук",
-    "Sounds": "Звуци",
-    "Notification sound": "Звук за уведомление",
-    "Set a new custom sound": "Настрой нов собствен звук",
-    "Browse": "Избор",
     "This room has already been upgraded.": "Тази стая вече е била обновена.",
     "edited": "редактирано",
     "Edit message": "Редактирай съобщението",
@@ -480,8 +471,6 @@
     "Lock": "Заключи",
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Тази стая препредава съобщения със следните платформи. <a>Научи повече.</a>",
-    "Bridges": "Мостове",
     "This user has not verified all of their sessions.": "Този потребител не е верифицирал всичките си сесии.",
     "You have not verified this user.": "Не сте верифицирали този потребител.",
     "You have verified this user. This user has verified all of their sessions.": "Верифицирали сте този потребител. Този потребител е верифицирал всичките си сесии.",
@@ -1831,16 +1820,30 @@
             "default_url_previews_off": "URL прегледи са изключени по подразбиране за участниците в тази стая.",
             "url_preview_encryption_warning": "В шифровани стаи като тази, по подразбиране URL прегледите са изключени, за да се подсигури че сървърът (където става генерирането на прегледите) не може да събира информация за връзките споделени в стаята.",
             "url_preview_explainer": "Когато се сподели URL връзка в съобщение, може да бъде показан URL преглед даващ повече информация за връзката (заглавие, описание и картинка от уебсайта).",
-            "url_previews_section": "URL прегледи"
+            "url_previews_section": "URL прегледи",
+            "aliases_section": "Адреси на стаята",
+            "other_section": "Други"
         },
         "advanced": {
             "unfederated": "Тази стая не е достъпна за отдалечени Matrix сървъри",
             "room_upgrade_button": "Обнови тази стая до препоръчаната версия на стаята",
             "room_predecessor": "Виж по-стари съобщения в %(roomName)s.",
             "room_version_section": "Версия на стаята",
-            "room_version": "Версия на стаята:"
+            "room_version": "Версия на стаята:",
+            "information_section_room": "Информация за стаята"
         },
-        "upload_avatar_label": "Качи профилна снимка"
+        "upload_avatar_label": "Качи профилна снимка",
+        "bridges": {
+            "description": "Тази стая препредава съобщения със следните платформи. <a>Научи повече.</a>",
+            "title": "Мостове"
+        },
+        "notifications": {
+            "uploaded_sound": "Качен звук",
+            "sounds_section": "Звуци",
+            "notification_sound": "Звук за уведомление",
+            "custom_sound_prompt": "Настрой нов собствен звук",
+            "browse_button": "Избор"
+        }
     },
     "encryption": {
         "verification": {
@@ -2288,7 +2291,9 @@
         "colour_bold": "Удебелено",
         "error_change_title": "Промяна на настройките за уведомление",
         "mark_all_read": "Маркирай всичко като прочетено",
-        "class_other": "Други"
+        "class_other": "Други",
+        "default": "По подразбиране",
+        "all_messages": "Всички съобщения"
     },
     "mobile_guide": {
         "toast_title": "Използвайте приложението за по-добра работа",

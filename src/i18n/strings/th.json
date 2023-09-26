@@ -1,5 +1,4 @@
 {
-    "Default": "ค่าเริ่มต้น",
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
     "Low priority": "ความสำคัญต่ำ",
@@ -105,7 +104,6 @@
     "Monday": "วันจันทร์",
     "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
-    "All messages": "ทุกข้อความ",
     "Invite to this room": "เชิญเข้าห้องนี้",
     "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
@@ -592,7 +590,9 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "การแจ้งเตือน",
-        "mark_all_read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว"
+        "mark_all_read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
+        "default": "ค่าเริ่มต้น",
+        "all_messages": "ทุกข้อความ"
     },
     "encryption": {
         "not_supported": "<ไม่รองรับ>"

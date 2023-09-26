@@ -61,7 +61,7 @@ function toDefaultLevels(levels: NotificationSettings["defaultLevels"]): Notific
 const NotificationOptions = [
     {
         value: NotificationDefaultLevels.AllMessages,
-        label: _t("All messages"),
+        label: _t("notifications|all_messages"),
     },
     {
         value: NotificationDefaultLevels.PeopleMentionsKeywords,

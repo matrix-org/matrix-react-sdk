@@ -12,7 +12,6 @@
     "All Rooms": "全てのルーム",
     "You cannot delete this message. (%(code)s)": "このメッセージを削除できません。(%(code)s）",
     "Send": "送信",
-    "All messages": "全てのメッセージ",
     "Sunday": "日曜日",
     "Today": "今日",
     "Monday": "月曜日",
@@ -57,7 +56,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(monthName)s%(day)s日 %(weekDayName)s曜日 %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s年%(monthName)s%(day)s日（%(weekDayName)s）",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s年%(monthName)s%(day)s日 %(weekDayName)s曜日 %(time)s",
-    "Default": "既定値",
     "Restricted": "制限",
     "Moderator": "モデレーター",
     "Reason": "理由",
@@ -201,12 +199,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "エクスポートされたファイルはパスフレーズで保護されています。ファイルを復号化するには、パスフレーズを以下に入力してください。",
     "File to import": "インポートするファイル",
     "Room Name": "ルーム名",
-    "Room information": "ルームの情報",
-    "Room Addresses": "ルームのアドレス",
-    "Sounds": "音",
-    "Notification sound": "通知音",
-    "Set a new custom sound": "カスタム音を設定",
-    "Browse": "参照",
     "Email Address": "メールアドレス",
     "Main address": "メインアドレス",
     "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
@@ -366,9 +358,6 @@
     "Unable to share email address": "メールアドレスを共有できません",
     "Unable to revoke sharing for email address": "メールアドレスの共有を取り消せません",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "ユーザーの権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認して、もう一度やり直してください。",
-    "Uploaded sound": "アップロードされた音",
-    "Bridges": "ブリッジ",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "このルームは以下のプラットフォームにメッセージをブリッジしています。<a>詳細</a>",
     "Set up": "設定",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
@@ -1001,17 +990,10 @@
     "Go back to set it again.": "戻って、改めて設定してください。",
     "That doesn't match.": "合致しません。",
     "Continue With Encryption Disabled": "暗号化を無効にして続行",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "メンションと、<a>設定</a>したキーワードのみを通知",
-    "@mentions & keywords": "メンションとキーワード",
-    "Get notified for every message": "全てのメッセージを通知",
-    "You won't get any notifications": "通知を送信しません",
-    "Get notifications as set up in your <a>settings</a>": "<a>設定</a>に従って通知",
     "Recently viewed": "最近表示したルーム",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "このルームはどのプラットフォームにもメッセージをブリッジしていません。<a>詳細</a>",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
-    "Space information": "スペースの情報",
     "Retry all": "全て再試行",
     "You can select all or individual messages to retry or delete": "全てのメッセージ、あるいは個別のメッセージを選択して、再送を試みるか削除することができます",
     "Some of your messages have not been sent": "いくつかのメッセージが送信されませんでした",
@@ -3160,7 +3142,9 @@
             "error_save_space_settings": "スペースの設定を保存できませんでした。",
             "description_space": "スペースの設定を変更します。",
             "save": "変更を保存",
-            "leave_space": "スペースから退出"
+            "leave_space": "スペースから退出",
+            "aliases_section": "ルームのアドレス",
+            "other_section": "その他"
         },
         "advanced": {
             "unfederated": "このルームはリモートのMatrixサーバーからアクセスできません",
@@ -3171,7 +3155,9 @@
             "room_predecessor": "%(roomName)sの古いメッセージを表示。",
             "room_id": "内部ルームID：",
             "room_version_section": "ルームのバージョン",
-            "room_version": "ルームのバージョン："
+            "room_version": "ルームのバージョン：",
+            "information_section_space": "スペースの情報",
+            "information_section_room": "ルームの情報"
         },
         "delete_avatar_label": "アバターを削除",
         "upload_avatar_label": "アバターをアップロード",
@@ -3191,6 +3177,19 @@
         "access": {
             "title": "アクセス",
             "description_space": "%(spaceName)sを表示、参加できる範囲を設定してください。"
+        },
+        "bridges": {
+            "description": "このルームは以下のプラットフォームにメッセージをブリッジしています。<a>詳細</a>",
+            "empty": "このルームはどのプラットフォームにもメッセージをブリッジしていません。<a>詳細</a>",
+            "title": "ブリッジ"
+        },
+        "notifications": {
+            "uploaded_sound": "アップロードされた音",
+            "settings_link": "<a>設定</a>に従って通知",
+            "sounds_section": "音",
+            "notification_sound": "通知音",
+            "custom_sound_prompt": "カスタム音を設定",
+            "browse_button": "参照"
         }
     },
     "encryption": {
@@ -3982,7 +3981,13 @@
         "keyword_new": "新しいキーワード",
         "class_global": "全体",
         "class_other": "その他",
-        "mentions_keywords": "メンションとキーワード"
+        "mentions_keywords": "メンションとキーワード",
+        "default": "既定値",
+        "all_messages": "全てのメッセージ",
+        "all_messages_description": "全てのメッセージを通知",
+        "mentions_and_keywords": "メンションとキーワード",
+        "mentions_and_keywords_description": "メンションと、<a>設定</a>したキーワードのみを通知",
+        "mute_description": "通知を送信しません"
     },
     "mobile_guide": {
         "toast_title": "より良い体験のためにアプリケーションを使用",

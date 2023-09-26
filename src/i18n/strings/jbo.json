@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": ".i li %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s detri",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": ".i li %(fullYear)s %(monthName)s %(day)s %(weekDayName)s %(time)s detri",
-    "Default": "zmiselcu'a",
     "Restricted": "vlipa so'u da",
     "Moderator": "vlipa so'o da",
     "Changes your display nickname": "",
@@ -417,6 +416,9 @@
         },
         "security": {
             "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i"
+        },
+        "general": {
+            "other_section": "drata"
         }
     },
     "encryption": {
@@ -517,6 +519,7 @@
         "error_join_incompatible_version_2": ".i .e'o ko tavla lo admine be le samtcise'u"
     },
     "notifications": {
-        "class_other": "drata"
+        "class_other": "drata",
+        "default": "zmiselcu'a"
     }
 }

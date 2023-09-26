@@ -21,7 +21,6 @@
     "Dec": "Duj",
     "PM": "MD",
     "AM": "FT",
-    "Default": "Amezwer",
     "Moderator": "Aseɣyad",
     "Thank you!": "Tanemmirt!",
     "Reason": "Taɣẓint",
@@ -45,8 +44,6 @@
     "Show more": "Sken-d ugar",
     "Warning!": "Ɣur-k·m!",
     "Authentication": "Asesteb",
-    "Sounds": "Imesla",
-    "Browse": "Inig",
     "Verification code": "Tangalt n usenqed",
     "Email Address": "Tansa n yimayl",
     "Phone Number": "Uṭṭun n tiliɣri",
@@ -152,7 +149,6 @@
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
     "Deactivate account": "Sens amiḍan",
-    "Notification sound": "Imesli i yilɣa",
     "Failed to unban": "Sefsex aḍraq yugi ad yeddu",
     "Banned by %(displayName)s": "Yettwagi sɣur %(displayName)s",
     "Remove %(email)s?": "Kkes %(email)s?",
@@ -186,7 +182,6 @@
     "Start chatting": "Bdu adiwenni",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ulac anekcum ɣer-s akka tura.",
     "Add room": "Rnu taxxamt",
-    "All messages": "Iznan i meṛṛa",
     "This Room": "Taxxamt-a",
     "Search…": "Nadi…",
     "Add some now": "Rnu kra tura",
@@ -377,12 +372,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
-    "Room information": "Talɣut n texxamt",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Taxxamt-a tettcuddu iznan ɣer tɣerɣar i d-iteddun. <a>Issin ugar.</a>",
-    "Bridges": "Tileggiyin",
-    "Room Addresses": "Tansiwin n texxamt",
-    "Uploaded sound": "Ameslaw i d-yulin",
-    "Set a new custom sound": "Sbadu ameslaw udmawan amaynut",
     "Error changing power level requirement": "Tuccḍa deg usnifel n tuttra n uswir afellay",
     "Error changing power level": "Tuccḍa deg usnifel n uswir afellay",
     "Unable to revoke sharing for email address": "Asefsex n beṭṭu n tansa n yimayl ur yeddi ara",
@@ -1764,16 +1753,30 @@
             "default_url_previews_off": "Tiskanin n URL ttwasensnt s wudem amezwer i yimttekkiyen n texxamt-a.",
             "url_preview_encryption_warning": "Deg texxamin yettwawgelhen, am texxamt-a, tiskanin n URL ttwasensnt s wudem amezwer i wakken ad neḍmen belli aqeddac agejdan (anida tiskanin ttwasirwent) ur yettizmir ara ad yelqeḍ talɣut ɣef yiseɣwan i d-ibanen deg texxamt-a.",
             "url_preview_explainer": "Ma yili yiwet iger-d aseɣwen deg yizen-ines, taskant n URL tezmer ad tettwaskan i wakken ad d-imudd ugar n talɣut ɣef useɣwen-a am uzwel, aglam d tugna n usmel.",
-            "url_previews_section": "Tiskanin n URL"
+            "url_previews_section": "Tiskanin n URL",
+            "aliases_section": "Tansiwin n texxamt",
+            "other_section": "Nniḍen"
         },
         "advanced": {
             "unfederated": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
             "room_upgrade_button": "Leqqem taxxamt-a ɣer lqem n texxamt yelhan",
             "room_predecessor": "Senqed iznan iqburen deg %(roomName)s.",
             "room_version_section": "Lqem n texxamt",
-            "room_version": "Lqem n texxamt:"
+            "room_version": "Lqem n texxamt:",
+            "information_section_room": "Talɣut n texxamt"
         },
-        "upload_avatar_label": "Sali-d avaṭar"
+        "upload_avatar_label": "Sali-d avaṭar",
+        "bridges": {
+            "description": "Taxxamt-a tettcuddu iznan ɣer tɣerɣar i d-iteddun. <a>Issin ugar.</a>",
+            "title": "Tileggiyin"
+        },
+        "notifications": {
+            "uploaded_sound": "Ameslaw i d-yulin",
+            "sounds_section": "Imesla",
+            "notification_sound": "Imesli i yilɣa",
+            "custom_sound_prompt": "Sbadu ameslaw udmawan amaynut",
+            "browse_button": "Inig"
+        }
     },
     "encryption": {
         "verification": {
@@ -2166,7 +2169,9 @@
         "colour_bold": "Azuran",
         "error_change_title": "Snifel iɣewwaren n yilɣa",
         "mark_all_read": "Creḍ kullec yettwaɣra",
-        "class_other": "Nniḍen"
+        "class_other": "Nniḍen",
+        "default": "Amezwer",
+        "all_messages": "Iznan i meṛṛa"
     },
     "room_summary_card_back_action_label": "Talɣut n texxamt",
     "quick_settings": {

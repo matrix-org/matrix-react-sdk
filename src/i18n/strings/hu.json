@@ -16,7 +16,6 @@
     "Are you sure you want to reject the invitation?": "Biztos, hogy elutasítja a meghívást?",
     "Custom level": "Egyedi szint",
     "Decrypt %(text)s": "%(text)s visszafejtése",
-    "Default": "Alapértelmezett",
     "Download %(text)s": "%(text)s letöltése",
     "Email address": "E-mail-cím",
     "Enter passphrase": "Jelmondat megadása",
@@ -153,7 +152,6 @@
     "Saturday": "Szombat",
     "Monday": "Hétfő",
     "Invite to this room": "Meghívás a szobába",
-    "All messages": "Összes üzenet",
     "All Rooms": "Minden szobában",
     "You cannot delete this message. (%(code)s)": "Nem törölheted ezt az üzenetet. (%(code)s)",
     "Thursday": "Csütörtök",
@@ -229,8 +227,6 @@
     "Unable to verify phone number.": "A telefonszámot nem sikerült ellenőrizni.",
     "Verification code": "Ellenőrző kód",
     "Phone Number": "Telefonszám",
-    "Room information": "Szobainformációk",
-    "Room Addresses": "Szobacímek",
     "Main address": "Fő cím",
     "Room avatar": "Szoba profilképe",
     "Room Name": "Szoba neve",
@@ -370,11 +366,6 @@
     "edited": "szerkesztve",
     "Add room": "Szoba hozzáadása",
     "Edit message": "Üzenet szerkesztése",
-    "Uploaded sound": "Feltöltött hang",
-    "Sounds": "Hangok",
-    "Notification sound": "Értesítési hang",
-    "Set a new custom sound": "Új egyénii hang beállítása",
-    "Browse": "Böngészés",
     "Upload all": "Összes feltöltése",
     "Edited at %(date)s. Click to view edits.": "Szerkesztés ideje: %(date)s. Kattintson a szerkesztések megtekintéséhez.",
     "Message edits": "Üzenetszerkesztések",
@@ -487,8 +478,6 @@
     "Enter your account password to confirm the upgrade:": "A fejlesztés megerősítéséhez add meg a fiók jelszavadat:",
     "You'll need to authenticate with the server to confirm the upgrade.": "A fejlesztés megerősítéséhez újból hitelesítenie kell a kiszolgálóval.",
     "Upgrade your encryption": "Titkosításod fejlesztése",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ez a szoba áthidalja az üzeneteket a felsorolt platformok felé. <a>Tudjon meg többet.</a>",
-    "Bridges": "Hidak",
     "Restore your key backup to upgrade your encryption": "A titkosítás fejlesztéséhez allítsd vissza a kulcs mentést",
     "This backup is trusted because it has been restored on this session": "Ez a mentés megbízható, mert ebben a munkamenetben lett helyreállítva",
     "This user has not verified all of their sessions.": "Ez a felhasználó még nem ellenőrizte az összes munkamenetét.",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "A nyilvánosságra hozott címet bárki bármelyik szerverről használhatja a szobához való belépéshez.",
     "Please provide an address": "Kérem adja meg a címet",
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
-    "Space information": "Tér információi",
     "Unnamed audio": "Névtelen hang",
     "Error processing audio message": "Hiba a hangüzenet feldolgozásánál",
     "Show %(count)s other previews": {
@@ -1159,7 +1147,6 @@
     "Insert link": "Link beillesztése",
     "Joining": "Belépés",
     "You do not have permission to start polls in this room.": "Nincs joga szavazást kezdeményezni ebben a szobában.",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ez a szoba egy platformra sem hidalja át az üzeneteket. <a>Tudjon meg többet.</a>",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "A biztonsági kulcsot tárolja biztonságos helyen, például egy jelszókezelőben vagy egy széfben, mivel ez tartja biztonságban a titkosított adatait.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "A biztonsági kulcsodat elkészül, ezt tárolja valamilyen biztonságos helyen, például egy jelszókezelőben vagy egy széfben.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
@@ -1176,11 +1163,6 @@
     "Files": "Fájlok",
     "Close this widget to view it in this panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez",
     "Unpin this widget to view it in this panel": "Kisalkalmazás rögzítésének megszüntetése az ezen a panelen való megjelenítéshez",
-    "You won't get any notifications": "Nem kap semmilyen értesítést",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Értesítések fogadása csak megemlítéseknél és kulcsszavaknál, a <a>beállításokban</a> megadottak szerint",
-    "@mentions & keywords": "@megemlítések és kulcsszavak",
-    "Get notified for every message": "Értesítés fogadása az összes üzenetről",
-    "Get notifications as set up in your <a>settings</a>": "Értesítések fogadása a <a>beállításokban</a> megadottak szerint",
     "Based on %(count)s votes": {
         "one": "%(count)s szavazat alapján",
         "other": "%(count)s szavazat alapján"
@@ -1540,7 +1522,6 @@
     "Formatting": "Formázás",
     "Search all rooms": "Keresés az összes szobában",
     "Search this room": "Keresés ebben a szobában",
-    "Upload custom sound": "Egyéni hang feltöltése",
     "common": {
         "about": "Névjegy",
         "analytics": "Analitika",
@@ -3244,7 +3225,9 @@
             "error_save_space_settings": "A tér beállításának mentése sikertelen.",
             "description_space": "A tér beállításainak szerkesztése.",
             "save": "Változtatások mentése",
-            "leave_space": "Tér elhagyása"
+            "leave_space": "Tér elhagyása",
+            "aliases_section": "Szobacímek",
+            "other_section": "Egyéb"
         },
         "advanced": {
             "unfederated": "Ez a szoba távoli Matrix-kiszolgálóról nem érhető el",
@@ -3255,7 +3238,9 @@
             "room_predecessor": "Régebbi üzenetek megjelenítése itt: %(roomName)s.",
             "room_id": "Belső szobaazonosító",
             "room_version_section": "Szoba verziója",
-            "room_version": "Szoba verziója:"
+            "room_version": "Szoba verziója:",
+            "information_section_space": "Tér információi",
+            "information_section_room": "Szobainformációk"
         },
         "delete_avatar_label": "Profilkép törlése",
         "upload_avatar_label": "Profilkép feltöltése",
@@ -3275,6 +3260,20 @@
         "access": {
             "title": "Hozzáférés",
             "description_space": "Döntse el, hogy ki láthatja, és léphet be ide: %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ez a szoba áthidalja az üzeneteket a felsorolt platformok felé. <a>Tudjon meg többet.</a>",
+            "empty": "Ez a szoba egy platformra sem hidalja át az üzeneteket. <a>Tudjon meg többet.</a>",
+            "title": "Hidak"
+        },
+        "notifications": {
+            "uploaded_sound": "Feltöltött hang",
+            "settings_link": "Értesítések fogadása a <a>beállításokban</a> megadottak szerint",
+            "sounds_section": "Hangok",
+            "notification_sound": "Értesítési hang",
+            "custom_sound_prompt": "Új egyénii hang beállítása",
+            "upload_sound_label": "Egyéni hang feltöltése",
+            "browse_button": "Böngészés"
         }
     },
     "encryption": {
@@ -4087,7 +4086,13 @@
         "keyword_new": "Új kulcsszó",
         "class_global": "Globális",
         "class_other": "Egyéb",
-        "mentions_keywords": "Megemlítések és kulcsszavak"
+        "mentions_keywords": "Megemlítések és kulcsszavak",
+        "default": "Alapértelmezett",
+        "all_messages": "Összes üzenet",
+        "all_messages_description": "Értesítés fogadása az összes üzenetről",
+        "mentions_and_keywords": "@megemlítések és kulcsszavak",
+        "mentions_and_keywords_description": "Értesítések fogadása csak megemlítéseknél és kulcsszavaknál, a <a>beállításokban</a> megadottak szerint",
+        "mute_description": "Nem kap semmilyen értesítést"
     },
     "mobile_guide": {
         "toast_title": "A jobb élmény érdekében használjon alkalmazást",

@@ -24,7 +24,6 @@
     "Nov": "Nën",
     "Dec": "Dhj",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Default": "Parazgjedhje",
     "Restricted": "E kufizuar",
     "Moderator": "Moderator",
     "Sunday": "E diel",
@@ -44,7 +43,6 @@
     "Monday": "E hënë",
     "Failed to forget room %(errCode)s": "S’u arrit të harrohej dhoma %(errCode)s",
     "Wednesday": "E mërkurë",
-    "All messages": "Krejt mesazhet",
     "unknown error code": "kod gabimi të panjohur",
     "Thank you!": "Faleminderit!",
     "Invite to this room": "Ftojeni te kjo dhomë",
@@ -226,8 +224,6 @@
     "Unable to verify phone number.": "S’arrihet të verifikohet numër telefoni.",
     "Verification code": "Kod verifikimi",
     "Phone Number": "Numër Telefoni",
-    "Room information": "Të dhëna dhome",
-    "Room Addresses": "Adresa Dhomash",
     "Share Link to User": "Ndajeni Lidhjen për te Përdoruesi",
     "Main address": "Adresë kryesore",
     "Room avatar": "Avatar dhome",
@@ -367,11 +363,6 @@
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Invalid base_url for m.identity_server": "Parametër base_url i i pavlefshëm për m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
-    "Uploaded sound": "U ngarkua tingull",
-    "Sounds": "Tinguj",
-    "Notification sound": "Tingull njoftimi",
-    "Set a new custom sound": "Caktoni një tingull të ri vetjak",
-    "Browse": "Shfletoni",
     "Upload all": "Ngarkoji krejt",
     "Edited at %(date)s. Click to view edits.": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet.",
     "Message edits": "Përpunime mesazhi",
@@ -485,8 +476,6 @@
     "You'll need to authenticate with the server to confirm the upgrade.": "Do t’ju duhet të bëni mirëfilltësimin me shërbyesin që të ripohohet përmirësimi.",
     "Upgrade your encryption": "Përmirësoni fshehtëzimin tuaj",
     "This backup is trusted because it has been restored on this session": "Kjo kopjeruajtje është e besuar, ngaqë është rikthyer në këtë sesion",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Kjo dhomë i kalon mesazhet te platformat vijuese. <a>Mësoni më tepër.</a>",
-    "Bridges": "Ura",
     "This user has not verified all of their sessions.": "Ky përdorues s’ka verifikuar krejt sesionet e tij.",
     "You have not verified this user.": "S’e keni verifikuar këtë përdorues.",
     "You have verified this user. This user has verified all of their sessions.": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
@@ -1057,7 +1046,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në dhomën tuaj.",
     "Published addresses can be used by anyone on any server to join your space.": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në hapësirën tuaj.",
     "This space has no local addresses": "Kjo hapësirë s’ka adresa vendore",
-    "Space information": "Hollësi hapësire",
     "Unnamed audio": "Audio pa emër",
     "Sent": "U dërgua",
     "Error processing audio message": "Gabim në përpunim mesazhi audio",
@@ -1164,18 +1152,12 @@
     "Yours, or the other users' session": "Sesioni juaj, ose i përdoruesve të tjerë",
     "Yours, or the other users' internet connection": "Lidhja internet e juaja, ose e përdoruesve të tjerë",
     "The homeserver the user you're verifying is connected to": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
     "You do not have permission to start polls in this room.": "S’keni leje të nisni anketime në këtë dhomë.",
     "Copy link to thread": "Kopjoje lidhjen te rrjedha",
     "Thread options": "Mundësi rrjedhe",
     "Reply in thread": "Përgjigjuni te rrjedha",
     "Forget": "Harroje",
     "Files": "Kartela",
-    "You won't get any notifications": "S’do të merrni ndonjë njoftim",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Merrni njoftime vetëm për përmendje dhe fjalëkyçe që keni ujdisur te <a>rregullimet</a> tuaja",
-    "@mentions & keywords": "@përmendje & fjalëkyçe",
-    "Get notified for every message": "Merrni njoftim për çdo mesazh",
-    "Get notifications as set up in your <a>settings</a>": "Merrni njoftime siç i keni ujdisur te <a>rregullimet</a> tuaj",
     "Reset event store": "Riktheje te parazgjedhjet arkivin e akteve",
     "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
     "Reset event store?": "Të rikthehet te parazgjedhjet arkivi i akteve?",
@@ -1538,7 +1520,6 @@
     "Search all rooms": "Kërko në krejt dhomat",
     "Search this room": "Kërko në këtë dhomë",
     "Formatting": "Formatim",
-    "Upload custom sound": "Ngarkoni tingull vetjak",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
     "You do not have permission to invite users": "S’keni leje të ftoni përdorues",
@@ -3237,7 +3218,9 @@
             "error_save_space_settings": "S’u arrit të ruhen rregullime hapësire.",
             "description_space": "Përpunoni rregullime që lidhen me hapësirën tuaj.",
             "save": "Ruaji Ndryshimet",
-            "leave_space": "Braktiseni Hapësirën"
+            "leave_space": "Braktiseni Hapësirën",
+            "aliases_section": "Adresa Dhomash",
+            "other_section": "Tjetër"
         },
         "advanced": {
             "unfederated": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
@@ -3248,7 +3231,9 @@
             "room_predecessor": "Shihni mesazhe më të vjetër në %(roomName)s.",
             "room_id": "ID e brendshme dhome",
             "room_version_section": "Version dhome",
-            "room_version": "Version dhome:"
+            "room_version": "Version dhome:",
+            "information_section_space": "Hollësi hapësire",
+            "information_section_room": "Të dhëna dhome"
         },
         "delete_avatar_label": "Fshije avatarin",
         "upload_avatar_label": "Ngarkoni avatar",
@@ -3268,6 +3253,20 @@
         "access": {
             "title": "Hyrje",
             "description_space": "Vendosni se cilët mund të shohin dhe marrin pjesë te %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Kjo dhomë i kalon mesazhet te platformat vijuese. <a>Mësoni më tepër.</a>",
+            "empty": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
+            "title": "Ura"
+        },
+        "notifications": {
+            "uploaded_sound": "U ngarkua tingull",
+            "settings_link": "Merrni njoftime siç i keni ujdisur te <a>rregullimet</a> tuaj",
+            "sounds_section": "Tinguj",
+            "notification_sound": "Tingull njoftimi",
+            "custom_sound_prompt": "Caktoni një tingull të ri vetjak",
+            "upload_sound_label": "Ngarkoni tingull vetjak",
+            "browse_button": "Shfletoni"
         }
     },
     "encryption": {
@@ -4076,7 +4075,13 @@
         "keyword_new": "Fjalëkyç i ri",
         "class_global": "Global",
         "class_other": "Tjetër",
-        "mentions_keywords": "Përmendje & fjalëkyçe"
+        "mentions_keywords": "Përmendje & fjalëkyçe",
+        "default": "Parazgjedhje",
+        "all_messages": "Krejt mesazhet",
+        "all_messages_description": "Merrni njoftim për çdo mesazh",
+        "mentions_and_keywords": "@përmendje & fjalëkyçe",
+        "mentions_and_keywords_description": "Merrni njoftime vetëm për përmendje dhe fjalëkyçe që keni ujdisur te <a>rregullimet</a> tuaja",
+        "mute_description": "S’do të merrni ndonjë njoftim"
     },
     "mobile_guide": {
         "toast_title": "Për një punim më të mirë, përdorni aplikacionin",

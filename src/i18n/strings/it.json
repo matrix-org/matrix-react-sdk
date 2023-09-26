@@ -32,7 +32,6 @@
     "Rooms": "Stanze",
     "Unnamed room": "Stanza senza nome",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
-    "Default": "Predefinito",
     "Restricted": "Limitato",
     "Moderator": "Moderatore",
     "Reason": "Motivo",
@@ -155,7 +154,6 @@
     "All Rooms": "Tutte le stanze",
     "Wednesday": "Mercoledì",
     "You cannot delete this message. (%(code)s)": "Non puoi eliminare questo messaggio. (%(code)s)",
-    "All messages": "Tutti i messaggi",
     "Invite to this room": "Invita in questa stanza",
     "Thursday": "Giovedì",
     "Logs sent": "Log inviati",
@@ -294,8 +292,6 @@
     "Unable to verify phone number.": "Impossibile verificare il numero di telefono.",
     "Verification code": "Codice di verifica",
     "Phone Number": "Numero di telefono",
-    "Room information": "Informazioni stanza",
-    "Room Addresses": "Indirizzi stanza",
     "Error updating main address": "Errore di aggiornamento indirizzo principale",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Si è verificato un errore aggiornando l'indirizzo principale della stanza. Potrebbe non essere permesso dal server o un problema temporaneo.",
     "Main address": "Indirizzo principale",
@@ -370,11 +366,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "L'URL dell'homeserver non sembra essere un homeserver Matrix valido",
     "Invalid base_url for m.identity_server": "Base_url per m.identity_server non valido",
     "Identity server URL does not appear to be a valid identity server": "L'URL del server di identità non sembra essere un server di identità valido",
-    "Uploaded sound": "Suono inviato",
-    "Sounds": "Suoni",
-    "Notification sound": "Suoni di notifica",
-    "Set a new custom sound": "Imposta un nuovo suono personalizzato",
-    "Browse": "Sfoglia",
     "Upload all": "Invia tutto",
     "Edited at %(date)s. Click to view edits.": "Modificato alle %(date)s. Clicca per vedere le modifiche.",
     "Message edits": "Modifiche del messaggio",
@@ -488,8 +479,6 @@
     "You'll need to authenticate with the server to confirm the upgrade.": "Dovrai autenticarti con il server per confermare l'aggiornamento.",
     "Upgrade your encryption": "Aggiorna la tua crittografia",
     "This backup is trusted because it has been restored on this session": "Questo backup è fidato perchè è stato ripristinato in questa sessione",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Questa stanza fa un bridge dei messaggi con le seguenti piattaforme. <a>Maggiori informazioni.</a>",
-    "Bridges": "Bridge",
     "This user has not verified all of their sessions.": "Questo utente non ha verificato tutte le sue sessioni.",
     "You have not verified this user.": "Non hai verificato questo utente.",
     "You have verified this user. This user has verified all of their sessions.": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
@@ -1057,7 +1046,6 @@
     "Pinned messages": "Messaggi ancorati",
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
-    "Space information": "Informazioni spazio",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
     "To publish an address, it needs to be set as a local address first.": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
@@ -1167,18 +1155,12 @@
     "Yours, or the other users' session": "La tua sessione o quella degli altri utenti",
     "Yours, or the other users' internet connection": "La tua connessione internet o quella degli altri utenti",
     "The homeserver the user you're verifying is connected to": "L'homeserver al quale è connesso l'utente che stai verificando",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Questa stanza non fa un bridge dei messaggi con alcuna piattaforma. <a>Maggiori informazioni.</a>",
     "You do not have permission to start polls in this room.": "Non hai i permessi per creare sondaggi in questa stanza.",
     "Copy link to thread": "Copia link nella conversazione",
     "Thread options": "Opzioni conversazione",
     "Reply in thread": "Rispondi nella conversazione",
     "Forget": "Dimentica",
     "Files": "File",
-    "You won't get any notifications": "Non riceverai alcuna notifica",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Ricevi notifiche solo per citazioni e parole chiave come configurato nelle tue <a>impostazioni</a>",
-    "@mentions & keywords": "@citazioni e parole chiave",
-    "Get notified for every message": "Ricevi notifiche per ogni messaggio",
-    "Get notifications as set up in your <a>settings</a>": "Ricevi notifiche come configurato nelle tue <a>impostazioni</a>",
     "Close this widget to view it in this panel": "Chiudi questo widget per vederlo in questo pannello",
     "Unpin this widget to view it in this panel": "Sblocca questo widget per vederlo in questo pannello",
     "Based on %(count)s votes": {
@@ -1540,7 +1522,6 @@
     "Formatting": "Formattazione",
     "Search all rooms": "Cerca in tutte le stanze",
     "Search this room": "Cerca in questa stanza",
-    "Upload custom sound": "Carica suono personalizzato",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Una volta che gli utenti si saranno uniti a %(brand)s, potrete scrivervi e la stanza sarà crittografata end-to-end",
     "Waiting for users to join %(brand)s": "In attesa che gli utenti si uniscano a %(brand)s",
     "You do not have permission to invite users": "Non hai l'autorizzazione per invitare utenti",
@@ -3333,7 +3314,9 @@
             "error_save_space_settings": "Impossibile salvare le impostazioni dello spazio.",
             "description_space": "Modifica le impostazioni relative al tuo spazio.",
             "save": "Salva modifiche",
-            "leave_space": "Esci dallo spazio"
+            "leave_space": "Esci dallo spazio",
+            "aliases_section": "Indirizzi stanza",
+            "other_section": "Altro"
         },
         "advanced": {
             "unfederated": "Questa stanza non è accessibile da server di Matrix remoti",
@@ -3344,7 +3327,9 @@
             "room_predecessor": "Vedi messaggi più vecchi in %(roomName)s.",
             "room_id": "ID interno stanza",
             "room_version_section": "Versione stanza",
-            "room_version": "Versione stanza:"
+            "room_version": "Versione stanza:",
+            "information_section_space": "Informazioni spazio",
+            "information_section_room": "Informazioni stanza"
         },
         "delete_avatar_label": "Elimina avatar",
         "upload_avatar_label": "Invia avatar",
@@ -3364,6 +3349,20 @@
         "access": {
             "title": "Accesso",
             "description_space": "Decidi chi può vedere ed entrare in %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Questa stanza fa un bridge dei messaggi con le seguenti piattaforme. <a>Maggiori informazioni.</a>",
+            "empty": "Questa stanza non fa un bridge dei messaggi con alcuna piattaforma. <a>Maggiori informazioni.</a>",
+            "title": "Bridge"
+        },
+        "notifications": {
+            "uploaded_sound": "Suono inviato",
+            "settings_link": "Ricevi notifiche come configurato nelle tue <a>impostazioni</a>",
+            "sounds_section": "Suoni",
+            "notification_sound": "Suoni di notifica",
+            "custom_sound_prompt": "Imposta un nuovo suono personalizzato",
+            "upload_sound_label": "Carica suono personalizzato",
+            "browse_button": "Sfoglia"
         }
     },
     "encryption": {
@@ -4188,7 +4187,13 @@
         "keyword_new": "Nuova parola chiave",
         "class_global": "Globale",
         "class_other": "Altro",
-        "mentions_keywords": "Citazioni e parole chiave"
+        "mentions_keywords": "Citazioni e parole chiave",
+        "default": "Predefinito",
+        "all_messages": "Tutti i messaggi",
+        "all_messages_description": "Ricevi notifiche per ogni messaggio",
+        "mentions_and_keywords": "@citazioni e parole chiave",
+        "mentions_and_keywords_description": "Ricevi notifiche solo per citazioni e parole chiave come configurato nelle tue <a>impostazioni</a>",
+        "mute_description": "Non riceverai alcuna notifica"
     },
     "mobile_guide": {
         "toast_title": "Usa l'app per un'esperienza migliore",

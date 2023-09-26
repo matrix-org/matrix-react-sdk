@@ -9,7 +9,6 @@
     "Are you sure you want to reject the invitation?": "Vai tiešām vēlaties noraidīt šo uzaicinājumu?",
     "Custom level": "Pielāgots līmenis",
     "Decrypt %(text)s": "Atšifrēt %(text)s",
-    "Default": "Noklusējuma",
     "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email address": "Epasta adrese",
     "Enter passphrase": "Ievadiet frāzveida paroli",
@@ -155,7 +154,6 @@
     "All Rooms": "Visās istabās",
     "Wednesday": "Trešdiena",
     "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
-    "All messages": "Visas ziņas",
     "Invite to this room": "Uzaicināt uz šo istabu",
     "Thursday": "Ceturtdiena",
     "Logs sent": "Logfaili nosūtīti",
@@ -190,7 +188,6 @@
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
     "This room is end-to-end encrypted": "Šajā istabā tiek veikta pilnīga šifrēšana",
-    "Room information": "Informācija par istabu",
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
@@ -235,11 +232,6 @@
     "Deactivate account": "Deaktivizēt kontu",
     "Phone Number": "Tālruņa numurs",
     "Email Address": "Epasta adrese",
-    "Browse": "Pārlūkot",
-    "Notification sound": "Paziņojumu skaņas signāli",
-    "Uploaded sound": "Augšupielādētie skaņas signāli",
-    "Sounds": "Skaņas signāli",
-    "Set a new custom sound": "Iestatīt jaunu pielāgotu skaņas signālu",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Iestatiet istabai adresi, lai lietotāji var atrast šo istabu jūsu bāzes serverī (%(localDomain)s)",
     "Local Addresses": "Lokālās adreses",
     "New published address (e.g. #alias:server)": "Jauna publiska adrese (piemēram, #alias:server)",
@@ -251,7 +243,6 @@
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Notikusi kļūda, mēģinot atjaunināt istabas galveno adresi. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
     "Error updating main address": "Kļūda galvenās adreses atjaunināšanā",
     "This address is available to use": "Šī adrese ir pieejama",
-    "Room Addresses": "Istabas adreses",
     "Room Topic": "Istabas temats",
     "Room %(name)s": "Istaba %(name)s",
     "Room Name": "Istabas nosaukums",
@@ -702,7 +693,6 @@
     "Pinned messages": "Piespraustās ziņas",
     "Pinned": "Piesprausts",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
-    "Space information": "Informācija par vietu",
     "Information": "Informācija",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
@@ -1587,12 +1577,16 @@
             "url_preview_encryption_warning": "Šifrētās istabās, ieskaitot arī šo, URL priekšskatījumi pēc noklusējuma ir atspējoti, lai nodrošinātu, ka jūsu bāzes serveris, kurā notiek priekšskatījumu ģenerēšana, nevar apkopot informāciju par saitēm, kuras redzat šajā istabā.",
             "url_preview_explainer": "Kad kāds savā ziņā ievieto URL, priekšskatījums ar virsrakstu, aprakstu un vietnes attēlu var tikt parādīts, tādējādi sniedzot vairāk informācijas par šo vietni.",
             "url_previews_section": "URL priekšskatījumi",
-            "save": "Saglabāt izmaiņas"
+            "save": "Saglabāt izmaiņas",
+            "aliases_section": "Istabas adreses",
+            "other_section": "Citi"
         },
         "advanced": {
             "unfederated": "Šī istaba nav pieejama no citiem Matrix serveriem",
             "room_version_section": "Istabas versija",
-            "room_version": "Istabas versija:"
+            "room_version": "Istabas versija:",
+            "information_section_space": "Informācija par vietu",
+            "information_section_room": "Informācija par istabu"
         },
         "upload_avatar_label": "Augšupielādēt avataru",
         "access": {
@@ -1602,6 +1596,13 @@
         "visibility": {
             "guest_access_label": "Iespējot piekļuvi viesiem",
             "alias_section": "Adrese"
+        },
+        "notifications": {
+            "uploaded_sound": "Augšupielādētie skaņas signāli",
+            "sounds_section": "Skaņas signāli",
+            "notification_sound": "Paziņojumu skaņas signāli",
+            "custom_sound_prompt": "Iestatīt jaunu pielāgotu skaņas signālu",
+            "browse_button": "Pārlūkot"
         }
     },
     "encryption": {
@@ -2032,7 +2033,9 @@
         "keyword": "Atslēgvārds",
         "keyword_new": "Jauns atslēgvārds",
         "class_other": "Citi",
-        "mentions_keywords": "Pieminēšana un atslēgvārdi"
+        "mentions_keywords": "Pieminēšana un atslēgvārdi",
+        "default": "Noklusējuma",
+        "all_messages": "Visas ziņas"
     },
     "chat_card_back_action_label": "Atgriezties uz čatu",
     "room_summary_card_back_action_label": "Informācija par istabu",

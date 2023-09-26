@@ -32,7 +32,6 @@
     "not specified": "non spécifié",
     "No more results": "Fin des résultats",
     "unknown error code": "code d’erreur inconnu",
-    "Default": "Par défaut",
     "Email address": "Adresse e-mail",
     "Error decrypting attachment": "Erreur lors du déchiffrement de la pièce jointe",
     "Invalid file%(extra)s": "Fichier %(extra)s non valide",
@@ -154,7 +153,6 @@
     "Invite to this room": "Inviter dans ce salon",
     "Wednesday": "Mercredi",
     "You cannot delete this message. (%(code)s)": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
-    "All messages": "Tous les messages",
     "All Rooms": "Tous les salons",
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
@@ -229,8 +227,6 @@
     "Unable to verify phone number.": "Impossible de vérifier le numéro de téléphone.",
     "Verification code": "Code de vérification",
     "Phone Number": "Numéro de téléphone",
-    "Room information": "Information du salon",
-    "Room Addresses": "Adresses du salon",
     "Main address": "Adresse principale",
     "Room avatar": "Avatar du salon",
     "Room Name": "Nom du salon",
@@ -370,11 +366,6 @@
     "Identity server URL does not appear to be a valid identity server": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
     "Add room": "Ajouter un salon",
     "Edit message": "Modifier le message",
-    "Uploaded sound": "Son téléchargé",
-    "Sounds": "Sons",
-    "Notification sound": "Son de notification",
-    "Set a new custom sound": "Définir un nouveau son personnalisé",
-    "Browse": "Parcourir",
     "Upload all": "Tout envoyer",
     "Edited at %(date)s. Click to view edits.": "Modifié le %(date)s. Cliquer pour voir les modifications.",
     "Message edits": "Modifications du message",
@@ -487,8 +478,6 @@
     "Upgrade your encryption": "Mettre à niveau votre chiffrement",
     "This room is end-to-end encrypted": "Ce salon est chiffré de bout en bout",
     "Everyone in this room is verified": "Tout le monde dans ce salon est vérifié",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ce salon transmet les messages vers les plateformes suivantes. <a>En savoir plus.</a>",
-    "Bridges": "Passerelles",
     "Waiting for %(displayName)s to accept…": "En attente d’acceptation par %(displayName)s…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
     "Your messages are not secure": "Vos messages ne sont pas sécurisés",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre salon.",
     "Published addresses can be used by anyone on any server to join your space.": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre espace.",
     "This space has no local addresses": "Cet espace n’a pas d’adresse locale",
-    "Space information": "Informations de l’espace",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
     "Error processing audio message": "Erreur lors du traitement du message audio",
@@ -1167,7 +1155,6 @@
     "Yours, or the other users' internet connection": "Votre connexion internet ou celle de l’autre utilisateur",
     "The homeserver the user you're verifying is connected to": "Le serveur d’accueil auquel l’utilisateur que vous vérifiez est connecté",
     "Insert link": "Insérer un lien",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ce salon ne transmet les messages à aucune plateforme. <a>En savoir plus.</a>",
     "Copy link to thread": "Copier le lien du fil de discussion",
     "Thread options": "Options des fils de discussion",
     "You do not have permission to start polls in this room.": "Vous n’avez pas la permission de démarrer un sondage dans ce salon.",
@@ -1176,11 +1163,6 @@
     "Close this widget to view it in this panel": "Fermer ce widget pour l’afficher dans ce panneau",
     "Unpin this widget to view it in this panel": "Désépinglez ce widget pour l’afficher dans ce panneau",
     "Reply in thread": "Répondre dans le fil de discussion",
-    "You won't get any notifications": "Vous n’aurez aucune notification",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Recevoir des notifications uniquement pour les mentions et mot-clés comme défini dans vos <a>paramètres</a>",
-    "@mentions & keywords": "@mentions et mots-clés",
-    "Get notified for every message": "Recevoir une notification pour chaque message",
-    "Get notifications as set up in your <a>settings</a>": "Recevoir les notifications comme défini dans vos <a>paramètres</a>",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
     "Based on %(count)s votes": {
         "one": "Sur la base de %(count)s vote",
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
     "Formatting": "Formatage",
-    "Upload custom sound": "Envoyer un son personnalisé",
     "Search all rooms": "Rechercher dans tous les salons",
     "Search this room": "Rechercher dans ce salon",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
@@ -3328,7 +3309,9 @@
             "error_save_space_settings": "Échec de l’enregistrement des paramètres.",
             "description_space": "Modifiez les paramètres de votre espace.",
             "save": "Enregistrer les modifications",
-            "leave_space": "Quitter l’espace"
+            "leave_space": "Quitter l’espace",
+            "aliases_section": "Adresses du salon",
+            "other_section": "Autre"
         },
         "advanced": {
             "unfederated": "Ce salon n’est pas accessible par les serveurs Matrix distants",
@@ -3339,7 +3322,9 @@
             "room_predecessor": "Voir les messages plus anciens dans %(roomName)s.",
             "room_id": "Identifiant interne du salon",
             "room_version_section": "Version du salon",
-            "room_version": "Version du salon :"
+            "room_version": "Version du salon :",
+            "information_section_space": "Informations de l’espace",
+            "information_section_room": "Information du salon"
         },
         "delete_avatar_label": "Supprimer l’avatar",
         "upload_avatar_label": "Envoyer un avatar",
@@ -3359,6 +3344,20 @@
         "access": {
             "title": "Accès",
             "description_space": "Décider qui peut visualiser et rejoindre %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ce salon transmet les messages vers les plateformes suivantes. <a>En savoir plus.</a>",
+            "empty": "Ce salon ne transmet les messages à aucune plateforme. <a>En savoir plus.</a>",
+            "title": "Passerelles"
+        },
+        "notifications": {
+            "uploaded_sound": "Son téléchargé",
+            "settings_link": "Recevoir les notifications comme défini dans vos <a>paramètres</a>",
+            "sounds_section": "Sons",
+            "notification_sound": "Son de notification",
+            "custom_sound_prompt": "Définir un nouveau son personnalisé",
+            "upload_sound_label": "Envoyer un son personnalisé",
+            "browse_button": "Parcourir"
         }
     },
     "encryption": {
@@ -4183,7 +4182,13 @@
         "keyword_new": "Nouveau mot-clé",
         "class_global": "Global",
         "class_other": "Autre",
-        "mentions_keywords": "Mentions et mots-clés"
+        "mentions_keywords": "Mentions et mots-clés",
+        "default": "Par défaut",
+        "all_messages": "Tous les messages",
+        "all_messages_description": "Recevoir une notification pour chaque message",
+        "mentions_and_keywords": "@mentions et mots-clés",
+        "mentions_and_keywords_description": "Recevoir des notifications uniquement pour les mentions et mot-clés comme défini dans vos <a>paramètres</a>",
+        "mute_description": "Vous n’aurez aucune notification"
     },
     "mobile_guide": {
         "toast_title": "Utilisez une application pour une meilleure expérience",

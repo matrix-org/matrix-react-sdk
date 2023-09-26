@@ -37,7 +37,6 @@
     },
     "Custom level": "Własny poziom",
     "Decrypt %(text)s": "Odszyfruj %(text)s",
-    "Default": "Zwykły",
     "Download %(text)s": "Pobierz %(text)s",
     "Email address": "Adres e-mail",
     "Enter passphrase": "Wpisz frazę",
@@ -139,7 +138,6 @@
     "All Rooms": "Wszystkie pokoje",
     "Wednesday": "Środa",
     "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
-    "All messages": "Wszystkie wiadomości",
     "Invite to this room": "Zaproś do tego pokoju",
     "Thursday": "Czwartek",
     "Search…": "Szukaj…",
@@ -248,7 +246,6 @@
     "Headphones": "Słuchawki",
     "Folder": "Folder",
     "Phone Number": "Numer telefonu",
-    "Room Addresses": "Adresy pokoju",
     "Join the conversation with an account": "Przyłącz się do rozmowy przy użyciu konta",
     "Sign Up": "Zarejestruj się",
     "Join the discussion": "Dołącz do dyskusji",
@@ -269,10 +266,6 @@
     "Email Address": "Adres e-mail",
     "edited": "edytowane",
     "Edit message": "Edytuj wiadomość",
-    "Sounds": "Dźwięki",
-    "Notification sound": "Dźwięk powiadomień",
-    "Set a new custom sound": "Ustaw nowy niestandardowy dźwięk",
-    "Browse": "Przeglądaj",
     "Thumbs up": "Kciuk w górę",
     "Ball": "Piłka",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
@@ -280,8 +273,6 @@
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
     "Deactivate account": "Dezaktywuj konto",
     "Add room": "Dodaj pokój",
-    "Room information": "Informacje pokoju",
-    "Uploaded sound": "Przesłano dźwięk",
     "Your email address hasn't been verified yet": "Twój adres e-mail nie został jeszcze zweryfikowany",
     "Verification code": "Kod weryfikacyjny",
     "Remove %(email)s?": "Usunąć %(email)s?",
@@ -659,7 +650,6 @@
     "Your messages are not secure": "Twoje wiadomości nie są bezpieczne",
     "Start Verification": "Rozpocznij weryfikację",
     "Waiting for %(displayName)s to accept…": "Oczekiwanie na akceptację przez %(displayName)s…",
-    "Bridges": "Mostki",
     "Verify User": "Weryfikuj użytkownika",
     "Verification Request": "Żądanie weryfikacji",
     "You verified %(name)s": "Zweryfikowałeś %(name)s",
@@ -854,15 +844,6 @@
     "Error changing power level": "Wystąpił błąd podczas zmiany poziomu uprawnień",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Wystąpił błąd podczas zmiany wymagań poziomu uprawnień pokoju. Upewnij się, że posiadasz wystarczające uprawnienia i spróbuj ponownie.",
     "Error changing power level requirement": "Wystąpił błąd podczas zmiany wymagań poziomu uprawnień",
-    "Upload custom sound": "Załaduj własny dźwięk",
-    "You won't get any notifications": "Nie otrzymasz żadnych powiadomień",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Otrzymuj powiadomienia tylko z wzmiankami i słowami kluczowymi zgodnie z Twoimi <a>ustawieniami</a>",
-    "Get notifications as set up in your <a>settings</a>": "Otrzymuj powiadomienia zgodnie z Twoimi <a>ustawieniami</a>",
-    "@mentions & keywords": "@wzmianki & słowa kluczowe",
-    "Get notified for every message": "Otrzymuj powiadomienie każdej wiadomości",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ten pokój nie mostkuje wiadomości z żadnymi platformami. <a>Dowiedz się więcej.</a>",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ten pokój mostkuje wiadomości do następujących platform. <a>Dowiedz się więcej.</a>",
-    "Space information": "Informacje przestrzeni",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Wiadomość tekstowa wysłana do %(msisdn)s. Wprowadź kod weryfikacyjny w niej zawarty.",
     "Failed to set pusher state": "Nie udało się ustawić stanu pushera",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
@@ -3315,7 +3296,9 @@
             "error_save_space_settings": "Nie udało się zapisać ustawień przestrzeni.",
             "description_space": "Edytuj ustawienia powiązane z twoją przestrzenią.",
             "save": "Zapisz zmiany",
-            "leave_space": "Opuść przestrzeń"
+            "leave_space": "Opuść przestrzeń",
+            "aliases_section": "Adresy pokoju",
+            "other_section": "Inne"
         },
         "advanced": {
             "unfederated": "Ten pokój nie jest dostępny na zdalnych serwerach Matrix",
@@ -3326,7 +3309,9 @@
             "room_predecessor": "Wyświetl starsze wiadomości w %(roomName)s.",
             "room_id": "Wewnętrzne ID pokoju",
             "room_version_section": "Wersja pokoju",
-            "room_version": "Wersja pokoju:"
+            "room_version": "Wersja pokoju:",
+            "information_section_space": "Informacje przestrzeni",
+            "information_section_room": "Informacje pokoju"
         },
         "delete_avatar_label": "Usuń awatar",
         "upload_avatar_label": "Prześlij awatar",
@@ -3346,6 +3331,20 @@
         "access": {
             "title": "Dostęp",
             "description_space": "Zdecyduj kto może wyświetlić i dołączyć do %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ten pokój mostkuje wiadomości do następujących platform. <a>Dowiedz się więcej.</a>",
+            "empty": "Ten pokój nie mostkuje wiadomości z żadnymi platformami. <a>Dowiedz się więcej.</a>",
+            "title": "Mostki"
+        },
+        "notifications": {
+            "uploaded_sound": "Przesłano dźwięk",
+            "settings_link": "Otrzymuj powiadomienia zgodnie z Twoimi <a>ustawieniami</a>",
+            "sounds_section": "Dźwięki",
+            "notification_sound": "Dźwięk powiadomień",
+            "custom_sound_prompt": "Ustaw nowy niestandardowy dźwięk",
+            "upload_sound_label": "Załaduj własny dźwięk",
+            "browse_button": "Przeglądaj"
         }
     },
     "encryption": {
@@ -4165,7 +4164,13 @@
         "keyword_new": "Nowe słowo kluczowe",
         "class_global": "Globalne",
         "class_other": "Inne",
-        "mentions_keywords": "Wzmianki i słowa kluczowe"
+        "mentions_keywords": "Wzmianki i słowa kluczowe",
+        "default": "Zwykły",
+        "all_messages": "Wszystkie wiadomości",
+        "all_messages_description": "Otrzymuj powiadomienie każdej wiadomości",
+        "mentions_and_keywords": "@wzmianki & słowa kluczowe",
+        "mentions_and_keywords_description": "Otrzymuj powiadomienia tylko z wzmiankami i słowami kluczowymi zgodnie z Twoimi <a>ustawieniami</a>",
+        "mute_description": "Nie otrzymasz żadnych powiadomień"
     },
     "mobile_guide": {
         "toast_title": "Użyj aplikacji by mieć lepsze doświadczenie",

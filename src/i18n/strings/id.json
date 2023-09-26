@@ -3,7 +3,6 @@
     "An error has occurred.": "Telah terjadi kesalahan.",
     "Are you sure you want to reject the invitation?": "Anda yakin menolak undangannya?",
     "Email address": "Alamat email",
-    "Default": "Bawaan",
     "Download %(text)s": "Unduh %(text)s",
     "Failed to reject invitation": "Gagal menolak undangan",
     "Incorrect verification code": "Kode verifikasi tidak benar",
@@ -61,7 +60,6 @@
     "Wednesday": "Rabu",
     "You cannot delete this message. (%(code)s)": "Anda tidak dapat menghapus pesan ini. (%(code)s)",
     "Send": "Kirim",
-    "All messages": "Semua pesan",
     "Invite to this room": "Undang ke ruangan ini",
     "Thursday": "Kamis",
     "Yesterday": "Kemarin",
@@ -338,7 +336,6 @@
     "Information": "Informasi",
     "Widgets": "Widget",
     "Unencrypted": "Tidak Dienkripsi",
-    "Bridges": "Jembatan",
     "Lock": "Gembok",
     "Accepting…": "Menerima…",
     "Italics": "Miring",
@@ -350,8 +347,6 @@
     "Notes": "Nota",
     "edited": "diedit",
     "Re-join": "Bergabung Ulang",
-    "Browse": "Jelajahi",
-    "Sounds": "Suara",
     "Headphones": "Headphone",
     "Anchor": "Jangkar",
     "Bell": "Lonceng",
@@ -425,8 +420,6 @@
     "Sign Up": "Daftar",
     "Add room": "Tambahkan ruangan",
     "Edit message": "Edit pesan",
-    "Notification sound": "Suara notifikasi",
-    "Uploaded sound": "Suara terunggah",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
@@ -435,8 +428,6 @@
     "Room Name": "Nama Ruangan",
     "Main address": "Alamat utama",
     "Phone Number": "Nomor Telepon",
-    "Room Addresses": "Alamat Ruangan",
-    "Room information": "Informasi ruangan",
     "That matches!": "Mereka cocok!",
     "General failure": "Kesalahan umum",
     "Share User": "Bagikan Pengguna",
@@ -487,9 +478,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ruangan tidak ini menjembatani pesan-pesan ke platform apa pun. <a>Pelajari lebih lanjut.</a>",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ruangan ini menjembatani pesan-pesan ke platform berikut ini. <a>Pelajari lebih lanjut.</a>",
-    "Space information": "Informasi space",
     "Close this widget to view it in this panel": "Tutup widget ini untuk menampilkannya di panel ini",
     "Unpin this widget to view it in this panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
     "Pinned messages": "Pesan yang dipasangi pin",
@@ -644,12 +632,6 @@
     "Error changing power level requirement": "Terjadi kesalahan saat mengubah persyaratan tingkat daya",
     "Banned by %(displayName)s": "Dicekal oleh %(displayName)s",
     "Failed to unban": "Gagal untuk menghapus cekalan",
-    "Set a new custom sound": "Atur suara kustom baru",
-    "You won't get any notifications": "Anda tidak akan mendapatkan notifikasi apa pun",
-    "Get notifications as set up in your <a>settings</a>": "Dapatkan notifikasi yang diatur di <a>pengaturan</a> Anda",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dapatkan notifikasi hanya dengan sebutan dan kata kunci yang diatur di <a>pengaturan</a> Anda",
-    "@mentions & keywords": "@sebutan & kata kunci",
-    "Get notified for every message": "Dapatkan notifikasi untuk setiap pesan",
     "Can't load this message": "Tidak dapat memuat pesan ini",
     "Submit logs": "Kirim catatan",
     "Edited at %(date)s. Click to view edits.": "Diedit di %(date)s. Klik untuk melihat editan.",
@@ -1540,7 +1522,6 @@
     "Formatting": "Format",
     "Search all rooms": "Cari semua ruangan",
     "Search this room": "Cari ruangan ini",
-    "Upload custom sound": "Unggah suara kustom",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
     "You do not have permission to invite users": "Anda tidak memiliki izin untuk mengundang pengguna",
@@ -3333,7 +3314,9 @@
             "error_save_space_settings": "Gagal untuk menyimpan pengaturan space.",
             "description_space": "Edit pengaturan yang berkaitan dengan space Anda.",
             "save": "Simpan Perubahan",
-            "leave_space": "Tinggalkan Space"
+            "leave_space": "Tinggalkan Space",
+            "aliases_section": "Alamat Ruangan",
+            "other_section": "Lainnya"
         },
         "advanced": {
             "unfederated": "Ruangan ini tidak dapat diakses oleh pengguna Matrix jarak jauh",
@@ -3344,7 +3327,9 @@
             "room_predecessor": "Lihat pesan-pesan lama di %(roomName)s.",
             "room_id": "ID ruangan internal",
             "room_version_section": "Versi ruangan",
-            "room_version": "Versi ruangan:"
+            "room_version": "Versi ruangan:",
+            "information_section_space": "Informasi space",
+            "information_section_room": "Informasi ruangan"
         },
         "delete_avatar_label": "Hapus avatar",
         "upload_avatar_label": "Unggah avatar",
@@ -3364,6 +3349,20 @@
         "access": {
             "title": "Akses",
             "description_space": "Putuskan siapa yang dapat melihat dan bergabung dengan %(spaceName)s."
+        },
+        "bridges": {
+            "description": "Ruangan ini menjembatani pesan-pesan ke platform berikut ini. <a>Pelajari lebih lanjut.</a>",
+            "empty": "Ruangan tidak ini menjembatani pesan-pesan ke platform apa pun. <a>Pelajari lebih lanjut.</a>",
+            "title": "Jembatan"
+        },
+        "notifications": {
+            "uploaded_sound": "Suara terunggah",
+            "settings_link": "Dapatkan notifikasi yang diatur di <a>pengaturan</a> Anda",
+            "sounds_section": "Suara",
+            "notification_sound": "Suara notifikasi",
+            "custom_sound_prompt": "Atur suara kustom baru",
+            "upload_sound_label": "Unggah suara kustom",
+            "browse_button": "Jelajahi"
         }
     },
     "encryption": {
@@ -4188,7 +4187,13 @@
         "keyword_new": "Kata kunci baru",
         "class_global": "Global",
         "class_other": "Lainnya",
-        "mentions_keywords": "Sebutan & kata kunci"
+        "mentions_keywords": "Sebutan & kata kunci",
+        "default": "Bawaan",
+        "all_messages": "Semua pesan",
+        "all_messages_description": "Dapatkan notifikasi untuk setiap pesan",
+        "mentions_and_keywords": "@sebutan & kata kunci",
+        "mentions_and_keywords_description": "Dapatkan notifikasi hanya dengan sebutan dan kata kunci yang diatur di <a>pengaturan</a> Anda",
+        "mute_description": "Anda tidak akan mendapatkan notifikasi apa pun"
     },
     "mobile_guide": {
         "toast_title": "Gunakan aplikasi untuk pengalaman yang lebih baik",

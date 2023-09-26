@@ -8,7 +8,6 @@
     "Session ID": "Sitzungs-ID",
     "Warning!": "Warnung!",
     "Are you sure you want to reject the invitation?": "Bist du sicher, dass du die Einladung ablehnen willst?",
-    "Default": "Standard",
     "Failed to reject invitation": "Einladung konnte nicht abgelehnt werden",
     "Failed to unban": "Aufheben der Verbannung fehlgeschlagen",
     "Forget room": "Raum entfernen",
@@ -155,7 +154,6 @@
     "Invite to this room": "In diesen Raum einladen",
     "Wednesday": "Mittwoch",
     "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
-    "All messages": "Alle Nachrichten",
     "All Rooms": "In allen Räumen",
     "Thursday": "Donnerstag",
     "Search…": "Suchen…",
@@ -229,8 +227,6 @@
     "Unable to verify phone number.": "Die Telefonnummer kann nicht überprüft werden.",
     "Verification code": "Bestätigungscode",
     "Phone Number": "Telefonnummer",
-    "Room information": "Rauminformationen",
-    "Room Addresses": "Raumadressen",
     "Dog": "Hund",
     "Cat": "Katze",
     "Lion": "Löwe",
@@ -339,9 +335,6 @@
     "Clear personal data": "Persönliche Daten löschen",
     "Deactivate account": "Benutzerkonto deaktivieren",
     "Lock": "Schloss",
-    "Notification sound": "Benachrichtigungston",
-    "Set a new custom sound": "Neuen individuellen Ton festlegen",
-    "Browse": "Durchsuchen",
     "Direct Messages": "Direktnachrichten",
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
@@ -397,7 +390,6 @@
     "Reject & Ignore user": "Ablehnen und Nutzer blockieren",
     "Show more": "Mehr zeigen",
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
-    "Sounds": "Töne",
     "Encrypted by an unverified session": "Von einer nicht verifizierten Sitzung verschlüsselt",
     "Unencrypted": "Unverschlüsselt",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
@@ -418,9 +410,6 @@
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Gib den per SMS an +%(msisdn)s gesendeten Bestätigungscode ein.",
     "Someone is using an unknown session": "Jemand verwendet eine unbekannte Sitzung",
     "This room is end-to-end encrypted": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Dieser Raum leitet Nachrichten von/an folgende(n) Plattformen weiter. <a>Mehr erfahren.</a>",
-    "Bridges": "Brücken",
-    "Uploaded sound": "Hochgeladener Ton",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
     "Error changing power level requirement": "Fehler beim Ändern der Anforderungen für Benutzerrechte",
@@ -1061,7 +1050,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Veröffentlichte Adressen erlauben jedem, den Raum zu betreten.",
     "Published addresses can be used by anyone on any server to join your space.": "Veröffentlichte Adressen erlauben jedem, den Space zu betreten.",
     "This space has no local addresses": "Dieser Space hat keine lokale Adresse",
-    "Space information": "Information über den Space",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "Unnamed audio": "Unbenannte Audiodatei",
     "Show %(count)s other previews": {
@@ -1162,18 +1150,12 @@
     "Yours, or the other users' internet connection": "Die Internetverbindung von dir oder dem anderen Nutzer",
     "The homeserver the user you're verifying is connected to": "Der Heim-Server der Person, die du verifizierst",
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
     "Reply in thread": "In Thread antworten",
-    "Get notifications as set up in your <a>settings</a>": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
     "Forget": "Vergessen",
     "Files": "Dateien",
-    "You won't get any notifications": "Du wirst keine Benachrichtigungen erhalten",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Nur bei Erwähnungen und Schlüsselwörtern benachrichtigen, die du in den <a>Einstellungen</a> konfigurieren kannst",
-    "@mentions & keywords": "@Erwähnungen und Schlüsselwörter",
-    "Get notified for every message": "Bei jeder Nachricht benachrichtigen",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
         "other": "%(count)s Stimmen"
@@ -1540,7 +1522,6 @@
     "Formatting": "Formatierung",
     "Search all rooms": "Alle Räume durchsuchen",
     "Search this room": "Diesen Raum durchsuchen",
-    "Upload custom sound": "Eigenen Ton hochladen",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
@@ -3333,7 +3314,9 @@
             "error_save_space_settings": "Spaceeinstellungen konnten nicht gespeichert werden.",
             "description_space": "Einstellungen vom Space bearbeiten.",
             "save": "Speichern",
-            "leave_space": "Space verlassen"
+            "leave_space": "Space verlassen",
+            "aliases_section": "Raumadressen",
+            "other_section": "Sonstiges"
         },
         "advanced": {
             "unfederated": "Dieser Raum ist von Personen auf anderen Matrix-Servern nicht betretbar",
@@ -3344,7 +3327,9 @@
             "room_predecessor": "Alte Nachrichten in %(roomName)s anzeigen.",
             "room_id": "Interne Raum-ID",
             "room_version_section": "Raumversion",
-            "room_version": "Raumversion:"
+            "room_version": "Raumversion:",
+            "information_section_space": "Information über den Space",
+            "information_section_room": "Rauminformationen"
         },
         "delete_avatar_label": "Avatar löschen",
         "upload_avatar_label": "Profilbild hochladen",
@@ -3364,6 +3349,20 @@
         "access": {
             "title": "Zutritt",
             "description_space": "Konfiguriere, wer %(spaceName)s sehen und betreten kann."
+        },
+        "bridges": {
+            "description": "Dieser Raum leitet Nachrichten von/an folgende(n) Plattformen weiter. <a>Mehr erfahren.</a>",
+            "empty": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
+            "title": "Brücken"
+        },
+        "notifications": {
+            "uploaded_sound": "Hochgeladener Ton",
+            "settings_link": "Du erhältst Benachrichtigungen, wie du sie in den <a>Einstellungen</a> konfiguriert hast",
+            "sounds_section": "Töne",
+            "notification_sound": "Benachrichtigungston",
+            "custom_sound_prompt": "Neuen individuellen Ton festlegen",
+            "upload_sound_label": "Eigenen Ton hochladen",
+            "browse_button": "Durchsuchen"
         }
     },
     "encryption": {
@@ -4188,7 +4187,13 @@
         "keyword_new": "Neues Schlüsselwort",
         "class_global": "Global",
         "class_other": "Sonstiges",
-        "mentions_keywords": "Erwähnungen und Schlüsselwörter"
+        "mentions_keywords": "Erwähnungen und Schlüsselwörter",
+        "default": "Standard",
+        "all_messages": "Alle Nachrichten",
+        "all_messages_description": "Bei jeder Nachricht benachrichtigen",
+        "mentions_and_keywords": "@Erwähnungen und Schlüsselwörter",
+        "mentions_and_keywords_description": "Nur bei Erwähnungen und Schlüsselwörtern benachrichtigen, die du in den <a>Einstellungen</a> konfigurieren kannst",
+        "mute_description": "Du wirst keine Benachrichtigungen erhalten"
     },
     "mobile_guide": {
         "toast_title": "Nutze die App für eine bessere Erfahrung",

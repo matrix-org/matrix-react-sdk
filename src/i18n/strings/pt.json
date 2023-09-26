@@ -1,7 +1,6 @@
 {
     "A new password must be entered.": "Deve ser introduzida uma nova palavra-passe.",
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
-    "Default": "Padrão",
     "Failed to reject invitation": "Falha ao tentar rejeitar convite",
     "Failed to unban": "Não foi possível desfazer o banimento",
     "Filter room members": "Filtrar integrantes da sala",
@@ -134,7 +133,6 @@
     "Monday": "Segunda-feira",
     "Invite to this room": "Convidar para esta sala",
     "Send": "Enviar",
-    "All messages": "Todas as mensagens",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
@@ -809,7 +807,8 @@
             "publish_toggle": "Publicar esta sala ao público no diretório de salas de %(domain)s's?",
             "user_url_previews_default_on": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
             "user_url_previews_default_off": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
-            "url_previews_section": "Pré-visualização de links"
+            "url_previews_section": "Pré-visualização de links",
+            "other_section": "Outros"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos"
@@ -898,7 +897,9 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificações",
-        "class_other": "Outros"
+        "class_other": "Outros",
+        "default": "Padrão",
+        "all_messages": "Todas as mensagens"
     },
     "onboarding": {
         "create_account": "Criar conta"

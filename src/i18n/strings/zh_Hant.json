@@ -6,7 +6,6 @@
     "Authentication": "授權",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "Decrypt %(text)s": "解密 %(text)s",
-    "Default": "預設",
     "Download %(text)s": "下載 %(text)s",
     "Email address": "電子郵件地址",
     "Error decrypting attachment": "解密附件時出錯",
@@ -153,7 +152,6 @@
     "Saturday": "星期六",
     "Monday": "星期一",
     "All Rooms": "所有聊天室",
-    "All messages": "所有訊息",
     "Invite to this room": "邀請加入這個聊天室",
     "You cannot delete this message. (%(code)s)": "您無法刪除此訊息。(%(code)s)",
     "Thursday": "星期四",
@@ -228,8 +226,6 @@
     "Unable to verify phone number.": "無法驗證電話號碼。",
     "Verification code": "驗證碼",
     "Phone Number": "電話號碼",
-    "Room information": "聊天室資訊",
-    "Room Addresses": "聊天室位址",
     "Main address": "主要位址",
     "Room avatar": "聊天室大頭照",
     "Room Name": "聊天室名稱",
@@ -369,11 +365,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家伺服器網址似乎不是有效的 Matrix 家伺服器",
     "Invalid base_url for m.identity_server": "無效的 m.identity_server base_url",
     "Identity server URL does not appear to be a valid identity server": "身分伺服器網址似乎不是有效的身分伺服器",
-    "Uploaded sound": "已上傳的音效",
-    "Sounds": "音效",
-    "Notification sound": "通知音效",
-    "Set a new custom sound": "設定新的自訂音效",
-    "Browse": "瀏覽",
     "Upload all": "上傳全部",
     "Edited at %(date)s. Click to view edits.": "編輯於 %(date)s。點擊以檢視編輯。",
     "Message edits": "訊息編輯紀錄",
@@ -487,8 +478,6 @@
     "You'll need to authenticate with the server to confirm the upgrade.": "您必須透過伺服器驗證以確認升級。",
     "Upgrade your encryption": "升級您的加密",
     "This backup is trusted because it has been restored on this session": "此備份已受信任，因為它已在此工作階段上復原",
-    "This room is bridging messages to the following platforms. <a>Learn more.</a>": "此聊天室已橋接訊息到以下平臺。<a>取得更多詳細資訊。</a>",
-    "Bridges": "橋接",
     "This user has not verified all of their sessions.": "此使用者尚未驗證他們的所有工作階段。",
     "You have verified this user. This user has verified all of their sessions.": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
     "Someone is using an unknown session": "某人正在使用未知的工作階段",
@@ -1062,7 +1051,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天室。",
     "Published addresses can be used by anyone on any server to join your space.": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天空間。",
     "This space has no local addresses": "此聊天空間沒有本機位址",
-    "Space information": "聊天空間資訊",
     "Unnamed audio": "未命名的音訊",
     "Error processing audio message": "處理音訊訊息時出現問題",
     "Show %(count)s other previews": {
@@ -1167,18 +1155,12 @@
     "Yours, or the other users' session": "您或其他使用者的工作階段",
     "Yours, or the other users' internet connection": "您或其他使用者的網際網路連線",
     "The homeserver the user you're verifying is connected to": "您正在驗證的使用者所連線的家伺服器",
-    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "此聊天室不會將訊息橋接至任何平台。<a>取得更多資訊。</a>",
     "Copy link to thread": "複製討論串連結",
     "Thread options": "討論串選項",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
     "Reply in thread": "在討論串中回覆",
     "Forget": "忘記",
     "Files": "檔案",
-    "You won't get any notifications": "不會收到任何通知",
-    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "僅在提及您與您在<a>設定</a>中列出的關鍵字時收到通知",
-    "@mentions & keywords": "@提及與關鍵字",
-    "Get notified for every message": "收到所有訊息的通知",
-    "Get notifications as set up in your <a>settings</a>": "依照您在<a>設定</a>中設定的方式接收通知",
     "Close this widget to view it in this panel": "關閉此小工具以在此面板中檢視",
     "Unpin this widget to view it in this panel": "取消釘選這個小工具以在此面板中檢視",
     "Based on %(count)s votes": {
@@ -1538,7 +1520,6 @@
     "Start DM anyway and never warn me again": "開始直接訊息且不要再次警告",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
     "Formatting": "格式化",
-    "Upload custom sound": "上傳自訂音效",
     "Search all rooms": "搜尋所有聊天室",
     "Search this room": "搜尋此聊天室",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
@@ -3328,7 +3309,9 @@
             "error_save_space_settings": "無法儲存聊天空間設定。",
             "description_space": "編輯您的聊天空間的設定。",
             "save": "儲存變更",
-            "leave_space": "離開聊天空間"
+            "leave_space": "離開聊天空間",
+            "aliases_section": "聊天室位址",
+            "other_section": "其他"
         },
         "advanced": {
             "unfederated": "此聊天室無法被遠端的 Matrix 伺服器存取",
@@ -3339,7 +3322,9 @@
             "room_predecessor": "檢視 %(roomName)s 中較舊的訊息。",
             "room_id": "內部聊天室 ID",
             "room_version_section": "聊天室版本",
-            "room_version": "聊天室版本："
+            "room_version": "聊天室版本：",
+            "information_section_space": "聊天空間資訊",
+            "information_section_room": "聊天室資訊"
         },
         "delete_avatar_label": "刪除大頭照",
         "upload_avatar_label": "上傳大頭照",
@@ -3359,6 +3344,20 @@
         "access": {
             "title": "存取",
             "description_space": "決定誰可以檢視並加入 %(spaceName)s。"
+        },
+        "bridges": {
+            "description": "此聊天室已橋接訊息到以下平臺。<a>取得更多詳細資訊。</a>",
+            "empty": "此聊天室不會將訊息橋接至任何平台。<a>取得更多資訊。</a>",
+            "title": "橋接"
+        },
+        "notifications": {
+            "uploaded_sound": "已上傳的音效",
+            "settings_link": "依照您在<a>設定</a>中設定的方式接收通知",
+            "sounds_section": "音效",
+            "notification_sound": "通知音效",
+            "custom_sound_prompt": "設定新的自訂音效",
+            "upload_sound_label": "上傳自訂音效",
+            "browse_button": "瀏覽"
         }
     },
     "encryption": {
@@ -4183,7 +4182,13 @@
         "keyword_new": "新關鍵字",
         "class_global": "全域",
         "class_other": "其他",
-        "mentions_keywords": "提及與關鍵字"
+        "mentions_keywords": "提及與關鍵字",
+        "default": "預設",
+        "all_messages": "所有訊息",
+        "all_messages_description": "收到所有訊息的通知",
+        "mentions_and_keywords": "@提及與關鍵字",
+        "mentions_and_keywords_description": "僅在提及您與您在<a>設定</a>中列出的關鍵字時收到通知",
+        "mute_description": "不會收到任何通知"
     },
     "mobile_guide": {
         "toast_title": "使用應用程式以取得更好的體驗",

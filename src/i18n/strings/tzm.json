@@ -163,6 +163,9 @@
     "room_settings": {
         "permissions": {
             "permissions_section": "Tisirag"
+        },
+        "general": {
+            "other_section": "Yaḍn"
         }
     },
     "settings": {
