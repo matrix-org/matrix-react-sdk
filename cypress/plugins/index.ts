@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
-import * as installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 import cloudPlugin from "cypress-cloud/plugin";
 import { initPlugins } from "cypress-plugin-init";
 
