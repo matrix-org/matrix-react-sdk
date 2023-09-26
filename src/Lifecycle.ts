@@ -660,7 +660,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             return false;
         }
 
-        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) || undefined;
+        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
         if (pickleKey) {
             logger.log("Got pickle key");
         } else {
