@@ -402,11 +402,6 @@
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
     "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
     "Clear personal data": "Persoonlike gegeevns wissn",
-    "Checking server": "Server wor gecontroleerd",
-    "Disconnect from the identity server <idserver />?": "Wil je de verbindienge me den identiteitsserver <idserver /> verbreekn?",
-    "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Je makt vo de moment gebruuk van <server></server> vo deur je contactn gevoundn te kunn wordn, en von hunder te kunn viendn. Je kut hierounder jen identiteitsserver wyzign.",
-    "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Je makt vo de moment geen gebruuk van een identiteitsserver. Voegt der hierounder één toe vo deur je contactn gevoundn te kunn wordn en von hunder te kunn viendn.",
-    "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "De verbindienge me jen identiteitsserver verbreekn goat dervoorn zorgn da je nie mi deur andere gebruukers gevoundn goa kunn wordn, en dat andere menschn je nie via e-mail of telefong goan kunn uutnodign.",
     "Discovery": "Ountdekkienge",
     "Deactivate account": "Account deactiveern",
     "Unable to revoke sharing for email address": "Kostege ’t deeln vo dat e-mailadresse hier nie intrekkn",
@@ -418,16 +413,9 @@
     "Discovery options will appear once you have added a phone number above.": "Ountdekkiengsopties goan verschynn a j’e telefongnumero toegevoegd ghed èt.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "’t Is een smse versteur noa +%(msisdn)s. Gift de verificoasjecode in da derin stoat.",
     "Command Help": "Hulp by ipdrachtn",
-    "The identity server you have chosen does not have any terms of service.": "Den identiteitsserver da je gekozen ghed èt, èt geen dienstvoorwoardn.",
-    "Terms of service not accepted or the identity server is invalid.": "Dienstvoorwoardn nie anveird, of den identiteitsserver is oungeldig.",
-    "Enter a new identity server": "Gift e nieuwen identiteitsserver in",
     "Remove %(email)s?": "%(email)s verwydern?",
     "Remove %(phone)s?": "%(phone)s verwydern?",
     "Explore rooms": "Gesprekkn ountdekkn",
-    "Identity server (%(server)s)": "Identiteitsserver (%(server)s)",
-    "Could not connect to identity server": "Kostege geen verbindienge moakn me den identiteitsserver",
-    "Not a valid identity server (status code %(code)s)": "Geen geldigen identiteitsserver (statuscode %(code)s)",
-    "Identity server URL must be HTTPS": "Den identiteitsserver-URL moet HTTPS zyn",
     "common": {
         "analytics": "Statistische gegeevns",
         "error": "Foute",
@@ -1185,5 +1173,19 @@
     "lightbox": {
         "rotate_left": "Links droain",
         "rotate_right": "Rechts droain"
+    },
+    "identity_server": {
+        "url_not_https": "Den identiteitsserver-URL moet HTTPS zyn",
+        "error_invalid": "Geen geldigen identiteitsserver (statuscode %(code)s)",
+        "error_connection": "Kostege geen verbindienge moakn me den identiteitsserver",
+        "checking": "Server wor gecontroleerd",
+        "error_invalid_or_terms": "Dienstvoorwoardn nie anveird, of den identiteitsserver is oungeldig.",
+        "no_terms": "Den identiteitsserver da je gekozen ghed èt, èt geen dienstvoorwoardn.",
+        "disconnect_server": "Wil je de verbindienge me den identiteitsserver <idserver /> verbreekn?",
+        "url": "Identiteitsserver (%(server)s)",
+        "description_connected": "Je makt vo de moment gebruuk van <server></server> vo deur je contactn gevoundn te kunn wordn, en von hunder te kunn viendn. Je kut hierounder jen identiteitsserver wyzign.",
+        "description_disconnected": "Je makt vo de moment geen gebruuk van een identiteitsserver. Voegt der hierounder één toe vo deur je contactn gevoundn te kunn wordn en von hunder te kunn viendn.",
+        "disconnect_warning": "De verbindienge me jen identiteitsserver verbreekn goat dervoorn zorgn da je nie mi deur andere gebruukers gevoundn goa kunn wordn, en dat andere menschn je nie via e-mail of telefong goan kunn uutnodign.",
+        "url_field_label": "Gift e nieuwen identiteitsserver in"
     }
 }

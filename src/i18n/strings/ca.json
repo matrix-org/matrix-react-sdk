@@ -187,7 +187,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. Gestiona'l a <settings>Configuració</settings>.",
     "Integrations not allowed": "No es permeten integracions",
     "Integrations are disabled": "Les integracions estan desactivades",
-    "Manage integrations": "Gestió d'integracions",
     "Room Settings - %(roomName)s": "Configuració de sala - %(roomName)s",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
@@ -199,8 +198,6 @@
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
     "Explore rooms": "Explora sales",
-    "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu.",
-    "Could not connect to identity server": "No s'ha pogut connectar amb el servidor d'identitat",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -805,5 +802,12 @@
     },
     "quick_settings": {
         "all_settings": "Totes les configuracions"
+    },
+    "identity_server": {
+        "error_connection": "No s'ha pogut connectar amb el servidor d'identitat"
+    },
+    "integration_manager": {
+        "manage_title": "Gestió d'integracions",
+        "explainer": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu."
     }
 }

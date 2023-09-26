@@ -46,7 +46,6 @@
     "Search…": "Arezzu…",
     "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
-    "None": "Walu",
     "Folder": "Asdaw",
     "Guitar": "Agiṭaṛ",
     "Ball": "Tacama",
@@ -169,7 +168,8 @@
     "settings": {
         "security": {
             "cross_signing_homeserver_support_exists": "illa",
-            "key_backup_algorithm": "Talguritmit:"
+            "key_backup_algorithm": "Talguritmit:",
+            "key_backup_active_version_none": "Walu"
         },
         "general": {
             "account_section": "Amiḍan",
@@ -181,5 +181,8 @@
         "enable_prompt_toast_title": "Tineɣmisin",
         "colour_none": "Walu",
         "class_other": "Yaḍn"
+    },
+    "labs_mjolnir": {
+        "rules_empty": "Walu"
     }
 }

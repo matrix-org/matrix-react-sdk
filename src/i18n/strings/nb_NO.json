@@ -78,7 +78,6 @@
     "Folder": "Mappe",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnumre",
-    "None": "Ingen",
     "Browse": "Bla",
     "Unable to verify phone number.": "Klarte ikke å verifisere telefonnummeret.",
     "Verification code": "Verifikasjonskode",
@@ -135,12 +134,6 @@
     "Trophy": "Trofé",
     "Ball": "Ball",
     "Guitar": "Gitar",
-    "Checking server": "Sjekker tjeneren",
-    "Change identity server": "Bytt ut identitetstjener",
-    "You should:": "Du burde:",
-    "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Å bruke en identitetstjener er valgfritt. Dersom du velger å ikke bruke en identitetstjener, vil du ikke kunne oppdages av andre brukere, og du vil ikke kunne invitere andre ut i fra E-postadresse eller telefonnummer.",
-    "Do not use an identity server": "Ikke bruk en identitetstjener",
-    "Manage integrations": "Behandle integreringer",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Godkjenn identitetstjenerens (%(serverName)s) brukervilkår, slik at du kan bli oppdaget ut i fra E-postadresse eller telefonnummer.",
     "Account management": "Kontobehandling",
     "Deactivate Account": "Deaktiver kontoen",
@@ -229,8 +222,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
     "Back up your keys before signing out to avoid losing them.": "Ta sikkerhetskopi av nøklene dine før du logger av for å unngå å miste dem.",
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
-    "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Hvis du ikke ønsker å bruke <server /> til å oppdage og bli oppdaget av eksisterende kontakter som du kjenner, skriv inn en annen identitetstjener nedenfor.",
-    "Enter a new identity server": "Skriv inn en ny identitetstjener",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
     "Share Link to User": "Del en lenke til brukeren",
@@ -285,7 +276,6 @@
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Aeroplane": "Fly",
-    "Disconnect anyway": "Koble fra likevel",
     "Uploaded sound": "Lastet opp lyd",
     "Incorrect verification code": "Ugyldig verifiseringskode",
     "Unable to add email address": "Klarte ikke å legge til E-postadressen",
@@ -337,7 +327,6 @@
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "wait and try again later": "vent og prøv igjen senere",
     "Remove %(phone)s?": "Vil du fjerne %(phone)s?",
     "Message preview": "Meldingsforhåndsvisning",
     "This room has no local addresses": "Dette rommet har ikke noen lokale adresser",
@@ -707,11 +696,6 @@
     "Croatia": "Kroatia",
     "Costa Rica": "Costa Rica",
     "Cook Islands": "Cook-øyene",
-    "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integreringsbehandlere mottar oppsettsdata, og kan endre på moduler, sende rominvitasjoner, og bestemme styrkenivåer på dine vegne.",
-    "Use an integration manager to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler til å behandle botter, moduler, og klistremerkepakker.",
-    "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler <b>(%(serverName)s)</b> til å behandle botter, moduler, og klistremerkepakker.",
-    "Identity server (%(server)s)": "Identitetstjener (%(server)s)",
-    "Could not connect to identity server": "Kunne ikke koble til identitetsserveren",
     "Results": "Resultat",
     "Retry all": "Prøv alle igjen",
     "Sent": "Sendt",
@@ -720,7 +704,6 @@
     "Add reaction": "Legg til reaksjon",
     "Downloading": "Laster ned",
     "Connection failed": "Tilkobling mislyktes",
-    "Address": "Adresse",
     "Corn": "Mais",
     "Cloud": "Sky",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -1086,7 +1069,8 @@
             "restore_key_backup": "Gjenopprett fra sikkerhetskopi",
             "key_backup_complete": "Alle nøkler er sikkerhetskopiert",
             "key_backup_algorithm": "Algoritme:",
-            "key_backup_inactive_warning": "Dine nøkler <b>har ikke blitt sikkerhetskopiert fra denne økten</b>."
+            "key_backup_inactive_warning": "Dine nøkler <b>har ikke blitt sikkerhetskopiert fra denne økten</b>.",
+            "key_backup_active_version_none": "Ingen"
         },
         "preferences": {
             "room_list_heading": "Romliste",
@@ -1470,7 +1454,8 @@
         "delete_avatar_label": "Slett profilbilde",
         "upload_avatar_label": "Last opp en avatar",
         "visibility": {
-            "title": "Synlighet"
+            "title": "Synlighet",
+            "alias_section": "Adresse"
         }
     },
     "encryption": {
@@ -1678,7 +1663,8 @@
         "title": "Ignorerte brukere",
         "advanced_warning": "⚠ Disse innstillingene er ment for avanserte brukere.",
         "personal_new_label": "Tjener- eller bruker-ID-en som skal ignoreres",
-        "personal_new_placeholder": "f.eks.: @bot:* eller example.org"
+        "personal_new_placeholder": "f.eks.: @bot:* eller example.org",
+        "rules_empty": "Ingen"
     },
     "create_space": {
         "public_heading": "Ditt offentlige område",
@@ -1793,5 +1779,24 @@
     "lightbox": {
         "rotate_left": "Roter til venstre",
         "rotate_right": "Roter til høyre"
+    },
+    "identity_server": {
+        "error_connection": "Kunne ikke koble til identitetsserveren",
+        "checking": "Sjekker tjeneren",
+        "change": "Bytt ut identitetstjener",
+        "suggestions": "Du burde:",
+        "suggestions_3": "vent og prøv igjen senere",
+        "disconnect_anyway": "Koble fra likevel",
+        "url": "Identitetstjener (%(server)s)",
+        "change_server_prompt": "Hvis du ikke ønsker å bruke <server /> til å oppdage og bli oppdaget av eksisterende kontakter som du kjenner, skriv inn en annen identitetstjener nedenfor.",
+        "description_optional": "Å bruke en identitetstjener er valgfritt. Dersom du velger å ikke bruke en identitetstjener, vil du ikke kunne oppdages av andre brukere, og du vil ikke kunne invitere andre ut i fra E-postadresse eller telefonnummer.",
+        "do_not_use": "Ikke bruk en identitetstjener",
+        "url_field_label": "Skriv inn en ny identitetstjener"
+    },
+    "integration_manager": {
+        "use_im_default": "Bruk en integreringsbehandler <b>(%(serverName)s)</b> til å behandle botter, moduler, og klistremerkepakker.",
+        "use_im": "Bruk en integreringsbehandler til å behandle botter, moduler, og klistremerkepakker.",
+        "manage_title": "Behandle integreringer",
+        "explainer": "Integreringsbehandlere mottar oppsettsdata, og kan endre på moduler, sende rominvitasjoner, og bestemme styrkenivåer på dine vegne."
     }
 }

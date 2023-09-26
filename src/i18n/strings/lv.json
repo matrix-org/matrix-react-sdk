@@ -191,7 +191,6 @@
     },
     "Encryption not enabled": "Šifrēšana nav iespējota",
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
-    "None": "Neviena",
     "Room options": "Istabas opcijas",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
@@ -237,9 +236,6 @@
     "You accepted": "Jūs akceptējāt",
     "IRC display name width": "IRC parādāmā vārda platums",
     "%(displayName)s cancelled verification.": "%(displayName)s atcēla verificēšanu.",
-    "Manage integrations": "Pārvaldīt integrācijas",
-    "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Pašlaik jūs izmantojat <server></server>, lai atklātu esošos kontaktus un jūs būtu atklājams citiem. Jūs varat mainīt identitātes serveri zemāk.",
-    "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Pašlaik jūs neizmantojat nevienu identitātes serveri. Lai atklātu esošos kontaktus un jūs būtu atklājams citiem, pievienojiet kādu identitātes serveri zemāk.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
     "Deactivate account": "Deaktivizēt kontu",
     "Phone Number": "Tālruņa numurs",
@@ -404,7 +400,6 @@
     "Upload files": "Failu augšupielāde",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Šie faili <b>pārsniedz</b> augšupielādes izmēra ierobežojumu %(limit)s.",
     "Upload files (%(current)s of %(total)s)": "Failu augšupielāde (%(current)s no %(total)s)",
-    "Could not connect to identity server": "Neizdevās pieslēgties identitāšu serverim",
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambija",
     "Yemen": "Jemena",
@@ -641,7 +636,6 @@
     "Sending": "Sūta",
     "Can't load this message": "Nevar ielādēt šo ziņu",
     "Send voice message": "Sūtīt balss ziņu",
-    "Address": "Adrese",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
@@ -665,7 +659,6 @@
         "one": "Rādīt %(count)s citu priekšskatījumu",
         "other": "Rādīt %(count)s citus priekšskatījumus"
     },
-    "Enter a new identity server": "Ievadiet jaunu identitāšu serveri",
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -1073,7 +1066,8 @@
             "bulk_options_reject_all_invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
             "message_search_section": "Ziņu meklēšana",
             "encryption_individual_verification_mode": "Uzskatīt par uzticamām tikai individuāli verificētas lietotāja sesijas, nepaļaujoties uz ierīču cross-signing funkcionalitāti.",
-            "key_backup_algorithm": "Algoritms:"
+            "key_backup_algorithm": "Algoritms:",
+            "key_backup_active_version_none": "Neviena"
         },
         "preferences": {
             "room_list_heading": "Istabu saraksts",
@@ -1606,7 +1600,8 @@
             "description_space": "Nosakiet, kas var skatīt un pievienoties %(spaceName)s."
         },
         "visibility": {
-            "guest_access_label": "Iespējot piekļuvi viesiem"
+            "guest_access_label": "Iespējot piekļuvi viesiem",
+            "alias_section": "Adrese"
         }
     },
     "encryption": {
@@ -2048,5 +2043,17 @@
     "lightbox": {
         "rotate_left": "Rotēt pa kreisi",
         "rotate_right": "Rotēt pa labi"
+    },
+    "labs_mjolnir": {
+        "rules_empty": "Neviena"
+    },
+    "identity_server": {
+        "error_connection": "Neizdevās pieslēgties identitāšu serverim",
+        "description_connected": "Pašlaik jūs izmantojat <server></server>, lai atklātu esošos kontaktus un jūs būtu atklājams citiem. Jūs varat mainīt identitātes serveri zemāk.",
+        "description_disconnected": "Pašlaik jūs neizmantojat nevienu identitātes serveri. Lai atklātu esošos kontaktus un jūs būtu atklājams citiem, pievienojiet kādu identitātes serveri zemāk.",
+        "url_field_label": "Ievadiet jaunu identitāšu serveri"
+    },
+    "integration_manager": {
+        "manage_title": "Pārvaldīt integrācijas"
     }
 }

@@ -75,7 +75,6 @@
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
-    "Checking server": "Tjekker server",
     "Local address": "Lokal adresse",
     "This room has no local addresses": "Dette rum har ingen lokal adresse",
     "The conversation continues here.": "Samtalen fortsætter her.",
@@ -860,5 +859,8 @@
         "enable_prompt_toast_title": "Notifikationer",
         "error_change_title": "Skift notifikations indstillinger",
         "class_other": "Andre"
+    },
+    "identity_server": {
+        "checking": "Tjekker server"
     }
 }

@@ -192,7 +192,6 @@
     "Email addresses": "Мејл адресе",
     "Phone numbers": "Бројеви телефона",
     "Discovery": "Откриће",
-    "None": "Ништа",
     "Discovery options will appear once you have added an email above.": "Опције откривања појавиће се након што додате мејл адресу изнад.",
     "Discovery options will appear once you have added a phone number above.": "Опције откривања појавиће се након што додате број телефона изнад.",
     "Email Address": "Е-адреса",
@@ -831,7 +830,8 @@
             "bulk_options_accept_all_invites": "Прихвати све %(invitedRooms)s позивнице",
             "bulk_options_reject_all_invites": "Одбиј све позивнице за собе %(invitedRooms)s",
             "message_search_section": "Претрага порука",
-            "message_search_disabled": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге."
+            "message_search_disabled": "Сигурно локално кеширајте шифроване поруке да би се појавиле у резултатима претраге.",
+            "key_backup_active_version_none": "Ништа"
         },
         "voip": {
             "mirror_local_feed": "Копирај довод локалног видеа"
@@ -1463,7 +1463,8 @@
     },
     "labs_mjolnir": {
         "rules_user": "Корисничка правила",
-        "advanced_warning": "⚠ Ова подешавања су намењена напредним корисницима."
+        "advanced_warning": "⚠ Ова подешавања су намењена напредним корисницима.",
+        "rules_empty": "Ништа"
     },
     "failed_load_async_component": "Не могу да учитам! Проверите повезаност и пробајте поново.",
     "upload_failed_generic": "Фајл „%(fileName)s“ није отпремљен.",

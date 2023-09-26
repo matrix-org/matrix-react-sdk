@@ -205,7 +205,6 @@
     "Bridges": "Droichid",
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
-    "None": "Níl aon cheann",
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
     "Success!": "Rath!",
@@ -342,7 +341,6 @@
     "Verification code": "Cód fíoraithe",
     "Results": "Torthaí",
     "Decrypting": "Ag Díchriptiú",
-    "Address": "Seoladh",
     "Sent": "Seolta",
     "Sending": "Ag Seoladh",
     "Avatar": "Abhatár",
@@ -584,7 +582,8 @@
             "encryption_section": "Criptiúchán",
             "secret_storage_ready": "réidh",
             "delete_backup": "Scrios cúltaca",
-            "key_backup_algorithm": "Algartam:"
+            "key_backup_algorithm": "Algartam:",
+            "key_backup_active_version_none": "Níl aon cheann"
         },
         "general": {
             "account_section": "Cuntas",
@@ -744,7 +743,8 @@
             "room_version": "Leagan seomra:"
         },
         "visibility": {
-            "title": "Léargas"
+            "title": "Léargas",
+            "alias_section": "Seoladh"
         },
         "access": {
             "title": "Rochtain"
@@ -853,7 +853,8 @@
     },
     "labs_mjolnir": {
         "ban_reason": "Neamhairde/Tachta",
-        "title": "Úsáideoirí neamhairde"
+        "title": "Úsáideoirí neamhairde",
+        "rules_empty": "Níl aon cheann"
     },
     "failed_load_async_component": "Ní féidir a lódáil! Seiceáil do nascacht líonra agus bain triail eile as.",
     "upload_failed_generic": "Níor éirigh leis an gcomhad '%(fileName)s' a uaslódáil.",

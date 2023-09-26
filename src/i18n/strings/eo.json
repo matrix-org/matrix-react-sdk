@@ -402,23 +402,6 @@
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
-    "Do not use an identity server": "Ne uzi identigan servilon",
-    "Enter a new identity server": "Enigi novan identigan servilon",
-    "Checking server": "Kontrolante servilon",
-    "Change identity server": "Ŝanĝi identigan servilon",
-    "Disconnect from the identity server <current /> and connect to <new /> instead?": "Ĉu malkonekti de la nuna identiga servilo <current /> kaj konekti anstataŭe al <new />?",
-    "Terms of service not accepted or the identity server is invalid.": "Aŭ uzkondiĉoj ne akceptiĝis, aŭ la identiga servilo estas nevalida.",
-    "The identity server you have chosen does not have any terms of service.": "La identiga servilo, kiun vi elektis, havas neniujn uzkondiĉojn.",
-    "Disconnect identity server": "Malkonekti la identigan servilon",
-    "Disconnect from the identity server <idserver />?": "Ĉu malkonektiĝi de la identiga servilo <idserver />?",
-    "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Vi ankoraŭ <b>havigas siajn personajn datumojn</b> je la identiga servilo <idserver />.",
-    "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Ni rekomendas, ke vi forigu viajn retpoŝtadresojn kaj telefonnumerojn de la identiga servilo, antaŭ ol vi malkonektiĝos.",
-    "Disconnect anyway": "Tamen malkonekti",
-    "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Vi nun uzas servilon <server></server> por trovi kontaktojn, kaj troviĝi de ili. Vi povas ŝanĝi vian identigan servilon sube.",
-    "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Se vi ne volas uzi servilon <server /> por trovi kontaktojn kaj troviĝi mem, enigu alian identigan servilon sube.",
-    "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Vi nun ne uzas identigan servilon. Por trovi kontaktojn kaj troviĝi de ili mem, aldonu iun sube.",
-    "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Malkonektiĝo de via identiga servilo signifas, ke vi ne povos troviĝi de aliaj uzantoj, kaj vi ne povos memage inviti aliajn per retpoŝto aŭ telefono.",
-    "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Vi ne devas uzi identigan servilon. Se vi tion elektos, vi ne povos troviĝi de aliaj uzantoj, kaj vi ne povos memage inviti ilin per retpoŝto aŭ telefono.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Konsentu al uzkondiĉoj de la identiga servilo (%(serverName)s) por esti trovita per retpoŝtadreso aŭ telefonnumero.",
     "Discovery": "Trovado",
     "Deactivate account": "Malaktivigi konton",
@@ -441,11 +424,6 @@
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
     "Italics": "Kursive",
     "Explore rooms": "Esplori ĉambrojn",
-    "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
-    "You should:": "Vi devus:",
-    "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrolu kromprogramojn de via foliumilo je ĉio, kio povus malhelpi konekton al la identiga servilo (ekzemple « Privacy Badger »)",
-    "contact the administrators of identity server <idserver />": "kontaktu la administrantojn de la identiga servilo <idserver />",
-    "wait and try again later": "atendu, kaj reprovu poste",
     "Unable to revoke sharing for email address": "Ne povas senvalidigi havigadon je retpoŝtadreso",
     "Unable to share email address": "Ne povas havigi vian retpoŝtadreson",
     "Your email address hasn't been verified yet": "Via retpoŝtadreso ankoraŭ ne kontroliĝis",
@@ -506,9 +484,7 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
-    "Manage integrations": "Administri kunigojn",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
-    "None": "Neniu",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Ĉi tiu ĉambro transpontigas mesaĝojn al la jenaj platformoj. <a>Eksciu plion.</a>",
     "Bridges": "Pontoj",
     "This user has not verified all of their sessions.": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
@@ -1090,13 +1066,6 @@
         "other": "Nun aliĝante al %(count)s ĉambroj"
     },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton.",
-    "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Kunigiloj ricevas agordajn datumojn, kaj povas modifi fenestraĵojn, sendi invitojn al ĉambroj, kaj vianome agordi povnivelojn.",
-    "Use an integration manager to manage bots, widgets, and sticker packs.": "Uzu kunigilon por administrado de robotoj, fenestraĵoj, kaj glumarkaroj.",
-    "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Uzu kunigilon <b>(%(serverName)s)</b> por administrado de robotoj, fenestraĵoj, kaj glumarkaroj.",
-    "Identity server (%(server)s)": "Identiga servilo (%(server)s)",
-    "Could not connect to identity server": "Ne povis konektiĝi al identiga servilo",
-    "Not a valid identity server (status code %(code)s)": "Nevalida identiga servilo (statkodo %(code)s)",
-    "Address": "Adreso",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
     "Send voice message": "Sendi voĉmesaĝon",
@@ -1105,7 +1074,6 @@
         "other": "Montri %(count)s aliajn antaŭrigardojn"
     },
     "Space information": "Informoj pri aro",
-    "Identity server URL must be HTTPS": "URL de identiga servilo devas esti je HTTPS",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -1735,7 +1703,8 @@
             "key_backup_connect": "Konekti ĉi tiun salutaĵon al Savkopiado de ŝlosiloj",
             "key_backup_complete": "Ĉiuj ŝlosiloj estas savkopiitaj",
             "key_backup_algorithm": "Algoritmo:",
-            "key_backup_inactive_warning": "Viaj ŝlosiloj <b>ne estas savkopiataj el ĉi tiu salutaĵo</b>."
+            "key_backup_inactive_warning": "Viaj ŝlosiloj <b>ne estas savkopiataj el ĉi tiu salutaĵo</b>.",
+            "key_backup_active_version_none": "Neniu"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",
@@ -2484,7 +2453,8 @@
             "history_visibility_anyone_space": "Antaŭrigardi aron",
             "history_visibility_anyone_space_description": "Povigi personojn antaŭrigardi vian aron antaŭ aliĝo.",
             "history_visibility_anyone_space_recommendation": "Rekomendita por publikaj aroj.",
-            "guest_access_label": "Ŝalti aliron de gastoj"
+            "guest_access_label": "Ŝalti aliron de gastoj",
+            "alias_section": "Adreso"
         },
         "access": {
             "title": "Aliro",
@@ -2979,7 +2949,8 @@
         "lists_heading": "Abonataj listoj",
         "lists_description_1": "Abono de listo de forbaroj aligos vin al ĝi!",
         "lists_description_2": "Se vi ne volas tion, bonvolu uzi alian ilon por malatenti uzantojn.",
-        "lists_new_label": "Ĉambra identigilo aŭ adreso de listo de forbaroj"
+        "lists_new_label": "Ĉambra identigilo aŭ adreso de listo de forbaroj",
+        "rules_empty": "Neniu"
     },
     "create_space": {
         "name_required": "Bonvolu enigi nomon por la aro",
@@ -3211,6 +3182,38 @@
     "a11y_jump_first_unread_room": "Salti al unua nelegita ĉambro.",
     "integration_manager": {
         "error_connecting_heading": "Ne povas konektiĝi al kunigilo",
-        "error_connecting": "La kunigilo estas eksterreta aŭ ne povas atingi vian hejmservilon."
+        "error_connecting": "La kunigilo estas eksterreta aŭ ne povas atingi vian hejmservilon.",
+        "use_im_default": "Uzu kunigilon <b>(%(serverName)s)</b> por administrado de robotoj, fenestraĵoj, kaj glumarkaroj.",
+        "use_im": "Uzu kunigilon por administrado de robotoj, fenestraĵoj, kaj glumarkaroj.",
+        "manage_title": "Administri kunigojn",
+        "explainer": "Kunigiloj ricevas agordajn datumojn, kaj povas modifi fenestraĵojn, sendi invitojn al ĉambroj, kaj vianome agordi povnivelojn."
+    },
+    "identity_server": {
+        "url_not_https": "URL de identiga servilo devas esti je HTTPS",
+        "error_invalid": "Nevalida identiga servilo (statkodo %(code)s)",
+        "error_connection": "Ne povis konektiĝi al identiga servilo",
+        "checking": "Kontrolante servilon",
+        "change": "Ŝanĝi identigan servilon",
+        "change_prompt": "Ĉu malkonekti de la nuna identiga servilo <current /> kaj konekti anstataŭe al <new />?",
+        "error_invalid_or_terms": "Aŭ uzkondiĉoj ne akceptiĝis, aŭ la identiga servilo estas nevalida.",
+        "no_terms": "La identiga servilo, kiun vi elektis, havas neniujn uzkondiĉojn.",
+        "disconnect": "Malkonekti la identigan servilon",
+        "disconnect_server": "Ĉu malkonektiĝi de la identiga servilo <idserver />?",
+        "disconnect_offline_warning": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
+        "suggestions": "Vi devus:",
+        "suggestions_1": "kontrolu kromprogramojn de via foliumilo je ĉio, kio povus malhelpi konekton al la identiga servilo (ekzemple « Privacy Badger »)",
+        "suggestions_2": "kontaktu la administrantojn de la identiga servilo <idserver />",
+        "suggestions_3": "atendu, kaj reprovu poste",
+        "disconnect_anyway": "Tamen malkonekti",
+        "disconnect_personal_data_warning_1": "Vi ankoraŭ <b>havigas siajn personajn datumojn</b> je la identiga servilo <idserver />.",
+        "disconnect_personal_data_warning_2": "Ni rekomendas, ke vi forigu viajn retpoŝtadresojn kaj telefonnumerojn de la identiga servilo, antaŭ ol vi malkonektiĝos.",
+        "url": "Identiga servilo (%(server)s)",
+        "description_connected": "Vi nun uzas servilon <server></server> por trovi kontaktojn, kaj troviĝi de ili. Vi povas ŝanĝi vian identigan servilon sube.",
+        "change_server_prompt": "Se vi ne volas uzi servilon <server /> por trovi kontaktojn kaj troviĝi mem, enigu alian identigan servilon sube.",
+        "description_disconnected": "Vi nun ne uzas identigan servilon. Por trovi kontaktojn kaj troviĝi de ili mem, aldonu iun sube.",
+        "disconnect_warning": "Malkonektiĝo de via identiga servilo signifas, ke vi ne povos troviĝi de aliaj uzantoj, kaj vi ne povos memage inviti aliajn per retpoŝto aŭ telefono.",
+        "description_optional": "Vi ne devas uzi identigan servilon. Se vi tion elektos, vi ne povos troviĝi de aliaj uzantoj, kaj vi ne povos memage inviti ilin per retpoŝto aŭ telefono.",
+        "do_not_use": "Ne uzi identigan servilon",
+        "url_field_label": "Enigi novan identigan servilon"
     }
 }

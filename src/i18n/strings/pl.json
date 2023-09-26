@@ -288,30 +288,9 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
     "Back up your keys before signing out to avoid losing them.": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
-    "Checking server": "Sprawdzanie serwera",
-    "Terms of service not accepted or the identity server is invalid.": "Warunki użytkowania nieakceptowane lub serwer tożsamości jest nieprawidłowy.",
-    "The identity server you have chosen does not have any terms of service.": "Serwer tożsamości który został wybrany nie posiada warunków użytkowania.",
-    "Disconnect from the identity server <idserver />?": "Odłączyć od serwera tożsamości <idserver />?",
-    "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Używasz <server></server>﻿, aby odnajdywać i móc być odnajdywanym przez istniejące kontakty, które znasz. Możesz zmienić serwer tożsamości poniżej.",
-    "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Nie używasz serwera tożsamości. Aby odkrywać i być odkrywanym przez istniejące kontakty które znasz, dodaj jeden poniżej.",
-    "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Odłączenie się od serwera tożsamości oznacza, że inni nie będą mogli Cię odnaleźć ani Ty nie będziesz w stanie zaprosić nikogo za pomocą e-maila czy telefonu.",
-    "Enter a new identity server": "Wprowadź nowy serwer tożsamości",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Wyrażasz zgodę na warunki użytkowania serwera%(serverName)s aby pozwolić na odkrywanie Ciebie za pomocą adresu e-mail oraz numeru telefonu.",
     "Discovery": "Odkrywanie",
     "Deactivate account": "Dezaktywuj konto",
-    "Change identity server": "Zmień serwer tożsamości",
-    "Disconnect from the identity server <current /> and connect to <new /> instead?": "Rozłączyć się z bieżącym serwerem tożsamości <current /> i połączyć się z <new />?",
-    "Disconnect identity server": "Rozłącz serwer tożsamości",
-    "You should:": "Należy:",
-    "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "sprawdzić rozszerzenia przeglądarki, które mogą blokować serwer tożsamości (takie jak Privacy Badger)",
-    "contact the administrators of identity server <idserver />": "skontaktować się z administratorami serwera tożsamości <idserver />",
-    "wait and try again later": "zaczekaj i spróbuj ponownie później",
-    "Disconnect anyway": "Odłącz mimo to",
-    "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "W dalszym ciągu <b>udostępniasz swoje dane osobowe</b> na serwerze tożsamości <idserver />.",
-    "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Zalecamy, by usunąć swój adres e-mail i numer telefonu z serwera tożsamości przed odłączeniem.",
-    "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Jeżeli nie chcesz używać <server /> do odnajdywania i bycia odnajdywanym przez osoby, które znasz, wpisz inny serwer tożsamości poniżej.",
-    "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Używanie serwera tożsamości jest opcjonalne. Jeżeli postanowisz nie używać serwera tożsamości, pozostali użytkownicy nie będą w stanie Cię odnaleźć ani nie będziesz mógł zaprosić innych po adresie e-mail czy numerze telefonu.",
-    "Do not use an identity server": "Nie używaj serwera tożsamości",
     "Add room": "Dodaj pokój",
     "Request media permissions": "Zapytaj o uprawnienia",
     "Voice & Video": "Głos i wideo",
@@ -356,7 +335,6 @@
     "Cancel All": "Anuluj wszystko",
     "Explore rooms": "Przeglądaj pokoje",
     "Success!": "Sukces!",
-    "Manage integrations": "Zarządzaj integracjami",
     "%(count)s verified sessions": {
         "other": "%(count)s zweryfikowanych sesji",
         "one": "1 zweryfikowana sesja"
@@ -569,7 +547,6 @@
     "Accepting…": "Akceptowanie…",
     "Re-join": "Dołącz ponownie",
     "Unencrypted": "Nieszyfrowane",
-    "None": "Brak",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -792,13 +769,6 @@
     "Search for rooms or people": "Szukaj pokojów i ludzi",
     "Some suggestions may be hidden for privacy.": "Niektóre propozycje mogą być ukryte z uwagi na prywatność.",
     "Or send invite link": "Lub wyślij link z zaproszeniem",
-    "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Zarządcy integracji otrzymują dane konfiguracji, mogą modyfikować widżety, wysyłać zaproszenia do pokojów i ustawiać poziom uprawnień w Twoim imieniu.",
-    "Use an integration manager to manage bots, widgets, and sticker packs.": "Użyj zarządcy integracji aby zarządzać botami, widżetami i pakietami naklejek.",
-    "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Użyj zarządcy Integracji <b>%(serverName)s</b> aby zarządzać botami, widżetami i pakietami naklejek.",
-    "Identity server (%(server)s)": "Serwer tożsamości (%(server)s)",
-    "Could not connect to identity server": "Nie można połączyć z serwerem tożsamości",
-    "Not a valid identity server (status code %(code)s)": "Nieprawidłowy serwer tożsamości (kod statusu %(code)s)",
-    "Identity server URL must be HTTPS": "URL serwera tożsamości musi być HTTPS",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s i %(count)s pozostała",
         "other": "%(spaceName)s i %(count)s pozostałych"
@@ -824,7 +794,6 @@
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
-    "Address": "Adres",
     "Space selection": "Wybór przestrzeni",
     "Reply in thread": "Odpowiedz w wątku",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
@@ -894,7 +863,6 @@
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Wystąpił nieznany błąd podczas zmiany hasła (%(stringifiedError)s)",
-    "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Powinieneś <b>usunąć swoje prywatne dane</b> z serwera tożsamości <idserver /> przed rozłączeniem. Niestety, serwer tożsamości <idserver /> jest aktualnie offline lub nie można się z nim połączyć.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "Home options": "Opcje głównej",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
@@ -2346,7 +2314,8 @@
             "key_backup_in_progress": "Tworzenie kopii zapasowej %(sessionsRemaining)s kluczy…",
             "key_backup_complete": "Utworzono kopię zapasową wszystkich kluczy",
             "key_backup_algorithm": "Algorytm:",
-            "key_backup_inactive_warning": "Twoje klucze <b>nie są zapisywanie na tej sesji</b>."
+            "key_backup_inactive_warning": "Twoje klucze <b>nie są zapisywanie na tej sesji</b>.",
+            "key_backup_active_version_none": "Brak"
         },
         "preferences": {
             "room_list_heading": "Lista pokojów",
@@ -3371,7 +3340,8 @@
             "history_visibility_anyone_space": "Podgląd przestrzeni",
             "history_visibility_anyone_space_description": "Pozwól ludziom na podgląd twojej przestrzeni zanim dołączą.",
             "history_visibility_anyone_space_recommendation": "Zalecane dla publicznych przestrzeni.",
-            "guest_access_label": "Włącz dostęp dla gości"
+            "guest_access_label": "Włącz dostęp dla gości",
+            "alias_section": "Adres"
         },
         "access": {
             "title": "Dostęp",
@@ -3943,7 +3913,8 @@
         "lists_heading": "Listy subskrybowanych",
         "lists_description_1": "Subskrybowanie do listy banów spowoduje, że do niej dołączysz!",
         "lists_description_2": "Jeśli to nie jest to czego chciałeś, użyj innego narzędzia do ignorowania użytkowników.",
-        "lists_new_label": "ID pokoju lub adres listy banów"
+        "lists_new_label": "ID pokoju lub adres listy banów",
+        "rules_empty": "Brak"
     },
     "create_space": {
         "name_required": "Podaj nazwę dla przestrzeni",
@@ -4220,6 +4191,38 @@
     "integration_manager": {
         "connecting": "Łączenie z menedżerem integracji…",
         "error_connecting_heading": "Nie udało się połączyć z menedżerem integracji",
-        "error_connecting": "Menedżer integracji jest offline, lub nie może połączyć się z Twoim homeserverem."
+        "error_connecting": "Menedżer integracji jest offline, lub nie może połączyć się z Twoim homeserverem.",
+        "use_im_default": "Użyj zarządcy Integracji <b>%(serverName)s</b> aby zarządzać botami, widżetami i pakietami naklejek.",
+        "use_im": "Użyj zarządcy integracji aby zarządzać botami, widżetami i pakietami naklejek.",
+        "manage_title": "Zarządzaj integracjami",
+        "explainer": "Zarządcy integracji otrzymują dane konfiguracji, mogą modyfikować widżety, wysyłać zaproszenia do pokojów i ustawiać poziom uprawnień w Twoim imieniu."
+    },
+    "identity_server": {
+        "url_not_https": "URL serwera tożsamości musi być HTTPS",
+        "error_invalid": "Nieprawidłowy serwer tożsamości (kod statusu %(code)s)",
+        "error_connection": "Nie można połączyć z serwerem tożsamości",
+        "checking": "Sprawdzanie serwera",
+        "change": "Zmień serwer tożsamości",
+        "change_prompt": "Rozłączyć się z bieżącym serwerem tożsamości <current /> i połączyć się z <new />?",
+        "error_invalid_or_terms": "Warunki użytkowania nieakceptowane lub serwer tożsamości jest nieprawidłowy.",
+        "no_terms": "Serwer tożsamości który został wybrany nie posiada warunków użytkowania.",
+        "disconnect": "Rozłącz serwer tożsamości",
+        "disconnect_server": "Odłączyć od serwera tożsamości <idserver />?",
+        "disconnect_offline_warning": "Powinieneś <b>usunąć swoje prywatne dane</b> z serwera tożsamości <idserver /> przed rozłączeniem. Niestety, serwer tożsamości <idserver /> jest aktualnie offline lub nie można się z nim połączyć.",
+        "suggestions": "Należy:",
+        "suggestions_1": "sprawdzić rozszerzenia przeglądarki, które mogą blokować serwer tożsamości (takie jak Privacy Badger)",
+        "suggestions_2": "skontaktować się z administratorami serwera tożsamości <idserver />",
+        "suggestions_3": "zaczekaj i spróbuj ponownie później",
+        "disconnect_anyway": "Odłącz mimo to",
+        "disconnect_personal_data_warning_1": "W dalszym ciągu <b>udostępniasz swoje dane osobowe</b> na serwerze tożsamości <idserver />.",
+        "disconnect_personal_data_warning_2": "Zalecamy, by usunąć swój adres e-mail i numer telefonu z serwera tożsamości przed odłączeniem.",
+        "url": "Serwer tożsamości (%(server)s)",
+        "description_connected": "Używasz <server></server>﻿, aby odnajdywać i móc być odnajdywanym przez istniejące kontakty, które znasz. Możesz zmienić serwer tożsamości poniżej.",
+        "change_server_prompt": "Jeżeli nie chcesz używać <server /> do odnajdywania i bycia odnajdywanym przez osoby, które znasz, wpisz inny serwer tożsamości poniżej.",
+        "description_disconnected": "Nie używasz serwera tożsamości. Aby odkrywać i być odkrywanym przez istniejące kontakty które znasz, dodaj jeden poniżej.",
+        "disconnect_warning": "Odłączenie się od serwera tożsamości oznacza, że inni nie będą mogli Cię odnaleźć ani Ty nie będziesz w stanie zaprosić nikogo za pomocą e-maila czy telefonu.",
+        "description_optional": "Używanie serwera tożsamości jest opcjonalne. Jeżeli postanowisz nie używać serwera tożsamości, pozostali użytkownicy nie będą w stanie Cię odnaleźć ani nie będziesz mógł zaprosić innych po adresie e-mail czy numerze telefonu.",
+        "do_not_use": "Nie używaj serwera tożsamości",
+        "url_field_label": "Wprowadź nowy serwer tożsamości"
     }
 }
