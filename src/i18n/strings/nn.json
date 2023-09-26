@@ -227,9 +227,6 @@
     "That matches!": "Dette stemmer!",
     "That doesn't match.": "Dette stemmer ikkje.",
     "Go back to set it again.": "Gå tilbake for å sette den på nytt.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Nøklane dine blir sikkerheitskopiert (den første kopieringa kan ta nokre minutt).",
-    "Success!": "Suksess!",
-    "Unable to create key backup": "Klarte ikkje å lage sikkerheitskopi av nøkkelen",
     "Set up": "Sett opp",
     "New Recovery Method": "Ny gjenopprettingsmetode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Har du ikkje satt opp den nye gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din.  Endre ditt kontopassord og sett opp gjenoppretting umiddelbart under instillingane.",
@@ -709,6 +706,11 @@
             "add_msisdn_confirm_button": "Stadfest tilleggjing av telefonnummeret",
             "add_msisdn_confirm_body": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
             "add_msisdn_dialog_title": "Legg til telefonnummer"
+        },
+        "key_backup": {
+            "backup_in_progress": "Nøklane dine blir sikkerheitskopiert (den første kopieringa kan ta nokre minutt).",
+            "backup_success": "Suksess!",
+            "cannot_create_backup": "Klarte ikkje å lage sikkerheitskopi av nøkkelen"
         }
     },
     "devtools": {

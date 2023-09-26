@@ -90,7 +90,6 @@
     "Unknown error": "Tuccḍa tarussint",
     "Your password has been reset.": "Awal uffir-inek/inem yettuwennez.",
     "Create account": "Rnu amiḍan",
-    "Success!": "Tammug akken iwata!",
     "Updating %(brand)s": "Leqqem %(brand)s",
     "I don't want my encrypted messages": "Ur bɣiɣ ara izan-inu iwgelhanen",
     "Manually export keys": "Sifeḍ s ufus tisura",
@@ -408,8 +407,6 @@
     "Verify your other session using one of the options below.": "Senqed tiɣimiyin-ik·im tiyaḍ s useqdec yiwet seg textiṛiyin ddaw.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeqqen ɣer tɣimit tamaynut war ma isenqed-itt:",
     "Ask this user to verify their session, or manually verify it below.": "Suter deg useqdac-a ad isenqed tiɣimit-is, neɣ senqed-itt ddaw s ufus.",
-    "Create key backup": "Rnu aḥraz n tsarut",
-    "Unable to create key backup": "Yegguma ad yernu uḥraz n tsarut",
     "This session is encrypting history using the new recovery method.": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
     "Secret storage public key:": "Tasarut tazayezt n uḥraz uffir:",
     "Unable to load key backup status": "Asali n waddad n uḥraz n tsarut ur yeddi ara",
@@ -450,7 +447,6 @@
     "Error decrypting image": "Tuccḍa deg uwgelhen n tugna",
     "Show image": "Sken tugna",
     "Invalid base_url for m.identity_server": "D arameɣtu base_url i m.identity_server",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
     "Contact your <a>server admin</a>.": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
@@ -1435,6 +1431,12 @@
             "add_msisdn_confirm_button": "Sentem timerna n wuṭṭun n tilifun",
             "add_msisdn_confirm_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n wuṭṭun-a n tilifun.",
             "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun"
+        },
+        "key_backup": {
+            "backup_in_progress": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
+            "backup_success": "Tammug akken iwata!",
+            "create_title": "Rnu aḥraz n tsarut",
+            "cannot_create_backup": "Yegguma ad yernu uḥraz n tsarut"
         }
     },
     "devtools": {

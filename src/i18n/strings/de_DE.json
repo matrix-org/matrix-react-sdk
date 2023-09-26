@@ -237,7 +237,6 @@
     "That matches!": "Das passt!",
     "That doesn't match.": "Das passt nicht.",
     "Go back to set it again.": "Gehe zurück und setze es erneut.",
-    "Unable to create key backup": "Konnte Schlüsselsicherung nicht erstellen",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
     "Unable to load key backup status": "Konnte Status der Schlüsselsicherung nicht laden",
@@ -344,8 +343,6 @@
     "Restore from Backup": "Von Sicherung wiederherstellen",
     "Back up your keys before signing out to avoid losing them.": "Um deine Schlüssel nicht zu verlieren, musst du sie vor der Abmeldung sichern.",
     "Start using Key Backup": "Beginne Schlüsselsicherung zu nutzen",
-    "Success!": "Erfolgreich!",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Deine Schlüssel werden gesichert (Das erste Backup könnte ein paar Minuten in Anspruch nehmen).",
     "Voice & Video": "Anrufe",
     "Are you sure you want to sign out?": "Bist du sicher, dass du dich abmelden möchtest?",
     "Manually export keys": "Schlüssel manuell exportieren",
@@ -699,7 +696,6 @@
     "Restore your key backup to upgrade your encryption": "Schlüsselsicherung wiederherstellen, um deine Verschlüsselung zu aktualisieren",
     "Upgrade your encryption": "Aktualisiere deine Verschlüsselung",
     "Unable to set up secret storage": "Sicherer Speicher kann nicht eingerichtet werden",
-    "Create key backup": "Schlüsselsicherung erstellen",
     "This session is encrypting history using the new recovery method.": "Diese Sitzung verschlüsselt den Verlauf mit der neuen Wiederherstellungsmethode.",
     "Unable to revoke sharing for email address": "Dem Teilen der E-Mail-Adresse kann nicht widerrufen werden",
     "Unable to query secret storage status": "Status des sicheren Speichers kann nicht gelesen werden",
@@ -1735,7 +1731,6 @@
     "Voice settings": "Spracheinstellungen",
     "Error downloading image": "Fehler beim Herunterladen des Bildes",
     "Unable to show image due to error": "Kann Bild aufgrund eines Fehlers nicht anzeigen",
-    "Send email": "E-Mail senden",
     "Sign out of all devices": "Auf allen Geräten abmelden",
     "Confirm new password": "Neues Passwort bestätigen",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
@@ -1769,7 +1764,6 @@
     "Declining…": "Ablehnen …",
     "There are no past polls in this room": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
     "There are no active polls in this room": "In diesem Raum gibt es keine aktiven Umfragen",
-    "Starting backup…": "Beginne Sicherung …",
     "Connecting…": "Verbinde …",
     "Scan QR code": "QR-Code einlesen",
     "Select '%(scanQRCode)s'": "Wähle „%(scanQRCode)s“",
@@ -2695,6 +2689,13 @@
             "add_msisdn_confirm_button": "Hinzugefügte Telefonnummer bestätigen",
             "add_msisdn_confirm_body": "Klicke unten die Schaltfläche, um die hinzugefügte Telefonnummer zu bestätigen.",
             "add_msisdn_dialog_title": "Telefonnummer hinzufügen"
+        },
+        "key_backup": {
+            "backup_in_progress": "Deine Schlüssel werden gesichert (Das erste Backup könnte ein paar Minuten in Anspruch nehmen).",
+            "backup_starting": "Beginne Sicherung …",
+            "backup_success": "Erfolgreich!",
+            "create_title": "Schlüsselsicherung erstellen",
+            "cannot_create_backup": "Konnte Schlüsselsicherung nicht erstellen"
         }
     },
     "devtools": {
@@ -3724,7 +3725,8 @@
         "incorrect_credentials_detail": "Bitte beachte, dass du dich gerade auf %(hs)s anmeldest, nicht matrix.org.",
         "failed_soft_logout_homeserver": "Erneute Authentifizierung aufgrund eines Problems des Heim-Servers fehlgeschlagen",
         "soft_logout_subheading": "Persönliche Daten löschen",
-        "soft_logout_warning": "Achtung: Deine persönlichen Daten (einschließlich Verschlüsselungs-Schlüssel) sind noch in dieser Sitzung gespeichert. Lösche diese Daten, wenn du diese Sitzung nicht mehr benötigst, oder dich mit einem anderen Konto anmelden möchtest."
+        "soft_logout_warning": "Achtung: Deine persönlichen Daten (einschließlich Verschlüsselungs-Schlüssel) sind noch in dieser Sitzung gespeichert. Lösche diese Daten, wenn du diese Sitzung nicht mehr benötigst, oder dich mit einem anderen Konto anmelden möchtest.",
+        "forgot_password_send_email": "E-Mail senden"
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",

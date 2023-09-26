@@ -110,7 +110,6 @@
     "Search failed": ".i da nabmi lo nu sisku",
     "Switch theme": "nu basti fi le ka jvinu",
     "That matches!": ".i du",
-    "Success!": ".i snada",
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
@@ -259,6 +258,9 @@
             "email_address_in_use": ".i xa'o pilno fa da le samymri judri",
             "msisdn_in_use": ".i xa'o pilno fa da le fonxa judri",
             "add_email_failed_verification": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri"
+        },
+        "key_backup": {
+            "backup_success": ".i snada"
         }
     },
     "create_room": {

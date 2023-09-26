@@ -410,9 +410,6 @@
     "That matches!": "Da komt overeen!",
     "That doesn't match.": "Da kom nie overeen.",
     "Go back to set it again.": "Goa were vo ’t herin te stelln.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "’t Wordt e back-up van je sleuters gemakt (den eesten back-up kut e poar minuutn deurn).",
-    "Success!": "Gereed!",
-    "Unable to create key backup": "Kostege de sleuterback-up nie anmoakn",
     "Set up": "Instelln",
     "New Recovery Method": "Nieuwe herstelmethode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "A je gy deze nieuwe herstelmethode nie èt ingesteld, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn.",
@@ -660,6 +657,11 @@
             "email_address_in_use": "Dat e-mailadresse hier es al in gebruuk",
             "msisdn_in_use": "Dezen telefongnumero es al in gebruuk",
             "add_email_failed_verification": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt"
+        },
+        "key_backup": {
+            "backup_in_progress": "’t Wordt e back-up van je sleuters gemakt (den eesten back-up kut e poar minuutn deurn).",
+            "backup_success": "Gereed!",
+            "cannot_create_backup": "Kostege de sleuterback-up nie anmoakn"
         }
     },
     "devtools": {

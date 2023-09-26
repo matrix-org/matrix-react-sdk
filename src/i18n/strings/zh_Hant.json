@@ -237,7 +237,6 @@
     "That matches!": "相符！",
     "That doesn't match.": "不相符。",
     "Go back to set it again.": "返回重新設定。",
-    "Unable to create key backup": "無法建立金鑰備份",
     "Unable to load backup status": "無法載入備份狀態",
     "Unable to restore backup": "無法復原備份",
     "No backup found!": "找不到備份！",
@@ -359,8 +358,6 @@
     "You'll lose access to your encrypted messages": "您將會失去您的加密訊息",
     "Are you sure you want to sign out?": "您確定要登出嗎？",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
-    "Your keys are being backed up (the first backup could take a few minutes).": "您的金鑰正在備份（第一次備份會花費數分鐘）。",
-    "Success!": "成功！",
     "Scissors": "剪刀",
     "Error updating main address": "更新主要位址時發生錯誤",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "更新聊天室的主要位址時發生錯誤。可能是不被伺服器允許或是遇到暫時性的錯誤。",
@@ -632,7 +629,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "驗證此裝置將會將其標記為受信任，且已驗證您的使用者將會信任此裝置。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果您不小心這樣做了，您可以在此工作階段上設定安全訊息，這將會以新的復原方法重新加密此工作階段的訊息歷史。",
     "You have not verified this user.": "您尚未驗證此使用者。",
-    "Create key backup": "建立金鑰備份",
     "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
     "Clear cross-signing keys": "清除交叉簽署金鑰",
@@ -1735,7 +1731,6 @@
     "Voice settings": "語音設定",
     "Error downloading image": "下載圖片時發生錯誤",
     "Unable to show image due to error": "因為錯誤而無法顯示圖片",
-    "Send email": "寄信",
     "Sign out of all devices": "登出所有裝置",
     "Confirm new password": "確認新密碼",
     "Too many attempts in a short time. Retry after %(timeout)s.": "短時間內嘗試太多次，請稍等 %(timeout)s 秒後再嘗試。",
@@ -1773,7 +1768,6 @@
     "Select '%(scanQRCode)s'": "選取「%(scanQRCode)s」",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "在設定中啟用「%(manageIntegrations)s」來執行此動作。",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "輸入僅有您知道的安全密語，因為其用於保護您的資料。為了安全起見，您不應重複使用您的帳號密碼。",
-    "Starting backup…": "正在開始備份…",
     "Connecting…": "連線中…",
     "Loading live location…": "正在載入即時位置…",
     "Fetching keys from server…": "正在取得來自伺服器的金鑰…",
@@ -2690,6 +2684,13 @@
             "add_msisdn_confirm_button": "確認新增電話號碼",
             "add_msisdn_confirm_body": "點擊下方按鈕以確認新增此電話號碼。",
             "add_msisdn_dialog_title": "新增電話號碼"
+        },
+        "key_backup": {
+            "backup_in_progress": "您的金鑰正在備份（第一次備份會花費數分鐘）。",
+            "backup_starting": "正在開始備份…",
+            "backup_success": "成功！",
+            "create_title": "建立金鑰備份",
+            "cannot_create_backup": "無法建立金鑰備份"
         }
     },
     "devtools": {
@@ -3719,7 +3720,8 @@
         "incorrect_credentials_detail": "請注意，您正在登入 %(hs)s 伺服器，不是 matrix.org。",
         "failed_soft_logout_homeserver": "因為家伺服器的問題，所以無法重新驗證",
         "soft_logout_subheading": "清除個人資料",
-        "soft_logout_warning": "警告：您的個人資料（包含加密金鑰）仍儲存於此工作階段。若您使用完此工作階段或想要登入其他帳號，請清除它。"
+        "soft_logout_warning": "警告：您的個人資料（包含加密金鑰）仍儲存於此工作階段。若您使用完此工作階段或想要登入其他帳號，請清除它。",
+        "forgot_password_send_email": "寄信"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",

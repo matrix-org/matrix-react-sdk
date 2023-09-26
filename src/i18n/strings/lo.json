@@ -776,11 +776,7 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "ໃຊ້ປະໂຫຍກລັບທີ່ທ່ານຮູ້ເທົ່ານັ້ນ, ແລະ ເປັນທາງເລືອກທີ່ຈະບັນທຶກກະແຈຄວາມປອດໄພເພື່ອໃຊ້ສຳລັບການສຳຮອງຂໍ້ມູນ.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "ພວກເຮົາຈະສ້າງກະແຈຄວາມປອດໄພໃຫ້ທ່ານເກັບຮັກສາໄວ້ບ່ອນໃດບ່ອນໜຶ່ງທີ່ປອດໄພ ເຊັ່ນ: ຕົວຈັດການລະຫັດຜ່ານ ຫຼື ຕູ້ນິລະໄພ.",
     "Generate a Security Key": "ສ້າງກະແຈຄວາມປອດໄພ",
-    "Unable to create key backup": "ບໍ່ສາມາດສ້າງສໍາຮອງຂໍ້ມູນທີ່ສໍາຄັນ",
-    "Create key backup": "ສ້າງການສໍາຮອງຂໍ້ມູນທີ່ສໍາຄັນ",
-    "Success!": "ສໍາເລັດ!",
     "Confirm your Security Phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ",
-    "Your keys are being backed up (the first backup could take a few minutes).": "ກະແຈຂອງທ່ານກຳລັງຖືກສຳຮອງຂໍ້ມູນ (ການສຳຮອງຂໍ້ມູນຄັ້ງທຳອິດອາດໃຊ້ເວລາສອງສາມນາທີ).",
     "Enter your Security Phrase a second time to confirm it.": "ກະລຸນາໃສ່ປະໂຫຍກຄວາມປອດໄພຂອງທ່ານເປັນເທື່ອທີສອງເພື່ອຢືນຢັນ.",
     "Go back to set it again.": "ກັບຄືນໄປຕັ້ງໃໝ່ອີກຄັ້ງ.",
     "That doesn't match.": "ບໍ່ກົງກັນ.",
@@ -2189,6 +2185,12 @@
             "add_msisdn_confirm_button": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
             "add_msisdn_confirm_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
             "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ"
+        },
+        "key_backup": {
+            "backup_in_progress": "ກະແຈຂອງທ່ານກຳລັງຖືກສຳຮອງຂໍ້ມູນ (ການສຳຮອງຂໍ້ມູນຄັ້ງທຳອິດອາດໃຊ້ເວລາສອງສາມນາທີ).",
+            "backup_success": "ສໍາເລັດ!",
+            "create_title": "ສ້າງການສໍາຮອງຂໍ້ມູນທີ່ສໍາຄັນ",
+            "cannot_create_backup": "ບໍ່ສາມາດສ້າງສໍາຮອງຂໍ້ມູນທີ່ສໍາຄັນ"
         }
     },
     "devtools": {

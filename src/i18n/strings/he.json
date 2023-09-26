@@ -1037,10 +1037,6 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "השתמש בביטוי סודי רק אתה מכיר, ושמור שמור מפתח אבטחה לשימוש לגיבוי.",
     "Enter a Security Phrase": "הזן ביטוי אבטחה",
     "Generate a Security Key": "צור מפתח אבטחה",
-    "Unable to create key backup": "לא ניתן ליצור גיבוי מפתח",
-    "Create key backup": "צור מפתח גיבוי",
-    "Success!": "הצלחה!",
-    "Your keys are being backed up (the first backup could take a few minutes).": "גיבוי המפתחות שלך (הגיבוי הראשון יכול לקחת מספר דקות).",
     "Go back to set it again.": "חזור להגדיר אותו שוב.",
     "That doesn't match.": "זה לא תואם.",
     "Use a different passphrase?": "להשתמש בביטוי סיסמה אחר?",
@@ -1322,7 +1318,6 @@
     "Nothing pinned, yet": "אין הודעות נעוצות, לבינתיים",
     "Files": "קבצים",
     "Set a new account password…": "הגדרת סיסמה חדשה לחשבונך…",
-    "Send email": "שלח אימייל",
     "New room": "חדר חדש",
     "common": {
         "about": "אודות",
@@ -1842,6 +1837,12 @@
             "add_msisdn_confirm_button": "אישור הוספת מספר טלפון",
             "add_msisdn_confirm_body": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
             "add_msisdn_dialog_title": "הוסף מספר טלפון"
+        },
+        "key_backup": {
+            "backup_in_progress": "גיבוי המפתחות שלך (הגיבוי הראשון יכול לקחת מספר דקות).",
+            "backup_success": "הצלחה!",
+            "create_title": "צור מפתח גיבוי",
+            "cannot_create_backup": "לא ניתן ליצור גיבוי מפתח"
         }
     },
     "devtools": {
@@ -2619,7 +2620,8 @@
         "autodiscovery_unexpected_error_is": "שגיאה לא צפויה בהתחברות אל שרת הזיהוי",
         "incorrect_credentials_detail": "שים לב שאתה מתחבר לשרת %(hs)s, לא ל- matrix.org.",
         "failed_soft_logout_homeserver": "האימות מחדש נכשל עקב בעיית שרת בית",
-        "soft_logout_subheading": "נקה מידע אישי"
+        "soft_logout_subheading": "נקה מידע אישי",
+        "forgot_password_send_email": "שלח אימייל"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",

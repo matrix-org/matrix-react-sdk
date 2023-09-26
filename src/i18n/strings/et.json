@@ -675,7 +675,6 @@
     "Confirm Security Phrase": "Kinnita turvafraas",
     "Save your Security Key": "Salvesta turvavõti",
     "Unable to set up secret storage": "Turvahoidla kasutuselevõtmine ei õnnestu",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
     "Favourited": "Märgitud lemmikuks",
     "Forget Room": "Unusta jututuba ära",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Sinu kontol on turvahoidlas olemas risttunnustamise identiteet, kuid seda veel ei loeta antud sessioonis usaldusväärseks.",
@@ -741,9 +740,6 @@
     "Connect this session to Key Backup": "Seo see sessioon krüptovõtmete varundusega",
     "not stored": "ei ole salvestatud",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Isikutuvastusserveri kasutamine ei ole kohustuslik. Kui sa seda ei tee, siis sa ei ole leitav teiste kasutajate poolt ega sulle ei saa telefoninumbri või e-posti aadressi alusel kutset saata. Küll aga saab kutset saata Matrix'i kasutajatunnuse alusel.",
-    "Success!": "Õnnestus!",
-    "Create key backup": "Tee võtmetest varukoopia",
-    "Unable to create key backup": "Ei õnnestu teha võtmetest varukoopiat",
     "New Recovery Method": "Uus taastamise meetod",
     "This session is encrypting history using the new recovery method.": "See sessioon krüptib ajalugu kasutades uut taastamise meetodit.",
     "Notification targets": "Teavituste eesmärgid",
@@ -1735,7 +1731,6 @@
     "Voice settings": "Heli seadistused",
     "Error downloading image": "Pildifaili allalaadimine ei õnnestunud",
     "Unable to show image due to error": "Vea tõttu ei ole võimalik pilti kuvada",
-    "Send email": "Saada e-kiri",
     "Sign out of all devices": "Logi kõik oma seadmed võrgust välja",
     "Confirm new password": "Kinnita oma uus salasõna",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
@@ -1773,7 +1768,6 @@
     "Select '%(scanQRCode)s'": "Vali „%(scanQRCode)s“",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Andmete kaitsmiseks sisesta turvafraas, mida vaid sina tead. Ole mõistlik ja palun ära kasuta selleks oma tavalist konto salasõna.",
-    "Starting backup…": "Alustame varundamist…",
     "Connecting…": "Kõne on ühendamisel…",
     "Loading live location…": "Reaalajas asukoht on laadimisel…",
     "Fetching keys from server…": "Laadin serverist võtmeid…",
@@ -2690,6 +2684,13 @@
             "add_msisdn_confirm_button": "Kinnita telefoninumbri lisamine",
             "add_msisdn_confirm_body": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
             "add_msisdn_dialog_title": "Lisa telefoninumber"
+        },
+        "key_backup": {
+            "backup_in_progress": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
+            "backup_starting": "Alustame varundamist…",
+            "backup_success": "Õnnestus!",
+            "create_title": "Tee võtmetest varukoopia",
+            "cannot_create_backup": "Ei õnnestu teha võtmetest varukoopiat"
         }
     },
     "devtools": {
@@ -3719,7 +3720,8 @@
         "incorrect_credentials_detail": "Sa kasutad sisselogimiseks serverit %(hs)s, mitte aga matrix.org'i.",
         "failed_soft_logout_homeserver": "Uuesti autentimine ei õnnestunud koduserveri vea tõttu",
         "soft_logout_subheading": "Kustuta privaatsed andmed",
-        "soft_logout_warning": "Hoiatus: Sinu privaatsed andmed (sealhulgas krüptimisvõtmed) on jätkuvalt salvestatud selles sessioonis. Eemalda nad, kui oled lõpetanud selle sessiooni kasutamise või soovid sisse logida muu kasutajakontoga."
+        "soft_logout_warning": "Hoiatus: Sinu privaatsed andmed (sealhulgas krüptimisvõtmed) on jätkuvalt salvestatud selles sessioonis. Eemalda nad, kui oled lõpetanud selle sessiooni kasutamise või soovid sisse logida muu kasutajakontoga.",
+        "forgot_password_send_email": "Saada e-kiri"
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",

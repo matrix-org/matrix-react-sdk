@@ -214,7 +214,6 @@
     "None": "Níl aon cheann",
     "Italics": "Iodálach",
     "Discovery": "Aimsiú",
-    "Success!": "Rath!",
     "Home": "Tús",
     "Favourite": "Cuir mar ceanán",
     "Removing…": "ag Baint…",
@@ -614,6 +613,9 @@
             "add_msisdn_confirm_button": "Deimhnigh an uimhir ghutháin nua",
             "add_msisdn_confirm_body": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
             "add_msisdn_dialog_title": "Cuir uimhir ghutháin"
+        },
+        "key_backup": {
+            "backup_success": "Rath!"
         }
     },
     "devtools": {

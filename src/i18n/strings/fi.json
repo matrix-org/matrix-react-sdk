@@ -259,7 +259,6 @@
     "No Audio Outputs detected": "Äänen ulostuloja ei havaittu",
     "Audio Output": "Äänen ulostulo",
     "Go to Settings": "Siirry asetuksiin",
-    "Success!": "Onnistui!",
     "Create account": "Luo tili",
     "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
@@ -358,8 +357,6 @@
     "That matches!": "Täsmää!",
     "That doesn't match.": "Ei täsmää.",
     "Go back to set it again.": "Palaa asettamaan se uudelleen.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Avaimiasi varmuuskopioidaan (ensimmäinen varmuuskopio voi viedä muutaman minuutin).",
-    "Unable to create key backup": "Avaimen varmuuskopiota ei voi luoda",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Tämä huone pyörii versiolla <roomVersion />, jonka tämä kotipalvelin on merkannut <i>epävakaaksi</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
     "Failed to revoke invite": "Kutsun kumoaminen epäonnistui",
@@ -1029,7 +1026,6 @@
     "Confirm encryption setup": "Vahvista salauksen asetukset",
     "Confirm account deactivation": "Vahvista tilin deaktivointi",
     "a key signature": "avaimen allekirjoitus",
-    "Create key backup": "Luo avaimen varmuuskopio",
     "Reason (optional)": "Syy (valinnainen)",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
@@ -1621,7 +1617,6 @@
     "Click to drop a pin": "Napsauta sijoittaaksesi karttaneulan",
     "Click to move the pin": "Napsauta siirtääksesi karttaneulaa",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
-    "Send email": "Lähetä sähköpostia",
     "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
     "Confirm new password": "Vahvista uusi salasana",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
@@ -2444,6 +2439,12 @@
             "add_msisdn_confirm_button": "Vahvista puhelinnumeron lisääminen",
             "add_msisdn_confirm_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
             "add_msisdn_dialog_title": "Lisää puhelinnumero"
+        },
+        "key_backup": {
+            "backup_in_progress": "Avaimiasi varmuuskopioidaan (ensimmäinen varmuuskopio voi viedä muutaman minuutin).",
+            "backup_success": "Onnistui!",
+            "create_title": "Luo avaimen varmuuskopio",
+            "cannot_create_backup": "Avaimen varmuuskopiota ei voi luoda"
         }
     },
     "devtools": {
@@ -3369,7 +3370,8 @@
         "autodiscovery_unexpected_error_is": "Odottamaton virhe selvitettäessä identiteettipalvelimen asetuksia",
         "incorrect_credentials_detail": "Huomaa että olet kirjautumassa palvelimelle %(hs)s, etkä palvelimelle matrix.org.",
         "failed_soft_logout_homeserver": "Uudelleenautentikointi epäonnistui kotipalvelinongelmasta johtuen",
-        "soft_logout_subheading": "Poista henkilökohtaiset tiedot"
+        "soft_logout_subheading": "Poista henkilökohtaiset tiedot",
+        "forgot_password_send_email": "Lähetä sähköpostia"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",

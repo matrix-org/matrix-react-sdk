@@ -312,11 +312,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     <div>{this.renderSignInSection()}</div>
 
                     <h2>{_t("auth|soft_logout_subheading")}</h2>
-                    <p>
-                        {_t(
-                            "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.",
-                        )}
-                    </p>
+                    <p>{_t("auth|soft_logout_warning")}</p>
                     <div>
                         <AccessibleButton onClick={this.onClearAll} kind="danger">
                             {_t("Clear all data")}

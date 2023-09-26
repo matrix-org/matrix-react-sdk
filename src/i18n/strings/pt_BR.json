@@ -247,7 +247,6 @@
     "That matches!": "Isto corresponde!",
     "That doesn't match.": "Isto não corresponde.",
     "Go back to set it again.": "Voltar para configurar novamente.",
-    "Unable to create key backup": "Não foi possível criar backup da chave",
     "New Recovery Method": "Nova opção de recuperação",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não definiu a nova opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina uma nova opção de recuperação imediatamente nas Configurações.",
     "Set up Secure Messages": "Configurar mensagens seguras",
@@ -436,7 +435,6 @@
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Se você cancelar agora, poderá perder mensagens e dados criptografados se você perder acesso aos seus logins atuais.",
     "Upgrade your encryption": "Atualizar sua criptografia",
     "Save your Security Key": "Salve sua Chave de Segurança",
-    "Create key backup": "Criar backup de chave",
     "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
     "Forget Room": "Esquecer Sala",
@@ -680,7 +678,6 @@
     "Your password has been reset.": "Sua senha foi alterada.",
     "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
-    "Success!": "Pronto!",
     "Change notification settings": "Alterar configuração de notificações",
     "Your server isn't responding to some <a>requests</a>.": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
     "Uploaded sound": "Som enviado",
@@ -761,7 +758,6 @@
     "Backup version:": "Versão do backup:",
     "Backup key stored:": "Backup da chave armazenada:",
     "Backup key cached:": "Backup da chave em cache:",
-    "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
     "Cross-signing is ready for use.": "A autoverificação está pronta para uso.",
     "Cross-signing is not set up.": "A autoverificação não está configurada.",
@@ -1970,6 +1966,12 @@
             "add_msisdn_confirm_button": "Confirmar adição de número de telefone",
             "add_msisdn_confirm_body": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
             "add_msisdn_dialog_title": "Adicionar número de telefone"
+        },
+        "key_backup": {
+            "backup_in_progress": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
+            "backup_success": "Pronto!",
+            "create_title": "Criar backup de chave",
+            "cannot_create_backup": "Não foi possível criar backup da chave"
         }
     },
     "devtools": {

@@ -236,7 +236,6 @@
     "That matches!": "U përputhën!",
     "That doesn't match.": "S’përputhen.",
     "Go back to set it again.": "Shkoni mbrapsht që ta ricaktoni.",
-    "Unable to create key backup": "S’arrihet të krijohet kopjeruajtje kyçesh",
     "Unable to load backup status": "S’arrihet të ngarkohet gjendje kopjeruajtjeje",
     "Unable to restore backup": "S’arrihet të rikthehet kopjeruajtje",
     "No backup found!": "S’u gjet kopjeruajtje!",
@@ -357,8 +356,6 @@
     "You'll lose access to your encrypted messages": "Do të humbni hyrje te mesazhet tuaj të fshehtëzuar",
     "Are you sure you want to sign out?": "Jeni i sigurt se doni të dilni?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Kyçet tuaj po kopjeruhen (kopjeruajtja e parë mund të hajë disa minuta).",
-    "Success!": "Sukses!",
     "Scissors": "Gërshërë",
     "Error updating main address": "Gabim gjatë përditësimit të adresës kryesore",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Pati një gabim në përditësimin e adresës kryesore të dhomës. Mund të mos lejohet nga shërbyesi ose mund të ketë ndodhur një gabim i përkohshëm.",
@@ -628,7 +625,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verifikimi i kësaj pajisjeje do të t’i vërë shenjë si të besuar dhe përdoruesit që janë verifikuar me ju do ta besojnë këtë pajisje.",
     "Restore your key backup to upgrade your encryption": "Që të përmirësoni fshehtëzimin tuaj, riktheni kopjeruajtjen e kyçeve tuaj",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Përmirësojeni këtë sesion për ta lejuar të verifikojë sesione të tjerë, duke u akorduar hyrje te mesazhe të fshehtëzuar dhe duke u vënë shenjë si të besuar për përdorues të tjerë.",
-    "Create key backup": "Krijo kopjeruajtje kyçesh",
     "This session is encrypting history using the new recovery method.": "Ky sesion e fshehtëzon historikun duke përdorur metodë të re rimarrjesh.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nëse këtë e keni bërë pa dashje, mund të ujdisni Mesazhe të Sigurt në këtë sesion, gjë që do të sjellë rifshehtëzimin e historikut të mesazheve të sesionit me një metodë të re rimarrjesh.",
     "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
@@ -1724,7 +1720,6 @@
         "one": "Jeni i sigurt se doni të dilet nga %(count)s session?",
         "other": "Jeni i sigurt se doni të dilet nga %(count)s sessione?"
     },
-    "Send email": "Dërgo email",
     "Sign out of all devices": "Dilni nga llogaria në krejt pajisjet",
     "Confirm new password": "Ripohoni fjalëkalimin e ri",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Shumë përpjekje brenda një kohe të shkurtër. Riprovoni pas %(timeout)s.",
@@ -1767,7 +1762,6 @@
     "Secure Backup successful": "Kopjeruajtje e Sigurt e susksesshme",
     "Your keys are now being backed up from this device.": "Kyçet tuaj tani po kopjeruhen nga kjo pajisje.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Jepni një Frazë Sigurie që e dini vetëm ju, ngaqë përdoret për të mbrojtur të dhënat tuaja. Që të jeni të sigurt, s’duhet të ripërdorni fjalëkalimin e llogarisë tuaj.",
-    "Starting backup…": "Po fillohet kopjeruajtje…",
     "Connecting…": "Po lidhet…",
     "Scan QR code": "Skanoni kodin QR",
     "Select '%(scanQRCode)s'": "Përzgjidhni “%(scanQRCode)s”",
@@ -2622,6 +2616,13 @@
             "add_msisdn_confirm_button": "Ripohoni shtim numri telefoni",
             "add_msisdn_confirm_body": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
             "add_msisdn_dialog_title": "Shtoni Numër Telefoni"
+        },
+        "key_backup": {
+            "backup_in_progress": "Kyçet tuaj po kopjeruhen (kopjeruajtja e parë mund të hajë disa minuta).",
+            "backup_starting": "Po fillohet kopjeruajtje…",
+            "backup_success": "Sukses!",
+            "create_title": "Krijo kopjeruajtje kyçesh",
+            "cannot_create_backup": "S’arrihet të krijohet kopjeruajtje kyçesh"
         }
     },
     "devtools": {
@@ -3620,7 +3621,8 @@
         "incorrect_credentials_detail": "Ju lutemi, kini parasysh se jeni futur te shërbyesi %(hs)s, jo te matrix.org.",
         "failed_soft_logout_homeserver": "S’u arrit të ribëhej mirëfilltësimi, për shkak të një problemi me shërbyesin Home",
         "soft_logout_subheading": "Spastro të dhëna personale",
-        "soft_logout_warning": "Kujdes: të dhënat tuaja personale (përfshi kyçe fshehtëzimi) janë ende të depozituara në këtë sesion. Spastrojini, nëse keni përfunduar së përdoruri këtë sesion, ose dëshironi të bëni hyrjen në një tjetër llogari."
+        "soft_logout_warning": "Kujdes: të dhënat tuaja personale (përfshi kyçe fshehtëzimi) janë ende të depozituara në këtë sesion. Spastrojini, nëse keni përfunduar së përdoruri këtë sesion, ose dëshironi të bëni hyrjen në një tjetër llogari.",
+        "forgot_password_send_email": "Dërgo email"
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",

@@ -453,9 +453,6 @@
     "That matches!": "맞습니다!",
     "That doesn't match.": "맞지 않습니다.",
     "Go back to set it again.": "돌아가서 다시 설정하기.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "키를 백업했습니다 (처음 백업에는 시간이 걸릴 수 있습니다).",
-    "Success!": "성공!",
-    "Unable to create key backup": "키 백업을 만들 수 없음",
     "Set up": "설정",
     "New Recovery Method": "새 복구 방식",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "새 복구 방식을 설정하지 않으면, 공격자가 계정에 접근을 시도할 지도 모릅니다. 설정에서 계정 비밀번호를 바꾸고 즉시 새 복구 방식을 설정하세요.",
@@ -914,6 +911,11 @@
             "add_email_dialog_title": "이메일 주소 추가",
             "add_email_failed_verification": "이메일 주소를 인증하지 못했습니다. 메일에 나온 주소를 눌렀는지 확인해 보세요",
             "add_msisdn_dialog_title": "전화번호 추가"
+        },
+        "key_backup": {
+            "backup_in_progress": "키를 백업했습니다 (처음 백업에는 시간이 걸릴 수 있습니다).",
+            "backup_success": "성공!",
+            "cannot_create_backup": "키 백업을 만들 수 없음"
         }
     },
     "devtools": {

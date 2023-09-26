@@ -112,7 +112,6 @@
     "Home": "Dorsièr personal",
     "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
-    "Success!": "Capitada !",
     "Explore rooms": "Percórrer las salas",
     "common": {
         "mute": "Copar lo son",
@@ -323,6 +322,9 @@
             "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
             "add_email_dialog_title": "Ajustar una adreça electronica",
             "add_msisdn_dialog_title": "Ajustar un numèro de telefòn"
+        },
+        "key_backup": {
+            "backup_success": "Capitada !"
         }
     },
     "auth": {

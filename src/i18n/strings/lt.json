@@ -486,9 +486,6 @@
     "Restoring keys from backup": "Raktų atkūrimas iš atsarginės kopijos",
     "Unable to query secret storage status": "Slaptos saugyklos būsenos užklausa neįmanoma",
     "Unable to set up secret storage": "Neįmanoma nustatyti slaptos saugyklos",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Kuriama jūsų raktų atsarginė kopija (pirmas atsarginės kopijos sukūrimas gali užtrukti kelias minutes).",
-    "Create key backup": "Sukurti atsarginę raktų kopiją",
-    "Unable to create key backup": "Nepavyko sukurti atsarginės raktų kopijos",
     "Your homeserver has exceeded its user limit.": "Jūsų serveris pasiekė savo vartotojų limitą.",
     "Your homeserver has exceeded one of its resource limits.": "Jūsų serveris pasiekė vieną iš savo resursų limitų.",
     "Cannot connect to integration manager": "Neįmanoma prisijungti prie integracijų tvarkytuvo",
@@ -1767,6 +1764,11 @@
             "add_msisdn_confirm_button": "Patvirtinkite telefono numerio pridėjimą",
             "add_msisdn_confirm_body": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
             "add_msisdn_dialog_title": "Pridėti Telefono Numerį"
+        },
+        "key_backup": {
+            "backup_in_progress": "Kuriama jūsų raktų atsarginė kopija (pirmas atsarginės kopijos sukūrimas gali užtrukti kelias minutes).",
+            "create_title": "Sukurti atsarginę raktų kopiją",
+            "cannot_create_backup": "Nepavyko sukurti atsarginės raktų kopijos"
         }
     },
     "devtools": {

@@ -772,10 +772,6 @@
     "Confirm Security Phrase": "Confirmar la frase de seguridad",
     "Save your Security Key": "Guarde su llave de seguridad",
     "Unable to set up secret storage": "No se puede configurar el almacenamiento secreto",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Se está realizando una copia de seguridad de sus claves (la primera copia de seguridad puede tardar unos minutos).",
-    "Success!": "¡Éxito!",
-    "Create key backup": "Crear copia de seguridad de claves",
-    "Unable to create key backup": "No se puede crear una copia de seguridad de la clave",
     "New Recovery Method": "Nuevo método de recuperación",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no configuró el nuevo método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración.",
     "Go to Settings": "Ir a la configuración",
@@ -1798,7 +1794,6 @@
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
     "This session is backing up your keys.": "",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
-    "Send email": "Enviar email",
     "Past polls": "Encuestas anteriores",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Los detalles de tu cuenta los gestiona de forma separada <code>%(hostname)s</code>.",
@@ -2577,6 +2572,12 @@
             "add_msisdn_confirm_button": "Confirmar nuevo número de teléfono",
             "add_msisdn_confirm_body": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
             "add_msisdn_dialog_title": "Añadir número de teléfono"
+        },
+        "key_backup": {
+            "backup_in_progress": "Se está realizando una copia de seguridad de sus claves (la primera copia de seguridad puede tardar unos minutos).",
+            "backup_success": "¡Éxito!",
+            "create_title": "Crear copia de seguridad de claves",
+            "cannot_create_backup": "No se puede crear una copia de seguridad de la clave"
         }
     },
     "devtools": {
@@ -3541,7 +3542,8 @@
         "autodiscovery_unexpected_error_is": "Error inesperado en la configuración del servidor de identidad",
         "incorrect_credentials_detail": "Por favor, ten en cuenta que estás iniciando sesión en el servidor %(hs)s, y no en matrix.org.",
         "failed_soft_logout_homeserver": "No ha sido posible volver a autenticarse debido a un problema con el servidor base",
-        "soft_logout_subheading": "Borrar datos personales"
+        "soft_logout_subheading": "Borrar datos personales",
+        "forgot_password_send_email": "Enviar email"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",

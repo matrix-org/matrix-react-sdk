@@ -721,10 +721,6 @@
     "Unable to query secret storage status": "Non se obtivo o estado do almacenaxe segredo",
     "Upgrade your encryption": "Mellora o teu cifrado",
     "Unable to set up secret storage": "Non se configurou un almacenaxe segredo",
-    "Your keys are being backed up (the first backup could take a few minutes).": "As chaves estanse a copiar (a primeira copia podería tardar un anaco).",
-    "Success!": "Feito!",
-    "Create key backup": "Crear copia da chave",
-    "Unable to create key backup": "Non se creou a copia da chave",
     "New Recovery Method": "Novo Método de Recuperación",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non configuras o novo método de recuperación, un atacante podería intentar o acceso á túa conta. Cambia inmediatamente o contrasinal da conta e configura un novo método de recuperación nos Axustes.",
     "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando o historial usando o novo método de recuperación.",
@@ -2358,6 +2354,12 @@
             "add_msisdn_confirm_button": "Confirma a adición do teléfono",
             "add_msisdn_confirm_body": "Preme no botón inferior para confirmar que engades este número.",
             "add_msisdn_dialog_title": "Engadir novo Número"
+        },
+        "key_backup": {
+            "backup_in_progress": "As chaves estanse a copiar (a primeira copia podería tardar un anaco).",
+            "backup_success": "Feito!",
+            "create_title": "Crear copia da chave",
+            "cannot_create_backup": "Non se creou a copia da chave"
         }
     },
     "devtools": {

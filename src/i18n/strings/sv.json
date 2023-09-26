@@ -759,10 +759,6 @@
     "Confirm Security Phrase": "Bekräfta säkerhetsfras",
     "Save your Security Key": "Spara din säkerhetsnyckel",
     "Unable to set up secret storage": "Kunde inte sätta upp hemlig lagring",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Dina nycklar säkerhetskopieras (den första säkerhetskopieringen kan ta några minuter).",
-    "Success!": "Framgång!",
-    "Create key backup": "Skapa nyckelsäkerhetskopia",
-    "Unable to create key backup": "Kunde inte skapa nyckelsäkerhetskopia",
     "New Recovery Method": "Ny återställningsmetod",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Om du inte har ställt in den nya återställningsmetoden kan en angripare försöka komma åt ditt konto. Byt ditt kontolösenord och ställ in en ny återställningsmetod omedelbart i inställningarna.",
     "This session is encrypting history using the new recovery method.": "Den här sessionen krypterar historik med den nya återställningsmetoden.",
@@ -1746,7 +1742,6 @@
     "Unable to decrypt message": "Kunde inte avkryptera meddelande",
     "This message could not be decrypted": "Det här meddelandet kunde inte avkrypteras",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s eller %(copyButton)s",
-    "Send email": "Skicka e-brev",
     "Sign out of all devices": "Logga ut ur alla enheter",
     "Confirm new password": "Bekräfta nytt lösenord",
     "Too many attempts in a short time. Retry after %(timeout)s.": "För många försök under en kort tid. Pröva igen efter %(timeout)s.",
@@ -1775,7 +1770,6 @@
     "Secure Backup successful": "Säkerhetskopiering lyckades",
     "Your keys are now being backed up from this device.": "Dina nycklar säkerhetskopieras nu från denna enhet.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Ange en säkerhetsfras som bara du känner till, eftersom den används för att säkra din data. För att vara säker, bör du inte återanvända ditt kontolösenord.",
-    "Starting backup…": "Startar säkerhetskopiering …",
     "Connecting…": "Kopplar upp …",
     "Loading live location…": "Laddar realtidsposition …",
     "Fetching keys from server…": "Hämtar nycklar från server …",
@@ -2646,6 +2640,13 @@
             "add_msisdn_confirm_button": "Bekräfta tilläggning av telefonnumret",
             "add_msisdn_confirm_body": "Klicka på knappen nedan för att bekräfta tilläggning av telefonnumret.",
             "add_msisdn_dialog_title": "Lägg till telefonnummer"
+        },
+        "key_backup": {
+            "backup_in_progress": "Dina nycklar säkerhetskopieras (den första säkerhetskopieringen kan ta några minuter).",
+            "backup_starting": "Startar säkerhetskopiering …",
+            "backup_success": "Framgång!",
+            "create_title": "Skapa nyckelsäkerhetskopia",
+            "cannot_create_backup": "Kunde inte skapa nyckelsäkerhetskopia"
         }
     },
     "devtools": {
@@ -3659,7 +3660,8 @@
         "incorrect_credentials_detail": "Observera att du loggar in på servern %(hs)s, inte matrix.org.",
         "failed_soft_logout_homeserver": "Misslyckades att återautentisera p.g.a. ett hemserverproblem",
         "soft_logout_subheading": "Rensa personlig information",
-        "soft_logout_warning": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto."
+        "soft_logout_warning": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto.",
+        "forgot_password_send_email": "Skicka e-brev"
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",

@@ -894,7 +894,6 @@
     "More": "Більше",
     "Show sidebar": "Показати бічну панель",
     "Hide sidebar": "Сховати бічну панель",
-    "Success!": "Успішно!",
     "Verification Request": "Запит підтвердження",
     "Leave space": "Вийти з простору",
     "Sent": "Надіслано",
@@ -1445,10 +1444,7 @@
     "The server (%(serverName)s) took too long to respond.": "Сервер (%(serverName)s) не відповів у прийнятний термін.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Не вдалося отримати відповідь на деякі запити до вашого сервера. Ось деякі можливі причини.",
     "Server isn't responding": "Сервер не відповідає",
-    "Create key backup": "Створити резервну копію ключів",
     "Unable to set up secret storage": "Не вдалося налаштувати таємне сховище",
-    "Unable to create key backup": "Не вдалося створити резервну копію ключів",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Створюється резервна копія ваших ключів (перше копіювання може тривати кілька хвилин).",
     "Identity server URL does not appear to be a valid identity server": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
     "Invalid base_url for m.identity_server": "Хибний base_url у m.identity_server",
     "Invalid identity server discovery response": "Хибна відповідь самоналаштування сервера ідентифікації",
@@ -1735,7 +1731,6 @@
     "Voice settings": "Налаштування голосу",
     "Error downloading image": "Помилка завантаження зображення",
     "Unable to show image due to error": "Не вдалося показати зображення через помилку",
-    "Send email": "Надіслати електронний лист",
     "Sign out of all devices": "Вийти на всіх пристроях",
     "Confirm new password": "Підтвердити новий пароль",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Забагато спроб за короткий час. Повторіть спробу за %(timeout)s.",
@@ -1773,7 +1768,6 @@
     "Select '%(scanQRCode)s'": "Виберіть «%(scanQRCode)s»",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Введіть фразу безпеки, відому лише вам, бо вона оберігатиме ваші дані. Задля безпеки, використайте щось інше ніж пароль вашого облікового запису.",
-    "Starting backup…": "Запуск резервного копіювання…",
     "Connecting…": "З'єднання…",
     "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
@@ -2690,6 +2684,13 @@
             "add_msisdn_confirm_button": "Підтвердьте додавання номера телефону",
             "add_msisdn_confirm_body": "Клацніть на кнопку внизу, щоб підтвердити додавання цього номера телефону.",
             "add_msisdn_dialog_title": "Додати номер телефону"
+        },
+        "key_backup": {
+            "backup_in_progress": "Створюється резервна копія ваших ключів (перше копіювання може тривати кілька хвилин).",
+            "backup_starting": "Запуск резервного копіювання…",
+            "backup_success": "Успішно!",
+            "create_title": "Створити резервну копію ключів",
+            "cannot_create_backup": "Не вдалося створити резервну копію ключів"
         }
     },
     "devtools": {
@@ -3719,7 +3720,8 @@
         "incorrect_credentials_detail": "Зауважте, ви входите на сервер %(hs)s, не на matrix.org.",
         "failed_soft_logout_homeserver": "Не вдалося перезайти через проблему з домашнім сервером",
         "soft_logout_subheading": "Очистити особисті дані",
-        "soft_logout_warning": "Попередження: ваші особисті дані ( включно з ключами шифрування) досі зберігаються в цьому сеансі. Очистьте їх, якщо ви завершили роботу в цьому сеансі або хочете увійти в інший обліковий запис."
+        "soft_logout_warning": "Попередження: ваші особисті дані ( включно з ключами шифрування) досі зберігаються в цьому сеансі. Очистьте їх, якщо ви завершили роботу в цьому сеансі або хочете увійти в інший обліковий запис.",
+        "forgot_password_send_email": "Надіслати електронний лист"
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",

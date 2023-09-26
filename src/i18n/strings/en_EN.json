@@ -270,6 +270,13 @@
             "other_sessions_heading": "Other sessions",
             "security_recommendations": "Security recommendations",
             "security_recommendations_description": "Improve your account security by following these recommendations."
+        },
+        "key_backup": {
+            "backup_in_progress": "Your keys are being backed up (the first backup could take a few minutes).",
+            "backup_starting": "Starting backup…",
+            "backup_success": "Success!",
+            "create_title": "Create key backup",
+            "cannot_create_backup": "Unable to create key backup"
         }
     },
     "auth": {
@@ -410,7 +417,8 @@
         "verify_email_explainer": "We need to know it’s you before resetting your password. Click the link in the email we just sent to <b>%(email)s</b>",
         "failed_soft_logout_homeserver": "Failed to re-authenticate due to a homeserver problem",
         "soft_logout_subheading": "Clear personal data",
-        "soft_logout_warning": "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account."
+        "soft_logout_warning": "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.",
+        "forgot_password_send_email": "Send email"
     },
     "action": {
         "confirm": "Confirm",
@@ -3807,12 +3815,6 @@
     "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
     "General failure": "General failure",
-    "Send email": "Send email",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Your keys are being backed up (the first backup could take a few minutes).",
-    "Starting backup…": "Starting backup…",
-    "Success!": "Success!",
-    "Create key backup": "Create key backup",
-    "Unable to create key backup": "Unable to create key backup",
     "Generate a Security Key": "Generate a Security Key",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.",
     "Enter a Security Phrase": "Enter a Security Phrase",

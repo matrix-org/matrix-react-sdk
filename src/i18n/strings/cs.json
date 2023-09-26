@@ -342,9 +342,6 @@
     "That matches!": "To odpovídá!",
     "That doesn't match.": "To nesedí.",
     "Go back to set it again.": "Nastavit heslo znovu.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Klíče se zálohují (první záloha může trvat pár minut).",
-    "Success!": "Úspěch!",
-    "Unable to create key backup": "Nepovedlo se vyrobit zálohů klíčů",
     "Set up Secure Messages": "Nastavit bezpečné obnovení zpráv",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Pokud jste způsob obnovy neodstranili vy, mohou se pokoušet k vašemu účtu dostat útočníci. Změňte si raději ihned heslo a nastavte nový způsob obnovy v Nastavení.",
     "Set up": "Nastavit",
@@ -639,7 +636,6 @@
     "You declined": "Odmítli jste",
     "%(name)s declined": "%(name)s odmítl(a)",
     "Upgrade your encryption": "Aktualizovat šifrování",
-    "Create key backup": "Vytvořit zálohu klíčů",
     "This session is encrypting history using the new recovery method.": "Tato relace šifruje historii zpráv s podporou nového způsobu obnovení.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Pokud se vám to stalo neúmyslně, můžete znovu nastavit zálohu zpráv pro tuto relaci. To znovu zašifruje historii zpráv novým způsobem.",
     "Your homeserver does not support cross-signing.": "Váš domovský server nepodporuje křížové podepisování.",
@@ -1735,7 +1731,6 @@
     "Voice settings": "Nastavení hlasu",
     "Video settings": "Nastavení videa",
     "Automatically adjust the microphone volume": "Automaticky upravit hlasitost mikrofonu",
-    "Send email": "Odeslat e-mail",
     "Sign out of all devices": "Odhlásit se ze všech zařízení",
     "Confirm new password": "Potvrďte nové heslo",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Příliš mnoho pokusů v krátkém čase. Zkuste to znovu po %(timeout)s.",
@@ -1772,7 +1767,6 @@
     "Scan QR code": "Skenovat QR kód",
     "Select '%(scanQRCode)s'": "Vybrat '%(scanQRCode)s'",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Pro provedení povolte v Nastavení položku '%(manageIntegrations)s'.",
-    "Starting backup…": "Zahájení zálohování…",
     "Connecting…": "Připojování…",
     "Loading live location…": "Načítání polohy živě…",
     "Fetching keys from server…": "Načítání klíčů ze serveru…",
@@ -2695,6 +2689,13 @@
             "add_msisdn_confirm_button": "Potrvrdit přidání telefonního čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
             "add_msisdn_dialog_title": "Přidat telefonní číslo"
+        },
+        "key_backup": {
+            "backup_in_progress": "Klíče se zálohují (první záloha může trvat pár minut).",
+            "backup_starting": "Zahájení zálohování…",
+            "backup_success": "Úspěch!",
+            "create_title": "Vytvořit zálohu klíčů",
+            "cannot_create_backup": "Nepovedlo se vyrobit zálohů klíčů"
         }
     },
     "devtools": {
@@ -3724,7 +3725,8 @@
         "incorrect_credentials_detail": "Právě se přihlašujete na server %(hs)s, a nikoliv na server matrix.org.",
         "failed_soft_logout_homeserver": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
         "soft_logout_subheading": "Smazat osobní data",
-        "soft_logout_warning": "Upozornění: vaše osobní údaje (včetně šifrovacích klíčů) jsou v této relaci stále uloženy. Pokud jste s touto relací skončili nebo se chcete přihlásit k jinému účtu, vymažte ji."
+        "soft_logout_warning": "Upozornění: vaše osobní údaje (včetně šifrovacích klíčů) jsou v této relaci stále uloženy. Pokud jste s touto relací skončili nebo se chcete přihlásit k jinému účtu, vymažte ji.",
+        "forgot_password_send_email": "Odeslat e-mail"
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",

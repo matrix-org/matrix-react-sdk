@@ -279,7 +279,6 @@
     "Create account": "Krei konton",
     "That matches!": "Tio akordas!",
     "That doesn't match.": "Tio ne akordas.",
-    "Success!": "Sukceso!",
     "Set up": "Agordi",
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
@@ -429,8 +428,6 @@
     "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
     "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
     "Go back to set it again.": "Reiru por reagordi ĝin.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Viaj ŝlosiloj estas savkopiataj (la unua savkopio povas daŭri kelkajn minutojn).",
-    "Unable to create key backup": "Ne povas krei savkopion de ŝlosiloj",
     "Bulk options": "Amasaj elektebloj",
     "Invalid base_url for m.homeserver": "Nevalida base_url por m.homeserver",
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
@@ -645,7 +642,6 @@
     "You'll need to authenticate with the server to confirm the upgrade.": "Vi devos aŭtentikigi kun la servilo por konfirmi la gradaltigon.",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Gradaltigu ĉi tiun salutaĵon por ebligi al ĝi kontroladon de aliaj salutaĵoj, donante al ili aliron al ĉifritaj mesaĵoj, kaj markante ilin fidataj por aliaj uzantoj.",
     "Unable to set up secret storage": "Ne povas starigi sekretan deponejon",
-    "Create key backup": "Krei savkopion de ŝlosiloj",
     "This session is encrypting history using the new recovery method.": "Ĉi tiu salutaĵo nun ĉifras historion kun la nova rehava metodo.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se vi faris tion akcidente, vi povas agordi Sekurajn mesaĝojn en ĉi tiu salutaĵo, kio reĉifros la historion de mesaj de ĉi tiu salutaĵo kun nova rehava metodo.",
     "Scroll to most recent messages": "Rulumi al plej freŝaj mesaĝoj",
@@ -1387,7 +1383,6 @@
     "Confirm new password": "Konfirmu novan pasvorton",
     "Sign out of all devices": "Elsaluti en ĉiuj aparatoj",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Vi estis elsalutita el ĉiuj aparatoj kaj ne plu ricevos puŝajn sciigojn. Por reŝalti sciigojn, ensalutu denove sur ĉiu aparato.",
-    "Send email": "Sendu retpoŝton",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Konservu vian Sekurecan ŝlosilon ie sekure, kiel pasvortadministranto aŭ monŝranko, ĉar ĝi estas uzata por protekti viajn ĉifritajn datumojn.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Ni generos Sekurecan ŝlosilon por ke vi stoku ie sekura, kiel pasvort-administranto aŭ monŝranko.",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s aŭ %(copyButton)s",
@@ -1939,6 +1934,12 @@
             "add_msisdn_confirm_button": "Konfirmu aldonon de telefonnumero",
             "add_msisdn_confirm_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
             "add_msisdn_dialog_title": "Aldoni telefonnumeron"
+        },
+        "key_backup": {
+            "backup_in_progress": "Viaj ŝlosiloj estas savkopiataj (la unua savkopio povas daŭri kelkajn minutojn).",
+            "backup_success": "Sukceso!",
+            "create_title": "Krei savkopion de ŝlosiloj",
+            "cannot_create_backup": "Ne povas krei savkopion de ŝlosiloj"
         }
     },
     "devtools": {
@@ -2746,7 +2747,8 @@
         "autodiscovery_unexpected_error_is": "Neatendita eraro eltrovi agordojn de identiga servilo",
         "incorrect_credentials_detail": "Rimarku ke vi salutas la servilon %(hs)s, ne matrix.org.",
         "failed_soft_logout_homeserver": "Malsukcesis reaŭtentikigi pro hejmservila problemo",
-        "soft_logout_subheading": "Vakigi personajn datumojn"
+        "soft_logout_subheading": "Vakigi personajn datumojn",
+        "forgot_password_send_email": "Sendu retpoŝton"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",

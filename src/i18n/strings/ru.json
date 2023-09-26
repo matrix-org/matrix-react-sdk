@@ -318,7 +318,6 @@
     "Anchor": "Якорь",
     "Headphones": "Наушники",
     "Folder": "Папка",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Выполняется резервная копия ключей (первый раз это может занять несколько минут).",
     "Scissors": "Ножницы",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Мы отправили вам сообщение для подтверждения адреса электронной почты. Пожалуйста, следуйте указаниям в сообщении, после чего нажмите кнопку ниже.",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Вы уверены? Зашифрованные сообщения будут безвозвратно утеряны при отсутствии соответствующего резервного копирования ваших ключей.",
@@ -421,8 +420,6 @@
     "Set a new custom sound": "Установка нового пользовательского звука",
     "Browse": "Просматривать",
     "Go back to set it again.": "Задать другой пароль.",
-    "Success!": "Успешно!",
-    "Unable to create key backup": "Невозможно создать резервную копию ключа",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Если вы не задали новый способ восстановления, злоумышленник может получить доступ к вашей учётной записи. Смените пароль учётной записи и сразу же задайте новый способ восстановления в настройках.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Если вы не убрали метод восстановления, злоумышленник может получить доступ к вашей учётной записи. Смените пароль учётной записи и сразу задайте новый способ восстановления в настройках.",
     "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
@@ -764,7 +761,6 @@
     "Confirm Security Phrase": "Подтвердите секретную фразу",
     "Save your Security Key": "Сохраните свой ключ безопасности",
     "Unable to set up secret storage": "Невозможно настроить секретное хранилище",
-    "Create key backup": "Создать резервную копию ключа",
     "This session is encrypting history using the new recovery method.": "Этот сеанс шифрует историю с помощью нового метода восстановления.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
     "Explore public rooms": "Просмотреть публичные комнаты",
@@ -1697,7 +1693,6 @@
     },
     "You have unverified sessions": "У вас есть незаверенные сеансы",
     "Search users in this room…": "Поиск пользователей в этой комнате…",
-    "Send email": "Отправить электронное письмо",
     "Mark as read": "Отметить как прочитанное",
     "The homeserver doesn't support signing in another device.": "Домашний сервер не поддерживает вход с другого устройства.",
     "Connection": "Соединение",
@@ -2485,6 +2480,12 @@
             "add_msisdn_confirm_button": "Подтвердите добавление номера телефона",
             "add_msisdn_confirm_body": "Нажмите кнопку ниже для добавления этого номера телефона.",
             "add_msisdn_dialog_title": "Добавить номер телефона"
+        },
+        "key_backup": {
+            "backup_in_progress": "Выполняется резервная копия ключей (первый раз это может занять несколько минут).",
+            "backup_success": "Успешно!",
+            "create_title": "Создать резервную копию ключа",
+            "cannot_create_backup": "Невозможно создать резервную копию ключа"
         }
     },
     "devtools": {
@@ -3433,7 +3434,8 @@
         "autodiscovery_unexpected_error_is": "Неопределённая ошибка при разборе параметра сервера идентификации",
         "incorrect_credentials_detail": "Обратите внимание, что вы заходите на сервер %(hs)s, а не на matrix.org.",
         "failed_soft_logout_homeserver": "Ошибка повторной аутентификации из-за проблем на сервере",
-        "soft_logout_subheading": "Очистить персональные данные"
+        "soft_logout_subheading": "Очистить персональные данные",
+        "forgot_password_send_email": "Отправить электронное письмо"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",

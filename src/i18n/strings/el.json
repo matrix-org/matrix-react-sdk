@@ -1329,7 +1329,6 @@
     "You'll need to authenticate with the server to confirm the upgrade.": "Θα χρειαστεί να πραγματοποιήσετε έλεγχο ταυτότητας με τον διακομιστή για να επιβεβαιώσετε την αναβάθμιση.",
     "Restore your key backup to upgrade your encryption": "Επαναφέρετε το αντίγραφο ασφαλείας του κλειδιού σας για να αναβαθμίσετε την κρυπτογράφηση",
     "Enter your account password to confirm the upgrade:": "Εισαγάγετε τον κωδικό πρόσβασης του λογαριασμού σας για να επιβεβαιώσετε την αναβάθμιση:",
-    "Success!": "Επιτυχία!",
     "Confirm your Security Phrase": "Επιβεβαιώστε τη Φράση Ασφαλείας σας",
     "Enter your Security Phrase a second time to confirm it.": "Εισαγάγετε τη Φράση Ασφαλείας σας για δεύτερη φορά για να την επιβεβαιώσετε.",
     "Go back to set it again.": "Επιστρέψτε για να το ρυθμίσετε ξανά.",
@@ -1421,7 +1420,6 @@
     "Sent": "Απεσταλμένα",
     "Recovery Method Removed": "Η Μέθοδος Ανάκτησης Καταργήθηκε",
     "This session is encrypting history using the new recovery method.": "Αυτή η συνεδρία κρυπτογραφεί το ιστορικό χρησιμοποιώντας τη νέα μέθοδο ανάκτησης.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας (το πρώτο αντίγραφο ασφαλείας μπορεί να διαρκέσει μερικά λεπτά).",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "General failure": "Γενική αποτυχία",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
@@ -1562,8 +1560,6 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Χρησιμοποιήστε μια μυστική φράση που γνωρίζετε μόνο εσείς και προαιρετικά αποθηκεύστε ένα κλειδί ασφαλείας για να το χρησιμοποιήσετε για τη δημιουργία αντιγράφων ασφαλείας.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Θα δημιουργήσουμε ένα κλειδί ασφαλείας για να το αποθηκεύσετε σε ασφαλές μέρος, όπως έναν διαχειριστή κωδικών πρόσβασης ή ένα χρηματοκιβώτιο.",
     "Generate a Security Key": "Δημιουργήστε ένα κλειδί ασφαλείας",
-    "Unable to create key backup": "Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας κλειδιού",
-    "Create key backup": "Δημιουργία αντιγράφου ασφαλείας κλειδιού",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
     "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
@@ -2181,6 +2177,12 @@
             "add_msisdn_confirm_button": "Επιβεβαιώστε την προσθήκη του τηλεφωνικού αριθμού",
             "add_msisdn_confirm_body": "Πιέστε το κουμπί από κάτω για να επιβεβαίωσετε την προσθήκη του τηλεφωνικού αριθμού.",
             "add_msisdn_dialog_title": "Προσθήκη Τηλεφωνικού Αριθμού"
+        },
+        "key_backup": {
+            "backup_in_progress": "Δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας (το πρώτο αντίγραφο ασφαλείας μπορεί να διαρκέσει μερικά λεπτά).",
+            "backup_success": "Επιτυχία!",
+            "create_title": "Δημιουργία αντιγράφου ασφαλείας κλειδιού",
+            "cannot_create_backup": "Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας κλειδιού"
         }
     },
     "devtools": {

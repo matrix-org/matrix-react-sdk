@@ -359,9 +359,6 @@
     "That matches!": "Dat komt overeen!",
     "That doesn't match.": "Dat komt niet overeen.",
     "Go back to set it again.": "Ga terug om het opnieuw in te stellen.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Er wordt een back-up van je sleutels gemaakt (de eerste back-up kan enkele minuten duren).",
-    "Success!": "Klaar!",
-    "Unable to create key backup": "Kan sleutelback-up niet aanmaken",
     "Set up": "Instellen",
     "New Recovery Method": "Nieuwe herstelmethode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Als je deze nieuwe herstelmethode niet hebt ingesteld, is het mogelijk dat een aanvaller toegang tot jouw account probeert te krijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in.",
@@ -642,7 +639,6 @@
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Upgrade deze sessie om er andere sessies mee te verifiëren. Hiermee krijgen de andere sessies toegang tot je versleutelde berichten en is het voor andere personen als vertrouwd gemarkeerd .",
     "Upgrade your encryption": "Upgrade je versleuteling",
     "Unable to set up secret storage": "Kan sleutelopslag niet instellen",
-    "Create key backup": "Sleutelback-up aanmaken",
     "This session is encrypting history using the new recovery method.": "Deze sessie versleutelt je geschiedenis aan de hand van de nieuwe herstelmethode.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
     "Mark all as read": "Alles markeren als gelezen",
@@ -2428,6 +2424,12 @@
             "add_msisdn_confirm_button": "Bevestig toevoegen van het telefoonnummer",
             "add_msisdn_confirm_body": "Klik op de knop hieronder om het toevoegen van dit telefoonnummer te bevestigen.",
             "add_msisdn_dialog_title": "Telefoonnummer toevoegen"
+        },
+        "key_backup": {
+            "backup_in_progress": "Er wordt een back-up van je sleutels gemaakt (de eerste back-up kan enkele minuten duren).",
+            "backup_success": "Klaar!",
+            "create_title": "Sleutelback-up aanmaken",
+            "cannot_create_backup": "Kan sleutelback-up niet aanmaken"
         }
     },
     "devtools": {

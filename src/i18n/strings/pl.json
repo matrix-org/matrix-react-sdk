@@ -216,7 +216,6 @@
     },
     "Add some now": "Dodaj teraz kilka",
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
-    "Unable to create key backup": "Nie można utworzyć kopii zapasowej klucza",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
     "That doesn't match.": "To się nie zgadza.",
@@ -393,7 +392,6 @@
     "Cancel All": "Anuluj wszystko",
     "Remove for everyone": "Usuń dla wszystkich",
     "Explore rooms": "Przeglądaj pokoje",
-    "Success!": "Sukces!",
     "Manage integrations": "Zarządzaj integracjami",
     "%(count)s verified sessions": {
         "other": "%(count)s zweryfikowanych sesji",
@@ -832,7 +830,6 @@
     "Encryption not enabled": "Nie włączono szyfrowania",
     "Use the <a>Desktop app</a> to see all encrypted files": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
     "Connecting": "Łączenie",
-    "Create key backup": "Utwórz kopię zapasową klucza",
     "Generate a Security Key": "Wygeneruj klucz bezpieczeństwa",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych, tworząc kopię zapasową kluczy szyfrowania na naszym serwerze.",
     "Safeguard against losing access to encrypted messages & data": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych",
@@ -1049,7 +1046,6 @@
     "You can also set up Secure Backup & manage your keys in Settings.": "W ustawieniach możesz również skonfigurować bezpieczną kopię zapasową i zarządzać swoimi kluczami.",
     "Restore your key backup to upgrade your encryption": "Przywróć kopię zapasową klucza, aby ulepszyć szyfrowanie",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Użyj sekretnej frazy, którą znasz tylko Ty, i opcjonalnie zapisz klucz bezpieczeństwa, który będzie używany do tworzenia kopii zapasowych.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Tworzy się kopia zapasowa Twoich kluczy (pierwsza kopia może potrwać kilka minut).",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Jeśli chcesz zachować dostęp do historii czatu w zaszyfrowanych pokojach, przed kontynuacją skonfiguruj kopię zapasową kluczy lub wyeksportuj klucze wiadomości z innego urządzenia.",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Kopia zapasowa nie mogła zostać rozszyfrowana za pomocą tego Klucza: upewnij się, że wprowadzono prawidłowy Klucz bezpieczeństwa.",
     "Restoring keys from backup": "Przywracanie kluczy z kopii zapasowej",
@@ -1805,12 +1801,10 @@
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Wprowadź hasło bezpieczeństwa, które znasz tylko Ty, ponieważ będzie użyte do ochrony Twoich danych. Ze względów bezpieczeństwa, nie wprowadzaj hasła Twojego konta.",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Ulepsz tę sesję, aby zezwolić jej na weryfikację innych sesji, dając im dostęp do wiadomości szyfrowanych i oznaczenie ich jako zaufane.",
     "You'll need to authenticate with the server to confirm the upgrade.": "Wymagane jest uwierzytelnienie z serwerem, aby potwierdzić ulepszenie.",
-    "Starting backup…": "Rozpoczynanie kopii zapasowej…",
     "Confirm your Security Phrase": "Potwierdź swoje hasło bezpieczeństwa",
     "Enter your Security Phrase a second time to confirm it.": "Wprowadź hasło bezpieczeństwa ponownie, aby potwierdzić.",
     "Great! This Security Phrase looks strong enough.": "Wspaniale! Hasło bezpieczeństwa wygląda na silne.",
     "Enter a Security Phrase": "Wprowadź hasło bezpieczeństwa",
-    "Send email": "Wyślij e-mail",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
     "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
@@ -2677,6 +2671,13 @@
             "add_msisdn_confirm_button": "Potwierdź dodanie numeru telefonu",
             "add_msisdn_confirm_body": "Naciśnij przycisk poniżej aby potwierdzić dodanie tego numeru telefonu.",
             "add_msisdn_dialog_title": "Dodaj numer telefonu"
+        },
+        "key_backup": {
+            "backup_in_progress": "Tworzy się kopia zapasowa Twoich kluczy (pierwsza kopia może potrwać kilka minut).",
+            "backup_starting": "Rozpoczynanie kopii zapasowej…",
+            "backup_success": "Sukces!",
+            "create_title": "Utwórz kopię zapasową klucza",
+            "cannot_create_backup": "Nie można utworzyć kopii zapasowej klucza"
         }
     },
     "devtools": {
@@ -3703,7 +3704,8 @@
         "incorrect_credentials_detail": "Zauważ proszę, że logujesz się na serwer %(hs)s, nie matrix.org.",
         "failed_soft_logout_homeserver": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
         "soft_logout_subheading": "Wyczyść dane osobiste",
-        "soft_logout_warning": "Ostrzeżenie: Twoje dane osobowe (włączając w to klucze szyfrujące) są wciąż przechowywane w tej sesji. Wyczyść je, jeśli chcesz zakończyć tę sesję lub chcesz zalogować się na inne konto."
+        "soft_logout_warning": "Ostrzeżenie: Twoje dane osobowe (włączając w to klucze szyfrujące) są wciąż przechowywane w tej sesji. Wyczyść je, jeśli chcesz zakończyć tę sesję lub chcesz zalogować się na inne konto.",
+        "forgot_password_send_email": "Wyślij e-mail"
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",

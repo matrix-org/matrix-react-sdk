@@ -1109,7 +1109,6 @@
     "Recovery Method Removed": "復元方法を削除しました",
     "Remove from room": "ルームから追放",
     "Failed to remove user": "ユーザーの追放に失敗しました",
-    "Success!": "成功しました！",
     "Information": "情報",
     "Search for spaces": "スペースを検索",
     "Share location": "位置情報を共有",
@@ -1201,7 +1200,6 @@
     "No backup found!": "バックアップがありません！",
     "Unable to restore backup": "バックアップを復元できません",
     "Unable to load backup status": "バックアップの状態を読み込めません",
-    "Unable to create key backup": "鍵のバックアップを作成できません",
     "Go back to set it again.": "戻って、改めて設定してください。",
     "That doesn't match.": "合致しません。",
     "Continue With Encryption Disabled": "暗号化を無効にして続行",
@@ -1285,7 +1283,6 @@
     "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
     "From a thread": "スレッドから",
     "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
-    "Create key backup": "鍵のバックアップを作成",
     "My current location": "自分の現在の位置情報",
     "My live location": "自分の位置情報（ライブ）",
     "What location type do you want to share?": "どのような種類の位置情報を共有したいですか？",
@@ -1320,7 +1317,6 @@
     "Vote not registered": "投票できませんでした",
     "Sorry, your vote was not registered. Please try again.": "投票できませんでした。もう一度やり直してください。",
     "Something went wrong trying to invite the users.": "ユーザーを招待する際に、問題が発生しました。",
-    "Your keys are being backed up (the first backup could take a few minutes).": "鍵をバックアップしています（最初のバックアップは数分かかる可能性があります）。",
     "Confirm account deactivation": "アカウントの無効化を承認",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、アカウントの無効化を承認してください。",
     "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
@@ -1660,7 +1656,6 @@
     "Message pending moderation": "保留中のメッセージのモデレート",
     "Widget added by": "ウィジェットの追加者",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
-    "Send email": "電子メールを送信",
     "Close call": "通話を終了",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
@@ -1769,7 +1764,6 @@
     "Select '%(scanQRCode)s'": "「%(scanQRCode)s」を選択",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "あなただけが知っているセキュリティーフレーズを入力してください。あなたのデータを保護するために使用されます。セキュリティーの観点から、アカウントのパスワードと異なるものを設定してください。",
-    "Starting backup…": "バックアップを開始しています…",
     "Connecting…": "接続しています…",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
@@ -2549,6 +2543,13 @@
             "add_msisdn_confirm_button": "電話番号の追加を承認",
             "add_msisdn_confirm_body": "下のボタンをクリックすると、この電話番号を追加します。",
             "add_msisdn_dialog_title": "電話番号を追加"
+        },
+        "key_backup": {
+            "backup_in_progress": "鍵をバックアップしています（最初のバックアップは数分かかる可能性があります）。",
+            "backup_starting": "バックアップを開始しています…",
+            "backup_success": "成功しました！",
+            "create_title": "鍵のバックアップを作成",
+            "cannot_create_backup": "鍵のバックアップを作成できません"
         }
     },
     "devtools": {
@@ -3532,7 +3533,8 @@
         "incorrect_credentials_detail": "matrix.orgではなく、%(hs)sのサーバーにログインしていることに注意してください。",
         "failed_soft_logout_homeserver": "ホームサーバーの問題のため再認証に失敗しました",
         "soft_logout_subheading": "個人データを消去",
-        "soft_logout_warning": "警告：あなたの個人データ（暗号化の鍵を含む）が、このセッションに保存されています。このセッションの使用を終了するか、他のアカウントにログインしたい場合は、そのデータを消去してください。"
+        "soft_logout_warning": "警告：あなたの個人データ（暗号化の鍵を含む）が、このセッションに保存されています。このセッションの使用を終了するか、他のアカウントにログインしたい場合は、そのデータを消去してください。",
+        "forgot_password_send_email": "電子メールを送信"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",

@@ -243,7 +243,6 @@
     "That matches!": "Corrisponde!",
     "That doesn't match.": "Non corrisponde.",
     "Go back to set it again.": "Torna per reimpostare.",
-    "Unable to create key backup": "Impossibile creare backup della chiave",
     "Set up": "Imposta",
     "Invalid identity server discovery response": "Risposta non valida cercando server di identità",
     "General failure": "Guasto generale",
@@ -365,8 +364,6 @@
     "Could not load user profile": "Impossibile caricare il profilo utente",
     "Your password has been reset.": "La tua password è stata reimpostata.",
     "Create account": "Crea account",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Il backup delle chiavi è in corso (il primo backup potrebbe richiedere qualche minuto).",
-    "Success!": "Completato!",
     "Recovery Method Removed": "Metodo di ripristino rimosso",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non hai rimosso il metodo di ripristino, è possibile che un aggressore stia cercando di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "La versione di questa stanza è <roomVersion />, che questo homeserver ha segnalato come <i>non stabile</i>.",
@@ -631,7 +628,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "La verifica di questo dispositivo lo segnerà come fidato e gli utenti che si sono verificati con te si fideranno di questo dispositivo.",
     "Restore your key backup to upgrade your encryption": "Ripristina il tuo backup chiavi per aggiornare la crittografia",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Aggiorna questa sessione per consentirle di verificare altre sessioni, garantendo loro l'accesso ai messaggi cifrati e contrassegnandole come fidate per gli altri utenti.",
-    "Create key backup": "Crea backup chiavi",
     "This session is encrypting history using the new recovery method.": "Questa sessione sta cifrando la cronologia usando il nuovo metodo di recupero.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se l'hai fatto accidentalmente, puoi configurare Messaggi Sicuri su questa sessione che cripterà nuovamente la cronologia dei messaggi con un nuovo metodo di recupero.",
     "Not Trusted": "Non fidato",
@@ -1735,7 +1731,6 @@
     "Video settings": "Impostazioni video",
     "Automatically adjust the microphone volume": "Regola automaticamente il volume del microfono",
     "Voice settings": "Impostazioni voce",
-    "Send email": "Invia email",
     "Sign out of all devices": "Disconnetti tutti i dispositivi",
     "Confirm new password": "Conferma nuova password",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Troppi tentativi in poco tempo. Riprova dopo %(timeout)s.",
@@ -1770,7 +1765,6 @@
     "Declining…": "Rifiuto…",
     "This session is backing up your keys.": "Questa sessione sta facendo il backup delle tue chiavi.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Inserisci una frase di sicurezza che conosci solo tu, dato che è usata per proteggere i tuoi dati. Per sicurezza, non dovresti riutilizzare la password dell'account.",
-    "Starting backup…": "Avvio del backup…",
     "Connecting…": "In connessione…",
     "Scan QR code": "Scansiona codice QR",
     "Select '%(scanQRCode)s'": "Seleziona '%(scanQRCode)s'",
@@ -2695,6 +2689,13 @@
             "add_msisdn_confirm_button": "Conferma aggiungendo un numero di telefono",
             "add_msisdn_confirm_body": "Clicca il pulsante sotto per confermare l'aggiunta di questo numero di telefono.",
             "add_msisdn_dialog_title": "Aggiungi numero di telefono"
+        },
+        "key_backup": {
+            "backup_in_progress": "Il backup delle chiavi è in corso (il primo backup potrebbe richiedere qualche minuto).",
+            "backup_starting": "Avvio del backup…",
+            "backup_success": "Completato!",
+            "create_title": "Crea backup chiavi",
+            "cannot_create_backup": "Impossibile creare backup della chiave"
         }
     },
     "devtools": {
@@ -3724,7 +3725,8 @@
         "incorrect_credentials_detail": "Nota che stai accedendo nel server %(hs)s , non matrix.org.",
         "failed_soft_logout_homeserver": "Riautenticazione fallita per un problema dell'homeserver",
         "soft_logout_subheading": "Elimina dati personali",
-        "soft_logout_warning": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account."
+        "soft_logout_warning": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account.",
+        "forgot_password_send_email": "Invia email"
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",

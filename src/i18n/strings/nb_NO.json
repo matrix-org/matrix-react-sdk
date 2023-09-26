@@ -123,7 +123,6 @@
     "Explore rooms": "Se alle rom",
     "Your password has been reset.": "Passordet ditt har blitt tilbakestilt.",
     "Create account": "Opprett konto",
-    "Success!": "Suksess!",
     "Set up": "Sett opp",
     "Lion": "Løve",
     "Pig": "Gris",
@@ -425,7 +424,6 @@
     "Switch theme": "Bytt tema",
     "All settings": "Alle innstillinger",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
-    "Create key backup": "Opprett nøkkelsikkerhetskopi",
     "Set up Secure Messages": "Sett opp sikre meldinger",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
@@ -1172,6 +1170,10 @@
             "add_msisdn_confirm_button": "Bekreft tillegging av telefonnummer",
             "add_msisdn_confirm_body": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
             "add_msisdn_dialog_title": "Legg til telefonnummer"
+        },
+        "key_backup": {
+            "backup_success": "Suksess!",
+            "create_title": "Opprett nøkkelsikkerhetskopi"
         }
     },
     "devtools": {

@@ -364,7 +364,6 @@
     "Folder": "Map",
     "Scissors": "Gunting",
     "Ok": "Ok",
-    "Success!": "Berhasil!",
     "Notes": "Nota",
     "edited": "diedit",
     "Re-join": "Bergabung Ulang",
@@ -1251,10 +1250,7 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Gunakan frasa rahasia yang hanya Anda tahu, dan simpan sebuah Kunci Keamanan untuk menggunakannya untuk cadangan secara opsional.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Kami akan membuat sebuah Kunci Keamanan untuk Anda simpan di tempat yang aman, seperti manajer sandi atau brankas.",
     "Generate a Security Key": "Buat sebuah Kunci Keamanan",
-    "Unable to create key backup": "Tidak dapat membuat cadangan kunci",
-    "Create key backup": "Buat cadangan kunci",
     "Confirm your Security Phrase": "Konfirmasi Frasa Keamanan Anda",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Kunci Anda sedang dicadangkan (cadangan pertama mungkin membutuhkan beberapa menit).",
     "Enter your Security Phrase a second time to confirm it.": "Masukkan Frasa Keamanan sekali lagi untuk mengkonfirmasinya.",
     "Go back to set it again.": "Pergi kembali untuk menyiapkannya lagi.",
     "That doesn't match.": "Itu tidak cocok.",
@@ -1735,7 +1731,6 @@
     "Video settings": "Pengaturan video",
     "Automatically adjust the microphone volume": "Atur volume mikrofon secara otomatis",
     "Voice settings": "Pengaturan suara",
-    "Send email": "Kirim email",
     "Sign out of all devices": "Keluarkan semua perangkat",
     "Confirm new password": "Konfirmasi kata sandi baru",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
@@ -1772,7 +1767,6 @@
     "Scan QR code": "Pindai kode QR",
     "Select '%(scanQRCode)s'": "Pilih '%(scanQRCode)s'",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
-    "Starting backup…": "Memulai pencadangan…",
     "Connecting…": "Menghubungkan…",
     "Loading live location…": "Memuat lokasi langsung…",
     "Fetching keys from server…": "Mendapatkan kunci- dari server…",
@@ -2695,6 +2689,13 @@
             "add_msisdn_confirm_button": "Konfirmasi penambahan nomor telepon",
             "add_msisdn_confirm_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
             "add_msisdn_dialog_title": "Tambahkan Nomor Telepon"
+        },
+        "key_backup": {
+            "backup_in_progress": "Kunci Anda sedang dicadangkan (cadangan pertama mungkin membutuhkan beberapa menit).",
+            "backup_starting": "Memulai pencadangan…",
+            "backup_success": "Berhasil!",
+            "create_title": "Buat cadangan kunci",
+            "cannot_create_backup": "Tidak dapat membuat cadangan kunci"
         }
     },
     "devtools": {
@@ -3724,7 +3725,8 @@
         "incorrect_credentials_detail": "Mohon dicatat Anda akan masuk ke server %(hs)s, bukan matrix.org.",
         "failed_soft_logout_homeserver": "Gagal untuk mengautentikasi ulang karena masalah homeserver",
         "soft_logout_subheading": "Hapus data personal",
-        "soft_logout_warning": "Peringatan: Data personal Anda (termasuk kunci enkripsi) masih disimpan di sesi ini. Hapus jika Anda selesai menggunakan sesi ini, atau jika ingin masuk ke akun yang lain."
+        "soft_logout_warning": "Peringatan: Data personal Anda (termasuk kunci enkripsi) masih disimpan di sesi ini. Hapus jika Anda selesai menggunakan sesi ini, atau jika ingin masuk ke akun yang lain.",
+        "forgot_password_send_email": "Kirim email"
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",

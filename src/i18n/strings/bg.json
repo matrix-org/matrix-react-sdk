@@ -246,7 +246,6 @@
     "That matches!": "Това съвпада!",
     "That doesn't match.": "Това не съвпада.",
     "Go back to set it again.": "Върнете се за да настройте нова.",
-    "Unable to create key backup": "Неуспешно създаване на резервно копие на ключа",
     "Unable to load commit detail: %(msg)s": "Неуспешно зареждане на информация за commit: %(msg)s",
     "New Recovery Method": "Нов метод за възстановяване",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ако не сте настройвали новия метод за възстановяване, вероятно някой се опитва да проникне в акаунта Ви. Веднага променете паролата на акаунта си и настройте нов метод за възстановяване от Настройки.",
@@ -360,8 +359,6 @@
     "You'll lose access to your encrypted messages": "Ще загубите достъп до шифрованите си съобщения",
     "Are you sure you want to sign out?": "Сигурни ли сте, че искате да излезете от профила?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Прави се резервно копие на ключовете Ви (първото копие може да отнеме няколко минути).",
-    "Success!": "Успешно!",
     "Scissors": "Ножици",
     "Error updating main address": "Грешка при обновяване на основния адрес",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Случи се грешка при обновяването на основния адрес за стаята. Може да не е позволено от сървъра, или да се е случила друга временна грешка.",
@@ -727,7 +724,6 @@
     "Use a different passphrase?": "Използвай друга парола?",
     "Unable to query secret storage status": "Неуспешно допитване за състоянието на секретното складиране",
     "Upgrade your encryption": "Обновете шифроването",
-    "Create key backup": "Създай резервно копие на ключовете",
     "This session is encrypting history using the new recovery method.": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
@@ -1497,6 +1493,12 @@
             "add_msisdn_confirm_button": "Потвърдете добавянето на телефонен номер",
             "add_msisdn_confirm_body": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
             "add_msisdn_dialog_title": "Добави телефонен номер"
+        },
+        "key_backup": {
+            "backup_in_progress": "Прави се резервно копие на ключовете Ви (първото копие може да отнеме няколко минути).",
+            "backup_success": "Успешно!",
+            "create_title": "Създай резервно копие на ключовете",
+            "cannot_create_backup": "Неуспешно създаване на резервно копие на ключа"
         }
     },
     "devtools": {

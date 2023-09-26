@@ -250,7 +250,6 @@
     "That matches!": "Zhoda!",
     "That doesn't match.": "To sa nezhoduje.",
     "Go back to set it again.": "Vráťte sa späť a nastavte to znovu.",
-    "Unable to create key backup": "Nie je možné vytvoriť zálohu šifrovacích kľúčov",
     "New Recovery Method": "Nový spôsob obnovy",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste si nenastavili nový spôsob obnovenia, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Set up Secure Messages": "Nastavenie zabezpečených správ",
@@ -364,8 +363,6 @@
     "Could not load user profile": "Nie je možné načítať profil používateľa",
     "Your password has been reset.": "Vaše heslo bolo obnovené.",
     "Create account": "Vytvoriť účet",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Zálohovanie kľúčov máte aktívne (prvé zálohovanie môže trvať niekoľko minút).",
-    "Success!": "Úspech!",
     "Recovery Method Removed": "Odstránený spôsob obnovenia",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
@@ -975,7 +972,6 @@
     "Signature upload failed": "Nahrávanie podpisu zlyhalo",
     "Signature upload success": "Úspešné nahratie podpisu",
     "Cancelled signature upload": "Zrušené nahrávanie podpisu",
-    "Create key backup": "Vytvoriť zálohu kľúča",
     "Integrations not allowed": "Integrácie nie sú povolené",
     "Integrations are disabled": "Integrácie sú zakázané",
     "Remove for everyone": "Odstrániť pre všetkých",
@@ -1735,7 +1731,6 @@
     "Video settings": "Nastavenia videa",
     "Automatically adjust the microphone volume": "Automaticky upraviť hlasitosť mikrofónu",
     "Voice settings": "Nastavenia hlasu",
-    "Send email": "Poslať e-mail",
     "Sign out of all devices": "Odhlásiť sa zo všetkých zariadení",
     "Confirm new password": "Potvrdiť nové heslo",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
@@ -1768,7 +1763,6 @@
     "This session is backing up your keys.": "Táto relácia zálohuje vaše kľúče.",
     "Declining…": "Odmietanie …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadajte bezpečnostnú frázu, ktorú poznáte len vy, keďže sa používa na ochranu vašich údajov. V záujme bezpečnosti by ste nemali heslo k účtu používať opakovane.",
-    "Starting backup…": "Začína sa zálohovanie…",
     "Connecting…": "Pripájanie…",
     "Scan QR code": "Skenovať QR kód",
     "Select '%(scanQRCode)s'": "Vyberte '%(scanQRCode)s'",
@@ -2690,6 +2684,13 @@
             "add_msisdn_confirm_button": "Potvrdiť pridanie telefónneho čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
             "add_msisdn_dialog_title": "Pridať telefónne číslo"
+        },
+        "key_backup": {
+            "backup_in_progress": "Zálohovanie kľúčov máte aktívne (prvé zálohovanie môže trvať niekoľko minút).",
+            "backup_starting": "Začína sa zálohovanie…",
+            "backup_success": "Úspech!",
+            "create_title": "Vytvoriť zálohu kľúča",
+            "cannot_create_backup": "Nie je možné vytvoriť zálohu šifrovacích kľúčov"
         }
     },
     "devtools": {
@@ -3719,7 +3720,8 @@
         "incorrect_credentials_detail": "Všimnite si: Práve sa prihlasujete na server %(hs)s, nie na server matrix.org.",
         "failed_soft_logout_homeserver": "Opätovná autentifikácia zlyhala kvôli problému domovského servera",
         "soft_logout_subheading": "Zmazať osobné dáta",
-        "soft_logout_warning": "Varovanie: Vaše osobné údaje (vrátane šifrovacích kľúčov) sú stále uložené v tejto relácií. Vymažte ich, ak ste ukončili používanie tejto relácie alebo sa chcete prihlásiť do iného konta."
+        "soft_logout_warning": "Varovanie: Vaše osobné údaje (vrátane šifrovacích kľúčov) sú stále uložené v tejto relácií. Vymažte ich, ak ste ukončili používanie tejto relácie alebo sa chcete prihlásiť do iného konta.",
+        "forgot_password_send_email": "Poslať e-mail"
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",

@@ -234,8 +234,6 @@
     },
     "That matches!": "Eşleşti!",
     "That doesn't match.": "Eşleşmiyor.",
-    "Success!": "Başarılı!",
-    "Unable to create key backup": "Anahtar yedeği oluşturulamıyor",
     "New Recovery Method": "Yeni Kurtarma Yöntemi",
     "Go to Settings": "Ayarlara Git",
     "Recovery Method Removed": "Kurtarma Yöntemi Silindi",
@@ -459,7 +457,6 @@
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
     "Go back to set it again.": "Geri git ve yeniden ayarla.",
     "Upgrade your encryption": "Şifrelemenizi güncelleyin",
-    "Create key backup": "Anahtar yedeği oluştur",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
     "Later": "Sonra",
@@ -522,7 +519,6 @@
     "Enter your account password to confirm the upgrade:": "Güncellemeyi başlatmak için hesap şifreni gir:",
     "You'll need to authenticate with the server to confirm the upgrade.": "Güncellemeyi teyit etmek için sunucuda oturum açmaya ihtiyacınız var.",
     "Unable to set up secret storage": "Sır deposu ayarlanamıyor",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Anahtarlarınız yedekleniyor (ilk yedek bir kaç dakika sürebilir).",
     "Set up": "Ayarla",
     "Upgrade public room": "Açık odayı güncelle",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
@@ -1376,6 +1372,12 @@
             "add_msisdn_confirm_button": "Telefon numarası eklemeyi onayla",
             "add_msisdn_confirm_body": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
             "add_msisdn_dialog_title": "Telefon Numarası Ekle"
+        },
+        "key_backup": {
+            "backup_in_progress": "Anahtarlarınız yedekleniyor (ilk yedek bir kaç dakika sürebilir).",
+            "backup_success": "Başarılı!",
+            "create_title": "Anahtar yedeği oluştur",
+            "cannot_create_backup": "Anahtar yedeği oluşturulamıyor"
         }
     },
     "devtools": {

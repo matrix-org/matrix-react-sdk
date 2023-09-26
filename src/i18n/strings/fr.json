@@ -238,7 +238,6 @@
     "That matches!": "Ça correspond !",
     "That doesn't match.": "Ça ne correspond pas.",
     "Go back to set it again.": "Retournez en arrière pour la redéfinir.",
-    "Unable to create key backup": "Impossible de créer la sauvegarde des clés",
     "Unable to load backup status": "Impossible de récupérer l’état de la sauvegarde",
     "Unable to restore backup": "Impossible de restaurer la sauvegarde",
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
@@ -360,8 +359,6 @@
     "You'll lose access to your encrypted messages": "Vous perdrez l’accès à vos messages chiffrés",
     "Are you sure you want to sign out?": "Voulez-vous vraiment vous déconnecter ?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Vous clés sont en cours de sauvegarde (la première sauvegarde peut prendre quelques minutes).",
-    "Success!": "Terminé !",
     "Scissors": "Ciseaux",
     "Error updating main address": "Erreur lors de la mise à jour de l’adresse principale",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Une erreur est survenue lors de la mise à jour de l’adresse principale de salon. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
@@ -632,7 +629,6 @@
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Mettez à niveau cette session pour l’autoriser à vérifier d’autres sessions, ce qui leur permettra d’accéder aux messages chiffrés et de les marquer comme fiables pour les autres utilisateurs.",
     "This session is encrypting history using the new recovery method.": "Cette session chiffre l’historique en utilisant la nouvelle méthode de récupération.",
     "You have not verified this user.": "Vous n’avez pas vérifié cet utilisateur.",
-    "Create key backup": "Créer une sauvegarde de clé",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Si vous l’avez fait accidentellement, vous pouvez configurer les messages sécurisés sur cette session ce qui re-chiffrera l’historique des messages de cette session avec une nouvelle méthode de récupération.",
     "Destroy cross-signing keys?": "Détruire les clés de signature croisée ?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La suppression des clés de signature croisée est permanente. Tous ceux que vous avez vérifié vont voir des alertes de sécurité. Il est peu probable que ce soit ce que vous voulez faire, sauf si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
@@ -1735,7 +1731,6 @@
     "Video settings": "Paramètres vidéo",
     "Voice settings": "Paramètres audio",
     "Automatically adjust the microphone volume": "Ajuster le volume du microphone automatiquement",
-    "Send email": "Envoyer l’e-mail",
     "Sign out of all devices": "Déconnecter tous les appareils",
     "Confirm new password": "Confirmer le nouveau mot de passe",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
@@ -1773,7 +1768,6 @@
     "Select '%(scanQRCode)s'": "Sélectionnez « %(scanQRCode)s »",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Saisissez une Phrase de Sécurité connue de vous seul·e car elle est utilisée pour protéger vos données. Pour plus de sécurité, vous ne devriez pas réutiliser le mot de passe de votre compte.",
-    "Starting backup…": "Début de la sauvegarde…",
     "Connecting…": "Connexion…",
     "Loading live location…": "Chargement de la position en direct…",
     "Fetching keys from server…": "Récupération des clés depuis le serveur…",
@@ -2690,6 +2684,13 @@
             "add_msisdn_confirm_button": "Confirmer l’ajout du numéro de téléphone",
             "add_msisdn_confirm_body": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de ce numéro de téléphone.",
             "add_msisdn_dialog_title": "Ajouter un numéro de téléphone"
+        },
+        "key_backup": {
+            "backup_in_progress": "Vous clés sont en cours de sauvegarde (la première sauvegarde peut prendre quelques minutes).",
+            "backup_starting": "Début de la sauvegarde…",
+            "backup_success": "Terminé !",
+            "create_title": "Créer une sauvegarde de clé",
+            "cannot_create_backup": "Impossible de créer la sauvegarde des clés"
         }
     },
     "devtools": {
@@ -3719,7 +3720,8 @@
         "incorrect_credentials_detail": "Veuillez noter que vous vous connectez au serveur %(hs)s, pas à matrix.org.",
         "failed_soft_logout_homeserver": "Échec de la ré-authentification à cause d’un problème du serveur d’accueil",
         "soft_logout_subheading": "Supprimer les données personnelles",
-        "soft_logout_warning": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte."
+        "soft_logout_warning": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte.",
+        "forgot_password_send_email": "Envoyer l’e-mail"
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",

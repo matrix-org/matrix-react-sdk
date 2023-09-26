@@ -237,7 +237,6 @@
     "That matches!": "Bat dator!",
     "That doesn't match.": "Ez dator bat.",
     "Go back to set it again.": "Joan atzera eta berriro ezarri.",
-    "Unable to create key backup": "Ezin izan da gakoaren babes-kopia sortu",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
@@ -358,8 +357,6 @@
     "You'll lose access to your encrypted messages": "Zure zifratutako mezuetara sarbidea galduko duzu",
     "Are you sure you want to sign out?": "Ziur saioa amaitu nahi duzula?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Zure gakoen babes-kopia egiten ari da (lehen babes-kopiak minutu batzuk behar ditzake).",
-    "Success!": "Ongi!",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ez baduzu berreskuratze metodoa kendu, agian erasotzaile bat zure mezuen historialera sarbidea lortu nahi du. Aldatu kontuaren pasahitza eta ezarri berreskuratze metodo berri bat berehala ezarpenetan.",
     "Scissors": "Artaziak",
     "Accept all %(invitedRooms)s invites": "Onartu %(invitedRooms)s gelako gonbidapen guztiak",
@@ -640,7 +637,6 @@
     "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
     "Restore your key backup to upgrade your encryption": "Berreskuratu zure gakoen babes-kopia zure zifratzea eguneratzeko",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Eguneratu saio hau beste saioak egiaztatu ahal ditzan, zifratutako mezuetara sarbidea emanez eta beste erabiltzaileei fidagarri gisa agertu daitezen.",
-    "Create key backup": "Sortu gakoen babes-kopia",
     "This session is encrypting history using the new recovery method.": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
@@ -1116,6 +1112,12 @@
             "add_msisdn_confirm_button": "Berretsi telefono zenbakia gehitzea",
             "add_msisdn_confirm_body": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
             "add_msisdn_dialog_title": "Gehitu telefono zenbakia"
+        },
+        "key_backup": {
+            "backup_in_progress": "Zure gakoen babes-kopia egiten ari da (lehen babes-kopiak minutu batzuk behar ditzake).",
+            "backup_success": "Ongi!",
+            "create_title": "Sortu gakoen babes-kopia",
+            "cannot_create_backup": "Ezin izan da gakoaren babes-kopia sortu"
         }
     },
     "devtools": {

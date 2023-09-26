@@ -494,7 +494,6 @@
     "Invite with email or username": "Bjóða með tölvupóstfangi eða notandanafni",
     "Go to Settings": "Fara í stillingar",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
-    "Success!": "Tókst!",
     "Use a different passphrase?": "Nota annan lykilfrasa?",
     "Create account": "Stofna notandaaðgang",
     "Your password has been reset.": "Lykilorðið þitt hefur verið endursett.",
@@ -877,8 +876,6 @@
     "Unable to load key backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Ertu viss? Þú munt tapa dulrituðu skilaboðunum þínum ef dulritunarlyklarnir þínir eru ekki rétt öryggisafritaðir.",
     "Switch theme": "Skipta um þema",
-    "Unable to create key backup": "Tókst ekki að gera öryggisafrit af dulritunarlykli",
-    "Create key backup": "Gera öryggisafrit af dulritunarlykli",
     "Rooms and spaces": "Spjallrásir og svæði",
     "Unable to copy a link to the room to the clipboard.": "Tókst ekki að afrita tengil á spjallrás á klippispjaldið.",
     "Unable to copy room link": "Tókst ekki að afrita tengil spjallrásar",
@@ -1268,7 +1265,6 @@
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum með því að taka öryggisafrit af dulritunarlyklunum á netþjóninum þinum.",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Notaðu leynilegan frasa eða setningu sem aðeins þú þekkir, og útbúðu öryggislykil fyrir öryggisafrit.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Við munum útbúa öryggislykil fyrir þig til að geyma á öruggum stað, eins og í lykilorðastýringu eða jafnvel í peningaskáp.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "Verið er að öryggisafrita dulritunarlyklana þína (öryggisafritun getur tekið dálítinn tíma í fyrsta skiptið).",
     "Go back to set it again.": "Farðu til baka til að setja hann aftur.",
     "Great! This Security Phrase looks strong enough.": "Frábært! Þessi öryggisfrasi virðist vera nógu sterkur.",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
@@ -1509,7 +1505,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessari spjallrás, verður ómögulegt að ná aftur stjórn á henni.",
     "Unknown room": "Óþekkt spjallrás",
-    "Send email": "Senda tölvupóst",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Þú hefur verið skráður út úr öllum tækjum og munt ekki lengur fá ýti-tilkynningar. Til að endurvirkja tilkynningar, þarf að skrá sig aftur inn á hverju tæki fyrir sig.",
     "Sign out of all devices": "Skrá út af öllum tækjum",
     "Confirm new password": "Staðfestu nýja lykilorðið",
@@ -2274,6 +2269,12 @@
             "add_msisdn_confirm_button": "Staðfestu að bæta við símanúmeri",
             "add_msisdn_confirm_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
             "add_msisdn_dialog_title": "Bæta við símanúmeri"
+        },
+        "key_backup": {
+            "backup_in_progress": "Verið er að öryggisafrita dulritunarlyklana þína (öryggisafritun getur tekið dálítinn tíma í fyrsta skiptið).",
+            "backup_success": "Tókst!",
+            "create_title": "Gera öryggisafrit af dulritunarlykli",
+            "cannot_create_backup": "Tókst ekki að gera öryggisafrit af dulritunarlykli"
         }
     },
     "devtools": {
@@ -3160,7 +3161,8 @@
         "autodiscovery_unexpected_error_is": "Óvænt villa kom upp við að lesa uppsetningu auðkenningarþjóns",
         "incorrect_credentials_detail": "Athugaðu að þú ert að skrá þig inn á %(hs)s þjóninn, ekki inn á matrix.org.",
         "failed_soft_logout_homeserver": "Tókst ekki að endurauðkenna vegna vandamála með heimaþjón",
-        "soft_logout_subheading": "Hreinsa persónuleg gögn"
+        "soft_logout_subheading": "Hreinsa persónuleg gögn",
+        "forgot_password_send_email": "Senda tölvupóst"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",

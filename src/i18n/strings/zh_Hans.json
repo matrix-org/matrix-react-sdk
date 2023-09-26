@@ -358,9 +358,6 @@
     "That matches!": "匹配成功！",
     "That doesn't match.": "不匹配。",
     "Go back to set it again.": "返回重新设置。",
-    "Your keys are being backed up (the first backup could take a few minutes).": "正在备份你的密钥（第一次备份可能会花费几分钟时间）。",
-    "Success!": "成功！",
-    "Unable to create key backup": "无法创建密钥备份",
     "New Recovery Method": "新恢复方式",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果你没有设置新恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新恢复方式。",
     "Set up Secure Messages": "设置安全消息",
@@ -753,7 +750,6 @@
     "Confirm Security Phrase": "确认安全密码",
     "Save your Security Key": "保存你的安全密钥",
     "Unable to set up secret storage": "无法设置秘密存储",
-    "Create key backup": "创建密钥备份",
     "This session is encrypting history using the new recovery method.": "此会话正在使用新的恢复方法加密历史。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
     "IRC display name width": "IRC 显示名称宽度",
@@ -2396,6 +2392,12 @@
             "add_msisdn_confirm_button": "确认添加电话号码",
             "add_msisdn_confirm_body": "点击下面的按钮，以确认添加此电话号码。",
             "add_msisdn_dialog_title": "添加电话号码"
+        },
+        "key_backup": {
+            "backup_in_progress": "正在备份你的密钥（第一次备份可能会花费几分钟时间）。",
+            "backup_success": "成功！",
+            "create_title": "创建密钥备份",
+            "cannot_create_backup": "无法创建密钥备份"
         }
     },
     "devtools": {

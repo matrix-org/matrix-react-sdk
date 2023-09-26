@@ -525,11 +525,7 @@
     "That doesn't match.": "مطابقت ندارد.",
     "Go back to set it again.": "برای تنظیم مجدد آن به عقب برگردید.",
     "Enter your Security Phrase a second time to confirm it.": "عبارت امنیتی خود را برای تائید مجددا وارد کنید.",
-    "Your keys are being backed up (the first backup could take a few minutes).": "در حال پیشتیبان‌گیری از کلیدهای شما (اولین نسخه پشتیبان ممکن است چند دقیقه طول بکشد).",
     "Confirm your Security Phrase": "عبارت امنیتی خود را تأیید کنیدعبارت امنیتی خود را تائید نمائید",
-    "Success!": "موفقیت‌آمیز بود!",
-    "Create key backup": "ساختن نسخه‌ی پشتیبان کلید",
-    "Unable to create key backup": "ایجاد کلید پشتیبان‌گیری امکان‌پذیر نیست",
     "Generate a Security Key": "یک کلید امنیتی ایجاد کنید",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "از یک عبارت محرمانه که فقط خودتان می‌دانید استفاده کنید، و محض احتیاط کلید امینی خود را برای استفاده هنگام پشتیبان‌گیری ذخیره نمائید.",
     "Filter results": "پالایش نتایج",
@@ -1731,6 +1727,12 @@
             "add_msisdn_confirm_button": "تأیید افزودن شماره تلفن",
             "add_msisdn_confirm_body": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
             "add_msisdn_dialog_title": "افزودن شماره تلفن"
+        },
+        "key_backup": {
+            "backup_in_progress": "در حال پیشتیبان‌گیری از کلیدهای شما (اولین نسخه پشتیبان ممکن است چند دقیقه طول بکشد).",
+            "backup_success": "موفقیت‌آمیز بود!",
+            "create_title": "ساختن نسخه‌ی پشتیبان کلید",
+            "cannot_create_backup": "ایجاد کلید پشتیبان‌گیری امکان‌پذیر نیست"
         }
     },
     "devtools": {
