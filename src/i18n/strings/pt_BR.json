@@ -138,7 +138,6 @@
     "Search…": "Buscar…",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "Invite to this room": "Convidar para esta sala",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
@@ -329,7 +328,6 @@
     "Security Key": "Chave de Segurança",
     "Use your Security Key to continue.": "Use sua Chave de Segurança para continuar.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Atenção</b>: você só deve configurar o backup de chave em um computador de sua confiança.",
-    "Explore rooms": "Explorar salas",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Proteja-se contra a perda de acesso a mensagens e dados criptografados fazendo backup das chaves de criptografia no seu servidor.",
@@ -400,8 +398,6 @@
     "Email (optional)": "E-mail (opcional)",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
-    "Room %(name)s": "Sala %(name)s",
-    "No recently visited rooms": "Nenhuma sala foi visitada recentemente",
     "Join the conversation with an account": "Participar da conversa com uma conta",
     "Sign Up": "Inscrever-se",
     "Reason: %(reason)s": "Razão: %(reason)s",
@@ -435,7 +431,6 @@
     "Everyone in this room is verified": "Todos nesta sala estão confirmados",
     "Edit message": "Editar mensagem",
     "Scroll to most recent messages": "Ir para as mensagens recentes",
-    "Close preview": "Fechar a visualização",
     "Italics": "Itálico",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
     "Failed to revoke invite": "Falha ao revogar o convite",
@@ -596,7 +591,6 @@
     "Backup version:": "Versão do backup:",
     "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
-    "Explore public rooms": "Explorar salas públicas",
     "Not encrypted": "Não criptografada",
     "Ignored attempt to disable encryption": "A tentativa de desativar a criptografia foi ignorada",
     "Message Actions": "Ações da mensagem",
@@ -917,9 +911,7 @@
     "Remember this": "Lembre-se disso",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
     "Allow this widget to verify your identity": "Permitir que este widget verifique a sua identidade",
-    "Recently visited rooms": "Salas visitadas recentemente",
     "Suggested Rooms": "Salas sugeridas",
-    "Add existing room": "Adicionar sala existente",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -930,7 +922,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Create a new room": "Criar uma nova sala",
-    "Invite to this space": "Convidar para este espaço",
     "Your message was sent": "A sua mensagem foi enviada",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
@@ -949,10 +940,8 @@
     "Only people invited will be able to find and join this space.": "Apenas convidados poderão encontrar e entrar neste espaço.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Qualquer um poderá encontrar e entrar neste espaço, não somente membros de <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Todos em <SpaceName/> poderão ver e entrar.",
-    "Public space": "Espaço público",
     "Private space (invite only)": "Espaço privado (apenas com convite)",
     "Space visibility": "Visibilidade do Espaço",
-    "Public room": "Sala pública",
     "To leave the beta, visit your settings.": "Para sair do beta, vá nas suas configurações.",
     "Search for rooms": "Buscar salas",
     "Add existing rooms": "Adicionar salas existentes",
@@ -1017,10 +1006,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "Show %(count)s other previews": {
-        "one": "Exibir a %(count)s outra prévia",
-        "other": "Exibir as %(count)s outras prévias"
-    },
     "Including you, %(commaSeparatedMembers)s": "Incluindo você, %(commaSeparatedMembers)s",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -1066,9 +1051,6 @@
         "other": "Entrando atualmente em %(count)s salas"
     },
     "Join public room": "Entrar na sala pública",
-    "Add people": "Adicionar pessoas",
-    "Invite to space": "Convidar para o espaço",
-    "Start new chat": "Comece um novo bate-papo",
     "Recently viewed": "Visualizado recentemente",
     "Insert link": "Inserir link",
     "You do not have permission to start polls in this room.": "Você não tem permissão para iniciar enquetes nesta sala.",
@@ -1092,11 +1074,6 @@
     },
     "Saved Items": "Itens salvos",
     "Add space": "Adicionar espaço",
-    "Video room": "Sala de vídeo",
-    "Private space": "Espaço privado",
-    "Private room": "Sala privada",
-    "New video room": "Nova sala de vídeo",
-    "New room": "Nova sala",
     "Seen by %(count)s people": {
         "one": "Visto por %(count)s pessoa",
         "other": "Visto por %(count)s pessoas"
@@ -1203,7 +1180,12 @@
         "profile": "Perfil",
         "display_name": "Nome e sobrenome",
         "user_avatar": "Foto de perfil",
-        "authentication": "Autenticação"
+        "authentication": "Autenticação",
+        "public_room": "Sala pública",
+        "video_room": "Sala de vídeo",
+        "public_space": "Espaço público",
+        "private_space": "Espaço privado",
+        "private_room": "Sala privada"
     },
     "action": {
         "continue": "Continuar",
@@ -1297,7 +1279,15 @@
         "click_to_copy": "Clique para copiar",
         "hide_advanced": "Esconder configurações avançadas",
         "show_advanced": "Mostrar configurações avançadas",
-        "unignore": "Desbloquear"
+        "unignore": "Desbloquear",
+        "start_new_chat": "Comece um novo bate-papo",
+        "invite_to_space": "Convidar para o espaço",
+        "add_people": "Adicionar pessoas",
+        "explore_rooms": "Explorar salas",
+        "new_room": "Nova sala",
+        "new_video_room": "Nova sala de vídeo",
+        "add_existing_room": "Adicionar sala existente",
+        "explore_public_rooms": "Explorar salas públicas"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1310,7 +1300,8 @@
             "one": "1 mensagem não lida."
         },
         "unread_messages": "Mensagens não lidas.",
-        "jump_first_invite": "Ir para o primeiro convite."
+        "jump_first_invite": "Ir para o primeiro convite.",
+        "room_name": "Sala %(name)s"
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -2129,6 +2120,13 @@
         "creation_summary_room": "%(creator)s criou e configurou esta sala.",
         "context_menu": {
             "external_url": "Link do código-fonte"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Exibir a %(count)s outra prévia",
+                "other": "Exibir as %(count)s outras prévias"
+            },
+            "close": "Fechar a visualização"
         }
     },
     "slash_command": {
@@ -2683,7 +2681,9 @@
         "show_less": "Mostrar menos",
         "notification_options": "Alterar notificações",
         "failed_remove_tag": "Falha ao remover a tag %(tagName)s da sala",
-        "failed_add_tag": "Falha ao adicionar a tag %(tagName)s para a sala"
+        "failed_add_tag": "Falha ao adicionar a tag %(tagName)s para a sala",
+        "breadcrumbs_label": "Salas visitadas recentemente",
+        "breadcrumbs_empty": "Nenhuma sala foi visitada recentemente"
     },
     "report_content": {
         "missing_reason": "Por favor, descreva porque você está reportando.",
@@ -2880,7 +2880,8 @@
         "search_children": "Pesquisar %(spaceName)s",
         "invite_link": "Compartilhar link de convite",
         "invite": "Convidar pessoas",
-        "invite_description": "Convidar com email ou nome de usuário"
+        "invite_description": "Convidar com email ou nome de usuário",
+        "invite_this_space": "Convidar para este espaço"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -2980,7 +2981,8 @@
             "copy_link": "Copiar link da sala",
             "low_priority": "Baixa prioridade",
             "forget": "Esquecer Sala"
-        }
+        },
+        "invite_this_room": "Convidar para esta sala"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",

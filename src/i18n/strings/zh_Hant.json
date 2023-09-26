@@ -141,7 +141,6 @@
     "Saturday": "星期六",
     "Monday": "星期一",
     "All Rooms": "所有聊天室",
-    "Invite to this room": "邀請加入這個聊天室",
     "You cannot delete this message. (%(code)s)": "您無法刪除此訊息。(%(code)s)",
     "Thursday": "星期四",
     "Search…": "搜尋…",
@@ -384,7 +383,6 @@
     "This invite to %(roomName)s was sent to %(email)s": "此 %(roomName)s 的邀請已傳送給 %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "在設定中使用身分伺服器以直接在 %(brand)s 中接收邀請。",
     "Share this email in Settings to receive invites directly in %(brand)s.": "在設定中分享此電子郵件以直接在 %(brand)s 中接收邀請。",
-    "Explore rooms": "探索聊天室",
     "e.g. my-room": "例如：my-room",
     "Close dialog": "關閉對話框",
     "Show image": "顯示圖片",
@@ -392,7 +390,6 @@
     "This client does not support end-to-end encryption.": "此客戶端不支援端對端加密。",
     "Messages in this room are not end-to-end encrypted.": "此聊天室內的訊息未經端到端加密。",
     "Cancel search": "取消搜尋",
-    "Room %(name)s": "聊天室 %(name)s",
     "Message Actions": "訊息動作",
     "You verified %(name)s": "您驗證了 %(name)s",
     "You cancelled verifying %(name)s": "您已取消驗證 %(name)s",
@@ -423,7 +420,6 @@
         "one": "1 個已驗證的工作階段"
     },
     "Unable to set up secret storage": "無法設定秘密資訊儲存空間",
-    "Close preview": "關閉預覽",
     "Language Dropdown": "語言下拉式選單",
     "Country Dropdown": "國家下拉式選單",
     "Show more": "顯示更多",
@@ -567,7 +563,6 @@
     "Your homeserver has exceeded one of its resource limits.": "您的家伺服器已超過其中一種資源限制。",
     "Ok": "確定",
     "Switch theme": "切換佈景主題",
-    "No recently visited rooms": "沒有最近造訪過的聊天室",
     "Message preview": "訊息預覽",
     "Room options": "聊天室選項",
     "Looks good!": "看起來真棒！",
@@ -601,7 +596,6 @@
     "A connection error occurred while trying to contact the server.": "在試圖與伺服器溝通時遇到連線錯誤。",
     "The server is not configured to indicate what the problem is (CORS).": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
     "Recent changes that have not yet been received": "尚未收到最新變更",
-    "Explore public rooms": "探索公開聊天室",
     "Preparing to download logs": "正在準備下載紀錄檔",
     "Information": "資訊",
     "Not encrypted": "未加密",
@@ -918,7 +912,6 @@
     "Remember this": "記住這個",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "小工具將會驗證您的使用者 ID，但將無法為您執行動作：",
     "Allow this widget to verify your identity": "允許此小工具驗證您的身分",
-    "Recently visited rooms": "最近造訪過的聊天室",
     "%(count)s members": {
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
@@ -933,13 +926,9 @@
     "Space selection": "選取聊天空間",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "如果您將自己降級，將無法撤銷此變更，而且如果您是空間中的最後一個特殊權限使用者，將無法再取得這類特殊權限。",
     "Suggested Rooms": "建議的聊天室",
-    "Add existing room": "新增既有的聊天室",
-    "Invite to this space": "邀請加入此聊天空間",
     "Your message was sent": "您的訊息已傳送",
     "Leave space": "離開聊天空間",
     "Create a space": "建立聊天空間",
-    "Private space": "私密聊天空間",
-    "Public space": "公開聊天空間",
     "<inviter/> invites you": "<inviter/> 邀請您",
     "You may want to try a different search or check for typos.": "您可能要嘗試其他搜尋或檢查是否有拼字錯誤。",
     "No results found": "找不到結果",
@@ -1020,10 +1009,6 @@
     "This space has no local addresses": "此聊天空間沒有本機位址",
     "Unnamed audio": "未命名的音訊",
     "Error processing audio message": "處理音訊訊息時出現問題",
-    "Show %(count)s other previews": {
-        "one": "顯示 %(count)s 個其他預覽",
-        "other": "顯示 %(count)s 個其他預覽"
-    },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
     "Unable to copy a link to the room to the clipboard.": "無法複製聊天室連結至剪貼簿。",
     "Unable to copy room link": "無法複製聊天室連結",
@@ -1045,7 +1030,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "決定哪些聊天空間可以存取此聊天室。若選取了聊天空間，其成員就可以找到並加入<RoomName/>。",
     "Select spaces": "選取聊天空間",
     "You're removing all spaces. Access will default to invite only": "您將取消所有聊天空間。存取權限將會預設為邀請制",
-    "Public room": "公開聊天室",
     "Want to add an existing space instead?": "想要新增既有的聊天空間嗎？",
     "Private space (invite only)": "私密聊天空間（邀請制）",
     "Space visibility": "空間能見度",
@@ -1152,9 +1136,6 @@
     "Home options": "家選項",
     "%(spaceName)s menu": "%(spaceName)s 選單",
     "Join public room": "加入公開聊天室",
-    "Add people": "新增夥伴",
-    "Invite to space": "邀請加入聊天空間",
-    "Start new chat": "開始新聊天",
     "Recently viewed": "最近檢視過",
     "%(count)s votes cast. Vote to see the results": {
         "one": "已投 %(count)s 票。投票後即可檢視結果",
@@ -1271,8 +1252,6 @@
         "one": "1 位成員",
         "other": "%(count)s 個參與者"
     },
-    "New video room": "新視訊聊天室",
-    "New room": "新聊天室",
     "Live location ended": "即時位置已結束",
     "View live location": "檢視即時位置",
     "Live location enabled": "即時位置已啟用",
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "要加入，請先在「實驗室」中啟用視訊聊天室",
     "To view, please enable video rooms in Labs first": "要檢視，請先在「實驗室」中啟用視訊聊天室",
     "To view %(roomName)s, you need an invite": "要檢視 %(roomName)s，您需要邀請",
-    "Private room": "私密聊天室",
-    "Video room": "視訊聊天室",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "您的訊息並未傳送，因為此家伺服器已被其管理員封鎖。請<a>聯絡您的服務管理員</a>以繼續使用服務。",
     "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
     "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
@@ -1609,7 +1586,12 @@
         "profile": "基本資料",
         "display_name": "顯示名稱",
         "user_avatar": "大頭照",
-        "authentication": "授權"
+        "authentication": "授權",
+        "public_room": "公開聊天室",
+        "video_room": "視訊聊天室",
+        "public_space": "公開聊天空間",
+        "private_space": "私密聊天空間",
+        "private_room": "私密聊天室"
     },
     "action": {
         "continue": "繼續",
@@ -1716,7 +1698,15 @@
         "click_to_copy": "點擊複製",
         "hide_advanced": "隱藏進階設定",
         "show_advanced": "顯示進階設定",
-        "unignore": "取消忽略"
+        "unignore": "取消忽略",
+        "start_new_chat": "開始新聊天",
+        "invite_to_space": "邀請加入聊天空間",
+        "add_people": "新增夥伴",
+        "explore_rooms": "探索聊天室",
+        "new_room": "新聊天室",
+        "new_video_room": "新視訊聊天室",
+        "add_existing_room": "新增既有的聊天室",
+        "explore_public_rooms": "探索公開聊天室"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -1729,7 +1719,8 @@
             "one": "1 則未讀的訊息。"
         },
         "unread_messages": "未讀的訊息。",
-        "jump_first_invite": "跳到第一個邀請。"
+        "jump_first_invite": "跳到第一個邀請。",
+        "room_name": "聊天室 %(name)s"
     },
     "labs": {
         "video_rooms": "視訊聊天室",
@@ -2959,6 +2950,13 @@
             "collapse_reply_thread": "收折回覆討論串",
             "view_related_event": "檢視相關的事件",
             "report": "回報"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "顯示 %(count)s 個其他預覽",
+                "other": "顯示 %(count)s 個其他預覽"
+            },
+            "close": "關閉預覽"
         }
     },
     "slash_command": {
@@ -3613,7 +3611,9 @@
         "notification_options": "通知選項",
         "failed_set_dm_tag": "無法設定私人訊息標籤",
         "failed_remove_tag": "無法從聊天室移除標籤 %(tagName)s",
-        "failed_add_tag": "無法新增標籤 %(tagName)s 到聊天室"
+        "failed_add_tag": "無法新增標籤 %(tagName)s 到聊天室",
+        "breadcrumbs_label": "最近造訪過的聊天室",
+        "breadcrumbs_empty": "沒有最近造訪過的聊天室"
     },
     "report_content": {
         "missing_reason": "請填寫為什麼您要回報。",
@@ -3871,7 +3871,8 @@
         "search_children": "搜尋 %(spaceName)s",
         "invite_link": "分享邀請連結",
         "invite": "邀請夥伴",
-        "invite_description": "使用電子郵件或使用者名稱邀請"
+        "invite_description": "使用電子郵件或使用者名稱邀請",
+        "invite_this_space": "邀請加入此聊天空間"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -4031,7 +4032,8 @@
             "mark_read": "標示為已讀",
             "notifications_default": "符合預設設定值",
             "notifications_mute": "聊天室靜音"
-        }
+        },
+        "invite_this_room": "邀請加入這個聊天室"
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",

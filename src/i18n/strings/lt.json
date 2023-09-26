@@ -17,7 +17,6 @@
     "Wednesday": "Trečiadienis",
     "Send": "Siųsti",
     "unknown error code": "nežinomas klaidos kodas",
-    "Invite to this room": "Pakviesti į šį kambarį",
     "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
     "Thursday": "Ketvirtadienis",
     "Yesterday": "Vakar",
@@ -140,7 +139,6 @@
     "Unable to restore backup": "Nepavyko atkurti atsarginės kopijos",
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
-    "Explore rooms": "Žvalgyti kambarius",
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
     "Remove recent messages by %(user)s": "Pašalinti paskutines %(user)s žinutes",
     "Jump to read receipt": "Nušokti iki perskaitytų žinučių",
@@ -187,7 +185,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
     "Back up your keys before signing out to avoid losing them.": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
     "Start using Key Backup": "Pradėti naudoti atsarginę raktų kopiją",
-    "Room %(name)s": "Kambarys %(name)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Atnaujinimas išjungs dabartinę kambario instanciją ir sukurs atnaujintą kambarį tuo pačiu pavadinimu.",
     "Other published addresses:": "Kiti paskelbti adresai:",
     "No other published addresses yet, add one below": "Kol kas nėra kitų paskelbtų adresų, pridėkite vieną žemiau",
@@ -847,24 +844,10 @@
     "Add space": "Pridėti erdvę",
     "Suggested Rooms": "Siūlomi kambariai",
     "Saved Items": "Išsaugoti daiktai",
-    "Explore public rooms": "Tyrinėti viešuosius kambarius",
-    "Add existing room": "Pridėti esamą kambarį",
-    "New video room": "Naujas vaizdo kambarys",
-    "New room": "Naujas kambarys",
-    "Add people": "Pridėti žmonių",
-    "Invite to space": "Pakviesti į erdvę",
-    "Start new chat": "Pradėti naują pokalbį",
     "%(count)s members": {
         "one": "%(count)s narys",
         "other": "%(count)s nariai"
     },
-    "Private room": "Privatus kambarys",
-    "Private space": "Privati erdvė",
-    "Public room": "Viešas kambarys",
-    "Public space": "Vieša erdvė",
-    "Video room": "Vaizdo kambarys",
-    "No recently visited rooms": "Nėra neseniai lankytų kambarių",
-    "Recently visited rooms": "Neseniai lankyti kambariai",
     "Replying": "Atsakoma",
     "Recently viewed": "Neseniai peržiūrėti",
     "Read receipts": "Skaitymo kvitai",
@@ -883,12 +866,6 @@
     "Voice Message": "Balso žinutė",
     "Hide stickers": "Slėpti lipdukus",
     "Send voice message": "Siųsti balso žinutę",
-    "Invite to this space": "Pakviesti į šią erdvę",
-    "Close preview": "Uždaryti peržiūrą",
-    "Show %(count)s other previews": {
-        "one": "Rodyti %(count)s kitą peržiūrą",
-        "other": "Rodyti %(count)s kitas peržiūras"
-    },
     "Scroll to most recent messages": "Slinkite prie naujausių žinučių",
     "Failed to send": "Nepavyko išsiųsti",
     "Your message was sent": "Jūsų žinutė išsiųsta",
@@ -987,7 +964,12 @@
         "profile": "Profilis",
         "display_name": "Rodomas Vardas",
         "user_avatar": "Profilio paveikslėlis",
-        "authentication": "Autentifikavimas"
+        "authentication": "Autentifikavimas",
+        "public_room": "Viešas kambarys",
+        "video_room": "Vaizdo kambarys",
+        "public_space": "Vieša erdvė",
+        "private_space": "Privati erdvė",
+        "private_room": "Privatus kambarys"
     },
     "action": {
         "continue": "Tęsti",
@@ -1081,7 +1063,15 @@
         "click_to_copy": "Spustelėkite kad nukopijuoti",
         "hide_advanced": "Paslėpti išplėstinius",
         "show_advanced": "Rodyti išplėstinius",
-        "unignore": "Nebeignoruoti"
+        "unignore": "Nebeignoruoti",
+        "start_new_chat": "Pradėti naują pokalbį",
+        "invite_to_space": "Pakviesti į erdvę",
+        "add_people": "Pridėti žmonių",
+        "explore_rooms": "Žvalgyti kambarius",
+        "new_room": "Naujas kambarys",
+        "new_video_room": "Naujas vaizdo kambarys",
+        "add_existing_room": "Pridėti esamą kambarį",
+        "explore_public_rooms": "Tyrinėti viešuosius kambarius"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1869,6 +1859,13 @@
         "context_menu": {
             "view_source": "Peržiūrėti šaltinį",
             "external_url": "Šaltinio URL adresas"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Rodyti %(count)s kitą peržiūrą",
+                "other": "Rodyti %(count)s kitas peržiūras"
+            },
+            "close": "Uždaryti peržiūrą"
         }
     },
     "slash_command": {
@@ -2375,7 +2372,9 @@
         },
         "show_less": "Rodyti mažiau",
         "notification_options": "Pranešimų parinktys",
-        "failed_remove_tag": "Nepavyko pašalinti žymos %(tagName)s iš kambario"
+        "failed_remove_tag": "Nepavyko pašalinti žymos %(tagName)s iš kambario",
+        "breadcrumbs_label": "Neseniai lankyti kambariai",
+        "breadcrumbs_empty": "Nėra neseniai lankytų kambarių"
     },
     "report_content": {
         "missing_reason": "Įrašykite kodėl pranešate.",
@@ -2392,7 +2391,8 @@
             "other": "%(count)s neperskaitytos žinutės."
         },
         "unread_messages": "Neperskaitytos žinutės.",
-        "jump_first_invite": "Peršokti iki pirmo pakvietimo."
+        "jump_first_invite": "Peršokti iki pirmo pakvietimo.",
+        "room_name": "Kambarys %(name)s"
     },
     "setting": {
         "help_about": {
@@ -2605,7 +2605,8 @@
             "copy_link": "Kopijuoti kambario nuorodą",
             "low_priority": "Žemo prioriteto",
             "forget": "Pamiršti Kambarį"
-        }
+        },
+        "invite_this_room": "Pakviesti į šį kambarį"
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2619,7 +2620,8 @@
         "search_children": "Ieškoti %(spaceName)s",
         "invite_link": "Bendrinti pakvietimo nuorodą",
         "invite": "Pakviesti žmonių",
-        "invite_description": "Pakviesti su el. paštu arba naudotojo vardu"
+        "invite_description": "Pakviesti su el. paštu arba naudotojo vardu",
+        "invite_this_space": "Pakviesti į šią erdvę"
     },
     "terms": {
         "integration_manager": "Naudoti botus, tiltus, valdiklius ir lipdukų pakuotes",

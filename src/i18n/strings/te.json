@@ -45,7 +45,6 @@
     "All Rooms": "అన్ని గదులు",
     "Wednesday": "బుధవారం",
     "Send": "పంపండి",
-    "Invite to this room": "ఈ గదికి ఆహ్వానించండి",
     "Thursday": "గురువారం",
     "Search…": "శోధన…",
     "Yesterday": "నిన్న",
@@ -194,6 +193,7 @@
         "context_menu": {
             "favourite": "గుర్తుంచు",
             "low_priority": "తక్కువ ప్రాధాన్యత"
-        }
+        },
+        "invite_this_room": "ఈ గదికి ఆహ్వానించండి"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "Explore rooms": "Istražite sobe",
     "Send": "Pošalji",
     "Sun": "Ned",
     "Mon": "Pon",
@@ -39,7 +38,8 @@
         "dismiss": "Odbaci",
         "trust": "Vjeruj",
         "sign_in": "Prijavite se",
-        "register": "Registruj se"
+        "register": "Registruj se",
+        "explore_rooms": "Istražite sobe"
     },
     "power_level": {
         "default": "Podrazumevano",

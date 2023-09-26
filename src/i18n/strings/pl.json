@@ -128,7 +128,6 @@
     "All Rooms": "Wszystkie pokoje",
     "Wednesday": "Środa",
     "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
-    "Invite to this room": "Zaproś do tego pokoju",
     "Thursday": "Czwartek",
     "Search…": "Szukaj…",
     "Logs sent": "Wysłano dzienniki",
@@ -291,7 +290,6 @@
     "Upload files": "Prześlij pliki",
     "Upload all": "Prześlij wszystko",
     "Cancel All": "Anuluj wszystko",
-    "Explore rooms": "Przeglądaj pokoje",
     "Success!": "Sukces!",
     "%(count)s verified sessions": {
         "other": "%(count)s zweryfikowanych sesji",
@@ -304,7 +302,6 @@
     },
     "Hide sessions": "Ukryj sesje",
     "Integrations are disabled": "Integracje są wyłączone",
-    "Close preview": "Zamknij podgląd",
     "Cancel search": "Anuluj wyszukiwanie",
     "Invite anyway": "Zaproś mimo to",
     "Notes": "Notatki",
@@ -345,7 +342,6 @@
     "Sign in with SSO": "Zaloguj się z SSO",
     "Add widgets, bridges & bots": "Dodaj widżety, mostki i boty",
     "Forget this room": "Zapomnij o tym pokoju",
-    "Explore public rooms": "Przeglądaj pokoje publiczne",
     "No other published addresses yet, add one below": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
     "Other published addresses:": "Inne opublikowane adresy:",
     "Room settings": "Ustawienia pokoju",
@@ -614,11 +610,9 @@
     "Mauritius": "Mauritius",
     "Mauritania": "Mauretania",
     "Martinique": "Martynika",
-    "Room %(name)s": "Pokój %(name)s",
     "Start chatting": "Rozpocznij rozmowę",
     "<userName/> wants to chat": "<userName/> chce porozmawiać",
     "Hide Widgets": "Ukryj widżety",
-    "No recently visited rooms": "Brak ostatnio odwiedzonych pokojów",
     "Show Widgets": "Pokaż widżety",
     "Not Trusted": "Nie zaufany",
     "Ask this user to verify their session, or manually verify it below.": "Poproś go/ją o zweryfikowanie tej sesji bądź zweryfikuj ją osobiście poniżej.",
@@ -747,7 +741,6 @@
     "Space selection": "Wybór przestrzeni",
     "Reply in thread": "Odpowiedz w wątku",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
-    "Start new chat": "Nowy czat",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
     "Send voice message": "Wyślij wiadomość głosową",
@@ -760,7 +753,6 @@
         "one": "Odczytane przez %(count)s osobę",
         "other": "Odczytane przez %(count)s osób"
     },
-    "New room": "Nowy pokój",
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
@@ -814,14 +806,9 @@
     "Hide formatting": "Ukryj formatowanie",
     "You do not have permission to start polls in this room.": "Nie posiadasz uprawnień, aby rozpocząć ankiety w tym pokoju.",
     "Hide stickers": "Ukryj naklejki",
-    "Invite to this space": "Zaproś do tej przestrzeni",
     "%(count)s participants": {
         "one": "1 uczestnik",
         "other": "%(count)s uczestników"
-    },
-    "Show %(count)s other previews": {
-        "one": "Pokaż %(count)s inny podgląd",
-        "other": "Pokaż %(count)s innych podglądów"
     },
     "Failed to send": "Nie udało się wysłać",
     "Your message was sent": "Twoja wiadomość została wysłana",
@@ -879,22 +866,12 @@
     "Add space": "Dodaj przestrzeń",
     "Suggested Rooms": "Sugerowane pokoje",
     "Saved Items": "Przedmioty zapisane",
-    "Add existing room": "Dodaj istniejący pokój",
-    "New video room": "Nowy pokój wideo",
-    "Add people": "Dodaj osoby",
-    "Invite to space": "Zaproś do przestrzeni",
-    "Private room": "Pokój prywatny",
-    "Private space": "Przestrzeń prywatna",
-    "Public room": "Pokój publiczny",
-    "Public space": "Przestrzeń publiczna",
-    "Video room": "Pokój wideo",
     "View chat timeline": "Wyświetl oś czasu czatu",
     "Close call": "Zamknij połączenie",
     "Change layout": "Zmień układ",
     "Freedom": "Wolność",
     "Video call (%(brand)s)": "Rozmowa wideo (%(brand)s)",
     "Video call (Jitsi)": "Rozmowa wideo (Jitsi)",
-    "Recently visited rooms": "Ostatnio odwiedzane pokoje",
     "Recently viewed": "Ostatnio wyświetlane",
     "Read receipts": "Czytaj potwierdzenia",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
@@ -1600,7 +1577,12 @@
         "profile": "Profil",
         "display_name": "Wyświetlana nazwa",
         "user_avatar": "Obraz profilowy",
-        "authentication": "Uwierzytelnienie"
+        "authentication": "Uwierzytelnienie",
+        "public_room": "Pokój publiczny",
+        "video_room": "Pokój wideo",
+        "public_space": "Przestrzeń publiczna",
+        "private_space": "Przestrzeń prywatna",
+        "private_room": "Pokój prywatny"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1707,7 +1689,15 @@
         "click_to_copy": "Kliknij aby skopiować",
         "hide_advanced": "Ukryj zaawansowane",
         "show_advanced": "Pokaż zaawansowane",
-        "unignore": "Przestań ignorować"
+        "unignore": "Przestań ignorować",
+        "start_new_chat": "Nowy czat",
+        "invite_to_space": "Zaproś do przestrzeni",
+        "add_people": "Dodaj osoby",
+        "explore_rooms": "Przeglądaj pokoje",
+        "new_room": "Nowy pokój",
+        "new_video_room": "Nowy pokój wideo",
+        "add_existing_room": "Dodaj istniejący pokój",
+        "explore_public_rooms": "Przeglądaj pokoje publiczne"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -1720,7 +1710,8 @@
             "one": "1 nieprzeczytana wiadomość."
         },
         "unread_messages": "Nieprzeczytane wiadomości.",
-        "jump_first_invite": "Przejdź do pierwszego zaproszenia."
+        "jump_first_invite": "Przejdź do pierwszego zaproszenia.",
+        "room_name": "Pokój %(name)s"
     },
     "labs": {
         "video_rooms": "Pokoje wideo",
@@ -2946,6 +2937,13 @@
             "collapse_reply_thread": "Zwiń wątek odpowiedzi",
             "view_related_event": "Wyświetl powiązane wydarzenie",
             "report": "Zgłoś"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Pokaż %(count)s inny podgląd",
+                "other": "Pokaż %(count)s innych podglądów"
+            },
+            "close": "Zamknij podgląd"
         }
     },
     "slash_command": {
@@ -3599,7 +3597,9 @@
         "notification_options": "Opcje powiadomień",
         "failed_set_dm_tag": "Nie udało się ustawić tagu wiadomości prywatnych",
         "failed_remove_tag": "Nie udało się usunąć tagu %(tagName)s z pokoju",
-        "failed_add_tag": "Nie można dodać tagu %(tagName)s do pokoju"
+        "failed_add_tag": "Nie można dodać tagu %(tagName)s do pokoju",
+        "breadcrumbs_label": "Ostatnio odwiedzane pokoje",
+        "breadcrumbs_empty": "Brak ostatnio odwiedzonych pokojów"
     },
     "report_content": {
         "missing_reason": "Wypełnij, dlaczego dokonujesz zgłoszenia.",
@@ -3857,7 +3857,8 @@
         "search_children": "Przeszukaj %(spaceName)s",
         "invite_link": "Udostępnij link zaproszenia",
         "invite": "Zaproś ludzi",
-        "invite_description": "Zaproś przy użyciu adresu email lub nazwy użytkownika"
+        "invite_description": "Zaproś przy użyciu adresu email lub nazwy użytkownika",
+        "invite_this_space": "Zaproś do tej przestrzeni"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -4015,7 +4016,8 @@
             "mark_read": "Oznacz jako przeczytane",
             "notifications_default": "Dopasuj z ustawieniami domyślnymi",
             "notifications_mute": "Wycisz pokój"
-        }
+        },
+        "invite_this_room": "Zaproś do tego pokoju"
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",

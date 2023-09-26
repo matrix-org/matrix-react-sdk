@@ -110,7 +110,6 @@
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
     },
-    "Invite to this room": "Uutnodign in dit gesprek",
     "Invited": "Uutgenodigd",
     "Filter room members": "Gespreksleedn filtern",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (macht %(powerLevelNumber)s)",
@@ -365,7 +364,6 @@
     "Clear personal data": "Persoonlike gegeevns wissn",
     "Deactivate account": "Account deactiveern",
     "Command Help": "Hulp by ipdrachtn",
-    "Explore rooms": "Gesprekkn ountdekkn",
     "common": {
         "analytics": "Statistische gegeevns",
         "error": "Foute",
@@ -467,7 +465,8 @@
         "mention": "Vermeldn",
         "submit": "Bevestign",
         "unban": "Ountbann",
-        "unignore": "Nie mi negeern"
+        "unignore": "Nie mi negeern",
+        "explore_rooms": "Gesprekkn ountdekkn"
     },
     "labs": {
         "pinning": "Bericht vastprikkn",
@@ -1082,7 +1081,8 @@
         "context_menu": {
             "favourite": "Favoriet",
             "low_priority": "Leige prioriteit"
-        }
+        },
+        "invite_this_room": "Uutnodign in dit gesprek"
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",

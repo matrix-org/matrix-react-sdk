@@ -140,7 +140,6 @@
     "Preparing to send logs": "Előkészülés napló küldéshez",
     "Saturday": "Szombat",
     "Monday": "Hétfő",
-    "Invite to this room": "Meghívás a szobába",
     "All Rooms": "Minden szobában",
     "You cannot delete this message. (%(code)s)": "Nem törölheted ezt az üzenetet. (%(code)s)",
     "Thursday": "Csütörtök",
@@ -385,7 +384,6 @@
         "one": "1 üzenet törlése"
     },
     "Remove recent messages": "Friss üzenetek törlése",
-    "Explore rooms": "Szobák felderítése",
     "e.g. my-room": "pl.: szobam",
     "Close dialog": "Ablak bezárása",
     "Show image": "Kép megjelenítése",
@@ -393,7 +391,6 @@
     "This client does not support end-to-end encryption.": "A kliens nem támogatja a végponttól végpontig való titkosítást.",
     "Messages in this room are not end-to-end encrypted.": "Az üzenetek a szobában nincsenek végponttól végpontig titkosítva.",
     "Cancel search": "Keresés megszakítása",
-    "Room %(name)s": "Szoba: %(name)s",
     "Message Actions": "Üzenet Műveletek",
     "You verified %(name)s": "Ellenőrizte: %(name)s",
     "You cancelled verifying %(name)s": "Az ellenőrzést megszakítottad ehhez: %(name)s",
@@ -424,7 +421,6 @@
         "other": "%(count)s ellenőrzött munkamenet",
         "one": "1 ellenőrzött munkamenet"
     },
-    "Close preview": "Előnézet bezárása",
     "Language Dropdown": "Nyelvválasztó lenyíló menü",
     "Country Dropdown": "Ország lenyíló menü",
     "Show more": "Több megjelenítése",
@@ -567,7 +563,6 @@
     "This address is already in use": "Ez a cím már használatban van",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ezt a munkamenetet előzőleg egy újabb %(brand)s verzióval használtad. Ahhoz, hogy újra ezt a verziót tudd használni végpontok közötti titkosítással, ki kell lépned majd újra vissza.",
     "Use a different passphrase?": "Másik jelmondat használata?",
-    "No recently visited rooms": "Nincsenek nemrégiben meglátogatott szobák",
     "Message preview": "Üzenet előnézet",
     "Room options": "Szoba beállítások",
     "Switch theme": "Kinézet váltása",
@@ -601,7 +596,6 @@
     "A connection error occurred while trying to contact the server.": "Kapcsolati hiba történt a kiszolgáló elérése során.",
     "The server is not configured to indicate what the problem is (CORS).": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
     "Recent changes that have not yet been received": "A legutóbbi változások, amelyek még nem érkeztek meg",
-    "Explore public rooms": "Nyilvános szobák felfedezése",
     "Information": "Információ",
     "Preparing to download logs": "Napló előkészítése feltöltéshez",
     "Not encrypted": "Nem titkosított",
@@ -918,7 +912,6 @@
     "Remember this": "Emlékezzen erre",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
     "Allow this widget to verify your identity": "A kisalkalmazás ellenőrizheti a személyazonosságát",
-    "Recently visited rooms": "Nemrég meglátogatott szobák",
     "%(count)s members": {
         "one": "%(count)s tag",
         "other": "%(count)s tag"
@@ -933,13 +926,9 @@
     "Space selection": "Tér kiválasztása",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Nem fogja tudni visszavonni ezt a változtatást, mert lefokozza magát, ha Ön az utolsó privilegizált felhasználó a térben, akkor lehetetlen lesz a jogosultságok visszanyerése.",
     "Suggested Rooms": "Javasolt szobák",
-    "Add existing room": "Létező szoba hozzáadása",
-    "Invite to this space": "Meghívás a térbe",
     "Your message was sent": "Üzenet elküldve",
     "Leave space": "Tér elhagyása",
     "Create a space": "Tér létrehozása",
-    "Private space": "Privát tér",
-    "Public space": "Nyilvános tér",
     "<inviter/> invites you": "<inviter/> meghívta",
     "You may want to try a different search or check for typos.": "Esetleg próbáljon ki egy másik keresést vagy nézze át elgépelések után.",
     "No results found": "Nincs találat",
@@ -1020,10 +1009,6 @@
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
     "Unnamed audio": "Névtelen hang",
     "Error processing audio message": "Hiba a hangüzenet feldolgozásánál",
-    "Show %(count)s other previews": {
-        "one": "%(count)s további előnézet megjelenítése",
-        "other": "%(count)s további előnézet megjelenítése"
-    },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
     "Unable to copy a link to the room to the clipboard.": "Ennek a szobának a hivatkozását nem sikerül a vágólapra másolni.",
     "Unable to copy room link": "A szoba hivatkozása nem másolható",
@@ -1037,7 +1022,6 @@
     "Select spaces": "Terek kiválasztása",
     "You're removing all spaces. Access will default to invite only": "Az összes teret törli. A hozzáférés alapállapota „csak meghívóval” lesz.",
     "User Directory": "Felhasználójegyzék",
-    "Public room": "Nyilvános szoba",
     "The call is in an unknown state!": "A hívás ismeretlen állapotban van!",
     "An unknown error occurred": "Ismeretlen hiba történt",
     "Their device couldn't start the camera or microphone": "A másik fél eszköze nem képes használni a kamerát vagy a mikrofont",
@@ -1152,9 +1136,6 @@
     "Home options": "Kezdőlap beállítások",
     "%(spaceName)s menu": "%(spaceName)s menű",
     "Join public room": "Belépés nyilvános szobába",
-    "Add people": "Felhasználók meghívása",
-    "Invite to space": "Meghívás a térbe",
-    "Start new chat": "Új beszélgetés indítása",
     "Recently viewed": "Nemrég megtekintett",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s leadott szavazat. Szavazzon az eredmény megtekintéséhez",
@@ -1288,8 +1269,6 @@
     "Something went wrong with your invite.": "Valami hiba történt a meghívójával.",
     "Forget this space": "Ennek a térnek az elfelejtése",
     "Loading preview": "Előnézet betöltése",
-    "New video room": "Új videó szoba",
-    "New room": "Új szoba",
     "Hide my messages from new joiners": "Üzeneteim elrejtése az újonnan csatlakozók elől",
     "You will leave all rooms and DMs that you are in": "Minden szobából és közvetlen beszélgetésből kilép",
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Senki nem használhatja többet a felhasználónevet (matrix azonosítot), Önt is beleértve: ez a felhasználói név használhatatlan marad",
@@ -1307,8 +1286,6 @@
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Azok a régi üzenetek amiket az emberek már megkaptak továbbra is láthatóak maradnak, mint az e-mailek amiket régebben küldött. Szeretné elrejteni az üzeneteit azon emberek elől aki ez után lépnek be a szobába?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Az azonosítási kiszolgálóról törlésre kerül: a barátai többé nem találják meg az e-mail-címe vagy a telefonszáma alapján",
     "To view %(roomName)s, you need an invite": "A %(roomName)s megjelenítéséhez meghívó szükséges",
-    "Private room": "Privát szoba",
-    "Video room": "Videó szoba",
     "%(members)s and %(last)s": "%(members)s és %(last)s",
     "%(members)s and more": "%(members)s és mások",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Az üzenete nem lett elküldve, mert a Matrix-kiszolgáló rendszergazdája letiltotta. A szolgáltatás használatának folytatásához <a>vegye fel a kapcsolatot a szolgáltatás rendszergazdájával</a>.",
@@ -1588,7 +1565,12 @@
         "profile": "Profil",
         "display_name": "Megjelenítési név",
         "user_avatar": "Profilkép",
-        "authentication": "Azonosítás"
+        "authentication": "Azonosítás",
+        "public_room": "Nyilvános szoba",
+        "video_room": "Videó szoba",
+        "public_space": "Nyilvános tér",
+        "private_space": "Privát tér",
+        "private_room": "Privát szoba"
     },
     "action": {
         "continue": "Folytatás",
@@ -1694,7 +1676,15 @@
         "click_to_copy": "Másolás kattintással",
         "hide_advanced": "Speciális beállítások elrejtése",
         "show_advanced": "Speciális beállítások megjelenítése",
-        "unignore": "Mellőzés feloldása"
+        "unignore": "Mellőzés feloldása",
+        "start_new_chat": "Új beszélgetés indítása",
+        "invite_to_space": "Meghívás a térbe",
+        "add_people": "Felhasználók meghívása",
+        "explore_rooms": "Szobák felderítése",
+        "new_room": "Új szoba",
+        "new_video_room": "Új videó szoba",
+        "add_existing_room": "Létező szoba hozzáadása",
+        "explore_public_rooms": "Nyilvános szobák felfedezése"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -1707,7 +1697,8 @@
             "one": "1 olvasatlan üzenet."
         },
         "unread_messages": "Olvasatlan üzenetek.",
-        "jump_first_invite": "Újrás az első meghívóhoz."
+        "jump_first_invite": "Újrás az első meghívóhoz.",
+        "room_name": "Szoba: %(name)s"
     },
     "labs": {
         "video_rooms": "Videószobák",
@@ -2884,6 +2875,13 @@
             "collapse_reply_thread": "Üzenetszál összecsukása",
             "view_related_event": "Kapcsolódó események megjelenítése",
             "report": "Jelentés"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "%(count)s további előnézet megjelenítése",
+                "other": "%(count)s további előnézet megjelenítése"
+            },
+            "close": "Előnézet bezárása"
         }
     },
     "slash_command": {
@@ -3527,7 +3525,9 @@
         "notification_options": "Értesítési beállítások",
         "failed_set_dm_tag": "Nem sikerült a közvetlen beszélgetés címkét beállítani",
         "failed_remove_tag": "Nem sikerült a szobáról eltávolítani ezt: %(tagName)s",
-        "failed_add_tag": "Nem sikerült hozzáadni a szobához ezt: %(tagName)s"
+        "failed_add_tag": "Nem sikerült hozzáadni a szobához ezt: %(tagName)s",
+        "breadcrumbs_label": "Nemrég meglátogatott szobák",
+        "breadcrumbs_empty": "Nincsenek nemrégiben meglátogatott szobák"
     },
     "report_content": {
         "missing_reason": "Adja meg, hogy miért jelenti.",
@@ -3782,7 +3782,8 @@
         "search_children": "Keresés: %(spaceName)s",
         "invite_link": "Meghívási hivatkozás megosztása",
         "invite": "Emberek meghívása",
-        "invite_description": "Meghívás e-mail-címmel vagy felhasználónévvel"
+        "invite_description": "Meghívás e-mail-címmel vagy felhasználónévvel",
+        "invite_this_space": "Meghívás a térbe"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -3940,7 +3941,8 @@
             "mark_read": "Megjelölés olvasottként",
             "notifications_default": "Az alapértelmezett beállítások szerint",
             "notifications_mute": "Szoba némítása"
-        }
+        },
+        "invite_this_room": "Meghívás a szobába"
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",

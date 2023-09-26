@@ -132,7 +132,6 @@
     "Tuesday": "Úterý",
     "Saturday": "Sobota",
     "Monday": "Pondělí",
-    "Invite to this room": "Pozvat do této místnosti",
     "All Rooms": "Všechny místnosti",
     "You cannot delete this message. (%(code)s)": "Tuto zprávu nemůžete smazat. (%(code)s)",
     "Thursday": "Čtvrtek",
@@ -375,7 +374,6 @@
     "Deactivate user": "Deaktivovat uživatele",
     "Remove recent messages": "Odstranit nedávné zprávy",
     "Italics": "Kurzívou",
-    "Room %(name)s": "Místnost %(name)s",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Pozvánka do místnosti %(roomName)s byla poslána na adresu %(email)s, která není k tomuto účtu přidána",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Přidejte si tento e-mail k účtu v Nastavení, abyste dostávali pozvání přímo v %(brand)su.",
     "This invite to %(roomName)s was sent to %(email)s": "Pozvánka do %(roomName)s byla odeslána na adresu %(email)s",
@@ -400,7 +398,6 @@
     "e.g. my-room": "např. moje-mistnost",
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
-    "Explore rooms": "Procházet místnosti",
     "Failed to re-authenticate due to a homeserver problem": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
     "Clear personal data": "Smazat osobní data",
     "Unencrypted": "Nezašifrované",
@@ -418,7 +415,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Místnost bude povýšena z verze <oldVersion /> na verzi <newVersion />.",
     "Verification Request": "Požadavek na ověření",
     "Unable to set up secret storage": "Nepovedlo se nastavit bezpečné úložiště",
-    "Close preview": "Zavřít náhled",
     "Hide verified sessions": "Skrýt ověřené relace",
     "%(count)s verified sessions": {
         "other": "%(count)s ověřených relací",
@@ -552,8 +548,6 @@
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Pravost této šifrované zprávy nelze na tomto zařízení ověřit.",
-    "No recently visited rooms": "Žádné nedávno navštívené místnosti",
-    "Explore public rooms": "Prozkoumat veřejné místnosti",
     "Preparing to download logs": "Příprava na stažení záznamů",
     "a new cross-signing key signature": "nový klíč pro křížový podpis",
     "a key signature": "podpis klíče",
@@ -917,7 +911,6 @@
     "Remember this": "Zapamatujte si toto",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget ověří vaše uživatelské ID, ale nebude za vás moci provádět akce:",
     "Allow this widget to verify your identity": "Povolte tomuto widgetu ověřit vaši identitu",
-    "Recently visited rooms": "Nedávno navštívené místnosti",
     "%(count)s members": {
         "one": "%(count)s člen",
         "other": "%(count)s členů"
@@ -932,14 +925,10 @@
     "Space selection": "Výběr prostoru",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Tuto změnu nebudete moci vrátit zpět, protože budete degradováni, pokud jste posledním privilegovaným uživatelem v daném prostoru, nebude možné znovu získat oprávnění.",
     "Suggested Rooms": "Doporučené místnosti",
-    "Add existing room": "Přidat existující místnost",
-    "Invite to this space": "Pozvat do tohoto prostoru",
     "Your message was sent": "Zpráva byla odeslána",
     "Leave space": "Opusit prostor",
     "Create a space": "Vytvořit prostor",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
-    "Private space": "Soukromý prostor",
-    "Public space": "Veřejný prostor",
     "<inviter/> invites you": "<inviter/> vás zve",
     "You may want to try a different search or check for typos.": "Možná budete chtít zkusit vyhledat něco jiného nebo zkontrolovat překlepy.",
     "No results found": "Nebyly nalezeny žádné výsledky",
@@ -1039,13 +1028,8 @@
     "Could not connect media": "Nepodařilo se připojit média",
     "Unable to copy a link to the room to the clipboard.": "Nelze zkopírovat odkaz na místnost do schránky.",
     "Unable to copy room link": "Nelze zkopírovat odkaz na místnost",
-    "Public room": "Veřejná místnost",
     "The call is in an unknown state!": "Hovor je v neznámém stavu!",
     "Call back": "Zavolat zpět",
-    "Show %(count)s other previews": {
-        "one": "Zobrazit %(count)s další náhled",
-        "other": "Zobrazit %(count)s dalších náhledů"
-    },
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
@@ -1152,9 +1136,6 @@
     "Home options": "Možnosti domovské obrazovky",
     "%(spaceName)s menu": "Nabídka pro %(spaceName)s",
     "Join public room": "Připojit se k veřejné místnosti",
-    "Add people": "Přidat lidi",
-    "Invite to space": "Pozvat do prostoru",
-    "Start new chat": "Zahájit nový chat",
     "Recently viewed": "Nedávno zobrazené",
     "%(count)s votes cast. Vote to see the results": {
         "other": "%(count)s hlasů. Hlasujte a podívejte se na výsledky",
@@ -1270,8 +1251,6 @@
         "one": "1 účastník",
         "other": "%(count)s účastníků"
     },
-    "New video room": "Nová video místnost",
-    "New room": "Nová místnost",
     "%(featureName)s Beta feedback": "Zpětná vazba beta funkce %(featureName)s",
     "Live location ended": "Sdílení polohy živě skončilo",
     "View live location": "Zobrazit polohu živě",
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "Pro vstup, povolte prosím nejprve video místnosti v Experimentálních funkcích",
     "To view, please enable video rooms in Labs first": "Pro zobrazení, povolte prosím nejprve video místnosti v Experimentálních funkcích",
     "To view %(roomName)s, you need an invite": "Pro zobrazení %(roomName)s potřebujete pozvánku",
-    "Private room": "Soukromá místnost",
-    "Video room": "Video místnost",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>.",
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
@@ -1609,7 +1586,12 @@
         "profile": "Profil",
         "display_name": "Zobrazované jméno",
         "user_avatar": "Profilový obrázek",
-        "authentication": "Ověření"
+        "authentication": "Ověření",
+        "public_room": "Veřejná místnost",
+        "video_room": "Video místnost",
+        "public_space": "Veřejný prostor",
+        "private_space": "Soukromý prostor",
+        "private_room": "Soukromá místnost"
     },
     "action": {
         "continue": "Pokračovat",
@@ -1717,7 +1699,15 @@
         "click_to_copy": "Kliknutím zkopírujte",
         "hide_advanced": "Skrýt pokročilé možnosti",
         "show_advanced": "Zobrazit pokročilé možnosti",
-        "unignore": "Odignorovat"
+        "unignore": "Odignorovat",
+        "start_new_chat": "Zahájit nový chat",
+        "invite_to_space": "Pozvat do prostoru",
+        "add_people": "Přidat lidi",
+        "explore_rooms": "Procházet místnosti",
+        "new_room": "Nová místnost",
+        "new_video_room": "Nová video místnost",
+        "add_existing_room": "Přidat existující místnost",
+        "explore_public_rooms": "Prozkoumat veřejné místnosti"
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka",
@@ -1730,7 +1720,8 @@
             "one": "Nepřečtená zpráva."
         },
         "unread_messages": "Nepřečtené zprávy.",
-        "jump_first_invite": "Přejít na první pozvánku."
+        "jump_first_invite": "Přejít na první pozvánku.",
+        "room_name": "Místnost %(name)s"
     },
     "labs": {
         "video_rooms": "Video místnosti",
@@ -2960,6 +2951,13 @@
             "collapse_reply_thread": "Sbalit vlákno odpovědi",
             "view_related_event": "Zobrazit související událost",
             "report": "Nahlásit"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Zobrazit %(count)s další náhled",
+                "other": "Zobrazit %(count)s dalších náhledů"
+            },
+            "close": "Zavřít náhled"
         }
     },
     "slash_command": {
@@ -3620,7 +3618,9 @@
         "notification_options": "Možnosti oznámení",
         "failed_set_dm_tag": "Nepodařilo se nastavit značku přímé zprávy",
         "failed_remove_tag": "Nepodařilo se odstranit štítek %(tagName)s z místnosti",
-        "failed_add_tag": "Nepodařilo se přidat štítek %(tagName)s k místnosti"
+        "failed_add_tag": "Nepodařilo se přidat štítek %(tagName)s k místnosti",
+        "breadcrumbs_label": "Nedávno navštívené místnosti",
+        "breadcrumbs_empty": "Žádné nedávno navštívené místnosti"
     },
     "report_content": {
         "missing_reason": "Vyplňte prosím co chcete nahlásit.",
@@ -3878,7 +3878,8 @@
         "search_children": "Hledat %(spaceName)s",
         "invite_link": "Sdílet odkaz na pozvánku",
         "invite": "Pozvat lidi",
-        "invite_description": "Pozvěte e-mailem nebo uživatelským jménem"
+        "invite_description": "Pozvěte e-mailem nebo uživatelským jménem",
+        "invite_this_space": "Pozvat do tohoto prostoru"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
@@ -4038,7 +4039,8 @@
             "mark_read": "Označit jako přečtené",
             "notifications_default": "Odpovídá výchozímu nastavení",
             "notifications_mute": "Ztlumit místnost"
-        }
+        },
+        "invite_this_room": "Pozvat do této místnosti"
     },
     "file_panel": {
         "guest_note": "Pro využívání této funkce se <a>zaregistrujte</a>",

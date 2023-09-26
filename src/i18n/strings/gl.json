@@ -143,7 +143,6 @@
     "Monday": "Luns",
     "All Rooms": "Todas as Salas",
     "Wednesday": "Mércores",
-    "Invite to this room": "Convidar a esta sala",
     "You cannot delete this message. (%(code)s)": "Non pode eliminar esta mensaxe. (%(code)s)",
     "Thursday": "Xoves",
     "Logs sent": "Informes enviados",
@@ -177,12 +176,10 @@
     "Sign in with SSO": "Conecta utilizando SSO",
     "Your password has been reset.": "Restableceuse o contrasinal.",
     "Deactivate account": "Desactivar conta",
-    "Room %(name)s": "Sala %(name)s",
     "Direct Messages": "Mensaxes Directas",
     "Enter the name of a new server you want to explore.": "Escribe o nome do novo servidor que queres explorar.",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
-    "Explore rooms": "Explorar salas",
     "General failure": "Fallo xeral",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Algo fallou ao actualizar os enderezos alternativos da sala. É posible que o servidor non o permita ou acontecese un fallo temporal.",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Establecer enderezos para a sala para que poida ser atopada no teu servidor local (%(localDomain)s)",
@@ -288,11 +285,9 @@
     "Unencrypted": "Non cifrada",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Scroll to most recent messages": "Ir ás mensaxes máis recentes",
-    "Close preview": "Pechar vista previa",
     "The conversation continues here.": "A conversa continúa aquí.",
     "This room has been replaced and is no longer active.": "Esta sala foi substituída e xa non está activa.",
     "Italics": "Cursiva",
-    "No recently visited rooms": "Sen salas recentes visitadas",
     "Reason: %(reason)s": "Razón: %(reason)s",
     "Forget this room": "Esquecer sala",
     "You were banned from %(roomName)s by %(memberName)s": "Foches bloqueada en %(roomName)s por %(memberName)s",
@@ -601,7 +596,6 @@
     "A connection error occurred while trying to contact the server.": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
     "The server is not configured to indicate what the problem is (CORS).": "O servidor non está configurado para sinalar cal é o problema (CORS).",
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
-    "Explore public rooms": "Explorar salas públicas",
     "Preparing to download logs": "Preparándose para descargar rexistro",
     "Information": "Información",
     "Not encrypted": "Sen cifrar",
@@ -918,7 +912,6 @@
     "Allow this widget to verify your identity": "Permitir a este widget verificar a túa identidade",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
     "Remember this": "Lembrar isto",
-    "Recently visited rooms": "Salas visitadas recentemente",
     "%(count)s members": {
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
@@ -933,13 +926,9 @@
     "Space selection": "Selección de Espazos",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non poderás desfacer este cambio xa que te estás degradando a ti mesma, se es a última usuaria con privilexios no espazo será imposible volver a obter os privilexios.",
     "Suggested Rooms": "Salas suxeridas",
-    "Add existing room": "Engadir sala existente",
-    "Invite to this space": "Convidar a este espazo",
     "Your message was sent": "Enviouse a túa mensaxe",
     "Leave space": "Saír do espazo",
     "Create a space": "Crear un espazo",
-    "Private space": "Espazo privado",
-    "Public space": "Espazo público",
     "<inviter/> invites you": "<inviter/> convídate",
     "You may want to try a different search or check for typos.": "Podes intentar unha busca diferente ou comprobar o escrito.",
     "No results found": "Sen resultados",
@@ -1021,10 +1010,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Os enderezos publicados poden ser utilizados por calquera en calquera servidor para unirse á túa sala.",
     "Published addresses can be used by anyone on any server to join your space.": "Os enderezos publicados podense usar por calquera en calquera servidor para unirse ao teu espazo.",
     "This space has no local addresses": "Este espazo non ten enderezos locais",
-    "Show %(count)s other previews": {
-        "one": "Mostrar %(count)s outra vista previa",
-        "other": "Mostrar outras %(count)s vistas previas"
-    },
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
     "Unnamed audio": "Audio sen nome",
@@ -1045,7 +1030,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decide que espazos poderán acceder a esta sala. Se un espazo é elexido, os seus membros poderán atopar e unirse a <RoomName/>.",
     "Select spaces": "Elixe espazos",
     "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
-    "Public room": "Sala pública",
     "Want to add an existing space instead?": "Queres engadir un espazo xa existente?",
     "Private space (invite only)": "Espazo privado (só convidadas)",
     "Space visibility": "Visibilidade do espazo",
@@ -1152,9 +1136,6 @@
     "Home options": "Opcións de Incio",
     "%(spaceName)s menu": "Menú de %(spaceName)s",
     "Join public room": "Unirse a sala pública",
-    "Add people": "Engadir persoas",
-    "Invite to space": "Convidar ao espazo",
-    "Start new chat": "Iniciar un novo chat",
     "Recently viewed": "Visto recentemente",
     "%(count)s votes cast. Vote to see the results": {
         "other": "%(count)s votos recollidos. Vota para ver os resultados",
@@ -1271,8 +1252,6 @@
     "Forget this space": "Esquecer este espazo",
     "You were removed by %(memberName)s": "%(memberName)s eliminoute de aquí",
     "Loading preview": "Cargando vista previa",
-    "New video room": "Nova sala de vídeo",
-    "New room": "Nova sala",
     "Live location ended": "Rematou a localización en directo",
     "View live location": "Ver localización en directo",
     "Live location enabled": "Activada a localización en directo",
@@ -1318,8 +1297,6 @@
     "To join, please enable video rooms in Labs first": "Para unirte, primeiro activa as salas de vídeo en Labs",
     "To view, please enable video rooms in Labs first": "Para ver, primeiro activa as salas de vídeo en Labs",
     "To view %(roomName)s, you need an invite": "Para ver %(roomName)s, precisas un convite",
-    "Private room": "Sala privada",
-    "Video room": "Sala de vídeo",
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
@@ -1465,7 +1442,12 @@
         "profile": "Perfil",
         "display_name": "Nome mostrado",
         "user_avatar": "Imaxe de perfil",
-        "authentication": "Autenticación"
+        "authentication": "Autenticación",
+        "public_room": "Sala pública",
+        "video_room": "Sala de vídeo",
+        "public_space": "Espazo público",
+        "private_space": "Espazo privado",
+        "private_room": "Sala privada"
     },
     "action": {
         "continue": "Continuar",
@@ -1569,7 +1551,15 @@
         "click_to_copy": "Click para copiar",
         "hide_advanced": "Ocultar Avanzado",
         "show_advanced": "Mostrar Avanzado",
-        "unignore": "Non ignorar"
+        "unignore": "Non ignorar",
+        "start_new_chat": "Iniciar un novo chat",
+        "invite_to_space": "Convidar ao espazo",
+        "add_people": "Engadir persoas",
+        "explore_rooms": "Explorar salas",
+        "new_room": "Nova sala",
+        "new_video_room": "Nova sala de vídeo",
+        "add_existing_room": "Engadir sala existente",
+        "explore_public_rooms": "Explorar salas públicas"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -1582,7 +1572,8 @@
             "one": "1 mensaxe non lida."
         },
         "unread_messages": "Mensaxes non lidas.",
-        "jump_first_invite": "Vai ó primeiro convite."
+        "jump_first_invite": "Vai ó primeiro convite.",
+        "room_name": "Sala %(name)s"
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -2608,6 +2599,13 @@
             "collapse_reply_thread": "Contraer fío de resposta",
             "view_related_event": "Ver evento relacionado",
             "report": "Denunciar"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Mostrar %(count)s outra vista previa",
+                "other": "Mostrar outras %(count)s vistas previas"
+            },
+            "close": "Pechar vista previa"
         }
     },
     "slash_command": {
@@ -3189,7 +3187,9 @@
         "notification_options": "Opcións de notificación",
         "failed_set_dm_tag": "Non se estableceu a etiqueta de mensaxe directa",
         "failed_remove_tag": "Fallo ao eliminar a etiqueta %(tagName)s da sala",
-        "failed_add_tag": "Fallo ao engadir a etiqueta %(tagName)s a sala"
+        "failed_add_tag": "Fallo ao engadir a etiqueta %(tagName)s a sala",
+        "breadcrumbs_label": "Salas visitadas recentemente",
+        "breadcrumbs_empty": "Sen salas recentes visitadas"
     },
     "report_content": {
         "missing_reason": "Escribe a razón do informe.",
@@ -3409,7 +3409,8 @@
         "search_children": "Buscar %(spaceName)s",
         "invite_link": "Compartir ligazón do convite",
         "invite": "Convidar persoas",
-        "invite_description": "Convida con email ou nome de usuaria"
+        "invite_description": "Convida con email ou nome de usuaria",
+        "invite_this_space": "Convidar a este espazo"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3556,7 +3557,8 @@
             "copy_link": "Copiar ligazón á sala",
             "low_priority": "Baixa prioridade",
             "forget": "Esquecer sala"
-        }
+        },
+        "invite_this_room": "Convidar a esta sala"
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",

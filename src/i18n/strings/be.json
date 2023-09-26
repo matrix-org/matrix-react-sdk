@@ -1,6 +1,5 @@
 {
     "Failed to forget room %(errCode)s": "Не атрымалася забыць пакой %(errCode)s",
-    "Invite to this room": "Запрасіць у гэты пакой",
     "common": {
         "error": "Памылка",
         "mute": "Без гуку",
@@ -45,6 +44,7 @@
         "context_menu": {
             "favourite": "Улюбёнае",
             "low_priority": "Нізкі прыярытэт"
-        }
+        },
+        "invite_this_room": "Запрасіць у гэты пакой"
     }
 }

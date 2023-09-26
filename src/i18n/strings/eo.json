@@ -135,7 +135,6 @@
     "Search…": "Serĉi…",
     "Saturday": "Sabato",
     "Monday": "Lundo",
-    "Invite to this room": "Inviti al ĉi tiu ĉambro",
     "Wednesday": "Merkredo",
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
     "All Rooms": "Ĉiuj ĉambroj",
@@ -376,9 +375,7 @@
     "Deactivate user": "Malaktivigi uzanton",
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
     "Italics": "Kursive",
-    "Explore rooms": "Esplori ĉambrojn",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Provu rulumi supren tra la historio por kontroli, ĉu ne estas iuj pli fruaj.",
-    "Room %(name)s": "Ĉambro %(name)s",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Ĉi tiu invito al %(roomName)s sendiĝis al %(email)s, kiu ne estas ligita al via konto",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Ligu ĉi tiun retpoŝtadreson al via konto en Agordoj por ricevadi invitojn rekte per %(brand)s.",
     "This invite to %(roomName)s was sent to %(email)s": "La invito al %(roomName)s sendiĝis al %(email)s",
@@ -433,7 +430,6 @@
     "Someone is using an unknown session": "Iu uzas nekonatan salutaĵon",
     "Encrypted by an unverified session": "Ĉifrita de nekontrolita salutaĵo",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
-    "Close preview": "Fermi antaŭrigardon",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
     "Waiting for %(displayName)s to accept…": "Atendante akcepton de %(displayName)s…",
     "Accepting…": "Akceptante…",
@@ -568,7 +564,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
-    "No recently visited rooms": "Neniuj freŝdate vizititaj ĉambroj",
     "Message preview": "Antaŭrigardo al mesaĝo",
     "Room options": "Elektebloj pri ĉambro",
     "Wrong file type": "Neĝusta dosiertipo",
@@ -624,7 +619,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Vi povas fiksi maksimume %(count)s fenestraĵojn"
     },
-    "Explore public rooms": "Esplori publikajn ĉambrojn",
     "Show Widgets": "Montri fenestraĵojn",
     "Hide Widgets": "Kaŝi fenestraĵojn",
     "Backup version:": "Repaŝa versio:",
@@ -908,7 +902,6 @@
     "Decline All": "Rifuzi ĉion",
     "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
     "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
-    "Recently visited rooms": "Freŝe vizititiaj ĉambroj",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
@@ -920,8 +913,6 @@
     "Dial pad": "Ciferplato",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ĉi tiu kutime influas nur traktadon de la ĉambro servil-flanke. Se vi spertas problemojn pri via %(brand)s, bonvolu raporti eraron.",
     "Suggested Rooms": "Rekomendataj ĉambroj",
-    "Private space": "Privata aro",
-    "Public space": "Publika aro",
     "<inviter/> invites you": "<inviter/> invitas vin",
     "No results found": "Neniuj rezultoj troviĝis",
     "%(count)s rooms": {
@@ -943,8 +934,6 @@
     "Space selection": "Elekto de aro",
     "Edit devices": "Redakti aparatojn",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vi ne povos malfari ĉi tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta altranga uzanto de la aro, vi ne plu povos rehavi viajn rajtojn.",
-    "Add existing room": "Aldoni jaman ĉambron",
-    "Invite to this space": "Inviti al ĉi tiu aro",
     "Your message was sent": "Via mesaĝo sendiĝis",
     "Leave space": "Forlasi aron",
     "Create a space": "Krei aron",
@@ -1007,10 +996,6 @@
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
     "Send voice message": "Sendi voĉmesaĝon",
-    "Show %(count)s other previews": {
-        "one": "Montri %(count)s alian antaŭrigardon",
-        "other": "Montri %(count)s aliajn antaŭrigardojn"
-    },
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -1044,7 +1029,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Ĉiu en <SpaceName/> povos ĝin trovi kaj aliĝi.",
     "Private space (invite only)": "Privata aro (nur por invititoj)",
     "Space visibility": "Videbleco de aro",
-    "Public room": "Publika ĉambro",
     "Adding spaces has moved.": "Aldonejo de aroj moviĝis.",
     "Search for rooms": "Serĉi ĉambrojn",
     "Search for spaces": "Serĉi arojn",
@@ -1211,7 +1195,10 @@
         "profile": "Profilo",
         "display_name": "Vidiga nomo",
         "user_avatar": "Profilbildo",
-        "authentication": "Aŭtentikigo"
+        "authentication": "Aŭtentikigo",
+        "public_room": "Publika ĉambro",
+        "public_space": "Publika aro",
+        "private_space": "Privata aro"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1307,7 +1294,10 @@
         "click_to_copy": "Klaku por kopii",
         "hide_advanced": "Kaŝi specialajn",
         "show_advanced": "Montri specialajn",
-        "unignore": "Reatenti"
+        "unignore": "Reatenti",
+        "explore_rooms": "Esplori ĉambrojn",
+        "add_existing_room": "Aldoni jaman ĉambron",
+        "explore_public_rooms": "Esplori publikajn ĉambrojn"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -1320,7 +1310,8 @@
             "one": "1 nelegita mesaĝo."
         },
         "unread_messages": "Nelegitaj mesaĝoj.",
-        "jump_first_invite": "Salti al unua invito."
+        "jump_first_invite": "Salti al unua invito.",
+        "room_name": "Ĉambro %(name)s"
     },
     "labs": {
         "video_rooms": "Videoĉambroj",
@@ -2116,6 +2107,13 @@
             "external_url": "Fonta URL",
             "collapse_reply_thread": "Maletendi respondan fadenon",
             "report": "Raporti"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Montri %(count)s alian antaŭrigardon",
+                "other": "Montri %(count)s aliajn antaŭrigardojn"
+            },
+            "close": "Fermi antaŭrigardon"
         }
     },
     "slash_command": {
@@ -2674,7 +2672,9 @@
         "show_less": "Montri malpli",
         "notification_options": "Elektebloj pri sciigoj",
         "failed_remove_tag": "Malsukcesis forigi etikedon %(tagName)s el la ĉambro",
-        "failed_add_tag": "Malsukcesis aldoni etikedon %(tagName)s al ĉambro"
+        "failed_add_tag": "Malsukcesis aldoni etikedon %(tagName)s al ĉambro",
+        "breadcrumbs_label": "Freŝe vizititiaj ĉambroj",
+        "breadcrumbs_empty": "Neniuj freŝdate vizititaj ĉambroj"
     },
     "report_content": {
         "missing_reason": "Bonvolu skribi, kial vi raportas.",
@@ -2909,7 +2909,8 @@
         "search_children": "Serĉi je %(spaceName)s",
         "invite_link": "Diskonigi invitan ligilon",
         "invite": "Inviti personojn",
-        "invite_description": "Inviti per retpoŝtadreso aŭ uzantonomo"
+        "invite_description": "Inviti per retpoŝtadreso aŭ uzantonomo",
+        "invite_this_space": "Inviti al ĉi tiu aro"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -3032,7 +3033,8 @@
             "favourite": "Elstarigi",
             "low_priority": "Malalta prioritato",
             "forget": "Forgesi ĉambron"
-        }
+        },
+        "invite_this_room": "Inviti al ĉi tiu ĉambro"
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",

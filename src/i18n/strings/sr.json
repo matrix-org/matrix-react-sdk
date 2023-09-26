@@ -140,7 +140,6 @@
     "Monday": "Понедељак",
     "All Rooms": "Све собе",
     "Wednesday": "Среда",
-    "Invite to this room": "Позови у ову собу",
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
@@ -192,7 +191,6 @@
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "General failure": "Општа грешка",
     "Light bulb": "сијалица",
-    "No recently visited rooms": "Нема недавно посећених соба",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
     "Looks good": "Изгледа добро",
@@ -464,7 +462,6 @@
     "Widgets": "Виџети",
     "Set my room layout for everyone": "Постави мој распоред собе за сваког",
     "Power level": "Ниво снаге",
-    "Explore rooms": "Истражи собе",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
     "Anchor": "сидро",
@@ -677,7 +674,8 @@
         "submit": "Пошаљи",
         "unban": "Скини забрану",
         "show_advanced": "Прикажи напредно",
-        "unignore": "Не занемаруј више"
+        "unignore": "Не занемаруј више",
+        "explore_rooms": "Истражи собе"
     },
     "labs": {
         "pinning": "Закачене поруке",
@@ -1309,7 +1307,8 @@
         "sublist_options": "Прикажи опције",
         "notification_options": "Опције обавештавања",
         "failed_remove_tag": "Нисам успео да скинем ознаку %(tagName)s са собе",
-        "failed_add_tag": "Нисам успео да додам ознаку %(tagName)s на собу"
+        "failed_add_tag": "Нисам успео да додам ознаку %(tagName)s на собу",
+        "breadcrumbs_empty": "Нема недавно посећених соба"
     },
     "report_content": {
         "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"
@@ -1438,7 +1437,8 @@
             "favourite": "Омиљено",
             "low_priority": "Најмања важност",
             "forget": "Заборави собу"
-        }
+        },
+        "invite_this_room": "Позови у ову собу"
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",

@@ -132,7 +132,6 @@
     "Saturday": "Lauantai",
     "Monday": "Maanantai",
     "All Rooms": "Kaikki huoneet",
-    "Invite to this room": "Kutsu käyttäjiä",
     "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
     "Yesterday": "Eilen",
@@ -376,7 +375,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Aseta identiteettipalvelin asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Jaa tämä sähköposti asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
-    "Explore rooms": "Selaa huoneita",
     "Deactivate user?": "Poista käyttäjä pysyvästi?",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Käyttäjän poistaminen kirjaa hänet ulos ja estää häntä kirjautumasta takaisin sisään. Lisäksi hän poistuu kaikista huoneista, joissa hän on. Tätä toimintoa ei voi kumota. Oletko varma, että haluat pysyvästi poistaa tämän käyttäjän?",
     "Deactivate user": "Poista käyttäjä pysyvästi",
@@ -384,7 +382,6 @@
     "e.g. my-room": "esim. oma-huone",
     "Show image": "Näytä kuva",
     "Close dialog": "Sulje dialogi",
-    "Room %(name)s": "Huone %(name)s",
     "Cancel search": "Peruuta haku",
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
     "Message Actions": "Viestitoiminnot",
@@ -411,7 +408,6 @@
     "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
     "Unencrypted": "Suojaamaton",
-    "Close preview": "Sulje esikatselu",
     "<userName/> wants to chat": "<userName/> haluaa keskustella",
     "Start chatting": "Aloita keskustelu",
     "Hide verified sessions": "Piilota varmennetut istunnot",
@@ -544,7 +540,6 @@
     "Error removing address": "Virhe osoitetta poistettaessa",
     "This address is available to use": "Tämä osoite on käytettävissä",
     "This address is already in use": "Tämä osoite on jo käytössä",
-    "No recently visited rooms": "Ei hiljattain vierailtuja huoneita",
     "Switch theme": "Vaihda teemaa",
     "Looks good!": "Hyvältä näyttää!",
     "Room options": "Huoneen asetukset",
@@ -722,7 +717,6 @@
     "Backup version:": "Varmuuskopiointiversio:",
     "Hide Widgets": "Piilota sovelmat",
     "Show Widgets": "Näytä sovelmat",
-    "Explore public rooms": "Selaa julkisia huoneita",
     "Server Options": "Palvelinasetukset",
     "Information": "Tiedot",
     "Zimbabwe": "Zimbabwe",
@@ -869,7 +863,6 @@
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
     "Open dial pad": "Avaa näppäimistö",
     "Dial pad": "Näppäimistö",
-    "Recently visited rooms": "Hiljattain vieraillut huoneet",
     "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
     "You may want to try a different search or check for typos.": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
@@ -888,7 +881,6 @@
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
     "Suggested Rooms": "Ehdotetut huoneet",
-    "Add existing room": "Lisää olemassa oleva huone",
     "Your message was sent": "Viestisi lähetettiin",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
@@ -937,8 +929,6 @@
     "Sent": "Lähetetty",
     "Server did not require any authentication": "Palvelin ei vaatinut mitään tunnistautumista",
     "Only people invited will be able to find and join this space.": "Vain kutsutut ihmiset voivat löytää tämän avaruuden ja liittyä siihen.",
-    "Public space": "Julkinen avaruus",
-    "Public room": "Julkinen huone",
     "Including %(commaSeparatedMembers)s": "Mukaan lukien %(commaSeparatedMembers)s",
     "Error processing audio message": "Virhe ääniviestiä käsiteltäessä",
     "Decrypting": "Puretaan salausta",
@@ -953,7 +943,6 @@
     "Nothing pinned, yet": "Ei mitään kiinnitetty, ei vielä",
     "Stop recording": "Pysäytä nauhoittaminen",
     "Send voice message": "Lähetä ääniviesti",
-    "Invite to this space": "Kutsu tähän avaruuteen",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
@@ -965,7 +954,6 @@
     "Add a space to a space you manage.": "Lisää avaruus hallitsemaasi avaruuteen.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Kuka tahansa voi löytää tämän avaruuden ja liittyä siihen, ei pelkästään avaruuden <SpaceName/> jäsenet.",
     "Anyone in <SpaceName/> will be able to find and join.": "Kuka tahansa avaruudessa <SpaceName/> voi löytää ja liittyä.",
-    "Private space": "Yksityinen avaruus",
     "Private space (invite only)": "Yksityinen avaruus (vain kutsulla)",
     "Select spaces": "Valitse avaruudet",
     "Want to add a new space instead?": "Haluatko lisätä sen sijaan uuden avaruuden?",
@@ -999,10 +987,6 @@
     "Unban from %(roomName)s": "Poista porttikielto huoneeseen %(roomName)s",
     "Export chat": "Vie keskustelu",
     "Insert link": "Lisää linkki",
-    "Show %(count)s other previews": {
-        "one": "Näytä %(count)s muu esikatselu",
-        "other": "Näytä %(count)s muuta esikatselua"
-    },
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -1025,7 +1009,6 @@
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Aseta osoitteita tälle avaruudelle, jotta käyttäjät löytävät tämän avaruuden kotipalvelimeltasi (%(localDomain)s)",
     "This space has no local addresses": "Tällä avaruudella ei ole paikallista osoitetta",
     "%(spaceName)s menu": "%(spaceName)s-valikko",
-    "Invite to space": "Kutsu avaruuteen",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -1076,7 +1059,6 @@
         "other": "Liitytään parhaillaan %(count)s huoneeseen"
     },
     "Join public room": "Liity julkiseen huoneeseen",
-    "Start new chat": "Aloita uusi keskustelu",
     "Message didn't send. Click for info.": "Viestiä ei lähetetty. Lisätietoa napsauttamalla.",
     "Poll": "Kysely",
     "You do not have permission to start polls in this room.": "Sinulla ei ole oikeutta aloittaa kyselyitä tässä huoneessa.",
@@ -1094,7 +1076,6 @@
     "Close this widget to view it in this panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
     "Unpin this widget to view it in this panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
     "Chat": "Keskustelu",
-    "Add people": "Lisää ihmisiä",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -1145,8 +1126,6 @@
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
     },
-    "New video room": "Uusi videohuone",
-    "New room": "Uusi huone",
     "You don't have permission to do this": "Sinulla ei ole lupaa tehdä tätä",
     "Failed to end poll": "Kyselyn päättäminen epäonnistui",
     "Hide my messages from new joiners": "Piilota viestini uusilta liittyjiltä",
@@ -1165,8 +1144,6 @@
     "You can still join here.": "Voit edelleen liittyä tänne.",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Kutsusi validointiyritys palautti virheen (%(errcode)s). Voit koettaa välittää tämän tiedon ihmiselle, joka kutsui sinut.",
     "Something went wrong with your invite.": "Kutsussasi meni jotain vikaan.",
-    "Private room": "Yksityinen huone",
-    "Video room": "Videohuone",
     "Read receipts": "Lukukuittaukset",
     "Seen by %(count)s people": {
         "one": "Nähnyt yksi ihminen",
@@ -1463,7 +1440,12 @@
         "profile": "Profiili",
         "display_name": "Näyttönimi",
         "user_avatar": "Profiilikuva",
-        "authentication": "Tunnistautuminen"
+        "authentication": "Tunnistautuminen",
+        "public_room": "Julkinen huone",
+        "video_room": "Videohuone",
+        "public_space": "Julkinen avaruus",
+        "private_space": "Yksityinen avaruus",
+        "private_room": "Yksityinen huone"
     },
     "action": {
         "continue": "Jatka",
@@ -1569,7 +1551,15 @@
         "click_to_copy": "Kopioi napsauttamalla",
         "hide_advanced": "Piilota lisäasetukset",
         "show_advanced": "Näytä lisäasetukset",
-        "unignore": "Huomioi käyttäjä jälleen"
+        "unignore": "Huomioi käyttäjä jälleen",
+        "start_new_chat": "Aloita uusi keskustelu",
+        "invite_to_space": "Kutsu avaruuteen",
+        "add_people": "Lisää ihmisiä",
+        "explore_rooms": "Selaa huoneita",
+        "new_room": "Uusi huone",
+        "new_video_room": "Uusi videohuone",
+        "add_existing_room": "Lisää olemassa oleva huone",
+        "explore_public_rooms": "Selaa julkisia huoneita"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -1582,7 +1572,8 @@
             "one": "Yksi lukematon viesti."
         },
         "unread_messages": "Lukemattomat viestit.",
-        "jump_first_invite": "Siirry ensimmäiseen kutsuun."
+        "jump_first_invite": "Siirry ensimmäiseen kutsuun.",
+        "room_name": "Huone %(name)s"
     },
     "labs": {
         "video_rooms": "Videohuoneet",
@@ -2658,6 +2649,13 @@
             "external_url": "Lähdeosoite",
             "collapse_reply_thread": "Supista vastausketju",
             "report": "Ilmoita"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Näytä %(count)s muu esikatselu",
+                "other": "Näytä %(count)s muuta esikatselua"
+            },
+            "close": "Sulje esikatselu"
         }
     },
     "slash_command": {
@@ -3279,7 +3277,9 @@
         "show_less": "Näytä vähemmän",
         "notification_options": "Ilmoitusasetukset",
         "failed_remove_tag": "Tagin %(tagName)s poistaminen huoneesta epäonnistui",
-        "failed_add_tag": "Tagin %(tagName)s lisääminen huoneeseen epäonnistui"
+        "failed_add_tag": "Tagin %(tagName)s lisääminen huoneeseen epäonnistui",
+        "breadcrumbs_label": "Hiljattain vieraillut huoneet",
+        "breadcrumbs_empty": "Ei hiljattain vierailtuja huoneita"
     },
     "report_content": {
         "missing_reason": "Kerro miksi teet ilmoitusta.",
@@ -3491,7 +3491,8 @@
         "search_children": "Etsi %(spaceName)s",
         "invite_link": "Jaa kutsulinkki",
         "invite": "Kutsu ihmisiä",
-        "invite_description": "Kutsu sähköpostiosoitteella tai käyttäjänimellä"
+        "invite_description": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
+        "invite_this_space": "Kutsu tähän avaruuteen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3636,7 +3637,8 @@
             "forget": "Unohda huone",
             "mark_read": "Merkitse luetuksi",
             "notifications_mute": "Mykistä huone"
-        }
+        },
+        "invite_this_room": "Kutsu käyttäjiä"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",

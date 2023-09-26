@@ -127,7 +127,6 @@
     "Failed to reject invitation": "Fekk ikkje til å seia nei til innbyding",
     "This room is not public. You will not be able to rejoin without an invite.": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Er du sikker på at du vil forlate rommet '%(roomName)s'?",
-    "Invite to this room": "Inviter til dette rommet",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
     "Connectivity to the server has been lost.": "Tilkoplinga til tenaren vart tapt.",
     "Sent messages will be stored until your connection has returned.": "Sende meldingar vil lagrast lokalt fram til nettverket er oppe att.",
@@ -167,7 +166,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dette tillèt deg å importere krypteringsnøklar som du tidlegare har eksportert frå ein annan Matrix-klient. Du har deretter moglegheit for å dekryptere alle meldingane som den andre klienten kunne dekryptere.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Den eksporterte fila vil bli verna med ein passfrase. Du bør skriva passfrasen her, for å dekryptere fila.",
     "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
-    "Explore rooms": "Utforsk romma",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Denne meldingen vart ikkje send fordi heimetenaren har nådd grensa for tilgjengelege systemressursar. Kontakt <a>systemadministratoren</a> for å vidare nytta denne tenesta.",
     "Add room": "Legg til rom",
@@ -197,7 +195,6 @@
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
     "Scroll to most recent messages": "Gå til dei nyaste meldingane",
-    "Close preview": "Lukk førehandsvisninga",
     "No recent messages by %(user)s found": "Fann ingen nyare meldingar frå %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
     "Remove recent messages by %(user)s": "Fjern nyare meldingar frå %(user)s",
@@ -213,7 +210,6 @@
     "The conversation continues here.": "Samtalen held fram her.",
     "This room has been replaced and is no longer active.": "Dette rommet er erstatta og er ikkje lenger aktivt.",
     "Italics": "Kursiv",
-    "Room %(name)s": "Rom %(name)s",
     "Direct Messages": "Folk",
     "Join the conversation with an account": "Bli med i samtalen med ein konto",
     "Sign Up": "Registrer deg",
@@ -285,7 +281,6 @@
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
-    "Explore public rooms": "Utforsk offentlege rom",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
     "Azerbaijan": "Aserbajdsjan",
@@ -435,7 +430,9 @@
         "unban": "Slepp inn att",
         "hide_advanced": "Gøym avanserte alternativ",
         "show_advanced": "Vis avanserte alternativ",
-        "unignore": "Slutt å ignorer"
+        "unignore": "Slutt å ignorer",
+        "explore_rooms": "Utforsk romma",
+        "explore_public_rooms": "Utforsk offentlege rom"
     },
     "labs": {
         "pinning": "Meldingsfesting",
@@ -838,6 +835,9 @@
         "creation_summary_room": "%(creator)s oppretta og konfiguerte dette rommet.",
         "context_menu": {
             "external_url": "Kjelde-URL"
+        },
+        "url_preview": {
+            "close": "Lukk førehandsvisninga"
         }
     },
     "slash_command": {
@@ -1095,7 +1095,8 @@
             "one": "1 ulesen melding."
         },
         "unread_messages": "Uleste meldingar.",
-        "jump_first_invite": "Hopp til fyrste invitasjon."
+        "jump_first_invite": "Hopp til fyrste invitasjon.",
+        "room_name": "Rom %(name)s"
     },
     "onboarding": {
         "explore_rooms": "Utforsk offentlege rom",
@@ -1147,7 +1148,8 @@
         "context_menu": {
             "favourite": "Yndling",
             "low_priority": "Lågrett"
-        }
+        },
+        "invite_this_room": "Inviter til dette rommet"
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",

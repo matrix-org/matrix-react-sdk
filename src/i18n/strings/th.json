@@ -96,11 +96,9 @@
     "Monday": "วันจันทร์",
     "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
-    "Invite to this room": "เชิญเข้าห้องนี้",
     "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
     "Yesterday": "เมื่อวานนี้",
-    "Explore rooms": "สำรวจห้อง",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
     "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
     "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
@@ -253,7 +251,8 @@
         "import": "นำเข้า",
         "export": "ส่งออก",
         "submit": "ส่ง",
-        "unban": "ปลดแบน"
+        "unban": "ปลดแบน",
+        "explore_rooms": "สำรวจห้อง"
     },
     "keyboard": {
         "home": "เมนูหลัก"
@@ -544,7 +543,8 @@
         "context_menu": {
             "favourite": "รายการโปรด",
             "low_priority": "ความสำคัญต่ำ"
-        }
+        },
+        "invite_this_room": "เชิญเข้าห้องนี้"
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",

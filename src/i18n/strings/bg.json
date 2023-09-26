@@ -143,7 +143,6 @@
     "Monday": "Понеделник",
     "All Rooms": "Във всички стаи",
     "Wednesday": "Сряда",
-    "Invite to this room": "Покани в тази стая",
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
     "Logs sent": "Логовете са изпратени",
@@ -385,10 +384,8 @@
     },
     "Remove recent messages": "Премахни скорошни съобщения",
     "Italics": "Наклонено",
-    "Explore rooms": "Открий стаи",
     "e.g. my-room": "например my-room",
     "Close dialog": "Затвори прозореца",
-    "Room %(name)s": "Стая %(name)s",
     "Failed to deactivate user": "Неуспешно деактивиране на потребител",
     "This client does not support end-to-end encryption.": "Този клиент не поддържа шифроване от край до край.",
     "Messages in this room are not end-to-end encrypted.": "Съобщенията в тази стая не са шифровани от край до край.",
@@ -405,7 +402,6 @@
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "You sent a verification request": "Изпратихте заявка за потвърждение",
     "Unencrypted": "Нешифровано",
-    "Close preview": "Затвори прегледа",
     "<userName/> wants to chat": "<userName/> иска да чати",
     "Start chatting": "Започни чат",
     "Failed to connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
@@ -568,7 +564,6 @@
     "Create key backup": "Създай резервно копие на ключовете",
     "This session is encrypting history using the new recovery method.": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
-    "No recently visited rooms": "Няма наскоро-посетени стаи",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
     "Room options": "Настройки на стаята",
@@ -620,7 +615,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Може да закачите максимум %(count)s приспособления"
     },
-    "Explore public rooms": "Прегледай публични стаи",
     "Show Widgets": "Покажи приспособленията",
     "Hide Widgets": "Скрий приспособленията",
     "Backup version:": "Версия на резервното копие:",
@@ -886,7 +880,6 @@
     "Afghanistan": "Афганистан",
     "United States": "Съединените щати",
     "United Kingdom": "Обединеното кралство",
-    "Add existing room": "Добави съществуваща стая",
     "Leave space": "Напусни пространство",
     "Create a space": "Създаване на пространство",
     "unknown person": "",
@@ -1046,7 +1039,10 @@
         "click_to_copy": "Натиснете за копиране",
         "hide_advanced": "Скрий разширени настройки",
         "show_advanced": "Покажи разширени настройки",
-        "unignore": "Премахни игнорирането"
+        "unignore": "Премахни игнорирането",
+        "explore_rooms": "Открий стаи",
+        "add_existing_room": "Добави съществуваща стая",
+        "explore_public_rooms": "Прегледай публични стаи"
     },
     "a11y": {
         "user_menu": "Потребителско меню",
@@ -1059,7 +1055,8 @@
             "one": "1 непрочетено съобщение."
         },
         "unread_messages": "Непрочетени съобщения.",
-        "jump_first_invite": "Отиди до първата покана."
+        "jump_first_invite": "Отиди до първата покана.",
+        "room_name": "Стая %(name)s"
     },
     "labs": {
         "pinning": "Функция за закачане на съобщения",
@@ -1617,6 +1614,9 @@
         "creation_summary_room": "%(creator)s създаде и настрой стаята.",
         "context_menu": {
             "external_url": "URL на източника"
+        },
+        "url_preview": {
+            "close": "Затвори прегледа"
         }
     },
     "slash_command": {
@@ -2011,7 +2011,8 @@
         "show_less": "Покажи по-малко",
         "notification_options": "Настройки за уведомление",
         "failed_remove_tag": "Неуспешно премахване на %(tagName)s етикет от стаята",
-        "failed_add_tag": "Неуспешно добавяне на %(tagName)s етикет в стаята"
+        "failed_add_tag": "Неуспешно добавяне на %(tagName)s етикет в стаята",
+        "breadcrumbs_empty": "Няма наскоро-посетени стаи"
     },
     "report_content": {
         "missing_reason": "Въведете защо докладвате.",
@@ -2158,7 +2159,8 @@
             "favourite": "Любим",
             "low_priority": "Нисък приоритет",
             "forget": "Забрави стаята"
-        }
+        },
+        "invite_this_room": "Покани в тази стая"
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",

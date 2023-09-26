@@ -457,7 +457,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ບໍ່ສາມາດຊອກຫາມັນໄດ້.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະຢູ່ໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມທີ່ເປັນຄໍາຖາມ.",
     "<inviter/> invites you": "<inviter/> ເຊີນທ່ານ",
-    "Private space": "ພື້ນທີ່ສ່ວນຕົວ",
     "Search names and descriptions": "ຄົ້ນຫາຊື່ ແລະ ຄໍາອະທິບາຍ",
     "Rooms and spaces": "ຫ້ອງ ແລະ ພຶ້ນທີ່",
     "Results": "ຜົນຮັບ",
@@ -861,14 +860,12 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້%(brand)sເວີຊັ້ນໃໝ່ກວ່າໃນລະບົບນີ້. ເພື່ອໃຊ້ເວີຊັ້ນນີ້ອີກເທື່ອໜຶ່ງດ້ວຍການເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງ, ທ່ານຈະຕ້ອງອອກຈາກລະບົບ ແລະ ກັບຄືນເຂົ້າລະຫັດໃໝ່ອີກຄັ້ງ.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "ເພື່ອຫຼີກເວັ້ນການສູນເສຍປະຫວັດການສົນທະນາຂອງທ່ານ, ທ່ານຕ້ອງອອກກະແຈຫ້ອງຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບ. ທ່ານຈະຕ້ອງໄດ້ກັບຄືນໄປຫາເວີຊັ້ນໃຫມ່ຂອງ %(brand)s ເພື່ອເຮັດສິ່ງນີ້",
     "Want to add an existing space instead?": "ຕ້ອງການເພີ່ມພື້ນທີ່ທີ່ມີຢູ່ແທນບໍ?",
-    "Public space": "ພື້ນທີ່ສາທາລະນະ",
     "Private space (invite only)": "ພື້ນທີ່ສ່ວນຕົວ (ເຊີນເທົ່ານັ້ນ)",
     "Space visibility": "ການເບິ່ງເຫັນພຶ້ນທີ່",
     "Add a space to a space you manage.": "ເພີ່ມພື້ນທີ່ໃສ່ພື້ນທີ່ທີ່ທ່ານຈັດການ.",
     "Only people invited will be able to find and join this space.": "ມີແຕ່ຄົນທີ່ຖືກເຊີນເທົ່ານັ້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້ໄດ້.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້, ບໍ່ພຽງແຕ່ສະມາຊິກຂອງ <SpaceName/> ເທົ່ານັ້ນ.",
     "Anyone in <SpaceName/> will be able to find and join.": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້.",
-    "Public room": "ຫ້ອງສາທາລະນະ",
     "Clear all data": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ",
     "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
     "Sorry, the poll did not end. Please try again.": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
@@ -956,11 +953,6 @@
     "Historical": "ປະຫວັດ",
     "Low priority": "ບູລິມະສິດຕໍ່າ",
     "Add room": "ເພີ່ມຫ້ອງ",
-    "Explore public rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
-    "Add existing room": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
-    "New video room": "ຫ້ອງວິດີໂອໃຫມ່",
-    "New room": "ຫ້ອງໃຫມ່",
-    "Explore rooms": "ການສຳຫຼວດຫ້ອງ",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Tuesday": "ວັນອັງຄານ",
@@ -1226,19 +1218,11 @@
     "Preparing to download logs": "ກຳລັງກະກຽມດາວໂຫຼດບັນທຶກ",
     "Failed to send logs: ": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
-    "Close preview": "ປິດຕົວຢ່າງ",
-    "Show %(count)s other previews": {
-        "one": "ສະແດງຕົວຢ່າງ %(count)s ອື່ນໆ",
-        "other": "ສະແດງຕົວຢ່າງອື່ນໆ %(count)s"
-    },
     "Scroll to most recent messages": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "Filter room members": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
     "Invited": "ເຊີນ",
-    "Start new chat": "ເລີ່ມການສົນທະນາໃໝ່",
-    "Add people": "ເພີ່ມຄົນ",
-    "Invite to space": "ເຊີນໄປຍັງພື້ນທີ່",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -1285,9 +1269,6 @@
         "one": "(~%(count)sຜົນຮັບ)",
         "other": "(~%(count)sຜົນຮັບ)"
     },
-    "No recently visited rooms": "ບໍ່ມີຫ້ອງທີ່ເຂົ້າເບິ່ງເມື່ອບໍ່ດົນມານີ້",
-    "Recently visited rooms": "ຫ້ອງທີ່ເຂົ້າເບິ່ງເມື່ອບໍ່ດົນມານີ້",
-    "Room %(name)s": "ຫ້ອງ %(name)s",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)s",
@@ -1300,8 +1281,6 @@
     "You do not have permission to post to this room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ໂພສໃສ່ຫ້ອງນີ້",
     "This room has been replaced and is no longer active.": "ຫ້ອງນີ້ໄດ້ໍປ່ຽນແທນ ແລະບໍ່ມີການເຄື່ອນໄຫວອີກຕໍ່ໄປ.",
     "The conversation continues here.": "ການສົນທະນາສືບຕໍ່ຢູ່ທີ່ນີ້.",
-    "Invite to this space": "ເຊີນໄປບ່ອນນີ້",
-    "Invite to this room": "ເຊີນເຂົ້າຫ້ອງນີ້",
     "and %(count)s others...": {
         "one": "ແລະ ອີກອັນນຶ່ງ...",
         "other": "ແລະ %(count)s ຜູ້ອຶ່ນ..."
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "ເພື່ອເຂົ້າຮ່ວມ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
     "To view, please enable video rooms in Labs first": "ເພື່ອເບິ່ງ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
     "To view %(roomName)s, you need an invite": "ເພື່ອເບິ່ງ %(roomName)s, ທ່ານຕ້ອງມີບັດເຊີນ",
-    "Private room": "ຫ້ອງສ່ວນຕົວ",
-    "Video room": "ຫ້ອງວີດີໂອ",
     "Unread email icon": "ໄອຄັອນເມວທີ່ຍັງບໍ່ໄດ້ຖືກອ່ານ",
     "An error occurred whilst sharing your live location, please try again": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ, ກະລຸນາລອງໃໝ່",
     "An error occurred whilst sharing your live location": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ",
@@ -1416,7 +1393,12 @@
         "profile": "ໂປຣໄຟລ໌",
         "display_name": "ຊື່ສະແດງ",
         "user_avatar": "ຮູບໂປຣໄຟລ໌",
-        "authentication": "ການຢືນຢັນ"
+        "authentication": "ການຢືນຢັນ",
+        "public_room": "ຫ້ອງສາທາລະນະ",
+        "video_room": "ຫ້ອງວີດີໂອ",
+        "public_space": "ພື້ນທີ່ສາທາລະນະ",
+        "private_space": "ພື້ນທີ່ສ່ວນຕົວ",
+        "private_room": "ຫ້ອງສ່ວນຕົວ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1515,7 +1497,15 @@
         "click_to_copy": "ກົດເພື່ອສຳເນົາ",
         "hide_advanced": "ເຊື່ອງຂັ້ນສູງ",
         "show_advanced": "ສະແດງຂັ້ນສູງ",
-        "unignore": "ບໍ່ສົນໃຈ"
+        "unignore": "ບໍ່ສົນໃຈ",
+        "start_new_chat": "ເລີ່ມການສົນທະນາໃໝ່",
+        "invite_to_space": "ເຊີນໄປຍັງພື້ນທີ່",
+        "add_people": "ເພີ່ມຄົນ",
+        "explore_rooms": "ການສຳຫຼວດຫ້ອງ",
+        "new_room": "ຫ້ອງໃຫມ່",
+        "new_video_room": "ຫ້ອງວິດີໂອໃຫມ່",
+        "add_existing_room": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
+        "explore_public_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -1528,7 +1518,8 @@
             "other": "%(count)s ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ."
         },
         "unread_messages": "ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
-        "jump_first_invite": "ໄປຫາຄຳເຊີນທຳອິດ."
+        "jump_first_invite": "ໄປຫາຄຳເຊີນທຳອິດ.",
+        "room_name": "ຫ້ອງ %(name)s"
     },
     "labs": {
         "msc3531_hide_messages_pending_moderation": "ໃຫ້ຜູ້ຄວບຄຸມການເຊື່ອງຂໍ້ຄວາມທີ່ລໍຖ້າການກັ່ນຕອງ.",
@@ -2435,6 +2426,13 @@
             "collapse_reply_thread": "ຫຍໍ້ກະທູ້ຕອບກັບ",
             "view_related_event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ",
             "report": "ລາຍງານ"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "ສະແດງຕົວຢ່າງ %(count)s ອື່ນໆ",
+                "other": "ສະແດງຕົວຢ່າງອື່ນໆ %(count)s"
+            },
+            "close": "ປິດຕົວຢ່າງ"
         }
     },
     "slash_command": {
@@ -3011,7 +3009,9 @@
         "show_less": "ສະແດງໜ້ອຍລົງ",
         "notification_options": "ຕົວເລືອກການແຈ້ງເຕືອນ",
         "failed_remove_tag": "ລຶບແທັກ %(tagName)s ອອກຈາກຫ້ອງບໍ່ສຳເລັດ",
-        "failed_add_tag": "ເພີ່ມແທັກ %(tagName)s ໃສ່ຫ້ອງບໍ່ສຳເລັດ"
+        "failed_add_tag": "ເພີ່ມແທັກ %(tagName)s ໃສ່ຫ້ອງບໍ່ສຳເລັດ",
+        "breadcrumbs_label": "ຫ້ອງທີ່ເຂົ້າເບິ່ງເມື່ອບໍ່ດົນມານີ້",
+        "breadcrumbs_empty": "ບໍ່ມີຫ້ອງທີ່ເຂົ້າເບິ່ງເມື່ອບໍ່ດົນມານີ້"
     },
     "report_content": {
         "missing_reason": "ກະລຸນາຕື່ມຂໍ້ມູນວ່າເປັນຫຍັງທ່ານກໍາລັງລາຍງານ.",
@@ -3239,7 +3239,8 @@
         "search_children": "ຊອກຫາ %(spaceName)s",
         "invite_link": "ແບ່ງປັນລິ້ງເຊີນ",
         "invite": "ເຊີນຜູ້ຄົນ",
-        "invite_description": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້"
+        "invite_description": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້",
+        "invite_this_space": "ເຊີນໄປບ່ອນນີ້"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3379,7 +3380,8 @@
             "copy_link": "ສຳເນົາລິ້ງຫ້ອງ",
             "low_priority": "ຄວາມສຳຄັນຕໍ່າ",
             "forget": "ລືມຫ້ອງ"
-        }
+        },
+        "invite_this_room": "ເຊີນເຂົ້າຫ້ອງນີ້"
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",

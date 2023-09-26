@@ -1,6 +1,5 @@
 {
     "Admin Tools": "Aisinas d’administrator",
-    "Invite to this room": "Convidar a aquesta sala",
     "Invited": "Convidat",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
@@ -91,7 +90,6 @@
     "Home": "Dorsièr personal",
     "Search failed": "La recèrca a fracassat",
     "Success!": "Capitada !",
-    "Explore rooms": "Percórrer las salas",
     "common": {
         "mute": "Copar lo son",
         "no_results": "Pas cap de resultat",
@@ -200,7 +198,8 @@
         "refresh": "Actualizada",
         "submit": "Mandar",
         "unban": "Reabilitar",
-        "unignore": "Ignorar pas"
+        "unignore": "Ignorar pas",
+        "explore_rooms": "Percórrer las salas"
     },
     "keyboard": {
         "home": "Dorsièr personal",
@@ -401,7 +400,8 @@
         "context_menu": {
             "favourite": "Favorit",
             "low_priority": "Prioritat bassa"
-        }
+        },
+        "invite_this_room": "Convidar a aquesta sala"
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",

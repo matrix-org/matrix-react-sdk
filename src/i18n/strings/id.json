@@ -54,12 +54,10 @@
     "Wednesday": "Rabu",
     "You cannot delete this message. (%(code)s)": "Anda tidak dapat menghapus pesan ini. (%(code)s)",
     "Send": "Kirim",
-    "Invite to this room": "Undang ke ruangan ini",
     "Thursday": "Kamis",
     "Yesterday": "Kemarin",
     "Thank you!": "Terima kasih!",
     "Permission Required": "Izin Dibutuhkan",
-    "Explore rooms": "Jelajahi ruangan",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Moderator": "Moderator",
     "Restricted": "Dibatasi",
@@ -549,15 +547,10 @@
     "Forget this room": "Lupakan ruangan ini",
     "Join the conversation with an account": "Bergabung obrolan dengan sebuah akun",
     "Suggested Rooms": "Ruangan yang Disarankan",
-    "Explore public rooms": "Jelajahi ruangan publik",
-    "Add existing room": "Tambahkan ruangan yang sudah ada",
     "Create new room": "Buat ruangan baru",
     "Show Widgets": "Tampilkan Widget",
     "Hide Widgets": "Sembunyikan Widget",
     "Room options": "Opsi ruangan",
-    "No recently visited rooms": "Tidak ada ruangan yang baru saja dilihat",
-    "Recently visited rooms": "Ruangan yang baru saja dilihat",
-    "Room %(name)s": "Ruangan %(name)s",
     "View message": "Tampilkan pesan",
     "Message didn't send. Click for info.": "Pesan tidak terkirim. Klik untuk informasi.",
     "Insert link": "Tambahkan tautan",
@@ -568,15 +561,9 @@
     "You do not have permission to start polls in this room.": "Anda tidak memiliki izin untuk memulai sebuah poll di ruangan ini.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tingkat daya %(powerLevelNumber)s)",
     "Filter room members": "Saring anggota ruangan",
-    "Invite to this space": "Undang ke space ini",
     "and %(count)s others...": {
         "one": "dan satu lainnya...",
         "other": "dan %(count)s lainnya..."
-    },
-    "Close preview": "Tutup tampilan",
-    "Show %(count)s other previews": {
-        "one": "Tampilkan %(count)s tampilan lainnya",
-        "other": "Tampilkan %(count)s tampilan lainnya"
     },
     "Scroll to most recent messages": "Gulir ke pesan yang terbaru",
     "Failed to send": "Gagal untuk dikirim",
@@ -720,10 +707,8 @@
     "Only people invited will be able to find and join this space.": "Hanya orang-orang yang diundang dapat menemukan dan bergabung dengan space ini.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Siapa saja dapat menemukan dan bergabung space ini, tidak hanya anggota dari <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Siapa saja di <SpaceName/> dapat menemukan dan bergabung.",
-    "Public space": "Space publik",
     "Private space (invite only)": "Space pribadi (undangan saja)",
     "Space visibility": "Visibilitas space",
-    "Public room": "Ruangan publik",
     "Clear all data": "Hapus semua data",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Menghapus semua data dari sesi ini itu permanen. Pesan-pesan terenkripsi akan hilang kecuali jika kunci-kuncinya telah dicadangkan.",
     "Clear all data in this session?": "Hapus semua data di sesi ini?",
@@ -857,7 +842,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi tidak dapat menemukannya.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi Anda tidak memiliki izin untuk menampilkan pesannya.",
     "<inviter/> invites you": "<inviter/> mengundang Anda",
-    "Private space": "Space pribadi",
     "Search names and descriptions": "Cari nama dan deskripsi",
     "Rooms and spaces": "Ruangan dan space",
     "You may want to try a different search or check for typos.": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
@@ -1152,9 +1136,6 @@
     "Home options": "Opsi Beranda",
     "%(spaceName)s menu": "Menu %(spaceName)s",
     "Join public room": "Bergabung dengan ruangan publik",
-    "Add people": "Tambahkan orang",
-    "Invite to space": "Undang ke space",
-    "Start new chat": "Mulai obrolan baru",
     "Recently viewed": "Baru saja dilihat",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s suara. Vote untuk melihat hasilnya",
@@ -1270,8 +1251,6 @@
         "one": "1 perserta",
         "other": "%(count)s perserta"
     },
-    "New video room": "Ruangan video baru",
-    "New room": "Ruangan baru",
     "%(featureName)s Beta feedback": "Masukan %(featureName)s Beta",
     "Live location ended": "Lokasi langsung berakhir",
     "View live location": "Tampilkan lokasi langsung",
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "Untuk bergabung, mohon aktifkan ruangan video di Uji Coba terlebih dahulu",
     "To view, please enable video rooms in Labs first": "Untuk menampilkan, mohon aktifkan ruangan video dalam Uji Coba terlebih dahulu",
     "To view %(roomName)s, you need an invite": "Untuk menampilkan %(roomName)s, Anda perlu sebuah undangan",
-    "Private room": "Ruangan privat",
-    "Video room": "Ruangan video",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak dikirim karena homeserver ini telah diblokir oleh administrator. Mohon <a>hubungi administrator layanan Anda</a> untuk terus menggunakan layanan ini.",
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
@@ -1609,7 +1586,12 @@
         "profile": "Profil",
         "display_name": "Nama Tampilan",
         "user_avatar": "Gambar profil",
-        "authentication": "Autentikasi"
+        "authentication": "Autentikasi",
+        "public_room": "Ruangan publik",
+        "video_room": "Ruangan video",
+        "public_space": "Space publik",
+        "private_space": "Space pribadi",
+        "private_room": "Ruangan privat"
     },
     "action": {
         "continue": "Lanjut",
@@ -1717,7 +1699,15 @@
         "click_to_copy": "Klik untuk menyalin",
         "hide_advanced": "Sembunyikan lanjutan",
         "show_advanced": "Tampilkan lanjutan",
-        "unignore": "Hilangkan Abaian"
+        "unignore": "Hilangkan Abaian",
+        "start_new_chat": "Mulai obrolan baru",
+        "invite_to_space": "Undang ke space",
+        "add_people": "Tambahkan orang",
+        "explore_rooms": "Jelajahi ruangan",
+        "new_room": "Ruangan baru",
+        "new_video_room": "Ruangan video baru",
+        "add_existing_room": "Tambahkan ruangan yang sudah ada",
+        "explore_public_rooms": "Jelajahi ruangan publik"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -1730,7 +1720,8 @@
             "other": "%(count)s pesan yang belum dibaca."
         },
         "unread_messages": "Pesan yang belum dibaca.",
-        "jump_first_invite": "Pergi ke undangan pertama."
+        "jump_first_invite": "Pergi ke undangan pertama.",
+        "room_name": "Ruangan %(name)s"
     },
     "labs": {
         "video_rooms": "Ruangan video",
@@ -2960,6 +2951,13 @@
             "collapse_reply_thread": "Tutup balasan utasan",
             "view_related_event": "Tampilkan peristiwa terkait",
             "report": "Laporkan"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Tampilkan %(count)s tampilan lainnya",
+                "other": "Tampilkan %(count)s tampilan lainnya"
+            },
+            "close": "Tutup tampilan"
         }
     },
     "slash_command": {
@@ -3620,7 +3618,9 @@
         "notification_options": "Opsi notifikasi",
         "failed_set_dm_tag": "Gagal menetapkan tanda pesan langsung",
         "failed_remove_tag": "Gagal menghapus tanda %(tagName)s dari ruangan",
-        "failed_add_tag": "Gagal menambahkan tag %(tagName)s ke ruangan"
+        "failed_add_tag": "Gagal menambahkan tag %(tagName)s ke ruangan",
+        "breadcrumbs_label": "Ruangan yang baru saja dilihat",
+        "breadcrumbs_empty": "Tidak ada ruangan yang baru saja dilihat"
     },
     "report_content": {
         "missing_reason": "Mohon isi kenapa Anda melaporkan.",
@@ -3878,7 +3878,8 @@
         "search_children": "Cari %(spaceName)s",
         "invite_link": "Bagikan tautan undangan",
         "invite": "Undang pengguna",
-        "invite_description": "Undang dengan email atau nama pengguna"
+        "invite_description": "Undang dengan email atau nama pengguna",
+        "invite_this_space": "Undang ke space ini"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -4038,7 +4039,8 @@
             "mark_read": "Tandai sebagai dibaca",
             "notifications_default": "Sesuai dengan pengaturan bawaan",
             "notifications_mute": "Bisukan ruangan"
-        }
+        },
+        "invite_this_room": "Undang ke ruangan ini"
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",

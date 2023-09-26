@@ -140,7 +140,6 @@
     "Preparing to send logs": "Senden von Protokolldateien wird vorbereitet",
     "Saturday": "Samstag",
     "Monday": "Montag",
-    "Invite to this room": "In diesen Raum einladen",
     "Wednesday": "Mittwoch",
     "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
     "All Rooms": "In allen Räumen",
@@ -325,7 +324,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
     "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
     "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
-    "Room %(name)s": "Raum %(name)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
     "%(count)s verified sessions": {
@@ -354,8 +352,6 @@
     "Verify by emoji": "Mit Emojis verifizieren",
     "Verify by comparing unique emoji.": "Durch den Vergleich einzigartiger Emojis verifizieren.",
     "You've successfully verified %(displayName)s!": "Du hast %(displayName)s erfolgreich verifiziert!",
-    "Explore rooms": "Räume erkunden",
-    "Close preview": "Vorschau schließen",
     "Join the discussion": "An Diskussion teilnehmen",
     "Remove recent messages by %(user)s": "Kürzlich gesendete Nachrichten von %(user)s entfernen",
     "Remove %(count)s messages": {
@@ -567,7 +563,6 @@
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "Beim Entfernen dieser Adresse ist ein Fehler aufgetreten. Vielleicht existiert sie nicht mehr oder es kam zu einem temporären Fehler.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du hast für diese Sitzung zuvor eine neuere Version von %(brand)s verwendet. Um diese Version mit Ende-zu-Ende-Verschlüsselung wieder zu benutzen, musst du dich erst ab- und dann wieder anmelden.",
     "Switch theme": "Design wechseln",
-    "No recently visited rooms": "Keine kürzlich besuchten Räume",
     "Message preview": "Nachrichtenvorschau",
     "Room options": "Raumoptionen",
     "Looks good!": "Sieht gut aus!",
@@ -601,7 +596,6 @@
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Verwende für deine Sicherung eine geheime Phrase, die nur du kennst, und speichere optional einen Sicherheitsschlüssel.",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Wenn du jetzt abbrichst, kannst du verschlüsselte Nachrichten und Daten verlieren, wenn du den Zugriff auf deine Sitzungen verlierst.",
     "You can also set up Secure Backup & manage your keys in Settings.": "Du kannst auch in den Einstellungen Sicherungen einrichten und deine Schlüssel verwalten.",
-    "Explore public rooms": "Öffentliche Räume erkunden",
     "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
     "Information": "Information",
     "Not encrypted": "Nicht verschlüsselt",
@@ -918,20 +912,15 @@
     "Remember this": "Dies merken",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Das Widget überprüft deine Nutzer-ID, kann jedoch keine Aktionen für dich ausführen:",
     "Allow this widget to verify your identity": "Erlaube diesem Widget deine Identität zu überprüfen",
-    "Recently visited rooms": "Kürzlich besuchte Räume",
     "%(count)s members": {
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
     },
     "Create a new room": "Neuen Raum erstellen",
     "Suggested Rooms": "Vorgeschlagene Räume",
-    "Add existing room": "Existierenden Raum hinzufügen",
     "Create a space": "Neuen Space erstellen",
     "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
-    "Invite to this space": "In diesen Space einladen",
-    "Private space": "Privater Space",
-    "Public space": "Öffentlicher Space",
     "<inviter/> invites you": "Du wirst von <inviter/> eingeladen",
     "No results found": "Keine Ergebnisse",
     "%(count)s rooms": {
@@ -1019,10 +1008,6 @@
     "This space has no local addresses": "Dieser Space hat keine lokale Adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "Unnamed audio": "Unbenannte Audiodatei",
-    "Show %(count)s other previews": {
-        "one": "%(count)s andere Vorschau zeigen",
-        "other": "%(count)s weitere Vorschauen zeigen"
-    },
     "Unable to copy a link to the room to the clipboard.": "Der Link zum Raum konnte nicht kopiert werden.",
     "Unable to copy room link": "Raumlink konnte nicht kopiert werden",
     "User Directory": "Benutzerverzeichnis",
@@ -1045,7 +1030,6 @@
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
     "Stop recording": "Aufnahme beenden",
     "Send voice message": "Sprachnachricht senden",
-    "Public room": "Öffentlicher Raum",
     "Add space": "Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
     "Search spaces": "Spaces durchsuchen",
@@ -1128,9 +1112,6 @@
     "Chat": "Unterhaltung",
     "%(spaceName)s menu": "%(spaceName)s-Menü",
     "Join public room": "Öffentlichen Raum betreten",
-    "Add people": "Personen hinzufügen",
-    "Invite to space": "In Space einladen",
-    "Start new chat": "Neue Direktnachricht",
     "Recently viewed": "Kürzlich besucht",
     "Developer": "Entwickler",
     "Experimental": "Experimentell",
@@ -1274,8 +1255,6 @@
     "Forget this space": "Diesen Space vergessen",
     "You were removed by %(memberName)s": "Du wurdest von %(memberName)s entfernt",
     "Loading preview": "Lade Vorschau",
-    "New video room": "Neuer Videoraum",
-    "New room": "Neuer Raum",
     "Seen by %(count)s people": {
         "one": "Von %(count)s Person gesehen",
         "other": "Von %(count)s Personen gesehen"
@@ -1301,11 +1280,9 @@
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
     "To view %(roomName)s, you need an invite": "Um %(roomName)s zu betrachten, benötigst du eine Einladung",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s wurde während des Betretens zurückgegeben. Wenn du denkst, dass diese Meldung nicht korrekt ist, <issueLink>reiche bitte einen Fehlerbericht ein</issueLink>.",
-    "Private room": "Privater Raum",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server von dessen Administration gesperrt wurde. Bitte <a>kontaktiere deine Dienstadministration</a>, um den Dienst weiterzunutzen.",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "Video room": "Videoraum",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Add new server…": "Neuen Server hinzufügen …",
     "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
@@ -1609,7 +1586,12 @@
         "profile": "Profil",
         "display_name": "Anzeigename",
         "user_avatar": "Profilbild",
-        "authentication": "Authentifizierung"
+        "authentication": "Authentifizierung",
+        "public_room": "Öffentlicher Raum",
+        "video_room": "Videoraum",
+        "public_space": "Öffentlicher Space",
+        "private_space": "Privater Space",
+        "private_room": "Privater Raum"
     },
     "action": {
         "continue": "Fortfahren",
@@ -1717,7 +1699,15 @@
         "click_to_copy": "Klicken um zu kopieren",
         "hide_advanced": "Erweiterte Einstellungen ausblenden",
         "show_advanced": "Erweiterte Einstellungen",
-        "unignore": "Nicht mehr blockieren"
+        "unignore": "Nicht mehr blockieren",
+        "start_new_chat": "Neue Direktnachricht",
+        "invite_to_space": "In Space einladen",
+        "add_people": "Personen hinzufügen",
+        "explore_rooms": "Räume erkunden",
+        "new_room": "Neuer Raum",
+        "new_video_room": "Neuer Videoraum",
+        "add_existing_room": "Existierenden Raum hinzufügen",
+        "explore_public_rooms": "Öffentliche Räume erkunden"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -1730,7 +1720,8 @@
             "one": "1 ungelesene Nachricht."
         },
         "unread_messages": "Ungelesene Nachrichten.",
-        "jump_first_invite": "Zur ersten Einladung springen."
+        "jump_first_invite": "Zur ersten Einladung springen.",
+        "room_name": "Raum %(name)s"
     },
     "labs": {
         "video_rooms": "Videoräume",
@@ -2960,6 +2951,13 @@
             "collapse_reply_thread": "Antworten verbergen",
             "view_related_event": "Zugehöriges Ereignis anzeigen",
             "report": "Melden"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "%(count)s andere Vorschau zeigen",
+                "other": "%(count)s weitere Vorschauen zeigen"
+            },
+            "close": "Vorschau schließen"
         }
     },
     "slash_command": {
@@ -3620,7 +3618,9 @@
         "notification_options": "Benachrichtigungsoptionen",
         "failed_set_dm_tag": "Fehler beim Setzen der Nachrichtenmarkierung",
         "failed_remove_tag": "Entfernen der Raum-Kennzeichnung %(tagName)s fehlgeschlagen",
-        "failed_add_tag": "Fehler beim Hinzufügen des \"%(tagName)s\"-Tags an dem Raum"
+        "failed_add_tag": "Fehler beim Hinzufügen des \"%(tagName)s\"-Tags an dem Raum",
+        "breadcrumbs_label": "Kürzlich besuchte Räume",
+        "breadcrumbs_empty": "Keine kürzlich besuchten Räume"
     },
     "report_content": {
         "missing_reason": "Bitte gib an, weshalb du einen Fehler meldest.",
@@ -3878,7 +3878,8 @@
         "search_children": "%(spaceName)s durchsuchen",
         "invite_link": "Einladungslink teilen",
         "invite": "Personen einladen",
-        "invite_description": "Personen mit E-Mail oder Benutzernamen einladen"
+        "invite_description": "Personen mit E-Mail oder Benutzernamen einladen",
+        "invite_this_space": "In diesen Space einladen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -4038,7 +4039,8 @@
             "mark_read": "Als gelesen markieren",
             "notifications_default": "Standardeinstellung verwenden",
             "notifications_mute": "Raum stumm stellen"
-        }
+        },
+        "invite_this_room": "In diesen Raum einladen"
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",

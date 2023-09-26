@@ -69,7 +69,6 @@
     "Upload files": "Sali-d ifuyla",
     "Home": "Agejdan",
     "Email (optional)": "Imayl (Afrayan)",
-    "Explore rooms": "Snirem tixxamin",
     "Your password has been reset.": "Awal uffir-inek/inem yettuwennez.",
     "Success!": "Tammug akken iwata!",
     "Updating %(brand)s": "Leqqem %(brand)s",
@@ -147,12 +146,10 @@
     "Edit message": "Ẓreg izen",
     "Encrypted by a deleted session": "Yettuwgelhen s texxamt yettwakksen",
     "Scroll to most recent messages": "Drurem ɣer yiznan akk n melmi kan",
-    "Close preview": "Mdel taskant",
     "and %(count)s others...": {
         "other": "d %(count)s wiyaḍ...",
         "one": "d wayeḍ-nniḍen..."
     },
-    "Invite to this room": "Nced-d ɣer texxamt-a",
     "Filter room members": "Sizdeg iɛeggalen n texxamt",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (i iǧehden %(powerLevelNumber)s",
     "Italics": "Uknan",
@@ -378,12 +375,9 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Room %(name)s": "Taxxamt %(name)s",
-    "No recently visited rooms": "Ulac taxxamt yemmeẓren melmi kan",
     "Unnamed room": "Taxxamt war isem",
     "Share room": "Bḍu taxxamt",
     "Create new room": "Rnu taxxamt tamaynut",
-    "Explore public rooms": "Snirem tixxamin tizuyaz",
     "Low priority": "Tazwart taddayt",
     "Historical": "Amazray",
     "Reason: %(reason)s": "Taɣzint: %(reason)s",
@@ -1009,7 +1003,9 @@
         "unban": "Asefsex n tigtin",
         "hide_advanced": "Ffer talqayt",
         "show_advanced": "Sken talqayt",
-        "unignore": "Ur yettwazgel ara"
+        "unignore": "Ur yettwazgel ara",
+        "explore_rooms": "Snirem tixxamin",
+        "explore_public_rooms": "Snirem tixxamin tizuyaz"
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac",
@@ -1022,7 +1018,8 @@
             "one": "1 yizen ur nettwaɣra ara."
         },
         "unread_messages": "Iznan ur nettwaɣra ara.",
-        "jump_first_invite": "Ɛreddi ɣer tinnubga tamezwarut."
+        "jump_first_invite": "Ɛreddi ɣer tinnubga tamezwarut.",
+        "room_name": "Taxxamt %(name)s"
     },
     "labs": {
         "pinning": "Arezzi n yizen",
@@ -1568,6 +1565,9 @@
         "creation_summary_room": "%(creator)s yerna-d taxxamt syen yeswel taxxamt.",
         "context_menu": {
             "external_url": "URL aɣbalu"
+        },
+        "url_preview": {
+            "close": "Mdel taskant"
         }
     },
     "slash_command": {
@@ -1933,7 +1933,8 @@
         "show_less": "Sken-d drus",
         "notification_options": "Tixtiṛiyin n wulɣu",
         "failed_remove_tag": "Tukksa n tebzimt %(tagName)s seg texxamt ur yeddi ara",
-        "failed_add_tag": "Timerna n tebzimt %(tagName)s ɣer texxamt ur yeddi ara"
+        "failed_add_tag": "Timerna n tebzimt %(tagName)s ɣer texxamt ur yeddi ara",
+        "breadcrumbs_empty": "Ulac taxxamt yemmeẓren melmi kan"
     },
     "report_content": {
         "missing_reason": "Ttxil-k·m ini-aɣ-d ayɣer i d-tettazneḍ alɣu.",
@@ -2087,7 +2088,8 @@
             "favourite": "Asmenyif",
             "low_priority": "Tazwart taddayt",
             "forget": "Tettuḍ taxxamt"
-        }
+        },
+        "invite_this_room": "Nced-d ɣer texxamt-a"
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",

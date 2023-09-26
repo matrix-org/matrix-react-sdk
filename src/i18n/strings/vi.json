@@ -29,7 +29,6 @@
     "Restricted": "Bị hạn chế",
     "Moderator": "Điều phối viên",
     "%(items)s and %(lastItem)s": "%(items)s và %(lastItem)s",
-    "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
     "Are you sure?": "Bạn có chắc không?",
     "Confirm Removal": "Xác nhận Loại bỏ",
@@ -289,7 +288,6 @@
     "Sending": "Đang gửi",
     "You don't have permission to do this": "Bạn không có quyền làm điều này",
     "<inviter/> invites you": "<inviter /> mời bạn",
-    "Private space": "Space riêng tư",
     "Search names and descriptions": "Tìm kiếm tên và mô tả",
     "You may want to try a different search or check for typos.": "Bạn có thể muốn thử một tìm kiếm khác hoặc kiểm tra lỗi chính tả.",
     "No results found": "không tim được kêt quả",
@@ -326,10 +324,8 @@
     "Only people invited will be able to find and join this space.": "Chỉ những người được mời mới có thể tìm và tham gia space này.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Bất kỳ ai cũng có thể tìm và tham gia space này, không chỉ là thành viên của <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Bất kỳ ai trong <SpaceName/> đều có thể tìm và tham gia.",
-    "Public space": "Space công cộng",
     "Private space (invite only)": "space riêng tư (chỉ mời)",
     "Space visibility": "Khả năng hiển thị space",
-    "Public room": "Phòng công cộng",
     "Clear all data": "Xóa tất cả dữ liệu",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Xóa tất cả dữ liệu khỏi phiên này là vĩnh viễn. Các tin nhắn được mã hóa sẽ bị mất trừ khi các khóa của chúng đã được sao lưu.",
     "Clear all data in this session?": "Xóa tất cả dữ liệu trong phiên này?",
@@ -650,8 +646,6 @@
     "Suggested Rooms": "Phòng được đề xuất",
     "Historical": "Lịch sử",
     "Low priority": "Ưu tiên thấp",
-    "Explore public rooms": "Khám phá các phòng chung",
-    "Add existing room": "Thêm phòng hiện có",
     "Create new room": "Tạo phòng mới",
     "Add room": "Thêm phòng",
     "Rooms": "Phòng",
@@ -664,9 +658,6 @@
         "other": "(~%(count)s kết quả)"
     },
     "Unnamed room": "Phòng không tên",
-    "No recently visited rooms": "Không có phòng nào được truy cập gần đây",
-    "Recently visited rooms": "Các phòng đã ghé thăm gần đây",
-    "Room %(name)s": "Phòng %(name)s",
     "Replying": "Đang trả lời",
     "%(duration)sd": "%(duration)sd",
     "%(duration)sh": "%(duration)sh",
@@ -802,16 +793,9 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (chỉ số %(powerLevelNumber)s)",
     "Filter room members": "Lọc thành viên phòng",
     "Invited": "Đã mời",
-    "Invite to this space": "Mời vào space này",
-    "Invite to this room": "Mời vào phòng này",
     "and %(count)s others...": {
         "one": "và một cái khác…",
         "other": "và %(count)s khác…"
-    },
-    "Close preview": "Đóng bản xem trước",
-    "Show %(count)s other previews": {
-        "one": "Hiển thị %(count)s bản xem trước khác",
-        "other": "Hiển thị %(count)s bản xem trước khác"
     },
     "Scroll to most recent messages": "Di chuyển đến các tin nhắn gần đây nhất",
     "Failed to send": "Gửi thất bại",
@@ -1146,9 +1130,6 @@
         "other": "Hiện đang tham gia %(count)s phòng"
     },
     "Join public room": "Tham gia vào phòng công cộng",
-    "Add people": "Thêm người",
-    "Invite to space": "Mời vào space",
-    "Start new chat": "Bắt đầu trò chuyện mới",
     "Recently viewed": "Được xem gần đây",
     "You do not have permission to start polls in this room.": "Bạn không có quyền để bắt đầu các cuộc thăm dò trong phòng này.",
     "Reply in thread": "Trả lời theo chủ đề",
@@ -1209,8 +1190,6 @@
     "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
-    "New video room": "Tạo phòng truyền hình",
-    "New room": "Tạo phòng",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "The scanned code is invalid.": "Mã vừa quét là không hợp lệ.",
     "Sign out of all devices": "Đăng xuất khỏi mọi thiết bị",
@@ -1240,7 +1219,6 @@
     "Show formatting": "Hiện định dạng",
     "You were removed by %(memberName)s": "Bạn đã bị loại bởi %(memberName)s",
     "Formatting": "Định dạng",
-    "Video room": "Phòng truyền hình",
     "You were banned by %(memberName)s": "Bạn đã bị cấm bởi %(memberName)s",
     "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
@@ -1267,7 +1245,6 @@
     "Send email": "Gửi thư",
     "Remove from room": "Loại bỏ khỏi phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
-    "Private room": "Phòng riêng tư",
     "Join the room to participate": "Tham gia phòng để tương tác",
     "Edit link": "Sửa liên kết",
     "Create a link": "Tạo liên kết",
@@ -1461,7 +1438,12 @@
         "profile": "Hồ sơ",
         "display_name": "Tên hiển thị",
         "user_avatar": "Ảnh đại diện",
-        "authentication": "Đăng nhập"
+        "authentication": "Đăng nhập",
+        "public_room": "Phòng công cộng",
+        "video_room": "Phòng truyền hình",
+        "public_space": "Space công cộng",
+        "private_space": "Space riêng tư",
+        "private_room": "Phòng riêng tư"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1568,7 +1550,15 @@
         "click_to_copy": "Bấm để sao chép",
         "hide_advanced": "Ẩn nâng cao",
         "show_advanced": "Hiện nâng cao",
-        "unignore": "Hủy bỏ qua"
+        "unignore": "Hủy bỏ qua",
+        "start_new_chat": "Bắt đầu trò chuyện mới",
+        "invite_to_space": "Mời vào space",
+        "add_people": "Thêm người",
+        "explore_rooms": "Khám phá các phòng",
+        "new_room": "Tạo phòng",
+        "new_video_room": "Tạo phòng truyền hình",
+        "add_existing_room": "Thêm phòng hiện có",
+        "explore_public_rooms": "Khám phá các phòng chung"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -1581,7 +1571,8 @@
             "other": "%(count)s tin nhắn chưa đọc."
         },
         "unread_messages": "Các tin nhắn chưa đọc.",
-        "jump_first_invite": "Chuyển đến lời mời đầu tiên."
+        "jump_first_invite": "Chuyển đến lời mời đầu tiên.",
+        "room_name": "Phòng %(name)s"
     },
     "labs": {
         "video_rooms": "Phòng video",
@@ -2701,6 +2692,13 @@
             "collapse_reply_thread": "Thu gọn chuỗi trả lời",
             "view_related_event": "Xem sự kiện liên quan",
             "report": "Bản báo cáo"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Hiển thị %(count)s bản xem trước khác",
+                "other": "Hiển thị %(count)s bản xem trước khác"
+            },
+            "close": "Đóng bản xem trước"
         }
     },
     "slash_command": {
@@ -3340,7 +3338,9 @@
         "show_less": "Hiện ít hơn",
         "notification_options": "Tùy chọn thông báo",
         "failed_remove_tag": "Không xóa được thẻ %(tagName)s khỏi phòng",
-        "failed_add_tag": "Không thêm được thẻ %(tagName)s vào phòng"
+        "failed_add_tag": "Không thêm được thẻ %(tagName)s vào phòng",
+        "breadcrumbs_label": "Các phòng đã ghé thăm gần đây",
+        "breadcrumbs_empty": "Không có phòng nào được truy cập gần đây"
     },
     "report_content": {
         "missing_reason": "Vui lòng điền lý do bạn đang báo cáo.",
@@ -3590,7 +3590,8 @@
         "search_children": "Tìm kiếm %(spaceName)s",
         "invite_link": "Chia sẻ liên kết mời",
         "invite": "Mời mọi người",
-        "invite_description": "Mời bằng thư điện tử hoặc tên người dùng"
+        "invite_description": "Mời bằng thư điện tử hoặc tên người dùng",
+        "invite_this_space": "Mời vào space này"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3739,7 +3740,8 @@
             "mark_read": "Đánh dấu đã đọc",
             "notifications_default": "Theo cài đặt mặc định",
             "notifications_mute": "Tắt tiếng phòng"
-        }
+        },
+        "invite_this_room": "Mời vào phòng này"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",

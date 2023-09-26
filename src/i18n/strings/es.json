@@ -104,7 +104,6 @@
     "Unnamed room": "Sala sin nombre",
     "Saturday": "Sábado",
     "Monday": "Lunes",
-    "Invite to this room": "Invitar a la sala",
     "Send": "Enviar",
     "Thank you!": "¡Gracias!",
     "All Rooms": "Todas las salas",
@@ -383,7 +382,6 @@
     "Unencrypted": "Sin cifrar",
     "Encrypted by a deleted session": "Cifrado por una sesión eliminada",
     "Scroll to most recent messages": "Ir a los mensajes más recientes",
-    "Close preview": "Cerrar vista previa",
     "No recent messages by %(user)s found": "No se han encontrado mensajes recientes de %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Intente desplazarse hacia arriba en la línea de tiempo para ver si hay alguna anterior.",
     "Remove recent messages by %(user)s": "Eliminar mensajes recientes de %(user)s",
@@ -398,7 +396,6 @@
     "Failed to deactivate user": "Error en desactivar usuario",
     "Remove recent messages": "Eliminar mensajes recientes",
     "Italics": "Cursiva",
-    "Room %(name)s": "Sala %(name)s",
     "Direct Messages": "Mensajes directos",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Esta invitación a la sala %(roomName)s fue enviada a %(email)s que no está asociada a su cuenta",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Para recibir invitaciones directamente en %(brand)s, en Configuración, debes vincular este correo electrónico con tu cuenta.",
@@ -511,7 +508,6 @@
     "Join millions for free on the largest public server": "Únete de forma gratuita a millones de personas en el servidor público más grande",
     "Sign in with SSO": "Ingrese con SSO",
     "Couldn't load page": "No se ha podido cargar la página",
-    "Explore rooms": "Explorar salas",
     "Add room": "Añadir una sala",
     "Could not load user profile": "No se pudo cargar el perfil de usuario",
     "Your password has been reset.": "Su contraseña ha sido restablecida.",
@@ -528,8 +524,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Tú servidor ha excedido el limite de sus recursos.",
     "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
-    "No recently visited rooms": "No hay salas visitadas recientemente",
-    "Explore public rooms": "Buscar salas públicas",
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Room options": "Opciones de la sala",
@@ -917,7 +911,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Invitar a alguien usando su nombre, dirección de correo, nombre de usuario (ej.: <userId/>) o <a>compartiendo la sala</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Empieza una conversación con alguien usando su nombre o nombre de usuario (como <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Empieza una conversación con alguien usando su nombre, correo electrónico o nombre de usuario (como <userId/>).",
-    "Recently visited rooms": "Salas visitadas recientemente",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "No podrás deshacer esto, ya que te estás quitando tus permisos. Si eres la última persona con permisos en este usuario, no será posible recuperarlos.",
     "%(count)s members": {
         "one": "%(count)s miembro",
@@ -932,14 +925,10 @@
     "Create a new room": "Crear una sala nueva",
     "Space selection": "Selección de espacio",
     "Suggested Rooms": "Salas sugeridas",
-    "Add existing room": "Añadir sala ya existente",
-    "Invite to this space": "Invitar al espacio",
     "Your message was sent": "Mensaje enviado",
     "Leave space": "Salir del espacio",
     "Create a space": "Crear un espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
-    "Private space": "Espacio privado",
-    "Public space": "Espacio público",
     "<inviter/> invites you": "<inviter/> te ha invitado",
     "You may want to try a different search or check for typos.": "Prueba con otro término de búsqueda o comprueba que no haya erratas.",
     "No results found": "Ningún resultado",
@@ -1024,10 +1013,6 @@
     "Unnamed audio": "Audio sin título",
     "User Directory": "Lista de usuarios",
     "Error processing audio message": "Error al procesar el mensaje de audio",
-    "Show %(count)s other previews": {
-        "one": "Ver otras %(count)s vistas previas",
-        "other": "Ver %(count)s otra vista previa"
-    },
     "Could not connect media": "No se ha podido conectar con los dispositivos multimedia",
     "Their device couldn't start the camera or microphone": "El dispositivo de la otra persona no ha podido iniciar la cámara o micrófono",
     "Error downloading audio": "Error al descargar el audio",
@@ -1057,7 +1042,6 @@
     "Private space (invite only)": "Espacio privado (solo por invitación)",
     "Space visibility": "Visibilidad del espacio",
     "Add a space to a space you manage.": "Añade un espacio a dentro de otros espacio que gestiones.",
-    "Public room": "Sala pública",
     "Adding spaces has moved.": "Hemos cambiado de sitio la creación de espacios.",
     "Search for rooms": "Buscar salas",
     "Search for spaces": "Buscar espacios",
@@ -1167,9 +1151,6 @@
     "Home options": "Opciones de la pantalla de inicio",
     "%(spaceName)s menu": "Menú de %(spaceName)s",
     "Join public room": "Unirse a la sala pública",
-    "Add people": "Añadir gente",
-    "Invite to space": "Invitar al espacio",
-    "Start new chat": "Crear conversación",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -1265,8 +1246,6 @@
     "Forget this space": "Olvidar este espacio",
     "You were removed by %(memberName)s": "%(memberName)s te ha sacado",
     "Loading preview": "Cargando previsualización",
-    "New video room": "Nueva sala de vídeo",
-    "New room": "Nueva sala",
     "Live location enabled": "Ubicación en tiempo real activada",
     "Live location error": "Error en la ubicación en tiempo real",
     "Live location ended": "La ubicación en tiempo real ha terminado",
@@ -1315,8 +1294,6 @@
     "Show Labs settings": "Ver ajustes de los experimentos",
     "To view, please enable video rooms in Labs first": "Para verla, activa las salas de vídeos en la sección de experimentos de los ajustes",
     "To view %(roomName)s, you need an invite": "Para ver %(roomName)s necesitas una invitación",
-    "Private room": "Sala privada",
-    "Video room": "Sala de vídeo",
     "Unread email icon": "Icono de email sin leer",
     "An error occurred whilst sharing your live location, please try again": "Ha ocurrido un error al compartir tu ubicación en tiempo real. Por favor, inténtalo de nuevo",
     "An error occurred whilst sharing your live location": "Ocurrió un error mientras se compartía tu ubicación en tiempo real",
@@ -1561,7 +1538,12 @@
         "profile": "Perfil",
         "display_name": "Nombre público",
         "user_avatar": "Foto de perfil",
-        "authentication": "Autenticación"
+        "authentication": "Autenticación",
+        "public_room": "Sala pública",
+        "video_room": "Sala de vídeo",
+        "public_space": "Espacio público",
+        "private_space": "Espacio privado",
+        "private_room": "Sala privada"
     },
     "action": {
         "continue": "Continuar",
@@ -1667,7 +1649,15 @@
         "click_to_copy": "Haz clic para copiar",
         "hide_advanced": "Ocultar ajustes avanzados",
         "show_advanced": "Mostrar ajustes avanzados",
-        "unignore": "Dejar de ignorar"
+        "unignore": "Dejar de ignorar",
+        "start_new_chat": "Crear conversación",
+        "invite_to_space": "Invitar al espacio",
+        "add_people": "Añadir gente",
+        "explore_rooms": "Explorar salas",
+        "new_room": "Nueva sala",
+        "new_video_room": "Nueva sala de vídeo",
+        "add_existing_room": "Añadir sala ya existente",
+        "explore_public_rooms": "Buscar salas públicas"
     },
     "a11y": {
         "user_menu": "Menú del Usuario",
@@ -1680,7 +1670,8 @@
             "one": "1 mensaje sin leer."
         },
         "unread_messages": "Mensajes sin leer.",
-        "jump_first_invite": "Salte a la primera invitación."
+        "jump_first_invite": "Salte a la primera invitación.",
+        "room_name": "Sala %(name)s"
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -2815,6 +2806,13 @@
             "collapse_reply_thread": "Ocultar respuestas",
             "view_related_event": "Ver evento relacionado",
             "report": "Denunciar"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Ver otras %(count)s vistas previas",
+                "other": "Ver %(count)s otra vista previa"
+            },
+            "close": "Cerrar vista previa"
         }
     },
     "slash_command": {
@@ -3443,7 +3441,9 @@
         "notification_options": "Ajustes de notificaciones",
         "failed_set_dm_tag": "Fallo al poner la etiqueta al mensaje directo",
         "failed_remove_tag": "Error al eliminar la etiqueta %(tagName)s de la sala",
-        "failed_add_tag": "Error al añadir la etiqueta %(tagName)s a la sala"
+        "failed_add_tag": "Error al añadir la etiqueta %(tagName)s a la sala",
+        "breadcrumbs_label": "Salas visitadas recientemente",
+        "breadcrumbs_empty": "No hay salas visitadas recientemente"
     },
     "report_content": {
         "missing_reason": "Por favor, explica por qué estás denunciando.",
@@ -3688,7 +3688,8 @@
         "search_children": "Buscar en %(spaceName)s",
         "invite_link": "Compartir enlace de invitación",
         "invite": "Invitar gente",
-        "invite_description": "Invitar correos electrónicos o nombres de usuario"
+        "invite_description": "Invitar correos electrónicos o nombres de usuario",
+        "invite_this_space": "Invitar al espacio"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor base no está configurado para mostrar mapas.",
@@ -3843,7 +3844,8 @@
             "forget": "Olvidar sala",
             "mark_read": "Marcar como leído",
             "notifications_mute": "Silenciar sala"
-        }
+        },
+        "invite_this_room": "Invitar a la sala"
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",

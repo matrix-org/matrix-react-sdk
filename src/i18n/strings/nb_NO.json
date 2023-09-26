@@ -8,7 +8,6 @@
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rommet %(errCode)s",
     "Wednesday": "Onsdag",
     "unknown error code": "ukjent feilkode",
-    "Invite to this room": "Inviter til dette rommet",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne meldingen. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
@@ -98,7 +97,6 @@
     "Share Room Message": "Del rommelding",
     "Cancel All": "Avbryt alt",
     "Home": "Hjem",
-    "Explore rooms": "Se alle rom",
     "Your password has been reset.": "Passordet ditt har blitt tilbakestilt.",
     "Success!": "Suksess!",
     "Set up": "Sett opp",
@@ -197,7 +195,6 @@
     "Share Link to User": "Del en lenke til brukeren",
     "Filter room members": "Filtrer rommets medlemmer",
     "Replying": "Svarer på",
-    "Room %(name)s": "Rom %(name)s",
     "Start chatting": "Begynn å chatte",
     "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
     "Add some now": "Legg til noen nå",
@@ -244,7 +241,6 @@
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Aeroplane": "Fly",
-    "Close preview": "Lukk forhåndsvisning",
     "Demote yourself?": "Vil du degradere deg selv?",
     "Demote": "Degrader",
     "and %(count)s others...": {
@@ -395,10 +391,7 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Recently visited rooms": "Nylig besøkte rom",
     "Edit devices": "Rediger enheter",
-    "Add existing room": "Legg til et eksisterende rom",
-    "Invite to this space": "Inviter til dette området",
     "Invite to %(roomName)s": "Inviter til %(roomName)s",
     "Resume": "Fortsett",
     "Avatar": "Profilbilde",
@@ -408,8 +401,6 @@
         "other": "%(count)s medlemmer"
     },
     "No results found": "Ingen resultater ble funnet",
-    "Public space": "Offentlig område",
-    "Private space": "Privat område",
     "You don't have permission": "Du har ikke tillatelse",
     "%(count)s rooms": {
         "other": "%(count)s rom",
@@ -455,7 +446,6 @@
     "Transfer": "Overfør",
     "Invite by email": "Inviter gjennom E-post",
     "Reason (optional)": "Årsak (valgfritt)",
-    "Explore public rooms": "Utforsk offentlige rom",
     "Upgrade Room Version": "Oppgrader romversjon",
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
@@ -749,7 +739,9 @@
         "profile": "Profil",
         "display_name": "Visningsnavn",
         "user_avatar": "Profilbilde",
-        "authentication": "Autentisering"
+        "authentication": "Autentisering",
+        "public_space": "Offentlig område",
+        "private_space": "Privat område"
     },
     "action": {
         "continue": "Fortsett",
@@ -840,7 +832,10 @@
         "click_to_copy": "Klikk for å kopiere",
         "hide_advanced": "Skjul avansert",
         "show_advanced": "Vis avansert",
-        "unignore": "Opphev ignorering"
+        "unignore": "Opphev ignorering",
+        "explore_rooms": "Se alle rom",
+        "add_existing_room": "Legg til et eksisterende rom",
+        "explore_public_rooms": "Utforsk offentlige rom"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -853,7 +848,8 @@
             "other": "%(count)s uleste meldinger."
         },
         "unread_messages": "Uleste meldinger.",
-        "jump_first_invite": "Hopp til den første invitasjonen."
+        "jump_first_invite": "Hopp til den første invitasjonen.",
+        "room_name": "Rom %(name)s"
     },
     "labs": {
         "pinning": "Meldingsklistring",
@@ -1279,6 +1275,9 @@
         "context_menu": {
             "external_url": "Kilde URL",
             "report": "Rapporter"
+        },
+        "url_preview": {
+            "close": "Lukk forhåndsvisning"
         }
     },
     "slash_command": {
@@ -1570,7 +1569,8 @@
         "show_less": "Vis mindre",
         "notification_options": "Varselsinnstillinger",
         "failed_remove_tag": "Kunne ikke fjerne tagg %(tagName)s fra rommet",
-        "failed_add_tag": "Kunne ikke legge til tagg %(tagName)s til rom"
+        "failed_add_tag": "Kunne ikke legge til tagg %(tagName)s til rom",
+        "breadcrumbs_label": "Nylig besøkte rom"
     },
     "onboarding": {
         "has_avatar_label": "Flott, det vil hjelp folk å ha tillit til at det er deg",
@@ -1690,7 +1690,8 @@
             "explore": "Se alle rom"
         },
         "invite_link": "Del invitasjonslenke",
-        "invite": "Inviter personer"
+        "invite": "Inviter personer",
+        "invite_this_space": "Inviter til dette området"
     },
     "room": {
         "drop_file_prompt": "Slipp ned en fil her for å laste opp",
@@ -1704,7 +1705,8 @@
             "favourite": "Favoritt",
             "low_priority": "Lav Prioritet",
             "forget": "Glem rommet"
-        }
+        },
+        "invite_this_room": "Inviter til dette rommet"
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"

@@ -142,7 +142,6 @@
     "Monday": "Pondelok",
     "All Rooms": "Vo všetkých miestnostiach",
     "Wednesday": "Streda",
-    "Invite to this room": "Pozvať do tejto miestnosti",
     "You cannot delete this message. (%(code)s)": "Nemôžete vymazať túto správu. (%(code)s)",
     "Thursday": "Štvrtok",
     "Logs sent": "Záznamy boli odoslané",
@@ -332,8 +331,6 @@
     "This room is end-to-end encrypted": "Táto miestnosť je end-to-end šifrovaná",
     "Everyone in this room is verified": "Všetci v tejto miestnosti sú overení",
     "Edit message": "Upraviť správu",
-    "No recently visited rooms": "Žiadne nedávno navštívené miestnosti",
-    "Explore rooms": "Preskúmať miestnosti",
     "Italics": "Kurzíva",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -624,7 +621,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Začnite s niekým konverzáciu pomocou jeho mena, e-mailovej adresy alebo používateľského mena (ako napr. <userId/>).",
     "Direct Messages": "Priame správy",
     "Private space (invite only)": "Súkromný priestor (len pre pozvaných)",
-    "Public space": "Verejný priestor",
     "Rooms and spaces": "Miestnosti a priestory",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
@@ -658,7 +654,6 @@
     "Verify User": "Overiť používateľa",
     "Start chatting": "Začať konverzáciu",
     "Verification Request": "Žiadosť o overenie",
-    "Room %(name)s": "Miestnosť %(name)s",
     "Show image": "Zobraziť obrázok",
     "e.g. my-room": "napr. moja-miestnost",
     "Deactivate user?": "Deaktivovať používateľa?",
@@ -693,15 +688,12 @@
     "Backup version:": "Verzia zálohy:",
     "Role in <RoomName/>": "Rola v <RoomName/>",
     "To publish an address, it needs to be set as a local address first.": "Ak chcete zverejniť adresu, je potrebné ju najprv nastaviť ako lokálnu adresu.",
-    "Private space": "Súkromný priestor",
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
     "This space is not public. You will not be able to rejoin without an invite.": "Tento priestor nie je verejný. Bez pozvánky sa doň nebudete môcť opätovne pripojiť.",
     "This room is public": "Táto miestnosť je verejná",
     "Public rooms": "Verejné miestnosti",
     "Upgrade public room": "Aktualizovať verejnú miestnosť",
-    "Public room": "Verejná miestnosť",
     "Join public room": "Pripojiť sa k verejnej miestnosti",
-    "Explore public rooms": "Preskúmajte verejné miestnosti",
     "Leave some rooms": "Opustiť niektoré miestnosti",
     "Leave all rooms": "Opustiť všetky miestnosti",
     "Don't leave any rooms": "Neopustiť žiadne miestnosti",
@@ -715,8 +707,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Pozvite niekoho pomocou jeho mena, e-mailovej adresy, používateľského mena (napríklad <userId/>) alebo <a>zdieľajte tento priestor</a>.",
     "Recently Direct Messaged": "Nedávno zaslané priame správy",
     "Something went wrong with your invite to %(roomName)s": "Niečo sa pokazilo s vašou pozvánkou do miestnosti %(roomName)s",
-    "Invite to space": "Pozvať do priestoru",
-    "Invite to this space": "Pozvať do tohto priestoru",
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
     "Hide sessions": "Skryť relácie",
     "%(count)s sessions": {
@@ -804,7 +794,6 @@
     "Close this widget to view it in this panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Ak máte oprávnenia, otvorte ponuku pri ľubovoľnej správe a výberom položky <b>Pripnúť</b> ich sem prilepíte.",
     "%(spaceName)s menu": "%(spaceName)s ponuka",
-    "Close preview": "Zatvoriť náhľad",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Určite, ktoré priestory budú mať prístup do tejto miestnosti. Ak je vybraný priestor, jeho členovia môžu nájsť a pripojiť sa k <RoomName/>.",
     "Select spaces": "Vybrať priestory",
@@ -855,7 +844,6 @@
     "Almost there! Is %(displayName)s showing the same shield?": "Už je to takmer hotové! Zobrazuje sa %(displayName)s rovnaký štít?",
     "Add space": "Pridať priestor",
     "Add reaction": "Pridať reakciu",
-    "Add people": "Pridať ľudí",
     "Adding spaces has moved.": "Pridávanie priestorov bolo presunuté.",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Pridávanie miestností... (%(progress)s z %(count)s)",
@@ -863,7 +851,6 @@
     },
     "Add existing space": "Pridať existujúci priestor",
     "Add existing rooms": "Pridať existujúce miestnosti",
-    "Add existing room": "Pridať existujúcu miestnosť",
     "Add a space to a space you manage.": "Pridať priestor do priestoru, ktorý spravujete.",
     "Add a new server": "Pridať nový server",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Ste tu jediný človek. Ak odídete, nikto sa už v budúcnosti nebude môcť pripojiť do tejto miestnosti, vrátane vás.",
@@ -892,16 +879,10 @@
     "Message preview": "Náhľad správy",
     "%(roomName)s can't be previewed. Do you want to join it?": "Nie je možné zobraziť náhľad miestnosti %(roomName)s. Chcete sa k nej pripojiť?",
     "You're previewing %(roomName)s. Want to join it?": "Zobrazujete náhľad %(roomName)s. Chcete sa k nej pripojiť?",
-    "Show %(count)s other previews": {
-        "one": "Zobraziť %(count)s ďalší náhľad",
-        "other": "Zobraziť %(count)s ďalších náhľadov"
-    },
-    "Start new chat": "Spustiť novú konverzáciu",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "View in room": "Zobraziť v miestnosti",
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
     "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
-    "Recently visited rooms": "Nedávno navštívené miestnosti",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
     "Incorrect Security Phrase": "Nesprávna bezpečnostná fráza",
@@ -1270,8 +1251,6 @@
         "one": "1 účastník",
         "other": "%(count)s účastníkov"
     },
-    "New video room": "Nová video miestnosť",
-    "New room": "Nová miestnosť",
     "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
     "Live location ended": "Ukončenie polohy v reálnom čase",
     "View live location": "Zobraziť polohu v reálnom čase",
@@ -1318,8 +1297,6 @@
     "To join, please enable video rooms in Labs first": "Ak sa chcete pripojiť, povoľte najprv video miestnosti v laboratóriách",
     "To view, please enable video rooms in Labs first": "Ak ich chcete zobraziť, povoľte najprv video miestnosti v laboratóriách",
     "To view %(roomName)s, you need an invite": "Na zobrazenie %(roomName)s potrebujete pozvánku",
-    "Private room": "Súkromná miestnosť",
-    "Video room": "Video miestnosť",
     "An error occurred whilst sharing your live location, please try again": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
     "An error occurred whilst sharing your live location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe",
     "Unread email icon": "Ikona neprečítaného e-mailu",
@@ -1609,7 +1586,12 @@
         "profile": "Profil",
         "display_name": "Zobrazované meno",
         "user_avatar": "Obrázok v profile",
-        "authentication": "Overenie"
+        "authentication": "Overenie",
+        "public_room": "Verejná miestnosť",
+        "video_room": "Video miestnosť",
+        "public_space": "Verejný priestor",
+        "private_space": "Súkromný priestor",
+        "private_room": "Súkromná miestnosť"
     },
     "action": {
         "continue": "Pokračovať",
@@ -1716,7 +1698,15 @@
         "click_to_copy": "Kliknutím skopírujete",
         "hide_advanced": "Skryť pokročilé možnosti",
         "show_advanced": "Ukázať pokročilé možnosti",
-        "unignore": "Prestať ignorovať"
+        "unignore": "Prestať ignorovať",
+        "start_new_chat": "Spustiť novú konverzáciu",
+        "invite_to_space": "Pozvať do priestoru",
+        "add_people": "Pridať ľudí",
+        "explore_rooms": "Preskúmať miestnosti",
+        "new_room": "Nová miestnosť",
+        "new_video_room": "Nová video miestnosť",
+        "add_existing_room": "Pridať existujúcu miestnosť",
+        "explore_public_rooms": "Preskúmajte verejné miestnosti"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -1729,7 +1719,8 @@
             "one": "1 neprečítaná správa."
         },
         "unread_messages": "Neprečítané správy.",
-        "jump_first_invite": "Prejsť na prvú pozvánku."
+        "jump_first_invite": "Prejsť na prvú pozvánku.",
+        "room_name": "Miestnosť %(name)s"
     },
     "labs": {
         "video_rooms": "Video miestnosti",
@@ -2959,6 +2950,13 @@
             "collapse_reply_thread": "Zbaliť vlákno odpovedí",
             "view_related_event": "Zobraziť súvisiacu udalosť",
             "report": "Nahlásiť"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Zobraziť %(count)s ďalší náhľad",
+                "other": "Zobraziť %(count)s ďalších náhľadov"
+            },
+            "close": "Zatvoriť náhľad"
         }
     },
     "slash_command": {
@@ -3613,7 +3611,9 @@
         "notification_options": "Možnosti oznámenia",
         "failed_set_dm_tag": "Nepodarilo sa nastaviť značku priamej správy",
         "failed_remove_tag": "Z miestnosti sa nepodarilo odstrániť značku %(tagName)s",
-        "failed_add_tag": "Miestnosti sa nepodarilo pridať značku %(tagName)s"
+        "failed_add_tag": "Miestnosti sa nepodarilo pridať značku %(tagName)s",
+        "breadcrumbs_label": "Nedávno navštívené miestnosti",
+        "breadcrumbs_empty": "Žiadne nedávno navštívené miestnosti"
     },
     "report_content": {
         "missing_reason": "Vyplňte prosím, prečo podávate hlásenie.",
@@ -3871,7 +3871,8 @@
         "search_children": "Hľadať %(spaceName)s",
         "invite_link": "Zdieľať odkaz na pozvánku",
         "invite": "Pozvať ľudí",
-        "invite_description": "Pozvať pomocou e-mailu alebo používateľského mena"
+        "invite_description": "Pozvať pomocou e-mailu alebo používateľského mena",
+        "invite_this_space": "Pozvať do tohto priestoru"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -4031,7 +4032,8 @@
             "mark_read": "Označiť ako prečítané",
             "notifications_default": "Rovnaké ako predvolené nastavenie",
             "notifications_mute": "Stlmiť miestnosť"
-        }
+        },
+        "invite_this_room": "Pozvať do tejto miestnosti"
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",

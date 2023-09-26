@@ -49,7 +49,6 @@
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
-    "Invite to this room": "Inviter til dette rum",
     "Send": "Send",
     "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
@@ -64,7 +63,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Enter passphrase": "Indtast kodeord",
-    "Explore rooms": "Udforsk rum",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
@@ -381,7 +379,8 @@
         "cancel": "Afbryd",
         "back": "Tilbage",
         "accept": "Accepter",
-        "register": "Registrér"
+        "register": "Registrér",
+        "explore_rooms": "Udforsk rum"
     },
     "labs": {
         "pinning": "Fastgørelse af beskeder",
@@ -852,7 +851,8 @@
         "context_menu": {
             "favourite": "Favorit",
             "low_priority": "Lav prioritet"
-        }
+        },
+        "invite_this_room": "Inviter til dette rum"
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s andre",

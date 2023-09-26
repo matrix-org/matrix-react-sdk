@@ -120,7 +120,6 @@
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "Invite to this room": "Convidar para esta sala",
     "Send": "Enviar",
     "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
@@ -128,7 +127,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
-    "Explore rooms": "Explorar rooms",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s-%(monthName)s-%(fullYear)s",
     "Anguilla": "Anguilla",
     "United States": "Estados Unidos",
@@ -459,7 +457,8 @@
         "export": "Exportar",
         "submit": "Enviar",
         "unban": "Desfazer banimento",
-        "unignore": "Deixar de ignorar"
+        "unignore": "Deixar de ignorar",
+        "explore_rooms": "Explorar rooms"
     },
     "keyboard": {
         "home": "Início"
@@ -777,7 +776,8 @@
         "context_menu": {
             "favourite": "Favorito",
             "low_priority": "Baixa prioridade"
-        }
+        },
+        "invite_this_room": "Convidar para esta sala"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para poder usar esta funcionalidade",

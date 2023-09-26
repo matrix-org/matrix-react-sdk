@@ -162,7 +162,6 @@
     "Join the conversation with an account": "انضم للمحادثة بحساب",
     "Historical": "تاريخي",
     "Low priority": "أولوية منخفضة",
-    "Explore public rooms": "استكشف الغرف العامة",
     "Add room": "أضف غرفة",
     "Rooms": "الغرف",
     "Show Widgets": "إظهار عناصر الواجهة",
@@ -174,8 +173,6 @@
         "other": "(~%(count)s نتائج)"
     },
     "Unnamed room": "غرفة بلا اسم",
-    "No recently visited rooms": "لا توجد غرف تمت زيارتها مؤخرًا",
-    "Room %(name)s": "الغرفة %(name)s",
     "Replying": "الرد",
     "%(duration)sd": "%(duration)sي",
     "%(duration)sh": "%(duration)sس",
@@ -188,12 +185,10 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (قوة %(powerLevelNumber)s)",
     "Filter room members": "تصفية أعضاء الغرفة",
     "Invited": "مدعو",
-    "Invite to this room": "ادع لهذه الغرفة",
     "and %(count)s others...": {
         "one": "وواحدة أخرى...",
         "other": "و %(count)s أخر..."
     },
-    "Close preview": "إغلاق المعاينة",
     "Scroll to most recent messages": "انتقل إلى أحدث الرسائل",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "لا يمكن ضمان موثوقية هذه الرسالة المشفرة على هذا الجهاز.",
     "Encrypted by a deleted session": "مشفرة باتصال محذوف",
@@ -344,7 +339,6 @@
     "American Samoa": "ساموا الأمريكية",
     "Algeria": "الجزائر",
     "Åland Islands": "جزر آلاند",
-    "Explore rooms": "استكشِف الغرف",
     "Paraguay": "باراغواي",
     "Netherlands": "هولندا",
     "Greece": "اليونان",
@@ -550,7 +544,9 @@
         "review": "مراجعة",
         "manage": "إدارة",
         "mention": "إشارة",
-        "unban": "فك الحظر"
+        "unban": "فك الحظر",
+        "explore_rooms": "استكشِف الغرف",
+        "explore_public_rooms": "استكشف الغرف العامة"
     },
     "labs": {
         "pinning": "تثبيت الرسالة",
@@ -921,6 +917,9 @@
             "lightbox_title": "%(senderDisplayName)s غير صورة الغرفة %(roomName)s",
             "removed": "%(senderDisplayName)s حذف صورة الغرفة.",
             "changed_img": "%(senderDisplayName)s غير صورة الغرفة إلى <img/>"
+        },
+        "url_preview": {
+            "close": "إغلاق المعاينة"
         }
     },
     "slash_command": {
@@ -1231,7 +1230,8 @@
             "other": "أظهر %(count)s زيادة"
         },
         "show_less": "أظهر أقل",
-        "notification_options": "خيارات الإشعارات"
+        "notification_options": "خيارات الإشعارات",
+        "breadcrumbs_empty": "لا توجد غرف تمت زيارتها مؤخرًا"
     },
     "a11y": {
         "n_unread_messages_mentions": {
@@ -1243,7 +1243,8 @@
             "other": "%(count)s من الرسائل غير مقروءة."
         },
         "unread_messages": "رسائل غير المقروءة.",
-        "jump_first_invite": "الانتقال لأول دعوة."
+        "jump_first_invite": "الانتقال لأول دعوة.",
+        "room_name": "الغرفة %(name)s"
     },
     "setting": {
         "help_about": {
@@ -1418,7 +1419,8 @@
             "favourite": "تفضيل",
             "low_priority": "أولوية منخفضة",
             "forget": "انسَ الغرفة"
-        }
+        },
+        "invite_this_room": "ادع لهذه الغرفة"
     },
     "space": {
         "context_menu": {

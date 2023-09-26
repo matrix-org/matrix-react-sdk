@@ -16,11 +16,9 @@
     "Wednesday": "ബുധന്‍",
     "You cannot delete this message. (%(code)s)": "നിങ്ങള്‍ക്ക് ഈ സന്ദേശം നീക്കം ചെയ്യാനാകില്ല. (%(code)s)",
     "Send": "അയയ്ക്കുക",
-    "Invite to this room": "ഈ റൂമിലേക്ക് ക്ഷണിക്കുക",
     "Thursday": "വ്യാഴം",
     "Search…": "തിരയുക…",
     "Yesterday": "ഇന്നലെ",
-    "Explore rooms": "മുറികൾ കണ്ടെത്തുക",
     "common": {
         "error": "എറര്‍",
         "mute": "നിശ്ശബ്ദം",
@@ -49,7 +47,8 @@
         "dismiss": "ഒഴിവാക്കുക",
         "close": "അടയ്ക്കുക",
         "cancel": "റദ്ദാക്കുക",
-        "back": "തിരികെ"
+        "back": "തിരികെ",
+        "explore_rooms": "മുറികൾ കണ്ടെത്തുക"
     },
     "bug_reporting": {
         "send_logs": "നാള്‍വഴി അയയ്ക്കുക",
@@ -107,6 +106,7 @@
         "context_menu": {
             "favourite": "പ്രിയപ്പെട്ടവ",
             "low_priority": "താഴ്ന്ന പരിഗണന"
-        }
+        },
+        "invite_this_room": "ഈ റൂമിലേക്ക് ക്ഷണിക്കുക"
     }
 }

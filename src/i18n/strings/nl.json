@@ -139,7 +139,6 @@
     "Search…": "Zoeken…",
     "Saturday": "Zaterdag",
     "Monday": "Maandag",
-    "Invite to this room": "Uitnodigen voor deze kamer",
     "All Rooms": "Alle kamers",
     "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
@@ -385,7 +384,6 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "Deel in de instellingen dit e-mailadres om uitnodigingen direct in %(brand)s te ontvangen.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
-    "Explore rooms": "Kamers ontdekken",
     "Show image": "Afbeelding tonen",
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
@@ -402,9 +400,7 @@
     "Encrypted by an unverified session": "Versleuteld door een niet-geverifieerde sessie",
     "Unencrypted": "Onversleuteld",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
-    "Close preview": "Voorbeeld sluiten",
     "Failed to deactivate user": "Deactiveren van persoon is mislukt",
-    "Room %(name)s": "Kamer %(name)s",
     "<userName/> wants to chat": "<userName/> wil een chat met je beginnen",
     "Start chatting": "Gesprek beginnen",
     "Reject & Ignore user": "Weigeren en persoon negeren",
@@ -748,7 +744,6 @@
     "Vatican City": "Vaticaanstad",
     "Taiwan": "Taiwan",
     "This room is public": "Deze kamer is publiek",
-    "Explore public rooms": "Publieke kamers ontdekken",
     "Room options": "Kameropties",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Start een kamer met iemand door hun naam, e-mailadres of inlognaam (zoals <userId/>) te typen.",
     "Error removing address": "Fout bij verwijderen van adres",
@@ -825,7 +820,6 @@
     "St. Lucia": "Sint Lucia",
     "South Sudan": "Zuid-Soedan",
     "Oman": "Oman",
-    "No recently visited rooms": "Geen onlangs bezochte kamers",
     "Use the <a>Desktop app</a> to see all encrypted files": "Gebruik de <a>Desktop-app</a> om alle versleutelde bestanden te zien",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
@@ -913,7 +907,6 @@
     "Other published addresses:": "Andere gepubliceerde adressen:",
     "Published Addresses": "Gepubliceerde adressen",
     "Open dial pad": "Kiestoetsen openen",
-    "Recently visited rooms": "Onlangs geopende kamers",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Als je nu annuleert, kan je versleutelde berichten en gegevens verliezen als je geen toegang meer hebt tot je login.",
@@ -932,13 +925,9 @@
     "Space selection": "Space-selectie",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Je kan deze wijziging niet ongedaan maken, omdat je jezelf rechten ontneemt. Als je de laatst bevoegde persoon in de Space bent zal het onmogelijk zijn om weer rechten te krijgen.",
     "Suggested Rooms": "Kamersuggesties",
-    "Add existing room": "Bestaande kamers toevoegen",
-    "Invite to this space": "Voor deze Space uitnodigen",
     "Your message was sent": "Je bericht is verstuurd",
     "Leave space": "Space verlaten",
     "Create a space": "Space maken",
-    "Private space": "Privé Space",
-    "Public space": "Publieke Space",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
     "You may want to try a different search or check for typos.": "Je kan een andere zoekterm proberen of controleren op een typefout.",
     "No results found": "Geen resultaten gevonden",
@@ -1020,10 +1009,6 @@
     "This space has no local addresses": "Deze Space heeft geen lokaaladres",
     "Unnamed audio": "Naamloze audio",
     "Error processing audio message": "Fout bij verwerking audiobericht",
-    "Show %(count)s other previews": {
-        "one": "%(count)s andere preview weergeven",
-        "other": "%(count)s andere previews weergeven"
-    },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
     "Unable to copy a link to the room to the clipboard.": "Kopiëren van kamerlink naar het klembord is mislukt.",
@@ -1035,7 +1020,6 @@
     "Their device couldn't start the camera or microphone": "Het andere apparaat kon de camera of microfoon niet starten",
     "Connection failed": "Verbinding mislukt",
     "Could not connect media": "Mediaverbinding mislukt",
-    "Public room": "Publieke kamer",
     "Error downloading audio": "Fout bij downloaden van audio",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
     "Automatically invite members from this room to the new one": "Automatisch leden uitnodigen van deze kamer in de nieuwe",
@@ -1152,9 +1136,6 @@
     "Home options": "Home-opties",
     "%(spaceName)s menu": "%(spaceName)s-menu",
     "Join public room": "Publieke kamer toetreden",
-    "Add people": "Personen toevoegen",
-    "Invite to space": "Voor Space uitnodigen",
-    "Start new chat": "Nieuwe chat beginnen",
     "Recently viewed": "Recent bekeken",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s stem uitgebracht. Stem om de resultaten te zien",
@@ -1269,8 +1250,6 @@
         "one": "Momenteel berichten in %(count)s kamer aan het verwijderen",
         "other": "Momenteel berichten in %(count)s kamers aan het verwijderen"
     },
-    "New video room": "Nieuwe video kamer",
-    "New room": "Nieuwe kamer",
     "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
     "You are sharing your live location": "Je deelt je live locatie",
     "Live location enabled": "Live locatie ingeschakeld",
@@ -1311,13 +1290,11 @@
     "Cameras": "Camera's",
     "Output devices": "Uitvoerapparaten",
     "Input devices": "Invoer apparaten",
-    "Private room": "Privé kamer",
     "To view, please enable video rooms in Labs first": "Schakel eerst videokamers in Labs in om te bekijken",
     "To join, please enable video rooms in Labs first": "Schakel eerst videokamers in Labs in om deel te nemen",
     "Open room": "Open kamer",
     "Show Labs settings": "Lab instellingen weergeven",
     "To view %(roomName)s, you need an invite": "Om %(roomName)s te bekijken, heb je een uitnodiging nodig",
-    "Video room": "Video kamer",
     "%(members)s and %(last)s": "%(members)s en %(last)s",
     "%(members)s and more": "%(members)s en meer",
     "Unread email icon": "Ongelezen e-mailpictogram",
@@ -1496,7 +1473,12 @@
         "profile": "Profiel",
         "display_name": "Weergavenaam",
         "user_avatar": "Profielfoto",
-        "authentication": "Login bevestigen"
+        "authentication": "Login bevestigen",
+        "public_room": "Publieke kamer",
+        "video_room": "Video kamer",
+        "public_space": "Publieke Space",
+        "private_space": "Privé Space",
+        "private_room": "Privé kamer"
     },
     "action": {
         "continue": "Doorgaan",
@@ -1600,7 +1582,15 @@
         "click_to_copy": "Klik om te kopiëren",
         "hide_advanced": "Geavanceerde info verbergen",
         "show_advanced": "Geavanceerde info tonen",
-        "unignore": "Niet meer negeren"
+        "unignore": "Niet meer negeren",
+        "start_new_chat": "Nieuwe chat beginnen",
+        "invite_to_space": "Voor Space uitnodigen",
+        "add_people": "Personen toevoegen",
+        "explore_rooms": "Kamers ontdekken",
+        "new_room": "Nieuwe kamer",
+        "new_video_room": "Nieuwe video kamer",
+        "add_existing_room": "Bestaande kamers toevoegen",
+        "explore_public_rooms": "Publieke kamers ontdekken"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -1613,7 +1603,8 @@
             "one": "1 ongelezen bericht."
         },
         "unread_messages": "Ongelezen berichten.",
-        "jump_first_invite": "Ga naar de eerste uitnodiging."
+        "jump_first_invite": "Ga naar de eerste uitnodiging.",
+        "room_name": "Kamer %(name)s"
     },
     "labs": {
         "video_rooms": "Video kamers",
@@ -2668,6 +2659,13 @@
             "collapse_reply_thread": "Antwoorddraad invouwen",
             "view_related_event": "Bekijk gerelateerde gebeurtenis",
             "report": "Melden"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "%(count)s andere preview weergeven",
+                "other": "%(count)s andere previews weergeven"
+            },
+            "close": "Voorbeeld sluiten"
         }
     },
     "slash_command": {
@@ -3266,7 +3264,9 @@
         "notification_options": "Meldingsinstellingen",
         "failed_set_dm_tag": "Kan tag voor direct bericht niet instellen",
         "failed_remove_tag": "Verwijderen van %(tagName)s-label van kamer is mislukt",
-        "failed_add_tag": "Toevoegen van %(tagName)s-label aan kamer is mislukt"
+        "failed_add_tag": "Toevoegen van %(tagName)s-label aan kamer is mislukt",
+        "breadcrumbs_label": "Onlangs geopende kamers",
+        "breadcrumbs_empty": "Geen onlangs bezochte kamers"
     },
     "report_content": {
         "missing_reason": "Geef aan waarom je deze melding indient.",
@@ -3501,7 +3501,8 @@
         "search_children": "Zoek %(spaceName)s",
         "invite_link": "Deel uitnodigingskoppeling",
         "invite": "Personen uitnodigen",
-        "invite_description": "Uitnodigen per e-mail of inlognaam"
+        "invite_description": "Uitnodigen per e-mail of inlognaam",
+        "invite_this_space": "Voor deze Space uitnodigen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3648,7 +3649,8 @@
             "copy_link": "Kamerlink kopiëren",
             "low_priority": "Lage prioriteit",
             "forget": "Kamer vergeten"
-        }
+        },
+        "invite_this_room": "Uitnodigen voor deze kamer"
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",

@@ -119,7 +119,6 @@
     "Monday": "Δευτέρα",
     "All Rooms": "Όλα τα δωμάτια",
     "Wednesday": "Τετάρτη",
-    "Invite to this room": "Πρόσκληση σε αυτό το δωμάτιο",
     "You cannot delete this message. (%(code)s)": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
     "Thursday": "Πέμπτη",
     "Search…": "Αναζήτηση…",
@@ -133,7 +132,6 @@
     "%(duration)sh": "%(duration)sω",
     "%(duration)sd": "%(duration)sμ",
     "Permission Required": "Απαιτείται Άδεια",
-    "Explore rooms": "Εξερευνήστε δωμάτια",
     "Ok": "Εντάξει",
     "Your homeserver has exceeded its user limit.": "Ο διακομιστής σας ξεπέρασε το όριο χρηστών.",
     "Ask this user to verify their session, or manually verify it below.": "Ζητήστε από αυτόν τον χρήστη να επιβεβαιώσει την συνεδρία του, ή επιβεβαιώστε την χειροκίνητα παρακάτω.",
@@ -405,8 +403,6 @@
     "Send voice message": "Στείλτε φωνητικό μήνυμα",
     "This room has been replaced and is no longer active.": "Αυτό το δωμάτιο έχει αντικατασταθεί και δεν είναι πλέον ενεργό.",
     "The conversation continues here.": "Η συζήτηση συνεχίζεται εδώ.",
-    "Invite to this space": "Πρόσκληση σε αυτό το χώρο",
-    "Close preview": "Κλείσιμο προεπισκόπησης",
     "Scroll to most recent messages": "Κύλιση στα πιο πρόσφατα μηνύματα",
     "Failed to send": "Αποτυχία αποστολής",
     "Your message was sent": "Το μήνυμά σας στάλθηκε",
@@ -513,15 +509,7 @@
     "Add space": "Προσθήκη χώρου",
     "Suggested Rooms": "Προτεινόμενα δωμάτια",
     "Add room": "Προσθήκη δωματίου",
-    "Explore public rooms": "Εξερευνήστε δημόσια δωμάτια",
-    "Add existing room": "Προσθήκη υπάρχοντος δωματίου",
-    "Add people": "Προσθήκη ατόμων",
-    "Invite to space": "Πρόσκληση στον χώρο",
-    "Start new chat": "Έναρξη νέας συνομιλίας",
     "Room options": "Επιλογές δωματίου",
-    "No recently visited rooms": "Δεν υπάρχουν δωμάτια που επισκεφτήκατε πρόσφατα",
-    "Recently visited rooms": "Δωμάτια που επισκεφτήκατε πρόσφατα",
-    "Room %(name)s": "Δωμάτιο %(name)s",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "View message": "Προβολή μηνύματος",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Η αυθεντικότητα αυτού του κρυπτογραφημένου μηνύματος δεν είναι εγγυημένη σε αυτήν τη συσκευή.",
@@ -559,10 +547,6 @@
     "Clear cache and resync": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
-    "Show %(count)s other previews": {
-        "other": "Εμφάνιση %(count)s άλλων προεπισκοπήσεων",
-        "one": "Εμφάνιση%(count)s άλλων προεπισκοπήσεων"
-    },
     "Encrypted by an unverified session": "Κρυπτογραφήθηκε από μια μη επαληθευμένη συνεδρία",
     "Copy link to thread": "Αντιγραφή συνδέσμου στο νήμα εκτέλεσης",
     "View in room": "Δείτε στο δωμάτιο",
@@ -794,7 +778,6 @@
     "Continue With Encryption Disabled": "Συνέχεια με Απενεργοποίηση Κρυπτογράφησης",
     "Incompatible Database": "Μη συμβατή Βάση Δεδομένων",
     "Want to add an existing space instead?": "Θέλετε να προσθέσετε έναν υπάρχοντα χώρο;",
-    "Public space": "Δημόσιος χώρος",
     "Private space (invite only)": "Ιδιωτικός χώρος (μόνο με πρόσκληση)",
     "Space visibility": "Ορατότητα χώρου",
     "Only people invited will be able to find and join this space.": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτόν τον χώρο.",
@@ -933,7 +916,6 @@
     "Sorry, the poll did not end. Please try again.": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Failed to end poll": "Αποτυχία τερματισμού της δημοσκόπησης",
     "Anyone in <SpaceName/> will be able to find and join.": "Οποιοσδήποτε στο <SpaceName/> θα μπορεί να βρει και να συμμετάσχει σε αυτό το δωμάτιο.",
-    "Public room": "Δημόσιο δωμάτιο",
     "Reason (optional)": "Αιτία (προαιρετικό)",
     "Removing…": "Αφαίρεση…",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Καταργήστε την επιλογή εάν θέλετε επίσης να καταργήσετε τα μηνύματα συστήματος σε αυτόν τον χρήστη (π.χ. αλλαγή μέλους, αλλαγή προφίλ…)",
@@ -1057,7 +1039,6 @@
     "Could not load user profile": "Αδυναμία φόρτωσης του προφίλ χρήστη",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
-    "Private space": "Ιδιωτικός χώρος",
     "Search names and descriptions": "Αναζήτηση ονομάτων και περιγραφών",
     "Rooms and spaces": "Δωμάτια και Χώροι",
     "Results": "Αποτελέσματα",
@@ -1273,8 +1254,6 @@
     "Output devices": "Συσκευές εξόδου",
     "Input devices": "Συσκευές εισόδου",
     "To continue, please enter your account password:": "Για να συνεχίσετε παρακαλώ εισάγετε τον κωδικό σας:",
-    "New room": "Νέο δωμάτιο",
-    "Private room": "Ιδιωτικό δωμάτιο",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
     "Start a group chat": "Ξεκινήστε μια ομαδική συνομιλία",
     "Other options": "Αλλες επιλογές",
@@ -1307,8 +1286,6 @@
     "To join, please enable video rooms in Labs first": "Για να συμμετέχετε, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
     "To view, please enable video rooms in Labs first": "Για προβολή, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
     "To view %(roomName)s, you need an invite": "Για να δείτε το %(roomName)s, χρειάζεστε μια πρόσκληση",
-    "New video room": "Νέο δωμάτιο βίντεο",
-    "Video room": "Δωμάτια βίντεο",
     "Seen by %(count)s people": {
         "one": "Αναγνώστηκε από %(count)s άτομο",
         "other": "Αναγνώστηκε από %(count)s άτομα"
@@ -1405,7 +1382,12 @@
         "profile": "Προφίλ",
         "display_name": "Εμφανιζόμενο όνομα",
         "user_avatar": "Εικόνα προφίλ",
-        "authentication": "Πιστοποίηση"
+        "authentication": "Πιστοποίηση",
+        "public_room": "Δημόσιο δωμάτιο",
+        "video_room": "Δωμάτια βίντεο",
+        "public_space": "Δημόσιος χώρος",
+        "private_space": "Ιδιωτικός χώρος",
+        "private_room": "Ιδιωτικό δωμάτιο"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1505,7 +1487,15 @@
         "click_to_copy": "Κλικ για αντιγραφή",
         "hide_advanced": "Απόκρυψη προχωρημένων",
         "show_advanced": "Εμφάνιση προχωρημένων",
-        "unignore": "Αναίρεση αγνόησης"
+        "unignore": "Αναίρεση αγνόησης",
+        "start_new_chat": "Έναρξη νέας συνομιλίας",
+        "invite_to_space": "Πρόσκληση στον χώρο",
+        "add_people": "Προσθήκη ατόμων",
+        "explore_rooms": "Εξερευνήστε δωμάτια",
+        "new_room": "Νέο δωμάτιο",
+        "new_video_room": "Νέο δωμάτιο βίντεο",
+        "add_existing_room": "Προσθήκη υπάρχοντος δωματίου",
+        "explore_public_rooms": "Εξερευνήστε δημόσια δωμάτια"
     },
     "a11y": {
         "user_menu": "Μενού χρήστη",
@@ -1518,7 +1508,8 @@
             "other": "%(count)s μη αναγνωσμένα μηνύματα."
         },
         "unread_messages": "Μη αναγνωσμένα μηνύματα.",
-        "jump_first_invite": "Μετάβαση στην πρώτη πρόσκληση."
+        "jump_first_invite": "Μετάβαση στην πρώτη πρόσκληση.",
+        "room_name": "Δωμάτιο %(name)s"
     },
     "labs": {
         "video_rooms": "Δωμάτια βίντεο",
@@ -2433,6 +2424,13 @@
             "external_url": "Πηγαίο URL",
             "collapse_reply_thread": "Σύμπτυξη νήματος απάντησης",
             "report": "Αναφορά"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "other": "Εμφάνιση %(count)s άλλων προεπισκοπήσεων",
+                "one": "Εμφάνιση%(count)s άλλων προεπισκοπήσεων"
+            },
+            "close": "Κλείσιμο προεπισκόπησης"
         }
     },
     "slash_command": {
@@ -3000,7 +2998,9 @@
         "show_less": "Εμφάνιση λιγότερων",
         "notification_options": "Επιλογές ειδοποίησης",
         "failed_remove_tag": "Δεν ήταν δυνατή η διαγραφή της ετικέτας %(tagName)s από το δωμάτιο",
-        "failed_add_tag": "Δεν ήταν δυνατή η προσθήκη της ετικέτας %(tagName)s στο δωμάτιο"
+        "failed_add_tag": "Δεν ήταν δυνατή η προσθήκη της ετικέτας %(tagName)s στο δωμάτιο",
+        "breadcrumbs_label": "Δωμάτια που επισκεφτήκατε πρόσφατα",
+        "breadcrumbs_empty": "Δεν υπάρχουν δωμάτια που επισκεφτήκατε πρόσφατα"
     },
     "report_content": {
         "missing_reason": "Παρακαλώ πείτε μας γιατί κάνετε αναφορά.",
@@ -3227,7 +3227,8 @@
         "search_children": "Αναζήτηση %(spaceName)s",
         "invite_link": "Κοινή χρήση συνδέσμου πρόσκλησης",
         "invite": "Προσκαλέστε άτομα",
-        "invite_description": "Πρόσκληση με email ή όνομα χρήστη"
+        "invite_description": "Πρόσκληση με email ή όνομα χρήστη",
+        "invite_this_space": "Πρόσκληση σε αυτό το χώρο"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3363,7 +3364,8 @@
             "copy_link": "Αντιγραφή συνδέσμου δωματίου",
             "low_priority": "Χαμηλή προτεραιότητα",
             "forget": "Ξεχάστε το δωμάτιο"
-        }
+        },
+        "invite_this_room": "Πρόσκληση σε αυτό το δωμάτιο"
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",

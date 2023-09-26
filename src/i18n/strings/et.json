@@ -16,7 +16,6 @@
     "AM": "EL",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
-    "Invite to this room": "Kutsu siia jututuppa",
     "The conversation continues here.": "Vestlus jätkub siin.",
     "Direct Messages": "Isiklikud sõnumid",
     "Rooms": "Jututoad",
@@ -40,7 +39,6 @@
     "collapse": "ahenda",
     "expand": "laienda",
     "Enter the name of a new server you want to explore.": "Sisesta uue serveri nimi mida tahad uurida.",
-    "Explore rooms": "Tutvu jututubadega",
     "Remove recent messages by %(user)s": "Eemalda %(user)s hiljutised sõnumid",
     "Remove %(count)s messages": {
         "other": "Eemalda %(count)s sõnumit",
@@ -114,7 +112,6 @@
     "%(duration)sh": "%(duration)s tund(i)",
     "%(duration)sd": "%(duration)s päev(a)",
     "Replying": "Vastan",
-    "Room %(name)s": "Jututuba %(name)s",
     "Unnamed room": "Nimeta jututuba",
     "(~%(count)s results)": {
         "other": "(~%(count)s tulemust)",
@@ -157,7 +154,6 @@
     "Unencrypted": "Krüptimata",
     "Encrypted by a deleted session": "Krüptitud kustutatud sessiooni poolt",
     "Scroll to most recent messages": "Mine viimaste sõnumite juurde",
-    "Close preview": "Sulge eelvaade",
     "No recent messages by %(user)s found": "Kasutajalt %(user)s ei leitud hiljutisi sõnumeid",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
@@ -429,7 +425,6 @@
     },
     "Invited": "Kutsutud",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (õigused %(powerLevelNumber)s)",
-    "No recently visited rooms": "Hiljuti külastatud jututubasid ei leidu",
     "Error creating address": "Viga aadressi loomisel",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Aadressi loomisel tekkis viga. See kas on serveri poolt keelatud või tekkis ajutine tõrge.",
     "You don't have permission to delete the address.": "Sinul pole õigusi selle aadressi kustutamiseks.",
@@ -599,7 +594,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "Server on seadistatud varjama tegelikke veapõhjuseid (CORS).",
     "You're all caught up.": "Ei tea... kõik vist on nüüd tehtud.",
     "Recent changes that have not yet been received": "Hiljutised muudatused, mis pole veel alla laetud või saabunud",
-    "Explore public rooms": "Sirvi avalikke jututubasid",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
@@ -918,7 +912,6 @@
     "Remember this": "Jäta see meelde",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
     "Allow this widget to verify your identity": "Luba sellel vidinal sinu isikut verifitseerida",
-    "Recently visited rooms": "Hiljuti külastatud jututoad",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Kas oled kindel, et soovid lahkuda kogukonnakeskusest „%(spaceName)s“?",
     "This space is not public. You will not be able to rejoin without an invite.": "See ei ole avalik kogukonnakeskus. Ilma kutseta sa ei saa uuesti liituda.",
     "Failed to start livestream": "Videovoo käivitamine ei õnnestu",
@@ -929,8 +922,6 @@
     "Space selection": "Kogukonnakeskuse valik",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Kuna sa vähendad enda õigusi, siis sul ei pruugi hiljem olla võimalik seda muutust tagasi pöörata. Kui sa juhtumisi oled viimane haldusõigustega kasutaja kogukonnakeskuses, siis hiljem on võimatu samu õigusi tagasi saada.",
     "Suggested Rooms": "Soovitatud jututoad",
-    "Add existing room": "Lisa olemasolev jututuba",
-    "Invite to this space": "Kutsu siia kogukonnakeskusesse",
     "Your message was sent": "Sinu sõnum sai saadetud",
     "Leave space": "Lahku kogukonnakeskusest",
     "Create a space": "Loo kogukonnakeskus",
@@ -949,8 +940,6 @@
     "No results found": "Tulemusi ei ole",
     "You may want to try a different search or check for typos.": "Aga proovi muuta otsingusõna või kontrolli ega neis trükivigu polnud.",
     "<inviter/> invites you": "<inviter/> saatis sulle kutse",
-    "Public space": "Avalik kogukonnakeskus",
-    "Private space": "Privaatne kogukonnakeskus",
     "Add existing rooms": "Lisa olemasolevaid jututubasid",
     "%(count)s people you know have already joined": {
         "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
@@ -1019,10 +1008,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
     "Please provide an address": "Palun sisesta aadress",
     "Unnamed audio": "Nimetu helifail",
-    "Show %(count)s other previews": {
-        "other": "Näita %(count)s muud eelvaadet",
-        "one": "Näita veel %(count)s eelvaadet"
-    },
     "Error processing audio message": "Viga häälsõnumi töötlemisel",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
@@ -1039,7 +1024,6 @@
     "Other spaces or rooms you might not know": "Sellised muud jututoad ja kogukonnakeskused, mida sa ei pruugi teada",
     "Automatically invite members from this room to the new one": "Kutsu jututoa senised liikmed automaatselt uude jututuppa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
-    "Public room": "Avalik jututuba",
     "Leave %(spaceName)s": "Lahku %(spaceName)s kogukonnakeskusest",
     "Decrypting": "Dekrüptin sisu",
     "You won't be able to rejoin unless you are re-invited.": "Ilma uue kutseta sa ei saa uuesti liituda.",
@@ -1151,9 +1135,6 @@
     "Home options": "Avalehe valikud",
     "%(spaceName)s menu": "%(spaceName)s menüü",
     "Join public room": "Liitu avaliku jututoaga",
-    "Add people": "Lisa inimesi",
-    "Invite to space": "Kutsu siia kogukonnakeskusesse",
-    "Start new chat": "Alusta uut vestlust",
     "Recently viewed": "Hiljuti vaadatud",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
@@ -1270,8 +1251,6 @@
         "one": "1 osaleja",
         "other": "%(count)s oselejat"
     },
-    "New video room": "Uus videotuba",
-    "New room": "Uus jututuba",
     "%(featureName)s Beta feedback": "%(featureName)s beetaversiooni tagasiside",
     "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
     "View live location": "Vaata asukohta reaalajas",
@@ -1318,8 +1297,6 @@
     "To join, please enable video rooms in Labs first": "Liitumiseks võta seadistustest katsete lehelt videotoad kasutusele",
     "To view, please enable video rooms in Labs first": "Jututoa nägemiseks võta seadistustest katsete lehelt videotoad kasutusele",
     "To view %(roomName)s, you need an invite": "%(roomName)s jututoaga tutvumiseks vajad sa kutset",
-    "Private room": "Omavaheline jututuba",
-    "Video room": "Videotuba",
     "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
     "Unread email icon": "Lugemata e-kirja ikoon",
@@ -1609,7 +1586,12 @@
         "profile": "Profiil",
         "display_name": "Kuvatav nimi",
         "user_avatar": "Profiilipilt",
-        "authentication": "Autentimine"
+        "authentication": "Autentimine",
+        "public_room": "Avalik jututuba",
+        "video_room": "Videotuba",
+        "public_space": "Avalik kogukonnakeskus",
+        "private_space": "Privaatne kogukonnakeskus",
+        "private_room": "Omavaheline jututuba"
     },
     "action": {
         "continue": "Jätka",
@@ -1716,7 +1698,15 @@
         "click_to_copy": "Kopeerimiseks klõpsa",
         "hide_advanced": "Peida lisaseadistused",
         "show_advanced": "Näita lisaseadistusi",
-        "unignore": "Lõpeta eiramine"
+        "unignore": "Lõpeta eiramine",
+        "start_new_chat": "Alusta uut vestlust",
+        "invite_to_space": "Kutsu siia kogukonnakeskusesse",
+        "add_people": "Lisa inimesi",
+        "explore_rooms": "Tutvu jututubadega",
+        "new_room": "Uus jututuba",
+        "new_video_room": "Uus videotuba",
+        "add_existing_room": "Lisa olemasolev jututuba",
+        "explore_public_rooms": "Sirvi avalikke jututubasid"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -1729,7 +1719,8 @@
             "one": "1 lugemata teade."
         },
         "unread_messages": "Lugemata sõnumid.",
-        "jump_first_invite": "Siirdu esimese kutse juurde."
+        "jump_first_invite": "Siirdu esimese kutse juurde.",
+        "room_name": "Jututuba %(name)s"
     },
     "labs": {
         "video_rooms": "Videotoad",
@@ -2959,6 +2950,13 @@
             "collapse_reply_thread": "Ahenda vastuste jutulõnga",
             "view_related_event": "Vaata seotud sündmust",
             "report": "Teata sisust"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "other": "Näita %(count)s muud eelvaadet",
+                "one": "Näita veel %(count)s eelvaadet"
+            },
+            "close": "Sulge eelvaade"
         }
     },
     "slash_command": {
@@ -3613,7 +3611,9 @@
         "notification_options": "Teavituste eelistused",
         "failed_set_dm_tag": "Otsevestluse sildi seadmine ei õnnestunud",
         "failed_remove_tag": "Sildi %(tagName)s eemaldamine jututoast ebaõnnestus",
-        "failed_add_tag": "Sildi %(tagName)s lisamine jututoale ebaõnnestus"
+        "failed_add_tag": "Sildi %(tagName)s lisamine jututoale ebaõnnestus",
+        "breadcrumbs_label": "Hiljuti külastatud jututoad",
+        "breadcrumbs_empty": "Hiljuti külastatud jututubasid ei leidu"
     },
     "report_content": {
         "missing_reason": "Palun kirjelda veateate põhjust.",
@@ -3871,7 +3871,8 @@
         "search_children": "Otsi %(spaceName)s kogukonnast",
         "invite_link": "Jaga kutse linki",
         "invite": "Kutsu teisi kasutajaid",
-        "invite_description": "Kutsu e-posti aadressi või kasutajanime alusel"
+        "invite_description": "Kutsu e-posti aadressi või kasutajanime alusel",
+        "invite_this_space": "Kutsu siia kogukonnakeskusesse"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -4031,7 +4032,8 @@
             "mark_read": "Märgi loetuks",
             "notifications_default": "Sobita vaikimisi seadistusega",
             "notifications_mute": "Summuta jututuba"
-        }
+        },
+        "invite_this_room": "Kutsu siia jututuppa"
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",

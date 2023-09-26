@@ -45,7 +45,6 @@
     "Wednesday": "E mërkurë",
     "unknown error code": "kod gabimi të panjohur",
     "Thank you!": "Faleminderit!",
-    "Invite to this room": "Ftojeni te kjo dhomë",
     "You cannot delete this message. (%(code)s)": "S’mund ta fshini këtë mesazh. (%(code)s)",
     "Thursday": "E enjte",
     "Logs sent": "Regjistrat u dërguan",
@@ -384,11 +383,9 @@
         "one": "Hiq 1 mesazh"
     },
     "Remove recent messages": "Hiq mesazhe së fundi",
-    "Explore rooms": "Eksploroni dhoma",
     "e.g. my-room": "p.sh., dhoma-ime",
     "Close dialog": "Mbylle dialogun",
     "Show image": "Shfaq figurë",
-    "Room %(name)s": "Dhoma %(name)s",
     "Failed to deactivate user": "S’u arrit të çaktivizohet përdorues",
     "This client does not support end-to-end encryption.": "Ky klient nuk mbulon fshehtëzim skaj-më-skaj.",
     "Messages in this room are not end-to-end encrypted.": "Mesazhet në këtë dhomë nuk janë të fshehtëzuara skaj-më-skaj.",
@@ -418,7 +415,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, <a>njoftoni një të metë</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Do ta përmirësoni këtë dhomë nga <oldVersion /> në <newVersion />.",
     "Unable to set up secret storage": "S’u arrit të ujdiset depozitë e fshehtë",
-    "Close preview": "Mbylle paraparjen",
     "Hide verified sessions": "Fshih sesione të verifikuar",
     "%(count)s verified sessions": {
         "other": "%(count)s sesione të verifikuar",
@@ -567,7 +563,6 @@
     "Use a different passphrase?": "Të përdoret një frazëkalim tjetër?",
     "Recently Direct Messaged": "Me Mesazhe të Drejtpërdrejtë Së Fundi",
     "Switch theme": "Ndërroni temën",
-    "No recently visited rooms": "S’ka dhoma të vizituara së fundi",
     "Message preview": "Paraparje mesazhi",
     "Room options": "Mundësi dhome",
     "Looks good!": "Mirë duket!",
@@ -599,7 +594,6 @@
     "A connection error occurred while trying to contact the server.": "Ndodhi një gabim teksa provohej lidhja me shërbyesin.",
     "The server is not configured to indicate what the problem is (CORS).": "Shërbyesi s’është formësuar të tregojë se cili është problemi (CORS).",
     "Recent changes that have not yet been received": "Ndryshime tani së fundi që s’janë marrë ende",
-    "Explore public rooms": "Eksploroni dhoma publike",
     "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Not encrypted": "Jo e fshehtëzuar",
     "Room settings": "Rregullime dhome",
@@ -916,7 +910,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
     "Allow this widget to verify your identity": "Lejojeni këtë widget të verifikojë identitetin tuaj",
     "Set my room layout for everyone": "Ujdise skemën e dhomës time për këdo",
-    "Recently visited rooms": "Dhoma të vizituara së fundi",
     "%(count)s members": {
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
@@ -930,13 +923,9 @@
     "Space selection": "Përzgjedhje hapësire",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, teksa zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te hapësira, s’do të jetë e mundur të rifitoni privilegjet.",
     "Suggested Rooms": "Roma të Këshilluara",
-    "Add existing room": "Shtoni dhomë ekzistuese",
-    "Invite to this space": "Ftoni në këtë hapësirë",
     "Your message was sent": "Mesazhi juaj u dërgua",
     "Leave space": "Braktiseni hapësirën",
     "Create a space": "Krijoni një hapësirë",
-    "Private space": "Hapësirë private",
-    "Public space": "Hapësirë publike",
     "<inviter/> invites you": "<inviter/> ju fton",
     "You may want to try a different search or check for typos.": "Mund të doni të provoni një tjetër kërkim ose të kontrolloni për gabime shkrimi.",
     "No results found": "S’u gjetën përfundime",
@@ -1016,10 +1005,6 @@
     "Unnamed audio": "Audio pa emër",
     "Sent": "U dërgua",
     "Error processing audio message": "Gabim në përpunim mesazhi audio",
-    "Show %(count)s other previews": {
-        "one": "Shfaq %(count)s paraparje tjetër",
-        "other": "Shfaq %(count)s paraparje të tjera"
-    },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "Unable to copy a link to the room to the clipboard.": "S’arrihet të kopjohet në të papastër një lidhje për te dhoma.",
     "Unable to copy room link": "S’arrihet të kopjohet lidhja e dhomës",
@@ -1040,7 +1025,6 @@
     "Search spaces": "Kërkoni në hapësira",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
     "Select spaces": "Përzgjidhni hapësira",
-    "Public room": "Dhomë publike",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
     "Add space": "Shtoni hapësirë",
     "Leave %(spaceName)s": "Braktise %(spaceName)s",
@@ -1152,9 +1136,6 @@
     "Home options": "Mundësi kreu",
     "%(spaceName)s menu": "Menu %(spaceName)s",
     "Join public room": "Hyni në dhomë publike",
-    "Add people": "Shtoni njerëz",
-    "Invite to space": "Ftoni në hapësirë",
-    "Start new chat": "Filloni fjalosje të re",
     "Recently viewed": "Parë së fundi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit.",
     "End Poll": "Përfundoje Pyetësorin",
@@ -1269,8 +1250,6 @@
         "one": "1 pjesëmarrës",
         "other": "%(count)s pjesëmarrës"
     },
-    "New video room": "Dhomë e re me video",
-    "New room": "Dhomë e re",
     "%(featureName)s Beta feedback": "Përshtypje për %(featureName)s Beta",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Jeni nxjerrë jashtë prej krejt pajisjeve dhe s’do të merrni më njoftime push. Që të riaktivizoni njoftimet, bëni sërish hyrjen në çdo pajisje.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Mesazhi juaj s’u dërgua, ngaqë ky shërbyes Home është bllokuar nga përgjegjësi i tij. Ju lutemi, që të vazhdoni ta përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
@@ -1323,8 +1302,6 @@
     "Joining…": "Po hyhet…",
     "Show Labs settings": "Shfaq rregullime për Labs",
     "To view %(roomName)s, you need an invite": "Që të shihni %(roomName)s, ju duhet një ftesë",
-    "Private room": "Dhomë private",
-    "Video room": "Dhomë me video",
     "Read receipts": "Dëftesa leximi",
     "Seen by %(count)s people": {
         "one": "Parë nga %(count)s person",
@@ -1589,7 +1566,12 @@
         "profile": "Profil",
         "display_name": "Emër Në Ekran",
         "user_avatar": "Foto profili",
-        "authentication": "Mirëfilltësim"
+        "authentication": "Mirëfilltësim",
+        "public_room": "Dhomë publike",
+        "video_room": "Dhomë me video",
+        "public_space": "Hapësirë publike",
+        "private_space": "Hapësirë private",
+        "private_room": "Dhomë private"
     },
     "action": {
         "continue": "Vazhdo",
@@ -1695,7 +1677,15 @@
         "click_to_copy": "Klikoni që të kopjohet",
         "hide_advanced": "Fshihi të mëtejshmet",
         "show_advanced": "Shfaqi të mëtejshmet",
-        "unignore": "Shpërfille"
+        "unignore": "Shpërfille",
+        "start_new_chat": "Filloni fjalosje të re",
+        "invite_to_space": "Ftoni në hapësirë",
+        "add_people": "Shtoni njerëz",
+        "explore_rooms": "Eksploroni dhoma",
+        "new_room": "Dhomë e re",
+        "new_video_room": "Dhomë e re me video",
+        "add_existing_room": "Shtoni dhomë ekzistuese",
+        "explore_public_rooms": "Eksploroni dhoma publike"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -1708,7 +1698,8 @@
             "one": "1 mesazh i palexuar."
         },
         "unread_messages": "Mesazhe të palexuar.",
-        "jump_first_invite": "Hidhu te ftesa e parë."
+        "jump_first_invite": "Hidhu te ftesa e parë.",
+        "room_name": "Dhoma %(name)s"
     },
     "labs": {
         "video_rooms": "Dhoma me video",
@@ -2878,6 +2869,13 @@
             "collapse_reply_thread": "Tkurre rrjedhën e përgjigjeve",
             "view_related_event": "Shihni veprimtari të afërt",
             "report": "Raportoje"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Shfaq %(count)s paraparje tjetër",
+                "other": "Shfaq %(count)s paraparje të tjera"
+            },
+            "close": "Mbylle paraparjen"
         }
     },
     "slash_command": {
@@ -3520,7 +3518,9 @@
         "notification_options": "Mundësi njoftimesh",
         "failed_set_dm_tag": "S’u arrit të caktohej etiketa e fjalosjes së drejtpërdrejtë",
         "failed_remove_tag": "S’u arrit të hiqej etiketa %(tagName)s nga dhoma",
-        "failed_add_tag": "S’u arrit të shtohej në dhomë etiketa %(tagName)s"
+        "failed_add_tag": "S’u arrit të shtohej në dhomë etiketa %(tagName)s",
+        "breadcrumbs_label": "Dhoma të vizituara së fundi",
+        "breadcrumbs_empty": "S’ka dhoma të vizituara së fundi"
     },
     "report_content": {
         "missing_reason": "Ju lutemi, plotësoni arsyen pse po raportoni.",
@@ -3773,7 +3773,8 @@
         "search_children": "Kërko te %(spaceName)s",
         "invite_link": "Jepuni lidhje ftese",
         "invite": "Ftoni njerëz",
-        "invite_description": "Ftoni përmes email-i ose emri përdoruesi"
+        "invite_description": "Ftoni përmes email-i ose emri përdoruesi",
+        "invite_this_space": "Ftoni në këtë hapësirë"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -3929,7 +3930,8 @@
             "mark_read": "Vëri shenjë si të lexuar",
             "notifications_default": "Kërko përputhje me rregullimin parazgjedhje",
             "notifications_mute": "Heshtoni dhomën"
-        }
+        },
+        "invite_this_room": "Ftojeni te kjo dhomë"
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",

@@ -624,7 +624,15 @@
         "unpin": "Unpin",
         "view": "View",
         "view_message": "View message",
+        "start_new_chat": "Start new chat",
+        "invite_to_space": "Invite to space",
+        "add_people": "Add people",
         "start_chat": "Start chat",
+        "explore_rooms": "Explore rooms",
+        "new_room": "New room",
+        "new_video_room": "New video room",
+        "add_existing_room": "Add existing room",
+        "explore_public_rooms": "Explore public rooms",
         "invites_list": "Invites",
         "reject": "Reject",
         "leave": "Leave",
@@ -732,6 +740,11 @@
         "select_all": "Select all",
         "emoji": "Emoji",
         "sticker": "Sticker",
+        "public_room": "Public room",
+        "video_room": "Video room",
+        "public_space": "Public space",
+        "private_space": "Private space",
+        "private_room": "Private room",
         "system_alerts": "System Alerts",
         "loading": "Loading…",
         "appearance": "Appearance",
@@ -1404,6 +1417,13 @@
         "no_permission_messages_before_join": "You don't have permission to view messages from before you joined.",
         "encrypted_historical_messages_unavailable": "Encrypted messages before this point are unavailable.",
         "historical_messages_unavailable": "You can't see earlier messages",
+        "url_preview": {
+            "show_n_more": {
+                "other": "Show %(count)s other previews",
+                "one": "Show %(count)s other preview"
+            },
+            "close": "Close preview"
+        },
         "reactions": {
             "label": "%(reactors)s reacted with %(content)s",
             "tooltip": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>"
@@ -1674,6 +1694,7 @@
         "error_join_title": "Failed to join",
         "error_join_403": "You need an invite to access this room.",
         "error_cancel_knock_title": "Failed to cancel",
+        "invite_this_room": "Invite to this room",
         "intro": {
             "send_message_start_dm": "Send your first message to invite <displayName/> to chat",
             "encrypted_3pid_dm_pending_join": "Once everyone has joined, you’ll be able to chat",
@@ -1691,6 +1712,7 @@
             "enable_encryption_prompt": "Enable encryption in settings.",
             "unencrypted_warning": "End-to-end encryption isn't enabled"
         },
+        "header_untrusted_label": "Untrusted",
         "edit_topic": "Edit topic",
         "read_topic": "Click to read topic",
         "context_menu": {
@@ -1759,6 +1781,7 @@
             "manage_and_explore": "Manage & explore rooms",
             "explore": "Explore rooms"
         },
+        "invite_this_space": "Invite to this space",
         "suggested_tooltip": "This room is suggested as a good one to join",
         "suggested": "Suggested",
         "select_room_below": "Select a room below first",
@@ -2449,6 +2472,7 @@
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "a11y": {
         "jump_first_invite": "Jump to first invite.",
+        "room_name": "Room %(name)s",
         "n_unread_messages_mentions": {
             "other": "%(count)s unread messages including mentions.",
             "one": "1 unread mention."
@@ -2556,11 +2580,6 @@
         "other": "(~%(count)s results)",
         "one": "(~%(count)s result)"
     },
-    "Show %(count)s other previews": {
-        "other": "Show %(count)s other previews",
-        "one": "Show %(count)s other preview"
-    },
-    "Close preview": "Close preview",
     "%(count)s participants": {
         "other": "%(count)s participants",
         "one": "1 participant"
@@ -2569,8 +2588,6 @@
         "other": "and %(count)s others...",
         "one": "and one other..."
     },
-    "Invite to this room": "Invite to this room",
-    "Invite to this space": "Invite to this space",
     "You do not have permission to invite users": "You do not have permission to invite users",
     "Invited": "Invited",
     "Filter room members": "Filter room members",
@@ -2643,37 +2660,39 @@
     },
     "Read receipts": "Read receipts",
     "Replying": "Replying",
-    "Room %(name)s": "Room %(name)s",
-    "Recently visited rooms": "Recently visited rooms",
-    "No recently visited rooms": "No recently visited rooms",
-    "Public room": "Public room",
-    "Untrusted": "Untrusted",
+    "room_list": {
+        "breadcrumbs_label": "Recently visited rooms",
+        "breadcrumbs_empty": "No recently visited rooms",
+        "sort_unread_first": "Show rooms with unread messages first",
+        "show_previews": "Show previews of messages",
+        "sort_by": "Sort by",
+        "sort_by_activity": "Activity",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "List options",
+        "show_n_more": {
+            "other": "Show %(count)s more",
+            "one": "Show %(count)s more"
+        },
+        "show_less": "Show less",
+        "notification_options": "Notification options",
+        "failed_set_dm_tag": "Failed to set direct message tag",
+        "failed_remove_tag": "Failed to remove tag %(tagName)s from room",
+        "failed_add_tag": "Failed to add tag %(tagName)s to room"
+    },
     "%(count)s members": {
         "other": "%(count)s members",
         "one": "%(count)s member"
     },
-    "Video room": "Video room",
-    "Public space": "Public space",
-    "Private space": "Private space",
-    "Private room": "Private room",
     "%(count)s people asking to join": {
         "other": "%(count)s people asking to join",
         "one": "Asking to join"
     },
-    "Start new chat": "Start new chat",
-    "Invite to space": "Invite to space",
     "spaces": {
         "error_no_permission_invite": "You do not have permissions to invite people to this space",
         "error_no_permission_create_room": "You do not have permissions to create new rooms in this space",
         "error_no_permission_add_room": "You do not have permissions to add rooms to this space",
         "error_no_permission_add_space": "You do not have permissions to add spaces to this space"
     },
-    "Add people": "Add people",
-    "Explore rooms": "Explore rooms",
-    "New room": "New room",
-    "New video room": "New video room",
-    "Add existing room": "Add existing room",
-    "Explore public rooms": "Explore public rooms",
     "Add room": "Add room",
     "Saved Items": "Saved Items",
     "Rooms": "Rooms",
@@ -2755,23 +2774,6 @@
     "To view, please enable video rooms in Labs first": "To view, please enable video rooms in Labs first",
     "To join, please enable video rooms in Labs first": "To join, please enable video rooms in Labs first",
     "Show Labs settings": "Show Labs settings",
-    "room_list": {
-        "sort_unread_first": "Show rooms with unread messages first",
-        "show_previews": "Show previews of messages",
-        "sort_by": "Sort by",
-        "sort_by_activity": "Activity",
-        "sort_by_alphabet": "A-Z",
-        "sublist_options": "List options",
-        "show_n_more": {
-            "other": "Show %(count)s more",
-            "one": "Show %(count)s more"
-        },
-        "show_less": "Show less",
-        "notification_options": "Notification options",
-        "failed_set_dm_tag": "Failed to set direct message tag",
-        "failed_remove_tag": "Failed to remove tag %(tagName)s from room",
-        "failed_add_tag": "Failed to add tag %(tagName)s to room"
-    },
     "Joined": "Joined",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.",
     "This room has already been upgraded.": "This room has already been upgraded.",

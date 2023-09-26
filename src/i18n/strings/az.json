@@ -65,7 +65,6 @@
     "AM": "12:00",
     "Restricted": "Məhduddur",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Explore rooms": "Otaqları kəşf edin",
     "common": {
         "analytics": "Analitik",
         "error": "Səhv",
@@ -102,7 +101,8 @@
         "accept": "Qəbul etmək",
         "register": "Qeydiyyatdan keçmək",
         "unban": "Blokdan çıxarmaq",
-        "unignore": "Blokdan çıxarmaq"
+        "unignore": "Blokdan çıxarmaq",
+        "explore_rooms": "Otaqları kəşf edin"
     },
     "keyboard": {
         "home": "Başlanğıc"

@@ -122,7 +122,6 @@
     "All Rooms": "All Rooms",
     "Wednesday": "Wednesday",
     "Send": "Send",
-    "Invite to this room": "Invite to this room",
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
     "Yesterday": "Yesterday",
@@ -132,7 +131,6 @@
     "Spanner": "Wrench",
     "Aeroplane": "Airplane",
     "Cat": "Cat",
-    "Explore rooms": "Explore rooms",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "common": {
         "analytics": "Analytics",
@@ -199,7 +197,8 @@
         "export": "Export",
         "submit": "Submit",
         "unban": "Unban",
-        "unignore": "Unignore"
+        "unignore": "Unignore",
+        "explore_rooms": "Explore rooms"
     },
     "keyboard": {
         "home": "Home"
@@ -495,7 +494,8 @@
             "unfavourite": "Favorited",
             "favourite": "Favorite",
             "low_priority": "Low Priority"
-        }
+        },
+        "invite_this_room": "Invite to this room"
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",

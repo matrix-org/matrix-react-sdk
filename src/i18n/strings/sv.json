@@ -84,7 +84,6 @@
     "Wednesday": "onsdag",
     "You cannot delete this message. (%(code)s)": "Du kan inte radera det här meddelandet. (%(code)s)",
     "Send": "Skicka",
-    "Invite to this room": "Bjud in till rummet",
     "Thursday": "torsdag",
     "Yesterday": "igår",
     "Thank you!": "Tack!",
@@ -316,8 +315,6 @@
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Couldn't load page": "Kunde inte ladda sidan",
-    "Close preview": "Stäng förhandsgranskning",
-    "Room %(name)s": "Rum %(name)s",
     "Re-join": "Gå med igen",
     "Try to join anyway": "Försök att gå med ändå",
     "Join the discussion": "Gå med i diskussionen",
@@ -392,9 +389,7 @@
     "Encrypted by a deleted session": "Krypterat av en raderad session",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
     "Scroll to most recent messages": "Skrolla till de senaste meddelandena",
-    "No recently visited rooms": "Inga nyligen besökta rum",
     "Add room": "Lägg till rum",
-    "Explore public rooms": "Utforska offentliga rum",
     "Reason: %(reason)s": "Anledning: %(reason)s",
     "Forget this room": "Glöm det här rummet",
     "You were banned from %(roomName)s by %(memberName)s": "Du blev bannad från %(roomName)s av %(memberName)s",
@@ -558,7 +553,6 @@
     "This room is public": "Det här rummet är offentligt",
     "Country Dropdown": "Land-dropdown",
     "Sign in with SSO": "Logga in med SSO",
-    "Explore rooms": "Utforska rum",
     "Switch theme": "Byt tema",
     "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
     "Failed to get autodiscovery configuration from server": "Misslyckades att få konfiguration för autoupptäckt från servern",
@@ -917,7 +911,6 @@
     "Not a valid Security Key": "Inte en giltig säkerhetsnyckel",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Kom åt din säkre meddelandehistorik och ställ in säker meddelandehantering genom att ange din säkerhetsnyckel.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Om du har glömt din säkerhetsnyckel så kan du <button>ställa in nya återställningsalternativ</button>",
-    "Recently visited rooms": "Nyligen besökta rum",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
@@ -932,13 +925,9 @@
     "Space selection": "Utrymmesval",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Du kommer inte kunna ångra den här ändringen eftersom du degraderar dig själv, och om du är den sista privilegierade användaren i utrymmet så kommer det att vara omöjligt att återfå utrymmet.",
     "Suggested Rooms": "Föreslagna rum",
-    "Add existing room": "Lägg till existerande rum",
-    "Invite to this space": "Bjud in till det här utrymmet",
     "Your message was sent": "Ditt meddelande skickades",
     "Leave space": "Lämna utrymmet",
     "Create a space": "Skapa ett utrymme",
-    "Private space": "Privat utrymme",
-    "Public space": "Offentligt utrymme",
     "<inviter/> invites you": "<inviter/> bjuder in dig",
     "You may want to try a different search or check for typos.": "Du kanske vill pröva en annan söksträng eller kolla efter felstavningar.",
     "No results found": "Inga resultat funna",
@@ -1014,10 +1003,6 @@
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
     "Stop recording": "Stoppa inspelning",
     "Send voice message": "Skicka röstmeddelande",
-    "Show %(count)s other previews": {
-        "one": "Visa %(count)s annan förhandsgranskning",
-        "other": "Visa %(count)s andra förhandsgranskningar"
-    },
     "This space has no local addresses": "Det här utrymmet har inga lokala adresser",
     "Error processing audio message": "Fel vid hantering av ljudmeddelande",
     "Decrypting": "Avkrypterar",
@@ -1069,7 +1054,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Vem som helst i <SpaceName/> kommer kunna hitta och gå med.",
     "Private space (invite only)": "Privat utrymme (endast inbjudan)",
     "Space visibility": "Utrymmessynlighet",
-    "Public room": "Offentligt rum",
     "Rooms and spaces": "Rum och utrymmen",
     "Results": "Resultat",
     "Some encryption parameters have been changed.": "Vissa krypteringsparametrar har ändrats.",
@@ -1156,9 +1140,6 @@
     "Home options": "Hemalternativ",
     "%(spaceName)s menu": "%(spaceName)s-alternativ",
     "Join public room": "Gå med i offentligt rum",
-    "Add people": "Lägg till personer",
-    "Invite to space": "Bjud in till utrymme",
-    "Start new chat": "Starta ny chatt",
     "Recently viewed": "Nyligen sedda",
     "Poll": "Omröstning",
     "Voice Message": "Röstmeddelanden",
@@ -1239,8 +1220,6 @@
         "one": "Tar just nu bort meddelanden i %(count)s rum",
         "other": "Tar just nu bort meddelanden i %(count)s rum"
     },
-    "New video room": "Nytt videorum",
-    "New room": "Nytt rum",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
@@ -1318,8 +1297,6 @@
     "To join, please enable video rooms in Labs first": "För att gå med, aktivera videorum i experiment först",
     "To view, please enable video rooms in Labs first": "För att se, aktivera videorum i experiment först",
     "To view %(roomName)s, you need an invite": "För att se %(roomName)s så behöver du en inbjudan",
-    "Private room": "Privat rum",
-    "Video room": "Videorum",
     "Unread email icon": "Oläst e-post-ikon",
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
@@ -1593,7 +1570,12 @@
         "profile": "Profil",
         "display_name": "Visningsnamn",
         "user_avatar": "Profilbild",
-        "authentication": "Autentisering"
+        "authentication": "Autentisering",
+        "public_room": "Offentligt rum",
+        "video_room": "Videorum",
+        "public_space": "Offentligt utrymme",
+        "private_space": "Privat utrymme",
+        "private_room": "Privat rum"
     },
     "action": {
         "continue": "Fortsätt",
@@ -1699,7 +1681,15 @@
         "click_to_copy": "Klicka för att kopiera",
         "hide_advanced": "Dölj avancerat",
         "show_advanced": "Visa avancerat",
-        "unignore": "Avignorera"
+        "unignore": "Avignorera",
+        "start_new_chat": "Starta ny chatt",
+        "invite_to_space": "Bjud in till utrymme",
+        "add_people": "Lägg till personer",
+        "explore_rooms": "Utforska rum",
+        "new_room": "Nytt rum",
+        "new_video_room": "Nytt videorum",
+        "add_existing_room": "Lägg till existerande rum",
+        "explore_public_rooms": "Utforska offentliga rum"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -1712,7 +1702,8 @@
             "one": "1 oläst meddelande."
         },
         "unread_messages": "Olästa meddelanden.",
-        "jump_first_invite": "Hoppa till första inbjudan."
+        "jump_first_invite": "Hoppa till första inbjudan.",
+        "room_name": "Rum %(name)s"
     },
     "labs": {
         "video_rooms": "Videorum",
@@ -2903,6 +2894,13 @@
             "collapse_reply_thread": "Kollapsa svarstråd",
             "view_related_event": "Visa relaterade händelser",
             "report": "Rapportera"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Visa %(count)s annan förhandsgranskning",
+                "other": "Visa %(count)s andra förhandsgranskningar"
+            },
+            "close": "Stäng förhandsgranskning"
         }
     },
     "slash_command": {
@@ -3555,7 +3553,9 @@
         "notification_options": "Aviseringsinställningar",
         "failed_set_dm_tag": "Misslyckades att sätta direktmeddelandetagg",
         "failed_remove_tag": "Misslyckades att radera etiketten %(tagName)s från rummet",
-        "failed_add_tag": "Misslyckades att lägga till etiketten %(tagName)s till rummet"
+        "failed_add_tag": "Misslyckades att lägga till etiketten %(tagName)s till rummet",
+        "breadcrumbs_label": "Nyligen besökta rum",
+        "breadcrumbs_empty": "Inga nyligen besökta rum"
     },
     "report_content": {
         "missing_reason": "Vänligen fyll i varför du anmäler.",
@@ -3812,7 +3812,8 @@
         "search_children": "Sök i %(spaceName)s",
         "invite_link": "Skapa inbjudningslänk",
         "invite": "Bjud in folk",
-        "invite_description": "Bjud in med e-postadress eller användarnamn"
+        "invite_description": "Bjud in med e-postadress eller användarnamn",
+        "invite_this_space": "Bjud in till det här utrymmet"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -3972,7 +3973,8 @@
             "mark_read": "Markera som läst",
             "notifications_default": "Matcha förvalsinställning",
             "notifications_mute": "Tysta rum"
-        }
+        },
+        "invite_this_room": "Bjud in till rummet"
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",

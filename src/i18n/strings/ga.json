@@ -317,7 +317,6 @@
     "Mon": "Lua",
     "Sun": "Doṁ",
     "Send": "Seol",
-    "Explore rooms": "Breathnaigh thart ar na seomraí",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
@@ -500,7 +499,8 @@
         "mention": "Luaigh",
         "submit": "Cuir isteach",
         "unban": "Bain an cosc",
-        "unignore": "Stop ag tabhairt neamhaird air"
+        "unignore": "Stop ag tabhairt neamhaird air",
+        "explore_rooms": "Breathnaigh thart ar na seomraí"
     },
     "labs": {
         "pinning": "Ceangal teachtaireachta",

@@ -418,7 +418,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                             labelKnock={
                                 this.askToJoinEnabled ? _t("room_settings|security|join_rule_knock") : undefined
                             }
-                            labelPublic={_t("Public room")}
+                            labelPublic={_t("common|public_room")}
                             labelRestricted={
                                 this.supportsRestricted ? _t("create_room|join_rule_restricted") : undefined
                             }

@@ -74,7 +74,6 @@
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
     "You cannot delete this message. (%(code)s)": "Þú getur ekki eytt þessum skilaboðum. (%(code)s)",
-    "Invite to this room": "Bjóða inn á þessa spjallrás",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
     "Search failed": "Leit mistókst",
     "A new password must be entered.": "Það verður að setja inn nýtt lykilorð.",
@@ -106,7 +105,6 @@
     "Uploading %(filename)s": "Sendi inn %(filename)s",
     "Passphrases must match": "Lykilfrasar verða að stemma",
     "Passphrase must not be empty": "Lykilfrasi má ekki vera auður",
-    "Explore rooms": "Kanna spjallrásir",
     "Add room": "Bæta við spjallrás",
     "Room options": "Valkostir spjallrásar",
     "Finland": "Finnland",
@@ -177,7 +175,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
     "Message edits": "Breytingar á skilaboðum",
-    "Explore public rooms": "Kanna almenningsspjallrásir",
     "Search for rooms": "Leita að spjallrásum",
     "Create a new room": "Búa til nýja spjallrás",
     "Adding rooms... (%(progress)s out of %(count)s)": {
@@ -489,9 +486,7 @@
     "Sent": "Sent",
     "Sending": "Sendi",
     "MB": "MB",
-    "Public space": "Opinbert svæði",
     "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
-    "Public room": "Almenningsspjallrás",
     "Notes": "Minnispunktar",
     "Want to add a new room instead?": "Viltu frekar bæta við nýrri spjallrás?",
     "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
@@ -578,7 +573,6 @@
     "This client does not support end-to-end encryption.": "Þetta forrit styður ekki enda-í-enda dulritun.",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
-    "Private space": "Einkasvæði",
     "Reset everything": "Frumstilla allt",
     "Not Trusted": "Ekki treyst",
     "Session key": "Dulritunarlykill setu",
@@ -598,26 +592,18 @@
     "Published Addresses": "Birt vistföng",
     "This room has no local addresses": "Þessi spjallrás er ekki með nein staðvær vistföng",
     "Suggested Rooms": "Tillögur að spjallrásum",
-    "Add people": "Bæta við fólki",
-    "Invite to space": "Bjóða inn á svæði",
-    "Start new chat": "Hefja nýtt spjall",
     "Show Widgets": "Sýna viðmótshluta",
     "Hide Widgets": "Fela viðmótshluta",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
     },
-    "No recently visited rooms": "Engar nýlega skoðaðar spjallrásir",
-    "Recently visited rooms": "Nýlega skoðaðar spjallrásir",
-    "Room %(name)s": "Spjallrás %(name)s",
     "You do not have permission to start polls in this room.": "Þú hefur ekki aðgangsheimildir til að hefja kannanir á þessari spjallrás.",
     "Send voice message": "Senda talskilaboð",
-    "Invite to this space": "Bjóða inn á þetta svæði",
     "and %(count)s others...": {
         "one": "og einn í viðbót...",
         "other": "og %(count)s til viðbótar..."
     },
-    "Close preview": "Loka forskoðun",
     "View in room": "Skoða á spjallrás",
     "Set up": "Setja upp",
     "Copy link to thread": "Afrita tengil á spjallþráð",
@@ -699,10 +685,6 @@
     "The following users may not exist": "Eftirfarandi notendur eru mögulega ekki til",
     "Create a new space": "Búa til nýtt svæði",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Þú hefur hunsað þennan notanda, þannig að skilaboð frá honum eru falin. <a>Birta samts.</a>",
-    "Show %(count)s other previews": {
-        "one": "Sýna %(count)s forskoðun til viðbótar",
-        "other": "Sýna %(count)s forskoðanir til viðbótar"
-    },
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
@@ -883,7 +865,6 @@
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ekki aðgengileg í augnablikinu.",
     "Do you want to chat with %(user)s?": "Viltu spjalla við %(user)s?",
     "Add space": "Bæta við svæði",
-    "Add existing room": "Bæta við fyrirliggjandi spjallrás",
     "Verification Request": "Beiðni um sannvottun",
     "Save your Security Key": "Vista öryggislykilinn þinn",
     "Set a Security Phrase": "Setja öryggisfrasa",
@@ -1126,10 +1107,6 @@
         "other": "%(count)s þátttakendur"
     },
     "Joining…": "Geng í hópinn…",
-    "New video room": "Ný myndspjallrás",
-    "New room": "Ný spjallrás",
-    "Private room": "Einkaspjallrás",
-    "Video room": "Myndspjallrás",
     "Read receipts": "Leskvittanir",
     "%(members)s and more": "%(members)s og fleiri",
     "Show Labs settings": "Sýna tilraunastillingar",
@@ -1335,7 +1312,12 @@
         "profile": "Notandasnið",
         "display_name": "Birtingarnafn",
         "user_avatar": "Notandamynd",
-        "authentication": "Auðkenning"
+        "authentication": "Auðkenning",
+        "public_room": "Almenningsspjallrás",
+        "video_room": "Myndspjallrás",
+        "public_space": "Opinbert svæði",
+        "private_space": "Einkasvæði",
+        "private_room": "Einkaspjallrás"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1440,7 +1422,15 @@
         "click_to_copy": "Smelltu til að afrita",
         "hide_advanced": "Fela ítarlegt",
         "show_advanced": "Birta ítarlegt",
-        "unignore": "Hætta að hunsa"
+        "unignore": "Hætta að hunsa",
+        "start_new_chat": "Hefja nýtt spjall",
+        "invite_to_space": "Bjóða inn á svæði",
+        "add_people": "Bæta við fólki",
+        "explore_rooms": "Kanna spjallrásir",
+        "new_room": "Ný spjallrás",
+        "new_video_room": "Ný myndspjallrás",
+        "add_existing_room": "Bæta við fyrirliggjandi spjallrás",
+        "explore_public_rooms": "Kanna almenningsspjallrásir"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -1453,7 +1443,8 @@
             "other": "%(count)s ólesin skilaboð."
         },
         "unread_messages": "Ólesin skilaboð.",
-        "jump_first_invite": "Fara í fyrsta boð."
+        "jump_first_invite": "Fara í fyrsta boð.",
+        "room_name": "Spjallrás %(name)s"
     },
     "labs": {
         "video_rooms": "Myndspjallrásir",
@@ -2485,6 +2476,13 @@
             "collapse_reply_thread": "Fella saman svarþráð",
             "view_related_event": "Skoða tengdan atburð",
             "report": "Tilkynna"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Sýna %(count)s forskoðun til viðbótar",
+                "other": "Sýna %(count)s forskoðanir til viðbótar"
+            },
+            "close": "Loka forskoðun"
         }
     },
     "slash_command": {
@@ -3072,7 +3070,9 @@
         "notification_options": "Valkostir tilkynninga",
         "failed_set_dm_tag": "Ekki tókst að stilla merki um bein skilaboð",
         "failed_remove_tag": "Mistókst að fjarlægja merkið %(tagName)s af spjallrás",
-        "failed_add_tag": "Mistókst að bæta merkinu %(tagName)s á spjallrás"
+        "failed_add_tag": "Mistókst að bæta merkinu %(tagName)s á spjallrás",
+        "breadcrumbs_label": "Nýlega skoðaðar spjallrásir",
+        "breadcrumbs_empty": "Engar nýlega skoðaðar spjallrásir"
     },
     "report_content": {
         "missing_reason": "Fylltu út skýringu á því hvers vegna þú ert að kæra.",
@@ -3304,7 +3304,8 @@
         "search_children": "Leita í %(spaceName)s",
         "invite_link": "Deila boðstengli",
         "invite": "Bjóða fólki",
-        "invite_description": "Bjóða með tölvupóstfangi eða notandanafni"
+        "invite_description": "Bjóða með tölvupóstfangi eða notandanafni",
+        "invite_this_space": "Bjóða inn á þetta svæði"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3436,7 +3437,8 @@
             "low_priority": "Lítill forgangur",
             "forget": "Gleyma spjallrás",
             "mark_read": "Merkja sem lesið"
-        }
+        },
+        "invite_this_room": "Bjóða inn á þessa spjallrás"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",

@@ -143,7 +143,6 @@
     "All Rooms": "Visās istabās",
     "Wednesday": "Trešdiena",
     "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
-    "Invite to this room": "Uzaicināt uz šo istabu",
     "Thursday": "Ceturtdiena",
     "Logs sent": "Logfaili nosūtīti",
     "Yesterday": "Vakardien",
@@ -231,7 +230,6 @@
     "Error updating main address": "Kļūda galvenās adreses atjaunināšanā",
     "This address is available to use": "Šī adrese ir pieejama",
     "Room Topic": "Istabas temats",
-    "Room %(name)s": "Istaba %(name)s",
     "Room Name": "Istabas nosaukums",
     "General failure": "Vispārīga kļūda",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
@@ -261,7 +259,6 @@
     "Start chatting": "Uzsākt saraksti",
     "Reject & Ignore user": "Noraidīt un ignorēt lietotāju",
     "Do you want to chat with %(user)s?": "Vai vēlaties sarakstīties ar %(user)s?",
-    "Explore rooms": "Pārlūkot istabas",
     "Confirm Security Phrase": "Apstipriniet slepeno frāzi",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Nodrošinieties pret piekļuves zaudēšanu šifrētām ziņām un datiem, dublējot šifrēšanas atslēgas savā serverī.",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Izmantojiet tikai jums zināmu slepeno frāzi un pēc izvēles saglabājiet drošības atslēgu, lai to izmantotu dublēšanai.",
@@ -320,9 +317,7 @@
     "Demote yourself?": "Pazemināt sevi?",
     "Accepting…": "Akceptē…",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
-    "Add existing room": "Pievienot eksistējošu istabu",
     "Add room": "Pievienot istabu",
-    "Invite to this space": "Uzaicināt uz šo vietu",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -611,7 +606,6 @@
     "Some suggestions may be hidden for privacy.": "Daži ieteikumi var būt slēpti dēļ privātuma.",
     "Search for rooms or people": "Meklēt istabas vai cilvēkus",
     "Message preview": "Ziņas priekšskatījums",
-    "Public room": "Publiska istaba",
     "Search for rooms": "Meklēt istabas",
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
@@ -620,11 +614,6 @@
     "Call declined": "Zvans noraidīts",
     "Join the discussion": "Pievienoties diskusijai",
     "Forget this room": "Aizmirst šo istabu",
-    "Explore public rooms": "Pārlūkot publiskas istabas",
-    "Show %(count)s other previews": {
-        "one": "Rādīt %(count)s citu priekšskatījumu",
-        "other": "Rādīt %(count)s citus priekšskatījumus"
-    },
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -694,8 +683,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
     "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
     "Want to add a new room instead?": "Vai tā vietā vēlaties pievienot jaunu istabu?",
-    "New video room": "Jauna video istaba",
-    "New room": "Jauna istaba",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Clear cache and resync": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt",
@@ -726,7 +713,6 @@
     "Search for spaces": "Meklēt vietas",
     "Recently viewed": "Nesen skatītie",
     "Who will you chat to the most?": "Ar ko jūs sarakstīsieties visvairāk?",
-    "Start new chat": "Uzsākt jaunu čatu",
     "Start a group chat": "Uzsākt grupas čatu",
     "Messages in this chat will be end-to-end encrypted.": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
     "Export chat": "Eksportēt čatu",
@@ -789,7 +775,8 @@
         "general": "Vispārīgi",
         "profile": "Profils",
         "display_name": "Parādāmais vārds",
-        "authentication": "Autentifikācija"
+        "authentication": "Autentifikācija",
+        "public_room": "Publiska istaba"
     },
     "action": {
         "continue": "Turpināt",
@@ -861,7 +848,13 @@
         "unban": "Atcelt pieejas liegumu",
         "hide_advanced": "Slēpt papildu iestatījumus",
         "show_advanced": "Rādīt papildu iestatījumus",
-        "unignore": "Atcelt ignorēšanu"
+        "unignore": "Atcelt ignorēšanu",
+        "start_new_chat": "Uzsākt jaunu čatu",
+        "explore_rooms": "Pārlūkot istabas",
+        "new_room": "Jauna istaba",
+        "new_video_room": "Jauna video istaba",
+        "add_existing_room": "Pievienot eksistējošu istabu",
+        "explore_public_rooms": "Pārlūkot publiskas istabas"
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne",
@@ -872,7 +865,8 @@
         "n_unread_messages": {
             "one": "1 nelasīta ziņa.",
             "other": "%(count)s nelasītas ziņas."
-        }
+        },
+        "room_name": "Istaba %(name)s"
     },
     "labs": {
         "pinning": "Ziņu piespraušana",
@@ -1379,6 +1373,12 @@
             "view_source": "Skatīt pirmkodu",
             "show_url_preview": "Rādīt priekšskatījumu",
             "external_url": "Avota URL adrese"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Rādīt %(count)s citu priekšskatījumu",
+                "other": "Rādīt %(count)s citus priekšskatījumus"
+            }
         }
     },
     "slash_command": {
@@ -1878,7 +1878,8 @@
         },
         "share_public": "Dalīties ar jūsu publisko vietu",
         "invite_link": "Dalīties ar uzaicinājuma saiti",
-        "invite": "Uzaicināt cilvēkus"
+        "invite": "Uzaicināt cilvēkus",
+        "invite_this_space": "Uzaicināt uz šo vietu"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",
@@ -1945,7 +1946,8 @@
             "favourite": "Izlase",
             "low_priority": "Zema prioritāte",
             "forget": "Aizmirst istabu"
-        }
+        },
+        "invite_this_room": "Uzaicināt uz šo istabu"
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",

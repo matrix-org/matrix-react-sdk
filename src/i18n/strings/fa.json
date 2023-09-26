@@ -14,7 +14,6 @@
     "Wednesday": "چهارشنبه",
     "Send": "ارسال",
     "unknown error code": "کد خطای ناشناخته",
-    "Invite to this room": "دعوت به این گپ",
     "You cannot delete this message. (%(code)s)": "شما نمی‌توانید این پیام را پاک کنید. (%(code)s)",
     "Thursday": "پنج‌شنبه",
     "Search…": "جستجو…",
@@ -60,7 +59,6 @@
     "Mon": "دوشنبه",
     "Sun": "یکشنبه",
     "Permission Required": "اجازه نیاز است",
-    "Explore rooms": "جستجو در اتاق ها",
     "Moderator": "معاون",
     "Restricted": "ممنوع",
     "Zimbabwe": "زیمبابوه",
@@ -658,7 +656,6 @@
     "Suggested Rooms": "اتاق‌های پیشنهادی",
     "Historical": "تاریخی",
     "Low priority": "اولویت کم",
-    "Explore public rooms": "کاوش در اتاق‌های عمومی",
     "Add room": "افزودن اتاق",
     "Rooms": "اتاق‌ها",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
@@ -669,9 +666,6 @@
         "one": "(~%(count)s نتیجه)",
         "other": "(~%(count)s نتیجه)"
     },
-    "No recently visited rooms": "اخیراً از اتاقی بازدید نشده است",
-    "Recently visited rooms": "اتاق‌هایی که به تازگی بازدید کرده‌اید",
-    "Room %(name)s": "اتاق %(name)s",
     "Replying": "پاسخ دادن",
     "%(duration)sd": "%(duration)s روز",
     "%(duration)sh": "%(duration)s ساعت",
@@ -683,12 +677,10 @@
     "The conversation continues here.": "گفتگو در اینجا ادامه دارد.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (سطح قدرت %(powerLevelNumber)s)",
     "Invited": "دعوت شد",
-    "Invite to this space": "به این فضای کاری دعوت کنید",
     "and %(count)s others...": {
         "one": "و یکی دیگر ...",
         "other": "و %(count)s مورد دیگر ..."
     },
-    "Close preview": "بستن پیش نمایش",
     "Scroll to most recent messages": "به جدیدترین پیام‌ها بروید",
     "Failed to send": "ارسال با خطا مواجه شد",
     "Your message was sent": "پیام شما ارسال شد",
@@ -887,8 +879,6 @@
     "Could not load user profile": "امکان نمایش پروفایل کاربر میسر نیست",
     "Switch theme": "تعویض پوسته",
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
-    "Private space": "محیط خصوصی",
-    "Public space": "محیط عمومی",
     "No results found": "نتیجه‌ای یافت نشد",
     "You don't have permission": "شما دسترسی ندارید",
     "Failed to reject invite": "رد دعوتنامه با شکست همراه شد",
@@ -906,7 +896,6 @@
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
     "Failed to reject invitation": "رد دعوتنامه موفقیت‌آمیز نبود",
     "Warning!": "هشدار!",
-    "Add existing room": "اضافه‌کردن اتاق موجود",
     "Create new room": "ایجاد اتاق جدید",
     "Leave space": "ترک محیط",
     "Couldn't load page": "نمایش صفحه امکان‌پذیر نبود",
@@ -1094,7 +1083,9 @@
         "profile": "پروفایل",
         "display_name": "نام نمایشی",
         "user_avatar": "تصویر پروفایل",
-        "authentication": "احراز هویت"
+        "authentication": "احراز هویت",
+        "public_space": "محیط عمومی",
+        "private_space": "محیط خصوصی"
     },
     "action": {
         "continue": "ادامه",
@@ -1187,7 +1178,10 @@
         "click_to_copy": "برای گرفتن رونوشت کلیک کنید",
         "hide_advanced": "پنهان‌کردن بخش پیشرفته",
         "show_advanced": "نمایش بخش پیشرفته",
-        "unignore": "لغو نادیده‌گرفتن"
+        "unignore": "لغو نادیده‌گرفتن",
+        "explore_rooms": "جستجو در اتاق ها",
+        "add_existing_room": "اضافه‌کردن اتاق موجود",
+        "explore_public_rooms": "کاوش در اتاق‌های عمومی"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -1200,7 +1194,8 @@
             "other": "%(count)s پیام خوانده نشده."
         },
         "unread_messages": "پیام های خوانده نشده.",
-        "jump_first_invite": "به اولین دعوت بروید."
+        "jump_first_invite": "به اولین دعوت بروید.",
+        "room_name": "اتاق %(name)s"
     },
     "labs": {
         "video_rooms": "اتاق های تصویری",
@@ -1908,6 +1903,9 @@
         "creation_summary_room": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
         "context_menu": {
             "external_url": "آدرس مبدا"
+        },
+        "url_preview": {
+            "close": "بستن پیش نمایش"
         }
     },
     "slash_command": {
@@ -2369,7 +2367,9 @@
         "show_less": "نمایش کمتر",
         "notification_options": "تنظیمات اعلان",
         "failed_remove_tag": "خطا در حذف کلیدواژه‌ی %(tagName)s از گپ",
-        "failed_add_tag": "در افزودن تگ %(tagName)s موفقیت‌آمیز نبود"
+        "failed_add_tag": "در افزودن تگ %(tagName)s موفقیت‌آمیز نبود",
+        "breadcrumbs_label": "اتاق‌هایی که به تازگی بازدید کرده‌اید",
+        "breadcrumbs_empty": "اخیراً از اتاقی بازدید نشده است"
     },
     "report_content": {
         "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
@@ -2581,7 +2581,8 @@
         "share_public": "محیط عمومی خود را به اشتراک بگذارید",
         "invite_link": "به اشتراک‌گذاری لینک دعوت",
         "invite": "دعوت کاربران",
-        "invite_description": "دعوت با ایمیل یا نام‌کاربری"
+        "invite_description": "دعوت با ایمیل یا نام‌کاربری",
+        "invite_this_space": "به این فضای کاری دعوت کنید"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
@@ -2699,7 +2700,8 @@
             "favourite": "علاقه‌مندی‌ها",
             "low_priority": "کم اهمیت",
             "forget": "اتاق را فراموش کن"
-        }
+        },
+        "invite_this_room": "دعوت به این گپ"
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",

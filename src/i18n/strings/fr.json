@@ -139,7 +139,6 @@
     "Search…": "Rechercher…",
     "Saturday": "Samedi",
     "Monday": "Lundi",
-    "Invite to this room": "Inviter dans ce salon",
     "Wednesday": "Mercredi",
     "You cannot delete this message. (%(code)s)": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
     "All Rooms": "Tous les salons",
@@ -385,7 +384,6 @@
         "one": "Supprimer 1 message"
     },
     "Remove recent messages": "Supprimer les messages récents",
-    "Explore rooms": "Parcourir les salons",
     "e.g. my-room": "par ex. mon-salon",
     "Close dialog": "Fermer la boîte de dialogue",
     "Show image": "Afficher l’image",
@@ -393,7 +391,6 @@
     "Failed to deactivate user": "Échec de la désactivation de l’utilisateur",
     "This client does not support end-to-end encryption.": "Ce client ne prend pas en charge le chiffrement de bout en bout.",
     "Messages in this room are not end-to-end encrypted.": "Les messages dans ce salon ne sont pas chiffrés de bout en bout.",
-    "Room %(name)s": "Salon %(name)s",
     "Message Actions": "Actions de message",
     "You verified %(name)s": "Vous avez vérifié %(name)s",
     "You cancelled verifying %(name)s": "Vous avez annulé la vérification de %(name)s",
@@ -424,7 +421,6 @@
         "other": "%(count)s sessions vérifiées",
         "one": "1 session vérifiée"
     },
-    "Close preview": "Fermer l’aperçu",
     "Language Dropdown": "Sélection de la langue",
     "Country Dropdown": "Sélection du pays",
     "Show more": "En voir plus",
@@ -568,7 +564,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Votre serveur d’accueil a dépassé une de ses limites de ressources.",
     "Ok": "OK",
     "Switch theme": "Changer le thème",
-    "No recently visited rooms": "Aucun salon visité récemment",
     "Message preview": "Aperçu de message",
     "Room options": "Options du salon",
     "Looks good!": "Ça a l’air correct !",
@@ -610,7 +605,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Vous ne pouvez épingler que jusqu’à %(count)s widgets"
     },
-    "Explore public rooms": "Parcourir les salons publics",
     "Show Widgets": "Afficher les widgets",
     "Hide Widgets": "Masquer les widgets",
     "Unable to set up keys": "Impossible de configurer les clés",
@@ -917,7 +911,6 @@
     "Approve widget permissions": "Approuver les permissions du widget",
     "Set my room layout for everyone": "Définir ma disposition de salon pour tout le monde",
     "Open dial pad": "Ouvrir le pavé de numérotation",
-    "Recently visited rooms": "Salons visités récemment",
     "Dial pad": "Pavé de numérotation",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
@@ -932,14 +925,10 @@
     "Create a new room": "Créer un nouveau salon",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vous ne pourrez pas annuler ce changement puisque vous vous rétrogradez. Si vous êtes le dernier utilisateur a privilèges de cet espace, il deviendra impossible d’en reprendre contrôle.",
     "Suggested Rooms": "Salons recommandés",
-    "Add existing room": "Ajouter un salon existant",
-    "Invite to this space": "Inviter dans cet espace",
     "Your message was sent": "Votre message a été envoyé",
     "Leave space": "Quitter l’espace",
     "Create a space": "Créer un espace",
     "Space selection": "Sélection d’un espace",
-    "Private space": "Espace privé",
-    "Public space": "Espace public",
     "<inviter/> invites you": "<inviter/> vous a invité",
     "You may want to try a different search or check for typos.": "Essayez une requête différente, ou vérifiez que vous n’avez pas fait de faute de frappe.",
     "No results found": "Aucun résultat",
@@ -1021,10 +1010,6 @@
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
     "Error processing audio message": "Erreur lors du traitement du message audio",
-    "Show %(count)s other previews": {
-        "one": "Afficher %(count)s autre aperçu",
-        "other": "Afficher %(count)s autres aperçus"
-    },
     "Adding spaces has moved.": "L’ajout d’espaces a été déplacé.",
     "Search for rooms": "Rechercher des salons",
     "Search for spaces": "Rechercher des espaces",
@@ -1063,7 +1048,6 @@
     "Only people invited will be able to find and join this space.": "Seules les personnes invitées pourront trouver et rejoindre cet espace.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Quiconque pourra trouver et rejoindre cet espace, pas seulement les membres de <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Tous les membres de <SpaceName/> pourront trouver et venir.",
-    "Public room": "Salon public",
     "Missed call": "Appel manqué",
     "Call declined": "Appel rejeté",
     "Stop recording": "Arrêter l’enregistrement",
@@ -1143,9 +1127,6 @@
     "Home options": "Options de l’accueil",
     "%(spaceName)s menu": "Menu %(spaceName)s",
     "Join public room": "Rejoindre le salon public",
-    "Add people": "Ajouter des personnes",
-    "Invite to space": "Inviter dans l’espace",
-    "Start new chat": "Commencer une nouvelle conversation privée",
     "Recently viewed": "Affiché récemment",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
@@ -1271,8 +1252,6 @@
     "Forget this space": "Oublier cet espace",
     "You were removed by %(memberName)s": "Vous avez été retiré par %(memberName)s",
     "Loading preview": "Chargement de l’aperçu",
-    "New video room": "Nouveau salon visio",
-    "New room": "Nouveau salon",
     "View live location": "Voir la position en direct",
     "Ban from room": "Bannir du salon",
     "Unban from room": "Révoquer le bannissement du salon",
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "Pour rejoindre, veuillez d’abord activer les salons vision dans la section Expérimental",
     "To view, please enable video rooms in Labs first": "Pour afficher, veuillez d’abord activer les salons vision dans la section Expérimental",
     "To view %(roomName)s, you need an invite": "Pour afficher %(roomName)s, vous avez besoin d’une invitation",
-    "Private room": "Salon privé",
-    "Video room": "Salon vidéo",
     "%(members)s and %(last)s": "%(members)s et %(last)s",
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
@@ -1609,7 +1586,12 @@
         "profile": "Profil",
         "display_name": "Nom d’affichage",
         "user_avatar": "Image de profil",
-        "authentication": "Authentification"
+        "authentication": "Authentification",
+        "public_room": "Salon public",
+        "video_room": "Salon vidéo",
+        "public_space": "Espace public",
+        "private_space": "Espace privé",
+        "private_room": "Salon privé"
     },
     "action": {
         "continue": "Continuer",
@@ -1716,7 +1698,15 @@
         "click_to_copy": "Cliquez pour copier",
         "hide_advanced": "Masquer les paramètres avancés",
         "show_advanced": "Afficher les paramètres avancés",
-        "unignore": "Ne plus ignorer"
+        "unignore": "Ne plus ignorer",
+        "start_new_chat": "Commencer une nouvelle conversation privée",
+        "invite_to_space": "Inviter dans l’espace",
+        "add_people": "Ajouter des personnes",
+        "explore_rooms": "Parcourir les salons",
+        "new_room": "Nouveau salon",
+        "new_video_room": "Nouveau salon visio",
+        "add_existing_room": "Ajouter un salon existant",
+        "explore_public_rooms": "Parcourir les salons publics"
     },
     "a11y": {
         "user_menu": "Menu utilisateur",
@@ -1729,7 +1719,8 @@
             "one": "1 message non lu."
         },
         "unread_messages": "Messages non lus.",
-        "jump_first_invite": "Sauter à la première invitation."
+        "jump_first_invite": "Sauter à la première invitation.",
+        "room_name": "Salon %(name)s"
     },
     "labs": {
         "video_rooms": "Salons vidéo",
@@ -2959,6 +2950,13 @@
             "collapse_reply_thread": "Masquer le fil de discussion",
             "view_related_event": "Afficher les événements liés",
             "report": "Signaler"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Afficher %(count)s autre aperçu",
+                "other": "Afficher %(count)s autres aperçus"
+            },
+            "close": "Fermer l’aperçu"
         }
     },
     "slash_command": {
@@ -3613,7 +3611,9 @@
         "notification_options": "Paramètres de notifications",
         "failed_set_dm_tag": "Échec de l’ajout de l’étiquette de conversation privée",
         "failed_remove_tag": "Échec de la suppression de l’étiquette %(tagName)s du salon",
-        "failed_add_tag": "Échec de l’ajout de l’étiquette %(tagName)s au salon"
+        "failed_add_tag": "Échec de l’ajout de l’étiquette %(tagName)s au salon",
+        "breadcrumbs_label": "Salons visités récemment",
+        "breadcrumbs_empty": "Aucun salon visité récemment"
     },
     "report_content": {
         "missing_reason": "Dites-nous pourquoi vous envoyez un signalement.",
@@ -3871,7 +3871,8 @@
         "search_children": "Rechercher %(spaceName)s",
         "invite_link": "Partager le lien d’invitation",
         "invite": "Inviter des personnes",
-        "invite_description": "Inviter par e-mail ou nom d’utilisateur"
+        "invite_description": "Inviter par e-mail ou nom d’utilisateur",
+        "invite_this_space": "Inviter dans cet espace"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -4031,7 +4032,8 @@
             "mark_read": "Marquer comme lu",
             "notifications_default": "Réglage par défaut",
             "notifications_mute": "Salon muet"
-        }
+        },
+        "invite_this_room": "Inviter dans ce salon"
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",

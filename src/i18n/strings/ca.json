@@ -131,7 +131,6 @@
     "Monday": "Dilluns",
     "All Rooms": "Totes les sales",
     "Wednesday": "Dimecres",
-    "Invite to this room": "Convida a aquesta sala",
     "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
     "Logs sent": "Logs enviats",
@@ -173,7 +172,6 @@
     "Go to Settings": "Ves a Configuració",
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
-    "Explore rooms": "Explora sales",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -247,7 +245,8 @@
         "mention": "Menciona",
         "submit": "Envia",
         "unban": "Retira l'expulsió",
-        "unignore": "Deixa de ignorar"
+        "unignore": "Deixa de ignorar",
+        "explore_rooms": "Explora sales"
     },
     "labs": {
         "pinning": "Fixació de missatges",
@@ -707,7 +706,8 @@
         "context_menu": {
             "favourite": "Favorit",
             "low_priority": "Baixa prioritat"
-        }
+        },
+        "invite_this_room": "Convida a aquesta sala"
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",

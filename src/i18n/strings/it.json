@@ -143,7 +143,6 @@
     "All Rooms": "Tutte le stanze",
     "Wednesday": "Mercoledì",
     "You cannot delete this message. (%(code)s)": "Non puoi eliminare questo messaggio. (%(code)s)",
-    "Invite to this room": "Invita in questa stanza",
     "Thursday": "Giovedì",
     "Logs sent": "Log inviati",
     "Yesterday": "Ieri",
@@ -387,13 +386,11 @@
     "Italics": "Corsivo",
     "e.g. my-room": "es. mia-stanza",
     "Close dialog": "Chiudi finestra",
-    "Explore rooms": "Esplora stanze",
     "Show image": "Mostra immagine",
     "Failed to deactivate user": "Disattivazione utente fallita",
     "This client does not support end-to-end encryption.": "Questo client non supporta la crittografia end-to-end.",
     "Messages in this room are not end-to-end encrypted.": "I messaggi in questa stanza non sono cifrati end-to-end.",
     "Cancel search": "Annulla ricerca",
-    "Room %(name)s": "Stanza %(name)s",
     "Message Actions": "Azioni messaggio",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Hai ignorato questo utente, perciò il suo messaggio è nascosto. <a>Mostra comunque.</a>",
     "You verified %(name)s": "Hai verificato %(name)s",
@@ -424,7 +421,6 @@
         "one": "1 sessione verificata"
     },
     "Unable to set up secret storage": "Impossibile impostare un archivio segreto",
-    "Close preview": "Chiudi anteprima",
     "Language Dropdown": "Lingua a tendina",
     "Country Dropdown": "Nazione a tendina",
     "Recent Conversations": "Conversazioni recenti",
@@ -568,7 +564,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Il tuo homeserver ha superato uno dei suoi limiti di risorse.",
     "Ok": "Ok",
     "Switch theme": "Cambia tema",
-    "No recently visited rooms": "Nessuna stanza visitata di recente",
     "Message preview": "Anteprima messaggio",
     "Room options": "Opzioni stanza",
     "Looks good!": "Sembra giusta!",
@@ -601,7 +596,6 @@
     "A connection error occurred while trying to contact the server.": "Si è verificato un errore di connessione tentando di contattare il server.",
     "The server is not configured to indicate what the problem is (CORS).": "Il server non è configurato per indicare qual è il problema (CORS).",
     "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
-    "Explore public rooms": "Esplora stanze pubbliche",
     "Preparing to download logs": "Preparazione al download dei log",
     "Information": "Informazione",
     "Backup version:": "Versione backup:",
@@ -918,7 +912,6 @@
     "Allow this widget to verify your identity": "Permetti a questo widget di verificare la tua identità",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Il widget verificherà il tuo ID utente, ma non sarà un grado di eseguire azioni per te:",
     "Remember this": "Ricordalo",
-    "Recently visited rooms": "Stanze visitate di recente",
     "%(count)s members": {
         "one": "%(count)s membro",
         "other": "%(count)s membri"
@@ -933,13 +926,9 @@
     "Space selection": "Selezione spazio",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non potrai annullare questa modifica dato che ti stai declassando, se sei l'ultimo utente privilegiato nello spazio sarà impossibile riottenere il grado.",
     "Suggested Rooms": "Stanze suggerite",
-    "Add existing room": "Aggiungi stanza esistente",
-    "Invite to this space": "Invita in questo spazio",
     "Your message was sent": "Il tuo messaggio è stato inviato",
     "Leave space": "Esci dallo spazio",
     "Create a space": "Crea uno spazio",
-    "Private space": "Spazio privato",
-    "Public space": "Spazio pubblico",
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
     "You may want to try a different search or check for typos.": "Prova a fare una ricerca diversa o controllare errori di battitura.",
     "No results found": "Nessun risultato trovato",
@@ -1023,10 +1012,6 @@
     "Unable to copy room link": "Impossibile copiare il link della stanza",
     "Unnamed audio": "Audio senza nome",
     "Error processing audio message": "Errore elaborazione messaggio audio",
-    "Show %(count)s other previews": {
-        "one": "Mostra %(count)s altra anteprima",
-        "other": "Mostra altre %(count)s anteprime"
-    },
     "Error downloading audio": "Errore di scaricamento dell'audio",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
     "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
@@ -1038,7 +1023,6 @@
     "Select spaces": "Seleziona spazi",
     "You're removing all spaces. Access will default to invite only": "Stai rimuovendo tutti gli spazi. L'accesso tornerà solo su invito",
     "User Directory": "Elenco utenti",
-    "Public room": "Stanza pubblica",
     "The call is in an unknown state!": "La chiamata è in uno stato sconosciuto!",
     "Call back": "Richiama",
     "No answer": "Nessuna risposta",
@@ -1152,9 +1136,6 @@
     "Home options": "Opzioni pagina iniziale",
     "%(spaceName)s menu": "Menu di %(spaceName)s",
     "Join public room": "Entra nella stanza pubblica",
-    "Add people": "Aggiungi persone",
-    "Invite to space": "Invita nello spazio",
-    "Start new chat": "Inizia nuova chat",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s voto. Vota per vedere i risultati",
         "other": "%(count)s voti. Vota per vedere i risultati"
@@ -1270,8 +1251,6 @@
         "one": "1 partecipante",
         "other": "%(count)s partecipanti"
     },
-    "New video room": "Nuova stanza video",
-    "New room": "Nuova stanza",
     "%(featureName)s Beta feedback": "Feedback %(featureName)s beta",
     "Live location enabled": "Posizione in tempo reale attivata",
     "Close sidebar": "Chiudi barra laterale",
@@ -1311,8 +1290,6 @@
     "%(members)s and more": "%(members)s e altri",
     "Open room": "Apri stanza",
     "To view %(roomName)s, you need an invite": "Per vedere %(roomName)s ti serve un invito",
-    "Private room": "Stanza privata",
-    "Video room": "Stanza video",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Il tuo messaggio non è stato inviato perché questo homeserver è stato bloccato dal suo amministratore. <a>Contatta l'amministratore del servizio</a> per continuare ad usarlo.",
     "Cameras": "Fotocamere",
     "Input devices": "Dispositivi di input",
@@ -1609,7 +1586,12 @@
         "profile": "Profilo",
         "display_name": "Nome visualizzato",
         "user_avatar": "Immagine del profilo",
-        "authentication": "Autenticazione"
+        "authentication": "Autenticazione",
+        "public_room": "Stanza pubblica",
+        "video_room": "Stanza video",
+        "public_space": "Spazio pubblico",
+        "private_space": "Spazio privato",
+        "private_room": "Stanza privata"
     },
     "action": {
         "continue": "Continua",
@@ -1717,7 +1699,15 @@
         "click_to_copy": "Clicca per copiare",
         "hide_advanced": "Nascondi avanzate",
         "show_advanced": "Mostra avanzate",
-        "unignore": "Non ignorare più"
+        "unignore": "Non ignorare più",
+        "start_new_chat": "Inizia nuova chat",
+        "invite_to_space": "Invita nello spazio",
+        "add_people": "Aggiungi persone",
+        "explore_rooms": "Esplora stanze",
+        "new_room": "Nuova stanza",
+        "new_video_room": "Nuova stanza video",
+        "add_existing_room": "Aggiungi stanza esistente",
+        "explore_public_rooms": "Esplora stanze pubbliche"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -1730,7 +1720,8 @@
             "one": "1 messaggio non letto."
         },
         "unread_messages": "Messaggi non letti.",
-        "jump_first_invite": "Salta al primo invito."
+        "jump_first_invite": "Salta al primo invito.",
+        "room_name": "Stanza %(name)s"
     },
     "labs": {
         "video_rooms": "Stanze video",
@@ -2960,6 +2951,13 @@
             "collapse_reply_thread": "Riduci conversazione di risposta",
             "view_related_event": "Vedi evento correlato",
             "report": "Segnala"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Mostra %(count)s altra anteprima",
+                "other": "Mostra altre %(count)s anteprime"
+            },
+            "close": "Chiudi anteprima"
         }
     },
     "slash_command": {
@@ -3620,7 +3618,9 @@
         "notification_options": "Opzioni di notifica",
         "failed_set_dm_tag": "Impostazione etichetta chat diretta fallita",
         "failed_remove_tag": "Rimozione etichetta %(tagName)s dalla stanza fallita",
-        "failed_add_tag": "Aggiunta etichetta %(tagName)s alla stanza fallita"
+        "failed_add_tag": "Aggiunta etichetta %(tagName)s alla stanza fallita",
+        "breadcrumbs_label": "Stanze visitate di recente",
+        "breadcrumbs_empty": "Nessuna stanza visitata di recente"
     },
     "report_content": {
         "missing_reason": "Inserisci il motivo della segnalazione.",
@@ -3878,7 +3878,8 @@
         "search_children": "Cerca %(spaceName)s",
         "invite_link": "Condividi collegamento di invito",
         "invite": "Invita persone",
-        "invite_description": "Invita con email o nome utente"
+        "invite_description": "Invita con email o nome utente",
+        "invite_this_space": "Invita in questo spazio"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -4038,7 +4039,8 @@
             "mark_read": "Segna come letto",
             "notifications_default": "Corrispondi l'impostazione predefinita",
             "notifications_mute": "Silenzia stanza"
-        }
+        },
+        "invite_this_room": "Invita in questa stanza"
     },
     "file_panel": {
         "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",

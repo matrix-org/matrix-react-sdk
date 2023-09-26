@@ -32,7 +32,6 @@
     "Wednesday": "Середа",
     "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
-    "Invite to this room": "Запросити до цієї кімнати",
     "Thursday": "Четвер",
     "Search…": "Пошук…",
     "Logs sent": "Журнали надіслані",
@@ -515,7 +514,6 @@
     "Faroe Islands": "Фарерські Острови",
     "Can't find this server or its room list": "Не вдалося знайти цей сервер або список його кімнат",
     "You're all caught up.": "Все готово.",
-    "Explore rooms": "Каталог кімнат",
     "Hide sessions": "Сховати сеанси",
     "Hide verified sessions": "Сховати звірені сеанси",
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
@@ -582,10 +580,8 @@
     "Avatar": "Аватар",
     "Delete Widget": "Видалити віджет",
     "Add space": "Додати простір",
-    "Public space": "Загальнодоступний простір",
     "Private space (invite only)": "Приватний простір (лише за запрошенням)",
     "Space visibility": "Видимість простору",
-    "Public room": "Загальнодоступна кімната",
     "Reason (optional)": "Причина (не обов'язково)",
     "Clear all data": "Очистити всі дані",
     "Clear all data in this session?": "Очистити всі дані сеансу?",
@@ -637,7 +633,6 @@
     "Return to login screen": "Повернутися на сторінку входу",
     "Switch theme": "Змінити тему",
     "<inviter/> invites you": "<inviter/> запрошує вас",
-    "Private space": "Приватний простір",
     "Search names and descriptions": "Шукати назви та описи",
     "Rooms and spaces": "Кімнати й простори",
     "Results": "Результати",
@@ -730,8 +725,6 @@
         "one": "(~%(count)s результат)",
         "other": "(~%(count)s результатів)"
     },
-    "Recently visited rooms": "Недавно відвідані кімнати",
-    "Room %(name)s": "Кімната %(name)s",
     "%(duration)sd": "%(duration)s дн",
     "%(duration)sh": "%(duration)s год",
     "%(duration)sm": "%(duration)s хв",
@@ -739,7 +732,6 @@
     "View message": "Переглянути повідомлення",
     "Italics": "Курсив",
     "Invited": "Запрошено",
-    "Invite to this space": "Запросити до цього простору",
     "Failed to send": "Не вдалося надіслати",
     "Your message was sent": "Ваше повідомлення було надіслано",
     "%(count)s reply": {
@@ -798,9 +790,6 @@
     "Sorry, your vote was not registered. Please try again.": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
     "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
     "Chat": "Бесіда",
-    "Start new chat": "Почати бесіду",
-    "Invite to space": "Запросити до простору",
-    "Add people": "Додати людей",
     "Join public room": "Приєднатись до загальнодоступної кімнати",
     "%(spaceName)s menu": "%(spaceName)s — меню",
     "No votes cast": "Жодного голосу",
@@ -874,7 +863,6 @@
     "Only people invited will be able to find and join this space.": "Лише запрошені до цього простору люди зможуть знайти й приєднатися до нього.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ви використовували %(brand)s на %(host)s, ввімкнувши відкладене звантаження учасників. У цій версії відкладене звантаження вимкнене. Оскільки локальне кешування не підтримує переходу між цими опціями, %(brand)s мусить заново синхронізувати ваш обліковий запис.",
     "Want to add an existing space instead?": "Бажаєте додати наявний простір натомість?",
-    "Add existing room": "Додати наявну кімнату",
     "Invited people will be able to read old messages.": "Запрошені люди зможуть читати старі повідомлення.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Запросіть когось за іменем, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цим простором</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Запросіть когось за іменем, е-поштою, користувацьким іменем (вигляду <userId/>) чи <a>поділіться цим простором</a>.",
@@ -1011,14 +999,7 @@
     },
     "Suggested Rooms": "Пропоновані кімнати",
     "Historical": "Історичні",
-    "Explore public rooms": "Переглянути загальнодоступні кімнати",
-    "No recently visited rooms": "Немає недавно відвіданих кімнат",
     "Recently viewed": "Недавно переглянуті",
-    "Close preview": "Закрити попередній перегляд",
-    "Show %(count)s other previews": {
-        "one": "Показати %(count)s інший попередній перегляд",
-        "other": "Показати %(count)s інших попередніх переглядів"
-    },
     "Scroll to most recent messages": "Перейти до найновіших повідомлень",
     "Unencrypted": "Не зашифроване",
     "Message Actions": "Дії з повідомленням",
@@ -1270,8 +1251,6 @@
         "one": "1 учасник",
         "other": "%(count)s учасників"
     },
-    "New video room": "Нова відеокімната",
-    "New room": "Нова кімната",
     "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
     "Live location ended": "Показ місцеперебування наживо завершено",
     "View live location": "Показувати місцеперебування наживо",
@@ -1317,8 +1296,6 @@
     "To join, please enable video rooms in Labs first": "Щоб приєднатися, спочатку ввімкніть відеокімнати в експериментальних функціях",
     "To view, please enable video rooms in Labs first": "Щоб переглянути, спочатку ввімкніть відеокімнати в експериментальних функціях",
     "To view %(roomName)s, you need an invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
-    "Private room": "Приватна кімната",
-    "Video room": "Відеокімната",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею.",
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
@@ -1609,7 +1586,12 @@
         "profile": "Профіль",
         "display_name": "Псевдонім",
         "user_avatar": "Зображення профілю",
-        "authentication": "Автентифікація"
+        "authentication": "Автентифікація",
+        "public_room": "Загальнодоступна кімната",
+        "video_room": "Відеокімната",
+        "public_space": "Загальнодоступний простір",
+        "private_space": "Приватний простір",
+        "private_room": "Приватна кімната"
     },
     "action": {
         "continue": "Продовжити",
@@ -1716,7 +1698,15 @@
         "click_to_copy": "Клацніть, щоб скопіювати",
         "hide_advanced": "Сховати розширені",
         "show_advanced": "Показати розширені",
-        "unignore": "Рознехтувати"
+        "unignore": "Рознехтувати",
+        "start_new_chat": "Почати бесіду",
+        "invite_to_space": "Запросити до простору",
+        "add_people": "Додати людей",
+        "explore_rooms": "Каталог кімнат",
+        "new_room": "Нова кімната",
+        "new_video_room": "Нова відеокімната",
+        "add_existing_room": "Додати наявну кімнату",
+        "explore_public_rooms": "Переглянути загальнодоступні кімнати"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -1729,7 +1719,8 @@
             "one": "1 непрочитане повідомлення."
         },
         "unread_messages": "Непрочитані повідомлення.",
-        "jump_first_invite": "Перейти до першого запрошення."
+        "jump_first_invite": "Перейти до першого запрошення.",
+        "room_name": "Кімната %(name)s"
     },
     "labs": {
         "video_rooms": "Відеокімнати",
@@ -2959,6 +2950,13 @@
             "collapse_reply_thread": "Згорнути відповіді",
             "view_related_event": "Переглянути пов'язані події",
             "report": "Поскаржитися"
+        },
+        "url_preview": {
+            "show_n_more": {
+                "one": "Показати %(count)s інший попередній перегляд",
+                "other": "Показати %(count)s інших попередніх переглядів"
+            },
+            "close": "Закрити попередній перегляд"
         }
     },
     "slash_command": {
@@ -3613,7 +3611,9 @@
         "notification_options": "Параметри сповіщень",
         "failed_set_dm_tag": "Не вдалося встановити мітку особистого повідомлення",
         "failed_remove_tag": "Не вдалося прибрати з кімнати мітку %(tagName)s",
-        "failed_add_tag": "Не вдалось додати до кімнати мітку %(tagName)s"
+        "failed_add_tag": "Не вдалось додати до кімнати мітку %(tagName)s",
+        "breadcrumbs_label": "Недавно відвідані кімнати",
+        "breadcrumbs_empty": "Немає недавно відвіданих кімнат"
     },
     "report_content": {
         "missing_reason": "Будь ласка, вкажіть, чому ви скаржитеся.",
@@ -3871,7 +3871,8 @@
         "search_children": "Пошук %(spaceName)s",
         "invite_link": "Надіслати запрошувальне посилання",
         "invite": "Запросити людей",
-        "invite_description": "Запросити за допомогою е-пошти або імені користувача"
+        "invite_description": "Запросити за допомогою е-пошти або імені користувача",
+        "invite_this_space": "Запросити до цього простору"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -4031,7 +4032,8 @@
             "mark_read": "Позначити прочитаним",
             "notifications_default": "Збігається з типовим налаштуванням",
             "notifications_mute": "Вимкнути сповіщення кімнати"
-        }
+        },
+        "invite_this_room": "Запросити до цієї кімнати"
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",

@@ -143,7 +143,6 @@
     "All Rooms": "Gela guztiak",
     "Wednesday": "Asteazkena",
     "You cannot delete this message. (%(code)s)": "Ezin duzu mezu hau ezabatu. (%(code)s)",
-    "Invite to this room": "Gonbidatu gela honetara",
     "Thursday": "Osteguna",
     "Search…": "Bilatu…",
     "Logs sent": "Egunkariak bidalita",
@@ -387,8 +386,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
     "Close dialog": "Itxi elkarrizketa-koadroa",
-    "Explore rooms": "Arakatu gelak",
-    "Room %(name)s": "%(name)s gela",
     "Failed to deactivate user": "Huts egin du erabiltzailea desaktibatzeak",
     "This client does not support end-to-end encryption.": "Bezero honek ez du muturretik muturrerako zifratzea onartzen.",
     "Messages in this room are not end-to-end encrypted.": "Gela honetako mezuak ez daude muturretik muturrera zifratuta.",
@@ -410,7 +407,6 @@
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
     "Unencrypted": "Zifratu gabe",
-    "Close preview": "Itxi aurrebista",
     "<userName/> wants to chat": "<userName/> erabiltzaileak txateatu nahi du",
     "Start chatting": "Hasi txateatzen",
     "Hide verified sessions": "Ezkutatu egiaztatutako saioak",
@@ -555,7 +551,6 @@
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
-    "No recently visited rooms": "Ez dago azkenaldian bisitatutako gelarik",
     "Message preview": "Mezu-aurrebista",
     "Room options": "Gelaren aukerak",
     "Error creating address": "Errorea helbidea sortzean",
@@ -718,7 +713,8 @@
         "unban": "Debekua kendu",
         "hide_advanced": "Ezkutatu aurreratua",
         "show_advanced": "Erakutsi aurreratua",
-        "unignore": "Ez ezikusi"
+        "unignore": "Ez ezikusi",
+        "explore_rooms": "Arakatu gelak"
     },
     "a11y": {
         "user_menu": "Erabiltzailea-menua",
@@ -731,7 +727,8 @@
             "one": "Irakurri gabeko mezu 1."
         },
         "unread_messages": "Irakurri gabeko mezuak.",
-        "jump_first_invite": "Jauzi lehen gonbidapenera."
+        "jump_first_invite": "Jauzi lehen gonbidapenera.",
+        "room_name": "%(name)s gela"
     },
     "labs": {
         "pinning": "Mezuak finkatzea",
@@ -1244,6 +1241,9 @@
         "creation_summary_room": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du.",
         "context_menu": {
             "external_url": "Iturriaren URLa"
+        },
+        "url_preview": {
+            "close": "Itxi aurrebista"
         }
     },
     "slash_command": {
@@ -1568,7 +1568,8 @@
         "show_less": "Erakutsi gutxiago",
         "notification_options": "Jakinarazpen ezarpenak",
         "failed_remove_tag": "Huts egin du %(tagName)s etiketa gelatik kentzean",
-        "failed_add_tag": "Huts egin du %(tagName)s etiketa gelara gehitzean"
+        "failed_add_tag": "Huts egin du %(tagName)s etiketa gelara gehitzean",
+        "breadcrumbs_empty": "Ez dago azkenaldian bisitatutako gelarik"
     },
     "report_content": {
         "missing_reason": "Idatzi zergatik salatzen duzun.",
@@ -1685,7 +1686,8 @@
             "favourite": "Gogokoa",
             "low_priority": "Lehentasun baxua",
             "forget": "Ahaztu gela"
-        }
+        },
+        "invite_this_room": "Gonbidatu gela honetara"
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
