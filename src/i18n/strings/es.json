@@ -366,7 +366,6 @@
     "Discovery": "Descubrimiento",
     "Deactivate account": "Desactivar cuenta",
     "None": "Ninguno",
-    "in account data": "en datos de cuenta",
     "Sounds": "Sonidos",
     "Notification sound": "Sonido para las notificaciones",
     "Set a new custom sound": "Establecer sonido personalizado",
@@ -639,9 +638,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Algorithm:": "Algoritmo:",
-    "Secret storage:": "Almacenamiento secreto:",
-    "ready": "Listo",
-    "not ready": "no está listo",
     "Room options": "Opciones de la sala",
     "Error creating address": "Error al crear la dirección",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Hubo un error al crear esa dirección. Es posible que el servidor no lo permita o que haya ocurrido una falla temporal.",
@@ -2306,7 +2302,11 @@
             "backup_key_stored_status": "Clave de respaldo almacenada:",
             "cross_signing_not_stored": "no almacenado",
             "backup_key_cached_status": "Clave de respaldo almacenada en caché:",
-            "4s_public_key_status": "Clave pública del almacén secreto:"
+            "4s_public_key_status": "Clave pública del almacén secreto:",
+            "4s_public_key_in_account_data": "en datos de cuenta",
+            "secret_storage_status": "Almacenamiento secreto:",
+            "secret_storage_ready": "Listo",
+            "secret_storage_not_ready": "no está listo"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",

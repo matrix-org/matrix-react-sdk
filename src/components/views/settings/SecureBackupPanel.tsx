@@ -390,11 +390,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
         return (
             <>
-                <SettingsSubsectionText>
-                    {_t(
-                        "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
-                    )}
-                </SettingsSubsectionText>
+                <SettingsSubsectionText>{_t("settings|security|backup_keys_description")}</SettingsSubsectionText>
                 {statusDescription}
                 <details>
                     <summary>{_t("common|advanced")}</summary>
@@ -420,13 +416,17 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                             <th scope="row">{_t("settings|security|4s_public_key_status")}</th>
                             <td>
                                 {secretStorageKeyInAccount
-                                    ? _t("in account data")
+                                    ? _t("settings|security|4s_public_key_in_account_data")
                                     : _t("settings|security|cross_signing_not_found")}
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">{_t("Secret storage:")}</th>
-                            <td>{secretStorageReady ? _t("ready") : _t("not ready")}</td>
+                            <th scope="row">{_t("settings|security|secret_storage_status")}</th>
+                            <td>
+                                {secretStorageReady
+                                    ? _t("settings|security|secret_storage_ready")
+                                    : _t("settings|security|secret_storage_not_ready")}
+                            </td>
                         </tr>
                         {extraDetailsTableRows}
                     </table>

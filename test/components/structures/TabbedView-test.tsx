@@ -22,7 +22,7 @@ import { NonEmptyArray } from "../../../src/@types/common";
 import { _t } from "../../../src/languageHandler";
 
 describe("<TabbedView />", () => {
-    const generalTab = new Tab("GENERAL", "General", "general", <div>general</div>);
+    const generalTab = new Tab("GENERAL", "common|general", "general", <div>general</div>);
     const labsTab = new Tab("LABS", "common|labs", "labs", <div>labs</div>);
     const securityTab = new Tab("SECURITY", "common|security", "security", <div>security</div>);
     const defaultProps = {

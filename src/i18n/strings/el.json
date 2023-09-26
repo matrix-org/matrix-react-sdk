@@ -583,10 +583,6 @@
     "Could not connect to identity server": "Δεν ήταν δυνατή η σύνδεση με τον διακομιστή ταυτότητας",
     "Not a valid identity server (status code %(code)s)": "Μη έγκυρος διακομιστής ταυτότητας(κωδικός κατάστασης %(code)s)",
     "Identity server URL must be HTTPS": "Η διεύθυνση URL διακομιστή ταυτότητας πρέπει να είναι HTTPS",
-    "not ready": "δεν είναι έτοιμο",
-    "ready": "έτοιμο",
-    "Secret storage:": "Μυστική αποθήκευση:",
-    "in account data": "στα δεδομένα λογαριασμού",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Οποιοσδήποτε στο <spaceName/> μπορεί να το βρει και να εγγραφεί. Μπορείτε να επιλέξετε και άλλους χώρους.",
     "Spaces with access": "Χώροι με πρόσβαση",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Οποιοσδήποτε σε ένα χώρο μπορεί να το βρει και να εγγραφεί. <a>Επεξεργαστείτε τους χώρους που έχουν πρόσβαση εδώ.</a>",
@@ -2007,7 +2003,11 @@
             "backup_key_stored_status": "Αποθηκευμένο εφεδρικό κλειδί:",
             "cross_signing_not_stored": "μη αποθηκευμένο",
             "backup_key_cached_status": "Αποθηκευμένο εφεδρικό κλειδί στην κρυφή μνήμη:",
-            "4s_public_key_status": "Δημόσιο κλειδί μυστικής αποθήκευσης:"
+            "4s_public_key_status": "Δημόσιο κλειδί μυστικής αποθήκευσης:",
+            "4s_public_key_in_account_data": "στα δεδομένα λογαριασμού",
+            "secret_storage_status": "Μυστική αποθήκευση:",
+            "secret_storage_ready": "έτοιμο",
+            "secret_storage_not_ready": "δεν είναι έτοιμο"
         },
         "preferences": {
             "room_list_heading": "Λίστα δωματίων",

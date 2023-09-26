@@ -362,7 +362,6 @@
     "Ok": "确定",
     "Lock": "锁",
     "Show more": "显示更多",
-    "in account data": "在账户数据中",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "在登出前连接此会话到密钥备份以避免丢失可能仅在此会话上的密钥。",
     "Connect this session to Key Backup": "将此会话连接到密钥备份",
     "This backup is trusted because it has been restored on this session": "此备份是受信任的因为它恢复到了此会话上",
@@ -710,9 +709,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Backup version:": "备份版本：",
     "Algorithm:": "算法：",
-    "Secret storage:": "秘密存储：",
-    "ready": "就绪",
-    "not ready": "尚未就绪",
     "Hong Kong": "香港",
     "Cook Islands": "库克群岛",
     "Congo - Kinshasa": "刚果 - 金沙萨",
@@ -2168,7 +2164,11 @@
             "backup_key_stored_status": "备份密钥已保存：",
             "cross_signing_not_stored": "未存储",
             "backup_key_cached_status": "备份密钥已缓存：",
-            "4s_public_key_status": "秘密存储公钥："
+            "4s_public_key_status": "秘密存储公钥：",
+            "4s_public_key_in_account_data": "在账户数据中",
+            "secret_storage_status": "秘密存储：",
+            "secret_storage_ready": "就绪",
+            "secret_storage_not_ready": "尚未就绪"
         },
         "preferences": {
             "room_list_heading": "房间列表",

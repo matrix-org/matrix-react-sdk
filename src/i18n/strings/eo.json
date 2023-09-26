@@ -520,7 +520,6 @@
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
-    "in account data": "en datumoj de konto",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ĉi tiu salutaĵo <b>ne savkopias viajn ŝlosilojn</b>, sed vi jam havas savkopion, el kiu vi povas rehavi datumojn, kaj ilin kreskigi plue.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Konektu ĉi tiun salutaĵon al savkopiado de ŝlosiloj antaŭ ol vi adiaŭos, por ne perdi ŝlosilojn, kiuj povus troviĝi nur en ĉi tiu salutaĵo.",
     "Connect this session to Key Backup": "Konekti ĉi tiun salutaĵon al Savkopiado de ŝlosiloj",
@@ -733,9 +732,6 @@
     "Explore public rooms": "Esplori publikajn ĉambrojn",
     "Show Widgets": "Montri fenestraĵojn",
     "Hide Widgets": "Kaŝi fenestraĵojn",
-    "not ready": "neprete",
-    "ready": "prete",
-    "Secret storage:": "Sekreta deponejo:",
     "Algorithm:": "Algoritmo:",
     "Backup version:": "Repaŝa versio:",
     "The operation could not be completed": "La ago ne povis finiĝi",
@@ -1773,7 +1769,11 @@
             "backup_key_stored_status": "Deponita Savkopia ŝlosilo:",
             "cross_signing_not_stored": "ne deponita",
             "backup_key_cached_status": "Kaŝmemorita Savkopia ŝlosilo:",
-            "4s_public_key_status": "Publika ŝlosilo de sekreta deponejo:"
+            "4s_public_key_status": "Publika ŝlosilo de sekreta deponejo:",
+            "4s_public_key_in_account_data": "en datumoj de konto",
+            "secret_storage_status": "Sekreta deponejo:",
+            "secret_storage_ready": "prete",
+            "secret_storage_not_ready": "neprete"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",

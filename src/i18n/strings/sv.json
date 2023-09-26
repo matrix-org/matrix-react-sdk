@@ -458,7 +458,6 @@
     "Set up": "Sätt upp",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
-    "in account data": "i kontodata",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Den här servern <b>säkerhetskopierar inte dina nycklar</b>, men du har en existerande säkerhetskopia du kan återställa ifrån och lägga till till i framtiden.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Anslut den här sessionen till nyckelsäkerhetskopiering innan du loggar ut för att undvika att du blir av med nycklar som kanske bara finns på den här sessionen.",
     "Connect this session to Key Backup": "Anslut den här sessionen till nyckelsäkerhetskopiering",
@@ -713,9 +712,6 @@
     "Room settings": "Rumsinställningar",
     "Backup version:": "Version av säkerhetskopia:",
     "Algorithm:": "Algoritm:",
-    "Secret storage:": "Hemlig lagring:",
-    "ready": "klart",
-    "not ready": "inte klart",
     "Widgets": "Widgets",
     "Edit widgets, bridges & bots": "Redigera widgets, bryggor och bottar",
     "Add widgets, bridges & bots": "Lägg till widgets, bryggor och bottar",
@@ -2358,7 +2354,11 @@
             "backup_key_stored_status": "Lagrad säkerhetskopieringsnyckel:",
             "cross_signing_not_stored": "inte lagrad",
             "backup_key_cached_status": "Cachad säkerhetskopieringsnyckel:",
-            "4s_public_key_status": "Publik nyckel för hemlig lagring:"
+            "4s_public_key_status": "Publik nyckel för hemlig lagring:",
+            "4s_public_key_in_account_data": "i kontodata",
+            "secret_storage_status": "Hemlig lagring:",
+            "secret_storage_ready": "klart",
+            "secret_storage_not_ready": "inte klart"
         },
         "preferences": {
             "room_list_heading": "Rumslista",

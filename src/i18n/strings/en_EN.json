@@ -14,11 +14,11 @@
             "add_msisdn_confirm_button": "Confirm adding phone number",
             "add_msisdn_confirm_body": "Click the button below to confirm adding this phone number.",
             "add_msisdn_dialog_title": "Add Phone Number",
+            "name_placeholder": "No display name",
             "oidc_manage_button": "Manage account",
             "account_section": "Account",
             "language_section": "Language and region",
-            "spell_check_section": "Spell check",
-            "name_placeholder": "No display name"
+            "spell_check_section": "Spell check"
         },
         "notifications": {
             "error_permissions_denied": "%(brand)s does not have permission to send you notifications - please check your browser settings",
@@ -169,6 +169,17 @@
             "message_search_unsupported": "%(brand)s is missing some components required for securely caching encrypted messages locally. If you'd like to experiment with this feature, build a custom %(brand)s Desktop with <nativeLink>search components added</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s can't securely cache encrypted messages locally while running in a web browser. Use <desktopLink>%(brand)s Desktop</desktopLink> for encrypted messages to appear in search results.",
             "message_search_failed": "Message search initialisation failed",
+            "backup_key_well_formed": "well formed",
+            "backup_key_unexpected_type": "unexpected type",
+            "backup_keys_description": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
+            "backup_key_stored_status": "Backup key stored:",
+            "cross_signing_not_stored": "not stored",
+            "backup_key_cached_status": "Backup key cached:",
+            "4s_public_key_status": "Secret storage public key:",
+            "4s_public_key_in_account_data": "in account data",
+            "secret_storage_status": "Secret storage:",
+            "secret_storage_ready": "ready",
+            "secret_storage_not_ready": "not ready",
             "bulk_options_section": "Bulk options",
             "bulk_options_accept_all_invites": "Accept all %(invitedRooms)s invites",
             "bulk_options_reject_all_invites": "Reject all %(invitedRooms)s invites",
@@ -180,14 +191,7 @@
             "message_search_space_used": "Space used:",
             "message_search_indexed_messages": "Indexed messages:",
             "message_search_indexed_rooms": "Indexed rooms:",
-            "message_search_room_progress": "%(doneRooms)s out of %(totalRooms)s",
-            "backup_key_well_formed": "well formed",
-            "backup_key_unexpected_type": "unexpected type",
-            "backup_keys_description": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
-            "backup_key_stored_status": "Backup key stored:",
-            "cross_signing_not_stored": "not stored",
-            "backup_key_cached_status": "Backup key cached:",
-            "4s_public_key_status": "Secret storage public key:"
+            "message_search_room_progress": "%(doneRooms)s out of %(totalRooms)s"
         },
         "inline_url_previews_default": "Enable inline URL previews by default",
         "inline_url_previews_room_account": "Enable URL previews for this room (only affects you)",
@@ -583,7 +587,10 @@
         "public": "Public",
         "private": "Private",
         "options": "Options",
+        "spaces": "Spaces",
         "copied": "Copied!",
+        "general": "General",
+        "saving": "Saving…",
         "advanced": "Advanced",
         "preview_message": "Hey you. You're the best!",
         "integration_manager": "Integration manager",
@@ -654,10 +661,7 @@
         "support": "Support",
         "room_name": "Room name",
         "thread": "Thread",
-        "accessibility": "Accessibility",
-        "spaces": "Spaces",
-        "general": "General",
-        "saving": "Saving…"
+        "accessibility": "Accessibility"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
@@ -1638,11 +1642,11 @@
         "invite": "Invite people",
         "invite_description": "Invite with email or username",
         "context_menu": {
+            "options": "Space options",
             "devtools_open_timeline": "See room timeline (devtools)",
             "home": "Space home",
             "manage_and_explore": "Manage & explore rooms",
-            "explore": "Explore rooms",
-            "options": "Space options"
+            "explore": "Explore rooms"
         },
         "suggested_tooltip": "This room is suggested as a good one to join",
         "suggested": "Suggested",
@@ -1916,14 +1920,14 @@
         "visibility": {
             "error_update_guest_access": "Failed to update the guest access of this space",
             "error_update_history_visibility": "Failed to update the history visibility of this space",
+            "guest_access_label": "Enable guest access",
             "guest_access_explainer": "Guests can join a space without having an account.",
             "guest_access_explainer_public_space": "This may be useful for public spaces.",
             "title": "Visibility",
             "error_failed_save": "Failed to update the visibility of this space",
             "history_visibility_anyone_space": "Preview Space",
             "history_visibility_anyone_space_description": "Allow people to preview your space before they join.",
-            "history_visibility_anyone_space_recommendation": "Recommended for public spaces.",
-            "guest_access_label": "Enable guest access"
+            "history_visibility_anyone_space_recommendation": "Recommended for public spaces."
         },
         "access": {
             "title": "Access",
@@ -2318,10 +2322,6 @@
     "Your keys are <b>not being backed up from this session</b>.": "Your keys are <b>not being backed up from this session</b>.",
     "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
     "Set up": "Set up",
-    "in account data": "in account data",
-    "Secret storage:": "Secret storage:",
-    "ready": "ready",
-    "not ready": "not ready",
     "Identity server URL must be HTTPS": "Identity server URL must be HTTPS",
     "Not a valid identity server (status code %(code)s)": "Not a valid identity server (status code %(code)s)",
     "Could not connect to identity server": "Could not connect to identity server",

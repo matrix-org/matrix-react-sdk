@@ -437,7 +437,6 @@
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet jūs neturite leidimo peržiūrėti tos žinutės.",
     "Failed to load timeline position": "Nepavyko įkelti laiko juostos pozicijos",
     "Identity server URL does not appear to be a valid identity server": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
-    "in account data": "paskyros duomenyse",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Šis seansas <b>nekuria atsarginių raktų kopijų</b>, bet jūs jau turite atsarginę kopiją iš kurios galite atkurti ir pridėti.",
     "All keys backed up": "Atsarginės kopijos sukurtos visiems raktams",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
@@ -531,9 +530,6 @@
     "None": "Nė vienas",
     "You should:": "Jūs turėtumėte:",
     "Checking server": "Tikrinamas serveris",
-    "not ready": "neparuošta",
-    "ready": "paruošta",
-    "Secret storage:": "Slapta saugykla:",
     "Algorithm:": "Algoritmas:",
     "Backup version:": "Atsarginės kopijos versija:",
     "Profile picture": "Profilio paveikslėlis",
@@ -1561,7 +1557,11 @@
             "backup_key_stored_status": "Atsarginis raktas saugomas:",
             "cross_signing_not_stored": "nesaugomas",
             "backup_key_cached_status": "Atsarginis raktas išsaugotas talpykloje:",
-            "4s_public_key_status": "Slaptos saugyklos viešas raktas:"
+            "4s_public_key_status": "Slaptos saugyklos viešas raktas:",
+            "4s_public_key_in_account_data": "paskyros duomenyse",
+            "secret_storage_status": "Slapta saugykla:",
+            "secret_storage_ready": "paruošta",
+            "secret_storage_not_ready": "neparuošta"
         },
         "preferences": {
             "room_list_heading": "Kambarių sąrašas",

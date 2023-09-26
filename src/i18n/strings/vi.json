@@ -800,10 +800,6 @@
     "Could not connect to identity server": "Không thể kết nối với máy chủ xác thực",
     "Not a valid identity server (status code %(code)s)": "Không phải là một máy chủ định danh hợp lệ (mã trạng thái %(code)s)",
     "Identity server URL must be HTTPS": "URL máy chủ định danh phải là HTTPS",
-    "not ready": "chưa sẵn sàng",
-    "ready": "Sẵn sàng",
-    "Secret storage:": "Lưu trữ bí mật:",
-    "in account data": "trong dữ liệu tài khoản",
     "Set up": "Cài đặt",
     "Back up your keys before signing out to avoid losing them.": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
     "Your keys are <b>not being backed up from this session</b>.": "Các khóa của bạn <b>not being backed up from this session</b>.",
@@ -2202,7 +2198,11 @@
             "backup_key_stored_status": "Lưu trữ hóa được sao lưu:",
             "cross_signing_not_stored": "không được lưu trữ",
             "backup_key_cached_status": "Đệm các khóa được sao lưu:",
-            "4s_public_key_status": "Khóa công khai lưu trữ bí mật:"
+            "4s_public_key_status": "Khóa công khai lưu trữ bí mật:",
+            "4s_public_key_in_account_data": "trong dữ liệu tài khoản",
+            "secret_storage_status": "Lưu trữ bí mật:",
+            "secret_storage_ready": "Sẵn sàng",
+            "secret_storage_not_ready": "chưa sẵn sàng"
         },
         "preferences": {
             "room_list_heading": "Danh sách phòng",

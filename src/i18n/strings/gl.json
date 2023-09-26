@@ -298,7 +298,6 @@
     "Headphones": "Auriculares",
     "Folder": "Cartafol",
     "Show more": "Mostrar máis",
-    "in account data": "nos datos da conta",
     "Cannot connect to integration manager": "Non se puido conectar co xestor de intregración",
     "The integration manager is offline or it cannot reach your homeserver.": "O xestor de integración non está en liña ou non é accesible desde o teu servidor.",
     "Delete Backup": "Borrar copia de apoio",
@@ -714,9 +713,6 @@
     "Room settings": "Axustes da sala",
     "Backup version:": "Versión da copia:",
     "Algorithm:": "Algoritmo:",
-    "Secret storage:": "Almacenaxe segreda:",
-    "ready": "lista",
-    "not ready": "non lista",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Unable to set up keys": "Non se puideron configurar as chaves",
@@ -2143,7 +2139,11 @@
             "backup_key_stored_status": "Chave da copia gardada:",
             "cross_signing_not_stored": "non gardado",
             "backup_key_cached_status": "Chave da copia na caché:",
-            "4s_public_key_status": "Chave pública da almacenaxe segreda:"
+            "4s_public_key_status": "Chave pública da almacenaxe segreda:",
+            "4s_public_key_in_account_data": "nos datos da conta",
+            "secret_storage_status": "Almacenaxe segreda:",
+            "secret_storage_ready": "lista",
+            "secret_storage_not_ready": "non lista"
         },
         "preferences": {
             "room_list_heading": "Listaxe de Salas",

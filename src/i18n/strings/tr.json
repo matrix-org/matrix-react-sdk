@@ -245,7 +245,6 @@
     "Anchor": "Çıpa",
     "Headphones": "Kulaklık",
     "Folder": "Klasör",
-    "in account data": "hesap verisinde",
     "Cannot connect to integration manager": "Entegrasyon yöneticisine bağlanılamadı",
     "Delete Backup": "Yedek Sil",
     "Unable to load key backup status": "Anahtar yedek durumu yüklenemiyor",
@@ -828,9 +827,6 @@
     "Room options": "Oda ayarları",
     "Open dial pad": "Arama tuşlarını aç",
     "You should:": "Şunu yapmalısınız:",
-    "not ready": "hazır değil",
-    "ready": "hazır",
-    "Secret storage:": "Gizli depolama:",
     "Back up your keys before signing out to avoid losing them.": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
     "Algorithm:": "Algoritma:",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Yalnızca bu oturumda olabilecek anahtarları kaybetmemek için, oturumu kapatmadan önce bu oturumu anahtar yedeklemeye bağlayın.",
@@ -1266,7 +1262,11 @@
             "backup_key_stored_status": "Yedekleme anahtarı depolandı:",
             "cross_signing_not_stored": "depolanmadı",
             "backup_key_cached_status": "Yedekleme anahtarı önbelleğe alındı:",
-            "4s_public_key_status": "Sır deposu açık anahtarı:"
+            "4s_public_key_status": "Sır deposu açık anahtarı:",
+            "4s_public_key_in_account_data": "hesap verisinde",
+            "secret_storage_status": "Gizli depolama:",
+            "secret_storage_ready": "hazır",
+            "secret_storage_not_ready": "hazır değil"
         },
         "preferences": {
             "room_list_heading": "Oda listesi",

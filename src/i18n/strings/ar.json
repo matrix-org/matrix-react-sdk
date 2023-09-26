@@ -239,10 +239,6 @@
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "انفصل عن خادم الهوية <current /> واتصل بآخر <new /> بدلاً منه؟",
     "Change identity server": "تغيير خادم الهوية",
     "Checking server": "فحص خادم",
-    "not ready": "غير جاهز",
-    "ready": "جاهز",
-    "Secret storage:": "التخزين السري:",
-    "in account data": "بيانات في حساب",
     "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
     "Your keys are <b>not being backed up from this session</b>.": "مفاتيحك <b>لا احتياطيَّ لها من هذا الاتصال</b>.",
     "Algorithm:": "الخوارزمية:",
@@ -816,7 +812,11 @@
             "backup_key_stored_status": "المفتاح الاختياطي المحفوظ:",
             "cross_signing_not_stored": "لم يُحفظ",
             "backup_key_cached_status": "المفتاح الاحتياطي المحفوظ (في cache):",
-            "4s_public_key_status": "المفتاح العام للتخزين السري:"
+            "4s_public_key_status": "المفتاح العام للتخزين السري:",
+            "4s_public_key_in_account_data": "بيانات في حساب",
+            "secret_storage_status": "التخزين السري:",
+            "secret_storage_ready": "جاهز",
+            "secret_storage_not_ready": "غير جاهز"
         },
         "preferences": {
             "room_list_heading": "قائمة الغرفة",

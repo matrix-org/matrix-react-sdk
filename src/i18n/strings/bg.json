@@ -499,7 +499,6 @@
     "You sent a verification request": "Изпратихте заявка за потвърждение",
     "Cannot connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
     "The integration manager is offline or it cannot reach your homeserver.": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви.",
-    "in account data": "в данни за акаунта",
     "Manage integrations": "Управление на интеграциите",
     "None": "Няма нищо",
     "Unencrypted": "Нешифровано",
@@ -729,9 +728,6 @@
     "Explore public rooms": "Прегледай публични стаи",
     "Show Widgets": "Покажи приспособленията",
     "Hide Widgets": "Скрий приспособленията",
-    "not ready": "не е готово",
-    "ready": "готово",
-    "Secret storage:": "Секретно складиране:",
     "Algorithm:": "Алгоритъм:",
     "Backup version:": "Версия на резервното копие:",
     "The operation could not be completed": "Операцията не можа да бъде завършена",
@@ -1405,7 +1401,11 @@
             "backup_key_stored_status": "Резервният ключ е съхранен:",
             "cross_signing_not_stored": "не е складиран",
             "backup_key_cached_status": "Резервният ключ е кеширан:",
-            "4s_public_key_status": "Публичен ключ за секретно складиране:"
+            "4s_public_key_status": "Публичен ключ за секретно складиране:",
+            "4s_public_key_in_account_data": "в данни за акаунта",
+            "secret_storage_status": "Секретно складиране:",
+            "secret_storage_ready": "готово",
+            "secret_storage_not_ready": "не е готово"
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",

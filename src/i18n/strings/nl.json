@@ -494,7 +494,6 @@
     "This room is end-to-end encrypted": "Deze kamer is eind-tot-eind-versleuteld",
     "Everyone in this room is verified": "Iedereen in deze kamer is geverifieerd",
     "Direct Messages": "Direct gesprek",
-    "in account data": "in accountinformatie",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Verbind deze sessie met de sleutelback-up voordat je jezelf afmeldt. Dit voorkomt dat je sleutels verliest die alleen op deze sessie voorkomen.",
     "Connect this session to Key Backup": "Verbind deze sessie met de sleutelback-up",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
@@ -867,8 +866,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken.",
     "Scroll to most recent messages": "Spring naar meest recente bericht",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
-    "not ready": "Niet gereed",
-    "ready": "Gereed",
     "Algorithm:": "Algoritme:",
     "Backup version:": "Versie reservekopie:",
     "The operation could not be completed": "De handeling kon niet worden voltooid",
@@ -949,7 +946,6 @@
     "Set a Security Phrase": "Een veiligheidswachtwoord instellen",
     "You can also set up Secure Backup & manage your keys in Settings.": "Je kan ook een beveiligde back-up instellen en je sleutels beheren via instellingen.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
-    "Secret storage:": "Sleutelopslag:",
     "Unable to query secret storage status": "Kan status sleutelopslag niet opvragen",
     "Use a different passphrase?": "Gebruik een ander wachtwoord?",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Bescherm je server tegen toegangsverlies tot versleutelde berichten en gegevens door een back-up te maken van de versleutelingssleutels.",
@@ -2181,7 +2177,11 @@
             "backup_key_stored_status": "Back-up sleutel bewaard:",
             "cross_signing_not_stored": "niet opgeslagen",
             "backup_key_cached_status": "Back-up sleutel cached:",
-            "4s_public_key_status": "Sleutelopslag publieke sleutel:"
+            "4s_public_key_status": "Sleutelopslag publieke sleutel:",
+            "4s_public_key_in_account_data": "in accountinformatie",
+            "secret_storage_status": "Sleutelopslag:",
+            "secret_storage_ready": "Gereed",
+            "secret_storage_not_ready": "Niet gereed"
         },
         "preferences": {
             "room_list_heading": "Kamerslijst",

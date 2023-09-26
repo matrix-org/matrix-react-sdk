@@ -120,7 +120,6 @@
     "Join the conversation with an account": "Приєднатись до бесіди з обліковим записом",
     "Unable to restore session": "Не вдалося відновити сеанс",
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
-    "in account data": "у даних облікового запису",
     "Email addresses": "Адреси е-пошти",
     "Phone numbers": "Номери телефонів",
     "Forget this room": "Забути цю кімнату",
@@ -740,9 +739,6 @@
     "Change identity server": "Змінити сервер ідентифікації",
     "Not a valid identity server (status code %(code)s)": "Хибний сервер ідентифікації (код статусу %(code)s)",
     "Identity server URL must be HTTPS": "URL-адреса сервера ідентифікації повинна починатися з HTTPS",
-    "not ready": "не готове",
-    "ready": "готове",
-    "Secret storage:": "Таємне сховище:",
     "Algorithm:": "Алгоритм:",
     "Backup version:": "Версія резервної копії:",
     "& %(count)s more": {
@@ -2401,7 +2397,11 @@
             "backup_key_stored_status": "Резервну копію ключа розміщено:",
             "cross_signing_not_stored": "не збережено",
             "backup_key_cached_status": "Резервну копію ключа кешовано:",
-            "4s_public_key_status": "Таємне сховище відкритого ключа:"
+            "4s_public_key_status": "Таємне сховище відкритого ключа:",
+            "4s_public_key_in_account_data": "у даних облікового запису",
+            "secret_storage_status": "Таємне сховище:",
+            "secret_storage_ready": "готове",
+            "secret_storage_not_ready": "не готове"
         },
         "preferences": {
             "room_list_heading": "Перелік кімнат",

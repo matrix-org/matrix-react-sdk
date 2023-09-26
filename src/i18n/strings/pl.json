@@ -828,7 +828,6 @@
     "Messaging": "Wiadomości",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
-    "ready": "gotowy",
     "Create a new room": "Utwórz nowy pokój",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Dodawanie pokojów... (%(progress)s z %(count)s)",
@@ -949,9 +948,6 @@
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Wystąpił nieznany błąd podczas zmiany hasła (%(stringifiedError)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Powinieneś <b>usunąć swoje prywatne dane</b> z serwera tożsamości <idserver /> przed rozłączeniem. Niestety, serwer tożsamości <idserver /> jest aktualnie offline lub nie można się z nim połączyć.",
-    "not ready": "nie gotowe",
-    "Secret storage:": "Sekretny magazyn:",
-    "in account data": "w danych konta",
     "Your keys are <b>not being backed up from this session</b>.": "Twoje klucze <b>nie są zapisywanie na tej sesji</b>.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "Backing up %(sessionsRemaining)s keys…": "Tworzenie kopii zapasowej %(sessionsRemaining)s kluczy…",
@@ -2390,7 +2386,11 @@
             "backup_key_stored_status": "Klucz zapasowy zapisany:",
             "cross_signing_not_stored": "nieprzechowywany",
             "backup_key_cached_status": "Klucz zapasowy zapisany w pamięci podręcznej:",
-            "4s_public_key_status": "Publiczny klucz sekretnego magazynu:"
+            "4s_public_key_status": "Publiczny klucz sekretnego magazynu:",
+            "4s_public_key_in_account_data": "w danych konta",
+            "secret_storage_status": "Sekretny magazyn:",
+            "secret_storage_ready": "gotowy",
+            "secret_storage_not_ready": "nie gotowe"
         },
         "preferences": {
             "room_list_heading": "Lista pokojów",

@@ -331,7 +331,6 @@
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "Lock": "Cadeado",
     "Show more": "Mostrar mais",
-    "in account data": "nos dados de conta",
     "Cannot connect to integration manager": "Não foi possível conectar ao gerenciador de integrações",
     "The integration manager is offline or it cannot reach your homeserver.": "Ou o gerenciador de integrações está indisponível, ou ele não conseguiu acessar o seu servidor.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Esta sessão <b>não está fazendo backup de suas chaves</b>, mas você tem um backup existente que pode restaurar para continuar.",
@@ -700,9 +699,6 @@
     "Failed to save your profile": "Houve uma falha ao salvar o seu perfil",
     "The operation could not be completed": "A operação não foi concluída",
     "Algorithm:": "Algoritmo:",
-    "Secret storage:": "Armazenamento secreto:",
-    "ready": "pronto",
-    "not ready": "não está pronto",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está integrando mensagens com as seguintes plataformas. <a>Saiba mais.</a>",
     "Bridges": "Integrações",
     "Error changing power level requirement": "Houve um erro ao alterar o nível de permissão do contato",
@@ -1778,7 +1774,11 @@
             "backup_key_stored_status": "Backup da chave armazenada:",
             "cross_signing_not_stored": "não armazenado",
             "backup_key_cached_status": "Backup da chave em cache:",
-            "4s_public_key_status": "Chave pública do armazenamento secreto:"
+            "4s_public_key_status": "Chave pública do armazenamento secreto:",
+            "4s_public_key_in_account_data": "nos dados de conta",
+            "secret_storage_status": "Armazenamento secreto:",
+            "secret_storage_ready": "pronto",
+            "secret_storage_not_ready": "não está pronto"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",

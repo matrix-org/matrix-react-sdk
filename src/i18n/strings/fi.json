@@ -507,7 +507,6 @@
     "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
     "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
-    "in account data": "tilin tiedoissa",
     "Unencrypted": "Suojaamaton",
     "Close preview": "Sulje esikatselu",
     "<userName/> wants to chat": "<userName/> haluaa keskustella",
@@ -668,8 +667,6 @@
     "Server isn't responding": "Palvelin ei vastaa",
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
     "Edited at %(date)s": "Muokattu %(date)s",
-    "not ready": "ei valmis",
-    "ready": "valmis",
     "Algorithm:": "Algoritmi:",
     "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
     "Decline All": "Kieltäydy kaikista",
@@ -830,7 +827,6 @@
     "a device cross-signing signature": "laitteen ristiinvarmennuksen allekirjoitus",
     "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
     "Backup version:": "Varmuuskopiointiversio:",
-    "Secret storage:": "Salainen tallennus:",
     "Hide Widgets": "Piilota sovelmat",
     "Show Widgets": "Näytä sovelmat",
     "Explore public rooms": "Selaa julkisia huoneita",
@@ -2178,7 +2174,11 @@
             "backup_key_stored_status": "Varmuuskopioavain tallennettu:",
             "cross_signing_not_stored": "ei tallennettu",
             "backup_key_cached_status": "Välimuistissa oleva varmuuskopioavain:",
-            "4s_public_key_status": "Salavaraston julkinen avain:"
+            "4s_public_key_status": "Salavaraston julkinen avain:",
+            "4s_public_key_in_account_data": "tilin tiedoissa",
+            "secret_storage_status": "Salainen tallennus:",
+            "secret_storage_ready": "valmis",
+            "secret_storage_not_ready": "ei valmis"
         },
         "preferences": {
             "room_list_heading": "Huoneluettelo",

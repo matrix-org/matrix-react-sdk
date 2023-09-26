@@ -625,7 +625,6 @@
     "Save your Security Key": "Salvesta turvavõti",
     "Unable to set up secret storage": "Turvahoidla kasutuselevõtmine ei õnnestu",
     "Your keys are being backed up (the first backup could take a few minutes).": "Sinu krüptovõtmeid varundatakse (esimese varukoopia tegemine võib võtta paar minutit).",
-    "in account data": "kasutajakonto andmete hulgas",
     "Authentication": "Autentimine",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krüptitud sõnumid kasutavad läbivat krüptimist. Ainult sinul ja saaja(te)l on võtmed selliste sõnumite lugemiseks.",
     "Unable to load key backup status": "Võtmete varunduse oleku laadimine ei õnnestunud",
@@ -714,9 +713,6 @@
     "Room settings": "Jututoa seadistused",
     "Backup version:": "Varukoopia versioon:",
     "Algorithm:": "Algoritm:",
-    "Secret storage:": "Turvahoidla:",
-    "ready": "valmis",
-    "not ready": "ei ole valmis",
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
     "Widgets": "Vidinad",
@@ -2401,7 +2397,11 @@
             "backup_key_stored_status": "Varukoopia võti on salvestatud:",
             "cross_signing_not_stored": "ei ole salvestatud",
             "backup_key_cached_status": "Varukoopia võti on puhverdatud:",
-            "4s_public_key_status": "Turvahoidla avalik võti:"
+            "4s_public_key_status": "Turvahoidla avalik võti:",
+            "4s_public_key_in_account_data": "kasutajakonto andmete hulgas",
+            "secret_storage_status": "Turvahoidla:",
+            "secret_storage_ready": "valmis",
+            "secret_storage_not_ready": "ei ole valmis"
         },
         "preferences": {
             "room_list_heading": "Jututubade loend",

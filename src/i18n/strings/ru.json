@@ -501,7 +501,6 @@
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
-    "in account data": "в данных учётной записи",
     "Cannot connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
     "The integration manager is offline or it cannot reach your homeserver.": "Менеджер интеграций не работает или не может подключиться к вашему домашнему серверу.",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Это сеанс <b>не сохраняет ваши ключи</b>, но у вас есть резервная копия, из которой вы можете их восстановить.",
@@ -713,9 +712,6 @@
     "Room settings": "Настройки комнаты",
     "Backup version:": "Версия резервной копии:",
     "Algorithm:": "Алгоритм:",
-    "Secret storage:": "Секретное хранилище:",
-    "ready": "готов",
-    "not ready": "не готов",
     "Widgets": "Виджеты",
     "Edit widgets, bridges & bots": "Редактировать виджеты, мосты и ботов",
     "Add widgets, bridges & bots": "Добавить виджеты, мосты и ботов",
@@ -2214,7 +2210,11 @@
             "backup_key_stored_status": "Резервный ключ сохранён:",
             "cross_signing_not_stored": "не сохранено",
             "backup_key_cached_status": "Резервный ключ кэширован:",
-            "4s_public_key_status": "Публичный ключ секретного хранилища:"
+            "4s_public_key_status": "Публичный ключ секретного хранилища:",
+            "4s_public_key_in_account_data": "в данных учётной записи",
+            "secret_storage_status": "Секретное хранилище:",
+            "secret_storage_ready": "готов",
+            "secret_storage_not_ready": "не готов"
         },
         "preferences": {
             "room_list_heading": "Список комнат",

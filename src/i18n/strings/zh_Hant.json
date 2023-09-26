@@ -514,7 +514,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "您將要把此聊天室從 <oldVersion /> 升級到 <newVersion />。",
     "<userName/> wants to chat": "<userName/> 想要聊天",
     "Start chatting": "開始聊天",
-    "in account data": "在帳號資料中",
     "Hide verified sessions": "隱藏已驗證的工作階段",
     "%(count)s verified sessions": {
         "other": "%(count)s 個已驗證的工作階段",
@@ -714,9 +713,6 @@
     "Room settings": "聊天室設定",
     "Backup version:": "備份版本：",
     "Algorithm:": "演算法：",
-    "Secret storage:": "秘密儲存空間：",
-    "ready": "已準備好",
-    "not ready": "尚未準備好",
     "Start a conversation with someone using their name or username (like <userId/>).": "使用某人的名字或使用者名稱（如 <userId/>）以與他們開始對話。",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Widgets": "小工具",
@@ -2401,7 +2397,11 @@
             "backup_key_stored_status": "是否已儲存備份金鑰：",
             "cross_signing_not_stored": "未儲存",
             "backup_key_cached_status": "是否快取備份金鑰：",
-            "4s_public_key_status": "秘密儲存空間公鑰："
+            "4s_public_key_status": "秘密儲存空間公鑰：",
+            "4s_public_key_in_account_data": "在帳號資料中",
+            "secret_storage_status": "秘密儲存空間：",
+            "secret_storage_ready": "已準備好",
+            "secret_storage_not_ready": "尚未準備好"
         },
         "preferences": {
             "room_list_heading": "聊天室清單",

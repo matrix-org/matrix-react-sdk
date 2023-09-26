@@ -734,10 +734,6 @@
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "התנתק משרת זיהוי עכשווי <current /> והתחבר אל <new /> במקום?",
     "Change identity server": "שנה כתובת של שרת הזיהוי",
     "Checking server": "בודק שרת",
-    "not ready": "לא מוכן",
-    "ready": "מוכן",
-    "Secret storage:": "אחסון סודי:",
-    "in account data": "במידע בחשבון",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
     "Jump to first invite.": "קפצו להזמנה ראשונה.",
     "Jump to first unread room.": "קפצו לחדר הראשון שלא נקרא.",
@@ -1693,7 +1689,11 @@
             "backup_key_stored_status": "גבה מפתח שמור:",
             "cross_signing_not_stored": "לא שמור",
             "backup_key_cached_status": "גבה מפתח במטמון:",
-            "4s_public_key_status": "מקום שמירה סודי של המפתח הציבורי:"
+            "4s_public_key_status": "מקום שמירה סודי של המפתח הציבורי:",
+            "4s_public_key_in_account_data": "במידע בחשבון",
+            "secret_storage_status": "אחסון סודי:",
+            "secret_storage_ready": "מוכן",
+            "secret_storage_not_ready": "לא מוכן"
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",

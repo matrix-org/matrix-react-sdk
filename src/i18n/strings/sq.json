@@ -506,7 +506,6 @@
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
     "Verification Request": "Kërkesë Verifikimi",
-    "in account data": "në të dhëna llogarie",
     "Unencrypted": "Të pafshehtëzuara",
     "<userName/> wants to chat": "<userName/> dëshiron të bisedojë",
     "Start chatting": "Filloni të bisedoni",
@@ -712,9 +711,6 @@
     "Information": "Informacion",
     "Backup version:": "Version kopjeruajtjeje:",
     "Algorithm:": "Algoritëm:",
-    "Secret storage:": "Depozitë e fshehtë:",
-    "ready": "gati",
-    "not ready": "jo gati",
     "Widgets": "Widget-e",
     "Edit widgets, bridges & bots": "Përpunoni widget-e, ura & robotë",
     "Add widgets, bridges & bots": "Shtoni widget-e, ura & robotë",
@@ -2339,7 +2335,11 @@
             "backup_key_stored_status": "Kyç kopjeruajtjesh i depozituar:",
             "cross_signing_not_stored": "e padepozituar",
             "backup_key_cached_status": "Kyç kopjeruajtjesh i ruajtur në fshehtinë:",
-            "4s_public_key_status": "Kyç publik depozite të fshehtë:"
+            "4s_public_key_status": "Kyç publik depozite të fshehtë:",
+            "4s_public_key_in_account_data": "në të dhëna llogarie",
+            "secret_storage_status": "Depozitë e fshehtë:",
+            "secret_storage_ready": "gati",
+            "secret_storage_not_ready": "jo gati"
         },
         "preferences": {
             "room_list_heading": "Listë dhomash",

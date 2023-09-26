@@ -348,7 +348,6 @@
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
-    "in account data": "v údajoch účtu",
     "Cannot connect to integration manager": "Nie je možné sa pripojiť k integračnému serveru",
     "The integration manager is offline or it cannot reach your homeserver.": "Integračný server je offline, alebo nemôže pristupovať k domovskému serveru.",
     "Change identity server": "Zmeniť server totožností",
@@ -884,13 +883,10 @@
     "Upload files": "Nahrať súbory",
     "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
     "Files": "Súbory",
-    "not ready": "nie je pripravené",
-    "ready": "pripravené",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
     "Unable to set up secret storage": "Nie je možné nastaviť tajné úložisko",
     "Unable to query secret storage status": "Nie je možné vykonať dopyt na stav tajného úložiska",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
-    "Secret storage:": "Tajné úložisko:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Bezpečné zálohovanie a správu kľúčov môžete nastaviť aj v Nastaveniach.",
     "View all %(count)s members": {
         "one": "Zobraziť 1 člena",
@@ -2401,7 +2397,11 @@
             "backup_key_stored_status": "Záložný kľúč uložený:",
             "cross_signing_not_stored": "neuložené",
             "backup_key_cached_status": "Záložný kľúč v medzipamäti:",
-            "4s_public_key_status": "Verejný kľúč bezpečného úložiska:"
+            "4s_public_key_status": "Verejný kľúč bezpečného úložiska:",
+            "4s_public_key_in_account_data": "v údajoch účtu",
+            "secret_storage_status": "Tajné úložisko:",
+            "secret_storage_ready": "pripravené",
+            "secret_storage_not_ready": "nie je pripravené"
         },
         "preferences": {
             "room_list_heading": "Zoznam miestností",

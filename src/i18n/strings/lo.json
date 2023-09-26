@@ -1248,10 +1248,6 @@
     "Could not connect to identity server": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບເຊີບເວີໄດ້",
     "Not a valid identity server (status code %(code)s)": "ບໍ່ແມ່ນເຊີບເວີທີ່ຖືກຕ້ອງ (ລະຫັດສະຖານະ %(code)s)",
     "Identity server URL must be HTTPS": "URL ເຊີບເວີຕ້ອງເປັນ HTTPS",
-    "not ready": "ບໍ່ພ້ອມ",
-    "ready": "ພ້ອມ",
-    "Secret storage:": "ການເກັບຮັກສາຄວາມລັບ:",
-    "in account data": "ໃນຂໍ້ມູນບັນຊີ",
     "Set up": "ຕັ້ງຄ່າ",
     "Back up your keys before signing out to avoid losing them.": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
     "Your keys are <b>not being backed up from this session</b>.": "ກະແຈຂອງທ່ານ <b>ບໍ່ຖືກສຳຮອງຂໍ້ມູນຈາກລະບົບນີ້</b>.",
@@ -2009,7 +2005,11 @@
             "backup_key_stored_status": "ກະແຈສຳຮອງທີ່ເກັບໄວ້:",
             "cross_signing_not_stored": "ບໍ່ໄດ້ເກັບຮັກສາໄວ້",
             "backup_key_cached_status": "ລະຫັດສໍາຮອງຂໍ້ມູນທີ່ເກັບໄວ້:",
-            "4s_public_key_status": "ກະເເຈສາທາລະນະການເກັບຮັກສາຄວາມລັບ:"
+            "4s_public_key_status": "ກະເເຈສາທາລະນະການເກັບຮັກສາຄວາມລັບ:",
+            "4s_public_key_in_account_data": "ໃນຂໍ້ມູນບັນຊີ",
+            "secret_storage_status": "ການເກັບຮັກສາຄວາມລັບ:",
+            "secret_storage_ready": "ພ້ອມ",
+            "secret_storage_not_ready": "ບໍ່ພ້ອມ"
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",

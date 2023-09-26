@@ -573,8 +573,6 @@
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Phone numbers": "Símanúmer",
     "Email addresses": "Tölvupóstföng",
-    "not ready": "ekki tilbúið",
-    "ready": "tilbúið",
     "Algorithm:": "Reiknirit:",
     "Restore from Backup": "Endurheimta úr öryggisafriti",
     "Profile picture": "Notandamynd",
@@ -762,8 +760,6 @@
     "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
     "Your messages are not secure": "Skilaboðin þín eru ekki örugg",
     "Could not connect to identity server": "Gat ekki tengst við auðkennisþjón",
-    "Secret storage:": "Leynigeymsla:",
-    "in account data": "í gögnum notandaaðgangs",
     "Back up your keys before signing out to avoid losing them.": "Taktu öryggisafrit af dulritunarlyklunum áður en þú skráir þig út svo þeir tapist ekki.",
     "Your keys are <b>not being backed up from this session</b>.": "Dulritunarlyklarnir þínir eru <b>ekki öryggisafritaðir úr þessari setu</b>.",
     "Backup version:": "Útgáfa öryggisafrits:",
@@ -2022,7 +2018,11 @@
             "backup_key_stored_status": "Geymdur öryggisafritunarlykill:",
             "cross_signing_not_stored": "ekki geymt",
             "backup_key_cached_status": "Öryggisafritunarlykill í skyndiminni:",
-            "4s_public_key_status": "Dreifilykill leynigeymslu:"
+            "4s_public_key_status": "Dreifilykill leynigeymslu:",
+            "4s_public_key_in_account_data": "í gögnum notandaaðgangs",
+            "secret_storage_status": "Leynigeymsla:",
+            "secret_storage_ready": "tilbúið",
+            "secret_storage_not_ready": "ekki tilbúið"
         },
         "preferences": {
             "room_list_heading": "Spjallrásalisti",

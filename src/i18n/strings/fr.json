@@ -515,7 +515,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vous allez mettre à niveau ce salon de <oldVersion /> vers <newVersion />.",
     "<userName/> wants to chat": "<userName/> veut discuter",
     "Start chatting": "Commencer à discuter",
-    "in account data": "dans les données du compte",
     "Unable to set up secret storage": "Impossible de configurer le coffre secret",
     "Hide verified sessions": "Masquer les sessions vérifiées",
     "%(count)s verified sessions": {
@@ -695,12 +694,9 @@
     "This room is public": "Ce salon est public",
     "Edited at %(date)s": "Modifié le %(date)s",
     "Click to view edits": "Cliquez pour voir les modifications",
-    "ready": "prêt",
     "The operation could not be completed": "L’opération n’a pas pu être terminée",
     "Failed to save your profile": "Erreur lors de l’enregistrement du profil",
     "Ignored attempt to disable encryption": "Essai de désactiver le chiffrement ignoré",
-    "not ready": "pas prêt",
-    "Secret storage:": "Coffre secret :",
     "Backup version:": "Version de la sauvegarde :",
     "This version of %(brand)s does not support searching encrypted messages": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés",
     "This version of %(brand)s does not support viewing some encrypted files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
@@ -2401,7 +2397,11 @@
             "backup_key_stored_status": "Clé de sauvegarde enregistrée :",
             "cross_signing_not_stored": "non sauvegardé",
             "backup_key_cached_status": "Clé de sauvegarde mise en cache :",
-            "4s_public_key_status": "Clé publique du coffre secret :"
+            "4s_public_key_status": "Clé publique du coffre secret :",
+            "4s_public_key_in_account_data": "dans les données du compte",
+            "secret_storage_status": "Coffre secret :",
+            "secret_storage_ready": "prêt",
+            "secret_storage_not_ready": "pas prêt"
         },
         "preferences": {
             "room_list_heading": "Liste de salons",

@@ -199,7 +199,6 @@
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
     "Widgets": "Giuirléidí",
-    "ready": "réidh",
     "Algorithm:": "Algartam:",
     "Information": "Eolas",
     "Ok": "Togha",
@@ -587,7 +586,8 @@
             "cross_signing_homeserver_support_exists": "a bheith ann",
             "export_megolm_keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
             "cryptography_section": "Cripteagrafaíocht",
-            "encryption_section": "Criptiúchán"
+            "encryption_section": "Criptiúchán",
+            "secret_storage_ready": "réidh"
         },
         "general": {
             "account_section": "Cuntas",

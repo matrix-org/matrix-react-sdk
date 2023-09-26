@@ -817,10 +817,6 @@
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "ارتباط با سرور هویت‌سنجی <current /> قطع شده و در عوض به <new /> متصل شوید؟",
     "Change identity server": "تغییر سرور هویت‌سنجی",
     "Checking server": "در حال بررسی سرور",
-    "not ready": "آماده نیست",
-    "ready": "آماده",
-    "Secret storage:": "حافظه نهان:",
-    "in account data": "در داده‌های حساب کاربری",
     "Back up your keys before signing out to avoid losing them.": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
     "Your keys are <b>not being backed up from this session</b>.": "کلید‌های شما <b>از این نشست پشتیبان‌گیری نمی‌شود</b>.",
     "Algorithm:": "الگوریتم:",
@@ -1611,7 +1607,11 @@
             "backup_key_stored_status": "کلید پشتیبان ذخیره شد:",
             "cross_signing_not_stored": "ذخیره نشد",
             "backup_key_cached_status": "کلید پشتیبان ذخیره شد:",
-            "4s_public_key_status": "کلید عمومی حافظه نهان:"
+            "4s_public_key_status": "کلید عمومی حافظه نهان:",
+            "4s_public_key_in_account_data": "در داده‌های حساب کاربری",
+            "secret_storage_status": "حافظه نهان:",
+            "secret_storage_ready": "آماده",
+            "secret_storage_not_ready": "آماده نیست"
         },
         "preferences": {
             "room_list_heading": "لیست اتاق‌ها",

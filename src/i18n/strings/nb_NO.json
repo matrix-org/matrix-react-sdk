@@ -521,8 +521,6 @@
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
     "Failed to deactivate user": "Mislyktes i å deaktivere brukeren",
-    "not ready": "ikke klar",
-    "ready": "klar",
     "Algorithm:": "Algoritme:",
     "Show Widgets": "Vis moduler",
     "Hide Widgets": "Skjul moduler",
@@ -721,7 +719,6 @@
     "Costa Rica": "Costa Rica",
     "Cook Islands": "Cook-øyene",
     "All keys backed up": "Alle nøkler er sikkerhetskopiert",
-    "Secret storage:": "Hemmelig lagring:",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integreringsbehandlere mottar oppsettsdata, og kan endre på moduler, sende rominvitasjoner, og bestemme styrkenivåer på dine vegne.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler til å behandle botter, moduler, og klistremerkepakker.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Bruk en integreringsbehandler <b>(%(serverName)s)</b> til å behandle botter, moduler, og klistremerkepakker.",
@@ -1090,7 +1087,10 @@
             "message_search_section": "Meldingssøk",
             "encryption_individual_verification_mode": "Verifiser hver brukerøkt individuelt for å stemple den som at du stoler på den, ikke stol på kryss-signerte enheter.",
             "backup_key_unexpected_type": "uventet type",
-            "4s_public_key_status": "Offentlig nøkkel for hemmelig lagring:"
+            "4s_public_key_status": "Offentlig nøkkel for hemmelig lagring:",
+            "secret_storage_status": "Hemmelig lagring:",
+            "secret_storage_ready": "klar",
+            "secret_storage_not_ready": "ikke klar"
         },
         "preferences": {
             "room_list_heading": "Romliste",

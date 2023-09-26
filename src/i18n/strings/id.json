@@ -344,7 +344,6 @@
     "Resume": "Lanjutkan",
     "Information": "Informasi",
     "Widgets": "Widget",
-    "ready": "siap",
     "Algorithm:": "Algoritma:",
     "Unencrypted": "Tidak Dienkripsi",
     "Bridges": "Jembatan",
@@ -511,9 +510,6 @@
     "Could not connect to identity server": "Tidak dapat menghubung ke server identitas",
     "Not a valid identity server (status code %(code)s)": "Bukan server identitas yang absah (kode status %(code)s)",
     "Identity server URL must be HTTPS": "URL server identitas harus HTTPS",
-    "not ready": "belum siap",
-    "Secret storage:": "Penyimpanan rahasia:",
-    "in account data": "di data akun",
     "Back up your keys before signing out to avoid losing them.": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
     "Your keys are <b>not being backed up from this session</b>.": "Kunci Anda <b>tidak dicadangan dari sesi ini</b>.",
     "Backup version:": "Versi cadangan:",
@@ -2406,7 +2402,11 @@
             "backup_key_stored_status": "Cadangan kunci disimpan:",
             "cross_signing_not_stored": "tidak disimpan",
             "backup_key_cached_status": "Cadangan kunci dicache:",
-            "4s_public_key_status": "Kunci publik penyimpanan rahasia:"
+            "4s_public_key_status": "Kunci publik penyimpanan rahasia:",
+            "4s_public_key_in_account_data": "di data akun",
+            "secret_storage_status": "Penyimpanan rahasia:",
+            "secret_storage_ready": "siap",
+            "secret_storage_not_ready": "belum siap"
         },
         "preferences": {
             "room_list_heading": "Daftar ruangan",

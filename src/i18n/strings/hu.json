@@ -515,7 +515,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "<oldVersion /> verzióról <newVersion /> verzióra fogja fejleszteni a szobát.",
     "<userName/> wants to chat": "<userName/> csevegni szeretne",
     "Start chatting": "Beszélgetés elkezdése",
-    "in account data": "fiókadatokban",
     "Unable to set up secret storage": "A biztonsági tárolót nem sikerült beállítani",
     "Hide verified sessions": "Ellenőrzött munkamenetek eltakarása",
     "%(count)s verified sessions": {
@@ -714,9 +713,6 @@
     "Room settings": "Szoba beállítások",
     "Backup version:": "Mentés verziója:",
     "Algorithm:": "Algoritmus:",
-    "Secret storage:": "Titkos tároló:",
-    "ready": "kész",
-    "not ready": "nincs kész",
     "Start a conversation with someone using their name or username (like <userId/>).": "Indíts beszélgetést valakivel és használd hozzá a nevét vagy a felhasználói nevét (mint <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Hívj meg valakit a nevét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a szobát</a>.",
     "Add widgets, bridges & bots": "Kisalkalmazások, hidak, és botok hozzáadása",
@@ -2341,7 +2337,11 @@
             "backup_key_stored_status": "Tárolt mentési kulcs:",
             "cross_signing_not_stored": "nincs tárolva",
             "backup_key_cached_status": "Gyorsítótárazott mentési kulcs:",
-            "4s_public_key_status": "Titkos tároló nyilvános kulcsa:"
+            "4s_public_key_status": "Titkos tároló nyilvános kulcsa:",
+            "4s_public_key_in_account_data": "fiókadatokban",
+            "secret_storage_status": "Titkos tároló:",
+            "secret_storage_ready": "kész",
+            "secret_storage_not_ready": "nincs kész"
         },
         "preferences": {
             "room_list_heading": "Szobalista",

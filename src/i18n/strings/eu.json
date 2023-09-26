@@ -506,7 +506,6 @@
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
-    "in account data": "kontuaren datuetan",
     "Unencrypted": "Zifratu gabe",
     "Close preview": "Itxi aurrebista",
     "<userName/> wants to chat": "<userName/> erabiltzaileak txateatu nahi du",
@@ -1045,7 +1044,8 @@
             "backup_key_well_formed": "ongi osatua",
             "backup_key_unexpected_type": "ustekabeko mota",
             "cross_signing_not_stored": "gorde gabe",
-            "4s_public_key_status": "Biltegi sekretuko gako publikoa:"
+            "4s_public_key_status": "Biltegi sekretuko gako publikoa:",
+            "4s_public_key_in_account_data": "kontuaren datuetan"
         },
         "preferences": {
             "room_list_heading": "Gelen zerrenda",

@@ -513,7 +513,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Solitamente ciò influisce solo come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, <a>segnala un errore</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Aggiornerai questa stanza dalla <oldVersion /> alla <newVersion />.",
-    "in account data": "nei dati dell'account",
     "<userName/> wants to chat": "<userName/> vuole chattare",
     "Start chatting": "Inizia a chattare",
     "Hide verified sessions": "Nascondi sessioni verificate",
@@ -712,9 +711,6 @@
     "Information": "Informazione",
     "Backup version:": "Versione backup:",
     "Algorithm:": "Algoritmo:",
-    "Secret storage:": "Archivio segreto:",
-    "ready": "pronto",
-    "not ready": "non pronto",
     "Not encrypted": "Non cifrato",
     "Room settings": "Impostazioni stanza",
     "Widgets": "Widget",
@@ -2406,7 +2402,11 @@
             "backup_key_stored_status": "Chiave di backup salvata:",
             "cross_signing_not_stored": "non salvato",
             "backup_key_cached_status": "Chiave di backup in cache:",
-            "4s_public_key_status": "Chiave pubblica dell'archivio segreto:"
+            "4s_public_key_status": "Chiave pubblica dell'archivio segreto:",
+            "4s_public_key_in_account_data": "nei dati dell'account",
+            "secret_storage_status": "Archivio segreto:",
+            "secret_storage_ready": "pronto",
+            "secret_storage_not_ready": "non pronto"
         },
         "preferences": {
             "room_list_heading": "Elenco stanze",

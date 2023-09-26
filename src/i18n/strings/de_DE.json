@@ -477,7 +477,6 @@
     "Uploaded sound": "Hochgeladener Ton",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "in account data": "in den Kontodaten",
     "Your keys are <b>not being backed up from this session</b>.": "Deine Schlüssel werden von dieser Sitzung <b>nicht gesichert</b>.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Zurzeit verwendest du <server></server>, um Kontakte zu finden und von anderen gefunden zu werden. Du kannst deinen Identitäts-Server nachfolgend wechseln.",
     "Error changing power level requirement": "Fehler beim Ändern der Anforderungen für Benutzerrechte",
@@ -714,9 +713,6 @@
     "Room settings": "Raumeinstellungen",
     "Backup version:": "Version der Sicherung:",
     "Algorithm:": "Algorithmus:",
-    "Secret storage:": "Sicherer Speicher:",
-    "ready": "bereit",
-    "not ready": "nicht bereit",
     "Widgets": "Widgets",
     "Edit widgets, bridges & bots": "Widgets, Brücken und Bots bearbeiten",
     "Add widgets, bridges & bots": "Widgets, Brücken und Bots hinzufügen",
@@ -2406,7 +2402,11 @@
             "backup_key_stored_status": "Sicherungsschlüssel gespeichert:",
             "cross_signing_not_stored": "nicht gespeichert",
             "backup_key_cached_status": "Sicherungsschlüssel zwischengespeichert:",
-            "4s_public_key_status": "Öffentlicher Schlüssel des sicheren Speichers:"
+            "4s_public_key_status": "Öffentlicher Schlüssel des sicheren Speichers:",
+            "4s_public_key_in_account_data": "in den Kontodaten",
+            "secret_storage_status": "Sicherer Speicher:",
+            "secret_storage_ready": "bereit",
+            "secret_storage_not_ready": "nicht bereit"
         },
         "preferences": {
             "room_list_heading": "Raumliste",
