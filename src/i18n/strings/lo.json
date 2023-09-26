@@ -315,15 +315,6 @@
     "Your email address hasn't been verified yet": "ທີ່ຢູ່ອີເມວຂອງທ່ານຍັງບໍ່ໄດ້ຖືກຢືນຢັນເທື່ອ",
     "Unable to share email address": "ບໍ່ສາມາດແບ່ງປັນທີ່ຢູ່ອີເມວໄດ້",
     "Unable to revoke sharing for email address": "ບໍ່ສາມາດຖອນການແບ່ງປັນສໍາລັບທີ່ຢູ່ອີເມວໄດ້",
-    "Unknown failure": "ຄວາມລົ້ມເຫຼວທີ່ບໍ່ຮູ້ສາເຫດ",
-    "Failed to update the join rules": "ອັບເດດກົດລະບຽບການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງລະດັບສິດຂອງຜູ້ໃຊ້. ກວດໃຫ້ແນ່ໃຈວ່າເຈົ້າມີສິດອະນຸຍາດພຽງພໍແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
-    "Error changing power level": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງລະດັບສິດ",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງຂໍ້ກຳນົດລະດັບສິດຂອງຫ້ອງ. ກວດໃຫ້ແນ່ໃຈວ່າເຈົ້າມີສິດອະນຸຍາດພຽງພໍແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
-    "Error changing power level requirement": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງຄວາມຕ້ອງການລະດັບພະລັງງານ",
-    "Reason": "ເຫດຜົນ",
-    "Banned by %(displayName)s": "ຫ້າມໂດຍ %(displayName)s",
-    "Failed to unban": "ຍົກເລີກບໍ່ສໍາເລັດ",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
@@ -2675,7 +2666,14 @@
             "title": "ພາລະບົດບາດ & ການອະນຸຍາດ",
             "permissions_section": "ການອະນຸຍາດ",
             "permissions_section_description_space": "ເລືອກພາລະບົດບາດທີ່ຕ້ອງການໃນການປ່ຽນແປງພາກສ່ວນຕ່າງໆຂອງພຶ້ນທີ່",
-            "permissions_section_description_room": "ເລືອກພາລະບົດບາດທີ່ຕ້ອງການໃນການປ່ຽນແປງພາກສ່ວນຕ່າງໆຂອງຫ້ອງ"
+            "permissions_section_description_room": "ເລືອກພາລະບົດບາດທີ່ຕ້ອງການໃນການປ່ຽນແປງພາກສ່ວນຕ່າງໆຂອງຫ້ອງ",
+            "error_unbanning": "ຍົກເລີກບໍ່ສໍາເລັດ",
+            "banned_by": "ຫ້າມໂດຍ %(displayName)s",
+            "ban_reason": "ເຫດຜົນ",
+            "error_changing_pl_reqs_title": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງຄວາມຕ້ອງການລະດັບພະລັງງານ",
+            "error_changing_pl_reqs_description": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງຂໍ້ກຳນົດລະດັບສິດຂອງຫ້ອງ. ກວດໃຫ້ແນ່ໃຈວ່າເຈົ້າມີສິດອະນຸຍາດພຽງພໍແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
+            "error_changing_pl_title": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງລະດັບສິດ",
+            "error_changing_pl_description": "ເກີດຄວາມຜິດພາດໃນການປ່ຽນແປງລະດັບສິດຂອງຜູ້ໃຊ້. ກວດໃຫ້ແນ່ໃຈວ່າເຈົ້າມີສິດອະນຸຍາດພຽງພໍແລ້ວລອງໃໝ່ອີກຄັ້ງ."
         },
         "security": {
             "strict_encryption": "ບໍ່ສົ່ງຂໍ້ຄວາມເຂົ້າລະຫັດໄປຫາລະບົບທີ່ບໍ່ໄດ້ຢືນຢັນໃນຫ້ອງນີ້ຈາກລະບົບນີ້",
@@ -2726,7 +2724,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
                 "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "ອັບເດດກົດລະບຽບການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
+            "error_join_rule_change_unknown": "ຄວາມລົ້ມເຫຼວທີ່ບໍ່ຮູ້ສາເຫດ"
         },
         "general": {
             "publish_toggle": "ເຜີຍແຜ່ຫ້ອງນີ້ຕໍ່ສາທາລະນະຢູ່ໃນຄຳນຳຫ້ອງຂອງ %(domain)s ບໍ?",

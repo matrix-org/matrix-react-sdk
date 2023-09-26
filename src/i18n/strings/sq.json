@@ -53,7 +53,6 @@
     "Rooms": "Dhoma",
     "PM": "PM",
     "AM": "AM",
-    "Reason": "Arsye",
     "Incorrect verification code": "Kod verifikimi i pasaktë",
     "Authentication": "Mirëfilltësim",
     "not specified": "e papërcaktuar",
@@ -75,7 +74,6 @@
     "Forget room": "Harroje dhomën",
     "Low priority": "Me përparësi të ulët",
     "%(roomName)s does not exist.": "%(roomName)s s’ekziston.",
-    "Banned by %(displayName)s": "Dëbuar nga %(displayName)s",
     "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
     "Add an Integration": "Shtoni një Integrim",
     "Email address": "Adresë email",
@@ -117,7 +115,6 @@
     "Failed to mute user": "S’u arrit t’i hiqej zëri përdoruesit",
     "Invited": "I ftuar",
     "Replying": "Po përgjigjet",
-    "Failed to unban": "S’u arrit t’i hiqej dëbimi",
     "Jump to first unread message.": "Hidhu te mesazhi i parë i palexuar.",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
@@ -400,11 +397,7 @@
     "This invite to %(roomName)s was sent to %(email)s": "Kjo ftesë për %(roomName)s u dërgua te %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Që të merrni ftesa drejt e në %(brand)s, përdorni një shërbyes identitetesh, te Rregullimet.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Që të merrni ftesa drejt e te %(brand)s, ndajeni me të tjerët këtë email, te Rregullimet.",
-    "Error changing power level": "Gabim në ndryshimin e shkallës së pushtetit",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ndodhi një gabim gjatë ndryshimit të shkallës së pushtetit të përdoruesit. Sigurohuni se keni leje të mjaftueshme dhe riprovoni.",
     "Italics": "Të pjerrëta",
-    "Error changing power level requirement": "Gabim në ndryshimin e domosdoshmërisë për shkallë pushteti",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ndodhi një gabim gjatë ndryshimit të domosdoshmërive për shkallë pushteti në dhomë. Sigurohuni se keni leje të mjaftueshme dhe riprovoni.",
     "No recent messages by %(user)s found": "S’u gjetën mesazhe së fundi nga %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Provoni të ngjiteni sipër në rrjedhën kohore, që të shihni nëse ka patur të tillë më herët.",
     "Remove recent messages by %(user)s": "Hiq mesazhe së fundi nga %(user)s",
@@ -1104,8 +1097,6 @@
     "Thumbs up": "Thumbs up",
     "Some encryption parameters have been changed.": "Janë ndryshuar disa parametra fshehtëzimi.",
     "Role in <RoomName/>": "Rol në <RoomName/>",
-    "Unknown failure": "Dështim i panjohur",
-    "Failed to update the join rules": "S’u arrit të përditësohen rregulla hyrjeje",
     "Message didn't send. Click for info.": "Mesazhi s’u dërgua. Klikoni për hollësi.",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
@@ -1416,8 +1407,6 @@
     "Freedom": "Liri",
     "Video call (Jitsi)": "Thirrje me video (Jitsi)",
     "Show formatting": "Shfaq formatim",
-    "Call type": "Lloj thirrjeje",
-    "You do not have sufficient permissions to change this.": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "Hide formatting": "Fshihe formatimin",
@@ -1428,8 +1417,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ose %(recoveryFile)s",
     "You're in": "Kaq qe",
     "toggle event": "shfaqe/fshihe aktin",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s është i fshehtëzuar skaj-më-skaj, por aktualisht është i kufizuar në numra më të vegjël përdoruesish.",
-    "Enable %(brand)s as an additional calling option in this room": "Aktivizojeni %(brand)s si një mundësi shtesë thirrjesh në këtë dhomë",
     "Send email": "Dërgo email",
     "Sign out of all devices": "Dilni nga llogaria në krejt pajisjet",
     "Confirm new password": "Ripohoni fjalëkalimin e ri",
@@ -3152,7 +3139,14 @@
             "permissions_section_description_room": "Përzgjidhni rolet e domosdoshme për të ndryshuar anë të ndryshme të dhomës",
             "add_privileged_user_heading": "Shtoni përdorues të privilegjuar",
             "add_privileged_user_description": "Jepini një ose disa përdoruesve më tepër privilegje në këtë dhomë",
-            "add_privileged_user_filter_placeholder": "Kërkoni për përdorues në këtë dhomë…"
+            "add_privileged_user_filter_placeholder": "Kërkoni për përdorues në këtë dhomë…",
+            "error_unbanning": "S’u arrit t’i hiqej dëbimi",
+            "banned_by": "Dëbuar nga %(displayName)s",
+            "ban_reason": "Arsye",
+            "error_changing_pl_reqs_title": "Gabim në ndryshimin e domosdoshmërisë për shkallë pushteti",
+            "error_changing_pl_reqs_description": "Ndodhi një gabim gjatë ndryshimit të domosdoshmërive për shkallë pushteti në dhomë. Sigurohuni se keni leje të mjaftueshme dhe riprovoni.",
+            "error_changing_pl_title": "Gabim në ndryshimin e shkallës së pushtetit",
+            "error_changing_pl_description": "Ndodhi një gabim gjatë ndryshimit të shkallës së pushtetit të përdoruesit. Sigurohuni se keni leje të mjaftueshme dhe riprovoni."
         },
         "security": {
             "strict_encryption": "Mos dërgo kurrë prej këtij sesioni mesazhe të fshehtëzuar te sesione të paverifikuar në këtë dhomë",
@@ -3204,7 +3198,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Po përditësohet hapësirë…",
                 "other": "Po përditësohen hapësira… (%(progress)s nga %(count)s) gjithsej"
-            }
+            },
+            "error_join_rule_change_title": "S’u arrit të përditësohen rregulla hyrjeje",
+            "error_join_rule_change_unknown": "Dështim i panjohur"
         },
         "general": {
             "publish_toggle": "Të bëhet publike kjo dhomë te drejtoria e dhomave %(domain)s?",
@@ -3267,6 +3263,12 @@
             "custom_sound_prompt": "Caktoni një tingull të ri vetjak",
             "upload_sound_label": "Ngarkoni tingull vetjak",
             "browse_button": "Shfletoni"
+        },
+        "voip": {
+            "enable_element_call_label": "Aktivizojeni %(brand)s si një mundësi shtesë thirrjesh në këtë dhomë",
+            "enable_element_call_caption": "%(brand)s është i fshehtëzuar skaj-më-skaj, por aktualisht është i kufizuar në numra më të vegjël përdoruesish.",
+            "enable_element_call_no_permissions_tooltip": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
+            "call_type_section": "Lloj thirrjeje"
         }
     },
     "encryption": {

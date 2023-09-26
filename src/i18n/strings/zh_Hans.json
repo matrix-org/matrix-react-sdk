@@ -10,7 +10,6 @@
     "Failed to reject invite": "拒绝邀请失败",
     "Failed to reject invitation": "拒绝邀请失败",
     "Failed to set display name": "设置显示名称失败",
-    "Failed to unban": "解除封禁失败",
     "Filter room members": "过滤房间成员",
     "Forget room": "忘记房间",
     "Historical": "历史",
@@ -46,7 +45,6 @@
     "unknown error code": "未知错误代码",
     "Low priority": "低优先级",
     "No more results": "没有更多结果",
-    "Reason": "理由",
     "Reject invitation": "拒绝邀请",
     "Warning!": "警告！",
     "Connectivity to the server has been lost.": "到服务器的连接已经丢失。",
@@ -112,7 +110,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s %(monthName)s %(day)s，%(weekDayName)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s %(monthName)s %(day)s %(time)s，%(weekDayName)s",
     "Replying": "正在回复",
-    "Banned by %(displayName)s": "被 %(displayName)s 封禁",
     "Restricted": "受限",
     "You don't currently have any stickerpacks enabled": "你目前未启用任何贴纸包",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "如果你是房间中最后一位拥有权限的用户，在你降低自己的权限等级后将无法撤销此修改，你将无法重新获得权限。",
@@ -334,10 +331,6 @@
     "Lock": "锁",
     "Show more": "显示更多",
     "This backup is trusted because it has been restored on this session": "此备份是受信任的因为它恢复到了此会话上",
-    "Error changing power level requirement": "更改权力级别需求时出错",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "更改此房间的权力级别需求时出错。请确保你有足够的权限后重试。",
-    "Error changing power level": "更改权力级别时出错",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "更改此用户的权力级别时出错。请确保你有足够权限后重试。",
     "Unable to share email address": "无法共享邮件地址",
     "Your email address hasn't been verified yet": "你的邮件地址尚未被验证",
     "Click the link in the email you received to verify and then click continue again.": "点击你所收到的电子邮件中的链接进行验证，然后再次点击继续。",
@@ -1107,8 +1100,6 @@
     "Results": "结果",
     "Some encryption parameters have been changed.": "一些加密参数已更改。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
-    "Unknown failure": "未知失败",
-    "Failed to update the join rules": "未能更新加入列表",
     "Message didn't send. Click for info.": "消息没有发送。点击查看信息。",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
@@ -1389,10 +1380,6 @@
     "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Change layout": "更改布局",
-    "Call type": "通话类型",
-    "You do not have sufficient permissions to change this.": "你没有足够的权限更改这个。",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",
-    "Enable %(brand)s as an additional calling option in this room": "启用%(brand)s作为此房间的额外通话选项",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -2895,7 +2882,14 @@
             "permissions_section_description_room": "选择更改房间各个部分所需的角色",
             "add_privileged_user_heading": "添加特权用户",
             "add_privileged_user_description": "授权给该房间内的某人或某些人",
-            "add_privileged_user_filter_placeholder": "搜索该房间内的用户……"
+            "add_privileged_user_filter_placeholder": "搜索该房间内的用户……",
+            "error_unbanning": "解除封禁失败",
+            "banned_by": "被 %(displayName)s 封禁",
+            "ban_reason": "理由",
+            "error_changing_pl_reqs_title": "更改权力级别需求时出错",
+            "error_changing_pl_reqs_description": "更改此房间的权力级别需求时出错。请确保你有足够的权限后重试。",
+            "error_changing_pl_title": "更改权力级别时出错",
+            "error_changing_pl_description": "更改此用户的权力级别时出错。请确保你有足够权限后重试。"
         },
         "security": {
             "strict_encryption": "永不从此会话向此房间中未验证的会话发送加密消息",
@@ -2947,7 +2941,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "other": "正在更新房间… （%(count)s 中的 %(progress)s）",
                 "one": "正在更新空间…"
-            }
+            },
+            "error_join_rule_change_title": "未能更新加入列表",
+            "error_join_rule_change_unknown": "未知失败"
         },
         "general": {
             "publish_toggle": "是否将此房间发布至 %(domain)s 的房间目录中？",
@@ -3008,6 +3004,12 @@
             "notification_sound": "通知声音",
             "custom_sound_prompt": "设置新的自定义声音",
             "browse_button": "浏览"
+        },
+        "voip": {
+            "enable_element_call_label": "启用%(brand)s作为此房间的额外通话选项",
+            "enable_element_call_caption": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",
+            "enable_element_call_no_permissions_tooltip": "你没有足够的权限更改这个。",
+            "call_type_section": "通话类型"
         }
     },
     "encryption": {

@@ -42,7 +42,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s kl. %(time)s",
     "Restricted": "Begrenset",
     "Moderator": "Moderator",
-    "Reason": "Årsak",
     "Dog": "Hund",
     "Cat": "Katt",
     "Horse": "Hest",
@@ -130,7 +129,6 @@
     "Ball": "Ball",
     "Guitar": "Gitar",
     "Deactivate account": "Deaktiver kontoen",
-    "Banned by %(displayName)s": "Bannlyst av %(displayName)s",
     "Edit message": "Rediger meldingen",
     "Unencrypted": "Ukryptert",
     "Deactivate user?": "Vil du deaktivere brukeren?",
@@ -1409,7 +1407,9 @@
             "send_event_type": "Send %(eventType)s-hendelser",
             "title": "Roller og tillatelser",
             "permissions_section": "Tillatelser",
-            "permissions_section_description_room": "Velg rollene som kreves for å endre på diverse deler av rommet"
+            "permissions_section_description_room": "Velg rollene som kreves for å endre på diverse deler av rommet",
+            "banned_by": "Bannlyst av %(displayName)s",
+            "ban_reason": "Årsak"
         },
         "security": {
             "strict_encryption": "Aldri send krypterte meldinger til uverifiserte økter i dette rommet fra denne økten",

@@ -48,7 +48,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s %(time)s",
-    "Reason": "Priežastis",
     "Incorrect verification code": "Neteisingas patvirtinimo kodas",
     "Warning!": "Įspėjimas!",
     "Failed to set display name": "Nepavyko nustatyti rodomo vardo",
@@ -129,7 +128,6 @@
     },
     "This room has been replaced and is no longer active.": "Šis kambarys buvo pakeistas ir daugiau nebėra aktyvus.",
     "You do not have permission to post to this room": "Jūs neturite leidimų rašyti šiame kambaryje",
-    "Failed to unban": "Nepavyko atblokuoti",
     "not specified": "nenurodyta",
     "Home": "Pradžia",
     "And %(count)s more...": {
@@ -332,10 +330,6 @@
     "Anchor": "Inkaras",
     "Headphones": "Ausinės",
     "Folder": "Aplankas",
-    "Error changing power level requirement": "Klaida keičiant galios lygio reikalavimą",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Keičiant kambario galios lygio reikalavimus įvyko klaida. Įsitikinkite, kad turite tam leidimą ir bandykite dar kartą.",
-    "Error changing power level": "Klaida keičiant galios lygį",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Keičiant vartotojo galios lygį įvyko klaida. Įsitikinkite, kad turite tam leidimą ir bandykite dar kartą.",
     "This user has not verified all of their sessions.": "Šis vartotojas nepatvirtino visų savo seansų.",
     "You have not verified this user.": "Jūs nepatvirtinote šio vartotojo.",
     "You have verified this user. This user has verified all of their sessions.": "Jūs patvirtinote šį vartotoją. Šis vartotojas patvirtino visus savo seansus.",
@@ -842,9 +836,6 @@
     "You were banned by %(memberName)s": "Jus užblokavo %(memberName)s",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s uždraudė jums lankytis %(roomName)s",
     "Unable to revoke sharing for email address": "Nepavyksta atšaukti el. pašto adreso bendrinimo",
-    "Unknown failure": "Nežinomas sutrikimas",
-    "Failed to update the join rules": "Nepavyko atnaujinti prisijungimo taisyklių",
-    "Banned by %(displayName)s": "Užblokuotas nuo %(displayName)s",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -2083,7 +2074,14 @@
             "title": "Rolės ir Leidimai",
             "permissions_section": "Leidimai",
             "permissions_section_description_space": "Pasirinkti roles, reikalingas įvairioms erdvės dalims keisti",
-            "permissions_section_description_room": "Pasirinkite įvairių kambario dalių keitimui reikalingas roles"
+            "permissions_section_description_room": "Pasirinkite įvairių kambario dalių keitimui reikalingas roles",
+            "error_unbanning": "Nepavyko atblokuoti",
+            "banned_by": "Užblokuotas nuo %(displayName)s",
+            "ban_reason": "Priežastis",
+            "error_changing_pl_reqs_title": "Klaida keičiant galios lygio reikalavimą",
+            "error_changing_pl_reqs_description": "Keičiant kambario galios lygio reikalavimus įvyko klaida. Įsitikinkite, kad turite tam leidimą ir bandykite dar kartą.",
+            "error_changing_pl_title": "Klaida keičiant galios lygį",
+            "error_changing_pl_description": "Keičiant vartotojo galios lygį įvyko klaida. Įsitikinkite, kad turite tam leidimą ir bandykite dar kartą."
         },
         "security": {
             "strict_encryption": "Niekada nesiųsti šifruotų žinučių nepatvirtintiems seansams šiame kambaryje iš šio seanso",
@@ -2135,7 +2133,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Atnaujinama erdvė...",
                 "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Nepavyko atnaujinti prisijungimo taisyklių",
+            "error_join_rule_change_unknown": "Nežinomas sutrikimas"
         },
         "general": {
             "publish_toggle": "Paskelbti šį kambarį viešai %(domain)s kambarių kataloge?",

@@ -28,7 +28,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Bị hạn chế",
     "Moderator": "Điều phối viên",
-    "Reason": "Lý do",
     "%(items)s and %(lastItem)s": "%(items)s và %(lastItem)s",
     "Explore rooms": "Khám phá các phòng",
     "Vietnam": "Việt Nam",
@@ -681,12 +680,6 @@
     "This room has been replaced and is no longer active.": "Phòng này đã được thay thế và không còn hoạt động nữa.",
     "The conversation continues here.": "Cuộc trò chuyện tiếp tục tại đây.",
     "Send voice message": "Gửi tin nhắn thoại",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi mức năng lượng của người dùng. Đảm bảo bạn có đủ quyền và thử lại.",
-    "Error changing power level": "Lỗi khi thay đổi mức công suất",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Đã xảy ra lỗi khi thay đổi yêu cầu mức công suất của phòng. Đảm bảo bạn có đủ quyền và thử lại.",
-    "Error changing power level requirement": "Lỗi khi thay đổi yêu cầu mức nguồn",
-    "Banned by %(displayName)s": "Bị cấm bởi %(displayName)s",
-    "Failed to unban": "Không thể bỏ cấm",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
     "They'll still be able to access whatever you're not an admin of.": "Họ sẽ vẫn có thể truy cập vào bất cứ gì mà bạn không phải là quản trị viên.",
@@ -863,8 +856,6 @@
     "Your email address hasn't been verified yet": "Địa chỉ thư điện tử của bạn chưa được xác minh",
     "Unable to share email address": "Không thể chia sẻ địa chỉ thư điện tử",
     "Unable to revoke sharing for email address": "Không thể thu hồi chia sẻ cho địa chỉ thư điện tử",
-    "Unknown failure": "Thất bại không xác định",
-    "Failed to update the join rules": "Cập nhật quy tắc tham gia thất bại",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
@@ -1234,13 +1225,11 @@
     "To proceed, please accept the verification request on your other device.": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
-    "You do not have sufficient permissions to change this.": "Bạn không có đủ quyền để thay đổi cái này.",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
     "This invite was sent to %(email)s": "Lời mời này đã được gửi tới %(email)s",
     "This invite was sent to %(email)s which is not associated with your account": "Lời mời này đã được gửi đến %(email)s nhưng không liên kết với tài khoản của bạn",
-    "Call type": "Loại cuộc gọi",
     "Unsent": "Chưa gửi",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
@@ -1248,7 +1237,6 @@
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
     "New video room": "Tạo phòng truyền hình",
     "New room": "Tạo phòng",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "The scanned code is invalid.": "Mã vừa quét là không hợp lệ.",
     "Sign out of all devices": "Đăng xuất khỏi mọi thiết bị",
@@ -1331,7 +1319,6 @@
     "Disinvite from space": "Hủy lời mời vào space",
     "You can still join here.": "Bạn vẫn có thể tham gia.",
     "Forget this space": "Quên space này",
-    "Enable %(brand)s as an additional calling option in this room": "Cho phép %(brand)s được làm tùy chọn gọi bổ sung trong phòng này",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
@@ -1396,16 +1383,7 @@
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "Declining…": "Đang từ chối…",
-    "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
-    "Email Notifications": "Thông báo qua thư điện tử",
-    "Reset to default settings": "Đặt lại về cài đặt mặc định",
-    "This setting will be applied by default to all your rooms.": "Cài đặt này sẽ được áp dụng theo mặc định cho các tất cả các phòng của bạn.",
-    "Notify when someone uses a keyword": "Thông báo khi có người dùng một từ khóa",
-    "Messages sent by bots": "Tin nhắn bởi bot",
-    "Invited to a room": "Được mời vào phòng",
-    "New room activity, upgrades and status messages occur": "Hoạt động mới trong phòng, nâng cấp và tin nhắn trạng thái",
-    "Mark all messages as read": "Đánh dấu đã đọc cho mọi tin nhắn",
     "common": {
         "about": "Giới thiệu",
         "analytics": "Về dữ liệu phân tích",
@@ -1967,7 +1945,15 @@
             "error_title": "Không thể bật thông báo",
             "error_updating": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
             "push_targets": "Mục tiêu thông báo",
-            "error_loading": "Đã xảy ra lỗi khi tải cài đặt thông báo của bạn."
+            "error_loading": "Đã xảy ra lỗi khi tải cài đặt thông báo của bạn.",
+            "default_setting_description": "Cài đặt này sẽ được áp dụng theo mặc định cho các tất cả các phòng của bạn.",
+            "play_sound_for_section": "Phát âm thanh cho",
+            "invites": "Được mời vào phòng",
+            "room_activity": "Hoạt động mới trong phòng, nâng cấp và tin nhắn trạng thái",
+            "notices": "Tin nhắn bởi bot",
+            "notify_keyword": "Thông báo khi có người dùng một từ khóa",
+            "quick_actions_mark_all_read": "Đánh dấu đã đọc cho mọi tin nhắn",
+            "quick_actions_reset": "Đặt lại về cài đặt mặc định"
         },
         "appearance": {
             "layout_irc": "IRC (thử nghiệm)",
@@ -2982,7 +2968,14 @@
             "permissions_section_description_room": "Chọn vai trò được yêu cầu để thay đổi thiết lập của phòng",
             "add_privileged_user_heading": "Thêm người dùng quyền lực",
             "add_privileged_user_description": "Cho người trong phòng này nhiều quyền hơn",
-            "add_privileged_user_filter_placeholder": "Tìm người trong phòng…"
+            "add_privileged_user_filter_placeholder": "Tìm người trong phòng…",
+            "error_unbanning": "Không thể bỏ cấm",
+            "banned_by": "Bị cấm bởi %(displayName)s",
+            "ban_reason": "Lý do",
+            "error_changing_pl_reqs_title": "Lỗi khi thay đổi yêu cầu mức nguồn",
+            "error_changing_pl_reqs_description": "Đã xảy ra lỗi khi thay đổi yêu cầu mức công suất của phòng. Đảm bảo bạn có đủ quyền và thử lại.",
+            "error_changing_pl_title": "Lỗi khi thay đổi mức công suất",
+            "error_changing_pl_description": "Đã xảy ra lỗi khi thay đổi mức năng lượng của người dùng. Đảm bảo bạn có đủ quyền và thử lại."
         },
         "security": {
             "strict_encryption": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực trong phòng này từ phiên này",
@@ -3037,7 +3030,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Đang cập nhật space…",
                 "other": "Đang cập nhật space… (%(progress)s trên %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Cập nhật quy tắc tham gia thất bại",
+            "error_join_rule_change_unknown": "Thất bại không xác định"
         },
         "general": {
             "publish_toggle": "Xuất bản phòng này cho công chúng trong thư mục phòng của %(domain)s?",
@@ -3100,6 +3095,12 @@
             "custom_sound_prompt": "Đặt âm thanh tùy chỉnh mới",
             "upload_sound_label": "Tải lên âm thanh tùy chỉnh",
             "browse_button": "Duyệt qua"
+        },
+        "voip": {
+            "enable_element_call_label": "Cho phép %(brand)s được làm tùy chọn gọi bổ sung trong phòng này",
+            "enable_element_call_caption": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
+            "enable_element_call_no_permissions_tooltip": "Bạn không có đủ quyền để thay đổi cái này.",
+            "call_type_section": "Loại cuộc gọi"
         }
     },
     "encryption": {
@@ -3891,7 +3892,8 @@
         "all_messages_description": "Nhận thông báo cho mọi tin nhắn",
         "mentions_and_keywords": "@đề cập & từ khóa",
         "mentions_and_keywords_description": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
-        "mute_description": "Bạn sẽ không nhận bất kỳ thông báo nào"
+        "mute_description": "Bạn sẽ không nhận bất kỳ thông báo nào",
+        "email_pusher_app_display_name": "Thông báo qua thư điện tử"
     },
     "mobile_guide": {
         "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",

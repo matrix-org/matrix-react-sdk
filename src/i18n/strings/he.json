@@ -304,7 +304,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
     "Verify your other session using one of the options below.": "אמתו את ההתחברות האחרת שלכם דרך אחת מהאפשרויות למטה.",
     "You signed in to a new session without verifying it:": "נכנסתם דרך התחברות חדשה מבלי לאמת אותה:",
-    "Reason": "סיבה",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
     "Failed to set display name": "עדכון שם תצוגה נכשל",
@@ -645,12 +644,6 @@
     "Your email address hasn't been verified yet": "כתובת הדוא\"ל שלך עדיין לא אומתה",
     "Unable to share email address": "לא ניתן לשתף את כתובת הדוא\"ל",
     "Unable to revoke sharing for email address": "לא ניתן לבטל את השיתוף לכתובת הדוא\"ל",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "אירעה שגיאה בשינוי רמת ההספק של המשתמש. ודא שיש לך הרשאות מספיקות ונסה שוב.",
-    "Error changing power level": "שגיאה בשינוי דרגת הניהול",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "אירעה שגיאה בשינוי דרישות רמת הניהול של החדר. ודא שיש לך הרשאות מספיקות ונסה שוב.",
-    "Error changing power level requirement": "שגיאה בשינוי דרישת דרגת ניהול",
-    "Banned by %(displayName)s": "נחסם על ידי %(displayName)s",
-    "Failed to unban": "שגיאה בהסרת חסימה",
     "Cancel search": "בטל חיפוש",
     "Can't load this message": "לא ניתן לטעון הודעה זו",
     "Submit logs": "הגש יומנים",
@@ -957,7 +950,6 @@
     "Send voice message": "שלח הודעה קולית",
     "Your message was sent": "ההודעה שלך נשלחה",
     "Copy link to thread": "העתק קישור לשרשור",
-    "Unknown failure": "כשל לא ידוע",
     "Create a space": "צור מרחב עבודה",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
@@ -2242,7 +2234,14 @@
             "permissions_section_description_room": "בחר את התפקידים הנדרשים לשינוי חלקים שונים של החדר",
             "add_privileged_user_heading": "הוספת משתמשים מורשים",
             "add_privileged_user_description": "הענק למשתמש או מספר משתמשים בחדר זה הרשאות נוספות",
-            "add_privileged_user_filter_placeholder": "חיפוש משתמשים בחדר זה…"
+            "add_privileged_user_filter_placeholder": "חיפוש משתמשים בחדר זה…",
+            "error_unbanning": "שגיאה בהסרת חסימה",
+            "banned_by": "נחסם על ידי %(displayName)s",
+            "ban_reason": "סיבה",
+            "error_changing_pl_reqs_title": "שגיאה בשינוי דרישת דרגת ניהול",
+            "error_changing_pl_reqs_description": "אירעה שגיאה בשינוי דרישות רמת הניהול של החדר. ודא שיש לך הרשאות מספיקות ונסה שוב.",
+            "error_changing_pl_title": "שגיאה בשינוי דרגת הניהול",
+            "error_changing_pl_description": "אירעה שגיאה בשינוי רמת ההספק של המשתמש. ודא שיש לך הרשאות מספיקות ונסה שוב."
         },
         "security": {
             "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו",
@@ -2282,7 +2281,8 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "מעדכן מרחב עבודה...",
                 "other": "מעדכן את מרחבי העבודה...%(progress)s מתוך %(count)s"
-            }
+            },
+            "error_join_rule_change_unknown": "כשל לא ידוע"
         },
         "general": {
             "publish_toggle": "לפרסם את החדר הזה לציבור במדריך החדרים של%(domain)s?",

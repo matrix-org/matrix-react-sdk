@@ -20,7 +20,6 @@
     "Failed to reject invite": "Falló al rechazar invitación",
     "Failed to reject invitation": "Falló al rechazar la invitación",
     "Failed to set display name": "No se ha podido cambiar el nombre público",
-    "Failed to unban": "No se pudo quitar veto",
     "Filter room members": "Filtrar miembros de la sala",
     "Forget room": "Olvidar sala",
     "Historical": "Historial",
@@ -55,7 +54,6 @@
     "not specified": "sin especificar",
     "No more results": "No hay más resultados",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, consulta tu correo electrónico y haz clic en el enlace que contiene. Una vez hecho esto, haz clic en continuar.",
-    "Reason": "Motivo",
     "Reject invitation": "Rechazar invitación",
     "Return to login screen": "Regresar a la pantalla de inicio de sesión",
     "This room has no local addresses": "Esta sala no tiene direcciones locales",
@@ -145,7 +143,6 @@
         "one": "(~%(count)s resultado)"
     },
     "Share room": "Compartir la sala",
-    "Banned by %(displayName)s": "Vetado por %(displayName)s",
     "You don't currently have any stickerpacks enabled": "Actualmente no tienes ningún paquete de pegatinas activado",
     "Error decrypting image": "Error al descifrar imagen",
     "Error decrypting video": "Error al descifrar el vídeo",
@@ -323,10 +320,6 @@
     "Upload Error": "Error de subida",
     "Remember my selection for this widget": "Recordar mi selección para este accesorio",
     "Deactivate account": "Desactivar cuenta",
-    "Error changing power level requirement": "Error al cambiar el requerimiento de nivel de poder",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ocurrió un error cambiando los requerimientos de nivel de poder de la sala. Asegúrate de tener los permisos suficientes e inténtalo de nuevo.",
-    "Error changing power level": "Error al cambiar nivel de poder",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ocurrió un error cambiando los requerimientos de nivel de poder del usuario. Asegúrate de tener los permisos suficientes e inténtalo de nuevo.",
     "Your email address hasn't been verified yet": "Tu dirección de email no ha sido verificada",
     "Verify the link in your inbox": "Verifica el enlace en tu bandeja de entrada",
     "Remove %(email)s?": "¿Eliminar %(email)s?",
@@ -1107,8 +1100,6 @@
     "Results": "Resultados",
     "Some encryption parameters have been changed.": "Algunos parámetros del cifrado han cambiado.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
-    "Failed to update the join rules": "Fallo al actualizar las reglas para unirse",
-    "Unknown failure": "Fallo desconocido",
     "Message didn't send. Click for info.": "Mensaje no enviado. Haz clic para más info.",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "Don't leave any rooms": "No salir de ninguna sala",
@@ -1401,9 +1392,6 @@
     "Spotlight": "Spotlight",
     "View chat timeline": "Ver historial del chat",
     "Failed to set pusher state": "Fallo al establecer el estado push",
-    "You do not have sufficient permissions to change this.": "No tienes suficientes permisos para cambiar esto.",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s está cifrado de extremo a extremo, pero actualmente está limitado a unos pocos participantes.",
-    "Enable %(brand)s as an additional calling option in this room": "Activar %(brand)s como una opción para las llamadas de esta sala",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s o %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "Video call ended": "Videollamada terminada",
@@ -1413,7 +1401,6 @@
     "Freedom": "Libertad",
     "Video call (%(brand)s)": "Videollamada (%(brand)s)",
     "Video call (Jitsi)": "Videollamada (Jitsi)",
-    "Call type": "Tipo de llamada",
     "Completing set up of your new device": "Terminando de configurar tu nuevo dispositivo",
     "Waiting for device to sign in": "Esperando a que el dispositivo inicie sesión",
     "Review and approve the sign in": "Revisar y aprobar inicio de sesión",
@@ -3085,7 +3072,14 @@
             "permissions_section_description_room": "Elige los roles que los usuarios deben tener para poder cambiar los distintos ajustes de la sala",
             "add_privileged_user_heading": "Añadir usuarios privilegiados",
             "add_privileged_user_description": "Otorga a uno o más usuarios privilegios especiales en esta sala",
-            "add_privileged_user_filter_placeholder": "Buscar usuarios en esta sala…"
+            "add_privileged_user_filter_placeholder": "Buscar usuarios en esta sala…",
+            "error_unbanning": "No se pudo quitar veto",
+            "banned_by": "Vetado por %(displayName)s",
+            "ban_reason": "Motivo",
+            "error_changing_pl_reqs_title": "Error al cambiar el requerimiento de nivel de poder",
+            "error_changing_pl_reqs_description": "Ocurrió un error cambiando los requerimientos de nivel de poder de la sala. Asegúrate de tener los permisos suficientes e inténtalo de nuevo.",
+            "error_changing_pl_title": "Error al cambiar nivel de poder",
+            "error_changing_pl_description": "Ocurrió un error cambiando los requerimientos de nivel de poder del usuario. Asegúrate de tener los permisos suficientes e inténtalo de nuevo."
         },
         "security": {
             "strict_encryption": "No enviar nunca mensajes cifrados a sesiones sin verificar en esta sala desde esta sesión",
@@ -3138,7 +3132,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Actualizando espacio…",
                 "other": "Actualizando espacios… (%(progress)s de %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Fallo al actualizar las reglas para unirse",
+            "error_join_rule_change_unknown": "Fallo desconocido"
         },
         "general": {
             "publish_toggle": "¿Quieres incluir esta sala en la lista pública de salas de %(domain)s?",
@@ -3200,6 +3196,12 @@
             "custom_sound_prompt": "Establecer sonido personalizado",
             "upload_sound_label": "Subir archivo personalizado",
             "browse_button": "Seleccionar"
+        },
+        "voip": {
+            "enable_element_call_label": "Activar %(brand)s como una opción para las llamadas de esta sala",
+            "enable_element_call_caption": "%(brand)s está cifrado de extremo a extremo, pero actualmente está limitado a unos pocos participantes.",
+            "enable_element_call_no_permissions_tooltip": "No tienes suficientes permisos para cambiar esto.",
+            "call_type_section": "Tipo de llamada"
         }
     },
     "encryption": {

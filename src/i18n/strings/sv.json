@@ -22,7 +22,6 @@
     "Failed to reject invite": "Misslyckades att avböja inbjudan",
     "Failed to reject invitation": "Misslyckades att avböja inbjudan",
     "Failed to set display name": "Misslyckades att ange visningsnamn",
-    "Failed to unban": "Misslyckades att avbanna",
     "Admin Tools": "Admin-verktyg",
     "Enter passphrase": "Ange lösenfras",
     "Filter room members": "Filtrera rumsmedlemmar",
@@ -41,7 +40,6 @@
     "not specified": "inte specificerad",
     "No more results": "Inga fler resultat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
-    "Reason": "Orsak",
     "Reject invitation": "Avböj inbjudan",
     "Return to login screen": "Tillbaka till inloggningsskärmen",
     "%(roomName)s does not exist.": "%(roomName)s finns inte.",
@@ -139,7 +137,6 @@
     "Import room keys": "Importera rumsnycklar",
     "File to import": "Fil att importera",
     "Replying": "Svarar",
-    "Banned by %(displayName)s": "Bannad av %(displayName)s",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
     "Clear Storage and Sign Out": "Rensa lagring och logga ut",
     "Send Logs": "Skicka loggar",
@@ -410,10 +407,6 @@
     "Back up your keys before signing out to avoid losing them.": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
     "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
-    "Error changing power level requirement": "Fel vid ändring av behörighetskrav",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ett fel inträffade vid ändring av rummets krav på behörighetsnivå. Försäkra att du har tillräcklig behörighet och försök igen.",
-    "Error changing power level": "Fel vid ändring av behörighetsnivå",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ett fel inträffade vid ändring av användarens behörighetsnivå. Försäkra att du har tillräcklig behörighet och försök igen.",
     "This user has not verified all of their sessions.": "Den här användaren har inte verifierat alla sina sessioner.",
     "You have not verified this user.": "Du har inte verifierat den här användaren.",
     "You have verified this user. This user has verified all of their sessions.": "Du har verifierat den här användaren. Den här användaren har verifierat alla sina sessioner.",
@@ -1107,8 +1100,6 @@
     "Results": "Resultat",
     "Some encryption parameters have been changed.": "Vissa krypteringsparametrar har ändrats.",
     "Role in <RoomName/>": "Roll i <RoomName/>",
-    "Unknown failure": "Okänt fel",
-    "Failed to update the join rules": "Misslyckades att uppdatera regler för att gå med",
     "Message didn't send. Click for info.": "Meddelande skickades inte. Klicka för info.",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "Would you like to leave the rooms in this space?": "Vill du lämna rummen i det här utrymmet?",
@@ -1416,10 +1407,6 @@
     "Show formatting": "Visa formatering",
     "Hide formatting": "Dölj formatering",
     "Failed to set pusher state": "Misslyckades att sätta pusharläge",
-    "Call type": "Samtalstyp",
-    "You do not have sufficient permissions to change this.": "Du är inte behörig att ändra detta.",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s är totalsträckskrypterad, men är för närvarande begränsad till ett lägre antal användare.",
-    "Enable %(brand)s as an additional calling option in this room": "Aktivera %(brand)s som ett extra samtalsalternativ i det här rummet",
     "Too many attempts in a short time. Wait some time before trying again.": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     "We're creating a room with %(names)s": "Vi skapar ett rum med %(names)s",
@@ -3182,7 +3169,14 @@
             "permissions_section_description_room": "Välj de roller som krävs för att ändra olika delar av rummet",
             "add_privileged_user_heading": "Lägg till privilegierade användare",
             "add_privileged_user_description": "Ge en eller flera användare i det här rummet fler privilegier",
-            "add_privileged_user_filter_placeholder": "Sök efter användare i det här rummet…"
+            "add_privileged_user_filter_placeholder": "Sök efter användare i det här rummet…",
+            "error_unbanning": "Misslyckades att avbanna",
+            "banned_by": "Bannad av %(displayName)s",
+            "ban_reason": "Orsak",
+            "error_changing_pl_reqs_title": "Fel vid ändring av behörighetskrav",
+            "error_changing_pl_reqs_description": "Ett fel inträffade vid ändring av rummets krav på behörighetsnivå. Försäkra att du har tillräcklig behörighet och försök igen.",
+            "error_changing_pl_title": "Fel vid ändring av behörighetsnivå",
+            "error_changing_pl_description": "Ett fel inträffade vid ändring av användarens behörighetsnivå. Försäkra att du har tillräcklig behörighet och försök igen."
         },
         "security": {
             "strict_encryption": "Skicka aldrig krypterade meddelanden till overifierade sessioner i det här rummet från den här sessionen",
@@ -3237,7 +3231,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Uppdaterar utrymme…",
                 "other": "Uppdaterar utrymmen… (%(progress)s av %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Misslyckades att uppdatera regler för att gå med",
+            "error_join_rule_change_unknown": "Okänt fel"
         },
         "general": {
             "publish_toggle": "Publicera rummet i den offentliga rumskatalogen på %(domain)s?",
@@ -3300,6 +3296,12 @@
             "custom_sound_prompt": "Ställ in ett nytt anpassat ljud",
             "upload_sound_label": "Ladda upp anpassat ljud",
             "browse_button": "Bläddra"
+        },
+        "voip": {
+            "enable_element_call_label": "Aktivera %(brand)s som ett extra samtalsalternativ i det här rummet",
+            "enable_element_call_caption": "%(brand)s är totalsträckskrypterad, men är för närvarande begränsad till ett lägre antal användare.",
+            "enable_element_call_no_permissions_tooltip": "Du är inte behörig att ändra detta.",
+            "call_type_section": "Samtalstyp"
         }
     },
     "encryption": {

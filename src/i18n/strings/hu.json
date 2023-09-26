@@ -26,7 +26,6 @@
     "Failed to reject invite": "A meghívót nem sikerült elutasítani",
     "Failed to reject invitation": "A meghívót nem sikerült elutasítani",
     "Failed to set display name": "Megjelenítési nevet nem sikerült beállítani",
-    "Failed to unban": "A kitiltás visszavonása sikertelen",
     "Filter room members": "Szoba tagság szűrése",
     "Forget room": "Szoba elfelejtése",
     "Historical": "Archív",
@@ -43,7 +42,6 @@
     "not specified": "nincs meghatározva",
     "No more results": "Nincs több találat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
-    "Reason": "Ok",
     "Reject invitation": "Meghívó elutasítása",
     "Return to login screen": "Vissza a bejelentkezési képernyőre",
     "%(roomName)s does not exist.": "%(roomName)s nem létezik.",
@@ -118,7 +116,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?",
     "AM": "de.",
     "PM": "du.",
-    "Banned by %(displayName)s": "Kitiltotta: %(displayName)s",
     "Jump to read receipt": "Olvasási visszaigazolásra ugrás",
     "Unnamed room": "Névtelen szoba",
     "And %(count)s more...": {
@@ -401,8 +398,6 @@
     "This invite to %(roomName)s was sent to %(email)s": "A meghívó ehhez a szobához: %(roomName)s ide lett elküldve: %(email)s",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Állíts be azonosítási szervert a Beállításokban, hogy közvetlen meghívókat kaphass %(brand)sba.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Oszd meg a Beállításokban ezt az e-mail címet, hogy közvetlen meghívókat kaphass %(brand)sba.",
-    "Error changing power level": "Hiba történt a hozzáférési szint megváltoztatása során",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Hiba történt a felhasználó hozzáférési szintjének megváltoztatása során. Ellenőrizze, hogy megvan-e hozzá a megfelelő jogosultsága, és próbálja újra.",
     "Italics": "Dőlt",
     "No recent messages by %(user)s found": "Nincs friss üzenet ettől a felhasználótól: %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Az idővonalon próbálj meg felgörgetni, hogy megnézd van-e régebbi üzenet.",
@@ -413,8 +408,6 @@
         "one": "1 üzenet törlése"
     },
     "Remove recent messages": "Friss üzenetek törlése",
-    "Error changing power level requirement": "A szükséges hozzáférési szint megváltoztatása nem sikerült",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Hiba történt a szobához szükséges hozzáférési szint megváltoztatása során. Ellenőrizze, hogy megvan-e hozzá a megfelelő jogosultsága, és próbálja újra.",
     "Explore rooms": "Szobák felderítése",
     "Verify the link in your inbox": "Ellenőrizd a hivatkozást a bejövő leveleid között",
     "e.g. my-room": "pl.: szobam",
@@ -1107,8 +1100,6 @@
     "Results": "Eredmények",
     "Some encryption parameters have been changed.": "Néhány titkosítási paraméter megváltozott.",
     "Role in <RoomName/>": "Szerep itt: <RoomName/>",
-    "Unknown failure": "Ismeretlen hiba",
-    "Failed to update the join rules": "A csatlakozási szabályokat nem sikerült frissíteni",
     "Message didn't send. Click for info.": "Az üzenet nincs elküldve. Kattintson az információkért.",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "Would you like to leave the rooms in this space?": "Ki szeretne lépni ennek a térnek minden szobájából?",
@@ -1410,10 +1401,6 @@
     "Spotlight": "Reflektor",
     "Freedom": "Szabadság",
     "Video call (%(brand)s)": "Videó hívás (%(brand)s)",
-    "Call type": "Hívás típusa",
-    "You do not have sufficient permissions to change this.": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
-    "Enable %(brand)s as an additional calling option in this room": "%(brand)s engedélyezése mint további opció hívásokhoz a szobában",
     "Completing set up of your new device": "Új eszköz beállításának elvégzése",
     "Waiting for device to sign in": "Várakozás a másik eszköz bejelentkezésére",
     "Start at the sign in screen": "Kezdje a bejelentkező képernyőn",
@@ -3159,7 +3146,14 @@
             "permissions_section_description_room": "A szoba bizonyos beállításainak megváltoztatásához szükséges szerep kiválasztása",
             "add_privileged_user_heading": "Privilegizált felhasználók hozzáadása",
             "add_privileged_user_description": "Több jog adása egy vagy több felhasználónak a szobában",
-            "add_privileged_user_filter_placeholder": "Felhasználók keresése a szobában…"
+            "add_privileged_user_filter_placeholder": "Felhasználók keresése a szobában…",
+            "error_unbanning": "A kitiltás visszavonása sikertelen",
+            "banned_by": "Kitiltotta: %(displayName)s",
+            "ban_reason": "Ok",
+            "error_changing_pl_reqs_title": "A szükséges hozzáférési szint megváltoztatása nem sikerült",
+            "error_changing_pl_reqs_description": "Hiba történt a szobához szükséges hozzáférési szint megváltoztatása során. Ellenőrizze, hogy megvan-e hozzá a megfelelő jogosultsága, és próbálja újra.",
+            "error_changing_pl_title": "Hiba történt a hozzáférési szint megváltoztatása során",
+            "error_changing_pl_description": "Hiba történt a felhasználó hozzáférési szintjének megváltoztatása során. Ellenőrizze, hogy megvan-e hozzá a megfelelő jogosultsága, és próbálja újra."
         },
         "security": {
             "strict_encryption": "Ebben a szobában sose küldjön titkosított üzenetet ellenőrizetlen munkamenetekbe ebből a munkamenetből",
@@ -3211,7 +3205,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Terek frissítése…",
                 "other": "Terek frissítése… (%(progress)s / %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "A csatlakozási szabályokat nem sikerült frissíteni",
+            "error_join_rule_change_unknown": "Ismeretlen hiba"
         },
         "general": {
             "publish_toggle": "Publikálod a szobát a(z) %(domain)s szoba listájába?",
@@ -3274,6 +3270,12 @@
             "custom_sound_prompt": "Új egyénii hang beállítása",
             "upload_sound_label": "Egyéni hang feltöltése",
             "browse_button": "Böngészés"
+        },
+        "voip": {
+            "enable_element_call_label": "%(brand)s engedélyezése mint további opció hívásokhoz a szobában",
+            "enable_element_call_caption": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
+            "enable_element_call_no_permissions_tooltip": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
+            "call_type_section": "Hívás típusa"
         }
     },
     "encryption": {

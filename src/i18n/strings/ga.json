@@ -295,7 +295,6 @@
     "Lion": "Leon",
     "Cat": "Cat",
     "Dog": "Madra",
-    "Reason": "Cúis",
     "Moderator": "Modhnóir",
     "Restricted": "Teoranta",
     "AM": "RN",
@@ -723,7 +722,8 @@
             "privileged_users_section": "Úsáideoirí Pribhléideacha",
             "muted_users_section": "Úsáideoirí Fuaim",
             "banned_users_section": "Úsáideoirí toirmiscthe",
-            "permissions_section": "Ceadanna"
+            "permissions_section": "Ceadanna",
+            "ban_reason": "Cúis"
         },
         "security": {
             "enable_encryption_confirm_title": "Cumasaigh criptiú?",

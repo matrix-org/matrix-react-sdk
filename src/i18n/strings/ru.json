@@ -2,7 +2,6 @@
     "A new password must be entered.": "Введите новый пароль.",
     "Are you sure you want to reject the invitation?": "Уверены, что хотите отклонить приглашение?",
     "Failed to reject invitation": "Не удалось отклонить приглашение",
-    "Failed to unban": "Не удалось разблокировать",
     "Filter room members": "Поиск по участникам",
     "Forget room": "Забыть комнату",
     "Historical": "Архив",
@@ -62,7 +61,6 @@
     "not specified": "не задан",
     "No more results": "Больше никаких результатов",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
-    "Reason": "Причина",
     "Reject invitation": "Отклонить приглашение",
     "Rooms": "Комнаты",
     "Search failed": "Поиск не удался",
@@ -118,7 +116,6 @@
     "This will allow you to reset your password and receive notifications.": "Это позволит при необходимости сбросить пароль и получать уведомления.",
     "AM": "ДП",
     "PM": "ПП",
-    "Banned by %(displayName)s": "Заблокирован(а) %(displayName)s",
     "Jump to read receipt": "Перейти к последнему прочтённому",
     "Unnamed room": "Комната без названия",
     "And %(count)s more...": {
@@ -380,10 +377,6 @@
     "Failed to re-authenticate due to a homeserver problem": "Ошибка повторной аутентификации из-за проблем на сервере",
     "Clear personal data": "Очистить персональные данные",
     "Deactivate account": "Деактивировать учётную запись",
-    "Error changing power level requirement": "Ошибка изменения требования к уровню прав",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Произошла ошибка при изменении требований к уровню доступа комнаты. Убедитесь, что у вас достаточно прав и попробуйте снова.",
-    "Error changing power level": "Ошибка изменения уровня прав",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Произошла ошибка при изменении уровня прав пользователя. Убедитесь, что у вас достаточно прав и попробуйте снова.",
     "Unable to revoke sharing for email address": "Не удается отменить общий доступ к адресу электронной почты",
     "Unable to share email address": "Невозможно поделиться адресом электронной почты",
     "Your email address hasn't been verified yet": "Ваш адрес электронной почты еще не проверен",
@@ -1107,8 +1100,6 @@
     "Unknown failure: %(reason)s": "Неизвестная ошибка: %(reason)s",
     "No answer": "Нет ответа",
     "Role in <RoomName/>": "Роль в <RoomName/>",
-    "Unknown failure": "Неизвестная ошибка",
-    "Failed to update the join rules": "Не удалось обновить правила присоединения",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -1426,7 +1417,6 @@
     "Hide formatting": "Скрыть форматирование",
     "This message could not be decrypted": "Это сообщение не удалось расшифровать",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Call type": "Тип звонка",
     "Poll history": "Опросы",
     "Active polls": "Активные опросы",
     "Formatting": "Форматирование",
@@ -2993,7 +2983,14 @@
             "permissions_section": "Права доступа",
             "permissions_section_description_space": "Выберите роли, необходимые для изменения различных частей пространства",
             "permissions_section_description_room": "Выберите роль, которая может изменять различные части комнаты",
-            "add_privileged_user_filter_placeholder": "Поиск пользователей в этой комнате…"
+            "add_privileged_user_filter_placeholder": "Поиск пользователей в этой комнате…",
+            "error_unbanning": "Не удалось разблокировать",
+            "banned_by": "Заблокирован(а) %(displayName)s",
+            "ban_reason": "Причина",
+            "error_changing_pl_reqs_title": "Ошибка изменения требования к уровню прав",
+            "error_changing_pl_reqs_description": "Произошла ошибка при изменении требований к уровню доступа комнаты. Убедитесь, что у вас достаточно прав и попробуйте снова.",
+            "error_changing_pl_title": "Ошибка изменения уровня прав",
+            "error_changing_pl_description": "Произошла ошибка при изменении уровня прав пользователя. Убедитесь, что у вас достаточно прав и попробуйте снова."
         },
         "security": {
             "strict_encryption": "Никогда не отправлять зашифрованные сообщения непроверенным сеансам в этой комнате и через этот сеанс",
@@ -3045,7 +3042,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Обновление пространства…",
                 "other": "Обновление пространств... (%(progress)s из %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Не удалось обновить правила присоединения",
+            "error_join_rule_change_unknown": "Неизвестная ошибка"
         },
         "general": {
             "publish_toggle": "Опубликовать эту комнату в каталоге комнат %(domain)s?",
@@ -3106,6 +3105,9 @@
             "notification_sound": "Звук уведомления",
             "custom_sound_prompt": "Установка нового пользовательского звука",
             "browse_button": "Просматривать"
+        },
+        "voip": {
+            "call_type_section": "Тип звонка"
         }
     },
     "encryption": {

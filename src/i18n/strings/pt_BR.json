@@ -2,7 +2,6 @@
     "A new password must be entered.": "Uma nova senha precisa ser inserida.",
     "Are you sure you want to reject the invitation?": "Tem certeza de que deseja recusar o convite?",
     "Failed to reject invitation": "Falha ao tentar recusar o convite",
-    "Failed to unban": "Não foi possível remover o banimento",
     "Filter room members": "Pesquisar participantes da sala",
     "Forget room": "Esquecer sala",
     "Historical": "Histórico",
@@ -43,7 +42,6 @@
     "Dec": "Dez",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
-    "Reason": "Razão",
     "Connectivity to the server has been lost.": "A conexão com o servidor foi perdida. Verifique sua conexão de internet.",
     "Sent messages will be stored until your connection has returned.": "Imagens enviadas ficarão armazenadas até que sua conexão seja reestabelecida.",
     "Failed to forget room %(errCode)s": "Falhou ao esquecer a sala %(errCode)s",
@@ -129,7 +127,6 @@
     "%(duration)sd": "%(duration)sd",
     "Replying": "Em resposta a",
     "Unnamed room": "Sala sem nome",
-    "Banned by %(displayName)s": "Banido por %(displayName)s",
     "Delete Widget": "Apagar widget",
     "collapse": "recolher",
     "expand": "expandir",
@@ -588,7 +585,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "O endereço do servidor local não parece indicar um servidor local válido na Matrix",
     "Identity server URL does not appear to be a valid identity server": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Quando há muitas mensagens, isso pode levar algum tempo. Por favor, não recarregue o seu cliente enquanto isso.",
-    "Error changing power level": "Erro ao alterar a permissão do usuário",
     "Discovery options will appear once you have added a phone number above.": "As opções de descoberta aparecerão assim que você adicione um número de telefone acima.",
     "No other published addresses yet, add one below": "Nenhum endereço publicado ainda, adicione um abaixo",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Defina endereços para esta sala, de modo que os usuários possam encontrar esta sala em seu servidor local (%(localDomain)s)",
@@ -626,9 +622,6 @@
     "Backup version:": "Versão do backup:",
     "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
-    "Error changing power level requirement": "Houve um erro ao alterar o nível de permissão do contato",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Ocorreu um erro ao alterar os níveis de permissão da sala. Certifique-se de que você tem o nível suficiente e tente novamente.",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ocorreu um erro ao alterar o nível de permissão de um contato. Certifique-se de que você tem o nível suficiente e tente novamente.",
     "Explore public rooms": "Explorar salas públicas",
     "Not encrypted": "Não criptografada",
     "Ignored attempt to disable encryption": "A tentativa de desativar a criptografia foi ignorada",
@@ -1037,7 +1030,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Não foi possível acessar seu microfone. Por favor, confira as configurações do seu navegador e tente novamente.",
     "Message didn't send. Click for info.": "A mensagem não foi enviada. Clique para mais informações.",
     "Send voice message": "Enviar uma mensagem de voz",
-    "Unknown failure": "Falha desconhecida",
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Export chat": "Exportar conversa",
@@ -1055,7 +1047,6 @@
         "one": "Exibir a %(count)s outra prévia",
         "other": "Exibir as %(count)s outras prévias"
     },
-    "Failed to update the join rules": "Falha ao atualizar as regras de entrada",
     "Including you, %(commaSeparatedMembers)s": "Incluindo você, %(commaSeparatedMembers)s",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -2374,7 +2365,14 @@
             "title": "Cargos e permissões",
             "permissions_section": "Permissões",
             "permissions_section_description_space": "Selecionar os cargos necessários para alterar certas partes do espaço",
-            "permissions_section_description_room": "Selecione os cargos necessários para alterar várias partes da sala"
+            "permissions_section_description_room": "Selecione os cargos necessários para alterar várias partes da sala",
+            "error_unbanning": "Não foi possível remover o banimento",
+            "banned_by": "Banido por %(displayName)s",
+            "ban_reason": "Razão",
+            "error_changing_pl_reqs_title": "Houve um erro ao alterar o nível de permissão do contato",
+            "error_changing_pl_reqs_description": "Ocorreu um erro ao alterar os níveis de permissão da sala. Certifique-se de que você tem o nível suficiente e tente novamente.",
+            "error_changing_pl_title": "Erro ao alterar a permissão do usuário",
+            "error_changing_pl_description": "Ocorreu um erro ao alterar o nível de permissão de um contato. Certifique-se de que você tem o nível suficiente e tente novamente."
         },
         "security": {
             "strict_encryption": "Nunca envie mensagens criptografadas a partir desta sessão para sessões não confirmadas nessa sala",
@@ -2425,7 +2423,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Atualizando espaço...",
                 "other": "Atualizando espaços... (%(progress)s de %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Falha ao atualizar as regras de entrada",
+            "error_join_rule_change_unknown": "Falha desconhecida"
         },
         "general": {
             "publish_toggle": "Quer publicar esta sala na lista pública de salas da %(domain)s?",

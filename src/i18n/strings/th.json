@@ -2,7 +2,6 @@
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
     "Low priority": "ความสำคัญต่ำ",
-    "Reason": "เหตุผล",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
     "Authentication": "การยืนยันตัวตน",
@@ -21,7 +20,6 @@
     "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
-    "Failed to unban": "การถอนแบนล้มเหลว",
     "Filter room members": "กรองสมาชิกห้อง",
     "Forget room": "ลืมห้อง",
     "Historical": "ประวัติแชทเก่า",
@@ -524,7 +522,9 @@
         "permissions": {
             "privileged_users_section": "ผู้ใช้ที่มีสิทธิพิเศษ",
             "banned_users_section": "ผู้ใช้ที่ถูกแบน",
-            "permissions_section": "สิทธิ์"
+            "permissions_section": "สิทธิ์",
+            "error_unbanning": "การถอนแบนล้มเหลว",
+            "ban_reason": "เหตุผล"
         },
         "security": {
             "enable_encryption_confirm_description": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสสำหรับห้องได้ เซิร์ฟเวอร์ไม่สามารถเห็นข้อความที่ส่งในห้องที่เข้ารหัสได้ เฉพาะผู้เข้าร่วมในห้องเท่านั้น การเปิดใช้งานการเข้ารหัสอาจทำให้บอทและบริดจ์จำนวนมากทำงานไม่ถูกต้อง. <a>เรียนรู้เพิ่มเติมเกี่ยวกับการเข้ารหัส.</a>",

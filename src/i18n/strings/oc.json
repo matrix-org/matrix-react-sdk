@@ -41,7 +41,6 @@
     "AM": "AM",
     "Moderator": "Moderator",
     "Thank you!": "Mercés !",
-    "Reason": "Rason",
     "Ok": "Validar",
     "Set up": "Parametrar",
     "Fish": "Pes",
@@ -359,7 +358,8 @@
     },
     "room_settings": {
         "permissions": {
-            "permissions_section": "Permissions"
+            "permissions_section": "Permissions",
+            "ban_reason": "Rason"
         },
         "security": {
             "title": "Seguretat e vida privada"

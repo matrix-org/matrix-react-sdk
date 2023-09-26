@@ -24,7 +24,6 @@
     "Failed to reject invite": "Kutsun hylkääminen epäonnistui",
     "Failed to reject invitation": "Kutsun hylkääminen epäonnistui",
     "Failed to set display name": "Näyttönimen asettaminen epäonnistui",
-    "Failed to unban": "Porttikiellon poistaminen epäonnistui",
     "Filter room members": "Suodata huoneen jäseniä",
     "Forget room": "Unohda huone",
     "Incorrect verification code": "Virheellinen varmennuskoodi",
@@ -39,7 +38,6 @@
     "AM": "ap.",
     "PM": "ip.",
     "No more results": "Ei enempää tuloksia",
-    "Reason": "Syy",
     "Reject invitation": "Hylkää kutsu",
     "Return to login screen": "Palaa kirjautumissivulle",
     "Rooms": "Huoneet",
@@ -115,7 +113,6 @@
     "Jump to read receipt": "Hyppää lukukuittaukseen",
     "Admin Tools": "Ylläpitotyökalut",
     "Unnamed room": "Nimetön huone",
-    "Banned by %(displayName)s": "%(displayName)s antoi porttikiellon",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "And %(count)s more...": {
         "other": "Ja %(count)s muuta..."
@@ -394,10 +391,6 @@
     "Remove recent messages": "Poista viimeaikaiset viestit",
     "Italics": "Kursivoitu",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Kutsu huoneeseen %(roomName)s lähetettiin osoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
-    "Error changing power level requirement": "Virhe muutettaessa oikeustasovaatimusta",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Huoneen oikeustasovaatimuksia muutettaessa tapahtui virhe. Varmista, että sinulla on riittävät oikeudet ja yritä uudelleen.",
-    "Error changing power level": "Virhe muutettaessa oikeustasoa",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Käyttäjän oikeustasoa muutettaessa tapahtui virhe. Varmista, että sinulla on riittävät oikeudet ja yritä uudelleen.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Aseta identiteettipalvelin asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Jaa tämä sähköposti asetuksissa saadaksesi kutsuja suoraan %(brand)sissa.",
@@ -987,7 +980,6 @@
     "Stop recording": "Pysäytä nauhoittaminen",
     "Send voice message": "Lähetä ääniviesti",
     "Invite to this space": "Kutsu tähän avaruuteen",
-    "Unknown failure": "Tuntematon virhe",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
@@ -1041,7 +1033,6 @@
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
     },
-    "Failed to update the join rules": "Liittymissääntöjen päivittäminen epäonnistui",
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "Files": "Tiedostot",
@@ -1306,7 +1297,6 @@
     "Close call": "Lopeta puhelu",
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
-    "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
     "Home options": "Etusivun valinnat",
@@ -1321,12 +1311,10 @@
     "Saved Items": "Tallennetut kohteet",
     "Show formatting": "Näytä muotoilu",
     "Hide formatting": "Piilota muotoilu",
-    "Call type": "Puhelun tyyppi",
     "Reply in thread": "Vastaa ketjuun",
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "Sign in new device": "Kirjaa sisään uusi laite",
     "Drop a Pin": "Sijoita karttaneula",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
     "Send email": "Lähetä sähköpostia",
     "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
     "Confirm new password": "Vahvista uusi salasana",
@@ -1342,7 +1330,6 @@
     "This invite was sent to %(email)s which is not associated with your account": "Tämä kutsu lähetettiin sähköpostiosoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
     "Spotlight": "Valokeila",
     "Freedom": "Vapaus",
-    "Enable %(brand)s as an additional calling option in this room": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
     "Interactively verify by emoji": "Vahvista vuorovaikutteisesti emojilla",
@@ -2922,7 +2909,14 @@
             "permissions_section": "Oikeudet",
             "permissions_section_description_space": "Valitse roolit, jotka vaaditaan avaruuden eri osioiden muuttamiseen",
             "permissions_section_description_room": "Valitse roolit, jotka vaaditaan huoneen eri osioiden muuttamiseen",
-            "add_privileged_user_filter_placeholder": "Etsi käyttäjiä tästä huoneesta…"
+            "add_privileged_user_filter_placeholder": "Etsi käyttäjiä tästä huoneesta…",
+            "error_unbanning": "Porttikiellon poistaminen epäonnistui",
+            "banned_by": "%(displayName)s antoi porttikiellon",
+            "ban_reason": "Syy",
+            "error_changing_pl_reqs_title": "Virhe muutettaessa oikeustasovaatimusta",
+            "error_changing_pl_reqs_description": "Huoneen oikeustasovaatimuksia muutettaessa tapahtui virhe. Varmista, että sinulla on riittävät oikeudet ja yritä uudelleen.",
+            "error_changing_pl_title": "Virhe muutettaessa oikeustasoa",
+            "error_changing_pl_description": "Käyttäjän oikeustasoa muutettaessa tapahtui virhe. Varmista, että sinulla on riittävät oikeudet ja yritä uudelleen."
         },
         "security": {
             "strict_encryption": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa",
@@ -2974,7 +2968,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Päivitetään avaruutta...",
                 "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Liittymissääntöjen päivittäminen epäonnistui",
+            "error_join_rule_change_unknown": "Tuntematon virhe"
         },
         "general": {
             "publish_toggle": "Julkaise tämä huone verkkotunnuksen %(domain)s huoneluettelossa?",
@@ -3035,6 +3031,12 @@
             "notification_sound": "Ilmoitusääni",
             "custom_sound_prompt": "Aseta uusi mukautettu ääni",
             "browse_button": "Selaa"
+        },
+        "voip": {
+            "enable_element_call_label": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
+            "enable_element_call_caption": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
+            "enable_element_call_no_permissions_tooltip": "Oikeutesi eivät riitä tämän muuttamiseen.",
+            "call_type_section": "Puhelun tyyppi"
         }
     },
     "encryption": {

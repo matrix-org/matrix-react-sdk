@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
-    "Reason": "Kialo",
     "Send": "Sendi",
     "Incorrect verification code": "Malĝusta kontrola kodo",
     "Authentication": "Aŭtentikigo",
@@ -62,8 +61,6 @@
     "Historical": "Estintaj",
     "%(roomName)s does not exist.": "%(roomName)s ne ekzistas.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ne estas atingebla nun.",
-    "Failed to unban": "Malsukcesis malforbari",
-    "Banned by %(displayName)s": "Forbarita de %(displayName)s",
     "unknown error code": "nekonata kodo de eraro",
     "Failed to forget room %(errCode)s": "Malsukcesis forgesi ĉambron %(errCode)s",
     "Jump to first unread message.": "Salti al unua nelegita mesaĝo.",
@@ -380,10 +377,6 @@
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
     "Deactivate account": "Malaktivigi konton",
-    "Error changing power level requirement": "Eraris ŝanĝo de postulo de povnivelo",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Eraris ŝanĝo de la postuloj de la ĉambro pri povnivelo. Certigu, ke vi havas sufiĉajn permesojn, kaj reprovu.",
-    "Error changing power level": "Eraris ŝanĝo de povnivelo",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Eraris ŝanĝo de povnivelo de la uzanto. Certigu, ke vi havas sufiĉajn permesojn, kaj reprovu.",
     "Remove %(email)s?": "Ĉu forigi %(email)s?",
     "Remove %(phone)s?": "Ĉu forigi %(phone)s?",
     "No recent messages by %(user)s found": "Neniuj freŝaj mesaĝoj de %(user)s troviĝis",
@@ -1113,8 +1106,6 @@
     "Some encryption parameters have been changed.": "Ŝanĝiĝis iuj parametroj de ĉifrado.",
     "Role in <RoomName/>": "Rolo en <RoomName/>",
     "Message didn't send. Click for info.": "Mesaĝo ne sendiĝis. Klaku por akiri informojn.",
-    "Unknown failure": "Nekonata malsukceso",
-    "Failed to update the join rules": "Malsukcesis ĝisdatigi regulojn pri aliĝo",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ĉu vi certas, ke vi volas fini ĉi tiun balotenketon? Ĉi tio montros la finajn rezultojn de la balotenketo kaj malhelpos personojn povi voĉdoni.",
     "End Poll": "Finu Balotenketon",
     "Sorry, the poll did not end. Please try again.": "Pardonu, la balotenketo ne finiĝis. Bonvolu reprovi.",
@@ -2356,7 +2347,14 @@
             "permissions_section": "Permesoj",
             "permissions_section_description_space": "Elekti rolojn bezonatajn por ŝanĝado de diversaj partoj de la aro",
             "permissions_section_description_room": "Elektu la rolojn postulatajn por ŝanĝado de diversaj partoj de la ĉambro",
-            "add_privileged_user_heading": "Aldoni rajtigitan uzanton"
+            "add_privileged_user_heading": "Aldoni rajtigitan uzanton",
+            "error_unbanning": "Malsukcesis malforbari",
+            "banned_by": "Forbarita de %(displayName)s",
+            "ban_reason": "Kialo",
+            "error_changing_pl_reqs_title": "Eraris ŝanĝo de postulo de povnivelo",
+            "error_changing_pl_reqs_description": "Eraris ŝanĝo de la postuloj de la ĉambro pri povnivelo. Certigu, ke vi havas sufiĉajn permesojn, kaj reprovu.",
+            "error_changing_pl_title": "Eraris ŝanĝo de povnivelo",
+            "error_changing_pl_description": "Eraris ŝanĝo de povnivelo de la uzanto. Certigu, ke vi havas sufiĉajn permesojn, kaj reprovu."
         },
         "security": {
             "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo",
@@ -2406,7 +2404,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Ĝisdatigante aro...",
                 "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Malsukcesis ĝisdatigi regulojn pri aliĝo",
+            "error_join_rule_change_unknown": "Nekonata malsukceso"
         },
         "general": {
             "publish_toggle": "Ĉu publikigi ĉi tiun ĉambron per la katalogo de ĉambroj de %(domain)s?",

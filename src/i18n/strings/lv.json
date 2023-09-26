@@ -21,7 +21,6 @@
     "Failed to reject invite": "Neizdevās noraidīt uzaicinājumu",
     "Failed to reject invitation": "Neizdevās noraidīt uzaicinājumu",
     "Failed to set display name": "Neizdevās iestatīt parādāmo vārdu",
-    "Failed to unban": "Neizdevās atbanot/atbloķēt (atcelt pieejas liegumu)",
     "Filter room members": "Atfiltrēt istabas dalībniekus",
     "Forget room": "Aizmirst istabu",
     "Historical": "Bijušie",
@@ -38,7 +37,6 @@
     "not specified": "nav noteikts",
     "No more results": "Vairāk nekādu rezultātu nav",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
-    "Reason": "Iemesls",
     "Reject invitation": "Noraidīt uzaicinājumu",
     "Return to login screen": "Atgriezties uz pierakstīšanās lapu",
     "This will allow you to reset your password and receive notifications.": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus.",
@@ -129,7 +127,6 @@
     "%(duration)sh": "%(duration)s stundas",
     "%(duration)sd": "%(duration)s dienas",
     "Replying": "Atbildot uz",
-    "Banned by %(displayName)s": "%(displayName)s liedzis pieeju",
     "Delete Widget": "Dzēst vidžetu",
     "collapse": "sakļaut",
     "expand": "izvērst",
@@ -1542,7 +1539,10 @@
             "banned_users_section": "Lietotāji, kuriem liegta pieeja",
             "title": "Lomas un atļaujas",
             "permissions_section": "Atļaujas",
-            "permissions_section_description_room": "Izvēlieties lomas, kas nepieciešamas, lai mainītu dažādus istabas parametrus"
+            "permissions_section_description_room": "Izvēlieties lomas, kas nepieciešamas, lai mainītu dažādus istabas parametrus",
+            "error_unbanning": "Neizdevās atbanot/atbloķēt (atcelt pieejas liegumu)",
+            "banned_by": "%(displayName)s liedzis pieeju",
+            "ban_reason": "Iemesls"
         },
         "security": {
             "strict_encryption": "Nesūtīt šifrētas ziņas no šīs sesijas neverificētām sesijām šajā istabā",

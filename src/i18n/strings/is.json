@@ -27,7 +27,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Takmarkað",
     "Moderator": "Umsjónarmaður",
-    "Reason": "Ástæða",
     "Send": "Senda",
     "Authentication": "Auðkenning",
     "Are you sure?": "Ertu viss?",
@@ -545,7 +544,6 @@
     "Phone Number": "Símanúmer",
     "Email Address": "Tölvupóstfang",
     "Verification code": "Sannvottunarkóði",
-    "Unknown failure": "Óþekkt bilun",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -847,10 +845,6 @@
     "Your email address hasn't been verified yet": "Tölvupóstfangið þitt hefur ekki ennþá verið staðfest",
     "Unable to share email address": "Get ekki deilt tölvupóstfangi",
     "Unable to revoke sharing for email address": "Ekki er hægt að afturkalla að deila tölvupóstfangi",
-    "Error changing power level": "Villa við að breyta valdastigi",
-    "Error changing power level requirement": "Villa við að breyta kröfum um valdastig",
-    "Banned by %(displayName)s": "Bannaður af %(displayName)s",
-    "Failed to unban": "Tókst ekki að taka úr banni",
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "Call declined": "Símtali hafnað",
@@ -1056,8 +1050,6 @@
     "Verify by comparing unique emoji.": "Sannprófaðu með því að bera saman einstakar táknmyndir.",
     "If you can't scan the code above, verify by comparing unique emoji.": "Ef þú getur ekki skannað kóðann hér fyrir ofan, skaltu sannprófa með því að bera saman einstakar táknmyndir.",
     "Verify by scanning": "Sannprófa með skönnun",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Villa kom upp við að breyta valdastigi notandans. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur.",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Villa kom upp við að breyta kröfum spjallrásarinnar um valdastig. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur.",
     "Some of your messages have not been sent": "Sum skilaboðin þín hafa ekki verið send",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Skilaboðin þín voru ekki send vegna þess að þessi heimaþjónn er kominn fram yfir takmörk á notuðum tilföngum. Hafðu <a>samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þjónustuna.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Skilaboðin þín voru ekki send vegna þess að þessi heimaþjónn er kominn fram yfir takmörk á mánaðarlega virkum notendum. Hafðu <a>samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þjónustuna.",
@@ -1263,8 +1255,6 @@
     "Hide formatting": "Fela sniðmótun",
     "This message could not be decrypted": "Þessi skilaboð er ekki hægt að afkóða",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
-    "Call type": "Tegund samtals",
-    "Failed to update the join rules": "Mistókst að uppfæra reglur fyrir þátttöku",
     "common": {
         "about": "Um hugbúnaðinn",
         "analytics": "Greiningar",
@@ -2745,7 +2735,14 @@
             "permissions_section_description_room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar",
             "add_privileged_user_heading": "Bæta við notendum með auknar heimildir",
             "add_privileged_user_description": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
-            "add_privileged_user_filter_placeholder": "Leita að notendum á þessari spjallrás…"
+            "add_privileged_user_filter_placeholder": "Leita að notendum á þessari spjallrás…",
+            "error_unbanning": "Tókst ekki að taka úr banni",
+            "banned_by": "Bannaður af %(displayName)s",
+            "ban_reason": "Ástæða",
+            "error_changing_pl_reqs_title": "Villa við að breyta kröfum um valdastig",
+            "error_changing_pl_reqs_description": "Villa kom upp við að breyta kröfum spjallrásarinnar um valdastig. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur.",
+            "error_changing_pl_title": "Villa við að breyta valdastigi",
+            "error_changing_pl_description": "Villa kom upp við að breyta valdastigi notandans. Athugaðu hvort þú hafir nægilegar heimildir og prófaðu aftur."
         },
         "security": {
             "strict_encryption": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja á þessari spjallrás úr þessari setu",
@@ -2787,7 +2784,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Uppfæri svæði...",
                 "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Mistókst að uppfæra reglur fyrir þátttöku",
+            "error_join_rule_change_unknown": "Óþekkt bilun"
         },
         "general": {
             "publish_toggle": "Birta þessa spjallrás opinberlega á skrá %(domain)s yfir spjallrásir?",
@@ -2844,6 +2843,9 @@
             "notification_sound": "Hljóð með tilkynningu",
             "custom_sound_prompt": "Stilla nýtt sérsniðið hljóð",
             "browse_button": "Skoða"
+        },
+        "voip": {
+            "call_type_section": "Tegund samtals"
         }
     },
     "encryption": {

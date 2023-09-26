@@ -58,7 +58,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s年%(monthName)s%(day)s日 %(weekDayName)s曜日 %(time)s",
     "Restricted": "制限",
     "Moderator": "モデレーター",
-    "Reason": "理由",
     "Incorrect verification code": "認証コードが誤っています",
     "Warning!": "警告！",
     "Authentication": "認証",
@@ -95,8 +94,6 @@
     "Failed to ban user": "ユーザーをブロックできませんでした",
     "%(roomName)s does not exist.": "%(roomName)sは存在しません。",
     "%(roomName)s is not accessible at this time.": "%(roomName)sは現在アクセスできません。",
-    "Failed to unban": "ブロック解除に失敗しました",
-    "Banned by %(displayName)s": "%(displayName)sによってブロックされました",
     "Only room administrators will see this warning": "この警告はルームの管理者にのみ表示されます",
     "You don't currently have any stickerpacks enabled": "現在、ステッカーパックが有効になっていません",
     "Add some now": "今すぐ追加",
@@ -202,8 +199,6 @@
     "Email Address": "メールアドレス",
     "Main address": "メインアドレス",
     "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
-    "Error changing power level requirement": "必要な権限レベルを変更する際にエラーが発生しました",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "ルームで必要な権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認したうえで、もう一度やり直してください。",
     "Room Topic": "ルームのトピック",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Remove recent messages": "最近のメッセージを削除",
@@ -255,7 +250,6 @@
     "Deactivate account": "アカウントを無効化",
     "Published Addresses": "公開アドレス",
     "Local Addresses": "ローカルアドレス",
-    "Error changing power level": "権限レベルを変更する際にエラーが発生しました",
     "Cancel search": "検索をキャンセル",
     "Show more": "さらに表示",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
@@ -357,7 +351,6 @@
     "Your email address hasn't been verified yet": "メールアドレスはまだ認証されていません",
     "Unable to share email address": "メールアドレスを共有できません",
     "Unable to revoke sharing for email address": "メールアドレスの共有を取り消せません",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "ユーザーの権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認して、もう一度やり直してください。",
     "Set up": "設定",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
@@ -960,7 +953,6 @@
     "Leave all rooms": "全てのルームから退出",
     "Select spaces": "スペースを選択",
     "Your homeserver doesn't seem to support this feature.": "ホームサーバーはこの機能をサポートしていません。",
-    "Unknown failure": "不明なエラー",
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "権限がある場合は、メッセージのメニューを開いて<b>固定</b>を選択すると、ここにメッセージが表示されます。",
@@ -1185,7 +1177,6 @@
     "Some encryption parameters have been changed.": "暗号化のパラメーターのいくつかが変更されました。",
     "The call is in an unknown state!": "通話の状態が不明です！",
     "They won't be able to access whatever you're not an admin of.": "あなたが管理者でない場所にアクセスすることができなくなります。",
-    "Failed to update the join rules": "参加のルールの更新に失敗しました",
     "They'll still be able to access whatever you're not an admin of.": "あなたが管理者ではないスペースやルームには、引き続きアクセスできます。",
     "Restore your key backup to upgrade your encryption": "鍵のバックアップを復元し、暗号化をアップグレードしてください",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
@@ -1319,8 +1310,6 @@
     "Close sidebar": "サイドバーを閉じる",
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
     "Stop and close": "停止して閉じる",
-    "Call type": "通話の種類",
-    "You do not have sufficient permissions to change this.": "この変更に必要な権限がありません。",
     "Saved Items": "保存済み項目",
     "View chat timeline": "チャットのタイムラインを表示",
     "Spotlight": "スポットライト",
@@ -1346,7 +1335,6 @@
     "Are you sure you're at the right place?": "正しい場所にいますか？",
     "Text": "テキスト",
     "Freedom": "自由",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)sではエンドツーエンド暗号化が設定されていますが、より少ないユーザー数に限定されています。",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
@@ -1458,7 +1446,6 @@
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
     "Declining…": "拒否しています…",
-    "Enable %(brand)s as an additional calling option in this room": "%(brand)sをこのルームの追加の通話手段として有効にする",
     "There are no past polls in this room": "このルームに過去のアンケートはありません",
     "There are no active polls in this room": "このルームに実施中のアンケートはありません",
     "Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.": "警告：あなたの個人データ（暗号化の鍵を含む）が、このセッションに保存されています。このセッションの使用を終了するか、他のアカウントにログインしたい場合は、そのデータを消去してください。",
@@ -3080,7 +3067,14 @@
             "permissions_section_description_room": "ルームに関する変更を行うために必要な役割を選択",
             "add_privileged_user_heading": "特権ユーザーを追加",
             "add_privileged_user_description": "このルームのユーザーに権限を付与",
-            "add_privileged_user_filter_placeholder": "このルームのユーザーを検索…"
+            "add_privileged_user_filter_placeholder": "このルームのユーザーを検索…",
+            "error_unbanning": "ブロック解除に失敗しました",
+            "banned_by": "%(displayName)sによってブロックされました",
+            "ban_reason": "理由",
+            "error_changing_pl_reqs_title": "必要な権限レベルを変更する際にエラーが発生しました",
+            "error_changing_pl_reqs_description": "ルームで必要な権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認したうえで、もう一度やり直してください。",
+            "error_changing_pl_title": "権限レベルを変更する際にエラーが発生しました",
+            "error_changing_pl_description": "ユーザーの権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認して、もう一度やり直してください。"
         },
         "security": {
             "strict_encryption": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない",
@@ -3128,7 +3122,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "スペースを更新しています…",
                 "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
-            }
+            },
+            "error_join_rule_change_title": "参加のルールの更新に失敗しました",
+            "error_join_rule_change_unknown": "不明なエラー"
         },
         "general": {
             "publish_toggle": "%(domain)sのルームディレクトリーにこのルームを公開しますか？",
@@ -3190,6 +3186,12 @@
             "notification_sound": "通知音",
             "custom_sound_prompt": "カスタム音を設定",
             "browse_button": "参照"
+        },
+        "voip": {
+            "enable_element_call_label": "%(brand)sをこのルームの追加の通話手段として有効にする",
+            "enable_element_call_caption": "%(brand)sではエンドツーエンド暗号化が設定されていますが、より少ないユーザー数に限定されています。",
+            "enable_element_call_no_permissions_tooltip": "この変更に必要な権限がありません。",
+            "call_type_section": "通話の種類"
         }
     },
     "encryption": {

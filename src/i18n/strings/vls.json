@@ -28,7 +28,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
     "Restricted": "Beperkten toegank",
     "Moderator": "Moderator",
-    "Reason": "Reedn",
     "%(items)s and %(lastItem)s": "%(items)s en %(lastItem)s",
     "Dog": "Hound",
     "Cat": "Katte",
@@ -110,8 +109,6 @@
     "Incorrect verification code": "Onjuste verificoasjecode",
     "Verification code": "Verificoasjecode",
     "Phone Number": "Telefongnumero",
-    "Failed to unban": "Ountbann mislukt",
-    "Banned by %(displayName)s": "Verbann deur %(displayName)s",
     "This event could not be displayed": "Deze gebeurtenisse kostege nie weergegeevn wordn",
     "Failed to ban user": "Verbann van gebruuker es mislukt",
     "Demote yourself?": "Jen eigen degradeern?",
@@ -882,7 +879,10 @@
             "send_event_type": "%(eventType)s-gebeurtenissn verstuurn",
             "title": "Rolln & toestemmiengn",
             "permissions_section": "Toestemmiengn",
-            "permissions_section_description_room": "Selecteert de rolln vereist vo verschillende deeln van ’t gesprek te wyzign"
+            "permissions_section_description_room": "Selecteert de rolln vereist vo verschillende deeln van ’t gesprek te wyzign",
+            "error_unbanning": "Ountbann mislukt",
+            "banned_by": "Verbann deur %(displayName)s",
+            "ban_reason": "Reedn"
         },
         "security": {
             "enable_encryption_confirm_title": "Versleuterienge inschoakeln?",

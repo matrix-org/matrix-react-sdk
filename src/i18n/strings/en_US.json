@@ -24,7 +24,6 @@
     "Failed to reject invite": "Failed to reject invite",
     "Failed to reject invitation": "Failed to reject invitation",
     "Failed to set display name": "Failed to set display name",
-    "Failed to unban": "Failed to unban",
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
     "Historical": "Historical",
@@ -40,7 +39,6 @@
     "not specified": "not specified",
     "No more results": "No more results",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
-    "Reason": "Reason",
     "Reject invitation": "Reject invitation",
     "Return to login screen": "Return to login screen",
     "Rooms": "Rooms",
@@ -85,7 +83,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Connectivity to the server has been lost.": "Connectivity to the server has been lost.",
     "Sent messages will be stored until your connection has returned.": "Sent messages will be stored until your connection has returned.",
-    "Banned by %(displayName)s": "Banned by %(displayName)s",
     "Passphrases must match": "Passphrases must match",
     "Passphrase must not be empty": "Passphrase must not be empty",
     "Export room keys": "Export room keys",
@@ -514,7 +511,10 @@
             "no_privileged_users": "No users have specific privileges in this room",
             "privileged_users_section": "Privileged Users",
             "banned_users_section": "Banned users",
-            "permissions_section": "Permissions"
+            "permissions_section": "Permissions",
+            "error_unbanning": "Failed to unban",
+            "banned_by": "Banned by %(displayName)s",
+            "ban_reason": "Reason"
         },
         "security": {
             "history_visibility_legend": "Who can read history?",

@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
-    "Reason": "Razón",
     "Send": "Enviar",
     "Incorrect verification code": "Código de verificación incorrecto",
     "Authentication": "Autenticación",
@@ -64,8 +63,6 @@
     "Historical": "Historial",
     "%(roomName)s does not exist.": "%(roomName)s non existe.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s non está accesible neste momento.",
-    "Failed to unban": "Fallou eliminar a prohibición",
-    "Banned by %(displayName)s": "Non aceptado por %(displayName)s",
     "unknown error code": "código de fallo descoñecido",
     "Failed to forget room %(errCode)s": "Fallo ao esquecer sala %(errCode)s",
     "Jump to first unread message.": "Ir a primeira mensaxe non lida.",
@@ -288,10 +285,6 @@
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
-    "Error changing power level requirement": "Erro ao cambiar o requerimento de nivel de responsabilidade",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Algo fallou ao cambiar os requerimentos de nivel de responsabilidade na sala. Asegúrate de ter os permisos suficientes e volve a intentalo.",
-    "Error changing power level": "Erro ao cambiar nivel de responsabilidade",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Algo fallou ao cambiar o nivel de responsabilidade da usuaria. Asegúrate de ter permiso suficiente e inténtao outra vez.",
     "Unable to revoke sharing for email address": "Non se puido revogar a compartición para o enderezo de correo",
     "Unable to share email address": "Non se puido compartir co enderezo de email",
     "Your email address hasn't been verified yet": "O teu enderezo de email aínda non foi verificado",
@@ -1107,8 +1100,6 @@
     "Results": "Resultados",
     "Some encryption parameters have been changed.": "Algún dos parámetros de cifrado foron cambiados.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
-    "Unknown failure": "Fallo descoñecido",
-    "Failed to update the join rules": "Fallou a actualización das normas para unirse",
     "Message didn't send. Click for info.": "Non se enviou a mensaxe. Click para info.",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "Would you like to leave the rooms in this space?": "Queres saír destas salas neste espazo?",
@@ -2850,7 +2841,14 @@
             "title": "Roles & Permisos",
             "permissions_section": "Permisos",
             "permissions_section_description_space": "Elexir os roles requeridos para cambiar varias partes do espazo",
-            "permissions_section_description_room": "Escolle os roles requeridos para cambiar determinadas partes da sala"
+            "permissions_section_description_room": "Escolle os roles requeridos para cambiar determinadas partes da sala",
+            "error_unbanning": "Fallou eliminar a prohibición",
+            "banned_by": "Non aceptado por %(displayName)s",
+            "ban_reason": "Razón",
+            "error_changing_pl_reqs_title": "Erro ao cambiar o requerimento de nivel de responsabilidade",
+            "error_changing_pl_reqs_description": "Algo fallou ao cambiar os requerimentos de nivel de responsabilidade na sala. Asegúrate de ter os permisos suficientes e volve a intentalo.",
+            "error_changing_pl_title": "Erro ao cambiar nivel de responsabilidade",
+            "error_changing_pl_description": "Algo fallou ao cambiar o nivel de responsabilidade da usuaria. Asegúrate de ter permiso suficiente e inténtao outra vez."
         },
         "security": {
             "strict_encryption": "Non enviar mensaxes cifradas desde esta sesión a sesións non verificadas nesta sala",
@@ -2902,7 +2900,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Actualizando espazo...",
                 "other": "Actualizando espazos... (%(progress)s de %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Fallou a actualización das normas para unirse",
+            "error_join_rule_change_unknown": "Fallo descoñecido"
         },
         "general": {
             "publish_toggle": "Publicar esta sala no directorio público de salas de %(domain)s?",

@@ -17,7 +17,6 @@
     "Moderator": "Moderator",
     "not specified": "niet opgegeven",
     "No more results": "Geen resultaten meer",
-    "Reason": "Reden",
     "Reject invitation": "Uitnodiging weigeren",
     "Sun": "Zo",
     "Mon": "Ma",
@@ -53,7 +52,6 @@
     "Failed to reject invite": "Weigeren van uitnodiging is mislukt",
     "Failed to reject invitation": "Weigeren van uitnodiging is mislukt",
     "Failed to set display name": "Instellen van weergavenaam is mislukt",
-    "Failed to unban": "Ontbannen mislukt",
     "Filter room members": "Kamerleden filteren",
     "Forget room": "Kamer vergeten",
     "Historical": "Historisch",
@@ -130,7 +128,6 @@
     "%(duration)sd": "%(duration)sd",
     "Replying": "Aan het beantwoorden",
     "Unnamed room": "Naamloze kamer",
-    "Banned by %(displayName)s": "Verbannen door %(displayName)s",
     "collapse": "dichtvouwen",
     "expand": "uitvouwen",
     "And %(count)s more...": {
@@ -391,10 +388,6 @@
     "Command Help": "Hulp bij opdrachten",
     "Remove %(email)s?": "%(email)s verwijderen?",
     "Remove %(phone)s?": "%(phone)s verwijderen?",
-    "Error changing power level requirement": "Fout bij wijzigen van machtsniveauvereiste",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Er is een fout opgetreden bij het wijzigen van de machtsniveauvereisten van de kamer. Zorg ervoor dat je over voldoende machtigingen beschikt en probeer het opnieuw.",
-    "Error changing power level": "Fout bij wijzigen van machtsniveau",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Er is een fout opgetreden bij het wijzigen van het machtsniveau van de persoon. Zorg ervoor dat je over voldoende machtigingen beschikt en probeer het opnieuw.",
     "Verify the link in your inbox": "Verifieer de koppeling in je postvak",
     "No recent messages by %(user)s found": "Geen recente berichten door %(user)s gevonden",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Probeer omhoog te scrollen in de tijdslijn om te kijken of er eerdere zijn.",
@@ -1107,8 +1100,6 @@
     "Results": "Resultaten",
     "Some encryption parameters have been changed.": "Enkele versleutingsparameters zijn gewijzigd.",
     "Role in <RoomName/>": "Rol in <RoomName/>",
-    "Unknown failure": "Onbekende fout",
-    "Failed to update the join rules": "Het updaten van de deelname regels is mislukt",
     "Message didn't send. Click for info.": "Bericht is niet verstuur. Klik voor meer info.",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
@@ -1429,10 +1420,6 @@
     "Video call (Jitsi)": "Videogesprek (Jitsi)",
     "Show formatting": "Opmaak tonen",
     "Failed to set pusher state": "Kan de pusher status niet instellen",
-    "Call type": "Oproeptype",
-    "You do not have sufficient permissions to change this.": "U heeft niet voldoende rechten om dit te wijzigen.",
-    "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s is eind-tot-eind versleuteld, maar is momenteel beperkt tot kleinere aantallen gebruikers.",
-    "Enable %(brand)s as an additional calling option in this room": "Schakel %(brand)s in als extra bel optie in deze kamer",
     "common": {
         "about": "Over",
         "analytics": "Gebruiksgegevens",
@@ -2925,7 +2912,14 @@
             "title": "Rollen & rechten",
             "permissions_section": "Rechten",
             "permissions_section_description_space": "Selecteer de rollen die vereist zijn om onderdelen van de space te wijzigen",
-            "permissions_section_description_room": "Selecteer de vereiste rollen om verschillende delen van de kamer te wijzigen"
+            "permissions_section_description_room": "Selecteer de vereiste rollen om verschillende delen van de kamer te wijzigen",
+            "error_unbanning": "Ontbannen mislukt",
+            "banned_by": "Verbannen door %(displayName)s",
+            "ban_reason": "Reden",
+            "error_changing_pl_reqs_title": "Fout bij wijzigen van machtsniveauvereiste",
+            "error_changing_pl_reqs_description": "Er is een fout opgetreden bij het wijzigen van de machtsniveauvereisten van de kamer. Zorg ervoor dat je over voldoende machtigingen beschikt en probeer het opnieuw.",
+            "error_changing_pl_title": "Fout bij wijzigen van machtsniveau",
+            "error_changing_pl_description": "Er is een fout opgetreden bij het wijzigen van het machtsniveau van de persoon. Zorg ervoor dat je over voldoende machtigingen beschikt en probeer het opnieuw."
         },
         "security": {
             "strict_encryption": "Vanaf deze sessie nooit versleutelde berichten naar ongeverifieerde sessies in deze kamer versturen",
@@ -2977,7 +2971,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Spaces bijwerken...",
                 "other": "Spaces bijwerken... (%(progress)s van %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Het updaten van de deelname regels is mislukt",
+            "error_join_rule_change_unknown": "Onbekende fout"
         },
         "general": {
             "publish_toggle": "Deze kamer vermelden in de publieke kamersgids van %(domain)s?",
@@ -3038,6 +3034,12 @@
             "notification_sound": "Meldingsgeluid",
             "custom_sound_prompt": "Stel een nieuw aangepast geluid in",
             "browse_button": "Bladeren"
+        },
+        "voip": {
+            "enable_element_call_label": "Schakel %(brand)s in als extra bel optie in deze kamer",
+            "enable_element_call_caption": "%(brand)s is eind-tot-eind versleuteld, maar is momenteel beperkt tot kleinere aantallen gebruikers.",
+            "enable_element_call_no_permissions_tooltip": "U heeft niet voldoende rechten om dit te wijzigen.",
+            "call_type_section": "Oproeptype"
         }
     },
     "encryption": {

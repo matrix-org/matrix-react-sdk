@@ -9,7 +9,6 @@
     "Warning!": "Advarsel!",
     "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
     "Failed to reject invitation": "Kunne ikke afvise invitationen",
-    "Failed to unban": "Var ikke i stand til at ophæve forbuddet",
     "unknown error code": "Ukendt fejlkode",
     "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
@@ -39,7 +38,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Begrænset",
     "Moderator": "Moderator",
-    "Reason": "Årsag",
     "Sunday": "Søndag",
     "Today": "I dag",
     "Friday": "Fredag",
@@ -784,7 +782,9 @@
     "room_settings": {
         "permissions": {
             "banned_users_section": "Bortviste brugere",
-            "permissions_section": "Tilladelser"
+            "permissions_section": "Tilladelser",
+            "error_unbanning": "Var ikke i stand til at ophæve forbuddet",
+            "ban_reason": "Årsag"
         },
         "security": {
             "enable_encryption_confirm_title": "Aktiver kryptering?",

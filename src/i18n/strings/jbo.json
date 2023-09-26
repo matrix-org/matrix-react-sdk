@@ -29,7 +29,6 @@
     "Restricted": "vlipa so'u da",
     "Moderator": "vlipa so'o da",
     "Changes your display nickname": "",
-    "Reason": "krinu",
     "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
     "Warning!": ".i ju'i",
     "Authentication": "lo nu facki lo du'u do du ma kau",
@@ -412,7 +411,8 @@
             "m.room.name": "nu basti fi le ka cmene le ve zilbe'i",
             "m.room.canonical_alias": "nu basti fi le ka ralju lu'i ro judri be le ve zilbe'i",
             "m.room.topic": "nu basti fi le ka skicu lerpoi",
-            "invite": "nu friti le ka ziljmina kei pa pilno"
+            "invite": "nu friti le ka ziljmina kei pa pilno",
+            "ban_reason": "krinu"
         },
         "security": {
             "strict_encryption": "nu na pa mifra be pa notci cu zilbe'i pa se samtcise'u poi na se lanli ku'o le se samtcise'u le cei'i"

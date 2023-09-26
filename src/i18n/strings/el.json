@@ -39,7 +39,6 @@
     "Enter passphrase": "Εισαγωγή συνθηματικού",
     "Failed to set display name": "Δεν ήταν δυνατό ο ορισμός του ονόματος εμφάνισης",
     "Home": "Αρχική",
-    "Reason": "Αιτία",
     "Reject invitation": "Απόρριψη πρόσκλησης",
     "Return to login screen": "Επιστροφή στην οθόνη σύνδεσης",
     "%(roomName)s does not exist.": "Το %(roomName)s δεν υπάρχει.",
@@ -87,7 +86,6 @@
     "Error decrypting video": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο",
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "Failed to ban user": "Δεν ήταν δυνατό ο αποκλεισμός του χρήστη",
-    "Failed to unban": "Δεν ήταν δυνατή η άρση του αποκλεισμού",
     "Invalid file%(extra)s": "Μη έγκυρο αρχείο %(extra)s",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
@@ -554,15 +552,8 @@
     "Unable to share phone number": "Αδυναμία κοινής χρήσης του αριθμού τηλεφώνου",
     "Unable to revoke sharing for phone number": "Αδυναμία ανάκληση της κοινής χρήσης για τον αριθμό τηλεφώνου",
     "Discovery options will appear once you have added an email above.": "Οι επιλογές εντοπισμού θα εμφανιστούν μόλις προσθέσετε ένα email παραπάνω.",
-    "Unknown failure": "Άγνωστο σφάλμα",
-    "Failed to update the join rules": "Αποτυχία ενημέρωσης των κανόνων συμμετοχής",
     "Click the link in the email you received to verify and then click continue again.": "Κάντε κλικ στον σύνδεσμο ηλεκτρονικής διεύθυνσης που λάβατε για επαλήθευση και μετα, κάντε ξανά κλικ στη συνέχεια.",
     "Unable to revoke sharing for email address": "Δεν είναι δυνατή η ανάκληση της κοινής χρήσης για τη διεύθυνση ηλεκτρονικού ταχυδρομείου",
-    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Παρουσιάστηκε σφάλμα κατά την αλλαγή του επιπέδου ισχύος του χρήστη. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
-    "Error changing power level": "Σφάλμα αλλαγής του επιπέδου ισχύος",
-    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Παρουσιάστηκε σφάλμα κατά την αλλαγή των απαιτήσεων επιπέδου ισχύος του δωματίου. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
-    "Error changing power level requirement": "Σφάλμα αλλαγής της απαίτησης επιπέδου ισχύος",
-    "Banned by %(displayName)s": "Αποκλείστηκε από %(displayName)s",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
     "Session key": "Κλειδί συνεδρίας",
@@ -2669,7 +2660,14 @@
             "title": "Ρόλοι & Δικαιώματα",
             "permissions_section": "Δικαιώματα",
             "permissions_section_description_space": "Επιλέξτε τους ρόλους που απαιτούνται για να αλλάξετε διάφορα μέρη του χώρου",
-            "permissions_section_description_room": "Επιλέξτε τους ρόλους που απαιτούνται για να αλλάξετε διάφορα μέρη του δωματίου"
+            "permissions_section_description_room": "Επιλέξτε τους ρόλους που απαιτούνται για να αλλάξετε διάφορα μέρη του δωματίου",
+            "error_unbanning": "Δεν ήταν δυνατή η άρση του αποκλεισμού",
+            "banned_by": "Αποκλείστηκε από %(displayName)s",
+            "ban_reason": "Αιτία",
+            "error_changing_pl_reqs_title": "Σφάλμα αλλαγής της απαίτησης επιπέδου ισχύος",
+            "error_changing_pl_reqs_description": "Παρουσιάστηκε σφάλμα κατά την αλλαγή των απαιτήσεων επιπέδου ισχύος του δωματίου. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
+            "error_changing_pl_title": "Σφάλμα αλλαγής του επιπέδου ισχύος",
+            "error_changing_pl_description": "Παρουσιάστηκε σφάλμα κατά την αλλαγή του επιπέδου ισχύος του χρήστη. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά."
         },
         "security": {
             "strict_encryption": "Μη στέλνετε ποτέ κρυπτογραφημένα μηνύματα σε μη επαληθευμένες συνεδρίες σε αυτό το δωμάτιο από αυτή τη συνεδρία",
@@ -2720,7 +2718,9 @@
             "join_rule_upgrade_updating_spaces": {
                 "one": "Ενημέρωση χώρου...",
                 "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
-            }
+            },
+            "error_join_rule_change_title": "Αποτυχία ενημέρωσης των κανόνων συμμετοχής",
+            "error_join_rule_change_unknown": "Άγνωστο σφάλμα"
         },
         "general": {
             "publish_toggle": "Δημοσίευση αυτού του δωματίου στο κοινό κατάλογο δωματίων του %(domain)s;",
