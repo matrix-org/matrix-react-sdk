@@ -38,7 +38,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Нећете моћи да опозовете ове промене јер себи смањујете овлашћења. Ако сте последњи овлашћени корисник у соби, немогуће је да поново добијете овлашћења.",
     "Are you sure?": "Да ли сте сигурни?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
-    "Unignore": "Не занемаруј више",
     "Jump to read receipt": "Скочи на потврду о прочитаности",
     "Admin Tools": "Админ алатке",
     "and %(count)s others...": {
@@ -126,8 +125,6 @@
     },
     "Uploading %(filename)s": "Отпремам датотеку %(filename)s",
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
-    "No Microphones detected": "Нема уочених микрофона",
-    "No Webcams detected": "Нема уочених веб камера",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
@@ -177,8 +174,6 @@
     "Share User": "Подели корисника",
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
-    "No Audio Outputs detected": "Нема уочених излаза звука",
-    "Audio Output": "Излаз звука",
     "Permission Required": "Неопходна је дозвола",
     "This event could not be displayed": "Овај догађај не може бити приказан",
     "Demote yourself?": "Рашчињавате себе?",
@@ -214,7 +209,6 @@
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "General failure": "Општа грешка",
     "Light bulb": "сијалица",
-    "Voice & Video": "Глас и видео",
     "Unable to revoke sharing for email address": "Не могу да опозовем дељење ове мејл адресе",
     "Unable to revoke sharing for phone number": "Не могу да опозовем дељење броја телефона",
     "No recently visited rooms": "Нема недавно посећених соба",
@@ -707,7 +701,8 @@
         "mention": "Спомени",
         "submit": "Пошаљи",
         "unban": "Скини забрану",
-        "show_advanced": "Прикажи напредно"
+        "show_advanced": "Прикажи напредно",
+        "unignore": "Не занемаруј више"
     },
     "labs": {
         "pinning": "Закачене поруке",
@@ -828,7 +823,12 @@
             "key_backup_active_version_none": "Ништа"
         },
         "voip": {
-            "mirror_local_feed": "Копирај довод локалног видеа"
+            "mirror_local_feed": "Копирај довод локалног видеа",
+            "audio_output": "Излаз звука",
+            "audio_output_empty": "Нема уочених излаза звука",
+            "audio_input_empty": "Нема уочених микрофона",
+            "video_input_empty": "Нема уочених веб камера",
+            "title": "Глас и видео"
         },
         "sessions": {
             "session_id": "ИД сесије"

@@ -32,7 +32,6 @@
     "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
     "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
     "Are you sure?": "Siz əminsiniz?",
-    "Unignore": "Blokdan çıxarmaq",
     "Invited": "Dəvət edilmişdir",
     "Filter room members": "İştirakçılara görə axtarış",
     "You do not have permission to post to this room": "Siz bu otağa yaza bilmirsiniz",
@@ -112,7 +111,8 @@
         "close": "Bağlamaq",
         "accept": "Qəbul etmək",
         "register": "Qeydiyyatdan keçmək",
-        "unban": "Blokdan çıxarmaq"
+        "unban": "Blokdan çıxarmaq",
+        "unignore": "Blokdan çıxarmaq"
     },
     "keyboard": {
         "home": "Başlanğıc"

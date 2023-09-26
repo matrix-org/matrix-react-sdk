@@ -2,8 +2,6 @@
     "Create new room": "새 방 만들기",
     "unknown error code": "알 수 없는 오류 코드",
     "Admin Tools": "관리자 도구",
-    "No Microphones detected": "마이크 감지 없음",
-    "No Webcams detected": "카메라 감지 없음",
     "Authentication": "인증",
     "A new password must be entered.": "새 비밀번호를 입력해주세요.",
     "An error has occurred.": "오류가 발생했습니다.",
@@ -151,7 +149,6 @@
     "%(duration)sd": "%(duration)s일",
     "Replying": "답장 중",
     "Share Link to User": "사용자에게 링크 공유",
-    "Unignore": "그만 무시하기",
     "Demote": "강등",
     "Demote yourself?": "자신을 강등하시겠습니까?",
     "This room is not public. You will not be able to rejoin without an invite.": "이 방은 공개되지 않았습니다. 초대 없이는 다시 들어올 수 없습니다.",
@@ -192,8 +189,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "브라우저의 저장소를 청소한다면 문제가 해결될 수도 있지만, 암호화된 대화 기록을 읽을 수 없게 됩니다.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "<consentLink>이용 약관</consentLink>을 검토하고 동의하기 전까진 메시지를 보낼 수 없습니다.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "이 홈서버가 월 간 활성 사용자 한도를 초과했기 때문에 메시지를 보낼 수 없었습니다. 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
-    "No Audio Outputs detected": "오디오 출력 감지 없음",
-    "Audio Output": "오디오 출력",
     "Dog": "개",
     "Cat": "고양이",
     "Lion": "사자",
@@ -261,10 +256,6 @@
     "Back up your keys before signing out to avoid losing them.": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
-    "Ignored users": "무시한 사용자",
-    "Missing media permissions, click the button below to request.": "미디어 권한이 없습니다, 권한 요청을 보내려면 아래 버튼을 클릭하세요.",
-    "Request media permissions": "미디어 권한 요청",
-    "Voice & Video": "음성 & 영상",
     "Room information": "방 정보",
     "Room Addresses": "방 주소",
     "Uploaded sound": "업로드된 소리",
@@ -664,7 +655,8 @@
         "clear": "지우기",
         "unban": "출입 금지 풀기",
         "hide_advanced": "고급 숨기기",
-        "show_advanced": "고급 보이기"
+        "show_advanced": "고급 보이기",
+        "unignore": "그만 무시하기"
     },
     "labs": {
         "pinning": "메시지 고정",
@@ -769,7 +761,14 @@
         "inline_url_previews_room_account": "이 방에서 URL 미리보기 사용하기 (오직 나만 영향을 받음)",
         "inline_url_previews_room": "이 방에 참여한 모두에게 기본으로 URL 미리보기 사용하기",
         "voip": {
-            "mirror_local_feed": "보고 있는 비디오 전송 상태 비추기"
+            "mirror_local_feed": "보고 있는 비디오 전송 상태 비추기",
+            "missing_permissions_prompt": "미디어 권한이 없습니다, 권한 요청을 보내려면 아래 버튼을 클릭하세요.",
+            "request_permissions": "미디어 권한 요청",
+            "audio_output": "오디오 출력",
+            "audio_output_empty": "오디오 출력 감지 없음",
+            "audio_input_empty": "마이크 감지 없음",
+            "video_input_empty": "카메라 감지 없음",
+            "title": "음성 & 영상"
         },
         "security": {
             "send_analytics": "정보 분석 데이터 보내기",
@@ -785,7 +784,8 @@
             "error_loading_key_backup_status": "키 백업 상태를 불러올 수 없음",
             "restore_key_backup": "백업에서 복구",
             "key_backup_complete": "모든 키 백업됨",
-            "key_backup_active_version_none": "없음"
+            "key_backup_active_version_none": "없음",
+            "ignore_users_section": "무시한 사용자"
         },
         "preferences": {
             "room_list_heading": "방 목록",

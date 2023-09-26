@@ -99,8 +99,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
     "Invited": "Convidada(o)",
-    "No Microphones detected": "Não foi detectado nenhum microfone",
-    "No Webcams detected": "Nenhuma câmera detectada",
     "Are you sure you want to leave the room '%(roomName)s'?": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Home": "Home",
@@ -125,7 +123,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s",
     "Send": "Enviar",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Você não poderá desfazer essa alteração, já que está rebaixando sua própria permissão. Se você for a última pessoa nesta sala, será impossível recuperar a permissão atual.",
-    "Unignore": "Desbloquear",
     "Jump to read receipt": "Ir para a confirmação de leitura",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -212,8 +209,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Você não pode enviar nenhuma mensagem até revisar e concordar com <consentLink>nossos termos e condições</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sua mensagem não foi enviada porque este homeserver atingiu seu Limite de usuário ativo mensal. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Sua mensagem não foi enviada porque este servidor local excedeu o limite de recursos. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
-    "No Audio Outputs detected": "Nenhuma caixa de som detectada",
-    "Audio Output": "Caixa de som",
     "Invalid homeserver discovery response": "Resposta de descoberta de homeserver inválida",
     "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
     "General failure": "Falha geral",
@@ -299,10 +294,6 @@
     "Unable to verify phone number.": "Não foi possível confirmar o número de telefone.",
     "Verification code": "Código de confirmação",
     "Phone Number": "Número de telefone",
-    "Ignored users": "Usuários bloqueados",
-    "Missing media permissions, click the button below to request.": "Permissões de mídia ausentes, clique no botão abaixo para solicitar.",
-    "Request media permissions": "Solicitar permissões de mídia",
-    "Voice & Video": "Voz e vídeo",
     "Room information": "Informação da sala",
     "Room Addresses": "Endereços da sala",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
@@ -317,7 +308,6 @@
     "Lock": "Cadeado",
     "Show more": "Mostrar mais",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "O administrador do servidor desativou a criptografia de ponta a ponta por padrão em salas privadas e em conversas.",
     "Click the link in the email you received to verify and then click continue again.": "Clique no link no e-mail que você recebeu para confirmar e então clique novamente em continuar.",
     "Verify the link in your inbox": "Verifique o link na sua caixa de e-mails",
     "This room is end-to-end encrypted": "Esta sala é criptografada de ponta a ponta",
@@ -993,7 +983,6 @@
     "Unable to access your microphone": "Não foi possível acessar seu microfone",
     "View message": "Ver mensagem",
     "Failed to send": "Falhou a enviar",
-    "You have no ignored users.": "Você não tem usuários ignorados.",
     "Space information": "Informações do espaço",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
@@ -1359,7 +1348,8 @@
         "unban": "Remover banimento",
         "click_to_copy": "Clique para copiar",
         "hide_advanced": "Esconder configurações avançadas",
-        "show_advanced": "Mostrar configurações avançadas"
+        "show_advanced": "Mostrar configurações avançadas",
+        "unignore": "Desbloquear"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1632,7 +1622,14 @@
         "inline_url_previews_room_account": "Ativar, para esta sala, a visualização de links (só afeta você)",
         "inline_url_previews_room": "Ativar, para todos os participantes desta sala, a visualização de links",
         "voip": {
-            "mirror_local_feed": "Espelhar o feed de vídeo local"
+            "mirror_local_feed": "Espelhar o feed de vídeo local",
+            "missing_permissions_prompt": "Permissões de mídia ausentes, clique no botão abaixo para solicitar.",
+            "request_permissions": "Solicitar permissões de mídia",
+            "audio_output": "Caixa de som",
+            "audio_output_empty": "Nenhuma caixa de som detectada",
+            "audio_input_empty": "Não foi detectado nenhum microfone",
+            "video_input_empty": "Nenhuma câmera detectada",
+            "title": "Voz e vídeo"
         },
         "security": {
             "message_search_disable_warning": "Se desativado, as mensagens de salas criptografadas não aparecerão em resultados de buscas.",
@@ -1702,7 +1699,10 @@
             "key_backup_complete": "O backup de todas as chaves foi realizado",
             "key_backup_algorithm": "Algoritmo:",
             "key_backup_inactive_warning": "Suas chaves <b>não estão sendo copiadas desta sessão</b>.",
-            "key_backup_active_version_none": "Nenhuma"
+            "key_backup_active_version_none": "Nenhuma",
+            "ignore_users_empty": "Você não tem usuários ignorados.",
+            "ignore_users_section": "Usuários bloqueados",
+            "e2ee_default_disabled_warning": "O administrador do servidor desativou a criptografia de ponta a ponta por padrão em salas privadas e em conversas."
         },
         "preferences": {
             "room_list_heading": "Lista de salas",

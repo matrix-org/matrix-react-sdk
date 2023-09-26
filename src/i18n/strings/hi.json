@@ -44,7 +44,6 @@
     "Failed to mute user": "उपयोगकर्ता को म्यूट करने में विफल",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "आप इस परिवर्तन को पूर्ववत नहीं कर पाएंगे क्योंकि आप उपयोगकर्ता को अपने आप से समान शक्ति स्तर रखने के लिए प्रोत्साहित कर रहे हैं।",
     "Are you sure?": "क्या आपको यकीन है?",
-    "Unignore": "अनदेखा न करें",
     "Jump to read receipt": "पढ़ी हुई रसीद में कूदें",
     "Share Link to User": "उपयोगकर्ता को लिंक साझा करें",
     "Admin Tools": "व्यवस्थापक उपकरण",
@@ -139,14 +138,6 @@
     "Room information": "रूम जानकारी",
     "Room Addresses": "रूम का पता",
     "Scissors": "कैंची",
-    "Ignored users": "अनदेखी उपयोगकर्ताओं",
-    "Missing media permissions, click the button below to request.": "मीडिया अनुमतियाँ गुम, अनुरोध करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-    "Request media permissions": "मीडिया अनुमति का अनुरोध करें",
-    "No Audio Outputs detected": "कोई ऑडियो आउटपुट नहीं मिला",
-    "No Microphones detected": "कोई माइक्रोफोन का पता नहीं चला",
-    "No Webcams detected": "कोई वेबकैम नहीं मिला",
-    "Audio Output": "ध्वनि - उत्पादन",
-    "Voice & Video": "ध्वनि और वीडियो",
     "Failed to unban": "अप्रतिबंधित करने में विफल",
     "Banned by %(displayName)s": "%(displayName)s द्वारा प्रतिबंधित",
     "Explore rooms": "रूम का अन्वेषण करें",
@@ -352,7 +343,8 @@
         "register": "पंजीकरण करें",
         "mention": "उल्लेख",
         "submit": "जमा करें",
-        "unban": "अप्रतिबंधित करें"
+        "unban": "अप्रतिबंधित करें",
+        "unignore": "अनदेखा न करें"
     },
     "labs": {
         "pinning": "संदेश पिनिंग",
@@ -419,7 +411,14 @@
         "inline_url_previews_room_account": "इस रूम के लिए यूआरएल पूर्वावलोकन सक्षम करें (केवल आपको प्रभावित करता है)",
         "inline_url_previews_room": "इस रूम में प्रतिभागियों के लिए डिफ़ॉल्ट रूप से यूआरएल पूर्वावलोकन सक्षम करें",
         "voip": {
-            "mirror_local_feed": "स्थानीय वीडियो फ़ीड को आईना करें"
+            "mirror_local_feed": "स्थानीय वीडियो फ़ीड को आईना करें",
+            "missing_permissions_prompt": "मीडिया अनुमतियाँ गुम, अनुरोध करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
+            "request_permissions": "मीडिया अनुमति का अनुरोध करें",
+            "audio_output": "ध्वनि - उत्पादन",
+            "audio_output_empty": "कोई ऑडियो आउटपुट नहीं मिला",
+            "audio_input_empty": "कोई माइक्रोफोन का पता नहीं चला",
+            "video_input_empty": "कोई वेबकैम नहीं मिला",
+            "title": "ध्वनि और वीडियो"
         },
         "security": {
             "send_analytics": "विश्लेषण डेटा भेजें",
@@ -432,7 +431,8 @@
             "delete_backup_confirm_description": "क्या आपको यकीन है? यदि आपकी कुंजियाँ ठीक से बैकअप नहीं हैं तो आप अपने एन्क्रिप्टेड संदेशों को खो देंगे।",
             "error_loading_key_backup_status": "कुंजी बैकअप स्थिति लोड होने में असमर्थ",
             "restore_key_backup": "बैकअप से बहाल करना",
-            "key_backup_complete": "सभी कुंजियाँ वापस आ गईं"
+            "key_backup_complete": "सभी कुंजियाँ वापस आ गईं",
+            "ignore_users_section": "अनदेखी उपयोगकर्ताओं"
         },
         "preferences": {
             "room_list_heading": "कक्ष सूचि",

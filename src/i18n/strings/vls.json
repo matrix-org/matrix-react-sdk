@@ -111,15 +111,6 @@
     "Incorrect verification code": "Onjuste verificoasjecode",
     "Verification code": "Verificoasjecode",
     "Phone Number": "Telefongnumero",
-    "Unignore": "Nie mi negeern",
-    "Ignored users": "Genegeerde gebruukers",
-    "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
-    "Request media permissions": "Mediatoestemmiengn verzoekn",
-    "No Audio Outputs detected": "Geen geluudsuutgangn gedetecteerd",
-    "No Microphones detected": "Geen microfoons gevoundn",
-    "No Webcams detected": "Geen webcams gevoundn",
-    "Audio Output": "Geluudsuutgang",
-    "Voice & Video": "Sproak & video",
     "Room information": "Gespreksinformoasje",
     "Room Addresses": "Gespreksadressn",
     "Failed to unban": "Ountbann mislukt",
@@ -509,7 +500,8 @@
         "refresh": "Herloadn",
         "mention": "Vermeldn",
         "submit": "Bevestign",
-        "unban": "Ountbann"
+        "unban": "Ountbann",
+        "unignore": "Nie mi negeern"
     },
     "labs": {
         "pinning": "Bericht vastprikkn",
@@ -591,7 +583,14 @@
         "inline_url_previews_room_account": "URL-voorvertoniengn in dit gesprek inschoakeln (geldt alleene vo joun)",
         "inline_url_previews_room": "URL-voorvertoniengn standoard vo de gebruukers in dit gesprek inschoakeln",
         "voip": {
-            "mirror_local_feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)"
+            "mirror_local_feed": "Lokoale videoanvoer ook elders ipsloan (spiegeln)",
+            "missing_permissions_prompt": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
+            "request_permissions": "Mediatoestemmiengn verzoekn",
+            "audio_output": "Geluudsuutgang",
+            "audio_output_empty": "Geen geluudsuutgangn gedetecteerd",
+            "audio_input_empty": "Geen microfoons gevoundn",
+            "video_input_empty": "Geen webcams gevoundn",
+            "title": "Sproak & video"
         },
         "security": {
             "send_analytics": "Statistische gegeevns (analytics) verstuurn",
@@ -606,7 +605,8 @@
             "delete_backup_confirm_description": "Zy je zeker? Je goa je versleuterde berichtn kwytspeeln a je sleuters nie correct geback-upt zyn.",
             "error_loading_key_backup_status": "Kostege de sleuterback-upstatus nie loadn",
             "restore_key_backup": "Herstelln uut back-up",
-            "key_backup_complete": "Alle sleuters zyn geback-upt"
+            "key_backup_complete": "Alle sleuters zyn geback-upt",
+            "ignore_users_section": "Genegeerde gebruukers"
         },
         "preferences": {
             "room_list_heading": "Gesprekslyste",

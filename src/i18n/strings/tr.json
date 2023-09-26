@@ -1,7 +1,5 @@
 {
     "Admin Tools": "Admin Araçları",
-    "No Microphones detected": "Hiçbir Mikrofon bulunamadı",
-    "No Webcams detected": "Hiçbir Web kamerası bulunamadı",
     "Authentication": "Doğrulama",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
     "and %(count)s others...": {
@@ -268,9 +266,6 @@
     "Cake": "Kek",
     "Heart": "Kalp",
     "Trophy": "Ödül",
-    "No Audio Outputs detected": "Ses çıkışları tespit edilemedi",
-    "Audio Output": "Ses Çıkışı",
-    "Voice & Video": "Ses & Video",
     "Room information": "Oda bilgisi",
     "Room Addresses": "Oda Adresleri",
     "Uploaded sound": "Yüklenen ses",
@@ -348,8 +343,6 @@
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "Ignored users": "Yoksayılan kullanıcılar",
-    "Request media permissions": "Medya izinleri talebi",
     "Set a new custom sound": "Özel bir ses ayarla",
     "Error changing power level requirement": "Güç düzey gereksinimi değiştirmede hata",
     "Error changing power level": "Güç düzeyi değiştirme hatası",
@@ -367,8 +360,6 @@
     "You're previewing %(roomName)s. Want to join it?": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
     "You don't currently have any stickerpacks enabled": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
     "Room Topic": "Oda Başlığı",
-    "Missing media permissions, click the button below to request.": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
-    "Unignore": "Yoksayma",
     "Unable to revoke sharing for email address": "E-posta adresi paylaşımı kaldırılamadı",
     "Unable to revoke sharing for phone number": "Telefon numarası paylaşımı kaldırılamıyor",
     "And %(count)s more...": {
@@ -817,7 +808,6 @@
     "Discovery options will appear once you have added an email above.": "Bulunulabilirlik seçenekleri, yukarıya bir e-posta adresi ekleyince ortaya çıkacaktır.",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Odanın güç düzeyi gereksinimlerini değiştirirken bir hata ile karşılaşıldı. Yeterince yetkiniz olduğunuzdan emin olup yeniden deyin.",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Bu oda, iletileri sözü edilen platformlara köprülüyor. <a>Daha fazla bilgi için.</a>",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Sunucu yönetinciniz varsayılan olarak odalarda ve doğrudandan iletilerde uçtan uca şifrelemeyi kapadı.",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
@@ -981,7 +971,8 @@
         "unban": "Yasağı Kaldır",
         "click_to_copy": "Kopyalamak için tıklayın",
         "hide_advanced": "Gelişmiş gizle",
-        "show_advanced": "Gelişmiş göster"
+        "show_advanced": "Gelişmiş göster",
+        "unignore": "Yoksayma"
     },
     "a11y": {
         "user_menu": "Kullanıcı menüsü",
@@ -1159,7 +1150,14 @@
         "inline_url_previews_room_account": "Bu oda için URL önizlemeyi aç (sadece sizi etkiler)",
         "inline_url_previews_room": "Bu odadaki katılımcılar için URL önizlemeyi varsayılan olarak açık hale getir",
         "voip": {
-            "mirror_local_feed": "Yerel video beslemesi yansısı"
+            "mirror_local_feed": "Yerel video beslemesi yansısı",
+            "missing_permissions_prompt": "Medya izinleri eksik, alttaki butona tıkayarak talep edin.",
+            "request_permissions": "Medya izinleri talebi",
+            "audio_output": "Ses Çıkışı",
+            "audio_output_empty": "Ses çıkışları tespit edilemedi",
+            "audio_input_empty": "Hiçbir Mikrofon bulunamadı",
+            "video_input_empty": "Hiçbir Web kamerası bulunamadı",
+            "title": "Ses & Video"
         },
         "security": {
             "message_search_indexing_idle": "Şu an hiç bir odada mesaj indeksleme yapılmıyor.",
@@ -1223,7 +1221,9 @@
             "key_backup_complete": "Bütün yedekler yedeklendi",
             "key_backup_algorithm": "Algoritma:",
             "key_backup_inactive_warning": "Anahtarlarınız <b>bu oturum tarafından yedeklenmiyor</b>.",
-            "key_backup_active_version_none": "Yok"
+            "key_backup_active_version_none": "Yok",
+            "ignore_users_section": "Yoksayılan kullanıcılar",
+            "e2ee_default_disabled_warning": "Sunucu yönetinciniz varsayılan olarak odalarda ve doğrudandan iletilerde uçtan uca şifrelemeyi kapadı."
         },
         "preferences": {
             "room_list_heading": "Oda listesi",

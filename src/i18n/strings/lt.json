@@ -84,10 +84,6 @@
     },
     "Uploading %(filename)s": "Įkeliamas %(filename)s",
     "Unable to remove contact information": "Nepavyko pašalinti kontaktinės informacijos",
-    "No Audio Outputs detected": "Neaptikta jokių garso išvesčių",
-    "No Microphones detected": "Neaptikta jokių mikrofonų",
-    "No Webcams detected": "Neaptikta jokių kamerų",
-    "Audio Output": "Garso išvestis",
     "A new password must be entered.": "Privalo būti įvestas naujas slaptažodis.",
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
@@ -128,7 +124,6 @@
     "Send Logs": "Siųsti žurnalus",
     "Unable to restore session": "Nepavyko atkurti seanso",
     "Invalid Email Address": "Neteisingas el. pašto adresas",
-    "Unignore": "Nebeignoruoti",
     "and %(count)s others...": {
         "other": "ir %(count)s kitų...",
         "one": "ir dar vienas..."
@@ -241,7 +236,6 @@
     "Your password has been reset.": "Jūsų slaptažodis buvo iš naujo nustatytas.",
     "Show more": "Rodyti daugiau",
     "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
-    "Voice & Video": "Garsas ir Vaizdas",
     "Deactivate user?": "Deaktyvuoti vartotoją?",
     "Deactivate user": "Deaktyvuoti vartotoją",
     "Failed to deactivate user": "Nepavyko deaktyvuoti vartotojo",
@@ -426,7 +420,6 @@
     "Room information": "Kambario informacija",
     "Browse": "Naršyti",
     "Set a new custom sound": "Nustatyti naują pasirinktinį garsą",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Serverio administratorius išjungė visapusį šifravimą, kaip numatytą, privačiuose kambariuose ir Tiesioginėse Žinutėse.",
     "Notification sound": "Pranešimo garsas",
     "Sounds": "Garsai",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
@@ -484,7 +477,6 @@
     "Video conference started by %(senderName)s": "%(senderName)s pradėjo video konferenciją",
     "Video conference updated by %(senderName)s": "%(senderName)s atnaujino video konferenciją",
     "Video conference ended by %(senderName)s": "%(senderName)s užbaigė video konferenciją",
-    "Ignored users": "Ignoruojami vartotojai",
     "Backup version:": "Atsarginės kopijos versija:",
     "Forget this room": "Pamiršti šį kambarį",
     "This homeserver would like to make sure you are not a robot.": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
@@ -871,9 +863,6 @@
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Šiame kambaryje žinutės perduodamos šioms platformoms. <a>Sužinokite daugiau.</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Šis kambarys neperduoda žinučių jokioms platformoms. <a>Sužinokite daugiau.</a>",
     "Space information": "Erdvės informacija",
-    "Request media permissions": "Prašyti medijos leidimų",
-    "Missing media permissions, click the button below to request.": "Trūksta medijos leidimų, spustelėkite toliau esantį mygtuką kad pateikti užklausą.",
-    "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -1143,7 +1132,8 @@
         "unban": "Atblokuoti",
         "click_to_copy": "Spustelėkite kad nukopijuoti",
         "hide_advanced": "Paslėpti išplėstinius",
-        "show_advanced": "Rodyti išplėstinius"
+        "show_advanced": "Rodyti išplėstinius",
+        "unignore": "Nebeignoruoti"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1419,7 +1409,14 @@
         "inline_url_previews_room_account": "Įjungti URL nuorodų peržiūras šiame kambaryje (įtakoja tik jus)",
         "inline_url_previews_room": "Įjungti URL nuorodų peržiūras kaip numatytasias šiame kambaryje esantiems dalyviams",
         "voip": {
-            "mirror_local_feed": "Atkartoti lokalų video tiekimą"
+            "mirror_local_feed": "Atkartoti lokalų video tiekimą",
+            "missing_permissions_prompt": "Trūksta medijos leidimų, spustelėkite toliau esantį mygtuką kad pateikti užklausą.",
+            "request_permissions": "Prašyti medijos leidimų",
+            "audio_output": "Garso išvestis",
+            "audio_output_empty": "Neaptikta jokių garso išvesčių",
+            "audio_input_empty": "Neaptikta jokių mikrofonų",
+            "video_input_empty": "Neaptikta jokių kamerų",
+            "title": "Garsas ir Vaizdas"
         },
         "send_read_receipts_unsupported": "Jūsų serveris nepalaiko skaitymo kvitų siuntimo išjungimo.",
         "security": {
@@ -1482,7 +1479,10 @@
             "key_backup_complete": "Atsarginės kopijos sukurtos visiems raktams",
             "key_backup_algorithm": "Algoritmas:",
             "key_backup_inactive_warning": "Jūsų raktams <b>nėra daromos atsarginės kopijos iš šio seanso</b>.",
-            "key_backup_active_version_none": "Nė vienas"
+            "key_backup_active_version_none": "Nė vienas",
+            "ignore_users_empty": "Nėra ignoruojamų naudotojų.",
+            "ignore_users_section": "Ignoruojami vartotojai",
+            "e2ee_default_disabled_warning": "Serverio administratorius išjungė visapusį šifravimą, kaip numatytą, privačiuose kambariuose ir Tiesioginėse Žinutėse."
         },
         "preferences": {
             "room_list_heading": "Kambarių sąrašas",

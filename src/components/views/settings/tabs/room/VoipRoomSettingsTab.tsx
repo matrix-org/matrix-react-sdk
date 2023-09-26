@@ -100,7 +100,7 @@ interface Props {
 export const VoipRoomSettingsTab: React.FC<Props> = ({ room }) => {
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("Voice & Video")}>
+            <SettingsSection heading={_t("settings|voip|title")}>
                 <SettingsSubsection heading={_t("Call type")}>
                     <ElementCallSwitch room={room} />
                 </SettingsSubsection>

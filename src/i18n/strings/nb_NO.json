@@ -133,15 +133,6 @@
     "Ball": "Ball",
     "Guitar": "Gitar",
     "Deactivate account": "Deaktiver kontoen",
-    "Ignored users": "Ignorerte brukere",
-    "Unignore": "Opphev ignorering",
-    "Missing media permissions, click the button below to request.": "Manglende mediatillatelser, klikk på knappen nedenfor for å be om dem.",
-    "Request media permissions": "Be om mediatillatelser",
-    "No Audio Outputs detected": "Ingen lydutdataer ble oppdaget",
-    "No Microphones detected": "Ingen mikrofoner ble oppdaget",
-    "No Webcams detected": "Ingen USB-kameraer ble oppdaget",
-    "Audio Output": "Lydutdata",
-    "Voice & Video": "Stemme og video",
     "Room information": "Rominformasjon",
     "Room Addresses": "Rom-adresser",
     "Sounds": "Lyder",
@@ -872,7 +863,8 @@
         "unban": "Opphev utestengelse",
         "click_to_copy": "Klikk for å kopiere",
         "hide_advanced": "Skjul avansert",
-        "show_advanced": "Vis avansert"
+        "show_advanced": "Vis avansert",
+        "unignore": "Opphev ignorering"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -1027,7 +1019,14 @@
         "inline_url_previews_room_account": "Skru på URL-forhåndsvisninger for dette rommet (Påvirker bare deg)",
         "inline_url_previews_room": "Skru på URL-forhåndsvisninger som standard for deltakerne i dette rommet",
         "voip": {
-            "mirror_local_feed": "Speil den lokale videostrømmen"
+            "mirror_local_feed": "Speil den lokale videostrømmen",
+            "missing_permissions_prompt": "Manglende mediatillatelser, klikk på knappen nedenfor for å be om dem.",
+            "request_permissions": "Be om mediatillatelser",
+            "audio_output": "Lydutdata",
+            "audio_output_empty": "Ingen lydutdataer ble oppdaget",
+            "audio_input_empty": "Ingen mikrofoner ble oppdaget",
+            "video_input_empty": "Ingen USB-kameraer ble oppdaget",
+            "title": "Stemme og video"
         },
         "security": {
             "message_search_space_used": "Plass brukt:",
@@ -1064,7 +1063,8 @@
             "key_backup_complete": "Alle nøkler er sikkerhetskopiert",
             "key_backup_algorithm": "Algoritme:",
             "key_backup_inactive_warning": "Dine nøkler <b>har ikke blitt sikkerhetskopiert fra denne økten</b>.",
-            "key_backup_active_version_none": "Ingen"
+            "key_backup_active_version_none": "Ingen",
+            "ignore_users_section": "Ignorerte brukere"
         },
         "preferences": {
             "room_list_heading": "Romliste",

@@ -38,8 +38,6 @@
     "An error has occurred.": "خطایی رخ داده است.",
     "A new password must be entered.": "گذواژه جدید باید وارد شود.",
     "Authentication": "احراز هویت",
-    "No Webcams detected": "هیچ وبکمی شناسایی نشد",
-    "No Microphones detected": "هیچ میکروفونی شناسایی نشد",
     "Incorrect verification code": "کد فعال‌سازی اشتباه است",
     "Home": "خانه",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
@@ -742,7 +740,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "اگر این کار را به صورت تصادفی انجام دادید، می‌توانید سازوکار پیام امن را برای این نشست تنظیم کرده که باعث می‌شود تمام تاریخچه‌ی این نشست با استفاده از یک روش جدیدِ بازیابی، مجددا رمزشود.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید.",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
     "Can't load this message": "بارگیری این پیام امکان پذیر نیست",
     "Submit logs": "ارسال لاگ‌ها",
     "edited": "ویرایش شده",
@@ -966,14 +963,6 @@
     "Room Addresses": "آدرس‌های اتاق",
     "Bridges": "پل‌ها",
     "Room information": "اطلاعات اتاق",
-    "Voice & Video": "صدا و تصویر",
-    "Audio Output": "خروجی صدا",
-    "No Audio Outputs detected": "هیچ خروجی صدایی یافت نشد",
-    "Request media permissions": "درخواست دسترسی به رسانه",
-    "Missing media permissions, click the button below to request.": "دسترسی به رسانه از دست رفت، برای درخواست مجدد بر روی دکمه‌ی زیر کلیک نمائید.",
-    "You have no ignored users.": "شما هیچ کاربری را نادیده نگرفته‌اید.",
-    "Unignore": "لغو نادیده‌گرفتن",
-    "Ignored users": "کاربران نادیده‌گرفته‌شده",
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
@@ -1241,7 +1230,8 @@
         "unban": "رفع تحریم",
         "click_to_copy": "برای گرفتن رونوشت کلیک کنید",
         "hide_advanced": "پنهان‌کردن بخش پیشرفته",
-        "show_advanced": "نمایش بخش پیشرفته"
+        "show_advanced": "نمایش بخش پیشرفته",
+        "unignore": "لغو نادیده‌گرفتن"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -1493,7 +1483,14 @@
         "inline_url_previews_room_account": "فعال‌سازی پیش‌نمایش URL برای این اتاق (تنها شما را تحت تاثیر قرار می‌دهد)",
         "inline_url_previews_room": "امکان پیش‌نمایش URL را به صورت پیش‌فرض برای اعضای این اتاق فعال کن",
         "voip": {
-            "mirror_local_feed": "تصویر خودتان را هنگام تماس تصویری برعکس (مثل آینه) نمایش بده"
+            "mirror_local_feed": "تصویر خودتان را هنگام تماس تصویری برعکس (مثل آینه) نمایش بده",
+            "missing_permissions_prompt": "دسترسی به رسانه از دست رفت، برای درخواست مجدد بر روی دکمه‌ی زیر کلیک نمائید.",
+            "request_permissions": "درخواست دسترسی به رسانه",
+            "audio_output": "خروجی صدا",
+            "audio_output_empty": "هیچ خروجی صدایی یافت نشد",
+            "audio_input_empty": "هیچ میکروفونی شناسایی نشد",
+            "video_input_empty": "هیچ وبکمی شناسایی نشد",
+            "title": "صدا و تصویر"
         },
         "security": {
             "message_search_disable_warning": "اگر غیر فعال شود، پیام‌های اتاق‌های رمزشده در نتایج جستجوها نمایش داده نمی‌شوند.",
@@ -1562,7 +1559,10 @@
             "key_backup_complete": "از همه کلیدها نسخه‌ی پشتیبان گرفته شد",
             "key_backup_algorithm": "الگوریتم:",
             "key_backup_inactive_warning": "کلید‌های شما <b>از این نشست پشتیبان‌گیری نمی‌شود</b>.",
-            "key_backup_active_version_none": "هیچ‌کدام"
+            "key_backup_active_version_none": "هیچ‌کدام",
+            "ignore_users_empty": "شما هیچ کاربری را نادیده نگرفته‌اید.",
+            "ignore_users_section": "کاربران نادیده‌گرفته‌شده",
+            "e2ee_default_disabled_warning": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است."
         },
         "preferences": {
             "room_list_heading": "لیست اتاق‌ها",

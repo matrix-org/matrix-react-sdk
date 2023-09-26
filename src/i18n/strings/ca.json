@@ -1,6 +1,4 @@
 {
-    "No Microphones detected": "No s'ha detectat cap micròfon",
-    "No Webcams detected": "No s'ha detectat cap càmera web",
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
     "unknown error code": "codi d'error desconegut",
@@ -45,7 +43,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "No podràs desfer aquest canvi ja que t'estàs baixant de rang, si ets l'últim usuari de la sala amb privilegis, et serà impossible recuperar-los.",
     "Are you sure?": "Estàs segur?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "No podràs desfer aquest canvi ja que estàs donant a l'usuari el mateix nivell d'autoritat que el teu.",
-    "Unignore": "Deixa de ignorar",
     "Jump to read receipt": "Vés a l'últim missatge llegit",
     "Admin Tools": "Eines d'administració",
     "and %(count)s others...": {
@@ -265,7 +262,8 @@
         "export": "Exporta",
         "mention": "Menciona",
         "submit": "Envia",
-        "unban": "Retira l'expulsió"
+        "unban": "Retira l'expulsió",
+        "unignore": "Deixa de ignorar"
     },
     "labs": {
         "pinning": "Fixació de missatges",
@@ -323,7 +321,9 @@
         "inline_url_previews_room_account": "Activa la vista prèvia d'URL d'aquesta sala (no afecta altres usuaris)",
         "inline_url_previews_room": "Activa per defecte la vista prèvia d'URL per als participants d'aquesta sala",
         "voip": {
-            "mirror_local_feed": "Remet el flux de vídeo local"
+            "mirror_local_feed": "Remet el flux de vídeo local",
+            "audio_input_empty": "No s'ha detectat cap micròfon",
+            "video_input_empty": "No s'ha detectat cap càmera web"
         },
         "security": {
             "send_analytics": "Envia dades d'anàlisi",

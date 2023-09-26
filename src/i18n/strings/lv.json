@@ -1,7 +1,5 @@
 {
     "Admin Tools": "Administratora rīki",
-    "No Microphones detected": "Nav mikrofonu",
-    "No Webcams detected": "Nav webkameru",
     "Authentication": "Autentifikācija",
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "A new password must be entered.": "Nepieciešams ievadīt jauno paroli.",
@@ -126,7 +124,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Ierobežots",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs nevarēsiet atcelt šīs izmaiņas pēc sava statusa pazemināšanas. Gadījumā, ja esat pēdējais priviliģētais lietotājs istabā, būs neiespējami atgūt šīs privilēģijas.",
-    "Unignore": "Atcelt ignorēšanu",
     "Jump to read receipt": "Pāriet uz pēdējo skatīto ziņu",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)smin",
@@ -888,7 +885,8 @@
         "clear": "Notīrīt",
         "unban": "Atcelt pieejas liegumu",
         "hide_advanced": "Slēpt papildu iestatījumus",
-        "show_advanced": "Rādīt papildu iestatījumus"
+        "show_advanced": "Rādīt papildu iestatījumus",
+        "unignore": "Atcelt ignorēšanu"
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne",
@@ -1040,7 +1038,9 @@
         "inline_url_previews_room_account": "Iespējot URL priekšskatījumus šajā istabā (ietekmē tikai jūs pašu)",
         "inline_url_previews_room": "Iespējot URL priekšskatījumus pēc noklusējuma visiem šīs istabas dalībniekiem",
         "voip": {
-            "mirror_local_feed": "Rādīt spoguļskatā kameras video"
+            "mirror_local_feed": "Rādīt spoguļskatā kameras video",
+            "audio_input_empty": "Nav mikrofonu",
+            "video_input_empty": "Nav webkameru"
         },
         "security": {
             "message_search_indexing": "Pašlaik indeksē: %(currentRoom)s",

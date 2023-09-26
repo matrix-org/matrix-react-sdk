@@ -37,7 +37,6 @@
     "Failed to mute user": "Fallo ó silenciar usuaria",
     "Are you sure?": "Está segura?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Non poderá desfacer este cambio xa que lle estará promocionando e outorgándolle a outra persoa os mesmos permisos que os seus.",
-    "Unignore": "Non ignorar",
     "Jump to read receipt": "Ir ao resgardo de lectura",
     "Admin Tools": "Ferramentas de administración",
     "and %(count)s others...": {
@@ -124,8 +123,6 @@
     },
     "Uploading %(filename)s": "Subindo %(filename)s",
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
-    "No Microphones detected": "Non se detectaron micrófonos",
-    "No Webcams detected": "Non se detectaron cámaras",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
     "Return to login screen": "Volver a pantalla de acceso",
@@ -177,8 +174,6 @@
     "Share User": "Compartir usuaria",
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
-    "No Audio Outputs detected": "Non se detectou unha saída de audio",
-    "Audio Output": "Saída de audio",
     "Permission Required": "Precísanse permisos",
     "This event could not be displayed": "Non se puido amosar este evento",
     "Demote yourself?": "Baixarse a ti mesma de rango?",
@@ -296,11 +291,6 @@
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
-    "Ignored users": "Usuarias ignoradas",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas.",
-    "Missing media permissions, click the button below to request.": "Falta permiso acceso multimedia, preme o botón para solicitalo.",
-    "Request media permissions": "Solicitar permiso a multimedia",
-    "Voice & Video": "Voz e Vídeo",
     "Room information": "Información da sala",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está enviando mensaxes ás seguintes plataformas. <a>Coñece máis.</a>",
     "Bridges": "Pontes",
@@ -1037,7 +1027,6 @@
     },
     "Failed to send": "Fallou o envío",
     "Enter your Security Phrase a second time to confirm it.": "Escribe a túa Frase de Seguridade por segunda vez para confirmala.",
-    "You have no ignored users.": "Non tes usuarias ignoradas.",
     "Want to add a new room instead?": "Queres engadir unha nova sala?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Engadindo sala...",
@@ -1631,7 +1620,8 @@
         "unban": "Non bloquear",
         "click_to_copy": "Click para copiar",
         "hide_advanced": "Ocultar Avanzado",
-        "show_advanced": "Mostrar Avanzado"
+        "show_advanced": "Mostrar Avanzado",
+        "unignore": "Non ignorar"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -1994,7 +1984,14 @@
         "inline_url_previews_room_account": "Activar vista previa de URL nesta sala (só che afecta a ti)",
         "inline_url_previews_room": "Activar a vista previa de URL por defecto para as participantes nesta sala",
         "voip": {
-            "mirror_local_feed": "Replicar a fonte de vídeo local"
+            "mirror_local_feed": "Replicar a fonte de vídeo local",
+            "missing_permissions_prompt": "Falta permiso acceso multimedia, preme o botón para solicitalo.",
+            "request_permissions": "Solicitar permiso a multimedia",
+            "audio_output": "Saída de audio",
+            "audio_output_empty": "Non se detectou unha saída de audio",
+            "audio_input_empty": "Non se detectaron micrófonos",
+            "video_input_empty": "Non se detectaron cámaras",
+            "title": "Voz e Vídeo"
         },
         "send_read_receipts_unsupported": "O teu servidor non ten soporte para desactivar o envío de resgardos de lectura.",
         "security": {
@@ -2065,7 +2062,10 @@
             "key_backup_complete": "Copiaronse todas as chaves",
             "key_backup_algorithm": "Algoritmo:",
             "key_backup_inactive_warning": "As túas chaves <b>non están a ser copiadas desde esta sesión</b>.",
-            "key_backup_active_version_none": "Nada"
+            "key_backup_active_version_none": "Nada",
+            "ignore_users_empty": "Non tes usuarias ignoradas.",
+            "ignore_users_section": "Usuarias ignoradas",
+            "e2ee_default_disabled_warning": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas."
         },
         "preferences": {
             "room_list_heading": "Listaxe de Salas",

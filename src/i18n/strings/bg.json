@@ -42,7 +42,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "След като си намалите нивото на достъп, няма да можете да възвърнете тази промяна. Ако сте последния потребител с привилегии в тази стая, ще бъде невъзможно да възвърнете привилегии си.",
     "Are you sure?": "Сигурни ли сте?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Няма да можете да възвърнете тази промяна, тъй като повишавате този потребител до същото ниво на достъп като Вашето.",
-    "Unignore": "Премахни игнорирането",
     "Admin Tools": "Инструменти на администратора",
     "and %(count)s others...": {
         "other": "и %(count)s други...",
@@ -124,8 +123,6 @@
         "one": "Качване на %(filename)s и %(count)s друг"
     },
     "Uploading %(filename)s": "Качване на %(filename)s",
-    "No Microphones detected": "Няма открити микрофони",
-    "No Webcams detected": "Няма открити уеб камери",
     "A new password must be entered.": "Трябва да бъде въведена нова парола.",
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
     "Return to login screen": "Връщане към страницата за влизане в профила",
@@ -177,8 +174,6 @@
     "Share User": "Споделяне на потребител",
     "Share Room Message": "Споделяне на съобщение от стая",
     "Link to selected message": "Създай връзка към избраното съобщение",
-    "No Audio Outputs detected": "Не са открити аудио изходи",
-    "Audio Output": "Аудио изходи",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Не можете да изпращате съобщения докато не прегледате и се съгласите с <consentLink>нашите правила и условия</consentLink>.",
     "Demote yourself?": "Понижете себе си?",
     "Demote": "Понижение",
@@ -236,10 +231,6 @@
     "Phone Number": "Телефонен номер",
     "Room information": "Информация за стаята",
     "Room Addresses": "Адреси на стаята",
-    "Ignored users": "Игнорирани потребители",
-    "Missing media permissions, click the button below to request.": "Липсва достъп до медийните устройства. Кликнете бутона по-долу за да поискате такъв.",
-    "Request media permissions": "Поискай достъп до медийните устройства",
-    "Voice & Video": "Глас и видео",
     "Main address": "Основен адрес",
     "Room avatar": "Снимка на стаята",
     "Room Name": "Име на стаята",
@@ -608,7 +599,6 @@
     "Keys restored": "Ключовете бяха възстановени",
     "Successfully restored %(sessionCount)s keys": "Успешно бяха възстановени %(sessionCount)s ключа",
     "Sign in with SSO": "Влезте със SSO",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Администраторът на сървъра е изключил шифроване от край-до-край по подразбиране за лични стаи и за директни съобщения.",
     "Switch theme": "Смени темата",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
     "Click the button below to confirm setting up encryption.": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
@@ -1098,7 +1088,8 @@
         "unban": "Отблокирай",
         "click_to_copy": "Натиснете за копиране",
         "hide_advanced": "Скрий разширени настройки",
-        "show_advanced": "Покажи разширени настройки"
+        "show_advanced": "Покажи разширени настройки",
+        "unignore": "Премахни игнорирането"
     },
     "a11y": {
         "user_menu": "Потребителско меню",
@@ -1297,7 +1288,14 @@
         "inline_url_previews_room_account": "Включване на URL прегледи за тази стая (засяга само Вас)",
         "inline_url_previews_room": "Включване по подразбиране на URL прегледи за участници в тази стая",
         "voip": {
-            "mirror_local_feed": "Показвай ми огледално моя видео образ"
+            "mirror_local_feed": "Показвай ми огледално моя видео образ",
+            "missing_permissions_prompt": "Липсва достъп до медийните устройства. Кликнете бутона по-долу за да поискате такъв.",
+            "request_permissions": "Поискай достъп до медийните устройства",
+            "audio_output": "Аудио изходи",
+            "audio_output_empty": "Не са открити аудио изходи",
+            "audio_input_empty": "Няма открити микрофони",
+            "video_input_empty": "Няма открити уеб камери",
+            "title": "Глас и видео"
         },
         "security": {
             "message_search_disable_warning": "Ако е изключено, съобщения от шифровани стаи няма да се показват в резултатите от търсения.",
@@ -1360,7 +1358,9 @@
             "key_backup_complete": "Всички ключове са в резервното копие",
             "key_backup_algorithm": "Алгоритъм:",
             "key_backup_inactive_warning": "На ключовете ви <b>не се прави резервно копие от тази сесия</b>.",
-            "key_backup_active_version_none": "Няма нищо"
+            "key_backup_active_version_none": "Няма нищо",
+            "ignore_users_section": "Игнорирани потребители",
+            "e2ee_default_disabled_warning": "Администраторът на сървъра е изключил шифроване от край-до-край по подразбиране за лични стаи и за директни съобщения."
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",

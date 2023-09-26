@@ -36,7 +36,6 @@
     "Failed to mute user": "Malsukcesis silentigi uzanton",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tiun ĉi ŝanĝon vi ne povos malfari, ĉar vi donas al la uzanto la saman povnivelon, kiun havas vi mem.",
     "Are you sure?": "Ĉu vi certas?",
-    "Unignore": "Reatenti",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vi estas direktota al ekstera retejo por aŭtentikigi vian konton por uzo kun %(integrationsUrl)s. Ĉu vi volas daŭrigi tion?",
     "Jump to read receipt": "Salti al legokonfirmo",
     "Admin Tools": "Estriloj",
@@ -121,8 +120,6 @@
     },
     "Uploading %(filename)s": "Alŝutante dosieron %(filename)s",
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
-    "No Microphones detected": "Neniu mikrofono troviĝis",
-    "No Webcams detected": "Neniu kamerao troviĝis",
     "A new password must be entered.": "Vi devas enigi novan pasvorton.",
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
     "Return to login screen": "Reiri al saluta paĝo",
@@ -224,8 +221,6 @@
     "Folder": "Dosierujo",
     "Email Address": "Retpoŝtadreso",
     "Phone Number": "Telefonnumero",
-    "Ignored users": "Malatentaj uzantoj",
-    "Voice & Video": "Voĉo kaj vido",
     "Room information": "Informoj pri ĉambro",
     "Room Addresses": "Adresoj de ĉambro",
     "Share Link to User": "Kunhavigi ligilon al uzanto",
@@ -258,9 +253,6 @@
     "Back up your keys before signing out to avoid losing them.": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
     "Unable to verify phone number.": "Ne povas kontroli telefonnumeron.",
     "Verification code": "Kontrola kodo",
-    "Missing media permissions, click the button below to request.": "Mankas aŭdovidaj permesoj; klaku al la suba butono por peti.",
-    "Request media permissions": "Peti aŭdovidajn permesojn",
-    "Audio Output": "Sona eligo",
     "This event could not be displayed": "Ĉi tiu okazo ne povis montriĝi",
     "This room is not public. You will not be able to rejoin without an invite.": "Ĉi tiu ĉambro ne estas publika. Vi ne povos re-aliĝi sen invito.",
     "Revoke invite": "Nuligi inviton",
@@ -342,7 +334,6 @@
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
     "Go to Settings": "Iri al agordoj",
-    "No Audio Outputs detected": "Neniu soneligo troviĝis",
     "The conversation continues here.": "La interparolo daŭras ĉi tie.",
     "This room has been replaced and is no longer active.": "Ĉi tiu ĉambro estas anstataŭita, kaj ne plu aktivas.",
     "Only room administrators will see this warning": "Nur administrantoj de ĉambro vidos ĉi tiun averton",
@@ -620,7 +611,6 @@
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "La administranto de via servilo malŝaltis implicitan tutvojan ĉifradon en privataj kaj individuaj ĉambroj.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
     "No recently visited rooms": "Neniuj freŝdate vizititaj ĉambroj",
     "Message preview": "Antaŭrigardo al mesaĝo",
@@ -1033,7 +1023,6 @@
     "No microphone found": "Neniu mikrofono troviĝis",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Ni ne povis aliri vian mikrofonon. Bonvolu kontroli la agordojn de via foliumilo kaj reprovi.",
     "Unable to access your microphone": "Ne povas aliri vian mikrofonon",
-    "You have no ignored users.": "Vi malatentas neniujn uzantojn.",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Enter your Security Phrase a second time to confirm it.": "Enigu vian Sekurecan frazon duafoje por ĝin konfirmi.",
@@ -1363,7 +1352,8 @@
         "unban": "Malforbari",
         "click_to_copy": "Klaku por kopii",
         "hide_advanced": "Kaŝi specialajn",
-        "show_advanced": "Montri specialajn"
+        "show_advanced": "Montri specialajn",
+        "unignore": "Reatenti"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -1628,7 +1618,14 @@
         "inline_url_previews_room_account": "Ŝalti URL-antaŭrigardon en ĉi tiu ĉambro (nur por vi)",
         "inline_url_previews_room": "Ŝalti URL-antaŭrigardon por anoj de ĉi tiu ĉambro",
         "voip": {
-            "mirror_local_feed": "Speguli lokan filmon"
+            "mirror_local_feed": "Speguli lokan filmon",
+            "missing_permissions_prompt": "Mankas aŭdovidaj permesoj; klaku al la suba butono por peti.",
+            "request_permissions": "Peti aŭdovidajn permesojn",
+            "audio_output": "Sona eligo",
+            "audio_output_empty": "Neniu soneligo troviĝis",
+            "audio_input_empty": "Neniu mikrofono troviĝis",
+            "video_input_empty": "Neniu kamerao troviĝis",
+            "title": "Voĉo kaj vido"
         },
         "security": {
             "message_search_disable_warning": "Post malŝalto, mesaĝoj el ĉifritaj ĉambroj ne aperos en serĉorezultoj.",
@@ -1697,7 +1694,10 @@
             "key_backup_complete": "Ĉiuj ŝlosiloj estas savkopiitaj",
             "key_backup_algorithm": "Algoritmo:",
             "key_backup_inactive_warning": "Viaj ŝlosiloj <b>ne estas savkopiataj el ĉi tiu salutaĵo</b>.",
-            "key_backup_active_version_none": "Neniu"
+            "key_backup_active_version_none": "Neniu",
+            "ignore_users_empty": "Vi malatentas neniujn uzantojn.",
+            "ignore_users_section": "Malatentaj uzantoj",
+            "e2ee_default_disabled_warning": "La administranto de via servilo malŝaltis implicitan tutvojan ĉifradon en privataj kaj individuaj ĉambroj."
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",

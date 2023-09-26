@@ -64,8 +64,6 @@
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
     "Authentication": "Autentificacion",
-    "Unignore": "Ignorar pas",
-    "Audio Output": "Sortida àudio",
     "Bridges": "Bridges",
     "Sounds": "Sons",
     "Browse": "Percórrer",
@@ -207,7 +205,8 @@
         "export": "Exportar",
         "refresh": "Actualizada",
         "submit": "Mandar",
-        "unban": "Reabilitar"
+        "unban": "Reabilitar",
+        "unignore": "Ignorar pas"
     },
     "keyboard": {
         "home": "Dorsièr personal",
@@ -313,6 +312,9 @@
             "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
             "add_email_dialog_title": "Ajustar una adreça electronica",
             "add_msisdn_dialog_title": "Ajustar un numèro de telefòn"
+        },
+        "voip": {
+            "audio_output": "Sortida àudio"
         }
     },
     "auth": {

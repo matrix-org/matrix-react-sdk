@@ -202,7 +202,6 @@
     "Encrypted by a deleted session": "مشفرة باتصال محذوف",
     "Unencrypted": "غير مشفر",
     "Encrypted by an unverified session": "مشفرة باتصال لم يتم التحقق منه",
-    "Ignored users": "المستخدمون المتجاهَلون",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
     "Deactivate account": "تعطيل الحساب",
     "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
@@ -327,14 +326,6 @@
     "Bridges": "الجسور",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "تعمل هذه الغرفة على توصيل الرسائل بالمنصات التالية. <a> اعرف المزيد. </a>",
     "Room information": "معلومات الغرفة",
-    "Voice & Video": "الصوت والفيديو",
-    "Audio Output": "مخرج الصوت",
-    "No Webcams detected": "لم يتم الكشف عن كاميرات الويب",
-    "No Microphones detected": "لم يتم الكشف عن أجهزة ميكروفون",
-    "No Audio Outputs detected": "لم يتم الكشف عن مخرجات الصوت",
-    "Request media permissions": "اطلب الإذن للوسائط",
-    "Missing media permissions, click the button below to request.": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة.",
     "Ok": "حسنا",
     "Your homeserver has exceeded one of its resource limits.": "لقد تجاوز خادمك أحد حدود موارده.",
     "Your homeserver has exceeded its user limit.": "لقد تجاوز خادمك حد عدد المستخدمين.",
@@ -717,7 +708,14 @@
         "inline_url_previews_room_account": "تمكين معاينة الروابط لهذه الغرفة (يؤثر عليك فقط)",
         "inline_url_previews_room": "تمكين معاينة الروابط أصلاً لأي مشارك في هذه الغرفة",
         "voip": {
-            "mirror_local_feed": "محاكاة تغذية الفيديو المحلية"
+            "mirror_local_feed": "محاكاة تغذية الفيديو المحلية",
+            "missing_permissions_prompt": "إذن الوسائط مفقود ، انقر الزر أدناه لطلب الإذن.",
+            "request_permissions": "اطلب الإذن للوسائط",
+            "audio_output": "مخرج الصوت",
+            "audio_output_empty": "لم يتم الكشف عن مخرجات الصوت",
+            "audio_input_empty": "لم يتم الكشف عن أجهزة ميكروفون",
+            "video_input_empty": "لم يتم الكشف عن كاميرات الويب",
+            "title": "الصوت والفيديو"
         },
         "security": {
             "send_analytics": "إرسال بيانات التحليلات",
@@ -771,7 +769,9 @@
             "key_backup_complete": "جميع المفاتيح منسوخة في الاحتياطي",
             "key_backup_algorithm": "الخوارزمية:",
             "key_backup_inactive_warning": "مفاتيحك <b>لا احتياطيَّ لها من هذا الاتصال</b>.",
-            "key_backup_active_version_none": "لا شيء"
+            "key_backup_active_version_none": "لا شيء",
+            "ignore_users_section": "المستخدمون المتجاهَلون",
+            "e2ee_default_disabled_warning": "قام مسؤول الخادم بتعطيل التشفير من طرف إلى طرف أصلاً في الغرف الخاصة والرسائل الخاصّة."
         },
         "preferences": {
             "room_list_heading": "قائمة الغرفة",

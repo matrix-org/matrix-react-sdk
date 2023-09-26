@@ -1,7 +1,5 @@
 {
     "Admin Tools": "నిర్వాహకుని ఉపకరణాలు",
-    "No Microphones detected": "మైక్రోఫోన్లు కనుగొనబడలేదు",
-    "No Webcams detected": "వెబ్కామ్లు కనుగొనబడలేదు",
     "Authentication": "ప్రామాణీకరణ",
     "You do not have permission to post to this room": "మీకు ఈ గదికి పోస్ట్ చేయడానికి అనుమతి లేదు",
     "A new password must be entered.": "కొత్త పాస్ వర్డ్ ను తప్పక నమోదు చేయాలి.",
@@ -116,6 +114,10 @@
             "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
             "add_email_failed_verification": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
             "deactivate_section": "ఖాతాను డీయాక్టివేట్ చేయండి"
+        },
+        "voip": {
+            "audio_input_empty": "మైక్రోఫోన్లు కనుగొనబడలేదు",
+            "video_input_empty": "వెబ్కామ్లు కనుగొనబడలేదు"
         }
     },
     "timeline": {

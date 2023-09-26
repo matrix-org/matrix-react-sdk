@@ -26,8 +26,6 @@
     "Import room keys": "Inportatu gelako gakoak",
     "Moderator": "Moderatzailea",
     "Admin Tools": "Administrazio-tresnak",
-    "No Microphones detected": "Ez da mikrofonorik atzeman",
-    "No Webcams detected": "Ez da kamerarik atzeman",
     "An error has occurred.": "Errore bat gertatu da.",
     "Are you sure?": "Ziur zaude?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Ziur '%(roomName)s' gelatik atera nahi duzula?",
@@ -121,7 +119,6 @@
     },
     "AM": "AM",
     "PM": "PM",
-    "Unignore": "Ez ezikusi",
     "Banned by %(displayName)s": "%(displayName)s erabiltzaileak debekatuta",
     "Restricted": "Mugatua",
     "Send": "Bidali",
@@ -177,8 +174,6 @@
     "Share User": "Partekatu erabiltzailea",
     "Share Room Message": "Partekatu gelako mezua",
     "Link to selected message": "Esteka hautatutako mezura",
-    "No Audio Outputs detected": "Ez da audio irteerarik antzeman",
-    "Audio Output": "Audio irteera",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ezin duzu mezurik bidali <consentLink>gure termino eta baldintzak</consentLink> irakurri eta onartu arte.",
     "Demote yourself?": "Jaitsi zure burua mailaz?",
     "Demote": "Jaitzi mailaz",
@@ -281,13 +276,9 @@
     "Join millions for free on the largest public server": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
     "Couldn't load page": "Ezin izan da orria kargatu",
     "Room Addresses": "Gelaren helbideak",
-    "Ignored users": "Ezikusitako erabiltzaileak",
-    "Voice & Video": "Ahotsa eta bideoa",
     "Main address": "Helbide nagusia",
     "Your password has been reset.": "Zure pasahitza berrezarri da.",
     "Recovery Method Removed": "Berreskuratze metodoa kendu da",
-    "Missing media permissions, click the button below to request.": "Multimedia baimenak falda dira, sakatu beheko botoia baimenak eskatzeko.",
-    "Request media permissions": "Eskatu multimedia baimenak",
     "Start using Key Backup": "Hasi gakoen babes-kopia egiten",
     "Back up your keys before signing out to avoid losing them.": "Egin gakoen babes-kopia bat saioa amaitu aurretik, galdu nahi ez badituzu.",
     "Headphones": "Aurikularrak",
@@ -608,7 +599,6 @@
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Zure zerbitzariko administratzaileak muturretik muturrerako zifratzea desgaitu du lehenetsita gela probatuetan eta mezu zuzenetan.",
     "No recently visited rooms": "Ez dago azkenaldian bisitatutako gelarik",
     "Message preview": "Mezu-aurrebista",
     "Room options": "Gelaren aukerak",
@@ -770,7 +760,8 @@
         "send_report": "Bidali salaketa",
         "unban": "Debekua kendu",
         "hide_advanced": "Ezkutatu aurreratua",
-        "show_advanced": "Erakutsi aurreratua"
+        "show_advanced": "Erakutsi aurreratua",
+        "unignore": "Ez ezikusi"
     },
     "a11y": {
         "user_menu": "Erabiltzailea-menua",
@@ -948,7 +939,14 @@
         "inline_url_previews_room_account": "Gaitu URLen aurrebista gela honetan (zuretzat bakarrik aldatuko duzu)",
         "inline_url_previews_room": "Gaitu URLen aurrebista lehenetsita gela honetako partaideentzat",
         "voip": {
-            "mirror_local_feed": "Bikoiztu tokiko bideo jarioa"
+            "mirror_local_feed": "Bikoiztu tokiko bideo jarioa",
+            "missing_permissions_prompt": "Multimedia baimenak falda dira, sakatu beheko botoia baimenak eskatzeko.",
+            "request_permissions": "Eskatu multimedia baimenak",
+            "audio_output": "Audio irteera",
+            "audio_output_empty": "Ez da audio irteerarik antzeman",
+            "audio_input_empty": "Ez da mikrofonorik atzeman",
+            "video_input_empty": "Ez da kamerarik atzeman",
+            "title": "Ahotsa eta bideoa"
         },
         "security": {
             "message_search_disable_warning": "Desgaituz gero, zifratutako geletako mezuak ez dira bilaketen emaitzetan agertuko.",
@@ -1002,7 +1000,9 @@
             "key_backup_connect": "Konektatu saio hau gakoen babes-kopiara",
             "key_backup_complete": "Gako guztien babes.kopia egin da",
             "key_backup_inactive_warning": "<b>Ez da zure gakoen babes-kopia egiten saio honetatik</b>.",
-            "key_backup_active_version_none": "Bat ere ez"
+            "key_backup_active_version_none": "Bat ere ez",
+            "ignore_users_section": "Ezikusitako erabiltzaileak",
+            "e2ee_default_disabled_warning": "Zure zerbitzariko administratzaileak muturretik muturrerako zifratzea desgaitu du lehenetsita gela probatuetan eta mezu zuzenetan."
         },
         "preferences": {
             "room_list_heading": "Gelen zerrenda",

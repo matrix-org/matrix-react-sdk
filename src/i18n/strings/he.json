@@ -671,16 +671,6 @@
     "Bridges": "גשרים",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "חדר זה מגשר בין מסרים לפלטפורמות הבאות. <a> למידע נוסף. </a>",
     "Room information": "מידע החדר",
-    "Voice & Video": "שמע ווידאו",
-    "Audio Output": "יציאת שמע",
-    "No Webcams detected": "לא נמצאה מצלמת רשת",
-    "No Microphones detected": "לא נמצא מיקרופון",
-    "No Audio Outputs detected": "לא התגלו יציאות אודיו",
-    "Request media permissions": "בקש הרשאות למדיה",
-    "Missing media permissions, click the button below to request.": "חסרות הרשאות מדיה, לחץ על הלחצן למטה כדי לבקש.",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות.",
-    "Unignore": "הסר התעלמות",
-    "Ignored users": "משתמשים שהתעלמתם מהם",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
     "Deactivate account": "סגור חשבון",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
@@ -979,7 +969,6 @@
     "Your message was sent": "ההודעה שלך נשלחה",
     "Copy link to thread": "העתק קישור לשרשור",
     "Unknown failure": "כשל לא ידוע",
-    "You have no ignored users.": "אין לך משתמשים שהתעלמו מהם.",
     "Create a space": "צור מרחב עבודה",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
@@ -1086,10 +1075,6 @@
     "Get notified for every message": "קבלת התראות על כל הודעה",
     "Get notifications as set up in your <a>settings</a>": "קבלת התראות על פי ההעדפות שלך במסך<a>הגדרות</a>",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
-    "Voice processing": "עיבוד קול",
-    "Video settings": "הגדרות וידאו",
-    "Automatically adjust the microphone volume": "התאמה אוטומטית של עוצמת המיקרופון",
-    "Voice settings": "הגדרות קול",
     "Close sidebar": "סגור סרגל צד",
     "Room info": "מידע על החדר",
     "To publish an address, it needs to be set as a local address first.": "כדי לפרסם כתובת, יש להגדיר אותה ככתובת מקומית תחילה.",
@@ -1281,7 +1266,8 @@
         "unban": "הסר חסימה",
         "click_to_copy": "לחץ להעתקה",
         "hide_advanced": "הסתר מתקדם",
-        "show_advanced": "הצג מתקדם"
+        "show_advanced": "הצג מתקדם",
+        "unignore": "הסר התעלמות"
     },
     "a11y": {
         "user_menu": "תפריט משתמש",
@@ -1548,7 +1534,18 @@
             "allow_p2p_description": "כאשר מופעל, הצד השני יוכל לראות את כתובת ה-IP שלך",
             "echo_cancellation": "ביטול הד",
             "noise_suppression": "ביטול רעשים",
-            "enable_fallback_ice_server_description": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה."
+            "enable_fallback_ice_server_description": "רלוונטי רק אם שרת הבית לא מציע שרת שיחות. כתובת ה-IP שלך תשותף במהלך שיחה.",
+            "missing_permissions_prompt": "חסרות הרשאות מדיה, לחץ על הלחצן למטה כדי לבקש.",
+            "request_permissions": "בקש הרשאות למדיה",
+            "audio_output": "יציאת שמע",
+            "audio_output_empty": "לא התגלו יציאות אודיו",
+            "audio_input_empty": "לא נמצא מיקרופון",
+            "video_input_empty": "לא נמצאה מצלמת רשת",
+            "title": "שמע ווידאו",
+            "voice_section": "הגדרות קול",
+            "voice_agc": "התאמה אוטומטית של עוצמת המיקרופון",
+            "video_section": "הגדרות וידאו",
+            "voice_processing": "עיבוד קול"
         },
         "send_read_receipts_unsupported": "השרת שלכם לא תומך בביטול שליחת אישורי קריאה.",
         "security": {
@@ -1618,7 +1615,10 @@
             "key_backup_complete": "כל המפתחות מגובים",
             "key_backup_algorithm": "אלגוריתם:",
             "key_backup_inactive_warning": "המפתחות שלך <b> אינם מגובים מהתחברות זו </b>.",
-            "key_backup_active_version_none": "ללא"
+            "key_backup_active_version_none": "ללא",
+            "ignore_users_empty": "אין לך משתמשים שהתעלמו מהם.",
+            "ignore_users_section": "משתמשים שהתעלמתם מהם",
+            "e2ee_default_disabled_warning": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות."
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",

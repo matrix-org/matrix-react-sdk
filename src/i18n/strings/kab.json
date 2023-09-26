@@ -152,8 +152,6 @@
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
     "Deactivate account": "Sens amiḍan",
-    "Ignored users": "Iseqdacen yettunfen",
-    "Voice & Video": "Ameslaw & Tavidyut",
     "Notification sound": "Imesli i yilɣa",
     "Failed to unban": "Sefsex aḍraq yugi ad yeddu",
     "Banned by %(displayName)s": "Yettwagi sɣur %(displayName)s",
@@ -379,12 +377,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
-    "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
-    "Request media permissions": "Suter tisirag n umidyat",
-    "No Audio Outputs detected": "Ulac tuffɣiwin n umeslaw i d-yettwafen",
-    "No Microphones detected": "Ulac isawaḍen i d-yettwafen",
-    "No Webcams detected": "Ulac tikamiṛatin i d-yettwafen",
-    "Audio Output": "Tuffɣa n umeslaw",
     "Room information": "Talɣut n texxamt",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Taxxamt-a tettcuddu iznan ɣer tɣerɣar i d-iteddun. <a>Issin ugar.</a>",
     "Bridges": "Tileggiyin",
@@ -512,8 +504,6 @@
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
-    "Unignore": "Ur yettwazgel ara",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Anedbal-ik·im n uqeddac issens awgelhen seg yixef ɣer yixef s wudem amezwer deg texxamin tusligin & yiznan usriden.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tzegleḍ useqdac-a, ihi iznan-ines ffren. <a>Ɣas akken sken-iten-id.</a>",
     "You cancelled verifying %(name)s": "Tesfesxeḍ asenqed n %(name)s",
     "You sent a verification request": "Tuzneḍ asuter n usenqed",
@@ -1061,7 +1051,8 @@
         "send_report": "Azen aneqqis",
         "unban": "Asefsex n tigtin",
         "hide_advanced": "Ffer talqayt",
-        "show_advanced": "Sken talqayt"
+        "show_advanced": "Sken talqayt",
+        "unignore": "Ur yettwazgel ara"
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac",
@@ -1247,7 +1238,14 @@
         "inline_url_previews_room_account": "Rmed tiskanin n URL i texxamt-a (i ak·akem-yeɛnan kan)",
         "inline_url_previews_room": "Rmed tiskanin n URL s wudem amezwer i yimttekkiyen deg texxamt-a",
         "voip": {
-            "mirror_local_feed": "Asbani n usuddem n tvidyut tadigant"
+            "mirror_local_feed": "Asbani n usuddem n tvidyut tadigant",
+            "missing_permissions_prompt": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
+            "request_permissions": "Suter tisirag n umidyat",
+            "audio_output": "Tuffɣa n umeslaw",
+            "audio_output_empty": "Ulac tuffɣiwin n umeslaw i d-yettwafen",
+            "audio_input_empty": "Ulac isawaḍen i d-yettwafen",
+            "video_input_empty": "Ulac tikamiṛatin i d-yettwafen",
+            "title": "Ameslaw & Tavidyut"
         },
         "security": {
             "message_search_disable_warning": "Ma yella tensa, iznan n texxamin tiwgelhanin ur d-ttbanen ara deg yigmaḍ n unadi.",
@@ -1310,7 +1308,9 @@
             "key_backup_complete": "Akk tisura ttwaḥerzent",
             "key_backup_algorithm": "Alguritm:",
             "key_backup_inactive_warning": "Tisura-inek·inem <b>ur ttwaḥrazent ara seg tɣimit-a</b>.",
-            "key_backup_active_version_none": "Ula yiwen"
+            "key_backup_active_version_none": "Ula yiwen",
+            "ignore_users_section": "Iseqdacen yettunfen",
+            "e2ee_default_disabled_warning": "Anedbal-ik·im n uqeddac issens awgelhen seg yixef ɣer yixef s wudem amezwer deg texxamin tusligin & yiznan usriden."
         },
         "preferences": {
             "room_list_heading": "Tabdart n texxamt",

@@ -3,8 +3,6 @@
     "Failed to forget room %(errCode)s": "Не вдалось видалити кімнату %(errCode)s",
     "unknown error code": "невідомий код помилки",
     "Admin Tools": "Засоби адміністрування",
-    "No Microphones detected": "Мікрофон не виявлено",
-    "No Webcams detected": "Вебкамеру не виявлено",
     "Authentication": "Автентифікація",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
@@ -231,9 +229,6 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "No Audio Outputs detected": "Звуковий вивід не виявлено",
-    "Audio Output": "Звуковий вивід",
-    "Voice & Video": "Голос і відео",
     "Unable to revoke sharing for email address": "Не вдалось відкликати оприлюднювання адреси е-пошти",
     "Unable to revoke sharing for phone number": "Не вдалось відкликати оприлюднювання телефонного номеру",
     "Filter room members": "Відфільтрувати учасників кімнати",
@@ -250,7 +245,6 @@
     "Share Room Message": "Поділитися повідомленням кімнати",
     "General failure": "Загальний збій",
     "Enter your account password to confirm the upgrade:": "Введіть пароль вашого облікового запису щоб підтвердити поліпшення:",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "expand": "розгорнути",
     "New Recovery Method": "Новий метод відновлення",
     "This session is encrypting history using the new recovery method.": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
@@ -820,8 +814,6 @@
     "Only do this if you have no other device to complete verification with.": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Схоже, у вас немає ключа безпеки або будь-яких інших пристроїв, які ви можете підтвердити. Цей пристрій не зможе отримати доступ до старих зашифрованих повідомлень. Щоб підтвердити свою справжність на цьому пристрої, вам потрібно буде скинути ключі перевірки.",
-    "Ignored users": "Нехтувані користувачі",
-    "You have no ignored users.": "Ви не маєте нехтуваних користувачів.",
     "The server is offline.": "Сервер вимкнено.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s і %(count)s інших",
@@ -837,8 +829,6 @@
     "Thread options": "Параметри гілки",
     "Reply in thread": "Відповісти у гілці",
     "Unable to remove contact information": "Не вдалося вилучити контактні дані",
-    "Request media permissions": "Запитати медіадозволи",
-    "Missing media permissions, click the button below to request.": "Бракує медіадозволів, натисніть кнопку нижче, щоб їх надати.",
     "Developer": "Розробка",
     "Moderation": "Модерування",
     "Experimental": "Експериментально",
@@ -1090,7 +1080,6 @@
     "Unable to verify phone number.": "Не вдалося перевірити номер телефону.",
     "Click the link in the email you received to verify and then click continue again.": "Для підтвердження перейдіть за посиланням в отриманому листі й знову натисніть «Продовжити».",
     "Your email address hasn't been verified yet": "Ваша адреса е-пошти ще не підтверджена",
-    "Unignore": "Рознехтувати",
     "Failed to re-authenticate due to a homeserver problem": "Не вдалося перезайти через проблему з домашнім сервером",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Скидання ключів звірки неможливо скасувати. Після скидання, ви втратите доступ до старих зашифрованих повідомлень, а всі друзі, які раніше вас звіряли, бачитимуть застереження безпеки, поки ви не проведете звірку з ними знову.",
     "I'll verify later": "Звірю пізніше",
@@ -1463,11 +1452,6 @@
     "Sign in new device": "Увійти на новому пристрої",
     "Show formatting": "Показати форматування",
     "Hide formatting": "Сховати форматування",
-    "Connection": "З'єднання",
-    "Voice processing": "Обробка голосу",
-    "Video settings": "Налаштування відео",
-    "Automatically adjust the microphone volume": "Авторегулювання гучності мікрофона",
-    "Voice settings": "Налаштування голосу",
     "Error downloading image": "Помилка завантаження зображення",
     "Unable to show image due to error": "Не вдалося показати зображення через помилку",
     "Send email": "Надіслати електронний лист",
@@ -1815,7 +1799,8 @@
         "unban": "Розблокувати",
         "click_to_copy": "Клацніть, щоб скопіювати",
         "hide_advanced": "Сховати розширені",
-        "show_advanced": "Показати розширені"
+        "show_advanced": "Показати розширені",
+        "unignore": "Рознехтувати"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -2238,7 +2223,19 @@
             "echo_cancellation": "Пригнічення відлуння",
             "noise_suppression": "Шумопригнічення",
             "enable_fallback_ice_server": "Дозволити резервний сервер підтримки викликів (%(server)s)",
-            "enable_fallback_ice_server_description": "Застосовується лише в тому випадку, якщо ваш домашній сервер не пропонує його. Ваша IP-адреса передаватиметься під час виклику."
+            "enable_fallback_ice_server_description": "Застосовується лише в тому випадку, якщо ваш домашній сервер не пропонує його. Ваша IP-адреса передаватиметься під час виклику.",
+            "missing_permissions_prompt": "Бракує медіадозволів, натисніть кнопку нижче, щоб їх надати.",
+            "request_permissions": "Запитати медіадозволи",
+            "audio_output": "Звуковий вивід",
+            "audio_output_empty": "Звуковий вивід не виявлено",
+            "audio_input_empty": "Мікрофон не виявлено",
+            "video_input_empty": "Вебкамеру не виявлено",
+            "title": "Голос і відео",
+            "voice_section": "Налаштування голосу",
+            "voice_agc": "Авторегулювання гучності мікрофона",
+            "video_section": "Налаштування відео",
+            "voice_processing": "Обробка голосу",
+            "connection_section": "З'єднання"
         },
         "send_read_receipts_unsupported": "Ваш сервер не підтримує вимкнення надсилання сповіщень про прочитання.",
         "security": {
@@ -2312,7 +2309,10 @@
             "key_backup_complete": "Усі ключі збережено",
             "key_backup_algorithm": "Алгоритм:",
             "key_backup_inactive_warning": "<b>Резервна копія ваших ключів не створюється з цього сеансу</b>.",
-            "key_backup_active_version_none": "Вимкнено"
+            "key_backup_active_version_none": "Вимкнено",
+            "ignore_users_empty": "Ви не маєте нехтуваних користувачів.",
+            "ignore_users_section": "Нехтувані користувачі",
+            "e2ee_default_disabled_warning": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях."
         },
         "preferences": {
             "room_list_heading": "Перелік кімнат",

@@ -42,7 +42,6 @@
     "Failed to mute user": "Fekk ikkje til å dempe brukaren",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kan ikkje angre denne endringa, fordi brukaren du forfremmar vil få same tilgangsnivå som du har no.",
     "Are you sure?": "Er du sikker?",
-    "Unignore": "Slutt å ignorer",
     "Share Link to User": "Del ei lenke til brukaren",
     "Admin Tools": "Administratorverktøy",
     "and %(count)s others...": {
@@ -158,10 +157,6 @@
     },
     "Uploading %(filename)s": "Lastar opp %(filename)s",
     "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
-    "No Audio Outputs detected": "Ingen ljodavspelingseiningar funne",
-    "No Microphones detected": "Ingen opptakseiningar funne",
-    "No Webcams detected": "Ingen Nettkamera funne",
-    "Audio Output": "Ljodavspeling",
     "A new password must be entered.": "Du må skriva eit nytt passord inn.",
     "New passwords must match each other.": "Dei nye passorda må vera like.",
     "Return to login screen": "Gå attende til innlogging",
@@ -278,7 +273,6 @@
     "Room Topic": "Romemne",
     "Room avatar": "Rom-avatar",
     "Power level": "Tilgangsnivå",
-    "Voice & Video": "Tale og video",
     "Show more": "Vis meir",
     "Invalid theme schema.": "",
     "Room information": "Rominformasjon",
@@ -290,14 +284,12 @@
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
-    "Ignored users": "Ignorerte brukarar",
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Tenaradministratoren din har deaktivert ende-til-ende kryptering som standard i direktemeldingar og private rom.",
     "Set a new custom sound": "Set ein ny tilpassa lyd",
     "This room is end-to-end encrypted": "Dette rommet er ende-til-ende kryptert",
     "Encrypted by an unverified session": "Kryptert av ein ikkje-verifisert sesjon",
@@ -463,7 +455,8 @@
         "submit": "Send inn",
         "unban": "Slepp inn att",
         "hide_advanced": "Gøym avanserte alternativ",
-        "show_advanced": "Vis avanserte alternativ"
+        "show_advanced": "Vis avanserte alternativ",
+        "unignore": "Slutt å ignorer"
     },
     "labs": {
         "pinning": "Meldingsfesting",
@@ -600,7 +593,12 @@
         "inline_url_previews_room_account": "Skru URL-førehandsvisingar på for dette rommet (påverkar deg åleine)",
         "inline_url_previews_room": "Skru URL-førehandsvisingar på som utgangspunkt for deltakarar i dette rommet",
         "voip": {
-            "mirror_local_feed": "Spegl den lokale videofeeden"
+            "mirror_local_feed": "Spegl den lokale videofeeden",
+            "audio_output": "Ljodavspeling",
+            "audio_output_empty": "Ingen ljodavspelingseiningar funne",
+            "audio_input_empty": "Ingen opptakseiningar funne",
+            "video_input_empty": "Ingen Nettkamera funne",
+            "title": "Tale og video"
         },
         "security": {
             "send_analytics": "Send statistikkdata",
@@ -617,7 +615,9 @@
             "4s_public_key_status": "Public-nøkkel for hemmeleg lager:",
             "delete_backup": "Slett sikkerheitskopi",
             "delete_backup_confirm_description": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
-            "restore_key_backup": "Gjenopprett frå sikkerheitskopi"
+            "restore_key_backup": "Gjenopprett frå sikkerheitskopi",
+            "ignore_users_section": "Ignorerte brukarar",
+            "e2ee_default_disabled_warning": "Tenaradministratoren din har deaktivert ende-til-ende kryptering som standard i direktemeldingar og private rom."
         },
         "preferences": {
             "room_list_heading": "Romkatalog",

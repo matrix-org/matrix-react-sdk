@@ -3,8 +3,6 @@
     "unknown error code": "codice errore sconosciuto",
     "Create new room": "Crea una nuova stanza",
     "Admin Tools": "Strumenti di amministrazione",
-    "No Microphones detected": "Nessun Microfono rilevato",
-    "No Webcams detected": "Nessuna Webcam rilevata",
     "Authentication": "Autenticazione",
     "Warning!": "Attenzione!",
     "Sun": "Dom",
@@ -46,7 +44,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Non potrai annullare questa modifica dato che ti stai declassando, se sei l'ultimo utente privilegiato nella stanza sarà impossibile ottenere di nuovo i privilegi.",
     "Are you sure?": "Sei sicuro?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Non potrai annullare questa modifica dato che stai promuovendo l'utente al tuo stesso grado.",
-    "Unignore": "Non ignorare più",
     "and %(count)s others...": {
         "other": "e altri %(count)s ...",
         "one": "e un altro..."
@@ -177,8 +174,6 @@
     "Share User": "Condividi utente",
     "Share Room Message": "Condividi messaggio stanza",
     "Link to selected message": "Link al messaggio selezionato",
-    "No Audio Outputs detected": "Nessuna uscita audio rilevata",
-    "Audio Output": "Uscita audio",
     "Permission Required": "Permesso richiesto",
     "This event could not be displayed": "Questo evento non può essere mostrato",
     "Demote yourself?": "Vuoi declassarti?",
@@ -299,10 +294,6 @@
     "Unable to verify phone number.": "Impossibile verificare il numero di telefono.",
     "Verification code": "Codice di verifica",
     "Phone Number": "Numero di telefono",
-    "Ignored users": "Utenti ignorati",
-    "Missing media permissions, click the button below to request.": "Autorizzazione multimediale mancante, clicca il pulsante sotto per richiederla.",
-    "Request media permissions": "Richiedi autorizzazioni multimediali",
-    "Voice & Video": "Voce e video",
     "Room information": "Informazioni stanza",
     "Room Addresses": "Indirizzi stanza",
     "Error updating main address": "Errore di aggiornamento indirizzo principale",
@@ -620,7 +611,6 @@
     "Your homeserver has exceeded its user limit.": "Il tuo homeserver ha superato il limite di utenti.",
     "Your homeserver has exceeded one of its resource limits.": "Il tuo homeserver ha superato uno dei suoi limiti di risorse.",
     "Ok": "Ok",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "L'amministratore del server ha disattivato la crittografia end-to-end in modo predefinito nelle stanze private e nei messaggi diretti.",
     "Switch theme": "Cambia tema",
     "No recently visited rooms": "Nessuna stanza visitata di recente",
     "Message preview": "Anteprima messaggio",
@@ -1037,7 +1027,6 @@
     },
     "Failed to send": "Invio fallito",
     "Enter your Security Phrase a second time to confirm it.": "Inserisci di nuovo la password di sicurezza per confermarla.",
-    "You have no ignored users.": "Non hai utenti ignorati.",
     "Want to add a new room instead?": "Vuoi invece aggiungere una nuova stanza?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Aggiunta stanza...",
@@ -1465,11 +1454,6 @@
     "Error downloading image": "Errore di scaricamento dell'immagine",
     "Unable to show image due to error": "Impossibile mostrare l'immagine per un errore",
     "Hide formatting": "Nascondi formattazione",
-    "Connection": "Connessione",
-    "Voice processing": "Elaborazione vocale",
-    "Video settings": "Impostazioni video",
-    "Automatically adjust the microphone volume": "Regola automaticamente il volume del microfono",
-    "Voice settings": "Impostazioni voce",
     "Send email": "Invia email",
     "Sign out of all devices": "Disconnetti tutti i dispositivi",
     "Confirm new password": "Conferma nuova password",
@@ -1820,7 +1804,8 @@
         "unban": "Togli ban",
         "click_to_copy": "Clicca per copiare",
         "hide_advanced": "Nascondi avanzate",
-        "show_advanced": "Mostra avanzate"
+        "show_advanced": "Mostra avanzate",
+        "unignore": "Non ignorare più"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -2243,7 +2228,19 @@
             "echo_cancellation": "Cancellazione dell'eco",
             "noise_suppression": "Riduzione del rumore",
             "enable_fallback_ice_server": "Permetti server di chiamata di ripiego (%(server)s)",
-            "enable_fallback_ice_server_description": "Si applica solo se il tuo homeserver non ne offre uno. Il tuo indirizzo IP verrebbe condiviso durante una chiamata."
+            "enable_fallback_ice_server_description": "Si applica solo se il tuo homeserver non ne offre uno. Il tuo indirizzo IP verrebbe condiviso durante una chiamata.",
+            "missing_permissions_prompt": "Autorizzazione multimediale mancante, clicca il pulsante sotto per richiederla.",
+            "request_permissions": "Richiedi autorizzazioni multimediali",
+            "audio_output": "Uscita audio",
+            "audio_output_empty": "Nessuna uscita audio rilevata",
+            "audio_input_empty": "Nessun Microfono rilevato",
+            "video_input_empty": "Nessuna Webcam rilevata",
+            "title": "Voce e video",
+            "voice_section": "Impostazioni voce",
+            "voice_agc": "Regola automaticamente il volume del microfono",
+            "video_section": "Impostazioni video",
+            "voice_processing": "Elaborazione vocale",
+            "connection_section": "Connessione"
         },
         "send_read_receipts_unsupported": "Il tuo server non supporta la disattivazione delle conferme di lettura.",
         "security": {
@@ -2317,7 +2314,10 @@
             "key_backup_complete": "Tutte le chiavi sono state copiate",
             "key_backup_algorithm": "Algoritmo:",
             "key_backup_inactive_warning": "Il backup chiavi <b>non viene fatto per questa sessione</b>.",
-            "key_backup_active_version_none": "Nessuno"
+            "key_backup_active_version_none": "Nessuno",
+            "ignore_users_empty": "Non hai utenti ignorati.",
+            "ignore_users_section": "Utenti ignorati",
+            "e2ee_default_disabled_warning": "L'amministratore del server ha disattivato la crittografia end-to-end in modo predefinito nelle stanze private e nei messaggi diretti."
         },
         "preferences": {
             "room_list_heading": "Elenco stanze",

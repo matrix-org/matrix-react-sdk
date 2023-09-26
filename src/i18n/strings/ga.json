@@ -6,11 +6,7 @@
     "An error has occurred.": "D’imigh earráid éigin.",
     "A new password must be entered.": "Caithfear focal faire nua a iontráil.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
-    "No Webcams detected": "Níor braitheadh aon ceamara gréasáin",
-    "No Microphones detected": "Níor braitheadh aon micreafón",
     "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
-    "Ignored users": "Úsáideoirí neamhairde",
-    "Unignore": "Stop ag tabhairt neamhaird air",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Permission Required": "Is Teastáil Cead",
     "Transfer": "Aistrigh",
@@ -514,7 +510,8 @@
         "refresh": "Athnuaigh",
         "mention": "Luaigh",
         "submit": "Cuir isteach",
-        "unban": "Bain an cosc"
+        "unban": "Bain an cosc",
+        "unignore": "Stop ag tabhairt neamhaird air"
     },
     "labs": {
         "pinning": "Ceangal teachtaireachta",
@@ -577,7 +574,8 @@
             "secret_storage_ready": "réidh",
             "delete_backup": "Scrios cúltaca",
             "key_backup_algorithm": "Algartam:",
-            "key_backup_active_version_none": "Níl aon cheann"
+            "key_backup_active_version_none": "Níl aon cheann",
+            "ignore_users_section": "Úsáideoirí neamhairde"
         },
         "general": {
             "account_section": "Cuntas",
@@ -597,6 +595,10 @@
             "deactivate_section": "Cuir cuntas as feidhm",
             "account_management_section": "Bainistíocht cuntais",
             "discovery_section": "Aimsiú"
+        },
+        "voip": {
+            "audio_input_empty": "Níor braitheadh aon micreafón",
+            "video_input_empty": "Níor braitheadh aon ceamara gréasáin"
         }
     },
     "devtools": {

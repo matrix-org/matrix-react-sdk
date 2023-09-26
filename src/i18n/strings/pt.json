@@ -99,8 +99,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Invited": "Convidada(o)",
-    "No Microphones detected": "Não foi detetado nenhum microfone",
-    "No Webcams detected": "Não foi detetada nenhuma Webcam",
     "Are you sure you want to leave the room '%(roomName)s'?": "Você tem certeza que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Create new room": "Criar nova sala",
@@ -121,7 +119,6 @@
     "AM": "AM",
     "PM": "PM",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
-    "Unignore": "Deixar de ignorar",
     "Banned by %(displayName)s": "Banido por %(displayName)s",
     "Sunday": "Domingo",
     "Today": "Hoje",
@@ -475,7 +472,8 @@
         "import": "Importar",
         "export": "Exportar",
         "submit": "Enviar",
-        "unban": "Desfazer banimento"
+        "unban": "Desfazer banimento",
+        "unignore": "Deixar de ignorar"
     },
     "keyboard": {
         "home": "Início"
@@ -558,6 +556,10 @@
             "name_placeholder": "Sem nome público de usuária(o)",
             "error_password_change_403": "Falha ao alterar a palavra-passe. A sua palavra-passe está correta?",
             "deactivate_section": "Desativar conta"
+        },
+        "voip": {
+            "audio_input_empty": "Não foi detetado nenhum microfone",
+            "video_input_empty": "Não foi detetada nenhuma Webcam"
         }
     },
     "devtools": {

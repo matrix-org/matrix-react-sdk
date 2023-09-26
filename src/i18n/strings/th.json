@@ -1,5 +1,4 @@
 {
-    "No Microphones detected": "ไม่พบไมโครโฟน",
     "Default": "ค่าเริ่มต้น",
     "Decrypt %(text)s": "ถอดรหัส %(text)s",
     "Download %(text)s": "ดาวน์โหลด %(text)s",
@@ -7,7 +6,6 @@
     "Reason": "เหตุผล",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
-    "No Webcams detected": "ไม่พบกล้องเว็บแคม",
     "Authentication": "การยืนยันตัวตน",
     "%(items)s and %(lastItem)s": "%(items)s และ %(lastItem)s",
     "and %(count)s others...": {
@@ -375,6 +373,10 @@
             "name_placeholder": "ไม่มีชื่อที่แสดง",
             "error_password_change_403": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
             "deactivate_section": "ปิดการใช้งานบัญชี"
+        },
+        "voip": {
+            "audio_input_empty": "ไม่พบไมโครโฟน",
+            "video_input_empty": "ไม่พบกล้องเว็บแคม"
         }
     },
     "timeline": {

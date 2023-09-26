@@ -341,17 +341,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "ຫ້ອງນີ້ບໍ່ໄດ້ເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມໃດໆ. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "ຫ້ອງນີ້ກໍາລັງເຊື່ອມຕໍ່ຂໍ້ຄວາມໄປຫາພັລດຟອມຕໍ່ໄປນີ້. <a>ສຶກສາເພີ່ມເຕີມ.</a>",
     "Space information": "ຂໍ້ມູນພື້ນທີ່",
-    "Voice & Video": "ສຽງ & ວິດີໂອ",
-    "No Webcams detected": "ບໍ່ພົບ Webcam",
-    "No Microphones detected": "ບໍ່ພົບໄມໂຄຣໂຟນ",
-    "No Audio Outputs detected": "ບໍ່ພົບສຽງອອກ",
-    "Audio Output": "ສຽງອອກ",
-    "Request media permissions": "ຮ້ອງຂໍການອະນຸຍາດສື່ມວນຊົນ",
-    "Missing media permissions, click the button below to request.": "ບໍ່ອະນຸຍາດສື່, ກົດໄປທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຮ້ອງຂໍ.",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "ຜູ້ຄຸມເຊີບເວີຂອງທ່ານໄດ້ປິດການນຳໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງໂດຍຄ່າເລີ່ມຕົ້ນໃນຫ້ອງສ່ວນຕົວ ແລະ ຂໍ້ຄວາມໂດຍກົງ.",
-    "You have no ignored users.": "ທ່ານບໍ່ມີຜູ້ໃຊ້ທີ່ຖືກລະເລີຍ.",
-    "Unignore": "ບໍ່ສົນໃຈ",
-    "Ignored users": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
@@ -1577,7 +1566,8 @@
         "unban": "ຍົກເລີກການຫ້າມ",
         "click_to_copy": "ກົດເພື່ອສຳເນົາ",
         "hide_advanced": "ເຊື່ອງຂັ້ນສູງ",
-        "show_advanced": "ສະແດງຂັ້ນສູງ"
+        "show_advanced": "ສະແດງຂັ້ນສູງ",
+        "unignore": "ບໍ່ສົນໃຈ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -1862,7 +1852,14 @@
         "inline_url_previews_room_account": "ເປີດໃຊ້ຕົວຢ່າງ URL ສໍາລັບຫ້ອງນີ້ (ມີຜົນຕໍ່ທ່ານເທົ່ານັ້ນ)",
         "inline_url_previews_room": "ເປີດໃຊ້ການສະແດງຕົວຢ່າງ URL ໂດຍຄ່າເລີ່ມຕົ້ນສໍາລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້",
         "voip": {
-            "mirror_local_feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ"
+            "mirror_local_feed": "ເບິ່ງຟີດວິດີໂອທ້ອງຖິ່ນ",
+            "missing_permissions_prompt": "ບໍ່ອະນຸຍາດສື່, ກົດໄປທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຮ້ອງຂໍ.",
+            "request_permissions": "ຮ້ອງຂໍການອະນຸຍາດສື່ມວນຊົນ",
+            "audio_output": "ສຽງອອກ",
+            "audio_output_empty": "ບໍ່ພົບສຽງອອກ",
+            "audio_input_empty": "ບໍ່ພົບໄມໂຄຣໂຟນ",
+            "video_input_empty": "ບໍ່ພົບ Webcam",
+            "title": "ສຽງ & ວິດີໂອ"
         },
         "security": {
             "message_search_disable_warning": "ຖ້າປິດໃຊ້ງານ, ຂໍ້ຄວາມຈາກຫ້ອງທີ່ເຂົ້າລະຫັດຈະບໍ່ປາກົດຢູ່ໃນຜົນການຄົ້ນຫາ.",
@@ -1932,7 +1929,10 @@
             "key_backup_complete": "ກະແຈທັງໝົດຖືກສຳຮອງໄວ້",
             "key_backup_algorithm": "ສູດການຄິດໄລ່:",
             "key_backup_inactive_warning": "ກະແຈຂອງທ່ານ <b>ບໍ່ຖືກສຳຮອງຂໍ້ມູນຈາກລະບົບນີ້</b>.",
-            "key_backup_active_version_none": "ບໍ່ມີ"
+            "key_backup_active_version_none": "ບໍ່ມີ",
+            "ignore_users_empty": "ທ່ານບໍ່ມີຜູ້ໃຊ້ທີ່ຖືກລະເລີຍ.",
+            "ignore_users_section": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
+            "e2ee_default_disabled_warning": "ຜູ້ຄຸມເຊີບເວີຂອງທ່ານໄດ້ປິດການນຳໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງໂດຍຄ່າເລີ່ມຕົ້ນໃນຫ້ອງສ່ວນຕົວ ແລະ ຂໍ້ຄວາມໂດຍກົງ."
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",

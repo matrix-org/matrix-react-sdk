@@ -10,8 +10,6 @@
     "Are you sure?": "Weet je het zeker?",
     "Are you sure you want to reject the invitation?": "Weet je zeker dat je de uitnodiging wilt weigeren?",
     "Admin Tools": "Beheerdersgereedschap",
-    "No Microphones detected": "Geen microfoons gevonden",
-    "No Webcams detected": "Geen webcams gevonden",
     "Are you sure you want to leave the room '%(roomName)s'?": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
@@ -126,7 +124,6 @@
     "Send": "Versturen",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Zelfdegradatie is onomkeerbaar. Als je de laatst gemachtigde persoon in de kamer bent zullen deze rechten voorgoed verloren gaan.",
-    "Unignore": "Niet meer negeren",
     "Jump to read receipt": "Naar het laatst gelezen bericht gaan",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -182,9 +179,6 @@
     "Share Room Message": "Bericht uit kamer delen",
     "Link to selected message": "Koppeling naar geselecteerd bericht",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Je kan geen berichten sturen totdat je <consentLink>onze algemene voorwaarden</consentLink> hebt gelezen en aanvaard.",
-    "No Audio Outputs detected": "Geen geluidsuitgangen gedetecteerd",
-    "Audio Output": "Geluidsuitgang",
-    "Ignored users": "Genegeerde personen",
     "Dog": "Hond",
     "Cat": "Kat",
     "Lion": "Leeuw",
@@ -255,9 +249,6 @@
     "Unable to verify phone number.": "Kan telefoonnummer niet verifiëren.",
     "Verification code": "Verificatiecode",
     "Phone Number": "Telefoonnummer",
-    "Missing media permissions, click the button below to request.": "Mediatoestemmingen ontbreken, klik op de knop hieronder om deze aan te vragen.",
-    "Request media permissions": "Mediatoestemmingen verzoeken",
-    "Voice & Video": "Spraak & video",
     "Room information": "Kamerinformatie",
     "Room Addresses": "Kameradressen",
     "This room has been replaced and is no longer active.": "Deze kamer is vervangen en niet langer actief.",
@@ -812,7 +803,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van de bijnaam van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
     "Show Widgets": "Widgets tonen",
     "Hide Widgets": "Widgets verbergen",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken.",
     "Scroll to most recent messages": "Spring naar meest recente bericht",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
     "Backup version:": "Versie reservekopie:",
@@ -1036,7 +1026,6 @@
     },
     "Failed to send": "Versturen is mislukt",
     "Enter your Security Phrase a second time to confirm it.": "Voer je veiligheidswachtwoord een tweede keer in om het te bevestigen.",
-    "You have no ignored users.": "Je hebt geen persoon genegeerd.",
     "Want to add a new room instead?": "Wil je anders een nieuwe kamer toevoegen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Kamer toevoegen...",
@@ -1667,7 +1656,8 @@
         "unban": "Ontbannen",
         "click_to_copy": "Klik om te kopiëren",
         "hide_advanced": "Geavanceerde info verbergen",
-        "show_advanced": "Geavanceerde info tonen"
+        "show_advanced": "Geavanceerde info tonen",
+        "unignore": "Niet meer negeren"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -2031,7 +2021,14 @@
         "inline_url_previews_room_account": "URL-voorvertoning in dit kamer inschakelen (geldt alleen voor jou)",
         "inline_url_previews_room": "URL-voorvertoning voor alle deelnemers aan deze kamer standaard inschakelen",
         "voip": {
-            "mirror_local_feed": "Lokale videoaanvoer ook elders opslaan (spiegelen)"
+            "mirror_local_feed": "Lokale videoaanvoer ook elders opslaan (spiegelen)",
+            "missing_permissions_prompt": "Mediatoestemmingen ontbreken, klik op de knop hieronder om deze aan te vragen.",
+            "request_permissions": "Mediatoestemmingen verzoeken",
+            "audio_output": "Geluidsuitgang",
+            "audio_output_empty": "Geen geluidsuitgangen gedetecteerd",
+            "audio_input_empty": "Geen microfoons gevonden",
+            "video_input_empty": "Geen webcams gevonden",
+            "title": "Spraak & video"
         },
         "send_read_receipts_unsupported": "Jouw server biedt geen ondersteuning voor het uitschakelen van het verzenden van leesbevestigingen.",
         "security": {
@@ -2103,7 +2100,10 @@
             "key_backup_complete": "Alle sleutels zijn geback-upt",
             "key_backup_algorithm": "Algoritme:",
             "key_backup_inactive_warning": "Jouw sleutels worden <b>niet geback-upt van deze sessie</b>.",
-            "key_backup_active_version_none": "Geen"
+            "key_backup_active_version_none": "Geen",
+            "ignore_users_empty": "Je hebt geen persoon genegeerd.",
+            "ignore_users_section": "Genegeerde personen",
+            "e2ee_default_disabled_warning": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken."
         },
         "preferences": {
             "room_list_heading": "Kamerslijst",

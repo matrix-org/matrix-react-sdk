@@ -1,8 +1,6 @@
 {
     "Failed to forget room %(errCode)s": "Δεν ήταν δυνατή η διαγραφή του δωματίου (%(errCode)s)",
     "unknown error code": "άγνωστος κωδικός σφάλματος",
-    "No Microphones detected": "Δεν εντοπίστηκε μικρόφωνο",
-    "No Webcams detected": "Δεν εντοπίστηκε κάμερα",
     "Authentication": "Πιστοποίηση",
     "A new password must be entered.": "Ο νέος κωδικός πρόσβασης πρέπει να εισαχθεί.",
     "An error has occurred.": "Παρουσιάστηκε ένα σφάλμα.",
@@ -436,7 +434,6 @@
     "Your email address hasn't been verified yet": "Η διεύθυνση email σας δεν έχει επαληθευτεί ακόμα",
     "Unable to share email address": "Δεν είναι δυνατή η κοινή χρήση της διεύθυνσης email",
     "Backup version:": "Έκδοση αντιγράφου ασφαλείας:",
-    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
     "Themes": "Θέματα",
@@ -511,7 +508,6 @@
     "Rocket": "Πύραυλος",
     "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
-    "Ignored users": "Χρήστες που αγνοήθηκαν",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
     "Signature upload failed": "Αποτυχία μεταφόρτωσης υπογραφής",
@@ -576,11 +572,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Αυτό το δωμάτιο δε γεφυρώνει μηνύματα σε καμία πλατφόρμα. <a>Μάθετε περισσότερα.</a>",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Αυτό το δωμάτιο γεφυρώνει μηνύματα στις ακόλουθες πλατφόρμες. <a>Μάθετε περισσότερα.</a>",
     "Space information": "Πληροφορίες Χώρου",
-    "Voice & Video": "Φωνή & Βίντεο",
-    "No Audio Outputs detected": "Δεν εντοπίστηκαν Έξοδοι Ήχου",
-    "Audio Output": "Έξοδος ήχου",
-    "Request media permissions": "Ζητήστε άδειες πολυμέσων",
-    "Missing media permissions, click the button below to request.": "Λείπουν δικαιώματα πολυμέσων, κάντε κλικ στο κουμπί παρακάτω για να αιτηθείτε.",
     "Click the link in the email you received to verify and then click continue again.": "Κάντε κλικ στον σύνδεσμο ηλεκτρονικής διεύθυνσης που λάβατε για επαλήθευση και μετα, κάντε ξανά κλικ στη συνέχεια.",
     "Unable to revoke sharing for email address": "Δεν είναι δυνατή η ανάκληση της κοινής χρήσης για τη διεύθυνση ηλεκτρονικού ταχυδρομείου",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Παρουσιάστηκε σφάλμα κατά την αλλαγή του επιπέδου ισχύος του χρήστη. Βεβαιωθείτε ότι έχετε επαρκή δικαιώματα και δοκιμάστε ξανά.",
@@ -589,7 +580,6 @@
     "Error changing power level requirement": "Σφάλμα αλλαγής της απαίτησης επιπέδου ισχύος",
     "Banned by %(displayName)s": "Αποκλείστηκε από %(displayName)s",
     "Get notifications as set up in your <a>settings</a>": "Λάβετε ειδοποιήσεις όπως έχoyn ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
-    "You have no ignored users.": "Δεν έχετε χρήστες που έχετε αγνοήσει.",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
     "Session key": "Κλειδί συνεδρίας",
@@ -1082,7 +1072,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Η αναβάθμιση αυτού του δωματίου θα τερματίσει το δωμάτιο και θα δημιουργήσει ένα αναβαθμισμένο δωμάτιο με το ίδιο όνομα.",
     "You can only join it with a working invite.": "Μπορείτε να συμμετάσχετε μόνο με ενεργή πρόσκληση.",
     "Home options": "Επιλογές αρχικής",
-    "Unignore": "Αναίρεση αγνόησης",
     "Spanner": "Γερμανικό κλειδί",
     "Go to Settings": "Μετάβαση στις Ρυθμίσεις",
     "New Recovery Method": "Νέα Μέθοδος Ανάκτησης",
@@ -1567,7 +1556,8 @@
         "unban": "Άρση αποκλεισμού",
         "click_to_copy": "Κλικ για αντιγραφή",
         "hide_advanced": "Απόκρυψη προχωρημένων",
-        "show_advanced": "Εμφάνιση προχωρημένων"
+        "show_advanced": "Εμφάνιση προχωρημένων",
+        "unignore": "Αναίρεση αγνόησης"
     },
     "a11y": {
         "user_menu": "Μενού χρήστη",
@@ -1859,7 +1849,14 @@
         "inline_url_previews_room_account": "Ενεργοποίηση προεπισκόπισης URL για αυτό το δωμάτιο (επηρεάζει μόνο εσάς)",
         "inline_url_previews_room": "Ενεργοποιήστε τις προεπισκοπήσεις URL από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο",
         "voip": {
-            "mirror_local_feed": "Αντικατοπτρίστε την τοπική ροή βίντεο"
+            "mirror_local_feed": "Αντικατοπτρίστε την τοπική ροή βίντεο",
+            "missing_permissions_prompt": "Λείπουν δικαιώματα πολυμέσων, κάντε κλικ στο κουμπί παρακάτω για να αιτηθείτε.",
+            "request_permissions": "Ζητήστε άδειες πολυμέσων",
+            "audio_output": "Έξοδος ήχου",
+            "audio_output_empty": "Δεν εντοπίστηκαν Έξοδοι Ήχου",
+            "audio_input_empty": "Δεν εντοπίστηκε μικρόφωνο",
+            "video_input_empty": "Δεν εντοπίστηκε κάμερα",
+            "title": "Φωνή & Βίντεο"
         },
         "security": {
             "message_search_disable_warning": "Εάν απενεργοποιηθεί, τα μηνύματα από κρυπτογραφημένα δωμάτια δε θα εμφανίζονται στα αποτελέσματα αναζήτησης.",
@@ -1929,7 +1926,10 @@
             "key_backup_complete": "Δημιουργήθηκαν αντίγραφα ασφαλείας όλων των κλειδιών",
             "key_backup_algorithm": "Αλγόριθμος:",
             "key_backup_inactive_warning": "<b>Δεν δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας από αυτήν την συνεδρία</b>.",
-            "key_backup_active_version_none": "Κανένα"
+            "key_backup_active_version_none": "Κανένα",
+            "ignore_users_empty": "Δεν έχετε χρήστες που έχετε αγνοήσει.",
+            "ignore_users_section": "Χρήστες που αγνοήθηκαν",
+            "e2ee_default_disabled_warning": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα."
         },
         "preferences": {
             "room_list_heading": "Λίστα δωματίων",
