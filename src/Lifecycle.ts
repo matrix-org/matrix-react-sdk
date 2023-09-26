@@ -568,7 +568,7 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
 
 // The pickle key is a string of unspecified length and format.  For AES, we
 // need a 256-bit Uint8Array. So we HKDF the pickle key to generate the AES
-// key.  The AES key should be zeroed after it is used
+// key.  The AES key should be zeroed after it is used.
 async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     const pickleKeyBuffer = new Uint8Array(pickleKey.length);
     for (let i = 0; i < pickleKey.length; i++) {
@@ -607,6 +607,8 @@ const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): tok
 };
 /**
  * Try to decrypt a token retrieved from storage
+ * Where token is not encrypted (plain text) returns the plain text token
+ * Where token is encrypted, attempts decryption. Returns successfully decrypted token, else undefined.
  * @param pickleKey pickle key used during encryption of token, or undefined
  * @param token
  * @param tokenIv initialization vector used during encryption of token eg ACCESS_TOKEN_IV
