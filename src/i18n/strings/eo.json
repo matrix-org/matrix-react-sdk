@@ -1096,7 +1096,6 @@
         "other": "Montri ĉiujn %(count)s anojn"
     },
     "Failed to send": "Malsukcesis sendi",
-    "unknown person": "nekonata persono",
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -1114,7 +1113,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Ni ne povis aliri vian mikrofonon. Bonvolu kontroli la agordojn de via foliumilo kaj reprovi.",
     "Unable to access your microphone": "Ne povas aliri vian mikrofonon",
     "You have no ignored users.": "Vi malatentas neniujn uzantojn.",
-    "Connecting": "Konektante",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Enter your Security Phrase a second time to confirm it.": "Enigu vian Sekurecan frazon duafoje por ĝin konfirmi.",
@@ -1208,7 +1206,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Vi estas la sola administranto de iuj ĉambroj aŭ aroj, de kie vi volas foriri. Se vi faros tion, neniu povos ilin plu administri.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Vi estas la sola administranto de ĉi tiu aro. Se vi foriros, neniu povos ĝin administri.",
     "You won't be able to rejoin unless you are re-invited.": "Vi ne povos ree aliĝi, krom se oni ree invitos vin.",
-    "Search %(spaceName)s": "Serĉi je %(spaceName)s",
     "User Directory": "Katologo de uzantoj",
     "Or send invite link": "Aŭ sendu invitan ligilon",
     "Some suggestions may be hidden for privacy.": "Iuj proponoj povas esti kaŝitaj pro privateco.",
@@ -1397,7 +1394,7 @@
         "off": "Ne",
         "all_rooms": "Ĉiuj ĉambroj",
         "copied": "Kopiita!",
-        "Advanced": "Altnivela"
+        "advanced": "Altnivela"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2422,7 +2419,9 @@
         "more_button": "Pli",
         "screenshare_monitor": "Vidigi tutan ekranon",
         "screenshare_window": "Fenestro de aplikaĵo",
-        "screenshare_title": "Havigi enhavon"
+        "screenshare_title": "Havigi enhavon",
+        "unknown_person": "nekonata persono",
+        "connecting": "Konektante"
     },
     "Other": "Alia",
     "room_settings": {
@@ -2943,7 +2942,8 @@
             "explore": "Esplori ĉambrojn",
             "manage_and_explore": "Administri kaj esplori ĉambrojn"
         },
-        "share_public": "Diskonigu vian publikan aron"
+        "share_public": "Diskonigu vian publikan aron",
+        "search_children": "Serĉi je %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -2990,7 +2990,6 @@
     },
     "create_space": {
         "name_required": "Bonvolu enigi nomon por la aro",
-        "name_placeholder": "ekz. mia-aro",
         "public_description": "Malferma aro por ĉiu ajn, ideala por komunumoj",
         "private_description": "Nur invita, ideala por vi mem aŭ por skipoj",
         "public_heading": "Via publika aro",
@@ -3016,7 +3015,10 @@
         "invite_teammates_by_username": "Inviti per uzantonomo",
         "setup_rooms_community_heading": "Pri kio volus vi diskuti en %(spaceName)s?",
         "setup_rooms_community_description": "Kreu ni ĉambron por ĉiu el ili.",
-        "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas."
+        "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas.",
+        "address_placeholder": "ekz. mia-aro",
+        "address_label": "Adreso",
+        "label": "Krei aron"
     },
     "user_menu": {
         "switch_theme_light": "Ŝalti helan reĝimon",

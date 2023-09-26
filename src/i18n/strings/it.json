@@ -1084,7 +1084,6 @@
     "Edit devices": "Modifica dispositivi",
     "Invite with email or username": "Invita con email o nome utente",
     "You can change these anytime.": "Puoi cambiarli in qualsiasi momento.",
-    "unknown person": "persona sconosciuta",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
@@ -1130,7 +1129,6 @@
     "No microphone found": "Nessun microfono trovato",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Non abbiamo potuto accedere al tuo microfono. Controlla le impostazioni del browser e riprova.",
     "Unable to access your microphone": "Impossibile accedere al microfono",
-    "Connecting": "In connessione",
     "Search names and descriptions": "Cerca nomi e descrizioni",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
@@ -1227,7 +1225,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Sei l'unico amministratore di alcune delle stanze o spazi che vuoi abbandonare. Se esci li lascerai senza amministratori.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Sei l'unico amministratore di questo spazio. Se esci nessuno ne avrà il controllo.",
     "You won't be able to rejoin unless you are re-invited.": "Non potrai rientrare a meno che non ti invitino di nuovo.",
-    "Search %(spaceName)s": "Cerca %(spaceName)s",
     "Want to add an existing space instead?": "Vuoi piuttosto aggiungere uno spazio esistente?",
     "Private space (invite only)": "Spazio privato (solo a invito)",
     "Space visibility": "Visibilità spazio",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale",
     "Unread email icon": "Icona email non letta",
     "Joining…": "Ingresso…",
-    "%(count)s people joined": {
-        "one": "È entrata %(count)s persona",
-        "other": "Sono entrate %(count)s persone"
-    },
     "Read receipts": "Ricevuta di lettura",
     "Deactivating your account is a permanent action — be careful!": "La disattivazione dell'account è permanente - attenzione!",
     "Some results may be hidden": "Alcuni risultati potrebbero essere nascosti",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "Verifica manualmente con testo",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s o %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
-    "You do not have permission to start voice calls": "Non hai il permesso di avviare chiamate",
-    "There's no one here to call": "Non c'è nessuno da chiamare qui",
-    "You do not have permission to start video calls": "Non hai il permesso di avviare videochiamate",
-    "Ongoing call": "Chiamata in corso",
     "Video call (Jitsi)": "Videochiamata (Jitsi)",
     "Failed to set pusher state": "Impostazione stato del push fallita",
     "Video call ended": "Videochiamata terminata",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Errore nella modifica della password",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (stato HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Errore sconosciuto di modifica della password (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Scaricamento della fonte fallito, nessun url trovato",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Una volta che gli utenti si saranno uniti a %(brand)s, potrete scrivervi e la stanza sarà crittografata end-to-end",
     "Waiting for users to join %(brand)s": "In attesa che gli utenti si uniscano a %(brand)s",
     "You do not have permission to invite users": "Non hai l'autorizzazione per invitare utenti",
@@ -1868,7 +1856,7 @@
         "deselect_all": "Deseleziona tutti",
         "select_all": "Seleziona tutti",
         "copied": "Copiato!",
-        "Advanced": "Avanzato"
+        "advanced": "Avanzato"
     },
     "action": {
         "continue": "Continua",
@@ -3316,7 +3304,17 @@
         "more_button": "Altro",
         "screenshare_monitor": "Condividi schermo intero",
         "screenshare_window": "Finestra applicazione",
-        "screenshare_title": "Condividi contenuto"
+        "screenshare_title": "Condividi contenuto",
+        "disabled_no_perms_start_voice_call": "Non hai il permesso di avviare chiamate",
+        "disabled_no_perms_start_video_call": "Non hai il permesso di avviare videochiamate",
+        "disabled_ongoing_call": "Chiamata in corso",
+        "disabled_no_one_here": "Non c'è nessuno da chiamare qui",
+        "n_people_joined": {
+            "one": "È entrata %(count)s persona",
+            "other": "Sono entrate %(count)s persone"
+        },
+        "unknown_person": "persona sconosciuta",
+        "connecting": "In connessione"
     },
     "Other": "Altro",
     "room_settings": {
@@ -3916,7 +3914,8 @@
             "explore": "Esplora stanze",
             "manage_and_explore": "Gestisci ed esplora le stanze"
         },
-        "share_public": "Condividi il tuo spazio pubblico"
+        "share_public": "Condividi il tuo spazio pubblico",
+        "search_children": "Cerca %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -3976,7 +3975,6 @@
     },
     "create_space": {
         "name_required": "Inserisci un nome per lo spazio",
-        "name_placeholder": "es. mio-spazio",
         "explainer": "Gli spazi sono un nuovo modo di raggruppare stanze e persone. Che tipo di spazio vuoi creare? Puoi cambiarlo in seguito.",
         "public_description": "Spazio aperto a tutti, la scelta migliore per le comunità",
         "private_description": "Solo su invito, la scelta migliore per te o i team",
@@ -4007,7 +4005,10 @@
         "setup_rooms_community_description": "Creiamo una stanza per ognuno di essi.",
         "setup_rooms_description": "Puoi aggiungerne anche altri in seguito, inclusi quelli già esistenti.",
         "setup_rooms_private_heading": "Su quali progetti sta lavorando la tua squadra?",
-        "setup_rooms_private_description": "Creeremo stanze per ognuno di essi."
+        "setup_rooms_private_description": "Creeremo stanze per ognuno di essi.",
+        "address_placeholder": "es. mio-spazio",
+        "address_label": "Indirizzo",
+        "label": "Crea uno spazio"
     },
     "user_menu": {
         "switch_theme_light": "Passa alla modalità chiara",
@@ -4192,7 +4193,8 @@
         "admin_contact_short": "Contatta il tuo <a>amministratore del server</a>.",
         "non_urgent_echo_failure_toast": "Il tuo server non sta rispondendo ad alcune <a>richieste</a>.",
         "failed_copy": "Copia fallita",
-        "something_went_wrong": "Qualcosa è andato storto!"
+        "something_went_wrong": "Qualcosa è andato storto!",
+        "download_media": "Scaricamento della fonte fallito, nessun url trovato"
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {

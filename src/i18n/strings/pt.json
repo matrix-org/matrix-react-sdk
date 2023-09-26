@@ -445,7 +445,7 @@
         "on": "Ativado",
         "off": "Desativado",
         "copied": "Copiado!",
-        "Advanced": "Avançado"
+        "advanced": "Avançado"
     },
     "action": {
         "continue": "Continuar",

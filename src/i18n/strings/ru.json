@@ -1083,7 +1083,6 @@
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
     "You may want to try a different search or check for typos.": "Вы можете попробовать другой поиск или проверить опечатки.",
     "No results found": "Результаты не найдены",
-    "Connecting": "Подключение",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджеры по интеграции получают данные конфигурации и могут изменять виджеты, отправлять приглашения в комнаты и устанавливать уровни доступа от вашего имени.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Используйте менеджер интеграций для управления ботами, виджетами и наклейками.",
@@ -1131,7 +1130,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Вы являетесь единственным администратором некоторых комнат или пространств, которые вы хотите покинуть. Покинув их, вы оставите их без администраторов.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Вы единственный администратор этого пространства. Если вы его оставите, это будет означать, что никто не имеет над ним контроля.",
     "You won't be able to rejoin unless you are re-invited.": "Вы сможете присоединиться только после повторного приглашения.",
-    "Search %(spaceName)s": "Поиск %(spaceName)s",
     "User Directory": "Каталог пользователей",
     "Consult first": "Сначала проконсультируйтесь",
     "Invited people will be able to read old messages.": "Приглашенные люди смогут читать старые сообщения.",
@@ -1245,7 +1243,6 @@
     "Failed to update the visibility of this space": "Не удалось обновить видимость этого пространства",
     "Show all rooms": "Показать все комнаты",
     "Address": "Адрес",
-    "unknown person": "Неизвестное лицо",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
     "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
@@ -1453,10 +1450,6 @@
     "%(members)s and more": "%(members)s и многие другие",
     "Deactivating your account is a permanent action — be careful!": "Деактивация вашей учётной записи является необратимым действием — будьте осторожны!",
     "Your password was successfully changed.": "Ваш пароль успешно изменён.",
-    "%(count)s people joined": {
-        "one": "%(count)s человек присоединился",
-        "other": "%(count)s человек(а) присоединились"
-    },
     "Remove from space": "Исключить из пространства",
     "This room or space is not accessible at this time.": "Эта комната или пространство в данный момент недоступны.",
     "This room or space does not exist.": "Такой комнаты или пространства не существует.",
@@ -1597,10 +1590,6 @@
     "Change layout": "Изменить расположение",
     "Spotlight": "Освещение",
     "Freedom": "Свободное",
-    "You do not have permission to start voice calls": "У вас нет разрешения для запуска звонка",
-    "There's no one here to call": "Здесь некому звонить",
-    "You do not have permission to start video calls": "У вас нет разрешения для запуска видеозвонка",
-    "Ongoing call": "Текущий звонок",
     "Show formatting": "Показать форматирование",
     "Hide formatting": "Скрыть форматирование",
     "This message could not be decrypted": "Это сообщение не удалось расшифровать",
@@ -1714,7 +1703,7 @@
         "deselect_all": "Отменить выбор",
         "select_all": "Выбрать все",
         "copied": "Скопировано!",
-        "Advanced": "Подробности"
+        "advanced": "Подробности"
     },
     "action": {
         "continue": "Продолжить",
@@ -3060,7 +3049,17 @@
         "more_button": "Больше",
         "screenshare_monitor": "Поделиться всем экраном",
         "screenshare_window": "Окно приложения",
-        "screenshare_title": "Поделиться содержимым"
+        "screenshare_title": "Поделиться содержимым",
+        "disabled_no_perms_start_voice_call": "У вас нет разрешения для запуска звонка",
+        "disabled_no_perms_start_video_call": "У вас нет разрешения для запуска видеозвонка",
+        "disabled_ongoing_call": "Текущий звонок",
+        "disabled_no_one_here": "Здесь некому звонить",
+        "n_people_joined": {
+            "one": "%(count)s человек присоединился",
+            "other": "%(count)s человек(а) присоединились"
+        },
+        "unknown_person": "Неизвестное лицо",
+        "connecting": "Подключение"
     },
     "Other": "Другие",
     "room_settings": {
@@ -3618,7 +3617,8 @@
             "explore": "Обзор комнат",
             "manage_and_explore": "Управление и список комнат"
         },
-        "share_public": "Поделитесь своим публичным пространством"
+        "share_public": "Поделитесь своим публичным пространством",
+        "search_children": "Поиск %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3676,7 +3676,6 @@
     },
     "create_space": {
         "name_required": "Пожалуйста, введите название пространства",
-        "name_placeholder": "например, my-space",
         "explainer": "Пространства — это новый способ организации комнат и людей. Какой вид пространства вы хотите создать? Вы можете изменить это позже.",
         "public_description": "Открытое пространство для всех, лучший вариант для сообществ",
         "private_description": "Только по приглашениям, лучший вариант для себя или команды",
@@ -3706,7 +3705,10 @@
         "setup_rooms_community_description": "Давайте создадим для каждого из них отдельную комнату.",
         "setup_rooms_description": "Позже можно добавить и другие, в том числе уже существующие.",
         "setup_rooms_private_heading": "Над какими проектами ваша команда работает?",
-        "setup_rooms_private_description": "Мы создадим комнаты для каждого из них."
+        "setup_rooms_private_description": "Мы создадим комнаты для каждого из них.",
+        "address_placeholder": "например, my-space",
+        "address_label": "Адрес",
+        "label": "Создать пространство"
     },
     "user_menu": {
         "switch_theme_light": "Переключить в светлый режим",

@@ -657,7 +657,7 @@
         "off": "끄기",
         "all_rooms": "모든 방 목록",
         "copied": "복사했습니다!",
-        "Advanced": "고급"
+        "advanced": "고급"
     },
     "action": {
         "continue": "계속하기",
@@ -1459,7 +1459,8 @@
     },
     "create_space": {
         "public_heading": "당신의 공개 스페이스",
-        "private_heading": "당신의 비공개 스페이스"
+        "private_heading": "당신의 비공개 스페이스",
+        "label": "스페이스 만들기"
     },
     "room": {
         "drop_file_prompt": "업로드할 파일을 여기에 놓으세요",

@@ -899,7 +899,6 @@
     "Insert link": "リンクを挿入",
     "Reason (optional)": "理由（任意）",
     "Copy link to thread": "スレッドへのリンクをコピー",
-    "Connecting": "接続しています",
     "Create a new space": "新しいスペースを作成",
     "This address is already in use": "このアドレスは既に使用されています",
     "This address is available to use": "このアドレスは使用できます",
@@ -937,7 +936,6 @@
     "Decrypting": "復号化しています",
     "Downloading": "ダウンロードしています",
     "An unknown error occurred": "不明なエラーが発生しました",
-    "unknown person": "不明な人間",
     "In reply to <a>this message</a>": "<a>このメッセージ</a>への返信",
     "Location": "位置情報",
     "Submit logs": "ログを提出",
@@ -1190,7 +1188,6 @@
     "Language Dropdown": "言語一覧",
     "You cancelled verification on your other device.": "他の端末で認証がキャンセルされました。",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
-    "Search %(spaceName)s": "%(spaceName)sを検索",
     "Your new device is now verified. Other users will see it as trusted.": "端末が認証されました。他のユーザーに「信頼済」として表示されます。",
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "新しい端末が認証されました。端末は暗号化されたメッセージにアクセスすることができます。また、端末は他のユーザーに「信頼済」として表示されます。",
     "Verify with Security Key": "セキュリティーキーで認証",
@@ -1472,18 +1469,12 @@
     "To join, please enable video rooms in Labs first": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
     "To view %(roomName)s, you need an invite": "%(roomName)sを見るには招待が必要です",
     "There's no preview, would you like to join?": "プレビューはありませんが、参加しますか？",
-    "You do not have permission to start voice calls": "音声通話を開始する権限がありません",
-    "You do not have permission to start video calls": "ビデオ通話を開始する権限がありません",
     "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
     "Reset event store?": "イベントストアをリセットしますか？",
     "Your firewall or anti-virus is blocking the request.": "ファイアーウォールまたはアンチウイルスソフトがリクエストをブロックしています。",
     "We're creating a room with %(names)s": "%(names)sという名前のルームを作成しています",
-    "%(count)s people joined": {
-        "one": "%(count)s人が参加しました",
-        "other": "%(count)s人が参加しました"
-    },
     "Close sidebar": "サイドバーを閉じる",
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
     "Stop and close": "停止して閉じる",
@@ -1492,7 +1483,6 @@
     "Saved Items": "保存済み項目",
     "View chat timeline": "チャットのタイムラインを表示",
     "Spotlight": "スポットライト",
-    "There's no one here to call": "ここには通話できる人はいません",
     "Read receipts": "開封確認メッセージ",
     "Seen by %(count)s people": {
         "one": "%(count)s人が閲覧済",
@@ -1519,7 +1509,6 @@
     "Connection": "接続",
     "Voice processing": "音声を処理しています",
     "Automatically adjust the microphone volume": "マイクの音量を自動的に調節",
-    "Ongoing call": "通話中",
     "Add privileged users": "特権ユーザーを追加",
     "Give one or multiple users in this room more privileges": "このルームのユーザーに権限を付与",
     "Search users in this room…": "このルームのユーザーを検索…",
@@ -1764,7 +1753,7 @@
         "deselect_all": "全ての選択を解除",
         "select_all": "全て選択",
         "copied": "コピーしました！",
-        "Advanced": "詳細"
+        "advanced": "詳細"
     },
     "action": {
         "continue": "続行",
@@ -3143,7 +3132,17 @@
         "more_button": "その他",
         "screenshare_monitor": "全画面を共有",
         "screenshare_window": "アプリケーションのウィンドウ",
-        "screenshare_title": "コンテンツを共有"
+        "screenshare_title": "コンテンツを共有",
+        "disabled_no_perms_start_voice_call": "音声通話を開始する権限がありません",
+        "disabled_no_perms_start_video_call": "ビデオ通話を開始する権限がありません",
+        "disabled_ongoing_call": "通話中",
+        "disabled_no_one_here": "ここには通話できる人はいません",
+        "n_people_joined": {
+            "one": "%(count)s人が参加しました",
+            "other": "%(count)s人が参加しました"
+        },
+        "unknown_person": "不明な人間",
+        "connecting": "接続しています"
     },
     "Other": "その他",
     "room_settings": {
@@ -3725,7 +3724,8 @@
             "explore": "ルームを探す",
             "manage_and_explore": "ルームの管理および探索"
         },
-        "share_public": "公開スペースを共有"
+        "share_public": "公開スペースを共有",
+        "search_children": "%(spaceName)sを検索"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",
@@ -3784,7 +3784,6 @@
     },
     "create_space": {
         "name_required": "スペースの名前を入力してください",
-        "name_placeholder": "例：my-space",
         "explainer": "スペースは、ルームや連絡先をまとめる新しい方法です。どんなグループを作りますか？これは後から変更できます。",
         "public_description": "誰でも参加できる公開スペース。コミュニティー向け",
         "private_description": "招待者のみ参加可能。個人やチーム向け",
@@ -3815,7 +3814,10 @@
         "setup_rooms_community_description": "テーマごとにルームを作りましょう。",
         "setup_rooms_description": "ルームは後からも追加できます。",
         "setup_rooms_private_heading": "あなたのチームはどのようなプロジェクトに取り組みますか？",
-        "setup_rooms_private_description": "それぞれのプロジェクトにルームを作りましょう。"
+        "setup_rooms_private_description": "それぞれのプロジェクトにルームを作りましょう。",
+        "address_placeholder": "例：my-space",
+        "address_label": "アドレス",
+        "label": "スペースを作成"
     },
     "user_menu": {
         "switch_theme_light": "ライトテーマに切り替える",

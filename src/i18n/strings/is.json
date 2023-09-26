@@ -458,7 +458,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Bandaríkin",
     "United Kingdom": "Stóra Bretland",
-    "Connecting": "Tengist",
     "Developer": "Forritari",
     "Experimental": "Á tilraunastigi",
     "Themes": "Þemu",
@@ -696,7 +695,6 @@
     "Copy link to thread": "Afrita tengil á spjallþráð",
     "You can change these anytime.": "Þú getur breytt þessu hvenær sem er.",
     "Create a space": "Búa til svæði",
-    "Search %(spaceName)s": "Leita í %(spaceName)s",
     "Guitar": "Gítar",
     "Ball": "Bolti",
     "Trophy": "Verðlaun",
@@ -716,7 +714,6 @@
     "Heart": "Hjarta",
     "Corn": "Maís",
     "Strawberry": "Jarðarber",
-    "unknown person": "óþekktur einstaklingur",
     "This room is not public. You will not be able to rejoin without an invite.": "Þessi spjallrás er ekki opinber. Þú munt ekki geta tekið aftur þátt nema að vera boðið.",
     "If they don't match, the security of your communication may be compromised.": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð.",
     "Confirm by comparing the following with the User Settings in your other session:": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
@@ -1290,10 +1287,6 @@
     "Terms of service not accepted or the identity server is invalid.": "Þjónustuskilmálar eru ekki samþykktir eða að auðkennisþjónn er ógildur.",
     "Connect this session to Key Backup": "Tengja þessa setu við öryggisafrit af lykli",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Við mælum með því að þú fjarlægir tölvupóstföngin þín og símanúmer af auðkennisþjóninum áður en þú aftengist.",
-    "%(count)s people joined": {
-        "one": "%(count)s aðili hefur tekið þátt",
-        "other": "%(count)s aðilar hafa tekið þátt"
-    },
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
@@ -1363,7 +1356,6 @@
     "View live location": "Skoða staðsetningu í rauntíma",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "To view %(roomName)s, you need an invite": "Til að skoða %(roomName)s þarftu boð",
-    "Ongoing call": "Símtal í gangi",
     "Video call (Jitsi)": "Myndsímtal (Jitsi)",
     "Seen by %(count)s people": {
         "one": "Séð af %(count)s aðila",
@@ -1424,9 +1416,6 @@
     "This invite was sent to %(email)s which is not associated with your account": "Þetta boð var sent til %(email)s sem er ekki tengt notandaaðgangnum þínum",
     "You can still join here.": "Þú getur samt tekið þátt hér.",
     "Join the room to participate": "Taka þátt í spjallrás",
-    "You do not have permission to start voice calls": "Þú hefur ekki heimildir til að hefja raddsímtöl",
-    "There's no one here to call": "Hér er enginn sem hægt er að hringja í",
-    "You do not have permission to start video calls": "Þú hefur ekki heimildir til að hefja myndsímtöl",
     "Video call (%(brand)s)": "Myndsímtal (%(brand)s)",
     "Show formatting": "Sýna sniðmótun",
     "Hide formatting": "Fela sniðmótun",
@@ -1535,7 +1524,7 @@
         "deselect_all": "Afvelja allt",
         "select_all": "Velja allt",
         "copied": "Afritað!",
-        "Advanced": "Nánar"
+        "advanced": "Nánar"
     },
     "action": {
         "continue": "Halda áfram",
@@ -2803,7 +2792,17 @@
         "more_button": "Meira",
         "screenshare_monitor": "Deila öllum skjánum",
         "screenshare_window": "Forritsgluggi",
-        "screenshare_title": "Deila efni"
+        "screenshare_title": "Deila efni",
+        "disabled_no_perms_start_voice_call": "Þú hefur ekki heimildir til að hefja raddsímtöl",
+        "disabled_no_perms_start_video_call": "Þú hefur ekki heimildir til að hefja myndsímtöl",
+        "disabled_ongoing_call": "Símtal í gangi",
+        "disabled_no_one_here": "Hér er enginn sem hægt er að hringja í",
+        "n_people_joined": {
+            "one": "%(count)s aðili hefur tekið þátt",
+            "other": "%(count)s aðilar hafa tekið þátt"
+        },
+        "unknown_person": "óþekktur einstaklingur",
+        "connecting": "Tengist"
     },
     "Other": "Annað",
     "room_settings": {
@@ -3338,7 +3337,8 @@
             "explore": "Kanna spjallrásir",
             "manage_and_explore": "Sýsla með og kanna spjallrásir"
         },
-        "share_public": "Deildu opinbera svæðinu þínu"
+        "share_public": "Deildu opinbera svæðinu þínu",
+        "search_children": "Leita í %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3390,7 +3390,6 @@
     },
     "create_space": {
         "name_required": "Settu inn eitthvað nafn fyrir svæðið",
-        "name_placeholder": "t.d. mitt-svæði",
         "explainer": "Svæði eru ný leið til að hópa fólk og spjallrásir. Hverskyns svæði langar þig til að útbúa? Þessu má breyta síðar.",
         "public_description": "Opið öllum, best fyrir dreifða hópa",
         "private_description": "Einungis gegn boði, best fyrir þig og lítinn hóp",
@@ -3413,7 +3412,10 @@
         "invite_teammates_heading": "Bjóddu félögum þínum",
         "invite_teammates_description": "Gakktu úr skugga um að rétta fólkið hafi aðgang. Þú getur boðið fleira fólki síðar.",
         "invite_teammates_by_username": "Bjóða með notandanafni",
-        "setup_rooms_community_description": "Búum til spjallrás fyrir hvern og einn þeirra."
+        "setup_rooms_community_description": "Búum til spjallrás fyrir hvern og einn þeirra.",
+        "address_placeholder": "t.d. mitt-svæði",
+        "address_label": "Vistfang",
+        "label": "Búa til svæði"
     },
     "user_menu": {
         "switch_theme_light": "Skiptu yfir í ljósan ham",

@@ -838,8 +838,6 @@
     "Enable guest access": "Įjungti svečių prieigą",
     "Invite people": "Pakviesti žmonių",
     "Address": "Adresas",
-    "Search %(spaceName)s": "Ieškoti %(spaceName)s",
-    "Connecting": "Jungiamasi",
     "Their device couldn't start the camera or microphone": "Jų įrenginys negalėjo įjungti kameros arba mikrofono",
     "Connection failed": "Nepavyko prisijungti",
     "Could not connect media": "Nepavyko prijungti medijos",
@@ -1019,11 +1017,6 @@
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
     "Create a space": "Sukurti erdvę",
     "Space selection": "Erdvės pasirinkimas",
-    "unknown person": "nežinomas asmuo",
-    "%(count)s people joined": {
-        "one": "%(count)s žmogus prisijungė",
-        "other": "%(count)s žmonės prisijungė"
-    },
     "Vietnam": "Vietnamas",
     "United Arab Emirates": "Jungtiniai Arabų Emiratai",
     "Ukraine": "Ukraina",
@@ -1185,7 +1178,7 @@
         "deselect_all": "Nuimti pasirinkimą nuo visko",
         "select_all": "Pasirinkti viską",
         "copied": "Nukopijuota!",
-        "Advanced": "Išplėstiniai"
+        "advanced": "Išplėstiniai"
     },
     "action": {
         "continue": "Tęsti",
@@ -2152,7 +2145,13 @@
         "join_button_tooltip_connecting": "Jungiamasi",
         "hide_sidebar_button": "Slėpti šoninę juostą",
         "show_sidebar_button": "Rodyti šoninę juostą",
-        "more_button": "Daugiau"
+        "more_button": "Daugiau",
+        "n_people_joined": {
+            "one": "%(count)s žmogus prisijungė",
+            "other": "%(count)s žmonės prisijungė"
+        },
+        "unknown_person": "nežinomas asmuo",
+        "connecting": "Jungiamasi"
     },
     "Other": "Kitas",
     "room_settings": {
@@ -2596,13 +2595,15 @@
     },
     "create_space": {
         "name_required": "Prašome įvesti pavadinimą šiai erdvei",
-        "name_placeholder": "pvz., mano-erdvė",
         "explainer": "Erdvės - tai naujas kambarių ir žmonių grupavimo būdas. Kokią erdvę norite sukurti? Vėliau tai galėsite pakeisti.",
         "public_description": "Atvira erdvė visiems, geriausia bendruomenėms",
         "private_description": "Tik pakviestiems, geriausia sau arba komandoms",
         "public_heading": "Jūsų vieša erdvė",
         "private_heading": "Jūsų privati erdvė",
-        "add_details_prompt": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti."
+        "add_details_prompt": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti.",
+        "address_placeholder": "pvz., mano-erdvė",
+        "address_label": "Adresas",
+        "label": "Sukurti erdvę"
     },
     "room": {
         "drop_file_prompt": "Norėdami įkelti, vilkite failą čia",
@@ -2653,7 +2654,8 @@
         "context_menu": {
             "explore": "Žvalgyti kambarius",
             "manage_and_explore": "Valdyti & tyrinėti kambarius"
-        }
+        },
+        "search_children": "Ieškoti %(spaceName)s"
     },
     "terms": {
         "integration_manager": "Naudoti botus, tiltus, valdiklius ir lipdukų pakuotes",

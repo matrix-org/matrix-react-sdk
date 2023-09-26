@@ -359,7 +359,7 @@
         "unnamed_room": "Unavngivet rum",
         "on": "Tændt",
         "off": "Slukket",
-        "Advanced": "Avanceret"
+        "advanced": "Avanceret"
     },
     "action": {
         "continue": "Fortsæt",

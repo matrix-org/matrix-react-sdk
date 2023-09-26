@@ -573,7 +573,7 @@
         "private": "Private",
         "options": "Options",
         "copied": "Copied!",
-        "Advanced": "Advanced",
+        "advanced": "Advanced",
         "preview_message": "Hey you. You're the best!",
         "integration_manager": "Integration manager",
         "message_layout": "Message layout",
@@ -771,17 +771,27 @@
         "video_call": "Video call",
         "join_button_tooltip_connecting": "Connecting",
         "join_button_tooltip_call_full": "Sorry — this call is currently full",
+        "disabled_no_perms_start_voice_call": "You do not have permission to start voice calls",
+        "disabled_no_perms_start_video_call": "You do not have permission to start video calls",
+        "disabled_ongoing_call": "Ongoing call",
+        "disabled_no_one_here": "There's no one here to call",
         "audio_devices": "Audio devices",
         "disable_microphone": "Mute microphone",
         "enable_microphone": "Unmute microphone",
         "video_devices": "Video devices",
         "disable_camera": "Turn off camera",
         "enable_camera": "Turn on camera",
+        "connecting": "Connecting",
+        "n_people_joined": {
+            "other": "%(count)s people joined",
+            "one": "%(count)s person joined"
+        },
         "dial": "Dial",
         "you_are_presenting": "You are presenting",
         "user_is_presenting": "%(sharerName)s is presenting",
         "camera_disabled": "Your camera is turned off",
         "camera_enabled": "Your camera is still enabled",
+        "unknown_person": "unknown person",
         "consulting": "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>",
         "call_held_switch": "You held the call <a>Switch</a>",
         "call_held_resume": "You held the call <a>Resume</a>",
@@ -1502,6 +1512,7 @@
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",
         "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
         "admin_contact_short": "Contact your <a>server admin</a>.",
+        "download_media": "Failed to download source media, no source url was found",
         "non_urgent_echo_failure_toast": "Your server isn't responding to some <a>requests</a>.",
         "failed_copy": "Failed to copy",
         "something_went_wrong": "Something went wrong!"
@@ -1608,6 +1619,7 @@
     },
     "space": {
         "share_public": "Share your public space",
+        "search_children": "Search %(spaceName)s",
         "context_menu": {
             "devtools_open_timeline": "See room timeline (devtools)",
             "home": "Space home",
@@ -2083,7 +2095,7 @@
         "lists_description_2": "If this isn't what you want, please use a different tool to ignore users.",
         "lists_new_label": "Room ID or address of ban list"
     },
-    "Join Room": "Join Room",
+    "Unnamed room": "Unnamed room",
     "onboarding": {
         "you_made_it": "You made it!",
         "find_friends": "Find and invite your friends",
@@ -2135,10 +2147,6 @@
         "explore_rooms": "Explore Public Rooms",
         "create_room": "Create a Group Chat"
     },
-    "You do not have permission to start voice calls": "You do not have permission to start voice calls",
-    "You do not have permission to start video calls": "You do not have permission to start video calls",
-    "Ongoing call": "Ongoing call",
-    "There's no one here to call": "There's no one here to call",
     "chat_effects": {
         "confetti_description": "Sends the given message with confetti",
         "confetti_message": "sends confetti",
@@ -2153,23 +2161,17 @@
         "hearts_description": "Sends the given message with hearts",
         "hearts_message": "sends hearts"
     },
-    "Failed to download source media, no source url was found": "Failed to download source media, no source url was found",
-    "Connecting": "Connecting",
-    "%(count)s people joined": {
-        "other": "%(count)s people joined",
-        "one": "%(count)s person joined"
-    },
-    "unknown person": "unknown person",
     "quick_settings": {
         "title": "Quick settings",
         "all_settings": "All settings",
         "metaspace_section": "Pin to sidebar",
         "sidebar_settings": "More options"
     },
-    "Search %(spaceName)s": "Search %(spaceName)s",
     "create_space": {
         "name_required": "Please enter a name for the space",
-        "name_placeholder": "e.g. my-space",
+        "address_placeholder": "e.g. my-space",
+        "address_label": "Address",
+        "label": "Create a space",
         "explainer": "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.",
         "public_description": "Open space for anyone, best for communities",
         "private_description": "Invite only, best for yourself or teams",
@@ -2203,8 +2205,6 @@
         "setup_rooms_private_heading": "What projects are your team working on?",
         "setup_rooms_private_description": "We'll create rooms for each of them."
     },
-    "Address": "Address",
-    "Create a space": "Create a space",
     "You can change these anytime.": "You can change these anytime.",
     "Creating…": "Creating…",
     "Show all rooms": "Show all rooms",
@@ -2225,6 +2225,7 @@
     "Enable guest access": "Enable guest access",
     "Guests can join a space without having an account.": "Guests can join a space without having an account.",
     "This may be useful for public spaces.": "This may be useful for public spaces.",
+    "Address": "Address",
     "Visibility": "Visibility",
     "Access": "Access",
     "Decide who can view and join %(spaceName)s.": "Decide who can view and join %(spaceName)s.",
@@ -3296,6 +3297,7 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Anyone in <SpaceName/> will be able to find and join.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Anyone will be able to find and join this space, not just members of <SpaceName/>.",
     "Only people invited will be able to find and join this space.": "Only people invited will be able to find and join this space.",
+    "Create a space": "Create a space",
     "Add a space to a space you manage.": "Add a space to a space you manage.",
     "Space visibility": "Space visibility",
     "Private space (invite only)": "Private space (invite only)",
@@ -3561,7 +3563,6 @@
     "Allow this widget to verify your identity": "Allow this widget to verify your identity",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "The widget will verify your user ID, but won't be able to perform actions for you:",
     "Remember this": "Remember this",
-    "Unnamed room": "Unnamed room",
     "%(count)s Members": {
         "other": "%(count)s Members",
         "one": "%(count)s Member"

@@ -1089,7 +1089,6 @@
     },
     "Invited people will be able to read old messages.": "Pozvaní lidé budou moci číst staré zprávy.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Ověřte svou identitu, abyste získali přístup k šifrovaným zprávám a prokázali svou identitu ostatním.",
-    "unknown person": "neznámá osoba",
     "Add existing rooms": "Přidat stávající místnosti",
     "We couldn't create your DM.": "Nemohli jsme vytvořit vaši přímou zprávu.",
     "Consult first": "Nejprve se poraďte",
@@ -1129,7 +1128,6 @@
     "No microphone found": "Nebyl nalezen žádný mikrofon",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nepodařilo se získat přístup k vašemu mikrofonu . Zkontrolujte prosím nastavení prohlížeče a zkuste to znovu.",
     "Unable to access your microphone": "Nelze získat přístup k mikrofonu",
-    "Connecting": "Spojování",
     "Search names and descriptions": "Hledat názvy a popisy",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
@@ -1228,7 +1226,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jste jediným správcem některých místností nebo prostorů, které chcete opustit. Jejich opuštěním zůstanou bez správců.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jste jediným správcem tohoto prostoru. Jeho opuštění bude znamenat, že nad ním nebude mít nikdo kontrolu.",
     "You won't be able to rejoin unless you are re-invited.": "Pokud nebudete znovu pozváni, nebudete se moci připojit.",
-    "Search %(spaceName)s": "Hledat %(spaceName)s",
     "Want to add an existing space instead?": "Chcete místo toho přidat stávající prostor?",
     "Private space (invite only)": "Soukromý prostor (pouze pro pozvané)",
     "Space visibility": "Viditelnost prostoru",
@@ -1522,10 +1519,6 @@
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
     "Joining…": "Připojování…",
-    "%(count)s people joined": {
-        "one": "%(count)s osoba se připojila",
-        "other": "%(count)s osob se připojilo"
-    },
     "Unread email icon": "Ikona nepřečteného e-mailu",
     "Read receipts": "Potvrzení o přečtení",
     "Deactivating your account is a permanent action — be careful!": "Deaktivace účtu je trvalá akce - buďte opatrní!",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "Ruční ověření pomocí textu",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s nebo %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
-    "You do not have permission to start voice calls": "Nemáte oprávnění k zahájení hlasových hovorů",
-    "There's no one here to call": "Není tu nikdo, komu zavolat",
-    "You do not have permission to start video calls": "Nemáte oprávnění ke spuštění videohovorů",
-    "Ongoing call": "Průběžný hovor",
     "Video call (Jitsi)": "Videohovor (Jitsi)",
     "Failed to set pusher state": "Nepodařilo se nastavit stav push oznámení",
     "Video call ended": "Videohovor ukončen",
@@ -1715,7 +1704,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Neznámá chyba při změně hesla (%(stringifiedError)s)",
     "Search all rooms": "Vyhledávat ve všech místnostech",
     "Search this room": "Vyhledávat v této místnosti",
-    "Failed to download source media, no source url was found": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
     "Waiting for users to join %(brand)s": "Čekání na připojení uživatelů k %(brand)s",
     "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
@@ -1868,7 +1856,7 @@
         "deselect_all": "Zrušit výběr všech",
         "select_all": "Vybrat všechny",
         "copied": "Zkopírováno!",
-        "Advanced": "Rozšířené"
+        "advanced": "Rozšířené"
     },
     "action": {
         "continue": "Pokračovat",
@@ -3316,7 +3304,17 @@
         "more_button": "Více",
         "screenshare_monitor": "Sdílet celou obrazovku",
         "screenshare_window": "Okno aplikace",
-        "screenshare_title": "Sdílet obsah"
+        "screenshare_title": "Sdílet obsah",
+        "disabled_no_perms_start_voice_call": "Nemáte oprávnění k zahájení hlasových hovorů",
+        "disabled_no_perms_start_video_call": "Nemáte oprávnění ke spuštění videohovorů",
+        "disabled_ongoing_call": "Průběžný hovor",
+        "disabled_no_one_here": "Není tu nikdo, komu zavolat",
+        "n_people_joined": {
+            "one": "%(count)s osoba se připojila",
+            "other": "%(count)s osob se připojilo"
+        },
+        "unknown_person": "neznámá osoba",
+        "connecting": "Spojování"
     },
     "Other": "Další možnosti",
     "room_settings": {
@@ -3916,7 +3914,8 @@
             "explore": "Procházet místnosti",
             "manage_and_explore": "Spravovat a prozkoumat místnosti"
         },
-        "share_public": "Sdílejte svůj veřejný prostor"
+        "share_public": "Sdílejte svůj veřejný prostor",
+        "search_children": "Hledat %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
@@ -3976,7 +3975,6 @@
     },
     "create_space": {
         "name_required": "Zadejte prosím název prostoru",
-        "name_placeholder": "např. můj-prostor",
         "explainer": "Prostory představují nový způsob seskupování místností a osob. Jaký prostor chcete vytvořit? To můžete později změnit.",
         "public_description": "Otevřený prostor pro kohokoli, nejlepší pro komunity",
         "private_description": "Pouze pozvat, nejlepší pro sebe nebo pro týmy",
@@ -4007,7 +4005,10 @@
         "setup_rooms_community_description": "Vytvořme pro každé z nich místnost.",
         "setup_rooms_description": "Později můžete přidat i další, včetně již existujících.",
         "setup_rooms_private_heading": "Na jakých projektech váš tým pracuje?",
-        "setup_rooms_private_description": "Pro každého z nich vytvoříme místnost."
+        "setup_rooms_private_description": "Pro každého z nich vytvoříme místnost.",
+        "address_placeholder": "např. můj-prostor",
+        "address_label": "Adresa",
+        "label": "Vytvořit prostor"
     },
     "user_menu": {
         "switch_theme_light": "Přepnout do světlého režimu",
@@ -4192,7 +4193,8 @@
         "admin_contact_short": "Kontaktujte <a>administrátora serveru</a>.",
         "non_urgent_echo_failure_toast": "Váš server neodpovídá na některé <a>požadavky</a>.",
         "failed_copy": "Nepodařilo se zkopírovat",
-        "something_went_wrong": "Něco se nepodařilo!"
+        "something_went_wrong": "Něco se nepodařilo!",
+        "download_media": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa"
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {

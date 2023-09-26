@@ -1100,8 +1100,6 @@
     "Show all rooms": "Mostrar todas as salas",
     "You can change these anytime.": "Você pode mudá-los a qualquer instante.",
     "Address": "Endereço",
-    "Connecting": "Conectando",
-    "unknown person": "pessoa desconhecida",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
     "Allow people to preview your space before they join.": "Permite que pessoas vejam seu espaço antes de entrarem.",
@@ -1189,7 +1187,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "Search %(spaceName)s": "Pesquisar %(spaceName)s",
     "Show %(count)s other previews": {
         "one": "Exibir a %(count)s outra prévia",
         "other": "Exibir as %(count)s outras prévias"
@@ -1300,10 +1297,6 @@
         "other": "Visto por %(count)s pessoas"
     },
     "Remove messages sent by me": "",
-    "%(count)s people joined": {
-        "one": "%(count)s pessoa entrou",
-        "other": "%(count)s pessoas entraram"
-    },
     "Text": "Texto",
     "Edit link": "Editar ligação",
     "Copy link to thread": "Copiar ligação para o tópico",
@@ -1399,7 +1392,7 @@
         "deselect_all": "Desmarcar todos",
         "select_all": "Selecionar tudo",
         "copied": "Copiado!",
-        "Advanced": "Avançado"
+        "advanced": "Avançado"
     },
     "action": {
         "continue": "Continuar",
@@ -2444,7 +2437,13 @@
         "more_button": "Mais",
         "screenshare_monitor": "Compartilhe a tela inteira",
         "screenshare_window": "Janela da aplicação",
-        "screenshare_title": "Compatilhe conteúdo"
+        "screenshare_title": "Compatilhe conteúdo",
+        "n_people_joined": {
+            "one": "%(count)s pessoa entrou",
+            "other": "%(count)s pessoas entraram"
+        },
+        "unknown_person": "pessoa desconhecida",
+        "connecting": "Conectando"
     },
     "Other": "Outros",
     "room_settings": {
@@ -2918,7 +2917,8 @@
         "context_menu": {
             "explore": "Explorar salas"
         },
-        "share_public": "Compartilhar o seu espaço público"
+        "share_public": "Compartilhar o seu espaço público",
+        "search_children": "Pesquisar %(spaceName)s"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -2958,7 +2958,6 @@
     },
     "create_space": {
         "name_required": "Por favor entre o nome do espaço",
-        "name_placeholder": "e.g. meu-espaco",
         "public_description": "Abra espaços para todos, especialmente para comunidades",
         "private_description": "Somente convite, melhor para si mesmo(a) ou para equipes",
         "public_heading": "O seu espaço público",
@@ -2966,7 +2965,10 @@
         "add_details_prompt": "Adicione alguns detalhes para ajudar as pessoas a reconhecê-lo.",
         "failed_create_initial_rooms": "Falha ao criar salas de espaço iniciais",
         "skip_action": "Ignorar por enquanto",
-        "invite_teammates_by_username": "Convidar por nome de usuário"
+        "invite_teammates_by_username": "Convidar por nome de usuário",
+        "address_placeholder": "e.g. meu-espaco",
+        "address_label": "Endereço",
+        "label": "Criar um espaço"
     },
     "user_menu": {
         "switch_theme_light": "Alternar para o modo claro",

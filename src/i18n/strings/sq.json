@@ -1093,7 +1093,6 @@
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
     },
-    "unknown person": "person i panjohur",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Jeni i vetmi person këtu. Nëse e braktisni, askush s’do të jetë në gjendje të hyjë në të ardhmen, përfshi ju.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Nëse riktheni gjithçka te parazgjedhjet, do të rifilloni pa sesione të besuara, pa përdorues të besuar, dhe mund të mos jeni në gjendje të shihni mesazhe të dikurshëm.",
     "Only do this if you have no other device to complete verification with.": "Bëjeni këtë vetëm nëse s’keni pajisje tjetër me të cilën të plotësoni verifikimin.",
@@ -1130,7 +1129,6 @@
     "No microphone found": "S’u gjet mikrofon",
     "We were unable to access your microphone. Please check your browser settings and try again.": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
     "Unable to access your microphone": "S’arrihet të përdoret mikrofoni juaj",
-    "Connecting": "Po lidhet",
     "Currently joining %(count)s rooms": {
         "one": "Aktualisht duke hyrë në %(count)s dhomë",
         "other": "Aktualisht duke hyrë në %(count)s dhoma"
@@ -1223,7 +1221,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jeni përgjegjësi i vetëm i kësaj hapësire. Braktisja e saj do të thotë se askush s’ka kontroll mbi të.",
     "You won't be able to rejoin unless you are re-invited.": "S’do të jeni në gjendje të rihyni, para se të riftoheni.",
-    "Search %(spaceName)s": "Kërko te %(spaceName)s",
     "Want to add an existing space instead?": "Në vend të kësaj, mos dëshironi të shtoni një hapësirë ekzistuese?",
     "Private space (invite only)": "Hapësirë private (vetëm me ftesa)",
     "Space visibility": "Dukshmëri hapësire",
@@ -1532,10 +1529,6 @@
     "%(members)s and more": "%(members)s dhe më tepër",
     "Deactivating your account is a permanent action — be careful!": "Çaktivizimi i llogarisë tuaj është një veprim i pakthyeshëm - hapni sytë!",
     "Your password was successfully changed.": "Fjalëkalimi juaj u ndryshua me sukses.",
-    "%(count)s people joined": {
-        "one": "Hyri %(count)s person",
-        "other": "Hynë %(count)s vetë"
-    },
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Nëse doni ta mbani mundësinë e përdorimit të historikut të fjalosjeve tuaja në dhoma të fshehtëzuara, ujdisni Kopjeruajtje Kyçesh, ose eksportoni kyçet tuaj të mesazheve prej një nga pajisjet tuaja të tjera, para se të ecni më tej.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Dalja nga pajisjet tuaja do të fshijë kyçet e fshehtëzimit të mesazheve të ruajtur në to, duke e bërë të palexueshëm historikun e mesazheve të fshehtëzuar.",
@@ -1583,10 +1576,6 @@
     "Close call": "Mbylli krejt",
     "Spotlight": "Projektor",
     "Freedom": "Liri",
-    "You do not have permission to start voice calls": "S’keni leje të nisni thirrje me zë",
-    "There's no one here to call": "Këtu s’ka kënd që të thirret",
-    "You do not have permission to start video calls": "S’keni leje të nisni thirrje me video",
-    "Ongoing call": "Thirrje në kryerje e sipër",
     "Video call (Jitsi)": "Thirrje me video (Jitsi)",
     "Show formatting": "Shfaq formatim",
     "Call type": "Lloj thirrjeje",
@@ -1713,7 +1702,6 @@
     "Error changing password": "Gabim në ndryshim fjalëkalimi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (gjendje HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Gabim i panjohur ndryshimi fjalëkalimi (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
     "You do not have permission to invite users": "S’keni leje të ftoni përdorues",
@@ -1816,7 +1804,7 @@
         "deselect_all": "Shpërzgjidhi krejt",
         "select_all": "Përzgjidhi krejt",
         "copied": "U kopjua!",
-        "Advanced": "Të mëtejshme"
+        "advanced": "Të mëtejshme"
     },
     "action": {
         "continue": "Vazhdo",
@@ -3221,7 +3209,17 @@
         "more_button": "Më tepër",
         "screenshare_monitor": "Nda krejt ekranin",
         "screenshare_window": "Dritare aplikacioni",
-        "screenshare_title": "Ndani lëndë"
+        "screenshare_title": "Ndani lëndë",
+        "disabled_no_perms_start_voice_call": "S’keni leje të nisni thirrje me zë",
+        "disabled_no_perms_start_video_call": "S’keni leje të nisni thirrje me video",
+        "disabled_ongoing_call": "Thirrje në kryerje e sipër",
+        "disabled_no_one_here": "Këtu s’ka kënd që të thirret",
+        "n_people_joined": {
+            "one": "Hyri %(count)s person",
+            "other": "Hynë %(count)s vetë"
+        },
+        "unknown_person": "person i panjohur",
+        "connecting": "Po lidhet"
     },
     "Other": "Tjetër",
     "room_settings": {
@@ -3812,7 +3810,8 @@
             "explore": "Eksploroni dhoma",
             "manage_and_explore": "Administroni & eksploroni dhoma"
         },
-        "share_public": "Ndani me të tjerët hapësirën tuaj publike"
+        "share_public": "Ndani me të tjerët hapësirën tuaj publike",
+        "search_children": "Kërko te %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -3870,7 +3869,6 @@
     },
     "create_space": {
         "name_required": "Ju lutemi, jepni një emër për hapësirën",
-        "name_placeholder": "p.sh., hapësira-ime",
         "explainer": "Hapësirat janë një mënyrë e re grupimi dhomash dhe njerëzish. Ç’lloj Hapësire doni të krijoni? Këtë mund ta ndryshoni më vonë.",
         "public_description": "Hapësirë e hapët për këdo, më e mira për bashkësi",
         "private_description": "Vetëm me ftesa, më e mira për ju dhe ekipe",
@@ -3901,7 +3899,10 @@
         "setup_rooms_community_description": "Le të krijojmë një dhomë për secilën prej tyre.",
         "setup_rooms_description": "Mund të shtoni edhe të tjera më vonë, përfshi ato ekzistueset tashmë.",
         "setup_rooms_private_heading": "Me cilat projekte po merret ekipi juaj?",
-        "setup_rooms_private_description": "Do të krijojmë dhoma për çdo prej tyre."
+        "setup_rooms_private_description": "Do të krijojmë dhoma për çdo prej tyre.",
+        "address_placeholder": "p.sh., hapësira-ime",
+        "address_label": "Adresë",
+        "label": "Krijoni një hapësirë"
     },
     "user_menu": {
         "switch_theme_light": "Kalo nën mënyrën e çelët",
@@ -4080,7 +4081,8 @@
         "admin_contact_short": "Lidhuni me <a>përgjegjësin e shërbyesit tuaj</a>.",
         "non_urgent_echo_failure_toast": "Shërbyesi juaj s’po u përgjigjet ca <a>kërkesave</a>.",
         "failed_copy": "S’u arrit të kopjohej",
-        "something_went_wrong": "Diçka shkoi ters!"
+        "something_went_wrong": "Diçka shkoi ters!",
+        "download_media": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi"
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {

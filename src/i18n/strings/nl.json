@@ -1096,7 +1096,6 @@
         "one": "%(count)s persoon die je kent is al geregistreerd",
         "other": "%(count)s personen die je kent hebben zich al geregistreerd"
     },
-    "unknown person": "onbekend persoon",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Je bent de enige persoon hier. Als je weggaat, zal niemand in de toekomst kunnen toetreden, jij ook niet.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Als u alles reset zult u opnieuw opstarten zonder vertrouwde sessies, zonder vertrouwde personen, en zult u misschien geen oude berichten meer kunnen zien.",
     "Only do this if you have no other device to complete verification with.": "Doe dit alleen als u geen ander apparaat hebt om de verificatie mee uit te voeren.",
@@ -1129,7 +1128,6 @@
     "No microphone found": "Geen microfoon gevonden",
     "We were unable to access your microphone. Please check your browser settings and try again.": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
     "Unable to access your microphone": "Geen toegang tot je microfoon",
-    "Connecting": "Verbinden",
     "Search names and descriptions": "In namen en omschrijvingen zoeken",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
@@ -1227,7 +1225,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Je bent de enige beheerder van sommige kamers of Spaces die je wil verlaten. Door deze te verlaten hebben ze geen beheerder meer.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Je bent de enige beheerder van deze Space. Door het te verlaten zal er niemand meer controle over hebben.",
     "You won't be able to rejoin unless you are re-invited.": "Je kan niet opnieuw deelnemen behalve als je opnieuw wordt uitgenodigd.",
-    "Search %(spaceName)s": "Zoek %(spaceName)s",
     "Want to add an existing space instead?": "Een bestaande Space toevoegen?",
     "Private space (invite only)": "Privé Space (alleen op uitnodiging)",
     "Space visibility": "Space zichtbaarheid",
@@ -1524,10 +1521,6 @@
     "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
     "Joining…": "Deelnemen…",
     "Read receipts": "Leesbevestigingen",
-    "%(count)s people joined": {
-        "one": "%(count)s persoon toegetreden",
-        "other": "%(count)s mensen toegetreden"
-    },
     "Deactivating your account is a permanent action — be careful!": "Het deactiveren van je account is een permanente actie - wees voorzichtig!",
     "Remove search filter for %(filter)s": "Verwijder zoekfilter voor %(filter)s",
     "Start a group chat": "Start een groepsgesprek",
@@ -1594,10 +1587,6 @@
     "Close call": "Sluit oproep",
     "Spotlight": "Schijnwerper",
     "Freedom": "Vrijheid",
-    "You do not have permission to start voice calls": "U heeft geen toestemming om spraakoproepen te starten",
-    "There's no one here to call": "Er is hier niemand om te bellen",
-    "You do not have permission to start video calls": "U heeft geen toestemming om videogesprekken te starten",
-    "Ongoing call": "Lopende oproep",
     "Video call (%(brand)s)": "Videogesprek (%(brand)s)",
     "Video call (Jitsi)": "Videogesprek (Jitsi)",
     "Show formatting": "Opmaak tonen",
@@ -1703,7 +1692,7 @@
         "deselect_all": "Allemaal deselecteren",
         "select_all": "Allemaal selecteren",
         "copied": "Gekopieerd!",
-        "Advanced": "Geavanceerd"
+        "advanced": "Geavanceerd"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2990,7 +2979,17 @@
         "more_button": "Meer",
         "screenshare_monitor": "Deel je gehele scherm",
         "screenshare_window": "Deel een app",
-        "screenshare_title": "Deel inhoud"
+        "screenshare_title": "Deel inhoud",
+        "disabled_no_perms_start_voice_call": "U heeft geen toestemming om spraakoproepen te starten",
+        "disabled_no_perms_start_video_call": "U heeft geen toestemming om videogesprekken te starten",
+        "disabled_ongoing_call": "Lopende oproep",
+        "disabled_no_one_here": "Er is hier niemand om te bellen",
+        "n_people_joined": {
+            "one": "%(count)s persoon toegetreden",
+            "other": "%(count)s mensen toegetreden"
+        },
+        "unknown_person": "onbekend persoon",
+        "connecting": "Verbinden"
     },
     "Other": "Overige",
     "room_settings": {
@@ -3537,7 +3536,8 @@
             "explore": "Kamers ontdekken",
             "manage_and_explore": "Beheer & ontdek kamers"
         },
-        "share_public": "Deel jouw publieke space"
+        "share_public": "Deel jouw publieke space",
+        "search_children": "Zoek %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3595,7 +3595,6 @@
     },
     "create_space": {
         "name_required": "Vul een naam in voor deze space",
-        "name_placeholder": "v.b. mijn-Space",
         "explainer": "Spaces zijn een nieuwe manier om kamers en mensen te groeperen. Wat voor ruimte wil je aanmaken? Je kan dit later wijzigen.",
         "public_description": "Publieke space voor iedereen, geschikt voor gemeenschappen",
         "private_description": "Alleen op uitnodiging, geschikt voor jezelf of teams",
@@ -3624,7 +3623,10 @@
         "setup_rooms_community_description": "Laten we voor elk een los kamer maken.",
         "setup_rooms_description": "Je kan er later nog meer toevoegen, inclusief al bestaande kamers.",
         "setup_rooms_private_heading": "Aan welke projecten werkt jouw team?",
-        "setup_rooms_private_description": "We zullen kamers voor elk van hen maken."
+        "setup_rooms_private_description": "We zullen kamers voor elk van hen maken.",
+        "address_placeholder": "v.b. mijn-Space",
+        "address_label": "Adres",
+        "label": "Space maken"
     },
     "user_menu": {
         "switch_theme_light": "Naar lichte modus wisselen",

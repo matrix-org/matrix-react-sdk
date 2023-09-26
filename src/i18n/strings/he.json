@@ -1072,8 +1072,6 @@
     "Show all rooms": "הצג את כל החדרים",
     "Create a space": "צור מרחב עבודה",
     "Address": "כתובת",
-    "Connecting": "מקשר",
-    "unknown person": "אדם לא ידוע",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
@@ -1193,7 +1191,6 @@
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
-    "Search %(spaceName)s": "חיפוש %(spaceName)s",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sו%(count)sאחרים",
         "other": "%(spaceName)sו%(count)s אחרים"
@@ -1312,7 +1309,7 @@
         "deselect_all": "הסר סימון מהכל",
         "select_all": "בחר הכל",
         "copied": "הועתק!",
-        "Advanced": "מתקדם"
+        "advanced": "מתקדם"
     },
     "action": {
         "continue": "המשך",
@@ -2303,7 +2300,9 @@
         "hide_sidebar_button": "הסתר סרגל צד",
         "show_sidebar_button": "הצג סרגל צד",
         "more_button": "יותר",
-        "screenshare_window": "חלון אפליקציה"
+        "screenshare_window": "חלון אפליקציה",
+        "unknown_person": "אדם לא ידוע",
+        "connecting": "מקשר"
     },
     "Other": "אחר",
     "room_settings": {
@@ -2769,7 +2768,8 @@
         "context_menu": {
             "explore": "גלה חדרים"
         },
-        "share_public": "שתף את מרחב העבודה הציבורי שלך"
+        "share_public": "שתף את מרחב העבודה הציבורי שלך",
+        "search_children": "חיפוש %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotReachable": "שרת בית זה אינו מוגדר כהלכה להצגת מפות, או ששרת המפות המוגדר אינו ניתן לגישה.",
@@ -2816,7 +2816,6 @@
     },
     "create_space": {
         "name_required": "נא הגדירו שם עבור מרחב העבודה",
-        "name_placeholder": "לדוגמא מרחב העבודה שלי",
         "explainer": "מרחבי עבודה הם דרך חדשה לקבץ חדרים ואנשים. איזה סוג של מרחב עבודה אתם רוצים ליצור? תוכלו לשנות זאת מאוחר יותר.",
         "public_description": "מרחב עבודה פתוח לכולם, מיועד לקהילות",
         "public_heading": "מרחב העבודה הציבורי שלך",
@@ -2843,7 +2842,10 @@
         "setup_rooms_community_description": "בואו ניצור חדר לכל אחד מהם.",
         "setup_rooms_description": "אתם יכולים להוסיף עוד מאוחר יותר, כולל אלה שכבר קיימים.",
         "setup_rooms_private_heading": "על אילו פרויקטים הצוות שלכם עובד?",
-        "setup_rooms_private_description": "ניצור חדרים לכל אחד מהם."
+        "setup_rooms_private_description": "ניצור חדרים לכל אחד מהם.",
+        "address_placeholder": "לדוגמא מרחב העבודה שלי",
+        "address_label": "כתובת",
+        "label": "צור מרחב עבודה"
     },
     "user_menu": {
         "switch_theme_light": "שנה למצב בהיר",

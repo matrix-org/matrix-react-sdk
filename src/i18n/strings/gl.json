@@ -1090,7 +1090,6 @@
     "You most likely do not want to reset your event index store": "Probablemente non queiras restablecer o índice de almacenaxe do evento",
     "Avatar": "Avatar",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifica a túa identidade para acceder a mensaxes cifradas e acreditar a túa identidade ante outras.",
-    "unknown person": "persoa descoñecida",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persoas que coñeces xa se uniron",
         "one": "%(count)s persoa que coñeces xa se uniu"
@@ -1130,7 +1129,6 @@
     "No microphone found": "Non atopamos ningún micrófono",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
     "Unable to access your microphone": "Non se puido acceder ao micrófono",
-    "Connecting": "Conectando",
     "Search names and descriptions": "Buscar nome e descricións",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
@@ -1240,7 +1238,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Es a única administradora dalgunhas salas ou espazos dos que queres saír. Ao saír deles deixaralos sen administración.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
     "You won't be able to rejoin unless you are re-invited.": "Non poderás volver a unirte se non te volven a convidar.",
-    "Search %(spaceName)s": "Buscar %(spaceName)s",
     "Decrypting": "Descifrando",
     "Show all rooms": "Mostar tódalas salas",
     "Missed call": "Chamada perdida",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
     "Joining…": "Entrando…",
-    "%(count)s people joined": {
-        "one": "uníuse %(count)s persoa",
-        "other": "%(count)s persoas uníronse"
-    },
     "Read receipts": "Resgados de lectura",
     "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
@@ -1663,7 +1656,7 @@
         "deselect_all": "Retirar selección a todos",
         "select_all": "Seleccionar todos",
         "copied": "Copiado!",
-        "Advanced": "Avanzado"
+        "advanced": "Avanzado"
     },
     "action": {
         "continue": "Continuar",
@@ -2917,7 +2910,13 @@
         "more_button": "Máis",
         "screenshare_monitor": "Compartir pantalla completa",
         "screenshare_window": "Ventá da aplicación",
-        "screenshare_title": "Compartir contido"
+        "screenshare_title": "Compartir contido",
+        "n_people_joined": {
+            "one": "uníuse %(count)s persoa",
+            "other": "%(count)s persoas uníronse"
+        },
+        "unknown_person": "persoa descoñecida",
+        "connecting": "Conectando"
     },
     "Other": "Outro",
     "room_settings": {
@@ -3447,7 +3446,8 @@
             "explore": "Explorar salas",
             "manage_and_explore": "Xestionar e explorar salas"
         },
-        "share_public": "Comparte o teu espazo público"
+        "share_public": "Comparte o teu espazo público",
+        "search_children": "Buscar %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3505,7 +3505,6 @@
     },
     "create_space": {
         "name_required": "Escribe un nome para o espazo",
-        "name_placeholder": "ex. o-meu-espazo",
         "explainer": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
         "public_description": "Espazo aberto para calquera, mellor para comunidades",
         "private_description": "Só con convite, mellor para ti ou para equipos",
@@ -3534,7 +3533,10 @@
         "setup_rooms_community_description": "Crea unha sala para cada un deles.",
         "setup_rooms_description": "Podes engadir máis posteriormente, incluíndo os xa existentes.",
         "setup_rooms_private_heading": "En que proxectos está a traballar o teu equipo?",
-        "setup_rooms_private_description": "Imos crear salas para cada un deles."
+        "setup_rooms_private_description": "Imos crear salas para cada un deles.",
+        "address_placeholder": "ex. o-meu-espazo",
+        "address_label": "Enderezo",
+        "label": "Crear un espazo"
     },
     "user_menu": {
         "switch_theme_light": "Cambiar a decorado claro",

@@ -1089,7 +1089,6 @@
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
     },
     "Space options": "Space-Optionen",
-    "unknown person": "unbekannte Person",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
     "Consult first": "Zuerst Anfragen",
@@ -1129,7 +1128,6 @@
     "No microphone found": "Kein Mikrofon gefunden",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Fehler beim Zugriff auf dein Mikrofon. Überprüfe deine Browsereinstellungen und versuche es nochmal.",
     "Unable to access your microphone": "Fehler beim Zugriff auf Mikrofon",
-    "Connecting": "Verbinden",
     "Search names and descriptions": "Nach Name und Beschreibung filtern",
     "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
     "Add reaction": "Reaktion hinzufügen",
@@ -1231,7 +1229,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Du bist der einzige Admin einiger Räume oder Spaces, die du verlassen willst. Dadurch werden diese keine Admins mehr haben.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Du bist der letzte Admin in diesem Space. Wenn du ihn jetzt verlässt, hat niemand mehr die Kontrolle über ihn.",
     "You won't be able to rejoin unless you are re-invited.": "Das Betreten wird dir ohne erneute Einladung nicht möglich sein.",
-    "Search %(spaceName)s": "%(spaceName)s durchsuchen",
     "Want to add an existing space instead?": "Willst du einen existierenden Space hinzufügen?",
     "Only people invited will be able to find and join this space.": "Nur eingeladene Personen können diesen Space sehen und betreten.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Finden und Betreten ist allen, nicht nur Mitgliedern von <SpaceName/>, möglich.",
@@ -1504,10 +1501,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server von dessen Administration gesperrt wurde. Bitte <a>kontaktiere deine Dienstadministration</a>, um den Dienst weiterzunutzen.",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "%(count)s people joined": {
-        "one": "%(count)s Person beigetreten",
-        "other": "%(count)s Personen beigetreten"
-    },
     "Video room": "Videoraum",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Add new server…": "Neuen Server hinzufügen …",
@@ -1569,10 +1562,6 @@
     "Join the room to participate": "Betrete den Raum, um teilzunehmen",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s oder %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
-    "There's no one here to call": "Hier ist niemand zum Anrufen",
-    "You do not have permission to start voice calls": "Dir fehlt die Berechtigung, um Audioanrufe zu beginnen",
-    "You do not have permission to start video calls": "Dir fehlt die Berechtigung, um Videoanrufe zu beginnen",
-    "Ongoing call": "laufender Anruf",
     "Video call (Jitsi)": "Videoanruf (Jitsi)",
     "Failed to set pusher state": "Konfigurieren des Push-Dienstes fehlgeschlagen",
     "Video call ended": "Videoanruf beendet",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Fehler während der Passwortänderung",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-Status %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Unbekannter Fehler während der Passwortänderung (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "You do not have permission to invite users": "Du bist nicht berechtigt, Benutzer einzuladen",
@@ -1868,7 +1856,7 @@
         "deselect_all": "Alle abwählen",
         "select_all": "Alle auswählen",
         "copied": "Kopiert!",
-        "Advanced": "Erweitert"
+        "advanced": "Erweitert"
     },
     "action": {
         "continue": "Fortfahren",
@@ -3316,7 +3304,17 @@
         "more_button": "Mehr",
         "screenshare_monitor": "Vollständigen Bildschirm teilen",
         "screenshare_window": "Anwendungsfenster",
-        "screenshare_title": "Inhalt teilen"
+        "screenshare_title": "Inhalt teilen",
+        "disabled_no_perms_start_voice_call": "Dir fehlt die Berechtigung, um Audioanrufe zu beginnen",
+        "disabled_no_perms_start_video_call": "Dir fehlt die Berechtigung, um Videoanrufe zu beginnen",
+        "disabled_ongoing_call": "laufender Anruf",
+        "disabled_no_one_here": "Hier ist niemand zum Anrufen",
+        "n_people_joined": {
+            "one": "%(count)s Person beigetreten",
+            "other": "%(count)s Personen beigetreten"
+        },
+        "unknown_person": "unbekannte Person",
+        "connecting": "Verbinden"
     },
     "Other": "Sonstiges",
     "room_settings": {
@@ -3916,7 +3914,8 @@
             "explore": "Räume erkunden",
             "manage_and_explore": "Räume erkunden und verwalten"
         },
-        "share_public": "Teile deinen öffentlichen Space mit der Welt"
+        "share_public": "Teile deinen öffentlichen Space mit der Welt",
+        "search_children": "%(spaceName)s durchsuchen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -3976,7 +3975,6 @@
     },
     "create_space": {
         "name_required": "Gib den Namen des Spaces ein",
-        "name_placeholder": "z. B. mein-space",
         "explainer": "Spaces sind eine neue Möglichkeit, Räume und Personen zu gruppieren. Welche Art von Space willst du erstellen? Du kannst dies später ändern.",
         "public_description": "Öffne den Space für alle - am besten für Communities",
         "private_description": "Nur für Eingeladene – optimal für dich selbst oder Teams",
@@ -4007,7 +4005,10 @@
         "setup_rooms_community_description": "Lass uns für jedes einen Raum erstellen.",
         "setup_rooms_description": "Du kannst später weitere hinzufügen, auch bereits bestehende.",
         "setup_rooms_private_heading": "Welche Projekte bearbeitet euer Team?",
-        "setup_rooms_private_description": "Wir werden für jedes einen Raum erstellen."
+        "setup_rooms_private_description": "Wir werden für jedes einen Raum erstellen.",
+        "address_placeholder": "z. B. mein-space",
+        "address_label": "Adresse",
+        "label": "Neuen Space erstellen"
     },
     "user_menu": {
         "switch_theme_light": "Zum hellen Thema wechseln",
@@ -4192,7 +4193,8 @@
         "admin_contact_short": "Kontaktiere deine <a>Heim-Server-Administration</a>.",
         "non_urgent_echo_failure_toast": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
         "failed_copy": "Kopieren fehlgeschlagen",
-        "something_went_wrong": "Etwas ist schiefgelaufen!"
+        "something_went_wrong": "Etwas ist schiefgelaufen!",
+        "download_media": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde"
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {

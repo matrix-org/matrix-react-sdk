@@ -1097,7 +1097,6 @@
         "one": "%(count)s ismerős már csatlakozott",
         "other": "%(count)s ismerős már csatlakozott"
     },
-    "unknown person": "ismeretlen személy",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Csak ön van itt. Ha kilép, akkor a jövőben senki nem tud majd ide belépni, beleértve önt is.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Ha mindent alaphelyzetbe állít, akkor nem lesz megbízható munkamenete, nem lesznek megbízható felhasználók és a régi üzenetekhez sem biztos, hogy hozzáfér majd.",
     "Only do this if you have no other device to complete verification with.": "Csak akkor tegye meg, ha egyetlen másik eszköze sincs az ellenőrzés elvégzéséhez.",
@@ -1130,7 +1129,6 @@
     "No microphone found": "Nem található mikrofon",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
     "Unable to access your microphone": "A mikrofont nem lehet használni",
-    "Connecting": "Kapcsolódás",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "Add reaction": "Reakció hozzáadása",
     "Search names and descriptions": "Nevek és leírások keresése",
@@ -1240,7 +1238,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ön az adminisztrátora néhány szobának vagy térnek amiből ki szeretne lépni. Ha kilép belőlük akkor azok adminisztrátor nélkül maradnak.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ön az egyetlen adminisztrátora a térnek. Ha kilép, senki nem tudja irányítani.",
     "You won't be able to rejoin unless you are re-invited.": "Nem fog tudni újra belépni amíg nem hívják meg újra.",
-    "Search %(spaceName)s": "Keresés: %(spaceName)s",
     "Decrypting": "Visszafejtés",
     "Missed call": "Nem fogadott hívás",
     "Call declined": "Hívás elutasítva",
@@ -1523,10 +1520,6 @@
     "Show Labs settings": "Labor beállítások megjelenítése",
     "To join, please enable video rooms in Labs first": "A belépéshez a Laborban be kell kapcsolni a videó szobákat",
     "To view, please enable video rooms in Labs first": "A megjelenítéshez a Laborban be kell kapcsolni a videó szobákat",
-    "%(count)s people joined": {
-        "one": "%(count)s személy belépett",
-        "other": "%(count)s személy belépett"
-    },
     "Read receipts": "Olvasási visszajelzés",
     "Deactivating your account is a permanent action — be careful!": "A fiók felfüggesztése végleges — legyen óvatos!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
@@ -1571,10 +1564,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
     "Video call ended": "Videó hívás befejeződött",
     "%(name)s started a video call": "%(name)s videóhívást indított",
-    "You do not have permission to start voice calls": "Nincs jogosultságod hang hívást indítani",
-    "There's no one here to call": "Itt nincs senki akit fel lehetne hívni",
-    "You do not have permission to start video calls": "Nincs jogosultságod videó hívást indítani",
-    "Ongoing call": "Hívás folyamatban",
     "Video call (Jitsi)": "Videóhívás (Jitsi)",
     "Failed to set pusher state": "A leküldő állapotának beállítása sikertelen",
     "Room info": "Szoba információ",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Hiba a jelszó módosítása során",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP állapot: %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Ismeretlen jelszómódosítási hiba (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
     "common": {
         "about": "Névjegy",
         "analytics": "Analitika",
@@ -1815,7 +1803,7 @@
         "deselect_all": "Semmit nem jelöl ki",
         "select_all": "Mindet kijelöli",
         "copied": "Másolva!",
-        "Advanced": "Speciális"
+        "advanced": "Speciális"
     },
     "action": {
         "continue": "Folytatás",
@@ -3228,7 +3216,17 @@
         "more_button": "Több",
         "screenshare_monitor": "A teljes képernyő megosztása",
         "screenshare_window": "Alkalmazásablak",
-        "screenshare_title": "Tartalom megosztása"
+        "screenshare_title": "Tartalom megosztása",
+        "disabled_no_perms_start_voice_call": "Nincs jogosultságod hang hívást indítani",
+        "disabled_no_perms_start_video_call": "Nincs jogosultságod videó hívást indítani",
+        "disabled_ongoing_call": "Hívás folyamatban",
+        "disabled_no_one_here": "Itt nincs senki akit fel lehetne hívni",
+        "n_people_joined": {
+            "one": "%(count)s személy belépett",
+            "other": "%(count)s személy belépett"
+        },
+        "unknown_person": "ismeretlen személy",
+        "connecting": "Kapcsolódás"
     },
     "Other": "Egyéb",
     "room_settings": {
@@ -3821,7 +3819,8 @@
             "explore": "Szobák felderítése",
             "manage_and_explore": "Szobák kezelése és felderítése"
         },
-        "share_public": "Nyilvános tér megosztása"
+        "share_public": "Nyilvános tér megosztása",
+        "search_children": "Keresés: %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -3881,7 +3880,6 @@
     },
     "create_space": {
         "name_required": "Adjon meg egy nevet a térhez",
-        "name_placeholder": "például sajat-ter",
         "explainer": "A terek a szobák és emberek csoportosításának új módja. Milyen teret szeretne létrehozni? Később megváltoztathatja.",
         "public_description": "Mindenki számára nyílt tér, a közösségek számára ideális",
         "private_description": "Csak meghívóval, saját célra és csoportok számára ideális",
@@ -3912,7 +3910,10 @@
         "setup_rooms_community_description": "Készítsünk szobát mindhez.",
         "setup_rooms_description": "Később is hozzáadhat többet, beleértve meglévőket is.",
         "setup_rooms_private_heading": "Milyen projekteken dolgozik a csoportja?",
-        "setup_rooms_private_description": "Mindenhez készítünk egy szobát."
+        "setup_rooms_private_description": "Mindenhez készítünk egy szobát.",
+        "address_placeholder": "például sajat-ter",
+        "address_label": "Cím",
+        "label": "Tér létrehozása"
     },
     "user_menu": {
         "switch_theme_light": "Világos módra váltás",
@@ -4091,7 +4092,8 @@
         "admin_contact_short": "Vegye fel a kapcsolatot a <a>kiszolgáló rendszergazdájával</a>.",
         "non_urgent_echo_failure_toast": "A kiszolgálója nem válaszol néhány <a>kérésre</a>.",
         "failed_copy": "Sikertelen másolás",
-        "something_went_wrong": "Valami rosszul sikerült."
+        "something_went_wrong": "Valami rosszul sikerült.",
+        "download_media": "A forrásmédia letöltése sikertelen, nem található forráswebcím"
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {

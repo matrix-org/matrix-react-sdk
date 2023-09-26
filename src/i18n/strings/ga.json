@@ -357,7 +357,6 @@
     "Visibility": "Léargas",
     "Address": "Seoladh",
     "Sent": "Seolta",
-    "Connecting": "Ag Ceangal",
     "Sending": "Ag Seoladh",
     "Avatar": "Abhatár",
     "Unnamed room": "Seomra gan ainm",
@@ -454,7 +453,7 @@
         "on": "Ar siúl",
         "off": "Múchta",
         "copied": "Cóipeáilte!",
-        "Advanced": "Forbartha"
+        "advanced": "Forbartha"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -717,7 +716,8 @@
         "default_device": "Gléas Réamhshocraithe",
         "no_media_perms_title": "Gan cheadanna meáin",
         "join_button_tooltip_connecting": "Ag Ceangal",
-        "more_button": "Níos mó"
+        "more_button": "Níos mó",
+        "connecting": "Ag Ceangal"
     },
     "Other": "Eile",
     "room_settings": {
@@ -885,5 +885,8 @@
     },
     "quick_settings": {
         "all_settings": "Gach Socrú"
+    },
+    "create_space": {
+        "address_label": "Seoladh"
     }
 }

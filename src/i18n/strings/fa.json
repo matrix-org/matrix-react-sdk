@@ -967,8 +967,6 @@
     "Cat": "گربه",
     "Dog": "سگ",
     "Dial pad": "صفحه شماره‌گیری",
-    "Connecting": "در حال اتصال",
-    "unknown person": "فرد ناشناس",
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "This event could not be displayed": "امکان نمایش این رخداد وجود ندارد",
     "Edit message": "ویرایش پیام",
@@ -1236,7 +1234,7 @@
         "off": "خاموش",
         "all_rooms": "همه اتاق‌ها",
         "copied": "رونوشت گرفته شد!",
-        "Advanced": "پیشرفته"
+        "advanced": "پیشرفته"
     },
     "action": {
         "continue": "ادامه",
@@ -2150,7 +2148,9 @@
         "call_toast_unknown_room": "اتاق ناشناس",
         "join_button_tooltip_connecting": "در حال اتصال",
         "hide_sidebar_button": "پنهان سازی نوار کناری",
-        "show_sidebar_button": "نمایش نوار کناری"
+        "show_sidebar_button": "نمایش نوار کناری",
+        "unknown_person": "فرد ناشناس",
+        "connecting": "در حال اتصال"
     },
     "Other": "دیگر",
     "room_settings": {
@@ -2689,7 +2689,8 @@
         "invite_teammates_by_username": "دعوت به نام کاربری",
         "setup_rooms_community_heading": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
         "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
-        "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود."
+        "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود.",
+        "label": "ساختن یک محیط"
     },
     "user_menu": {
         "switch_theme_light": "انتخاب حالت روشن",

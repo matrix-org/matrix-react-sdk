@@ -1084,7 +1084,6 @@
     "<inviter/> invites you": "<inviter/> saatis sulle kutse",
     "Public space": "Avalik kogukonnakeskus",
     "Private space": "Privaatne kogukonnakeskus",
-    "unknown person": "tundmatu isik",
     "Add existing rooms": "Lisa olemasolevaid jututubasid",
     "%(count)s people you know have already joined": {
         "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
@@ -1130,7 +1129,6 @@
     "No microphone found": "Mikrofoni ei leidu",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Meil puudub ligipääs sinu mikrofonile. Palun kontrolli oma veebibrauseri seadistusi ja proovi uuesti.",
     "Unable to access your microphone": "Puudub ligipääs mikrofonile",
-    "Connecting": "Kõne on ühendamisel",
     "Search names and descriptions": "Otsi nimede ja kirjelduste seast",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
@@ -1208,7 +1206,6 @@
     "Leave %(spaceName)s": "Lahku %(spaceName)s kogukonnakeskusest",
     "Decrypting": "Dekrüptin sisu",
     "Show all rooms": "Näita kõiki jututubasid",
-    "Search %(spaceName)s": "Otsi %(spaceName)s kogukonnast",
     "You won't be able to rejoin unless you are re-invited.": "Ilma uue kutseta sa ei saa uuesti liituda.",
     "Want to add a new space instead?": "Kas sa selle asemel soovid lisada uut kogukonnakeskust?",
     "Create a new space": "Loo uus kogukonnakeskus",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
     "Unread email icon": "Lugemata e-kirja ikoon",
     "Joining…": "Liitun…",
-    "%(count)s people joined": {
-        "other": "%(count)s osalejat liitus",
-        "one": "%(count)s osaleja liitus"
-    },
     "Read receipts": "Lugemisteatised",
     "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa.",
@@ -1571,10 +1564,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
     "Video call ended": "Videokõne on lõppenud",
     "%(name)s started a video call": "%(name)s algatas videokõne",
-    "You do not have permission to start video calls": "Sul ei ole piisavalt õigusi videokõne alustamiseks",
-    "You do not have permission to start voice calls": "Sul ei ole piisavalt õigusi häälkõne alustamiseks",
-    "There's no one here to call": "Siin ei leidu kedagi, kellele helistada",
-    "Ongoing call": "Kõne on pooleli",
     "Video call (Jitsi)": "Videokõne (Jitsi)",
     "Failed to set pusher state": "Tõuketeavituste teenuse oleku määramine ei õnnestunud",
     "Room info": "Jututoa teave",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Viga salasõna muutmisel",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP olekukood %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Tundmatu viga salasõna muutmisel (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Kui kutse saanud kasutajad on liitunud %(brand)s'ga, siis saad sa nendega suhelda ja jututuba on läbivalt krüptitud",
     "Waiting for users to join %(brand)s": "Kasutajate liitumise ootel %(brand)s'ga",
     "You do not have permission to invite users": "Sul pole õigusi kutse saatmiseks teistele kasutajatele",
@@ -1864,7 +1852,7 @@
         "deselect_all": "Eemalda kõik valikud",
         "select_all": "Vali kõik",
         "copied": "Kopeeritud!",
-        "Advanced": "Teave arendajatele"
+        "advanced": "Teave arendajatele"
     },
     "action": {
         "continue": "Jätka",
@@ -3311,7 +3299,17 @@
         "more_button": "Veel",
         "screenshare_monitor": "Jaga tervet ekraani",
         "screenshare_window": "Rakenduse aken",
-        "screenshare_title": "Jaga sisu"
+        "screenshare_title": "Jaga sisu",
+        "disabled_no_perms_start_voice_call": "Sul ei ole piisavalt õigusi häälkõne alustamiseks",
+        "disabled_no_perms_start_video_call": "Sul ei ole piisavalt õigusi videokõne alustamiseks",
+        "disabled_ongoing_call": "Kõne on pooleli",
+        "disabled_no_one_here": "Siin ei leidu kedagi, kellele helistada",
+        "n_people_joined": {
+            "other": "%(count)s osalejat liitus",
+            "one": "%(count)s osaleja liitus"
+        },
+        "unknown_person": "tundmatu isik",
+        "connecting": "Kõne on ühendamisel"
     },
     "Other": "Muud",
     "room_settings": {
@@ -3911,7 +3909,8 @@
             "explore": "Tutvu jututubadega",
             "manage_and_explore": "Halda ja uuri jututubasid"
         },
-        "share_public": "Jaga oma avalikku kogukonnakeskust"
+        "share_public": "Jaga oma avalikku kogukonnakeskust",
+        "search_children": "Otsi %(spaceName)s kogukonnast"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -3971,7 +3970,6 @@
     },
     "create_space": {
         "name_required": "Palun sisesta kogukonnakeskuse nimi",
-        "name_placeholder": "näiteks minu kogukond",
         "explainer": "Kogukonnakeskused on uus võimalus jututubade ja inimeste liitmiseks. Missugust kogukonnakeskust sa tahaksid luua? Sa saad seda hiljem muuta.",
         "public_description": "Avaliku ligipääsuga kogukonnakeskus",
         "private_description": "Liitumine vaid kutse alusel, sobib sulle ja sinu lähematele kaaslastele",
@@ -4002,7 +4000,10 @@
         "setup_rooms_community_description": "Teeme siis iga teema jaoks oma jututoa.",
         "setup_rooms_description": "Sa võid ka hiljem siia luua uusi jututubasid või lisada olemasolevaid.",
         "setup_rooms_private_heading": "Missuguste projektidega sinu tiim tegeleb?",
-        "setup_rooms_private_description": "Loome siis igaühe jaoks oma jututoa."
+        "setup_rooms_private_description": "Loome siis igaühe jaoks oma jututoa.",
+        "address_placeholder": "näiteks minu kogukond",
+        "address_label": "Aadress",
+        "label": "Loo kogukonnakeskus"
     },
     "user_menu": {
         "switch_theme_light": "Kasuta heledat teemat",
@@ -4187,7 +4188,8 @@
         "admin_contact_short": "Võta ühendust <a>oma serveri haldajaga</a>.",
         "non_urgent_echo_failure_toast": "Sinu koduserver ei vasta mõnedele <a>päringutele</a>.",
         "failed_copy": "Kopeerimine ebaõnnestus",
-        "something_went_wrong": "Midagi läks nüüd valesti!"
+        "something_went_wrong": "Midagi läks nüüd valesti!",
+        "download_media": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu"
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {

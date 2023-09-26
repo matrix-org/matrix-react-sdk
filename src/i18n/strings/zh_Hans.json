@@ -1116,8 +1116,6 @@
     "Unable to access your microphone": "无法访问你的麦克风",
     "Failed to send": "发送失败",
     "You have no ignored users.": "你没有设置忽略用户。",
-    "Connecting": "连接中",
-    "unknown person": "陌生人",
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -1201,7 +1199,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "你是某些要离开的房间或空间的唯一管理员。离开将使它们没有任何管理员。",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "你是此空间的唯一管理员。离开它将意味着没有人可以控制它。",
     "You won't be able to rejoin unless you are re-invited.": "除非你被重新邀请，否则你将无法重新加入。",
-    "Search %(spaceName)s": "搜索 %(spaceName)s",
     "User Directory": "用户目录",
     "Want to add an existing space instead?": "想要添加现有空间？",
     "Add a space to a space you manage.": "向你管理的空间添加空间。",
@@ -1437,10 +1434,6 @@
     "Your new device is now verified. It has access to your encrypted messages, and other users will see it as trusted.": "你的新设备已通过验证。它现在可以访问你的加密消息，并且其它用户会将其视为受信任的。",
     "Deactivating your account is a permanent action — be careful!": "停用你的账户是永久性动作——小心！",
     "Your password was successfully changed.": "你的密码已成功更改。",
-    "%(count)s people joined": {
-        "one": "%(count)s个人已加入",
-        "other": "%(count)s个人已加入"
-    },
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
     "Join the room to participate": "加入房间以参与",
     "Can't create a thread from an event with an existing relation": "无法从既有关系的事件创建消息列",
@@ -1555,10 +1548,6 @@
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s或%(copyButton)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
     "Video call (Jitsi)": "视频通话（Jitsi）",
-    "Ongoing call": "正在进行的通话",
-    "You do not have permission to start video calls": "你没有权限开始视频通话",
-    "There's no one here to call": "这里没有人可以打电话",
-    "You do not have permission to start voice calls": "你没有权限开始语音通话",
     "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Change layout": "更改布局",
@@ -1667,7 +1656,7 @@
         "deselect_all": "取消全选",
         "select_all": "全选",
         "copied": "已复制！",
-        "Advanced": "高级"
+        "advanced": "高级"
     },
     "action": {
         "continue": "继续",
@@ -2960,7 +2949,17 @@
         "more_button": "更多",
         "screenshare_monitor": "分享整个屏幕",
         "screenshare_window": "应用程序窗口",
-        "screenshare_title": "分享内容"
+        "screenshare_title": "分享内容",
+        "disabled_no_perms_start_voice_call": "你没有权限开始语音通话",
+        "disabled_no_perms_start_video_call": "你没有权限开始视频通话",
+        "disabled_ongoing_call": "正在进行的通话",
+        "disabled_no_one_here": "这里没有人可以打电话",
+        "n_people_joined": {
+            "one": "%(count)s个人已加入",
+            "other": "%(count)s个人已加入"
+        },
+        "unknown_person": "陌生人",
+        "connecting": "连接中"
     },
     "Other": "其他",
     "room_settings": {
@@ -3515,7 +3514,8 @@
             "explore": "探索房间",
             "manage_and_explore": "管理并探索房间"
         },
-        "share_public": "分享你的公共空间"
+        "share_public": "分享你的公共空间",
+        "search_children": "搜索 %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3573,7 +3573,6 @@
     },
     "create_space": {
         "name_required": "请输入空间名称",
-        "name_placeholder": "例如：my-space",
         "explainer": "空间是将房间和人分组的一种新方式。你想创建什么类型的空间？你可以在以后更改。",
         "public_description": "适合每一个人的开放空间，社群的理想选择",
         "private_description": "仅邀请，适合你自己或团队",
@@ -3601,7 +3600,10 @@
         "setup_rooms_community_heading": "你想在 %(spaceName)s 中讨论什么？",
         "setup_rooms_community_description": "让我们为每个主题都创建一个房间吧。",
         "setup_rooms_description": "稍后你可以添加更多房间，包括现有的。",
-        "setup_rooms_private_heading": "你的团队正在进行什么项目?"
+        "setup_rooms_private_heading": "你的团队正在进行什么项目?",
+        "address_placeholder": "例如：my-space",
+        "address_label": "地址",
+        "label": "创建空间"
     },
     "user_menu": {
         "switch_theme_light": "切换到浅色模式",

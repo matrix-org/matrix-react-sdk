@@ -848,7 +848,6 @@
     "To join a space you'll need an invite.": "Để tham gia vào một space, bạn sẽ cần một lời mời.",
     "Create a space": "Tạo một Space",
     "Address": "Địa chỉ",
-    "Search %(spaceName)s": "Tìm kiếm %(spaceName)s",
     "Folder": "Thư mục",
     "Headphones": "Tai nghe",
     "Anchor": "Mỏ neo",
@@ -912,8 +911,6 @@
     "Lion": "Sư tử",
     "Cat": "Con mèo",
     "Dog": "Chó",
-    "Connecting": "Đang kết nối",
-    "unknown person": "người không rõ",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (chỉ số %(powerLevelNumber)s)",
     "Filter room members": "Lọc thành viên phòng",
     "Invited": "Đã mời",
@@ -1411,10 +1408,6 @@
     "Add privileged users": "Thêm người dùng quyền lực",
     "Saving…": "Đang lưu…",
     "Creating…": "Đang tạo…",
-    "%(count)s people joined": {
-        "one": "%(count)s người đã tham gia",
-        "other": "%(count)s người đã tham gia"
-    },
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
@@ -1487,7 +1480,6 @@
     "Hide formatting": "Ẩn định dạng",
     "The beginning of the room": "Bắt đầu phòng",
     "Poll": "Bỏ phiếu",
-    "Ongoing call": "Cuộc gọi hiện thời",
     "Joining…": "Đang tham gia…",
     "Pinned": "Đã ghim",
     "Open room": "Mở phòng",
@@ -1515,15 +1507,12 @@
     },
     "Joining space…": "Đang tham gia space…",
     "Joining room…": "Đang tham gia phòng…",
-    "There's no one here to call": "Không có ai ở đây để gọi",
-    "You do not have permission to start voice calls": "Bạn không có quyền để bắt đầu cuộc gọi",
     "View chat timeline": "Xem dòng tin nhắn",
     "There's no preview, would you like to join?": "Không xem trước được, bạn có muốn tham gia?",
     "Disinvite from space": "Hủy lời mời vào space",
     "You can still join here.": "Bạn vẫn có thể tham gia.",
     "Forget this space": "Quên space này",
     "Enable %(brand)s as an additional calling option in this room": "Cho phép %(brand)s được làm tùy chọn gọi bổ sung trong phòng này",
-    "You do not have permission to start video calls": "Bạn không có quyền để bắt đầu cuộc gọi truyền hình",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
@@ -1553,7 +1542,6 @@
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "Cameras": "Máy quay",
-    "Failed to download source media, no source url was found": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url",
     "Past polls": "Các cuộc bỏ phiếu trước",
     "Active polls": "Các cuộc bỏ phiếu hiện tại",
     "unavailable": "không có sẵn",
@@ -1698,7 +1686,7 @@
         "deselect_all": "Bỏ chọn tất cả",
         "select_all": "Chọn tất cả",
         "copied": "Đã sao chép!",
-        "Advanced": "Nâng cao"
+        "advanced": "Nâng cao"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -3053,7 +3041,17 @@
         "more_button": "Thêm",
         "screenshare_monitor": "Chia sẻ toàn bộ màn hình",
         "screenshare_window": "Cửa sổ ứng dụng",
-        "screenshare_title": "Chia sẻ nội dung"
+        "screenshare_title": "Chia sẻ nội dung",
+        "disabled_no_perms_start_voice_call": "Bạn không có quyền để bắt đầu cuộc gọi",
+        "disabled_no_perms_start_video_call": "Bạn không có quyền để bắt đầu cuộc gọi truyền hình",
+        "disabled_ongoing_call": "Cuộc gọi hiện thời",
+        "disabled_no_one_here": "Không có ai ở đây để gọi",
+        "n_people_joined": {
+            "one": "%(count)s người đã tham gia",
+            "other": "%(count)s người đã tham gia"
+        },
+        "unknown_person": "người không rõ",
+        "connecting": "Đang kết nối"
     },
     "Other": "Khác",
     "room_settings": {
@@ -3630,7 +3628,8 @@
             "explore": "Khám phá các phòng",
             "manage_and_explore": "Quản lý và khám phá phòng"
         },
-        "share_public": "Chia sẻ space công cộng của bạn"
+        "share_public": "Chia sẻ space công cộng của bạn",
+        "search_children": "Tìm kiếm %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3684,7 +3683,6 @@
     },
     "create_space": {
         "name_required": "Vui lòng nhập tên cho Space",
-        "name_placeholder": "ví dụ như my-space",
         "explainer": "Space là một cách mới để nhóm các phòng và mọi người. Loại space nào bạn muốn tạo? Bạn có thể thay đổi sau.",
         "public_description": "Tạo space cho mọi người, tốt nhất cho cộng đồng",
         "private_description": "Chỉ mời, tốt nhất cho bản thân hoặc các đội",
@@ -3712,7 +3710,10 @@
         "setup_rooms_community_heading": "Một số điều bạn muốn thảo luận trong %(spaceName)s là gì?",
         "setup_rooms_community_description": "Hãy tạo một phòng cho mỗi người trong số họ.",
         "setup_rooms_description": "Bạn cũng có thể thêm nhiều hơn sau, bao gồm cả những cái đã có.",
-        "setup_rooms_private_heading": "Nhóm của bạn đang thực hiện các dự án nào?"
+        "setup_rooms_private_heading": "Nhóm của bạn đang thực hiện các dự án nào?",
+        "address_placeholder": "ví dụ như my-space",
+        "address_label": "Địa chỉ",
+        "label": "Tạo một Space"
     },
     "user_menu": {
         "switch_theme_light": "Chuyển sang chế độ ánh sáng",
@@ -3890,7 +3891,8 @@
         "admin_contact_short": "Liên hệ với <a>quản trị viên máy chủ</a> của bạn.",
         "non_urgent_echo_failure_toast": "Máy chủ của bạn không phản hồi một số yêu cầu <a>requests</a>.",
         "failed_copy": "Sao chép không thành công",
-        "something_went_wrong": "Đã xảy ra lỗi!"
+        "something_went_wrong": "Đã xảy ra lỗi!",
+        "download_media": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url"
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {

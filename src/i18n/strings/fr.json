@@ -1097,7 +1097,6 @@
         "one": "%(count)s personne que vous connaissez en fait déjà partie",
         "other": "%(count)s personnes que vous connaissez en font déjà partie"
     },
-    "unknown person": "personne inconnue",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Vous êtes la seule personne ici. Si vous partez, plus personne ne pourra rejoindre cette conversation, y compris vous.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Si vous réinitialisez tout, vous allez repartir sans session et utilisateur de confiance. Vous pourriez ne pas voir certains messages passés.",
     "Only do this if you have no other device to complete verification with.": "Poursuivez seulement si vous n’avez aucun autre appareil avec lequel procéder à la vérification.",
@@ -1130,7 +1129,6 @@
     "No microphone found": "Aucun microphone détecté",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Nous n’avons pas pu accéder à votre microphone. Merci de vérifier les paramètres de votre navigateur et de réessayer.",
     "Unable to access your microphone": "Impossible d’accéder à votre microphone",
-    "Connecting": "Connexion",
     "Search names and descriptions": "Rechercher par nom et description",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
@@ -1233,7 +1231,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Vous êtes le seul administrateur de certains salons ou espaces que vous souhaitez quitter. En les quittant, vous les laisserez sans aucun administrateur.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Vous êtes le seul administrateur de cet espace. En le quittant, plus personne n’aura le contrôle dessus.",
     "You won't be able to rejoin unless you are re-invited.": "Il vous sera impossible de revenir à moins d’y être réinvité.",
-    "Search %(spaceName)s": "Rechercher %(spaceName)s",
     "Want to add an existing space instead?": "Vous voulez plutôt ajouter un espace existant ?",
     "Private space (invite only)": "Espace privé (uniquement sur invitation)",
     "Space visibility": "Visibilité de l’espace",
@@ -1524,10 +1521,6 @@
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
     "Joining…": "En train de rejoindre…",
     "Read receipts": "Accusés de réception",
-    "%(count)s people joined": {
-        "one": "%(count)s personne s’est jointe",
-        "other": "%(count)s personnes se sont jointes"
-    },
     "Deactivating your account is a permanent action — be careful!": "La désactivation du compte est une action permanente. Soyez prudent !",
     "Remove search filter for %(filter)s": "Supprimer le filtre de recherche pour %(filter)s",
     "Start a group chat": "Démarrer une conversation de groupe",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "Vérifier manuellement avec un texte",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s ou %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
-    "You do not have permission to start voice calls": "Vous n’avez pas la permission de démarrer un appel audio",
-    "There's no one here to call": "Il n’y a personne à appeler ici",
-    "You do not have permission to start video calls": "Vous n’avez pas la permission de démarrer un appel vidéo",
-    "Ongoing call": "Appel en cours",
     "Video call (Jitsi)": "Appel vidéo (Jitsi)",
     "Failed to set pusher state": "Échec lors de la définition de l’état push",
     "Video call ended": "Appel vidéo terminé",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Erreur lors du changement de mot de passe",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (statut HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Erreur inconnue du changement de mot de passe (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
     "Waiting for users to join %(brand)s": "En attente de connexion des utilisateurs à %(brand)s",
     "You do not have permission to invite users": "Vous n’avez pas la permission d’inviter des utilisateurs",
@@ -1864,7 +1852,7 @@
         "deselect_all": "Tout désélectionner",
         "select_all": "Tout sélectionner",
         "copied": "Copié !",
-        "Advanced": "Avancé"
+        "advanced": "Avancé"
     },
     "action": {
         "continue": "Continuer",
@@ -3311,7 +3299,17 @@
         "more_button": "Plus",
         "screenshare_monitor": "Partager l’écran entier",
         "screenshare_window": "Fenêtre d’application",
-        "screenshare_title": "Partager le contenu"
+        "screenshare_title": "Partager le contenu",
+        "disabled_no_perms_start_voice_call": "Vous n’avez pas la permission de démarrer un appel audio",
+        "disabled_no_perms_start_video_call": "Vous n’avez pas la permission de démarrer un appel vidéo",
+        "disabled_ongoing_call": "Appel en cours",
+        "disabled_no_one_here": "Il n’y a personne à appeler ici",
+        "n_people_joined": {
+            "one": "%(count)s personne s’est jointe",
+            "other": "%(count)s personnes se sont jointes"
+        },
+        "unknown_person": "personne inconnue",
+        "connecting": "Connexion"
     },
     "Other": "Autre",
     "room_settings": {
@@ -3911,7 +3909,8 @@
             "explore": "Parcourir les salons",
             "manage_and_explore": "Gérer et découvrir les salons"
         },
-        "share_public": "Partager votre espace public"
+        "share_public": "Partager votre espace public",
+        "search_children": "Rechercher %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -3971,7 +3970,6 @@
     },
     "create_space": {
         "name_required": "Veuillez renseigner un nom pour l’espace",
-        "name_placeholder": "par ex. mon-espace",
         "explainer": "Les espaces sont une nouvelle manière de regrouper les salons et les personnes. Quel type d’espace voulez-vous créer ? Vous pouvez changer ceci plus tard.",
         "public_description": "Espace ouvert à tous, idéal pour les communautés",
         "private_description": "Sur invitation, idéal pour vous-même ou les équipes",
@@ -4002,7 +4000,10 @@
         "setup_rooms_community_description": "Créons un salon pour chacun d’entre eux.",
         "setup_rooms_description": "Vous pourrez en ajouter plus tard, y compris certains déjà existant.",
         "setup_rooms_private_heading": "Sur quels projets travaille votre équipe ?",
-        "setup_rooms_private_description": "Nous allons créer un salon pour chacun d’entre eux."
+        "setup_rooms_private_description": "Nous allons créer un salon pour chacun d’entre eux.",
+        "address_placeholder": "par ex. mon-espace",
+        "address_label": "Adresse",
+        "label": "Créer un espace"
     },
     "user_menu": {
         "switch_theme_light": "Passer au mode clair",
@@ -4187,7 +4188,8 @@
         "admin_contact_short": "Contactez <a>l’administrateur de votre serveur</a>.",
         "non_urgent_echo_failure_toast": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
         "failed_copy": "Échec de la copie",
-        "something_went_wrong": "Quelque chose s’est mal déroulé !"
+        "something_went_wrong": "Quelque chose s’est mal déroulé !",
+        "download_media": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée"
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {

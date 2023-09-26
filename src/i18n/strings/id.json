@@ -508,7 +508,6 @@
     "Transfer": "Pindah",
     "Sending": "Mengirim",
     "Spaces": "Space",
-    "Connecting": "Menghubungkan",
     "Disconnect from the identity server <idserver />?": "Putuskan hubungan dari server identitas <idserver />?",
     "Disconnect identity server": "Putuskan hubungan server identitas",
     "The identity server you have chosen does not have any terms of service.": "Server identitas yang Anda pilih tidak memiliki persyaratan layanan.",
@@ -598,8 +597,6 @@
     "You can change these anytime.": "Anda dapat mengubahnya kapan saja.",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
     "Create a space": "Buat space",
-    "Search %(spaceName)s": "Cari %(spaceName)s",
-    "unknown person": "pengguna tidak dikenal",
     "IRC display name width": "Lebar nama tampilan IRC",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Unread email icon": "Ikon email belum dibaca",
     "Joining…": "Bergabung…",
-    "%(count)s people joined": {
-        "one": "%(count)s orang bergabung",
-        "other": "%(count)s orang bergabung"
-    },
     "Read receipts": "Laporan dibaca",
     "Deactivating your account is a permanent action — be careful!": "Menonaktifkan akun Anda adalah aksi yang permanen — hati-hati!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "Verifikasi secara manual dengan teks",
     "%(downloadButton)s or %(copyButton)s": "-%(downloadButton)s atau %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
-    "You do not have permission to start voice calls": "Anda tidak memiliki izin untuk memulai panggilan suara",
-    "There's no one here to call": "Tidak ada siapa pun di sini untuk dipanggil",
-    "You do not have permission to start video calls": "Anda tidak memiliki izin untuk memulai panggilan video",
-    "Ongoing call": "Panggilan sedang berlangsung",
     "Video call (Jitsi)": "Panggilan video (Jitsi)",
     "Failed to set pusher state": "Gagal menetapkan keadaan pendorong",
     "Video call ended": "Panggilan video berakhir",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Terjadi kesalahan mengubah kata sandi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (status HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Terjadi kesalahan perubahan kata sandi yang tidak diketahui (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
     "You do not have permission to invite users": "Anda tidak memiliki izin untuk mengundang pengguna",
@@ -1868,7 +1856,7 @@
         "deselect_all": "Batalkan semua pilihan",
         "select_all": "Pilih semua",
         "copied": "Disalin!",
-        "Advanced": "Tingkat Lanjut"
+        "advanced": "Tingkat Lanjut"
     },
     "action": {
         "continue": "Lanjut",
@@ -3316,7 +3304,17 @@
         "more_button": "Lagi",
         "screenshare_monitor": "Bagikan seluruh layar",
         "screenshare_window": "Jendela aplikasi",
-        "screenshare_title": "Bagikan konten"
+        "screenshare_title": "Bagikan konten",
+        "disabled_no_perms_start_voice_call": "Anda tidak memiliki izin untuk memulai panggilan suara",
+        "disabled_no_perms_start_video_call": "Anda tidak memiliki izin untuk memulai panggilan video",
+        "disabled_ongoing_call": "Panggilan sedang berlangsung",
+        "disabled_no_one_here": "Tidak ada siapa pun di sini untuk dipanggil",
+        "n_people_joined": {
+            "one": "%(count)s orang bergabung",
+            "other": "%(count)s orang bergabung"
+        },
+        "unknown_person": "pengguna tidak dikenal",
+        "connecting": "Menghubungkan"
     },
     "Other": "Lainnya",
     "room_settings": {
@@ -3916,7 +3914,8 @@
             "explore": "Jelajahi ruangan",
             "manage_and_explore": "Kelola & jelajahi ruangan"
         },
-        "share_public": "Bagikan space publik Anda"
+        "share_public": "Bagikan space publik Anda",
+        "search_children": "Cari %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -3976,7 +3975,6 @@
     },
     "create_space": {
         "name_required": "Mohon masukkan nama untuk space ini",
-        "name_placeholder": "mis. space-saya",
         "explainer": "Space adalah cara yang baru untuk mengelompokkan ruangan dan orang. Space apa yang Anda ingin buat? Ini dapat diubah nanti.",
         "public_description": "Space terbuka untuk siapa saja, baik untuk komunitas",
         "private_description": "Undangan saja, baik untuk Anda sendiri atau tim",
@@ -4007,7 +4005,10 @@
         "setup_rooms_community_description": "Mari kita buat ruangan untuk masing-masing.",
         "setup_rooms_description": "Anda juga dapat menambahkan lebih banyak nanti, termasuk yang sudah ada.",
         "setup_rooms_private_heading": "Proyek apa yang sedang dikerjakan tim Anda?",
-        "setup_rooms_private_description": "Kami akan membuat ruangan untuk masing-masing."
+        "setup_rooms_private_description": "Kami akan membuat ruangan untuk masing-masing.",
+        "address_placeholder": "mis. space-saya",
+        "address_label": "Alamat",
+        "label": "Buat space"
     },
     "user_menu": {
         "switch_theme_light": "Ubah ke mode terang",
@@ -4192,7 +4193,8 @@
         "admin_contact_short": "Hubungi <a>admin server</a> Anda.",
         "non_urgent_echo_failure_toast": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
         "failed_copy": "Gagal untuk menyalin",
-        "something_went_wrong": "Ada sesuatu yang salah!"
+        "something_went_wrong": "Ada sesuatu yang salah!",
+        "download_media": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan"
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {

@@ -852,7 +852,7 @@
         "off": "Izslēgt",
         "all_rooms": "Visas istabas",
         "copied": "Nokopēts!",
-        "Advanced": "Papildu"
+        "advanced": "Papildu"
     },
     "action": {
         "continue": "Turpināt",
@@ -1912,7 +1912,9 @@
         "personal_space_description": "Privāta vieta, kur organizēt jūsu istabas",
         "private_space_description": "Privāta vieta jums un jūsu komandas dalībniekiem",
         "setup_rooms_community_description": "Izveidojam katram no tiem savu istabu!",
-        "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem."
+        "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem.",
+        "address_label": "Adrese",
+        "label": "Izveidot vietu"
     },
     "user_menu": {
         "switch_theme_light": "Pārslēgt gaišo režīmu",

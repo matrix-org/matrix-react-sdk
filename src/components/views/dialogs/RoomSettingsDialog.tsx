@@ -218,7 +218,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             tabs.push(
                 new Tab(
                     RoomSettingsTab.Advanced,
-                    _td("common|Advanced"),
+                    _td("common|advanced"),
                     "mx_RoomSettingsDialog_warningIcon",
                     (
                         <AdvancedRoomSettingsTab

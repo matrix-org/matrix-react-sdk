@@ -582,7 +582,6 @@
     "Share Link to User": "Поділитися посиланням на користувача",
     "<a>In reply to</a> <pill>": "<a>У відповідь на</a> <pill>",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
-    "unknown person": "невідома особа",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Менеджери інтеграцій отримують дані конфігурації та можуть змінювати віджети, надсилати запрошення у кімнати й установлювати рівні повноважень від вашого імені.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Використовувати менеджер інтеграцій для керування ботами, віджетами й пакунками наліпок.",
@@ -646,7 +645,6 @@
     "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "<userName/> invited you": "<userName/> запрошує вас",
     "Sign in with SSO": "Увійти за допомогою SSO",
-    "Connecting": "З'єднання",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
     "Start Verification": "Почати перевірку",
@@ -813,7 +811,6 @@
     "Unable to upload": "Не вдалося вивантажити",
     "Cancelled signature upload": "Вивантаження підпису скасовано",
     "Upload completed": "Вивантаження виконано",
-    "Search %(spaceName)s": "Пошук %(spaceName)s",
     "Leave some rooms": "Вийте з кількох кімнат",
     "Leave all rooms": "Вийти з кімнати",
     "Success!": "Успішно!",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Unread email icon": "Піктограма непрочитаного електронного листа",
     "Joining…": "Приєднання…",
-    "%(count)s people joined": {
-        "one": "%(count)s осіб приєдналися",
-        "other": "%(count)s людей приєдналися"
-    },
     "Read receipts": "Звіти про прочитання",
     "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s або %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
-    "You do not have permission to start voice calls": "У вас немає дозволу розпочинати голосові виклики",
-    "There's no one here to call": "Тут немає кого викликати",
-    "You do not have permission to start video calls": "У вас немає дозволу розпочинати відеовиклики",
-    "Ongoing call": "Поточний виклик",
     "Video call (Jitsi)": "Відеовиклик (Jitsi)",
     "Failed to set pusher state": "Не вдалося встановити стан push-служби",
     "Video call ended": "Відеовиклик завершено",
@@ -1715,7 +1704,6 @@
     "Error changing password": "Помилка зміни пароля",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-статус %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Невідома помилка зміни пароля (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
@@ -1864,7 +1852,7 @@
         "deselect_all": "Скасувати вибір",
         "select_all": "Вибрати всі",
         "copied": "Скопійовано!",
-        "Advanced": "Подробиці"
+        "advanced": "Подробиці"
     },
     "action": {
         "continue": "Продовжити",
@@ -3311,7 +3299,17 @@
         "more_button": "Більше",
         "screenshare_monitor": "Поділитися всім екраном",
         "screenshare_window": "Вікно застосунку",
-        "screenshare_title": "Поділитися вмістом"
+        "screenshare_title": "Поділитися вмістом",
+        "disabled_no_perms_start_voice_call": "У вас немає дозволу розпочинати голосові виклики",
+        "disabled_no_perms_start_video_call": "У вас немає дозволу розпочинати відеовиклики",
+        "disabled_ongoing_call": "Поточний виклик",
+        "disabled_no_one_here": "Тут немає кого викликати",
+        "n_people_joined": {
+            "one": "%(count)s осіб приєдналися",
+            "other": "%(count)s людей приєдналися"
+        },
+        "unknown_person": "невідома особа",
+        "connecting": "З'єднання"
     },
     "Other": "Інше",
     "room_settings": {
@@ -3911,7 +3909,8 @@
             "explore": "Каталог кімнат",
             "manage_and_explore": "Керування і перегляд кімнат"
         },
-        "share_public": "Поділитися своїм загальнодоступним простором"
+        "share_public": "Поділитися своїм загальнодоступним простором",
+        "search_children": "Пошук %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -3971,7 +3970,6 @@
     },
     "create_space": {
         "name_required": "Будь ласка, введіть назву простору",
-        "name_placeholder": "наприклад, мій-простір",
         "explainer": "Простори — це новий спосіб групових кімнат та людей. Який вид простору ви хочете створити? Ви можете змінити це пізніше.",
         "public_description": "Відкритий простір для будь-кого, найкраще для спільнот",
         "private_description": "Лише за запрошенням, найкраще для себе чи для команди",
@@ -4002,7 +4000,10 @@
         "setup_rooms_community_description": "Створімо по кімнаті для кожної.",
         "setup_rooms_description": "Згодом ви зможете додати більше, зокрема вже наявні.",
         "setup_rooms_private_heading": "Над якими проєктами працює ваша команда?",
-        "setup_rooms_private_description": "Ми створимо кімнати для кожного з них."
+        "setup_rooms_private_description": "Ми створимо кімнати для кожного з них.",
+        "address_placeholder": "наприклад, мій-простір",
+        "address_label": "Адреса",
+        "label": "Створити простір"
     },
     "user_menu": {
         "switch_theme_light": "Світла тема",
@@ -4187,7 +4188,8 @@
         "admin_contact_short": "Зверніться до <a>адміністратора сервера</a>.",
         "non_urgent_echo_failure_toast": "Ваш сервер не відповідає на деякі <a>запити</a>.",
         "failed_copy": "Не вдалося скопіювати",
-        "something_went_wrong": "Щось пішло не так!"
+        "something_went_wrong": "Щось пішло не так!",
+        "download_media": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела"
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {

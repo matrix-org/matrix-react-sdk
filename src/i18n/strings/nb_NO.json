@@ -483,7 +483,6 @@
         "other": "%(count)s rom",
         "one": "%(count)s rom"
     },
-    "unknown person": "ukjent person",
     "Share invite link": "Del invitasjonslenke",
     "Leave space": "Forlat området",
     "%(count)s people you know have already joined": {
@@ -752,7 +751,6 @@
     "Address": "Adresse",
     "Corn": "Mais",
     "Cloud": "Sky",
-    "Connecting": "Kobler til",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
     "St. Martin": "Saint Martin",
     "St. Barthélemy": "Saint Barthélemy",
@@ -831,7 +829,7 @@
         "off": "Av",
         "all_rooms": "Alle rom",
         "copied": "Kopiert!",
-        "Advanced": "Avansert"
+        "advanced": "Avansert"
     },
     "action": {
         "continue": "Fortsett",
@@ -1418,7 +1416,9 @@
         "default_device": "Standardenhet",
         "no_media_perms_title": "Ingen mediatillatelser",
         "join_button_tooltip_connecting": "Kobler til",
-        "more_button": "Mer"
+        "more_button": "Mer",
+        "unknown_person": "ukjent person",
+        "connecting": "Kobler til"
     },
     "Other": "Andre",
     "room_settings": {
@@ -1691,7 +1691,8 @@
         "skip_action": "Hopp over for nå",
         "share_heading": "Del %(name)s",
         "personal_space": "Bare meg selv",
-        "invite_teammates_by_username": "Inviter etter brukernavn"
+        "invite_teammates_by_username": "Inviter etter brukernavn",
+        "address_label": "Adresse"
     },
     "user_menu": {
         "switch_theme_light": "Bytt til lys modus",

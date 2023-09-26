@@ -1084,7 +1084,6 @@
     "Edit devices": "編輯裝置",
     "Invite with email or username": "使用電子郵件或使用者名稱邀請",
     "You can change these anytime.": "您隨時可以變更這些。",
-    "unknown person": "不明身份的人",
     "Verify your identity to access encrypted messages and prove your identity to others.": "驗證您的身分來存取已加密的訊息並對其他人證明您的身分。",
     "%(count)s people you know have already joined": {
         "other": "%(count)s 個您認識的人已加入",
@@ -1130,7 +1129,6 @@
     "No microphone found": "找不到麥克風",
     "We were unable to access your microphone. Please check your browser settings and try again.": "我們無法存取您的麥克風。請檢查您的瀏覽器設定並再試一次。",
     "Unable to access your microphone": "無法存取您的麥克風",
-    "Connecting": "連線中",
     "Search names and descriptions": "搜尋名稱與描述",
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
@@ -1240,7 +1238,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
     "You won't be able to rejoin unless you are re-invited.": "您將無法重新加入，除非您再次被邀請。",
-    "Search %(spaceName)s": "搜尋 %(spaceName)s",
     "Decrypting": "正在解密",
     "Show all rooms": "顯示所有聊天室",
     "Missed call": "未接來電",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
     "Unread email icon": "未讀電子郵件圖示",
     "Joining…": "正在加入…",
-    "%(count)s people joined": {
-        "one": "%(count)s 個人已加入",
-        "other": "%(count)s 個人已加入"
-    },
     "Read receipts": "讀取回條",
     "Deactivating your account is a permanent action — be careful!": "停用帳號無法還原 — 請小心！",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
@@ -1569,10 +1562,6 @@
     "Manually verify by text": "透過文字手動驗證",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s 或 %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
-    "You do not have permission to start voice calls": "您無權限開始語音通話",
-    "There's no one here to call": "這裡沒有人可以通話",
-    "You do not have permission to start video calls": "您沒有權限開始視訊通話",
-    "Ongoing call": "正在進行通話",
     "Video call (Jitsi)": "視訊通話 (Jitsi)",
     "Failed to set pusher state": "無法設定推送程式狀態",
     "Video call ended": "視訊通話已結束",
@@ -1715,7 +1704,6 @@
     "Error changing password": "變更密碼錯誤",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s（HTTP 狀態 %(httpStatus)s）",
     "Unknown password change error (%(stringifiedError)s)": "未知密碼變更錯誤（%(stringifiedError)s）",
-    "Failed to download source media, no source url was found": "下載來源媒體失敗，找不到來源 URL",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
     "Waiting for users to join %(brand)s": "等待使用者加入 %(brand)s",
     "You do not have permission to invite users": "您沒有權限邀請使用者",
@@ -1864,7 +1852,7 @@
         "deselect_all": "取消選取",
         "select_all": "全部選取",
         "copied": "已複製！",
-        "Advanced": "進階"
+        "advanced": "進階"
     },
     "action": {
         "continue": "繼續",
@@ -3311,7 +3299,17 @@
         "more_button": "更多",
         "screenshare_monitor": "分享整個螢幕",
         "screenshare_window": "應用程式視窗",
-        "screenshare_title": "分享內容"
+        "screenshare_title": "分享內容",
+        "disabled_no_perms_start_voice_call": "您無權限開始語音通話",
+        "disabled_no_perms_start_video_call": "您沒有權限開始視訊通話",
+        "disabled_ongoing_call": "正在進行通話",
+        "disabled_no_one_here": "這裡沒有人可以通話",
+        "n_people_joined": {
+            "one": "%(count)s 個人已加入",
+            "other": "%(count)s 個人已加入"
+        },
+        "unknown_person": "不明身份的人",
+        "connecting": "連線中"
     },
     "Other": "其他",
     "room_settings": {
@@ -3911,7 +3909,8 @@
             "explore": "探索聊天室",
             "manage_and_explore": "管理與探索聊天室"
         },
-        "share_public": "分享您的公開聊天空間"
+        "share_public": "分享您的公開聊天空間",
+        "search_children": "搜尋 %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -3971,7 +3970,6 @@
     },
     "create_space": {
         "name_required": "請輸入聊天空間名稱",
-        "name_placeholder": "例如：my-space",
         "explainer": "聊天空間是一種將聊天室與夥伴分組的新方式。您想要建立何種類型的聊天空間？您稍後仍可變更。",
         "public_description": "對所有人開放的聊天空間，最適合社群",
         "private_description": "邀請制，適用於您自己或團隊使用",
@@ -4002,7 +4000,10 @@
         "setup_rooms_community_description": "讓我們為每個主題建立一個聊天室吧。",
         "setup_rooms_description": "您稍後可以新增更多內容，包含既有的。",
         "setup_rooms_private_heading": "您的團隊正在從事哪些專案？",
-        "setup_rooms_private_description": "我們將為每個主題建立聊天室。"
+        "setup_rooms_private_description": "我們將為每個主題建立聊天室。",
+        "address_placeholder": "例如：my-space",
+        "address_label": "位址",
+        "label": "建立聊天空間"
     },
     "user_menu": {
         "switch_theme_light": "切換至淺色模式",
@@ -4187,7 +4188,8 @@
         "admin_contact_short": "聯絡您的<a>伺服器管理員</a>。",
         "non_urgent_echo_failure_toast": "您的伺服器未回應某些<a>請求</a>。",
         "failed_copy": "無法複製",
-        "something_went_wrong": "出了點問題！"
+        "something_went_wrong": "出了點問題！",
+        "download_media": "下載來源媒體失敗，找不到來源 URL"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {

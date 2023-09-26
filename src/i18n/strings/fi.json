@@ -1051,8 +1051,6 @@
     "Unable to access your microphone": "Mikrofonia ei voi käyttää",
     "Failed to send": "Lähettäminen epäonnistui",
     "You have no ignored users.": "Et ole sivuuttanut käyttäjiä.",
-    "Connecting": "Yhdistetään",
-    "unknown person": "tuntematon henkilö",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Integraatioiden lähteet vastaanottavat asetusdataa ja voivat muokata sovelmia, lähettää kutsuja huoneeseen ja asettaa oikeustasoja puolestasi.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Käytä integraatioiden lähdettä bottien, sovelmien ja tarrapakettien hallintaan.",
@@ -1369,10 +1367,6 @@
     },
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Your password was successfully changed.": "Salasanasi vaihtaminen onnistui.",
-    "%(count)s people joined": {
-        "one": "%(count)s ihminen liittyi",
-        "other": "%(count)s ihmistä liittyi"
-    },
     "Developer": "Kehittäjä",
     "Close sidebar": "Sulje sivupalkki",
     "Updated %(humanizedUpdateTime)s": "Päivitetty %(humanizedUpdateTime)s",
@@ -1398,7 +1392,6 @@
     "Copy link to thread": "Kopioi linkki ketjuun",
     "From a thread": "Ketjusta",
     "Deactivating your account is a permanent action — be careful!": "Tilin deaktivointi on peruuttamaton toiminto — ole varovainen!",
-    "Search %(spaceName)s": "Etsi %(spaceName)s",
     "Messaging": "Viestintä",
     "Confirm your Security Phrase": "Vahvista turvalause",
     "Enter your Security Phrase a second time to confirm it.": "Kirjoita turvalause toistamiseen vahvistaaksesi sen.",
@@ -1471,9 +1464,6 @@
     "Join the room to participate": "Liity huoneeseen osallistuaksesi",
     "View chat timeline": "Näytä keskustelun aikajana",
     "Close call": "Lopeta puhelu",
-    "You do not have permission to start voice calls": "Sinulla ei ole oikeutta aloittaa äänipuheluita",
-    "You do not have permission to start video calls": "Sinulla ei ole oikeutta aloittaa videopuheluita",
-    "Ongoing call": "Käynnissä oleva puhelu",
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
@@ -1520,7 +1510,6 @@
     "This invite was sent to %(email)s which is not associated with your account": "Tämä kutsu lähetettiin sähköpostiosoitteeseen %(email)s, joka ei ole yhteydessä tiliisi",
     "Spotlight": "Valokeila",
     "Freedom": "Vapaus",
-    "There's no one here to call": "Täällä ei ole ketään, jolle voisi soittaa",
     "Enable %(brand)s as an additional calling option in this room": "Ota %(brand)s käyttöön puheluiden lisävaihtoehtona tässä huoneessa",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
@@ -1679,7 +1668,7 @@
         "deselect_all": "Älä valitse mitään",
         "select_all": "Valitse kaikki",
         "copied": "Kopioitu!",
-        "Advanced": "Lisäasetukset"
+        "advanced": "Lisäasetukset"
     },
     "action": {
         "continue": "Jatka",
@@ -2988,7 +2977,17 @@
         "more_button": "Lisää",
         "screenshare_monitor": "Jaa koko näyttö",
         "screenshare_window": "Sovelluksen ikkuna",
-        "screenshare_title": "Jaa sisältö"
+        "screenshare_title": "Jaa sisältö",
+        "disabled_no_perms_start_voice_call": "Sinulla ei ole oikeutta aloittaa äänipuheluita",
+        "disabled_no_perms_start_video_call": "Sinulla ei ole oikeutta aloittaa videopuheluita",
+        "disabled_ongoing_call": "Käynnissä oleva puhelu",
+        "disabled_no_one_here": "Täällä ei ole ketään, jolle voisi soittaa",
+        "n_people_joined": {
+            "one": "%(count)s ihminen liittyi",
+            "other": "%(count)s ihmistä liittyi"
+        },
+        "unknown_person": "tuntematon henkilö",
+        "connecting": "Yhdistetään"
     },
     "Other": "Muut",
     "room_settings": {
@@ -3528,7 +3527,8 @@
             "explore": "Selaa huoneita",
             "manage_and_explore": "Hallitse ja selaa huoneita"
         },
-        "share_public": "Jaa julkinen avaruutesi"
+        "share_public": "Jaa julkinen avaruutesi",
+        "search_children": "Etsi %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3581,7 +3581,6 @@
     },
     "create_space": {
         "name_required": "Anna nimi avaruudelle",
-        "name_placeholder": "esim. minun-space",
         "explainer": "Avaruudet ovat uusi tapa ryhmitellä huoneita ja ihmisiä. Minkälaisen avaruuden sinä haluat luoda? Voit muuttaa tätä asetusta myöhemmin.",
         "public_description": "Avoin avaruus kaikille, paras yhteisöille",
         "private_description": "Vain kutsulla, paras itsellesi tai tiimeille",
@@ -3609,7 +3608,10 @@
         "setup_rooms_community_description": "Tehdään huone jokaiselle.",
         "setup_rooms_description": "Voit lisätä niitä myöhemmin, mukaan lukien olemassa olevia.",
         "setup_rooms_private_heading": "Minkä projektien parissa tiimisi työskentelee?",
-        "setup_rooms_private_description": "Luomme huoneet jokaiselle niistä."
+        "setup_rooms_private_description": "Luomme huoneet jokaiselle niistä.",
+        "address_placeholder": "esim. minun-space",
+        "address_label": "Osoite",
+        "label": "Luo avaruus"
     },
     "user_menu": {
         "switch_theme_light": "Vaihda vaaleaan teemaan",

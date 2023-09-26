@@ -786,7 +786,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
     "Encryption not enabled": "Nie włączono szyfrowania",
     "Use the <a>Desktop app</a> to see all encrypted files": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
-    "Connecting": "Łączenie",
     "Create key backup": "Utwórz kopię zapasową klucza",
     "Generate a Security Key": "Wygeneruj klucz bezpieczeństwa",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Zabezpiecz się przed utratą dostępu do szyfrowanych wiadomości i danych, tworząc kopię zapasową kluczy szyfrowania na naszym serwerze.",
@@ -906,13 +905,7 @@
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
     "Address": "Adres",
-    "Search %(spaceName)s": "Przeszukaj %(spaceName)s",
     "Space selection": "Wybór przestrzeni",
-    "unknown person": "nieznana osoba",
-    "%(count)s people joined": {
-        "one": "%(count)s osoba dołączyła",
-        "other": "%(count)s osób dołączyło"
-    },
     "Reply in thread": "Odpowiedz w wątku",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "Start new chat": "Nowy czat",
@@ -1066,7 +1059,6 @@
     "You have verified this user. This user has verified all of their sessions.": "Zweryfikowałeś tego użytkownika. Użytkownik zweryfikował wszystkie swoje sesje.",
     "You have not verified this user.": "Nie zweryfikowałeś tego użytkownika.",
     "This user has not verified all of their sessions.": "Ten użytkownik nie zweryfikował wszystkich swoich sesji.",
-    "Failed to download source media, no source url was found": "Nie udało się pobrać media źródłowego, nie znaleziono źródłowego adresu URL",
     "This room has already been upgraded.": "Ten pokój został już ulepszony.",
     "Joined": "Dołączono",
     "Show Labs settings": "Pokaż ustawienia laboratoriów",
@@ -1106,7 +1098,6 @@
         "one": "Aktualnie dołączanie do %(count)s pokoju",
         "other": "Aktualnie dołączanie do %(count)s pokoi"
     },
-    "Ongoing call": "Rozmowa w toku",
     "Add space": "Dodaj przestrzeń",
     "Suggested Rooms": "Sugerowane pokoje",
     "Saved Items": "Przedmioty zapisane",
@@ -1123,9 +1114,6 @@
     "Close call": "Zamknij połączenie",
     "Change layout": "Zmień układ",
     "Freedom": "Wolność",
-    "You do not have permission to start voice calls": "Nie posiadasz uprawnień do rozpoczęcia rozmowy głosowej",
-    "There's no one here to call": "Nie ma tu nikogo, do kogo można zadzwonić",
-    "You do not have permission to start video calls": "Nie posiadasz wymaganych uprawnień do rozpoczęcia rozmowy wideo",
     "Video call (%(brand)s)": "Rozmowa wideo (%(brand)s)",
     "Video call (Jitsi)": "Rozmowa wideo (Jitsi)",
     "Recently visited rooms": "Ostatnio odwiedzane pokoje",
@@ -1853,7 +1841,7 @@
         "deselect_all": "Odznacz wszystkie",
         "select_all": "Zaznacz wszystkie",
         "copied": "Skopiowano!",
-        "Advanced": "Zaawansowane"
+        "advanced": "Zaawansowane"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -3298,7 +3286,17 @@
         "more_button": "Więcej",
         "screenshare_monitor": "Udostępnij cały ekran",
         "screenshare_window": "Okno aplikacji",
-        "screenshare_title": "Udostępnij zawartość"
+        "screenshare_title": "Udostępnij zawartość",
+        "disabled_no_perms_start_voice_call": "Nie posiadasz uprawnień do rozpoczęcia rozmowy głosowej",
+        "disabled_no_perms_start_video_call": "Nie posiadasz wymaganych uprawnień do rozpoczęcia rozmowy wideo",
+        "disabled_ongoing_call": "Rozmowa w toku",
+        "disabled_no_one_here": "Nie ma tu nikogo, do kogo można zadzwonić",
+        "n_people_joined": {
+            "one": "%(count)s osoba dołączyła",
+            "other": "%(count)s osób dołączyło"
+        },
+        "unknown_person": "nieznana osoba",
+        "connecting": "Łączenie"
     },
     "Other": "Inne",
     "room_settings": {
@@ -3897,7 +3895,8 @@
             "explore": "Przeglądaj pokoje",
             "manage_and_explore": "Zarządzaj i odkrywaj pokoje"
         },
-        "share_public": "Zaproś do swojej publicznej przestrzeni"
+        "share_public": "Zaproś do swojej publicznej przestrzeni",
+        "search_children": "Przeszukaj %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -3957,7 +3956,6 @@
     },
     "create_space": {
         "name_required": "Podaj nazwę dla przestrzeni",
-        "name_placeholder": "np. moja-przestrzen",
         "explainer": "Przestrzenie to nowy sposób na grupowanie pokojów i osób. Jaki rodzaj przestrzeni chcesz utworzyć? Możesz zmienić to później.",
         "public_description": "Przestrzeń otwarta dla każdego, najlepsza dla społeczności",
         "private_description": "Tylko na zaproszenie, najlepsza dla siebie lub zespołów",
@@ -3988,7 +3986,10 @@
         "setup_rooms_community_description": "Utwórzmy pokój dla każdego z nich.",
         "setup_rooms_description": "W przyszłości będziesz mógł dodać więcej, włączając już istniejące.",
         "setup_rooms_private_heading": "Nad jakimi projektami pracuje Twój zespół?",
-        "setup_rooms_private_description": "Utworzymy pokój dla każdego z nich."
+        "setup_rooms_private_description": "Utworzymy pokój dla każdego z nich.",
+        "address_placeholder": "np. moja-przestrzen",
+        "address_label": "Adres",
+        "label": "Utwórz przestrzeń"
     },
     "user_menu": {
         "switch_theme_light": "Przełącz na tryb jasny",
@@ -4169,7 +4170,8 @@
         "admin_contact_short": "Skontaktuj się ze swoim <a>administratorem serwera</a>.",
         "non_urgent_echo_failure_toast": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
         "failed_copy": "Kopiowanie nieudane",
-        "something_went_wrong": "Coś poszło nie tak!"
+        "something_went_wrong": "Coś poszło nie tak!",
+        "download_media": "Nie udało się pobrać media źródłowego, nie znaleziono źródłowego adresu URL"
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {

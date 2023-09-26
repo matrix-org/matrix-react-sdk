@@ -182,7 +182,7 @@
         "unnamed_room": "Unnamed Room",
         "on": "On",
         "off": "Off",
-        "Advanced": "Advanced"
+        "advanced": "Advanced"
     },
     "action": {
         "continue": "Continue",

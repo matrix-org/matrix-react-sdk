@@ -1087,7 +1087,6 @@
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
     },
-    "unknown person": "okänd person",
     "Add existing rooms": "Lägg till existerande rum",
     "We couldn't create your DM.": "Vi kunde inte skapa ditt DM.",
     "Reset event store": "Återställ händelselagring",
@@ -1133,7 +1132,6 @@
     "No microphone found": "Ingen mikrofon hittad",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Vi kunde inte komma åt din mikrofon. Vänligen kolla dina webbläsarinställningar och försök igen.",
     "Unable to access your microphone": "Kan inte komma åt din mikrofon",
-    "Connecting": "Ansluter",
     "Currently joining %(count)s rooms": {
         "one": "Går just nu med i %(count)s rum",
         "other": "Går just nu med i %(count)s rum"
@@ -1238,7 +1236,6 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Du är den enda administratören i vissa rum eller utrymmen du vill lämna. Om du lämnar så kommer vissa av dem sakna administratör.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Du är den enda administratören i utrymmet. Om du lämnar nu så kommer ingen ha kontroll över det.",
     "You won't be able to rejoin unless you are re-invited.": "Du kommer inte kunna gå med igen om du inte bjuds in igen.",
-    "Search %(spaceName)s": "Sök i %(spaceName)s",
     "User Directory": "Användarkatalog",
     "Want to add an existing space instead?": "Vill du lägga till ett existerande utrymme istället?",
     "Add a space to a space you manage.": "Lägg till ett utrymme till ett utrymme du kan hantera.",
@@ -1523,10 +1520,6 @@
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
     "Joining…": "Går med…",
-    "%(count)s people joined": {
-        "other": "%(count)s personer gick med",
-        "one": "%(count)s person gick med"
-    },
     "Read receipts": "Läskvitton",
     "Deactivating your account is a permanent action — be careful!": "Avaktivering av ditt konto är en permanent handling — var försiktig!",
     "Remove search filter for %(filter)s": "Ta bort sökfilter för %(filter)s",
@@ -1588,10 +1581,6 @@
     "Change layout": "Byt utseende",
     "Spotlight": "Rampljus",
     "Freedom": "Frihet",
-    "You do not have permission to start voice calls": "Du är inte behörig att starta röstsamtal",
-    "There's no one here to call": "Det finns ingen här att ringa",
-    "You do not have permission to start video calls": "Du är inte behörig att starta videosamtal",
-    "Ongoing call": "Pågående samtal",
     "Video call (%(brand)s)": "Videosamtal (%(brand)s)",
     "Video call (Jitsi)": "Videosamtal (Jitsi)",
     "Show formatting": "Visa formatering",
@@ -1697,7 +1686,6 @@
     "Error changing password": "Fel vid byte av lösenord",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (HTTP-status %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Okänt fel vid lösenordsändring (%(stringifiedError)s)",
-    "Failed to download source media, no source url was found": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -1822,7 +1810,7 @@
         "deselect_all": "Välj bort alla",
         "select_all": "Välj alla",
         "copied": "Kopierat!",
-        "Advanced": "Avancerat"
+        "advanced": "Avancerat"
     },
     "action": {
         "continue": "Fortsätt",
@@ -3253,7 +3241,17 @@
         "more_button": "Mer",
         "screenshare_monitor": "Dela hela skärmen",
         "screenshare_window": "Programfönster",
-        "screenshare_title": "Dela innehåll"
+        "screenshare_title": "Dela innehåll",
+        "disabled_no_perms_start_voice_call": "Du är inte behörig att starta röstsamtal",
+        "disabled_no_perms_start_video_call": "Du är inte behörig att starta videosamtal",
+        "disabled_ongoing_call": "Pågående samtal",
+        "disabled_no_one_here": "Det finns ingen här att ringa",
+        "n_people_joined": {
+            "other": "%(count)s personer gick med",
+            "one": "%(count)s person gick med"
+        },
+        "unknown_person": "okänd person",
+        "connecting": "Ansluter"
     },
     "Other": "Annat",
     "room_settings": {
@@ -3851,7 +3849,8 @@
             "explore": "Utforska rum",
             "manage_and_explore": "Hantera och utforska rum"
         },
-        "share_public": "Dela ditt offentliga utrymme"
+        "share_public": "Dela ditt offentliga utrymme",
+        "search_children": "Sök i %(spaceName)s"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -3911,7 +3910,6 @@
     },
     "create_space": {
         "name_required": "Vänligen ange ett namn för utrymmet",
-        "name_placeholder": "t.ex. mitt-utrymme",
         "explainer": "Utrymmen är ett nytt sätt att gruppera rum och personer. Vad för slags utrymme vill du skapa? Du kan ändra detta senare.",
         "public_description": "Öppna utrymmet för alla, bäst för gemenskaper",
         "private_description": "Endast inbjudan, bäst för dig själv eller team",
@@ -3942,7 +3940,10 @@
         "setup_rooms_community_description": "Låt oss skapa ett rum för varje.",
         "setup_rooms_description": "Du kan lägga till flera senare också, inklusive redan existerande.",
         "setup_rooms_private_heading": "Vilka projekt jobbar ditt team på?",
-        "setup_rooms_private_description": "Vi kommer skapa rum för var och en av dem."
+        "setup_rooms_private_description": "Vi kommer skapa rum för var och en av dem.",
+        "address_placeholder": "t.ex. mitt-utrymme",
+        "address_label": "Adress",
+        "label": "Skapa ett utrymme"
     },
     "user_menu": {
         "switch_theme_light": "Byt till ljust läge",
@@ -4127,7 +4128,8 @@
         "admin_contact_short": "Kontakta din <a>serveradministratör</a>.",
         "non_urgent_echo_failure_toast": "Din server svarar inte på vissa <a>förfrågningar</a>.",
         "failed_copy": "Misslyckades att kopiera",
-        "something_went_wrong": "Något gick fel!"
+        "something_went_wrong": "Något gick fel!",
+        "download_media": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades"
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {

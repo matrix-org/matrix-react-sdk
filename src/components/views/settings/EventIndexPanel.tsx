@@ -227,7 +227,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                     {EventIndexPeg.error && (
                         <SettingsSubsectionText>
                             <details>
-                                <summary>{_t("common|Advanced")}</summary>
+                                <summary>{_t("common|advanced")}</summary>
                                 <code>
                                     {EventIndexPeg.error instanceof Error
                                         ? EventIndexPeg.error.message
