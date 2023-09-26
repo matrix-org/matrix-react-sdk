@@ -68,12 +68,6 @@ const monitorSyncedRule = async (
             definition.ruleToVectorState(syncedRule) !== primaryRuleVectorState,
     );
 
-    console.log(
-        "hey",
-        { outOfSyncRules, primaryRule, primaryRuleVectorState },
-        syncedRules.map((syncedRule) => definition.ruleToVectorState(syncedRule)),
-    );
-
     if (outOfSyncRules.length) {
         await updateExistingPushRulesWithActions(
             matrixClient,
