@@ -1,7 +1,6 @@
 {
     "AM": "AM",
     "PM": "PM",
-    "Authentication": "Authentication",
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
     "and %(count)s others...": {
         "other": "and %(count)s others...",
@@ -23,12 +22,9 @@
     "Failed to mute user": "Failed to mute user",
     "Failed to reject invite": "Failed to reject invite",
     "Failed to reject invitation": "Failed to reject invitation",
-    "Failed to set display name": "Failed to set display name",
     "Filter room members": "Filter room members",
     "Forget room": "Forget room",
     "Historical": "Historical",
-    "Incorrect verification code": "Incorrect verification code",
-    "Invalid Email Address": "Invalid Email Address",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Invited": "Invited",
     "Join Room": "Join Room",
@@ -46,12 +42,8 @@
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Session ID": "Session ID",
     "This room has no local addresses": "This room has no local addresses",
-    "This doesn't appear to be a valid email address": "This doesn't appear to be a valid email address",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tried to load a specific point in this room's timeline, but was unable to find it.",
-    "Unable to add email address": "Unable to add email address",
-    "Unable to remove contact information": "Unable to remove contact information",
-    "Unable to verify email address.": "Unable to verify email address.",
     "unknown error code": "unknown error code",
     "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
@@ -168,7 +160,8 @@
         "on": "On",
         "off": "Off",
         "advanced": "Advanced",
-        "profile": "Profile"
+        "profile": "Profile",
+        "authentication": "Authentication"
     },
     "action": {
         "continue": "Continue",
@@ -277,7 +270,14 @@
             "add_msisdn_dialog_title": "Add Phone Number",
             "name_placeholder": "No display name",
             "error_password_change_403": "Failed to change password. Is your password correct?",
-            "deactivate_section": "Deactivate Account"
+            "deactivate_section": "Deactivate Account",
+            "error_email_verification": "Unable to verify email address.",
+            "incorrect_msisdn_verification": "Incorrect verification code",
+            "error_set_name": "Failed to set display name",
+            "error_remove_3pid": "Unable to remove contact information",
+            "error_invalid_email": "Invalid Email Address",
+            "error_invalid_email_detail": "This doesn't appear to be a valid email address",
+            "error_add_email": "Unable to add email address"
         },
         "voip": {
             "audio_input_empty": "No Microphones detected",

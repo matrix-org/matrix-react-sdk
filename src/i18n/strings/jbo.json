@@ -29,10 +29,7 @@
     "Restricted": "vlipa so'u da",
     "Moderator": "vlipa so'o da",
     "Changes your display nickname": "",
-    "Incorrect verification code": ".i na'e drani ke lacri lerpoi",
     "Warning!": ".i ju'i",
-    "Authentication": "lo nu facki lo du'u do du ma kau",
-    "Failed to set display name": ".i pu fliba lo nu galfi lo cmene",
     "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "Dog": "gerku",
     "Cat": "mlatu",
@@ -138,8 +135,6 @@
     },
     "Are you sure you want to leave the room '%(roomName)s'?": ".i xu do birti le du'u do kaidji le ka co'u pagbu le se zilbe'i be fo la'o zoi. %(roomName)s .zoi",
     "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
-    "Unable to share email address": ".i da nabmi fi lo nu jungau le du'u samymri judri",
-    "Unable to share phone number": ".i da nabmi fi lo nu jungau le du'u fonjudri",
     "Edit message": "nu basti fi le ka notci",
     "Share room": "nu jungau fi le du'u ve zilbe'i",
     "Share Link to User": "nu jungau pa pilno le du'u judri",
@@ -167,7 +162,8 @@
         "trusted": "se lacri",
         "not_trusted": "na se lacri",
         "unnamed_room": "na da cmene",
-        "advanced": "macnu"
+        "advanced": "macnu",
+        "authentication": "lo nu facki lo du'u do du ma kau"
     },
     "action": {
         "continue": "",
@@ -252,7 +248,11 @@
             "email_address_in_use": ".i xa'o pilno fa da le samymri judri",
             "msisdn_in_use": ".i xa'o pilno fa da le fonxa judri",
             "add_email_failed_verification": ".i da nabmi fi lo nu facki le du'u do ponse le te samymri .i ko birti le du'u do samcu'a le judrysni pe le se samymri",
-            "name_placeholder": ".i na da cmene"
+            "name_placeholder": ".i na da cmene",
+            "error_share_email_discovery": ".i da nabmi fi lo nu jungau le du'u samymri judri",
+            "error_share_msisdn_discovery": ".i da nabmi fi lo nu jungau le du'u fonjudri",
+            "incorrect_msisdn_verification": ".i na'e drani ke lacri lerpoi",
+            "error_set_name": ".i pu fliba lo nu galfi lo cmene"
         }
     },
     "create_room": {

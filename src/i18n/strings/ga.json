@@ -228,12 +228,10 @@
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
     "%(duration)ss": "%(duration)ss",
-    "Email Address": "Seoladh Ríomhphoist",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
     "Invited": "Le cuireadh",
     "Demote": "Bain ceadanna",
-    "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
     "Headphones": "Cluasáin",
@@ -323,8 +321,6 @@
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Phone Number": "Uimhir Fóin",
-    "Verification code": "Cód fíoraithe",
     "Results": "Torthaí",
     "Decrypting": "Ag Díchriptiú",
     "Sent": "Seolta",
@@ -424,7 +420,8 @@
         "general": "Ginearálta",
         "profile": "Próifíl",
         "display_name": "Ainm Taispeána",
-        "user_avatar": "Pictiúr próifíle"
+        "user_avatar": "Pictiúr próifíle",
+        "authentication": "Fíordheimhniú"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -586,7 +583,10 @@
             "msisdns_heading": "Uimhreacha guthán",
             "deactivate_section": "Cuir cuntas as feidhm",
             "account_management_section": "Bainistíocht cuntais",
-            "discovery_section": "Aimsiú"
+            "discovery_section": "Aimsiú",
+            "msisdn_verification_field_label": "Cód fíoraithe",
+            "email_address_label": "Seoladh Ríomhphoist",
+            "msisdn_label": "Uimhir Fóin"
         },
         "voip": {
             "audio_input_empty": "Níor braitheadh aon micreafón",

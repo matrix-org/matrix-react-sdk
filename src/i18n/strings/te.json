@@ -1,6 +1,5 @@
 {
     "Admin Tools": "నిర్వాహకుని ఉపకరణాలు",
-    "Authentication": "ప్రామాణీకరణ",
     "You do not have permission to post to this room": "మీకు ఈ గదికి పోస్ట్ చేయడానికి అనుమతి లేదు",
     "A new password must be entered.": "కొత్త పాస్ వర్డ్ ను తప్పక నమోదు చేయాలి.",
     "An error has occurred.": "ఒక లోపము సంభవించినది.",
@@ -34,7 +33,6 @@
     "Connectivity to the server has been lost.": "సెర్వెర్ కనెక్టివిటీని కోల్పోయారు.",
     "Sent messages will be stored until your connection has returned.": "మీ కనెక్షన్ తిరిగి వచ్చే వరకు పంపిన సందేశాలు నిల్వ చేయబడతాయి.",
     "Failed to forget room %(errCode)s": "గది మర్చిపోవడం విఫలమైంది %(errCode)s",
-    "Incorrect verification code": "ధృవీకరణ కోడ్ సరిగా లెదు",
     "unknown error code": "తెలియని కోడ్ లోపం",
     "Unable to restore session": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు",
     "Create new room": "క్రొత్త గది సృష్టించండి",
@@ -62,7 +60,8 @@
         "microphone": "మైక్రోఫోన్",
         "on": "వేయుము",
         "off": "ఆపు",
-        "advanced": "ఆధునిక"
+        "advanced": "ఆధునిక",
+        "authentication": "ప్రామాణీకరణ"
     },
     "action": {
         "continue": "కొనసాగించు",
@@ -111,7 +110,8 @@
             "msisdn_in_use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
             "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
             "add_email_failed_verification": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
-            "deactivate_section": "ఖాతాను డీయాక్టివేట్ చేయండి"
+            "deactivate_section": "ఖాతాను డీయాక్టివేట్ చేయండి",
+            "incorrect_msisdn_verification": "ధృవీకరణ కోడ్ సరిగా లెదు"
         },
         "voip": {
             "audio_input_empty": "మైక్రోఫోన్లు కనుగొనబడలేదు",

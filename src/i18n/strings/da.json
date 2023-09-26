@@ -65,7 +65,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Enter passphrase": "Indtast kodeord",
     "Explore rooms": "Udforsk rum",
-    "Verification code": "Verifikationskode",
     "Headphones": "Hovedtelefoner",
     "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
@@ -450,7 +449,8 @@
             "add_msisdn_dialog_title": "Tilføj telefonnummer",
             "error_password_change_403": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
             "password_change_success": "Din adgangskode blev ændret.",
-            "deactivate_section": "Deaktiver brugerkonto"
+            "deactivate_section": "Deaktiver brugerkonto",
+            "msisdn_verification_field_label": "Verifikationskode"
         }
     },
     "devtools": {

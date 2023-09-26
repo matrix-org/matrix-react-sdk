@@ -28,10 +28,7 @@
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
     "Send": "Send",
-    "Incorrect verification code": "Urett stadfestingskode",
     "Warning!": "Åtvaring!",
-    "Authentication": "Authentisering",
-    "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
     "This event could not be displayed": "Denne hendingen kunne ikkje visast",
     "Failed to ban user": "Fekk ikkje til å stenge ute brukaren",
     "Demote yourself?": "Senke ditt eige tilgangsnivå?",
@@ -116,12 +113,8 @@
     "We encountered an error trying to restore your previous session.": "Noko gjekk gale med framhentinga av den førre øykta di.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Viss du har tidligare brukt ein nyare versjon av %(brand)s, kan økts-data vere inkompatibel med denne versjonen. Lukk dette vindauget og bytt til ein nyare versjon.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Det kan henda at å tømma nettlesarlageret rettar opp i det, men det loggar deg ut og kan gjera den krypterte pratehistoria uleseleg.",
-    "Invalid Email Address": "Ugangbar Epostadresse",
-    "This doesn't appear to be a valid email address": "Det ser ikkje ut til at epostadressa er gangbar",
     "Verification Pending": "Ventar på verifikasjon",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ver venleg og sjekk eposten din og klikk på lenkja du har fått. Når det er gjort, klikk gå fram.",
-    "Unable to add email address": "Klarte ikkje å leggja epostadressa til",
-    "Unable to verify email address.": "Klarte ikkje å stadfesta epostadressa.",
     "This will allow you to reset your password and receive notifications.": "Dette tillèt deg å attendestilla passordet ditt og å få varsel.",
     "Share Room": "Del Rom",
     "Link to most recent message": "Lenk til den nyaste meldinga",
@@ -151,7 +144,6 @@
         "one": "Lastar opp %(filename)s og %(count)s andre"
     },
     "Uploading %(filename)s": "Lastar opp %(filename)s",
-    "Unable to remove contact information": "Klarte ikkje å fjerna kontaktinfo",
     "A new password must be entered.": "Du må skriva eit nytt passord inn.",
     "New passwords must match each other.": "Dei nye passorda må vera like.",
     "Return to login screen": "Gå attende til innlogging",
@@ -294,7 +286,6 @@
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
     "Explore public rooms": "Utforsk offentlege rom",
-    "Email Address": "E-postadresse",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
     "Azerbaijan": "Aserbajdsjan",
@@ -385,7 +376,8 @@
         "advanced": "Avansert",
         "general": "Generelt",
         "profile": "Brukar",
-        "display_name": "Visningsnamn"
+        "display_name": "Visningsnamn",
+        "authentication": "Authentisering"
     },
     "action": {
         "continue": "Fortset",
@@ -646,7 +638,15 @@
             "error_password_change_403": "Fekk ikkje til å skifta passord. Er passordet rett?",
             "emails_heading": "E-postadresser",
             "msisdns_heading": "Telefonnummer",
-            "deactivate_section": "Avliv Brukaren"
+            "deactivate_section": "Avliv Brukaren",
+            "error_email_verification": "Klarte ikkje å stadfesta epostadressa.",
+            "incorrect_msisdn_verification": "Urett stadfestingskode",
+            "error_set_name": "Fekk ikkje til å setja visningsnamn",
+            "error_remove_3pid": "Klarte ikkje å fjerna kontaktinfo",
+            "error_invalid_email": "Ugangbar Epostadresse",
+            "error_invalid_email_detail": "Det ser ikkje ut til at epostadressa er gangbar",
+            "error_add_email": "Klarte ikkje å leggja epostadressa til",
+            "email_address_label": "E-postadresse"
         },
         "sidebar": {
             "title": "Sidestolpe"

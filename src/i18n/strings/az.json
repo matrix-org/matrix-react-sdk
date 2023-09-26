@@ -23,9 +23,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Moderator": "Moderator",
-    "Incorrect verification code": "Təsdiq etmənin səhv kodu",
-    "Authentication": "Müəyyənləşdirilmə",
-    "Failed to set display name": "Görünüş adını təyin etmək bacarmadı",
     "not specified": "qeyd edilmədi",
     "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
     "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
@@ -48,11 +45,8 @@
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
     "An error has occurred.": "Səhv oldu.",
-    "Invalid Email Address": "Yanlış email",
     "Verification Pending": "Gözləmə təsdiq etmələr",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın.",
-    "Unable to add email address": "Email-i əlavə etməyə müvəffəq olmur",
-    "Unable to verify email address.": "Email-i yoxlamağı bacarmadı.",
     "Reject invitation": "Dəvəti rədd etmək",
     "Are you sure you want to reject the invitation?": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
     "Failed to reject invitation": "Dəvəti rədd etməyi bacarmadı",
@@ -61,7 +55,6 @@
     "No more results": "Daha çox nəticə yoxdur",
     "Failed to reject invite": "Dəvəti rədd etməyi bacarmadı",
     "Failed to load timeline position": "Xronologiyadan nişanı yükləməyi bacarmadı",
-    "Unable to remove contact information": "Əlaqə məlumatlarının silməyi bacarmadı",
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
@@ -89,7 +82,8 @@
         "identity_server": "Eyniləşdirmənin serveri",
         "on": "Qoşmaq",
         "advanced": "Təfərrüatlar",
-        "profile": "Profil"
+        "profile": "Profil",
+        "authentication": "Müəyyənləşdirilmə"
     },
     "action": {
         "continue": "Davam etmək",
@@ -151,7 +145,13 @@
             "add_email_failed_verification": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
             "add_msisdn_dialog_title": "Telefon nömrəsi əlavə etmək",
             "error_password_change_403": "Şifrəni əvəz etməyi bacarmadı. Siz cari şifrə düzgün daxil etdiniz?",
-            "deactivate_section": "Hesabı bağlamaq"
+            "deactivate_section": "Hesabı bağlamaq",
+            "error_email_verification": "Email-i yoxlamağı bacarmadı.",
+            "incorrect_msisdn_verification": "Təsdiq etmənin səhv kodu",
+            "error_set_name": "Görünüş adını təyin etmək bacarmadı",
+            "error_remove_3pid": "Əlaqə məlumatlarının silməyi bacarmadı",
+            "error_invalid_email": "Yanlış email",
+            "error_add_email": "Email-i əlavə etməyə müvəffəq olmur"
         }
     },
     "timeline": {
