@@ -868,14 +868,6 @@
     },
     "Securely cache encrypted messages locally for them to appear in search results.": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "به صورت جداگانه هر نشستی که با بقیه‌ی کاربران دارید را تائید کنید تا به عنوان نشست قابل اعتماد نشانه‌گذاری شود، با این کار می‌توانید به دستگاه‌های امضاء متقابل اعتماد نکنید.",
-    "Unable to query secret storage status": "امکان جستجو و کنکاش وضعیت حافظه‌ی مخفی میسر نیست",
-    "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "اگر الان لغو کنید، ممکن است پیام‌ها و داده‌های رمزشده‌ی خود را در صورت خارج‌شدن از حساب‌های کاربریتان، از دست دهید.",
-    "You can also set up Secure Backup & manage your keys in Settings.": "همچنین می‌توانید پشتیبان‌گیری امن را برپا کرده و کلید‌های خود را در تنظیمات مدیریت کنید.",
-    "Upgrade your encryption": "رمزنگاری خود را ارتقا دهید",
-    "Set a Security Phrase": "یک عبارت امنیتی تنظیم کنید",
-    "Confirm Security Phrase": "عبارت امنیتی را تأیید کنید",
-    "Save your Security Key": "کلید امنیتی خود را ذخیره کنید",
-    "Unable to set up secret storage": "تنظیم حافظه‌ی پنهان امکان پذیر نیست",
     "Passphrases must match": "عبارات‌های امنیتی باید مطابقت داشته باشند",
     "Passphrase must not be empty": "عبارت امنیتی نمی‌تواند خالی باشد",
     "Unknown error": "خطای ناشناخته",
@@ -1733,7 +1725,15 @@
                 "pass_phrase_match_failed": "مطابقت ندارد.",
                 "set_phrase_again": "برای تنظیم مجدد آن به عقب برگردید.",
                 "enter_phrase_to_confirm": "عبارت امنیتی خود را برای تائید مجددا وارد کنید.",
-                "confirm_security_phrase": "عبارت امنیتی خود را تأیید کنیدعبارت امنیتی خود را تائید نمائید"
+                "confirm_security_phrase": "عبارت امنیتی خود را تأیید کنیدعبارت امنیتی خود را تائید نمائید",
+                "secret_storage_query_failure": "امکان جستجو و کنکاش وضعیت حافظه‌ی مخفی میسر نیست",
+                "cancel_warning": "اگر الان لغو کنید، ممکن است پیام‌ها و داده‌های رمزشده‌ی خود را در صورت خارج‌شدن از حساب‌های کاربریتان، از دست دهید.",
+                "settings_reminder": "همچنین می‌توانید پشتیبان‌گیری امن را برپا کرده و کلید‌های خود را در تنظیمات مدیریت کنید.",
+                "title_upgrade_encryption": "رمزنگاری خود را ارتقا دهید",
+                "title_set_phrase": "یک عبارت امنیتی تنظیم کنید",
+                "title_confirm_phrase": "عبارت امنیتی را تأیید کنید",
+                "title_save_key": "کلید امنیتی خود را ذخیره کنید",
+                "unable_to_setup": "تنظیم حافظه‌ی پنهان امکان پذیر نیست"
             }
         }
     },

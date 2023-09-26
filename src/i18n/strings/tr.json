@@ -453,7 +453,6 @@
     "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
-    "Upgrade your encryption": "Şifrelemenizi güncelleyin",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
     "Later": "Sonra",
@@ -513,7 +512,6 @@
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
     "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-    "Unable to set up secret storage": "Sır deposu ayarlanamıyor",
     "Set up": "Ayarla",
     "Upgrade public room": "Açık odayı güncelle",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
@@ -1378,7 +1376,9 @@
                 "requires_server_authentication": "Güncellemeyi teyit etmek için sunucuda oturum açmaya ihtiyacınız var.",
                 "pass_phrase_match_success": "Eşleşti!",
                 "pass_phrase_match_failed": "Eşleşmiyor.",
-                "set_phrase_again": "Geri git ve yeniden ayarla."
+                "set_phrase_again": "Geri git ve yeniden ayarla.",
+                "title_upgrade_encryption": "Şifrelemenizi güncelleyin",
+                "unable_to_setup": "Sır deposu ayarlanamıyor"
             }
         }
     },

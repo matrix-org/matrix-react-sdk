@@ -424,9 +424,6 @@
     "Create account": "Criar conta",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
-    "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Se você cancelar agora, poderá perder mensagens e dados criptografados se você perder acesso aos seus logins atuais.",
-    "Upgrade your encryption": "Atualizar sua criptografia",
-    "Save your Security Key": "Salve sua Chave de Segurança",
     "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
     "Forget Room": "Esquecer Sala",
@@ -746,7 +743,6 @@
     "Backup version:": "Versão do backup:",
     "Backup key stored:": "Backup da chave armazenada:",
     "Backup key cached:": "Backup da chave em cache:",
-    "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
     "Cross-signing is ready for use.": "A autoverificação está pronta para uso.",
     "Cross-signing is not set up.": "A autoverificação não está configurada.",
     "Failed to save your profile": "Houve uma falha ao salvar o seu perfil",
@@ -781,10 +777,6 @@
     "A connection error occurred while trying to contact the server.": "Um erro ocorreu na conexão do Element com o servidor.",
     "Unable to set up keys": "Não foi possível configurar as chaves",
     "Failed to get autodiscovery configuration from server": "Houve uma falha para obter do servidor a configuração de encontrar contatos",
-    "Unable to query secret storage status": "Não foi possível obter o status do armazenamento secreto",
-    "Set a Security Phrase": "Defina uma frase de segurança",
-    "Confirm Security Phrase": "Confirme a frase de segurança",
-    "Unable to set up secret storage": "Não foi possível definir o armazenamento secreto",
     "Recovery Method Removed": "Opção de recuperação removida",
     "You can only pin up to %(count)s widgets": {
         "other": "Você pode fixar até %(count)s widgets"
@@ -1972,7 +1964,15 @@
                 "use_different_passphrase": "Usar uma frase secreta diferente?",
                 "pass_phrase_match_failed": "Isto não corresponde.",
                 "set_phrase_again": "Voltar para configurar novamente.",
-                "confirm_security_phrase": "Confirmar com a sua Frase de Segurança"
+                "confirm_security_phrase": "Confirmar com a sua Frase de Segurança",
+                "secret_storage_query_failure": "Não foi possível obter o status do armazenamento secreto",
+                "cancel_warning": "Se você cancelar agora, poderá perder mensagens e dados criptografados se você perder acesso aos seus logins atuais.",
+                "settings_reminder": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
+                "title_upgrade_encryption": "Atualizar sua criptografia",
+                "title_set_phrase": "Defina uma frase de segurança",
+                "title_confirm_phrase": "Confirme a frase de segurança",
+                "title_save_key": "Salve sua Chave de Segurança",
+                "unable_to_setup": "Não foi possível definir o armazenamento secreto"
             }
         }
     },

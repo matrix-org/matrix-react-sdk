@@ -235,7 +235,6 @@
     "Albania": "Albānija",
     "Confirm to continue": "Apstipriniet, lai turpinātu",
     "Confirm account deactivation": "Apstipriniet konta deaktivizēšanu",
-    "Set a Security Phrase": "Iestatiet slepeno frāzi",
     "Incorrect Security Phrase": "Nepareiza slepenā frāze",
     "Security Phrase": "Slepenā frāze",
     "Join millions for free on the largest public server": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
@@ -312,7 +311,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Uzsāciet sarunu ar citiem, izmantojot vārdu vai lietotājvārdu (piemērs - <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Uzsāciet sarunu ar citiem, izmantojot vārdu, epasta adresi vai lietotājvārdu (piemērs - <userId/>).",
     "Use your Security Key to continue.": "Izmantojiet savu drošības atslēgu, lai turpinātu.",
-    "Save your Security Key": "Saglabājiet savu drošības atslēgu",
     "Enter Security Key": "Ievadiet drošības atslēgu",
     "Security Key mismatch": "Drošības atslēgas atšķiras",
     "Invalid Security Key": "Kļūdaina drošības atslēga",
@@ -322,7 +320,6 @@
     "Reject & Ignore user": "Noraidīt un ignorēt lietotāju",
     "Do you want to chat with %(user)s?": "Vai vēlaties sarakstīties ar %(user)s?",
     "Explore rooms": "Pārlūkot istabas",
-    "Confirm Security Phrase": "Apstipriniet slepeno frāzi",
     "Create account": "Izveidot kontu",
     "Your password has been reset.": "Jūsu parole ir atiestatīta.",
     "Could not load user profile": "Nevarēja ielādēt lietotāja profilu",
@@ -1163,7 +1160,10 @@
                 "use_different_passphrase": "Izmantot citu frāzveida paroli?",
                 "pass_phrase_match_failed": "Nesakrīt.",
                 "set_phrase_again": "Atgriezties, lai iestatītu atkārtoti.",
-                "confirm_security_phrase": "Apstipriniet savu slepeno frāzi"
+                "confirm_security_phrase": "Apstipriniet savu slepeno frāzi",
+                "title_set_phrase": "Iestatiet slepeno frāzi",
+                "title_confirm_phrase": "Apstipriniet slepeno frāzi",
+                "title_save_key": "Saglabājiet savu drošības atslēgu"
             }
         }
     },

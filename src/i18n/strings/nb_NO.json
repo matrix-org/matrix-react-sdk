@@ -244,7 +244,6 @@
     "No more results": "Ingen flere resultater",
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
     "File to import": "Filen som skal importeres",
-    "Upgrade your encryption": "Oppgrader krypteringen din",
     "Verify this session": "Verifiser denne økten",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(count)s others": {
@@ -1174,7 +1173,8 @@
                 "use_different_passphrase": "Vil du bruke en annen passfrase?",
                 "pass_phrase_match_failed": "Det samsvarer ikke.",
                 "set_phrase_again": "Gå tilbake for å velge på nytt.",
-                "confirm_security_phrase": "Bekreft sikkerhetsfrasen din"
+                "confirm_security_phrase": "Bekreft sikkerhetsfrasen din",
+                "title_upgrade_encryption": "Oppgrader krypteringen din"
             }
         }
     },

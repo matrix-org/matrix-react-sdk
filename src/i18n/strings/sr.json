@@ -602,7 +602,6 @@
     "Failed to save space settings.": "Чување подешавања простора није успело.",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
-    "You can also set up Secure Backup & manage your keys in Settings.": "Такође можете да подесите Сигурносну копију и управљате својим тастерима у подешавањима.",
     "Edit settings relating to your space.": "Уредите поставке које се односе на ваш простор.",
     "Go to Settings": "Идите на подешавања",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
@@ -896,7 +895,8 @@
                 "description": "Заштитите од губитка приступа шифрованим порукама и подацима је подржан сигурносном копијом кључева за шифровање на серверу.",
                 "requires_password_confirmation": "Унесите лозинку за налог да бисте потврдили надоградњу:",
                 "requires_key_restore": "Вратите сигурносну копију кључа да бисте надоградили шифровање",
-                "requires_server_authentication": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу."
+                "requires_server_authentication": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу.",
+                "settings_reminder": "Такође можете да подесите Сигурносну копију и управљате својим тастерима у подешавањима."
             }
         }
     },

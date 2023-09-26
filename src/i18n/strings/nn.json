@@ -327,7 +327,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
-    "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
     "Later": "Seinare",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
@@ -711,7 +710,8 @@
             "setup_secure_backup": {
                 "pass_phrase_match_success": "Dette stemmer!",
                 "pass_phrase_match_failed": "Dette stemmer ikkje.",
-                "set_phrase_again": "Gå tilbake for å sette den på nytt."
+                "set_phrase_again": "Gå tilbake for å sette den på nytt.",
+                "unable_to_setup": "Oppsett av hemmeleg lager feila"
             }
         }
     },

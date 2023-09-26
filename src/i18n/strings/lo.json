@@ -759,15 +759,6 @@
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Passphrase must not be empty": "ຂໍ້ຄວາມລະຫັດຜ່ານຈະຕ້ອງບໍ່ຫວ່າງເປົ່າ",
     "Passphrases must match": "ປະໂຫຍກຕ້ອງກົງກັນ",
-    "Unable to set up secret storage": "ບໍ່ສາມາດກຳນົດບ່ອນເກັບຂໍ້ມູນລັບໄດ້",
-    "Save your Security Key": "ບັນທຶກກະແຈຄວາມປອດໄພຂອງທ່ານ",
-    "Confirm Security Phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພ",
-    "Set a Security Phrase": "ຕັ້ງຄ່າປະໂຫຍກຄວາມປອດໄພ",
-    "Upgrade your encryption": "ປັບປຸງການເຂົ້າລະຫັດຂອງທ່ານ",
-    "You can also set up Secure Backup & manage your keys in Settings.": "ນອກນັ້ນທ່ານຍັງສາມາດຕັ້ງຄ່າການສໍາຮອງຂໍ້ມູນທີ່ປອດໄພ & ຈັດການກະແຈຂອງທ່ານໃນການຕັ້ງຄ່າ.",
-    "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "ຖ້າທ່ານຍົກເລີກດຽວນີ້, ທ່ານອາດຈະສູນເສຍຂໍ້ຄວາມ & ຂໍ້ມູນທີ່ຖືກເຂົ້າລະຫັດ ແລະ ທ່ານສູນເສຍການເຂົ້າເຖິງການເຂົ້າສູ່ລະບົບຂອງທ່ານ.",
-    "Unable to query secret storage status": "ບໍ່ສາມາດຄົ້ນຫາສະຖານະການເກັບຮັກສາຄວາມລັບໄດ້",
-    "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "ການເກັບຮັກສາກະແຈຄວາມປອດໄພຂອງທ່ານໄວ້ບ່ອນໃດບ່ອນໜຶ່ງທີ່ປອດໄພ ເຊັ່ນ: ຕົວຈັດການລະຫັດຜ່ານ ຫຼືບ່ອນປອດໄພ ເພາະຈະຖືກໃຊ້ເພື່ອປົກປ້ອງຂໍ້ມູນທີ່ເຂົ້າລະຫັດໄວ້ຂອງທ່ານ.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Create account": "ສ້າງບັນຊີ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
@@ -2191,7 +2182,16 @@
                 "pass_phrase_match_failed": "ບໍ່ກົງກັນ.",
                 "set_phrase_again": "ກັບຄືນໄປຕັ້ງໃໝ່ອີກຄັ້ງ.",
                 "enter_phrase_to_confirm": "ກະລຸນາໃສ່ປະໂຫຍກຄວາມປອດໄພຂອງທ່ານເປັນເທື່ອທີສອງເພື່ອຢືນຢັນ.",
-                "confirm_security_phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ"
+                "confirm_security_phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ",
+                "security_key_safety_reminder": "ການເກັບຮັກສາກະແຈຄວາມປອດໄພຂອງທ່ານໄວ້ບ່ອນໃດບ່ອນໜຶ່ງທີ່ປອດໄພ ເຊັ່ນ: ຕົວຈັດການລະຫັດຜ່ານ ຫຼືບ່ອນປອດໄພ ເພາະຈະຖືກໃຊ້ເພື່ອປົກປ້ອງຂໍ້ມູນທີ່ເຂົ້າລະຫັດໄວ້ຂອງທ່ານ.",
+                "secret_storage_query_failure": "ບໍ່ສາມາດຄົ້ນຫາສະຖານະການເກັບຮັກສາຄວາມລັບໄດ້",
+                "cancel_warning": "ຖ້າທ່ານຍົກເລີກດຽວນີ້, ທ່ານອາດຈະສູນເສຍຂໍ້ຄວາມ & ຂໍ້ມູນທີ່ຖືກເຂົ້າລະຫັດ ແລະ ທ່ານສູນເສຍການເຂົ້າເຖິງການເຂົ້າສູ່ລະບົບຂອງທ່ານ.",
+                "settings_reminder": "ນອກນັ້ນທ່ານຍັງສາມາດຕັ້ງຄ່າການສໍາຮອງຂໍ້ມູນທີ່ປອດໄພ & ຈັດການກະແຈຂອງທ່ານໃນການຕັ້ງຄ່າ.",
+                "title_upgrade_encryption": "ປັບປຸງການເຂົ້າລະຫັດຂອງທ່ານ",
+                "title_set_phrase": "ຕັ້ງຄ່າປະໂຫຍກຄວາມປອດໄພ",
+                "title_confirm_phrase": "ຢືນຢັນປະໂຫຍກຄວາມປອດໄພ",
+                "title_save_key": "ບັນທຶກກະແຈຄວາມປອດໄພຂອງທ່ານ",
+                "unable_to_setup": "ບໍ່ສາມາດກຳນົດບ່ອນເກັບຂໍ້ມູນລັບໄດ້"
             }
         }
     },

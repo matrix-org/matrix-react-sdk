@@ -555,7 +555,6 @@
     "Upgrade public room": "Eguneratu gela publikoa",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gela eguneratzea ekintza aurreratu bat da eta akatsen, falta diren ezaugarrien, edo segurtasun arazoen erruz gela ezegonkorra denean aholkatzen da.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Gela hau <oldVersion /> bertsiotik <newVersion /> bertsiora eguneratuko duzu.",
-    "Unable to set up secret storage": "Ezin izan da biltegi sekretua ezarri",
     "Language Dropdown": "Hizkuntza menua",
     "Country Dropdown": "Herrialde menua",
     "Show more": "Erakutsi gehiago",
@@ -575,7 +574,6 @@
     "Verify User": "Egiaztatu erabiltzailea",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz.",
     "Start Verification": "Hasi egiaztaketa",
-    "Upgrade your encryption": "Eguneratu zure zifratzea",
     "Verify this session": "Egiaztatu saio hau",
     "Encryption upgrade available": "Zifratze eguneratzea eskuragarri",
     "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.": "Zure kontuak zeharkako sinatze identitate bat du biltegi sekretuan, baina saio honek ez du oraindik fidagarritzat.",
@@ -685,7 +683,6 @@
     "Submit logs": "Bidali egunkariak",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
     "Unable to upload": "Ezin izan da igo",
-    "Unable to query secret storage status": "Ezin izan da biltegi sekretuaren egoera kontsultatu",
     "New login. Was this you?": "Saio berria. Zu izan zara?",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
@@ -1118,7 +1115,10 @@
                 "pass_phrase_match_success": "Bat dator!",
                 "use_different_passphrase": "Erabili pasa-esaldi desberdin bat?",
                 "pass_phrase_match_failed": "Ez dator bat.",
-                "set_phrase_again": "Joan atzera eta berriro ezarri."
+                "set_phrase_again": "Joan atzera eta berriro ezarri.",
+                "secret_storage_query_failure": "Ezin izan da biltegi sekretuaren egoera kontsultatu",
+                "title_upgrade_encryption": "Eguneratu zure zifratzea",
+                "unable_to_setup": "Ezin izan da biltegi sekretua ezarri"
             }
         }
     },
