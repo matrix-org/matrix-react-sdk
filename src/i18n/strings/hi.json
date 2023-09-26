@@ -36,7 +36,6 @@
     "Warning!": "चेतावनी!",
     "Authentication": "प्रमाणीकरण",
     "Failed to set display name": "प्रदर्शन नाम सेट करने में विफल",
-    "Notification targets": "अधिसूचना के लक्ष्य",
     "This event could not be displayed": "यह घटना प्रदर्शित नहीं की जा सकी",
     "Failed to ban user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
     "Demote yourself?": "खुद को अवनत करें?",
@@ -138,12 +137,9 @@
     "Unable to verify phone number.": "फ़ोन नंबर सत्यापित करने में असमर्थ।",
     "Verification code": "पुष्टि संख्या",
     "Phone Number": "फ़ोन नंबर",
-    "Profile picture": "प्रोफ़ाइल फोटो",
-    "Display Name": "प्रदर्शित होने वाला नाम",
     "Room information": "रूम जानकारी",
     "Room Addresses": "रूम का पता",
     "Failed to change password. Is your password correct?": "पासवर्ड बदलने में विफल। क्या आपका पासवर्ड सही है?",
-    "Profile": "प्रोफाइल",
     "Email addresses": "ईमेल पता",
     "Phone numbers": "फोन नंबर",
     "Account management": "खाता प्रबंधन",
@@ -333,7 +329,10 @@
         "on": "चालू",
         "off": "बंद",
         "advanced": "उन्नत",
-        "general": "सामान्य"
+        "general": "सामान्य",
+        "profile": "प्रोफाइल",
+        "display_name": "प्रदर्शित होने वाला नाम",
+        "user_avatar": "प्रोफ़ाइल फोटो"
     },
     "action": {
         "continue": "आगे बढ़ें",
@@ -416,7 +415,8 @@
             "noisy": "शोरगुल",
             "error_permissions_denied": "%(brand)s को आपको सूचनाएं भेजने की अनुमति नहीं है - कृपया अपनी ब्राउज़र सेटिंग जांचें",
             "error_permissions_missing": "%(brand)s को सूचनाएं भेजने की अनुमति नहीं दी गई थी - कृपया पुनः प्रयास करें",
-            "error_title": "अधिसूचनाएं सक्षम करने में असमर्थ"
+            "error_title": "अधिसूचनाएं सक्षम करने में असमर्थ",
+            "push_targets": "अधिसूचना के लक्ष्य"
         },
         "appearance": {
             "timeline_image_size_default": "डिफ़ॉल्ट",

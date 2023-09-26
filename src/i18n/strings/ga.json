@@ -242,7 +242,6 @@
     "Demote": "Bain ceadanna",
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
-    "Profile": "Próifíl",
     "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
@@ -339,15 +338,10 @@
     "Account management": "Bainistíocht cuntais",
     "Phone numbers": "Uimhreacha guthán",
     "Email addresses": "Seoltaí r-phost",
-    "Display Name": "Ainm Taispeána",
-    "Profile picture": "Pictiúr próifíle",
     "Phone Number": "Uimhir Fóin",
     "Verification code": "Cód fíoraithe",
-    "Notification targets": "Spriocanna fógraí",
     "Results": "Torthaí",
     "Decrypting": "Ag Díchriptiú",
-    "Global": "Uilíoch",
-    "Keyword": "Eochairfhocal",
     "Address": "Seoladh",
     "Sent": "Seolta",
     "Sending": "Ag Seoladh",
@@ -448,7 +442,10 @@
         "copied": "Cóipeáilte!",
         "advanced": "Forbartha",
         "spaces": "Spásanna",
-        "general": "Ginearálta"
+        "general": "Ginearálta",
+        "profile": "Próifíl",
+        "display_name": "Ainm Taispeána",
+        "user_avatar": "Pictiúr próifíle"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -571,7 +568,8 @@
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
         "notifications": {
             "rule_call": "Nuair a fhaighim cuireadh glaoigh",
-            "noisy": "Callánach"
+            "noisy": "Callánach",
+            "push_targets": "Spriocanna fógraí"
         },
         "appearance": {
             "timeline_image_size_default": "Réamhshocrú",
@@ -882,7 +880,10 @@
     "notifications": {
         "enable_prompt_toast_title": "Fógraí",
         "colour_none": "Níl aon cheann",
-        "colour_bold": "Trom"
+        "colour_bold": "Trom",
+        "keyword": "Eochairfhocal",
+        "class_global": "Uilíoch",
+        "class_other": "Eile"
     },
     "onboarding": {
         "create_account": "Déan cuntas a chruthú"

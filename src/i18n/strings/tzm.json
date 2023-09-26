@@ -47,7 +47,6 @@
     "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
     "None": "Walu",
-    "Profile": "Ifres",
     "Folder": "Asdaw",
     "Guitar": "Agiṭaṛ",
     "Ball": "Tacama",
@@ -91,7 +90,8 @@
         "microphone": "Amikṛu",
         "emoji": "Imuji",
         "space": "Space",
-        "copied": "inɣel!"
+        "copied": "inɣel!",
+        "profile": "Ifres"
     },
     "action": {
         "continue": "Kemmel",
@@ -179,6 +179,7 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Tineɣmisin",
-        "colour_none": "Walu"
+        "colour_none": "Walu",
+        "class_other": "Yaḍn"
     }
 }

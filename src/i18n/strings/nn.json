@@ -34,7 +34,6 @@
     "Warning!": "Åtvaring!",
     "Authentication": "Authentisering",
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
-    "Notification targets": "Varselmål",
     "This event could not be displayed": "Denne hendingen kunne ikkje visast",
     "Failed to ban user": "Fekk ikkje til å stenge ute brukaren",
     "Demote yourself?": "Senke ditt eige tilgangsnivå?",
@@ -183,7 +182,6 @@
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Klarte ikkje å lasta handlinga som vert svara til. Anten finst ho ikkje elles har du ikkje tilgang til å sjå ho.",
     "Filter results": "Filtrer resultat",
     "Server may be unavailable, overloaded, or search timed out :(": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :(",
-    "Profile": "Brukar",
     "Export room keys": "Eksporter romnøklar",
     "Import room keys": "Importer romnøklar",
     "File to import": "Fil til import",
@@ -273,7 +271,6 @@
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
     "Revoke invite": "Trekk invitasjon",
     "Invited by %(sender)s": "Invitert av %(sender)s",
-    "Mark all as read": "Merk alle som lesne",
     "Error updating main address": "Feil under oppdatering av hovedadresse",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Det skjedde ein feil under oppdatering av hovudadressa for rommet. Det kan hende at dette er ein mellombels feil, eller at det ikkje er tillate på tenaren.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Feil under oppdatering av alternativ adresse. Det kan hende at dette er mellombels, eller at det ikkje er tillate på tenaren.",
@@ -291,7 +288,6 @@
     "Power level": "Tilgangsnivå",
     "Voice & Video": "Tale og video",
     "Show more": "Vis meir",
-    "Display Name": "Visningsnamn",
     "Invalid theme schema.": "",
     "Room information": "Rominformasjon",
     "Room Addresses": "Romadresser",
@@ -363,9 +359,6 @@
     "Poll": "Røysting",
     "You do not have permission to start polls in this room.": "Du har ikkje lov til å starte nye røystingar i dette rommet.",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
-    "New keyword": "Nytt nøkkelord",
-    "Keyword": "Nøkkelord",
-    "Mentions & keywords": "Nemningar & nøkkelord",
     "Identity server (%(server)s)": "Identietstenar (%(server)s)",
     "Change identity server": "Endre identitetstenar",
     "Not a valid identity server (status code %(code)s)": "Ikkje ein gyldig identietstenar (statuskode %(code)s)",
@@ -429,7 +422,9 @@
         "off": "Av",
         "copied": "Kopiert!",
         "advanced": "Avansert",
-        "general": "Generelt"
+        "general": "Generelt",
+        "profile": "Brukar",
+        "display_name": "Visningsnamn"
     },
     "action": {
         "continue": "Fortset",
@@ -594,7 +589,8 @@
             "noisy": "Bråkete",
             "error_permissions_denied": "%(brand)s har ikkje lov til å senda deg varsel - sjekk nettlesarinnstillingane dine",
             "error_permissions_missing": "%(brand)s fekk ikkje tillating til å senda varsel - ver venleg og prøv igjen",
-            "error_title": "Klarte ikkje å skru på Varsel"
+            "error_title": "Klarte ikkje å skru på Varsel",
+            "push_targets": "Varselmål"
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentell)",
@@ -1263,7 +1259,12 @@
         "enable_prompt_toast_title": "Varsel",
         "enable_prompt_toast_description": "Aktiver skrivebordsvarsel",
         "colour_bold": "Feit",
-        "error_change_title": "Endra varslingsinnstillingar"
+        "error_change_title": "Endra varslingsinnstillingar",
+        "mark_all_read": "Merk alle som lesne",
+        "keyword": "Nøkkelord",
+        "keyword_new": "Nytt nøkkelord",
+        "class_other": "Anna",
+        "mentions_keywords": "Nemningar & nøkkelord"
     },
     "room_summary_card_back_action_label": "Rominformasjon",
     "quick_settings": {

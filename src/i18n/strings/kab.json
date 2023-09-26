@@ -45,8 +45,6 @@
     "Show more": "Sken-d ugar",
     "Warning!": "Ɣur-k·m!",
     "Authentication": "Asesteb",
-    "Display Name": "Sken isem",
-    "Profile": "Amaɣnu",
     "None": "Ula yiwen",
     "Sounds": "Imesla",
     "Browse": "Inig",
@@ -156,8 +154,6 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Notification targets": "Isaḍasen n yilɣa",
-    "Profile picture": "Tugna n umaɣnu",
     "Checking server": "Asenqed n uqeddac",
     "Change identity server": "Snifel aqeddac n timagit",
     "You should:": "Aql-ak·am:",
@@ -328,7 +324,6 @@
     "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
     "Room options": "Tixtiṛiyin n texxamt",
     "All Rooms": "Akk tixxamin",
-    "Mark all as read": "Creḍ kullec yettwaɣra",
     "Error creating address": "Tuccḍa deg tmerna n tensa",
     "Error removing address": "Tuccḍa deg tukksa n tensa",
     "Main address": "Tansa tagejdant",
@@ -702,8 +697,6 @@
     "Backup version:": "Lqem n uklas:",
     "Not encrypted": "Ur yettwawgelhen ara",
     "Room settings": "Iɣewwaṛen n texxamt",
-    "Failed to save your profile": "Yecceḍ usekles n umaɣnu-ik•im",
-    "The operation could not be completed": "Tamahilt ur tezmir ara ad tettwasmed",
     "Widgets": "Iwiǧiten",
     "Iraq": "ɛiṛaq",
     "Bosnia": "Busniya",
@@ -1027,7 +1020,10 @@
         "all_rooms": "Akk tixxamin",
         "copied": "Yettwanɣel!",
         "advanced": "Talqayt",
-        "general": "Amatu"
+        "general": "Amatu",
+        "profile": "Amaɣnu",
+        "display_name": "Sken isem",
+        "user_avatar": "Tugna n umaɣnu"
     },
     "action": {
         "continue": "Kemmel",
@@ -1268,7 +1264,8 @@
             "noisy": "Sɛan ṣṣut",
             "error_permissions_denied": "%(brand)s ulac ɣer-s tisirag i tuzna n yilɣa - ttxil-k/m senqed iɣewwaren n yiminig-ik/im",
             "error_permissions_missing": "%(brand)s ur d-yefk ara tisirag i tuzna n yilɣa - ttxil-k/m εreḍ tikkelt-nniḍen",
-            "error_title": "Sens irmad n yilɣa"
+            "error_title": "Sens irmad n yilɣa",
+            "push_targets": "Isaḍasen n yilɣa"
         },
         "appearance": {
             "heading": "Err arwes-ik·im d udmawan",
@@ -1382,7 +1379,9 @@
             "add_msisdn_confirm_button": "Sentem timerna n wuṭṭun n tilifun",
             "add_msisdn_confirm_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n wuṭṭun-a n tilifun.",
             "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun",
-            "name_placeholder": "Ulac meffer isem"
+            "name_placeholder": "Ulac meffer isem",
+            "error_saving_profile_title": "Yecceḍ usekles n umaɣnu-ik•im",
+            "error_saving_profile": "Tamahilt ur tezmir ara ad tettwasmed"
         }
     },
     "devtools": {
@@ -2197,7 +2196,9 @@
         "enable_prompt_toast_title": "Ilɣa",
         "colour_none": "Ula yiwen",
         "colour_bold": "Azuran",
-        "error_change_title": "Snifel iɣewwaren n yilɣa"
+        "error_change_title": "Snifel iɣewwaren n yilɣa",
+        "mark_all_read": "Creḍ kullec yettwaɣra",
+        "class_other": "Nniḍen"
     },
     "room_summary_card_back_action_label": "Talɣut n texxamt",
     "quick_settings": {

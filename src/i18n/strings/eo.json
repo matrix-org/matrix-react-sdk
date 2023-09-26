@@ -127,7 +127,6 @@
     "Unable to remove contact information": "Ne povas forigi kontaktajn informojn",
     "No Microphones detected": "Neniu mikrofono troviĝis",
     "No Webcams detected": "Neniu kamerao troviĝis",
-    "Profile": "Profilo",
     "A new password must be entered.": "Vi devas enigi novan pasvorton.",
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
     "Return to login screen": "Reiri al saluta paĝo",
@@ -145,7 +144,6 @@
     "Replying": "Respondante",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Sunday": "Dimanĉo",
-    "Notification targets": "Celoj de sciigoj",
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
     "Changelog": "Protokolo de ŝanĝoj",
@@ -230,8 +228,6 @@
     "Folder": "Dosierujo",
     "Email Address": "Retpoŝtadreso",
     "Phone Number": "Telefonnumero",
-    "Profile picture": "Profilbildo",
-    "Display Name": "Vidiga nomo",
     "Email addresses": "Retpoŝtadresoj",
     "Phone numbers": "Telefonnumeroj",
     "Ignored users": "Malatentaj uzantoj",
@@ -528,7 +524,6 @@
     "Encrypted by an unverified session": "Ĉifrita de nekontrolita salutaĵo",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
     "Close preview": "Fermi antaŭrigardon",
-    "Mark all as read": "Marki ĉion legita",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
     "Waiting for %(displayName)s to accept…": "Atendante akcepton de %(displayName)s…",
     "Accepting…": "Akceptante…",
@@ -724,8 +719,6 @@
     "Show Widgets": "Montri fenestraĵojn",
     "Hide Widgets": "Kaŝi fenestraĵojn",
     "Backup version:": "Repaŝa versio:",
-    "The operation could not be completed": "La ago ne povis finiĝi",
-    "Failed to save your profile": "Malsukcesis konservi vian profilon",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
@@ -1133,11 +1126,6 @@
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito.",
     "Space information": "Informoj pri aro",
     "Identity server URL must be HTTPS": "URL de identiga servilo devas esti je HTTPS",
-    "There was an error loading your notification settings.": "Eraris enlegado de viaj agordoj pri sciigoj.",
-    "Mentions & keywords": "Mencioj kaj ĉefvortoj",
-    "Global": "Ĉie",
-    "New keyword": "Nova ĉefvorto",
-    "Keyword": "Ĉefvorto",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -1348,7 +1336,10 @@
         "copied": "Kopiita!",
         "advanced": "Altnivela",
         "spaces": "Aroj",
-        "general": "Ĝeneralaj"
+        "general": "Ĝeneralaj",
+        "profile": "Profilo",
+        "display_name": "Vidiga nomo",
+        "user_avatar": "Profilbildo"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1679,7 +1670,9 @@
             "noisy": "Brue",
             "error_permissions_denied": "%(brand)s ne havas permeson sciigi vin – bonvolu kontroli la agordojn de via foliumilo",
             "error_permissions_missing": "%(brand)s ne ricevis permeson sendi sciigojn – bonvolu reprovi",
-            "error_title": "Ne povas ŝalti sciigojn"
+            "error_title": "Ne povas ŝalti sciigojn",
+            "push_targets": "Celoj de sciigoj",
+            "error_loading": "Eraris enlegado de viaj agordoj pri sciigoj."
         },
         "appearance": {
             "layout_bubbles": "Mesaĝaj vezikoj",
@@ -1837,7 +1830,9 @@
             "add_msisdn_confirm_button": "Konfirmu aldonon de telefonnumero",
             "add_msisdn_confirm_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
             "add_msisdn_dialog_title": "Aldoni telefonnumeron",
-            "name_placeholder": "Sen vidiga nomo"
+            "name_placeholder": "Sen vidiga nomo",
+            "error_saving_profile_title": "Malsukcesis konservi vian profilon",
+            "error_saving_profile": "La ago ne povis finiĝi"
         },
         "sidebar": {
             "title": "Flanka kolumno",
@@ -3192,7 +3187,13 @@
         "enable_prompt_toast_description": "Ŝalti labortablajn sciigojn",
         "colour_none": "Neniu",
         "colour_bold": "Grase",
-        "error_change_title": "Ŝanĝi agordojn pri sciigoj"
+        "error_change_title": "Ŝanĝi agordojn pri sciigoj",
+        "mark_all_read": "Marki ĉion legita",
+        "keyword": "Ĉefvorto",
+        "keyword_new": "Nova ĉefvorto",
+        "class_global": "Ĉie",
+        "class_other": "Alia",
+        "mentions_keywords": "Mencioj kaj ĉefvortoj"
     },
     "mobile_guide": {
         "toast_title": "Uzu aplikaĵon por pli bona sperto",

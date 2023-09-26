@@ -17,7 +17,6 @@
     "Invalid Email Address": "Ungültige E-Mail-Adresse",
     "Moderator": "Moderator",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
-    "Profile": "Profil",
     "Reject invitation": "Einladung ablehnen",
     "Return to login screen": "Zur Anmeldemaske zurückkehren",
     "This doesn't appear to be a valid email address": "Dies scheint keine gültige E-Mail-Adresse zu sein",
@@ -149,7 +148,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Dieser Raum ist nicht öffentlich. Du wirst ihn nicht ohne erneute Einladung betreten können.",
     "You don't currently have any stickerpacks enabled": "Keine Sticker-Pakete aktiviert",
     "Sunday": "Sonntag",
-    "Notification targets": "Benachrichtigungsziele",
     "Today": "Heute",
     "Friday": "Freitag",
     "Changelog": "Änderungsprotokoll",
@@ -240,8 +238,6 @@
     "Unable to verify phone number.": "Die Telefonnummer kann nicht überprüft werden.",
     "Verification code": "Bestätigungscode",
     "Phone Number": "Telefonnummer",
-    "Profile picture": "Profilbild",
-    "Display Name": "Anzeigename",
     "Room information": "Rauminformationen",
     "Email addresses": "E-Mail-Adressen",
     "Phone numbers": "Telefonnummern",
@@ -501,7 +497,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
-    "Mark all as read": "Alle als gelesen markieren",
     "Local address": "Lokale Adresse",
     "Published Addresses": "Öffentliche Adresse",
     "Other published addresses:": "Andere öffentliche Adressen:",
@@ -719,8 +714,6 @@
     "Video conference updated by %(senderName)s": "Videokonferenz wurde von %(senderName)s aktualisiert",
     "Video conference started by %(senderName)s": "Videokonferenz von %(senderName)s gestartet",
     "Ignored attempt to disable encryption": "Versuch, die Verschlüsselung zu deaktivieren, wurde ignoriert",
-    "Failed to save your profile": "Speichern des Profils fehlgeschlagen",
-    "The operation could not be completed": "Die Operation konnte nicht abgeschlossen werden",
     "You can only pin up to %(count)s widgets": {
         "other": "Du kannst nur %(count)s Widgets anheften"
     },
@@ -1136,11 +1129,6 @@
     "Not a valid identity server (status code %(code)s)": "Ungültiger Identitäts-Server (Fehlercode %(code)s)",
     "Identity server URL must be HTTPS": "Identitäts-Server-URL muss mit HTTPS anfangen",
     "Error processing audio message": "Fehler beim Verarbeiten der Audionachricht",
-    "There was an error loading your notification settings.": "Fehler beim Laden der Benachrichtigungseinstellungen.",
-    "Mentions & keywords": "Erwähnungen und Schlüsselwörter",
-    "Global": "Global",
-    "New keyword": "Neues Schlüsselwort",
-    "Keyword": "Schlüsselwort",
     "The call is in an unknown state!": "Dieser Anruf ist in einem unbekannten Zustand!",
     "Call back": "Zurückrufen",
     "Connection failed": "Verbindung fehlgeschlagen",
@@ -1628,7 +1616,6 @@
     "Active polls": "Aktive Umfragen",
     "View poll in timeline": "Umfrage im Verlauf anzeigen",
     "Invites by email can only be sent one at a time": "E-Mail-Einladungen können nur nacheinander gesendet werden",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ein Fehler ist während der Aktualisierung deiner Benachrichtigungseinstellungen aufgetreten. Bitte versuche die Option erneut umzuschalten.",
     "Desktop app logo": "Desktop-App-Logo",
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
     "Message from %(user)s": "Nachricht von %(user)s",
@@ -1807,7 +1794,10 @@
         "advanced": "Erweitert",
         "spaces": "Spaces",
         "general": "Allgemein",
-        "saving": "Speichere …"
+        "saving": "Speichere …",
+        "profile": "Profil",
+        "display_name": "Anzeigename",
+        "user_avatar": "Profilbild"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2295,7 +2285,10 @@
             "noisy": "Laut",
             "error_permissions_denied": "%(brand)s hat keine Berechtigung, Benachrichtigungen zu senden - Bitte überprüfe deine Browsereinstellungen",
             "error_permissions_missing": "%(brand)s hat keine Berechtigung für das Senden von Benachrichtigungen erhalten - Bitte versuche es erneut",
-            "error_title": "Benachrichtigungen konnten nicht aktiviert werden"
+            "error_title": "Benachrichtigungen konnten nicht aktiviert werden",
+            "error_updating": "Ein Fehler ist während der Aktualisierung deiner Benachrichtigungseinstellungen aufgetreten. Bitte versuche die Option erneut umzuschalten.",
+            "push_targets": "Benachrichtigungsziele",
+            "error_loading": "Fehler beim Laden der Benachrichtigungseinstellungen."
         },
         "appearance": {
             "layout_irc": "IRC (Experimentell)",
@@ -2546,7 +2539,9 @@
             "add_msisdn_confirm_button": "Hinzugefügte Telefonnummer bestätigen",
             "add_msisdn_confirm_body": "Klicke unten die Schaltfläche, um die hinzugefügte Telefonnummer zu bestätigen.",
             "add_msisdn_dialog_title": "Telefonnummer hinzufügen",
-            "name_placeholder": "Kein Anzeigename"
+            "name_placeholder": "Kein Anzeigename",
+            "error_saving_profile_title": "Speichern des Profils fehlgeschlagen",
+            "error_saving_profile": "Die Operation konnte nicht abgeschlossen werden"
         },
         "sidebar": {
             "title": "Seitenleiste",
@@ -4220,7 +4215,13 @@
         "colour_grey": "Grau",
         "colour_red": "Rot",
         "colour_unsent": "Nicht gesendet",
-        "error_change_title": "Benachrichtigungseinstellungen ändern"
+        "error_change_title": "Benachrichtigungseinstellungen ändern",
+        "mark_all_read": "Alle als gelesen markieren",
+        "keyword": "Schlüsselwort",
+        "keyword_new": "Neues Schlüsselwort",
+        "class_global": "Global",
+        "class_other": "Sonstiges",
+        "mentions_keywords": "Erwähnungen und Schlüsselwörter"
     },
     "mobile_guide": {
         "toast_title": "Nutze die App für eine bessere Erfahrung",

@@ -107,15 +107,11 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleuterde berichtn zyn beveiligd me eind-tout-eind-versleuterienge. Alleene d’ountvanger(s) en gy èn de sleuters vo deze berichtn te leezn.",
     "Back up your keys before signing out to avoid losing them.": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
     "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
-    "Notification targets": "Meldiengsbestemmiengn",
     "Unable to verify phone number.": "Kostege de telefongnumero nie verifieern.",
     "Incorrect verification code": "Onjuste verificoasjecode",
     "Verification code": "Verificoasjecode",
     "Phone Number": "Telefongnumero",
-    "Profile picture": "Profielfoto",
-    "Display Name": "Weergavenoame",
     "Failed to change password. Is your password correct?": "Wyzign van ’t paswoord es mislukt. Es je paswoord wel juste?",
-    "Profile": "Profiel",
     "Email addresses": "E-mailadressn",
     "Phone numbers": "Telefongnumero’s",
     "Account management": "Accountbeheer",
@@ -475,7 +471,10 @@
         "off": "Uut",
         "copied": "Gekopieerd!",
         "advanced": "Geavanceerd",
-        "general": "Algemeen"
+        "general": "Algemeen",
+        "profile": "Profiel",
+        "display_name": "Weergavenoame",
+        "user_avatar": "Profielfoto"
     },
     "action": {
         "continue": "Verdergoan",
@@ -602,7 +601,8 @@
             "noisy": "Lawoaierig",
             "error_permissions_denied": "%(brand)s èt geen toestemmienge vo je meldiengn te verstuurn - controleert je browserinstelliengn",
             "error_permissions_missing": "%(brand)s èt geen toestemmienge gekreegn ghed vo joun meldiengn te verstuurn - herprobeer ’t e ki",
-            "error_title": "Kostege meldiengn nie inschoakeln"
+            "error_title": "Kostege meldiengn nie inschoakeln",
+            "push_targets": "Meldiengsbestemmiengn"
         },
         "appearance": {
             "timeline_image_size_default": "Standoard",
@@ -1175,7 +1175,8 @@
         "one": "<Items/> en één ander"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Meldiengn"
+        "enable_prompt_toast_title": "Meldiengn",
+        "class_other": "Overige"
     },
     "room_summary_card_back_action_label": "Gespreksinformoasje",
     "onboarding": {

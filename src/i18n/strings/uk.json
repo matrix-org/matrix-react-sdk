@@ -20,7 +20,6 @@
     "Email address": "Адреса е-пошти",
     "Rooms": "Кімнати",
     "Sunday": "Неділя",
-    "Notification targets": "Цілі сповіщень",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
     "Changelog": "Журнал змін",
@@ -44,7 +43,6 @@
     "Logs sent": "Журнали надіслані",
     "Yesterday": "Вчора",
     "Thank you!": "Дякуємо!",
-    "Profile": "Профіль",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
     "Warning!": "Увага!",
     "Sun": "нд",
@@ -282,7 +280,6 @@
     "Upgrade your encryption": "Поліпшити ваше шифрування",
     "IRC display name width": "Ширина псевдоніма IRC",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
-    "Display Name": "Псевдонім",
     "wait and try again later": "зачекати та повторити спробу пізніше",
     "This room is end-to-end encrypted": "Ця кімната є наскрізно зашифрованою",
     "Encrypted by an unverified session": "Зашифроване незвіреним сеансом",
@@ -301,7 +298,6 @@
     "Verify by comparing unique emoji.": "Звірити порівнянням унікальних емодзі.",
     "Verify by emoji": "Звірити за допомогою емодзі",
     "The integration manager is offline or it cannot reach your homeserver.": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером.",
-    "Profile picture": "Зображення профілю",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
     "Show image": "Показати зображення",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
@@ -707,13 +703,6 @@
     "Delete all": "Видалити всі",
     "Some of your messages have not been sent": "Деякі з ваших повідомлень не надіслано",
     "Back up your keys before signing out to avoid losing them.": "Створіть резервну копію ключів перед виходом, щоб не втратити їх.",
-    "The operation could not be completed": "Неможливо завершити операцію",
-    "Failed to save your profile": "Не вдалося зберегти ваш профіль",
-    "There was an error loading your notification settings.": "Сталася помилка під час завантаження налаштувань сповіщень.",
-    "Mentions & keywords": "Згадки та ключові слова",
-    "Global": "Глобально",
-    "New keyword": "Нове ключове слово",
-    "Keyword": "Ключове слово",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Це поліпшення дозволить учасникам обраних просторів доступитися до цієї кімнати без запрошення.",
     "Space members": "Учасники простору",
     "Anyone in a space can find and join. You can select multiple spaces.": "Будь-хто у просторі може знайти та приєднатися. Можна вибрати кілька просторів.",
@@ -808,7 +797,6 @@
     "Stop recording": "Зупинити запис",
     "No microphone found": "Мікрофона не знайдено",
     "Unable to access your microphone": "Не вдалося доступитися до мікрофона",
-    "Mark all as read": "Позначити все прочитаним",
     "Try to join anyway": "Все одно спробувати приєднатися",
     "Reason: %(reason)s": "Причина: %(reason)s",
     "Sign Up": "Зареєструватися",
@@ -1628,7 +1616,6 @@
     "There are no active polls. Load more polls to view polls for previous months": "Немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
     "Load more polls": "Завантажити більше опитувань",
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Сталася помилка під час оновлення налаштувань сповіщень. Спробуйте змінити налаштування ще раз.",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
     "Message from %(user)s": "Повідомлення від %(user)s",
@@ -1803,7 +1790,10 @@
         "advanced": "Подробиці",
         "spaces": "Простори",
         "general": "Загальні",
-        "saving": "Збереження…"
+        "saving": "Збереження…",
+        "profile": "Профіль",
+        "display_name": "Псевдонім",
+        "user_avatar": "Зображення профілю"
     },
     "action": {
         "continue": "Продовжити",
@@ -2290,7 +2280,10 @@
             "noisy": "Шумно",
             "error_permissions_denied": "%(brand)s не має дозволу надсилати вам сповіщення — перевірте налаштування браузера",
             "error_permissions_missing": "%(brand)s не має дозволу надсилати сповіщення — будь ласка, спробуйте ще раз",
-            "error_title": "Не вдалося увімкнути сповіщення"
+            "error_title": "Не вдалося увімкнути сповіщення",
+            "error_updating": "Сталася помилка під час оновлення налаштувань сповіщень. Спробуйте змінити налаштування ще раз.",
+            "push_targets": "Цілі сповіщень",
+            "error_loading": "Сталася помилка під час завантаження налаштувань сповіщень."
         },
         "appearance": {
             "layout_irc": "IRC (Експериментально)",
@@ -2541,7 +2534,9 @@
             "add_msisdn_confirm_button": "Підтвердьте додавання номера телефону",
             "add_msisdn_confirm_body": "Клацніть на кнопку внизу, щоб підтвердити додавання цього номера телефону.",
             "add_msisdn_dialog_title": "Додати номер телефону",
-            "name_placeholder": "Немає псевдоніма"
+            "name_placeholder": "Немає псевдоніма",
+            "error_saving_profile_title": "Не вдалося зберегти ваш профіль",
+            "error_saving_profile": "Неможливо завершити операцію"
         },
         "sidebar": {
             "title": "Бічна панель",
@@ -4215,7 +4210,13 @@
         "colour_grey": "Сірий",
         "colour_red": "Червоний",
         "colour_unsent": "Не надіслано",
-        "error_change_title": "Змінити налаштування сповіщень"
+        "error_change_title": "Змінити налаштування сповіщень",
+        "mark_all_read": "Позначити все прочитаним",
+        "keyword": "Ключове слово",
+        "keyword_new": "Нове ключове слово",
+        "class_global": "Глобально",
+        "class_other": "Інше",
+        "mentions_keywords": "Згадки та ключові слова"
     },
     "mobile_guide": {
         "toast_title": "Використовуйте застосунок для зручності",

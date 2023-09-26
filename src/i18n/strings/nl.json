@@ -20,7 +20,6 @@
     "Moderator": "Moderator",
     "not specified": "niet opgegeven",
     "No more results": "Geen resultaten meer",
-    "Profile": "Profiel",
     "Reason": "Reden",
     "Reject invitation": "Uitnodiging weigeren",
     "Sun": "Zo",
@@ -149,7 +148,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Dit is geen publieke kamer. Slechts op uitnodiging zal je opnieuw kunnen toetreden.",
     "You don't currently have any stickerpacks enabled": "Je hebt momenteel geen stickerpakketten ingeschakeld",
     "Sunday": "Zondag",
-    "Notification targets": "Meldingsbestemmingen",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
     "Changelog": "Wijzigingslogboek",
@@ -261,8 +259,6 @@
     "Unable to verify phone number.": "Kan telefoonnummer niet verifiëren.",
     "Verification code": "Verificatiecode",
     "Phone Number": "Telefoonnummer",
-    "Profile picture": "Profielfoto",
-    "Display Name": "Weergavenaam",
     "Email addresses": "E-mailadressen",
     "Phone numbers": "Telefoonnummers",
     "Account management": "Accountbeheer",
@@ -585,7 +581,6 @@
     "Create key backup": "Sleutelback-up aanmaken",
     "This session is encrypting history using the new recovery method.": "Deze sessie versleutelt je geschiedenis aan de hand van de nieuwe herstelmethode.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
-    "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
     "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
@@ -858,8 +853,6 @@
     "Scroll to most recent messages": "Spring naar meest recente bericht",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
     "Backup version:": "Versie reservekopie:",
-    "The operation could not be completed": "De handeling kon niet worden voltooid",
-    "Failed to save your profile": "Profiel opslaan mislukt",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
     "Server name": "Servernaam",
@@ -1134,11 +1127,6 @@
     "Not a valid identity server (status code %(code)s)": "Geen geldige identiteitsserver (statuscode %(code)s)",
     "Identity server URL must be HTTPS": "Identiteitsserver-URL moet HTTPS zijn",
     "User Directory": "Personengids",
-    "There was an error loading your notification settings.": "Er was een fout bij het laden van je meldingsvoorkeuren.",
-    "Mentions & keywords": "Vermeldingen & trefwoorden",
-    "Global": "Overal",
-    "New keyword": "Nieuw trefwoord",
-    "Keyword": "Trefwoord",
     "Unable to copy a link to the room to the clipboard.": "Kopiëren van kamerlink naar het klembord is mislukt.",
     "Unable to copy room link": "Kopiëren van kamerlink is mislukt",
     "The call is in an unknown state!": "Deze oproep heeft een onbekende status!",
@@ -1646,7 +1634,10 @@
         "copied": "Gekopieerd!",
         "advanced": "Geavanceerd",
         "spaces": "Spaces",
-        "general": "Algemeen"
+        "general": "Algemeen",
+        "profile": "Profiel",
+        "display_name": "Weergavenaam",
+        "user_avatar": "Profielfoto"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2079,7 +2070,9 @@
             "noisy": "Luid",
             "error_permissions_denied": "%(brand)s heeft geen toestemming jou meldingen te sturen - controleer je browserinstellingen",
             "error_permissions_missing": "%(brand)s kreeg geen toestemming jou meldingen te sturen - probeer het opnieuw",
-            "error_title": "Kan meldingen niet inschakelen"
+            "error_title": "Kan meldingen niet inschakelen",
+            "push_targets": "Meldingsbestemmingen",
+            "error_loading": "Er was een fout bij het laden van je meldingsvoorkeuren."
         },
         "appearance": {
             "layout_irc": "IRC (Experimenteel)",
@@ -2296,7 +2289,9 @@
             "add_msisdn_confirm_button": "Bevestig toevoegen van het telefoonnummer",
             "add_msisdn_confirm_body": "Klik op de knop hieronder om het toevoegen van dit telefoonnummer te bevestigen.",
             "add_msisdn_dialog_title": "Telefoonnummer toevoegen",
-            "name_placeholder": "Geen weergavenaam"
+            "name_placeholder": "Geen weergavenaam",
+            "error_saving_profile_title": "Profiel opslaan mislukt",
+            "error_saving_profile": "De handeling kon niet worden voltooid"
         },
         "sidebar": {
             "title": "Zijbalk",
@@ -3815,7 +3810,13 @@
         "colour_none": "Geen",
         "colour_bold": "Vet",
         "colour_unsent": "niet verstuurd",
-        "error_change_title": "Meldingsinstellingen wijzigen"
+        "error_change_title": "Meldingsinstellingen wijzigen",
+        "mark_all_read": "Alles markeren als gelezen",
+        "keyword": "Trefwoord",
+        "keyword_new": "Nieuw trefwoord",
+        "class_global": "Overal",
+        "class_other": "Overige",
+        "mentions_keywords": "Vermeldingen & trefwoorden"
     },
     "mobile_guide": {
         "toast_title": "Gebruik de app voor een betere ervaring",

@@ -71,7 +71,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
-    "Profile": "个人资料",
     "%(roomName)s is not accessible at this time.": "%(roomName)s 此时无法访问。",
     "Unable to add email address": "无法添加邮箱地址",
     "Unable to verify email address.": "无法验证邮箱地址。",
@@ -143,7 +142,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "尝试加载此房间的时间线的特定时间点，但是无法找到。",
     "Sunday": "星期日",
-    "Notification targets": "通知目标",
     "Today": "今天",
     "Friday": "星期五",
     "Changelog": "更改日志",
@@ -283,8 +281,6 @@
     "Unable to verify phone number.": "无法验证电话号码。",
     "Verification code": "验证码",
     "Phone Number": "电话号码",
-    "Profile picture": "头像",
-    "Display Name": "显示名称",
     "Email addresses": "电子邮箱地址",
     "Phone numbers": "电话号码",
     "Account management": "账户管理",
@@ -456,7 +452,6 @@
     "This room is public": "此房间为公共的",
     "This room has already been upgraded.": "此房间已经被升级。",
     "Failed to connect to integration manager": "连接至集成管理器失败",
-    "Mark all as read": "标记所有为已读",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "更新此房间的备用地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
     "Error creating address": "创建地址时出现错误",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "创建地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
@@ -777,8 +772,6 @@
     "Hide Widgets": "隐藏挂件",
     "Invite to this space": "邀请至此空间",
     "Your message was sent": "消息已发送",
-    "Failed to save your profile": "个人资料保存失败",
-    "The operation could not be completed": "操作无法完成",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
     "This version of %(brand)s does not support searching encrypted messages": "当前版本的 %(brand)s 不支持搜索加密消息",
@@ -1128,11 +1121,6 @@
     "Not a valid identity server (status code %(code)s)": "身份服务器无效（状态码 %(code)s）",
     "Identity server URL must be HTTPS": "身份服务器URL必须是HTTPS",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "此升级将允许选定的空间成员无需邀请即可访问此房间。",
-    "There was an error loading your notification settings.": "加载你的通知设置时出错。",
-    "Mentions & keywords": "提及&关键词",
-    "Global": "全局",
-    "New keyword": "新的关键词",
-    "Keyword": "关键词",
     "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
@@ -1609,7 +1597,10 @@
         "copied": "已复制！",
         "advanced": "高级",
         "spaces": "空间",
-        "general": "通用"
+        "general": "通用",
+        "profile": "个人资料",
+        "display_name": "显示名称",
+        "user_avatar": "头像"
     },
     "action": {
         "continue": "继续",
@@ -2059,7 +2050,9 @@
             "noisy": "响铃",
             "error_permissions_denied": "%(brand)s 没有通知发送权限 - 请检查你的浏览器设置",
             "error_permissions_missing": "%(brand)s 没有通知发送权限 - 请重试",
-            "error_title": "无法启用通知"
+            "error_title": "无法启用通知",
+            "push_targets": "通知目标",
+            "error_loading": "加载你的通知设置时出错。"
         },
         "appearance": {
             "layout_irc": "IRC（实验性）",
@@ -2263,7 +2256,9 @@
             "add_msisdn_confirm_button": "确认添加电话号码",
             "add_msisdn_confirm_body": "点击下面的按钮，以确认添加此电话号码。",
             "add_msisdn_dialog_title": "添加电话号码",
-            "name_placeholder": "无显示名称"
+            "name_placeholder": "无显示名称",
+            "error_saving_profile_title": "个人资料保存失败",
+            "error_saving_profile": "操作无法完成"
         },
         "sidebar": {
             "title": "侧边栏",
@@ -3799,7 +3794,13 @@
         "colour_none": "无",
         "colour_bold": "粗体",
         "colour_unsent": "未发送",
-        "error_change_title": "修改通知设置"
+        "error_change_title": "修改通知设置",
+        "mark_all_read": "标记所有为已读",
+        "keyword": "关键词",
+        "keyword_new": "新的关键词",
+        "class_global": "全局",
+        "class_other": "其他",
+        "mentions_keywords": "提及&关键词"
     },
     "mobile_guide": {
         "toast_title": "使用 app 以获得更好的体验",

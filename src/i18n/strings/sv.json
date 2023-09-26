@@ -47,7 +47,6 @@
     "not specified": "inte specificerad",
     "No more results": "Inga fler resultat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
-    "Profile": "Profil",
     "Reason": "Orsak",
     "Reject invitation": "Avböj inbjudan",
     "Return to login screen": "Tillbaka till inloggningsskärmen",
@@ -83,7 +82,6 @@
     "Nov": "Nov",
     "Dec": "Dec",
     "Sunday": "söndag",
-    "Notification targets": "Aviseringsmål",
     "Today": "idag",
     "Friday": "fredag",
     "Changelog": "Ändringslogg",
@@ -273,8 +271,6 @@
     "Unable to verify phone number.": "Kunde inte verifiera telefonnumret.",
     "Verification code": "Verifieringskod",
     "Phone Number": "Telefonnummer",
-    "Profile picture": "Profilbild",
-    "Display Name": "Visningsnamn",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnummer",
     "Account management": "Kontohantering",
@@ -505,7 +501,6 @@
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
-    "Mark all as read": "Markera alla som lästa",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid uppdatering av rummets alternativa adresser. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
     "Error creating address": "Fel vid skapande av adress",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid skapande av adressen. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
@@ -708,8 +703,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Starta en konversation med någon med deras namn eller användarnamn (som <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
     "Unable to set up keys": "Kunde inte ställa in nycklar",
-    "Failed to save your profile": "Misslyckades att spara din profil",
-    "The operation could not be completed": "Operationen kunde inte slutföras",
     "Ignored attempt to disable encryption": "Ignorerade försök att inaktivera kryptering",
     "Join the conference at the top of this room": "Gå med i gruppsamtalet på toppen av det här rummet",
     "Join the conference from the room information card on the right": "Gå med i gruppsamtalet ifrån informationskortet till höger",
@@ -1120,11 +1113,6 @@
     "Identity server URL must be HTTPS": "URL för identitetsserver måste vara HTTPS",
     "Address": "Adress",
     "Space information": "Utrymmesinfo",
-    "There was an error loading your notification settings.": "Ett fel inträffade när dina aviseringsinställningar laddades.",
-    "Mentions & keywords": "Omnämnanden & nyckelord",
-    "Global": "Globalt",
-    "New keyword": "Nytt nyckelord",
-    "Keyword": "Nyckelord",
     "Stop recording": "Stoppa inspelning",
     "Send voice message": "Skicka röstmeddelande",
     "Show %(count)s other previews": {
@@ -1608,7 +1596,6 @@
     "Connecting to integration manager…": "Kontaktar integrationshanteraren …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
     "View poll": "Visa omröstning",
     "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
         "one": "Det finns inga tidigare omröstningar för det senaste dygnet. Ladda fler omröstningar för att se omröstningar för tidigare månader",
@@ -1761,7 +1748,10 @@
         "advanced": "Avancerat",
         "spaces": "Utrymmen",
         "general": "Allmänt",
-        "saving": "Sparar …"
+        "saving": "Sparar …",
+        "profile": "Profil",
+        "display_name": "Visningsnamn",
+        "user_avatar": "Profilbild"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2247,7 +2237,10 @@
             "noisy": "Högljudd",
             "error_permissions_denied": "%(brand)s har inte tillstånd att skicka aviseringar - kontrollera webbläsarens inställningar",
             "error_permissions_missing": "%(brand)s fick inte tillstånd att skicka aviseringar - försök igen",
-            "error_title": "Det går inte att aktivera aviseringar"
+            "error_title": "Det går inte att aktivera aviseringar",
+            "error_updating": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
+            "push_targets": "Aviseringsmål",
+            "error_loading": "Ett fel inträffade när dina aviseringsinställningar laddades."
         },
         "appearance": {
             "layout_irc": "IRC (Experimentellt)",
@@ -2498,7 +2491,9 @@
             "add_msisdn_confirm_button": "Bekräfta tilläggning av telefonnumret",
             "add_msisdn_confirm_body": "Klicka på knappen nedan för att bekräfta tilläggning av telefonnumret.",
             "add_msisdn_dialog_title": "Lägg till telefonnummer",
-            "name_placeholder": "Inget visningsnamn"
+            "name_placeholder": "Inget visningsnamn",
+            "error_saving_profile_title": "Misslyckades att spara din profil",
+            "error_saving_profile": "Operationen kunde inte slutföras"
         },
         "sidebar": {
             "title": "Sidofält",
@@ -4155,7 +4150,13 @@
         "colour_grey": "Grå",
         "colour_red": "Röd",
         "colour_unsent": "Ej skickat",
-        "error_change_title": "Ändra aviseringsinställningar"
+        "error_change_title": "Ändra aviseringsinställningar",
+        "mark_all_read": "Markera alla som lästa",
+        "keyword": "Nyckelord",
+        "keyword_new": "Nytt nyckelord",
+        "class_global": "Globalt",
+        "class_other": "Annat",
+        "mentions_keywords": "Omnämnanden & nyckelord"
     },
     "mobile_guide": {
         "toast_title": "Använd appen för en bättre upplevelse",

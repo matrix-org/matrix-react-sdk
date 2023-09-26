@@ -28,7 +28,6 @@
     "Failed to forget room %(errCode)s": "נכשל בעת בקשה לשכוח חדר %(errCode)s",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
-    "Notification targets": "יעדי התראה",
     "Today": "היום",
     "Friday": "שישי",
     "Changelog": "דו\"ח שינויים",
@@ -311,11 +310,6 @@
     "Reason": "סיבה",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
-    "Profile picture": "תמונת פרופיל",
-    "Display Name": "שם לתצוגה",
-    "Profile": "פרופיל",
-    "The operation could not be completed": "לא ניתן היה להשלים את הפעולה",
-    "Failed to save your profile": "שמירת הפרופיל שלך נכשלה",
     "The integration manager is offline or it cannot reach your homeserver.": "מנהל האינטגרציה לא מקוון או שהוא לא יכול להגיע לשרת הבית שלך.",
     "Cannot connect to integration manager": "לא ניתן להתחבר אל מנהל האינטגרציה",
     "Failed to set display name": "עדכון שם תצוגה נכשל",
@@ -572,7 +566,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "אירעה שגיאה בעדכון הכתובות החלופיות של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "אירעה שגיאה בעדכון הכתובת הראשית של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
     "Error updating main address": "שגיאה בעדכון כתובת ראשית",
-    "Mark all as read": "סמן הכל כנקרא",
     "Jump to first unread message.": "קפצו להודעה הראשונה שלא נקראה.",
     "Invited by %(sender)s": "הוזמנו על ידי %(sender)s",
     "Revoke invite": "שלול הזמנה",
@@ -1031,7 +1024,6 @@
     "Copy link to thread": "העתק קישור לשרשור",
     "Unknown failure": "כשל לא ידוע",
     "You have no ignored users.": "אין לך משתמשים שהתעלמו מהם.",
-    "Global": "כללי",
     "Loading new room": "טוען חדר חדש",
     "Sending invites... (%(progress)s out of %(count)s)": {
         "one": "שולח הזמנה..."
@@ -1101,7 +1093,6 @@
     "To view, please enable video rooms in Labs first": "כדי לצפות, אנא הפעל תחילה חדרי וידאו במעבדת הפיתוח",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "@mentions & keywords": "אזכורים ומילות מפתח",
-    "Mentions & keywords": "אזכורים ומילות מפתח",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
     "Adding spaces has moved.": "הוספת מרחבי עבודה הוזז.",
@@ -1153,8 +1144,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
-    "New keyword": "מילת מפתח חדשה",
-    "Keyword": "מילת מפתח",
     "Location": "מיקום",
     "Edit devices": "הגדרת מכשירים",
     "Role in <RoomName/>": "תפקיד בחדר <RoomName/>",
@@ -1265,7 +1254,10 @@
         "copied": "הועתק!",
         "advanced": "מתקדם",
         "spaces": "מרחבי עבודה",
-        "general": "כללי"
+        "general": "כללי",
+        "profile": "פרופיל",
+        "display_name": "שם לתצוגה",
+        "user_avatar": "תמונת פרופיל"
     },
     "action": {
         "continue": "המשך",
@@ -1590,7 +1582,8 @@
             "noisy": "התראה קולית",
             "error_permissions_denied": "%(brand)s אין אישור לשלוח אליכם הודעות - אנא בדקו את הרשאות הדפדפן",
             "error_permissions_missing": "%(brand)s לא נתנו הרשאות לשלוח התרעות - אנא נסו שוב",
-            "error_title": "לא ניתן להפעיל התראות"
+            "error_title": "לא ניתן להפעיל התראות",
+            "push_targets": "יעדי התראה"
         },
         "appearance": {
             "layout_bubbles": "בועות הודעות",
@@ -1738,7 +1731,9 @@
             "add_msisdn_confirm_button": "אישור הוספת מספר טלפון",
             "add_msisdn_confirm_body": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
             "add_msisdn_dialog_title": "הוסף מספר טלפון",
-            "name_placeholder": "אין שם לתצוגה"
+            "name_placeholder": "אין שם לתצוגה",
+            "error_saving_profile_title": "שמירת הפרופיל שלך נכשלה",
+            "error_saving_profile": "לא ניתן היה להשלים את הפעולה"
         },
         "sidebar": {
             "title": "סרגל צד",
@@ -2995,7 +2990,13 @@
         "enable_prompt_toast_description": "אשרו התראות שולחן עבודה",
         "colour_none": "ללא",
         "colour_bold": "מודגש",
-        "error_change_title": "שינוי הגדרת התרעות"
+        "error_change_title": "שינוי הגדרת התרעות",
+        "mark_all_read": "סמן הכל כנקרא",
+        "keyword": "מילת מפתח",
+        "keyword_new": "מילת מפתח חדשה",
+        "class_global": "כללי",
+        "class_other": "אחר",
+        "mentions_keywords": "אזכורים ומילות מפתח"
     },
     "mobile_guide": {
         "toast_title": "השתמש באפליקציה לחוויה טובה יותר",

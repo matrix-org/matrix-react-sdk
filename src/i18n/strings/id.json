@@ -12,7 +12,6 @@
     "Invalid Email Address": "Alamat Email Tidak Absah",
     "Invited": "Diundang",
     "Low priority": "Prioritas rendah",
-    "Profile": "Profil",
     "Reason": "Alasan",
     "Return to login screen": "Kembali ke halaman masuk",
     "Rooms": "Ruangan",
@@ -50,7 +49,6 @@
     "%(items)s and %(lastItem)s": "%(items)s dan %(lastItem)s",
     "Decrypt %(text)s": "Dekripsi %(text)s",
     "Sunday": "Minggu",
-    "Notification targets": "Target notifikasi",
     "Today": "Hari Ini",
     "Changelog": "Changelog",
     "This Room": "Ruangan ini",
@@ -452,8 +450,6 @@
     "Account management": "Manajemen akun",
     "Phone numbers": "Nomor telepon",
     "Email addresses": "Alamat email",
-    "Profile picture": "Gambar profil",
-    "Display Name": "Nama Tampilan",
     "That matches!": "Mereka cocok!",
     "General failure": "Kesalahan umum",
     "Share User": "Bagikan Pengguna",
@@ -492,8 +488,6 @@
     "Decrypting": "Mendekripsi",
     "Downloading": "Mengunduh",
     "Forget room": "Lupakan ruangan",
-    "Global": "Global",
-    "Keyword": "Kata kunci",
     "Address": "Alamat",
     "Avatar": "Avatar",
     "Hold": "Jeda",
@@ -511,11 +505,6 @@
     "Back up your keys before signing out to avoid losing them.": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
-    "The operation could not be completed": "Operasi ini tidak dapat diselesaikan",
-    "Failed to save your profile": "Gagal untuk menyimpan profil Anda",
-    "There was an error loading your notification settings.": "Sebuah kesalahan terjadi saat memuat pengaturan notifikasi Anda.",
-    "Mentions & keywords": "Sebutan & kata kunci",
-    "New keyword": "Kata kunci baru",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Memperbarui space...",
         "other": "Memperbarui space... (%(progress)s dari %(count)s)"
@@ -631,7 +620,6 @@
     "No microphone found": "Tidak ada mikrofon yang ditemukan",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Kami tidak dapat mengakses mikrofon Anda. Mohon periksa pengaturan browser Anda dan coba lagi.",
     "Unable to access your microphone": "Tidak dapat mengakses mikrofon Anda",
-    "Mark all as read": "Tandai semua sebagai dibaca",
     "Jump to first unread message.": "Pergi ke pesan pertama yang belum dibaca.",
     "Invited by %(sender)s": "Diundang oleh %(sender)s",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Tidak dapat menghapus undangan. Server ini mungkin mengalami masalah sementara atau Anda tidak memiliki izin yang dibutuhkan untuk menghapus undangannya.",
@@ -1628,7 +1616,6 @@
     "Active polls": "Pemungutan suara yang aktif",
     "View poll in timeline": "Tampilkan pemungutan suara di lini masa",
     "Invites by email can only be sent one at a time": "Undangan lewat surel hanya dapat dikirim satu-satu",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Sebuah kesalahan terjadi saat memperbarui preferensi notifikasi Anda. Silakan coba mengubah opsi Anda lagi.",
     "Desktop app logo": "Logo aplikasi desktop",
     "Requires your server to support the stable version of MSC3827": "Mengharuslkan server Anda mendukung versi MSC3827 yang stabil",
     "Message from %(user)s": "Pesan dari %(user)s",
@@ -1807,7 +1794,10 @@
         "advanced": "Tingkat Lanjut",
         "spaces": "Space",
         "general": "Umum",
-        "saving": "Menyimpan…"
+        "saving": "Menyimpan…",
+        "profile": "Profil",
+        "display_name": "Nama Tampilan",
+        "user_avatar": "Gambar profil"
     },
     "action": {
         "continue": "Lanjut",
@@ -2295,7 +2285,10 @@
             "noisy": "Berisik",
             "error_permissions_denied": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — mohon periksa pengaturan browser Anda",
             "error_permissions_missing": "%(brand)s tidak memiliki izin untuk mengirim Anda notifikasi — silakan coba lagi",
-            "error_title": "Tidak dapat mengaktifkan Notifikasi"
+            "error_title": "Tidak dapat mengaktifkan Notifikasi",
+            "error_updating": "Sebuah kesalahan terjadi saat memperbarui preferensi notifikasi Anda. Silakan coba mengubah opsi Anda lagi.",
+            "push_targets": "Target notifikasi",
+            "error_loading": "Sebuah kesalahan terjadi saat memuat pengaturan notifikasi Anda."
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimental)",
@@ -2546,7 +2539,9 @@
             "add_msisdn_confirm_button": "Konfirmasi penambahan nomor telepon",
             "add_msisdn_confirm_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
             "add_msisdn_dialog_title": "Tambahkan Nomor Telepon",
-            "name_placeholder": "Tidak ada nama tampilan"
+            "name_placeholder": "Tidak ada nama tampilan",
+            "error_saving_profile_title": "Gagal untuk menyimpan profil Anda",
+            "error_saving_profile": "Operasi ini tidak dapat diselesaikan"
         },
         "sidebar": {
             "title": "Bilah Samping",
@@ -4220,7 +4215,13 @@
         "colour_grey": "Abu-Abu",
         "colour_red": "Merah",
         "colour_unsent": "Belum dikirim",
-        "error_change_title": "Ubah pengaturan notifikasi"
+        "error_change_title": "Ubah pengaturan notifikasi",
+        "mark_all_read": "Tandai semua sebagai dibaca",
+        "keyword": "Kata kunci",
+        "keyword_new": "Kata kunci baru",
+        "class_global": "Global",
+        "class_other": "Lainnya",
+        "mentions_keywords": "Sebutan & kata kunci"
     },
     "mobile_guide": {
         "toast_title": "Gunakan aplikasi untuk pengalaman yang lebih baik",

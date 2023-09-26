@@ -130,7 +130,6 @@
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
-    "Profile": "Perfil",
     "A new password must be entered.": "Debe introducir un novo contrasinal.",
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
     "Return to login screen": "Volver a pantalla de acceso",
@@ -149,7 +148,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala non é pública. Non poderá volver a ela sen un convite.",
     "You don't currently have any stickerpacks enabled": "Non ten paquetes de iconas activados",
     "Sunday": "Domingo",
-    "Notification targets": "Obxectivos das notificacións",
     "Today": "Hoxe",
     "Friday": "Venres",
     "Changelog": "Rexistro de cambios",
@@ -304,8 +302,6 @@
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
-    "Display Name": "Nome mostrado",
-    "Profile picture": "Imaxe de perfil",
     "Checking server": "Comprobando servidor",
     "Change identity server": "Cambiar de servidor de identidade",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Desconectar do servidor de identidade <current /> e conectar con <new />?",
@@ -413,7 +409,6 @@
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Non se revogou o convite. O servidor podería estar experimentando un problema temporal ou non tes permisos suficientes para revogar o convite.",
     "Revoke invite": "Revogar convite",
     "Invited by %(sender)s": "Convidada por %(sender)s",
-    "Mark all as read": "Marcar todo como lido",
     "Error updating main address": "Fallo ao actualizar o enderezo principal",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Algo fallou ao actualizar o enderezo principal da sala. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
     "Error creating address": "Fallo ao crear o enderezo",
@@ -719,8 +714,6 @@
     "Video conference updated by %(senderName)s": "Video conferencia actualizada por %(senderName)s",
     "Video conference started by %(senderName)s": "Video conferencia iniciada por %(senderName)s",
     "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
-    "Failed to save your profile": "Non se gardaron os cambios",
-    "The operation could not be completed": "Non se puido realizar a acción",
     "You can only pin up to %(count)s widgets": {
         "other": "Só podes fixar ata %(count)s widgets"
     },
@@ -1132,11 +1125,6 @@
         "other": "Mostrar outras %(count)s vistas previas"
     },
     "Space information": "Información do Espazo",
-    "There was an error loading your notification settings.": "Houbo un erro ao cargar os axustes de notificación.",
-    "Mentions & keywords": "Mencións e palabras chave",
-    "Global": "Global",
-    "New keyword": "Nova palabra chave",
-    "Keyword": "Palabra chave",
     "Address": "Enderezo",
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
@@ -1610,7 +1598,10 @@
         "copied": "Copiado!",
         "advanced": "Avanzado",
         "spaces": "Espazos",
-        "general": "Xeral"
+        "general": "Xeral",
+        "profile": "Perfil",
+        "display_name": "Nome mostrado",
+        "user_avatar": "Imaxe de perfil"
     },
     "action": {
         "continue": "Continuar",
@@ -2042,7 +2033,9 @@
             "noisy": "Ruidoso",
             "error_permissions_denied": "%(brand)s non ten permiso para enviarlle notificacións: comprobe os axustes do navegador",
             "error_permissions_missing": "%(brand)s non ten permiso para enviar notificacións: inténteo de novo",
-            "error_title": "Non se puideron activar as notificacións"
+            "error_title": "Non se puideron activar as notificacións",
+            "push_targets": "Obxectivos das notificacións",
+            "error_loading": "Houbo un erro ao cargar os axustes de notificación."
         },
         "appearance": {
             "layout_irc": "IRC (Experimental)",
@@ -2232,7 +2225,9 @@
             "add_msisdn_confirm_button": "Confirma a adición do teléfono",
             "add_msisdn_confirm_body": "Preme no botón inferior para confirmar que engades este número.",
             "add_msisdn_dialog_title": "Engadir novo Número",
-            "name_placeholder": "Sen nome público"
+            "name_placeholder": "Sen nome público",
+            "error_saving_profile_title": "Non se gardaron os cambios",
+            "error_saving_profile": "Non se puido realizar a acción"
         },
         "sidebar": {
             "title": "Barra lateral",
@@ -3730,7 +3725,13 @@
         "colour_none": "Nada",
         "colour_bold": "Resaltado",
         "colour_unsent": "Sen enviar",
-        "error_change_title": "Cambiar os axustes das notificacións"
+        "error_change_title": "Cambiar os axustes das notificacións",
+        "mark_all_read": "Marcar todo como lido",
+        "keyword": "Palabra chave",
+        "keyword_new": "Nova palabra chave",
+        "class_global": "Global",
+        "class_other": "Outro",
+        "mentions_keywords": "Mencións e palabras chave"
     },
     "mobile_guide": {
         "toast_title": "Para ter unha mellor experiencia usa a app",

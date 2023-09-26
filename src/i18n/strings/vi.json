@@ -608,7 +608,6 @@
     "No microphone found": "Không tìm thấy micrô",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Chúng tôi không thể truy cập micrô của bạn. Xin hãy kiểm tra trình duyệt của bạn và thử lại.",
     "Unable to access your microphone": "Không thể truy cập micrô của bạn",
-    "Mark all as read": "Đánh dấu tất cả đã đọc",
     "Jump to first unread message.": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
     "Invited by %(sender)s": "Được %(sender)s mời",
     "Revoke invite": "Thu hồi lời mời",
@@ -936,17 +935,6 @@
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
     "Your homeserver has exceeded its user limit.": "Máy chủ của bạn đã vượt quá giới hạn người dùng của nó.",
-    "Profile picture": "Ảnh đại diện",
-    "Display Name": "Tên hiển thị",
-    "Profile": "Hồ sơ",
-    "The operation could not be completed": "Lệnh không thể hoàn thành",
-    "Failed to save your profile": "Không lưu được hồ sơ của bạn",
-    "There was an error loading your notification settings.": "Đã xảy ra lỗi khi tải cài đặt thông báo của bạn.",
-    "Notification targets": "Mục tiêu thông báo",
-    "Mentions & keywords": "Đề cập & từ khóa",
-    "Global": "Toàn cầu",
-    "New keyword": "Từ khóa mới",
-    "Keyword": "Từ khóa",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Đang cập nhật space…",
         "other": "Đang cập nhật space… (%(progress)s trên %(count)s)"
@@ -1369,7 +1357,6 @@
     "Unsent": "Chưa gửi",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
     "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
@@ -1637,7 +1624,10 @@
         "advanced": "Nâng cao",
         "spaces": "Không gian",
         "general": "Tổng quát",
-        "saving": "Đang lưu…"
+        "saving": "Đang lưu…",
+        "profile": "Hồ sơ",
+        "display_name": "Tên hiển thị",
+        "user_avatar": "Ảnh đại diện"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2091,7 +2081,10 @@
             "noisy": "Bật âm",
             "error_permissions_denied": "%(brand)s chưa có quyền để gửi thông báo cho bạn - vui lòng kiểm tra thiết lập trình duyệt",
             "error_permissions_missing": "%(brand)s vẫn chưa được cấp quyền để gửi thông báo - vui lòng thử lại",
-            "error_title": "Không thể bật thông báo"
+            "error_title": "Không thể bật thông báo",
+            "error_updating": "Một lỗi đã xảy ra khi cập nhật tùy chọn thông báo của bạn. Hãy thử làm lại.",
+            "push_targets": "Mục tiêu thông báo",
+            "error_loading": "Đã xảy ra lỗi khi tải cài đặt thông báo của bạn."
         },
         "appearance": {
             "layout_irc": "IRC (thử nghiệm)",
@@ -2341,7 +2334,9 @@
             "add_msisdn_confirm_button": "Xác nhận thêm số điện thoại",
             "add_msisdn_confirm_body": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
             "add_msisdn_dialog_title": "Thêm Số Điện Thoại",
-            "name_placeholder": "Không có tên hiển thị"
+            "name_placeholder": "Không có tên hiển thị",
+            "error_saving_profile_title": "Không lưu được hồ sơ của bạn",
+            "error_saving_profile": "Lệnh không thể hoàn thành"
         },
         "sidebar": {
             "title": "Thanh bên",
@@ -3918,7 +3913,13 @@
         "colour_grey": "Xám",
         "colour_red": "Đỏ",
         "colour_unsent": "Chưa gửi",
-        "error_change_title": "Thay đổi cài đặt thông báo"
+        "error_change_title": "Thay đổi cài đặt thông báo",
+        "mark_all_read": "Đánh dấu tất cả đã đọc",
+        "keyword": "Từ khóa",
+        "keyword_new": "Từ khóa mới",
+        "class_global": "Toàn cầu",
+        "class_other": "Khác",
+        "mentions_keywords": "Đề cập & từ khóa"
     },
     "mobile_guide": {
         "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",

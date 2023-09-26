@@ -66,7 +66,6 @@
     "not specified": "не задан",
     "No more results": "Больше никаких результатов",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
-    "Profile": "Профиль",
     "Reason": "Причина",
     "Reject invitation": "Отклонить приглашение",
     "Rooms": "Комнаты",
@@ -148,7 +147,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Эта комната не является публичной. Вы не сможете войти без приглашения.",
     "<a>In reply to</a> <pill>": "<a>В ответ на</a> <pill>",
     "Sunday": "Воскресенье",
-    "Notification targets": "Устройства для уведомлений",
     "Today": "Сегодня",
     "Friday": "Пятница",
     "Changelog": "История изменений",
@@ -200,7 +198,6 @@
     "Unable to verify phone number.": "Невозможно проверить номер телефона.",
     "Verification code": "Код подтверждения",
     "Phone Number": "Номер телефона",
-    "Display Name": "Отображаемое имя",
     "Room information": "Информация о комнате",
     "Room Addresses": "Адреса комнаты",
     "Email addresses": "Адреса электронной почты",
@@ -302,7 +299,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Эти сообщения защищены сквозным шифрованием. Только вы и ваш собеседник имеете ключи для их расшифровки и чтения.",
     "Back up your keys before signing out to avoid losing them.": "Перед выходом сохраните резервную копию ключей шифрования, чтобы не потерять их.",
     "Start using Key Backup": "Использовать резервную копию ключей шифрования",
-    "Profile picture": "Аватар",
     "Missing media permissions, click the button below to request.": "Отсутствуют разрешения для доступа к камере/микрофону. Нажмите кнопку ниже, чтобы запросить их.",
     "Request media permissions": "Запросить доступ к медиа устройству",
     "Error updating main address": "Ошибка обновления основного адреса",
@@ -522,7 +518,6 @@
     "Start chatting": "Начать беседу",
     "Reject & Ignore user": "Отклонить и заигнорировать пользователя",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
-    "Mark all as read": "Отметить всё как прочитанное",
     "Local address": "Локальный адрес",
     "Published Addresses": "Публичные адреса",
     "Other published addresses:": "Прочие публичные адреса:",
@@ -717,8 +712,6 @@
     "Video conference ended by %(senderName)s": "%(senderName)s завершил(а) видеоконференцию",
     "Video conference updated by %(senderName)s": "%(senderName)s обновил(а) видеоконференцию",
     "Video conference started by %(senderName)s": "%(senderName)s начал(а) видеоконференцию",
-    "Failed to save your profile": "Не удалось сохранить ваш профиль",
-    "The operation could not be completed": "Операция не может быть выполнена",
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
     "Ignored attempt to disable encryption": "Игнорируемая попытка отключить шифрование",
@@ -1189,11 +1182,6 @@
     "Upgrade required": "Требуется обновление",
     "Space information": "Информация о пространстве",
     "You have no ignored users.": "У вас нет игнорируемых пользователей.",
-    "There was an error loading your notification settings.": "Произошла ошибка при загрузке настроек уведомлений.",
-    "Mentions & keywords": "Упоминания и ключевые слова",
-    "Global": "Глобально",
-    "New keyword": "Новое ключевое слово",
-    "Keyword": "Ключевое слово",
     "Address": "Адрес",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
@@ -1657,7 +1645,10 @@
         "copied": "Скопировано!",
         "advanced": "Подробности",
         "spaces": "Пространства",
-        "general": "Общие"
+        "general": "Общие",
+        "profile": "Профиль",
+        "display_name": "Отображаемое имя",
+        "user_avatar": "Аватар"
     },
     "action": {
         "continue": "Продолжить",
@@ -2107,7 +2098,9 @@
             "noisy": "Вкл. (со звуком)",
             "error_permissions_denied": "У %(brand)s нет разрешения на отправку уведомлений — проверьте настройки браузера",
             "error_permissions_missing": "%(brand)s не получил разрешение на отправку уведомлений: пожалуйста, попробуйте снова",
-            "error_title": "Не удалось включить уведомления"
+            "error_title": "Не удалось включить уведомления",
+            "push_targets": "Устройства для уведомлений",
+            "error_loading": "Произошла ошибка при загрузке настроек уведомлений."
         },
         "appearance": {
             "layout_irc": "IRC (Экспериментально)",
@@ -2347,7 +2340,9 @@
             "add_msisdn_confirm_button": "Подтвердите добавление номера телефона",
             "add_msisdn_confirm_body": "Нажмите кнопку ниже для добавления этого номера телефона.",
             "add_msisdn_dialog_title": "Добавить номер телефона",
-            "name_placeholder": "Нет отображаемого имени"
+            "name_placeholder": "Нет отображаемого имени",
+            "error_saving_profile_title": "Не удалось сохранить ваш профиль",
+            "error_saving_profile": "Операция не может быть выполнена"
         },
         "sidebar": {
             "title": "Боковая панель",
@@ -3903,7 +3898,13 @@
         "colour_grey": "Серый",
         "colour_red": "Красный",
         "colour_unsent": "Не отправлено",
-        "error_change_title": "Изменить настройки уведомлений"
+        "error_change_title": "Изменить настройки уведомлений",
+        "mark_all_read": "Отметить всё как прочитанное",
+        "keyword": "Ключевое слово",
+        "keyword_new": "Новое ключевое слово",
+        "class_global": "Глобально",
+        "class_other": "Другие",
+        "mentions_keywords": "Упоминания и ключевые слова"
     },
     "mobile_guide": {
         "toast_title": "Используйте приложение для лучшего опыта",

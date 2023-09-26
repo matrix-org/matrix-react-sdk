@@ -132,7 +132,6 @@
     "Unable to remove contact information": "Не могу да уклоним контакт податке",
     "No Microphones detected": "Нема уочених микрофона",
     "No Webcams detected": "Нема уочених веб камера",
-    "Profile": "Профил",
     "A new password must be entered.": "Морате унети нову лозинку.",
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
@@ -148,7 +147,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Извезена датотека ће бити заштићена са фразом. Требало би да унесете фразу овде, да бисте дешифровали датотеку.",
     "File to import": "Датотека за увоз",
     "Sunday": "Недеља",
-    "Notification targets": "Циљеви обавештења",
     "Today": "Данас",
     "Friday": "Петак",
     "Changelog": "Записник о изменама",
@@ -208,7 +206,6 @@
     "Forget this room": "Заборави ову собу",
     "Start chatting": "Започни ћаскање",
     "Room options": "Опције собе",
-    "Mark all as read": "Означи све као прочитано",
     "Room Name": "Назив собе",
     "Room Topic": "Тема собе",
     "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
@@ -585,8 +582,6 @@
     "Enter your account password to confirm the upgrade:": "Унесите лозинку за налог да бисте потврдили надоградњу:",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Заштитите од губитка приступа шифрованим порукама и подацима је подржан сигурносном копијом кључева за шифровање на серверу.",
     "Clear all data": "Очисти све податке",
-    "Profile picture": "Слика профила",
-    "Display Name": "Прикажи име",
     "Couldn't load page": "Учитавање странице није успело",
     "Sign in with SSO": "Пријавите се помоћу SSO",
     "Kosovo": "/",
@@ -658,7 +653,10 @@
         "off": "Искључено",
         "copied": "Копирано!",
         "advanced": "Напредно",
-        "general": "Опште"
+        "general": "Опште",
+        "profile": "Профил",
+        "display_name": "Прикажи име",
+        "user_avatar": "Слика профила"
     },
     "action": {
         "continue": "Настави",
@@ -803,7 +801,8 @@
             "noisy": "Бучно",
             "error_permissions_denied": "%(brand)s нема овлашћења за слање обавештења, проверите подешавања вашег прегледача",
             "error_permissions_missing": "%(brand)s-у није дато овлашћење за слање обавештења, пробајте поново касније",
-            "error_title": "Нисам успео да омогућим обавештења"
+            "error_title": "Нисам успео да омогућим обавештења",
+            "push_targets": "Циљеви обавештења"
         },
         "appearance": {
             "heading": "Прилагодите изглед",
@@ -1510,7 +1509,9 @@
     "notifications": {
         "enable_prompt_toast_title": "Обавештења",
         "colour_none": "Ништа",
-        "error_change_title": "Промените подешавања обавештења"
+        "error_change_title": "Промените подешавања обавештења",
+        "mark_all_read": "Означи све као прочитано",
+        "class_other": "Остало"
     },
     "quick_settings": {
         "all_settings": "Сва подешавања"

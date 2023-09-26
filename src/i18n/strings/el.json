@@ -44,7 +44,6 @@
     "Enter passphrase": "Εισαγωγή συνθηματικού",
     "Failed to set display name": "Δεν ήταν δυνατό ο ορισμός του ονόματος εμφάνισης",
     "Home": "Αρχική",
-    "Profile": "Προφίλ",
     "Reason": "Αιτία",
     "Reject invitation": "Απόρριψη πρόσκλησης",
     "Return to login screen": "Επιστροφή στην οθόνη σύνδεσης",
@@ -125,7 +124,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Θα μεταφερθείτε σε έναν ιστότοπου τρίτου για να πραγματοποιηθεί η πιστοποίηση του λογαριασμού σας με το %(integrationsUrl)s. Θα θέλατε να συνεχίσετε;",
     "This will allow you to reset your password and receive notifications.": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις.",
     "Sunday": "Κυριακή",
-    "Notification targets": "Στόχοι ειδοποιήσεων",
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
     "Changelog": "Αλλαγές",
@@ -442,12 +440,6 @@
     "Your email address hasn't been verified yet": "Η διεύθυνση email σας δεν έχει επαληθευτεί ακόμα",
     "Unable to share email address": "Δεν είναι δυνατή η κοινή χρήση της διεύθυνσης email",
     "Backup version:": "Έκδοση αντιγράφου ασφαλείας:",
-    "Profile picture": "Εικόνα προφίλ",
-    "The operation could not be completed": "Η λειτουργία δεν μπόρεσε να ολοκληρωθεί",
-    "Failed to save your profile": "Αποτυχία αποθήκευσης του προφίλ σας",
-    "There was an error loading your notification settings.": "Παρουσιάστηκε σφάλμα κατά τη φόρτωση των ρυθμίσεων ειδοποιήσεων σας.",
-    "Mentions & keywords": "Αναφορές & λέξεις-κλειδιά",
-    "New keyword": "Νέα λέξη-κλειδί",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Ενημέρωση χώρου...",
         "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
@@ -523,8 +515,6 @@
     "Hat": "Καπέλο",
     "Robot": "Ρομπότ",
     "Smiley": "Χαμογελαστό πρόσωπο",
-    "Global": "Γενικές ρυθμίσεις",
-    "Keyword": "Λέξη-κλειδί",
     "Jump to first invite.": "Μετάβαση στην πρώτη πρόσκληση.",
     "Jump to first unread room.": "Μετάβαση στο πρώτο μη αναγνωσμένο δωμάτιο.",
     "To join a space you'll need an invite.": "Για να συμμετάσχετε σε ένα χώρο θα χρειαστείτε μια πρόσκληση.",
@@ -542,7 +532,6 @@
     "Rocket": "Πύραυλος",
     "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
-    "Display Name": "Εμφανιζόμενο όνομα",
     "Account management": "Διαχείριση λογαριασμών",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Αποδεχτείτε τους Όρους χρήσης του διακομιστή ταυτότητας (%(serverName)s), ώστε να μπορείτε να είστε ανιχνεύσιμοι μέσω της διεύθυνσης ηλεκτρονικού ταχυδρομείου ή του αριθμού τηλεφώνου.",
     "Phone numbers": "Τηλεφωνικοί αριθμοί",
@@ -914,7 +903,6 @@
     "Stop recording": "Διακοπή εγγραφής",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Δε βρέθηκε μικρόφωνο στη συσκευή σας. Παρακαλώ ελέγξτε τις ρυθμίσεις σας και δοκιμάστε ξανά.",
     "Unable to access your microphone": "Αδυναμία πρόσβασης μικροφώνου",
-    "Mark all as read": "Επισήμανση όλων ως αναγνωσμένων",
     "Open thread": "Άνοιγμα νήματος",
     "%(count)s reply": {
         "one": "%(count)s απάντηση",
@@ -1550,7 +1538,10 @@
         "copied": "Αντιγράφηκε!",
         "advanced": "Προχωρημένες",
         "spaces": "Χώροι",
-        "general": "Γενικά"
+        "general": "Γενικά",
+        "profile": "Προφίλ",
+        "display_name": "Εμφανιζόμενο όνομα",
+        "user_avatar": "Εικόνα προφίλ"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1907,7 +1898,9 @@
             "noisy": "Δυνατά",
             "error_permissions_denied": "Το %(brand)s δεν έχει δικαιώματα για αποστολή ειδοποιήσεων - παρακαλούμε ελέγξτε τις ρυθμίσεις του περιηγητή σας",
             "error_permissions_missing": "Δεν δόθηκαν δικαιώματα αποστολής ειδοποιήσεων στο %(brand)s - παρακαλούμε προσπαθήστε ξανά",
-            "error_title": "Αδυναμία ενεργοποίησης των ειδοποιήσεων"
+            "error_title": "Αδυναμία ενεργοποίησης των ειδοποιήσεων",
+            "push_targets": "Στόχοι ειδοποιήσεων",
+            "error_loading": "Παρουσιάστηκε σφάλμα κατά τη φόρτωση των ρυθμίσεων ειδοποιήσεων σας."
         },
         "appearance": {
             "layout_irc": "IRC (Πειραματικό)",
@@ -2063,7 +2056,9 @@
             "add_msisdn_confirm_button": "Επιβεβαιώστε την προσθήκη του τηλεφωνικού αριθμού",
             "add_msisdn_confirm_body": "Πιέστε το κουμπί από κάτω για να επιβεβαίωσετε την προσθήκη του τηλεφωνικού αριθμού.",
             "add_msisdn_dialog_title": "Προσθήκη Τηλεφωνικού Αριθμού",
-            "name_placeholder": "Χωρίς όνομα"
+            "name_placeholder": "Χωρίς όνομα",
+            "error_saving_profile_title": "Αποτυχία αποθήκευσης του προφίλ σας",
+            "error_saving_profile": "Η λειτουργία δεν μπόρεσε να ολοκληρωθεί"
         },
         "sidebar": {
             "title": "Πλαϊνή μπάρα",
@@ -3515,7 +3510,13 @@
         "colour_none": "Κανένα",
         "colour_bold": "Έντονα",
         "colour_unsent": "Μη απεσταλμένα",
-        "error_change_title": "Αλλάξτε τις ρυθμίσεις ειδοποιήσεων"
+        "error_change_title": "Αλλάξτε τις ρυθμίσεις ειδοποιήσεων",
+        "mark_all_read": "Επισήμανση όλων ως αναγνωσμένων",
+        "keyword": "Λέξη-κλειδί",
+        "keyword_new": "Νέα λέξη-κλειδί",
+        "class_global": "Γενικές ρυθμίσεις",
+        "class_other": "Άλλα",
+        "mentions_keywords": "Αναφορές & λέξεις-κλειδιά"
     },
     "mobile_guide": {
         "toast_title": "Χρησιμοποιήστε την εφαρμογή για καλύτερη εμπειρία",

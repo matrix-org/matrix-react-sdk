@@ -1,6 +1,5 @@
 {
     "Sunday": "Søndag",
-    "Notification targets": "Mål for varsel",
     "Today": "I dag",
     "Friday": "Fredag",
     "Tuesday": "Tirsdag",
@@ -77,8 +76,6 @@
     "Anchor": "Anker",
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
-    "Display Name": "Visningsnavn",
-    "Profile": "Profil",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnumre",
     "None": "Ingen",
@@ -139,7 +136,6 @@
     "Trophy": "Trofé",
     "Ball": "Ball",
     "Guitar": "Gitar",
-    "Profile picture": "Profilbilde",
     "Checking server": "Sjekker tjeneren",
     "Change identity server": "Bytt ut identitetstjener",
     "You should:": "Du burde:",
@@ -311,7 +307,6 @@
     "This room has already been upgraded.": "Dette rommet har allerede blitt oppgradert.",
     "Revoke invite": "Trekk tilbake invitasjonen",
     "Invited by %(sender)s": "Invitert av %(sender)s",
-    "Mark all as read": "Merk alle som lest",
     "Other published addresses:": "Andre publiserte adresser:",
     "Waiting for %(displayName)s to accept…": "Venter på at %(displayName)s skal akseptere …",
     "Your homeserver": "Hjemmetjeneren din",
@@ -727,8 +722,6 @@
     "Add reaction": "Legg til reaksjon",
     "Downloading": "Laster ned",
     "Connection failed": "Tilkobling mislyktes",
-    "Global": "Globalt",
-    "Keyword": "Nøkkelord",
     "Address": "Adresse",
     "Corn": "Mais",
     "Cloud": "Sky",
@@ -811,7 +804,10 @@
         "all_rooms": "Alle rom",
         "copied": "Kopiert!",
         "advanced": "Avansert",
-        "general": "Generelt"
+        "general": "Generelt",
+        "profile": "Profil",
+        "display_name": "Visningsnavn",
+        "user_avatar": "Profilbilde"
     },
     "action": {
         "continue": "Fortsett",
@@ -1034,7 +1030,8 @@
             "noisy": "Bråkete",
             "error_permissions_denied": "%(brand)s har ikke tillatelse til å sende deg varsler - vennligst sjekk nettleserinnstillingene",
             "error_permissions_missing": "%(brand)s fikk ikke tillatelse til å sende deg varsler - vennligst prøv igjen",
-            "error_title": "Klarte ikke slå på Varslinger"
+            "error_title": "Klarte ikke slå på Varslinger",
+            "push_targets": "Mål for varsel"
         },
         "appearance": {
             "heading": "Tilpass utseendet du bruker",
@@ -1774,7 +1771,11 @@
         "enable_prompt_toast_title": "Varsler",
         "enable_prompt_toast_description": "Aktiver skrivebordsvarsler",
         "colour_none": "Ingen",
-        "colour_bold": "Fet"
+        "colour_bold": "Fet",
+        "mark_all_read": "Merk alle som lest",
+        "keyword": "Nøkkelord",
+        "class_global": "Globalt",
+        "class_other": "Andre"
     },
     "mobile_guide": {
         "toast_title": "Bruk appen for en bedre opplevelse",

@@ -31,7 +31,6 @@
     "Reason": "Ástæða",
     "Send": "Senda",
     "Authentication": "Auðkenning",
-    "Notification targets": "Markmið tilkynninga",
     "Are you sure?": "Ertu viss?",
     "Unignore": "Hætta að hunsa",
     "Admin Tools": "Kerfisstjóratól",
@@ -87,7 +86,6 @@
     "Invite to this room": "Bjóða inn á þessa spjallrás",
     "Connectivity to the server has been lost.": "Tenging við vefþjón hefur rofnað.",
     "Search failed": "Leit mistókst",
-    "Profile": "Notandasnið",
     "A new password must be entered.": "Það verður að setja inn nýtt lykilorð.",
     "New passwords must match each other.": "Nýju lykilorðin verða að vera þau sömu.",
     "Return to login screen": "Fara aftur í innskráningargluggann",
@@ -546,7 +544,6 @@
     "Local address": "Staðvært vistfang",
     "Stop recording": "Stöðva upptöku",
     "No microphone found": "Enginn hljóðnemi fannst",
-    "Mark all as read": "Merkja allt sem lesið",
     "%(roomName)s does not exist.": "%(roomName)s er ekki til.",
     "Do you want to join %(roomName)s?": "Viltu taka þátt í %(roomName)s?",
     "Start chatting": "Hefja spjall",
@@ -573,17 +570,12 @@
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Phone numbers": "Símanúmer",
     "Email addresses": "Tölvupóstföng",
-    "Profile picture": "Notandamynd",
-    "Mentions & keywords": "Tilvísanir og stikkorð",
-    "Global": "Víðvært",
-    "Keyword": "Stikkorð",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Uppfæri svæði...",
         "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
     },
     "Space members": "Meðlimir svæðis",
     "Upgrade required": "Uppfærsla er nauðsynleg",
-    "Display Name": "Birtingarnafn",
     "Address": "Vistfang",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -923,10 +915,6 @@
         "other": "Sjá alla %(count)s meðlimina"
     },
     "Identity server URL must be HTTPS": "Slóð á auðkennisþjón verður að vera HTTPS",
-    "The operation could not be completed": "Ekki tókst að ljúka aðgerðinni",
-    "Failed to save your profile": "Mistókst að vista sniðið þitt",
-    "There was an error loading your notification settings.": "Það kom upp villa við að hlaða inn stillingum fyrir tilkynningar.",
-    "New keyword": "Nýtt stikkorð",
     "This event could not be displayed": "Ekki tókst að birta þennan atburð",
     "Edit message": "Breyta skilaboðum",
     "Everyone in this room is verified": "Allir á þessari spjallrás eru staðfestir",
@@ -1479,7 +1467,10 @@
         "copied": "Afritað!",
         "advanced": "Nánar",
         "spaces": "Svæði",
-        "general": "Almennt"
+        "general": "Almennt",
+        "profile": "Notandasnið",
+        "display_name": "Birtingarnafn",
+        "user_avatar": "Notandamynd"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1918,7 +1909,9 @@
             "noisy": "Hávært",
             "error_permissions_denied": "%(brand)s hefur ekki heimildir til að senda þér tilkynningar - yfirfarðu stillingar vafrans þíns",
             "error_permissions_missing": "%(brand)s voru ekki gefnar heimildir til að senda þér tilkynningar - reyndu aftur",
-            "error_title": "Tekst ekki að virkja tilkynningar"
+            "error_title": "Tekst ekki að virkja tilkynningar",
+            "push_targets": "Markmið tilkynninga",
+            "error_loading": "Það kom upp villa við að hlaða inn stillingum fyrir tilkynningar."
         },
         "appearance": {
             "layout_irc": "IRC (á tilraunastigi)",
@@ -2134,7 +2127,9 @@
             "add_msisdn_confirm_button": "Staðfestu að bæta við símanúmeri",
             "add_msisdn_confirm_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
             "add_msisdn_dialog_title": "Bæta við símanúmeri",
-            "name_placeholder": "Ekkert birtingarnafn"
+            "name_placeholder": "Ekkert birtingarnafn",
+            "error_saving_profile_title": "Mistókst að vista sniðið þitt",
+            "error_saving_profile": "Ekki tókst að ljúka aðgerðinni"
         },
         "sidebar": {
             "title": "Hliðarspjald",
@@ -3602,7 +3597,13 @@
         "colour_none": "Ekkert",
         "colour_bold": "Feitletrað",
         "colour_unsent": "Ósent",
-        "error_change_title": "Breytta tilkynningastillingum"
+        "error_change_title": "Breytta tilkynningastillingum",
+        "mark_all_read": "Merkja allt sem lesið",
+        "keyword": "Stikkorð",
+        "keyword_new": "Nýtt stikkorð",
+        "class_global": "Víðvært",
+        "class_other": "Annað",
+        "mentions_keywords": "Tilvísanir og stikkorð"
     },
     "mobile_guide": {
         "toast_title": "Notaðu smáforritið til að njóta betur reynslunnar",

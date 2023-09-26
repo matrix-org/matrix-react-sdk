@@ -56,7 +56,6 @@
     "New passwords must match each other.": "Pasahitz berriak berdinak izan behar dira.",
     "not specified": "zehaztu gabe",
     "No more results": "Emaitza gehiagorik ez",
-    "Profile": "Profila",
     "Reason": "Arrazoia",
     "Reject invitation": "Baztertu gonbidapena",
     "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
@@ -149,7 +148,6 @@
     "<a>In reply to</a> <pill>": "<a>honi erantzunez:</a> <pill>",
     "You don't currently have any stickerpacks enabled": "Ez duzu eranskailu multzorik aktibatuta",
     "Sunday": "Igandea",
-    "Notification targets": "Jakinarazpenen helburuak",
     "Today": "Gaur",
     "Friday": "Ostirala",
     "Changelog": "Aldaketa-egunkaria",
@@ -321,8 +319,6 @@
     "Unable to verify phone number.": "Ezin izan da telefono zenbakia egiaztatu.",
     "Verification code": "Egiaztaketa kodea",
     "Phone Number": "Telefono zenbakia",
-    "Profile picture": "Profileko irudia",
-    "Display Name": "Pantaila-izena",
     "Room information": "Gelako informazioa",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Egiaztatu erabiltzaile hau fidagarritzat markatzeko. Honek bakea ematen dizu muturretik muturrerako zifratutako mezuak erabiltzean.",
     "Incoming Verification Request": "Jasotako egiaztaketa eskaria",
@@ -584,7 +580,6 @@
     "This session is encrypting history using the new recovery method.": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
-    "Mark all as read": "Markatu denak irakurrita gisa",
     "Scroll to most recent messages": "Korritu azken mezuetara",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Errore bat gertatu da gelaren ordezko helbideak eguneratzean. Agian zerbitzariak ez du onartzen edo une bateko akatsa izan da.",
     "Local address": "Helbide lokala",
@@ -739,7 +734,10 @@
         "all_rooms": "Gela guztiak",
         "copied": "Kopiatuta!",
         "advanced": "Aurreratua",
-        "general": "Orokorra"
+        "general": "Orokorra",
+        "profile": "Profila",
+        "display_name": "Pantaila-izena",
+        "user_avatar": "Profileko irudia"
     },
     "action": {
         "continue": "Jarraitu",
@@ -970,7 +968,8 @@
             "noisy": "Zaratatsua",
             "error_permissions_denied": "%(brand)sek ez du zuri jakinarazpenak bidaltzeko baimenik,  egiaztatu nabigatzailearen ezarpenak",
             "error_permissions_missing": "Ez zaio jakinarazpenak bidaltzeko baimena eman %(brand)si, saiatu berriro",
-            "error_title": "Ezin izan dira jakinarazpenak gaitu"
+            "error_title": "Ezin izan dira jakinarazpenak gaitu",
+            "push_targets": "Jakinarazpenen helburuak"
         },
         "appearance": {
             "match_system_theme": "Bat egin sistemako azalarekin",
@@ -1813,7 +1812,9 @@
         "enable_prompt_toast_title": "Jakinarazpenak",
         "colour_none": "Bat ere ez",
         "colour_bold": "Lodia",
-        "error_change_title": "Aldatu jakinarazpenen ezarpenak"
+        "error_change_title": "Aldatu jakinarazpenen ezarpenak",
+        "mark_all_read": "Markatu denak irakurrita gisa",
+        "class_other": "Beste bat"
     },
     "room_summary_card_back_action_label": "Gelako informazioa",
     "quick_settings": {

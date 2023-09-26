@@ -479,7 +479,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "ທ່ານສາມາດປັກໝຸດໄດ້ເຖິງ %(count)s widget ເທົ່ານັ້ນ"
     },
-    "Profile": "ໂປຣໄຟລ໌",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
     "Missing domain separator e.g. (:domain.org)": "ຂາດຕົວແຍກໂດເມນ e.g. (:domain.org)",
     "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
@@ -632,7 +631,6 @@
     "No microphone found": "ບໍ່ພົບໄມໂຄຣໂຟນ",
     "We were unable to access your microphone. Please check your browser settings and try again.": "ພວກເຮົາບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
     "Unable to access your microphone": "ບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້",
-    "Mark all as read": "ໝາຍທັງໝົດວ່າອ່ານແລ້ວ",
     "Jump to first unread message.": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
     "Open thread": "ເປີດກະທູ້",
     "%(count)s reply": {
@@ -752,7 +750,6 @@
     "Upgrade required": "ຕ້ອງການບົກລະດັບ",
     "The integration manager is offline or it cannot reach your homeserver.": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້.",
     "Cannot connect to integration manager": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
-    "Display Name": "ຊື່ສະແດງ",
     "Failed to set display name": "ກຳນົດການສະເເດງຊື່ບໍ່ສຳເລັດ",
     "Reset event store": "ກູ້ຄືນທີ່ຈັດເກັບ",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "ຖ້າທ່ານດຳເນິນການ, ກະລຸນາຮັບຊາບວ່າຂໍ້ຄວາມຂອງທ່ານຈະບໍ່ຖືກລຶບ, ແຕ່ການຊອກຫາອາດຈະຖືກຫຼຸດໜ້ອຍລົງເປັນເວລາສອງສາມນາທີໃນຂະນະທີ່ດັດສະນີຈະຖືກສ້າງໃໝ່",
@@ -1212,8 +1209,6 @@
     "Leave space": "ອອກຈາກພື້ນທີ່",
     "Leave some rooms": "ອອກຈາກບາງຫ້ອງ",
     "Leave all rooms": "ອອກຈາກຫ້ອງທັງຫມົດ",
-    "New keyword": "ຄໍາສໍາຄັນໃຫມ່",
-    "Keyword": "ຄໍາສໍາຄັນ",
     "Phone numbers": "ເບີໂທລະສັບ",
     "Email addresses": "ທີ່ຢູ່ອີເມວ",
     "Your password was successfully changed.": "ລະຫັດຜ່ານຂອງທ່ານຖືກປ່ຽນສຳເລັດແລ້ວ.",
@@ -1252,13 +1247,6 @@
     "Back up your keys before signing out to avoid losing them.": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
-    "Profile picture": "ຮູບໂປຣໄຟລ໌",
-    "The operation could not be completed": "ການດໍາເນີນງານບໍ່ສໍາເລັດ",
-    "Failed to save your profile": "ບັນທຶກໂປຣໄຟລ໌ຂອງທ່ານບໍ່ສຳເລັດ",
-    "There was an error loading your notification settings.": "ເກີດຄວາມຜິດພາດໃນການໂຫຼດການຕັ້ງຄ່າການແຈ້ງເຕືອນຂອງທ່ານ.",
-    "Notification targets": "ເປົ້າໝາຍການແຈ້ງເຕືອນ",
-    "Mentions & keywords": "ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
-    "Global": "ທົ່ວໂລກ",
     "Fish": "ປາ",
     "Turtle": "ເຕົ່າ",
     "Penguin": "ນົກເພັນກິນ",
@@ -1560,7 +1548,10 @@
         "copied": "ສຳເນົາແລ້ວ!",
         "advanced": "ຂັ້ນສູງ",
         "spaces": "ພື້ນທີ່",
-        "general": "ທົ່ວໄປ"
+        "general": "ທົ່ວໄປ",
+        "profile": "ໂປຣໄຟລ໌",
+        "display_name": "ຊື່ສະແດງ",
+        "user_avatar": "ຮູບໂປຣໄຟລ໌"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1909,7 +1900,9 @@
             "noisy": "ສຽງດັງ",
             "error_permissions_denied": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນໃຫ້ທ່ານ - ກະລຸນາກວດສອບການຕັ້ງຄ່າຂອງບຣາວເຊີຂອງທ່ານ",
             "error_permissions_missing": "%(brand)s ບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ສົ່ງການແຈ້ງເຕືອນ - ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
-            "error_title": "ບໍ່ສາມາດເປີດໃຊ້ການແຈ້ງເຕືອນໄດ້"
+            "error_title": "ບໍ່ສາມາດເປີດໃຊ້ການແຈ້ງເຕືອນໄດ້",
+            "push_targets": "ເປົ້າໝາຍການແຈ້ງເຕືອນ",
+            "error_loading": "ເກີດຄວາມຜິດພາດໃນການໂຫຼດການຕັ້ງຄ່າການແຈ້ງເຕືອນຂອງທ່ານ."
         },
         "appearance": {
             "layout_irc": "(ທົດລອງ)IRC",
@@ -2064,7 +2057,9 @@
             "add_msisdn_confirm_button": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
             "add_msisdn_confirm_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
             "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ",
-            "name_placeholder": "ບໍ່ມີຊື່ສະແດງຜົນ"
+            "name_placeholder": "ບໍ່ມີຊື່ສະແດງຜົນ",
+            "error_saving_profile_title": "ບັນທຶກໂປຣໄຟລ໌ຂອງທ່ານບໍ່ສຳເລັດ",
+            "error_saving_profile": "ການດໍາເນີນງານບໍ່ສໍາເລັດ"
         },
         "sidebar": {
             "title": "ແຖບດ້ານຂ້າງ",
@@ -3531,7 +3526,13 @@
         "colour_none": "ບໍ່ມີ",
         "colour_bold": "ຕົວໜາ",
         "colour_unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
-        "error_change_title": "ປ່ຽນການຕັ້ງຄ່າການແຈ້ງເຕືອນ"
+        "error_change_title": "ປ່ຽນການຕັ້ງຄ່າການແຈ້ງເຕືອນ",
+        "mark_all_read": "ໝາຍທັງໝົດວ່າອ່ານແລ້ວ",
+        "keyword": "ຄໍາສໍາຄັນ",
+        "keyword_new": "ຄໍາສໍາຄັນໃຫມ່",
+        "class_global": "ທົ່ວໂລກ",
+        "class_other": "ອື່ນໆ",
+        "mentions_keywords": "ກ່າວເຖິງ & ຄໍາສໍາຄັນ"
     },
     "mobile_guide": {
         "toast_title": "ໃຊ້ແອັບເພື່ອປະສົບການທີ່ດີກວ່າ",

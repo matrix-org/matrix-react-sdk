@@ -59,7 +59,6 @@
     "not specified": "未指定",
     "No more results": "沒有更多結果",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "請收信並點擊信中的連結。完成後，再點擊「繼續」。",
-    "Profile": "基本資料",
     "Reject invitation": "拒絕邀請",
     "%(roomName)s does not exist.": "%(roomName)s 不存在。",
     "%(roomName)s is not accessible at this time.": "%(roomName)s 此時無法存取。",
@@ -149,7 +148,6 @@
     "<a>In reply to</a> <pill>": "<a>回覆給</a> <pill>",
     "You don't currently have any stickerpacks enabled": "您目前沒有啟用任何貼圖包",
     "Sunday": "星期日",
-    "Notification targets": "通知目標",
     "Today": "今天",
     "Friday": "星期五",
     "Changelog": "變更記錄檔",
@@ -239,8 +237,6 @@
     "Unable to verify phone number.": "無法驗證電話號碼。",
     "Verification code": "驗證碼",
     "Phone Number": "電話號碼",
-    "Profile picture": "大頭照",
-    "Display Name": "顯示名稱",
     "Room information": "聊天室資訊",
     "Room Addresses": "聊天室位址",
     "Email addresses": "電子郵件地址",
@@ -585,7 +581,6 @@
     "%(name)s declined": "%(name)s 拒絕了",
     "Accepting…": "正在接受…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要回報與 Matrix 有關的安全性問題，請閱讀 Matrix.org 的<a>安全性揭露政策</a>。",
-    "Mark all as read": "全部標示為已讀",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "更新聊天室的替代位址時發生錯誤。伺服器可能不允許這麼做，或是遇到暫時性的錯誤。",
     "Scroll to most recent messages": "捲動到最新訊息",
     "Local address": "本機位址",
@@ -719,8 +714,6 @@
     "Video conference updated by %(senderName)s": "視訊會議由 %(senderName)s 更新",
     "Video conference started by %(senderName)s": "視訊會議由 %(senderName)s 開始",
     "Ignored attempt to disable encryption": "已忽略嘗試停用加密",
-    "Failed to save your profile": "無法儲存您的設定檔",
-    "The operation could not be completed": "無法完成操作",
     "You can only pin up to %(count)s widgets": {
         "other": "您最多只能釘選 %(count)s 個小工具"
     },
@@ -1136,11 +1129,6 @@
     "Unable to copy a link to the room to the clipboard.": "無法複製聊天室連結至剪貼簿。",
     "Unable to copy room link": "無法複製聊天室連結",
     "User Directory": "使用者目錄",
-    "There was an error loading your notification settings.": "載入您的通知設定時發生錯誤。",
-    "Mentions & keywords": "提及與關鍵字",
-    "Global": "全域",
-    "New keyword": "新關鍵字",
-    "Keyword": "關鍵字",
     "The call is in an unknown state!": "通話處於未知狀態！",
     "Call back": "回撥",
     "No answer": "無回應",
@@ -1628,7 +1616,6 @@
     "View poll in timeline": "在時間軸中檢視投票",
     "Answered elsewhere": "在別處回答",
     "Invites by email can only be sent one at a time": "透過電子郵件傳送的邀請一次只能傳送一個",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "更新您的通知偏好設定時發生錯誤。請再試一次。",
     "Desktop app logo": "桌面應用程式標誌",
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
     "Message from %(user)s": "來自 %(user)s 的訊息",
@@ -1803,7 +1790,10 @@
         "advanced": "進階",
         "spaces": "聊天空間",
         "general": "一般",
-        "saving": "正在儲存…"
+        "saving": "正在儲存…",
+        "profile": "基本資料",
+        "display_name": "顯示名稱",
+        "user_avatar": "大頭照"
     },
     "action": {
         "continue": "繼續",
@@ -2290,7 +2280,10 @@
             "noisy": "吵鬧",
             "error_permissions_denied": "%(brand)s 沒有權限向您傳送通知──請檢查您的瀏覽器設定",
             "error_permissions_missing": "%(brand)s 沒有權限向您傳送通知──請重試",
-            "error_title": "無法啟用通知功能"
+            "error_title": "無法啟用通知功能",
+            "error_updating": "更新您的通知偏好設定時發生錯誤。請再試一次。",
+            "push_targets": "通知目標",
+            "error_loading": "載入您的通知設定時發生錯誤。"
         },
         "appearance": {
             "layout_irc": "IRC（實驗性）",
@@ -2541,7 +2534,9 @@
             "add_msisdn_confirm_button": "確認新增電話號碼",
             "add_msisdn_confirm_body": "點擊下方按鈕以確認新增此電話號碼。",
             "add_msisdn_dialog_title": "新增電話號碼",
-            "name_placeholder": "沒有顯示名稱"
+            "name_placeholder": "沒有顯示名稱",
+            "error_saving_profile_title": "無法儲存您的設定檔",
+            "error_saving_profile": "無法完成操作"
         },
         "sidebar": {
             "title": "側邊欄",
@@ -4215,7 +4210,13 @@
         "colour_grey": "灰",
         "colour_red": "紅",
         "colour_unsent": "未傳送",
-        "error_change_title": "變更通知設定"
+        "error_change_title": "變更通知設定",
+        "mark_all_read": "全部標示為已讀",
+        "keyword": "關鍵字",
+        "keyword_new": "新關鍵字",
+        "class_global": "全域",
+        "class_other": "其他",
+        "mentions_keywords": "提及與關鍵字"
     },
     "mobile_guide": {
         "toast_title": "使用應用程式以取得更好的體驗",

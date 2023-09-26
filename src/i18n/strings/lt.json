@@ -1,6 +1,5 @@
 {
     "Sunday": "Sekmadienis",
-    "Notification targets": "Pranešimo objektai",
     "Today": "Šiandien",
     "Friday": "Penktadienis",
     "Changelog": "Keitinių žurnalas",
@@ -90,7 +89,6 @@
     "No Microphones detected": "Neaptikta jokių mikrofonų",
     "No Webcams detected": "Neaptikta jokių kamerų",
     "Audio Output": "Garso išvestis",
-    "Profile": "Profilis",
     "A new password must be entered.": "Privalo būti įvestas naujas slaptažodis.",
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
@@ -211,7 +209,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
     "Back up your keys before signing out to avoid losing them.": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
     "Start using Key Backup": "Pradėti naudoti atsarginę raktų kopiją",
-    "Display Name": "Rodomas Vardas",
     "Room %(name)s": "Kambarys %(name)s",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Atnaujinimas išjungs dabartinę kambario instanciją ir sukurs atnaujintą kambarį tuo pačiu pavadinimu.",
     "Other published addresses:": "Kiti paskelbti adresai:",
@@ -524,9 +521,6 @@
     "You should:": "Jūs turėtumėte:",
     "Checking server": "Tikrinamas serveris",
     "Backup version:": "Atsarginės kopijos versija:",
-    "Profile picture": "Profilio paveikslėlis",
-    "The operation could not be completed": "Nepavyko užbaigti operacijos",
-    "Failed to save your profile": "Nepavyko išsaugoti jūsų profilio",
     "Forget this room": "Pamiršti šį kambarį",
     "This homeserver would like to make sure you are not a robot.": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
@@ -792,9 +786,6 @@
     "Bahamas": "Bahamų salos",
     "Unable to share email address": "Nepavyko pasidalinti el. pašto adresu",
     "Verification code": "Patvirtinimo kodas",
-    "Mentions & keywords": "Paminėjimai & Raktažodžiai",
-    "New keyword": "Naujas raktažodis",
-    "Keyword": "Raktažodis",
     "Sending invites... (%(progress)s out of %(count)s)": {
         "one": "Siunčiame pakvietimą...",
         "other": "Siunčiame pakvietimus... (%(progress)s iš %(count)s)"
@@ -880,7 +871,6 @@
     "No microphone found": "Mikrofonas nerastas",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Mums nepavyko pasiekti jūsų mikrofono. Patikrinkite naršyklės nustatymus ir bandykite dar kartą.",
     "Unable to access your microphone": "Nepavyksta pasiekti mikrofono",
-    "Mark all as read": "Pažymėti viską kaip perskaitytą",
     "Jump to first unread message.": "Pereiti prie pirmos neperskaitytos žinutės.",
     "Open thread": "Atidaryti temą",
     "%(count)s reply": {
@@ -942,8 +932,6 @@
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Your password was successfully changed.": "Jūsų slaptažodis sėkmingai pakeistas.",
-    "There was an error loading your notification settings.": "Įkeliant pranešimų nustatymus įvyko klaida.",
-    "Global": "Globalus",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atnaujinama erdvė...",
         "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
@@ -1132,7 +1120,10 @@
         "copied": "Nukopijuota!",
         "advanced": "Išplėstiniai",
         "spaces": "Erdvės",
-        "general": "Bendrieji"
+        "general": "Bendrieji",
+        "profile": "Profilis",
+        "display_name": "Rodomas Vardas",
+        "user_avatar": "Profilio paveikslėlis"
     },
     "action": {
         "continue": "Tęsti",
@@ -1468,7 +1459,9 @@
             "noisy": "Triukšmingas",
             "error_permissions_denied": "%(brand)s neturi leidimo siųsti jums pranešimus - patikrinkite savo naršyklės nustatymus",
             "error_permissions_missing": "%(brand)s nebuvo suteiktas leidimas siųsti pranešimus - bandykite dar kartą",
-            "error_title": "Nepavyko įjungti Pranešimų"
+            "error_title": "Nepavyko įjungti Pranešimų",
+            "push_targets": "Pranešimo objektai",
+            "error_loading": "Įkeliant pranešimų nustatymus įvyko klaida."
         },
         "appearance": {
             "layout_irc": "IRC (eksperimentinis)",
@@ -1649,7 +1642,9 @@
             "add_msisdn_confirm_button": "Patvirtinkite telefono numerio pridėjimą",
             "add_msisdn_confirm_body": "Paspauskite žemiau esantį mygtuką, kad patvirtintumėte šio numerio pridėjimą.",
             "add_msisdn_dialog_title": "Pridėti Telefono Numerį",
-            "name_placeholder": "Nėra rodomo vardo"
+            "name_placeholder": "Nėra rodomo vardo",
+            "error_saving_profile_title": "Nepavyko išsaugoti jūsų profilio",
+            "error_saving_profile": "Nepavyko užbaigti operacijos"
         },
         "sidebar": {
             "title": "Šoninė juosta",
@@ -2739,7 +2734,13 @@
         "enable_prompt_toast_description": "Įjungti darbalaukio pranešimus",
         "colour_none": "Nė vienas",
         "colour_bold": "Pusjuodis",
-        "error_change_title": "Keisti pranešimų nustatymus"
+        "error_change_title": "Keisti pranešimų nustatymus",
+        "mark_all_read": "Pažymėti viską kaip perskaitytą",
+        "keyword": "Raktažodis",
+        "keyword_new": "Naujas raktažodis",
+        "class_global": "Globalus",
+        "class_other": "Kitas",
+        "mentions_keywords": "Paminėjimai & Raktažodžiai"
     },
     "mobile_guide": {
         "toast_title": "Naudokite programėlę geresnei patirčiai",

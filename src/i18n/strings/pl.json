@@ -72,7 +72,6 @@
     "PM": "PM",
     "No more results": "Nie ma więcej wyników",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
-    "Profile": "Profil",
     "Reason": "Powód",
     "Reject invitation": "Odrzuć zaproszenie",
     "Return to login screen": "Wróć do ekranu logowania",
@@ -132,7 +131,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Nie będziesz mógł cofnąć tej zmiany, ponieważ degradujesz swoje uprawnienia. Jeśli jesteś ostatnim użytkownikiem uprzywilejowanym w tym pokoju, nie będziesz mógł ich odzyskać.",
     "Unnamed room": "Pokój bez nazwy",
     "Sunday": "Niedziela",
-    "Notification targets": "Cele powiadomień",
     "Today": "Dzisiaj",
     "Friday": "Piątek",
     "Changelog": "Dziennik zmian",
@@ -259,7 +257,6 @@
     "Headphones": "Słuchawki",
     "Folder": "Folder",
     "Phone Number": "Numer telefonu",
-    "Display Name": "Wyświetlana nazwa",
     "Email addresses": "Adresy e-mail",
     "Phone numbers": "Numery telefonów",
     "Account management": "Zarządzanie kontem",
@@ -293,7 +290,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
     "Back up your keys before signing out to avoid losing them.": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
-    "Profile picture": "Obraz profilowy",
     "Checking server": "Sprawdzanie serwera",
     "Terms of service not accepted or the identity server is invalid.": "Warunki użytkowania nieakceptowane lub serwer tożsamości jest nieprawidłowy.",
     "The identity server you have chosen does not have any terms of service.": "Serwer tożsamości który został wybrany nie posiada warunków użytkowania.",
@@ -747,8 +743,6 @@
     "The room upgrade could not be completed": "Uaktualnienie pokoju nie mogło zostać ukończone",
     "Failed to upgrade room": "Nie udało się uaktualnić pokoju",
     "Backup version:": "Wersja kopii zapasowej:",
-    "The operation could not be completed": "To działanie nie mogło być ukończone",
-    "Failed to save your profile": "Nie udało się zapisać profilu",
     "Set up": "Konfiguruj",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
@@ -831,11 +825,6 @@
     "Stop recording": "Skończ nagrywanie",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
     "No microphone found": "Nie znaleziono mikrofonu",
-    "There was an error loading your notification settings.": "Wystąpił błąd podczas wczytywania twoich ustawień powiadomień.",
-    "Mentions & keywords": "Wzmianki i słowa kluczowe",
-    "Global": "Globalne",
-    "New keyword": "Nowe słowo kluczowe",
-    "Keyword": "Słowo kluczowe",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Aktualizowanie przestrzeni...",
         "other": "Aktualizowanie przestrzeni... (%(progress)s z %(count)s)"
@@ -940,8 +929,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Wystąpił nieznany błąd podczas zmiany hasła (%(stringifiedError)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Powinieneś <b>usunąć swoje prywatne dane</b> z serwera tożsamości <idserver /> przed rozłączeniem. Niestety, serwer tożsamości <idserver /> jest aktualnie offline lub nie można się z nim połączyć.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",
-    "Mark all as read": "Oznacz wszystko jako przeczytane",
     "Connecting to integration manager…": "Łączenie z menedżerem integracji…",
     "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
     "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
@@ -1792,7 +1779,10 @@
         "advanced": "Zaawansowane",
         "spaces": "Przestrzenie",
         "general": "Ogólne",
-        "saving": "Zapisywanie…"
+        "saving": "Zapisywanie…",
+        "profile": "Profil",
+        "display_name": "Wyświetlana nazwa",
+        "user_avatar": "Obraz profilowy"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2279,7 +2269,10 @@
             "noisy": "Głośny",
             "error_permissions_denied": "%(brand)s nie ma uprawnień, by wysyłać Ci powiadomienia - sprawdź ustawienia swojej przeglądarki",
             "error_permissions_missing": "%(brand)s nie otrzymał uprawnień do wysyłania powiadomień - spróbuj ponownie",
-            "error_title": "Nie można włączyć powiadomień"
+            "error_title": "Nie można włączyć powiadomień",
+            "error_updating": "Wystąpił błąd podczas aktualizowania Twoich preferencji powiadomień. Przełącz opcję ponownie.",
+            "push_targets": "Cele powiadomień",
+            "error_loading": "Wystąpił błąd podczas wczytywania twoich ustawień powiadomień."
         },
         "appearance": {
             "layout_irc": "IRC (eksperymentalny)",
@@ -2530,7 +2523,9 @@
             "add_msisdn_confirm_button": "Potwierdź dodanie numeru telefonu",
             "add_msisdn_confirm_body": "Naciśnij przycisk poniżej aby potwierdzić dodanie tego numeru telefonu.",
             "add_msisdn_dialog_title": "Dodaj numer telefonu",
-            "name_placeholder": "Brak nazwy ekranowej"
+            "name_placeholder": "Brak nazwy ekranowej",
+            "error_saving_profile_title": "Nie udało się zapisać profilu",
+            "error_saving_profile": "To działanie nie mogło być ukończone"
         },
         "sidebar": {
             "title": "Pasek boczny",
@@ -4197,7 +4192,13 @@
         "colour_grey": "Szary",
         "colour_red": "Czerwony",
         "colour_unsent": "Niewysłane",
-        "error_change_title": "Zmień ustawienia powiadomień"
+        "error_change_title": "Zmień ustawienia powiadomień",
+        "mark_all_read": "Oznacz wszystko jako przeczytane",
+        "keyword": "Słowo kluczowe",
+        "keyword_new": "Nowe słowo kluczowe",
+        "class_global": "Globalne",
+        "class_other": "Inne",
+        "mentions_keywords": "Wzmianki i słowa kluczowe"
     },
     "mobile_guide": {
         "toast_title": "Użyj aplikacji by mieć lepsze doświadczenie",

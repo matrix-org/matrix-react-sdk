@@ -44,7 +44,6 @@
     "AM": "ap.",
     "PM": "ip.",
     "No more results": "Ei enempää tuloksia",
-    "Profile": "Profiili",
     "Reason": "Syy",
     "Reject invitation": "Hylkää kutsu",
     "Return to login screen": "Palaa kirjautumissivulle",
@@ -141,7 +140,6 @@
     "expand": "laajenna",
     "collapse": "supista",
     "Sunday": "Sunnuntai",
-    "Notification targets": "Ilmoituksen kohteet",
     "Today": "Tänään",
     "Friday": "Perjantai",
     "Changelog": "Muutosloki",
@@ -232,7 +230,6 @@
     "Link to most recent message": "Linkitä viimeisimpään viestiin",
     "Continue With Encryption Disabled": "Jatka salaus poistettuna käytöstä",
     "You don't currently have any stickerpacks enabled": "Sinulla ei ole tarrapaketteja käytössä",
-    "Profile picture": "Profiilikuva",
     "Email addresses": "Sähköpostiosoitteet",
     "Phone numbers": "Puhelinnumerot",
     "Account management": "Tilin hallinta",
@@ -262,7 +259,6 @@
     "Invite anyway and never warn me again": "Kutsu silti, äläkä varoita minua enää uudelleen",
     "The conversation continues here.": "Keskustelu jatkuu täällä.",
     "Share Link to User": "Jaa linkki käyttäjään",
-    "Display Name": "Näyttönimi",
     "Phone Number": "Puhelinnumero",
     "Email Address": "Sähköpostiosoite",
     "Elephant": "Norsu",
@@ -538,7 +534,6 @@
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Tämä huone siltaa viestejä seuraaville alustoille. <a>Lue lisää.</a>",
-    "Mark all as read": "Merkitse kaikki luetuiksi",
     "Accepting…": "Hyväksytään…",
     "One of the following may be compromised:": "Jokin seuraavista saattaa olla vaarantunut:",
     "Your homeserver": "Kotipalvelimesi",
@@ -658,14 +653,12 @@
     "Server isn't responding": "Palvelin ei vastaa",
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
     "Edited at %(date)s": "Muokattu %(date)s",
-    "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
     "Decline All": "Kieltäydy kaikista",
     "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
     "The server is offline.": "Palvelin ei ole verkossa.",
     "Your firewall or anti-virus is blocking the request.": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
     "The server (%(serverName)s) took too long to respond.": "Palvelin (%(serverName)s) ei vastannut ajoissa.",
     "Preparing to download logs": "Valmistellaan lokien lataamista",
-    "The operation could not be completed": "Toimintoa ei voitu tehdä loppuun asti",
     "Comoros": "Komorit",
     "Colombia": "Kolumbia",
     "Cocos (Keeling) Islands": "Kookossaaret",
@@ -1086,10 +1079,6 @@
     "Space selection": "Avaruuden valinta",
     "Search for rooms": "Etsi huoneita",
     "Search for spaces": "Etsi avaruuksia",
-    "Global": "Yleiset",
-    "New keyword": "Uusi avainsana",
-    "Keyword": "Avainsana",
-    "Mentions & keywords": "Maininnat ja avainsanat",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "Address": "Osoite",
     "Create a new space": "Luo uusi avaruus",
@@ -1104,7 +1093,6 @@
     "Please provide an address": "Määritä osoite",
     "Call back": "Soita takaisin",
     "Role in <RoomName/>": "Rooli huoneessa <RoomName/>",
-    "There was an error loading your notification settings.": "Virhe ladatessa ilmoitusasetuksia.",
     "View in room": "Näytä huoneessa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
@@ -1621,7 +1609,10 @@
         "advanced": "Lisäasetukset",
         "spaces": "Avaruudet",
         "general": "Yleiset",
-        "saving": "Tallennetaan…"
+        "saving": "Tallennetaan…",
+        "profile": "Profiili",
+        "display_name": "Näyttönimi",
+        "user_avatar": "Profiilikuva"
     },
     "action": {
         "continue": "Jatka",
@@ -2075,7 +2066,9 @@
             "noisy": "Äänekäs",
             "error_permissions_denied": "%(brand)silla ei ole oikeuksia lähettää sinulle ilmoituksia. Ole hyvä ja tarkista selaimen asetukset",
             "error_permissions_missing": "%(brand)s ei saanut lupaa lähettää ilmoituksia - yritä uudelleen",
-            "error_title": "Ilmoitusten käyttöönotto epäonnistui"
+            "error_title": "Ilmoitusten käyttöönotto epäonnistui",
+            "push_targets": "Ilmoituksen kohteet",
+            "error_loading": "Virhe ladatessa ilmoitusasetuksia."
         },
         "appearance": {
             "layout_irc": "IRC (kokeellinen)",
@@ -2304,7 +2297,9 @@
             "add_msisdn_confirm_button": "Vahvista puhelinnumeron lisääminen",
             "add_msisdn_confirm_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
             "add_msisdn_dialog_title": "Lisää puhelinnumero",
-            "name_placeholder": "Ei näyttönimeä"
+            "name_placeholder": "Ei näyttönimeä",
+            "error_saving_profile_title": "Profiilisi tallentaminen ei onnistunut",
+            "error_saving_profile": "Toimintoa ei voitu tehdä loppuun asti"
         },
         "sidebar": {
             "title": "Sivupalkki",
@@ -3812,7 +3807,13 @@
         "colour_bold": "Lihavoitu",
         "colour_grey": "Harmaa",
         "colour_red": "Punainen",
-        "error_change_title": "Muokkaa ilmoitusasetuksia"
+        "error_change_title": "Muokkaa ilmoitusasetuksia",
+        "mark_all_read": "Merkitse kaikki luetuiksi",
+        "keyword": "Avainsana",
+        "keyword_new": "Uusi avainsana",
+        "class_global": "Yleiset",
+        "class_other": "Muut",
+        "mentions_keywords": "Maininnat ja avainsanat"
     },
     "mobile_guide": {
         "toast_title": "Parempi kokemus sovelluksella",

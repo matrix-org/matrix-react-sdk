@@ -122,7 +122,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "حدث خطأ أثناء تحديث العناوين البديلة للغرفة. قد لا يسمح به الخادم أو حدث فشل مؤقت.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "حدث خطأ أثناء تحديث العنوان الرئيسي للغرفة. قد لا يسمح به الخادم أو حدث فشل مؤقت.",
     "Error updating main address": "تعذر تحديث العنوان الرئيسي",
-    "Mark all as read": "أشر عليها بأنها قرأت",
     "Jump to first unread message.": "الانتقال إلى أول رسالة غير مقروءة.",
     "Invited by %(sender)s": "دُعيت من %(sender)s",
     "Revoke invite": "إبطال الدعوة",
@@ -242,12 +241,6 @@
     "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
     "Backup version:": "نسخة الاحتياطي:",
     "This backup is trusted because it has been restored on this session": "هذا الاحتياطي موثوق به لأنه تمت استعادته في هذا الاتصال",
-    "Profile picture": "الصورة الشخصية",
-    "Display Name": "الاسم الظاهر",
-    "Profile": "الملف الشخصي",
-    "The operation could not be completed": "تعذر إتمام العملية",
-    "Failed to save your profile": "تعذر حفظ ملفك الشخصي",
-    "Notification targets": "أهداف الإشعار",
     "You've successfully verified your device!": "لقد نجحت في التحقق من جهازك!",
     "Verify all users in a room to ensure it's secure.": "تحقق من جميع المستخدمين في الغرفة للتأكد من أنها آمنة.",
     "Almost there! Is %(displayName)s showing the same shield?": "أوشكت على الوصول! هل يظهر %(displayName)s نفس الدرع؟",
@@ -594,7 +587,10 @@
         "off": "مطفأ",
         "copied": "نُسخ!",
         "advanced": "متقدم",
-        "general": "عام"
+        "general": "عام",
+        "profile": "الملف الشخصي",
+        "display_name": "الاسم الظاهر",
+        "user_avatar": "الصورة الشخصية"
     },
     "action": {
         "continue": "واصِل",
@@ -738,7 +734,8 @@
             "noisy": "مزعج",
             "error_permissions_denied": "لا يملك %(brand)s التصريح لإرسال التنبيهات. من فضلك تحقّق من إعدادات المتصفح",
             "error_permissions_missing": "لم تقدّم التصريح اللازم كي يُرسل %(brand)s التنبيهات. من فضلك أعِد المحاولة",
-            "error_title": "تعذر تفعيل التنبيهات"
+            "error_title": "تعذر تفعيل التنبيهات",
+            "push_targets": "أهداف الإشعار"
         },
         "appearance": {
             "heading": "تخصيص مظهرك",
@@ -837,7 +834,9 @@
             "add_msisdn_confirm_button": "أكّد إضافة رقم الهاتف",
             "add_msisdn_confirm_body": "انقر الزر بالأسفل لتأكيد إضافة رقم الهاتف هذا.",
             "add_msisdn_dialog_title": "أضِف رقم الهاتف",
-            "name_placeholder": "لا اسم ظاهر"
+            "name_placeholder": "لا اسم ظاهر",
+            "error_saving_profile_title": "تعذر حفظ ملفك الشخصي",
+            "error_saving_profile": "تعذر إتمام العملية"
         }
     },
     "devtools": {
@@ -1505,7 +1504,9 @@
         "enable_prompt_toast_description": "تمكين إشعارات سطح المكتب",
         "colour_none": "لا شيء",
         "colour_bold": "ثخين",
-        "error_change_title": "تغيير إعدادات الإشعار"
+        "error_change_title": "تغيير إعدادات الإشعار",
+        "mark_all_read": "أشر عليها بأنها قرأت",
+        "class_other": "أخرى"
     },
     "error": {
         "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك.",

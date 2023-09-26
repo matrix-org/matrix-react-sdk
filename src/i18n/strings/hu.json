@@ -49,7 +49,6 @@
     "not specified": "nincs meghatározva",
     "No more results": "Nincs több találat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
-    "Profile": "Profil",
     "Reason": "Ok",
     "Reject invitation": "Meghívó elutasítása",
     "Return to login screen": "Vissza a bejelentkezési képernyőre",
@@ -149,7 +148,6 @@
     "<a>In reply to</a> <pill>": "<a>Válasz neki</a> <pill>",
     "You don't currently have any stickerpacks enabled": "Nincs engedélyezett matrica csomagod",
     "Sunday": "Vasárnap",
-    "Notification targets": "Értesítések célpontja",
     "Today": "Ma",
     "Friday": "Péntek",
     "Changelog": "Változások",
@@ -240,8 +238,6 @@
     "Unable to verify phone number.": "A telefonszámot nem sikerült ellenőrizni.",
     "Verification code": "Ellenőrző kód",
     "Phone Number": "Telefonszám",
-    "Profile picture": "Profilkép",
-    "Display Name": "Megjelenítési név",
     "Room information": "Szobainformációk",
     "Room Addresses": "Szobacímek",
     "Email addresses": "E-mail-cím",
@@ -586,7 +582,6 @@
     "%(name)s declined": "%(name)s elutasította",
     "Accepting…": "Elfogadás…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
-    "Mark all as read": "Összes megjelölése olvasottként",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "A szoba címének megváltoztatásakor hiba történt. Lehet, hogy a szerver nem engedélyezi vagy átmeneti hiba történt.",
     "Scroll to most recent messages": "A legfrissebb üzenethez görget",
     "Local address": "Helyi cím",
@@ -719,8 +714,6 @@
     "Video conference ended by %(senderName)s": "A videókonferenciát befejezte: %(senderName)s",
     "Video conference updated by %(senderName)s": "A videókonferenciát frissítette: %(senderName)s",
     "Video conference started by %(senderName)s": "A videókonferenciát elindította: %(senderName)s",
-    "Failed to save your profile": "A saját profil mentése sikertelen",
-    "The operation could not be completed": "A műveletet nem lehetett befejezni",
     "Data on this screen is shared with %(widgetDomain)s": "Az ezen a képernyőn látható adatok megosztásra kerülnek ezzel: %(widgetDomain)s",
     "Modal Widget": "Előugró kisalkalmazás",
     "You can only pin up to %(count)s widgets": {
@@ -1166,11 +1159,6 @@
     },
     "Upgrade required": "Fejlesztés szükséges",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát.",
-    "There was an error loading your notification settings.": "Hiba történt az értesítés beállítások betöltése során.",
-    "Mentions & keywords": "Megemlítések és kulcsszavak",
-    "Global": "Globális",
-    "New keyword": "Új kulcsszó",
-    "Keyword": "Kulcsszó",
     "Want to add an existing space instead?": "Inkább meglévő teret adna hozzá?",
     "Private space (invite only)": "Privát tér (csak meghívóval)",
     "Space visibility": "Tér láthatósága",
@@ -1628,7 +1616,6 @@
         "other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez"
     },
     "Invites by email can only be sent one at a time": "E-mail meghívóból egyszerre csak egy küldhető el",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Hiba történt az értesítési beállítások frissítése során. Próbálja meg be- és kikapcsolni a beállítást.",
     "Desktop app logo": "Asztali alkalmazás profilkép",
     "Requires your server to support the stable version of MSC3827": "A Matrix-kiszolgálónak támogatnia kell az MSC3827 stabil verzióját",
     "Message from %(user)s": "Üzenet tőle: %(user)s",
@@ -1754,7 +1741,10 @@
         "advanced": "Speciális",
         "spaces": "Terek",
         "general": "Általános",
-        "saving": "Mentés…"
+        "saving": "Mentés…",
+        "profile": "Profil",
+        "display_name": "Megjelenítési név",
+        "user_avatar": "Profilkép"
     },
     "action": {
         "continue": "Folytatás",
@@ -2231,7 +2221,10 @@
             "noisy": "Hangos",
             "error_permissions_denied": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – ellenőrizze a böngésző beállításait",
             "error_permissions_missing": "A(z) %(brand)s alkalmazásnak nincs jogosultsága értesítést küldeni – próbálja újra",
-            "error_title": "Az értesítések engedélyezése sikertelen"
+            "error_title": "Az értesítések engedélyezése sikertelen",
+            "error_updating": "Hiba történt az értesítési beállítások frissítése során. Próbálja meg be- és kikapcsolni a beállítást.",
+            "push_targets": "Értesítések célpontja",
+            "error_loading": "Hiba történt az értesítés beállítások betöltése során."
         },
         "appearance": {
             "layout_irc": "IRC (kísérleti)",
@@ -2481,7 +2474,9 @@
             "add_msisdn_confirm_button": "Telefonszám hozzáadásának megerősítése",
             "add_msisdn_confirm_body": "A telefonszám hozzáadásának megerősítéséhez kattintson a lenti gombra.",
             "add_msisdn_dialog_title": "Telefonszám hozzáadása",
-            "name_placeholder": "Nincs megjelenítendő név"
+            "name_placeholder": "Nincs megjelenítendő név",
+            "error_saving_profile_title": "A saját profil mentése sikertelen",
+            "error_saving_profile": "A műveletet nem lehetett befejezni"
         },
         "sidebar": {
             "title": "Oldalsáv",
@@ -4119,7 +4114,13 @@
         "colour_grey": "Szürke",
         "colour_red": "Piros",
         "colour_unsent": "Elküldetlen",
-        "error_change_title": "Értesítési beállítások megváltoztatása"
+        "error_change_title": "Értesítési beállítások megváltoztatása",
+        "mark_all_read": "Összes megjelölése olvasottként",
+        "keyword": "Kulcsszó",
+        "keyword_new": "Új kulcsszó",
+        "class_global": "Globális",
+        "class_other": "Egyéb",
+        "mentions_keywords": "Megemlítések és kulcsszavak"
     },
     "mobile_guide": {
         "toast_title": "A jobb élmény érdekében használjon alkalmazást",

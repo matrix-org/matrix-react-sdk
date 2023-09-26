@@ -44,7 +44,6 @@
     "not specified": "nav noteikts",
     "No more results": "Vairāk nekādu rezultātu nav",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
-    "Profile": "Profils",
     "Reason": "Iemesls",
     "Reject invitation": "Noraidīt uzaicinājumu",
     "Return to login screen": "Atgriezties uz pierakstīšanās lapu",
@@ -148,7 +147,6 @@
     },
     "This room is not public. You will not be able to rejoin without an invite.": "Šī istaba nav publiska un jūs nevarēsiet atkārtoti pievienoties bez uzaicinājuma.",
     "Sunday": "Svētdiena",
-    "Notification targets": "Paziņojumu adresāti",
     "Today": "Šodien",
     "Friday": "Piektdiena",
     "Changelog": "Izmaiņu vēsture",
@@ -313,7 +311,6 @@
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
     "Session key": "Sesijas atslēga",
     "Account management": "Konta pārvaldība",
-    "Failed to save your profile": "Neizdevās salabāt jūsu profilu",
     "Ok": "Labi",
     "Your homeserver has exceeded one of its resource limits.": "Jūsu bāzes serverī ir pārsniegts limits kādam no resursiem.",
     "Your homeserver has exceeded its user limit.": "Jūsu bāzes serverī ir pārsniegts lietotāju limits.",
@@ -364,7 +361,6 @@
     "Invite to this space": "Uzaicināt uz šo vietu",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Teksta ziņa tika nosūtīta uz +%(msisdn)s. Lūdzu, ievadiet tajā esošo verifikācijas kodu.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Piekrītiet identitāšu servera (%(serverName)s) pakalpojumu sniegšanas noteikumiem, lai padarītu sevi atrodamu citiem, izmantojot epasta adresi vai tālruņa numuru.",
-    "Display Name": "Parādāmais vārds",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -672,9 +668,6 @@
         "other": "Rādīt %(count)s citus priekšskatījumus"
     },
     "Enter a new identity server": "Ievadiet jaunu identitāšu serveri",
-    "Mentions & keywords": "Pieminēšana un atslēgvārdi",
-    "New keyword": "Jauns atslēgvārds",
-    "Keyword": "Atslēgvārds",
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -839,7 +832,9 @@
         "all_rooms": "Visas istabas",
         "copied": "Nokopēts!",
         "advanced": "Papildu",
-        "general": "Vispārīgi"
+        "general": "Vispārīgi",
+        "profile": "Profils",
+        "display_name": "Parādāmais vārds"
     },
     "action": {
         "continue": "Turpināt",
@@ -1043,7 +1038,8 @@
             "noisy": "Ar skaņu",
             "error_permissions_denied": "%(brand)s nav atļauts nosūtīt jums paziņojumus. Lūdzu pārbaudi sava pārlūka iestatījumus",
             "error_permissions_missing": "%(brand)s nav piešķirta atļauja nosūtīt paziņojumus. Lūdzu mēģini vēlreiz",
-            "error_title": "Neizdevās iespējot paziņojumus"
+            "error_title": "Neizdevās iespējot paziņojumus",
+            "push_targets": "Paziņojumu adresāti"
         },
         "appearance": {
             "heading": "Pielāgot izskatu",
@@ -1109,7 +1105,8 @@
             "add_msisdn_confirm_button": "Apstiprināt tālruņa numura pievienošanu",
             "add_msisdn_confirm_body": "Jānospiež zemāk esošā poga, lai apstiprinātu šī tālruņa numura pievienošanu.",
             "add_msisdn_dialog_title": "Pievienot tālruņa numuru",
-            "name_placeholder": "Nav parādāmā vārda"
+            "name_placeholder": "Nav parādāmā vārda",
+            "error_saving_profile_title": "Neizdevās salabāt jūsu profilu"
         },
         "sidebar": {
             "metaspaces_home_all_rooms": "Rādīt visas istabas"
@@ -2036,7 +2033,11 @@
         "enable_prompt_toast_title": "Paziņojumi",
         "enable_prompt_toast_description": "Iespējot darbvirsmas paziņojumus",
         "colour_none": "Neviena",
-        "error_change_title": "Mainīt paziņojumu iestatījumus"
+        "error_change_title": "Mainīt paziņojumu iestatījumus",
+        "keyword": "Atslēgvārds",
+        "keyword_new": "Jauns atslēgvārds",
+        "class_other": "Citi",
+        "mentions_keywords": "Pieminēšana un atslēgvārdi"
     },
     "chat_card_back_action_label": "Atgriezties uz čatu",
     "room_summary_card_back_action_label": "Informācija par istabu",

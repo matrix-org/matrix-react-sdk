@@ -118,7 +118,6 @@
     "Unable to remove contact information": "Nie je možné odstrániť kontaktné informácie",
     "No Microphones detected": "Neboli rozpoznané žiadne mikrofóny",
     "No Webcams detected": "Neboli rozpoznané žiadne kamery",
-    "Profile": "Profil",
     "A new password must be entered.": "Musíte zadať nové heslo.",
     "New passwords must match each other.": "Obe nové heslá musia byť zhodné.",
     "Return to login screen": "Vrátiť sa na prihlasovaciu obrazovku",
@@ -148,7 +147,6 @@
     "<a>In reply to</a> <pill>": "<a>Odpoveď na</a> <pill>",
     "You don't currently have any stickerpacks enabled": "Momentálne nemáte aktívne žiadne balíčky s nálepkami",
     "Sunday": "Nedeľa",
-    "Notification targets": "Ciele oznámení",
     "Today": "Dnes",
     "Friday": "Piatok",
     "Changelog": "Zoznam zmien",
@@ -304,8 +302,6 @@
     "Unable to verify phone number.": "Nie je možné overiť telefónne číslo.",
     "Verification code": "Overovací kód",
     "Phone Number": "Telefónne číslo",
-    "Profile picture": "Obrázok v profile",
-    "Display Name": "Zobrazované meno",
     "Email addresses": "Emailové adresy",
     "Phone numbers": "Telefónne čísla",
     "Account management": "Správa účtu",
@@ -693,11 +689,7 @@
     "Encryption not enabled": "Šifrovanie nie je zapnuté",
     "Unencrypted": "Nešifrované",
     "Search spaces": "Hľadať priestory",
-    "New keyword": "Nové kľúčové slovo",
-    "Keyword": "Kľúčové slovo",
     "@mentions & keywords": "@zmienky a kľúčové slová",
-    "Mentions & keywords": "Zmienky a kľúčové slová",
-    "Global": "Celosystémové",
     "Room options": "Možnosti miestnosti",
     "Search for spaces": "Hľadať priestory",
     "Updating spaces... (%(progress)s out of %(count)s)": {
@@ -1116,7 +1108,6 @@
     "Enter a server name": "Zadajte názov servera",
     "Scroll to most recent messages": "Prejsť na najnovšie správy",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Pri aktualizácii alternatívnych adries miestnosti došlo k chybe. Nemusí to byť povolené serverom alebo došlo k dočasnému zlyhaniu.",
-    "Mark all as read": "Označiť všetko ako prečítané",
     "The encryption used by this room isn't supported.": "Šifrovanie používané v tejto miestnosti nie je podporované.",
     "Waiting for %(displayName)s to accept…": "Čaká sa, kým to %(displayName)s prijme…",
     "Language Dropdown": "Rozbaľovací zoznam jazykov",
@@ -1203,7 +1194,6 @@
     "Try to join anyway": "Skúsiť sa pripojiť aj tak",
     "You can only join it with a working invite.": "Môžete sa k nemu pripojiť len s funkčnou pozvánkou.",
     "Join the conversation with an account": "Pripojte sa ku konverzácii pomocou účtu",
-    "The operation could not be completed": "Operáciu nebolo možné dokončiť",
     "Recently viewed": "Nedávno zobrazené",
     "Link to room": "Odkaz na miestnosť",
     "Spaces you're in": "Priestory, v ktorých sa nachádzate",
@@ -1269,7 +1259,6 @@
     "Message didn't send. Click for info.": "Správa sa neodoslala. Kliknite pre informácie.",
     "Insert link": "Vložiť odkaz",
     "You do not have permission to start polls in this room.": "Nemáte povolenie spúšťať ankety v tejto miestnosti.",
-    "There was an error loading your notification settings.": "Pri načítaní nastavení oznámení došlo k chybe.",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Táto miestnosť sa nachádza v niektorých priestoroch, ktorých nie ste správcom. V týchto priestoroch bude stará miestnosť stále zobrazená, ale ľudia budú vyzvaní, aby sa pripojili k novej miestnosti.",
     "Currently, %(count)s spaces have access": {
         "one": "V súčasnosti má priestor prístup",
@@ -1280,7 +1269,6 @@
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferencia aktualizovaná používateľom %(senderName)s",
     "Video conference started by %(senderName)s": "Videokonferencia spustená používateľom %(senderName)s",
-    "Failed to save your profile": "Nepodarilo sa uložiť váš profil",
     "You can only pin up to %(count)s widgets": {
         "other": "Môžete pripnúť iba %(count)s widgetov"
     },
@@ -1628,7 +1616,6 @@
     "Active polls": "Aktívne ankety",
     "View poll in timeline": "Zobraziť anketu na časovej osi",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailom sa môžu posielať len po jednej",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Pri aktualizácii vašich predvolieb oznámení došlo k chybe. Skúste prosím prepnúť možnosť znova.",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
     "Message from %(user)s": "Správa od %(user)s",
@@ -1803,7 +1790,10 @@
         "advanced": "Pokročilé",
         "spaces": "Priestory",
         "general": "Všeobecné",
-        "saving": "Ukladanie…"
+        "saving": "Ukladanie…",
+        "profile": "Profil",
+        "display_name": "Zobrazované meno",
+        "user_avatar": "Obrázok v profile"
     },
     "action": {
         "continue": "Pokračovať",
@@ -2290,7 +2280,10 @@
             "noisy": "Hlasné",
             "error_permissions_denied": "%(brand)s nemá udelené povolenie, aby vám mohol posielať oznámenia - Prosím, skontrolujte nastavenia vašeho prehliadača",
             "error_permissions_missing": "Aplikácii %(brand)s nebolo udelené povolenie potrebné pre posielanie oznámení - prosím, skúste to znovu",
-            "error_title": "Nie je možné povoliť oznámenia"
+            "error_title": "Nie je možné povoliť oznámenia",
+            "error_updating": "Pri aktualizácii vašich predvolieb oznámení došlo k chybe. Skúste prosím prepnúť možnosť znova.",
+            "push_targets": "Ciele oznámení",
+            "error_loading": "Pri načítaní nastavení oznámení došlo k chybe."
         },
         "appearance": {
             "layout_irc": "IRC (experimentálne)",
@@ -2541,7 +2534,9 @@
             "add_msisdn_confirm_button": "Potvrdiť pridanie telefónneho čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
             "add_msisdn_dialog_title": "Pridať telefónne číslo",
-            "name_placeholder": "Žiadne zobrazované meno"
+            "name_placeholder": "Žiadne zobrazované meno",
+            "error_saving_profile_title": "Nepodarilo sa uložiť váš profil",
+            "error_saving_profile": "Operáciu nebolo možné dokončiť"
         },
         "sidebar": {
             "title": "Bočný panel",
@@ -4215,7 +4210,13 @@
         "colour_grey": "Sivá",
         "colour_red": "Červená",
         "colour_unsent": "Neodoslané",
-        "error_change_title": "Upraviť nastavenia upozornení"
+        "error_change_title": "Upraviť nastavenia upozornení",
+        "mark_all_read": "Označiť všetko ako prečítané",
+        "keyword": "Kľúčové slovo",
+        "keyword_new": "Nové kľúčové slovo",
+        "class_global": "Celosystémové",
+        "class_other": "Ďalšie",
+        "mentions_keywords": "Zmienky a kľúčové slová"
     },
     "mobile_guide": {
         "toast_title": "Použite aplikáciu pre lepší zážitok",

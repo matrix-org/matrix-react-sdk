@@ -135,7 +135,6 @@
     "Confirm passphrase": "Introduïu una contrasenya",
     "Import room keys": "Importa les claus de la sala",
     "Sunday": "Diumenge",
-    "Notification targets": "Objectius de les notificacions",
     "Today": "Avui",
     "Friday": "Divendres",
     "Changelog": "Registre de canvis",
@@ -321,7 +320,8 @@
             "noisy": "Sorollós",
             "error_permissions_denied": "%(brand)s no té permís per enviar-te notificacions, comprova la configuració del teu navegador",
             "error_permissions_missing": "%(brand)s no ha rebut cap permís per enviar notificacions, torna-ho a provar",
-            "error_title": "No s'han pogut activar les notificacions"
+            "error_title": "No s'han pogut activar les notificacions",
+            "push_targets": "Objectius de les notificacions"
         },
         "appearance": {
             "subheading": "La configuració d'aspecte només afecta aquesta sessió %(brand)s.",
@@ -797,7 +797,8 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificacions",
-        "error_change_title": "Canvia la configuració de notificacions"
+        "error_change_title": "Canvia la configuració de notificacions",
+        "class_other": "Altres"
     },
     "user_menu": {
         "settings": "Totes les configuracions"

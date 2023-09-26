@@ -64,8 +64,6 @@
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
     "Authentication": "Autentificacion",
-    "Display Name": "Nom d'afichatge",
-    "Profile": "Perfil",
     "Unignore": "Ignorar pas",
     "Audio Output": "Sortida àudio",
     "Bridges": "Bridges",
@@ -76,7 +74,6 @@
     "Italics": "Italicas",
     "Historical": "Istoric",
     "Sign Up": "S’inscriure",
-    "Mark all as read": "Tot marcar coma legit",
     "Demote": "Retrogradar",
     "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
@@ -144,7 +141,9 @@
         "feedback": "Comentaris",
         "off": "Atudat",
         "advanced": "Avançat",
-        "general": "General"
+        "general": "General",
+        "profile": "Perfil",
+        "display_name": "Nom d'afichatge"
     },
     "action": {
         "continue": "Contunhar",
@@ -379,7 +378,9 @@
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificacions",
-        "colour_bold": "Gras"
+        "colour_bold": "Gras",
+        "mark_all_read": "Tot marcar coma legit",
+        "class_other": "Autre"
     },
     "quick_settings": {
         "sidebar_settings": "Autras opcions"

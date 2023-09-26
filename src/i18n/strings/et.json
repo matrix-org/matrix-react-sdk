@@ -191,10 +191,7 @@
     "Missing media permissions, click the button below to request.": "Meediaga seotud õigused puuduvad. Nende nõutamiseks klõpsi järgnevat nuppu.",
     "Request media permissions": "Nõuta meediaõigusi",
     "Failed to set display name": "Kuvatava nime määramine ebaõnnestus",
-    "Display Name": "Kuvatav nimi",
-    "Profile picture": "Profiilipilt",
     "Failed to change password. Is your password correct?": "Salasõna muutmine ebaõnnestus. Kas sinu salasõna on ikka õige?",
-    "Profile": "Profiil",
     "Email addresses": "E-posti aadressid",
     "Phone numbers": "Telefoninumbrid",
     "Start verification again from their profile.": "Alusta verifitseerimist uuesti nende profiilist.",
@@ -295,7 +292,6 @@
     "Revoke invite": "Tühista kutse",
     "Invited by %(sender)s": "Kutsutud %(sender)s poolt",
     "Jump to first unread message.": "Mine esimese lugemata sõnumi juurde.",
-    "Mark all as read": "Märgi kõik loetuks",
     "Error updating main address": "Viga põhiaadressi uuendamisel",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Jututoa põhiaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Jututoa lisaaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
@@ -678,7 +674,6 @@
     "Unable to create key backup": "Ei õnnestu teha võtmetest varukoopiat",
     "New Recovery Method": "Uus taastamise meetod",
     "This session is encrypting history using the new recovery method.": "See sessioon krüptib ajalugu kasutades uut taastamise meetodit.",
-    "Notification targets": "Teavituste eesmärgid",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Isikutuvastusserveri kasutamise lõpetamine tähendab, et sa ei ole leitav teiste kasutajate poolt ega sulle ei saa telefoninumbri või e-posti aadressi alusel kutset saata. Küll aga saab kutset saata Matrix'i kasutajatunnuse alusel.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Selleks, et sa ei kaotaks oma vestluste ajalugu, pead sa eksportima jututoa krüptovõtmed enne välja logimist. Küll, aga pead sa selleks kasutama %(brand)s uuemat versiooni",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Sa oled selle sessiooni jaoks varem kasutanud %(brand)s'i uuemat versiooni. Selle versiooni kasutamiseks läbiva krüptimisega, pead sa esmalt logima välja ja siis uuesti logima tagasi sisse.",
@@ -719,8 +714,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)s uuendas video rühmakõne",
     "Video conference started by %(senderName)s": "%(senderName)s alustas video rühmakõnet",
     "Ignored attempt to disable encryption": "Eirasin katset lõpetada krüptimise kasutamine",
-    "Failed to save your profile": "Sinu profiili salvestamine ei õnnestunud",
-    "The operation could not be completed": "Toimingut ei õnnestunud lõpetada",
     "You can only pin up to %(count)s widgets": {
         "other": "Sa saad kinnitada kuni %(count)s vidinat"
     },
@@ -1136,11 +1129,6 @@
     "User Directory": "Kasutajate kataloog",
     "Unable to copy room link": "Jututoa lingi kopeerimine ei õnnestu",
     "Unable to copy a link to the room to the clipboard.": "Jututoa lingi kopeerimine lõikelauale ei õnnestunud.",
-    "Keyword": "Märksõnad",
-    "Mentions & keywords": "Mainimised ja märksõnad",
-    "New keyword": "Uus märksõna",
-    "Global": "Üldised",
-    "There was an error loading your notification settings.": "Sinu teavituste seadistuste laadimisel tekkis viga.",
     "The call is in an unknown state!": "Selle kõne oleks on teadmata!",
     "Call back": "Helista tagasi",
     "No answer": "Keegi ei vasta kõnele",
@@ -1628,7 +1616,6 @@
     "There are no past polls. Load more polls to view polls for previous months": "Pole ühtegi hiljutist küsitlust. Varasemate kuude vaatamiseks laadi veel küsitlusi",
     "There are no active polls. Load more polls to view polls for previous months": "Pole ühtegi käimas küsitlust. Varasemate kuude vaatamiseks laadi veel küsitlusi",
     "Invites by email can only be sent one at a time": "Kutseid saad e-posti teel saata vaid ükshaaval",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Teavituste eelistuste muutmisel tekkis viga. Palun proovi sama valikut uuesti sisse/välja lülitada.",
     "Desktop app logo": "Töölauarakenduse logo",
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
     "Message from %(user)s": "Sõnum kasutajalt %(user)s",
@@ -1803,7 +1790,10 @@
         "advanced": "Teave arendajatele",
         "spaces": "Kogukonnakeskused",
         "general": "Üldist",
-        "saving": "Salvestame…"
+        "saving": "Salvestame…",
+        "profile": "Profiil",
+        "display_name": "Kuvatav nimi",
+        "user_avatar": "Profiilipilt"
     },
     "action": {
         "continue": "Jätka",
@@ -2290,7 +2280,10 @@
             "noisy": "Jutukas",
             "error_permissions_denied": "%(brand)s'il puudub luba sulle teavituste kuvamiseks - palun kontrolli oma brauseri seadistusi",
             "error_permissions_missing": "%(brand)s ei saanud luba teavituste kuvamiseks - palun proovi uuesti",
-            "error_title": "Teavituste kasutusele võtmine ei õnnestunud"
+            "error_title": "Teavituste kasutusele võtmine ei õnnestunud",
+            "error_updating": "Teavituste eelistuste muutmisel tekkis viga. Palun proovi sama valikut uuesti sisse/välja lülitada.",
+            "push_targets": "Teavituste eesmärgid",
+            "error_loading": "Sinu teavituste seadistuste laadimisel tekkis viga."
         },
         "appearance": {
             "layout_irc": "IRC (katseline)",
@@ -2541,7 +2534,9 @@
             "add_msisdn_confirm_button": "Kinnita telefoninumbri lisamine",
             "add_msisdn_confirm_body": "Klõpsi järgnevat nuppu telefoninumbri lisamise kinnitamiseks.",
             "add_msisdn_dialog_title": "Lisa telefoninumber",
-            "name_placeholder": "Kuvatav nimi puudub"
+            "name_placeholder": "Kuvatav nimi puudub",
+            "error_saving_profile_title": "Sinu profiili salvestamine ei õnnestunud",
+            "error_saving_profile": "Toimingut ei õnnestunud lõpetada"
         },
         "sidebar": {
             "title": "Külgpaan",
@@ -4215,7 +4210,13 @@
         "colour_grey": "Hall",
         "colour_red": "Punane",
         "colour_unsent": "Saatmata",
-        "error_change_title": "Muuda teavituste seadistusi"
+        "error_change_title": "Muuda teavituste seadistusi",
+        "mark_all_read": "Märgi kõik loetuks",
+        "keyword": "Märksõnad",
+        "keyword_new": "Uus märksõna",
+        "class_global": "Üldised",
+        "class_other": "Muud",
+        "mentions_keywords": "Mainimised ja märksõnad"
     },
     "mobile_guide": {
         "toast_title": "Rakendusega saad Matrix'is suhelda parimal viisil",

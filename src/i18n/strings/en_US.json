@@ -47,7 +47,6 @@
     "not specified": "not specified",
     "No more results": "No more results",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
-    "Profile": "Profile",
     "Reason": "Reason",
     "Reject invitation": "Reject invitation",
     "Return to login screen": "Return to login screen",
@@ -129,7 +128,6 @@
     },
     "This will allow you to reset your password and receive notifications.": "This will allow you to reset your password and receive notifications.",
     "Sunday": "Sunday",
-    "Notification targets": "Notification targets",
     "Today": "Today",
     "Friday": "Friday",
     "Changelog": "Changelog",
@@ -181,7 +179,8 @@
         "unnamed_room": "Unnamed Room",
         "on": "On",
         "off": "Off",
-        "advanced": "Advanced"
+        "advanced": "Advanced",
+        "profile": "Profile"
     },
     "action": {
         "continue": "Continue",
@@ -257,7 +256,8 @@
             "noisy": "Noisy",
             "error_permissions_denied": "%(brand)s does not have permission to send you notifications - please check your browser settings",
             "error_permissions_missing": "%(brand)s was not given permission to send notifications - please try again",
-            "error_title": "Unable to enable Notifications"
+            "error_title": "Unable to enable Notifications",
+            "push_targets": "Notification targets"
         },
         "appearance": {
             "heading": "Customize your appearance",
@@ -589,6 +589,7 @@
         "something_went_wrong": "Something went wrong!"
     },
     "notifications": {
-        "enable_prompt_toast_title": "Notifications"
+        "enable_prompt_toast_title": "Notifications",
+        "class_other": "Other"
     }
 }

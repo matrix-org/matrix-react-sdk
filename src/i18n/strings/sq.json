@@ -28,7 +28,6 @@
     "Restricted": "E kufizuar",
     "Moderator": "Moderator",
     "Sunday": "E diel",
-    "Notification targets": "Objektiva njoftimesh",
     "Today": "Sot",
     "Friday": "E premte",
     "Changelog": "Regjistër ndryshimesh",
@@ -111,7 +110,6 @@
     "Uploading %(filename)s": "Po ngarkohet %(filename)s",
     "No Microphones detected": "S’u pikasën Mikrofona",
     "No Webcams detected": "S’u pikasën kamera",
-    "Profile": "Profil",
     "Return to login screen": "Kthehuni te skena e hyrjeve",
     "Session ID": "ID sesioni",
     "Passphrases must match": "Frazëkalimet duhet të përputhen",
@@ -237,8 +235,6 @@
     "Unable to verify phone number.": "S’arrihet të verifikohet numër telefoni.",
     "Verification code": "Kod verifikimi",
     "Phone Number": "Numër Telefoni",
-    "Profile picture": "Foto profili",
-    "Display Name": "Emër Në Ekran",
     "Room information": "Të dhëna dhome",
     "Room Addresses": "Adresa Dhomash",
     "Email addresses": "Adresa email",
@@ -583,7 +579,6 @@
     "%(name)s declined": "%(name)s hodhi poshtë",
     "Accepting…": "Po pranohet…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
-    "Mark all as read": "Vëru të tërave shenjë si të lexuara",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Pati një gabim gjatë përditësimit të adresave alternative të dhomës. Mund të mos lejohet nga shërbyesi pse ndodhi një gabim i përkohshëm.",
     "Local address": "Adresë vendore",
     "Published Addresses": "Adresa të Publikuara",
@@ -717,8 +712,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
     "This version of %(brand)s does not support viewing some encrypted files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
     "This version of %(brand)s does not support searching encrypted messages": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar",
-    "Failed to save your profile": "S’u arrit të ruhej profili juaj",
-    "The operation could not be completed": "Veprimi s’u plotësua dot",
     "You can only pin up to %(count)s widgets": {
         "other": "Mundeni të fiksoni deri në %(count)s widget-e"
     },
@@ -1132,11 +1125,6 @@
     "Unable to copy a link to the room to the clipboard.": "S’arrihet të kopjohet në të papastër një lidhje për te dhoma.",
     "Unable to copy room link": "S’arrihet të kopjohet lidhja e dhomës",
     "User Directory": "Drejtori Përdoruesi",
-    "There was an error loading your notification settings.": "Pati një gabim në ngarkimin e rregullimeve tuaja për njoftimet.",
-    "Mentions & keywords": "Përmendje & fjalëkyçe",
-    "Global": "Global",
-    "New keyword": "Fjalëkyç i ri",
-    "Keyword": "Fjalëkyç",
     "The call is in an unknown state!": "Thirrja gjendet në një gjendje të panjohur!",
     "Call back": "Thirreni ju",
     "No answer": "S’ka përgjigje",
@@ -1627,7 +1615,6 @@
     "Active polls": "Pyetësorë aktivë",
     "View poll in timeline": "Shiheni pyetësorin në rrjedhë kohore",
     "Invites by email can only be sent one at a time": "Ftesat me email mund të dërgohen vetëm një në herë",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ndodhi një gabim teksa përditësoheshin parapëlqimet tuaja për njoftime. Ju lutemi, provoni ta riaktivizoni mundësinë tuaj.",
     "Desktop app logo": "Stemë aplikacioni Desktop",
     "Message from %(user)s": "Mesazh nga %(user)s",
     "Message in %(room)s": "Mesazh në %(room)s",
@@ -1755,7 +1742,10 @@
         "advanced": "Të mëtejshme",
         "spaces": "Hapësira",
         "general": "Të përgjithshme",
-        "saving": "Po ruhet…"
+        "saving": "Po ruhet…",
+        "profile": "Profil",
+        "display_name": "Emër Në Ekran",
+        "user_avatar": "Foto profili"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2229,7 +2219,10 @@
             "noisy": "I zhurmshëm",
             "error_permissions_denied": "%(brand)s-i s’ka leje t’ju dërgojë njoftime - Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj",
             "error_permissions_missing": "%(brand)s-it s’iu dha leje të dërgojë njoftime - ju lutemi, riprovoni",
-            "error_title": "S’arrihet të aktivizohen njoftimet"
+            "error_title": "S’arrihet të aktivizohen njoftimet",
+            "error_updating": "Ndodhi një gabim teksa përditësoheshin parapëlqimet tuaja për njoftime. Ju lutemi, provoni ta riaktivizoni mundësinë tuaj.",
+            "push_targets": "Objektiva njoftimesh",
+            "error_loading": "Pati një gabim në ngarkimin e rregullimeve tuaja për njoftimet."
         },
         "appearance": {
             "layout_irc": "IRC (Eksperimentale)",
@@ -2478,7 +2471,9 @@
             "add_msisdn_confirm_button": "Ripohoni shtim numri telefoni",
             "add_msisdn_confirm_body": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
             "add_msisdn_dialog_title": "Shtoni Numër Telefoni",
-            "name_placeholder": "S’ka emër shfaqjeje"
+            "name_placeholder": "S’ka emër shfaqjeje",
+            "error_saving_profile_title": "S’u arrit të ruhej profili juaj",
+            "error_saving_profile": "Veprimi s’u plotësua dot"
         },
         "sidebar": {
             "title": "Anështyllë",
@@ -4108,7 +4103,13 @@
         "colour_grey": "Gri",
         "colour_red": "E kuqe",
         "colour_unsent": "Të padërguar",
-        "error_change_title": "Ndryshoni rregullime njoftimesh"
+        "error_change_title": "Ndryshoni rregullime njoftimesh",
+        "mark_all_read": "Vëru të tërave shenjë si të lexuara",
+        "keyword": "Fjalëkyç",
+        "keyword_new": "Fjalëkyç i ri",
+        "class_global": "Global",
+        "class_other": "Tjetër",
+        "mentions_keywords": "Përmendje & fjalëkyçe"
     },
     "mobile_guide": {
         "toast_title": "Për një punim më të mirë, përdorni aplikacionin",

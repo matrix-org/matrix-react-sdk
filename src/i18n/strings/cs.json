@@ -136,14 +136,12 @@
     "Connectivity to the server has been lost.": "Spojení se serverem bylo přerušeno.",
     "Sent messages will be stored until your connection has returned.": "Odeslané zprávy zůstanou uložené, dokud se spojení znovu neobnoví.",
     "Failed to load timeline position": "Nepodařilo se načíst pozici na časové ose",
-    "Profile": "Profil",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
     "Send": "Odeslat",
     "collapse": "sbalit",
     "expand": "rozbalit",
     "Sunday": "Neděle",
-    "Notification targets": "Cíle oznámení",
     "Today": "Dnes",
     "Friday": "Pátek",
     "Changelog": "Seznam změn",
@@ -219,8 +217,6 @@
     "Phone Number": "Telefonní číslo",
     "Unable to verify phone number.": "Nepovedlo se ověřit telefonní číslo.",
     "Verification code": "Ověřovací kód",
-    "Profile picture": "Profilový obrázek",
-    "Display Name": "Zobrazované jméno",
     "Room Addresses": "Adresy místnosti",
     "Ignored users": "Ignorovaní uživatelé",
     "This room has been replaced and is no longer active.": "Tato místnost byla nahrazena a už není používaná.",
@@ -584,7 +580,6 @@
     "This session is encrypting history using the new recovery method.": "Tato relace šifruje historii zpráv s podporou nového způsobu obnovení.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Pokud se vám to stalo neúmyslně, můžete znovu nastavit zálohu zpráv pro tuto relaci. To znovu zašifruje historii zpráv novým způsobem.",
     "Accepting…": "Přijímání…",
-    "Mark all as read": "Označit vše jako přečtené",
     "Scroll to most recent messages": "Přejít na poslední zprávy",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Nepovedlo se změnit alternativní adresy místnosti. Možná to server neumožňuje a nebo je to dočasná chyba.",
     "Local address": "Lokální adresa",
@@ -977,8 +972,6 @@
     "Your firewall or anti-virus is blocking the request.": "Váš firewall nebo antivirový program blokuje požadavek.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo příliš dlouho, než odpověděl.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
-    "The operation could not be completed": "Operace nemohla být dokončena",
-    "Failed to save your profile": "Váš profil se nepodařilo uložit",
     "You can only pin up to %(count)s widgets": {
         "other": "Můžete připnout až %(count)s widgetů"
     },
@@ -1144,8 +1137,6 @@
         "one": "a %(count)s další"
     },
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky.",
-    "There was an error loading your notification settings.": "Došlo k chybě při načítání nastavení oznámení.",
-    "Global": "Globální",
     "Error downloading audio": "Chyba při stahování audia",
     "No answer": "Žádná odpověď",
     "An unknown error occurred": "Došlo k neznámé chybě",
@@ -1170,9 +1161,6 @@
         "one": "V současné době má prostor přístup"
     },
     "Upgrade required": "Vyžadována aktualizace",
-    "Mentions & keywords": "Zmínky a klíčová slova",
-    "New keyword": "Nové klíčové slovo",
-    "Keyword": "Klíčové slovo",
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
@@ -1628,7 +1616,6 @@
     "Active polls": "Aktivní hlasování",
     "View poll in timeline": "Zobrazit hlasování na časové ose",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailem lze zasílat pouze po jedné",
-    "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Při aktualizaci předvoleb oznámení došlo k chybě. Zkuste prosím přepnout volbu znovu.",
     "Desktop app logo": "Logo desktopové aplikace",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilní verzi MSC3827",
     "Message from %(user)s": "Zpráva od %(user)s",
@@ -1807,7 +1794,10 @@
         "advanced": "Rozšířené",
         "spaces": "Prostory",
         "general": "Obecné",
-        "saving": "Ukládání…"
+        "saving": "Ukládání…",
+        "profile": "Profil",
+        "display_name": "Zobrazované jméno",
+        "user_avatar": "Profilový obrázek"
     },
     "action": {
         "continue": "Pokračovat",
@@ -2295,7 +2285,10 @@
             "noisy": "Hlučný",
             "error_permissions_denied": "%(brand)s není oprávněn posílat vám oznámení – zkontrolujte prosím nastavení svého prohlížeče",
             "error_permissions_missing": "%(brand)s nebyl oprávněn k posílání oznámení – zkuste to prosím znovu",
-            "error_title": "Nepodařilo se povolit oznámení"
+            "error_title": "Nepodařilo se povolit oznámení",
+            "error_updating": "Při aktualizaci předvoleb oznámení došlo k chybě. Zkuste prosím přepnout volbu znovu.",
+            "push_targets": "Cíle oznámení",
+            "error_loading": "Došlo k chybě při načítání nastavení oznámení."
         },
         "appearance": {
             "layout_irc": "IRC (experimentální)",
@@ -2546,7 +2539,9 @@
             "add_msisdn_confirm_button": "Potrvrdit přidání telefonního čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačítko potvrdíte přidání telefonního čísla.",
             "add_msisdn_dialog_title": "Přidat telefonní číslo",
-            "name_placeholder": "Žádné zobrazované jméno"
+            "name_placeholder": "Žádné zobrazované jméno",
+            "error_saving_profile_title": "Váš profil se nepodařilo uložit",
+            "error_saving_profile": "Operace nemohla být dokončena"
         },
         "sidebar": {
             "title": "Postranní panel",
@@ -4220,7 +4215,13 @@
         "colour_grey": "Šedá",
         "colour_red": "Červená",
         "colour_unsent": "Neodeslané",
-        "error_change_title": "Upravit nastavení oznámení"
+        "error_change_title": "Upravit nastavení oznámení",
+        "mark_all_read": "Označit vše jako přečtené",
+        "keyword": "Klíčové slovo",
+        "keyword_new": "Nové klíčové slovo",
+        "class_global": "Globální",
+        "class_other": "Další možnosti",
+        "mentions_keywords": "Zmínky a klíčová slova"
     },
     "mobile_guide": {
         "toast_title": "Pro lepší zážitek použijte aplikaci",

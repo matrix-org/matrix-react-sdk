@@ -47,7 +47,6 @@
     "not specified": "Belirtilmemiş",
     "No more results": "Başka sonuç yok",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
-    "Profile": "Profil",
     "Reason": "Sebep",
     "Reject invitation": "Daveti Reddet",
     "Return to login screen": "Giriş ekranına dön",
@@ -125,7 +124,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
-    "Notification targets": "Bildirim hedefleri",
     "Today": "Bugün",
     "Friday": "Cuma",
     "Changelog": "Değişiklikler",
@@ -247,8 +245,6 @@
     "Folder": "Klasör",
     "Cannot connect to integration manager": "Entegrasyon yöneticisine bağlanılamadı",
     "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
-    "Display Name": "Ekran Adı",
-    "Profile picture": "Profil resmi",
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
     "Dog": "Köpek",
@@ -464,7 +460,6 @@
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Reject & Ignore user": "Kullanıcı Reddet & Yoksay",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
-    "Mark all as read": "Tümünü okunmuş olarak işaretle",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
     "Explore rooms": "Odaları keşfet",
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
@@ -794,8 +789,6 @@
     "Spanner": "Anahtar",
     "Smiley": "Gülen yüz",
     "Dial pad": "Arama tuşları",
-    "The operation could not be completed": "Eylem tamamlanamadı",
-    "Failed to save your profile": "Profiliniz kaydedilemedi",
     "Verify all users in a room to ensure it's secure.": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
     "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Onaylamanız için size e-posta gönderdik. Lütfen yönergeleri takip edin ve sonra aşağıdaki butona tıklayın.",
@@ -944,7 +937,10 @@
         "all_rooms": "Tüm odalar",
         "copied": "Kopyalandı!",
         "advanced": "Gelişmiş",
-        "general": "Genel"
+        "general": "Genel",
+        "profile": "Profil",
+        "display_name": "Ekran Adı",
+        "user_avatar": "Profil resmi"
     },
     "action": {
         "continue": "Devam Et",
@@ -1178,7 +1174,8 @@
             "noisy": "Gürültülü",
             "error_permissions_denied": "%(brand)s size bildirim gönderme iznine sahip değil - lütfen tarayıcı ayarlarınızı kontrol edin",
             "error_permissions_missing": "%(brand)s'a bildirim gönderme izni verilmedi - lütfen tekrar deneyin",
-            "error_title": "Bildirimler aktif edilemedi"
+            "error_title": "Bildirimler aktif edilemedi",
+            "push_targets": "Bildirim hedefleri"
         },
         "appearance": {
             "heading": "Görünüşü özelleştir",
@@ -1323,7 +1320,9 @@
             "add_msisdn_confirm_button": "Telefon numarası eklemeyi onayla",
             "add_msisdn_confirm_body": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
             "add_msisdn_dialog_title": "Telefon Numarası Ekle",
-            "name_placeholder": "Görünür isim yok"
+            "name_placeholder": "Görünür isim yok",
+            "error_saving_profile_title": "Profiliniz kaydedilemedi",
+            "error_saving_profile": "Eylem tamamlanamadı"
         }
     },
     "devtools": {
@@ -2224,7 +2223,9 @@
         "enable_prompt_toast_description": "Masaüstü bildirimlerini etkinleştir",
         "colour_none": "Yok",
         "colour_bold": "Kalın",
-        "error_change_title": "Bildirim ayarlarını değiştir"
+        "error_change_title": "Bildirim ayarlarını değiştir",
+        "mark_all_read": "Tümünü okunmuş olarak işaretle",
+        "class_other": "Diğer"
     },
     "mobile_guide": {
         "toast_title": "Daha iyi bir deneyim için uygulamayı kullanın",

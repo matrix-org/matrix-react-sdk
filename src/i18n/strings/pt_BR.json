@@ -14,7 +14,6 @@
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "As novas senhas informadas precisam ser idênticas.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
-    "Profile": "Perfil",
     "Reject invitation": "Recusar o convite",
     "Return to login screen": "Retornar à tela de login",
     "Rooms": "Salas",
@@ -148,7 +147,6 @@
     },
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala não é pública. Você não poderá voltar sem ser convidada/o.",
     "Sunday": "Domingo",
-    "Notification targets": "Aparelhos notificados",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
     "Changelog": "Registro de alterações",
@@ -305,7 +303,6 @@
     "Unable to verify phone number.": "Não foi possível confirmar o número de telefone.",
     "Verification code": "Código de confirmação",
     "Phone Number": "Número de telefone",
-    "Profile picture": "Foto de perfil",
     "Email addresses": "Endereços de e-mail",
     "Phone numbers": "Números de Telefone",
     "Account management": "Gerenciamento da Conta",
@@ -445,7 +442,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Se você confirmar esse usuário, a sessão será marcada como confiável para você e para ele.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Confirmar este aparelho o marcará como confiável para você e para os usuários que se confirmaram com você.",
     "Email (optional)": "E-mail (opcional)",
-    "Display Name": "Nome e sobrenome",
     "Checking server": "Verificando servidor",
     "Change identity server": "Alterar o servidor de identidade",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Desconectar-se do servidor de identidade <current /> e conectar-se em <new /> em vez disso?",
@@ -524,7 +520,6 @@
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
     "Revoke invite": "Revogar o convite",
     "Invited by %(sender)s": "Convidado por %(sender)s",
-    "Mark all as read": "Marcar tudo como lido",
     "Error updating main address": "Erro ao atualizar o endereço principal",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ocorreu um erro ao atualizar o endereço principal da sala. Isso pode não ser permitido pelo servidor ou houve um problema temporário.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Ocorreu um erro ao atualizar o endereço alternativo da sala. Isso pode não ser permitido pelo servidor ou houve um problema temporário.",
@@ -687,8 +682,6 @@
     "Backup version:": "Versão do backup:",
     "Your keys are being backed up (the first backup could take a few minutes).": "O backup de suas chaves está sendo feito (o primeiro backup pode demorar alguns minutos).",
     "You can also set up Secure Backup & manage your keys in Settings.": "Você também pode configurar o Backup online & configurar as suas senhas nas Configurações.",
-    "Failed to save your profile": "Houve uma falha ao salvar o seu perfil",
-    "The operation could not be completed": "A operação não foi concluída",
     "This room is bridging messages to the following platforms. <a>Learn more.</a>": "Esta sala está integrando mensagens com as seguintes plataformas. <a>Saiba mais.</a>",
     "Bridges": "Integrações",
     "Error changing power level requirement": "Houve um erro ao alterar o nível de permissão do contato",
@@ -1053,12 +1046,7 @@
     "Upgrade required": "Atualização necessária",
     "You have no ignored users.": "Você não tem usuários ignorados.",
     "Space information": "Informações do espaço",
-    "Mentions & keywords": "Menções e palavras-chave",
-    "Global": "Global",
-    "New keyword": "Nova palavra-chave",
-    "Keyword": "Palavra-chave",
     "Address": "Endereço",
-    "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
@@ -1346,7 +1334,10 @@
         "copied": "Copiado!",
         "advanced": "Avançado",
         "spaces": "Espaços",
-        "general": "Geral"
+        "general": "Geral",
+        "profile": "Perfil",
+        "display_name": "Nome e sobrenome",
+        "user_avatar": "Foto de perfil"
     },
     "action": {
         "continue": "Continuar",
@@ -1678,7 +1669,9 @@
             "noisy": "Ativado com som",
             "error_permissions_denied": "%(brand)s não tem permissão para lhe enviar notificações - confirme as configurações do seu navegador",
             "error_permissions_missing": "%(brand)s não tem permissão para lhe enviar notificações - tente novamente",
-            "error_title": "Não foi possível ativar as notificações"
+            "error_title": "Não foi possível ativar as notificações",
+            "push_targets": "Aparelhos notificados",
+            "error_loading": "Um erro ocorreu ao carregar suas configurações de notificação."
         },
         "appearance": {
             "layout_irc": "IRC (experimental)",
@@ -1854,7 +1847,9 @@
             "add_msisdn_confirm_button": "Confirmar adição de número de telefone",
             "add_msisdn_confirm_body": "Clique no botão abaixo para confirmar a adição deste número de telefone.",
             "add_msisdn_dialog_title": "Adicionar número de telefone",
-            "name_placeholder": "Nenhum nome e sobrenome"
+            "name_placeholder": "Nenhum nome e sobrenome",
+            "error_saving_profile_title": "Houve uma falha ao salvar o seu perfil",
+            "error_saving_profile": "A operação não foi concluída"
         },
         "sidebar": {
             "title": "Barra lateral",
@@ -3132,7 +3127,13 @@
         "enable_prompt_toast_description": "Ativar notificações na área de trabalho",
         "colour_none": "Nenhuma",
         "colour_bold": "Negrito",
-        "error_change_title": "Alterar configuração de notificações"
+        "error_change_title": "Alterar configuração de notificações",
+        "mark_all_read": "Marcar tudo como lido",
+        "keyword": "Palavra-chave",
+        "keyword_new": "Nova palavra-chave",
+        "class_global": "Global",
+        "class_other": "Outros",
+        "mentions_keywords": "Menções e palavras-chave"
     },
     "mobile_guide": {
         "toast_title": "Use o aplicativo para ter uma experiência melhor",

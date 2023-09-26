@@ -130,7 +130,6 @@
     "Uploading %(filename)s": "Качване на %(filename)s",
     "No Microphones detected": "Няма открити микрофони",
     "No Webcams detected": "Няма открити уеб камери",
-    "Profile": "Профил",
     "A new password must be entered.": "Трябва да бъде въведена нова парола.",
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
     "Return to login screen": "Връщане към страницата за влизане в профила",
@@ -149,7 +148,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Експортираният файл може да бъде предпазен с парола. Трябва да въведете парола тук, за да разшифровате файла.",
     "You don't currently have any stickerpacks enabled": "В момента нямате включени пакети със стикери",
     "Sunday": "Неделя",
-    "Notification targets": "Устройства, получаващи известия",
     "Today": "Днес",
     "Friday": "Петък",
     "Changelog": "Списък на промените",
@@ -240,8 +238,6 @@
     "Unable to verify phone number.": "Неуспешно потвърждение на телефонния номер.",
     "Verification code": "Код за потвърждение",
     "Phone Number": "Телефонен номер",
-    "Profile picture": "Профилна снимка",
-    "Display Name": "Име",
     "Room information": "Информация за стаята",
     "Room Addresses": "Адреси на стаята",
     "Email addresses": "Имейл адреси",
@@ -542,7 +538,6 @@
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
     "Scroll to most recent messages": "Отиди до най-скорошните съобщения",
     "Reject & Ignore user": "Откажи и игнорирай потребителя",
-    "Mark all as read": "Маркирай всичко като прочетено",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Възникна грешка при обновяване на алтернативните адреси на стаята. Или не е позволено от сървъра или се е случила временна грешка.",
     "Local address": "Локален адрес",
     "Published Addresses": "Публикувани адреси",
@@ -720,8 +715,6 @@
     "Show Widgets": "Покажи приспособленията",
     "Hide Widgets": "Скрий приспособленията",
     "Backup version:": "Версия на резервното копие:",
-    "The operation could not be completed": "Операцията не можа да бъде завършена",
-    "Failed to save your profile": "Неуспешно запазване на профила ви",
     "Save your Security Key": "Запази ключа за сигурност",
     "Confirm Security Phrase": "Потвърди фразата за сигурност",
     "Set a Security Phrase": "Настрой фраза за сигурност",
@@ -1064,7 +1057,10 @@
         "copied": "Копирано!",
         "advanced": "Разширени",
         "spaces": "Пространства",
-        "general": "Общи"
+        "general": "Общи",
+        "profile": "Профил",
+        "display_name": "Име",
+        "user_avatar": "Профилна снимка"
     },
     "action": {
         "continue": "Продължи",
@@ -1318,7 +1314,8 @@
             "noisy": "Шумно",
             "error_permissions_denied": "%(brand)s няма разрешение да Ви изпраща известия - моля проверете вашите настройки на браузъра",
             "error_permissions_missing": "%(brand)s не е получил разрешение да изпраща известия - моля опитайте отново",
-            "error_title": "Неупешно включване на известия"
+            "error_title": "Неупешно включване на известия",
+            "push_targets": "Устройства, получаващи известия"
         },
         "appearance": {
             "heading": "Настройте изгледа",
@@ -1432,7 +1429,9 @@
             "add_msisdn_confirm_button": "Потвърдете добавянето на телефонен номер",
             "add_msisdn_confirm_body": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
             "add_msisdn_dialog_title": "Добави телефонен номер",
-            "name_placeholder": "Няма име"
+            "name_placeholder": "Няма име",
+            "error_saving_profile_title": "Неуспешно запазване на профила ви",
+            "error_saving_profile": "Операцията не можа да бъде завършена"
         }
     },
     "devtools": {
@@ -2319,7 +2318,9 @@
         "enable_prompt_toast_description": "Включете уведомления на работния плот",
         "colour_none": "Няма нищо",
         "colour_bold": "Удебелено",
-        "error_change_title": "Промяна на настройките за уведомление"
+        "error_change_title": "Промяна на настройките за уведомление",
+        "mark_all_read": "Маркирай всичко като прочетено",
+        "class_other": "Други"
     },
     "mobile_guide": {
         "toast_title": "Използвайте приложението за по-добра работа",

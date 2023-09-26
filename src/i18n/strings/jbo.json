@@ -515,5 +515,8 @@
     },
     "room": {
         "error_join_incompatible_version_2": ".i .e'o ko tavla lo admine be le samtcise'u"
+    },
+    "notifications": {
+        "class_other": "drata"
     }
 }
