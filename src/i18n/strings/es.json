@@ -17,7 +17,6 @@
     "Error decrypting attachment": "Error al descifrar adjunto",
     "Failed to ban user": "Bloqueo del usuario falló",
     "Failed to change password. Is your password correct?": "No se ha podido cambiar la contraseña. ¿Has escrito tu contraseña actual correctamente?",
-    "Failed to change power level": "Fallo al cambiar de nivel de acceso",
     "Failed to forget room %(errCode)s": "No se pudo olvidar la sala %(errCode)s",
     "Failed to load timeline position": "Fallo al cargar el historial",
     "Failed to mute user": "No se pudo silenciar al usuario",
@@ -48,7 +47,6 @@
     "Confirm passphrase": "Confirmar frase de contraseña",
     "Import room keys": "Importar claves de sala",
     "File to import": "Fichero a importar",
-    "Unknown error": "Error desconocido",
     "Unable to restore session": "No se puede recuperar la sesión",
     "%(roomName)s does not exist.": "%(roomName)s no existe.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s no es accesible en este momento.",
@@ -298,9 +296,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica a este usuario para marcarlo como de confianza. Confiar en usuarios aporta tranquilidad en los mensajes cifrados de extremo a extremo.",
     "Incoming Verification Request": "Petición de verificación entrante",
     "Scissors": "Tijeras",
-    "Cannot connect to integration manager": "No se puede conectar al gestor de integraciones",
-    "The integration manager is offline or it cannot reach your homeserver.": "El gestor de integraciones está desconectado o no puede conectar con su servidor.",
-    "Jump to first unread room.": "Saltar a la primera sala sin leer.",
     "Lock": "Bloquear",
     "Show more": "Ver más",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Estás usando actualmente <server></server> para descubrir y ser descubierto por contactos existentes que conoces. Puedes cambiar tu servidor de identidad más abajo.",
@@ -601,7 +596,6 @@
     "Sign in with SSO": "Ingrese con SSO",
     "Couldn't load page": "No se ha podido cargar la página",
     "Explore rooms": "Explorar salas",
-    "Jump to first invite.": "Salte a la primera invitación.",
     "Add room": "Añadir una sala",
     "Could not load user profile": "No se pudo cargar el perfil de usuario",
     "Your password has been reset.": "Su contraseña ha sido restablecida.",
@@ -1209,16 +1203,6 @@
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
     },
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Actualizando espacio…",
-        "other": "Actualizando espacios… (%(progress)s de %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Enviando invitación…",
-        "other": "Enviando invitaciones… (%(progress)s de %(count)s)"
-    },
-    "Loading new room": "Cargando la nueva sala",
-    "Upgrading room": "Actualizar sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
     "View in room": "Ver en la sala",
     "Insert link": "Insertar enlace",
@@ -1539,9 +1523,6 @@
     "Change layout": "Cambiar disposición",
     "This message could not be decrypted": "No se ha podido descifrar este mensaje",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
-    "Search users in this room…": "Buscar usuarios en esta sala…",
-    "Give one or multiple users in this room more privileges": "Otorga a uno o más usuarios privilegios especiales en esta sala",
-    "Add privileged users": "Añadir usuarios privilegiados",
     "Connecting…": "Conectando…",
     "Scan QR code": "Escanear código QR",
     "Loading live location…": "Cargando ubicación en tiempo real…",
@@ -1572,7 +1553,6 @@
     "Sending your message…": "Enviando tu mensaje…",
     "Upload custom sound": "Subir archivo personalizado",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (estado HTTP %(httpStatus)s)",
-    "Connecting to integration manager…": "Conectando al gestor de integraciones…",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -1817,7 +1797,8 @@
             "other": "%(count)s mensajes sin leer.",
             "one": "1 mensaje sin leer."
         },
-        "unread_messages": "Mensajes sin leer."
+        "unread_messages": "Mensajes sin leer.",
+        "jump_first_invite": "Salte a la primera invitación."
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -3151,7 +3132,10 @@
             "title": "Roles y permisos",
             "permissions_section": "Permisos",
             "permissions_section_description_space": "Elige los roles que los usuarios deben tener para poder cambiar los distintos ajustes del espacio",
-            "permissions_section_description_room": "Elige los roles que los usuarios deben tener para poder cambiar los distintos ajustes de la sala"
+            "permissions_section_description_room": "Elige los roles que los usuarios deben tener para poder cambiar los distintos ajustes de la sala",
+            "add_privileged_user_heading": "Añadir usuarios privilegiados",
+            "add_privileged_user_description": "Otorga a uno o más usuarios privilegios especiales en esta sala",
+            "add_privileged_user_filter_placeholder": "Buscar usuarios en esta sala…"
         },
         "security": {
             "strict_encryption": "No enviar nunca mensajes cifrados a sesiones sin verificar en esta sala desde esta sesión",
@@ -3194,7 +3178,17 @@
             "join_rule_restricted_description_prompt": "Cualquiera en un espacio puede encontrar y unirse. Puedes seleccionar varios espacios.",
             "join_rule_restricted": "Miembros del espacio",
             "join_rule_restricted_upgrade_warning": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
-            "join_rule_restricted_upgrade_description": "Si actualizas, podrás configurar la sala para que los miembros de los espacios que elijas puedan unirse sin que tengas que invitarles."
+            "join_rule_restricted_upgrade_description": "Si actualizas, podrás configurar la sala para que los miembros de los espacios que elijas puedan unirse sin que tengas que invitarles.",
+            "join_rule_upgrade_upgrading_room": "Actualizar sala",
+            "join_rule_upgrade_awaiting_room": "Cargando la nueva sala",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Enviando invitación…",
+                "other": "Enviando invitaciones… (%(progress)s de %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Actualizando espacio…",
+                "other": "Actualizando espacios… (%(progress)s de %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "¿Quieres incluir esta sala en la lista pública de salas de %(domain)s?",
@@ -3991,7 +3985,9 @@
         "admin_contact_short": "Contacta con el <a>administrador del servidor</a>.",
         "non_urgent_echo_failure_toast": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
         "failed_copy": "Falló la copia",
-        "something_went_wrong": "¡Algo ha fallado!"
+        "something_went_wrong": "¡Algo ha fallado!",
+        "update_power_level": "Fallo al cambiar de nivel de acceso",
+        "unknown": "Error desconocido"
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4039,5 +4035,11 @@
     "lightbox": {
         "rotate_left": "Girar a la izquierda",
         "rotate_right": "Girar a la derecha"
+    },
+    "a11y_jump_first_unread_room": "Saltar a la primera sala sin leer.",
+    "integration_manager": {
+        "connecting": "Conectando al gestor de integraciones…",
+        "error_connecting_heading": "No se puede conectar al gestor de integraciones",
+        "error_connecting": "El gestor de integraciones está desconectado o no puede conectar con su servidor."
     }
 }

@@ -26,7 +26,6 @@
     "Enter passphrase": "Jelmondat megadása",
     "Error decrypting attachment": "Csatolmány visszafejtése sikertelen",
     "Failed to ban user": "A felhasználót nem sikerült kizárni",
-    "Failed to change power level": "A hozzáférési szint megváltoztatása sikertelen",
     "Failed to load timeline position": "Az idővonal pozíciót nem sikerült betölteni",
     "Failed to mute user": "A felhasználót némítása sikertelen",
     "Failed to reject invite": "A meghívót nem sikerült elutasítani",
@@ -113,7 +112,6 @@
     "File to import": "Fájl betöltése",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "A kimentett fájl jelmondattal van védve. A kibontáshoz add meg a jelmondatot.",
     "Confirm Removal": "Törlés megerősítése",
-    "Unknown error": "Ismeretlen hiba",
     "Unable to restore session": "A munkamenetet nem lehet helyreállítani",
     "Error decrypting image": "Hiba a kép visszafejtésénél",
     "Error decrypting video": "Hiba a videó visszafejtésénél",
@@ -475,8 +473,6 @@
     "This client does not support end-to-end encryption.": "A kliens nem támogatja a végponttól végpontig való titkosítást.",
     "Messages in this room are not end-to-end encrypted.": "Az üzenetek a szobában nincsenek végponttól végpontig titkosítva.",
     "Cancel search": "Keresés megszakítása",
-    "Jump to first unread room.": "Ugrás az első olvasatlan szobához.",
-    "Jump to first invite.": "Újrás az első meghívóhoz.",
     "Room %(name)s": "Szoba: %(name)s",
     "Message Actions": "Üzenet Műveletek",
     "You verified %(name)s": "Ellenőrizte: %(name)s",
@@ -491,8 +487,6 @@
     "None": "Semmi",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ezt a felhasználót figyelmen kívül hagyod, így az üzenetei el lesznek rejtve. <a>Megjelenítés mindenképpen.</a>",
     "Messages in this room are end-to-end encrypted.": "Az üzenetek a szobában végponttól végpontig titkosítottak.",
-    "Cannot connect to integration manager": "Nem lehet kapcsolódni az integrációkezelőhöz",
-    "The integration manager is offline or it cannot reach your homeserver.": "Az integrációkezelő nem működik, vagy nem éri el a Matrix-kiszolgálóját.",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
     "Integrations are disabled": "Az integrációk le vannak tiltva",
     "Integrations not allowed": "Az integrációk nem engedélyezettek",
@@ -1195,16 +1189,6 @@
     "Verify with Security Key": "Ellenőrzés Biztonsági Kulccsal",
     "Verify with Security Key or Phrase": "Ellenőrzés Biztonsági Kulccsal vagy Jelmondattal",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Úgy tűnik, hogy nem rendelkezik biztonsági kulccsal, vagy másik eszközzel, amelyikkel ellenőrizhetné. Ezzel az eszközzel nem fér majd hozzá a régi titkosított üzenetekhez. Ahhoz, hogy a személyazonosságát ezen az eszközön ellenőrizni lehessen, az ellenőrzédi kulcsokat alaphelyzetbe kell állítani.",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Terek frissítése…",
-        "other": "Terek frissítése… (%(progress)s / %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Meghívók küldése…",
-        "other": "Meghívók küldése… (%(progress)s / %(count)s)"
-    },
-    "Loading new room": "Új szoba betöltése",
-    "Upgrading room": "Szoba fejlesztése",
     "Downloading": "Letöltés",
     "They won't be able to access whatever you're not an admin of.": "Később nem férhetnek hozzá olyan helyekhez ahol ön nem adminisztrátor.",
     "Ban them from specific things I'm able to": "Kitiltani őket bizonyos helyekről ahonnan joga van hozzá",
@@ -1537,9 +1521,6 @@
     "We were unable to start a chat with the other user.": "A beszélgetést a másik felhasználóval nem lehetett elindítani.",
     "Error starting verification": "Ellenőrzés indításakor hiba lépett fel",
     "Change layout": "Képernyőbeosztás megváltoztatása",
-    "Search users in this room…": "Felhasználók keresése a szobában…",
-    "Give one or multiple users in this room more privileges": "Több jog adása egy vagy több felhasználónak a szobában",
-    "Add privileged users": "Privilegizált felhasználók hozzáadása",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
@@ -1577,7 +1558,6 @@
     "Encrypting your message…": "Üzenet titkosítása…",
     "Sending your message…": "Üzenet küldése…",
     "Set a new account password…": "Új fiókjelszó beállítása…",
-    "Connecting to integration manager…": "Kapcsolódás az integrációkezelőhöz…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Loading polls": "Szavazások betöltése",
     "Ended a poll": "Lezárta a szavazást",
@@ -1845,7 +1825,8 @@
             "other": "%(count)s olvasatlan üzenet.",
             "one": "1 olvasatlan üzenet."
         },
-        "unread_messages": "Olvasatlan üzenetek."
+        "unread_messages": "Olvasatlan üzenetek.",
+        "jump_first_invite": "Újrás az első meghívóhoz."
     },
     "labs": {
         "video_rooms": "Videószobák",
@@ -3225,7 +3206,10 @@
             "title": "Szerepek és jogosultságok",
             "permissions_section": "Jogosultságok",
             "permissions_section_description_space": "A tér bizonyos beállításainak megváltoztatásához szükséges szerep kiválasztása",
-            "permissions_section_description_room": "A szoba bizonyos beállításainak megváltoztatásához szükséges szerep kiválasztása"
+            "permissions_section_description_room": "A szoba bizonyos beállításainak megváltoztatásához szükséges szerep kiválasztása",
+            "add_privileged_user_heading": "Privilegizált felhasználók hozzáadása",
+            "add_privileged_user_description": "Több jog adása egy vagy több felhasználónak a szobában",
+            "add_privileged_user_filter_placeholder": "Felhasználók keresése a szobában…"
         },
         "security": {
             "strict_encryption": "Ebben a szobában sose küldjön titkosított üzenetet ellenőrizetlen munkamenetekbe ebből a munkamenetből",
@@ -3267,7 +3251,17 @@
             "join_rule_restricted_description_prompt": "A téren bárki megtalálhatja és beléphet. Több teret is kiválaszthat.",
             "join_rule_restricted": "Tértagság",
             "join_rule_restricted_upgrade_warning": "Ez a szoba olyan terekben is benne van, amelynek nem Ön az adminisztrátora. Ezekben a terekben továbbra is a régi szoba jelenik meg, de az emberek jelzést kapnak, hogy lépjenek be az újba.",
-            "join_rule_restricted_upgrade_description": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát."
+            "join_rule_restricted_upgrade_description": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát.",
+            "join_rule_upgrade_upgrading_room": "Szoba fejlesztése",
+            "join_rule_upgrade_awaiting_room": "Új szoba betöltése",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Meghívók küldése…",
+                "other": "Meghívók küldése… (%(progress)s / %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Terek frissítése…",
+                "other": "Terek frissítése… (%(progress)s / %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Publikálod a szobát a(z) %(domain)s szoba listájába?",
@@ -4092,7 +4086,9 @@
         "non_urgent_echo_failure_toast": "A kiszolgálója nem válaszol néhány <a>kérésre</a>.",
         "failed_copy": "Sikertelen másolás",
         "something_went_wrong": "Valami rosszul sikerült.",
-        "download_media": "A forrásmédia letöltése sikertelen, nem található forráswebcím"
+        "download_media": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
+        "update_power_level": "A hozzáférési szint megváltoztatása sikertelen",
+        "unknown": "Ismeretlen hiba"
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4141,5 +4137,11 @@
         "title": "Képnézet",
         "rotate_left": "Forgatás balra",
         "rotate_right": "Forgatás jobbra"
+    },
+    "a11y_jump_first_unread_room": "Ugrás az első olvasatlan szobához.",
+    "integration_manager": {
+        "connecting": "Kapcsolódás az integrációkezelőhöz…",
+        "error_connecting_heading": "Nem lehet kapcsolódni az integrációkezelőhöz",
+        "error_connecting": "Az integrációkezelő nem működik, vagy nem éri el a Matrix-kiszolgálóját."
     }
 }

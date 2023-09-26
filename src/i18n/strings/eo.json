@@ -34,7 +34,6 @@
     "Failed to set display name": "Malsukcesis agordi vidigan nomon",
     "Failed to ban user": "Malsukcesis forbari uzanton",
     "Failed to mute user": "Malsukcesis silentigi uzanton",
-    "Failed to change power level": "Malsukcesis ŝanĝi povnivelon",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tiun ĉi ŝanĝon vi ne povos malfari, ĉar vi donas al la uzanto la saman povnivelon, kiun havas vi mem.",
     "Are you sure?": "Ĉu vi certas?",
     "Unignore": "Reatenti",
@@ -92,7 +91,6 @@
         "other": "Kaj %(count)s pliaj…"
     },
     "Confirm Removal": "Konfirmi forigon",
-    "Unknown error": "Nekonata eraro",
     "Deactivate Account": "Malaktivigi konton",
     "An error has occurred.": "Okazis eraro.",
     "Unable to restore session": "Salutaĵo ne rehaveblas",
@@ -486,11 +484,7 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. Administru per <settings>Agordoj</settings>.",
     "Close dialog": "Fermi interagujon",
     "Command Help": "Helpo pri komando",
-    "Jump to first unread room.": "Salti al unua nelegita ĉambro.",
-    "Jump to first invite.": "Salti al unua invito.",
     "Lock": "Seruro",
-    "Cannot connect to integration manager": "Ne povas konektiĝi al kunigilo",
-    "The integration manager is offline or it cannot reach your homeserver.": "La kunigilo estas eksterreta aŭ ne povas atingi vian hejmservilon.",
     "This room is end-to-end encrypted": "Ĉi tiu ĉambro uzas tutvojan ĉifradon",
     "Everyone in this room is verified": "Ĉiu en la ĉambro estas kontrolita",
     "Unencrypted": "Neĉifrita",
@@ -1193,16 +1187,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
     "Can't edit poll": "Ne povas redakti balotenketon",
     "Poll": "Balotenketo",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Ĝisdatigante aro...",
-        "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Sendante inviton...",
-        "other": "Sendante invitojn... (%(progress)s el %(count)s)"
-    },
-    "Loading new room": "Ŝarĝante novan ĉambron",
-    "Upgrading room": "Altgradiga ĉambro",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
@@ -1234,7 +1218,6 @@
     "Files": "Dosieroj",
     "Close sidebar": "Fermu la flanka kolumno",
     "Public rooms": "Publikajn ĉambrojn",
-    "Add privileged users": "Aldoni rajtigitan uzanton",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "common": {
@@ -1431,7 +1414,8 @@
             "other": "%(count)s nelegitaj mesaĝoj.",
             "one": "1 nelegita mesaĝo."
         },
-        "unread_messages": "Nelegitaj mesaĝoj."
+        "unread_messages": "Nelegitaj mesaĝoj.",
+        "jump_first_invite": "Salti al unua invito."
     },
     "labs": {
         "video_rooms": "Videoĉambroj",
@@ -2414,7 +2398,8 @@
             "title": "Roloj kaj Permesoj",
             "permissions_section": "Permesoj",
             "permissions_section_description_space": "Elekti rolojn bezonatajn por ŝanĝado de diversaj partoj de la aro",
-            "permissions_section_description_room": "Elektu la rolojn postulatajn por ŝanĝado de diversaj partoj de la ĉambro"
+            "permissions_section_description_room": "Elektu la rolojn postulatajn por ŝanĝado de diversaj partoj de la ĉambro",
+            "add_privileged_user_heading": "Aldoni rajtigitan uzanton"
         },
         "security": {
             "strict_encryption": "Neniam sendi ĉifritajn mesaĝojn al nekontrolitaj salutaĵoj en ĉi tiu ĉambro de ĉi tiu salutaĵo",
@@ -2454,7 +2439,17 @@
             "join_rule_restricted_description_active_space": "Ĉiu en <spaceName/> povas trovi kaj aliĝi. Vi povas elekti ankaŭ aliajn arojn.",
             "join_rule_restricted_description_prompt": "Ĉiu en aro povas trovi kaj aliĝi. Vi povas elekti plurajn arojn.",
             "join_rule_restricted": "Aranoj",
-            "join_rule_restricted_upgrade_description": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito."
+            "join_rule_restricted_upgrade_description": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito.",
+            "join_rule_upgrade_upgrading_room": "Altgradiga ĉambro",
+            "join_rule_upgrade_awaiting_room": "Ŝarĝante novan ĉambron",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Sendante inviton...",
+                "other": "Sendante invitojn... (%(progress)s el %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Ĝisdatigante aro...",
+                "other": "Ĝisdatigante arojn... (%(progress)s el %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Ĉu publikigi ĉi tiun ĉambron per la katalogo de ĉambroj de %(domain)s?",
@@ -3168,7 +3163,9 @@
         "admin_contact_short": "Kontaktu <a>administranton de via servilo</a>.",
         "non_urgent_echo_failure_toast": "Via servilo ne respondas al iuj <a>petoj</a>.",
         "failed_copy": "Malsukcesis kopii",
-        "something_went_wrong": "Io misokazis!"
+        "something_went_wrong": "Io misokazis!",
+        "update_power_level": "Malsukcesis ŝanĝi povnivelon",
+        "unknown": "Nekonata eraro"
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3210,5 +3207,10 @@
     "lightbox": {
         "rotate_left": "Turni maldekstren",
         "rotate_right": "Turni dekstren"
+    },
+    "a11y_jump_first_unread_room": "Salti al unua nelegita ĉambro.",
+    "integration_manager": {
+        "error_connecting_heading": "Ne povas konektiĝi al kunigilo",
+        "error_connecting": "La kunigilo estas eksterreta aŭ ne povas atingi vian hejmservilon."
     }
 }

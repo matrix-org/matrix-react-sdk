@@ -283,7 +283,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Sa ei saa saata ühtego sõnumit enne, kui oled läbi lugenud ja nõustunud <consentLink>meie kasutustingimustega</consentLink>.",
     "Couldn't load page": "Lehe laadimine ei õnnestunud",
     "Are you sure you want to leave the room '%(roomName)s'?": "Kas oled kindel, et soovid lahkuda jututoast „%(roomName)s“?",
-    "Unknown error": "Teadmata viga",
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "You don't currently have any stickerpacks enabled": "Sul pole ühtegi kleepsupakki kasutusel",
     "Add some now": "Lisa nüüd mõned",
@@ -471,7 +470,6 @@
     "Default": "Tavaline",
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
-    "Failed to change power level": "Õiguste muutmine ei õnnestunud",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Sa ei saa seda muudatust hiljem tagasi pöörata, sest annad teisele kasutajale samad õigused, mis sinul on.",
     "Deactivate user?": "Kas deaktiveerime kasutajakonto?",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Kasutaja deaktiveerimisel logitakse ta automaatselt välja ning ei lubata enam sisse logida. Lisaks lahkub ta kõikidest jututubadest, mille liige ta parasjagu on. Seda tegevust ei saa tagasi pöörata. Kas sa oled ikka kindel, et soovid selle kasutaja kõijkalt eemaldada?",
@@ -484,8 +482,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Ok": "Sobib",
     "IRC display name width": "IRC kuvatava nime laius",
-    "Cannot connect to integration manager": "Ei saa ühendust lõiminguhalduriga",
-    "The integration manager is offline or it cannot reach your homeserver.": "Lõiminguhaldur kas ei tööta või ei õnnestu tal teha päringuid sinu koduserveri suunas.",
     "Back up your keys before signing out to avoid losing them.": "Vältimaks nende kaotamist, varunda krüptovõtmed enne väljalogimist.",
     "None": "Ei ühelgi juhul",
     "Ignored users": "Eiratud kasutajad",
@@ -662,8 +658,6 @@
     "This backup is trusted because it has been restored on this session": "See varukoopia on usaldusväärne, sest ta on taastatud sellest sessioonist",
     "Start using Key Backup": "Võta kasutusele krüptovõtmete varundamine",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Sa hetkel ei kasuta isikutuvastusserverit. Et olla leitav ja ise leida sinule teadaolevaid inimesi seadista ta alljärgnevalt.",
-    "Jump to first unread room.": "Siirdu esimesse lugemata jututuppa.",
-    "Jump to first invite.": "Siirdu esimese kutse juurde.",
     "Recovery Method Removed": "Taastemeetod on eemaldatud",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Kui sa tegid seda juhuslikult, siis sa võid selles sessioonis uuesti seadistada sõnumite krüptimise, mille tulemusel krüptime uuesti kõik sõnumid ja loome uue taastamise meetodi.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Kui sa ei ole ise taastamise meetodeid eemaldanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod.",
@@ -1195,16 +1189,6 @@
     "Verify with Security Key or Phrase": "Verifitseeri turvavõtme või turvafraasiga",
     "Skip verification for now": "Jäta verifitseerimine praegu vahele",
     "Really reset verification keys?": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Uuendan kogukonnakeskust...",
-        "other": "Uuendan kogukonnakeskuseid... (%(progress)s / %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Saadan kutset...",
-        "other": "Saadan kutseid... (%(progress)s / %(count)s)"
-    },
-    "Loading new room": "Laadin uut jututuba",
-    "Upgrading room": "Uuendan jututoa versiooni",
     "They won't be able to access whatever you're not an admin of.": "Kasutaja ei saa ligi kohtadele, kus sul pole peakasutaja õigusi.",
     "Ban them from specific things I'm able to": "Määra kasutajale suhtluskeeld valitud kohtades, kust ma saan",
     "Unban them from specific things I'm able to": "Eemalda kasutajalt suhtluskeeld valitud kohtadest, kust ma saan",
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Viga verifitseerimise alustamisel",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
     "Change layout": "Muuda paigutust",
-    "Search users in this room…": "Vali kasutajad sellest jututoast…",
-    "Give one or multiple users in this room more privileges": "Lisa selles jututoas ühele või mitmele kasutajale täiendavaid õigusi",
-    "Add privileged users": "Lisa kasutajatele täiendavaid õigusi",
     "Unable to decrypt message": "Sõnumi dekrüptimine ei õnnestunud",
     "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "Krüptin sinu sõnumit…",
     "Sending your message…": "Saadan sinu sõnumit…",
     "Set a new account password…": "Määra kontole uus salasõna…",
-    "Connecting to integration manager…": "Ühendamisel lõiminguhalduriga…",
     "Starting export process…": "Alustame eksportimist…",
     "Secure Backup successful": "Krüptovõtmete varundus õnnestus",
     "Your keys are now being backed up from this device.": "Sinu krüptovõtmed on parasjagu sellest seadmest varundamisel.",
@@ -1893,7 +1873,8 @@
             "other": "%(count)s lugemata teadet.",
             "one": "1 lugemata teade."
         },
-        "unread_messages": "Lugemata sõnumid."
+        "unread_messages": "Lugemata sõnumid.",
+        "jump_first_invite": "Siirdu esimese kutse juurde."
     },
     "labs": {
         "video_rooms": "Videotoad",
@@ -3306,7 +3287,10 @@
             "title": "Rollid ja õigused",
             "permissions_section": "Õigused",
             "permissions_section_description_space": "Vali rollid, mis on vajalikud kogukonna eri osade muutmiseks",
-            "permissions_section_description_room": "Vali rollid, mis on vajalikud jututoa eri osade muutmiseks"
+            "permissions_section_description_room": "Vali rollid, mis on vajalikud jututoa eri osade muutmiseks",
+            "add_privileged_user_heading": "Lisa kasutajatele täiendavaid õigusi",
+            "add_privileged_user_description": "Lisa selles jututoas ühele või mitmele kasutajale täiendavaid õigusi",
+            "add_privileged_user_filter_placeholder": "Vali kasutajad sellest jututoast…"
         },
         "security": {
             "strict_encryption": "Ära iialgi saada sellest sessioonist krüptitud sõnumeid verifitseerimata sessioonidesse selles jututoas",
@@ -3351,7 +3335,17 @@
             "join_rule_knock": "Küsi võimalust liitumiseks",
             "join_rule_knock_description": "Kasutajade ei saa liituda enne, kui selleks vastav luba on antud.",
             "join_rule_restricted_upgrade_warning": "See jututuba on mõne sellise kogukonnakeskuse osa, kus sul pole haldaja õigusi. Selliselt juhul vana jututuba jätkuvalt kuvatakse, kuid selle asutajatele pakutakse võimalust uuega liituda.",
-            "join_rule_restricted_upgrade_description": "Antud uuendusega on valitud kogukonnakeskuste liikmetel võimalik selle jututoaga ilma kutseta liituda."
+            "join_rule_restricted_upgrade_description": "Antud uuendusega on valitud kogukonnakeskuste liikmetel võimalik selle jututoaga ilma kutseta liituda.",
+            "join_rule_upgrade_upgrading_room": "Uuendan jututoa versiooni",
+            "join_rule_upgrade_awaiting_room": "Laadin uut jututuba",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Saadan kutset...",
+                "other": "Saadan kutseid... (%(progress)s / %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Uuendan kogukonnakeskust...",
+                "other": "Uuendan kogukonnakeskuseid... (%(progress)s / %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Kas avaldame selle jututoa %(domain)s jututubade loendis?",
@@ -4188,7 +4182,9 @@
         "non_urgent_echo_failure_toast": "Sinu koduserver ei vasta mõnedele <a>päringutele</a>.",
         "failed_copy": "Kopeerimine ebaõnnestus",
         "something_went_wrong": "Midagi läks nüüd valesti!",
-        "download_media": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu"
+        "download_media": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu",
+        "update_power_level": "Õiguste muutmine ei õnnestunud",
+        "unknown": "Teadmata viga"
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4237,5 +4233,11 @@
         "title": "Pildivaade",
         "rotate_left": "Pööra vasakule",
         "rotate_right": "Pööra paremale"
+    },
+    "a11y_jump_first_unread_room": "Siirdu esimesse lugemata jututuppa.",
+    "integration_manager": {
+        "connecting": "Ühendamisel lõiminguhalduriga…",
+        "error_connecting_heading": "Ei saa ühendust lõiminguhalduriga",
+        "error_connecting": "Lõiminguhaldur kas ei tööta või ei õnnestu tal teha päringuid sinu koduserveri suunas."
     }
 }

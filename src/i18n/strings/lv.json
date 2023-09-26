@@ -19,7 +19,6 @@
     "Error decrypting attachment": "Kļūda atšifrējot pielikumu",
     "Failed to ban user": "Neizdevās nobanot/bloķēt (liegt pieeju) lietotāju",
     "Failed to change password. Is your password correct?": "Neizdevās nomainīt paroli. Vai tā ir pareiza?",
-    "Failed to change power level": "Neizdevās nomainīt statusa līmeni",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tu nevarēsi atcelt šo darbību, jo šim lietotājam piešķir tādu pašu statusa līmeni, kāds ir Tev.",
     "Failed to forget room %(errCode)s": "Neizdevās \"aizmirst\" istabu %(errCode)s",
     "Failed to load timeline position": "Neizdevās ielādēt laikpaziņojumu pozīciju",
@@ -113,7 +112,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
     "Confirm Removal": "Apstipriniet dzēšanu",
-    "Unknown error": "Nezināma kļūda",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
     "Error decrypting image": "Kļūda atšifrējot attēlu",
@@ -739,7 +737,6 @@
     "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
     "Want to add a new room instead?": "Vai tā vietā vēlaties pievienot jaunu istabu?",
     "New video room": "Jauna video istaba",
-    "Loading new room": "Ielādē jaunu istabu",
     "New room": "Jauna istaba",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
@@ -1584,7 +1581,8 @@
             "history_visibility_invited": "Tikai dalībnieki (no to uzaicināšanas brīža)",
             "history_visibility_joined": "Tikai dalībnieki (kopš pievienošanās)",
             "history_visibility_world_readable": "Ikviens",
-            "join_rule_restricted_upgrade_warning": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai."
+            "join_rule_restricted_upgrade_warning": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai.",
+            "join_rule_upgrade_awaiting_room": "Ielādē jaunu istabu"
         },
         "general": {
             "publish_toggle": "Publicēt šo istabu publiskajā %(domain)s katalogā?",
@@ -2021,7 +2019,9 @@
         "tls": "Neizdodas savienoties ar bāzes serveri. Pārbaudi tīkla savienojumu un pārliecinies, ka <a> bāzes servera SSL sertifikāts</a> ir uzticams, kā arī pārlūkā instalētie paplašinājumi nebloķē pieprasījumus.",
         "admin_contact_short": "Sazinieties ar <a>servera administratoru</a>.",
         "failed_copy": "Nokopēt neizdevās",
-        "something_went_wrong": "Kaut kas nogāja greizi!"
+        "something_went_wrong": "Kaut kas nogāja greizi!",
+        "update_power_level": "Neizdevās nomainīt statusa līmeni",
+        "unknown": "Nezināma kļūda"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

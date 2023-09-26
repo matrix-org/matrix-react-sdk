@@ -589,7 +589,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "با غیرفعال کردن این کاربر، او از سیستم خارج شده و از ورود مجدد وی جلوگیری می‌شود. علاوه بر این، او تمام اتاق هایی را که در آن هست ترک می کند. این عمل قابل برگشت نیست. آیا مطمئن هستید که می خواهید این کاربر را غیرفعال کنید؟",
     "Deactivate user?": "کاربر غیرفعال شود؟",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "شما نمی توانید این تغییر را باطل کنید زیرا در حال ارتقا سطح قدرت یک کاربر به سطح قدرت خود هستید.",
-    "Failed to change power level": "تغییر سطح قدرت انجام نشد",
     "Failed to mute user": "کاربر بی صدا نشد",
     "Remove recent messages": "حذف پیام‌های اخیر",
     "Remove %(count)s messages": {
@@ -642,8 +641,6 @@
     "Room avatar": "آواتار اتاق",
     "Room Topic": "موضوع اتاق",
     "Room Name": "نام اتاق",
-    "Jump to first invite.": "به اولین دعوت بروید.",
-    "Jump to first unread room.": "به اولین اتاق خوانده نشده بروید.",
     "%(roomName)s is not accessible at this time.": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
     "%(roomName)s does not exist.": "%(roomName)s وجود ندارد.",
     "%(roomName)s can't be previewed. Do you want to join it?": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
@@ -819,8 +816,6 @@
     "Back up your keys before signing out to avoid losing them.": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
     "Backup version:": "نسخه‌ی پشتیبان:",
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
-    "The integration manager is offline or it cannot reach your homeserver.": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود.",
-    "Cannot connect to integration manager": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
     "You'll need to authenticate with the server to confirm the upgrade.": "برای تائید ارتقاء، نیاز به احراز هویت نزد سرور خواهید داشت.",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "برای اینکه بتوانید بقیه‌ی نشست‌ها را تائید کرده و به آن‌ها امکان مشاهده‌ی پیام‌های رمزشده را بدهید، ابتدا باید این نشست را ارتقاء دهید. بعد از تائیدشدن، به عنوان نشست‌ّای تائید‌شده به سایر کاربران نمایش داده خواهند شد.",
     "Unable to query secret storage status": "امکان جستجو و کنکاش وضعیت حافظه‌ی مخفی میسر نیست",
@@ -833,7 +828,6 @@
     "Unable to set up secret storage": "تنظیم حافظه‌ی پنهان امکان پذیر نیست",
     "Passphrases must match": "عبارات‌های امنیتی باید مطابقت داشته باشند",
     "Passphrase must not be empty": "عبارت امنیتی نمی‌تواند خالی باشد",
-    "Unknown error": "خطای ناشناخته",
     "Show more": "نمایش بیشتر",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "آدرس‌های این اتاق را تنظیم کنید تا کاربران بتوانند این اتاق را از طریق سرور شما پیدا کنند (%(localDomain)s)",
     "Local Addresses": "آدرس‌های محلی",
@@ -1298,7 +1292,8 @@
             "one": "۱ پیام خوانده نشده.",
             "other": "%(count)s پیام خوانده نشده."
         },
-        "unread_messages": "پیام های خوانده نشده."
+        "unread_messages": "پیام های خوانده نشده.",
+        "jump_first_invite": "به اولین دعوت بروید."
     },
     "labs": {
         "video_rooms": "اتاق های تصویری",
@@ -2831,7 +2826,9 @@
         "admin_contact_short": "تماس با <a>مدیر کارسازتان</a>.",
         "non_urgent_echo_failure_toast": "سرور شما به بعضی <a>درخواست‌ها</a> پاسخ نمی‌دهد.",
         "failed_copy": "خطا در گرفتن رونوشت",
-        "something_went_wrong": "مشکلی پیش آمد!"
+        "something_went_wrong": "مشکلی پیش آمد!",
+        "update_power_level": "تغییر سطح قدرت انجام نشد",
+        "unknown": "خطای ناشناخته"
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2871,5 +2868,10 @@
     "lightbox": {
         "rotate_left": "چرخش به چپ",
         "rotate_right": "چرخش به راست"
+    },
+    "a11y_jump_first_unread_room": "به اولین اتاق خوانده نشده بروید.",
+    "integration_manager": {
+        "error_connecting_heading": "امکان اتصال به مدیر یکپارچه‌سازی‌ها وجود ندارد",
+        "error_connecting": "مدیر یکپارچه‌سازی‌ یا آفلاین است و یا نمی‌تواند به سرور شما متصل شود."
     }
 }

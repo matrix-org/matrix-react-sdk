@@ -123,7 +123,6 @@
     "expand": "išskleisti",
     "Logs sent": "Žurnalai išsiųsti",
     "Failed to send logs: ": "Nepavyko išsiųsti žurnalų: ",
-    "Unknown error": "Nežinoma klaida",
     "An error has occurred.": "Įvyko klaida.",
     "Failed to upgrade room": "Nepavyko atnaujinti kambario",
     "The room upgrade could not be completed": "Nepavyko užbaigti kambario atnaujinimo",
@@ -192,7 +191,6 @@
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (galia %(powerLevelNumber)s)",
     "Change identity server": "Pakeisti tapatybės serverį",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs žeminate savo privilegijas kambaryje. Jei jūs esate paskutinis privilegijuotas vartotojas kambaryje, atgauti privilegijas bus neįmanoma.",
-    "Failed to change power level": "Nepavyko pakeisti galios lygio",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs paaukštinate vartotoją, suteikdami tokį patį galios lygį, kokį turite jūs.",
     "Email (optional)": "El. paštas (neprivaloma)",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jei jūs nenustatėte naujo paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą.",
@@ -440,8 +438,6 @@
     "Unable to create key backup": "Nepavyko sukurti atsarginės raktų kopijos",
     "Your homeserver has exceeded its user limit.": "Jūsų serveris pasiekė savo vartotojų limitą.",
     "Your homeserver has exceeded one of its resource limits.": "Jūsų serveris pasiekė vieną iš savo resursų limitų.",
-    "Cannot connect to integration manager": "Neįmanoma prisijungti prie integracijų tvarkytuvo",
-    "The integration manager is offline or it cannot reach your homeserver.": "Integracijų tvarkytuvas yra išjungtas arba negali pasiekti jūsų serverio.",
     "Disconnect anyway": "Vis tiek atsijungti",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Norėdami pranešti apie su Matrix susijusią saugos problemą, perskaitykite Matrix.org <a>Saugumo Atskleidimo Poliiką</a>.",
     "Failed to connect to integration manager": "Nepavyko prisijungti prie integracijų tvarkytuvo",
@@ -786,14 +782,6 @@
     "Bahamas": "Bahamų salos",
     "Unable to share email address": "Nepavyko pasidalinti el. pašto adresu",
     "Verification code": "Patvirtinimo kodas",
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Siunčiame pakvietimą...",
-        "other": "Siunčiame pakvietimus... (%(progress)s iš %(count)s)"
-    },
-    "Loading new room": "Įkeliamas naujas kambarys",
-    "Upgrading room": "Atnaujinamas kambarys",
-    "Jump to first unread room.": "Peršokti į pirmą neperskaitytą kambarį.",
-    "Jump to first invite.": "Peršokti iki pirmo pakvietimo.",
     "Address": "Adresas",
     "Their device couldn't start the camera or microphone": "Jų įrenginys negalėjo įjungti kameros arba mikrofono",
     "Connection failed": "Nepavyko prisijungti",
@@ -927,10 +915,6 @@
     "You have no ignored users.": "Nėra ignoruojamų naudotojų.",
     "Deactivating your account is a permanent action — be careful!": "Paskyros deaktyvavimas yra negrįžtamas veiksmas — būkite atsargūs!",
     "Your password was successfully changed.": "Jūsų slaptažodis sėkmingai pakeistas.",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Atnaujinama erdvė...",
-        "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
-    },
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -2190,7 +2174,17 @@
             "join_rule_restricted_description_prompt": "Kiekvienas esantis erdvėje gali rasti ir prisijungti. Galite pasirinkti kelias erdves.",
             "join_rule_restricted": "Erdvės nariai",
             "join_rule_restricted_upgrade_warning": "Šis kambarys yra kai kuriose erdvėse, kuriose nesate administratorius. Šiose erdvėse senasis kambarys vis dar bus rodomas, bet žmonės bus raginami prisijungti prie naujojo.",
-            "join_rule_restricted_upgrade_description": "Šis atnaujinimas suteiks galimybę pasirinktų erdvių nariams patekti į šį kambarį be kvietimo."
+            "join_rule_restricted_upgrade_description": "Šis atnaujinimas suteiks galimybę pasirinktų erdvių nariams patekti į šį kambarį be kvietimo.",
+            "join_rule_upgrade_upgrading_room": "Atnaujinamas kambarys",
+            "join_rule_upgrade_awaiting_room": "Įkeliamas naujas kambarys",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Siunčiame pakvietimą...",
+                "other": "Siunčiame pakvietimus... (%(progress)s iš %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Atnaujinama erdvė...",
+                "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Paskelbti šį kambarį viešai %(domain)s kambarių kataloge?",
@@ -2428,7 +2422,8 @@
             "one": "1 neperskaityta žinutė.",
             "other": "%(count)s neperskaitytos žinutės."
         },
-        "unread_messages": "Neperskaitytos žinutės."
+        "unread_messages": "Neperskaitytos žinutės.",
+        "jump_first_invite": "Peršokti iki pirmo pakvietimo."
     },
     "setting": {
         "help_about": {
@@ -2721,7 +2716,9 @@
         "admin_contact_short": "Susisiekite su savo <a>serverio administratoriumi</a>.",
         "non_urgent_echo_failure_toast": "Jūsų serveris neatsako į kai kurias <a>užklausas</a>.",
         "failed_copy": "Nepavyko nukopijuoti",
-        "something_went_wrong": "Kažkas nutiko!"
+        "something_went_wrong": "Kažkas nutiko!",
+        "update_power_level": "Nepavyko pakeisti galios lygio",
+        "unknown": "Nežinoma klaida"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2762,5 +2759,10 @@
     },
     "lightbox": {
         "rotate_left": "Pasukti Kairėn"
+    },
+    "a11y_jump_first_unread_room": "Peršokti į pirmą neperskaitytą kambarį.",
+    "integration_manager": {
+        "error_connecting_heading": "Neįmanoma prisijungti prie integracijų tvarkytuvo",
+        "error_connecting": "Integracijų tvarkytuvas yra išjungtas arba negali pasiekti jūsų serverio."
     }
 }

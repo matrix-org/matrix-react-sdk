@@ -72,7 +72,6 @@
     "Unavailable": "Ekki tiltækt",
     "Changelog": "Breytingaskrá",
     "Confirm Removal": "Staðfesta fjarlægingu",
-    "Unknown error": "Óþekkt villa",
     "Deactivate Account": "Gera notandaaðgang óvirkann",
     "Filter results": "Sía niðurstöður",
     "An error has occurred.": "Villa kom upp.",
@@ -570,10 +569,6 @@
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Phone numbers": "Símanúmer",
     "Email addresses": "Tölvupóstföng",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Uppfæri svæði...",
-        "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
-    },
     "Address": "Vistfang",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -616,8 +611,6 @@
     "Ignored attempt to disable encryption": "Hunsaði tilraun til að gera dulritun óvirka",
     "This client does not support end-to-end encryption.": "Þetta forrit styður ekki enda-í-enda dulritun.",
     "Room Addresses": "Vistföng spjallrása",
-    "Loading new room": "Hleð inn nýrri spjallrás",
-    "Upgrading room": "Uppfæri spjallrás",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Private space": "Einkasvæði",
@@ -690,10 +683,6 @@
     "Start using Key Backup": "Byrja að nota öryggisafrit dulritunarlykla",
     "No votes cast": "Engin atkvæði greidd",
     "This room has been replaced and is no longer active.": "Þessari spjallrás hefur verið skipt út og er hún ekki lengur virk.",
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Sendi boð...",
-        "other": "Sendi boð... (%(progress)s af %(count)s)"
-    },
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -726,8 +715,6 @@
     "Jump to date": "Hoppa á dagsetningu",
     "Jump to read receipt": "Fara í fyrstu leskvittun",
     "Incorrect verification code": "Rangur sannvottunarkóði",
-    "Jump to first invite.": "Fara í fyrsta boð.",
-    "Jump to first unread room.": "Fara í fyrstu ólesnu spjallrásIna.",
     "Generate a Security Key": "Útbúa öryggislykil",
     "Not a valid Security Key": "Ekki gildur öryggislykill",
     "This looks like a valid Security Key!": "Þetta lítur út eins og gildur öryggislykill!",
@@ -790,8 +777,6 @@
     "Manage integrations": "Sýsla með samþættingar",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Notaðu samþættingarstýringu til að stýra vélmennum, viðmótshlutum og límmerkjapökkum.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Notaðu samþættingarstýringu <b>(%(serverName)s)</b> til að stýra vélmennum, viðmótshlutum og límmerkjapökkum.",
-    "The integration manager is offline or it cannot reach your homeserver.": "Samþættingarstýringin er ekki nettengd og nær ekki að tengjast heimaþjóninum þínum.",
-    "Cannot connect to integration manager": "Get ekki tengst samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
     "Cancel search": "Hætta við leitina",
     "Drop a Pin": "Sleppa pinna",
@@ -1158,7 +1143,6 @@
     "Almost there! Is %(displayName)s showing the same shield?": "Næstum því búið! Sýnir %(displayName)s sama skjöldinn?",
     "Almost there! Is your other device showing the same shield?": "Næstum því búið! Sýnir hitt tækið þitt sama skjöldinn?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að gefa notandanum jafn mikil völd og þú hefur sjálf/ur.",
-    "Failed to change power level": "Mistókst að breyta valdastigi",
     "You can only pin up to %(count)s widgets": {
         "other": "Þú getur bara fest allt að %(count)s viðmótshluta"
     },
@@ -1331,7 +1315,6 @@
     "Connection": "Tenging",
     "Video settings": "Myndstillingar",
     "Voice settings": "Raddstillingar",
-    "Search users in this room…": "Leita að notendum á þessari spjallrás…",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -1352,8 +1335,6 @@
     "Failed to update the join rules": "Mistókst að uppfæra reglur fyrir þátttöku",
     "Voice processing": "Meðhöndlun tals",
     "Automatically adjust the microphone volume": "Aðlaga hljóðstyrk hljóðnema sjálfvirkt",
-    "Give one or multiple users in this room more privileges": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
-    "Add privileged users": "Bæta við notendum með auknar heimildir",
     "common": {
         "about": "Um hugbúnaðinn",
         "analytics": "Greiningar",
@@ -1572,7 +1553,8 @@
             "one": "1 ólesin skilaboð.",
             "other": "%(count)s ólesin skilaboð."
         },
-        "unread_messages": "Ólesin skilaboð."
+        "unread_messages": "Ólesin skilaboð.",
+        "jump_first_invite": "Fara í fyrsta boð."
     },
     "labs": {
         "video_rooms": "Myndspjallrásir",
@@ -2804,7 +2786,10 @@
             "title": "Hlutverk og heimildir",
             "permissions_section": "Heimildir",
             "permissions_section_description_space": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum svæðisins",
-            "permissions_section_description_room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar"
+            "permissions_section_description_room": "Veldu þau hlutverk sem krafist er til að breyta ýmsum þáttum spjallrásarinnar",
+            "add_privileged_user_heading": "Bæta við notendum með auknar heimildir",
+            "add_privileged_user_description": "Gefðu einum eða fleiri notendum á þessari spjallrás auknar heimildir",
+            "add_privileged_user_filter_placeholder": "Leita að notendum á þessari spjallrás…"
         },
         "security": {
             "strict_encryption": "Aldrei senda dulrituð skilaboð af þessu tæki til ósannvottaðra tækja á þessari spjallrás úr þessari setu",
@@ -2836,7 +2821,17 @@
             "join_rule_restricted_description_spaces": "Svæði með aðgang",
             "join_rule_restricted_description_active_space": "Hver sem er í <spaceName/> getur fundið og tekið þátt. Þú getur einnig valið önnur svæði.",
             "join_rule_restricted_description_prompt": "Hver sem er í svæði getur fundið og tekið þátt. Þú getur valið mörg svæði.",
-            "join_rule_restricted": "Meðlimir svæðis"
+            "join_rule_restricted": "Meðlimir svæðis",
+            "join_rule_upgrade_upgrading_room": "Uppfæri spjallrás",
+            "join_rule_upgrade_awaiting_room": "Hleð inn nýrri spjallrás",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Sendi boð...",
+                "other": "Sendi boð... (%(progress)s af %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Uppfæri svæði...",
+                "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Birta þessa spjallrás opinberlega á skrá %(domain)s yfir spjallrásir?",
@@ -3577,7 +3572,9 @@
         "admin_contact_short": "Hafðu samband við <a>kerfisstjórann þinn</a>.",
         "non_urgent_echo_failure_toast": "Netþjónninn þinn er ekki að svara sumum <a>beiðnum</a>.",
         "failed_copy": "Mistókst að afrita",
-        "something_went_wrong": "Eitthvað fór úrskeiðis!"
+        "something_went_wrong": "Eitthvað fór úrskeiðis!",
+        "update_power_level": "Mistókst að breyta valdastigi",
+        "unknown": "Óþekkt villa"
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3623,5 +3620,10 @@
     "lightbox": {
         "rotate_left": "Snúa til vinstri",
         "rotate_right": "Snúa til hægri"
+    },
+    "a11y_jump_first_unread_room": "Fara í fyrstu ólesnu spjallrásIna.",
+    "integration_manager": {
+        "error_connecting_heading": "Get ekki tengst samþættingarstýringu",
+        "error_connecting": "Samþættingarstýringin er ekki nettengd og nær ekki að tengjast heimaþjóninum þínum."
     }
 }

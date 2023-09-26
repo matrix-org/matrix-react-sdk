@@ -64,7 +64,6 @@
     "AM": "dop.",
     "PM": "odp.",
     "No more results": "Žádné další výsledky",
-    "Failed to change power level": "Nepodařilo se změnit úroveň oprávnění",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (oprávnění %(powerLevelNumber)s)",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tuto změnu nepůjde vrátit zpět, protože tomuto uživateli nastavujete stejnou úroveň oprávnění, jakou máte vy.",
     "Return to login screen": "Vrátit k přihlašovací obrazovce",
@@ -127,7 +126,6 @@
         "other": "A %(count)s dalších..."
     },
     "Confirm Removal": "Potvrdit odstranění",
-    "Unknown error": "Neznámá chyba",
     "Unable to restore session": "Nelze obnovit relaci",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
@@ -483,12 +481,8 @@
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
     "Explore rooms": "Procházet místnosti",
-    "Jump to first unread room.": "Přejít na první nepřečtenou místnost.",
-    "Jump to first invite.": "Přejít na první pozvánku.",
     "Failed to re-authenticate due to a homeserver problem": "Kvůli problémům s domovským server se nepovedlo autentifikovat znovu",
     "Clear personal data": "Smazat osobní data",
-    "Cannot connect to integration manager": "Nepovedlo se připojení ke správci integrací",
-    "The integration manager is offline or it cannot reach your homeserver.": "Správce integrací neběží nebo se nemůže připojit k vašemu domovskému serveru.",
     "Manage integrations": "Správa integrací",
     "None": "Žádné",
     "Unencrypted": "Nezašifrované",
@@ -1204,16 +1198,6 @@
     "Unban from %(roomName)s": "Zrušit vykázání z %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Stále budou mít přístup ke všemu, čeho nejste správcem.",
     "Disinvite from %(roomName)s": "Zrušit pozvánku do %(roomName)s",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Aktualizace prostoru...",
-        "other": "Aktualizace prostorů... (%(progress)s z %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Odeslání pozvánky...",
-        "other": "Odesílání pozvánek... (%(progress)s z %(count)s)"
-    },
-    "Loading new room": "Načítání nové místnosti",
-    "Upgrading room": "Aktualizace místnosti",
     "Downloading": "Stahování",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Chyba při zahájení ověření",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     "Change layout": "Změnit rozvržení",
-    "Search users in this room…": "Hledání uživatelů v této místnosti…",
-    "Give one or multiple users in this room more privileges": "Přidělit jednomu nebo více uživatelům v této místnosti více oprávnění",
-    "Add privileged users": "Přidat oprávněné uživatele",
     "Unable to decrypt message": "Nepodařilo se dešifrovat zprávu",
     "This message could not be decrypted": "Tuto zprávu se nepodařilo dešifrovat",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -1573,7 +1554,6 @@
     "Encrypting your message…": "Šifrování zprávy…",
     "Sending your message…": "Odeslání zprávy…",
     "Set a new account password…": "Nastavení nového hesla k účtu…",
-    "Connecting to integration manager…": "Připojování ke správci integrací…",
     "Starting export process…": "Zahájení procesu exportu…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadejte bezpečnostní frázi, kterou znáte jen vy, protože slouží k ochraně vašich dat. V zájmu bezpečnosti byste neměli heslo k účtu používat opakovaně.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Pokračujte pouze v případě, že jste si jisti, že jste ztratili všechna ostatní zařízení a bezpečnostní klíč.",
@@ -1898,7 +1878,8 @@
             "other": "%(count)s nepřečtených zpráv.",
             "one": "Nepřečtená zpráva."
         },
-        "unread_messages": "Nepřečtené zprávy."
+        "unread_messages": "Nepřečtené zprávy.",
+        "jump_first_invite": "Přejít na první pozvánku."
     },
     "labs": {
         "video_rooms": "Video místnosti",
@@ -3311,7 +3292,10 @@
             "title": "Role a oprávnění",
             "permissions_section": "Oprávnění",
             "permissions_section_description_space": "Výbrat role potřebné ke změně různých částí prostoru",
-            "permissions_section_description_room": "Vyberte role potřebné k provedení různých změn v této místnosti"
+            "permissions_section_description_room": "Vyberte role potřebné k provedení různých změn v této místnosti",
+            "add_privileged_user_heading": "Přidat oprávněné uživatele",
+            "add_privileged_user_description": "Přidělit jednomu nebo více uživatelům v této místnosti více oprávnění",
+            "add_privileged_user_filter_placeholder": "Hledání uživatelů v této místnosti…"
         },
         "security": {
             "strict_encryption": "Nikdy v této místnosti neposílat šifrované zprávy neověřeným relacím",
@@ -3356,7 +3340,17 @@
             "join_rule_knock": "Požádat o vstup",
             "join_rule_knock_description": "Lidé nemohou vstoupit, pokud jim není povolen přístup.",
             "join_rule_restricted_upgrade_warning": "Tato místnost se nachází v některých prostorech, jejichž nejste správcem. V těchto prostorech bude stará místnost stále zobrazena, ale lidé budou vyzváni, aby se připojili k nové místnosti.",
-            "join_rule_restricted_upgrade_description": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky."
+            "join_rule_restricted_upgrade_description": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky.",
+            "join_rule_upgrade_upgrading_room": "Aktualizace místnosti",
+            "join_rule_upgrade_awaiting_room": "Načítání nové místnosti",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Odeslání pozvánky...",
+                "other": "Odesílání pozvánek... (%(progress)s z %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Aktualizace prostoru...",
+                "other": "Aktualizace prostorů... (%(progress)s z %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Zapsat tuto místnost do veřejného adresáře místností na %(domain)s?",
@@ -4193,7 +4187,9 @@
         "non_urgent_echo_failure_toast": "Váš server neodpovídá na některé <a>požadavky</a>.",
         "failed_copy": "Nepodařilo se zkopírovat",
         "something_went_wrong": "Něco se nepodařilo!",
-        "download_media": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa"
+        "download_media": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
+        "update_power_level": "Nepodařilo se změnit úroveň oprávnění",
+        "unknown": "Neznámá chyba"
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4242,5 +4238,11 @@
         "title": "Zobrazení obrázku",
         "rotate_left": "Otočit doleva",
         "rotate_right": "Otočit doprava"
+    },
+    "a11y_jump_first_unread_room": "Přejít na první nepřečtenou místnost.",
+    "integration_manager": {
+        "connecting": "Připojování ke správci integrací…",
+        "error_connecting_heading": "Nepovedlo se připojení ke správci integrací",
+        "error_connecting": "Správce integrací neběží nebo se nemůže připojit k vašemu domovskému serveru."
     }
 }

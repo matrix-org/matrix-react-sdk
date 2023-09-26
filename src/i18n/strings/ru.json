@@ -52,7 +52,6 @@
     "Decrypt %(text)s": "Расшифровать %(text)s",
     "Download %(text)s": "Скачать %(text)s",
     "Failed to ban user": "Не удалось заблокировать пользователя",
-    "Failed to change power level": "Не удалось изменить уровень прав",
     "Failed to forget room %(errCode)s": "Не удалось забыть комнату: %(errCode)s",
     "Authentication": "Аутентификация",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
@@ -100,7 +99,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
     "Confirm Removal": "Подтвердите удаление",
-    "Unknown error": "Неизвестная ошибка",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
     "Error decrypting image": "Ошибка расшифровки изображения",
@@ -476,8 +474,6 @@
     "Explore rooms": "Обзор комнат",
     "Cancel search": "Отменить поиск",
     "Room %(name)s": "Комната %(name)s",
-    "Jump to first unread room.": "Перейти в первую непрочитанную комнату.",
-    "Jump to first invite.": "Перейти к первому приглашению.",
     "Message Actions": "Сообщение действий",
     "Manage integrations": "Управление интеграциями",
     "Direct Messages": "Личные сообщения",
@@ -491,8 +487,6 @@
     "Not Trusted": "Недоверенное",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
-    "Cannot connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
-    "The integration manager is offline or it cannot reach your homeserver.": "Менеджер интеграций не работает или не может подключиться к вашему домашнему серверу.",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
     "None": "Нет",
     "Verify by scanning": "Подтверждение сканированием",
@@ -1195,16 +1189,6 @@
     "Proceed with reset": "Выполнить сброс",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "Похоже, у вас нет бумажного ключа, или других сеансов, с которыми вы могли бы свериться.  В этом сеансе вы не сможете получить доступ к старым зашифрованным сообщениям. Чтобы подтвердить свою личность в этом сеансе, вам нужно будет сбросить свои ключи шифрования.",
     "Really reset verification keys?": "Действительно сбросить ключи подтверждения?",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Обновление пространства…",
-        "other": "Обновление пространств... (%(progress)s из %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Отправка приглашения…",
-        "other": "Отправка приглашений... (%(progress)s из %(count)s)"
-    },
-    "Loading new room": "Загрузка новой комнаты",
-    "Upgrading room": "Обновление комнаты",
     "Ban from %(roomName)s": "Заблокировать в %(roomName)s",
     "Unban from %(roomName)s": "Разблокировать в %(roomName)s",
     "They won't be able to access whatever you're not an admin of.": "Они не смогут получить доступ к тем местам, где вы не являетесь администратором.",
@@ -1491,7 +1475,6 @@
     "Video call (Jitsi)": "Видеозвонок (Jitsi)",
     "View chat timeline": "Посмотреть ленту сообщений",
     "Video call (%(brand)s)": "Видеозвонок (%(brand)s)",
-    "Search users in this room…": "Поиск пользователей в этой комнате…",
     "Send email": "Отправить электронное письмо",
     "The homeserver doesn't support signing in another device.": "Домашний сервер не поддерживает вход с другого устройства.",
     "Connection": "Соединение",
@@ -1748,7 +1731,8 @@
             "other": "%(count)s непрочитанных сообщения(-й).",
             "one": "1 непрочитанное сообщение."
         },
-        "unread_messages": "Непрочитанные сообщения."
+        "unread_messages": "Непрочитанные сообщения.",
+        "jump_first_invite": "Перейти к первому приглашению."
     },
     "labs": {
         "video_rooms": "Видеокомнаты",
@@ -3057,7 +3041,8 @@
             "title": "Роли и права",
             "permissions_section": "Права доступа",
             "permissions_section_description_space": "Выберите роли, необходимые для изменения различных частей пространства",
-            "permissions_section_description_room": "Выберите роль, которая может изменять различные части комнаты"
+            "permissions_section_description_room": "Выберите роль, которая может изменять различные части комнаты",
+            "add_privileged_user_filter_placeholder": "Поиск пользователей в этой комнате…"
         },
         "security": {
             "strict_encryption": "Никогда не отправлять зашифрованные сообщения непроверенным сеансам в этой комнате и через этот сеанс",
@@ -3099,7 +3084,17 @@
             "join_rule_restricted_description_prompt": "Любой человек в пространстве может найти и присоединиться. Вы можете выбрать несколько пространств.",
             "join_rule_restricted": "Участники пространства",
             "join_rule_restricted_upgrade_warning": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
-            "join_rule_restricted_upgrade_description": "Это обновление позволит участникам выбранных пространств получить доступ в эту комнату без приглашения."
+            "join_rule_restricted_upgrade_description": "Это обновление позволит участникам выбранных пространств получить доступ в эту комнату без приглашения.",
+            "join_rule_upgrade_upgrading_room": "Обновление комнаты",
+            "join_rule_upgrade_awaiting_room": "Загрузка новой комнаты",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Отправка приглашения…",
+                "other": "Отправка приглашений... (%(progress)s из %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Обновление пространства…",
+                "other": "Обновление пространств... (%(progress)s из %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Опубликовать эту комнату в каталоге комнат %(domain)s?",
@@ -3876,7 +3871,9 @@
         "admin_contact_short": "Обратитесь к <a>администратору сервера</a>.",
         "non_urgent_echo_failure_toast": "Ваш сервер не отвечает на некоторые <a>запросы</a>.",
         "failed_copy": "Не удалось скопировать",
-        "something_went_wrong": "Что-то пошло не так!"
+        "something_went_wrong": "Что-то пошло не так!",
+        "update_power_level": "Не удалось изменить уровень прав",
+        "unknown": "Неизвестная ошибка"
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3924,5 +3921,10 @@
     "lightbox": {
         "rotate_left": "Повернуть влево",
         "rotate_right": "Повернуть вправо"
+    },
+    "a11y_jump_first_unread_room": "Перейти в первую непрочитанную комнату.",
+    "integration_manager": {
+        "error_connecting_heading": "Не удалось подключиться к менеджеру интеграций",
+        "error_connecting": "Менеджер интеграций не работает или не может подключиться к вашему домашнему серверу."
     }
 }

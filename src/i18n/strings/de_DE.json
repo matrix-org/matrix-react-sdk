@@ -59,7 +59,6 @@
     "Decrypt %(text)s": "%(text)s entschlüsseln",
     "Download %(text)s": "%(text)s herunterladen",
     "Failed to ban user": "Verbannen des Benutzers fehlgeschlagen",
-    "Failed to change power level": "Ändern der Berechtigungsstufe fehlgeschlagen",
     "Failed to mute user": "Stummschalten des Nutzers fehlgeschlagen",
     "Failed to reject invite": "Ablehnen der Einladung ist fehlgeschlagen",
     "Failed to set display name": "Anzeigename konnte nicht gesetzt werden",
@@ -90,7 +89,6 @@
     "Confirm passphrase": "Passphrase bestätigen",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Die exportierte Datei ist mit einer Passphrase geschützt. Du kannst die Passphrase hier eingeben, um die Datei zu entschlüsseln.",
     "Confirm Removal": "Entfernen bestätigen",
-    "Unknown error": "Unbekannter Fehler",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
     "Error decrypting image": "Entschlüsselung des Bilds fehlgeschlagen",
     "Error decrypting video": "Videoentschlüsselung fehlgeschlagen",
@@ -366,8 +364,6 @@
     "You should:": "Du solltest:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "Überprüfe deinen Browser auf Erweiterungen, die den Identitäts-Server blockieren könnten (z. B. Privacy Badger)",
     "Lock": "Schloss",
-    "Cannot connect to integration manager": "Verbindung zum Integrationsassistenten fehlgeschlagen",
-    "The integration manager is offline or it cannot reach your homeserver.": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Vom Identitäts-Server <current /> trennen, und stattdessen mit <new /> verbinden?",
     "The identity server you have chosen does not have any terms of service.": "Der von dir gewählte Identitäts-Server gibt keine Nutzungsbedingungen an.",
     "Disconnect identity server": "Verbindung zum Identitäts-Server trennen",
@@ -590,8 +586,6 @@
     "Country Dropdown": "Landauswahl",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s Reaktion(en) erneut senden",
     "Sign in with SSO": "Einmalanmeldung verwenden",
-    "Jump to first unread room.": "Zum ersten ungelesenen Raum springen.",
-    "Jump to first invite.": "Zur ersten Einladung springen.",
     "Failed to get autodiscovery configuration from server": "Abrufen der Autodiscovery-Konfiguration vom Server fehlgeschlagen",
     "Invalid base_url for m.homeserver": "Ungültige base_url für m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
@@ -1198,16 +1192,6 @@
     "Disinvite from %(roomName)s": "Einladung für %(roomName)s zurückziehen",
     "Export chat": "Unterhaltung exportieren",
     "Insert link": "Link einfügen",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Space aktualisieren …",
-        "other": "Spaces aktualisieren … (%(progress)s von %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Einladung senden …",
-        "other": "Einladungen senden … (%(progress)s von %(count)s)"
-    },
-    "Loading new room": "Neuer Raum wird geladen",
-    "Upgrading room": "Raum wird aktualisiert",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Bewahre deinen Sicherheitsschlüssel sicher auf, etwa in einem Passwortmanager oder einem Safe, da er verwendet wird, um deine Daten zu sichern.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Wir generieren einen Sicherheitsschlüssel für dich, den du in einem Passwort-Manager oder Safe sicher aufbewahren solltest.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
@@ -1537,9 +1521,6 @@
     "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
     "Change layout": "Anordnung ändern",
-    "Add privileged users": "Berechtigten Benutzer hinzufügen",
-    "Search users in this room…": "Benutzer im Raum suchen …",
-    "Give one or multiple users in this room more privileges": "Einem oder mehreren Benutzern im Raum mehr Berechtigungen geben",
     "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
     "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
@@ -1573,7 +1554,6 @@
     "Encrypting your message…": "Verschlüssele deine Nachricht …",
     "Sending your message…": "Sende deine Nachricht …",
     "Set a new account password…": "Setze neues Kontopasswort …",
-    "Connecting to integration manager…": "Verbinde mit Integrationsassistent …",
     "Starting export process…": "Beginne Exportvorgang …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Gib eine nur dir bekannte Sicherheitsphrase ein, die dem Schutz deiner Daten dient. Um die Sicherheit zu gewährleisten, sollte dies nicht dein Kontopasswort sein.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
@@ -1898,7 +1878,8 @@
             "other": "%(count)s ungelesene Nachrichten.",
             "one": "1 ungelesene Nachricht."
         },
-        "unread_messages": "Ungelesene Nachrichten."
+        "unread_messages": "Ungelesene Nachrichten.",
+        "jump_first_invite": "Zur ersten Einladung springen."
     },
     "labs": {
         "video_rooms": "Videoräume",
@@ -3311,7 +3292,10 @@
             "title": "Rollen und Berechtigungen",
             "permissions_section": "Berechtigungen",
             "permissions_section_description_space": "Wähle, von wem folgende Aktionen ausgeführt werden können",
-            "permissions_section_description_room": "Wähle Rollen, die benötigt werden, um einige Teile des Raumes zu ändern"
+            "permissions_section_description_room": "Wähle Rollen, die benötigt werden, um einige Teile des Raumes zu ändern",
+            "add_privileged_user_heading": "Berechtigten Benutzer hinzufügen",
+            "add_privileged_user_description": "Einem oder mehreren Benutzern im Raum mehr Berechtigungen geben",
+            "add_privileged_user_filter_placeholder": "Benutzer im Raum suchen …"
         },
         "security": {
             "strict_encryption": "Niemals verschlüsselte Nachrichten von dieser Sitzung zu unverifizierten Sitzungen in diesem Raum senden",
@@ -3356,7 +3340,17 @@
             "join_rule_knock": "Beitrittsanfragen",
             "join_rule_knock_description": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
             "join_rule_restricted_upgrade_warning": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
-            "join_rule_restricted_upgrade_description": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung."
+            "join_rule_restricted_upgrade_description": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
+            "join_rule_upgrade_upgrading_room": "Raum wird aktualisiert",
+            "join_rule_upgrade_awaiting_room": "Neuer Raum wird geladen",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Einladung senden …",
+                "other": "Einladungen senden … (%(progress)s von %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Space aktualisieren …",
+                "other": "Spaces aktualisieren … (%(progress)s von %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Diesen Raum im Raumverzeichnis von %(domain)s veröffentlichen?",
@@ -4193,7 +4187,9 @@
         "non_urgent_echo_failure_toast": "Dein Server antwortet auf einige <a>Anfragen</a> nicht.",
         "failed_copy": "Kopieren fehlgeschlagen",
         "something_went_wrong": "Etwas ist schiefgelaufen!",
-        "download_media": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde"
+        "download_media": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
+        "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen",
+        "unknown": "Unbekannter Fehler"
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4242,5 +4238,11 @@
         "title": "Bildbetrachter",
         "rotate_left": "Nach links drehen",
         "rotate_right": "Nach rechts drehen"
+    },
+    "a11y_jump_first_unread_room": "Zum ersten ungelesenen Raum springen.",
+    "integration_manager": {
+        "connecting": "Verbinde mit Integrationsassistent …",
+        "error_connecting_heading": "Verbindung zum Integrationsassistenten fehlgeschlagen",
+        "error_connecting": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen."
     }
 }

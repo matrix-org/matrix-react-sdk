@@ -31,7 +31,6 @@
     "not specified": "qeyd edilmədi",
     "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
     "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
-    "Failed to change power level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı",
     "Are you sure?": "Siz əminsiniz?",
     "Unignore": "Blokdan çıxarmaq",
     "Invited": "Dəvət edilmişdir",
@@ -346,5 +345,8 @@
     },
     "encryption": {
         "not_supported": "<dəstəklənmir>"
+    },
+    "error": {
+        "update_power_level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı"
     }
 }

@@ -131,15 +131,15 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                 const roomId = await upgradeRoom(room, targetVersion, opts.invite, true, true, true, (progress) => {
                     const total = 2 + progress.updateSpacesTotal + progress.inviteUsersTotal;
                     if (!progress.roomUpgraded) {
-                        fn(_t("Upgrading room"), 0, total);
+                        fn(_t("room_settings|security|join_rule_upgrade_upgrading_room"), 0, total);
                     } else if (!progress.roomSynced) {
-                        fn(_t("Loading new room"), 1, total);
+                        fn(_t("room_settings|security|join_rule_upgrade_awaiting_room"), 1, total);
                     } else if (
                         progress.inviteUsersProgress !== undefined &&
                         progress.inviteUsersProgress < progress.inviteUsersTotal
                     ) {
                         fn(
-                            _t("Sending invites... (%(progress)s out of %(count)s)", {
+                            _t("room_settings|security|join_rule_upgrade_sending_invites", {
                                 progress: progress.inviteUsersProgress,
                                 count: progress.inviteUsersTotal,
                             }),
@@ -151,7 +151,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                         progress.updateSpacesProgress < progress.updateSpacesTotal
                     ) {
                         fn(
-                            _t("Updating spaces... (%(progress)s out of %(count)s)", {
+                            _t("room_settings|security|join_rule_upgrade_updating_spaces", {
                                 progress: progress.updateSpacesProgress,
                                 count: progress.updateSpacesTotal,
                             }),

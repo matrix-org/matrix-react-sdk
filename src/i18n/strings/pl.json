@@ -1,6 +1,5 @@
 {
     "This will allow you to reset your password and receive notifications.": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia.",
-    "Unknown error": "Nieznany błąd",
     "Create new room": "Utwórz nowy pokój",
     "Jan": "Sty",
     "Feb": "Lut",
@@ -48,7 +47,6 @@
     "Enter passphrase": "Wpisz frazę",
     "Error decrypting attachment": "Błąd odszyfrowywania załącznika",
     "Failed to ban user": "Nie udało się zbanować użytkownika",
-    "Failed to change power level": "Nie udało się zmienić poziomu mocy",
     "Failed to load timeline position": "Nie udało się wczytać pozycji osi czasu",
     "Failed to mute user": "Nie udało się wyciszyć użytkownika",
     "Failed to reject invite": "Nie udało się odrzucić zaproszenia",
@@ -703,8 +701,6 @@
     "Bridges": "Mostki",
     "Verify User": "Weryfikuj użytkownika",
     "Verification Request": "Żądanie weryfikacji",
-    "Jump to first unread room.": "Przejdź do pierwszego nieprzeczytanego pokoju.",
-    "Jump to first invite.": "Przejdź do pierwszego zaproszenia.",
     "You verified %(name)s": "Zweryfikowałeś %(name)s",
     "Message Actions": "Działania na wiadomościach",
     "This client does not support end-to-end encryption.": "Ten klient nie obsługuje szyfrowania end-to-end.",
@@ -750,8 +746,6 @@
     "Everyone in this room is verified": "Wszyscy w tym pokoju są zweryfikowani",
     "This room is end-to-end encrypted": "Ten pokój jest szyfrowany end-to-end",
     "Scroll to most recent messages": "Przewiń do najnowszych wiadomości",
-    "The integration manager is offline or it cannot reach your homeserver.": "Menedżer integracji jest offline, lub nie może połączyć się z Twoim homeserverem.",
-    "Cannot connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
     "Server Options": "Opcje serwera",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ostrzeżenie</b>: kopia zapasowa klucza powinna być konfigurowana tylko z zaufanego komputera.",
@@ -825,16 +819,6 @@
     "Stop recording": "Skończ nagrywanie",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
     "No microphone found": "Nie znaleziono mikrofonu",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Aktualizowanie przestrzeni...",
-        "other": "Aktualizowanie przestrzeni... (%(progress)s z %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Wysyłanie zaproszenia...",
-        "other": "Wysyłanie zaproszeń... (%(progress)s z %(count)s)"
-    },
-    "Loading new room": "Wczytywanie nowego pokoju",
-    "Upgrading room": "Aktualizowanie pokoju",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
@@ -905,7 +889,6 @@
     "Video settings": "Ustawienia wideo",
     "Set a new account password…": "Ustaw nowe hasło użytkownika…",
     "Error changing password": "Wystąpił błąd podczas zmiany hasła",
-    "Search users in this room…": "Szukaj użytkowników w tym pokoju…",
     "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
@@ -913,9 +896,6 @@
     "Unknown password change error (%(stringifiedError)s)": "Wystąpił nieznany błąd podczas zmiany hasła (%(stringifiedError)s)",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Powinieneś <b>usunąć swoje prywatne dane</b> z serwera tożsamości <idserver /> przed rozłączeniem. Niestety, serwer tożsamości <idserver /> jest aktualnie offline lub nie można się z nim połączyć.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
-    "Connecting to integration manager…": "Łączenie z menedżerem integracji…",
-    "Give one or multiple users in this room more privileges": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
-    "Add privileged users": "Dodaj użytkowników uprzywilejowanych",
     "Home options": "Opcje głównej",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Twój administrator serwera wyłączył szyfrowanie end-to-end domyślnie w pokojach prywatnych i wiadomościach bezpośrednich.",
     "You have no ignored users.": "Nie posiadasz ignorowanych użytkowników.",
@@ -1882,7 +1862,8 @@
             "other": "%(count)s nieprzeczytanych wiadomości.",
             "one": "1 nieprzeczytana wiadomość."
         },
-        "unread_messages": "Nieprzeczytane wiadomości."
+        "unread_messages": "Nieprzeczytane wiadomości.",
+        "jump_first_invite": "Przejdź do pierwszego zaproszenia."
     },
     "labs": {
         "video_rooms": "Pokoje wideo",
@@ -3293,7 +3274,10 @@
             "title": "Role i uprawnienia",
             "permissions_section": "Uprawnienia",
             "permissions_section_description_space": "Wybierz wymagane role wymagane do zmiany różnych części przestrzeni",
-            "permissions_section_description_room": "Wybierz role wymagane do zmieniania różnych części pokoju"
+            "permissions_section_description_room": "Wybierz role wymagane do zmieniania różnych części pokoju",
+            "add_privileged_user_heading": "Dodaj użytkowników uprzywilejowanych",
+            "add_privileged_user_description": "Dodaj jednemu lub więcej użytkownikom więcej uprawnień",
+            "add_privileged_user_filter_placeholder": "Szukaj użytkowników w tym pokoju…"
         },
         "security": {
             "strict_encryption": "Nigdy nie wysyłaj zaszyfrowanych wiadomości do niezweryfikowanych sesji z tej sesji w tym pokoju",
@@ -3338,7 +3322,17 @@
             "join_rule_knock": "Poproś o dołączenie",
             "join_rule_knock_description": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
             "join_rule_restricted_upgrade_warning": "Ten pokój znajduje się w przestrzeniach, w których nie masz uprawnień administratora. W tych przestrzeniach stary pokój wciąż będzie wyświetlany, lecz ludzie otrzymają propozycję dołączenia do nowego.",
-            "join_rule_restricted_upgrade_description": "To ulepszenie pozwoli członkom wybranych przestrzeni uzyskać dostęp do tego pokoju bez zaproszenia."
+            "join_rule_restricted_upgrade_description": "To ulepszenie pozwoli członkom wybranych przestrzeni uzyskać dostęp do tego pokoju bez zaproszenia.",
+            "join_rule_upgrade_upgrading_room": "Aktualizowanie pokoju",
+            "join_rule_upgrade_awaiting_room": "Wczytywanie nowego pokoju",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Wysyłanie zaproszenia...",
+                "other": "Wysyłanie zaproszeń... (%(progress)s z %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Aktualizowanie przestrzeni...",
+                "other": "Aktualizowanie przestrzeni... (%(progress)s z %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Czy opublikować ten pokój dla ogółu w spisie pokojów domeny %(domain)s?",
@@ -4170,7 +4164,9 @@
         "non_urgent_echo_failure_toast": "Twój serwer nie odpowiada na niektóre <a>zapytania</a>.",
         "failed_copy": "Kopiowanie nieudane",
         "something_went_wrong": "Coś poszło nie tak!",
-        "download_media": "Nie udało się pobrać media źródłowego, nie znaleziono źródłowego adresu URL"
+        "download_media": "Nie udało się pobrać media źródłowego, nie znaleziono źródłowego adresu URL",
+        "update_power_level": "Nie udało się zmienić poziomu mocy",
+        "unknown": "Nieznany błąd"
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4219,5 +4215,11 @@
         "title": "Widok obrazu",
         "rotate_left": "Obróć w lewo",
         "rotate_right": "Obróć w prawo"
+    },
+    "a11y_jump_first_unread_room": "Przejdź do pierwszego nieprzeczytanego pokoju.",
+    "integration_manager": {
+        "connecting": "Łączenie z menedżerem integracji…",
+        "error_connecting_heading": "Nie udało się połączyć z menedżerem integracji",
+        "error_connecting": "Menedżer integracji jest offline, lub nie może połączyć się z Twoim homeserverem."
     }
 }

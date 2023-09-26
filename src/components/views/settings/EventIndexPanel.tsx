@@ -231,7 +231,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                                 <code>
                                     {EventIndexPeg.error instanceof Error
                                         ? EventIndexPeg.error.message
-                                        : _t("Unknown error")}
+                                        : _t("error|unknown")}
                                 </code>
                                 <p>
                                     <AccessibleButton key="delete" kind="danger" onClick={this.confirmEventStoreReset}>

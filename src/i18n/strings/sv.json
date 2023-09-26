@@ -21,7 +21,6 @@
     "Error decrypting attachment": "Fel vid avkryptering av bilagan",
     "Failed to ban user": "Misslyckades att banna användaren",
     "Failed to change password. Is your password correct?": "Misslyckades att byta lösenord. Är lösenordet rätt?",
-    "Failed to change power level": "Misslyckades att ändra behörighetsnivå",
     "Failed to forget room %(errCode)s": "Misslyckades att glömma bort rummet %(errCode)s",
     "Failed to load timeline position": "Misslyckades att hämta positionen på tidslinjen",
     "Failed to mute user": "Misslyckades att tysta användaren",
@@ -149,7 +148,6 @@
     "Replying": "Svarar",
     "Banned by %(displayName)s": "Bannad av %(displayName)s",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
-    "Unknown error": "Okänt fel",
     "Clear Storage and Sign Out": "Rensa lagring och logga ut",
     "Send Logs": "Skicka loggar",
     "Unable to restore session": "Kunde inte återställa sessionen",
@@ -376,8 +374,6 @@
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Couldn't load page": "Kunde inte ladda sidan",
-    "Cannot connect to integration manager": "Kan inte ansluta till integrationshanteraren",
-    "The integration manager is offline or it cannot reach your homeserver.": "Integrationshanteraren är offline eller kan inte nå din hemserver.",
     "Manage integrations": "Hantera integrationer",
     "Close preview": "Stäng förhandsgranskning",
     "Room %(name)s": "Rum %(name)s",
@@ -495,8 +491,6 @@
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Använd en identitetsserver i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Dela denna e-postadress i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Reject & Ignore user": "Avvisa och ignorera användare",
-    "Jump to first unread room.": "Hoppa till första olästa rum.",
-    "Jump to first invite.": "Hoppa till första inbjudan.",
     "Room options": "Rumsinställningar",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
@@ -1200,16 +1194,6 @@
         "one": "%(count)s svar",
         "other": "%(count)s svar"
     },
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Uppdaterar utrymme…",
-        "other": "Uppdaterar utrymmen… (%(progress)s av %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Skickar inbjudan…",
-        "other": "Skickar inbjudningar… (%(progress)s av %(count)s)"
-    },
-    "Loading new room": "Laddar nytt rum",
-    "Upgrading room": "Uppgraderar rum",
     "View in room": "Visa i rum",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
     "MB": "MB",
@@ -1485,9 +1469,6 @@
     "Video settings": "Videoinställningar",
     "Automatically adjust the microphone volume": "Justera automatiskt mikrofonvolymen",
     "Voice settings": "Röstinställningar",
-    "Search users in this room…": "Sök efter användare i det här rummet…",
-    "Give one or multiple users in this room more privileges": "Ge en eller flera användare i det här rummet fler privilegier",
-    "Add privileged users": "Lägg till privilegierade användare",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
     "Manually verify by text": "Verifiera manuellt med text",
@@ -1577,7 +1558,6 @@
     "Encrypting your message…": "Krypterar ditt meddelande …",
     "Sending your message…": "Skickar ditt meddelande …",
     "Set a new account password…": "Sätt ett nytt kontolösenord …",
-    "Connecting to integration manager…": "Kontaktar integrationshanteraren …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "View poll": "Visa omröstning",
@@ -1850,7 +1830,8 @@
             "other": "%(count)s olästa meddelanden.",
             "one": "1 oläst meddelande."
         },
-        "unread_messages": "Olästa meddelanden."
+        "unread_messages": "Olästa meddelanden.",
+        "jump_first_invite": "Hoppa till första inbjudan."
     },
     "labs": {
         "video_rooms": "Videorum",
@@ -3248,7 +3229,10 @@
             "title": "Roller & behörigheter",
             "permissions_section": "Behörigheter",
             "permissions_section_description_space": "Välj de roller som krävs för att ändra olika delar av utrymmet",
-            "permissions_section_description_room": "Välj de roller som krävs för att ändra olika delar av rummet"
+            "permissions_section_description_room": "Välj de roller som krävs för att ändra olika delar av rummet",
+            "add_privileged_user_heading": "Lägg till privilegierade användare",
+            "add_privileged_user_description": "Ge en eller flera användare i det här rummet fler privilegier",
+            "add_privileged_user_filter_placeholder": "Sök efter användare i det här rummet…"
         },
         "security": {
             "strict_encryption": "Skicka aldrig krypterade meddelanden till overifierade sessioner i det här rummet från den här sessionen",
@@ -3293,7 +3277,17 @@
             "join_rule_knock": "Be om att gå med",
             "join_rule_knock_description": "Personer kan inte gå med om inte åtkomst ges.",
             "join_rule_restricted_upgrade_warning": "Det här rummet är med i några utrymmen du inte är admin för. I de utrymmena så kommer det gamla rummet fortfarande visas, men folk kommer uppmanas att gå med i det nya.",
-            "join_rule_restricted_upgrade_description": "Den här uppgraderingen kommer att låta medlemmar i valda utrymmen komma åt det här rummet utan en inbjudan."
+            "join_rule_restricted_upgrade_description": "Den här uppgraderingen kommer att låta medlemmar i valda utrymmen komma åt det här rummet utan en inbjudan.",
+            "join_rule_upgrade_upgrading_room": "Uppgraderar rum",
+            "join_rule_upgrade_awaiting_room": "Laddar nytt rum",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Skickar inbjudan…",
+                "other": "Skickar inbjudningar… (%(progress)s av %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Uppdaterar utrymme…",
+                "other": "Uppdaterar utrymmen… (%(progress)s av %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Publicera rummet i den offentliga rumskatalogen på %(domain)s?",
@@ -4128,7 +4122,9 @@
         "non_urgent_echo_failure_toast": "Din server svarar inte på vissa <a>förfrågningar</a>.",
         "failed_copy": "Misslyckades att kopiera",
         "something_went_wrong": "Något gick fel!",
-        "download_media": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades"
+        "download_media": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
+        "update_power_level": "Misslyckades att ändra behörighetsnivå",
+        "unknown": "Okänt fel"
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4177,5 +4173,11 @@
         "title": "Bildvy",
         "rotate_left": "Rotera vänster",
         "rotate_right": "Rotera höger"
+    },
+    "a11y_jump_first_unread_room": "Hoppa till första olästa rum.",
+    "integration_manager": {
+        "connecting": "Kontaktar integrationshanteraren …",
+        "error_connecting_heading": "Kan inte ansluta till integrationshanteraren",
+        "error_connecting": "Integrationshanteraren är offline eller kan inte nå din hemserver."
     }
 }

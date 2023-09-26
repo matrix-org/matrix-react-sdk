@@ -82,7 +82,6 @@
     "Import room keys": "Tuo huoneen avaimet",
     "File to import": "Tuotava tiedosto",
     "Confirm Removal": "Varmista poistaminen",
-    "Unknown error": "Tuntematon virhe",
     "Unable to restore session": "Istunnon palautus epäonnistui",
     "Decrypt %(text)s": "Pura %(text)s",
     "%(roomName)s does not exist.": "Huonetta %(roomName)s ei ole olemassa.",
@@ -90,7 +89,6 @@
     "Unable to add email address": "Sähköpostiosoitteen lisääminen epäonnistui",
     "Unable to remove contact information": "Yhteystietojen poistaminen epäonnistui",
     "Unable to verify email address.": "Sähköpostin vahvistaminen epäonnistui.",
-    "Failed to change power level": "Oikeustason muuttaminen epäonnistui",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
     "Server may be unavailable, overloaded, or search timed out :(": "Palvelin saattaa olla saavuttamattomissa, ylikuormitettu tai haku kesti liian kauan :(",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
@@ -460,16 +458,12 @@
     "wait and try again later": "odottaa ja yrittää uudelleen myöhemmin",
     "Room %(name)s": "Huone %(name)s",
     "Cancel search": "Peruuta haku",
-    "Jump to first unread room.": "Siirry ensimmäiseen lukemattomaan huoneeseen.",
-    "Jump to first invite.": "Siirry ensimmäiseen kutsuun.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Tekstiviesti on lähetetty numeroon +%(msisdn)s. Syötä siinä oleva varmistuskoodi.",
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
     "Your email address hasn't been verified yet": "Sähköpostiosoitettasi ei ole vielä varmistettu",
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
     "Message Actions": "Viestitoiminnot",
     "None": "Ei mitään",
-    "Cannot connect to integration manager": "Integraatioiden lähteeseen yhdistäminen epäonnistui",
-    "The integration manager is offline or it cannot reach your homeserver.": "Integraatioiden lähde on poissa verkosta, tai siihen ei voida yhdistää kotipalvelimeltasi.",
     "Manage integrations": "Integraatioiden hallinta",
     "Discovery": "Käyttäjien etsintä",
     "Click the link in the email you received to verify and then click continue again.": "Napsauta lähettämässämme sähköpostissa olevaa linkkiä vahvistaaksesi tunnuksesi. Napsauta sen jälkeen tällä sivulla olevaa painiketta ”Jatka”.",
@@ -1110,16 +1104,6 @@
         "other": "%(count)s vastausta"
     },
     "Failed to update the join rules": "Liittymissääntöjen päivittäminen epäonnistui",
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Lähetetään kutsua...",
-        "other": "Lähetetään kutsuja... (%(progress)s / %(count)s)"
-    },
-    "Loading new room": "Ladataan uutta huonetta",
-    "Upgrading room": "Päivitetään huonetta",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Päivitetään avaruutta...",
-        "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
-    },
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "Files": "Tiedostot",
@@ -1425,7 +1409,6 @@
     "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
     "Change layout": "Vaihda asettelua",
     "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
-    "Search users in this room…": "Etsi käyttäjiä tästä huoneesta…",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
@@ -1713,7 +1696,8 @@
             "other": "%(count)s lukematonta viestiä.",
             "one": "Yksi lukematon viesti."
         },
-        "unread_messages": "Lukemattomat viestit."
+        "unread_messages": "Lukemattomat viestit.",
+        "jump_first_invite": "Siirry ensimmäiseen kutsuun."
     },
     "labs": {
         "video_rooms": "Videohuoneet",
@@ -2986,7 +2970,8 @@
             "title": "Roolit ja oikeudet",
             "permissions_section": "Oikeudet",
             "permissions_section_description_space": "Valitse roolit, jotka vaaditaan avaruuden eri osioiden muuttamiseen",
-            "permissions_section_description_room": "Valitse roolit, jotka vaaditaan huoneen eri osioiden muuttamiseen"
+            "permissions_section_description_room": "Valitse roolit, jotka vaaditaan huoneen eri osioiden muuttamiseen",
+            "add_privileged_user_filter_placeholder": "Etsi käyttäjiä tästä huoneesta…"
         },
         "security": {
             "strict_encryption": "Älä lähetä salattuja viestejä vahvistamattomiin istuntoihin tässä huoneessa tässä istunnossa",
@@ -3028,7 +3013,17 @@
             "join_rule_restricted_description_prompt": "Kuka tahansa avaruudessa voi löytää ja liittyä. Voit valita monta avaruutta.",
             "join_rule_restricted": "Avaruuden jäsenet",
             "join_rule_restricted_upgrade_warning": "Tämä huone on joissain avaruuksissa, joissa et ole ylläpitäjänä. Ne avaruudet tulevat edelleen näyttämään vanhan huoneen, mutta ihmisiä kehotetaan liittymään uuteen.",
-            "join_rule_restricted_upgrade_description": "Tämä päivitys antaa valittujen avaruuksien jäsenten liittyä tähän huoneeseen ilman kutsua."
+            "join_rule_restricted_upgrade_description": "Tämä päivitys antaa valittujen avaruuksien jäsenten liittyä tähän huoneeseen ilman kutsua.",
+            "join_rule_upgrade_upgrading_room": "Päivitetään huonetta",
+            "join_rule_upgrade_awaiting_room": "Ladataan uutta huonetta",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Lähetetään kutsua...",
+                "other": "Lähetetään kutsuja... (%(progress)s / %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Päivitetään avaruutta...",
+                "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Julkaise tämä huone verkkotunnuksen %(domain)s huoneluettelossa?",
@@ -3786,7 +3781,9 @@
         "admin_contact_short": "Ota yhteyttä <a>palvelimesi ylläpitäjään</a>.",
         "non_urgent_echo_failure_toast": "Palvelimesi ei vastaa joihinkin <a>pyyntöihin</a>.",
         "failed_copy": "Kopiointi epäonnistui",
-        "something_went_wrong": "Jokin meni vikaan!"
+        "something_went_wrong": "Jokin meni vikaan!",
+        "update_power_level": "Oikeustason muuttaminen epäonnistui",
+        "unknown": "Tuntematon virhe"
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3833,5 +3830,10 @@
     "lightbox": {
         "rotate_left": "Kierrä vasempaan",
         "rotate_right": "Kierrä oikeaan"
+    },
+    "a11y_jump_first_unread_room": "Siirry ensimmäiseen lukemattomaan huoneeseen.",
+    "integration_manager": {
+        "error_connecting_heading": "Integraatioiden lähteeseen yhdistäminen epäonnistui",
+        "error_connecting": "Integraatioiden lähde on poissa verkosta, tai siihen ei voida yhdistää kotipalvelimeltasi."
     }
 }

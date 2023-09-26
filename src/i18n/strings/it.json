@@ -44,7 +44,6 @@
     "Failed to set display name": "Impostazione nome visibile fallita",
     "Failed to ban user": "Ban utente fallito",
     "Failed to mute user": "Impossibile silenziare l'utente",
-    "Failed to change power level": "Cambio di livello poteri fallito",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Non potrai annullare questa modifica dato che ti stai declassando, se sei l'ultimo utente privilegiato nella stanza sarà impossibile ottenere di nuovo i privilegi.",
     "Are you sure?": "Sei sicuro?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Non potrai annullare questa modifica dato che stai promuovendo l'utente al tuo stesso grado.",
@@ -97,7 +96,6 @@
         "other": "E altri %(count)s ..."
     },
     "Confirm Removal": "Conferma la rimozione",
-    "Unknown error": "Errore sconosciuto",
     "Deactivate Account": "Disattiva l'account",
     "An error has occurred.": "Si è verificato un errore.",
     "Unable to restore session": "Impossibile ripristinare la sessione",
@@ -475,8 +473,6 @@
     "This client does not support end-to-end encryption.": "Questo client non supporta la crittografia end-to-end.",
     "Messages in this room are not end-to-end encrypted.": "I messaggi in questa stanza non sono cifrati end-to-end.",
     "Cancel search": "Annulla ricerca",
-    "Jump to first unread room.": "Salta alla prima stanza non letta.",
-    "Jump to first invite.": "Salta al primo invito.",
     "Room %(name)s": "Stanza %(name)s",
     "None": "Nessuno",
     "Message Actions": "Azioni messaggio",
@@ -491,8 +487,6 @@
     "%(name)s wants to verify": "%(name)s vuole verificare",
     "You sent a verification request": "Hai inviato una richiesta di verifica",
     "Messages in this room are end-to-end encrypted.": "I messaggi in questa stanza sono cifrati end-to-end.",
-    "Cannot connect to integration manager": "Impossibile connettere al gestore di integrazioni",
-    "The integration manager is offline or it cannot reach your homeserver.": "Il gestore di integrazioni è offline o non riesce a raggiungere il tuo homeserver.",
     "Failed to connect to integration manager": "Connessione al gestore di integrazioni fallita",
     "Integrations are disabled": "Le integrazioni sono disattivate",
     "Integrations not allowed": "Integrazioni non permesse",
@@ -1195,16 +1189,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "In risposta a <a>questo messaggio</a>",
     "Export chat": "Esporta conversazione",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Aggiornamento spazio...",
-        "other": "Aggiornamento spazi... (%(progress)s di %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Spedizione invito...",
-        "other": "Spedizione inviti... (%(progress)s di %(count)s)"
-    },
-    "Loading new room": "Caricamento nuova stanza",
-    "Upgrading room": "Aggiornamento stanza",
     "Ban them from everything I'm able to": "Bandiscilo ovunque io possa farlo",
     "Unban them from everything I'm able to": "Riammettilo ovunque io possa farlo",
     "Ban from %(roomName)s": "Bandisci da %(roomName)s",
@@ -1537,9 +1521,6 @@
     "We were unable to start a chat with the other user.": "Non siamo riusciti ad avviare la conversazione con l'altro utente.",
     "Error starting verification": "Errore di avvio della verifica",
     "Change layout": "Cambia disposizione",
-    "Search users in this room…": "Cerca utenti in questa stanza…",
-    "Give one or multiple users in this room more privileges": "Dai più privilegi a uno o più utenti in questa stanza",
-    "Add privileged users": "Aggiungi utenti privilegiati",
     "Unable to decrypt message": "Impossibile decifrare il messaggio",
     "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
     "Text": "Testo",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "Crittazione del tuo messaggio…",
     "Sending your message…": "Invio del tuo messaggio…",
     "Set a new account password…": "Imposta una nuova password dell'account…",
-    "Connecting to integration manager…": "Connessione al gestore di integrazioni…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Secure Backup successful": "Backup Sicuro completato",
     "Your keys are now being backed up from this device.": "Viene ora fatto il backup delle tue chiavi da questo dispositivo.",
@@ -1898,7 +1878,8 @@
             "other": "%(count)s messaggi non letti.",
             "one": "1 messaggio non letto."
         },
-        "unread_messages": "Messaggi non letti."
+        "unread_messages": "Messaggi non letti.",
+        "jump_first_invite": "Salta al primo invito."
     },
     "labs": {
         "video_rooms": "Stanze video",
@@ -3311,7 +3292,10 @@
             "title": "Ruoli e permessi",
             "permissions_section": "Autorizzazioni",
             "permissions_section_description_space": "Seleziona i ruoli necessari per cambiare varie parti dello spazio",
-            "permissions_section_description_room": "Seleziona i ruoli necessari per cambiare varie parti della stanza"
+            "permissions_section_description_room": "Seleziona i ruoli necessari per cambiare varie parti della stanza",
+            "add_privileged_user_heading": "Aggiungi utenti privilegiati",
+            "add_privileged_user_description": "Dai più privilegi a uno o più utenti in questa stanza",
+            "add_privileged_user_filter_placeholder": "Cerca utenti in questa stanza…"
         },
         "security": {
             "strict_encryption": "Non inviare mai messaggi cifrati a sessioni non verificate in questa stanza da questa sessione",
@@ -3356,7 +3340,17 @@
             "join_rule_knock": "Chiedi di entrare",
             "join_rule_knock_description": "Nessuno può entrare previo consenso di accesso.",
             "join_rule_restricted_upgrade_warning": "Questa stanza è in alcuni spazi di cui non sei amministratore. In quegli spazi, la vecchia stanza verrà ancora mostrata, ma alla gente verrà chiesto di entrare in quella nuova.",
-            "join_rule_restricted_upgrade_description": "Questo aggiornamento permetterà ai membri di spazi selezionati di accedere alla stanza senza invito."
+            "join_rule_restricted_upgrade_description": "Questo aggiornamento permetterà ai membri di spazi selezionati di accedere alla stanza senza invito.",
+            "join_rule_upgrade_upgrading_room": "Aggiornamento stanza",
+            "join_rule_upgrade_awaiting_room": "Caricamento nuova stanza",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Spedizione invito...",
+                "other": "Spedizione inviti... (%(progress)s di %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Aggiornamento spazio...",
+                "other": "Aggiornamento spazi... (%(progress)s di %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Pubblicare questa stanza nell'elenco pubblico delle stanze in %(domain)s ?",
@@ -4193,7 +4187,9 @@
         "non_urgent_echo_failure_toast": "Il tuo server non sta rispondendo ad alcune <a>richieste</a>.",
         "failed_copy": "Copia fallita",
         "something_went_wrong": "Qualcosa è andato storto!",
-        "download_media": "Scaricamento della fonte fallito, nessun url trovato"
+        "download_media": "Scaricamento della fonte fallito, nessun url trovato",
+        "update_power_level": "Cambio di livello poteri fallito",
+        "unknown": "Errore sconosciuto"
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4242,5 +4238,11 @@
         "title": "Vista immagine",
         "rotate_left": "Ruota a sinistra",
         "rotate_right": "Ruota a destra"
+    },
+    "a11y_jump_first_unread_room": "Salta alla prima stanza non letta.",
+    "integration_manager": {
+        "connecting": "Connessione al gestore di integrazioni…",
+        "error_connecting_heading": "Impossibile connettere al gestore di integrazioni",
+        "error_connecting": "Il gestore di integrazioni è offline o non riesce a raggiungere il tuo homeserver."
     }
 }

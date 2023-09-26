@@ -478,7 +478,6 @@
     "Join Room": "Bergabung dengan Ruangan",
     "Confirm passphrase": "Konfirmasi frasa sandi",
     "Enter passphrase": "Masukkan frasa sandi",
-    "Unknown error": "Kesalahan tidak diketahui",
     "Results": "Hasil",
     "Joined": "Tergabung",
     "Joining": "Bergabung",
@@ -505,21 +504,7 @@
     "Back up your keys before signing out to avoid losing them.": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Memperbarui space...",
-        "other": "Memperbarui space... (%(progress)s dari %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Mengirimkan undangan...",
-        "other": "Mengirimkan undangan... (%(progress)s dari %(count)s)"
-    },
-    "Loading new room": "Memuat ruangan baru",
-    "Upgrading room": "Meningkatkan ruangan",
-    "The integration manager is offline or it cannot reach your homeserver.": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda.",
-    "Cannot connect to integration manager": "Tidak dapat menghubungkan ke manajer integrasi",
     "Failed to set display name": "Gagal untuk menetapkan nama tampilan",
-    "Jump to first invite.": "Pergi ke undangan pertama.",
-    "Jump to first unread room.": "Pergi ke ruangan yang belum dibaca.",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
     "Create a space": "Buat space",
     "IRC display name width": "Lebar nama tampilan IRC",
@@ -783,7 +768,6 @@
     "Deactivate user": "Nonaktifkan pengguna",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Menonaktifkan pengguna ini akan mengeluarkan dan mencegahnya masuk ke akun lagi. Pengguna itu juga akan meninggalkan semua ruangan yang pengguna itu berada. Aksi ini tidak dapat dibatalkan. Apakah Anda yakin Anda ingin menonaktifkan pengguna ini?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Anda tidak akan dapat membatalkan perubahan ini ketika Anda mempromosikan pengguna untuk memiliki tingkat daya yang sama dengan Anda sendiri.",
-    "Failed to change power level": "Gagal untuk mengubah tingkat daya",
     "Failed to mute user": "Gagal untuk membisukan pengguna",
     "Failed to ban user": "Gagal untuk mencekal pengguna",
     "They won't be able to access whatever you're not an admin of.": "Mereka tidak dapat mengakses apa saja yang Anda bukan admin di sana.",
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Terjadi kesalahan memulai verifikasi",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
     "Change layout": "Ubah tata letak",
-    "Search users in this room…": "Cari pengguna di ruangan ini…",
-    "Give one or multiple users in this room more privileges": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
-    "Add privileged users": "Tambahkan pengguna yang diizinkan",
     "Unable to decrypt message": "Tidak dapat mendekripsi pesan",
     "This message could not be decrypted": "Pesan ini tidak dapat didekripsi",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
@@ -1574,7 +1555,6 @@
     "Encrypting your message…": "Mengenkripsi pesan Anda…",
     "Sending your message…": "Mengirim pesan Anda…",
     "Set a new account password…": "Atur kata sandi akun baru…",
-    "Connecting to integration manager…": "Menghubungkan ke pengelola integrasi…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Masukkan frasa keamanan yang hanya Anda tahu, yang digunakan untuk mengamankan data Anda. Supaya aman, jangan menggunakan ulang kata sandi akun Anda.",
     "Secure Backup successful": "Pencadangan Aman berhasil",
@@ -1898,7 +1878,8 @@
             "one": "1 pesan yang belum dibaca.",
             "other": "%(count)s pesan yang belum dibaca."
         },
-        "unread_messages": "Pesan yang belum dibaca."
+        "unread_messages": "Pesan yang belum dibaca.",
+        "jump_first_invite": "Pergi ke undangan pertama."
     },
     "labs": {
         "video_rooms": "Ruangan video",
@@ -3311,7 +3292,10 @@
             "title": "Peran & Izin",
             "permissions_section": "Izin",
             "permissions_section_description_space": "Pilih peran yang dibutuhkan untuk mengubah bagian-bagian space ini",
-            "permissions_section_description_room": "Pilih peran yang dibutuhkan untuk mengubah bagian-bagian ruangan ini"
+            "permissions_section_description_room": "Pilih peran yang dibutuhkan untuk mengubah bagian-bagian ruangan ini",
+            "add_privileged_user_heading": "Tambahkan pengguna yang diizinkan",
+            "add_privileged_user_description": "Berikan satu atau beberapa pengguna dalam ruangan ini lebih banyak izin",
+            "add_privileged_user_filter_placeholder": "Cari pengguna di ruangan ini…"
         },
         "security": {
             "strict_encryption": "Jangan kirim pesan terenkripsi ke sesi yang belum diverifikasi di ruangan ini dari sesi ini",
@@ -3356,7 +3340,17 @@
             "join_rule_knock": "Bertanya untuk bergabung",
             "join_rule_knock_description": "Orang-orang tidak dapat bergabung kecuali diberikan akses.",
             "join_rule_restricted_upgrade_warning": "Ruangan ini masih ada di dalam space yang Anda bukan admin di sana. Di space itu, ruangan yang lama masih terlihat, tetapi orang akan diberi tahu untuk bergabung dengan ruangan yang baru.",
-            "join_rule_restricted_upgrade_description": "Peningkatan ini akan mengizinkan anggota di space yang terpilih untuk dapat mengakses ruangan ini tanpa sebuah undangan."
+            "join_rule_restricted_upgrade_description": "Peningkatan ini akan mengizinkan anggota di space yang terpilih untuk dapat mengakses ruangan ini tanpa sebuah undangan.",
+            "join_rule_upgrade_upgrading_room": "Meningkatkan ruangan",
+            "join_rule_upgrade_awaiting_room": "Memuat ruangan baru",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Mengirimkan undangan...",
+                "other": "Mengirimkan undangan... (%(progress)s dari %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Memperbarui space...",
+                "other": "Memperbarui space... (%(progress)s dari %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Publikasi ruangan ini ke publik di direktori ruangan %(domain)s?",
@@ -4193,7 +4187,9 @@
         "non_urgent_echo_failure_toast": "Server Anda tidak menanggapi beberapa <a>permintaan</a>.",
         "failed_copy": "Gagal untuk menyalin",
         "something_went_wrong": "Ada sesuatu yang salah!",
-        "download_media": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan"
+        "download_media": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
+        "update_power_level": "Gagal untuk mengubah tingkat daya",
+        "unknown": "Kesalahan tidak diketahui"
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4242,5 +4238,11 @@
         "title": "Tampilan gambar",
         "rotate_left": "Putar ke Kiri",
         "rotate_right": "Putar ke Kanan"
+    },
+    "a11y_jump_first_unread_room": "Pergi ke ruangan yang belum dibaca.",
+    "integration_manager": {
+        "connecting": "Menghubungkan ke pengelola integrasi…",
+        "error_connecting_heading": "Tidak dapat menghubungkan ke manajer integrasi",
+        "error_connecting": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda."
     }
 }

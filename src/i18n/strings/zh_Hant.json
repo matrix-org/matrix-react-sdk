@@ -50,7 +50,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "您確定要離開聊天室「%(roomName)s」嗎？",
     "Custom level": "自訂等級",
     "Enter passphrase": "輸入安全密語",
-    "Failed to change power level": "無法變更權限等級",
     "Home": "首頁",
     "Invited": "已邀請",
     "Low priority": "低優先度",
@@ -115,7 +114,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
     "Confirm Removal": "確認刪除",
-    "Unknown error": "未知的錯誤",
     "Unable to restore session": "無法復原工作階段",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
     "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
@@ -474,8 +472,6 @@
     "This client does not support end-to-end encryption.": "此客戶端不支援端對端加密。",
     "Messages in this room are not end-to-end encrypted.": "此聊天室內的訊息未經端到端加密。",
     "Cancel search": "取消搜尋",
-    "Jump to first unread room.": "跳到第一個未讀的聊天室。",
-    "Jump to first invite.": "跳到第一個邀請。",
     "Room %(name)s": "聊天室 %(name)s",
     "Message Actions": "訊息動作",
     "You verified %(name)s": "您驗證了 %(name)s",
@@ -490,8 +486,6 @@
     "None": "無",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "您已忽略這個使用者，所以他們的訊息會隱藏。<a>無論如何都顯示。</a>",
     "Messages in this room are end-to-end encrypted.": "此聊天室內的訊息有端對端加密。",
-    "Cannot connect to integration manager": "無法連線到整合管理員",
-    "The integration manager is offline or it cannot reach your homeserver.": "整合管理員已離線或無法存取您的家伺服器。",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
     "Integrations are disabled": "整合已停用",
     "Integrations not allowed": "不允許整合",
@@ -1204,16 +1198,6 @@
     "Unban from %(roomName)s": "從 %(roomName)s 取消封鎖",
     "They'll still be able to access whatever you're not an admin of.": "他們仍然可以存取您不是管理員的任何地方。",
     "Disinvite from %(roomName)s": "拒絕來自 %(roomName)s 的邀請",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "正在更新空間…",
-        "other": "正在更新空間…（%(count)s 中的第 %(progress)s 個）"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "正在傳送邀請…",
-        "other": "正在傳送邀請…（%(count)s 中的第 %(progress)s 個）"
-    },
-    "Loading new room": "正在載入新的聊天室",
-    "Upgrading room": "正在升級聊天室",
     "Downloading": "正在下載",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
@@ -1537,9 +1521,6 @@
     "We were unable to start a chat with the other user.": "我們無法與其他使用者開始聊天。",
     "Error starting verification": "開始驗證時發生錯誤",
     "Change layout": "變更排列",
-    "Search users in this room…": "搜尋此聊天室中的使用者…",
-    "Give one or multiple users in this room more privileges": "給這個聊天室中的一個使用者或多個使用者更多的特殊權限",
-    "Add privileged users": "新增特權使用者",
     "Unable to decrypt message": "無法解密訊息",
     "This message could not be decrypted": "此訊息無法解密",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "正在加密您的訊息…",
     "Sending your message…": "正在傳送您的訊息…",
     "Set a new account password…": "設定新帳號密碼…",
-    "Connecting to integration manager…": "正在連線至整合管理員…",
     "Starting export process…": "正在開始匯出流程…",
     "Secure Backup successful": "安全備份成功",
     "Your keys are now being backed up from this device.": "您已備份此裝置的金鑰。",
@@ -1893,7 +1873,8 @@
             "other": "%(count)s 則未讀訊息。",
             "one": "1 則未讀的訊息。"
         },
-        "unread_messages": "未讀的訊息。"
+        "unread_messages": "未讀的訊息。",
+        "jump_first_invite": "跳到第一個邀請。"
     },
     "labs": {
         "video_rooms": "視訊聊天室",
@@ -3306,7 +3287,10 @@
             "title": "角色與權限",
             "permissions_section": "權限",
             "permissions_section_description_space": "選取變更聊天空間各個部份所需的角色",
-            "permissions_section_description_room": "選取更改聊天室各部份的所需的角色"
+            "permissions_section_description_room": "選取更改聊天室各部份的所需的角色",
+            "add_privileged_user_heading": "新增特權使用者",
+            "add_privileged_user_description": "給這個聊天室中的一個使用者或多個使用者更多的特殊權限",
+            "add_privileged_user_filter_placeholder": "搜尋此聊天室中的使用者…"
         },
         "security": {
             "strict_encryption": "不要從此工作階段傳送已加密的訊息給此聊天室中未驗證的工作階段",
@@ -3351,7 +3335,17 @@
             "join_rule_knock": "要求加入",
             "join_rule_knock_description": "除非授予存取權限，否則人們無法加入。",
             "join_rule_restricted_upgrade_warning": "這個聊天室位於您不是管理員的某些聊天空間中。在那些聊天空間中，舊的聊天室仍將會顯示，但系統會提示使用者加入新的聊天室。",
-            "join_rule_restricted_upgrade_description": "此升級讓特定聊天空間的成員不需要邀請就可以存取此聊天室。"
+            "join_rule_restricted_upgrade_description": "此升級讓特定聊天空間的成員不需要邀請就可以存取此聊天室。",
+            "join_rule_upgrade_upgrading_room": "正在升級聊天室",
+            "join_rule_upgrade_awaiting_room": "正在載入新的聊天室",
+            "join_rule_upgrade_sending_invites": {
+                "one": "正在傳送邀請…",
+                "other": "正在傳送邀請…（%(count)s 中的第 %(progress)s 個）"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "正在更新空間…",
+                "other": "正在更新空間…（%(count)s 中的第 %(progress)s 個）"
+            }
         },
         "general": {
             "publish_toggle": "將這個聊天室公開到 %(domain)s 的聊天室目錄中？",
@@ -4188,7 +4182,9 @@
         "non_urgent_echo_failure_toast": "您的伺服器未回應某些<a>請求</a>。",
         "failed_copy": "無法複製",
         "something_went_wrong": "出了點問題！",
-        "download_media": "下載來源媒體失敗，找不到來源 URL"
+        "download_media": "下載來源媒體失敗，找不到來源 URL",
+        "update_power_level": "無法變更權限等級",
+        "unknown": "未知的錯誤"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4237,5 +4233,11 @@
         "title": "影像檢視",
         "rotate_left": "向左旋轉",
         "rotate_right": "向右旋轉"
+    },
+    "a11y_jump_first_unread_room": "跳到第一個未讀的聊天室。",
+    "integration_manager": {
+        "connecting": "正在連線至整合管理員…",
+        "error_connecting_heading": "無法連線到整合管理員",
+        "error_connecting": "整合管理員已離線或無法存取您的家伺服器。"
     }
 }

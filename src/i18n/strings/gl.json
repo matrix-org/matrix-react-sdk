@@ -35,7 +35,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Failed to ban user": "Fallo ao bloquear usuaria",
     "Failed to mute user": "Fallo ó silenciar usuaria",
-    "Failed to change power level": "Fallo ao cambiar o nivel de permisos",
     "Are you sure?": "Está segura?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Non poderá desfacer este cambio xa que lle estará promocionando e outorgándolle a outra persoa os mesmos permisos que os seus.",
     "Unignore": "Non ignorar",
@@ -94,7 +93,6 @@
         "other": "E %(count)s máis..."
     },
     "Confirm Removal": "Confirma a retirada",
-    "Unknown error": "Fallo descoñecido",
     "Deactivate Account": "Desactivar conta",
     "An error has occurred.": "Algo fallou.",
     "Unable to restore session": "Non se puido restaurar a sesión",
@@ -296,8 +294,6 @@
     "Headphones": "Auriculares",
     "Folder": "Cartafol",
     "Show more": "Mostrar máis",
-    "Cannot connect to integration manager": "Non se puido conectar co xestor de intregración",
-    "The integration manager is offline or it cannot reach your homeserver.": "O xestor de integración non está en liña ou non é accesible desde o teu servidor.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "As mensaxes cifradas están seguras con cifrado de extremo-a-extremo. Só ti e o correpondente(s) tedes as chaves para ler as mensaxes.",
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
@@ -624,8 +620,6 @@
     "Country Dropdown": "Despregable de países",
     "Email (optional)": "Email (optativo)",
     "Couldn't load page": "Non se puido cargar a páxina",
-    "Jump to first unread room.": "Vaite a primeira sala non lida.",
-    "Jump to first invite.": "Vai ó primeiro convite.",
     "Switch theme": "Cambiar decorado",
     "Could not load user profile": "Non se cargou o perfil da usuaria",
     "Invalid homeserver discovery response": "Resposta de descubrimento do servidor non válida",
@@ -1209,16 +1203,6 @@
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
     },
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Actualizando espazo...",
-        "other": "Actualizando espazos... (%(progress)s de %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Enviando convite...",
-        "other": "Enviando convites... (%(progress)s de %(count)s)"
-    },
-    "Loading new room": "Cargando nova sala",
-    "Upgrading room": "Actualizando sala",
     "View in room": "Ver na sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
     "Insert link": "Escribir ligazón",
@@ -1700,7 +1684,8 @@
             "other": "%(count)s mensaxe non lidas.",
             "one": "1 mensaxe non lida."
         },
-        "unread_messages": "Mensaxes non lidas."
+        "unread_messages": "Mensaxes non lidas.",
+        "jump_first_invite": "Vai ó primeiro convite."
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -2956,7 +2941,17 @@
             "join_rule_restricted_description_prompt": "Calquera nun espazo pode atopar e unirse. Podes elexir múltiples espazos.",
             "join_rule_restricted": "Membros do espazo",
             "join_rule_restricted_upgrade_warning": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
-            "join_rule_restricted_upgrade_description": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite."
+            "join_rule_restricted_upgrade_description": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite.",
+            "join_rule_upgrade_upgrading_room": "Actualizando sala",
+            "join_rule_upgrade_awaiting_room": "Cargando nova sala",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Enviando convite...",
+                "other": "Enviando convites... (%(progress)s de %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Actualizando espazo...",
+                "other": "Actualizando espazos... (%(progress)s de %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Publicar esta sala no directorio público de salas de %(domain)s?",
@@ -3705,7 +3700,9 @@
         "admin_contact_short": "Contacta coa <a>administración</a>.",
         "non_urgent_echo_failure_toast": "O teu servidor non responde a algunhas <a>solicitudes</a>.",
         "failed_copy": "Fallo ao copiar",
-        "something_went_wrong": "Algo fallou!"
+        "something_went_wrong": "Algo fallou!",
+        "update_power_level": "Fallo ao cambiar o nivel de permisos",
+        "unknown": "Fallo descoñecido"
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3751,5 +3748,10 @@
     "lightbox": {
         "rotate_left": "Rotar á esquerda",
         "rotate_right": "Rotar á dereita"
+    },
+    "a11y_jump_first_unread_room": "Vaite a primeira sala non lida.",
+    "integration_manager": {
+        "error_connecting_heading": "Non se puido conectar co xestor de intregración",
+        "error_connecting": "O xestor de integración non está en liña ou non é accesible desde o teu servidor."
     }
 }

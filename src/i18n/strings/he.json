@@ -310,8 +310,6 @@
     "Reason": "סיבה",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
-    "The integration manager is offline or it cannot reach your homeserver.": "מנהל האינטגרציה לא מקוון או שהוא לא יכול להגיע לשרת הבית שלך.",
-    "Cannot connect to integration manager": "לא ניתן להתחבר אל מנהל האינטגרציה",
     "Failed to set display name": "עדכון שם תצוגה נכשל",
     "Authentication": "אימות",
     "Set up": "הגדר",
@@ -497,7 +495,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "השבתת משתמש זה תנתק אותו וימנע ממנו להתחבר חזרה. בנוסף, הם יעזבו את כל החדרים בהם הם נמצאים. לא ניתן לבטל פעולה זו. האם אתה בטוח שברצונך להשבית משתמש זה?",
     "Are you sure?": "האם אתם בטוחים?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "לא תוכל לבטל את השינוי הזה מכיוון שאתה מקדם את המשתמש לאותה רמת ניהול כמוך.",
-    "Failed to change power level": "שינוי דרגת מנהל נכשל",
     "Failed to mute user": "כשלון בהשתקת משתמש",
     "Failed to ban user": "כשלון בחסימת משתמש",
     "Remove recent messages": "הסר הודעות אחרונות",
@@ -718,8 +715,6 @@
     "Change identity server": "שנה כתובת של שרת הזיהוי",
     "Checking server": "בודק שרת",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
-    "Jump to first invite.": "קפצו להזמנה ראשונה.",
-    "Jump to first unread room.": "קפצו לחדר הראשון שלא נקרא.",
     "%(roomName)s is not accessible at this time.": "לא ניתן להכנס אל %(roomName)s בזמן הזה.",
     "%(roomName)s does not exist.": "%(roomName)s לא קיים.",
     "%(roomName)s can't be previewed. Do you want to join it?": "לא ניתן לצפות ב־%(roomName)s. האם תרצו להצטרף?",
@@ -920,7 +915,6 @@
     "Enter passphrase": "הזן ביטוי סיסמה",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "תהליך זה מאפשר לך לייצא את המפתחות להודעות שקיבלת בחדרים מוצפנים לקובץ מקומי. לאחר מכן תוכל לייבא את הקובץ ללקוח מטריקס אחר בעתיד, כך שלקוח יוכל גם לפענח הודעות אלה.",
     "Export room keys": "ייצא מפתחות לחדר",
-    "Unknown error": "שגיאה לא ידועה",
     "Passphrase must not be empty": "ביטוי הסיסמה לא יכול להיות ריק",
     "Passphrases must match": "ביטויי סיסמה חייבים להתאים",
     "Unable to set up secret storage": "לא ניתן להגדיר אחסון סודי",
@@ -1024,10 +1018,6 @@
     "Copy link to thread": "העתק קישור לשרשור",
     "Unknown failure": "כשל לא ידוע",
     "You have no ignored users.": "אין לך משתמשים שהתעלמו מהם.",
-    "Loading new room": "טוען חדר חדש",
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "שולח הזמנה..."
-    },
     "Create a space": "צור מרחב עבודה",
     "Address": "כתובת",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
@@ -1118,10 +1108,6 @@
     "Public space": "מרחב עבודה ציבורי",
     "Invite to this space": "הזמינו למרחב עבודה זה",
     "Space information": "מידע על מרחב העבודה",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "מעדכן מרחב עבודה...",
-        "other": "מעדכן את מרחבי העבודה...%(progress)s מתוך %(count)s"
-    },
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -1146,9 +1132,6 @@
     "Close sidebar": "סגור סרגל צד",
     "Deactivating your account is a permanent action — be careful!": "סגירת החשבון הינה פעולה שלא ניתנת לביטול - שים לב!",
     "Room info": "מידע על החדר",
-    "Search users in this room…": "חיפוש משתמשים בחדר זה…",
-    "Give one or multiple users in this room more privileges": "הענק למשתמש או מספר משתמשים בחדר זה הרשאות נוספות",
-    "Add privileged users": "הוספת משתמשים מורשים",
     "To publish an address, it needs to be set as a local address first.": "כדי לפרסם כתובת, יש להגדיר אותה ככתובת מקומית תחילה.",
     "Pinned messages": "הודעות נעוצות",
     "Pinned": "הודעות נעוצות",
@@ -1351,7 +1334,8 @@
             "one": "1 הודעה שלא נקראה.",
             "other": "%(count)s הודעות שלא נקראו."
         },
-        "unread_messages": "הודעות שלא נקראו."
+        "unread_messages": "הודעות שלא נקראו.",
+        "jump_first_invite": "קפצו להזמנה ראשונה."
     },
     "labs": {
         "latex_maths": "בצע מתמטיקה של LaTeX בהודעות",
@@ -2303,7 +2287,10 @@
             "title": "תפקידים והרשאות",
             "permissions_section": "הרשאות",
             "permissions_section_description_space": "ביחרו את ההרשאות הנדרשות כדי לשנות חלקים שונים של מרחב העבודה",
-            "permissions_section_description_room": "בחר את התפקידים הנדרשים לשינוי חלקים שונים של החדר"
+            "permissions_section_description_room": "בחר את התפקידים הנדרשים לשינוי חלקים שונים של החדר",
+            "add_privileged_user_heading": "הוספת משתמשים מורשים",
+            "add_privileged_user_description": "הענק למשתמש או מספר משתמשים בחדר זה הרשאות נוספות",
+            "add_privileged_user_filter_placeholder": "חיפוש משתמשים בחדר זה…"
         },
         "security": {
             "strict_encryption": "לעולם אל תשלח הודעות מוצפנות אל התחברות שאינה מאומתת בחדר זה, מהתחברות זו",
@@ -2335,7 +2322,15 @@
             "join_rule_restricted_description_prompt": "כל אחד במרחב עבודה יכול למצוא ולהצטרף. אתם יכולים לבחור מספר מרחבי עבודה.",
             "join_rule_restricted": "משתתפי מרחב העבודה",
             "join_rule_restricted_upgrade_warning": "החדר הזה נמצא בחלק ממרחבי העבודה שאתם לא מוגדרים כמנהלים בהם. במרחבים האלה, החדר הישן עדיין יוצג, אבל אנשים יתבקשו להצטרף לחדר החדש.",
-            "join_rule_restricted_upgrade_description": "שדרוג זה יאפשר לחברים במרחבים נבחרים גישה לחדר זה ללא הזמנה."
+            "join_rule_restricted_upgrade_description": "שדרוג זה יאפשר לחברים במרחבים נבחרים גישה לחדר זה ללא הזמנה.",
+            "join_rule_upgrade_awaiting_room": "טוען חדר חדש",
+            "join_rule_upgrade_sending_invites": {
+                "one": "שולח הזמנה..."
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "מעדכן מרחב עבודה...",
+                "other": "מעדכן את מרחבי העבודה...%(progress)s מתוך %(count)s"
+            }
         },
         "general": {
             "publish_toggle": "לפרסם את החדר הזה לציבור במדריך החדרים של%(domain)s?",
@@ -2971,7 +2966,9 @@
         "admin_contact_short": "צרו קשר עם <a>מנהל השרת</a>.",
         "non_urgent_echo_failure_toast": "השרת שלכם אינו מגיב לבקשות מסויימות <a>בקשות</a>.",
         "failed_copy": "שגיאה בהעתקה",
-        "something_went_wrong": "משהו השתבש!"
+        "something_went_wrong": "משהו השתבש!",
+        "update_power_level": "שינוי דרגת מנהל נכשל",
+        "unknown": "שגיאה לא ידועה"
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3018,5 +3015,10 @@
     "lightbox": {
         "rotate_left": "סובב שמאלה",
         "rotate_right": "סובב ימינה"
+    },
+    "a11y_jump_first_unread_room": "קפצו לחדר הראשון שלא נקרא.",
+    "integration_manager": {
+        "error_connecting_heading": "לא ניתן להתחבר אל מנהל האינטגרציה",
+        "error_connecting": "מנהל האינטגרציה לא מקוון או שהוא לא יכול להגיע לשרת הבית שלך."
     }
 }

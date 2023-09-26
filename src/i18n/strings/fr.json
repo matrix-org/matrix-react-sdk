@@ -2,7 +2,6 @@
     "Download %(text)s": "Télécharger %(text)s",
     "Failed to ban user": "Échec du bannissement de l’utilisateur",
     "Failed to change password. Is your password correct?": "Échec du changement de mot de passe. Votre mot de passe est-il correct ?",
-    "Failed to change power level": "Échec du changement de rang",
     "Failed to forget room %(errCode)s": "Échec de l’oubli du salon %(errCode)s",
     "%(items)s and %(lastItem)s": "%(items)s et %(lastItem)s",
     "and %(count)s others...": {
@@ -95,7 +94,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
     "Confirm Removal": "Confirmer la suppression",
-    "Unknown error": "Erreur inconnue",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
     "Error decrypting image": "Erreur lors du déchiffrement de l’image",
@@ -475,8 +473,6 @@
     "Failed to deactivate user": "Échec de la désactivation de l’utilisateur",
     "This client does not support end-to-end encryption.": "Ce client ne prend pas en charge le chiffrement de bout en bout.",
     "Messages in this room are not end-to-end encrypted.": "Les messages dans ce salon ne sont pas chiffrés de bout en bout.",
-    "Jump to first unread room.": "Sauter au premier salon non lu.",
-    "Jump to first invite.": "Sauter à la première invitation.",
     "Room %(name)s": "Salon %(name)s",
     "Message Actions": "Actions de message",
     "You verified %(name)s": "Vous avez vérifié %(name)s",
@@ -491,8 +487,6 @@
     "None": "Aucun",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vous avez ignoré cet utilisateur, donc ses messages sont cachés. <a>Les montrer quand même.</a>",
     "Messages in this room are end-to-end encrypted.": "Les messages dans ce salon sont chiffrés de bout en bout.",
-    "Cannot connect to integration manager": "Impossible de se connecter au gestionnaire d’intégrations",
-    "The integration manager is offline or it cannot reach your homeserver.": "Le gestionnaire d’intégrations est hors ligne ou il ne peut pas joindre votre serveur d’accueil.",
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
@@ -1205,16 +1199,6 @@
     "Unban from %(roomName)s": "Annuler le bannissement de %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Ils pourront toujours accéder aux endroits dans lesquels vous n’êtes pas administrateur.",
     "Disinvite from %(roomName)s": "Annuler l’invitation à %(roomName)s",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Mise-à-jour de l’espace…",
-        "other": "Mise-à-jour des espaces… (%(progress)s sur %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Envoi de l’invitation…",
-        "other": "Envoi des invitations… (%(progress)s sur %(count)s)"
-    },
-    "Loading new room": "Chargement du nouveau salon",
-    "Upgrading room": "Mise-à-jour du salon",
     "View in room": "Voir dans le salon",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Erreur en démarrant la vérification",
     "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
     "Change layout": "Changer la disposition",
-    "Search users in this room…": "Chercher des utilisateurs dans ce salon…",
-    "Give one or multiple users in this room more privileges": "Donne plus de privilèges à un ou plusieurs utilisateurs de ce salon",
-    "Add privileged users": "Ajouter des utilisateurs privilégiés",
     "Unable to decrypt message": "Impossible de déchiffrer le message",
     "This message could not be decrypted": "Ce message n’a pas pu être déchiffré",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "Chiffrement de votre message…",
     "Sending your message…": "Envoi de votre message…",
     "Set a new account password…": "Définir un nouveau mot de passe de compte…",
-    "Connecting to integration manager…": "Connexion au gestionnaire d’intégrations…",
     "Starting export process…": "Démarrage du processus d’export…",
     "Secure Backup successful": "Sauvegarde sécurisée réalisée avec succès",
     "Your keys are now being backed up from this device.": "Vos clés sont maintenant sauvegardées depuis cet appareil.",
@@ -1893,7 +1873,8 @@
             "other": "%(count)s messages non lus.",
             "one": "1 message non lu."
         },
-        "unread_messages": "Messages non lus."
+        "unread_messages": "Messages non lus.",
+        "jump_first_invite": "Sauter à la première invitation."
     },
     "labs": {
         "video_rooms": "Salons vidéo",
@@ -3306,7 +3287,10 @@
             "title": "Rôles et permissions",
             "permissions_section": "Permissions",
             "permissions_section_description_space": "Sélectionner les rôles nécessaires pour modifier les différentes parties de l’espace",
-            "permissions_section_description_room": "Sélectionner les rôles nécessaires pour modifier les différentes parties du salon"
+            "permissions_section_description_room": "Sélectionner les rôles nécessaires pour modifier les différentes parties du salon",
+            "add_privileged_user_heading": "Ajouter des utilisateurs privilégiés",
+            "add_privileged_user_description": "Donne plus de privilèges à un ou plusieurs utilisateurs de ce salon",
+            "add_privileged_user_filter_placeholder": "Chercher des utilisateurs dans ce salon…"
         },
         "security": {
             "strict_encryption": "Ne jamais envoyer des messages chiffrés aux sessions non vérifiées dans ce salon depuis cette session",
@@ -3351,7 +3335,17 @@
             "join_rule_knock": "Demander à venir",
             "join_rule_knock_description": "Les personnes ne peuvent pas venir tant que l’accès ne leur est pas autorisé.",
             "join_rule_restricted_upgrade_warning": "Ce salon se trouve dans certains espaces pour lesquels vous n’êtes pas administrateur. Dans ces espaces, l’ancien salon sera toujours disponible, mais un message sera affiché pour inciter les personnes à rejoindre le nouveau salon.",
-            "join_rule_restricted_upgrade_description": "Cette mise-à-jour permettra aux membres des espaces sélectionnés d’accéder à ce salon sans invitation."
+            "join_rule_restricted_upgrade_description": "Cette mise-à-jour permettra aux membres des espaces sélectionnés d’accéder à ce salon sans invitation.",
+            "join_rule_upgrade_upgrading_room": "Mise-à-jour du salon",
+            "join_rule_upgrade_awaiting_room": "Chargement du nouveau salon",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Envoi de l’invitation…",
+                "other": "Envoi des invitations… (%(progress)s sur %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Mise-à-jour de l’espace…",
+                "other": "Mise-à-jour des espaces… (%(progress)s sur %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Publier ce salon dans le répertoire de salons public de %(domain)s ?",
@@ -4188,7 +4182,9 @@
         "non_urgent_echo_failure_toast": "Votre serveur ne répond pas à certaines <a>requêtes</a>.",
         "failed_copy": "Échec de la copie",
         "something_went_wrong": "Quelque chose s’est mal déroulé !",
-        "download_media": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée"
+        "download_media": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée",
+        "update_power_level": "Échec du changement de rang",
+        "unknown": "Erreur inconnue"
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4237,5 +4233,11 @@
         "title": "Vue d’image",
         "rotate_left": "Tourner à gauche",
         "rotate_right": "Tourner à droite"
+    },
+    "a11y_jump_first_unread_room": "Sauter au premier salon non lu.",
+    "integration_manager": {
+        "connecting": "Connexion au gestionnaire d’intégrations…",
+        "error_connecting_heading": "Impossible de se connecter au gestionnaire d’intégrations",
+        "error_connecting": "Le gestionnaire d’intégrations est hors ligne ou il ne peut pas joindre votre serveur d’accueil."
     }
 }

@@ -35,7 +35,6 @@
     "Failed to set display name": "Нисам успео да поставим приказно име",
     "Failed to ban user": "Неуспех при забрањивању приступа кориснику",
     "Failed to mute user": "Неуспех при пригушивању корисника",
-    "Failed to change power level": "Не могу да изменим ниво снаге",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Нећете моћи да опозовете ове промене јер себи смањујете овлашћења. Ако сте последњи овлашћени корисник у соби, немогуће је да поново добијете овлашћења.",
     "Are you sure?": "Да ли сте сигурни?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
@@ -94,7 +93,6 @@
         "other": "И %(count)s других..."
     },
     "Confirm Removal": "Потврди уклањање",
-    "Unknown error": "Непозната грешка",
     "Deactivate Account": "Деактивирај налог",
     "An error has occurred.": "Догодила се грешка.",
     "Unable to restore session": "Не могу да повратим сесију",
@@ -191,7 +189,6 @@
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Show more": "Прикажи више",
-    "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
     "Email addresses": "Мејл адресе",
     "Phone numbers": "Бројеви телефона",
     "Discovery": "Откриће",
@@ -1500,7 +1497,9 @@
         "mixed_content": "Не могу да се повежем на сервер преко ХТТП када је ХТТПС УРЛ у траци вашег прегледача. Или користите HTTPS или <a>омогућите небезбедне скрипте</a>.",
         "tls": "Не могу да се повежем на домаћи сервер. Проверите вашу интернет везу, постарајте се да је <a>ССЛ сертификат сервера</a> од поверења и да проширење прегледача не блокира захтеве.",
         "failed_copy": "Нисам успео да ископирам",
-        "something_went_wrong": "Нешто је пошло наопако!"
+        "something_went_wrong": "Нешто је пошло наопако!",
+        "update_power_level": "Не могу да изменим ниво снаге",
+        "unknown": "Непозната грешка"
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",
@@ -1515,5 +1514,8 @@
     },
     "quick_settings": {
         "all_settings": "Сва подешавања"
+    },
+    "integration_manager": {
+        "error_connecting_heading": "Не могу се повезати на управника уградњи"
     }
 }

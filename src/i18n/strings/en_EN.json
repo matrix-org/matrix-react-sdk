@@ -1556,6 +1556,8 @@
         "download_media": "Failed to download source media, no source url was found",
         "non_urgent_echo_failure_toast": "Your server isn't responding to some <a>requests</a>.",
         "failed_copy": "Failed to copy",
+        "update_power_level": "Failed to change power level",
+        "unknown": "Unknown error",
         "something_went_wrong": "Something went wrong!"
     },
     "items_and_n_others": {
@@ -1906,6 +1908,16 @@
     "room_settings": {
         "security": {
             "strict_encryption": "Never send encrypted messages to unverified sessions in this room from this session",
+            "join_rule_upgrade_upgrading_room": "Upgrading room",
+            "join_rule_upgrade_awaiting_room": "Loading new room",
+            "join_rule_upgrade_sending_invites": {
+                "other": "Sending invites... (%(progress)s out of %(count)s)",
+                "one": "Sending invite..."
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "other": "Updating spaces... (%(progress)s out of %(count)s)",
+                "one": "Updating space..."
+            },
             "join_rule_upgrade_required": "Upgrade required",
             "join_rule_invite": "Private (invite only)",
             "join_rule_invite_description": "Only invited people can join.",
@@ -1982,18 +1994,10 @@
             "title": "Access",
             "description_space": "Decide who can view and join %(spaceName)s."
         },
-        "advanced": {
-            "unfederated": "This room is not accessible by remote Matrix servers",
-            "room_upgrade_warning": "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.",
-            "space_upgrade_button": "Upgrade this space to the recommended room version",
-            "room_upgrade_button": "Upgrade this room to the recommended room version",
-            "space_predecessor": "View older version of %(spaceName)s.",
-            "room_predecessor": "View older messages in %(roomName)s.",
-            "room_id": "Internal room ID",
-            "room_version_section": "Room version",
-            "room_version": "Room version:"
-        },
         "permissions": {
+            "add_privileged_user_heading": "Add privileged users",
+            "add_privileged_user_description": "Give one or multiple users in this room more privileges",
+            "add_privileged_user_filter_placeholder": "Search users in this room…",
             "m.room.avatar_space": "Change space avatar",
             "m.room.avatar": "Change room avatar",
             "m.room.name_space": "Change space name",
@@ -2032,6 +2036,17 @@
             "permissions_section": "Permissions",
             "permissions_section_description_space": "Select the roles required to change various parts of the space",
             "permissions_section_description_room": "Select the roles required to change various parts of the room"
+        },
+        "advanced": {
+            "unfederated": "This room is not accessible by remote Matrix servers",
+            "room_upgrade_warning": "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.",
+            "space_upgrade_button": "Upgrade this space to the recommended room version",
+            "room_upgrade_button": "Upgrade this room to the recommended room version",
+            "space_predecessor": "View older version of %(spaceName)s.",
+            "room_predecessor": "View older messages in %(roomName)s.",
+            "room_id": "Internal room ID",
+            "room_version_section": "Room version",
+            "room_version": "Room version:"
         }
     },
     "devtools": {
@@ -2299,25 +2314,24 @@
         "setup_rooms_private_description": "We'll create rooms for each of them."
     },
     "Address": "Address",
-    "Jump to first unread room.": "Jump to first unread room.",
-    "Jump to first invite.": "Jump to first invite.",
-    "Failed to change power level": "Failed to change power level",
-    "Add privileged users": "Add privileged users",
-    "Give one or multiple users in this room more privileges": "Give one or multiple users in this room more privileges",
-    "Search users in this room…": "Search users in this room…",
-    "Unknown error": "Unknown error",
-    "Connecting to integration manager…": "Connecting to integration manager…",
-    "Cannot connect to integration manager": "Cannot connect to integration manager",
-    "The integration manager is offline or it cannot reach your homeserver.": "The integration manager is offline or it cannot reach your homeserver.",
-    "Upgrading room": "Upgrading room",
-    "Loading new room": "Loading new room",
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "other": "Sending invites... (%(progress)s out of %(count)s)",
-        "one": "Sending invite..."
+    "a11y_jump_first_unread_room": "Jump to first unread room.",
+    "a11y": {
+        "jump_first_invite": "Jump to first invite.",
+        "n_unread_messages_mentions": {
+            "other": "%(count)s unread messages including mentions.",
+            "one": "1 unread mention."
+        },
+        "n_unread_messages": {
+            "other": "%(count)s unread messages.",
+            "one": "1 unread message."
+        },
+        "unread_messages": "Unread messages.",
+        "user_menu": "User menu"
     },
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "other": "Updating spaces... (%(progress)s out of %(count)s)",
-        "one": "Updating space..."
+    "integration_manager": {
+        "connecting": "Connecting to integration manager…",
+        "error_connecting_heading": "Cannot connect to integration manager",
+        "error_connecting": "The integration manager is offline or it cannot reach your homeserver."
     },
     "None": "None",
     "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
@@ -2748,18 +2762,6 @@
         "failed_set_dm_tag": "Failed to set direct message tag",
         "failed_remove_tag": "Failed to remove tag %(tagName)s from room",
         "failed_add_tag": "Failed to add tag %(tagName)s to room"
-    },
-    "a11y": {
-        "n_unread_messages_mentions": {
-            "other": "%(count)s unread messages including mentions.",
-            "one": "1 unread mention."
-        },
-        "n_unread_messages": {
-            "other": "%(count)s unread messages.",
-            "one": "1 unread message."
-        },
-        "unread_messages": "Unread messages.",
-        "user_menu": "User menu"
     },
     "Joined": "Joined",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.",

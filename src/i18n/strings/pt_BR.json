@@ -60,7 +60,6 @@
     "Decrypt %(text)s": "Descriptografar %(text)s",
     "Download %(text)s": "Baixar %(text)s",
     "Failed to ban user": "Não foi possível banir o usuário",
-    "Failed to change power level": "Não foi possível alterar o nível de permissão",
     "Failed to load timeline position": "Não foi possível carregar um trecho da conversa",
     "Failed to mute user": "Não foi possível remover notificações da/do usuária/o",
     "Failed to reject invite": "Não foi possível recusar o convite",
@@ -94,7 +93,6 @@
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O arquivo exportado será protegido com uma senha. Você deverá inserir a senha aqui para poder descriptografar o arquivo futuramente.",
     "Confirm Removal": "Confirmar a remoção",
-    "Unknown error": "Erro desconhecido",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
     "Error decrypting image": "Erro ao descriptografar a imagem",
@@ -323,8 +321,6 @@
     "IRC display name width": "Largura do nome e sobrenome nas mensagens",
     "Lock": "Cadeado",
     "Show more": "Mostrar mais",
-    "Cannot connect to integration manager": "Não foi possível conectar ao gerenciador de integrações",
-    "The integration manager is offline or it cannot reach your homeserver.": "Ou o gerenciador de integrações está indisponível, ou ele não conseguiu acessar o seu servidor.",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "wait and try again later": "aguarde e tente novamente mais tarde",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "O administrador do servidor desativou a criptografia de ponta a ponta por padrão em salas privadas e em conversas.",
@@ -421,8 +417,6 @@
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
-    "Jump to first unread room.": "Ir para a primeira sala não lida.",
-    "Jump to first invite.": "Ir para o primeiro convite.",
     "Add room": "Adicionar sala",
     "Room options": "Opções da Sala",
     "This room is public": "Esta sala é pública",
@@ -1186,16 +1180,6 @@
     "Get notified for every message": "Seja notificado para cada mensagem",
     "Get notifications as set up in your <a>settings</a>": "Receba notificações conforme configurado em suas <a>configurações</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala não está conectando mensagens a nenhuma plataforma. <a> Saiba mais. </a>",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Atualizando espaço...",
-        "other": "Atualizando espaços... (%(progress)s de %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Enviando convite...",
-        "other": "Enviando convites... (%(progress)s de %(count)s)"
-    },
-    "Loading new room": "Carregando nova sala",
-    "Upgrading room": "Atualizando sala",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
@@ -1426,7 +1410,8 @@
             "other": "%(count)s mensagens não lidas.",
             "one": "1 mensagem não lida."
         },
-        "unread_messages": "Mensagens não lidas."
+        "unread_messages": "Mensagens não lidas.",
+        "jump_first_invite": "Ir para o primeiro convite."
     },
     "labs": {
         "video_rooms": "Salas de vídeo",
@@ -2479,7 +2464,17 @@
             "join_rule_restricted_description_prompt": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
             "join_rule_restricted": "Membros do espaço",
             "join_rule_restricted_upgrade_warning": "Esta sala está em alguns espaços dos quais você não é administrador. Nesses espaços, a sala antiga ainda será exibida, mas as pessoas serão solicitadas a ingressar na nova.",
-            "join_rule_restricted_upgrade_description": "Esta melhoria permite que membros de espaços selecionados acessem esta sala sem um convite."
+            "join_rule_restricted_upgrade_description": "Esta melhoria permite que membros de espaços selecionados acessem esta sala sem um convite.",
+            "join_rule_upgrade_upgrading_room": "Atualizando sala",
+            "join_rule_upgrade_awaiting_room": "Carregando nova sala",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Enviando convite...",
+                "other": "Enviando convites... (%(progress)s de %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Atualizando espaço...",
+                "other": "Atualizando espaços... (%(progress)s de %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Quer publicar esta sala na lista pública de salas da %(domain)s?",
@@ -3108,7 +3103,9 @@
         "admin_contact_short": "Entre em contato com sua(seu) <a>administrador(a) do servidor</a>.",
         "non_urgent_echo_failure_toast": "Seu servidor não está respondendo a algumas <a>solicitações</a>.",
         "failed_copy": "Não foi possível copiar",
-        "something_went_wrong": "Não foi possível carregar!"
+        "something_went_wrong": "Não foi possível carregar!",
+        "update_power_level": "Não foi possível alterar o nível de permissão",
+        "unknown": "Erro desconhecido"
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3151,5 +3148,10 @@
     "lightbox": {
         "rotate_left": "Girar para a esquerda",
         "rotate_right": "Girar para a direita"
+    },
+    "a11y_jump_first_unread_room": "Ir para a primeira sala não lida.",
+    "integration_manager": {
+        "error_connecting_heading": "Não foi possível conectar ao gerenciador de integrações",
+        "error_connecting": "Ou o gerenciador de integrações está indisponível, ou ele não conseguiu acessar o seu servidor."
     }
 }

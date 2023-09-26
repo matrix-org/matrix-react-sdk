@@ -135,7 +135,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Je kut deze actie nie oungedoan moakn omda je jen eigen degradeert. A je de latste bevoorrechte gebruuker in ’t gesprek zyt, is ’t ounmeuglik van deze rechtn were te krygn.",
     "Demote": "Degradeern",
     "Failed to mute user": "Dempn van gebruuker es mislukt",
-    "Failed to change power level": "Wyzign van ’t machtsniveau es mislukt",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Je kut deze veranderiengn nie oungedoan moakn angezien da je de gebruuker tout ’tzelfste niveau als jen eigen promoveert.",
     "Jump to read receipt": "Noar ’t latst geleezn bericht goan",
     "Share Link to User": "Koppelienge me de gebruuker deeln",
@@ -253,7 +252,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Vo je gespreksgeschiedenisse nie kwyt te speeln, moe je je gesprekssleuters exporteern vooraleer da je jen afmeldt. Je goa moetn werekeern noa de nieuwere versie van %(brand)s vo dit te doen",
     "Incompatible Database": "Incompatibele database",
     "Continue With Encryption Disabled": "Verdergoan me versleuterienge uutgeschoakeld",
-    "Unknown error": "Ounbekende foute",
     "Filter results": "Resultoatn filtern",
     "An error has occurred.": "’t Is e foute ipgetreedn.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
@@ -1168,7 +1166,9 @@
         "mixed_content": "Je ku geen verbindienge moakn me de thuusserver via HTTP wanneer dat der een HTTPS-URL in je browserbalk stoat. Gebruukt HTTPS of <a>schoakelt ounveilige scripts in</a>.",
         "tls": "Geen verbindienge met de thuusserver - controleer je verbindienge, zorgt dervoorn dan ’t <a>SSL-certificoat van de thuusserver</a> vertrouwd is en dat der geen browserextensies verzoekn blokkeern.",
         "failed_copy": "Kopieern mislukt",
-        "something_went_wrong": "’t Es etwa misgegoan!"
+        "something_went_wrong": "’t Es etwa misgegoan!",
+        "update_power_level": "Wyzign van ’t machtsniveau es mislukt",
+        "unknown": "Ounbekende foute"
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",

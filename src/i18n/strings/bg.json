@@ -40,7 +40,6 @@
     "Failed to set display name": "Неуспешно задаване на име",
     "Failed to ban user": "Неуспешно блокиране на потребителя",
     "Failed to mute user": "Неуспешно заглушаване на потребителя",
-    "Failed to change power level": "Неуспешна промяна на нивото на достъп",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "След като си намалите нивото на достъп, няма да можете да възвърнете тази промяна. Ако сте последния потребител с привилегии в тази стая, ще бъде невъзможно да възвърнете привилегии си.",
     "Are you sure?": "Сигурни ли сте?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Няма да можете да възвърнете тази промяна, тъй като повишавате този потребител до същото ниво на достъп като Вашето.",
@@ -95,7 +94,6 @@
         "other": "И %(count)s други..."
     },
     "Confirm Removal": "Потвърдете премахването",
-    "Unknown error": "Неизвестна грешка",
     "Deactivate Account": "Затвори акаунта",
     "Verification Pending": "Очакване на потвърждение",
     "An error has occurred.": "Възникна грешка.",
@@ -477,8 +475,6 @@
     "Message Actions": "Действия със съобщението",
     "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
-    "Jump to first unread room.": "Отиди до първата непрочетена стая.",
-    "Jump to first invite.": "Отиди до първата покана.",
     "You verified %(name)s": "Потвърдихте %(name)s",
     "You cancelled verifying %(name)s": "Отказахте потвърждаването за %(name)s",
     "%(name)s cancelled verifying": "%(name)s отказа потвърждаването",
@@ -488,8 +484,6 @@
     "%(name)s cancelled": "%(name)s отказа",
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "You sent a verification request": "Изпратихте заявка за потвърждение",
-    "Cannot connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
-    "The integration manager is offline or it cannot reach your homeserver.": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви.",
     "Manage integrations": "Управление на интеграциите",
     "None": "Няма нищо",
     "Unencrypted": "Нешифровано",
@@ -1154,7 +1148,8 @@
             "other": "%(count)s непрочетени съобщения.",
             "one": "1 непрочетено съобщение."
         },
-        "unread_messages": "Непрочетени съобщения."
+        "unread_messages": "Непрочетени съобщения.",
+        "jump_first_invite": "Отиди до първата покана."
     },
     "labs": {
         "pinning": "Функция за закачане на съобщения",
@@ -2305,7 +2300,9 @@
         "admin_contact_short": "Свържете се със <a>сървърния администратор</a>.",
         "non_urgent_echo_failure_toast": "Сървърът ви не отговаря на някои <a>заявки</a>.",
         "failed_copy": "Неуспешно копиране",
-        "something_went_wrong": "Нещо се обърка!"
+        "something_went_wrong": "Нещо се обърка!",
+        "update_power_level": "Неуспешна промяна на нивото на достъп",
+        "unknown": "Неизвестна грешка"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2337,5 +2334,10 @@
     "lightbox": {
         "rotate_left": "Завърти наляво",
         "rotate_right": "Завърти надясно"
+    },
+    "a11y_jump_first_unread_room": "Отиди до първата непрочетена стая.",
+    "integration_manager": {
+        "error_connecting_heading": "Неуспешна връзка с мениджъра на интеграции",
+        "error_connecting": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви."
     }
 }

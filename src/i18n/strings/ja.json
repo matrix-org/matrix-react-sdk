@@ -73,7 +73,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "あなたは自分自身を降格させようとしています。この変更は取り消せません。あなたがルームの中で最後の特権ユーザーである場合、特権を再取得することはできなくなります。",
     "Demote": "降格する",
     "Failed to mute user": "ユーザーのミュートに失敗しました",
-    "Failed to change power level": "権限レベルの変更に失敗しました",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "このユーザーにあなたと同じ権限レベルを与えようとしています。この変更は取り消せません。",
     "Jump to read receipt": "既読通知へ移動",
     "Share Link to User": "ユーザーへのリンクを共有",
@@ -132,7 +131,6 @@
     },
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
     "Confirm Removal": "削除の確認",
-    "Unknown error": "不明なエラー",
     "Deactivate Account": "アカウントの無効化",
     "An error has occurred.": "エラーが発生しました。",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "以前%(host)sにて、メンバーの遅延ロードを有効にした%(brand)sが使用されていました。このバージョンでは、遅延ロードは無効です。ローカルのキャッシュにはこれらの2つの設定の間での互換性がないため、%(brand)sはアカウントを再同期する必要があります。",
@@ -290,7 +288,6 @@
     "%(displayName)s cancelled verification.": "%(displayName)sが認証をキャンセルしました。",
     "You cancelled verification.": "認証をキャンセルしました。",
     "Switch theme": "テーマを切り替える",
-    "Cannot connect to integration manager": "インテグレーションマネージャーに接続できません",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
     "Do not use an identity server": "IDサーバーを使用しない",
@@ -359,8 +356,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "このルームはホームサーバーが<i>不安定</i>と判断したルームバージョン<roomVersion />で動作しています。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "このルームをアップグレードすると、現在のルームの使用を終了し、アップグレードしたルームを同じ名前で作成します。",
     "This room has already been upgraded.": "このルームは既にアップグレードされています。",
-    "Jump to first invite.": "最初の招待に移動。",
-    "Jump to first unread room.": "未読のある最初のルームにジャンプします。",
     "You're previewing %(roomName)s. Want to join it?": "ルーム %(roomName)s のプレビューです。参加しますか？",
     "Share this email in Settings to receive invites directly in %(brand)s.": "このメールアドレスを設定から共有すると、%(brand)sから招待を受け取れます。",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "設定からIDサーバーを使用すると、%(brand)sから直接招待を受け取れます。",
@@ -415,7 +410,6 @@
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "IDサーバー <current /> から切断して<new />に接続しますか？",
     "Change identity server": "IDサーバーを変更",
     "Checking server": "サーバーをチェックしています",
-    "The integration manager is offline or it cannot reach your homeserver.": "インテグレーションマネージャーがオフラインか、またはあなたのホームサーバーに到達できません。",
     "Set up": "設定",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
@@ -891,16 +885,6 @@
     "Submit logs": "ログを提出",
     "Click to view edits": "クリックすると変更履歴を表示",
     "Can't load this message": "このメッセージを読み込めません",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "スペースを更新しています…",
-        "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "招待を送信しています…",
-        "other": "招待を送信しています…（計%(count)s件のうち%(progress)s件）"
-    },
-    "Loading new room": "新しいルームを読み込んでいます",
-    "Upgrading room": "ルームをアップグレードしています",
     "Address": "アドレス",
     "Notes": "メモ",
     "Search for rooms": "ルームを検索",
@@ -1437,9 +1421,6 @@
     "Connection": "接続",
     "Voice processing": "音声を処理しています",
     "Automatically adjust the microphone volume": "マイクの音量を自動的に調節",
-    "Add privileged users": "特権ユーザーを追加",
-    "Give one or multiple users in this room more privileges": "このルームのユーザーに権限を付与",
-    "Search users in this room…": "このルームのユーザーを検索…",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "メッセージを暗号化しています…",
     "Sending your message…": "メッセージを送信しています…",
     "Set a new account password…": "アカウントの新しいパスワードを設定…",
-    "Connecting to integration manager…": "インテグレーションマネージャーに接続しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
@@ -1799,7 +1779,8 @@
             "one": "未読メッセージ1件。",
             "other": "未読メッセージ%(count)s件。"
         },
-        "unread_messages": "未読メッセージ。"
+        "unread_messages": "未読メッセージ。",
+        "jump_first_invite": "最初の招待に移動。"
     },
     "labs": {
         "video_rooms": "ビデオ通話ルーム",
@@ -3145,7 +3126,10 @@
             "title": "役割と権限",
             "permissions_section": "権限",
             "permissions_section_description_space": "スペースに関する変更を行うために必要な役割を選択",
-            "permissions_section_description_room": "ルームに関する変更を行うために必要な役割を選択"
+            "permissions_section_description_room": "ルームに関する変更を行うために必要な役割を選択",
+            "add_privileged_user_heading": "特権ユーザーを追加",
+            "add_privileged_user_description": "このルームのユーザーに権限を付与",
+            "add_privileged_user_filter_placeholder": "このルームのユーザーを検索…"
         },
         "security": {
             "strict_encryption": "このセッションでは、このルームの未認証のセッションに対して暗号化されたメッセージを送信しない",
@@ -3183,7 +3167,17 @@
             "join_rule_restricted_description_prompt": "スペースのメンバーが検索し、参加できます。複数のスペースを選択できます。",
             "join_rule_restricted": "スペースのメンバー",
             "join_rule_restricted_upgrade_warning": "このルームは、あなたが管理者でないスペースの中にあります。そのスペースでは古いルームは表示され続けますが、参加者は新しいルームに参加するように求められます。",
-            "join_rule_restricted_upgrade_description": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。"
+            "join_rule_restricted_upgrade_description": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
+            "join_rule_upgrade_upgrading_room": "ルームをアップグレードしています",
+            "join_rule_upgrade_awaiting_room": "新しいルームを読み込んでいます",
+            "join_rule_upgrade_sending_invites": {
+                "one": "招待を送信しています…",
+                "other": "招待を送信しています…（計%(count)s件のうち%(progress)s件）"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "スペースを更新しています…",
+                "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
+            }
         },
         "general": {
             "publish_toggle": "%(domain)sのルームディレクトリーにこのルームを公開しますか？",
@@ -3987,7 +3981,9 @@
         "admin_contact_short": "<a>サーバー管理者</a>に問い合わせてください。",
         "non_urgent_echo_failure_toast": "あなたのサーバーはいくつかの<a>リクエスト</a>に応答しません。",
         "failed_copy": "コピーに失敗しました",
-        "something_went_wrong": "問題が発生しました！"
+        "something_went_wrong": "問題が発生しました！",
+        "update_power_level": "権限レベルの変更に失敗しました",
+        "unknown": "不明なエラー"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4035,5 +4031,11 @@
     "lightbox": {
         "rotate_left": "左に回転",
         "rotate_right": "右に回転"
+    },
+    "a11y_jump_first_unread_room": "未読のある最初のルームにジャンプします。",
+    "integration_manager": {
+        "connecting": "インテグレーションマネージャーに接続しています…",
+        "error_connecting_heading": "インテグレーションマネージャーに接続できません",
+        "error_connecting": "インテグレーションマネージャーがオフラインか、またはあなたのホームサーバーに到達できません。"
     }
 }

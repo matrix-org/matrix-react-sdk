@@ -42,7 +42,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "आप इस बदलाव को पूर्ववत नहीं कर पाएंगे क्योंकि आप स्वयं को अवनत कर रहे हैं, अगर आप रूम में आखिरी विशेषाधिकार प्राप्त उपयोगकर्ता हैं तो विशेषाधिकार हासिल करना असंभव होगा।",
     "Demote": "अवनत",
     "Failed to mute user": "उपयोगकर्ता को म्यूट करने में विफल",
-    "Failed to change power level": "पावर स्तर बदलने में विफल",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "आप इस परिवर्तन को पूर्ववत नहीं कर पाएंगे क्योंकि आप उपयोगकर्ता को अपने आप से समान शक्ति स्तर रखने के लिए प्रोत्साहित कर रहे हैं।",
     "Are you sure?": "क्या आपको यकीन है?",
     "Unignore": "अनदेखा न करें",
@@ -754,7 +753,8 @@
     },
     "error": {
         "mau": "इस होमसर्वर ने अपनी मासिक सक्रिय उपयोगकर्ता सीमा को प्राप्त कर लिया हैं।",
-        "resource_limits": "यह होम सर्वर अपनी संसाधन सीमाओं में से एक से अधिक हो गया है।"
+        "resource_limits": "यह होम सर्वर अपनी संसाधन सीमाओं में से एक से अधिक हो गया है।",
+        "update_power_level": "पावर स्तर बदलने में विफल"
     },
     "notifications": {
         "enable_prompt_toast_title": "सूचनाएं"

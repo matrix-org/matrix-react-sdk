@@ -32,7 +32,6 @@
     "Authentication": "Overenie",
     "Failed to ban user": "Nepodarilo sa zakázať používateľa",
     "Failed to mute user": "Nepodarilo sa umlčať používateľa",
-    "Failed to change power level": "Nepodarilo sa zmeniť úroveň oprávnenia",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Túto zmenu nebudete môcť vrátiť späť, pretože tomuto používateľovi udeľujete rovnakú úroveň oprávnenia, akú máte vy.",
     "Are you sure?": "Ste si istí?",
     "Unignore": "Prestať ignorovať",
@@ -83,7 +82,6 @@
         "other": "A %(count)s ďalších…"
     },
     "Confirm Removal": "Potvrdiť odstránenie",
-    "Unknown error": "Neznáma chyba",
     "Deactivate Account": "Deaktivovať účet",
     "An error has occurred.": "Vyskytla sa chyba.",
     "Unable to restore session": "Nie je možné obnoviť reláciu",
@@ -339,8 +337,6 @@
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
-    "Cannot connect to integration manager": "Nie je možné sa pripojiť k integračnému serveru",
-    "The integration manager is offline or it cannot reach your homeserver.": "Integračný server je offline, alebo nemôže pristupovať k domovskému serveru.",
     "Change identity server": "Zmeniť server totožností",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Naozaj si želáte odpojiť od servera totožností <current /> a pripojiť sa namiesto toho k serveru <new />?",
     "Disconnect identity server": "Odpojiť server totožností",
@@ -692,10 +688,6 @@
     "@mentions & keywords": "@zmienky a kľúčové slová",
     "Room options": "Možnosti miestnosti",
     "Search for spaces": "Hľadať priestory",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Aktualizácia priestoru...",
-        "other": "Aktualizácia priestorov... (%(progress)s z %(count)s)"
-    },
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
@@ -1008,7 +1000,6 @@
     "Start new chat": "Spustiť novú konverzáciu",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "View in room": "Zobraziť v miestnosti",
-    "Loading new room": "Načítanie novej miestnosti",
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
     "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
     "Recently visited rooms": "Nedávno navštívené miestnosti",
@@ -1027,11 +1018,6 @@
         "one": "%(count)s odpoveď",
         "other": "%(count)s odpovedí"
     },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Odosielanie pozvánky...",
-        "other": "Odosielanie pozvánok... (%(progress)s z %(count)s)"
-    },
-    "Upgrading room": "Aktualizácia miestnosti",
     "Unknown failure": "Neznáme zlyhanie",
     "Stop recording": "Zastaviť nahrávanie",
     "Missed call": "Zmeškaný hovor",
@@ -1167,8 +1153,6 @@
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Nasledujúci používatelia nemusia existovať alebo sú neplatní a nemožno ich pozvať: %(csvNames)s",
     "Failed to find the following users": "Nepodarilo sa nájsť týchto používateľov",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tohto používateľa ste ignorovali, takže jeho správa je skrytá. <a>Ukázať aj tak.</a>",
-    "Jump to first invite.": "Prejsť na prvú pozvánku.",
-    "Jump to first unread room.": "Preskočiť na prvú neprečítanú miestnosť.",
     "This client does not support end-to-end encryption.": "Tento klient nepodporuje end-to-end šifrovanie.",
     "Failed to deactivate user": "Nepodarilo sa deaktivovať používateľa",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pri veľkom množstve správ to môže trvať určitý čas. Medzitým prosím neobnovujte svojho klienta.",
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Chyba pri spustení overovania",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     "Change layout": "Zmeniť rozloženie",
-    "Search users in this room…": "Vyhľadať používateľov v tejto miestnosti…",
-    "Give one or multiple users in this room more privileges": "Prideliť jednému alebo viacerým používateľom v tejto miestnosti viac oprávnení",
-    "Add privileged users": "Pridať oprávnených používateľov",
     "Unable to decrypt message": "Nie je možné dešifrovať správu",
     "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "Šifrovanie vašej správy…",
     "Sending your message…": "Odosielanie vašej správy…",
     "Set a new account password…": "Nastaviť nové heslo k účtu…",
-    "Connecting to integration manager…": "Pripájanie k správcovi integrácie…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Secure Backup successful": "Bezpečné zálohovanie bolo úspešné",
     "Your keys are now being backed up from this device.": "Kľúče sa teraz zálohujú z tohto zariadenia.",
@@ -1893,7 +1873,8 @@
             "other": "%(count)s neprečítaných správ.",
             "one": "1 neprečítaná správa."
         },
-        "unread_messages": "Neprečítané správy."
+        "unread_messages": "Neprečítané správy.",
+        "jump_first_invite": "Prejsť na prvú pozvánku."
     },
     "labs": {
         "video_rooms": "Video miestnosti",
@@ -3306,7 +3287,10 @@
             "title": "Role a povolenia",
             "permissions_section": "Povolenia",
             "permissions_section_description_space": "Vyberte role potrebné na zmenu rôznych častí tohto priestoru",
-            "permissions_section_description_room": "Vyberte role potrebné na zmenu rôznych častí miestnosti"
+            "permissions_section_description_room": "Vyberte role potrebné na zmenu rôznych častí miestnosti",
+            "add_privileged_user_heading": "Pridať oprávnených používateľov",
+            "add_privileged_user_description": "Prideliť jednému alebo viacerým používateľom v tejto miestnosti viac oprávnení",
+            "add_privileged_user_filter_placeholder": "Vyhľadať používateľov v tejto miestnosti…"
         },
         "security": {
             "strict_encryption": "Nikdy neposielať šifrované správy neovereným reláciám v tejto miestnosti z tejto relácie",
@@ -3351,7 +3335,17 @@
             "join_rule_knock": "Požiadať o pripojenie",
             "join_rule_knock_description": "Ľudia sa nemôžu pripojiť, pokiaľ im nebude udelený prístup.",
             "join_rule_restricted_upgrade_warning": "Táto miestnosť sa nachádza v niektorých priestoroch, ktorých nie ste správcom. V týchto priestoroch bude stará miestnosť stále zobrazená, ale ľudia budú vyzvaní, aby sa pripojili k novej miestnosti.",
-            "join_rule_restricted_upgrade_description": "Táto aktualizácia umožní členom vybraných priestorov prístup do tejto miestnosti bez pozvánky."
+            "join_rule_restricted_upgrade_description": "Táto aktualizácia umožní členom vybraných priestorov prístup do tejto miestnosti bez pozvánky.",
+            "join_rule_upgrade_upgrading_room": "Aktualizácia miestnosti",
+            "join_rule_upgrade_awaiting_room": "Načítanie novej miestnosti",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Odosielanie pozvánky...",
+                "other": "Odosielanie pozvánok... (%(progress)s z %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Aktualizácia priestoru...",
+                "other": "Aktualizácia priestorov... (%(progress)s z %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Uverejniť túto miestnosť v adresári miestností na serveri %(domain)s?",
@@ -4188,7 +4182,9 @@
         "non_urgent_echo_failure_toast": "Váš server neodpovedá na niektoré <a>požiadavky</a>.",
         "failed_copy": "Nepodarilo sa skopírovať",
         "something_went_wrong": "Niečo sa pokazilo!",
-        "download_media": "Nepodarilo sa stiahnuť zdrojové médium, nebola nájdená žiadna zdrojová url adresa"
+        "download_media": "Nepodarilo sa stiahnuť zdrojové médium, nebola nájdená žiadna zdrojová url adresa",
+        "update_power_level": "Nepodarilo sa zmeniť úroveň oprávnenia",
+        "unknown": "Neznáma chyba"
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4237,5 +4233,11 @@
         "title": "Prehľad obrázkov",
         "rotate_left": "Otočiť doľava",
         "rotate_right": "Otočiť doprava"
+    },
+    "a11y_jump_first_unread_room": "Preskočiť na prvú neprečítanú miestnosť.",
+    "integration_manager": {
+        "connecting": "Pripájanie k správcovi integrácie…",
+        "error_connecting_heading": "Nie je možné sa pripojiť k integračnému serveru",
+        "error_connecting": "Integračný server je offline, alebo nemôže pristupovať k domovskému serveru."
     }
 }

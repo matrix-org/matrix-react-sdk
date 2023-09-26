@@ -98,7 +98,6 @@
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Unknown error": "Error desconeguda",
     "Search failed": "La recèrca a fracassat",
     "Success!": "Capitada !",
     "Explore rooms": "Percórrer las salas",
@@ -386,7 +385,8 @@
         "sidebar_settings": "Autras opcions"
     },
     "error": {
-        "failed_copy": "Impossible de copiar"
+        "failed_copy": "Impossible de copiar",
+        "unknown": "Error desconeguda"
     },
     "room": {
         "context_menu": {

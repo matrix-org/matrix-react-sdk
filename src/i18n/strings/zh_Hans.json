@@ -61,9 +61,7 @@
     "Confirm passphrase": "确认口令词组",
     "Import room keys": "导入房间密钥",
     "File to import": "要导入的文件",
-    "Unknown error": "未知错误",
     "Unable to restore session": "无法恢复会话",
-    "Failed to change power level": "权力级别修改失败",
     "New passwords must match each other.": "新密码必须互相匹配。",
     "%(roomName)s does not exist.": "%(roomName)s 不存在。",
     "This room has no local addresses": "此房间没有本地地址",
@@ -401,8 +399,6 @@
     "This user has not verified all of their sessions.": "此用户没有验证其全部会话。",
     "You have not verified this user.": "你没有验证此用户。",
     "You have verified this user. This user has verified all of their sessions.": "你验证了此用户。此用户已验证了其全部会话。",
-    "Cannot connect to integration manager": "不能连接到集成管理器",
-    "The integration manager is offline or it cannot reach your homeserver.": "此集成管理器为离线状态或者其不能访问你的家服务器。",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "检查你的浏览器是否安装有可能屏蔽身份服务器的插件（例如 Privacy Badger）",
     "Manage integrations": "管理集成",
     "Deactivate account": "停用账户",
@@ -445,8 +441,6 @@
     "Reject & Ignore user": "拒绝并忽略用户",
     "You're previewing %(roomName)s. Want to join it?": "你正在预览 %(roomName)s。想加入吗？",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s 不能被预览。你想加入吗？",
-    "Jump to first unread room.": "跳转至第一个未读房间。",
-    "Jump to first invite.": "跳转至第一个邀请。",
     "Add room": "添加房间",
     "Room options": "房间选项",
     "This room is public": "此房间为公共的",
@@ -1195,16 +1189,6 @@
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "看起来你没有安全密钥或者任何其他可以验证的设备。 此设备将无法访问旧的加密消息。为了在这个设备上验证你的身份，你需要重置你的验证密钥。",
     "Skip verification for now": "暂时跳过验证",
     "Really reset verification keys?": "确实要重置验证密钥？",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "other": "正在更新房间… （%(count)s 中的 %(progress)s）",
-        "one": "正在更新空间…"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "正在发送邀请…",
-        "other": "正在发送邀请… （%(count)s 中的 %(progress)s）"
-    },
-    "Loading new room": "正在加载新房间",
-    "Upgrading room": "正在升级房间",
     "Disinvite from %(roomName)s": "取消邀请加入 %(roomName)s",
     "They won't be able to access whatever you're not an admin of.": "他们将无法访问你不是管理员的一切。",
     "Ban them from specific things I'm able to": "禁止这些人做某些我有权决定的事",
@@ -1480,9 +1464,6 @@
     "Video settings": "视频设置",
     "Voice settings": "语音设置",
     "Automatically adjust the microphone volume": "自动调整话筒音量",
-    "Search users in this room…": "搜索该房间内的用户……",
-    "Give one or multiple users in this room more privileges": "授权给该房间内的某人或某些人",
-    "Add privileged users": "添加特权用户",
     "Call type": "通话类型",
     "You do not have sufficient permissions to change this.": "你没有足够的权限更改这个。",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",
@@ -1701,7 +1682,8 @@
             "other": "%(count)s 个未读消息。",
             "one": "1 个未读消息。"
         },
-        "unread_messages": "未读消息。"
+        "unread_messages": "未读消息。",
+        "jump_first_invite": "跳转至第一个邀请。"
     },
     "labs": {
         "video_rooms": "视频房间",
@@ -2959,7 +2941,10 @@
             "title": "角色与权限",
             "permissions_section": "权限",
             "permissions_section_description_space": "选择改变空间各个部分所需的角色",
-            "permissions_section_description_room": "选择更改房间各个部分所需的角色"
+            "permissions_section_description_room": "选择更改房间各个部分所需的角色",
+            "add_privileged_user_heading": "添加特权用户",
+            "add_privileged_user_description": "授权给该房间内的某人或某些人",
+            "add_privileged_user_filter_placeholder": "搜索该房间内的用户……"
         },
         "security": {
             "strict_encryption": "永不从此会话向此房间中未验证的会话发送加密消息",
@@ -3001,7 +2986,17 @@
             "join_rule_restricted_description_prompt": "空间中的任何人都可以找到并加入。你可以选择多个空间。",
             "join_rule_restricted": "空间成员",
             "join_rule_restricted_upgrade_warning": "这个房间位于你不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
-            "join_rule_restricted_upgrade_description": "此升级将允许选定的空间成员无需邀请即可访问此房间。"
+            "join_rule_restricted_upgrade_description": "此升级将允许选定的空间成员无需邀请即可访问此房间。",
+            "join_rule_upgrade_upgrading_room": "正在升级房间",
+            "join_rule_upgrade_awaiting_room": "正在加载新房间",
+            "join_rule_upgrade_sending_invites": {
+                "one": "正在发送邀请…",
+                "other": "正在发送邀请… （%(count)s 中的 %(progress)s）"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "other": "正在更新房间… （%(count)s 中的 %(progress)s）",
+                "one": "正在更新空间…"
+            }
         },
         "general": {
             "publish_toggle": "是否将此房间发布至 %(domain)s 的房间目录中？",
@@ -3774,7 +3769,9 @@
         "admin_contact_short": "请联系你的<a>服务器管理员</a>。",
         "non_urgent_echo_failure_toast": "你的服务器没有响应一些<a>请求</a>。",
         "failed_copy": "复制失败",
-        "something_went_wrong": "出了点问题！"
+        "something_went_wrong": "出了点问题！",
+        "update_power_level": "权力级别修改失败",
+        "unknown": "未知错误"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3820,5 +3817,10 @@
     "lightbox": {
         "rotate_left": "向左旋转",
         "rotate_right": "向右旋转"
+    },
+    "a11y_jump_first_unread_room": "跳转至第一个未读房间。",
+    "integration_manager": {
+        "error_connecting_heading": "不能连接到集成管理器",
+        "error_connecting": "此集成管理器为离线状态或者其不能访问你的家服务器。"
     }
 }

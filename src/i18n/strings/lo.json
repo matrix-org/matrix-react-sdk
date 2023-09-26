@@ -354,8 +354,6 @@
     "Ignored users": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
     "None": "ບໍ່ມີ",
     "Warning!": "ແຈ້ງເຕືອນ!",
-    "Jump to first invite.": "ໄປຫາຄຳເຊີນທຳອິດ.",
-    "Jump to first unread room.": "ໄປຫາຫ້ອງທໍາອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
     "Address": "ທີ່ຢູ່",
@@ -676,7 +674,6 @@
     "Enter passphrase": "ໃສ່ລະຫັດຜ່ານ",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "ຂະບວນການນີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກລະຫັດສໍາລັບຂໍ້ຄວາມທີ່ທ່ານໄດ້ຮັບໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດໄປຫາໄຟລ໌ໃນຊ່ອງເກັບຂໍ້ມູນ. ຫຼັງຈາກນັ້ນທ່ານຈະສາມາດນໍາເຂົ້າໄຟລ໌ເຂົ້າໄປໃນລູກຄ້າ Matrix ອື່ນໃນອະນາຄົດ, ດັ່ງນັ້ນລູກຄ້ານັ້ນຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມເຫຼົ່ານີ້ໄດ້.",
     "Export room keys": "ສົ່ງກະແຈຫ້ອງອອກ",
-    "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Passphrase must not be empty": "ຂໍ້ຄວາມລະຫັດຜ່ານຈະຕ້ອງບໍ່ຫວ່າງເປົ່າ",
     "Passphrases must match": "ປະໂຫຍກຕ້ອງກົງກັນ",
     "Unable to set up secret storage": "ບໍ່ສາມາດກຳນົດບ່ອນເກັບຂໍ້ມູນລັບໄດ້",
@@ -722,18 +719,6 @@
     "Verify with Security Key or Phrase": "ຢືນຢັນດ້ວຍກະແຈຄວາມປອດໄພ ຫຼືປະໂຫຍກ",
     "Proceed with reset": "ດຳເນີນການຕັ້ງຄ່າໃໝ່",
     "It looks like you don't have a Security Key or any other devices you can verify against.  This device will not be able to access old encrypted messages. In order to verify your identity on this device, you'll need to reset your verification keys.": "ເບິ່ງຄືວ່າທ່ານບໍ່ມີກະແຈຄວາມປອດໄພ ຫຼື ອຸປະກອນອື່ນໆທີ່ທ່ານສາມາດຢືນຢັນໄດ້. ອຸປະກອນນີ້ຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້. ເພື່ອຢືນຢັນຕົວຕົນຂອງທ່ານໃນອຸປະກອນນີ້, ທ່ານຈຳເປັນຕ້ອງຕັ້ງລະຫັດຢືນຢັນຂອງທ່ານ.",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
-        "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "ກຳລັງສົ່ງຄຳເຊີນ...",
-        "other": "ກຳລັງສົ່ງຄຳເຊີນ... (%(progress)s ຈາກທັງໝົດ %(count)s)"
-    },
-    "Loading new room": "ກຳລັງໂຫຼດຫ້ອງໃໝ່",
-    "Upgrading room": "ການຍົກລະດັບຫ້ອງ",
-    "The integration manager is offline or it cannot reach your homeserver.": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້.",
-    "Cannot connect to integration manager": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
     "Failed to set display name": "ກຳນົດການສະເເດງຊື່ບໍ່ສຳເລັດ",
     "Reset event store": "ກູ້ຄືນທີ່ຈັດເກັບ",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "ຖ້າທ່ານດຳເນິນການ, ກະລຸນາຮັບຊາບວ່າຂໍ້ຄວາມຂອງທ່ານຈະບໍ່ຖືກລຶບ, ແຕ່ການຊອກຫາອາດຈະຖືກຫຼຸດໜ້ອຍລົງເປັນເວລາສອງສາມນາທີໃນຂະນະທີ່ດັດສະນີຈະຖືກສ້າງໃໝ່",
@@ -1083,7 +1068,6 @@
     "Deactivate user?": "ປິດໃຊ້ງານຜູ້ໃຊ້ບໍ?",
     "Are you sure?": "ທ່ານແນ່ໃຈບໍ່?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "ທ່ານບໍ່ສາມາດຍົກເລີກການປ່ຽນແປງນີ້ໄດ້ເນື່ອງຈາກທ່ານກໍາລັງສົ່ງເສີມຜູ້ໃຊ້ໃຫ້ມີລະດັບພະລັງງານດຽວກັນກັບຕົວທ່ານເອງ.",
-    "Failed to change power level": "ການປ່ຽນແປງລະດັບພະລັງງານບໍ່ສຳເລັດ",
     "Failed to mute user": "ປິດສຽງຜູ້ໃຊ້ບໍ່ສຳເລັດ",
     "Remove them from specific things I'm able to": "ລຶບອອກບາງສິ່ງທີ່ທີ່ຂ້ອຍສາມາດເຮັດໄດ້",
     "Remove them from everything I'm able to": "ລຶບອອກຈາກທຸກສິ່ງທີ່ຂ້ອຍສາມາດເຮັດໄດ້",
@@ -1645,7 +1629,8 @@
             "one": "1 ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
             "other": "%(count)s ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ."
         },
-        "unread_messages": "ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ."
+        "unread_messages": "ຂໍ້ຄວາມທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
+        "jump_first_invite": "ໄປຫາຄຳເຊີນທຳອິດ."
     },
     "labs": {
         "msc3531_hide_messages_pending_moderation": "ໃຫ້ຜູ້ຄວບຄຸມການເຊື່ອງຂໍ້ຄວາມທີ່ລໍຖ້າການກັ່ນຕອງ.",
@@ -2780,7 +2765,17 @@
             "join_rule_restricted_description_prompt": "ທຸກຄົນຢູ່ໃນພື້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. ທ່ານສາມາດເລືອກຫຼາຍໄດ້ຫຼາຍພຶ້ນທີ່.",
             "join_rule_restricted": "ພຶ້ນທີ່ຂອງສະມາຊິກ",
             "join_rule_restricted_upgrade_warning": "ຫ້ອງນີ້ແມ່ນຢູ່ໃນບາງພື້ນທີ່ທີ່ທ່ານບໍ່ແມ່ນຜູ້ຄຸ້ມຄອງ. ໃນສະຖານທີ່ເຫຼົ່ານັ້ນ, ຫ້ອງເກົ່າຍັງຈະສະແດງຢູ່, ແຕ່ຜູ້ຄົນຈະຖືກກະຕຸ້ນໃຫ້ເຂົ້າຮ່ວມຫ້ອງໃຫມ່.",
-            "join_rule_restricted_upgrade_description": "ການຍົກລະດັບນີ້ຈະອະນຸຍາດໃຫ້ສະມາຊິກຂອງພື້ນທີ່ທີ່ເລືອກເຂົ້າມາໃນຫ້ອງນີ້ໂດຍບໍ່ມີການເຊີນ."
+            "join_rule_restricted_upgrade_description": "ການຍົກລະດັບນີ້ຈະອະນຸຍາດໃຫ້ສະມາຊິກຂອງພື້ນທີ່ທີ່ເລືອກເຂົ້າມາໃນຫ້ອງນີ້ໂດຍບໍ່ມີການເຊີນ.",
+            "join_rule_upgrade_upgrading_room": "ການຍົກລະດັບຫ້ອງ",
+            "join_rule_upgrade_awaiting_room": "ກຳລັງໂຫຼດຫ້ອງໃໝ່",
+            "join_rule_upgrade_sending_invites": {
+                "one": "ກຳລັງສົ່ງຄຳເຊີນ...",
+                "other": "ກຳລັງສົ່ງຄຳເຊີນ... (%(progress)s ຈາກທັງໝົດ %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "ກຳລັງປັບປຸງພື້ນທີ່..",
+                "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "ເຜີຍແຜ່ຫ້ອງນີ້ຕໍ່ສາທາລະນະຢູ່ໃນຄຳນຳຫ້ອງຂອງ %(domain)s ບໍ?",
@@ -3512,7 +3507,9 @@
         "admin_contact_short": "ຕິດຕໍ່ <a>ຜູ້ເບິ່ງຄຸ້ມຄອງເຊີບເວີ</a> ຂອງທ່ານ.",
         "non_urgent_echo_failure_toast": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງບາງ <a>ຄຳຮ້ອງຂໍ</a>.",
         "failed_copy": "ສຳເນົາບໍ່ສຳເລັດ",
-        "something_went_wrong": "ມີບາງຢ່າງຜິດພາດ!"
+        "something_went_wrong": "ມີບາງຢ່າງຜິດພາດ!",
+        "update_power_level": "ການປ່ຽນແປງລະດັບພະລັງງານບໍ່ສຳເລັດ",
+        "unknown": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ"
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3552,5 +3549,10 @@
     "lightbox": {
         "rotate_left": "ໝຸນດ້ານຊ້າຍ",
         "rotate_right": "ໝຸນດ້ານຂວາ"
+    },
+    "a11y_jump_first_unread_room": "ໄປຫາຫ້ອງທໍາອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
+    "integration_manager": {
+        "error_connecting_heading": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
+        "error_connecting": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້."
     }
 }

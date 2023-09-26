@@ -58,7 +58,6 @@
     "Enter passphrase": "Nhập cụm mật khẩu",
     "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Quá trình này cho phép bạn xuất khóa cho các tin nhắn bạn đã nhận được trong các phòng được mã hóa sang một tệp cục bộ. Sau đó, bạn sẽ có thể nhập tệp vào ứng dụng khách Matrix khác trong tương lai, do đó ứng dụng khách đó cũng sẽ có thể giải mã các thông báo này.",
     "Export room keys": "Xuất các mã khoá phòng",
-    "Unknown error": "Lỗi không thể nhận biết",
     "Passphrase must not be empty": "Cụm mật khẩu không được để trống",
     "Passphrases must match": "Cụm mật khẩu phải khớp",
     "Unable to set up secret storage": "Không thể thiết lập bộ nhớ bí mật",
@@ -563,7 +562,6 @@
     "Filter results": "Lọc kết quả",
     "Deactivate user?": "Hủy kích hoạt người dùng?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Bạn sẽ không thể hoàn tác thay đổi này vì bạn đang khuyến khích người dùng có cùng mức sức mạnh với bạn.",
-    "Failed to change power level": "Không thay đổi được mức công suất",
     "Failed to mute user": "Không thể tắt tiếng người dùng",
     "They won't be able to access whatever you're not an admin of.": "Họ sẽ không thể truy cập vào bất cứ gì mà bạn không phải là quản trị viên.",
     "Ban them from specific things I'm able to": "Cấm họ khỏi những thứ cụ thể mà tôi có thể",
@@ -803,8 +801,6 @@
     "Back up your keys before signing out to avoid losing them.": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
     "Backup version:": "Phiên bản dự phòng:",
     "This backup is trusted because it has been restored on this session": "Bản sao lưu này đáng tin cậy vì nó đã được khôi phục trong phiên này",
-    "Jump to first invite.": "Chuyển đến lời mời đầu tiên.",
-    "Jump to first unread room.": "Chuyển đến phòng chưa đọc đầu tiên.",
     "Home": "Nhà",
     "To join a space you'll need an invite.": "Để tham gia vào một space, bạn sẽ cần một lời mời.",
     "Create a space": "Tạo một Space",
@@ -935,18 +931,6 @@
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
     "Your homeserver has exceeded its user limit.": "Máy chủ của bạn đã vượt quá giới hạn người dùng của nó.",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Đang cập nhật space…",
-        "other": "Đang cập nhật space… (%(progress)s trên %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Đang gửi lời mời…",
-        "other": "Đang gửi lời mời... (%(progress)s trên %(count)s)"
-    },
-    "Loading new room": "Đang tải phòng mới",
-    "Upgrading room": "Đang nâng cấp phòng",
-    "The integration manager is offline or it cannot reach your homeserver.": "Trình quản lý tích hợp đang ngoại tuyến hoặc không thể kết nối với Máy chủ của bạn.",
-    "Cannot connect to integration manager": "Không thể kết nối với trình quản lý tích hợp",
     "Failed to set display name": "Không đặt được tên hiển thị",
     "Authentication": "Đăng nhập",
     "Warning!": "Cảnh báo!",
@@ -1327,7 +1311,6 @@
     "Set a new account password…": "Đặt mật khẩu tài khoản mới…",
     "Your password was successfully changed.": "Đã đổi mật khẩu thành công.",
     "Error changing password": "Lỗi khi đổi mật khẩu",
-    "Add privileged users": "Thêm người dùng quyền lực",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
@@ -1336,8 +1319,6 @@
     "Call type": "Loại cuộc gọi",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (Trạng thái HTTP %(httpStatus)s)",
     "Unknown password change error (%(stringifiedError)s)": "Lỗi không xác định khi đổi mật khẩu (%(stringifiedError)s)",
-    "Search users in this room…": "Tìm người trong phòng…",
-    "Give one or multiple users in this room more privileges": "Cho người trong phòng này nhiều quyền hơn",
     "Unsent": "Chưa gửi",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Automatically adjust the microphone volume": "Tự điều chỉnh âm lượng cho micrô",
@@ -1347,7 +1328,6 @@
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
     "New video room": "Tạo phòng truyền hình",
     "New room": "Tạo phòng",
-    "Connecting to integration manager…": "Đang kết nối tới quản lý tích hợp…",
     "%(brand)s is end-to-end encrypted, but is currently limited to smaller numbers of users.": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "The scanned code is invalid.": "Mã vừa quét là không hợp lệ.",
@@ -1727,7 +1707,8 @@
             "one": "1 tin chưa đọc.",
             "other": "%(count)s tin nhắn chưa đọc."
         },
-        "unread_messages": "Các tin nhắn chưa đọc."
+        "unread_messages": "Các tin nhắn chưa đọc.",
+        "jump_first_invite": "Chuyển đến lời mời đầu tiên."
     },
     "labs": {
         "video_rooms": "Phòng video",
@@ -3048,7 +3029,10 @@
             "title": "Vai trò & Quyền",
             "permissions_section": "Quyền hạn",
             "permissions_section_description_space": "Chọn các vai trò cần thiết để thay đổi các phần khác nhau trong space",
-            "permissions_section_description_room": "Chọn vai trò được yêu cầu để thay đổi thiết lập của phòng"
+            "permissions_section_description_room": "Chọn vai trò được yêu cầu để thay đổi thiết lập của phòng",
+            "add_privileged_user_heading": "Thêm người dùng quyền lực",
+            "add_privileged_user_description": "Cho người trong phòng này nhiều quyền hơn",
+            "add_privileged_user_filter_placeholder": "Tìm người trong phòng…"
         },
         "security": {
             "strict_encryption": "Không bao giờ gửi tin nhắn được mã hóa đến các phiên chưa được xác thực trong phòng này từ phiên này",
@@ -3093,7 +3077,17 @@
             "join_rule_knock": "Yêu cầu để tham gia",
             "join_rule_knock_description": "Người khác không thể tham gia khi chưa có phép.",
             "join_rule_restricted_upgrade_warning": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
-            "join_rule_restricted_upgrade_description": "Nâng cấp này sẽ cho phép các thành viên của các space đã chọn vào phòng này mà không cần lời mời."
+            "join_rule_restricted_upgrade_description": "Nâng cấp này sẽ cho phép các thành viên của các space đã chọn vào phòng này mà không cần lời mời.",
+            "join_rule_upgrade_upgrading_room": "Đang nâng cấp phòng",
+            "join_rule_upgrade_awaiting_room": "Đang tải phòng mới",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Đang gửi lời mời…",
+                "other": "Đang gửi lời mời... (%(progress)s trên %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Đang cập nhật space…",
+                "other": "Đang cập nhật space… (%(progress)s trên %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Xuất bản phòng này cho công chúng trong thư mục phòng của %(domain)s?",
@@ -3891,7 +3885,9 @@
         "non_urgent_echo_failure_toast": "Máy chủ của bạn không phản hồi một số yêu cầu <a>requests</a>.",
         "failed_copy": "Sao chép không thành công",
         "something_went_wrong": "Đã xảy ra lỗi!",
-        "download_media": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url"
+        "download_media": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url",
+        "update_power_level": "Không thay đổi được mức công suất",
+        "unknown": "Lỗi không thể nhận biết"
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3940,5 +3936,11 @@
         "title": "Xem ảnh",
         "rotate_left": "Xoay trái",
         "rotate_right": "Xoay phải"
+    },
+    "a11y_jump_first_unread_room": "Chuyển đến phòng chưa đọc đầu tiên.",
+    "integration_manager": {
+        "connecting": "Đang kết nối tới quản lý tích hợp…",
+        "error_connecting_heading": "Không thể kết nối với trình quản lý tích hợp",
+        "error_connecting": "Trình quản lý tích hợp đang ngoại tuyến hoặc không thể kết nối với Máy chủ của bạn."
     }
 }

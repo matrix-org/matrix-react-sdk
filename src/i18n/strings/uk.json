@@ -83,7 +83,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ви не зможете скасувати цю дію, оскільки ви зменшуєте свої повноваження. Якщо ви останній привілейований користувач у цій кімнаті, ви не зможете повернути повноваження.",
     "Demote": "Зменшити повноваження",
     "Failed to mute user": "Не вдалося заглушити користувача",
-    "Failed to change power level": "Не вдалося змінити рівень повноважень",
     "Join the discussion": "Приєднатися до обговорення",
     "The conversation continues here.": "Розмова триває тут.",
     "This room has been replaced and is no longer active.": "Ця кімната була замінена і не є активною.",
@@ -91,7 +90,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Щоб уникнути втрати історії ваших листувань, ви маєте експортувати ключі кімнати перед виходом. Вам треба буде повернутися до новішої версії %(brand)s аби зробити це",
     "Incompatible Database": "Несумісна база даних",
     "Continue With Encryption Disabled": "Продовжити із вимкненим шифруванням",
-    "Unknown error": "Невідома помилка",
     "Are you sure you want to sign out?": "Ви впевнені, що хочете вийти?",
     "Your homeserver doesn't seem to support this feature.": "Схоже, що ваш домашній сервер не підтримує цю властивість.",
     "Sign out and remove encryption keys?": "Вийти та видалити ключі шифрування?",
@@ -133,8 +131,6 @@
     "Session key": "Ключ сеансу",
     "Connectivity to the server has been lost.": "З'єднання з сервером було втрачено.",
     "Sent messages will be stored until your connection has returned.": "Надіслані повідомлення будуть збережені поки не з'явиться зв'язок.",
-    "Jump to first unread room.": "Перейти до першої непрочитаної кімнати.",
-    "Jump to first invite.": "Перейти до першого запрошення.",
     "Add room": "Додати кімнату",
     "You seem to be uploading files, are you sure you want to quit?": "Схоже, що ви зараз відвантажуєте файли. Ви впевнені, що хочете вийти?",
     "You seem to be in a call, are you sure you want to quit?": "Схоже, ви намагаєтесь вийти посеред розмови. Ви впевнені, що хочете вийти?",
@@ -241,7 +237,6 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "Cannot connect to integration manager": "Не вдалося з'єднатися з менеджером інтеграцій",
     "Checking server": "Перевірка сервера",
     "You should:": "Вам варто:",
     "Disconnect anyway": "Відключити в будь-якому випадку",
@@ -297,7 +292,6 @@
     "If you can't scan the code above, verify by comparing unique emoji.": "Якщо ви не можете сканувати зазначений код, звірте порівнянням унікальних емодзі.",
     "Verify by comparing unique emoji.": "Звірити порівнянням унікальних емодзі.",
     "Verify by emoji": "Звірити за допомогою емодзі",
-    "The integration manager is offline or it cannot reach your homeserver.": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
     "Show image": "Показати зображення",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
@@ -924,16 +918,6 @@
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
     "You are about to leave <spaceName/>.": "Ви збираєтеся вийти з <spaceName/>.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Оновлення простору...",
-        "other": "Оновлення просторів... (%(progress)s із %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Надсилання запрошення...",
-        "other": "Надсилання запрошень... (%(progress)s із %(count)s)"
-    },
-    "Loading new room": "Звантаження нової кімнати",
-    "Upgrading room": "Поліпшення кімнати",
     "Link to selected message": "Посилання на вибране повідомлення",
     "To help us prevent this in future, please <a>send us logs</a>.": "Щоб уникнути цього в майбутньому просимо <a>надіслати нам журнал</a>.",
     "Missing session data": "Відсутні дані сеансу",
@@ -1537,9 +1521,6 @@
     "Error starting verification": "Помилка запуску перевірки",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
     "Change layout": "Змінити макет",
-    "Search users in this room…": "Пошук користувачів у цій кімнаті…",
-    "Give one or multiple users in this room more privileges": "Надайте одному або кільком користувачам у цій кімнаті більше повноважень",
-    "Add privileged users": "Додати привілейованих користувачів",
     "Unable to decrypt message": "Не вдалося розшифрувати повідомлення",
     "This message could not be decrypted": "Не вдалося розшифрувати це повідомлення",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
@@ -1575,7 +1556,6 @@
     "Encrypting your message…": "Шифрування повідомлення…",
     "Sending your message…": "Надсилання повідомлення…",
     "Set a new account password…": "Встановити новий пароль облікового запису…",
-    "Connecting to integration manager…": "Під'єднання до менеджера інтеграцій…",
     "Starting export process…": "Початок процесу експорту…",
     "Secure Backup successful": "Безпечне резервне копіювання виконано успішно",
     "Your keys are now being backed up from this device.": "На цьому пристрої створюється резервна копія ваших ключів.",
@@ -1893,7 +1873,8 @@
             "other": "%(count)s непрочитаних повідомлень.",
             "one": "1 непрочитане повідомлення."
         },
-        "unread_messages": "Непрочитані повідомлення."
+        "unread_messages": "Непрочитані повідомлення.",
+        "jump_first_invite": "Перейти до першого запрошення."
     },
     "labs": {
         "video_rooms": "Відеокімнати",
@@ -3306,7 +3287,10 @@
             "title": "Ролі й дозволи",
             "permissions_section": "Дозволи",
             "permissions_section_description_space": "Оберіть ролі, потрібні для зміни різних частин простору",
-            "permissions_section_description_room": "Виберіть ролі, необхідні для зміни різних частин кімнати"
+            "permissions_section_description_room": "Виберіть ролі, необхідні для зміни різних частин кімнати",
+            "add_privileged_user_heading": "Додати привілейованих користувачів",
+            "add_privileged_user_description": "Надайте одному або кільком користувачам у цій кімнаті більше повноважень",
+            "add_privileged_user_filter_placeholder": "Пошук користувачів у цій кімнаті…"
         },
         "security": {
             "strict_encryption": "Ніколи не надсилати зашифровані повідомлення до незвірених сеансів у цій кімнаті з цього сеансу",
@@ -3351,7 +3335,17 @@
             "join_rule_knock": "Запит на приєднання",
             "join_rule_knock_description": "Люди не можуть приєднатися, якщо їм не надано доступ.",
             "join_rule_restricted_upgrade_warning": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
-            "join_rule_restricted_upgrade_description": "Це поліпшення дозволить учасникам обраних просторів доступитися до цієї кімнати без запрошення."
+            "join_rule_restricted_upgrade_description": "Це поліпшення дозволить учасникам обраних просторів доступитися до цієї кімнати без запрошення.",
+            "join_rule_upgrade_upgrading_room": "Поліпшення кімнати",
+            "join_rule_upgrade_awaiting_room": "Звантаження нової кімнати",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Надсилання запрошення...",
+                "other": "Надсилання запрошень... (%(progress)s із %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Оновлення простору...",
+                "other": "Оновлення просторів... (%(progress)s із %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Опублікувати цю кімнату для всіх у каталозі кімнат %(domain)s?",
@@ -4188,7 +4182,9 @@
         "non_urgent_echo_failure_toast": "Ваш сервер не відповідає на деякі <a>запити</a>.",
         "failed_copy": "Не вдалося скопіювати",
         "something_went_wrong": "Щось пішло не так!",
-        "download_media": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела"
+        "download_media": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
+        "update_power_level": "Не вдалося змінити рівень повноважень",
+        "unknown": "Невідома помилка"
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4237,5 +4233,11 @@
         "title": "Перегляд зображення",
         "rotate_left": "Обернути ліворуч",
         "rotate_right": "Обернути праворуч"
+    },
+    "a11y_jump_first_unread_room": "Перейти до першої непрочитаної кімнати.",
+    "integration_manager": {
+        "connecting": "Під'єднання до менеджера інтеграцій…",
+        "error_connecting_heading": "Не вдалося з'єднатися з менеджером інтеграцій",
+        "error_connecting": "Менеджер інтеграцій не під'єднаний або не може зв'язатися з вашим домашнім сервером."
     }
 }

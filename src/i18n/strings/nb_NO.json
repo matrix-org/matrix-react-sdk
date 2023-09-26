@@ -102,7 +102,6 @@
     "Unavailable": "Ikke tilgjengelig",
     "Changelog": "Endringslogg",
     "Confirm Removal": "Bekreft fjerning",
-    "Unknown error": "Ukjent feil",
     "Session name": "Øktens navn",
     "Filter results": "Filtrerresultater",
     "An error has occurred.": "En feil har oppstått.",
@@ -373,7 +372,6 @@
     "Keys restored": "Nøklene ble gjenopprettet",
     "Reject invitation": "Avslå invitasjonen",
     "Couldn't load page": "Klarte ikke å laste inn siden",
-    "Jump to first invite.": "Hopp til den første invitasjonen.",
     "You seem to be uploading files, are you sure you want to quit?": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?",
     "Switch theme": "Bytt tema",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
@@ -909,7 +907,8 @@
             "one": "1 ulest melding.",
             "other": "%(count)s uleste meldinger."
         },
-        "unread_messages": "Uleste meldinger."
+        "unread_messages": "Uleste meldinger.",
+        "jump_first_invite": "Hopp til den første invitasjonen."
     },
     "labs": {
         "pinning": "Meldingsklistring",
@@ -1788,7 +1787,8 @@
     },
     "error": {
         "failed_copy": "Mislyktes i å kopiere",
-        "something_went_wrong": "Noe gikk galt!"
+        "something_went_wrong": "Noe gikk galt!",
+        "unknown": "Ukjent feil"
     },
     "lightbox": {
         "rotate_left": "Roter til venstre",

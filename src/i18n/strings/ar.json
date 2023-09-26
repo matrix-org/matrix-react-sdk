@@ -138,8 +138,6 @@
     "This room has already been upgraded.": "سبق وأن تمت ترقية هذه الغرفة.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
     "Room options": "خيارات الغرفة",
-    "Jump to first invite.": "الانتقال لأول دعوة.",
-    "Jump to first unread room.": "الانتقال لأول غرفة لم تقرأ.",
     "%(roomName)s is not accessible at this time.": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
     "%(roomName)s does not exist.": "الغرفة %(roomName)s ليست موجودة.",
     "%(roomName)s can't be previewed. Do you want to join it?": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
@@ -256,7 +254,6 @@
     "Deactivate user?": "إلغاء نشاط المستخدم؟",
     "Are you sure?": "هل متأكد أنت؟",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "لن تكون قادرًا على التراجع عن هذا التغيير لأنك ترقي المستخدم ليكون له نفس مستوى الطاقة لديك.",
-    "Failed to change power level": "تعذر تغيير مستوى القوة",
     "Failed to mute user": "تعذر كتم المستخدم",
     "Failed to ban user": "تعذر حذف المستخدم",
     "Remove recent messages": "احذف الرسائل الحديثة",
@@ -307,8 +304,6 @@
     "Room avatar": "صورة الغرفة",
     "Room Topic": "موضوع الغرفة",
     "Room Name": "اسم الغرفة",
-    "The integration manager is offline or it cannot reach your homeserver.": "مدري التكامل غير متصل بالإنرتنت أو لا يمكنه الوصول إلى خادمك الوسيط.",
-    "Cannot connect to integration manager": "لا يمكن الاتصال بمدير التكامل",
     "Failed to set display name": "تعذر تعيين الاسم الظاهر",
     "Authentication": "المصادقة",
     "Set up": "تأسيس",
@@ -1274,7 +1269,8 @@
             "one": "رسالة واحدة غير مقروءة.",
             "other": "%(count)s من الرسائل غير مقروءة."
         },
-        "unread_messages": "رسائل غير المقروءة."
+        "unread_messages": "رسائل غير المقروءة.",
+        "jump_first_invite": "الانتقال لأول دعوة."
     },
     "setting": {
         "help_about": {
@@ -1512,7 +1508,8 @@
         "admin_contact_short": "تواصل مع <a>مدير الخادم</a> الخاص بك.",
         "non_urgent_echo_failure_toast": "خادمك لا يتجاوب مع بعض <a>الطلبات</a>.",
         "failed_copy": "تعذر النسخ",
-        "something_went_wrong": "هناك خطأ ما!"
+        "something_went_wrong": "هناك خطأ ما!",
+        "update_power_level": "تعذر تغيير مستوى القوة"
     },
     "room_summary_card_back_action_label": "معلومات الغرفة",
     "analytics": {
@@ -1521,5 +1518,10 @@
     "lightbox": {
         "rotate_left": "أدر لليسار",
         "rotate_right": "أدر لليمين"
+    },
+    "a11y_jump_first_unread_room": "الانتقال لأول غرفة لم تقرأ.",
+    "integration_manager": {
+        "error_connecting_heading": "لا يمكن الاتصال بمدير التكامل",
+        "error_connecting": "مدري التكامل غير متصل بالإنرتنت أو لا يمكنه الوصول إلى خادمك الوسيط."
     }
 }

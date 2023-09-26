@@ -23,7 +23,6 @@
     "Error decrypting attachment": "Ek şifresini çözme hatası",
     "Failed to ban user": "Kullanıcı yasaklama(Ban) başarısız",
     "Failed to change password. Is your password correct?": "Parola değiştirilemedi . Şifreniz doğru mu ?",
-    "Failed to change power level": "Güç seviyesini değiştirme başarısız oldu",
     "Failed to forget room %(errCode)s": "Oda unutulması başarısız oldu %(errCode)s",
     "Failed to load timeline position": "Zaman çizelgesi konumu yüklenemedi",
     "Failed to mute user": "Kullanıcıyı sessize almak başarısız oldu",
@@ -115,7 +114,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
-    "Unknown error": "Bilinmeyen Hata",
     "Unable to restore session": "Oturum geri yüklenemiyor",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
     "Error decrypting image": "Resim şifre çözme hatası",
@@ -202,8 +200,6 @@
     "Email (optional)": "E-posta (opsiyonel)",
     "Couldn't load page": "Sayfa yüklenemiyor",
     "Verification Request": "Doğrulama Talebi",
-    "Jump to first unread room.": "Okunmamış ilk odaya zıpla.",
-    "Jump to first invite.": "İlk davete zıpla.",
     "Add room": "Oda ekle",
     "Could not load user profile": "Kullanıcı profili yüklenemedi",
     "Your password has been reset.": "Parolanız sıfırlandı.",
@@ -243,7 +239,6 @@
     "Anchor": "Çıpa",
     "Headphones": "Kulaklık",
     "Folder": "Klasör",
-    "Cannot connect to integration manager": "Entegrasyon yöneticisine bağlanılamadı",
     "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
     "Checking server": "Sunucu kontrol ediliyor",
     "Change identity server": "Kimlik sunucu değiştir",
@@ -420,7 +415,6 @@
     "Create key backup": "Anahtar yedeği oluştur",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Show more": "Daha fazla göster",
-    "The integration manager is offline or it cannot reach your homeserver.": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor.",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
     "This user has not verified all of their sessions.": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
     "You have not verified this user.": "Bu kullanıcıyı doğrulamadınız.",
@@ -1035,7 +1029,8 @@
             "other": "%(count)s okunmamış mesaj.",
             "one": "1 okunmamış mesaj."
         },
-        "unread_messages": "Okunmamış mesajlar."
+        "unread_messages": "Okunmamış mesajlar.",
+        "jump_first_invite": "İlk davete zıpla."
     },
     "labs": {
         "latex_maths": "Mesajlarda LaTex maths işleyin",
@@ -2210,7 +2205,9 @@
         "admin_contact_short": "<a>Sunucu yöneticinize</a> başvurun.",
         "non_urgent_echo_failure_toast": "Sunucunuz bası <a>istekler'e</a> onay vermiyor.",
         "failed_copy": "Kopyalama başarısız",
-        "something_went_wrong": "Bir şeyler yanlış gitti!"
+        "something_went_wrong": "Bir şeyler yanlış gitti!",
+        "update_power_level": "Güç seviyesini değiştirme başarısız oldu",
+        "unknown": "Bilinmeyen Hata"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2245,5 +2242,10 @@
     },
     "create_space": {
         "add_details_prompt_2": "Bunları istediğiniz zaman değiştirebilirsiniz."
+    },
+    "a11y_jump_first_unread_room": "Okunmamış ilk odaya zıpla.",
+    "integration_manager": {
+        "error_connecting_heading": "Entegrasyon yöneticisine bağlanılamadı",
+        "error_connecting": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor."
     }
 }

@@ -87,13 +87,11 @@
     "Import room keys": "Εισαγωγή κλειδιών δωματίου",
     "File to import": "Αρχείο για εισαγωγή",
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
-    "Unknown error": "Άγνωστο σφάλμα",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
     "Error decrypting image": "Σφάλμα κατά την αποκρυπτογράφηση της εικόνας",
     "Error decrypting video": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο",
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "Failed to ban user": "Δεν ήταν δυνατό ο αποκλεισμός του χρήστη",
-    "Failed to change power level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
     "Failed to unban": "Δεν ήταν δυνατή η άρση του αποκλεισμού",
     "Invalid file%(extra)s": "Μη έγκυρο αρχείο %(extra)s",
     "not specified": "μη καθορισμένο",
@@ -440,16 +438,6 @@
     "Your email address hasn't been verified yet": "Η διεύθυνση email σας δεν έχει επαληθευτεί ακόμα",
     "Unable to share email address": "Δεν είναι δυνατή η κοινή χρήση της διεύθυνσης email",
     "Backup version:": "Έκδοση αντιγράφου ασφαλείας:",
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Ενημέρωση χώρου...",
-        "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Αποστολή πρόσκλησης...",
-        "other": "Αποστολή προσκλήσεων... (%(progress)s από %(count)s)"
-    },
-    "Loading new room": "Φόρτωση νέου δωματίου",
-    "Upgrading room": "Αναβάθμιση δωματίου",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
@@ -511,8 +499,6 @@
     "Hat": "Καπέλο",
     "Robot": "Ρομπότ",
     "Smiley": "Χαμογελαστό πρόσωπο",
-    "Jump to first invite.": "Μετάβαση στην πρώτη πρόσκληση.",
-    "Jump to first unread room.": "Μετάβαση στο πρώτο μη αναγνωσμένο δωμάτιο.",
     "To join a space you'll need an invite.": "Για να συμμετάσχετε σε ένα χώρο θα χρειαστείτε μια πρόσκληση.",
     "Create a space": "Δημιουργήστε ένα χώρο",
     "Address": "Διεύθυνση",
@@ -1293,12 +1279,10 @@
     "The poll has ended. No votes were cast.": "Η δημοσκόπηση έληξε. Δεν υπάρχουν ψήφοι.",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
     "Manage integrations": "Διαχείριση πρόσθετων",
-    "Cannot connect to integration manager": "Δεν είναι δυνατή η σύνδεση με τον διαχειριστή πρόσθετων",
     "Failed to re-authenticate due to a homeserver problem": "Απέτυχε ο εκ νέου έλεγχος ταυτότητας λόγω προβλήματος με τον κεντρικό διακομιστή",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Το μήνυμά σας δεν στάλθηκε επειδή αυτός ο κεντρικός διακομιστής έχει υπερβεί ένα όριο πόρων. Παρακαλώ <a>επικοινωνήστε με τον διαχειριστή</a> για να συνεχίσετε να χρησιμοποιείτε την υπηρεσία.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Το μήνυμά σας δε στάλθηκε επειδή αυτός ο κεντρικός διακομιστής έχει φτάσει το μηνιαίο όριο ενεργού χρήστη. Παρακαλώ <a>επικοινωνήστε με τον διαχειριστή</a> για να συνεχίσετε να χρησιμοποιείτε την υπηρεσία.",
-    "The integration manager is offline or it cannot reach your homeserver.": "Ο διαχειριστής πρόσθετων είναι εκτός σύνδεσης ή δεν μπορεί να επικοινωνήσει με κεντρικό διακομιστή σας.",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
     "Allow this widget to verify your identity": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
     "Remember my selection for this widget": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή",
@@ -1636,7 +1620,8 @@
             "one": "1 μη αναγνωσμένο μήνυμα.",
             "other": "%(count)s μη αναγνωσμένα μηνύματα."
         },
-        "unread_messages": "Μη αναγνωσμένα μηνύματα."
+        "unread_messages": "Μη αναγνωσμένα μηνύματα.",
+        "jump_first_invite": "Μετάβαση στην πρώτη πρόσκληση."
     },
     "labs": {
         "video_rooms": "Δωμάτια βίντεο",
@@ -2774,7 +2759,17 @@
             "join_rule_restricted_description_prompt": "Οποιοσδήποτε σε ένα Χώρο μπορεί να βρει και να εγγραφεί. Μπορείτε να επιλέξετε πολλούς Χώρους.",
             "join_rule_restricted": "Μέλη χώρου",
             "join_rule_restricted_upgrade_warning": "Αυτό το δωμάτιο βρίσκεται σε ορισμένους Χώρους στους οποίους δεν είστε διαχειριστής. Σε αυτούς τους Χώρους, το παλιό δωμάτιο θα εξακολουθεί να εμφανίζεται, αλλά τα άτομα θα κληθούν να συμμετάσχουν στο νέο.",
-            "join_rule_restricted_upgrade_description": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση."
+            "join_rule_restricted_upgrade_description": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση.",
+            "join_rule_upgrade_upgrading_room": "Αναβάθμιση δωματίου",
+            "join_rule_upgrade_awaiting_room": "Φόρτωση νέου δωματίου",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Αποστολή πρόσκλησης...",
+                "other": "Αποστολή προσκλήσεων... (%(progress)s από %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Ενημέρωση χώρου...",
+                "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Δημοσίευση αυτού του δωματίου στο κοινό κατάλογο δωματίων του %(domain)s;",
@@ -3496,7 +3491,9 @@
         "admin_contact_short": "Επικοινωνήστε με τον <a>διαχειριστή του διακομιστή σας</a>.",
         "non_urgent_echo_failure_toast": "Ο διακομιστής σας δεν ανταποκρίνεται σε ορισμένα <a>αιτήματα</a>.",
         "failed_copy": "Αποτυχία αντιγραφής",
-        "something_went_wrong": "Κάτι πήγε στραβά!"
+        "something_went_wrong": "Κάτι πήγε στραβά!",
+        "update_power_level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
+        "unknown": "Άγνωστο σφάλμα"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -3536,5 +3533,10 @@
     "lightbox": {
         "rotate_left": "Περιστροφή αριστερά",
         "rotate_right": "Περιστροφή δεξιά"
+    },
+    "a11y_jump_first_unread_room": "Μετάβαση στο πρώτο μη αναγνωσμένο δωμάτιο.",
+    "integration_manager": {
+        "error_connecting_heading": "Δεν είναι δυνατή η σύνδεση με τον διαχειριστή πρόσθετων",
+        "error_connecting": "Ο διαχειριστής πρόσθετων είναι εκτός σύνδεσης ή δεν μπορεί να επικοινωνήσει με κεντρικό διακομιστή σας."
     }
 }

@@ -79,7 +79,6 @@
     "Home": "Agejdan",
     "Email (optional)": "Imayl (Afrayan)",
     "Explore rooms": "Snirem tixxamin",
-    "Unknown error": "Tuccḍa tarussint",
     "Your password has been reset.": "Awal uffir-inek/inem yettuwennez.",
     "Success!": "Tammug akken iwata!",
     "Updating %(brand)s": "Leqqem %(brand)s",
@@ -106,7 +105,6 @@
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
     "Failed to set display name": "Asbadu n yisem yettwaskanen ur yeddi ara",
-    "Cannot connect to integration manager": "Ur nessaweḍ ara ad neqqen ɣer umsefrak n useddu",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
     "Clear personal data": "Sfeḍ isefka udmawanen",
     "Passphrases must match": "Tifyar tuffirin ilaq ad mṣadant",
@@ -198,8 +196,6 @@
     "Join the discussion": "Ttekki deg udiwenni",
     "Start chatting": "Bdu adiwenni",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ulac anekcum ɣer-s akka tura.",
-    "Jump to first unread room.": "Ɛeddi ɣer texxamt tamezwarut ur nettwaɣra ara.",
-    "Jump to first invite.": "Ɛreddi ɣer tinnubga tamezwarut.",
     "Add room": "Rnu taxxamt",
     "All messages": "Iznan i meṛṛa",
     "This Room": "Taxxamt-a",
@@ -373,7 +369,6 @@
     "Remove recent messages by %(user)s": "Kkes iznan n melmi kan sɣur %(user)s",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "I tugget meqqren n yiznan, ayagi yezmer ad yeṭṭef kra n wakud. Ṛǧu ur sirin ara amsaɣ-ik·im deg leɛḍil.",
     "Failed to ban user": "Tigtin n useqdac ur yeddi ara",
-    "Failed to change power level": "Asnifel n uswir afellay ur yeddi ara",
     "Failed to deactivate user": "Asensi n useqdac ur yeddi ara",
     "This client does not support end-to-end encryption.": "Amsaɣ-a ur yessefrak ara awgelhen seg yixef ɣer yixef.",
     "Ask %(displayName)s to scan your code:": "Suter deg %(displayName)s aḍummu n tengalt-ik·im:",
@@ -502,7 +497,6 @@
     "The room upgrade could not be completed": "Aleqqem n texxamt yegguma ad yemmed",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
-    "The integration manager is offline or it cannot reach your homeserver.": "Amsefrak n umsidef ha-t-an beṛṛa n tuqqna neɣ ur yezmir ara ad yaweḍ ɣer uqeddac-ik·im agejdan.",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
     "Back up your keys before signing out to avoid losing them.": "Ḥrez tisura-ik·im send tuffɣa i wakken ur ttruḥunt ara.",
     "wait and try again later": "ṛǧu syen ɛreḍ tikkelt-nniḍen",
@@ -1117,7 +1111,8 @@
             "other": "Iznan ur nettwaɣra ara %(count)s.",
             "one": "1 yizen ur nettwaɣra ara."
         },
-        "unread_messages": "Iznan ur nettwaɣra ara."
+        "unread_messages": "Iznan ur nettwaɣra ara.",
+        "jump_first_invite": "Ɛreddi ɣer tinnubga tamezwarut."
     },
     "labs": {
         "pinning": "Arezzi n yizen",
@@ -2185,7 +2180,9 @@
         "admin_contact_short": "Nermes anedbal-inek·inem <a>n uqeddac</a>.",
         "non_urgent_echo_failure_toast": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n <a>yisuturen</a>.",
         "failed_copy": "Anɣal ur yeddi ara",
-        "something_went_wrong": "Yella wayen ur nteddu ara akken iwata!"
+        "something_went_wrong": "Yella wayen ur nteddu ara akken iwata!",
+        "update_power_level": "Asnifel n uswir afellay ur yeddi ara",
+        "unknown": "Tuccḍa tarussint"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2211,5 +2208,10 @@
     "lightbox": {
         "rotate_left": "Zzi ɣer uzelmaḍ",
         "rotate_right": "Zzi ɣer uyeffus"
+    },
+    "a11y_jump_first_unread_room": "Ɛeddi ɣer texxamt tamezwarut ur nettwaɣra ara.",
+    "integration_manager": {
+        "error_connecting_heading": "Ur nessaweḍ ara ad neqqen ɣer umsefrak n useddu",
+        "error_connecting": "Amsefrak n umsidef ha-t-an beṛṛa n tuqqna neɣ ur yezmir ara ad yaweḍ ɣer uqeddac-ik·im agejdan."
     }
 }

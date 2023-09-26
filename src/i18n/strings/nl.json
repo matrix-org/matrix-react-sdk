@@ -53,7 +53,6 @@
     "Enter passphrase": "Wachtwoord invoeren",
     "Error decrypting attachment": "Fout bij het ontsleutelen van de bijlage",
     "Failed to ban user": "Verbannen van persoon is mislukt",
-    "Failed to change power level": "Wijzigen van machtsniveau is mislukt",
     "Failed to load timeline position": "Laden van tijdslijnpositie is mislukt",
     "Failed to mute user": "Dempen van persoon is mislukt",
     "Failed to reject invite": "Weigeren van uitnodiging is mislukt",
@@ -115,7 +114,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee kan je vanuit een andere Matrix-cliënt weggeschreven versleutelingssleutels inlezen, zodat je alle berichten die de andere cliënt kon ontcijferen ook hier kan lezen.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Het weggeschreven bestand is beveiligd met een wachtwoord. Voer dat wachtwoord hier in om het bestand te ontsleutelen.",
     "Confirm Removal": "Verwijdering bevestigen",
-    "Unknown error": "Onbekende fout",
     "Unable to restore session": "Herstellen van sessie mislukt",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
     "Error decrypting image": "Fout bij het ontsleutelen van de afbeelding",
@@ -468,8 +466,6 @@
     "Click the link in the email you received to verify and then click continue again.": "Open de koppeling in de ontvangen verificatie-e-mail, en klik dan op ‘Doorgaan’.",
     "Lock": "Hangslot",
     "Show more": "Meer tonen",
-    "Cannot connect to integration manager": "Kan geen verbinding maken met de integratiebeheerder",
-    "The integration manager is offline or it cannot reach your homeserver.": "De integratiebeheerder is offline of kan je homeserver niet bereiken.",
     "None": "Geen",
     "You should:": "Je zou best:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "je browserextensies bekijken voor extensies die mogelijk de identiteitsserver blokkeren (zoals Privacy Badger)",
@@ -570,8 +566,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Je upgrade deze kamer van <oldVersion /> naar <newVersion />.",
     "Verification Request": "Verificatieverzoek",
     "Country Dropdown": "Landselectie",
-    "Jump to first unread room.": "Ga naar het eerste ongelezen kamer.",
-    "Jump to first invite.": "Ga naar de eerste uitnodiging.",
     "Enter your account password to confirm the upgrade:": "Voer je wachtwoord in om het upgraden te bevestigen:",
     "Restore your key backup to upgrade your encryption": "Herstel je sleutelback-up om je versleuteling te upgraden",
     "You'll need to authenticate with the server to confirm the upgrade.": "Je zal moeten inloggen bij de server om het upgraden te bevestigen.",
@@ -1203,16 +1197,6 @@
         "one": "%(count)s reactie",
         "other": "%(count)s reacties"
     },
-    "Updating spaces... (%(progress)s out of %(count)s)": {
-        "one": "Spaces bijwerken...",
-        "other": "Spaces bijwerken... (%(progress)s van %(count)s)"
-    },
-    "Sending invites... (%(progress)s out of %(count)s)": {
-        "one": "Uitnodigingen versturen...",
-        "other": "Uitnodigingen versturen... (%(progress)s van %(count)s)"
-    },
-    "Loading new room": "Nieuwe kamer laden",
-    "Upgrading room": "Kamer aan het bijwerken",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Het resetten van je verificatiesleutels kan niet ongedaan worden gemaakt. Na het resetten heb je geen toegang meer tot oude versleutelde berichten, en vrienden die je eerder hebben geverifieerd zullen veiligheidswaarschuwingen zien totdat je opnieuw bij hen geverifieert bent.",
     "I'll verify later": "Ik verifieer het later",
     "Verify with Security Key": "Verifieer met veiligheidssleutel",
@@ -1736,7 +1720,8 @@
             "other": "%(count)s ongelezen berichten.",
             "one": "1 ongelezen bericht."
         },
-        "unread_messages": "Ongelezen berichten."
+        "unread_messages": "Ongelezen berichten.",
+        "jump_first_invite": "Ga naar de eerste uitnodiging."
     },
     "labs": {
         "video_rooms": "Video kamers",
@@ -3031,7 +3016,17 @@
             "join_rule_restricted_description_prompt": "Iedereen in een space kan hem vinden en deelnemen. Je kan meerdere spaces selecteren.",
             "join_rule_restricted": "Space leden",
             "join_rule_restricted_upgrade_warning": "Deze kamer is in spaces waar je geen beheerder van bent. In deze spaces zal de oude kamer nog worden getoond, maar leden zullen een melding krijgen om deel te nemen aan de nieuwe kamer.",
-            "join_rule_restricted_upgrade_description": "Deze upgrade maakt het mogelijk voor leden van geselecteerde spaces om toegang te krijgen tot deze kamer zonder een uitnodiging."
+            "join_rule_restricted_upgrade_description": "Deze upgrade maakt het mogelijk voor leden van geselecteerde spaces om toegang te krijgen tot deze kamer zonder een uitnodiging.",
+            "join_rule_upgrade_upgrading_room": "Kamer aan het bijwerken",
+            "join_rule_upgrade_awaiting_room": "Nieuwe kamer laden",
+            "join_rule_upgrade_sending_invites": {
+                "one": "Uitnodigingen versturen...",
+                "other": "Uitnodigingen versturen... (%(progress)s van %(count)s)"
+            },
+            "join_rule_upgrade_updating_spaces": {
+                "one": "Spaces bijwerken...",
+                "other": "Spaces bijwerken... (%(progress)s van %(count)s)"
+            }
         },
         "general": {
             "publish_toggle": "Deze kamer vermelden in de publieke kamersgids van %(domain)s?",
@@ -3790,7 +3785,9 @@
         "admin_contact_short": "Neem contact op met je <a>serverbeheerder</a>.",
         "non_urgent_echo_failure_toast": "Je server reageert niet op sommige <a>verzoeken</a>.",
         "failed_copy": "Kopiëren mislukt",
-        "something_went_wrong": "Er is iets misgegaan!"
+        "something_went_wrong": "Er is iets misgegaan!",
+        "update_power_level": "Wijzigen van machtsniveau is mislukt",
+        "unknown": "Onbekende fout"
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3836,5 +3833,10 @@
     "lightbox": {
         "rotate_left": "Links draaien",
         "rotate_right": "Rechts draaien"
+    },
+    "a11y_jump_first_unread_room": "Ga naar het eerste ongelezen kamer.",
+    "integration_manager": {
+        "error_connecting_heading": "Kan geen verbinding maken met de integratiebeheerder",
+        "error_connecting": "De integratiebeheerder is offline of kan je homeserver niet bereiken."
     }
 }

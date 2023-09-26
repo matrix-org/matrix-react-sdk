@@ -40,7 +40,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kan ikkje gjera om på denne endringa sidan du senkar tilgangsnivået ditt. Viss du er den siste privilegerte brukaren i rommet vil det bli umogleg å få tilbake tilgangsrettane.",
     "Demote": "Degrader",
     "Failed to mute user": "Fekk ikkje til å dempe brukaren",
-    "Failed to change power level": "Fekk ikkje til å endra tilgangsnivået",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kan ikkje angre denne endringa, fordi brukaren du forfremmar vil få same tilgangsnivå som du har no.",
     "Are you sure?": "Er du sikker?",
     "Unignore": "Slutt å ignorer",
@@ -115,7 +114,6 @@
     "Changelog": "Endringslogg",
     "not specified": "Ikkje spesifisert",
     "Confirm Removal": "Godkjenn Fjerning",
-    "Unknown error": "Noko ukjend gjekk galt",
     "Deactivate Account": "Avliv Brukaren",
     "An error has occurred.": "Noko gjekk gale.",
     "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
@@ -302,8 +300,6 @@
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
-    "Jump to first unread room.": "Hopp til fyrste uleste rom.",
-    "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "wait and try again later": "vent og prøv om att seinare",
@@ -1107,7 +1103,8 @@
             "other": "%(count)s uleste meldingar.",
             "one": "1 ulesen melding."
         },
-        "unread_messages": "Uleste meldingar."
+        "unread_messages": "Uleste meldingar.",
+        "jump_first_invite": "Hopp til fyrste invitasjon."
     },
     "onboarding": {
         "explore_rooms": "Utforsk offentlege rom",
@@ -1249,7 +1246,9 @@
         "mixed_content": "Kan ikkje kobla til heimetenaren via HTTP fordi URL-adressa i nettlesaren er HTTPS. Bruk HTTPS, eller <a>aktiver usikre skript</a>.",
         "tls": "Kan ikkje kopla til heimtenaren - ver venleg og sjekk tilkoplinga di, og sjå til at <a>heimtenaren din sitt CCL-sertifikat</a> er stolt på og at ein nettlesartillegg ikkje hindrar førespurnader.",
         "failed_copy": "Noko gjekk gale med kopieringa",
-        "something_went_wrong": "Noko gjekk gale!"
+        "something_went_wrong": "Noko gjekk gale!",
+        "update_power_level": "Fekk ikkje til å endra tilgangsnivået",
+        "unknown": "Noko ukjend gjekk galt"
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",
@@ -1278,5 +1277,6 @@
     },
     "theme": {
         "match_system": "Følg systemet"
-    }
+    },
+    "a11y_jump_first_unread_room": "Hopp til fyrste uleste rom."
 }
