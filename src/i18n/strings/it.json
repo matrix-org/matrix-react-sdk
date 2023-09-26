@@ -41,7 +41,6 @@
     "Reason": "Motivo",
     "Send": "Invia",
     "Incorrect verification code": "Codice di verifica sbagliato",
-    "No display name": "Nessun nome visibile",
     "Failed to set display name": "Impostazione nome visibile fallita",
     "Failed to ban user": "Ban utente fallito",
     "Failed to mute user": "Impossibile silenziare l'utente",
@@ -316,7 +315,6 @@
     "Email addresses": "Indirizzi email",
     "Phone numbers": "Numeri di telefono",
     "Account management": "Gestione account",
-    "General": "Generale",
     "Ignored users": "Utenti ignorati",
     "Missing media permissions, click the button below to request.": "Autorizzazione multimediale mancante, clicca il pulsante sotto per richiederla.",
     "Request media permissions": "Richiedi autorizzazioni multimediali",
@@ -515,11 +513,9 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Solitamente ciò influisce solo come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, <a>segnala un errore</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Aggiornerai questa stanza dalla <oldVersion /> alla <newVersion />.",
-    "Secret storage public key:": "Chiave pubblica dell'archivio segreto:",
     "in account data": "nei dati dell'account",
     "<userName/> wants to chat": "<userName/> vuole chattare",
     "Start chatting": "Inizia a chattare",
-    "not stored": "non salvato",
     "Hide verified sessions": "Nascondi sessioni verificate",
     "%(count)s verified sessions": {
         "other": "%(count)s sessioni verificate",
@@ -639,8 +635,6 @@
     "Verification timed out.": "Verifica scaduta.",
     "%(displayName)s cancelled verification.": "%(displayName)s ha annullato la verifica.",
     "You cancelled verification.": "Hai annullato la verifica.",
-    "well formed": "formattata bene",
-    "unexpected type": "tipo inatteso",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Conferma la disattivazione del tuo account usando Single Sign On per dare prova della tua identità.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Sei sicuro di volere disattivare il tuo account? È irreversibile.",
     "Confirm account deactivation": "Conferma disattivazione account",
@@ -718,8 +712,6 @@
     "Information": "Informazione",
     "Backup version:": "Versione backup:",
     "Algorithm:": "Algoritmo:",
-    "Backup key stored:": "Chiave di backup salvata:",
-    "Backup key cached:": "Chiave di backup in cache:",
     "Secret storage:": "Archivio segreto:",
     "ready": "pronto",
     "not ready": "non pronto",
@@ -1035,7 +1027,6 @@
     "Invalid Security Key": "Chiave di sicurezza non valida",
     "Wrong Security Key": "Chiave di sicurezza sbagliata",
     "Set my room layout for everyone": "Imposta la disposizione della stanza per tutti",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Fai il backup delle tue chiavi di crittografia con i dati del tuo account in caso perdessi l'accesso alle sessioni. Le tue chiavi saranno protette con una chiave di recupero univoca.",
     "Allow this widget to verify your identity": "Permetti a questo widget di verificare la tua identità",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Il widget verificherà il tuo ID utente, ma non sarà un grado di eseguire azioni per te:",
     "Remember this": "Ricordalo",
@@ -1051,14 +1042,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Create a new room": "Crea nuova stanza",
-    "Spaces": "Spazi",
     "Space selection": "Selezione spazio",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non potrai annullare questa modifica dato che ti stai declassando, se sei l'ultimo utente privilegiato nello spazio sarà impossibile riottenere il grado.",
     "Suggested Rooms": "Stanze suggerite",
     "Add existing room": "Aggiungi stanza esistente",
     "Invite to this space": "Invita in questo spazio",
     "Your message was sent": "Il tuo messaggio è stato inviato",
-    "Space options": "Opzioni dello spazio",
     "Leave space": "Esci dallo spazio",
     "Create a space": "Crea uno spazio",
     "Private space": "Spazio privato",
@@ -1138,7 +1127,6 @@
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
     "Space information": "Informazioni spazio",
-    "Enable guest access": "Attiva accesso ospiti",
     "Address": "Indirizzo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
@@ -1632,7 +1620,6 @@
     "Set a new account password…": "Imposta una nuova password dell'account…",
     "Backing up %(sessionsRemaining)s keys…": "Backup di %(sessionsRemaining)s chiavi…",
     "Connecting to integration manager…": "Connessione al gestore di integrazioni…",
-    "Saving…": "Salvataggio…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Secure Backup successful": "Backup Sicuro completato",
     "Your keys are now being backed up from this device.": "Viene ora fatto il backup delle tue chiavi da questo dispositivo.",
@@ -1833,7 +1820,10 @@
         "deselect_all": "Deseleziona tutti",
         "select_all": "Seleziona tutti",
         "copied": "Copiato!",
-        "advanced": "Avanzato"
+        "advanced": "Avanzato",
+        "spaces": "Spazi",
+        "general": "Generale",
+        "saving": "Salvataggio…"
     },
     "action": {
         "continue": "Continua",
@@ -2409,7 +2399,14 @@
             "message_search_disabled": "Tieni in cache localmente i messaggi cifrati in modo sicuro affinché appaiano nei risultati di ricerca.",
             "message_search_unsupported": "A %(brand)s mancano alcuni componenti richiesti per tenere in cache i messaggi cifrati in modo sicuro. Se vuoi sperimentare questa funzionalità, compila un %(brand)s Desktop personale con <nativeLink>i componenti di ricerca aggiunti</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s non può tenere in cache i messaggi cifrati quando usato in un browser web. Usa <desktopLink>%(brand)s Desktop</desktopLink> affinché i messaggi cifrati appaiano nei risultati di ricerca.",
-            "message_search_failed": "Inizializzazione ricerca messaggi fallita"
+            "message_search_failed": "Inizializzazione ricerca messaggi fallita",
+            "backup_key_well_formed": "formattata bene",
+            "backup_key_unexpected_type": "tipo inatteso",
+            "backup_keys_description": "Fai il backup delle tue chiavi di crittografia con i dati del tuo account in caso perdessi l'accesso alle sessioni. Le tue chiavi saranno protette con una chiave di recupero univoca.",
+            "backup_key_stored_status": "Chiave di backup salvata:",
+            "cross_signing_not_stored": "non salvato",
+            "backup_key_cached_status": "Chiave di backup in cache:",
+            "4s_public_key_status": "Chiave pubblica dell'archivio segreto:"
         },
         "preferences": {
             "room_list_heading": "Elenco stanze",
@@ -2548,7 +2545,8 @@
             "add_msisdn_confirm_sso_button": "Conferma aggiungendo questo numero di telefono usando Single Sign On per provare la tua identità.",
             "add_msisdn_confirm_button": "Conferma aggiungendo un numero di telefono",
             "add_msisdn_confirm_body": "Clicca il pulsante sotto per confermare l'aggiunta di questo numero di telefono.",
-            "add_msisdn_dialog_title": "Aggiungi numero di telefono"
+            "add_msisdn_dialog_title": "Aggiungi numero di telefono",
+            "name_placeholder": "Nessun nome visibile"
         },
         "sidebar": {
             "title": "Barra laterale",
@@ -3401,7 +3399,8 @@
             "error_failed_save": "Aggiornamento visibilità dello spazio fallito",
             "history_visibility_anyone_space": "Anteprima spazio",
             "history_visibility_anyone_space_description": "Permetti a chiunque di vedere l'anteprima dello spazio prima di unirsi.",
-            "history_visibility_anyone_space_recommendation": "Consigliato per gli spazi pubblici."
+            "history_visibility_anyone_space_recommendation": "Consigliato per gli spazi pubblici.",
+            "guest_access_label": "Attiva accesso ospiti"
         },
         "access": {
             "title": "Accesso",
@@ -3911,7 +3910,8 @@
             "devtools_open_timeline": "Mostra linea temporale della stanza (strumenti per sviluppatori)",
             "home": "Pagina iniziale dello spazio",
             "explore": "Esplora stanze",
-            "manage_and_explore": "Gestisci ed esplora le stanze"
+            "manage_and_explore": "Gestisci ed esplora le stanze",
+            "options": "Opzioni dello spazio"
         },
         "share_public": "Condividi il tuo spazio pubblico",
         "search_children": "Cerca %(spaceName)s",

@@ -31,7 +31,6 @@
     "Reason": "Grunnlag",
     "Send": "Send",
     "Incorrect verification code": "Urett stadfestingskode",
-    "No display name": "Ingen visningsnamn",
     "Warning!": "Åtvaring!",
     "Authentication": "Authentisering",
     "Failed to set display name": "Fekk ikkje til å setja visningsnamn",
@@ -294,7 +293,6 @@
     "Show more": "Vis meir",
     "Display Name": "Visningsnamn",
     "Invalid theme schema.": "",
-    "General": "Generelt",
     "Room information": "Rominformasjon",
     "Room Addresses": "Romadresser",
     "Sounds": "Lydar",
@@ -304,7 +302,6 @@
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
-    "Secret storage public key:": "Public-nøkkel for hemmeleg lager:",
     "Ignored users": "Ignorerte brukarar",
     "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
@@ -434,7 +431,8 @@
         "on": "På",
         "off": "Av",
         "copied": "Kopiert!",
-        "advanced": "Avansert"
+        "advanced": "Avansert",
+        "general": "Generelt"
     },
     "action": {
         "continue": "Fortset",
@@ -640,7 +638,8 @@
             "cryptography_section": "Kryptografi",
             "encryption_section": "Kryptografi",
             "bulk_options_accept_all_invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
-            "bulk_options_reject_all_invites": "Kanseller alle invitasjonar frå %(invitedRooms)s"
+            "bulk_options_reject_all_invites": "Kanseller alle invitasjonar frå %(invitedRooms)s",
+            "4s_public_key_status": "Public-nøkkel for hemmeleg lager:"
         },
         "preferences": {
             "room_list_heading": "Romkatalog",
@@ -677,7 +676,8 @@
             "add_msisdn_confirm_sso_button": "Stadfest dette telefonnummeret for å bruka Single-sign-on for å bevisa identiteten din.",
             "add_msisdn_confirm_button": "Stadfest tilleggjing av telefonnummeret",
             "add_msisdn_confirm_body": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
-            "add_msisdn_dialog_title": "Legg til telefonnummer"
+            "add_msisdn_dialog_title": "Legg til telefonnummer",
+            "name_placeholder": "Ingen visningsnamn"
         },
         "sidebar": {
             "title": "Sidestolpe"

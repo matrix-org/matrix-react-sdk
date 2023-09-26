@@ -804,25 +804,14 @@
     "ready": "Sẵn sàng",
     "Secret storage:": "Lưu trữ bí mật:",
     "in account data": "trong dữ liệu tài khoản",
-    "Secret storage public key:": "Khóa công khai lưu trữ bí mật:",
-    "Backup key cached:": "Đệm các khóa được sao lưu:",
-    "not stored": "không được lưu trữ",
-    "Backup key stored:": "Lưu trữ hóa được sao lưu:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sao lưu các khóa mã hóa với dữ liệu tài khoản của bạn trong trường hợp bạn mất quyền truy cập vào các phiên của mình. Các khóa của bạn sẽ được bảo mật bằng Khóa bảo mật duy nhất.",
-    "unexpected type": "loại bất ngờ",
-    "well formed": "được hình thành một cách hoàn hảo",
     "Set up": "Cài đặt",
     "Back up your keys before signing out to avoid losing them.": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
     "Your keys are <b>not being backed up from this session</b>.": "Các khóa của bạn <b>not being backed up from this session</b>.",
     "Algorithm:": "Thuật toán:",
     "Backup version:": "Phiên bản dự phòng:",
     "This backup is trusted because it has been restored on this session": "Bản sao lưu này đáng tin cậy vì nó đã được khôi phục trong phiên này",
-    "Space options": "Tùy chọn space",
     "Jump to first invite.": "Chuyển đến lời mời đầu tiên.",
     "Jump to first unread room.": "Chuyển đến phòng chưa đọc đầu tiên.",
-    "Enable guest access": "Bật quyền truy cập của khách",
-    "General": "Tổng quát",
-    "Spaces": "Không gian",
     "Home": "Nhà",
     "To join a space you'll need an invite.": "Để tham gia vào một space, bạn sẽ cần một lời mời.",
     "Create a space": "Tạo một Space",
@@ -1002,7 +991,6 @@
     "Failed to set display name": "Không đặt được tên hiển thị",
     "Authentication": "Đăng nhập",
     "Warning!": "Cảnh báo!",
-    "No display name": "Không có tên hiển thị",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Yemen",
@@ -1384,7 +1372,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Đang sao lưu %(sessionsRemaining)s khóa…",
     "This session is backing up your keys.": "Phiên này đang sao lưu các khóa.",
     "Add privileged users": "Thêm người dùng quyền lực",
-    "Saving…": "Đang lưu…",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
@@ -1663,7 +1650,10 @@
         "deselect_all": "Bỏ chọn tất cả",
         "select_all": "Chọn tất cả",
         "copied": "Đã sao chép!",
-        "advanced": "Nâng cao"
+        "advanced": "Nâng cao",
+        "spaces": "Không gian",
+        "general": "Tổng quát",
+        "saving": "Đang lưu…"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2205,7 +2195,14 @@
             "message_search_disabled": "Bộ nhớ cache an toàn các tin nhắn được mã hóa cục bộ để chúng xuất hiện trong kết quả tìm kiếm.",
             "message_search_unsupported": "%(brand)s thiếu một số thành phần thiết yếu để lưu trữ cục bộ an toàn các tin nhắn được mã hóa. Nếu bạn muốn thử nghiệm với tính năng này, hãy dựng một bản %(brand)s tùy chỉnh cho máy tính có thêm <nativeLink>các thành phần để tìm kiếm</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s không thể lưu trữ cục bộ an toàn các tin nhắn được mã hóa khi đang chạy trong trình duyệt web. Sử dụng <desktopLink>%(brand)s cho máy tính</desktopLink> để các tin nhắn được mã hóa xuất hiện trong kết quả tìm kiếm.",
-            "message_search_failed": "Khởi tạo tìm kiếm tin nhắn không thành công"
+            "message_search_failed": "Khởi tạo tìm kiếm tin nhắn không thành công",
+            "backup_key_well_formed": "được hình thành một cách hoàn hảo",
+            "backup_key_unexpected_type": "loại bất ngờ",
+            "backup_keys_description": "Sao lưu các khóa mã hóa với dữ liệu tài khoản của bạn trong trường hợp bạn mất quyền truy cập vào các phiên của mình. Các khóa của bạn sẽ được bảo mật bằng Khóa bảo mật duy nhất.",
+            "backup_key_stored_status": "Lưu trữ hóa được sao lưu:",
+            "cross_signing_not_stored": "không được lưu trữ",
+            "backup_key_cached_status": "Đệm các khóa được sao lưu:",
+            "4s_public_key_status": "Khóa công khai lưu trữ bí mật:"
         },
         "preferences": {
             "room_list_heading": "Danh sách phòng",
@@ -2343,7 +2340,8 @@
             "add_msisdn_confirm_sso_button": "Xác nhận thêm số điện thoại này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
             "add_msisdn_confirm_button": "Xác nhận thêm số điện thoại",
             "add_msisdn_confirm_body": "Nhấn vào nút dưới đây để xác nhận thêm số điện thoại này.",
-            "add_msisdn_dialog_title": "Thêm Số Điện Thoại"
+            "add_msisdn_dialog_title": "Thêm Số Điện Thoại",
+            "name_placeholder": "Không có tên hiển thị"
         },
         "sidebar": {
             "title": "Thanh bên",
@@ -3138,7 +3136,8 @@
             "error_failed_save": "Không cập nhật được khả năng hiển thị của space này",
             "history_visibility_anyone_space": "Xem trước space",
             "history_visibility_anyone_space_description": "Cho phép mọi người xem trước space của bạn trước khi tham gia.",
-            "history_visibility_anyone_space_recommendation": "Được đề xuất cho space công cộng."
+            "history_visibility_anyone_space_recommendation": "Được đề xuất cho space công cộng.",
+            "guest_access_label": "Bật quyền truy cập của khách"
         },
         "access": {
             "title": "Truy cập",
@@ -3625,7 +3624,8 @@
         "context_menu": {
             "devtools_open_timeline": "Xem dòng thời gian phòng (devtools)",
             "explore": "Khám phá các phòng",
-            "manage_and_explore": "Quản lý và khám phá phòng"
+            "manage_and_explore": "Quản lý và khám phá phòng",
+            "options": "Tùy chọn space"
         },
         "share_public": "Chia sẻ space công cộng của bạn",
         "search_children": "Tìm kiếm %(spaceName)s",

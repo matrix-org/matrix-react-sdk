@@ -47,7 +47,6 @@
     "Moderator": "Moderátor",
     "New passwords must match each other.": "Az új jelszavaknak meg kell egyezniük egymással.",
     "not specified": "nincs meghatározva",
-    "No display name": "Nincs megjelenítendő név",
     "No more results": "Nincs több találat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
     "Profile": "Profil",
@@ -247,7 +246,6 @@
     "Profile picture": "Profilkép",
     "Display Name": "Megjelenítési név",
     "Room information": "Szobainformációk",
-    "General": "Általános",
     "Room Addresses": "Szobacímek",
     "Email addresses": "E-mail-cím",
     "Phone numbers": "Telefonszámok",
@@ -517,10 +515,8 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "<oldVersion /> verzióról <newVersion /> verzióra fogja fejleszteni a szobát.",
     "<userName/> wants to chat": "<userName/> csevegni szeretne",
     "Start chatting": "Beszélgetés elkezdése",
-    "Secret storage public key:": "Titkos tároló nyilvános kulcsa:",
     "in account data": "fiókadatokban",
     "Unable to set up secret storage": "A biztonsági tárolót nem sikerült beállítani",
-    "not stored": "nincs tárolva",
     "Hide verified sessions": "Ellenőrzött munkamenetek eltakarása",
     "%(count)s verified sessions": {
         "other": "%(count)s ellenőrzött munkamenet",
@@ -631,8 +627,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Erősítsd meg a felhasználói beállítások összehasonlításával a többi munkamenetedben:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ezt a munkamenetet hitelesítsd az ő felhasználói beállításának az összehasonlításával:",
     "If they don't match, the security of your communication may be compromised.": "Ha nem egyeznek akkor a kommunikációtok biztonsága veszélyben lehet.",
-    "well formed": "helyesen formázott",
-    "unexpected type": "váratlan típus",
     "Almost there! Is %(displayName)s showing the same shield?": "Majdnem kész! %(displayName)s is ugyanazt a pajzsot mutatja?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Sikeresen ellenőrizted: %(deviceName)s (%(deviceId)s)!",
     "Start verification again from the notification.": "Ellenőrzés újrakezdése az értesítésből.",
@@ -720,8 +714,6 @@
     "Room settings": "Szoba beállítások",
     "Backup version:": "Mentés verziója:",
     "Algorithm:": "Algoritmus:",
-    "Backup key stored:": "Tárolt mentési kulcs:",
-    "Backup key cached:": "Gyorsítótárazott mentési kulcs:",
     "Secret storage:": "Titkos tároló:",
     "ready": "kész",
     "not ready": "nincs kész",
@@ -1034,7 +1026,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "A biztonsági tárolóhoz nem lehet hozzáférni. Kérjük ellenőrizze, hogy jó Biztonsági jelmondatot adott-e meg.",
     "Invalid Security Key": "Érvénytelen biztonsági kulcs",
     "Wrong Security Key": "Hibás biztonsági kulcs",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Mentse el a titkosítási kulcsokat a fiókadatokkal arra az esetre, ha elvesztené a hozzáférést a munkameneteihez. A kulcsok egy egyedi biztonsági kulccsal lesznek védve.",
     "Set my room layout for everyone": "A szoba megjelenésének beállítása mindenki számára",
     "Remember this": "Emlékezzen erre",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
@@ -1051,14 +1042,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevével, felhasználói nevével (pl. <userId/>) vagy <a>oszd meg ezt a teret</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a teret</a>.",
     "Create a new room": "Új szoba készítése",
-    "Spaces": "Terek",
     "Space selection": "Tér kiválasztása",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Nem fogja tudni visszavonni ezt a változtatást, mert lefokozza magát, ha Ön az utolsó privilegizált felhasználó a térben, akkor lehetetlen lesz a jogosultságok visszanyerése.",
     "Suggested Rooms": "Javasolt szobák",
     "Add existing room": "Létező szoba hozzáadása",
     "Invite to this space": "Meghívás a térbe",
     "Your message was sent": "Üzenet elküldve",
-    "Space options": "Tér beállításai",
     "Leave space": "Tér elhagyása",
     "Create a space": "Tér létrehozása",
     "Private space": "Privát tér",
@@ -1143,7 +1132,6 @@
     "Please provide an address": "Kérem adja meg a címet",
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
     "Space information": "Tér információi",
-    "Enable guest access": "Vendéghozzáférés engedélyezése",
     "Address": "Cím",
     "Unnamed audio": "Névtelen hang",
     "Error processing audio message": "Hiba a hangüzenet feldolgozásánál",
@@ -1618,7 +1606,6 @@
     "Select '%(scanQRCode)s'": "Kiválasztás „%(scanQRCode)s”",
     "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
     "There are no past polls in this room": "Nincsenek régebbi szavazások ebben a szobában",
-    "Saving…": "Mentés…",
     "There are no active polls in this room": "Nincsenek aktív szavazások ebben a szobában",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
     "Checking…": "Ellenőrzés…",
@@ -1780,7 +1767,10 @@
         "deselect_all": "Semmit nem jelöl ki",
         "select_all": "Mindet kijelöli",
         "copied": "Másolva!",
-        "advanced": "Speciális"
+        "advanced": "Speciális",
+        "spaces": "Terek",
+        "general": "Általános",
+        "saving": "Mentés…"
     },
     "action": {
         "continue": "Folytatás",
@@ -2344,7 +2334,14 @@
             "message_search_disabled": "A titkosított üzenetek biztonságos helyi gyorsítótárazása, hogy megjelenhessenek a keresési találatok között.",
             "message_search_unsupported": "A titkosított üzenetek biztonságos helyi tárolásához hiányzik néhány összetevő a(z) %(brand)s alkalmazásból. Ha kísérletezni szeretne ezzel a funkcióval, akkor állítson össze egy egyéni asztali %(brand)s alkalmazást, amely <nativeLink>tartalmazza a keresési összetevőket</nativeLink>.",
             "message_search_unsupported_web": "A(z) %(brand)s nem képes helyileg biztonságosan elmenteni a titkosított üzeneteket, ha webböngészőben fut. Használja az <desktopLink>asztali %(brand)s</desktopLink> alkalmazást, hogy az üzenetekben való kereséskor a titkosított üzenetek is megjelenjenek.",
-            "message_search_failed": "Az üzenetkeresés előkészítése sikertelen"
+            "message_search_failed": "Az üzenetkeresés előkészítése sikertelen",
+            "backup_key_well_formed": "helyesen formázott",
+            "backup_key_unexpected_type": "váratlan típus",
+            "backup_keys_description": "Mentse el a titkosítási kulcsokat a fiókadatokkal arra az esetre, ha elvesztené a hozzáférést a munkameneteihez. A kulcsok egy egyedi biztonsági kulccsal lesznek védve.",
+            "backup_key_stored_status": "Tárolt mentési kulcs:",
+            "cross_signing_not_stored": "nincs tárolva",
+            "backup_key_cached_status": "Gyorsítótárazott mentési kulcs:",
+            "4s_public_key_status": "Titkos tároló nyilvános kulcsa:"
         },
         "preferences": {
             "room_list_heading": "Szobalista",
@@ -2483,7 +2480,8 @@
             "add_msisdn_confirm_sso_button": "Erősítse meg a telefonszám hozzáadását azáltal, hogy az egyszeri bejelentkezéssel bizonyítja a személyazonosságát.",
             "add_msisdn_confirm_button": "Telefonszám hozzáadásának megerősítése",
             "add_msisdn_confirm_body": "A telefonszám hozzáadásának megerősítéséhez kattintson a lenti gombra.",
-            "add_msisdn_dialog_title": "Telefonszám hozzáadása"
+            "add_msisdn_dialog_title": "Telefonszám hozzáadása",
+            "name_placeholder": "Nincs megjelenítendő név"
         },
         "sidebar": {
             "title": "Oldalsáv",
@@ -3312,7 +3310,8 @@
             "error_failed_save": "A tér láthatóságának frissítése sikertelen",
             "history_visibility_anyone_space": "Tér előnézete",
             "history_visibility_anyone_space_description": "A tér előnézetének engedélyezése a belépés előtt.",
-            "history_visibility_anyone_space_recommendation": "A nyilvános terekhez ajánlott."
+            "history_visibility_anyone_space_recommendation": "A nyilvános terekhez ajánlott.",
+            "guest_access_label": "Vendéghozzáférés engedélyezése"
         },
         "access": {
             "title": "Hozzáférés",
@@ -3816,7 +3815,8 @@
             "devtools_open_timeline": "Szoba idővonal megjelenítése (fejlesztői eszközök)",
             "home": "Kezdő tér",
             "explore": "Szobák felderítése",
-            "manage_and_explore": "Szobák kezelése és felderítése"
+            "manage_and_explore": "Szobák kezelése és felderítése",
+            "options": "Tér beállításai"
         },
         "share_public": "Nyilvános tér megosztása",
         "search_children": "Keresés: %(spaceName)s",

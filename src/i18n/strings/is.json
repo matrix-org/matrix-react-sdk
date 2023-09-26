@@ -195,7 +195,6 @@
     "Lion": "Ljón",
     "Cat": "Köttur",
     "Dog": "Hundur",
-    "General": "Almennt",
     "Demote": "Leggja til baka",
     "Replying": "Svara",
     "%(duration)sd": "%(duration)sd",
@@ -211,7 +210,6 @@
         "other": "Bæti við spjallrásum... (%(progress)s af %(count)s)"
     },
     "Role in <RoomName/>": "Hlutverk í <RoomName/>",
-    "Spaces": "Svæði",
     "Zimbabwe": "Simbabve",
     "Zambia": "Sambía",
     "Yemen": "Jemen",
@@ -590,7 +588,6 @@
     "Space members": "Meðlimir svæðis",
     "Upgrade required": "Uppfærsla er nauðsynleg",
     "Display Name": "Birtingarnafn",
-    "Space options": "Valkostir svæðis",
     "Address": "Vistfang",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -717,7 +714,6 @@
         "one": "og %(count)s til viðbótar",
         "other": "og %(count)s til viðbótar"
     },
-    "No display name": "Ekkert birtingarnafn",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -768,13 +764,6 @@
     "Could not connect to identity server": "Gat ekki tengst við auðkennisþjón",
     "Secret storage:": "Leynigeymsla:",
     "in account data": "í gögnum notandaaðgangs",
-    "Secret storage public key:": "Dreifilykill leynigeymslu:",
-    "Backup key cached:": "Öryggisafritunarlykill í skyndiminni:",
-    "not stored": "ekki geymt",
-    "Backup key stored:": "Geymdur öryggisafritunarlykill:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Taktu öryggisafrit af dulritunarlyklunum þínum ásamt gögnum notandaaðgangsins fari svo að þú missir aðgang að setunum þínum. Dulritunarlyklarnir verða varðir með einstökum öryggislykli.",
-    "unexpected type": "óvænt tegund",
-    "well formed": "rétt sniðið",
     "Back up your keys before signing out to avoid losing them.": "Taktu öryggisafrit af dulritunarlyklunum áður en þú skráir þig út svo þeir tapist ekki.",
     "Your keys are <b>not being backed up from this session</b>.": "Dulritunarlyklarnir þínir eru <b>ekki öryggisafritaðir úr þessari setu</b>.",
     "Backup version:": "Útgáfa öryggisafrits:",
@@ -813,7 +802,6 @@
     "Anyone in a space can find and join. You can select multiple spaces.": "Hver sem er í svæði getur fundið og tekið þátt. Þú getur valið mörg svæði.",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Hver sem er í <spaceName/> getur fundið og tekið þátt. Þú getur einnig valið önnur svæði.",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Hver sem er í svæði getur fundið og tekið þátt. <a>Breyttu hér því hvaða svæði hafa aðgang.</a>",
-    "Enable guest access": "Leyfa aðgang gesta",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
@@ -1502,7 +1490,9 @@
         "deselect_all": "Afvelja allt",
         "select_all": "Velja allt",
         "copied": "Afritað!",
-        "advanced": "Nánar"
+        "advanced": "Nánar",
+        "spaces": "Svæði",
+        "general": "Almennt"
     },
     "action": {
         "continue": "Halda áfram",
@@ -2025,7 +2015,14 @@
             },
             "message_search_disabled": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum.",
             "message_search_unsupported_web": "%(brand)s nær ekki að setja dulrituð skilaboð leynilega í skyndiminni á tækinu á meðan keyrt er í vafra. Notaðu <desktopLink>%(brand)s Desktop vinnutölvuútgáfuna</desktopLink> svo skilaboðin birtist í leitarniðurstöðum.",
-            "message_search_failed": "Frumstilling leitar í skilaboðum mistókst"
+            "message_search_failed": "Frumstilling leitar í skilaboðum mistókst",
+            "backup_key_well_formed": "rétt sniðið",
+            "backup_key_unexpected_type": "óvænt tegund",
+            "backup_keys_description": "Taktu öryggisafrit af dulritunarlyklunum þínum ásamt gögnum notandaaðgangsins fari svo að þú missir aðgang að setunum þínum. Dulritunarlyklarnir verða varðir með einstökum öryggislykli.",
+            "backup_key_stored_status": "Geymdur öryggisafritunarlykill:",
+            "cross_signing_not_stored": "ekki geymt",
+            "backup_key_cached_status": "Öryggisafritunarlykill í skyndiminni:",
+            "4s_public_key_status": "Dreifilykill leynigeymslu:"
         },
         "preferences": {
             "room_list_heading": "Spjallrásalisti",
@@ -2136,7 +2133,8 @@
             "add_msisdn_confirm_sso_button": "Staðfestu viðbætingu þessa símanúmers með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
             "add_msisdn_confirm_button": "Staðfestu að bæta við símanúmeri",
             "add_msisdn_confirm_body": "Smelltu á hnappinn hér að neðan til að staðfesta að bæta við þessu símanúmeri.",
-            "add_msisdn_dialog_title": "Bæta við símanúmeri"
+            "add_msisdn_dialog_title": "Bæta við símanúmeri",
+            "name_placeholder": "Ekkert birtingarnafn"
         },
         "sidebar": {
             "title": "Hliðarspjald",
@@ -2879,7 +2877,8 @@
             "error_failed_save": "Mistókst að uppfæra sýnileika þessa svæðis",
             "history_visibility_anyone_space": "Forskoða svæði",
             "history_visibility_anyone_space_description": "Bjóddu fólki að forskoða svæðið þitt áður en þau geta tekið þátt.",
-            "history_visibility_anyone_space_recommendation": "Mælt með fyrir opinber almenningssvæði."
+            "history_visibility_anyone_space_recommendation": "Mælt með fyrir opinber almenningssvæði.",
+            "guest_access_label": "Leyfa aðgang gesta"
         },
         "access": {
             "title": "Aðgangur",
@@ -3335,7 +3334,8 @@
             "devtools_open_timeline": "Skoða tímalínu spjallrásar (forritaratól)",
             "home": "Forsíða svæðis",
             "explore": "Kanna spjallrásir",
-            "manage_and_explore": "Sýsla með og kanna spjallrásir"
+            "manage_and_explore": "Sýsla með og kanna spjallrásir",
+            "options": "Valkostir svæðis"
         },
         "share_public": "Deildu opinbera svæðinu þínu",
         "search_children": "Leita í %(spaceName)s",

@@ -98,7 +98,6 @@
     "Failed to unban": "Δεν ήταν δυνατή η άρση του αποκλεισμού",
     "Invalid file%(extra)s": "Μη έγκυρο αρχείο %(extra)s",
     "not specified": "μη καθορισμένο",
-    "No display name": "Χωρίς όνομα",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
     "%(roomName)s is not accessible at this time.": "Το %(roomName)s δεν είναι προσβάσιμο αυτή τη στιγμή.",
     "Server may be unavailable, overloaded, or search timed out :(": "Ο διακομιστής μπορεί να είναι μη διαθέσιμος, υπερφορτωμένος, ή να έχει λήξει η αναζήτηση :(",
@@ -464,15 +463,11 @@
     "Loading new room": "Φόρτωση νέου δωματίου",
     "Upgrading room": "Αναβάθμιση δωματίου",
     "Space members": "Μέλη χώρου",
-    "Space options": "Επιλογές χώρου",
-    "Enable guest access": "Ενεργοποίηση πρόσβασης επισκέπτη",
-    "General": "Γενικά",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
     "Themes": "Θέματα",
     "Widgets": "Μικροεφαρμογές",
-    "Spaces": "Χώροι",
     "Messaging": "Μηνύματα",
     "Room information": "Πληροφορίες δωματίου",
     "Your homeserver has exceeded one of its resource limits.": "Ο κεντρικός σας διακομιστής έχει υπερβεί ένα από τα όρια πόρων του.",
@@ -554,11 +549,6 @@
     "Ball": "Μπάλα",
     "Trophy": "Τρόπαιο",
     "Rocket": "Πύραυλος",
-    "Backup key cached:": "Αποθηκευμένο εφεδρικό κλειδί στην κρυφή μνήμη:",
-    "not stored": "μη αποθηκευμένο",
-    "Backup key stored:": "Αποθηκευμένο εφεδρικό κλειδί:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών κρυπτογράφησης με τα δεδομένα του λογαριασμού σας σε περίπτωση που χάσετε την πρόσβαση στις συνεδρίες σας. Τα κλειδιά σας θα ασφαλιστούν με ένα μοναδικό κλειδί ασφαλείας.",
-    "unexpected type": "μη αναμενόμενος τύπος",
     "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "Your keys are <b>not being backed up from this session</b>.": "<b>Δεν δημιουργούνται αντίγραφα ασφαλείας των κλειδιών σας από αυτήν την συνεδρία</b>.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
@@ -597,8 +587,6 @@
     "ready": "έτοιμο",
     "Secret storage:": "Μυστική αποθήκευση:",
     "in account data": "στα δεδομένα λογαριασμού",
-    "Secret storage public key:": "Δημόσιο κλειδί μυστικής αποθήκευσης:",
-    "well formed": "καλοσχηματισμένο",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Οποιοσδήποτε στο <spaceName/> μπορεί να το βρει και να εγγραφεί. Μπορείτε να επιλέξετε και άλλους χώρους.",
     "Spaces with access": "Χώροι με πρόσβαση",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Οποιοσδήποτε σε ένα χώρο μπορεί να το βρει και να εγγραφεί. <a>Επεξεργαστείτε τους χώρους που έχουν πρόσβαση εδώ.</a>",
@@ -1574,7 +1562,9 @@
         "deselect_all": "Αποεπιλογή όλων",
         "select_all": "Επιλογή όλων",
         "copied": "Αντιγράφηκε!",
-        "advanced": "Προχωρημένες"
+        "advanced": "Προχωρημένες",
+        "spaces": "Χώροι",
+        "general": "Γενικά"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2010,7 +2000,14 @@
             "message_search_disabled": "Αποθηκεύστε με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά για να εμφανίζονται στα αποτελέσματα αναζήτησης.",
             "message_search_unsupported": "Λείπουν ορισμένα στοιχεία από το %(brand)s που απαιτούνται για την ασφαλή αποθήκευση κρυπτογραφημένων μηνυμάτων τοπικά. Εάν θέλετε να πειραματιστείτε με αυτό το χαρακτηριστικό, δημιουργήστε μια προσαρμοσμένη %(brand)s επιφάνεια εργασίαςμε <nativeLink>προσθήκη στοιχείων αναζήτησης</nativeLink>.",
             "message_search_unsupported_web": "Το %(brand)s δεν μπορεί να αποθηκεύσει με ασφάλεια κρυπτογραφημένα μηνύματα τοπικά ενώ εκτελείται σε πρόγραμμα περιήγησης ιστού. Χρησιμοποιήστε την <desktopLink>%(brand)s Επιφάνεια εργασίας</desktopLink> για να εμφανίζονται κρυπτογραφημένα μηνύματα στα αποτελέσματα αναζήτησης.",
-            "message_search_failed": "Η αρχικοποίηση αναζήτησης μηνυμάτων απέτυχε"
+            "message_search_failed": "Η αρχικοποίηση αναζήτησης μηνυμάτων απέτυχε",
+            "backup_key_well_formed": "καλοσχηματισμένο",
+            "backup_key_unexpected_type": "μη αναμενόμενος τύπος",
+            "backup_keys_description": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών κρυπτογράφησης με τα δεδομένα του λογαριασμού σας σε περίπτωση που χάσετε την πρόσβαση στις συνεδρίες σας. Τα κλειδιά σας θα ασφαλιστούν με ένα μοναδικό κλειδί ασφαλείας.",
+            "backup_key_stored_status": "Αποθηκευμένο εφεδρικό κλειδί:",
+            "cross_signing_not_stored": "μη αποθηκευμένο",
+            "backup_key_cached_status": "Αποθηκευμένο εφεδρικό κλειδί στην κρυφή μνήμη:",
+            "4s_public_key_status": "Δημόσιο κλειδί μυστικής αποθήκευσης:"
         },
         "preferences": {
             "room_list_heading": "Λίστα δωματίων",
@@ -2065,7 +2062,8 @@
             "add_msisdn_confirm_sso_button": "Επιβεβαιώστε την προσθήκη αυτού του αριθμού τηλεφώνου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας.",
             "add_msisdn_confirm_button": "Επιβεβαιώστε την προσθήκη του τηλεφωνικού αριθμού",
             "add_msisdn_confirm_body": "Πιέστε το κουμπί από κάτω για να επιβεβαίωσετε την προσθήκη του τηλεφωνικού αριθμού.",
-            "add_msisdn_dialog_title": "Προσθήκη Τηλεφωνικού Αριθμού"
+            "add_msisdn_dialog_title": "Προσθήκη Τηλεφωνικού Αριθμού",
+            "name_placeholder": "Χωρίς όνομα"
         },
         "sidebar": {
             "title": "Πλαϊνή μπάρα",
@@ -2818,7 +2816,8 @@
             "error_failed_save": "Αποτυχία ενημέρωσης της ορατότητας αυτού του χώρου",
             "history_visibility_anyone_space": "Προεπισκόπηση Χώρου",
             "history_visibility_anyone_space_description": "Επιτρέψτε στους χρήστες να κάνουν προεπισκόπηση του χώρου σας προτού να εγγραφούν.",
-            "history_visibility_anyone_space_recommendation": "Προτείνεται για δημόσιους χώρους."
+            "history_visibility_anyone_space_recommendation": "Προτείνεται για δημόσιους χώρους.",
+            "guest_access_label": "Ενεργοποίηση πρόσβασης επισκέπτη"
         },
         "access": {
             "title": "Πρόσβαση",
@@ -3262,7 +3261,8 @@
             "devtools_open_timeline": "Εμφάνιση χρονοδιαγράμματος δωματίου (develtools)",
             "home": "Αρχική σελίδα χώρου",
             "explore": "Εξερευνήστε δωμάτια",
-            "manage_and_explore": "Διαχειριστείτε και εξερευνήστε δωμάτια"
+            "manage_and_explore": "Διαχειριστείτε και εξερευνήστε δωμάτια",
+            "options": "Επιλογές χώρου"
         },
         "share_public": "Μοιραστείτε τον δημόσιο χώρο σας",
         "search_children": "Αναζήτηση %(spaceName)s",

@@ -45,7 +45,6 @@
     "Moderator": "Moderator",
     "New passwords must match each other.": "De nya lösenorden måste matcha.",
     "not specified": "inte specificerad",
-    "No display name": "Inget visningsnamn",
     "No more results": "Inga fler resultat",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
     "Profile": "Profil",
@@ -279,7 +278,6 @@
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnummer",
     "Account management": "Kontohantering",
-    "General": "Allmänt",
     "Voice & Video": "Röst & video",
     "Room information": "Rumsinformation",
     "Room Addresses": "Rumsadresser",
@@ -460,14 +458,10 @@
     "Set up": "Sätt upp",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
-    "well formed": "välformaterad",
-    "unexpected type": "oväntad typ",
-    "Secret storage public key:": "Publik nyckel för hemlig lagring:",
     "in account data": "i kontodata",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Den här servern <b>säkerhetskopierar inte dina nycklar</b>, men du har en existerande säkerhetskopia du kan återställa ifrån och lägga till till i framtiden.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Anslut den här sessionen till nyckelsäkerhetskopiering innan du loggar ut för att undvika att du blir av med nycklar som kanske bara finns på den här sessionen.",
     "Connect this session to Key Backup": "Anslut den här sessionen till nyckelsäkerhetskopiering",
-    "not stored": "inte lagrad",
     "This backup is trusted because it has been restored on this session": "Den här säkerhetskopian är betrodd för att den har återställts på den här sessionen",
     "Your keys are <b>not being backed up from this session</b>.": "Dina nycklar <b>säkerhetskopieras inte från den här sessionen</b>.",
     "Back up your keys before signing out to avoid losing them.": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
@@ -719,8 +713,6 @@
     "Room settings": "Rumsinställningar",
     "Backup version:": "Version av säkerhetskopia:",
     "Algorithm:": "Algoritm:",
-    "Backup key stored:": "Lagrad säkerhetskopieringsnyckel:",
-    "Backup key cached:": "Cachad säkerhetskopieringsnyckel:",
     "Secret storage:": "Hemlig lagring:",
     "ready": "klart",
     "not ready": "inte klart",
@@ -1020,7 +1012,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Den här widgeten kommer att verifiera ditt användar-ID, men kommer inte kunna utföra handlingar som dig:",
     "Allow this widget to verify your identity": "Tillåt att den här widgeten verifierar din identitet",
     "Set my room layout for everyone": "Sätt mitt rumsarrangemang för alla",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Säkerhetskopiera dina krypteringsnycklar med din kontodata ifall du skulle förlora åtkomst till dina sessioner. Dina nycklar kommer att säkras med en unik säkerhetsnyckel.",
     "Great! This Security Phrase looks strong enough.": "Fantastiskt! Den här säkerhetsfrasen ser tillräckligt stark ut.",
     "Confirm your Security Phrase": "Bekräfta din säkerhetsfras",
     "A new Security Phrase and key for Secure Messages have been detected.": "En ny säkerhetsfras och -nyckel för säkra meddelanden har detekterats.",
@@ -1050,14 +1041,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>), eller <a>dela det här utrymmet</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>), eller <a>dela det här rummet</a>.",
     "Create a new room": "Skapa ett nytt rum",
-    "Spaces": "Utrymmen",
     "Space selection": "Utrymmesval",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Du kommer inte kunna ångra den här ändringen eftersom du degraderar dig själv, och om du är den sista privilegierade användaren i utrymmet så kommer det att vara omöjligt att återfå utrymmet.",
     "Suggested Rooms": "Föreslagna rum",
     "Add existing room": "Lägg till existerande rum",
     "Invite to this space": "Bjud in till det här utrymmet",
     "Your message was sent": "Ditt meddelande skickades",
-    "Space options": "Utrymmesalternativ",
     "Leave space": "Lämna utrymmet",
     "Create a space": "Skapa ett utrymme",
     "Private space": "Privat utrymme",
@@ -1150,7 +1139,6 @@
     "Global": "Globalt",
     "New keyword": "Nytt nyckelord",
     "Keyword": "Nyckelord",
-    "Enable guest access": "Aktivera gäståtkomst",
     "Stop recording": "Stoppa inspelning",
     "Send voice message": "Skicka röstmeddelande",
     "Show %(count)s other previews": {
@@ -1634,7 +1622,6 @@
     "Set a new account password…": "Sätt ett nytt kontolösenord …",
     "Backing up %(sessionsRemaining)s keys…": "Säkerhetskopierar %(sessionsRemaining)s nycklar …",
     "Connecting to integration manager…": "Kontaktar integrationshanteraren …",
-    "Saving…": "Sparar …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
@@ -1787,7 +1774,10 @@
         "deselect_all": "Välj bort alla",
         "select_all": "Välj alla",
         "copied": "Kopierat!",
-        "advanced": "Avancerat"
+        "advanced": "Avancerat",
+        "spaces": "Utrymmen",
+        "general": "Allmänt",
+        "saving": "Sparar …"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2361,7 +2351,14 @@
             "message_search_disabled": "Cachar krypterade meddelanden säkert lokalt för att de ska visas i sökresultat.",
             "message_search_unsupported": "%(brand)s saknar vissa komponenter som krävs som krävs för att säkert cacha krypterade meddelanden lokalt. Om du vill experimentera med den här funktionen, bygg en anpassad %(brand)s Skrivbord med <nativeLink>sökkomponenter tillagda</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s kan inte säkert cacha krypterade meddelanden lokalt när den kör i en webbläsare. Använd <desktopLink>%(brand)s Skrivbord</desktopLink> för att krypterade meddelanden ska visas i sökresultaten.",
-            "message_search_failed": "Initialisering av meddelandesökning misslyckades"
+            "message_search_failed": "Initialisering av meddelandesökning misslyckades",
+            "backup_key_well_formed": "välformaterad",
+            "backup_key_unexpected_type": "oväntad typ",
+            "backup_keys_description": "Säkerhetskopiera dina krypteringsnycklar med din kontodata ifall du skulle förlora åtkomst till dina sessioner. Dina nycklar kommer att säkras med en unik säkerhetsnyckel.",
+            "backup_key_stored_status": "Lagrad säkerhetskopieringsnyckel:",
+            "cross_signing_not_stored": "inte lagrad",
+            "backup_key_cached_status": "Cachad säkerhetskopieringsnyckel:",
+            "4s_public_key_status": "Publik nyckel för hemlig lagring:"
         },
         "preferences": {
             "room_list_heading": "Rumslista",
@@ -2500,7 +2497,8 @@
             "add_msisdn_confirm_sso_button": "Bekräfta tilläggning av telefonnumret genom att använda samlad inloggning för att bevisa din identitet.",
             "add_msisdn_confirm_button": "Bekräfta tilläggning av telefonnumret",
             "add_msisdn_confirm_body": "Klicka på knappen nedan för att bekräfta tilläggning av telefonnumret.",
-            "add_msisdn_dialog_title": "Lägg till telefonnummer"
+            "add_msisdn_dialog_title": "Lägg till telefonnummer",
+            "name_placeholder": "Inget visningsnamn"
         },
         "sidebar": {
             "title": "Sidofält",
@@ -3338,7 +3336,8 @@
             "error_failed_save": "Misslyckades att uppdatera synligheten för det här utrymmet",
             "history_visibility_anyone_space": "Förhandsgranska utrymme",
             "history_visibility_anyone_space_description": "Låt personer förhandsgranska ditt utrymme innan de går med.",
-            "history_visibility_anyone_space_recommendation": "Rekommenderas för offentliga utrymmen."
+            "history_visibility_anyone_space_recommendation": "Rekommenderas för offentliga utrymmen.",
+            "guest_access_label": "Aktivera gäståtkomst"
         },
         "access": {
             "title": "Åtkomst",
@@ -3846,7 +3845,8 @@
             "devtools_open_timeline": "Se rummets tidslinje (utvecklingsverktyg)",
             "home": "Utrymmeshem",
             "explore": "Utforska rum",
-            "manage_and_explore": "Hantera och utforska rum"
+            "manage_and_explore": "Hantera och utforska rum",
+            "options": "Utrymmesalternativ"
         },
         "share_public": "Dela ditt offentliga utrymme",
         "search_children": "Sök i %(spaceName)s",

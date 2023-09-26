@@ -36,7 +36,6 @@
     "Moderator": "Модератор",
     "Reason": "Причина",
     "Incorrect verification code": "Неправилен код за потвърждение",
-    "No display name": "Няма име",
     "Authentication": "Автентикация",
     "Failed to set display name": "Неуспешно задаване на име",
     "Failed to ban user": "Неуспешно блокиране на потребителя",
@@ -247,7 +246,6 @@
     "Profile picture": "Профилна снимка",
     "Display Name": "Име",
     "Room information": "Информация за стаята",
-    "General": "Общи",
     "Room Addresses": "Адреси на стаята",
     "Email addresses": "Имейл адреси",
     "Phone numbers": "Телефонни номера",
@@ -501,9 +499,7 @@
     "You sent a verification request": "Изпратихте заявка за потвърждение",
     "Cannot connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
     "The integration manager is offline or it cannot reach your homeserver.": "Мениджъра на интеграции е офлайн или не може да се свърже със сървъра ви.",
-    "Secret storage public key:": "Публичен ключ за секретно складиране:",
     "in account data": "в данни за акаунта",
-    "not stored": "не е складиран",
     "Manage integrations": "Управление на интеграциите",
     "None": "Няма нищо",
     "Unencrypted": "Нешифровано",
@@ -538,8 +534,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
     "Lock": "Заключи",
-    "well formed": "коректен",
-    "unexpected type": "непознат тип",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Тази сесия <b>не прави резервни копия на ключовете</b>, но имате съществуващо резервно копие, което да възстановите и към което да добавяте от тук нататък.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Свържете тази сесия с резервно копие на ключове преди да се отпишете от нея, за да не загубите ключове, които може би съществуват единствено в тази сесия.",
     "Connect this session to Key Backup": "Свържи тази сесия с резервно копие на ключовете",
@@ -738,8 +732,6 @@
     "not ready": "не е готово",
     "ready": "готово",
     "Secret storage:": "Секретно складиране:",
-    "Backup key cached:": "Резервният ключ е кеширан:",
-    "Backup key stored:": "Резервният ключ е съхранен:",
     "Algorithm:": "Алгоритъм:",
     "Backup version:": "Версия на резервното копие:",
     "The operation could not be completed": "Операцията не можа да бъде завършена",
@@ -1006,12 +998,10 @@
     "Afghanistan": "Афганистан",
     "United States": "Съединените щати",
     "United Kingdom": "Обединеното кралство",
-    "Space options": "Опции на пространството",
     "Add existing room": "Добави съществуваща стая",
     "Leave space": "Напусни пространство",
     "Create a space": "Създаване на пространство",
     "unknown person": "",
-    "Spaces": "Пространства",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Мениджърът на интеграции получава конфигурационни данни, може да модифицира приспособления, да изпраща покани за стаи и да настройва нива на достъп от ваше име.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Използвай мениджър на интеграции за управление на ботове, приспособления и стикери.",
@@ -1086,7 +1076,9 @@
         "off": "Изкл.",
         "all_rooms": "Всички стаи",
         "copied": "Копирано!",
-        "advanced": "Разширени"
+        "advanced": "Разширени",
+        "spaces": "Пространства",
+        "general": "Общи"
     },
     "action": {
         "continue": "Продължи",
@@ -1407,7 +1399,13 @@
             "encryption_individual_verification_mode": "Потвърждавай индивидуално всяка сесия на потребителите, маркирайки я като доверена и недоверявайки се на кръстосано-подписваните устройства.",
             "message_search_disabled": "Кеширай шифровани съобщения локално по сигурен начин за да се появяват в резултати от търсения.",
             "message_search_unsupported": "Липсват задължителни компоненти в %(brand)s, за да могат да бъдат складирани локално и по сигурен начин шифровани съобщения. Ако искате да експериментирате с тази функция, \"компилирайте\" версия на %(brand)s Desktop с <nativeLink>добавени компоненти за търсене</nativeLink>.",
-            "message_search_unsupported_web": "%(brand)s не може да кешира шифровани съобщения локално по сигурен начин когато работи в уеб браузър. Използвайте <desktopLink>%(brand)s Desktop </desktopLink> за да можете да търсите шифровани съобщения."
+            "message_search_unsupported_web": "%(brand)s не може да кешира шифровани съобщения локално по сигурен начин когато работи в уеб браузър. Използвайте <desktopLink>%(brand)s Desktop </desktopLink> за да можете да търсите шифровани съобщения.",
+            "backup_key_well_formed": "коректен",
+            "backup_key_unexpected_type": "непознат тип",
+            "backup_key_stored_status": "Резервният ключ е съхранен:",
+            "cross_signing_not_stored": "не е складиран",
+            "backup_key_cached_status": "Резервният ключ е кеширан:",
+            "4s_public_key_status": "Публичен ключ за секретно складиране:"
         },
         "preferences": {
             "room_list_heading": "Списък със стаи",
@@ -1433,7 +1431,8 @@
             "add_msisdn_confirm_sso_button": "Потвърдете добавянето на този телефонен номер като докажете идентичността си чрез използване на Single Sign On.",
             "add_msisdn_confirm_button": "Потвърдете добавянето на телефонен номер",
             "add_msisdn_confirm_body": "Кликнете бутона по-долу за да потвърдите добавянето на телефонния номер.",
-            "add_msisdn_dialog_title": "Добави телефонен номер"
+            "add_msisdn_dialog_title": "Добави телефонен номер",
+            "name_placeholder": "Няма име"
         }
     },
     "devtools": {
@@ -2202,7 +2201,8 @@
     "space": {
         "context_menu": {
             "explore": "Открий стаи",
-            "manage_and_explore": "Управление и откриване на стаи"
+            "manage_and_explore": "Управление и откриване на стаи",
+            "options": "Опции на пространството"
         },
         "share_public": "Споделете публичното си място",
         "invite_link": "Сподели връзка с покана",

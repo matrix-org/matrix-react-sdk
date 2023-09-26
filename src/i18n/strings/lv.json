@@ -42,7 +42,6 @@
     "Moderator": "Moderators",
     "New passwords must match each other.": "Jaunajām parolēm ir jāsakrīt vienai ar otru.",
     "not specified": "nav noteikts",
-    "No display name": "Nav parādāmā vārda",
     "No more results": "Vairāk nekādu rezultātu nav",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
     "Profile": "Profils",
@@ -272,7 +271,6 @@
     "Room %(name)s": "Istaba %(name)s",
     "Room Name": "Istabas nosaukums",
     "General failure": "Vispārīga kļūda",
-    "General": "Vispārīgi",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
     "e.g. my-room": "piem., mana-istaba",
     "Room address": "Istabas adrese",
@@ -678,7 +676,6 @@
     "Mentions & keywords": "Pieminēšana un atslēgvārdi",
     "New keyword": "Jauns atslēgvārds",
     "Keyword": "Atslēgvārds",
-    "Enable guest access": "Iespējot piekļuvi viesiem",
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -689,7 +686,6 @@
         "other": "Pamatojoties uz %(count)s balsīm"
     },
     "No votes cast": "Nav balsojumu",
-    "Space options": "Vietas parametri",
     "Reason (optional)": "Iemesls (izvēles)",
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
@@ -843,7 +839,8 @@
         "off": "Izslēgt",
         "all_rooms": "Visas istabas",
         "copied": "Nokopēts!",
-        "advanced": "Papildu"
+        "advanced": "Papildu",
+        "general": "Vispārīgi"
     },
     "action": {
         "continue": "Turpināt",
@@ -1111,7 +1108,8 @@
             "add_msisdn_confirm_sso_button": "Apstiprināt šī tālruņa numura pievienošanu, izmantojot vienoto pieteikšanos savas identitātes apliecināšanai.",
             "add_msisdn_confirm_button": "Apstiprināt tālruņa numura pievienošanu",
             "add_msisdn_confirm_body": "Jānospiež zemāk esošā poga, lai apstiprinātu šī tālruņa numura pievienošanu.",
-            "add_msisdn_dialog_title": "Pievienot tālruņa numuru"
+            "add_msisdn_dialog_title": "Pievienot tālruņa numuru",
+            "name_placeholder": "Nav parādāmā vārda"
         },
         "sidebar": {
             "metaspaces_home_all_rooms": "Rādīt visas istabas"
@@ -1611,6 +1609,9 @@
         "access": {
             "title": "Piekļuve",
             "description_space": "Nosakiet, kas var skatīt un pievienoties %(spaceName)s."
+        },
+        "visibility": {
+            "guest_access_label": "Iespējot piekļuvi viesiem"
         }
     },
     "encryption": {
@@ -1881,7 +1882,8 @@
     "space": {
         "landing_welcome": "Laipni lūdzam uz <name/>",
         "context_menu": {
-            "explore": "Pārlūkot istabas"
+            "explore": "Pārlūkot istabas",
+            "options": "Vietas parametri"
         },
         "share_public": "Dalīties ar jūsu publisko vietu",
         "invite_link": "Dalīties ar uzaicinājuma saiti",

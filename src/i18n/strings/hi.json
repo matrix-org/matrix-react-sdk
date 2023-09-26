@@ -33,7 +33,6 @@
     "Reason": "कारण",
     "Send": "भेजें",
     "Incorrect verification code": "गलत सत्यापन कोड",
-    "No display name": "कोई प्रदर्शन नाम नहीं",
     "Warning!": "चेतावनी!",
     "Authentication": "प्रमाणीकरण",
     "Failed to set display name": "प्रदर्शन नाम सेट करने में विफल",
@@ -147,7 +146,6 @@
     "Profile picture": "प्रोफ़ाइल फोटो",
     "Display Name": "प्रदर्शित होने वाला नाम",
     "Room information": "रूम जानकारी",
-    "General": "सामान्य",
     "Room Addresses": "रूम का पता",
     "Failed to change password. Is your password correct?": "पासवर्ड बदलने में विफल। क्या आपका पासवर्ड सही है?",
     "Profile": "प्रोफाइल",
@@ -339,7 +337,8 @@
         "unnamed_room": "अनाम रूम",
         "on": "चालू",
         "off": "बंद",
-        "advanced": "उन्नत"
+        "advanced": "उन्नत",
+        "general": "सामान्य"
     },
     "action": {
         "continue": "आगे बढ़ें",
@@ -457,7 +456,8 @@
             "add_msisdn_confirm_sso_button": "अपनी पहचान साबित करने के लिए सिंगल साइन ऑन का उपयोग करके इस फ़ोन नंबर को जोड़ने की पुष्टि करें।",
             "add_msisdn_confirm_button": "फ़ोन नंबर जोड़ने की पुष्टि करें",
             "add_msisdn_confirm_body": "इस फ़ोन नंबर को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
-            "add_msisdn_dialog_title": "फोन नंबर डालें"
+            "add_msisdn_dialog_title": "फोन नंबर डालें",
+            "name_placeholder": "कोई प्रदर्शन नाम नहीं"
         }
     },
     "timeline": {

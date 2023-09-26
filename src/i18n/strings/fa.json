@@ -821,13 +821,6 @@
     "ready": "آماده",
     "Secret storage:": "حافظه نهان:",
     "in account data": "در داده‌های حساب کاربری",
-    "Secret storage public key:": "کلید عمومی حافظه نهان:",
-    "Backup key cached:": "کلید پشتیبان ذخیره شد:",
-    "not stored": "ذخیره نشد",
-    "Backup key stored:": "کلید پشتیبان ذخیره شد:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "در صورت از دست رفتن دسترسی به نشست‌هایتان، از کلیدهای رمزنگاری و داده‌های حساب کاربری خود نسخه‌ی پشتیبان تهیه نمائید. کلیدهای شما توسط کلید منحضر به فرد امنیتی (Security Key) امن خواهند ماند.",
-    "unexpected type": "تایپ (نوع) غیرمنتظره",
-    "well formed": "خوش‌ساخت",
     "Back up your keys before signing out to avoid losing them.": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
     "Your keys are <b>not being backed up from this session</b>.": "کلید‌های شما <b>از این نشست پشتیبان‌گیری نمی‌شود</b>.",
     "Algorithm:": "الگوریتم:",
@@ -994,8 +987,6 @@
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
     "Failed to reject invitation": "رد دعوتنامه موفقیت‌آمیز نبود",
     "Warning!": "هشدار!",
-    "No display name": "هیچ نامی برای نمایش وجود ندارد",
-    "Space options": "گزینه‌های انتخابی محیط",
     "Add existing room": "اضافه‌کردن اتاق موجود",
     "Create new room": "ایجاد اتاق جدید",
     "Leave space": "ترک محیط",
@@ -1034,11 +1025,9 @@
     "Unignore": "لغو نادیده‌گرفتن",
     "Ignored users": "کاربران نادیده‌گرفته‌شده",
     "None": "هیچ‌کدام",
-    "General": "عمومی",
     "Discovery": "کاوش",
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Account management": "مدیریت حساب کاربری",
-    "Spaces": "محیط‌ها",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
     "Phone numbers": "شماره تلفن",
@@ -1224,7 +1213,9 @@
         "off": "خاموش",
         "all_rooms": "همه اتاق‌ها",
         "copied": "رونوشت گرفته شد!",
-        "advanced": "پیشرفته"
+        "advanced": "پیشرفته",
+        "spaces": "محیط‌ها",
+        "general": "عمومی"
     },
     "action": {
         "continue": "ادامه",
@@ -1613,7 +1604,14 @@
             "message_search_disabled": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
             "message_search_unsupported": "%(brand)s بعضی از مولفه‌های مورد نیاز برای ذخیره امن پیام‌های رمزشده به صورت محلی را ندارد. اگر تمایل به استفاده از این قابلیت دارید، یک نسخه‌ی دلخواه از %(brand)s با <nativeLink> مولفه‌های مورد نظر</nativeLink> بسازید.",
             "message_search_unsupported_web": "%(brand)s نمی‌تواند پیام‌های رمزشده را به شکل امن و به صورت محلی در هنگامی که مرورگر در حال فعالیت است ذخیره کند. از <desktopLink>%(brand)s نسخه‌ی دسکتاپ</desktopLink> برای نمایش پیام‌های رمزشده در نتایج جستجو استفاده نمائید.",
-            "message_search_failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود"
+            "message_search_failed": "آغاز فرآیند جستجوی پیام‌ها با شکست همراه بود",
+            "backup_key_well_formed": "خوش‌ساخت",
+            "backup_key_unexpected_type": "تایپ (نوع) غیرمنتظره",
+            "backup_keys_description": "در صورت از دست رفتن دسترسی به نشست‌هایتان، از کلیدهای رمزنگاری و داده‌های حساب کاربری خود نسخه‌ی پشتیبان تهیه نمائید. کلیدهای شما توسط کلید منحضر به فرد امنیتی (Security Key) امن خواهند ماند.",
+            "backup_key_stored_status": "کلید پشتیبان ذخیره شد:",
+            "cross_signing_not_stored": "ذخیره نشد",
+            "backup_key_cached_status": "کلید پشتیبان ذخیره شد:",
+            "4s_public_key_status": "کلید عمومی حافظه نهان:"
         },
         "preferences": {
             "room_list_heading": "لیست اتاق‌ها",
@@ -1644,7 +1642,8 @@
             "add_msisdn_confirm_sso_button": "برای اثبات هویت خود، اضافه‌شدن این شماره تلفن را با استفاده از Single Sign On تائید کنید.",
             "add_msisdn_confirm_button": "تأیید افزودن شماره تلفن",
             "add_msisdn_confirm_body": "برای تائید اضافه‌شدن این شماره تلفن، بر روی دکمه‌ی زیر کلیک کنید.",
-            "add_msisdn_dialog_title": "افزودن شماره تلفن"
+            "add_msisdn_dialog_title": "افزودن شماره تلفن",
+            "name_placeholder": "هیچ نامی برای نمایش وجود ندارد"
         },
         "sidebar": {
             "title": "نوارکناری",
@@ -2613,7 +2612,8 @@
         "incompatible_server_hierarchy": "سرور شما از نمایش سلسله مراتبی فضاهای کاری پشتیبانی نمی کند.",
         "context_menu": {
             "explore": "جستجو در اتاق ها",
-            "manage_and_explore": "مدیریت و جستجوی اتاق‌ها"
+            "manage_and_explore": "مدیریت و جستجوی اتاق‌ها",
+            "options": "گزینه‌های انتخابی محیط"
         },
         "share_public": "محیط عمومی خود را به اشتراک بگذارید",
         "invite_link": "به اشتراک‌گذاری لینک دعوت",

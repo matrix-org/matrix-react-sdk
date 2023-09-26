@@ -28,7 +28,6 @@
     "Moderator": "Moderátor",
     "Reason": "Dôvod",
     "Incorrect verification code": "Nesprávny overovací kód",
-    "No display name": "Žiadne zobrazované meno",
     "Failed to set display name": "Nepodarilo sa nastaviť zobrazované meno",
     "Authentication": "Overenie",
     "Failed to ban user": "Nepodarilo sa zakázať používateľa",
@@ -315,7 +314,6 @@
     "Email addresses": "Emailové adresy",
     "Phone numbers": "Telefónne čísla",
     "Account management": "Správa účtu",
-    "General": "Všeobecné",
     "Ignored users": "Ignorovaní používatelia",
     "Missing media permissions, click the button below to request.": "Ak vám chýbajú povolenia na médiá, kliknite na tlačidlo nižšie na ich vyžiadanie.",
     "Request media permissions": "Požiadať o povolenia pristupovať k médiám",
@@ -350,11 +348,9 @@
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
     "The identity server you have chosen does not have any terms of service.": "Zadaný server totožností nezverejňuje žiadne podmienky poskytovania služieb.",
-    "Secret storage public key:": "Verejný kľúč bezpečného úložiska:",
     "in account data": "v údajoch účtu",
     "Cannot connect to integration manager": "Nie je možné sa pripojiť k integračnému serveru",
     "The integration manager is offline or it cannot reach your homeserver.": "Integračný server je offline, alebo nemôže pristupovať k domovskému serveru.",
-    "not stored": "neuložené",
     "Change identity server": "Zmeniť server totožností",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Naozaj si želáte odpojiť od servera totožností <current /> a pripojiť sa namiesto toho k serveru <new />?",
     "Disconnect identity server": "Odpojiť server totožností",
@@ -397,8 +393,6 @@
     "Verify by comparing unique emoji.": "Overenie porovnaním jedinečnej kombinácie emotikonov.",
     "Verify by emoji": "Overiť pomocou emotikonov",
     "Show more": "Zobraziť viac",
-    "well formed": "správne vytvorené",
-    "unexpected type": "neočakávaný typ",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Táto relácia <b>nezálohuje vaše kľúče</b>, ale máte jednu existujúcu zálohu, ktorú môžete obnoviť a pridať do budúcnosti.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Pred odhlásením pripojte túto reláciu k zálohe kľúčov, aby ste predišli strate kľúčov, ktoré môžu byť len v tejto relácii.",
     "Connect this session to Key Backup": "Pripojiť túto reláciu k Zálohe kľúčov",
@@ -721,7 +715,6 @@
         "other": "Aktualizácia priestorov... (%(progress)s z %(count)s)"
     },
     "Spaces with access": "Priestory s prístupom",
-    "Spaces": "Priestory",
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
@@ -756,7 +749,6 @@
     "Rooms and spaces": "Miestnosti a priestory",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Zálohujte si šifrovacie kľúče s údajmi o účte pre prípad, že stratíte prístup k reláciám. Vaše kľúče budú zabezpečené jedinečným bezpečnostným kľúčom.",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
     "You're all caught up.": "Všetko ste už stihli.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Overte svoju totožnosť, aby ste mali prístup k zašifrovaným správam a potvrdili svoju totožnosť ostatným.",
@@ -899,7 +891,6 @@
     "Unable to query secret storage status": "Nie je možné vykonať dopyt na stav tajného úložiska",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "Secret storage:": "Tajné úložisko:",
-    "Backup key stored:": "Záložný kľúč uložený:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Bezpečné zálohovanie a správu kľúčov môžete nastaviť aj v Nastaveniach.",
     "View all %(count)s members": {
         "one": "Zobraziť 1 člena",
@@ -977,7 +968,6 @@
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
     "Preparing to download logs": "Príprava na prevzatie záznamov",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Táto miestnosť nepremosťuje správy so žiadnymi platformami. <a>Viac informácií</a>",
-    "Backup key cached:": "Záložný kľúč v medzipamäti:",
     "Home options": "Možnosti domovskej obrazovky",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
     "You accepted": "Prijali ste",
@@ -1174,7 +1164,6 @@
     "No votes cast": "Žiadne odovzdané hlasy",
     "Thread options": "Možnosti vlákna",
     "Server Options": "Možnosti servera",
-    "Space options": "Možnosti priestoru",
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
@@ -1300,7 +1289,6 @@
         "one": "V súčasnosti má priestor prístup",
         "other": "V súčasnosti má prístup %(count)s priestorov"
     },
-    "Enable guest access": "Zapnúť prístup pre hostí",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
@@ -1632,7 +1620,6 @@
     "Set a new account password…": "Nastaviť nové heslo k účtu…",
     "Backing up %(sessionsRemaining)s keys…": "Zálohovanie %(sessionsRemaining)s kľúčov…",
     "Connecting to integration manager…": "Pripájanie k správcovi integrácie…",
-    "Saving…": "Ukladanie…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Secure Backup successful": "Bezpečné zálohovanie bolo úspešné",
     "Your keys are now being backed up from this device.": "Kľúče sa teraz zálohujú z tohto zariadenia.",
@@ -1829,7 +1816,10 @@
         "deselect_all": "Zrušiť výber všetkých",
         "select_all": "Vybrať všetky",
         "copied": "Skopírované!",
-        "advanced": "Pokročilé"
+        "advanced": "Pokročilé",
+        "spaces": "Priestory",
+        "general": "Všeobecné",
+        "saving": "Ukladanie…"
     },
     "action": {
         "continue": "Pokračovať",
@@ -2404,7 +2394,14 @@
             "message_search_disabled": "Bezpečne lokálne ukladať zašifrované správy do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania.",
             "message_search_unsupported": "%(brand)su chýbajú niektoré komponenty potrebné na bezpečné cachovanie šifrovaných správ lokálne. Pokiaľ chcete experimentovať s touto funkciou, spravte si svoj vlastný %(brand)s Desktop s <nativeLink>pridanými vyhľadávacími komponentami</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s nedokáže bezpečne lokálne ukladať do vyrovnávacej pamäte zašifrované správy, keď je spustený vo webovom prehliadači. Na zobrazenie šifrovaných správ vo výsledkoch vyhľadávania použite <desktopLink>%(brand)s Desktop</desktopLink>.",
-            "message_search_failed": "Inicializácia vyhľadávania správ zlyhala"
+            "message_search_failed": "Inicializácia vyhľadávania správ zlyhala",
+            "backup_key_well_formed": "správne vytvorené",
+            "backup_key_unexpected_type": "neočakávaný typ",
+            "backup_keys_description": "Zálohujte si šifrovacie kľúče s údajmi o účte pre prípad, že stratíte prístup k reláciám. Vaše kľúče budú zabezpečené jedinečným bezpečnostným kľúčom.",
+            "backup_key_stored_status": "Záložný kľúč uložený:",
+            "cross_signing_not_stored": "neuložené",
+            "backup_key_cached_status": "Záložný kľúč v medzipamäti:",
+            "4s_public_key_status": "Verejný kľúč bezpečného úložiska:"
         },
         "preferences": {
             "room_list_heading": "Zoznam miestností",
@@ -2543,7 +2540,8 @@
             "add_msisdn_confirm_sso_button": "Potvrďte pridanie telefónneho čísla pomocou Single Sign On.",
             "add_msisdn_confirm_button": "Potvrdiť pridanie telefónneho čísla",
             "add_msisdn_confirm_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie telefónneho čísla.",
-            "add_msisdn_dialog_title": "Pridať telefónne číslo"
+            "add_msisdn_dialog_title": "Pridať telefónne číslo",
+            "name_placeholder": "Žiadne zobrazované meno"
         },
         "sidebar": {
             "title": "Bočný panel",
@@ -3396,7 +3394,8 @@
             "error_failed_save": "Nepodarilo sa aktualizovať viditeľnosť tohto priestoru",
             "history_visibility_anyone_space": "Prehľad priestoru",
             "history_visibility_anyone_space_description": "Umožnite ľuďom prezrieť si váš priestor predtým, ako sa k vám pripoja.",
-            "history_visibility_anyone_space_recommendation": "Odporúča sa pre verejné priestory."
+            "history_visibility_anyone_space_recommendation": "Odporúča sa pre verejné priestory.",
+            "guest_access_label": "Zapnúť prístup pre hostí"
         },
         "access": {
             "title": "Prístup",
@@ -3906,7 +3905,8 @@
             "devtools_open_timeline": "Pozrite si časovú os miestnosti (devtools)",
             "home": "Domov priestoru",
             "explore": "Preskúmať miestnosti",
-            "manage_and_explore": "Spravovať a preskúmať miestnosti"
+            "manage_and_explore": "Spravovať a preskúmať miestnosti",
+            "options": "Možnosti priestoru"
         },
         "share_public": "Zdieľajte svoj verejný priestor",
         "search_children": "Hľadať %(spaceName)s",

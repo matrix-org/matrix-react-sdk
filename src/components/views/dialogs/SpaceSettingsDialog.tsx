@@ -55,7 +55,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
         return [
             new Tab(
                 SpaceSettingsTab.General,
-                _td("General"),
+                _td("common|general"),
                 "mx_SpaceSettingsDialog_generalIcon",
                 <SpaceSettingsGeneralTab matrixClient={cli} space={space} />,
             ),

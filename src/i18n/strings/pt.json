@@ -109,7 +109,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Você tem certeza que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Create new room": "Criar nova sala",
-    "No display name": "Sem nome público de usuária(o)",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Enviando o arquivo %(filename)s e %(count)s outros arquivos",
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
@@ -562,7 +561,8 @@
             "add_msisdn_confirm_sso_button": "Confirme que quer adicionar este número de telefone usando Single Sign On para provar a sua identidade.",
             "add_msisdn_confirm_button": "Confirme que quer adicionar o número de telefone",
             "add_msisdn_confirm_body": "Pressione o botão abaixo para confirmar a adição este número de telefone.",
-            "add_msisdn_dialog_title": "Adicione número de telefone"
+            "add_msisdn_dialog_title": "Adicione número de telefone",
+            "name_placeholder": "Sem nome público de usuária(o)"
         }
     },
     "devtools": {

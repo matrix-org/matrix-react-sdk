@@ -116,7 +116,6 @@
     "Create new room": "Neuer Raum",
     "Home": "Startseite",
     "Admin Tools": "Administrationswerkzeuge",
-    "No display name": "Kein Anzeigename",
     "%(roomName)s does not exist.": "%(roomName)s existiert nicht.",
     "%(roomName)s is not accessible at this time.": "Auf %(roomName)s kann momentan nicht zugegriffen werden.",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (Berechtigungslevel %(powerLevelNumber)s)",
@@ -247,7 +246,6 @@
     "Profile picture": "Profilbild",
     "Display Name": "Anzeigename",
     "Room information": "Rauminformationen",
-    "General": "Allgemein",
     "Email addresses": "E-Mail-Adressen",
     "Phone numbers": "Telefonnummern",
     "Account management": "Benutzerkontenverwaltung",
@@ -379,7 +377,6 @@
     "Lock": "Schloss",
     "Cannot connect to integration manager": "Verbindung zum Integrationsassistenten fehlgeschlagen",
     "The integration manager is offline or it cannot reach your homeserver.": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
-    "not stored": "nicht gespeichert",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Vom Identitäts-Server <current /> trennen, und stattdessen mit <new /> verbinden?",
     "The identity server you have chosen does not have any terms of service.": "Der von dir gewählte Identitäts-Server gibt keine Nutzungsbedingungen an.",
     "Disconnect identity server": "Verbindung zum Identitäts-Server trennen",
@@ -480,8 +477,6 @@
     "Uploaded sound": "Hochgeladener Ton",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "unexpected type": "unbekannter Typ",
-    "Secret storage public key:": "Öffentlicher Schlüssel des sicheren Speichers:",
     "in account data": "in den Kontodaten",
     "Your keys are <b>not being backed up from this session</b>.": "Deine Schlüssel werden von dieser Sitzung <b>nicht gesichert</b>.",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "Zurzeit verwendest du <server></server>, um Kontakte zu finden und von anderen gefunden zu werden. Du kannst deinen Identitäts-Server nachfolgend wechseln.",
@@ -617,7 +612,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
     "Invalid base_url for m.identity_server": "Ungültige base_url für m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
-    "well formed": "wohlgeformt",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "Wenn du <server /> nicht verwenden willst, um Kontakte zu finden und von anderen gefunden zu werden, trage unten einen anderen Identitäts-Server ein.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Beim Ändern der Anforderungen für Benutzerrechte ist ein Fehler aufgetreten. Stelle sicher, dass du die nötigen Berechtigungen besitzt und versuche es erneut.",
@@ -720,8 +714,6 @@
     "Room settings": "Raumeinstellungen",
     "Backup version:": "Version der Sicherung:",
     "Algorithm:": "Algorithmus:",
-    "Backup key stored:": "Sicherungsschlüssel gespeichert:",
-    "Backup key cached:": "Sicherungsschlüssel zwischengespeichert:",
     "Secret storage:": "Sicherer Speicher:",
     "ready": "bereit",
     "not ready": "nicht bereit",
@@ -1024,7 +1016,6 @@
     "Invalid Security Key": "Ungültiger Sicherheitsschlüssel",
     "Wrong Security Key": "Falscher Sicherheitsschlüssel",
     "Open dial pad": "Wähltastatur öffnen",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sichere deine Schlüssel mit deinen Kontodaten, für den Fall, dass du den Zugriff auf deine Sitzungen verlierst. Deine Schlüssel werden mit einem eindeutigen Sicherheitsschlüssel geschützt.",
     "Dial pad": "Wähltastatur",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
@@ -1066,7 +1057,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename, E-Mail-Adresse oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite to %(roomName)s": "In %(roomName)s einladen",
-    "Spaces": "Spaces",
     "You may want to try a different search or check for typos.": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
     "You don't have permission": "Du hast dazu keine Berechtigung",
     "This space is not public. You will not be able to rejoin without an invite.": "Du wirst diesen privaten Space nur mit einer Einladung wieder betreten können.",
@@ -1079,7 +1069,6 @@
         "one": "%(count)s Person, die du kennst, ist schon beigetreten",
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
     },
-    "Space options": "Space-Optionen",
     "Avatar": "Avatar",
     "Invited people will be able to read old messages.": "Eingeladene Leute werden ältere Nachrichten lesen können.",
     "Consult first": "Zuerst Anfragen",
@@ -1142,7 +1131,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "Veröffentlichte Adressen erlauben jedem, den Space zu betreten.",
     "This space has no local addresses": "Dieser Space hat keine lokale Adresse",
     "Space information": "Information über den Space",
-    "Enable guest access": "Gastzutritt",
     "Address": "Adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "Unnamed audio": "Unbenannte Audiodatei",
@@ -1630,7 +1618,6 @@
     "Set a new account password…": "Setze neues Kontopasswort …",
     "Backing up %(sessionsRemaining)s keys…": "Sichere %(sessionsRemaining)s Schlüssel …",
     "Connecting to integration manager…": "Verbinde mit Integrationsassistent …",
-    "Saving…": "Speichere …",
     "Starting export process…": "Beginne Exportvorgang …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Gib eine nur dir bekannte Sicherheitsphrase ein, die dem Schutz deiner Daten dient. Um die Sicherheit zu gewährleisten, sollte dies nicht dein Kontopasswort sein.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
@@ -1833,7 +1820,10 @@
         "deselect_all": "Alle abwählen",
         "select_all": "Alle auswählen",
         "copied": "Kopiert!",
-        "advanced": "Erweitert"
+        "advanced": "Erweitert",
+        "spaces": "Spaces",
+        "general": "Allgemein",
+        "saving": "Speichere …"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2409,7 +2399,14 @@
             "message_search_disabled": "Speichere verschlüsselte Nachrichten lokal, sodass sie deinen Suchergebnissen erscheinen können.",
             "message_search_unsupported": "Um verschlüsselte Nachrichten lokal zu durchsuchen, benötigt %(brand)s weitere Komponenten. Wenn du diese Funktion testen möchtest, kannst du dir deine eigene Version von %(brand)s Desktop mit der <nativeLink>integrierten Suchfunktion kompilieren</nativeLink>.",
             "message_search_unsupported_web": "Das Durchsuchen von verschlüsselten Nachrichten wird aus Sicherheitsgründen nur von %(brand)s Desktop unterstützt. <desktopLink>Hier gehts zum Download</desktopLink>.",
-            "message_search_failed": "Initialisierung der Nachrichtensuche fehlgeschlagen"
+            "message_search_failed": "Initialisierung der Nachrichtensuche fehlgeschlagen",
+            "backup_key_well_formed": "wohlgeformt",
+            "backup_key_unexpected_type": "unbekannter Typ",
+            "backup_keys_description": "Sichere deine Schlüssel mit deinen Kontodaten, für den Fall, dass du den Zugriff auf deine Sitzungen verlierst. Deine Schlüssel werden mit einem eindeutigen Sicherheitsschlüssel geschützt.",
+            "backup_key_stored_status": "Sicherungsschlüssel gespeichert:",
+            "cross_signing_not_stored": "nicht gespeichert",
+            "backup_key_cached_status": "Sicherungsschlüssel zwischengespeichert:",
+            "4s_public_key_status": "Öffentlicher Schlüssel des sicheren Speichers:"
         },
         "preferences": {
             "room_list_heading": "Raumliste",
@@ -2548,7 +2545,8 @@
             "add_msisdn_confirm_sso_button": "Bestätige die hinzugefügte Telefonnummer, indem du deine Identität mittels der Einmalanmeldung nachweist.",
             "add_msisdn_confirm_button": "Hinzugefügte Telefonnummer bestätigen",
             "add_msisdn_confirm_body": "Klicke unten die Schaltfläche, um die hinzugefügte Telefonnummer zu bestätigen.",
-            "add_msisdn_dialog_title": "Telefonnummer hinzufügen"
+            "add_msisdn_dialog_title": "Telefonnummer hinzufügen",
+            "name_placeholder": "Kein Anzeigename"
         },
         "sidebar": {
             "title": "Seitenleiste",
@@ -3401,7 +3399,8 @@
             "error_failed_save": "Sichtbarkeit des Space konnte nicht geändert werden",
             "history_visibility_anyone_space": "Space-Vorschau erlauben",
             "history_visibility_anyone_space_description": "Personen können den Space vor dem Betreten erkunden.",
-            "history_visibility_anyone_space_recommendation": "Empfohlen für öffentliche Spaces."
+            "history_visibility_anyone_space_recommendation": "Empfohlen für öffentliche Spaces.",
+            "guest_access_label": "Gastzutritt"
         },
         "access": {
             "title": "Zutritt",
@@ -3911,7 +3910,8 @@
             "devtools_open_timeline": "Nachrichtenverlauf anzeigen (Entwicklungswerkzeuge)",
             "home": "Space-Übersicht",
             "explore": "Räume erkunden",
-            "manage_and_explore": "Räume erkunden und verwalten"
+            "manage_and_explore": "Räume erkunden und verwalten",
+            "options": "Space-Optionen"
         },
         "share_public": "Teile deinen öffentlichen Space mit der Welt",
         "search_children": "%(spaceName)s durchsuchen",

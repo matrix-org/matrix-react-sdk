@@ -59,7 +59,6 @@
     "AM": "AM",
     "Reason": "Arsye",
     "Incorrect verification code": "Kod verifikimi i pasaktë",
-    "No display name": "S’ka emër shfaqjeje",
     "Authentication": "Mirëfilltësim",
     "not specified": "e papërcaktuar",
     "This room has no local addresses": "Kjo dhomë s’ka adresë vendore",
@@ -244,7 +243,6 @@
     "Profile picture": "Foto profili",
     "Display Name": "Emër Në Ekran",
     "Room information": "Të dhëna dhome",
-    "General": "Të përgjithshme",
     "Room Addresses": "Adresa Dhomash",
     "Email addresses": "Adresa email",
     "Phone numbers": "Numra telefonash",
@@ -508,7 +506,6 @@
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
     "Verification Request": "Kërkesë Verifikimi",
-    "Secret storage public key:": "Kyç publik depozite të fshehtë:",
     "in account data": "në të dhëna llogarie",
     "Unencrypted": "Të pafshehtëzuara",
     "<userName/> wants to chat": "<userName/> dëshiron të bisedojë",
@@ -519,7 +516,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, <a>njoftoni një të metë</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Do ta përmirësoni këtë dhomë nga <oldVersion /> në <newVersion />.",
     "Unable to set up secret storage": "S’u arrit të ujdiset depozitë e fshehtë",
-    "not stored": "e padepozituar",
     "Close preview": "Mbylle paraparjen",
     "Hide verified sessions": "Fshih sesione të verifikuar",
     "%(count)s verified sessions": {
@@ -636,8 +632,6 @@
     "%(displayName)s cancelled verification.": "%(displayName)s anuloi verifikimin.",
     "You cancelled verification.": "Anuluat verifikimin.",
     "Sign in with SSO": "Hyni me HNj",
-    "unexpected type": "lloj i papritur",
-    "well formed": "e mirëformuar",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Ripohoni çaktivizimin e llogarisë tuaj duke përdorur Hyrje Njëshe që të dëshmoni identitetin tuaj.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Jeni i sigurt se doni të çaktivizohet llogaria juaj? Kjo është e pakthyeshme.",
     "Confirm account deactivation": "Ripohoni çaktivizim llogarie",
@@ -718,8 +712,6 @@
     "Information": "Informacion",
     "Backup version:": "Version kopjeruajtjeje:",
     "Algorithm:": "Algoritëm:",
-    "Backup key stored:": "Kyç kopjeruajtjesh i depozituar:",
-    "Backup key cached:": "Kyç kopjeruajtjesh i ruajtur në fshehtinë:",
     "Secret storage:": "Depozitë e fshehtë:",
     "ready": "gati",
     "not ready": "jo gati",
@@ -1032,7 +1024,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "S’arrihet të hyhet në depozitë të fshehtë. Ju lutemi, verifikoni se keni dhënë Frazën e saktë të Sigurisë.",
     "Invalid Security Key": "Kyç Sigurie i Pavlefshëm",
     "Wrong Security Key": "Kyç Sigurie i Gabuar",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Kopjeruani kyçet tuaj të fshehtëzimit me të dhënat e llogarisë tuaj, për ditën kur mund të humbni hyrje në sesionet tuaja. Kyçet tuaj do të jenë të siguruar me një Kyç unik Sigurie.",
     "Remember this": "Mbaje mend këtë",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
     "Allow this widget to verify your identity": "Lejojeni këtë widget të verifikojë identitetin tuaj",
@@ -1048,14 +1039,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Create a new room": "Krijoni dhomë të re",
-    "Spaces": "Hapësira",
     "Space selection": "Përzgjedhje hapësire",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, teksa zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te hapësira, s’do të jetë e mundur të rifitoni privilegjet.",
     "Suggested Rooms": "Roma të Këshilluara",
     "Add existing room": "Shtoni dhomë ekzistuese",
     "Invite to this space": "Ftoni në këtë hapësirë",
     "Your message was sent": "Mesazhi juaj u dërgua",
-    "Space options": "Mundësi Hapësire",
     "Leave space": "Braktiseni hapësirën",
     "Create a space": "Krijoni një hapësirë",
     "Private space": "Hapësirë private",
@@ -1138,7 +1127,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në hapësirën tuaj.",
     "This space has no local addresses": "Kjo hapësirë s’ka adresa vendore",
     "Space information": "Hollësi hapësire",
-    "Enable guest access": "Lejo hyrje si vizitor",
     "Address": "Adresë",
     "Unnamed audio": "Audio pa emër",
     "Sent": "U dërgua",
@@ -1632,7 +1620,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Po kopjeruhen kyçet për %(sessionsRemaining)s…",
     "This session is backing up your keys.": "Kjo sesion po bën kopjeruajtje të kyçeve tuaja.",
     "Connecting to integration manager…": "Po lidhet me përgjegjës integrimesh…",
-    "Saving…": "Po ruhet…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Loading polls": "Po ngarkohen pyetësorë",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
@@ -1781,7 +1768,10 @@
         "deselect_all": "Shpërzgjidhi krejt",
         "select_all": "Përzgjidhi krejt",
         "copied": "U kopjua!",
-        "advanced": "Të mëtejshme"
+        "advanced": "Të mëtejshme",
+        "spaces": "Hapësira",
+        "general": "Të përgjithshme",
+        "saving": "Po ruhet…"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2342,7 +2332,14 @@
             "message_search_disabled": "Ruaj lokalisht në mënyrë të sigurt në fshehtinë mesazhet që të shfaqen në përfundime kërkimi.",
             "message_search_unsupported": "%(brand)s-it i mungojnë disa përbërës të domosdoshëm për ruajtje lokalisht në mënyrë të sigurt në fshehtinë mesazhe. Nëse do të donit të eksperimentonit me këtë veçori, montoni një Desktop vetjak %(brand)s Desktop me <nativeLink>shtim përbërësish kërkimi</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s s’mund të ruajë lokalisht në fshehtinë në mënyrë të siguruar mesazhe të fshehtëzuar, teksa xhirohet në një shfletues. Që mesazhet e fshehtëzuar të shfaqen te përfundime kërkimi, përdorni <desktopLink>%(brand)s Desktop</desktopLink>.",
-            "message_search_failed": "Dështoi gatitje kërkimi mesazhesh"
+            "message_search_failed": "Dështoi gatitje kërkimi mesazhesh",
+            "backup_key_well_formed": "e mirëformuar",
+            "backup_key_unexpected_type": "lloj i papritur",
+            "backup_keys_description": "Kopjeruani kyçet tuaj të fshehtëzimit me të dhënat e llogarisë tuaj, për ditën kur mund të humbni hyrje në sesionet tuaja. Kyçet tuaj do të jenë të siguruar me një Kyç unik Sigurie.",
+            "backup_key_stored_status": "Kyç kopjeruajtjesh i depozituar:",
+            "cross_signing_not_stored": "e padepozituar",
+            "backup_key_cached_status": "Kyç kopjeruajtjesh i ruajtur në fshehtinë:",
+            "4s_public_key_status": "Kyç publik depozite të fshehtë:"
         },
         "preferences": {
             "room_list_heading": "Listë dhomash",
@@ -2480,7 +2477,8 @@
             "add_msisdn_confirm_sso_button": "Ripohojeni shtimin e këtij numri telefoni duke përdorur Hyrje Njëshe që të provoni identitetin tuaj.",
             "add_msisdn_confirm_button": "Ripohoni shtim numri telefoni",
             "add_msisdn_confirm_body": "Klikoni mbi butonin më poshtë që të ripohoni shtimin e këtij numri telefoni.",
-            "add_msisdn_dialog_title": "Shtoni Numër Telefoni"
+            "add_msisdn_dialog_title": "Shtoni Numër Telefoni",
+            "name_placeholder": "S’ka emër shfaqjeje"
         },
         "sidebar": {
             "title": "Anështyllë",
@@ -3305,7 +3303,8 @@
             "error_failed_save": "S’arrihet të përditësohet dukshmëria e kësaj hapësire",
             "history_visibility_anyone_space": "Parashiheni Hapësirën",
             "history_visibility_anyone_space_description": "Lejojini personat të parashohin hapësirën tuaj para se të hyjnë në të.",
-            "history_visibility_anyone_space_recommendation": "E rekomanduar për hapësira publike."
+            "history_visibility_anyone_space_recommendation": "E rekomanduar për hapësira publike.",
+            "guest_access_label": "Lejo hyrje si vizitor"
         },
         "access": {
             "title": "Hyrje",
@@ -3807,7 +3806,8 @@
             "devtools_open_timeline": "Shihni rrjedhë kohore të dhomës (mjete zhvilluesi)",
             "home": "Shtëpia e hapësirës",
             "explore": "Eksploroni dhoma",
-            "manage_and_explore": "Administroni & eksploroni dhoma"
+            "manage_and_explore": "Administroni & eksploroni dhoma",
+            "options": "Mundësi Hapësire"
         },
         "share_public": "Ndani me të tjerët hapësirën tuaj publike",
         "search_children": "Kërko te %(spaceName)s",

@@ -31,7 +31,6 @@
     "Reason": "Разлог",
     "Send": "Пошаљи",
     "Incorrect verification code": "Нетачни потврдни код",
-    "No display name": "Нема приказног имена",
     "Authentication": "Идентификација",
     "Failed to set display name": "Нисам успео да поставим приказно име",
     "Failed to ban user": "Неуспех при забрањивању приступа кориснику",
@@ -197,7 +196,6 @@
     "Cannot connect to integration manager": "Не могу се повезати на управника уградњи",
     "Email addresses": "Мејл адресе",
     "Phone numbers": "Бројеви телефона",
-    "General": "Опште",
     "Discovery": "Откриће",
     "None": "Ништа",
     "Discovery options will appear once you have added an email above.": "Опције откривања појавиће се након што додате мејл адресу изнад.",
@@ -659,7 +657,8 @@
         "on": "Укључено",
         "off": "Искључено",
         "copied": "Копирано!",
-        "advanced": "Напредно"
+        "advanced": "Напредно",
+        "general": "Опште"
     },
     "action": {
         "continue": "Настави",
@@ -856,7 +855,8 @@
             "add_msisdn_confirm_sso_button": "Потврдите додавање броја телефона помоћу јединствене пријаве да докажете свој идентитет.",
             "add_msisdn_confirm_button": "Потврда додавања броја телефона",
             "add_msisdn_confirm_body": "Кликните на дугме испод за потврду додавања броја телефона.",
-            "add_msisdn_dialog_title": "Додај број телефона"
+            "add_msisdn_dialog_title": "Додај број телефона",
+            "name_placeholder": "Нема приказног имена"
         }
     },
     "devtools": {

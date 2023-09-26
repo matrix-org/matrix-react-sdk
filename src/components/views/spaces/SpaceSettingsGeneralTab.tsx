@@ -96,7 +96,7 @@ const SpaceSettingsGeneralTab: React.FC<IProps> = ({ matrixClient: cli, space })
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("General")}>
+            <SettingsSection heading={_t("common|general")}>
                 <div>
                     <div>{_t("room_settings|general|description_space")}</div>
 
@@ -122,7 +122,7 @@ const SpaceSettingsGeneralTab: React.FC<IProps> = ({ matrixClient: cli, space })
                         {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton onClick={onSave} disabled={busy} kind="primary">
-                        {busy ? _t("Saving…") : _t("room_settings|general|save")}
+                        {busy ? _t("common|saving") : _t("room_settings|general|save")}
                     </AccessibleButton>
                 </div>
 

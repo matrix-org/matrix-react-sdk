@@ -30,7 +30,6 @@
     "Reason": "Kialo",
     "Send": "Sendi",
     "Incorrect verification code": "Malĝusta kontrola kodo",
-    "No display name": "Sen vidiga nomo",
     "Authentication": "Aŭtentikigo",
     "Failed to set display name": "Malsukcesis agordi vidigan nomon",
     "Failed to ban user": "Malsukcesis forbari uzanton",
@@ -170,7 +169,6 @@
     "Preparing to send logs": "Pretigante sendon de protokolo",
     "Permission Required": "Necesas permeso",
     "Delete Backup": "Forigi savkopion",
-    "General": "Ĝeneralaj",
     "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
     "Dog": "Hundo",
     "Cat": "Kato",
@@ -522,12 +520,10 @@
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
-    "Secret storage public key:": "Publika ŝlosilo de sekreta deponejo:",
     "in account data": "en datumoj de konto",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Ĉi tiu salutaĵo <b>ne savkopias viajn ŝlosilojn</b>, sed vi jam havas savkopion, el kiu vi povas rehavi datumojn, kaj ilin kreskigi plue.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Konektu ĉi tiun salutaĵon al savkopiado de ŝlosiloj antaŭ ol vi adiaŭos, por ne perdi ŝlosilojn, kiuj povus troviĝi nur en ĉi tiu salutaĵo.",
     "Connect this session to Key Backup": "Konekti ĉi tiun salutaĵon al Savkopiado de ŝlosiloj",
-    "not stored": "ne deponita",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "Your keys are <b>not being backed up from this session</b>.": "Viaj ŝlosiloj <b>ne estas savkopiataj el ĉi tiu salutaĵo</b>.",
     "Manage integrations": "Administri kunigojn",
@@ -633,8 +629,6 @@
     "Verify all users in a room to ensure it's secure.": "Kontrolu ĉiujn uzantojn en ĉambro por certigi, ke ĝi sekuras.",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
-    "well formed": "bone formita",
-    "unexpected type": "neatendita tipo",
     "Almost there! Is %(displayName)s showing the same shield?": "Preskaŭ finite! Ĉu %(displayName)s montras la saman ŝildon?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Vi sukcese kontrolis %(deviceName)s (%(deviceId)s)!",
     "Start verification again from the notification.": "Rekomencu kontroladon el la sciigo.",
@@ -742,8 +736,6 @@
     "not ready": "neprete",
     "ready": "prete",
     "Secret storage:": "Sekreta deponejo:",
-    "Backup key cached:": "Kaŝmemorita Savkopia ŝlosilo:",
-    "Backup key stored:": "Deponita Savkopia ŝlosilo:",
     "Algorithm:": "Algoritmo:",
     "Backup version:": "Repaŝa versio:",
     "The operation could not be completed": "La ago ne povis finiĝi",
@@ -1037,7 +1029,6 @@
     "A call can only be transferred to a single user.": "Voko povas transdoniĝi nur al unu uzanto.",
     "Set my room layout for everyone": "Agordi al ĉiuj mian aranĝon de ĉambro",
     "Open dial pad": "Malfermi ciferplaton",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Savkopiu viajn čifrajn šlosilojn kune kun la datumoj de via konto, okaze ke vi perdos aliron al viaj salutaĵoj. Viaj ŝlosiloj sekuriĝos per unika Sekureca ŝlosilo.",
     "Dial pad": "Ciferplato",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ĉi tiu kutime influas nur traktadon de la ĉambro servil-flanke. Se vi spertas problemojn pri via %(brand)s, bonvolu raporti eraron.",
     "Suggested Rooms": "Rekomendataj ĉambroj",
@@ -1061,7 +1052,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite to %(roomName)s": "Inviti al %(roomName)s",
     "Create a new room": "Krei novan ĉambron",
-    "Spaces": "Aroj",
     "Space selection": "Elekto de aro",
     "Edit devices": "Redakti aparatojn",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vi ne povos malfari ĉi tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta altranga uzanto de la aro, vi ne plu povos rehavi viajn rajtojn.",
@@ -1072,7 +1062,6 @@
     "Create a space": "Krei aron",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
     "You don't have permission": "Vi ne rajtas",
-    "Space options": "Agordoj de aro",
     "Invited people will be able to read old messages.": "Invititoj povos legi malnovajn mesaĝojn.",
     "Add existing rooms": "Aldoni jamajn ĉambrojn",
     "View message": "Montri mesaĝon",
@@ -1134,7 +1123,6 @@
     "Identity server (%(server)s)": "Identiga servilo (%(server)s)",
     "Could not connect to identity server": "Ne povis konektiĝi al identiga servilo",
     "Not a valid identity server (status code %(code)s)": "Nevalida identiga servilo (statkodo %(code)s)",
-    "Enable guest access": "Ŝalti aliron de gastoj",
     "Address": "Adreso",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
@@ -1372,7 +1360,9 @@
         "off": "Ne",
         "all_rooms": "Ĉiuj ĉambroj",
         "copied": "Kopiita!",
-        "advanced": "Altnivela"
+        "advanced": "Altnivela",
+        "spaces": "Aroj",
+        "general": "Ĝeneralaj"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1776,7 +1766,14 @@
             "message_search_disabled": "Sekure kaŝmemori ĉifritajn mesaĝojn loke, por aperigi ilin en serĉrezultoj.",
             "message_search_unsupported": "%(brand)s malhavas kelkajn partojn bezonajn por sekura loka kaŝmemorado de ĉirfitaj mesaĝoj. Se vi volas eksperimenti pri ĉi tiu kapablo, kunmetu propran klienton «%(brand)s Dekstop» kun <nativeLink>aldonitaj serĉopartoj</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s ne povas sekure kaŝkopii ĉifritajn mesaĝojn loke, funkciante per foliumilo. Uzu <desktopLink>%(brand)s Desktop</desktopLink> por aperigi ĉifritajn mesaĝojn en serĉrezultoj.",
-            "message_search_failed": "Malsukcesis komenci serĉadon de mesaĝoj"
+            "message_search_failed": "Malsukcesis komenci serĉadon de mesaĝoj",
+            "backup_key_well_formed": "bone formita",
+            "backup_key_unexpected_type": "neatendita tipo",
+            "backup_keys_description": "Savkopiu viajn čifrajn šlosilojn kune kun la datumoj de via konto, okaze ke vi perdos aliron al viaj salutaĵoj. Viaj ŝlosiloj sekuriĝos per unika Sekureca ŝlosilo.",
+            "backup_key_stored_status": "Deponita Savkopia ŝlosilo:",
+            "cross_signing_not_stored": "ne deponita",
+            "backup_key_cached_status": "Kaŝmemorita Savkopia ŝlosilo:",
+            "4s_public_key_status": "Publika ŝlosilo de sekreta deponejo:"
         },
         "preferences": {
             "room_list_heading": "Ĉambrolisto",
@@ -1839,7 +1836,8 @@
             "add_msisdn_confirm_sso_button": "Konfirmu aldonon de ĉi tiu telefonnumero per identiĝo per ununura saluto.",
             "add_msisdn_confirm_button": "Konfirmu aldonon de telefonnumero",
             "add_msisdn_confirm_body": "Klaku la ĉi-suban butonon por konfirmi aldonon de ĉi tiu telefonnumero.",
-            "add_msisdn_dialog_title": "Aldoni telefonnumeron"
+            "add_msisdn_dialog_title": "Aldoni telefonnumeron",
+            "name_placeholder": "Sen vidiga nomo"
         },
         "sidebar": {
             "title": "Flanka kolumno",
@@ -2495,7 +2493,8 @@
             "error_failed_save": "Malsukcesis ĝisdatigi la videblecon de ĉi tiu aro",
             "history_visibility_anyone_space": "Antaŭrigardi aron",
             "history_visibility_anyone_space_description": "Povigi personojn antaŭrigardi vian aron antaŭ aliĝo.",
-            "history_visibility_anyone_space_recommendation": "Rekomendita por publikaj aroj."
+            "history_visibility_anyone_space_recommendation": "Rekomendita por publikaj aroj.",
+            "guest_access_label": "Ŝalti aliron de gastoj"
         },
         "access": {
             "title": "Aliro",
@@ -2940,7 +2939,8 @@
         "incompatible_server_hierarchy": "Via servilo ne subtenas montradon de hierarĥioj de aroj.",
         "context_menu": {
             "explore": "Esplori ĉambrojn",
-            "manage_and_explore": "Administri kaj esplori ĉambrojn"
+            "manage_and_explore": "Administri kaj esplori ĉambrojn",
+            "options": "Agordoj de aro"
         },
         "share_public": "Diskonigu vian publikan aron",
         "search_children": "Serĉi je %(spaceName)s",

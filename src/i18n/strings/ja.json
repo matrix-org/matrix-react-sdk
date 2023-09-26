@@ -66,7 +66,6 @@
     "Moderator": "モデレーター",
     "Reason": "理由",
     "Incorrect verification code": "認証コードが誤っています",
-    "No display name": "表示名がありません",
     "Warning!": "警告！",
     "Authentication": "認証",
     "Failed to set display name": "表示名の設定に失敗しました",
@@ -214,7 +213,6 @@
     "Unignore": "無視を解除",
     "Room Name": "ルーム名",
     "Phone numbers": "電話番号",
-    "General": "一般",
     "Room information": "ルームの情報",
     "Room Addresses": "ルームのアドレス",
     "Sounds": "音",
@@ -234,7 +232,6 @@
     "Remove recent messages": "最近のメッセージを削除",
     "Add room": "ルームを追加",
     "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "本当によろしいですか？ もし鍵が正常にバックアップされていない場合、暗号化されたメッセージにアクセスできなくなります。",
-    "not stored": "保存されていません",
     "All keys backed up": "全ての鍵がバックアップされています",
     "Back up your keys before signing out to avoid losing them.": "鍵を失くさないよう、サインアウトする前にバックアップしてください。",
     "Start using Key Backup": "鍵のバックアップを使用開始",
@@ -283,7 +280,6 @@
     "You signed in to a new session without verifying it:": "あなたのこのセッションはまだ認証されていません：",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s（%(userId)s）は未認証のセッションにサインインしました：",
     "Recent Conversations": "最近会話したユーザー",
-    "Secret storage public key:": "機密ストレージの公開鍵：",
     "in account data": "アカウントデータ内",
     "Account management": "アカウントの管理",
     "Deactivate account": "アカウントを無効化",
@@ -360,12 +356,9 @@
     "Integrations are disabled": "インテグレーションが無効になっています",
     "Manage integrations": "インテグレーションを管理",
     "Enter a new identity server": "新しいIDサーバーを入力",
-    "Backup key cached:": "バックアップキーのキャッシュ：",
-    "Backup key stored:": "バックアップキーの保存：",
     "Algorithm:": "アルゴリズム：",
     "Backup version:": "バックアップのバージョン：",
     "Secret storage:": "機密ストレージ：",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "セッションにアクセスできなくなる場合に備えて、アカウントデータと暗号鍵をバックアップしましょう。鍵は一意のセキュリティーキーで保護されます。",
     "Explore rooms": "ルームを探す",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "アドレスを作成する際にエラーが発生しました。サーバーで許可されていないか、一時的な障害が発生した可能性があります。",
@@ -439,8 +432,6 @@
     "Checking server": "サーバーをチェックしています",
     "not ready": "準備ができていません",
     "ready": "準備ができました",
-    "unexpected type": "予期しない種類",
-    "well formed": "正常な形式です",
     "Your keys are <b>not being backed up from this session</b>.": "鍵は<b>このセッションからバックアップされていません</b>。",
     "Unable to load key backup status": "鍵のバックアップの状態を読み込めません",
     "The operation could not be completed": "操作を完了できませんでした",
@@ -839,12 +830,10 @@
     "Add existing room": "既存のルームを追加",
     "Invite to this space": "このスペースに招待",
     "Your message was sent": "メッセージが送信されました",
-    "Space options": "スペースのオプション",
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
     "Edit devices": "端末を編集",
     "You have no ignored users.": "無視しているユーザーはいません。",
-    "Spaces": "スペース",
     "Invite to %(roomName)s": "%(roomName)sに招待",
     "Private space": "非公開スペース",
     "Are you sure you want to leave the space '%(spaceName)s'?": "このスペース「%(spaceName)s」から退出してよろしいですか？",
@@ -1119,7 +1108,6 @@
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "このルームはどのプラットフォームにもメッセージをブリッジしていません。<a>詳細</a>",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
-    "Enable guest access": "ゲストによるアクセスを有効にする",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
     "Space information": "スペースの情報",
     "Retry all": "全て再試行",
@@ -1628,7 +1616,6 @@
     "Set a new account password…": "アカウントの新しいパスワードを設定…",
     "Backing up %(sessionsRemaining)s keys…": "%(sessionsRemaining)s個の鍵をバックアップしています…",
     "Connecting to integration manager…": "インテグレーションマネージャーに接続しています…",
-    "Saving…": "保存しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
@@ -1730,7 +1717,10 @@
         "deselect_all": "全ての選択を解除",
         "select_all": "全て選択",
         "copied": "コピーしました！",
-        "advanced": "詳細"
+        "advanced": "詳細",
+        "spaces": "スペース",
+        "general": "一般",
+        "saving": "保存しています…"
     },
     "action": {
         "continue": "続行",
@@ -2281,7 +2271,14 @@
             "message_search_disabled": "検索結果の表示用に、暗号化されたメッセージをローカルに安全にキャッシュしています。",
             "message_search_unsupported": "暗号化されたメッセージの安全なキャッシュをローカルに保存するためのコンポーネントが%(brand)sにありません。この機能を試してみたい場合は、<nativeLink>検索コンポーネントが追加された</nativeLink>%(brand)sデスクトップのカスタム版をビルドしてください。",
             "message_search_unsupported_web": "Webブラウザー上で動作する%(brand)sは、暗号化メッセージの安全なキャッシュをローカルに保存できません。<desktopLink>%(brand)s デスクトップ</desktopLink>を使用すると、暗号化メッセージを検索結果に表示することができます。",
-            "message_search_failed": "メッセージの検索機能の初期化に失敗しました"
+            "message_search_failed": "メッセージの検索機能の初期化に失敗しました",
+            "backup_key_well_formed": "正常な形式です",
+            "backup_key_unexpected_type": "予期しない種類",
+            "backup_keys_description": "セッションにアクセスできなくなる場合に備えて、アカウントデータと暗号鍵をバックアップしましょう。鍵は一意のセキュリティーキーで保護されます。",
+            "backup_key_stored_status": "バックアップキーの保存：",
+            "cross_signing_not_stored": "保存されていません",
+            "backup_key_cached_status": "バックアップキーのキャッシュ：",
+            "4s_public_key_status": "機密ストレージの公開鍵："
         },
         "preferences": {
             "room_list_heading": "ルーム一覧",
@@ -2416,7 +2413,8 @@
             "add_msisdn_confirm_sso_button": "シングルサインオンを使用して本人確認を行い、電話番号の追加を承認してください。",
             "add_msisdn_confirm_button": "電話番号の追加を承認",
             "add_msisdn_confirm_body": "下のボタンをクリックすると、この電話番号を追加します。",
-            "add_msisdn_dialog_title": "電話番号を追加"
+            "add_msisdn_dialog_title": "電話番号を追加",
+            "name_placeholder": "表示名がありません"
         },
         "sidebar": {
             "title": "サイドバー",
@@ -3228,7 +3226,8 @@
             "error_failed_save": "このスペースの見え方の更新に失敗しました",
             "history_visibility_anyone_space": "スペースのプレビュー",
             "history_visibility_anyone_space_description": "参加する前にスペースのプレビューを閲覧することを許可。",
-            "history_visibility_anyone_space_recommendation": "公開のスペースでは許可することを推奨します。"
+            "history_visibility_anyone_space_recommendation": "公開のスペースでは許可することを推奨します。",
+            "guest_access_label": "ゲストによるアクセスを有効にする"
         },
         "access": {
             "title": "アクセス",
@@ -3721,7 +3720,8 @@
             "devtools_open_timeline": "ルームのタイムラインを表示（開発者ツール）",
             "home": "スペースのホーム",
             "explore": "ルームを探す",
-            "manage_and_explore": "ルームの管理および探索"
+            "manage_and_explore": "ルームの管理および探索",
+            "options": "スペースのオプション"
         },
         "share_public": "公開スペースを共有",
         "search_children": "%(spaceName)sを検索",

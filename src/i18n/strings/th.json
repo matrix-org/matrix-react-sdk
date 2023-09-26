@@ -92,7 +92,6 @@
     },
     "A new password must be entered.": "กรุณากรอกรหัสผ่านใหม่",
     "Custom level": "กำหนดระดับเอง",
-    "No display name": "ไม่มีชื่อที่แสดง",
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
     "Enter passphrase": "กรอกรหัสผ่าน",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
@@ -195,7 +194,6 @@
     "You don't currently have any stickerpacks enabled": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
     "Failed to connect to integration manager": "ไม่สามารถเชื่อมต่อกับตัวจัดการการรวม",
     "General failure": "ข้อผิดพลาดทั่วไป",
-    "General": "ทั่วไป",
     "collapse": "ยุบ",
     "common": {
         "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
@@ -228,7 +226,8 @@
         "stickerpack": "ชุดสติ๊กเกอร์",
         "on": "เปิด",
         "off": "ปิด",
-        "advanced": "ขึ้นสูง"
+        "advanced": "ขึ้นสูง",
+        "general": "ทั่วไป"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -377,7 +376,8 @@
             "add_msisdn_confirm_sso_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
             "add_msisdn_confirm_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
             "add_msisdn_confirm_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
-            "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์"
+            "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์",
+            "name_placeholder": "ไม่มีชื่อที่แสดง"
         }
     },
     "timeline": {

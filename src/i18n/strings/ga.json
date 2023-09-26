@@ -13,7 +13,6 @@
     "Unignore": "Stop ag tabhairt neamhaird air",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Permission Required": "Is Teastáil Cead",
-    "Spaces": "Spásanna",
     "Transfer": "Aistrigh",
     "Hold": "Fan",
     "Resume": "Tosaigh arís",
@@ -246,7 +245,6 @@
     "Demote": "Bain ceadanna",
     "Browse": "Brabhsáil",
     "Sounds": "Fuaimeanna",
-    "General": "Ginearálta",
     "Profile": "Próifíl",
     "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
@@ -451,7 +449,9 @@
         "on": "Ar siúl",
         "off": "Múchta",
         "copied": "Cóipeáilte!",
-        "advanced": "Forbartha"
+        "advanced": "Forbartha",
+        "spaces": "Spásanna",
+        "general": "Ginearálta"
     },
     "action": {
         "continue": "Lean ar aghaidh",

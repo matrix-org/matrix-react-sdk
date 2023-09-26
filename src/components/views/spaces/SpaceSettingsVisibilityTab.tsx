@@ -109,7 +109,7 @@ const SpaceSettingsVisibilityTab: React.FC<IProps> = ({ matrixClient: cli, space
                             value={guestAccessEnabled}
                             onChange={setGuestAccessEnabled}
                             disabled={!canSetGuestAccess}
-                            label={_t("Enable guest access")}
+                            label={_t("room_settings|visibility|guest_access_label")}
                         />
                         <p>
                             {_t("room_settings|visibility|guest_access_explainer")}

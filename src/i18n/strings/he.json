@@ -331,7 +331,6 @@
     "Failed to set display name": "עדכון שם תצוגה נכשל",
     "Authentication": "אימות",
     "Set up": "הגדר",
-    "No display name": "אין שם לתצוגה",
     "Show more": "הצג יותר",
     "Folder": "תקיה",
     "Headphones": "אוזניות",
@@ -705,7 +704,6 @@
     "Ignored users": "משתמשים שהתעלמתם מהם",
     "None": "ללא",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
-    "General": "כללי",
     "Discovery": "מציאה",
     "Deactivate account": "סגור חשבון",
     "Deactivate Account": "סגור חשבון",
@@ -740,12 +738,6 @@
     "ready": "מוכן",
     "Secret storage:": "אחסון סודי:",
     "in account data": "במידע בחשבון",
-    "Secret storage public key:": "מקום שמירה סודי של המפתח הציבורי:",
-    "Backup key cached:": "גבה מפתח במטמון:",
-    "not stored": "לא שמור",
-    "Backup key stored:": "גבה מפתח שמור:",
-    "unexpected type": "סוג בלתי צפוי",
-    "well formed": "מעוצב היטב",
     "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
     "Jump to first invite.": "קפצו להזמנה ראשונה.",
     "Jump to first unread room.": "קפצו לחדר הראשון שלא נקרא.",
@@ -1014,7 +1006,6 @@
     "Dial pad": "לוח חיוג",
     "Set my room layout for everyone": "הגדר את פריסת החדר שלי עבור כולם",
     "Open dial pad": "פתח לוח חיוג",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "גבה את מפתחות ההצפנה שלך עם נתוני חשבונך במקרה שתאבד את הגישה להפעלות שלך. המפתחות שלך מאובטחים באמצעות מפתח אבטחה ייחודי.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "אם שכחת את מפתח האבטחה שלך תוכל <button> להגדיר אפשרויות שחזור חדשות</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "גש להיסטוריית ההודעות המאובטחות שלך והגדר הודעות מאובטחות על ידי הזנת מפתח האבטחה שלך.",
     "Enter Security Key": "הזן מפתח אבטחה",
@@ -1046,7 +1037,6 @@
     "Failed to send": "השליחה נכשלה",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
-    "Spaces": "מרחבי עבודה",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
     "Voice Message": "הודעה קולית",
@@ -1167,7 +1157,6 @@
         "one": "כרגע, למרחב העבודה יש גישה",
         "other": "כרגע ל, %(count)s מרחבי עבודה יש גישה"
     },
-    "Space options": "אפשרויות מרחב העבודה",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -1186,7 +1175,6 @@
     "You won't get any notifications": "לא תקבל שום התראה",
     "Get notified for every message": "קבלת התראות על כל הודעה",
     "Get notifications as set up in your <a>settings</a>": "קבלת התראות על פי ההעדפות שלך במסך<a>הגדרות</a>",
-    "Enable guest access": "אפשר גישה לאורחים",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Voice processing": "עיבוד קול",
     "Video settings": "הגדרות וידאו",
@@ -1289,7 +1277,9 @@
         "deselect_all": "הסר סימון מהכל",
         "select_all": "בחר הכל",
         "copied": "הועתק!",
-        "advanced": "מתקדם"
+        "advanced": "מתקדם",
+        "spaces": "מרחבי עבודה",
+        "general": "כללי"
     },
     "action": {
         "continue": "המשך",
@@ -1696,7 +1686,14 @@
             "message_search_disabled": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש.",
             "message_search_unsupported": "%(brand)s חסרים כמה רכיבים הנדרשים לצורך אחסון במטמון מאובטח של הודעות מוצפנות באופן מקומי. אם תרצה להתנסות בתכונה זו, בנה %(brand)s מותאם אישית לדסקטום עם <nativeLink>חפש רכיבים להוספה</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s אינם יכולים לשמור במטמון מאובטח הודעות מוצפנות באופן מקומי בזמן שהם פועלים בדפדפן אינטרנט. השתמש ב- <desktopLink>%(brand)s Desktop </desktopLink> כדי שהודעות מוצפנות יופיעו בתוצאות החיפוש.",
-            "message_search_failed": "אתחול חיפוש הודעות נכשל"
+            "message_search_failed": "אתחול חיפוש הודעות נכשל",
+            "backup_key_well_formed": "מעוצב היטב",
+            "backup_key_unexpected_type": "סוג בלתי צפוי",
+            "backup_keys_description": "גבה את מפתחות ההצפנה שלך עם נתוני חשבונך במקרה שתאבד את הגישה להפעלות שלך. המפתחות שלך מאובטחים באמצעות מפתח אבטחה ייחודי.",
+            "backup_key_stored_status": "גבה מפתח שמור:",
+            "cross_signing_not_stored": "לא שמור",
+            "backup_key_cached_status": "גבה מפתח במטמון:",
+            "4s_public_key_status": "מקום שמירה סודי של המפתח הציבורי:"
         },
         "preferences": {
             "room_list_heading": "רשימת חדרים",
@@ -1740,7 +1737,8 @@
             "add_msisdn_confirm_sso_button": "אשר הוספת מספר טלפון על ידי כניסה חד שלבית לאימות חשבונכם.",
             "add_msisdn_confirm_button": "אישור הוספת מספר טלפון",
             "add_msisdn_confirm_body": "לחצו על הכפתור לאישור הוספת מספר הטלפון הזה.",
-            "add_msisdn_dialog_title": "הוסף מספר טלפון"
+            "add_msisdn_dialog_title": "הוסף מספר טלפון",
+            "name_placeholder": "אין שם לתצוגה"
         },
         "sidebar": {
             "title": "סרגל צד",
@@ -2377,7 +2375,8 @@
             "error_failed_save": "עדכון הנראות של מרחב העבודה הזה נכשל",
             "history_visibility_anyone_space": "תצוגה מקדימה של מרחב העבודה",
             "history_visibility_anyone_space_description": "אפשרו לאנשים תצוגה מקדימה של מרחב העבודה שלכם לפני שהם מצטרפים.",
-            "history_visibility_anyone_space_recommendation": "מומלץ למרחבי עבודה ציבוריים."
+            "history_visibility_anyone_space_recommendation": "מומלץ למרחבי עבודה ציבוריים.",
+            "guest_access_label": "אפשר גישה לאורחים"
         },
         "access": {
             "title": "גישה",
@@ -2768,7 +2767,8 @@
         "failed_load_rooms": "טעינת רשימת החדרים נכשלה.",
         "incompatible_server_hierarchy": "השרת שלכם אינו תומך בהצגת היררכית חללי עבודה.",
         "context_menu": {
-            "explore": "גלה חדרים"
+            "explore": "גלה חדרים",
+            "options": "אפשרויות מרחב העבודה"
         },
         "share_public": "שתף את מרחב העבודה הציבורי שלך",
         "search_children": "חיפוש %(spaceName)s",

@@ -93,7 +93,6 @@
     "Anchor": "Anker",
     "Headphones": "Koptelefong",
     "Folder": "Mappe",
-    "No display name": "Geen weergavenoame",
     "Warning!": "Let ip!",
     "Authentication": "Authenticoasje",
     "Failed to set display name": "Instelln van weergavenoame es mislukt",
@@ -126,7 +125,6 @@
     "Phone numbers": "Telefongnumero’s",
     "Account management": "Accountbeheer",
     "Deactivate Account": "Account deactiveern",
-    "General": "Algemeen",
     "Unignore": "Nie mi negeern",
     "Ignored users": "Genegeerde gebruukers",
     "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
@@ -481,7 +479,8 @@
         "on": "An",
         "off": "Uut",
         "copied": "Gekopieerd!",
-        "advanced": "Geavanceerd"
+        "advanced": "Geavanceerd",
+        "general": "Algemeen"
     },
     "action": {
         "continue": "Verdergoan",
@@ -643,7 +642,8 @@
             "language_section": "Toale en regio",
             "email_address_in_use": "Dat e-mailadresse hier es al in gebruuk",
             "msisdn_in_use": "Dezen telefongnumero es al in gebruuk",
-            "add_email_failed_verification": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt"
+            "add_email_failed_verification": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt",
+            "name_placeholder": "Geen weergavenoame"
         }
     },
     "devtools": {

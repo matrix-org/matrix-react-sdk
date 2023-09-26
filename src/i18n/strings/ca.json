@@ -38,7 +38,6 @@
     "Reason": "Raó",
     "Send": "Envia",
     "Incorrect verification code": "El codi de verificació és incorrecte",
-    "No display name": "Sense nom visible",
     "Authentication": "Autenticació",
     "Failed to set display name": "No s'ha pogut establir el nom visible",
     "This room is not public. You will not be able to rejoin without an invite.": "Aquesta sala no és pública. No podreu tronar a entrar sense invitació.",
@@ -356,7 +355,8 @@
             "add_msisdn_confirm_sso_button": "Confirma l'addició d'aquest número de telèfon mitjançant la inscripció única SSO (per demostrar la teva identitat).",
             "add_msisdn_confirm_button": "Confirma l'addició del número de telèfon",
             "add_msisdn_confirm_body": "Fes clic al botó de sota per confirmar l'addició d'aquest número de telèfon.",
-            "add_msisdn_dialog_title": "Afegeix número de telèfon"
+            "add_msisdn_dialog_title": "Afegeix número de telèfon",
+            "name_placeholder": "Sense nom visible"
         }
     },
     "devtools": {

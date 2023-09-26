@@ -371,7 +371,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
                     selected={selected}
                     label={this.state.name}
-                    contextMenuTooltip={_t("Space options")}
+                    contextMenuTooltip={_t("space|context_menu|options")}
                     notificationState={notificationState}
                     isNarrow={isPanelCollapsed}
                     size={isNested ? "24px" : "32px"}

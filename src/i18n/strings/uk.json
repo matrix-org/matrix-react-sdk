@@ -78,7 +78,6 @@
     "Reason": "Причина",
     "Default": "Типовий",
     "Incorrect verification code": "Неправильний код перевірки",
-    "No display name": "Немає псевдоніма",
     "Failed to set display name": "Не вдалося налаштувати псевдонім",
     "This event could not be displayed": "Неможливо показати цю подію",
     "Failed to ban user": "Не вдалося заблокувати користувача",
@@ -166,7 +165,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
     "Ok": "Гаразд",
     "Set up": "Налаштувати",
-    "General": "Загальні",
     "Discovery": "Виявлення",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Щоб повідомити про проблеми безпеки Matrix, будь ласка, прочитайте <a>Політику розкриття інформації</a> Matrix.org.",
     "Error changing power level requirement": "Помилка під час зміни вимог до рівня повноважень",
@@ -246,12 +244,9 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "well formed": "добре сформований",
-    "unexpected type": "несподіваний тип",
     "Cannot connect to integration manager": "Не вдалося з'єднатися з менеджером інтеграцій",
     "Delete Backup": "Видалити резервну копію",
     "Restore from Backup": "Відновити з резервної копії",
-    "not stored": "не збережено",
     "All keys backed up": "Усі ключі збережено",
     "Checking server": "Перевірка сервера",
     "You should:": "Вам варто:",
@@ -278,7 +273,6 @@
     "Share Room Message": "Поділитися повідомленням кімнати",
     "General failure": "Загальний збій",
     "Enter your account password to confirm the upgrade:": "Введіть пароль вашого облікового запису щоб підтвердити поліпшення:",
-    "Secret storage public key:": "Таємне сховище відкритого ключа:",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "expand": "розгорнути",
     "New Recovery Method": "Новий метод відновлення",
@@ -700,7 +694,6 @@
     "e.g. my-room": "наприклад, моя-кімната",
     "Room address": "Адреса кімнати",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не вдалося завантажити подію, на яку було надано відповідь, її або не існує, або у вас немає дозволу на її перегляд.",
-    "Spaces": "Простори",
     "Custom level": "Власний рівень",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "File to import": "Файл для імпорту",
@@ -721,9 +714,6 @@
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Цей сеанс <b>не створює резервну копію ваших ключів</b>, але у вас є резервна копія, з якої ви можете їх відновити.",
     "Your keys are <b>not being backed up from this session</b>.": "<b>Резервна копія ваших ключів не створюється з цього сеансу</b>.",
     "Back up your keys before signing out to avoid losing them.": "Створіть резервну копію ключів перед виходом, щоб не втратити їх.",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Резервне копіювання ключів шифрування з даними вашого облікового запису на випадок втрати доступу до сеансів. Ваші ключі будуть захищені унікальним ключем безпеки.",
-    "Backup key stored:": "Резервну копію ключа розміщено:",
-    "Backup key cached:": "Резервну копію ключа кешовано:",
     "Unable to load key backup status": "Не вдалося завантажити стан резервного копіювання ключа",
     "The operation could not be completed": "Неможливо завершити операцію",
     "Failed to save your profile": "Не вдалося зберегти ваш профіль",
@@ -760,8 +750,6 @@
         "other": "і ще %(count)s"
     },
     "Upgrade required": "Потрібне поліпшення",
-    "Space options": "Параметри простору",
-    "Enable guest access": "Увімкнути гостьовий доступ",
     "Create a space": "Створити простір",
     "Address": "Адреса",
     "Cancel All": "Скасувати все",
@@ -1632,7 +1620,6 @@
     "Set a new account password…": "Встановити новий пароль облікового запису…",
     "Backing up %(sessionsRemaining)s keys…": "Резервне копіювання %(sessionsRemaining)s ключів…",
     "Connecting to integration manager…": "Під'єднання до менеджера інтеграцій…",
-    "Saving…": "Збереження…",
     "Starting export process…": "Початок процесу експорту…",
     "Secure Backup successful": "Безпечне резервне копіювання виконано успішно",
     "Your keys are now being backed up from this device.": "На цьому пристрої створюється резервна копія ваших ключів.",
@@ -1829,7 +1816,10 @@
         "deselect_all": "Скасувати вибір",
         "select_all": "Вибрати всі",
         "copied": "Скопійовано!",
-        "advanced": "Подробиці"
+        "advanced": "Подробиці",
+        "spaces": "Простори",
+        "general": "Загальні",
+        "saving": "Збереження…"
     },
     "action": {
         "continue": "Продовжити",
@@ -2404,7 +2394,14 @@
             "message_search_disabled": "Безпечно локально кешувати зашифровані повідомлення щоб вони з'являлись у результатах пошуку.",
             "message_search_unsupported": "%(brand)s'ові бракує деяких складників, необхідних для безпечного локального кешування зашифрованих повідомлень. Якщо ви хочете поекспериментувати з цією властивістю, зберіть спеціальну збірку %(brand)s Desktop із <nativeLink>доданням пошукових складників</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s не може безпечно локально кешувати зашифровані повідомлення під час роботи у браузері. Користуйтесь <desktopLink>%(brand)s для комп'ютерів</desktopLink>, в якому зашифровані повідомлення з'являються у результатах пошуку.",
-            "message_search_failed": "Не вдалося ініціалізувати пошук повідомлень"
+            "message_search_failed": "Не вдалося ініціалізувати пошук повідомлень",
+            "backup_key_well_formed": "добре сформований",
+            "backup_key_unexpected_type": "несподіваний тип",
+            "backup_keys_description": "Резервне копіювання ключів шифрування з даними вашого облікового запису на випадок втрати доступу до сеансів. Ваші ключі будуть захищені унікальним ключем безпеки.",
+            "backup_key_stored_status": "Резервну копію ключа розміщено:",
+            "cross_signing_not_stored": "не збережено",
+            "backup_key_cached_status": "Резервну копію ключа кешовано:",
+            "4s_public_key_status": "Таємне сховище відкритого ключа:"
         },
         "preferences": {
             "room_list_heading": "Перелік кімнат",
@@ -2543,7 +2540,8 @@
             "add_msisdn_confirm_sso_button": "Підтвердьте додавання цього телефонного номера за допомогоє єдиного входу, щоб довести вашу справжність.",
             "add_msisdn_confirm_button": "Підтвердьте додавання номера телефону",
             "add_msisdn_confirm_body": "Клацніть на кнопку внизу, щоб підтвердити додавання цього номера телефону.",
-            "add_msisdn_dialog_title": "Додати номер телефону"
+            "add_msisdn_dialog_title": "Додати номер телефону",
+            "name_placeholder": "Немає псевдоніма"
         },
         "sidebar": {
             "title": "Бічна панель",
@@ -3396,7 +3394,8 @@
             "error_failed_save": "Не вдалось оновити видимість цього простору",
             "history_visibility_anyone_space": "Попередній перегляд простору",
             "history_visibility_anyone_space_description": "Дозвольте людям переглядати ваш простір, перш ніж вони приєднаються.",
-            "history_visibility_anyone_space_recommendation": "Рекомендовано для загальнодоступних просторів."
+            "history_visibility_anyone_space_recommendation": "Рекомендовано для загальнодоступних просторів.",
+            "guest_access_label": "Увімкнути гостьовий доступ"
         },
         "access": {
             "title": "Доступ",
@@ -3906,7 +3905,8 @@
             "devtools_open_timeline": "Переглянути стрічку кімнати (розробка)",
             "home": "Домівка простору",
             "explore": "Каталог кімнат",
-            "manage_and_explore": "Керування і перегляд кімнат"
+            "manage_and_explore": "Керування і перегляд кімнат",
+            "options": "Параметри простору"
         },
         "share_public": "Поділитися своїм загальнодоступним простором",
         "search_children": "Пошук %(spaceName)s",

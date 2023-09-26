@@ -422,7 +422,6 @@
     "Dog": "Anjing",
     "Demote": "Turunkan",
     "Replying": "Membalas",
-    "General": "Umum",
     "Deactivate user?": "Nonaktifkan pengguna?",
     "Remove %(phone)s?": "Hapus %(phone)s?",
     "Remove %(email)s?": "Hapus %(email)s?",
@@ -503,7 +502,6 @@
     "Hold": "Jeda",
     "Transfer": "Pindah",
     "Sending": "Mengirim",
-    "Spaces": "Space",
     "Disconnect from the identity server <idserver />?": "Putuskan hubungan dari server identitas <idserver />?",
     "Disconnect identity server": "Putuskan hubungan server identitas",
     "The identity server you have chosen does not have any terms of service.": "Server identitas yang Anda pilih tidak memiliki persyaratan layanan.",
@@ -516,13 +514,6 @@
     "not ready": "belum siap",
     "Secret storage:": "Penyimpanan rahasia:",
     "in account data": "di data akun",
-    "Secret storage public key:": "Kunci publik penyimpanan rahasia:",
-    "Backup key cached:": "Cadangan kunci dicache:",
-    "not stored": "tidak disimpan",
-    "Backup key stored:": "Cadangan kunci disimpan:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Cadangkan kunci enkripsi Anda dengan data akun Anda jika Anda kehilangan akses ke sesi-sesi Anda. Kunci Anda akan diamankan dengan Kunci Keamanan yang unik.",
-    "unexpected type": "tipe yang tidak terduga",
-    "well formed": "terbentuk dengan baik",
     "Back up your keys before signing out to avoid losing them.": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
     "Your keys are <b>not being backed up from this session</b>.": "Kunci Anda <b>tidak dicadangan dari sesi ini</b>.",
     "Backup version:": "Versi cadangan:",
@@ -568,11 +559,8 @@
     "The integration manager is offline or it cannot reach your homeserver.": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda.",
     "Cannot connect to integration manager": "Tidak dapat menghubungkan ke manajer integrasi",
     "Failed to set display name": "Gagal untuk menetapkan nama tampilan",
-    "No display name": "Tidak ada nama tampilan",
-    "Space options": "Opsi space",
     "Jump to first invite.": "Pergi ke undangan pertama.",
     "Jump to first unread room.": "Pergi ke ruangan yang belum dibaca.",
-    "Enable guest access": "Aktifkan akses tamu",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
     "Create a space": "Buat space",
     "IRC display name width": "Lebar nama tampilan IRC",
@@ -1631,7 +1619,6 @@
     "Set a new account password…": "Atur kata sandi akun baru…",
     "Backing up %(sessionsRemaining)s keys…": "Mencadangkan %(sessionsRemaining)s kunci…",
     "Connecting to integration manager…": "Menghubungkan ke pengelola integrasi…",
-    "Saving…": "Menyimpan…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Masukkan frasa keamanan yang hanya Anda tahu, yang digunakan untuk mengamankan data Anda. Supaya aman, jangan menggunakan ulang kata sandi akun Anda.",
     "Secure Backup successful": "Pencadangan Aman berhasil",
@@ -1833,7 +1820,10 @@
         "deselect_all": "Batalkan semua pilihan",
         "select_all": "Pilih semua",
         "copied": "Disalin!",
-        "advanced": "Tingkat Lanjut"
+        "advanced": "Tingkat Lanjut",
+        "spaces": "Space",
+        "general": "Umum",
+        "saving": "Menyimpan…"
     },
     "action": {
         "continue": "Lanjut",
@@ -2409,7 +2399,14 @@
             "message_search_disabled": "Simpan pesan terenkripsi secara lokal dengan aman agar muncul di hasil pencarian.",
             "message_search_unsupported": "%(brand)s tidak memiliki beberapa komponen yang diperlukan untuk menyimpan pesan terenkripsi secara lokal dengan aman. Jika Anda ingin bereksperimen dengan fitur ini, buat %(brand)s Desktop yang khusus dengan <nativeLink>tambahan komponen penelusuran</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s tidak dapat menyimpan pesan terenkripsi secara lokal dengan aman saat dijalankan di browser. Gunakan <desktopLink>%(brand)s Desktop</desktopLink> supaya pesan terenkripsi dapat muncul di hasil pencarian.",
-            "message_search_failed": "Inisialisasi pencarian pesan gagal"
+            "message_search_failed": "Inisialisasi pencarian pesan gagal",
+            "backup_key_well_formed": "terbentuk dengan baik",
+            "backup_key_unexpected_type": "tipe yang tidak terduga",
+            "backup_keys_description": "Cadangkan kunci enkripsi Anda dengan data akun Anda jika Anda kehilangan akses ke sesi-sesi Anda. Kunci Anda akan diamankan dengan Kunci Keamanan yang unik.",
+            "backup_key_stored_status": "Cadangan kunci disimpan:",
+            "cross_signing_not_stored": "tidak disimpan",
+            "backup_key_cached_status": "Cadangan kunci dicache:",
+            "4s_public_key_status": "Kunci publik penyimpanan rahasia:"
         },
         "preferences": {
             "room_list_heading": "Daftar ruangan",
@@ -2548,7 +2545,8 @@
             "add_msisdn_confirm_sso_button": "Konfirmasi penambahan nomor telepon ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
             "add_msisdn_confirm_button": "Konfirmasi penambahan nomor telepon",
             "add_msisdn_confirm_body": "Klik tombol di bawah untuk mengkonfirmasi penambahan nomor telepon ini.",
-            "add_msisdn_dialog_title": "Tambahkan Nomor Telepon"
+            "add_msisdn_dialog_title": "Tambahkan Nomor Telepon",
+            "name_placeholder": "Tidak ada nama tampilan"
         },
         "sidebar": {
             "title": "Bilah Samping",
@@ -3401,7 +3399,8 @@
             "error_failed_save": "Gagal untuk memperbarui visibilitas untuk space ini",
             "history_visibility_anyone_space": "Tampilkan Space",
             "history_visibility_anyone_space_description": "Memungkinkan orang-orang untuk memperlihatkan space Anda sebelum mereka bergabung.",
-            "history_visibility_anyone_space_recommendation": "Direkomendasikan untuk space publik."
+            "history_visibility_anyone_space_recommendation": "Direkomendasikan untuk space publik.",
+            "guest_access_label": "Aktifkan akses tamu"
         },
         "access": {
             "title": "Akses",
@@ -3911,7 +3910,8 @@
             "devtools_open_timeline": "Lihat lini masa ruangan (alat pengembang)",
             "home": "Beranda space",
             "explore": "Jelajahi ruangan",
-            "manage_and_explore": "Kelola & jelajahi ruangan"
+            "manage_and_explore": "Kelola & jelajahi ruangan",
+            "options": "Opsi space"
         },
         "share_public": "Bagikan space publik Anda",
         "search_children": "Cari %(spaceName)s",

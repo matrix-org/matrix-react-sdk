@@ -673,7 +673,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
         };
     }
 
-    let buttonText = _t("Saving…");
+    let buttonText = _t("common|saving");
     if (!saving) {
         buttonText = selectionAllSuggested ? _t("space|unmark_suggested") : _t("space|mark_suggested");
     }

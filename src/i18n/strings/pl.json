@@ -70,7 +70,6 @@
     "not specified": "nieokreślony",
     "AM": "AM",
     "PM": "PM",
-    "No display name": "Brak nazwy ekranowej",
     "No more results": "Nie ma więcej wyników",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
     "Profile": "Profil",
@@ -287,7 +286,6 @@
     "Email Address": "Adres e-mail",
     "edited": "edytowane",
     "Edit message": "Edytuj wiadomość",
-    "General": "Ogólne",
     "Sounds": "Dźwięki",
     "Notification sound": "Dźwięk powiadomień",
     "Set a new custom sound": "Ustaw nowy niestandardowy dźwięk",
@@ -803,7 +801,6 @@
         "other": "%(count)s członkowie"
     },
     "You don't have permission": "Nie masz uprawnień",
-    "Spaces": "Przestrzenie",
     "Nothing pinned, yet": "Nie przypięto tu jeszcze niczego",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Jeżeli masz uprawnienia, przejdź do menu dowolnej wiadomości i wybierz <b>Przypnij</b>, aby przyczepić ją tutaj.",
     "Pinned messages": "Przypięte wiadomości",
@@ -878,8 +875,6 @@
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
-    "Space options": "Opcje przestrzeni",
-    "Enable guest access": "Włącz dostęp dla gości",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
     "Address": "Adres",
@@ -930,7 +925,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Wprowadź swoją frazę zabezpieczającą lub <button>użyj klucza zabezpieczającego</button>, aby kontynuować.",
     "Invalid Security Key": "Nieprawidłowy klucz bezpieczeństwa",
     "Wrong Security Key": "Niewłaściwy klucz bezpieczeństwa",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Utwórz kopię zapasową kluczy szyfrujących wraz z danymi konta na wypadek utraty dostępu do sesji. Twoje klucze będą zabezpieczone unikalnym kluczem bezpieczeństwa.",
     "Secure Backup successful": "Wykonanie bezpiecznej kopii zapasowej powiodło się",
     "You can also set up Secure Backup & manage your keys in Settings.": "W ustawieniach możesz również skonfigurować bezpieczną kopię zapasową i zarządzać swoimi kluczami.",
     "Restore your key backup to upgrade your encryption": "Przywróć kopię zapasową klucza, aby ulepszyć szyfrowanie",
@@ -940,8 +934,6 @@
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Kopia zapasowa nie mogła zostać rozszyfrowana za pomocą tego Klucza: upewnij się, że wprowadzono prawidłowy Klucz bezpieczeństwa.",
     "Restoring keys from backup": "Przywracanie kluczy z kopii zapasowej",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Brakuje niektórych danych sesji, w tym zaszyfrowanych kluczy wiadomości. Wyloguj się i zaloguj, aby to naprawić, przywracając klucze z kopii zapasowej.",
-    "Backup key stored:": "Klucz zapasowy zapisany:",
-    "Backup key cached:": "Klucz zapasowy zapisany w pamięci podręcznej:",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Unsent": "Niewysłane",
@@ -951,7 +943,6 @@
     "Set a new account password…": "Ustaw nowe hasło użytkownika…",
     "Error changing password": "Wystąpił błąd podczas zmiany hasła",
     "Search users in this room…": "Szukaj użytkowników w tym pokoju…",
-    "Saving…": "Zapisywanie…",
     "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
@@ -961,10 +952,6 @@
     "not ready": "nie gotowe",
     "Secret storage:": "Sekretny magazyn:",
     "in account data": "w danych konta",
-    "Secret storage public key:": "Publiczny klucz sekretnego magazynu:",
-    "not stored": "nieprzechowywany",
-    "unexpected type": "niespodziewany typ",
-    "well formed": "dobrze ukształtowany",
     "Your keys are <b>not being backed up from this session</b>.": "Twoje klucze <b>nie są zapisywanie na tej sesji</b>.",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "Backing up %(sessionsRemaining)s keys…": "Tworzenie kopii zapasowej %(sessionsRemaining)s kluczy…",
@@ -1818,7 +1805,10 @@
         "deselect_all": "Odznacz wszystkie",
         "select_all": "Zaznacz wszystkie",
         "copied": "Skopiowano!",
-        "advanced": "Zaawansowane"
+        "advanced": "Zaawansowane",
+        "spaces": "Przestrzenie",
+        "general": "Ogólne",
+        "saving": "Zapisywanie…"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2393,7 +2383,14 @@
             "message_search_disabled": "Bezpiecznie przechowuj lokalnie wiadomości szyfrowane, aby mogły się wyświetlać w wynikach wyszukiwania.",
             "message_search_unsupported": "%(brand)s brakuje niektórych komponentów wymaganych do bezpiecznego przechowywania wiadomości szyfrowanych lokalnie. Jeśli chcesz eksperymentować z tą funkcją, zbuduj własny %(brand)s Desktop z <nativeLink> dodanymi komponentami wyszukiwania</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s nie jest w stanie bezpiecznie przechowywać wiadomości szyfrowanych lokalnie, gdy działa w przeglądarce. Użyj <desktopLink> Desktop</desktopLink>, aby wiadomości pojawiły się w wynikach wyszukiwania.",
-            "message_search_failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się"
+            "message_search_failed": "Inicjalizacja wyszukiwania wiadomości nie powiodła się",
+            "backup_key_well_formed": "dobrze ukształtowany",
+            "backup_key_unexpected_type": "niespodziewany typ",
+            "backup_keys_description": "Utwórz kopię zapasową kluczy szyfrujących wraz z danymi konta na wypadek utraty dostępu do sesji. Twoje klucze będą zabezpieczone unikalnym kluczem bezpieczeństwa.",
+            "backup_key_stored_status": "Klucz zapasowy zapisany:",
+            "cross_signing_not_stored": "nieprzechowywany",
+            "backup_key_cached_status": "Klucz zapasowy zapisany w pamięci podręcznej:",
+            "4s_public_key_status": "Publiczny klucz sekretnego magazynu:"
         },
         "preferences": {
             "room_list_heading": "Lista pokojów",
@@ -2532,7 +2529,8 @@
             "add_msisdn_confirm_sso_button": "Potwierdź dodanie tego numeru telefonu przy użyciu pojedynczego logowania, aby potwierdzić swoją tożsamość.",
             "add_msisdn_confirm_button": "Potwierdź dodanie numeru telefonu",
             "add_msisdn_confirm_body": "Naciśnij przycisk poniżej aby potwierdzić dodanie tego numeru telefonu.",
-            "add_msisdn_dialog_title": "Dodaj numer telefonu"
+            "add_msisdn_dialog_title": "Dodaj numer telefonu",
+            "name_placeholder": "Brak nazwy ekranowej"
         },
         "sidebar": {
             "title": "Pasek boczny",
@@ -3383,7 +3381,8 @@
             "error_failed_save": "Nie udało się zaktualizować widoczności tej przestrzeni",
             "history_visibility_anyone_space": "Podgląd przestrzeni",
             "history_visibility_anyone_space_description": "Pozwól ludziom na podgląd twojej przestrzeni zanim dołączą.",
-            "history_visibility_anyone_space_recommendation": "Zalecane dla publicznych przestrzeni."
+            "history_visibility_anyone_space_recommendation": "Zalecane dla publicznych przestrzeni.",
+            "guest_access_label": "Włącz dostęp dla gości"
         },
         "access": {
             "title": "Dostęp",
@@ -3892,7 +3891,8 @@
             "devtools_open_timeline": "Pokaż oś czasu pokoju (devtools)",
             "home": "Przestrzeń główna",
             "explore": "Przeglądaj pokoje",
-            "manage_and_explore": "Zarządzaj i odkrywaj pokoje"
+            "manage_and_explore": "Zarządzaj i odkrywaj pokoje",
+            "options": "Opcje przestrzeni"
         },
         "share_public": "Zaproś do swojej publicznej przestrzeni",
         "search_children": "Przeszukaj %(spaceName)s",

@@ -57,7 +57,6 @@
     "Moderator": "版主",
     "New passwords must match each other.": "新密碼必須互相相符。",
     "not specified": "未指定",
-    "No display name": "沒有顯示名稱",
     "No more results": "沒有更多結果",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "請收信並點擊信中的連結。完成後，再點擊「繼續」。",
     "Profile": "基本資料",
@@ -246,7 +245,6 @@
     "Profile picture": "大頭照",
     "Display Name": "顯示名稱",
     "Room information": "聊天室資訊",
-    "General": "一般",
     "Room Addresses": "聊天室位址",
     "Email addresses": "電子郵件地址",
     "Phone numbers": "電話號碼",
@@ -516,9 +514,7 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "您將要把此聊天室從 <oldVersion /> 升級到 <newVersion />。",
     "<userName/> wants to chat": "<userName/> 想要聊天",
     "Start chatting": "開始聊天",
-    "Secret storage public key:": "秘密儲存空間公鑰：",
     "in account data": "在帳號資料中",
-    "not stored": "未儲存",
     "Hide verified sessions": "隱藏已驗證的工作階段",
     "%(count)s verified sessions": {
         "other": "%(count)s 個已驗證的工作階段",
@@ -638,8 +634,6 @@
     "Verification timed out.": "驗證逾時。",
     "%(displayName)s cancelled verification.": "%(displayName)s 取消驗證。",
     "You cancelled verification.": "您取消了驗證。",
-    "well formed": "組成良好",
-    "unexpected type": "預料之外的類型",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "透過使用單一登入系統來證您的身分以確認停用您的帳號。",
     "Are you sure you want to deactivate your account? This is irreversible.": "確定您想要停用您的帳號嗎？此為不可逆的操作。",
     "Confirm account deactivation": "確認停用帳號",
@@ -720,8 +714,6 @@
     "Room settings": "聊天室設定",
     "Backup version:": "備份版本：",
     "Algorithm:": "演算法：",
-    "Backup key stored:": "是否已儲存備份金鑰：",
-    "Backup key cached:": "是否快取備份金鑰：",
     "Secret storage:": "秘密儲存空間：",
     "ready": "已準備好",
     "not ready": "尚未準備好",
@@ -1035,7 +1027,6 @@
     "Invalid Security Key": "無效的安全金鑰",
     "Wrong Security Key": "錯誤的安全金鑰",
     "Set my room layout for everyone": "為所有人設定我的聊天室佈局",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "請備份您帳號的加密金鑰，以防無法使用您的工作階段。您的金鑰會被特殊的安全金鑰保護。",
     "Remember this": "記住這個",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "小工具將會驗證您的使用者 ID，但將無法為您執行動作：",
     "Allow this widget to verify your identity": "允許此小工具驗證您的身分",
@@ -1051,14 +1042,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
     "Create a new room": "建立新聊天室",
-    "Spaces": "聊天空間",
     "Space selection": "選取聊天空間",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "如果您將自己降級，將無法撤銷此變更，而且如果您是空間中的最後一個特殊權限使用者，將無法再取得這類特殊權限。",
     "Suggested Rooms": "建議的聊天室",
     "Add existing room": "新增既有的聊天室",
     "Invite to this space": "邀請加入此聊天空間",
     "Your message was sent": "您的訊息已傳送",
-    "Space options": "聊天空間選項",
     "Leave space": "離開聊天空間",
     "Create a space": "建立聊天空間",
     "Private space": "私密聊天空間",
@@ -1143,7 +1132,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天空間。",
     "This space has no local addresses": "此聊天空間沒有本機位址",
     "Space information": "聊天空間資訊",
-    "Enable guest access": "允許訪客存取",
     "Address": "位址",
     "Unnamed audio": "未命名的音訊",
     "Error processing audio message": "處理音訊訊息時出現問題",
@@ -1632,7 +1620,6 @@
     "Set a new account password…": "設定新帳號密碼…",
     "Backing up %(sessionsRemaining)s keys…": "正在備份 %(sessionsRemaining)s 把金鑰…",
     "Connecting to integration manager…": "正在連線至整合管理員…",
-    "Saving…": "正在儲存…",
     "Starting export process…": "正在開始匯出流程…",
     "Secure Backup successful": "安全備份成功",
     "Your keys are now being backed up from this device.": "您已備份此裝置的金鑰。",
@@ -1829,7 +1816,10 @@
         "deselect_all": "取消選取",
         "select_all": "全部選取",
         "copied": "已複製！",
-        "advanced": "進階"
+        "advanced": "進階",
+        "spaces": "聊天空間",
+        "general": "一般",
+        "saving": "正在儲存…"
     },
     "action": {
         "continue": "繼續",
@@ -2404,7 +2394,14 @@
             "message_search_disabled": "將加密的訊息安全地在本機快取以出現在顯示結果中。",
             "message_search_unsupported": "%(brand)s 缺少某些在本機快取已加密訊息所需的元件。如果您想要實驗此功能，請加入<nativeLink>搜尋元件</nativeLink>來自行建構 %(brand)s 桌面版。",
             "message_search_unsupported_web": "%(brand)s 無法在網頁瀏覽器中執行時，安全地在本機快取加密訊息。若需搜尋加密訊息，請使用 <desktopLink>%(brand)s 桌面版</desktopLink>。",
-            "message_search_failed": "訊息搜尋初始化失敗"
+            "message_search_failed": "訊息搜尋初始化失敗",
+            "backup_key_well_formed": "組成良好",
+            "backup_key_unexpected_type": "預料之外的類型",
+            "backup_keys_description": "請備份您帳號的加密金鑰，以防無法使用您的工作階段。您的金鑰會被特殊的安全金鑰保護。",
+            "backup_key_stored_status": "是否已儲存備份金鑰：",
+            "cross_signing_not_stored": "未儲存",
+            "backup_key_cached_status": "是否快取備份金鑰：",
+            "4s_public_key_status": "秘密儲存空間公鑰："
         },
         "preferences": {
             "room_list_heading": "聊天室清單",
@@ -2543,7 +2540,8 @@
             "add_msisdn_confirm_sso_button": "透過使用單一登入來證明您的身分，以確認新增此電話號碼。",
             "add_msisdn_confirm_button": "確認新增電話號碼",
             "add_msisdn_confirm_body": "點擊下方按鈕以確認新增此電話號碼。",
-            "add_msisdn_dialog_title": "新增電話號碼"
+            "add_msisdn_dialog_title": "新增電話號碼",
+            "name_placeholder": "沒有顯示名稱"
         },
         "sidebar": {
             "title": "側邊欄",
@@ -3396,7 +3394,8 @@
             "error_failed_save": "無法更新此聊天空間的能見度",
             "history_visibility_anyone_space": "預覽聊天空間",
             "history_visibility_anyone_space_description": "允許人們在加入前預覽您的聊天空間。",
-            "history_visibility_anyone_space_recommendation": "給公開聊天空間的推薦。"
+            "history_visibility_anyone_space_recommendation": "給公開聊天空間的推薦。",
+            "guest_access_label": "允許訪客存取"
         },
         "access": {
             "title": "存取",
@@ -3906,7 +3905,8 @@
             "devtools_open_timeline": "檢視聊天室時間軸（開發者工具）",
             "home": "聊天空間首頁",
             "explore": "探索聊天室",
-            "manage_and_explore": "管理與探索聊天室"
+            "manage_and_explore": "管理與探索聊天室",
+            "options": "聊天空間選項"
         },
         "share_public": "分享您的公開聊天空間",
         "search_children": "搜尋 %(spaceName)s",

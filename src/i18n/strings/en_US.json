@@ -115,7 +115,6 @@
     "Admin Tools": "Admin Tools",
     "Create new room": "Create new room",
     "Home": "Home",
-    "No display name": "No display name",
     "%(roomName)s does not exist.": "%(roomName)s does not exist.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is not accessible at this time.",
     "Uploading %(filename)s": "Uploading %(filename)s",
@@ -286,7 +285,8 @@
             "add_msisdn_confirm_sso_button": "Confirm adding this phone number by using Single Sign On to prove your identity.",
             "add_msisdn_confirm_button": "Confirm adding phone number",
             "add_msisdn_confirm_body": "Click the button below to confirm adding this phone number.",
-            "add_msisdn_dialog_title": "Add Phone Number"
+            "add_msisdn_dialog_title": "Add Phone Number",
+            "name_placeholder": "No display name"
         }
     },
     "timeline": {

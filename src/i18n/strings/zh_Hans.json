@@ -47,7 +47,6 @@
     "Invited": "已邀请",
     "Moderator": "协管员",
     "not specified": "未指定",
-    "No display name": "无显示名称",
     "Create new room": "创建新房间",
     "unknown error code": "未知错误代码",
     "Low priority": "低优先级",
@@ -294,7 +293,6 @@
     "Email addresses": "电子邮箱地址",
     "Phone numbers": "电话号码",
     "Account management": "账户管理",
-    "General": "通用",
     "Ignored users": "已忽略的用户",
     "Missing media permissions, click the button below to request.": "缺少媒体权限，点击下面的按钮以请求权限。",
     "Request media permissions": "请求媒体权限",
@@ -364,8 +362,6 @@
     "Ok": "确定",
     "Lock": "锁",
     "Show more": "显示更多",
-    "unexpected type": "未预期的类型",
-    "Secret storage public key:": "秘密存储公钥：",
     "in account data": "在账户数据中",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "在登出前连接此会话到密钥备份以避免丢失可能仅在此会话上的密钥。",
     "Connect this session to Key Backup": "将此会话连接到密钥备份",
@@ -385,7 +381,6 @@
     "Disconnect anyway": "仍然断开连接",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "你仍然在身份服务器 <idserver /> 上<b>共享你的个人数据</b>。",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "我们推荐你在断开连接前从身份服务器上删除你的邮箱地址和电话号码。",
-    "not stored": "未存储",
     "You are currently using <server></server> to discover and be discoverable by existing contacts you know. You can change your identity server below.": "你正在使用<server></server>来发现你认识的现存联系人，同时也让他们可以发现你。你可以在下方更改你的身份服务器。",
     "If you don't want to use <server /> to discover and be discoverable by existing contacts you know, enter another identity server below.": "如果你不想使用 <server /> 以发现你认识的现存联系人并被其发现，请在下方输入另一个身份服务器。",
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "你现在没有使用身份服务器。若想发现你认识的现存联系人并被其发现，请在下方添加一个身份服务器。",
@@ -703,7 +698,6 @@
     "This session is encrypting history using the new recovery method.": "此会话正在使用新的恢复方法加密历史。",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
     "IRC display name width": "IRC 显示名称宽度",
-    "well formed": "格式正确",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
     "Unable to revoke sharing for email address": "无法撤消电子邮件地址共享",
     "Unable to revoke sharing for phone number": "无法撤销电话号码共享",
@@ -716,8 +710,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Backup version:": "备份版本：",
     "Algorithm:": "算法：",
-    "Backup key stored:": "备份密钥已保存：",
-    "Backup key cached:": "备份密钥已缓存：",
     "Secret storage:": "秘密存储：",
     "ready": "就绪",
     "not ready": "尚未就绪",
@@ -790,7 +782,6 @@
     "Transfer": "传输",
     "Reason (optional)": "理由（可选）",
     "Create a new room": "创建新房间",
-    "Spaces": "空间",
     "Server Options": "服务器选项",
     "Information": "信息",
     "Not encrypted": "未加密",
@@ -800,10 +791,8 @@
     "Hide Widgets": "隐藏挂件",
     "Invite to this space": "邀请至此空间",
     "Your message was sent": "消息已发送",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "请使用你的账户数据备份加密密钥，以免你无法访问你的会话。密钥会由一个唯一安全密钥保护。",
     "Failed to save your profile": "个人资料保存失败",
     "The operation could not be completed": "操作无法完成",
-    "Space options": "空间选项",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
     "This version of %(brand)s does not support searching encrypted messages": "当前版本的 %(brand)s 不支持搜索加密消息",
@@ -1143,7 +1132,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "任何服务器上的人均可通过公布的地址加入你的空间。",
     "This space has no local addresses": "此空间没有本地地址",
     "Space information": "空间信息",
-    "Enable guest access": "启用游客访问权限",
     "Address": "地址",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "集成管理器接收配置数据，并可以以你的名义修改挂件、发送房间邀请及设置权力级别。",
@@ -1634,7 +1622,9 @@
         "deselect_all": "取消全选",
         "select_all": "全选",
         "copied": "已复制！",
-        "advanced": "高级"
+        "advanced": "高级",
+        "spaces": "空间",
+        "general": "通用"
     },
     "action": {
         "continue": "继续",
@@ -2171,7 +2161,14 @@
             "message_search_disabled": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
             "message_search_unsupported": "%(brand)s缺少安全地在本地缓存加密信息所必须的部件。如果你想实验此功能，请构建一个自定义的<nativeLink>带有搜索部件的</nativeLink>%(brand)s桌面版。",
             "message_search_unsupported_web": "%(brand)s 在浏览器中运行时不能安全地在本地缓存加密信息。请使用<desktopLink>%(brand)s 桌面版</desktopLink>以使加密信息出现在搜索结果中。",
-            "message_search_failed": "消息搜索初始化失败"
+            "message_search_failed": "消息搜索初始化失败",
+            "backup_key_well_formed": "格式正确",
+            "backup_key_unexpected_type": "未预期的类型",
+            "backup_keys_description": "请使用你的账户数据备份加密密钥，以免你无法访问你的会话。密钥会由一个唯一安全密钥保护。",
+            "backup_key_stored_status": "备份密钥已保存：",
+            "cross_signing_not_stored": "未存储",
+            "backup_key_cached_status": "备份密钥已缓存：",
+            "4s_public_key_status": "秘密存储公钥："
         },
         "preferences": {
             "room_list_heading": "房间列表",
@@ -2265,7 +2262,8 @@
             "add_msisdn_confirm_sso_button": "通过单点登录以证明你的身份，并确认添加此电话号码。",
             "add_msisdn_confirm_button": "确认添加电话号码",
             "add_msisdn_confirm_body": "点击下面的按钮，以确认添加此电话号码。",
-            "add_msisdn_dialog_title": "添加电话号码"
+            "add_msisdn_dialog_title": "添加电话号码",
+            "name_placeholder": "无显示名称"
         },
         "sidebar": {
             "title": "侧边栏",
@@ -3045,7 +3043,8 @@
             "error_failed_save": "更新此空间的可见性失败",
             "history_visibility_anyone_space": "预览空间",
             "history_visibility_anyone_space_description": "允许人们在加入前预览你的空间。",
-            "history_visibility_anyone_space_recommendation": "建议用于公开空间。"
+            "history_visibility_anyone_space_recommendation": "建议用于公开空间。",
+            "guest_access_label": "启用游客访问权限"
         },
         "access": {
             "title": "访问",
@@ -3512,7 +3511,8 @@
             "devtools_open_timeline": "查看房间时间线（开发工具）",
             "home": "空间首页",
             "explore": "探索房间",
-            "manage_and_explore": "管理并探索房间"
+            "manage_and_explore": "管理并探索房间",
+            "options": "空间选项"
         },
         "share_public": "分享你的公共空间",
         "search_children": "搜索 %(spaceName)s",

@@ -377,9 +377,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         if (backupKeyCached) {
             backupKeyWellFormedText = ", ";
             if (backupKeyWellFormed) {
-                backupKeyWellFormedText += _t("well formed");
+                backupKeyWellFormedText += _t("settings|security|backup_key_well_formed");
             } else {
-                backupKeyWellFormedText += _t("unexpected type");
+                backupKeyWellFormedText += _t("settings|security|backup_key_unexpected_type");
             }
         }
 
@@ -400,15 +400,15 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                     <summary>{_t("common|advanced")}</summary>
                     <table className="mx_SecureBackupPanel_statusList">
                         <tr>
-                            <th scope="row">{_t("Backup key stored:")}</th>
+                            <th scope="row">{_t("settings|security|backup_key_stored_status")}</th>
                             <td>
                                 {backupKeyStored === true
                                     ? _t("settings|security|cross_signing_in_4s")
-                                    : _t("not stored")}
+                                    : _t("settings|security|cross_signing_not_stored")}
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">{_t("Backup key cached:")}</th>
+                            <th scope="row">{_t("settings|security|backup_key_cached_status")}</th>
                             <td>
                                 {backupKeyCached
                                     ? _t("settings|security|cross_signing_cached")
@@ -417,7 +417,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">{_t("Secret storage public key:")}</th>
+                            <th scope="row">{_t("settings|security|4s_public_key_status")}</th>
                             <td>
                                 {secretStorageKeyInAccount
                                     ? _t("in account data")

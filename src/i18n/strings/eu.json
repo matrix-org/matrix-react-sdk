@@ -55,7 +55,6 @@
     "Invited": "Gonbidatuta",
     "New passwords must match each other.": "Pasahitz berriak berdinak izan behar dira.",
     "not specified": "zehaztu gabe",
-    "No display name": "Pantaila izenik ez",
     "No more results": "Emaitza gehiagorik ez",
     "Profile": "Profila",
     "Reason": "Arrazoia",
@@ -289,7 +288,6 @@
     "Email (optional)": "E-mail (aukerakoa)",
     "Join millions for free on the largest public server": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
     "Couldn't load page": "Ezin izan da orria kargatu",
-    "General": "Orokorra",
     "Room Addresses": "Gelaren helbideak",
     "Email addresses": "E-mail helbideak",
     "Phone numbers": "Telefono zenbakiak",
@@ -508,9 +506,7 @@
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
-    "Secret storage public key:": "Biltegi sekretuko gako publikoa:",
     "in account data": "kontuaren datuetan",
-    "not stored": "gorde gabe",
     "Unencrypted": "Zifratu gabe",
     "Close preview": "Itxi aurrebista",
     "<userName/> wants to chat": "<userName/> erabiltzaileak txateatu nahi du",
@@ -630,8 +626,6 @@
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
-    "well formed": "ongi osatua",
-    "unexpected type": "ustekabeko mota",
     "Almost there! Is %(displayName)s showing the same shield?": "Ia amaitu duzu! %(displayName)s gailuak ezkutu bera erakusten du?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Ongi egiaztatu duzu %(deviceName)s (%(deviceId)s)!",
     "Start verification again from the notification.": "Hasi egiaztaketa berriro jakinarazpenetik.",
@@ -754,7 +748,8 @@
         "off": "Ez",
         "all_rooms": "Gela guztiak",
         "copied": "Kopiatuta!",
-        "advanced": "Aurreratua"
+        "advanced": "Aurreratua",
+        "general": "Orokorra"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1046,7 +1041,11 @@
             "message_search_section": "Mezuen bilaketa",
             "encryption_individual_verification_mode": "Egiaztatu erabiltzaile baten saio bakoitza hau fidagarri gisa markatzeko, ez dira zeharka sinatutako gailuak fidagarritzat jotzen.",
             "message_search_disabled": "Gorde zifratutako mezuak cachean modu seguruan bilaketen emaitzetan agertu daitezen.",
-            "message_search_unsupported": "%(brand)s-ek zifratutako mezuak cache lokalean modu seguruan gordetzeko elementu batzuk faltan ditu. Ezaugarri honekin esperimentatu nahi baduzu, konpilatu pertsonalizatutako %(brand)s Desktop <nativeLink> bilaketa osagaiekin</nativeLink>."
+            "message_search_unsupported": "%(brand)s-ek zifratutako mezuak cache lokalean modu seguruan gordetzeko elementu batzuk faltan ditu. Ezaugarri honekin esperimentatu nahi baduzu, konpilatu pertsonalizatutako %(brand)s Desktop <nativeLink> bilaketa osagaiekin</nativeLink>.",
+            "backup_key_well_formed": "ongi osatua",
+            "backup_key_unexpected_type": "ustekabeko mota",
+            "cross_signing_not_stored": "gorde gabe",
+            "4s_public_key_status": "Biltegi sekretuko gako publikoa:"
         },
         "preferences": {
             "room_list_heading": "Gelen zerrenda",
@@ -1072,7 +1071,8 @@
             "add_msisdn_confirm_sso_button": "Baieztatu telefono zenbaki hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
             "add_msisdn_confirm_button": "Berretsi telefono zenbakia gehitzea",
             "add_msisdn_confirm_body": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
-            "add_msisdn_dialog_title": "Gehitu telefono zenbakia"
+            "add_msisdn_dialog_title": "Gehitu telefono zenbakia",
+            "name_placeholder": "Pantaila izenik ez"
         }
     },
     "devtools": {

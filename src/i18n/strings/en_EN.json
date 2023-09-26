@@ -17,7 +17,8 @@
             "oidc_manage_button": "Manage account",
             "account_section": "Account",
             "language_section": "Language and region",
-            "spell_check_section": "Spell check"
+            "spell_check_section": "Spell check",
+            "name_placeholder": "No display name"
         },
         "notifications": {
             "error_permissions_denied": "%(brand)s does not have permission to send you notifications - please check your browser settings",
@@ -179,7 +180,14 @@
             "message_search_space_used": "Space used:",
             "message_search_indexed_messages": "Indexed messages:",
             "message_search_indexed_rooms": "Indexed rooms:",
-            "message_search_room_progress": "%(doneRooms)s out of %(totalRooms)s"
+            "message_search_room_progress": "%(doneRooms)s out of %(totalRooms)s",
+            "backup_key_well_formed": "well formed",
+            "backup_key_unexpected_type": "unexpected type",
+            "backup_keys_description": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
+            "backup_key_stored_status": "Backup key stored:",
+            "cross_signing_not_stored": "not stored",
+            "backup_key_cached_status": "Backup key cached:",
+            "4s_public_key_status": "Secret storage public key:"
         },
         "inline_url_previews_default": "Enable inline URL previews by default",
         "inline_url_previews_room_account": "Enable URL previews for this room (only affects you)",
@@ -646,7 +654,10 @@
         "support": "Support",
         "room_name": "Room name",
         "thread": "Thread",
-        "accessibility": "Accessibility"
+        "accessibility": "Accessibility",
+        "spaces": "Spaces",
+        "general": "General",
+        "saving": "Saving…"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
@@ -1630,7 +1641,8 @@
             "devtools_open_timeline": "See room timeline (devtools)",
             "home": "Space home",
             "manage_and_explore": "Manage & explore rooms",
-            "explore": "Explore rooms"
+            "explore": "Explore rooms",
+            "options": "Space options"
         },
         "suggested_tooltip": "This room is suggested as a good one to join",
         "suggested": "Suggested",
@@ -1910,7 +1922,8 @@
             "error_failed_save": "Failed to update the visibility of this space",
             "history_visibility_anyone_space": "Preview Space",
             "history_visibility_anyone_space_description": "Allow people to preview your space before they join.",
-            "history_visibility_anyone_space_recommendation": "Recommended for public spaces."
+            "history_visibility_anyone_space_recommendation": "Recommended for public spaces.",
+            "guest_access_label": "Enable guest access"
         },
         "access": {
             "title": "Access",
@@ -2232,19 +2245,13 @@
         "setup_rooms_private_heading": "What projects are your team working on?",
         "setup_rooms_private_description": "We'll create rooms for each of them."
     },
-    "Spaces": "Spaces",
-    "General": "General",
-    "Saving…": "Saving…",
-    "Enable guest access": "Enable guest access",
     "Address": "Address",
     "Jump to first unread room.": "Jump to first unread room.",
     "Jump to first invite.": "Jump to first invite.",
-    "Space options": "Space options",
     "Failed to change power level": "Failed to change power level",
     "Add privileged users": "Add privileged users",
     "Give one or multiple users in this room more privileges": "Give one or multiple users in this room more privileges",
     "Search users in this room…": "Search users in this room…",
-    "No display name": "No display name",
     "Unknown error": "Unknown error",
     "Connecting to integration manager…": "Connecting to integration manager…",
     "Cannot connect to integration manager": "Cannot connect to integration manager",
@@ -2311,13 +2318,6 @@
     "Your keys are <b>not being backed up from this session</b>.": "Your keys are <b>not being backed up from this session</b>.",
     "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
     "Set up": "Set up",
-    "well formed": "well formed",
-    "unexpected type": "unexpected type",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.",
-    "Backup key stored:": "Backup key stored:",
-    "not stored": "not stored",
-    "Backup key cached:": "Backup key cached:",
-    "Secret storage public key:": "Secret storage public key:",
     "in account data": "in account data",
     "Secret storage:": "Secret storage:",
     "ready": "ready",

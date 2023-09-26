@@ -114,7 +114,6 @@
         "other": "Envoi de %(filename)s et %(count)s autres"
     },
     "Create new room": "Créer un nouveau salon",
-    "No display name": "Pas de nom d’affichage",
     "%(roomName)s does not exist.": "%(roomName)s n’existe pas.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s n’est pas joignable pour le moment.",
     "(~%(count)s results)": {
@@ -247,7 +246,6 @@
     "Profile picture": "Image de profil",
     "Display Name": "Nom d’affichage",
     "Room information": "Information du salon",
-    "General": "Général",
     "Room Addresses": "Adresses du salon",
     "Email addresses": "Adresses e-mail",
     "Phone numbers": "Numéros de téléphone",
@@ -517,10 +515,8 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vous allez mettre à niveau ce salon de <oldVersion /> vers <newVersion />.",
     "<userName/> wants to chat": "<userName/> veut discuter",
     "Start chatting": "Commencer à discuter",
-    "Secret storage public key:": "Clé publique du coffre secret :",
     "in account data": "dans les données du compte",
     "Unable to set up secret storage": "Impossible de configurer le coffre secret",
-    "not stored": "non sauvegardé",
     "Hide verified sessions": "Masquer les sessions vérifiées",
     "%(count)s verified sessions": {
         "other": "%(count)s sessions vérifiées",
@@ -639,8 +635,6 @@
     "Verification timed out.": "La vérification a expiré.",
     "%(displayName)s cancelled verification.": "%(displayName)s a annulé la vérification.",
     "You cancelled verification.": "Vous avez annulé la vérification.",
-    "well formed": "bien formée",
-    "unexpected type": "type inattendu",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirmez la désactivation de votre compte en utilisant l’authentification unique pour prouver votre identité.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Voulez-vous vraiment désactiver votre compte ? Ceci est irréversible.",
     "Confirm account deactivation": "Confirmez la désactivation de votre compte",
@@ -707,8 +701,6 @@
     "Ignored attempt to disable encryption": "Essai de désactiver le chiffrement ignoré",
     "not ready": "pas prêt",
     "Secret storage:": "Coffre secret :",
-    "Backup key cached:": "Clé de sauvegarde mise en cache :",
-    "Backup key stored:": "Clé de sauvegarde enregistrée :",
     "Backup version:": "Version de la sauvegarde :",
     "This version of %(brand)s does not support searching encrypted messages": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés",
     "This version of %(brand)s does not support viewing some encrypted files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
@@ -1038,7 +1030,6 @@
     "Set my room layout for everyone": "Définir ma disposition de salon pour tout le monde",
     "Open dial pad": "Ouvrir le pavé de numérotation",
     "Recently visited rooms": "Salons visités récemment",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sauvegardez vos clés de chiffrement et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisés avec une Clé de Sécurité unique.",
     "Dial pad": "Pavé de numérotation",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
@@ -1051,13 +1042,11 @@
     "Failed to start livestream": "Échec lors du démarrage de la diffusion en direct",
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
     "Create a new room": "Créer un nouveau salon",
-    "Spaces": "Espaces",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vous ne pourrez pas annuler ce changement puisque vous vous rétrogradez. Si vous êtes le dernier utilisateur a privilèges de cet espace, il deviendra impossible d’en reprendre contrôle.",
     "Suggested Rooms": "Salons recommandés",
     "Add existing room": "Ajouter un salon existant",
     "Invite to this space": "Inviter dans cet espace",
     "Your message was sent": "Votre message a été envoyé",
-    "Space options": "Options de l’espace",
     "Leave space": "Quitter l’espace",
     "Create a space": "Créer un espace",
     "Space selection": "Sélection d’un espace",
@@ -1143,7 +1132,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre espace.",
     "This space has no local addresses": "Cet espace n’a pas d’adresse locale",
     "Space information": "Informations de l’espace",
-    "Enable guest access": "Activer l’accès visiteur",
     "Address": "Adresse",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Les gestionnaires d’intégrations reçoivent les données de configuration et peuvent modifier les widgets, envoyer des invitations aux salons et définir les rangs à votre place.",
@@ -1632,7 +1620,6 @@
     "Set a new account password…": "Définir un nouveau mot de passe de compte…",
     "Backing up %(sessionsRemaining)s keys…": "Sauvegarde de %(sessionsRemaining)s clés…",
     "Connecting to integration manager…": "Connexion au gestionnaire d’intégrations…",
-    "Saving…": "Enregistrement…",
     "Starting export process…": "Démarrage du processus d’export…",
     "Secure Backup successful": "Sauvegarde sécurisée réalisée avec succès",
     "Your keys are now being backed up from this device.": "Vos clés sont maintenant sauvegardées depuis cet appareil.",
@@ -1829,7 +1816,10 @@
         "deselect_all": "Tout désélectionner",
         "select_all": "Tout sélectionner",
         "copied": "Copié !",
-        "advanced": "Avancé"
+        "advanced": "Avancé",
+        "spaces": "Espaces",
+        "general": "Général",
+        "saving": "Enregistrement…"
     },
     "action": {
         "continue": "Continuer",
@@ -2404,7 +2394,14 @@
             "message_search_disabled": "Mettre en cache les messages chiffrés localement et de manière sécurisée pour qu’ils apparaissent dans les résultats de recherche.",
             "message_search_unsupported": "Il manque quelques composants à %(brand)s pour mettre en cache les messages chiffrés localement de manière sécurisée. Si vous voulez essayer cette fonctionnalité, construisez %(brand)s Desktop vous-même en <nativeLink>ajoutant les composants de recherche</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s ne peut actuellement mettre en cache vos messages chiffrés localement de manière sécurisée via le navigateur Web. Utilisez <desktopLink>%(brand)s Desktop</desktopLink> pour que les messages chiffrés apparaissent dans vos résultats de recherche.",
-            "message_search_failed": "Échec de l’initialisation de la recherche de message"
+            "message_search_failed": "Échec de l’initialisation de la recherche de message",
+            "backup_key_well_formed": "bien formée",
+            "backup_key_unexpected_type": "type inattendu",
+            "backup_keys_description": "Sauvegardez vos clés de chiffrement et les données de votre compte au cas où vous perdiez l’accès à vos sessions. Vos clés seront sécurisés avec une Clé de Sécurité unique.",
+            "backup_key_stored_status": "Clé de sauvegarde enregistrée :",
+            "cross_signing_not_stored": "non sauvegardé",
+            "backup_key_cached_status": "Clé de sauvegarde mise en cache :",
+            "4s_public_key_status": "Clé publique du coffre secret :"
         },
         "preferences": {
             "room_list_heading": "Liste de salons",
@@ -2543,7 +2540,8 @@
             "add_msisdn_confirm_sso_button": "Confirmez l’ajout de ce numéro de téléphone en utilisant l’authentification unique pour prouver votre identité.",
             "add_msisdn_confirm_button": "Confirmer l’ajout du numéro de téléphone",
             "add_msisdn_confirm_body": "Cliquez sur le bouton ci-dessous pour confirmer l’ajout de ce numéro de téléphone.",
-            "add_msisdn_dialog_title": "Ajouter un numéro de téléphone"
+            "add_msisdn_dialog_title": "Ajouter un numéro de téléphone",
+            "name_placeholder": "Pas de nom d’affichage"
         },
         "sidebar": {
             "title": "Barre latérale",
@@ -3396,7 +3394,8 @@
             "error_failed_save": "Échec de la mise à jour de la visibilité de cet espace",
             "history_visibility_anyone_space": "Aperçu de l’espace",
             "history_visibility_anyone_space_description": "Permettre aux personnes d’avoir un aperçu de l’espace avant de le rejoindre.",
-            "history_visibility_anyone_space_recommendation": "Recommandé pour les espaces publics."
+            "history_visibility_anyone_space_recommendation": "Recommandé pour les espaces publics.",
+            "guest_access_label": "Activer l’accès visiteur"
         },
         "access": {
             "title": "Accès",
@@ -3906,7 +3905,8 @@
             "devtools_open_timeline": "Voir l’historique du salon (outils développeurs)",
             "home": "Accueil de l’espace",
             "explore": "Parcourir les salons",
-            "manage_and_explore": "Gérer et découvrir les salons"
+            "manage_and_explore": "Gérer et découvrir les salons",
+            "options": "Options de l’espace"
         },
         "share_public": "Partager votre espace public",
         "search_children": "Rechercher %(spaceName)s",

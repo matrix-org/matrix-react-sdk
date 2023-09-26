@@ -81,7 +81,6 @@
     "Profile": "Profil",
     "Email addresses": "E-postadresser",
     "Phone numbers": "Telefonnumre",
-    "General": "Generelt",
     "None": "Ingen",
     "Browse": "Bla",
     "Unable to verify phone number.": "Klarte ikke å verifisere telefonnummeret.",
@@ -293,10 +292,7 @@
     "Clear all data": "Tøm alle data",
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
-    "Secret storage public key:": "Offentlig nøkkel for hemmelig lagring:",
     "Aeroplane": "Fly",
-    "No display name": "Ingen visningsnavn",
-    "unexpected type": "uventet type",
     "Disconnect anyway": "Koble fra likevel",
     "Uploaded sound": "Lastet opp lyd",
     "Incorrect verification code": "Ugyldig verifiseringskode",
@@ -822,7 +818,8 @@
         "off": "Av",
         "all_rooms": "Alle rom",
         "copied": "Kopiert!",
-        "advanced": "Avansert"
+        "advanced": "Avansert",
+        "general": "Generelt"
     },
     "action": {
         "continue": "Fortsett",
@@ -1091,7 +1088,9 @@
             "bulk_options_accept_all_invites": "Aksepter alle %(invitedRooms)s-invitasjoner",
             "bulk_options_reject_all_invites": "Avslå alle %(invitedRooms)s-invitasjoner",
             "message_search_section": "Meldingssøk",
-            "encryption_individual_verification_mode": "Verifiser hver brukerøkt individuelt for å stemple den som at du stoler på den, ikke stol på kryss-signerte enheter."
+            "encryption_individual_verification_mode": "Verifiser hver brukerøkt individuelt for å stemple den som at du stoler på den, ikke stol på kryss-signerte enheter.",
+            "backup_key_unexpected_type": "uventet type",
+            "4s_public_key_status": "Offentlig nøkkel for hemmelig lagring:"
         },
         "preferences": {
             "room_list_heading": "Romliste",
@@ -1117,7 +1116,8 @@
             "add_msisdn_confirm_sso_button": "Bekreft dette telefonnummeret ved å bruke Single Sign On for å bevise din identitet.",
             "add_msisdn_confirm_button": "Bekreft tillegging av telefonnummer",
             "add_msisdn_confirm_body": "Klikk knappen nedenfor for å bekrefte dette telefonnummeret.",
-            "add_msisdn_dialog_title": "Legg til telefonnummer"
+            "add_msisdn_dialog_title": "Legg til telefonnummer",
+            "name_placeholder": "Ingen visningsnavn"
         }
     },
     "devtools": {

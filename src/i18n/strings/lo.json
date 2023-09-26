@@ -354,12 +354,8 @@
     "Ignored users": "ຜູ້ໃຊ້ຖືກຍົກເວັ້ນ",
     "None": "ບໍ່ມີ",
     "Warning!": "ແຈ້ງເຕືອນ!",
-    "No display name": "ບໍ່ມີຊື່ສະແດງຜົນ",
-    "Space options": "ຕົວເລືອກພື້ນທີ່",
     "Jump to first invite.": "ໄປຫາຄຳເຊີນທຳອິດ.",
     "Jump to first unread room.": "ໄປຫາຫ້ອງທໍາອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
-    "Enable guest access": "ເປີດໃຊ້ການເຂົ້າເຖິງແຂກ/ຜູ້ຖືກເຊີນ",
-    "General": "ທົ່ວໄປ",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
     "Address": "ທີ່ຢູ່",
@@ -483,7 +479,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "ທ່ານສາມາດປັກໝຸດໄດ້ເຖິງ %(count)s widget ເທົ່ານັ້ນ"
     },
-    "Spaces": "ພື້ນທີ່",
     "Profile": "ໂປຣໄຟລ໌",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
     "Missing domain separator e.g. (:domain.org)": "ຂາດຕົວແຍກໂດເມນ e.g. (:domain.org)",
@@ -1257,13 +1252,6 @@
     "ready": "ພ້ອມ",
     "Secret storage:": "ການເກັບຮັກສາຄວາມລັບ:",
     "in account data": "ໃນຂໍ້ມູນບັນຊີ",
-    "Secret storage public key:": "ກະເເຈສາທາລະນະການເກັບຮັກສາຄວາມລັບ:",
-    "Backup key cached:": "ລະຫັດສໍາຮອງຂໍ້ມູນທີ່ເກັບໄວ້:",
-    "not stored": "ບໍ່ໄດ້ເກັບຮັກສາໄວ້",
-    "Backup key stored:": "ກະແຈສຳຮອງທີ່ເກັບໄວ້:",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "ສຳຮອງຂໍ້ມູນລະຫັດການເຂົ້າລະຫັດຂອງທ່ານດ້ວຍຂໍ້ມູນບັນຊີຂອງທ່ານໃນກໍລະນີທີ່ທ່ານສູນເສຍການເຂົ້າເຖິງລະບົບຂອງທ່ານ. ກະແຈຂອງທ່ານຈະຖືກຮັກສາໄວ້ດ້ວຍກະແຈຄວາມປອດໄພທີ່ເປັນເອກະລັກ.",
-    "unexpected type": "ປະເພດທີ່ບໍ່ຄາດຄິດ",
-    "well formed": "ສ້າງຕັ້ງຂຶ້ນ",
     "Set up": "ຕັ້ງຄ່າ",
     "Back up your keys before signing out to avoid losing them.": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
     "Your keys are <b>not being backed up from this session</b>.": "ກະແຈຂອງທ່ານ <b>ບໍ່ຖືກສຳຮອງຂໍ້ມູນຈາກລະບົບນີ້</b>.",
@@ -1584,7 +1572,9 @@
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
         "select_all": "ເລືອກທັງຫມົດ",
         "copied": "ສຳເນົາແລ້ວ!",
-        "advanced": "ຂັ້ນສູງ"
+        "advanced": "ຂັ້ນສູງ",
+        "spaces": "ພື້ນທີ່",
+        "general": "ທົ່ວໄປ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2012,7 +2002,14 @@
             "message_search_disabled": "ເກັບຮັກສາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຄົ້ນຫາ.",
             "message_search_unsupported": "%(brand)s ຂາດບາງອົງປະກອບທີ່ຕ້ອງການສໍາລັບການເກັບຂໍ້ຄວາມເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ. ຖ້າທ່ານຕ້ອງການທົດລອງໃຊ້ຄຸນສົມບັດນີ້, ສ້າງ %(brand)s Desktop ແບບກຳນົດເອງດ້ວຍການເພີ່ມ <nativeLink>ອົງປະກອບການຄົ້ນຫາ</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s ບໍ່ສາມາດເກັບຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງ ໃນຂະນະທີ່ກຳລັງດຳເນີນການໃນເວັບບຣາວເຊີ. ໃຊ້ <desktopLink>%(brand)s Desktop</desktopLink> ເພື່ອໃຫ້ຂໍ້ຄວາມເຂົ້າລະຫັດຈະປາກົດໃນຜົນການຊອກຫາ.",
-            "message_search_failed": "ການເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບໍ່ສຳເລັດ"
+            "message_search_failed": "ການເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບໍ່ສຳເລັດ",
+            "backup_key_well_formed": "ສ້າງຕັ້ງຂຶ້ນ",
+            "backup_key_unexpected_type": "ປະເພດທີ່ບໍ່ຄາດຄິດ",
+            "backup_keys_description": "ສຳຮອງຂໍ້ມູນລະຫັດການເຂົ້າລະຫັດຂອງທ່ານດ້ວຍຂໍ້ມູນບັນຊີຂອງທ່ານໃນກໍລະນີທີ່ທ່ານສູນເສຍການເຂົ້າເຖິງລະບົບຂອງທ່ານ. ກະແຈຂອງທ່ານຈະຖືກຮັກສາໄວ້ດ້ວຍກະແຈຄວາມປອດໄພທີ່ເປັນເອກະລັກ.",
+            "backup_key_stored_status": "ກະແຈສຳຮອງທີ່ເກັບໄວ້:",
+            "cross_signing_not_stored": "ບໍ່ໄດ້ເກັບຮັກສາໄວ້",
+            "backup_key_cached_status": "ລະຫັດສໍາຮອງຂໍ້ມູນທີ່ເກັບໄວ້:",
+            "4s_public_key_status": "ກະເເຈສາທາລະນະການເກັບຮັກສາຄວາມລັບ:"
         },
         "preferences": {
             "room_list_heading": "ລາຍຊື່ຫ້ອງ",
@@ -2066,7 +2063,8 @@
             "add_msisdn_confirm_sso_button": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
             "add_msisdn_confirm_button": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
             "add_msisdn_confirm_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
-            "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ"
+            "add_msisdn_dialog_title": "ເພີ່ມເບີໂທລະສັບ",
+            "name_placeholder": "ບໍ່ມີຊື່ສະແດງຜົນ"
         },
         "sidebar": {
             "title": "ແຖບດ້ານຂ້າງ",
@@ -2824,7 +2822,8 @@
             "error_failed_save": "ອັບເດດການເບິ່ງເຫັນພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
             "history_visibility_anyone_space": "ເບິ່ງຕົວຢ່າງພື້ນທີ່",
             "history_visibility_anyone_space_description": "ອະນຸຍາດໃຫ້ຄົນເບິ່ງຕົວຢ່າງພື້ນທີ່ຂອງທ່ານກ່ອນທີ່ເຂົາເຈົ້າເຂົ້າຮ່ວມ.",
-            "history_visibility_anyone_space_recommendation": "ແນະນຳສຳລັບສະຖານທີ່ສາທາລະນະ."
+            "history_visibility_anyone_space_recommendation": "ແນະນຳສຳລັບສະຖານທີ່ສາທາລະນະ.",
+            "guest_access_label": "ເປີດໃຊ້ການເຂົ້າເຖິງແຂກ/ຜູ້ຖືກເຊີນ"
         },
         "access": {
             "title": "ການເຂົ້າເຖິງ",
@@ -3274,7 +3273,8 @@
             "devtools_open_timeline": "ເບິ່ງທາມລາຍຫ້ອງ (devtools)",
             "home": "ພຶ້ນທີ່ home",
             "explore": "ການສຳຫຼວດຫ້ອງ",
-            "manage_and_explore": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ"
+            "manage_and_explore": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ",
+            "options": "ຕົວເລືອກພື້ນທີ່"
         },
         "share_public": "ແບ່ງປັນພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
         "search_children": "ຊອກຫາ %(spaceName)s",

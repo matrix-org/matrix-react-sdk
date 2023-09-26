@@ -67,7 +67,6 @@
     "Restore from Backup": "Restablir a partir de l'archiu",
     "Display Name": "Nom d'afichatge",
     "Profile": "Perfil",
-    "General": "General",
     "Unignore": "Ignorar pas",
     "Audio Output": "Sortida àudio",
     "Bridges": "Bridges",
@@ -145,7 +144,8 @@
         "system_alerts": "Alèrtas sistèma",
         "feedback": "Comentaris",
         "off": "Atudat",
-        "advanced": "Avançat"
+        "advanced": "Avançat",
+        "general": "General"
     },
     "action": {
         "continue": "Contunhar",

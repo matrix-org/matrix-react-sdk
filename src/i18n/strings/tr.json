@@ -45,7 +45,6 @@
     "Moderator": "Moderatör",
     "New passwords must match each other.": "Yeni şifreler birbirleriyle eşleşmelidir.",
     "not specified": "Belirtilmemiş",
-    "No display name": "Görünür isim yok",
     "No more results": "Başka sonuç yok",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
     "Profile": "Profil",
@@ -251,7 +250,6 @@
     "Delete Backup": "Yedek Sil",
     "Unable to load key backup status": "Anahtar yedek durumu yüklenemiyor",
     "Restore from Backup": "Yedekten Geri Dön",
-    "not stored": "depolanmadı",
     "All keys backed up": "Bütün yedekler yedeklendi",
     "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
     "Display Name": "Ekran Adı",
@@ -296,7 +294,6 @@
     "Email addresses": "E-posta adresleri",
     "Phone numbers": "Telefon numaraları",
     "Account management": "Hesap yönetimi",
-    "General": "Genel",
     "Discovery": "Keşfet",
     "No Audio Outputs detected": "Ses çıkışları tespit edilemedi",
     "Audio Output": "Ses Çıkışı",
@@ -432,7 +429,6 @@
     "Create key backup": "Anahtar yedeği oluştur",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Show more": "Daha fazla göster",
-    "Secret storage public key:": "Sır deposu açık anahtarı:",
     "The integration manager is offline or it cannot reach your homeserver.": "Entegrasyon yöneticisi çevrim dışı veya anasunucunuza erişemiyor.",
     "Connect this session to Key Backup": "Anahtar Yedekleme için bu oturuma bağlanın",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
@@ -835,9 +831,6 @@
     "not ready": "hazır değil",
     "ready": "hazır",
     "Secret storage:": "Gizli depolama:",
-    "Backup key cached:": "Yedekleme anahtarı önbelleğe alındı:",
-    "Backup key stored:": "Yedekleme anahtarı depolandı:",
-    "unexpected type": "Bilinmeyen tür",
     "Back up your keys before signing out to avoid losing them.": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
     "Algorithm:": "Algoritma:",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Yalnızca bu oturumda olabilecek anahtarları kaybetmemek için, oturumu kapatmadan önce bu oturumu anahtar yedeklemeye bağlayın.",
@@ -883,8 +876,6 @@
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kimlik sunucunuza erişimi engelleyen herhangi bir eklenti (Privacy Badger gibi) için tarayıcınızı kontrol ediniz",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Bağlantınızı kesmeden önce <b>kişisel verilerinizi <idserver /> kimlik sunucusundan silmelisiniz</b>. Ne yazık ki <idserver /> kimlik sunucusu şu anda çevrim dışı ya da bir nedenden ötürü erişilemiyor.",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "<current /> kimlik sunucusundan bağlantı kesilip <new /> kimlik sunucusuna bağlanılsın mı?",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Olası bir oturuma erişememe durumunu önlemek için şifreleme anahtarlarınızı hesap verilerinizle yedekleyin. Anahtarlarınız eşsiz bir güvenlik anahtarı ile güvenlenecektir.",
-    "well formed": "uygun biçimlendirilmiş",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
@@ -966,7 +957,8 @@
         "off": "Kapalı",
         "all_rooms": "Tüm odalar",
         "copied": "Kopyalandı!",
-        "advanced": "Gelişmiş"
+        "advanced": "Gelişmiş",
+        "general": "Genel"
     },
     "action": {
         "continue": "Devam Et",
@@ -1267,7 +1259,14 @@
             },
             "message_search_disabled": "Arama sonuçlarında gozükmeleri için iletileri güvenli bir şekilde yerel olarak önbelleğe al.",
             "message_search_unsupported": "%(brand)s, şifrelenmiş iletileri yerel olarak güvenli bir şekilde önbelleğe almak için gereken bazı bileşenlerden yoksun. Bu özelliği denemek istiyorsanız, <nativeLink> arama bileşenlerinin eklendiği</nativeLink> özel bir masaüstü oluşturun.",
-            "message_search_unsupported_web": "%(brand)s internet tarayıcısında çalışıyorken şifrelenmiş mesajları güvenli bir şekilde önbelleğe alamaz. Şifrelenmiş mesajların arama sonucunda görünmesi için <desktopLink>%(brand)s Masaüstü</desktopLink> kullanın."
+            "message_search_unsupported_web": "%(brand)s internet tarayıcısında çalışıyorken şifrelenmiş mesajları güvenli bir şekilde önbelleğe alamaz. Şifrelenmiş mesajların arama sonucunda görünmesi için <desktopLink>%(brand)s Masaüstü</desktopLink> kullanın.",
+            "backup_key_well_formed": "uygun biçimlendirilmiş",
+            "backup_key_unexpected_type": "Bilinmeyen tür",
+            "backup_keys_description": "Olası bir oturuma erişememe durumunu önlemek için şifreleme anahtarlarınızı hesap verilerinizle yedekleyin. Anahtarlarınız eşsiz bir güvenlik anahtarı ile güvenlenecektir.",
+            "backup_key_stored_status": "Yedekleme anahtarı depolandı:",
+            "cross_signing_not_stored": "depolanmadı",
+            "backup_key_cached_status": "Yedekleme anahtarı önbelleğe alındı:",
+            "4s_public_key_status": "Sır deposu açık anahtarı:"
         },
         "preferences": {
             "room_list_heading": "Oda listesi",
@@ -1323,7 +1322,8 @@
             "add_msisdn_confirm_sso_button": "Kimliğinizi doğrulamak için Tek Seferlik Oturum Açma özelliğini kullanarak bu telefon numarasını eklemeyi onaylayın.",
             "add_msisdn_confirm_button": "Telefon numarası eklemeyi onayla",
             "add_msisdn_confirm_body": "Telefon numarasını eklemeyi kabul etmek için aşağıdaki tuşa tıklayın.",
-            "add_msisdn_dialog_title": "Telefon Numarası Ekle"
+            "add_msisdn_dialog_title": "Telefon Numarası Ekle",
+            "name_placeholder": "Görünür isim yok"
         }
     },
     "devtools": {

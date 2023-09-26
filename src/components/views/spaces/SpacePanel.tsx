@@ -297,7 +297,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                 }
                 element="ul"
                 role="tree"
-                aria-label={_t("Spaces")}
+                aria-label={_t("common|spaces")}
             >
                 {metaSpacesSection}
                 {invites.map((s) => (

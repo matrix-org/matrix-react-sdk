@@ -60,7 +60,6 @@
     "Moderator": "Moderador",
     "New passwords must match each other.": "Las contraseñas nuevas deben coincidir.",
     "not specified": "sin especificar",
-    "No display name": "Sin nombre público",
     "No more results": "No hay más resultados",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, consulta tu correo electrónico y haz clic en el enlace que contiene. Una vez hecho esto, haz clic en continuar.",
     "Profile": "Perfil",
@@ -287,7 +286,6 @@
     "Phone Number": "Número de teléfono",
     "Profile picture": "Foto de perfil",
     "Display Name": "Nombre público",
-    "General": "General",
     "Room Addresses": "Direcciones de la sala",
     "Account management": "Gestión de la cuenta",
     "Ignored users": "Usuarios ignorados",
@@ -368,9 +366,7 @@
     "Discovery": "Descubrimiento",
     "Deactivate account": "Desactivar cuenta",
     "None": "Ninguno",
-    "Secret storage public key:": "Clave pública del almacén secreto:",
     "in account data": "en datos de cuenta",
-    "not stored": "no almacenado",
     "Sounds": "Sonidos",
     "Notification sound": "Sonido para las notificaciones",
     "Set a new custom sound": "Establecer sonido personalizado",
@@ -398,8 +394,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Pídele al usuario que verifique su sesión, o verifícala manualmente a continuación.",
     "Not Trusted": "No es de confianza",
     "Set up": "Configurar",
-    "well formed": "bien formado",
-    "unexpected type": "tipo inesperado",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "Esta sesión no <b> ha creado una copia de seguridad de tus llaves</b>, pero tienes una copia de seguridad existente de la que puedes restaurar y añadir para proceder.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Conecte esta sesión a la copia de seguridad de las claves antes de firmar y así evitar perder las claves que sólo existen en esta sesión.",
     "Connect this session to Key Backup": "Conecta esta sesión a la copia de respaldo de tu clave",
@@ -645,8 +639,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Algorithm:": "Algoritmo:",
-    "Backup key stored:": "Clave de respaldo almacenada:",
-    "Backup key cached:": "Clave de respaldo almacenada en caché:",
     "Secret storage:": "Almacenamiento secreto:",
     "ready": "Listo",
     "not ready": "no está listo",
@@ -932,7 +924,6 @@
     "Reason (optional)": "Motivo (opcional)",
     "Server Options": "Opciones del servidor",
     "Open dial pad": "Abrir teclado numérico",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Haz una copia de seguridad de tus claves de cifrado con los datos de tu cuenta por si pierdes acceso a tus sesiones. Las clave serán aseguradas con una clave de seguridad única.",
     "The operation could not be completed": "No se ha podido completar la operación",
     "Failed to save your profile": "No se ha podido guardar tu perfil",
     "Dial pad": "Teclado numérico",
@@ -1051,13 +1042,11 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, correo electrónico, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Create a new room": "Crear una sala nueva",
-    "Spaces": "Espacios",
     "Space selection": "Selección de espacio",
     "Suggested Rooms": "Salas sugeridas",
     "Add existing room": "Añadir sala ya existente",
     "Invite to this space": "Invitar al espacio",
     "Your message was sent": "Mensaje enviado",
-    "Space options": "Opciones del espacio",
     "Leave space": "Salir del espacio",
     "Create a space": "Crear un espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
@@ -1143,7 +1132,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "Los espacios publicados pueden usarse por cualquiera, independientemente de su servidor base.",
     "This space has no local addresses": "Este espacio no tiene direcciones locales",
     "Space information": "Información del espacio",
-    "Enable guest access": "Permitir acceso a personas sin cuenta",
     "Address": "Dirección",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "Los gestores de integraciones reciben datos de configuración, y pueden modificar accesorios, enviar invitaciones de sala, y establecer niveles de poder en tu nombre.",
@@ -1627,7 +1615,6 @@
     "Upload custom sound": "Subir archivo personalizado",
     "%(errorMessage)s (HTTP status %(httpStatus)s)": "%(errorMessage)s (estado HTTP %(httpStatus)s)",
     "Connecting to integration manager…": "Conectando al gestor de integraciones…",
-    "Saving…": "Guardando…",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -1749,7 +1736,10 @@
         "deselect_all": "Deseleccionar todo",
         "select_all": "Seleccionar todo",
         "copied": "¡Copiado!",
-        "advanced": "Avanzado"
+        "advanced": "Avanzado",
+        "spaces": "Espacios",
+        "general": "General",
+        "saving": "Guardando…"
     },
     "action": {
         "continue": "Continuar",
@@ -2309,7 +2299,14 @@
             "message_search_disabled": "Almacenar localmente, de manera segura, a los mensajes cifrados localmente para que aparezcan en los resultados de búsqueda.",
             "message_search_unsupported": "A %(brand)s le faltan algunos componentes necesarios para el almacenamiento seguro de mensajes cifrados a nivel local. Si quieres experimentar con esta característica, construye un Escritorio %(brand)s personalizado con <nativeLink> componentes de búsqueda añadidos</nativeLink>.",
             "message_search_unsupported_web": "%(brand)s no puede almacenar en caché de forma segura mensajes cifrados localmente mientras se ejecuta en un navegador web. Usa <desktopLink> %(brand)s Escritorio</desktopLink> para que los mensajes cifrados aparezcan en los resultados de búsqueda.",
-            "message_search_failed": "Ha fallado la inicialización de la búsqueda de mensajes"
+            "message_search_failed": "Ha fallado la inicialización de la búsqueda de mensajes",
+            "backup_key_well_formed": "bien formado",
+            "backup_key_unexpected_type": "tipo inesperado",
+            "backup_keys_description": "Haz una copia de seguridad de tus claves de cifrado con los datos de tu cuenta por si pierdes acceso a tus sesiones. Las clave serán aseguradas con una clave de seguridad única.",
+            "backup_key_stored_status": "Clave de respaldo almacenada:",
+            "cross_signing_not_stored": "no almacenado",
+            "backup_key_cached_status": "Clave de respaldo almacenada en caché:",
+            "4s_public_key_status": "Clave pública del almacén secreto:"
         },
         "preferences": {
             "room_list_heading": "Lista de salas",
@@ -2435,7 +2432,8 @@
             "add_msisdn_confirm_sso_button": "Confirma el nuevo número de teléfono usando SSO para probar tu identidad.",
             "add_msisdn_confirm_button": "Confirmar nuevo número de teléfono",
             "add_msisdn_confirm_body": "Haz clic en el botón de abajo para confirmar este nuevo número de teléfono.",
-            "add_msisdn_dialog_title": "Añadir número de teléfono"
+            "add_msisdn_dialog_title": "Añadir número de teléfono",
+            "name_placeholder": "Sin nombre público"
         },
         "sidebar": {
             "title": "Barra lateral",
@@ -3238,7 +3236,8 @@
             "error_failed_save": "No se ha podido cambiar la visibilidad del espacio",
             "history_visibility_anyone_space": "Previsualizar espacio",
             "history_visibility_anyone_space_description": "Permitir que se pueda ver una vista previa del espacio antes de unirse a él.",
-            "history_visibility_anyone_space_recommendation": "Recomendado para espacios públicos."
+            "history_visibility_anyone_space_recommendation": "Recomendado para espacios públicos.",
+            "guest_access_label": "Permitir acceso a personas sin cuenta"
         },
         "access": {
             "title": "Acceso",
@@ -3722,7 +3721,8 @@
             "devtools_open_timeline": "Ver línea de tiempo de la sala (herramientas de desarrollo)",
             "home": "Inicio del espacio",
             "explore": "Explorar salas",
-            "manage_and_explore": "Gestionar y explorar salas"
+            "manage_and_explore": "Gestionar y explorar salas",
+            "options": "Opciones del espacio"
         },
         "share_public": "Comparte tu espacio público",
         "search_children": "Buscar en %(spaceName)s",

@@ -43,7 +43,6 @@
     "not specified": "ei määritetty",
     "AM": "ap.",
     "PM": "ip.",
-    "No display name": "Ei näyttönimeä",
     "No more results": "Ei enempää tuloksia",
     "Profile": "Profiili",
     "Reason": "Syy",
@@ -222,7 +221,6 @@
     "Anchor": "Ankkuri",
     "Headphones": "Kuulokkeet",
     "Folder": "Kansio",
-    "General": "Yleiset",
     "Room Name": "Huoneen nimi",
     "Room Topic": "Huoneen aihe",
     "Room information": "Huoneen tiedot",
@@ -509,9 +507,7 @@
     "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
     "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
-    "Secret storage public key:": "Salavaraston julkinen avain:",
     "in account data": "tilin tiedoissa",
-    "not stored": "ei tallennettu",
     "Unencrypted": "Suojaamaton",
     "Close preview": "Sulje esikatselu",
     "<userName/> wants to chat": "<userName/> haluaa keskustella",
@@ -674,7 +670,6 @@
     "Edited at %(date)s": "Muokattu %(date)s",
     "not ready": "ei valmis",
     "ready": "valmis",
-    "unexpected type": "odottamaton tyyppi",
     "Algorithm:": "Algoritmi:",
     "Failed to save your profile": "Profiilisi tallentaminen ei onnistunut",
     "Decline All": "Kieltäydy kaikista",
@@ -834,10 +829,7 @@
     "Room settings": "Huoneen asetukset",
     "a device cross-signing signature": "laitteen ristiinvarmennuksen allekirjoitus",
     "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
-    "well formed": "hyvin muotoiltu",
     "Backup version:": "Varmuuskopiointiversio:",
-    "Backup key stored:": "Varmuuskopioavain tallennettu:",
-    "Backup key cached:": "Välimuistissa oleva varmuuskopioavain:",
     "Secret storage:": "Salainen tallennus:",
     "Hide Widgets": "Piilota sovelmat",
     "Show Widgets": "Näytä sovelmat",
@@ -1088,8 +1080,6 @@
         "one": "& %(count)s lisää",
         "other": "& %(count)s lisää"
     },
-    "Space options": "Avaruuden valinnat",
-    "Enable guest access": "Ota käyttöön vieraiden pääsy",
     "Space information": "Avaruuden tiedot",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
@@ -1114,7 +1104,6 @@
     "New keyword": "Uusi avainsana",
     "Keyword": "Avainsana",
     "Mentions & keywords": "Maininnat ja avainsanat",
-    "Spaces": "Avaruudet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "Address": "Osoite",
     "Create a new space": "Luo uusi avaruus",
@@ -1445,7 +1434,6 @@
     "Video call (%(brand)s)": "Videopuhelu (%(brand)s)",
     "Video call (Jitsi)": "Videopuhelu (Jitsi)",
     "You do not have sufficient permissions to change this.": "Oikeutesi eivät riitä tämän muuttamiseen.",
-    "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Varmuuskopioi salausavaimesi tilisi datan kanssa siltä varalta, että menetät pääsyn istuntoihisi. Avaimesi turvataan yksilöllisellä turva-avaimella.",
     "Get notifications as set up in your <a>settings</a>": "Vastaanota ilmoitukset <a>asetuksissa</a> määrittämälläsi tavalla",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
@@ -1496,7 +1484,6 @@
     "Text": "Teksti",
     "Create a link": "Luo linkki",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
-    "Saving…": "Tallennetaan…",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
@@ -1645,7 +1632,10 @@
         "deselect_all": "Älä valitse mitään",
         "select_all": "Valitse kaikki",
         "copied": "Kopioitu!",
-        "advanced": "Lisäasetukset"
+        "advanced": "Lisäasetukset",
+        "spaces": "Avaruudet",
+        "general": "Yleiset",
+        "saving": "Tallennetaan…"
     },
     "action": {
         "continue": "Jatka",
@@ -2181,7 +2171,14 @@
             },
             "message_search_disabled": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa.",
             "message_search_unsupported": "%(brand)sissa ei ole joitain komponentteja, joita tarvitaan viestien turvalliseen välimuistitallennukseen. Jos haluat kokeilla tätä ominaisuutta, käännä mukautettu %(brand)s Desktop, jossa on mukana <nativeLink>hakukomponentit</nativeLink>.",
-            "message_search_failed": "Viestihaun alustus epäonnistui"
+            "message_search_failed": "Viestihaun alustus epäonnistui",
+            "backup_key_well_formed": "hyvin muotoiltu",
+            "backup_key_unexpected_type": "odottamaton tyyppi",
+            "backup_keys_description": "Varmuuskopioi salausavaimesi tilisi datan kanssa siltä varalta, että menetät pääsyn istuntoihisi. Avaimesi turvataan yksilöllisellä turva-avaimella.",
+            "backup_key_stored_status": "Varmuuskopioavain tallennettu:",
+            "cross_signing_not_stored": "ei tallennettu",
+            "backup_key_cached_status": "Välimuistissa oleva varmuuskopioavain:",
+            "4s_public_key_status": "Salavaraston julkinen avain:"
         },
         "preferences": {
             "room_list_heading": "Huoneluettelo",
@@ -2306,7 +2303,8 @@
             "add_msisdn_confirm_sso_button": "Vahvista tämän puhelinnumeron lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
             "add_msisdn_confirm_button": "Vahvista puhelinnumeron lisääminen",
             "add_msisdn_confirm_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän puhelinnumeron.",
-            "add_msisdn_dialog_title": "Lisää puhelinnumero"
+            "add_msisdn_dialog_title": "Lisää puhelinnumero",
+            "name_placeholder": "Ei näyttönimeä"
         },
         "sidebar": {
             "title": "Sivupalkki",
@@ -3072,7 +3070,8 @@
             "error_failed_save": "Avaruuden näkyvyyden muuttaminen epäonnistui",
             "history_visibility_anyone_space": "Esikatsele avaruutta",
             "history_visibility_anyone_space_description": "Salli ihmisten esikatsella avaruuttasi ennen liittymistä.",
-            "history_visibility_anyone_space_recommendation": "Suositeltu julkisiin avaruuksiin."
+            "history_visibility_anyone_space_recommendation": "Suositeltu julkisiin avaruuksiin.",
+            "guest_access_label": "Ota käyttöön vieraiden pääsy"
         },
         "access": {
             "title": "Pääsy",
@@ -3524,7 +3523,8 @@
             "devtools_open_timeline": "Näytä huoneen aikajana (devtools)",
             "home": "Avaruuden koti",
             "explore": "Selaa huoneita",
-            "manage_and_explore": "Hallitse ja selaa huoneita"
+            "manage_and_explore": "Hallitse ja selaa huoneita",
+            "options": "Avaruuden valinnat"
         },
         "share_public": "Jaa julkinen avaruutesi",
         "search_children": "Etsi %(spaceName)s",

@@ -47,7 +47,6 @@
     "Authentication": "Asesteb",
     "Display Name": "Sken isem",
     "Profile": "Amaɣnu",
-    "General": "Amatu",
     "None": "Ula yiwen",
     "Sounds": "Imesla",
     "Browse": "Inig",
@@ -329,9 +328,6 @@
     "Guitar": "Tagitaṛt",
     "Trumpet": "Lɣiḍa",
     "Bell": "Anayna",
-    "No display name": "Ulac meffer isem",
-    "well formed": "imsel akken iwata",
-    "unexpected type": "anaw ur nettwaṛǧa ara",
     "Forget this room": "Ttu taxxamt-a",
     "Reject & Ignore user": "Agi & Zgel aseqdac",
     "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
@@ -372,9 +368,7 @@
     "Create key backup": "Rnu aḥraz n tsarut",
     "Unable to create key backup": "Yegguma ad yernu uḥraz n tsarut",
     "This session is encrypting history using the new recovery method.": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
-    "Secret storage public key:": "Tasarut tazayezt n uḥraz uffir:",
     "Unable to load key backup status": "Asali n waddad n uḥraz n tsarut ur yeddi ara",
-    "not stored": "ur yettusekles ara",
     "Your keys are <b>not being backed up from this session</b>.": "Tisura-inek·inem <b>ur ttwaḥrazent ara seg tɣimit-a</b>.",
     "Start using Key Backup": "Bdu aseqdec n uḥraz n tsarut",
     "Failed to change password. Is your password correct?": "Asnifel n wawal uffir ur yeddi ara. Awal-ik·im d ameɣtu?",
@@ -717,14 +711,12 @@
     "Trophy": "Arraz",
     "Backup version:": "Lqem n uklas:",
     "Algorithm:": "Alguritm:",
-    "Backup key stored:": "Tasarut n uklas tettwaḥrez:",
     "ready": "yewjed",
     "not ready": "ur yewjid ara",
     "Not encrypted": "Ur yettwawgelhen ara",
     "Room settings": "Iɣewwaṛen n texxamt",
     "Failed to save your profile": "Yecceḍ usekles n umaɣnu-ik•im",
     "The operation could not be completed": "Tamahilt ur tezmir ara ad tettwasmed",
-    "Backup key cached:": "Tasarut n ukles tettwaffer:",
     "Secret storage:": "Aklas uffir:",
     "Widgets": "Iwiǧiten",
     "Iraq": "ɛiṛaq",
@@ -1048,7 +1040,8 @@
         "off": "Insa",
         "all_rooms": "Akk tixxamin",
         "copied": "Yettwanɣel!",
-        "advanced": "Talqayt"
+        "advanced": "Talqayt",
+        "general": "Amatu"
     },
     "action": {
         "continue": "Kemmel",
@@ -1356,7 +1349,13 @@
             "encryption_individual_verification_mode": "Senqed yal tiɣimit yettwasqedcen sɣur aseqdac weḥd-s i ucraḍ fell-as d tuttkilt, war attkal ɣef yibenkan yettuzemlen s uzmel anmidag.",
             "message_search_disabled": "Ḥrez iznan iwgelhanen idiganen s wudem awurman i wakken ad d-banen deg yigmaḍ n unadi.",
             "message_search_unsupported": "%(brand)s xuṣṣent kra n yisegran yettusran i tuffra s wudem aɣelsan n yiznan iwgelhanen idiganen. Ma yella tebɣiḍ ad tgeḍ tarmit s tmahilt-a, snulfu-d tanarit %(brand)s tudmawant s <nativeLink>unadi n yisegran yettwarnan</nativeLink>.",
-            "message_search_unsupported_web": "%(brand)s ur yezmir ara ad iffer s wudem aɣelsan iznan iwgelhanen idiganen mi ara iteddu ɣef yiminig web. Seqdec <desktopLink>tanarit</desktopLink> i yiznan iwgelhanen i wakken ad d-banen deg yigmaḍ n unadi."
+            "message_search_unsupported_web": "%(brand)s ur yezmir ara ad iffer s wudem aɣelsan iznan iwgelhanen idiganen mi ara iteddu ɣef yiminig web. Seqdec <desktopLink>tanarit</desktopLink> i yiznan iwgelhanen i wakken ad d-banen deg yigmaḍ n unadi.",
+            "backup_key_well_formed": "imsel akken iwata",
+            "backup_key_unexpected_type": "anaw ur nettwaṛǧa ara",
+            "backup_key_stored_status": "Tasarut n uklas tettwaḥrez:",
+            "cross_signing_not_stored": "ur yettusekles ara",
+            "backup_key_cached_status": "Tasarut n ukles tettwaffer:",
+            "4s_public_key_status": "Tasarut tazayezt n uḥraz uffir:"
         },
         "preferences": {
             "room_list_heading": "Tabdart n texxamt",
@@ -1382,7 +1381,8 @@
             "add_msisdn_confirm_sso_button": "Sentem timerna n wuṭṭun n tilifun s useqdec n unekcum asuf i ubeggen n timagit-ik(im).",
             "add_msisdn_confirm_button": "Sentem timerna n wuṭṭun n tilifun",
             "add_msisdn_confirm_body": "Sit ɣef tqeffalt yellan ddaw i usentem n tmerna n wuṭṭun-a n tilifun.",
-            "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun"
+            "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun",
+            "name_placeholder": "Ulac meffer isem"
         }
     },
     "devtools": {

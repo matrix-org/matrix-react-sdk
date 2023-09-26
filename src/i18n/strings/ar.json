@@ -209,7 +209,6 @@
     "Ignored users": "المستخدمون المتجاهَلون",
     "None": "لا شيء",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
-    "General": "عام",
     "Discovery": "الاكتشاف",
     "Deactivate account": "تعطيل الحساب",
     "Deactivate Account": "تعطيل الحساب",
@@ -244,12 +243,6 @@
     "ready": "جاهز",
     "Secret storage:": "التخزين السري:",
     "in account data": "بيانات في حساب",
-    "Secret storage public key:": "المفتاح العام للتخزين السري:",
-    "Backup key cached:": "المفتاح الاحتياطي المحفوظ (في cache):",
-    "Backup key stored:": "المفتاح الاختياطي المحفوظ:",
-    "not stored": "لم يُحفظ",
-    "unexpected type": "نوع غير متوقع",
-    "well formed": "مشكل جيّداً",
     "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
     "Your keys are <b>not being backed up from this session</b>.": "مفاتيحك <b>لا احتياطيَّ لها من هذا الاتصال</b>.",
     "Algorithm:": "الخوارزمية:",
@@ -341,7 +334,6 @@
     "Authentication": "المصادقة",
     "Set up": "تأسيس",
     "Warning!": "إنذار!",
-    "No display name": "لا اسم ظاهر",
     "Show more": "أظهر أكثر",
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
@@ -615,7 +607,8 @@
         "on": "مشتغل",
         "off": "مطفأ",
         "copied": "نُسخ!",
-        "advanced": "متقدم"
+        "advanced": "متقدم",
+        "general": "عام"
     },
     "action": {
         "continue": "واصِل",
@@ -817,7 +810,13 @@
             "encryption_individual_verification_mode": "تحقق بشكل فردي من كل اتصال يستخدمه المستخدم لتمييزه أنه موثوق ، دون الوثوق بالأجهزة الموقعة بالتبادل.",
             "message_search_disabled": "تخزين الرسائل المشفرة بشكل آمن (في cache) محليًا حتى تظهر في نتائج البحث.",
             "message_search_unsupported": "%(brand)s يفقد بعض المكونات المطلوبة لحفظ آمن محليًّا للرسائل المشفرة. إذا أدرت تجربة هذه الخاصية، فأنشئ %(brand)s على سطح المكتب مع <nativeLink>إضافة مكونات البحث</nativeLink>.",
-            "message_search_unsupported_web": "%(brand)s لا يستطيع تخزين الرسائل المشفرة محليًّا (في cache) بشكل آمن طالما أنه يعمل على متصفح ويب. استخدم <desktopLink>%(brand)s على سطح المكتب</desktopLink> لتظهر لك الرسائل المشفرة في نتائج البحث."
+            "message_search_unsupported_web": "%(brand)s لا يستطيع تخزين الرسائل المشفرة محليًّا (في cache) بشكل آمن طالما أنه يعمل على متصفح ويب. استخدم <desktopLink>%(brand)s على سطح المكتب</desktopLink> لتظهر لك الرسائل المشفرة في نتائج البحث.",
+            "backup_key_well_formed": "مشكل جيّداً",
+            "backup_key_unexpected_type": "نوع غير متوقع",
+            "backup_key_stored_status": "المفتاح الاختياطي المحفوظ:",
+            "cross_signing_not_stored": "لم يُحفظ",
+            "backup_key_cached_status": "المفتاح الاحتياطي المحفوظ (في cache):",
+            "4s_public_key_status": "المفتاح العام للتخزين السري:"
         },
         "preferences": {
             "room_list_heading": "قائمة الغرفة",
@@ -837,7 +836,8 @@
             "add_msisdn_confirm_sso_button": "أكّد إضافتك لرقم الهاتف هذا باستعمال الولوج الموحّد لإثبات هويّتك.",
             "add_msisdn_confirm_button": "أكّد إضافة رقم الهاتف",
             "add_msisdn_confirm_body": "انقر الزر بالأسفل لتأكيد إضافة رقم الهاتف هذا.",
-            "add_msisdn_dialog_title": "أضِف رقم الهاتف"
+            "add_msisdn_dialog_title": "أضِف رقم الهاتف",
+            "name_placeholder": "لا اسم ظاهر"
         }
     },
     "devtools": {
