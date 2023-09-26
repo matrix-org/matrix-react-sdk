@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
-import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import * as installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 import cloudPlugin from "cypress-cloud/plugin";
 import { initPlugins } from "cypress-plugin-init";
 
@@ -45,9 +45,11 @@ export default function (on: PluginEvents, config: PluginConfigOptions) {
             webserver,
             oAuthServer,
             log,
-            installLogsPrinter,
             mailhogDocker,
         ],
         config,
     );
+    installLogsPrinter(on, {
+        // printLogsToConsole: "always",
+    });
 }
