@@ -48,7 +48,7 @@ const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> 
         description: (
             <div>
                 <p>
-                    {_t("Are you sure you want to sign out of %(count)s sessions?", {
+                    {_t("settings|sessions|sign_out_confirm_description", {
                         count: sessionsToSignOutCount,
                     })}
                 </p>
@@ -275,7 +275,7 @@ const SessionManagerTab: React.FC = () => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("Sessions")}>
+            <SettingsSection heading={_t("settings|sessions|title")}>
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -302,9 +302,7 @@ const SessionManagerTab: React.FC = () => {
                                 disabled={!!signingOutDeviceIds.length}
                             />
                         }
-                        description={_t(
-                            "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
-                        )}
+                        description={_t("settings|sessions|best_security_note")}
                         data-testid="other-sessions-section"
                         stretchContent
                     >
