@@ -104,12 +104,7 @@
     "Unable to verify email address.": "Kostege ’t e-mailadresse nie verifieern.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "M'èn joun een e-mail gestuurd vo jen adresse te verifieern. Gelieve de doarin gegeven anwyziengn ip te volgn en ton ip de knop hierounder te klikkn.",
     "Email Address": "E-mailadresse",
-    "Delete Backup": "Back-up verwydern",
-    "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Zy je zeker? Je goa je versleuterde berichtn kwytspeeln a je sleuters nie correct geback-upt zyn.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleuterde berichtn zyn beveiligd me eind-tout-eind-versleuterienge. Alleene d’ountvanger(s) en gy èn de sleuters vo deze berichtn te leezn.",
-    "Unable to load key backup status": "Kostege de sleuterback-upstatus nie loadn",
-    "Restore from Backup": "Herstelln uut back-up",
-    "All keys backed up": "Alle sleuters zyn geback-upt",
     "Back up your keys before signing out to avoid losing them.": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
     "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
     "Notification targets": "Meldiengsbestemmiengn",
@@ -626,7 +621,12 @@
             "encryption_section": "Versleuterienge",
             "bulk_options_section": "Bulkopties",
             "bulk_options_accept_all_invites": "Alle %(invitedRooms)s-uutnodigiengn anveirdn",
-            "bulk_options_reject_all_invites": "Alle %(invitedRooms)s-uutnodigiengn weigern"
+            "bulk_options_reject_all_invites": "Alle %(invitedRooms)s-uutnodigiengn weigern",
+            "delete_backup": "Back-up verwydern",
+            "delete_backup_confirm_description": "Zy je zeker? Je goa je versleuterde berichtn kwytspeeln a je sleuters nie correct geback-upt zyn.",
+            "error_loading_key_backup_status": "Kostege de sleuterback-upstatus nie loadn",
+            "restore_key_backup": "Herstelln uut back-up",
+            "key_backup_complete": "Alle sleuters zyn geback-upt"
         },
         "preferences": {
             "room_list_heading": "Gesprekslyste",

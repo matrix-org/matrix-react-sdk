@@ -309,7 +309,6 @@
     "Jump to first unread room.": "Hopp til fyrste uleste rom.",
     "Jump to first invite.": "Hopp til fyrste invitasjon.",
     "Unable to set up secret storage": "Oppsett av hemmeleg lager feila",
-    "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "wait and try again later": "vent og prøv om att seinare",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
@@ -327,8 +326,6 @@
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
-    "Delete Backup": "Slett sikkerheitskopi",
-    "Restore from Backup": "Gjenopprett frå sikkerheitskopi",
     "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
     "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
@@ -639,7 +636,10 @@
             "encryption_section": "Kryptografi",
             "bulk_options_accept_all_invites": "Aksepter alle invitasjonar frå %(invitedRooms)s",
             "bulk_options_reject_all_invites": "Kanseller alle invitasjonar frå %(invitedRooms)s",
-            "4s_public_key_status": "Public-nøkkel for hemmeleg lager:"
+            "4s_public_key_status": "Public-nøkkel for hemmeleg lager:",
+            "delete_backup": "Slett sikkerheitskopi",
+            "delete_backup_confirm_description": "Er du sikker? Alle dine krypterte meldingar vil gå tapt viss nøklane dine ikkje er sikkerheitskopierte.",
+            "restore_key_backup": "Gjenopprett frå sikkerheitskopi"
         },
         "preferences": {
             "room_list_heading": "Romkatalog",

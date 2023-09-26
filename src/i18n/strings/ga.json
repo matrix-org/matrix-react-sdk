@@ -199,7 +199,6 @@
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
     "Widgets": "Giuirléidí",
-    "Algorithm:": "Algartam:",
     "Information": "Eolas",
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
@@ -236,7 +235,6 @@
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
     "%(duration)ss": "%(duration)ss",
-    "Delete Backup": "Scrios cúltaca",
     "Email Address": "Seoladh Ríomhphoist",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
@@ -587,7 +585,9 @@
             "export_megolm_keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
             "cryptography_section": "Cripteagrafaíocht",
             "encryption_section": "Criptiúchán",
-            "secret_storage_ready": "réidh"
+            "secret_storage_ready": "réidh",
+            "delete_backup": "Scrios cúltaca",
+            "key_backup_algorithm": "Algartam:"
         },
         "general": {
             "account_section": "Cuntas",

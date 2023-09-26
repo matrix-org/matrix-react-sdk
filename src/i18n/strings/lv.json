@@ -364,7 +364,6 @@
     "Invite to this space": "Uzaicināt uz šo vietu",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Teksta ziņa tika nosūtīta uz +%(msisdn)s. Lūdzu, ievadiet tajā esošo verifikācijas kodu.",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Piekrītiet identitāšu servera (%(serverName)s) pakalpojumu sniegšanas noteikumiem, lai padarītu sevi atrodamu citiem, izmantojot epasta adresi vai tālruņa numuru.",
-    "Algorithm:": "Algoritms:",
     "Display Name": "Parādāmais vārds",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
@@ -1081,7 +1080,8 @@
             "bulk_options_accept_all_invites": "Pieņemt visus %(invitedRooms)s uzaicinājumus",
             "bulk_options_reject_all_invites": "Noraidīt visus %(invitedRooms)s uzaicinājumus",
             "message_search_section": "Ziņu meklēšana",
-            "encryption_individual_verification_mode": "Uzskatīt par uzticamām tikai individuāli verificētas lietotāja sesijas, nepaļaujoties uz ierīču cross-signing funkcionalitāti."
+            "encryption_individual_verification_mode": "Uzskatīt par uzticamām tikai individuāli verificētas lietotāja sesijas, nepaļaujoties uz ierīču cross-signing funkcionalitāti.",
+            "key_backup_algorithm": "Algoritms:"
         },
         "preferences": {
             "room_list_heading": "Istabu saraksts",

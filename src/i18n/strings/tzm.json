@@ -47,7 +47,6 @@
     "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
     "None": "Walu",
-    "Algorithm:": "Talguritmit:",
     "Profile": "Ifres",
     "Folder": "Asdaw",
     "Guitar": "Agiṭaṛ",
@@ -169,7 +168,8 @@
     },
     "settings": {
         "security": {
-            "cross_signing_homeserver_support_exists": "illa"
+            "cross_signing_homeserver_support_exists": "illa",
+            "key_backup_algorithm": "Talguritmit:"
         },
         "general": {
             "account_section": "Amiḍan",

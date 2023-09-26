@@ -263,12 +263,7 @@
     "Headphones": "헤드폰",
     "Folder": "폴더",
     "Power level": "권한 등급",
-    "Delete Backup": "백업 삭제",
-    "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.": "확실합니까? 키를 정상적으로 백업하지 않았다면 암호화된 메시지를 잃게 됩니다.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
-    "Unable to load key backup status": "키 백업 상태를 불러올 수 없음",
-    "Restore from Backup": "백업에서 복구",
-    "All keys backed up": "모든 키 백업됨",
     "Back up your keys before signing out to avoid losing them.": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
     "Start using Key Backup": "키 백업 시작",
     "Profile picture": "프로필 사진",
@@ -831,7 +826,12 @@
             "encryption_section": "암호화",
             "bulk_options_section": "대량 설정",
             "bulk_options_accept_all_invites": "모든 %(invitedRooms)s개의 초대를 수락",
-            "bulk_options_reject_all_invites": "모든 %(invitedRooms)s개의 초대를 거절"
+            "bulk_options_reject_all_invites": "모든 %(invitedRooms)s개의 초대를 거절",
+            "delete_backup": "백업 삭제",
+            "delete_backup_confirm_description": "확실합니까? 키를 정상적으로 백업하지 않았다면 암호화된 메시지를 잃게 됩니다.",
+            "error_loading_key_backup_status": "키 백업 상태를 불러올 수 없음",
+            "restore_key_backup": "백업에서 복구",
+            "key_backup_complete": "모든 키 백업됨"
         },
         "preferences": {
             "room_list_heading": "방 목록",

@@ -195,11 +195,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private deleteBackup = (): void => {
         Modal.createDialog(QuestionDialog, {
-            title: _t("Delete Backup"),
-            description: _t(
-                "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
-            ),
-            button: _t("Delete Backup"),
+            title: _t("settings|security|delete_backup"),
+            description: _t("settings|security|delete_backup_confirm_description"),
+            button: _t("settings|security|delete_backup"),
             danger: true,
             onFinished: (proceed) => {
                 if (!proceed) return;
@@ -253,36 +251,30 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         if (error) {
             statusDescription = (
                 <SettingsSubsectionText className="error">
-                    {_t("Unable to load key backup status")}
+                    {_t("settings|security|error_loading_key_backup_status")}
                 </SettingsSubsectionText>
             );
         } else if (loading) {
             statusDescription = <Spinner />;
         } else if (backupInfo) {
-            let restoreButtonCaption = _t("Restore from Backup");
+            let restoreButtonCaption = _t("settings|security|restore_key_backup");
 
             if (this.state.activeBackupVersion !== null) {
                 statusDescription = (
-                    <SettingsSubsectionText>✅ {_t("This session is backing up your keys.")}</SettingsSubsectionText>
+                    <SettingsSubsectionText>✅ {_t("settings|security|key_backup_active")}</SettingsSubsectionText>
                 );
             } else {
                 statusDescription = (
                     <>
                         <SettingsSubsectionText>
-                            {_t(
-                                "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.",
-                                {},
-                                { b: (sub) => <b>{sub}</b> },
-                            )}
+                            {_t("settings|security|key_backup_inactive", {}, { b: (sub) => <b>{sub}</b> })}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t(
-                                "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.",
-                            )}
+                            {_t("settings|security|key_backup_connect_prompt")}
                         </SettingsSubsectionText>
                     </>
                 );
-                restoreButtonCaption = _t("Connect this session to Key Backup");
+                restoreButtonCaption = _t("settings|security|key_backup_connect");
             }
 
             let uploadStatus: ReactNode;
@@ -292,32 +284,33 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             } else if (sessionsRemaining > 0) {
                 uploadStatus = (
                     <div>
-                        {_t("Backing up %(sessionsRemaining)s keys…", { sessionsRemaining })} <br />
+                        {_t("settings|security|key_backup_in_progress", { sessionsRemaining })} <br />
                     </div>
                 );
             } else {
                 uploadStatus = (
                     <div>
-                        {_t("All keys backed up")} <br />
+                        {_t("settings|security|key_backup_complete")} <br />
                     </div>
                 );
             }
 
             let trustedLocally: string | undefined;
             if (backupTrustInfo?.matchesDecryptionKey) {
-                trustedLocally = _t("This backup can be restored on this session");
+                trustedLocally = _t("settings|security|key_backup_can_be_restored");
             }
 
             extraDetailsTableRows = (
                 <>
                     <tr>
-                        <th scope="row">{_t("Latest backup version on server:")}</th>
+                        <th scope="row">{_t("settings|security|key_backup_latest_version")}</th>
                         <td>
-                            {backupInfo.version} ({_t("Algorithm:")} <code>{backupInfo.algorithm}</code>)
+                            {backupInfo.version} ({_t("settings|security|key_backup_algorithm")}{" "}
+                            <code>{backupInfo.algorithm}</code>)
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">{_t("Active backup version:")}</th>
+                        <th scope="row">{_t("settings|security|key_backup_active_version")}</th>
                         <td>{this.state.activeBackupVersion === null ? _t("None") : this.state.activeBackupVersion}</td>
                     </tr>
                 </>
@@ -339,7 +332,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             if (!isSecureBackupRequired(MatrixClientPeg.safeGet())) {
                 actions.push(
                     <AccessibleButton key="delete" kind="danger" onClick={this.deleteBackup}>
-                        {_t("Delete Backup")}
+                        {_t("settings|security|delete_backup")}
                     </AccessibleButton>,
                 );
             }
@@ -347,11 +340,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             statusDescription = (
                 <>
                     <SettingsSubsectionText>
-                        {_t(
-                            "Your keys are <b>not being backed up from this session</b>.",
-                            {},
-                            { b: (sub) => <b>{sub}</b> },
-                        )}
+                        {_t("settings|security|key_backup_inactive_warning", {}, { b: (sub) => <b>{sub}</b> })}
                     </SettingsSubsectionText>
                     <SettingsSubsectionText>
                         {_t("Back up your keys before signing out to avoid losing them.")}

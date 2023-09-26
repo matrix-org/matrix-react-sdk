@@ -182,7 +182,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
         let setupButtonCaption;
         if (this.state.backupStatus === BackupStatus.SERVER_BACKUP_BUT_DISABLED) {
-            setupButtonCaption = _t("Connect this session to Key Backup");
+            setupButtonCaption = _t("settings|security|key_backup_connect");
         } else {
             // if there's an error fetching the backup info, we'll just assume there's
             // no backup for the purpose of the button caption
