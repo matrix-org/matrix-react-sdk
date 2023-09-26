@@ -58,21 +58,6 @@ function toDefaultLevels(levels: NotificationSettings["defaultLevels"]): Notific
     }
 }
 
-const NotificationOptions = [
-    {
-        value: NotificationDefaultLevels.AllMessages,
-        label: _t("notifications|all_messages"),
-    },
-    {
-        value: NotificationDefaultLevels.PeopleMentionsKeywords,
-        label: _t("settings|notifications|people_mentions_keywords"),
-    },
-    {
-        value: NotificationDefaultLevels.MentionsKeywords,
-        label: _t("settings|notifications|mentions_keywords_only"),
-    },
-];
-
 function boldText(text: string): JSX.Element {
     return <strong>{text}</strong>;
 }
@@ -100,6 +85,21 @@ export default function NotificationSettings2(): JSX.Element {
 
     const [updatingUnread, setUpdatingUnread] = useState<boolean>(false);
     const hasUnreadNotifications = useHasUnreadNotifications();
+
+    const NotificationOptions = [
+        {
+            value: NotificationDefaultLevels.AllMessages,
+            label: _t("notifications|all_messages"),
+        },
+        {
+            value: NotificationDefaultLevels.PeopleMentionsKeywords,
+            label: _t("settings|notifications|people_mentions_keywords"),
+        },
+        {
+            value: NotificationDefaultLevels.MentionsKeywords,
+            label: _t("settings|notifications|mentions_keywords_only"),
+        },
+    ];
 
     return (
         <div className="mx_NotificationSettings2">
