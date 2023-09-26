@@ -541,11 +541,11 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             >
                 <div className="mx_CreateSecretStorageDialog_optionTitle">
                     <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_secureBackup" />
-                    {_t("Generate a Security Key")}
+                    {_t("settings|key_backup|setup_secure_backup|generate_security_key_title")}
                 </div>
                 <div>
                     {_t(
-                        "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.",
+                        "settings|key_backup|setup_secure_backup|generate_security_key_description",
                     )}
                 </div>
             </StyledRadioButton>
@@ -564,11 +564,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             >
                 <div className="mx_CreateSecretStorageDialog_optionTitle">
                     <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_securePhrase" />
-                    {_t("Enter a Security Phrase")}
+                    {_t("settings|key_backup|setup_secure_backup|enter_phrase_title")}
                 </div>
-                <div>
-                    {_t("Use a secret phrase only you know, and optionally save a Security Key to use for backup.")}
-                </div>
+                <div>{_t("settings|key_backup|setup_secure_backup|enter_phrase_description")}</div>
             </StyledRadioButton>
         );
     }
@@ -584,7 +582,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <form onSubmit={this.onChooseKeyPassphraseFormSubmit}>
                 <p className="mx_CreateSecretStorageDialog_centeredBody">
                     {_t(
-                        "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.",
+                        "settings|key_backup|setup_secure_backup|description",
                     )}
                 </p>
                 <div className="mx_CreateSecretStorageDialog_primaryContainer" role="radiogroup">
@@ -607,7 +605,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         if (this.state.canUploadKeysWithPasswordOnly) {
             authPrompt = (
                 <div>
-                    <div>{_t("Enter your account password to confirm the upgrade:")}</div>
+                    <div>{_t("settings|key_backup|setup_secure_backup|requires_password_confirmation")}</div>
                     <div>
                         <Field
                             id="mx_CreateSecretStorageDialog_password"
@@ -624,19 +622,19 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         } else if (!this.state.backupTrustInfo?.trusted) {
             authPrompt = (
                 <div>
-                    <div>{_t("Restore your key backup to upgrade your encryption")}</div>
+                    <div>{_t("settings|key_backup|setup_secure_backup|requires_key_restore")}</div>
                 </div>
             );
             nextCaption = _t("action|restore");
         } else {
-            authPrompt = <p>{_t("You'll need to authenticate with the server to confirm the upgrade.")}</p>;
+            authPrompt = <p>{_t("settings|key_backup|setup_secure_backup|requires_server_authentication")}</p>;
         }
 
         return (
             <form onSubmit={this.onMigrateFormSubmit}>
                 <p>
                     {_t(
-                        "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.",
+                        "settings|key_backup|setup_secure_backup|session_upgrade_description",
                     )}
                 </p>
                 <div>{authPrompt}</div>
@@ -659,7 +657,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <form onSubmit={this.onPassPhraseNextClick}>
                 <p>
                     {_t(
-                        "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.",
+                        "settings|key_backup|setup_secure_backup|enter_phrase_description",
                     )}
                 </p>
 
@@ -672,10 +670,10 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                         onValidate={this.onPassPhraseValidate}
                         fieldRef={this.passphraseField}
                         autoFocus={true}
-                        label={_td("Enter a Security Phrase")}
-                        labelEnterPassword={_td("Enter a Security Phrase")}
-                        labelStrongPassword={_td("Great! This Security Phrase looks strong enough.")}
-                        labelAllowedButUnsafe={_td("Great! This Security Phrase looks strong enough.")}
+                        label={_td("settings|key_backup|setup_secure_backup|enter_phrase_title")}
+                        labelEnterPassword={_td("settings|key_backup|setup_secure_backup|enter_phrase_title")}
+                        labelStrongPassword={_td("settings|key_backup|setup_secure_backup|phrase_strong_enough")}
+                        labelAllowedButUnsafe={_td("settings|key_backup|setup_secure_backup|phrase_strong_enough")}
                     />
                 </div>
 
@@ -697,8 +695,8 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         let matchText;
         let changeText;
         if (this.state.passPhraseConfirm === this.state.passPhrase) {
-            matchText = _t("That matches!");
-            changeText = _t("Use a different passphrase?");
+            matchText = _t("settings|key_backup|setup_secure_backup|pass_phrase_match_success");
+            changeText = _t("settings|key_backup|setup_secure_backup|use_different_passphrase");
         } else if (!this.state.passPhrase.startsWith(this.state.passPhraseConfirm)) {
             // only tell them they're wrong if they've actually gone wrong.
             // Security conscious readers will note that if you left element-web unattended
@@ -707,8 +705,8 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             // just opening the browser's developer tools and reading it.
             // Note that not having typed anything at all will not hit this clause and
             // fall through so empty box === no hint.
-            matchText = _t("That doesn't match.");
-            changeText = _t("Go back to set it again.");
+            matchText = _t("settings|key_backup|setup_secure_backup|pass_phrase_match_failed");
+            changeText = _t("settings|key_backup|setup_secure_backup|set_phrase_again");
         }
 
         let passPhraseMatch: JSX.Element | undefined;
@@ -724,14 +722,14 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         }
         return (
             <form onSubmit={this.onPassPhraseConfirmNextClick}>
-                <p>{_t("Enter your Security Phrase a second time to confirm it.")}</p>
+                <p>{_t("settings|key_backup|setup_secure_backup|enter_phrase_to_confirm")}</p>
                 <div className="mx_CreateSecretStorageDialog_passPhraseContainer">
                     <Field
                         type="password"
                         onChange={this.onPassPhraseConfirmChange}
                         value={this.state.passPhraseConfirm}
                         className="mx_CreateSecretStorageDialog_passPhraseField"
-                        label={_t("Confirm your Security Phrase")}
+                        label={_t("settings|key_backup|setup_secure_backup|confirm_security_phrase")}
                         autoFocus={true}
                         autoComplete="new-password"
                     />

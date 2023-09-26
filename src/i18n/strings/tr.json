@@ -232,8 +232,6 @@
         "other": "%(items)s ve diğer %(count)s",
         "one": "%(items)s ve bir diğeri"
     },
-    "That matches!": "Eşleşti!",
-    "That doesn't match.": "Eşleşmiyor.",
     "New Recovery Method": "Yeni Kurtarma Yöntemi",
     "Go to Settings": "Ayarlara Git",
     "Recovery Method Removed": "Kurtarma Yöntemi Silindi",
@@ -455,7 +453,6 @@
     "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
-    "Go back to set it again.": "Geri git ve yeniden ayarla.",
     "Upgrade your encryption": "Şifrelemenizi güncelleyin",
     "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
@@ -516,8 +513,6 @@
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
     "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-    "Enter your account password to confirm the upgrade:": "Güncellemeyi başlatmak için hesap şifreni gir:",
-    "You'll need to authenticate with the server to confirm the upgrade.": "Güncellemeyi teyit etmek için sunucuda oturum açmaya ihtiyacınız var.",
     "Unable to set up secret storage": "Sır deposu ayarlanamıyor",
     "Set up": "Ayarla",
     "Upgrade public room": "Açık odayı güncelle",
@@ -1377,7 +1372,14 @@
             "backup_in_progress": "Anahtarlarınız yedekleniyor (ilk yedek bir kaç dakika sürebilir).",
             "backup_success": "Başarılı!",
             "create_title": "Anahtar yedeği oluştur",
-            "cannot_create_backup": "Anahtar yedeği oluşturulamıyor"
+            "cannot_create_backup": "Anahtar yedeği oluşturulamıyor",
+            "setup_secure_backup": {
+                "requires_password_confirmation": "Güncellemeyi başlatmak için hesap şifreni gir:",
+                "requires_server_authentication": "Güncellemeyi teyit etmek için sunucuda oturum açmaya ihtiyacınız var.",
+                "pass_phrase_match_success": "Eşleşti!",
+                "pass_phrase_match_failed": "Eşleşmiyor.",
+                "set_phrase_again": "Geri git ve yeniden ayarla."
+            }
         }
     },
     "devtools": {

@@ -224,9 +224,6 @@
     "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil",
     "Create account": "Lag konto",
-    "That matches!": "Dette stemmer!",
-    "That doesn't match.": "Dette stemmer ikkje.",
-    "Go back to set it again.": "Gå tilbake for å sette den på nytt.",
     "Set up": "Sett opp",
     "New Recovery Method": "Ny gjenopprettingsmetode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Har du ikkje satt opp den nye gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din.  Endre ditt kontopassord og sett opp gjenoppretting umiddelbart under instillingane.",
@@ -710,7 +707,12 @@
         "key_backup": {
             "backup_in_progress": "Nøklane dine blir sikkerheitskopiert (den første kopieringa kan ta nokre minutt).",
             "backup_success": "Suksess!",
-            "cannot_create_backup": "Klarte ikkje å lage sikkerheitskopi av nøkkelen"
+            "cannot_create_backup": "Klarte ikkje å lage sikkerheitskopi av nøkkelen",
+            "setup_secure_backup": {
+                "pass_phrase_match_success": "Dette stemmer!",
+                "pass_phrase_match_failed": "Dette stemmer ikkje.",
+                "set_phrase_again": "Gå tilbake for å sette den på nytt."
+            }
         }
     },
     "devtools": {

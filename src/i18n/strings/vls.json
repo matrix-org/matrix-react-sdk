@@ -407,9 +407,6 @@
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee ku je de versleuteriengssleuters da j’uut een andere Matrix-cliënt had geëxporteerd importeern, zoda j’alle berichtn da ’t ander programma kostege ountsleutern ook hier goa kunn leezn.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "’t Geëxporteerd bestand is beveiligd met e paswoord. Gift da paswoord hier in vo ’t bestand t’ountsleutern.",
     "File to import": "T’importeern bestand",
-    "That matches!": "Da komt overeen!",
-    "That doesn't match.": "Da kom nie overeen.",
-    "Go back to set it again.": "Goa were vo ’t herin te stelln.",
     "Set up": "Instelln",
     "New Recovery Method": "Nieuwe herstelmethode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "A je gy deze nieuwe herstelmethode nie èt ingesteld, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn.",
@@ -661,7 +658,12 @@
         "key_backup": {
             "backup_in_progress": "’t Wordt e back-up van je sleuters gemakt (den eesten back-up kut e poar minuutn deurn).",
             "backup_success": "Gereed!",
-            "cannot_create_backup": "Kostege de sleuterback-up nie anmoakn"
+            "cannot_create_backup": "Kostege de sleuterback-up nie anmoakn",
+            "setup_secure_backup": {
+                "pass_phrase_match_success": "Da komt overeen!",
+                "pass_phrase_match_failed": "Da kom nie overeen.",
+                "set_phrase_again": "Goa were vo ’t herin te stelln."
+            }
         }
     },
     "devtools": {

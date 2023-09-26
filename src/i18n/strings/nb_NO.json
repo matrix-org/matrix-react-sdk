@@ -370,14 +370,10 @@
     "Passphrases must match": "Passfrasene må samsvare",
     "Passphrase must not be empty": "Passfrasen kan ikke være tom",
     "Confirm passphrase": "Bekreft passfrasen",
-    "That matches!": "Det samsvarer!",
-    "That doesn't match.": "Det samsvarer ikke.",
-    "Go back to set it again.": "Gå tilbake for å velge på nytt.",
     "Other users may not trust it": "Andre brukere kan kanskje mistro den",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
     "Messages in this room are end-to-end encrypted.": "Meldinger i dette rommet er start-til-slutt-kryptert.",
     "Messages in this room are not end-to-end encrypted.": "Meldinger i dette rommet er ikke start-til-slutt-kryptert.",
-    "Use a different passphrase?": "Vil du bruke en annen passfrase?",
     "Jump to read receipt": "Hopp til lesekvitteringen",
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
@@ -547,8 +543,6 @@
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
     "New Recovery Method": "Ny gjenopprettingsmetode",
-    "Generate a Security Key": "Generer en sikkerhetsnøkkel",
-    "Confirm your Security Phrase": "Bekreft sikkerhetsfrasen din",
     "Use app": "Bruk app",
     "Use app for a better experience": "Bruk appen for en bedre opplevelse",
     "This address is already in use": "Denne adressen er allerede i bruk",
@@ -1173,7 +1167,15 @@
         },
         "key_backup": {
             "backup_success": "Suksess!",
-            "create_title": "Opprett nøkkelsikkerhetskopi"
+            "create_title": "Opprett nøkkelsikkerhetskopi",
+            "setup_secure_backup": {
+                "generate_security_key_title": "Generer en sikkerhetsnøkkel",
+                "pass_phrase_match_success": "Det samsvarer!",
+                "use_different_passphrase": "Vil du bruke en annen passfrase?",
+                "pass_phrase_match_failed": "Det samsvarer ikke.",
+                "set_phrase_again": "Gå tilbake for å velge på nytt.",
+                "confirm_security_phrase": "Bekreft sikkerhetsfrasen din"
+            }
         }
     },
     "devtools": {

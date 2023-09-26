@@ -613,10 +613,6 @@
     "Please enter verification code sent via text.": "Унесите верификациони код послат путем текста.",
     "Unable to verify phone number.": "Није могуће верификовати број телефона.",
     "Unable to share phone number": "Није могуће делити телефонски број",
-    "You'll need to authenticate with the server to confirm the upgrade.": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу.",
-    "Restore your key backup to upgrade your encryption": "Вратите сигурносну копију кључа да бисте надоградили шифровање",
-    "Enter your account password to confirm the upgrade:": "Унесите лозинку за налог да бисте потврдили надоградњу:",
-    "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Заштитите од губитка приступа шифрованим порукама и подацима је подржан сигурносном копијом кључева за шифровање на серверу.",
     "Clear all data": "Очисти све податке",
     "New login. Was this you?": "Нова пријава. Да ли сте то били Ви?",
     "Other users may not trust it": "Други корисници можда немају поверења у то",
@@ -894,6 +890,14 @@
             "add_msisdn_confirm_button": "Потврда додавања броја телефона",
             "add_msisdn_confirm_body": "Кликните на дугме испод за потврду додавања броја телефона.",
             "add_msisdn_dialog_title": "Додај број телефона"
+        },
+        "key_backup": {
+            "setup_secure_backup": {
+                "description": "Заштитите од губитка приступа шифрованим порукама и подацима је подржан сигурносном копијом кључева за шифровање на серверу.",
+                "requires_password_confirmation": "Унесите лозинку за налог да бисте потврдили надоградњу:",
+                "requires_key_restore": "Вратите сигурносну копију кључа да бисте надоградили шифровање",
+                "requires_server_authentication": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу."
+            }
         }
     },
     "devtools": {

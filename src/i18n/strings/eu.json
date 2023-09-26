@@ -234,9 +234,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Zure txaten historiala ez galtzeko, zure gelako gakoak esportatu behar dituzu saioa amaitu aurretik. %(brand)s-en bertsio berriagora bueltatu behar zara hau egiteko",
     "Incompatible Database": "Datu-base bateraezina",
     "Continue With Encryption Disabled": "Jarraitu zifratzerik gabe",
-    "That matches!": "Bat dator!",
-    "That doesn't match.": "Ez dator bat.",
-    "Go back to set it again.": "Joan atzera eta berriro ezarri.",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
@@ -578,8 +575,6 @@
     "Verify User": "Egiaztatu erabiltzailea",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz.",
     "Start Verification": "Hasi egiaztaketa",
-    "Enter your account password to confirm the upgrade:": "Sartu zure kontuaren pasa-hitza eguneraketa baieztatzeko:",
-    "You'll need to authenticate with the server to confirm the upgrade.": "Zerbitzariarekin autentifikatu beharko duzu eguneraketa baieztatzeko.",
     "Upgrade your encryption": "Eguneratu zure zifratzea",
     "Verify this session": "Egiaztatu saio hau",
     "Encryption upgrade available": "Zifratze eguneratzea eskuragarri",
@@ -635,8 +630,6 @@
     "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
     "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
-    "Restore your key backup to upgrade your encryption": "Berreskuratu zure gakoen babes-kopia zure zifratzea eguneratzeko",
-    "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Eguneratu saio hau beste saioak egiaztatu ahal ditzan, zifratutako mezuetara sarbidea emanez eta beste erabiltzaileei fidagarri gisa agertu daitezen.",
     "This session is encrypting history using the new recovery method.": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
@@ -726,7 +719,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
     "All settings": "Ezarpen guztiak",
-    "Use a different passphrase?": "Erabili pasa-esaldi desberdin bat?",
     "Change notification settings": "Aldatu jakinarazpenen ezarpenak",
     "Forget Room": "Ahaztu gela",
     "This room is public": "Gela hau publikoa da",
@@ -1117,7 +1109,17 @@
             "backup_in_progress": "Zure gakoen babes-kopia egiten ari da (lehen babes-kopiak minutu batzuk behar ditzake).",
             "backup_success": "Ongi!",
             "create_title": "Sortu gakoen babes-kopia",
-            "cannot_create_backup": "Ezin izan da gakoaren babes-kopia sortu"
+            "cannot_create_backup": "Ezin izan da gakoaren babes-kopia sortu",
+            "setup_secure_backup": {
+                "requires_password_confirmation": "Sartu zure kontuaren pasa-hitza eguneraketa baieztatzeko:",
+                "requires_key_restore": "Berreskuratu zure gakoen babes-kopia zure zifratzea eguneratzeko",
+                "requires_server_authentication": "Zerbitzariarekin autentifikatu beharko duzu eguneraketa baieztatzeko.",
+                "session_upgrade_description": "Eguneratu saio hau beste saioak egiaztatu ahal ditzan, zifratutako mezuetara sarbidea emanez eta beste erabiltzaileei fidagarri gisa agertu daitezen.",
+                "pass_phrase_match_success": "Bat dator!",
+                "use_different_passphrase": "Erabili pasa-esaldi desberdin bat?",
+                "pass_phrase_match_failed": "Ez dator bat.",
+                "set_phrase_again": "Joan atzera eta berriro ezarri."
+            }
         }
     },
     "devtools": {
