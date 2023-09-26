@@ -1145,20 +1145,6 @@
     "Connection failed": "Kapcsolódás sikertelen",
     "Could not connect media": "Média kapcsolat nem hozható létre",
     "Call back": "Visszahívás",
-    "Space members": "Tértagság",
-    "Anyone in a space can find and join. You can select multiple spaces.": "A téren bárki megtalálhatja és beléphet. Több teret is kiválaszthat.",
-    "Spaces with access": "Terek hozzáféréssel",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "A téren bárki megtalálhatja és beléphet. <a>Szerkessze, hogy melyik tér férhet hozzá.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Jelenleg %(count)s tér rendelkezik hozzáféréssel",
-        "one": "Jelenleg egy tér rendelkezik hozzáféréssel"
-    },
-    "& %(count)s more": {
-        "other": "és még %(count)s",
-        "one": "és még %(count)s"
-    },
-    "Upgrade required": "Fejlesztés szükséges",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát.",
     "Want to add an existing space instead?": "Inkább meglévő teret adna hozzá?",
     "Private space (invite only)": "Privát tér (csak meghívóval)",
     "Space visibility": "Tér láthatósága",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "Szerep itt: <RoomName/>",
     "Unknown failure": "Ismeretlen hiba",
     "Failed to update the join rules": "A csatlakozási szabályokat nem sikerült frissíteni",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "A(z) <spaceName/> téren bárki megtalálhatja és beléphet. Kiválaszthat más tereket is.",
     "Message didn't send. Click for info.": "Az üzenet nincs elküldve. Kattintson az információkért.",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "Would you like to leave the rooms in this space?": "Ki szeretne lépni ennek a térnek minden szobájából?",
@@ -1241,7 +1226,6 @@
     "Joining": "Belépés",
     "You do not have permission to start polls in this room.": "Nincs joga szavazást kezdeményezni ebben a szobában.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Ez a szoba egy platformra sem hidalja át az üzeneteket. <a>Tudjon meg többet.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ez a szoba olyan terekben is benne van, amelynek nem Ön az adminisztrátora. Ezekben a terekben továbbra is a régi szoba jelenik meg, de az emberek jelzést kapnak, hogy lépjenek be az újba.",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "A biztonsági kulcsot tárolja biztonságos helyen, például egy jelszókezelőben vagy egy széfben, mivel ez tartja biztonságban a titkosított adatait.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "A biztonsági kulcsodat elkészül, ezt tárolja valamilyen biztonságos helyen, például egy jelszókezelőben vagy egy széfben.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
@@ -3267,7 +3251,23 @@
             "history_visibility_shared": "Csak tagok számára (a beállítás kiválasztásától)",
             "history_visibility_invited": "Csak tagoknak (a meghívásuk idejétől)",
             "history_visibility_joined": "Csak tagoknak (amióta csatlakoztak)",
-            "history_visibility_world_readable": "Bárki"
+            "history_visibility_world_readable": "Bárki",
+            "join_rule_upgrade_required": "Fejlesztés szükséges",
+            "join_rule_restricted_n_more": {
+                "other": "és még %(count)s",
+                "one": "és még %(count)s"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Jelenleg %(count)s tér rendelkezik hozzáféréssel",
+                "one": "Jelenleg egy tér rendelkezik hozzáféréssel"
+            },
+            "join_rule_restricted_description": "A téren bárki megtalálhatja és beléphet. <a>Szerkessze, hogy melyik tér férhet hozzá.</a>",
+            "join_rule_restricted_description_spaces": "Terek hozzáféréssel",
+            "join_rule_restricted_description_active_space": "A(z) <spaceName/> téren bárki megtalálhatja és beléphet. Kiválaszthat más tereket is.",
+            "join_rule_restricted_description_prompt": "A téren bárki megtalálhatja és beléphet. Több teret is kiválaszthat.",
+            "join_rule_restricted": "Tértagság",
+            "join_rule_restricted_upgrade_warning": "Ez a szoba olyan terekben is benne van, amelynek nem Ön az adminisztrátora. Ezekben a terekben továbbra is a régi szoba jelenik meg, de az emberek jelzést kapnak, hogy lépjenek be az újba.",
+            "join_rule_restricted_upgrade_description": "Ez a fejlesztés lehetővé teszi, hogy a kiválasztott terek tagjai meghívó nélkül is elérjék ezt a szobát."
         },
         "general": {
             "publish_toggle": "Publikálod a szobát a(z) %(domain)s szoba listájába?",

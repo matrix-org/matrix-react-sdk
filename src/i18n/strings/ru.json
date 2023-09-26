@@ -1108,7 +1108,6 @@
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Любой сможет найти и присоединиться к этому пространству, а не только члены <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Любой человек в <SpaceName/> сможет найти и присоединиться.",
     "Public room": "Публичная комната",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Это обновление позволит участникам выбранных пространств получить доступ в эту комнату без приглашения.",
     "To leave the beta, visit your settings.": "Чтобы выйти из бета-версии, зайдите в настройки.",
     "Adding spaces has moved.": "Добавление пространств перемещено.",
     "Search for rooms": "Поиск комнат",
@@ -1167,19 +1166,6 @@
         "other": "Показать %(count)s других предварительных просмотров"
     },
     "Failed to send": "Не удалось отправить",
-    "Space members": "Участники пространства",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Любой человек в пространстве может найти и присоединиться. Вы можете выбрать несколько пространств.",
-    "Spaces with access": "Пространства с доступом",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Любой человек в пространстве может найти и присоединиться. <a>Укажите здесь, какие пространства могут получить доступ.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "В настоящее время %(count)s пространств имеют доступ",
-        "one": "В настоящее время пространство имеет доступ"
-    },
-    "& %(count)s more": {
-        "other": "и %(count)s ещё",
-        "one": "и %(count)s еще"
-    },
-    "Upgrade required": "Требуется обновление",
     "Space information": "Информация о пространстве",
     "You have no ignored users.": "У вас нет игнорируемых пользователей.",
     "Address": "Адрес",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "Роль в <RoomName/>",
     "Unknown failure": "Неизвестная ошибка",
     "Failed to update the join rules": "Не удалось обновить правила присоединения",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Любой человек в <spaceName/> может найти и присоединиться. Вы можете выбрать и другие пространства.",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -1341,7 +1326,6 @@
     "Get notified for every message": "Получать уведомление о каждом сообщении",
     "Get notifications as set up in your <a>settings</a>": "Получать уведомления в соответствии с <a>настройками</a>",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Эта комната не передаёт сообщения на какие-либо платформы <a>Узнать больше.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -3099,7 +3083,23 @@
             "history_visibility_shared": "Только участники (с момента выбора этого параметра)",
             "history_visibility_invited": "Только участники (с момента их приглашения)",
             "history_visibility_joined": "Только участники (с момента их входа)",
-            "history_visibility_world_readable": "Все"
+            "history_visibility_world_readable": "Все",
+            "join_rule_upgrade_required": "Требуется обновление",
+            "join_rule_restricted_n_more": {
+                "other": "и %(count)s ещё",
+                "one": "и %(count)s еще"
+            },
+            "join_rule_restricted_summary": {
+                "other": "В настоящее время %(count)s пространств имеют доступ",
+                "one": "В настоящее время пространство имеет доступ"
+            },
+            "join_rule_restricted_description": "Любой человек в пространстве может найти и присоединиться. <a>Укажите здесь, какие пространства могут получить доступ.</a>",
+            "join_rule_restricted_description_spaces": "Пространства с доступом",
+            "join_rule_restricted_description_active_space": "Любой человек в <spaceName/> может найти и присоединиться. Вы можете выбрать и другие пространства.",
+            "join_rule_restricted_description_prompt": "Любой человек в пространстве может найти и присоединиться. Вы можете выбрать несколько пространств.",
+            "join_rule_restricted": "Участники пространства",
+            "join_rule_restricted_upgrade_warning": "Эта комната находится в некоторых пространствах, администратором которых вы не являетесь. В этих пространствах старая комната будет по-прежнему отображаться, но людям будет предложено присоединиться к новой.",
+            "join_rule_restricted_upgrade_description": "Это обновление позволит участникам выбранных пространств получить доступ в эту комнату без приглашения."
         },
         "general": {
             "publish_toggle": "Опубликовать эту комнату в каталоге комнат %(domain)s?",

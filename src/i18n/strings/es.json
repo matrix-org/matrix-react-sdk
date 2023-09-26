@@ -1146,19 +1146,6 @@
     "Only people invited will be able to find and join this space.": "Solo las personas invitadas podrán encontrar y unirse a este espacio.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Cualquiera podrá encontrar y unirse a este espacio, incluso si no forman parte de <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Cualquiera que forme parte de <SpaceName/> podrá encontrar y unirse.",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Cualquiera en un espacio puede encontrar y unirse. Puedes seleccionar varios espacios.",
-    "Spaces with access": "Espacios con acceso",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Cualquiera en un espacio puede encontrar y unirse. <a>Ajusta qué espacios pueden acceder desde aquí.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Ahora mismo, %(count)s espacios tienen acceso",
-        "one": "Ahora mismo, un espacio tiene acceso"
-    },
-    "& %(count)s more": {
-        "other": "y %(count)s más",
-        "one": "y %(count)s más"
-    },
-    "Upgrade required": "Actualización necesaria",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Si actualizas, podrás configurar la sala para que los miembros de los espacios que elijas puedan unirse sin que tengas que invitarles.",
     "Add space": "Añadir un espacio",
     "Spaces you know that contain this room": "Espacios que conoces que contienen esta sala",
     "Search spaces": "Buscar espacios",
@@ -1179,7 +1166,6 @@
     "Want to add a new space instead?": "¿Quieres añadir un espacio nuevo en su lugar?",
     "Add existing space": "Añadir un espacio ya existente",
     "Decrypting": "Descifrando",
-    "Space members": "Miembros del espacio",
     "Missed call": "Llamada perdida",
     "Call declined": "Llamada rechazada",
     "Stop recording": "Dejar de grabar",
@@ -1190,7 +1176,6 @@
     "Some encryption parameters have been changed.": "Algunos parámetros del cifrado han cambiado.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
     "Failed to update the join rules": "Fallo al actualizar las reglas para unirse",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Cualquiera en <spaceName/> puede encontrar y unirse. También puedes seleccionar otros espacios.",
     "Unknown failure": "Fallo desconocido",
     "Message didn't send. Click for info.": "Mensaje no enviado. Haz clic para más info.",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
@@ -1247,7 +1232,6 @@
     "Copy link to thread": "Copiar enlace al hilo",
     "Thread options": "Ajustes del hilo",
     "You do not have permission to start polls in this room.": "No tienes permisos para empezar encuestas en esta sala.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
     "Reply in thread": "Responder en hilo",
     "You won't get any notifications": "No recibirás ninguna notificación",
     "@mentions & keywords": "@menciones y palabras clave",
@@ -3194,7 +3178,23 @@
             "history_visibility_shared": "Solo participantes (desde el momento en que se selecciona esta opción)",
             "history_visibility_invited": "Solo participantes (desde que fueron invitados)",
             "history_visibility_joined": "Solo participantes (desde que se unieron a la sala)",
-            "history_visibility_world_readable": "Todos"
+            "history_visibility_world_readable": "Todos",
+            "join_rule_upgrade_required": "Actualización necesaria",
+            "join_rule_restricted_n_more": {
+                "other": "y %(count)s más",
+                "one": "y %(count)s más"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Ahora mismo, %(count)s espacios tienen acceso",
+                "one": "Ahora mismo, un espacio tiene acceso"
+            },
+            "join_rule_restricted_description": "Cualquiera en un espacio puede encontrar y unirse. <a>Ajusta qué espacios pueden acceder desde aquí.</a>",
+            "join_rule_restricted_description_spaces": "Espacios con acceso",
+            "join_rule_restricted_description_active_space": "Cualquiera en <spaceName/> puede encontrar y unirse. También puedes seleccionar otros espacios.",
+            "join_rule_restricted_description_prompt": "Cualquiera en un espacio puede encontrar y unirse. Puedes seleccionar varios espacios.",
+            "join_rule_restricted": "Miembros del espacio",
+            "join_rule_restricted_upgrade_warning": "Esta sala está en algún espacio en el que no eres administrador. En esos espacios, la sala antigua todavía aparecerá, pero se avisará a los participantes para que se unan a la nueva.",
+            "join_rule_restricted_upgrade_description": "Si actualizas, podrás configurar la sala para que los miembros de los espacios que elijas puedan unirse sin que tengas que invitarles."
         },
         "general": {
             "publish_toggle": "¿Quieres incluir esta sala en la lista pública de salas de %(domain)s?",

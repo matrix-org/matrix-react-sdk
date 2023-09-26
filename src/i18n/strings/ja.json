@@ -829,9 +829,6 @@
     "Could not connect to identity server": "IDサーバーに接続できませんでした",
     "Not a valid identity server (status code %(code)s)": "有効なIDサーバーではありません（ステータスコード %(code)s）",
     "Identity server URL must be HTTPS": "IDサーバーのURLはHTTPSスキーマである必要があります",
-    "Anyone in a space can find and join. You can select multiple spaces.": "スペースのメンバーが検索し、参加できます。複数のスペースを選択できます。",
-    "Space members": "スペースのメンバー",
-    "Upgrade required": "アップグレードが必要",
     "Verify your identity to access encrypted messages and prove your identity to others.": "暗号化されたメッセージにアクセスするには、本人確認が必要です。",
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Rooms and spaces": "ルームとスペース",
@@ -859,7 +856,6 @@
     "Please provide an address": "アドレスを入力してください",
     "Enter a server name": "サーバー名を入力",
     "Add existing space": "既存のスペースを追加",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
         "other": "%(spaceName)sと他%(count)s個"
@@ -926,9 +922,6 @@
     "Only people invited will be able to find and join this space.": "招待された人のみがこのスペースを検索し、参加できます。",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "<SpaceName/>のメンバーだけでなく、誰でもこのスペースを検索し、参加できます。",
     "Anyone in <SpaceName/> will be able to find and join.": "<SpaceName/>の誰でも検索し、参加できます。",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "<spaceName/>の誰でも検索し、参加できます。他のスペースも選択できます。",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "スペースの誰でも検索し、参加できます。<a>ここをクリックすると、どのスペースにアクセスできるかを編集できます。</a>",
-    "Spaces with access": "アクセスできるスペース",
     "Enter Security Key": "セキュリティーキーを入力",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：信頼済のコンピューターからのみ鍵のバックアップを設定してください。",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s個の鍵が復元されました",
@@ -1318,7 +1311,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
     "Including %(commaSeparatedMembers)s": "%(commaSeparatedMembers)sを含む",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "このルームは、あなたが管理者でないスペースの中にあります。そのスペースでは古いルームは表示され続けますが、参加者は新しいルームに参加するように求められます。",
     "Disinvite from %(roomName)s": "%(roomName)sへの招待を取り消す",
     "Unban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック解除",
     "Unban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック解除",
@@ -1345,10 +1337,6 @@
     },
     "Confirm this user's session by comparing the following with their User Settings:": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
     "Confirm by comparing the following with the User Settings in your other session:": "他のセッションのユーザー設定で、以下を比較して承認してください：",
-    "Currently, %(count)s spaces have access": {
-        "other": "現在%(count)s個のスペースがアクセスできます",
-        "one": "現在1個のスペースがアクセスできます"
-    },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
     "Loading preview": "プレビューを読み込んでいます",
     "You were removed by %(memberName)s": "%(memberName)sにより追放されました",
@@ -3183,7 +3171,19 @@
             "history_visibility_shared": "メンバーのみ（この設定を選択した時点から）",
             "history_visibility_invited": "メンバーのみ（招待を送った時点から）",
             "history_visibility_joined": "メンバーのみ（参加した時点から）",
-            "history_visibility_world_readable": "誰でも"
+            "history_visibility_world_readable": "誰でも",
+            "join_rule_upgrade_required": "アップグレードが必要",
+            "join_rule_restricted_summary": {
+                "other": "現在%(count)s個のスペースがアクセスできます",
+                "one": "現在1個のスペースがアクセスできます"
+            },
+            "join_rule_restricted_description": "スペースの誰でも検索し、参加できます。<a>ここをクリックすると、どのスペースにアクセスできるかを編集できます。</a>",
+            "join_rule_restricted_description_spaces": "アクセスできるスペース",
+            "join_rule_restricted_description_active_space": "<spaceName/>の誰でも検索し、参加できます。他のスペースも選択できます。",
+            "join_rule_restricted_description_prompt": "スペースのメンバーが検索し、参加できます。複数のスペースを選択できます。",
+            "join_rule_restricted": "スペースのメンバー",
+            "join_rule_restricted_upgrade_warning": "このルームは、あなたが管理者でないスペースの中にあります。そのスペースでは古いルームは表示され続けますが、参加者は新しいルームに参加するように求められます。",
+            "join_rule_restricted_upgrade_description": "このアップグレードにより、選択したスペースのメンバーは、招待なしでこのルームにアクセスできるようになります。"
         },
         "general": {
             "publish_toggle": "%(domain)sのルームディレクトリーにこのルームを公開しますか？",

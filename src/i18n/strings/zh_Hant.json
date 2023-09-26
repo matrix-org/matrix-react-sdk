@@ -1137,7 +1137,6 @@
     "Connection failed": "連線失敗",
     "Could not connect media": "無法連結媒體",
     "Error downloading audio": "下載音訊時發生錯誤",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "任何在聊天空間中的人都可以找到並加入。<a>編輯哪些聊天空間可以存取這裡。</a>",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
     "Automatically invite members from this room to the new one": "自動將該聊天室的成員邀請至新的聊天室",
     "These are likely ones other room admins are a part of.": "這些可能是其他聊天室管理員的一部分。",
@@ -1148,19 +1147,6 @@
     "Select spaces": "選取聊天空間",
     "You're removing all spaces. Access will default to invite only": "您將取消所有聊天空間。存取權限將會預設為邀請制",
     "Public room": "公開聊天室",
-    "Space members": "聊天空間成員",
-    "Anyone in a space can find and join. You can select multiple spaces.": "空間中的任何人都可以找到並加入。您可以選取多個空間。",
-    "Spaces with access": "可存取的聊天空間",
-    "Currently, %(count)s spaces have access": {
-        "other": "目前，%(count)s 個空間可存取",
-        "one": "目前，1 個空間可存取"
-    },
-    "& %(count)s more": {
-        "other": "以及 %(count)s 個",
-        "one": "與其他 %(count)s 個"
-    },
-    "Upgrade required": "必須升級",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "此升級讓特定聊天空間的成員不需要邀請就可以存取此聊天室。",
     "Want to add an existing space instead?": "想要新增既有的聊天空間嗎？",
     "Private space (invite only)": "私密聊天空間（邀請制）",
     "Space visibility": "空間能見度",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "<RoomName/> 中的角色",
     "Unknown failure": "未知錯誤",
     "Failed to update the join rules": "加入規則更新失敗",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "在 <spaceName/> 中的任何人都可以找到並加入。您也可以選取其他聊天空間。",
     "Message didn't send. Click for info.": "訊息未傳送。點擊以取得更多資訊。",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "Would you like to leave the rooms in this space?": "您想要離開此聊天空間中的聊天室嗎？",
@@ -1249,7 +1234,6 @@
     "Yours, or the other users' internet connection": "您或其他使用者的網際網路連線",
     "The homeserver the user you're verifying is connected to": "您正在驗證的使用者所連線的家伺服器",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "此聊天室不會將訊息橋接至任何平台。<a>取得更多資訊。</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "這個聊天室位於您不是管理員的某些聊天空間中。在那些聊天空間中，舊的聊天室仍將會顯示，但系統會提示使用者加入新的聊天室。",
     "Copy link to thread": "複製討論串連結",
     "Thread options": "討論串選項",
     "You do not have permission to start polls in this room.": "您沒有權限在此聊天室發起投票。",
@@ -1642,8 +1626,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
     "Waiting for users to join %(brand)s": "等待使用者加入 %(brand)s",
     "You do not have permission to invite users": "您沒有權限邀請使用者",
-    "Ask to join": "要求加入",
-    "People cannot join unless access is granted.": "除非授予存取權限，否則人們無法加入。",
     "Email summary": "電子郵件摘要",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "選取您要將摘要傳送到的電子郵件地址。請在<button>一般</button>中管理您的電子郵件地址。",
     "Mentions and Keywords only": "僅提及與關鍵字",
@@ -3351,7 +3333,25 @@
             "history_visibility_shared": "僅限成員（自選取此選項開始）",
             "history_visibility_invited": "僅限成員（自他們被邀請開始）",
             "history_visibility_joined": "僅限成員（自他們加入開始）",
-            "history_visibility_world_readable": "任何人"
+            "history_visibility_world_readable": "任何人",
+            "join_rule_upgrade_required": "必須升級",
+            "join_rule_restricted_n_more": {
+                "other": "以及 %(count)s 個",
+                "one": "與其他 %(count)s 個"
+            },
+            "join_rule_restricted_summary": {
+                "other": "目前，%(count)s 個空間可存取",
+                "one": "目前，1 個空間可存取"
+            },
+            "join_rule_restricted_description": "任何在聊天空間中的人都可以找到並加入。<a>編輯哪些聊天空間可以存取這裡。</a>",
+            "join_rule_restricted_description_spaces": "可存取的聊天空間",
+            "join_rule_restricted_description_active_space": "在 <spaceName/> 中的任何人都可以找到並加入。您也可以選取其他聊天空間。",
+            "join_rule_restricted_description_prompt": "空間中的任何人都可以找到並加入。您可以選取多個空間。",
+            "join_rule_restricted": "聊天空間成員",
+            "join_rule_knock": "要求加入",
+            "join_rule_knock_description": "除非授予存取權限，否則人們無法加入。",
+            "join_rule_restricted_upgrade_warning": "這個聊天室位於您不是管理員的某些聊天空間中。在那些聊天空間中，舊的聊天室仍將會顯示，但系統會提示使用者加入新的聊天室。",
+            "join_rule_restricted_upgrade_description": "此升級讓特定聊天空間的成員不需要邀請就可以存取此聊天室。"
         },
         "general": {
             "publish_toggle": "將這個聊天室公開到 %(domain)s 的聊天室目錄中？",

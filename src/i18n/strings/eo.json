@@ -1110,20 +1110,6 @@
         "one": "Montri %(count)s alian antaŭrigardon",
         "other": "Montri %(count)s aliajn antaŭrigardojn"
     },
-    "Space members": "Aranoj",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Ĉiu en aro povas trovi kaj aliĝi. Vi povas elekti plurajn arojn.",
-    "Spaces with access": "Aroj kun aliro",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Ĉiu en aro povas trovi kaj aliĝi. <a>Redaktu, kiuj aroj povas aliri, tie ĉi.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Nun, %(count)s aroj rajtas aliri",
-        "one": "Nun, aro povas aliri"
-    },
-    "& %(count)s more": {
-        "other": "kaj %(count)s pli",
-        "one": "kaj %(count)s pli"
-    },
-    "Upgrade required": "Necesas gradaltigo",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito.",
     "Space information": "Informoj pri aro",
     "Identity server URL must be HTTPS": "URL de identiga servilo devas esti je HTTPS",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
@@ -1184,7 +1170,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se vi havas la bezonajn permesojn, malfermu la menuon sur ajna mesaĝo, kaj klaku al <b>Fiksi</b> por meti ĝin ĉi tien.",
     "Nothing pinned, yet": "Ankoraŭ nenio fiksita",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Agordu adresojn por ĉi tiu aro, por ke uzantoj trovu ĝin per via hejmservilo (%(localDomain)s)",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Ĉiu en <spaceName/> povas trovi kaj aliĝi. Vi povas elekti ankaŭ aliajn arojn.",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Rooms and spaces": "Ĉambroj kaj aroj",
     "Results": "Rezultoj",
@@ -2454,7 +2439,22 @@
             "history_visibility_shared": "Nur ĉambranoj (ekde ĉi tiu elekto)",
             "history_visibility_invited": "Nur ĉambranoj (ekde la invito)",
             "history_visibility_joined": "Nur ĉambranoj (ekde la aliĝo)",
-            "history_visibility_world_readable": "Iu ajn"
+            "history_visibility_world_readable": "Iu ajn",
+            "join_rule_upgrade_required": "Necesas gradaltigo",
+            "join_rule_restricted_n_more": {
+                "other": "kaj %(count)s pli",
+                "one": "kaj %(count)s pli"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Nun, %(count)s aroj rajtas aliri",
+                "one": "Nun, aro povas aliri"
+            },
+            "join_rule_restricted_description": "Ĉiu en aro povas trovi kaj aliĝi. <a>Redaktu, kiuj aroj povas aliri, tie ĉi.</a>",
+            "join_rule_restricted_description_spaces": "Aroj kun aliro",
+            "join_rule_restricted_description_active_space": "Ĉiu en <spaceName/> povas trovi kaj aliĝi. Vi povas elekti ankaŭ aliajn arojn.",
+            "join_rule_restricted_description_prompt": "Ĉiu en aro povas trovi kaj aliĝi. Vi povas elekti plurajn arojn.",
+            "join_rule_restricted": "Aranoj",
+            "join_rule_restricted_upgrade_description": "Ĉi tiu gradaltigo povigos anojn de la elektitaj aroj aliri ĉi tiun ĉambron sen invito."
         },
         "general": {
             "publish_toggle": "Ĉu publikigi ĉi tiun ĉambron per la katalogo de ĉambroj de %(domain)s?",

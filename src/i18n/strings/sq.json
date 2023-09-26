@@ -1142,20 +1142,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
     "Select spaces": "Përzgjidhni hapësira",
     "Public room": "Dhomë publike",
-    "Space members": "Anëtarë hapësire",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Mund të përzgjidhni një hapësirë që mund të gjejë dhe hyjë. Mund të përzgjidhni disa hapësira.",
-    "Spaces with access": "Hapësira me hyrje",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Cilido në një hapësirë mund ta gjejë dhe hyjë. <a>Përpunoni se cilat hapësira kanë hyrje këtu.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Deri tani, %(count)s hapësira kanë hyrje",
-        "one": "Aktualisht një hapësirë ka hyrje"
-    },
-    "& %(count)s more": {
-        "other": "& %(count)s më tepër",
-        "one": "& %(count)s më tepër"
-    },
-    "Upgrade required": "Lypset domosdo përmirësim",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Ky përmirësim do t’u lejojë anëtarëve të hapësirave të përzgjedhura të hyjnë në këtë dhomë pa ndonjë ftesë.",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
     "Add space": "Shtoni hapësirë",
     "Leave %(spaceName)s": "Braktise %(spaceName)s",
@@ -1188,7 +1174,6 @@
     "Role in <RoomName/>": "Rol në <RoomName/>",
     "Unknown failure": "Dështim i panjohur",
     "Failed to update the join rules": "S’u arrit të përditësohen rregulla hyrjeje",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Cilido te <spaceName/> mund ta gjejë dhe hyjë në të. Mund të përzgjidhni gjithashtu hapësira të tjera.",
     "Message didn't send. Click for info.": "Mesazhi s’u dërgua. Klikoni për hollësi.",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
@@ -1246,7 +1231,6 @@
     "Yours, or the other users' internet connection": "Lidhja internet e juaja, ose e përdoruesve të tjerë",
     "The homeserver the user you're verifying is connected to": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Kjo dhomë s’kalon mesazhe në ndonjë platformë. <a>Mësoni më tepër.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Kjo dhomë gjendet në disa hapësira për të cilat nuk jeni një nga përgjegjësit. Në këto hapësira, dhoma e vjetër prapë do të shfaqet, por njerëzve do t’u kërkohet të marrin pjesë te e reja.",
     "You do not have permission to start polls in this room.": "S’keni leje të nisni anketime në këtë dhomë.",
     "Copy link to thread": "Kopjoje lidhjen te rrjedha",
     "Thread options": "Mundësi rrjedhe",
@@ -3260,7 +3244,23 @@
             "history_visibility_shared": "Vetëm anëtarët (që nga çasti i përzgjedhjes së kësaj mundësie)",
             "history_visibility_invited": "Vetëm anëtarë (që kur qenë ftuar)",
             "history_visibility_joined": "Vetëm anëtarë (që kur janë bërë pjesë)",
-            "history_visibility_world_readable": "Cilido"
+            "history_visibility_world_readable": "Cilido",
+            "join_rule_upgrade_required": "Lypset domosdo përmirësim",
+            "join_rule_restricted_n_more": {
+                "other": "& %(count)s më tepër",
+                "one": "& %(count)s më tepër"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Deri tani, %(count)s hapësira kanë hyrje",
+                "one": "Aktualisht një hapësirë ka hyrje"
+            },
+            "join_rule_restricted_description": "Cilido në një hapësirë mund ta gjejë dhe hyjë. <a>Përpunoni se cilat hapësira kanë hyrje këtu.</a>",
+            "join_rule_restricted_description_spaces": "Hapësira me hyrje",
+            "join_rule_restricted_description_active_space": "Cilido te <spaceName/> mund ta gjejë dhe hyjë në të. Mund të përzgjidhni gjithashtu hapësira të tjera.",
+            "join_rule_restricted_description_prompt": "Mund të përzgjidhni një hapësirë që mund të gjejë dhe hyjë. Mund të përzgjidhni disa hapësira.",
+            "join_rule_restricted": "Anëtarë hapësire",
+            "join_rule_restricted_upgrade_warning": "Kjo dhomë gjendet në disa hapësira për të cilat nuk jeni një nga përgjegjësit. Në këto hapësira, dhoma e vjetër prapë do të shfaqet, por njerëzve do t’u kërkohet të marrin pjesë te e reja.",
+            "join_rule_restricted_upgrade_description": "Ky përmirësim do t’u lejojë anëtarëve të hapësirave të përzgjedhura të hyjnë në këtë dhomë pa ndonjë ftesë."
         },
         "general": {
             "publish_toggle": "Të bëhet publike kjo dhomë te drejtoria e dhomave %(domain)s?",

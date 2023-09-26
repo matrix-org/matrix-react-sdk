@@ -945,21 +945,6 @@
     },
     "Loading new room": "Đang tải phòng mới",
     "Upgrading room": "Đang nâng cấp phòng",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Nâng cấp này sẽ cho phép các thành viên của các space đã chọn vào phòng này mà không cần lời mời.",
-    "Space members": "Thành viên space",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Bất kỳ ai trong một space đều có thể tìm và tham gia. Bạn có thể chọn nhiều khoảng trắng.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Bất cứ ai trong <spaceName/> có thể tìm và tham gia. Bạn cũng có thể chọn các space khác.",
-    "Spaces with access": "Các Space có quyền truy cập",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Bất kỳ ai trong một space đều có thể tìm và tham gia. Chỉnh sửa space nào có thể truy cập tại đây. <a>Edit which spaces can access here.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Hiện tại, một space có quyền truy cập",
-        "other": "Hiện tại, %(count)s spaces có quyền truy cập"
-    },
-    "& %(count)s more": {
-        "one": "& %(count)s thêm",
-        "other": "& %(count)s thêm"
-    },
-    "Upgrade required": "Yêu cầu nâng cấp",
     "The integration manager is offline or it cannot reach your homeserver.": "Trình quản lý tích hợp đang ngoại tuyến hoặc không thể kết nối với Máy chủ của bạn.",
     "Cannot connect to integration manager": "Không thể kết nối với trình quản lý tích hợp",
     "Failed to set display name": "Không đặt được tên hiển thị",
@@ -1286,7 +1271,6 @@
     "Get notified for every message": "Nhận thông báo cho mọi tin nhắn",
     "Get notifications as set up in your <a>settings</a>": "Nhận thông báo như được thiết lập trong <a>cài đặt</a> của bạn",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Phòng này không nối các tin nhắn đến bất kỳ nền tảng nào. <a>Tìm hiểu thêm</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -1513,14 +1497,12 @@
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "Declining…": "Đang từ chối…",
-    "People cannot join unless access is granted.": "Người khác không thể tham gia khi chưa có phép.",
     "Play a sound for": "Phát âm thanh cho",
     "Close call": "Đóng cuộc gọi",
     "Email Notifications": "Thông báo qua thư điện tử",
     "Reset to default settings": "Đặt lại về cài đặt mặc định",
     "This setting will be applied by default to all your rooms.": "Cài đặt này sẽ được áp dụng theo mặc định cho các tất cả các phòng của bạn.",
     "Notify when someone uses a keyword": "Thông báo khi có người dùng một từ khóa",
-    "Ask to join": "Yêu cầu để tham gia",
     "Messages sent by bots": "Tin nhắn bởi bot",
     "Invited to a room": "Được mời vào phòng",
     "New room activity, upgrades and status messages occur": "Hoạt động mới trong phòng, nâng cấp và tin nhắn trạng thái",
@@ -3093,7 +3075,25 @@
             "history_visibility_shared": "Chỉ dành cho thành viên (từ thời điểm chọn thiết lập này)",
             "history_visibility_invited": "Chỉ dành cho thành viên (từ thời điểm được mời)",
             "history_visibility_joined": "Chỉ dành cho thành viên (từ thời điểm tham gia)",
-            "history_visibility_world_readable": "Bất kỳ ai"
+            "history_visibility_world_readable": "Bất kỳ ai",
+            "join_rule_upgrade_required": "Yêu cầu nâng cấp",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s thêm",
+                "other": "& %(count)s thêm"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Hiện tại, một space có quyền truy cập",
+                "other": "Hiện tại, %(count)s spaces có quyền truy cập"
+            },
+            "join_rule_restricted_description": "Bất kỳ ai trong một space đều có thể tìm và tham gia. Chỉnh sửa space nào có thể truy cập tại đây. <a>Edit which spaces can access here.</a>",
+            "join_rule_restricted_description_spaces": "Các Space có quyền truy cập",
+            "join_rule_restricted_description_active_space": "Bất cứ ai trong <spaceName/> có thể tìm và tham gia. Bạn cũng có thể chọn các space khác.",
+            "join_rule_restricted_description_prompt": "Bất kỳ ai trong một space đều có thể tìm và tham gia. Bạn có thể chọn nhiều khoảng trắng.",
+            "join_rule_restricted": "Thành viên space",
+            "join_rule_knock": "Yêu cầu để tham gia",
+            "join_rule_knock_description": "Người khác không thể tham gia khi chưa có phép.",
+            "join_rule_restricted_upgrade_warning": "Phòng này đang trong một số space mà bạn không phải là quản trị viên. Trong các space đó, phòng cũ vẫn sẽ được hiển thị, nhưng mọi người sẽ được thông báo để tham gia phòng mới.",
+            "join_rule_restricted_upgrade_description": "Nâng cấp này sẽ cho phép các thành viên của các space đã chọn vào phòng này mà không cần lời mời."
         },
         "general": {
             "publish_toggle": "Xuất bản phòng này cho công chúng trong thư mục phòng của %(domain)s?",

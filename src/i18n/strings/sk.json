@@ -696,7 +696,6 @@
         "one": "Aktualizácia priestoru...",
         "other": "Aktualizácia priestorov... (%(progress)s z %(count)s)"
     },
-    "Spaces with access": "Priestory s prístupom",
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
@@ -833,14 +832,10 @@
     "Room settings": "Nastavenia miestnosti",
     "Room address": "Adresa miestnosti",
     "Get notifications as set up in your <a>settings</a>": "Dostávajte oznámenia podľa nastavenia v <a>nastaveniach</a>",
-    "Space members": "Členovia priestoru",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Nastavte adresy pre túto miestnosť, aby ju používatelia mohli nájsť prostredníctvom vášho domovského servera (%(localDomain)s)",
     "You won't get any notifications": "Nebudete dostávať žiadne oznámenia",
     "Get notified only with mentions and keywords as set up in your <a>settings</a>": "Dostávajte upozornenia len na zmienky a kľúčové slová nastavené vo vašich <a>nastaveniach</a>",
     "Get notified for every message": "Dostávajte upozornenia na každú správu",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Ktokoľvek v <spaceName/> môže nájsť a pripojiť sa. Môžete vybrať aj iné priestory.",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Každý v priestore môže nájsť a pripojiť sa. <a>Upravte, ktoré priestory sem môžu mať prístup.</a>",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Každý, kto sa nachádza v priestore, môže nájsť a pripojiť sa. Môžete vybrať viacero priestorov.",
     "Local Addresses": "Lokálne adresy",
     "This space has no local addresses": "Tento priestor nemá žiadne lokálne adresy",
     "No other published addresses yet, add one below": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
@@ -925,12 +920,10 @@
     "Failed to revoke invite": "Nepodarilo sa odvolať pozvánku",
     "Set my room layout for everyone": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
-    "Upgrade required": "Vyžaduje sa aktualizácia",
     "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vezmite prosím na vedomie, že aktualizácia vytvorí novú verziu miestnosti</b>. Všetky aktuálne správy zostanú v tejto archivovanej miestnosti.",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Táto aktualizácia umožní členom vybraných priestorov prístup do tejto miestnosti bez pozvánky.",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "The poll has ended. No votes were cast.": "Anketa sa skončila. Nebol odovzdaný žiadny hlas.",
     "There was a problem communicating with the server. Please try again.": "Nastal problém pri komunikácii so serverom. Skúste to prosím znova.",
@@ -1016,10 +1009,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "View in room": "Zobraziť v miestnosti",
     "Loading new room": "Načítanie novej miestnosti",
-    "& %(count)s more": {
-        "one": "a %(count)s viac",
-        "other": "& %(count)s viac"
-    },
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
     "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
     "Recently visited rooms": "Nedávno navštívené miestnosti",
@@ -1259,11 +1248,6 @@
     "Message didn't send. Click for info.": "Správa sa neodoslala. Kliknite pre informácie.",
     "Insert link": "Vložiť odkaz",
     "You do not have permission to start polls in this room.": "Nemáte povolenie spúšťať ankety v tejto miestnosti.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Táto miestnosť sa nachádza v niektorých priestoroch, ktorých nie ste správcom. V týchto priestoroch bude stará miestnosť stále zobrazená, ale ľudia budú vyzvaní, aby sa pripojili k novej miestnosti.",
-    "Currently, %(count)s spaces have access": {
-        "one": "V súčasnosti má priestor prístup",
-        "other": "V súčasnosti má prístup %(count)s priestorov"
-    },
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
@@ -1651,8 +1635,6 @@
     "Mentions and Keywords": "Zmienky a kľúčové slová",
     "Other things we think you might be interested in:": "Ďalšie veci, ktoré by vás mohli zaujímať:",
     "Show a badge <badge/> when keywords are used in a room.": "Zobraziť odznak <badge/> pri použití kľúčových slov v miestnosti.",
-    "Ask to join": "Požiadať o pripojenie",
-    "People cannot join unless access is granted.": "Ľudia sa nemôžu pripojiť, pokiaľ im nebude udelený prístup.",
     "Email summary": "Emailový súhrn",
     "People, Mentions and Keywords": "Ľudia, zmienky a kľúčové slová",
     "Mentions and Keywords only": "Iba zmienky a kľúčové slová",
@@ -3351,7 +3333,25 @@
             "history_visibility_shared": "Len členovia (odkedy je aktívna táto voľba)",
             "history_visibility_invited": "Len členovia (odkedy boli pozvaní)",
             "history_visibility_joined": "Len členovia (odkedy vstúpili)",
-            "history_visibility_world_readable": "Ktokoľvek"
+            "history_visibility_world_readable": "Ktokoľvek",
+            "join_rule_upgrade_required": "Vyžaduje sa aktualizácia",
+            "join_rule_restricted_n_more": {
+                "one": "a %(count)s viac",
+                "other": "& %(count)s viac"
+            },
+            "join_rule_restricted_summary": {
+                "one": "V súčasnosti má priestor prístup",
+                "other": "V súčasnosti má prístup %(count)s priestorov"
+            },
+            "join_rule_restricted_description": "Každý v priestore môže nájsť a pripojiť sa. <a>Upravte, ktoré priestory sem môžu mať prístup.</a>",
+            "join_rule_restricted_description_spaces": "Priestory s prístupom",
+            "join_rule_restricted_description_active_space": "Ktokoľvek v <spaceName/> môže nájsť a pripojiť sa. Môžete vybrať aj iné priestory.",
+            "join_rule_restricted_description_prompt": "Každý, kto sa nachádza v priestore, môže nájsť a pripojiť sa. Môžete vybrať viacero priestorov.",
+            "join_rule_restricted": "Členovia priestoru",
+            "join_rule_knock": "Požiadať o pripojenie",
+            "join_rule_knock_description": "Ľudia sa nemôžu pripojiť, pokiaľ im nebude udelený prístup.",
+            "join_rule_restricted_upgrade_warning": "Táto miestnosť sa nachádza v niektorých priestoroch, ktorých nie ste správcom. V týchto priestoroch bude stará miestnosť stále zobrazená, ale ľudia budú vyzvaní, aby sa pripojili k novej miestnosti.",
+            "join_rule_restricted_upgrade_description": "Táto aktualizácia umožní členom vybraných priestorov prístup do tejto miestnosti bez pozvánky."
         },
         "general": {
             "publish_toggle": "Uverejniť túto miestnosť v adresári miestností na serveri %(domain)s?",

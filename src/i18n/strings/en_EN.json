@@ -1906,9 +1906,29 @@
     "room_settings": {
         "security": {
             "strict_encryption": "Never send encrypted messages to unverified sessions in this room from this session",
+            "join_rule_upgrade_required": "Upgrade required",
             "join_rule_invite": "Private (invite only)",
             "join_rule_invite_description": "Only invited people can join.",
             "join_rule_public_description": "Anyone can find and join.",
+            "join_rule_restricted_n_more": {
+                "other": "& %(count)s more",
+                "one": "& %(count)s more"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Currently, %(count)s spaces have access",
+                "one": "Currently, a space has access"
+            },
+            "join_rule_restricted_description": "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>",
+            "join_rule_restricted_description_spaces": "Spaces with access",
+            "join_rule_restricted_description_active_space": "Anyone in <spaceName/> can find and join. You can select other spaces too.",
+            "join_rule_restricted_description_prompt": "Anyone in a space can find and join. You can select multiple spaces.",
+            "join_rule_restricted": "Space members",
+            "join_rule_knock": "Ask to join",
+            "join_rule_knock_description": "People cannot join unless access is granted.",
+            "publish_space": "Make this space visible in the public room directory.",
+            "publish_room": "Make this room visible in the public room directory.",
+            "join_rule_restricted_upgrade_warning": "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.",
+            "join_rule_restricted_upgrade_description": "This upgrade will allow members of selected spaces access to this room without an invite.",
             "enable_encryption_public_room_confirm_title": "Are you sure you want to add encryption to this public room?",
             "enable_encryption_public_room_confirm_description_1": "<b>It's not recommended to add encryption to public rooms.</b> Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.",
             "enable_encryption_public_room_confirm_description_2": "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.",
@@ -2299,26 +2319,6 @@
         "other": "Updating spaces... (%(progress)s out of %(count)s)",
         "one": "Updating space..."
     },
-    "Upgrade required": "Upgrade required",
-    "& %(count)s more": {
-        "other": "& %(count)s more",
-        "one": "& %(count)s more"
-    },
-    "Currently, %(count)s spaces have access": {
-        "other": "Currently, %(count)s spaces have access",
-        "one": "Currently, a space has access"
-    },
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>",
-    "Spaces with access": "Spaces with access",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Anyone in <spaceName/> can find and join. You can select other spaces too.",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Anyone in a space can find and join. You can select multiple spaces.",
-    "Space members": "Space members",
-    "Ask to join": "Ask to join",
-    "People cannot join unless access is granted.": "People cannot join unless access is granted.",
-    "Make this space visible in the public room directory.": "Make this space visible in the public room directory.",
-    "Make this room visible in the public room directory.": "Make this room visible in the public room directory.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "This upgrade will allow members of selected spaces access to this room without an invite.",
     "None": "None",
     "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
     "Set up": "Set up",

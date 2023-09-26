@@ -1054,11 +1054,6 @@
     "Send voice message": "Lähetä ääniviesti",
     "Invite to this space": "Kutsu tähän avaruuteen",
     "Unknown failure": "Tuntematon virhe",
-    "Space members": "Avaruuden jäsenet",
-    "& %(count)s more": {
-        "one": "& %(count)s lisää",
-        "other": "& %(count)s lisää"
-    },
     "Space information": "Avaruuden tiedot",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
@@ -1121,7 +1116,6 @@
     },
     "Loading new room": "Ladataan uutta huonetta",
     "Upgrading room": "Päivitetään huonetta",
-    "Upgrade required": "Päivitys vaaditaan",
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Päivitetään avaruutta...",
         "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
@@ -1145,16 +1139,6 @@
     "This space has no local addresses": "Tällä avaruudella ei ole paikallista osoitetta",
     "%(spaceName)s menu": "%(spaceName)s-valikko",
     "Invite to space": "Kutsu avaruuteen",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Tämä päivitys antaa valittujen avaruuksien jäsenten liittyä tähän huoneeseen ilman kutsua.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Tämä huone on joissain avaruuksissa, joissa et ole ylläpitäjänä. Ne avaruudet tulevat edelleen näyttämään vanhan huoneen, mutta ihmisiä kehotetaan liittymään uuteen.",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Kuka tahansa avaruudessa voi löytää ja liittyä. Voit valita monta avaruutta.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Kuka tahansa avaruudessa <spaceName/> voi löytää ja liittyä. Voit valita muitakin avaruuksia.",
-    "Spaces with access": "Avaruudet, joilla on pääsyoikeus",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Kuka tahansa avaruuden jäsen voi löytää ja liittyä. <a>Muokkaa millä avaruuksilla on pääsyoikeus täällä.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Tällä hetkellä yhdellä avaruudella on pääsyoikeus",
-        "other": "Tällä hetkellä %(count)s avaruudella on pääsyoikeus"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -3028,7 +3012,23 @@
             "history_visibility_shared": "Vain jäsenet (tämän valinnan tekemisestä lähtien)",
             "history_visibility_invited": "Vain jäsenet (kutsumisestaan lähtien)",
             "history_visibility_joined": "Vain jäsenet (liittymisestään lähtien)",
-            "history_visibility_world_readable": "Kaikki"
+            "history_visibility_world_readable": "Kaikki",
+            "join_rule_upgrade_required": "Päivitys vaaditaan",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s lisää",
+                "other": "& %(count)s lisää"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Tällä hetkellä yhdellä avaruudella on pääsyoikeus",
+                "other": "Tällä hetkellä %(count)s avaruudella on pääsyoikeus"
+            },
+            "join_rule_restricted_description": "Kuka tahansa avaruuden jäsen voi löytää ja liittyä. <a>Muokkaa millä avaruuksilla on pääsyoikeus täällä.</a>",
+            "join_rule_restricted_description_spaces": "Avaruudet, joilla on pääsyoikeus",
+            "join_rule_restricted_description_active_space": "Kuka tahansa avaruudessa <spaceName/> voi löytää ja liittyä. Voit valita muitakin avaruuksia.",
+            "join_rule_restricted_description_prompt": "Kuka tahansa avaruudessa voi löytää ja liittyä. Voit valita monta avaruutta.",
+            "join_rule_restricted": "Avaruuden jäsenet",
+            "join_rule_restricted_upgrade_warning": "Tämä huone on joissain avaruuksissa, joissa et ole ylläpitäjänä. Ne avaruudet tulevat edelleen näyttämään vanhan huoneen, mutta ihmisiä kehotetaan liittymään uuteen.",
+            "join_rule_restricted_upgrade_description": "Tämä päivitys antaa valittujen avaruuksien jäsenten liittyä tähän huoneeseen ilman kutsua."
         },
         "general": {
             "publish_toggle": "Julkaise tämä huone verkkotunnuksen %(domain)s huoneluettelossa?",

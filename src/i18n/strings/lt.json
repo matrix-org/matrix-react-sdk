@@ -792,11 +792,6 @@
     },
     "Loading new room": "Įkeliamas naujas kambarys",
     "Upgrading room": "Atnaujinamas kambarys",
-    "& %(count)s more": {
-        "one": "& %(count)s daugiau",
-        "other": "& %(count)s daugiau"
-    },
-    "Upgrade required": "Reikalingas atnaujinimas",
     "Jump to first unread room.": "Peršokti į pirmą neperskaitytą kambarį.",
     "Jump to first invite.": "Peršokti iki pirmo pakvietimo.",
     "Address": "Adresas",
@@ -935,17 +930,6 @@
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "Atnaujinama erdvė...",
         "other": "Atnaujinamos erdvės... (%(progress)s iš %(count)s)"
-    },
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Šis atnaujinimas suteiks galimybę pasirinktų erdvių nariams patekti į šį kambarį be kvietimo.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Šis kambarys yra kai kuriose erdvėse, kuriose nesate administratorius. Šiose erdvėse senasis kambarys vis dar bus rodomas, bet žmonės bus raginami prisijungti prie naujojo.",
-    "Space members": "Erdvės nariai",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Kiekvienas esantis erdvėje gali rasti ir prisijungti. Galite pasirinkti kelias erdves.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Kiekvienas iš <spaceName/> gali rasti ir prisijungti. Galite pasirinkti ir kitas erdves.",
-    "Spaces with access": "Erdvės su prieiga",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Bet kas erdvėje gali rasti ir prisijungti. <a>Redaguoti kurios erdvės gali pasiekti čia.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Šiuo metu erdvė turi prieigą",
-        "other": "Šiuo metu %(count)s erdvės turi prieigą"
     },
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
@@ -2190,7 +2174,23 @@
             "history_visibility_shared": "Tik nariai (nuo šios parinkties pasirinkimo momento)",
             "history_visibility_invited": "Tik nariai (nuo jų pakvietimo)",
             "history_visibility_joined": "Tik nariai (nuo jų prisijungimo)",
-            "history_visibility_world_readable": "Bet kas"
+            "history_visibility_world_readable": "Bet kas",
+            "join_rule_upgrade_required": "Reikalingas atnaujinimas",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s daugiau",
+                "other": "& %(count)s daugiau"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Šiuo metu erdvė turi prieigą",
+                "other": "Šiuo metu %(count)s erdvės turi prieigą"
+            },
+            "join_rule_restricted_description": "Bet kas erdvėje gali rasti ir prisijungti. <a>Redaguoti kurios erdvės gali pasiekti čia.</a>",
+            "join_rule_restricted_description_spaces": "Erdvės su prieiga",
+            "join_rule_restricted_description_active_space": "Kiekvienas iš <spaceName/> gali rasti ir prisijungti. Galite pasirinkti ir kitas erdves.",
+            "join_rule_restricted_description_prompt": "Kiekvienas esantis erdvėje gali rasti ir prisijungti. Galite pasirinkti kelias erdves.",
+            "join_rule_restricted": "Erdvės nariai",
+            "join_rule_restricted_upgrade_warning": "Šis kambarys yra kai kuriose erdvėse, kuriose nesate administratorius. Šiose erdvėse senasis kambarys vis dar bus rodomas, bet žmonės bus raginami prisijungti prie naujojo.",
+            "join_rule_restricted_upgrade_description": "Šis atnaujinimas suteiks galimybę pasirinktų erdvių nariams patekti į šį kambarį be kvietimo."
         },
         "general": {
             "publish_toggle": "Paskelbti šį kambarį viešai %(domain)s kambarių kataloge?",

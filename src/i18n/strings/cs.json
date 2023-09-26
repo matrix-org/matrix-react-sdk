@@ -1132,11 +1132,6 @@
     "Select spaces": "Vybrané prostory",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všechny prostory. Přístup bude ve výchozím nastavení pouze na pozvánky",
     "User Directory": "Adresář uživatelů",
-    "& %(count)s more": {
-        "other": "a %(count)s dalších",
-        "one": "a %(count)s další"
-    },
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky.",
     "Error downloading audio": "Chyba při stahování audia",
     "No answer": "Žádná odpověď",
     "An unknown error occurred": "Došlo k neznámé chybě",
@@ -1152,15 +1147,6 @@
         "one": "Zobrazit %(count)s další náhled",
         "other": "Zobrazit %(count)s dalších náhledů"
     },
-    "Space members": "Členové prostoru",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Každý, kdo se nachází v prostoru, ho může najít a připojit se k němu. Můžete vybrat více prostorů.",
-    "Spaces with access": "Prostory s přístupem",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Každý, kdo se nachází v prostoru, ho může najít a připojit se k němu. <a>Zde upravte, ke kterým prostorům lze přistupovat.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "V současné době má %(count)s prostorů přístup k",
-        "one": "V současné době má prostor přístup"
-    },
-    "Upgrade required": "Vyžadována aktualizace",
     "Add existing space": "Přidat stávající prostor",
     "Add space": "Přidat prostor",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "Role v <RoomName/>",
     "Unknown failure": "Neznámá chyba",
     "Failed to update the join rules": "Nepodařilo se aktualizovat pravidla pro připojení",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Kdokoli v <spaceName/> může prostor najít a připojit se. Můžete vybrat i další prostory.",
     "Message didn't send. Click for info.": "Zpráva se neodeslala. Klikněte pro informace.",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "Would you like to leave the rooms in this space?": "Chcete odejít z místností v tomto prostoru?",
@@ -1249,7 +1234,6 @@
     "Yours, or the other users' internet connection": "Vaše internetové připojení nebo připojení ostatních uživatelů",
     "The homeserver the user you're verifying is connected to": "Domovský server, ke kterému je ověřovaný uživatel připojen",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Tato místnost nepropojuje zprávy s žádnou platformou. <a>Zjistit více.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Tato místnost se nachází v některých prostorech, jejichž nejste správcem. V těchto prostorech bude stará místnost stále zobrazena, ale lidé budou vyzváni, aby se připojili k nové místnosti.",
     "You do not have permission to start polls in this room.": "Nemáte oprávnění zahajovat hlasování v této místnosti.",
     "Copy link to thread": "Kopírovat odkaz na vlákno",
     "Thread options": "Možnosti vláken",
@@ -1644,7 +1628,6 @@
     "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
     "Great! This passphrase looks strong enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
-    "Ask to join": "Požádat o vstup",
     "Email summary": "E-mailový souhrn",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Vyberte e-maily, na které chcete zasílat souhrny. E-maily můžete spravovat v nastavení <button>Obecné</button>.",
     "People, Mentions and Keywords": "Lidé, zmínky a klíčová slova",
@@ -1658,7 +1641,6 @@
     "Quick Actions": "Rychlé akce",
     "Mark all messages as read": "Označit všechny zprávy jako přečtené",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Zprávy jsou zde koncově šifrovány. Ověřte %(displayName)s v jeho profilu - klepněte na jeho profilový obrázek.",
-    "People cannot join unless access is granted.": "Lidé nemohou vstoupit, pokud jim není povolen přístup.",
     "Email Notifications": "E-mailová oznámení",
     "Unable to find user by email": "Nelze najít uživatele podle e-mailu",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualizace:</strong>Zjednodušili jsme Nastavení oznámení, aby bylo možné snadněji najít možnosti nastavení. Některá vlastní nastavení, která jste zvolili v minulosti, se zde nezobrazují, ale jsou stále aktivní. Pokud budete pokračovat, některá vaše nastavení se mohou změnit. <a>Zjistit více</a>",
@@ -3356,7 +3338,25 @@
             "history_visibility_shared": "Pouze členové (od chvíle vybrání této volby)",
             "history_visibility_invited": "Pouze členové (od chvíle jejich pozvání)",
             "history_visibility_joined": "Pouze členové (od chvíle jejich vstupu)",
-            "history_visibility_world_readable": "Kdokoliv"
+            "history_visibility_world_readable": "Kdokoliv",
+            "join_rule_upgrade_required": "Vyžadována aktualizace",
+            "join_rule_restricted_n_more": {
+                "other": "a %(count)s dalších",
+                "one": "a %(count)s další"
+            },
+            "join_rule_restricted_summary": {
+                "other": "V současné době má %(count)s prostorů přístup k",
+                "one": "V současné době má prostor přístup"
+            },
+            "join_rule_restricted_description": "Každý, kdo se nachází v prostoru, ho může najít a připojit se k němu. <a>Zde upravte, ke kterým prostorům lze přistupovat.</a>",
+            "join_rule_restricted_description_spaces": "Prostory s přístupem",
+            "join_rule_restricted_description_active_space": "Kdokoli v <spaceName/> může prostor najít a připojit se. Můžete vybrat i další prostory.",
+            "join_rule_restricted_description_prompt": "Každý, kdo se nachází v prostoru, ho může najít a připojit se k němu. Můžete vybrat více prostorů.",
+            "join_rule_restricted": "Členové prostoru",
+            "join_rule_knock": "Požádat o vstup",
+            "join_rule_knock_description": "Lidé nemohou vstoupit, pokud jim není povolen přístup.",
+            "join_rule_restricted_upgrade_warning": "Tato místnost se nachází v některých prostorech, jejichž nejste správcem. V těchto prostorech bude stará místnost stále zobrazena, ale lidé budou vyzváni, aby se připojili k nové místnosti.",
+            "join_rule_restricted_upgrade_description": "Tato změna umožní členům vybraných prostorů přístup do této místnosti bez pozvánky."
         },
         "general": {
             "publish_toggle": "Zapsat tuto místnost do veřejného adresáře místností na %(domain)s?",

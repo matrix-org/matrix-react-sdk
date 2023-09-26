@@ -1028,7 +1028,6 @@
     "Sending invites... (%(progress)s out of %(count)s)": {
         "one": "שולח הזמנה..."
     },
-    "Upgrade required": "נדרש שדרוג",
     "Create a space": "צור מרחב עבודה",
     "Address": "כתובת",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
@@ -1122,17 +1121,6 @@
     "Updating spaces... (%(progress)s out of %(count)s)": {
         "one": "מעדכן מרחב עבודה...",
         "other": "מעדכן את מרחבי העבודה...%(progress)s מתוך %(count)s"
-    },
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "שדרוג זה יאפשר לחברים במרחבים נבחרים גישה לחדר זה ללא הזמנה.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "החדר הזה נמצא בחלק ממרחבי העבודה שאתם לא מוגדרים כמנהלים בהם. במרחבים האלה, החדר הישן עדיין יוצג, אבל אנשים יתבקשו להצטרף לחדר החדש.",
-    "Space members": "משתתפי מרחב העבודה",
-    "Anyone in a space can find and join. You can select multiple spaces.": "כל אחד במרחב עבודה יכול למצוא ולהצטרף. אתם יכולים לבחור מספר מרחבי עבודה.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "כל אחד ב-<spaceName/> יכול למצוא ולהצטרף. אתם יכולים לבחור גם מרחבי עבודה אחרים.",
-    "Spaces with access": "מרחבי עבודה עם גישה",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "כל אחד במרחב העבודה יכול למצוא ולהצטרף. <a>ערוך לאילו מרחבי עבודה יש גישה כאן.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "כרגע, למרחב העבודה יש גישה",
-        "other": "כרגע ל, %(count)s מרחבי עבודה יש גישה"
     },
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
@@ -2335,7 +2323,19 @@
             "history_visibility_shared": "חברים בלבד (מרגע בחירת אפשרות זו)",
             "history_visibility_invited": "חברים בלבד (מאז שהוזמנו)",
             "history_visibility_joined": "חברים בלבד (מאז שהצטרפו)",
-            "history_visibility_world_readable": "כולם"
+            "history_visibility_world_readable": "כולם",
+            "join_rule_upgrade_required": "נדרש שדרוג",
+            "join_rule_restricted_summary": {
+                "one": "כרגע, למרחב העבודה יש גישה",
+                "other": "כרגע ל, %(count)s מרחבי עבודה יש גישה"
+            },
+            "join_rule_restricted_description": "כל אחד במרחב העבודה יכול למצוא ולהצטרף. <a>ערוך לאילו מרחבי עבודה יש גישה כאן.</a>",
+            "join_rule_restricted_description_spaces": "מרחבי עבודה עם גישה",
+            "join_rule_restricted_description_active_space": "כל אחד ב-<spaceName/> יכול למצוא ולהצטרף. אתם יכולים לבחור גם מרחבי עבודה אחרים.",
+            "join_rule_restricted_description_prompt": "כל אחד במרחב עבודה יכול למצוא ולהצטרף. אתם יכולים לבחור מספר מרחבי עבודה.",
+            "join_rule_restricted": "משתתפי מרחב העבודה",
+            "join_rule_restricted_upgrade_warning": "החדר הזה נמצא בחלק ממרחבי העבודה שאתם לא מוגדרים כמנהלים בהם. במרחבים האלה, החדר הישן עדיין יוצג, אבל אנשים יתבקשו להצטרף לחדר החדש.",
+            "join_rule_restricted_upgrade_description": "שדרוג זה יאפשר לחברים במרחבים נבחרים גישה לחדר זה ללא הזמנה."
         },
         "general": {
             "publish_toggle": "לפרסם את החדר הזה לציבור במדריך החדרים של%(domain)s?",

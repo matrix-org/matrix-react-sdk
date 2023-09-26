@@ -1147,20 +1147,6 @@
     "Select spaces": "Elixe espazos",
     "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
     "Public room": "Sala pública",
-    "Space members": "Membros do espazo",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Calquera nun espazo pode atopar e unirse. Podes elexir múltiples espazos.",
-    "Spaces with access": "Espazos con acceso",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Calquera nun espazo pode atopala e unirse. <a>Editar que espazos poden acceder aquí.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Actualmente, %(count)s espazos teñen acceso",
-        "one": "Actualmente, un espazo ten acceso"
-    },
-    "& %(count)s more": {
-        "other": "e %(count)s máis",
-        "one": "e %(count)s máis"
-    },
-    "Upgrade required": "Actualización requerida",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite.",
     "Want to add an existing space instead?": "Queres engadir un espazo xa existente?",
     "Private space (invite only)": "Espazo privado (só convidadas)",
     "Space visibility": "Visibilidade do espazo",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "Rol en <RoomName/>",
     "Unknown failure": "Fallo descoñecido",
     "Failed to update the join rules": "Fallou a actualización das normas para unirse",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Calquera en <spaceName/> pode atopar e unirse. Tamén podes elexir outros espazos.",
     "Message didn't send. Click for info.": "Non se enviou a mensaxe. Click para info.",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "Would you like to leave the rooms in this space?": "Queres saír destas salas neste espazo?",
@@ -1254,7 +1239,6 @@
     "@mentions & keywords": "@mencións & palabras chave",
     "Get notified for every message": "Ter notificación de tódalas mensaxes",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Esta sala non está a reenviar mensaxes a ningún outro sistema. <a>Saber máis.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
@@ -2956,7 +2940,23 @@
             "history_visibility_shared": "Só participantes (desde o momento en que se selecciona esta opción)",
             "history_visibility_invited": "Só participantes (desde que foron convidadas)",
             "history_visibility_joined": "Só participantes (desde que se uniron)",
-            "history_visibility_world_readable": "Calquera"
+            "history_visibility_world_readable": "Calquera",
+            "join_rule_upgrade_required": "Actualización requerida",
+            "join_rule_restricted_n_more": {
+                "other": "e %(count)s máis",
+                "one": "e %(count)s máis"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Actualmente, %(count)s espazos teñen acceso",
+                "one": "Actualmente, un espazo ten acceso"
+            },
+            "join_rule_restricted_description": "Calquera nun espazo pode atopala e unirse. <a>Editar que espazos poden acceder aquí.</a>",
+            "join_rule_restricted_description_spaces": "Espazos con acceso",
+            "join_rule_restricted_description_active_space": "Calquera en <spaceName/> pode atopar e unirse. Tamén podes elexir outros espazos.",
+            "join_rule_restricted_description_prompt": "Calquera nun espazo pode atopar e unirse. Podes elexir múltiples espazos.",
+            "join_rule_restricted": "Membros do espazo",
+            "join_rule_restricted_upgrade_warning": "Esta sala está nalgúns espazos nos que non es admin. Nesos espazos, seguirase mostrando a sala antiga, pero as usuarias serán convidadas a unirse á nova.",
+            "join_rule_restricted_upgrade_description": "Esta actualización permitirá que os membros dos espazos seleccionados teñan acceso á sala sen precisar convite."
         },
         "general": {
             "publish_toggle": "Publicar esta sala no directorio público de salas de %(domain)s?",

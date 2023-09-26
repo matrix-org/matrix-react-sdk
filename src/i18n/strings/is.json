@@ -574,8 +574,6 @@
         "one": "Uppfæri svæði...",
         "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
     },
-    "Space members": "Meðlimir svæðis",
-    "Upgrade required": "Uppfærsla er nauðsynleg",
     "Address": "Vistfang",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -696,11 +694,6 @@
         "one": "Sendi boð...",
         "other": "Sendi boð... (%(progress)s af %(count)s)"
     },
-    "Spaces with access": "Svæði með aðgang",
-    "& %(count)s more": {
-        "one": "og %(count)s til viðbótar",
-        "other": "og %(count)s til viðbótar"
-    },
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -779,9 +772,6 @@
         "other": "Sýna %(count)s forskoðanir til viðbótar"
     },
     "You have no ignored users.": "Þú ert ekki með neina hunsaða notendur.",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Hver sem er í svæði getur fundið og tekið þátt. Þú getur valið mörg svæði.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Hver sem er í <spaceName/> getur fundið og tekið þátt. Þú getur einnig valið önnur svæði.",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Hver sem er í svæði getur fundið og tekið þátt. <a>Breyttu hér því hvaða svæði hafa aðgang.</a>",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
@@ -800,10 +790,6 @@
     "Manage integrations": "Sýsla með samþættingar",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Notaðu samþættingarstýringu til að stýra vélmennum, viðmótshlutum og límmerkjapökkum.",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "Notaðu samþættingarstýringu <b>(%(serverName)s)</b> til að stýra vélmennum, viðmótshlutum og límmerkjapökkum.",
-    "Currently, %(count)s spaces have access": {
-        "one": "Núna er svæði með aðgang",
-        "other": "Núna eru %(count)s svæði með aðgang"
-    },
     "The integration manager is offline or it cannot reach your homeserver.": "Samþættingarstýringin er ekki nettengd og nær ekki að tengjast heimaþjóninum þínum.",
     "Cannot connect to integration manager": "Get ekki tengst samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
@@ -2836,7 +2822,21 @@
             "history_visibility_shared": "Einungis meðlimir (síðan þessi kostur var valinn)",
             "history_visibility_invited": "Einungis meðlimir (síðan þeim var boðið)",
             "history_visibility_joined": "Einungis meðlimir (síðan þeir skráðu sig)",
-            "history_visibility_world_readable": "Hver sem er"
+            "history_visibility_world_readable": "Hver sem er",
+            "join_rule_upgrade_required": "Uppfærsla er nauðsynleg",
+            "join_rule_restricted_n_more": {
+                "one": "og %(count)s til viðbótar",
+                "other": "og %(count)s til viðbótar"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Núna er svæði með aðgang",
+                "other": "Núna eru %(count)s svæði með aðgang"
+            },
+            "join_rule_restricted_description": "Hver sem er í svæði getur fundið og tekið þátt. <a>Breyttu hér því hvaða svæði hafa aðgang.</a>",
+            "join_rule_restricted_description_spaces": "Svæði með aðgang",
+            "join_rule_restricted_description_active_space": "Hver sem er í <spaceName/> getur fundið og tekið þátt. Þú getur einnig valið önnur svæði.",
+            "join_rule_restricted_description_prompt": "Hver sem er í svæði getur fundið og tekið þátt. Þú getur valið mörg svæði.",
+            "join_rule_restricted": "Meðlimir svæðis"
         },
         "general": {
             "publish_toggle": "Birta þessa spjallrás opinberlega á skrá %(domain)s yfir spjallrásir?",

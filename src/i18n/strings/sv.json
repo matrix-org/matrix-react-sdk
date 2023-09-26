@@ -1119,20 +1119,6 @@
         "one": "Visa %(count)s annan förhandsgranskning",
         "other": "Visa %(count)s andra förhandsgranskningar"
     },
-    "Space members": "Utrymmesmedlemmar",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Vem som helst i ett utrymme kan hitta och gå med. Du kan välja flera utrymmen.",
-    "Spaces with access": "Utrymmen med åtkomst",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Vem som helst i ett utrymme kan hitta och gå med. <a>Redigera vilka utrymmen som kan komma åt här.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "Just nu har %(count)s utrymmen åtkomst",
-        "one": "Just nu har ett utrymme åtkomst"
-    },
-    "& %(count)s more": {
-        "other": "& %(count)s till",
-        "one": "& %(count)s till"
-    },
-    "Upgrade required": "Uppgradering krävs",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Den här uppgraderingen kommer att låta medlemmar i valda utrymmen komma åt det här rummet utan en inbjudan.",
     "This space has no local addresses": "Det här utrymmet har inga lokala adresser",
     "Error processing audio message": "Fel vid hantering av ljudmeddelande",
     "Decrypting": "Avkrypterar",
@@ -1191,7 +1177,6 @@
     "Role in <RoomName/>": "Roll i <RoomName/>",
     "Unknown failure": "Okänt fel",
     "Failed to update the join rules": "Misslyckades att uppdatera regler för att gå med",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Vem som helst i <spaceName/> kan hitta och gå med. Du kan välja andra utrymmen också.",
     "Message didn't send. Click for info.": "Meddelande skickades inte. Klicka för info.",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "Would you like to leave the rooms in this space?": "Vill du lämna rummen i det här utrymmet?",
@@ -1252,7 +1237,6 @@
     "The homeserver the user you're verifying is connected to": "Hemservern användaren du verifierar är ansluten till",
     "You do not have permission to start polls in this room.": "Du får inte starta omröstningar i det här rummet.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Det här rummet bryggar inte meddelanden till några platformar. <a>Läs mer.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Det här rummet är med i några utrymmen du inte är admin för. I de utrymmena så kommer det gamla rummet fortfarande visas, men folk kommer uppmanas att gå med i det nya.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -1644,8 +1628,6 @@
     "Unable to find event at that date": "Kunde inte hitta händelse vid det datumet",
     "Are you sure you wish to remove (delete) this event?": "Är du säker på att du vill ta bort (radera) den här händelsen?",
     "Note that removing room changes like this could undo the change.": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
-    "Ask to join": "Be om att gå med",
-    "People cannot join unless access is granted.": "Personer kan inte gå med om inte åtkomst ges.",
     "common": {
         "about": "Om",
         "analytics": "Statistik",
@@ -3293,7 +3275,25 @@
             "history_visibility_shared": "Endast medlemmar (från tidpunkten för när denna inställning valdes)",
             "history_visibility_invited": "Endast medlemmar (från när de blev inbjudna)",
             "history_visibility_joined": "Endast medlemmar (från när de gick med)",
-            "history_visibility_world_readable": "Vem som helst"
+            "history_visibility_world_readable": "Vem som helst",
+            "join_rule_upgrade_required": "Uppgradering krävs",
+            "join_rule_restricted_n_more": {
+                "other": "& %(count)s till",
+                "one": "& %(count)s till"
+            },
+            "join_rule_restricted_summary": {
+                "other": "Just nu har %(count)s utrymmen åtkomst",
+                "one": "Just nu har ett utrymme åtkomst"
+            },
+            "join_rule_restricted_description": "Vem som helst i ett utrymme kan hitta och gå med. <a>Redigera vilka utrymmen som kan komma åt här.</a>",
+            "join_rule_restricted_description_spaces": "Utrymmen med åtkomst",
+            "join_rule_restricted_description_active_space": "Vem som helst i <spaceName/> kan hitta och gå med. Du kan välja andra utrymmen också.",
+            "join_rule_restricted_description_prompt": "Vem som helst i ett utrymme kan hitta och gå med. Du kan välja flera utrymmen.",
+            "join_rule_restricted": "Utrymmesmedlemmar",
+            "join_rule_knock": "Be om att gå med",
+            "join_rule_knock_description": "Personer kan inte gå med om inte åtkomst ges.",
+            "join_rule_restricted_upgrade_warning": "Det här rummet är med i några utrymmen du inte är admin för. I de utrymmena så kommer det gamla rummet fortfarande visas, men folk kommer uppmanas att gå med i det nya.",
+            "join_rule_restricted_upgrade_description": "Den här uppgraderingen kommer att låta medlemmar i valda utrymmen komma åt det här rummet utan en inbjudan."
         },
         "general": {
             "publish_toggle": "Publicera rummet i den offentliga rumskatalogen på %(domain)s?",

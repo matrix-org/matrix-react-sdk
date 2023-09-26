@@ -515,22 +515,6 @@
     },
     "Loading new room": "Memuat ruangan baru",
     "Upgrading room": "Meningkatkan ruangan",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Peningkatan ini akan mengizinkan anggota di space yang terpilih untuk dapat mengakses ruangan ini tanpa sebuah undangan.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ruangan ini masih ada di dalam space yang Anda bukan admin di sana. Di space itu, ruangan yang lama masih terlihat, tetapi orang akan diberi tahu untuk bergabung dengan ruangan yang baru.",
-    "Space members": "Anggota space",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Siapa saja di sebuah space dapat menemukan dan bergabung. Anda dapat memilih beberapa space.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Siapa saja di <spaceName/> dapat menemukan dan bergabung. Anda juga dapat memilih space yang lain.",
-    "Spaces with access": "Space dengan akses",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Siapa saja di dalam space dapat menemukan dan bergabung. <a>Edit space apa saja yang dapat mengakses.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Saat ini, sebuah space memiliki akses",
-        "other": "Saat ini, %(count)s space memiliki akses"
-    },
-    "& %(count)s more": {
-        "one": "& %(count)s lainnya",
-        "other": "& %(count)s lainnya"
-    },
-    "Upgrade required": "Peningkatan diperlukan",
     "The integration manager is offline or it cannot reach your homeserver.": "Manager integrasinya mungkin sedang luring atau tidak dapat mencapai homeserver Anda.",
     "Cannot connect to integration manager": "Tidak dapat menghubungkan ke manajer integrasi",
     "Failed to set display name": "Gagal untuk menetapkan nama tampilan",
@@ -1644,8 +1628,6 @@
     "You do not have permission to invite users": "Anda tidak memiliki izin untuk mengundang pengguna",
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
-    "Ask to join": "Bertanya untuk bergabung",
-    "People cannot join unless access is granted.": "Orang-orang tidak dapat bergabung kecuali diberikan akses.",
     "Email Notifications": "Notifikasi Surel",
     "Email summary": "Kirim surel ikhtisar",
     "Receive an email summary of missed notifications": "Terima surel ikhtisar notifikasi yang terlewat",
@@ -3356,7 +3338,25 @@
             "history_visibility_shared": "Anggota saja (sejak memilih opsi ini)",
             "history_visibility_invited": "Anggota saja (sejak mereka diundang)",
             "history_visibility_joined": "Anggota saja (sejak mereka bergabung)",
-            "history_visibility_world_readable": "Siapa Saja"
+            "history_visibility_world_readable": "Siapa Saja",
+            "join_rule_upgrade_required": "Peningkatan diperlukan",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s lainnya",
+                "other": "& %(count)s lainnya"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Saat ini, sebuah space memiliki akses",
+                "other": "Saat ini, %(count)s space memiliki akses"
+            },
+            "join_rule_restricted_description": "Siapa saja di dalam space dapat menemukan dan bergabung. <a>Edit space apa saja yang dapat mengakses.</a>",
+            "join_rule_restricted_description_spaces": "Space dengan akses",
+            "join_rule_restricted_description_active_space": "Siapa saja di <spaceName/> dapat menemukan dan bergabung. Anda juga dapat memilih space yang lain.",
+            "join_rule_restricted_description_prompt": "Siapa saja di sebuah space dapat menemukan dan bergabung. Anda dapat memilih beberapa space.",
+            "join_rule_restricted": "Anggota space",
+            "join_rule_knock": "Bertanya untuk bergabung",
+            "join_rule_knock_description": "Orang-orang tidak dapat bergabung kecuali diberikan akses.",
+            "join_rule_restricted_upgrade_warning": "Ruangan ini masih ada di dalam space yang Anda bukan admin di sana. Di space itu, ruangan yang lama masih terlihat, tetapi orang akan diberi tahu untuk bergabung dengan ruangan yang baru.",
+            "join_rule_restricted_upgrade_description": "Peningkatan ini akan mengizinkan anggota di space yang terpilih untuk dapat mengakses ruangan ini tanpa sebuah undangan."
         },
         "general": {
             "publish_toggle": "Publikasi ruangan ini ke publik di direktori ruangan %(domain)s?",

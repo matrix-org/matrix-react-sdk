@@ -450,7 +450,6 @@
     },
     "Loading new room": "Φόρτωση νέου δωματίου",
     "Upgrading room": "Αναβάθμιση δωματίου",
-    "Space members": "Μέλη χώρου",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
@@ -490,9 +489,6 @@
     "Dog": "Σκύλος",
     "Heart": "Καρδιά",
     "Cake": "Τούρτα",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Αυτό το δωμάτιο βρίσκεται σε ορισμένους Χώρους στους οποίους δεν είστε διαχειριστής. Σε αυτούς τους Χώρους, το παλιό δωμάτιο θα εξακολουθεί να εμφανίζεται, αλλά τα άτομα θα κληθούν να συμμετάσχουν στο νέο.",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Οποιοσδήποτε σε ένα Χώρο μπορεί να βρει και να εγγραφεί. Μπορείτε να επιλέξετε πολλούς Χώρους.",
     "Aeroplane": "Αεροπλάνο",
     "Bicycle": "Ποδήλατο",
     "Train": "Τρένο",
@@ -562,18 +558,6 @@
     "Could not connect to identity server": "Δεν ήταν δυνατή η σύνδεση με τον διακομιστή ταυτότητας",
     "Not a valid identity server (status code %(code)s)": "Μη έγκυρος διακομιστής ταυτότητας(κωδικός κατάστασης %(code)s)",
     "Identity server URL must be HTTPS": "Η διεύθυνση URL διακομιστή ταυτότητας πρέπει να είναι HTTPS",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Οποιοσδήποτε στο <spaceName/> μπορεί να το βρει και να εγγραφεί. Μπορείτε να επιλέξετε και άλλους χώρους.",
-    "Spaces with access": "Χώροι με πρόσβαση",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Οποιοσδήποτε σε ένα χώρο μπορεί να το βρει και να εγγραφεί. <a>Επεξεργαστείτε τους χώρους που έχουν πρόσβαση εδώ.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Αυτήν τη στιγμή, ένας χώρος έχει πρόσβαση",
-        "other": "Αυτήν τη στιγμή, %(count)s χώροι έχουν πρόσβαση"
-    },
-    "& %(count)s more": {
-        "one": "& %(count)s περισσότερα",
-        "other": "& %(count)s περισσότερα"
-    },
-    "Upgrade required": "Απαιτείται αναβάθμιση",
     "Ignored users": "Χρήστες που αγνοήθηκαν",
     "None": "Κανένα",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
@@ -2774,7 +2758,23 @@
             "history_visibility_shared": "Μόνο μέλη (από τη στιγμή που ορίστηκε αυτή η επιλογή)",
             "history_visibility_invited": "Μόνο μέλη (από τη στιγμή που προσκλήθηκαν)",
             "history_visibility_joined": "Μόνο μέλη (από τη στιγμή που έγιναν μέλη)",
-            "history_visibility_world_readable": "Oποιοσδήποτε"
+            "history_visibility_world_readable": "Oποιοσδήποτε",
+            "join_rule_upgrade_required": "Απαιτείται αναβάθμιση",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s περισσότερα",
+                "other": "& %(count)s περισσότερα"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Αυτήν τη στιγμή, ένας χώρος έχει πρόσβαση",
+                "other": "Αυτήν τη στιγμή, %(count)s χώροι έχουν πρόσβαση"
+            },
+            "join_rule_restricted_description": "Οποιοσδήποτε σε ένα χώρο μπορεί να το βρει και να εγγραφεί. <a>Επεξεργαστείτε τους χώρους που έχουν πρόσβαση εδώ.</a>",
+            "join_rule_restricted_description_spaces": "Χώροι με πρόσβαση",
+            "join_rule_restricted_description_active_space": "Οποιοσδήποτε στο <spaceName/> μπορεί να το βρει και να εγγραφεί. Μπορείτε να επιλέξετε και άλλους χώρους.",
+            "join_rule_restricted_description_prompt": "Οποιοσδήποτε σε ένα Χώρο μπορεί να βρει και να εγγραφεί. Μπορείτε να επιλέξετε πολλούς Χώρους.",
+            "join_rule_restricted": "Μέλη χώρου",
+            "join_rule_restricted_upgrade_warning": "Αυτό το δωμάτιο βρίσκεται σε ορισμένους Χώρους στους οποίους δεν είστε διαχειριστής. Σε αυτούς τους Χώρους, το παλιό δωμάτιο θα εξακολουθεί να εμφανίζεται, αλλά τα άτομα θα κληθούν να συμμετάσχουν στο νέο.",
+            "join_rule_restricted_upgrade_description": "Αυτή η αναβάθμιση θα επιτρέψει σε μέλη επιλεγμένων Χώρων πρόσβαση σε αυτό το δωμάτιο χωρίς πρόσκληση."
         },
         "general": {
             "publish_toggle": "Δημοσίευση αυτού του δωματίου στο κοινό κατάλογο δωματίων του %(domain)s;",

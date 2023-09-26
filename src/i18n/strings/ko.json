@@ -505,8 +505,6 @@
     "Get notifications as set up in your <a>settings</a>": "<a>설정</a>에서 지정한 알림만 받습니다",
     "Get notified for every message": "모든 메세지 알림을 받습니다",
     "You won't get any notifications": "어떤 알람도 받지 않습니다",
-    "Space members": "스페이스 멤버 목록",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "<spaceName/>에 소속된 누구나 찾고 참여할 수 있습니다. 다른 스페이스도 선택 가능합니다.",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
     "Search for rooms": "방 검색",
@@ -547,8 +545,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "이름, 이메일, 사용자명(<userId/>) 으로 대화를 시작하세요.",
     "Search names and descriptions": "이름 및 설명 검색",
     "@mentions & keywords": "@멘션(언급) & 키워드",
-    "Anyone in a space can find and join. You can select multiple spaces.": "스페이스의 누구나 찾고 참여할 수 있습니다. 여러 스페이스를 선택할 수 있습니다.",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "누구나 스페이스를 찾고 참여할 수 있습니다. <a>이곳에서 접근 가능한 스페이스를 편집하세요.</a>",
     "Add space": "스페이스 추가하기",
     "Add existing rooms": "기존 방 추가",
     "Add existing room": "기존 방 목록에서 추가하기",
@@ -1200,7 +1196,11 @@
             "history_visibility_shared": "구성원만(이 설정을 선택한 시점부터)",
             "history_visibility_invited": "구성원만(구성원이 초대받은 시점부터)",
             "history_visibility_joined": "구성원만(구성원들이 참여한 시점부터)",
-            "history_visibility_world_readable": "누구나"
+            "history_visibility_world_readable": "누구나",
+            "join_rule_restricted_description": "누구나 스페이스를 찾고 참여할 수 있습니다. <a>이곳에서 접근 가능한 스페이스를 편집하세요.</a>",
+            "join_rule_restricted_description_active_space": "<spaceName/>에 소속된 누구나 찾고 참여할 수 있습니다. 다른 스페이스도 선택 가능합니다.",
+            "join_rule_restricted_description_prompt": "스페이스의 누구나 찾고 참여할 수 있습니다. 여러 스페이스를 선택할 수 있습니다.",
+            "join_rule_restricted": "스페이스 멤버 목록"
         },
         "general": {
             "publish_toggle": "%(domain)s님의 방 목록에서 이 방을 공개로 게시하겠습니까?",

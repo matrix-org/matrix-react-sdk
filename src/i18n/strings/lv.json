@@ -733,7 +733,6 @@
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "Join public room": "Pievienoties publiskai istabai",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Lai nezaudētu čata vēsturi, pirms izrakstīšanās no konta jums ir jāeksportē istabas atslēgas. Lai to izdarītu, jums būs jāatgriežas jaunākajā %(brand)s versijā",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Pārtraukt lietotāju runāšanu vecajā istabas versijā un publicēt ziņojumu, kurā lietotājiem tiek ieteikts pāriet uz jauno istabu",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
@@ -1584,7 +1583,8 @@
             "history_visibility_shared": "Tikai dalībnieki (no šī parametra iestatīšanas brīža)",
             "history_visibility_invited": "Tikai dalībnieki (no to uzaicināšanas brīža)",
             "history_visibility_joined": "Tikai dalībnieki (kopš pievienošanās)",
-            "history_visibility_world_readable": "Ikviens"
+            "history_visibility_world_readable": "Ikviens",
+            "join_rule_restricted_upgrade_warning": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai."
         },
         "general": {
             "publish_toggle": "Publicēt šo istabu publiskajā %(domain)s katalogā?",

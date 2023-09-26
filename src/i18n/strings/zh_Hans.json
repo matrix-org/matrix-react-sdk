@@ -1120,7 +1120,6 @@
     "Could not connect to identity server": "无法连接到身份服务器",
     "Not a valid identity server (status code %(code)s)": "身份服务器无效（状态码 %(code)s）",
     "Identity server URL must be HTTPS": "身份服务器URL必须是HTTPS",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "此升级将允许选定的空间成员无需邀请即可访问此房间。",
     "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
@@ -1172,26 +1171,12 @@
         "one": "显示 %(count)s 个其他预览",
         "other": "显示 %(count)s 个其他预览"
     },
-    "Space members": "空间成员",
-    "Anyone in a space can find and join. You can select multiple spaces.": "空间中的任何人都可以找到并加入。你可以选择多个空间。",
-    "Spaces with access": "可访问的空间",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "空间中的任何人都可以找到并加入。<a>在此处编辑哪些空间可以访问。</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "目前，%(count)s 个空间可以访问",
-        "one": "目前，一个空间有访问权限"
-    },
-    "& %(count)s more": {
-        "other": "以及另 %(count)s",
-        "one": "& 另外 %(count)s"
-    },
-    "Upgrade required": "需要升级",
     "Rooms and spaces": "房间与空间",
     "Results": "结果",
     "Some encryption parameters have been changed.": "一些加密参数已更改。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
     "Unknown failure": "未知失败",
     "Failed to update the join rules": "未能更新加入列表",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "<spaceName/> 中的任何人都可以寻找和加入。你也可以选择其他空间。",
     "Message didn't send. Click for info.": "消息没有发送。点击查看信息。",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
@@ -1249,7 +1234,6 @@
     "Yours, or the other users' internet connection": "你或其他用户的互联网连接",
     "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "这个房间不会将消息桥接到任何平台。<a>了解更多</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "这个房间位于你不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
     "You do not have permission to start polls in this room.": "你无权在此房间启动投票。",
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
@@ -3001,7 +2985,23 @@
             "history_visibility_shared": "仅成员（从选中此选项时开始）",
             "history_visibility_invited": "只有成员（从他们被邀请开始）",
             "history_visibility_joined": "只有成员（从他们加入开始）",
-            "history_visibility_world_readable": "任何人"
+            "history_visibility_world_readable": "任何人",
+            "join_rule_upgrade_required": "需要升级",
+            "join_rule_restricted_n_more": {
+                "other": "以及另 %(count)s",
+                "one": "& 另外 %(count)s"
+            },
+            "join_rule_restricted_summary": {
+                "other": "目前，%(count)s 个空间可以访问",
+                "one": "目前，一个空间有访问权限"
+            },
+            "join_rule_restricted_description": "空间中的任何人都可以找到并加入。<a>在此处编辑哪些空间可以访问。</a>",
+            "join_rule_restricted_description_spaces": "可访问的空间",
+            "join_rule_restricted_description_active_space": "<spaceName/> 中的任何人都可以寻找和加入。你也可以选择其他空间。",
+            "join_rule_restricted_description_prompt": "空间中的任何人都可以找到并加入。你可以选择多个空间。",
+            "join_rule_restricted": "空间成员",
+            "join_rule_restricted_upgrade_warning": "这个房间位于你不是管理员的某些空间中。 在这些空间中，旧房间仍将显示，但系统会提示人们加入新房间。",
+            "join_rule_restricted_upgrade_description": "此升级将允许选定的空间成员无需邀请即可访问此房间。"
         },
         "general": {
             "publish_toggle": "是否将此房间发布至 %(domain)s 的房间目录中？",

@@ -1146,20 +1146,6 @@
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
     "Stop recording": "Aufnahme beenden",
     "Send voice message": "Sprachnachricht senden",
-    "Space members": "Spacemitglieder",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Das Betreten ist allen in den gewählten Spaces möglich.",
-    "Spaces with access": "Spaces mit Zutritt",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Das Betreten ist allen in diesen Spaces möglich. <a>Ändere, welche Spaces Zutritt haben.</a>",
-    "Currently, %(count)s spaces have access": {
-        "other": "%(count)s Spaces haben Zutritt",
-        "one": "Derzeit hat ein Space Zutritt"
-    },
-    "& %(count)s more": {
-        "other": "und %(count)s weitere",
-        "one": "und %(count)s weitere"
-    },
-    "Upgrade required": "Aktualisierung erforderlich",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
     "Public room": "Öffentlicher Raum",
     "Add space": "Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
@@ -1186,7 +1172,6 @@
     "Rooms and spaces": "Räume und Spaces",
     "Unknown failure": "Unbekannter Fehler",
     "Failed to update the join rules": "Fehler beim Aktualisieren der Beitrittsregeln",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Finden und betreten ist Mitgliedern von <spaceName/> erlaubt. Du kannst auch weitere Spaces wählen.",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "You are about to leave <spaceName/>.": "Du bist dabei, <spaceName/> zu verlassen.",
     "Leave some rooms": "Zu verlassende Räume auswählen",
@@ -1244,7 +1229,6 @@
     "The homeserver the user you're verifying is connected to": "Der Heim-Server der Person, die du verifizierst",
     "You do not have permission to start polls in this room.": "Du bist nicht berechtigt, Umfragen in diesem Raum zu beginnen.",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Dieser Raum leitet keine Nachrichten von/an andere(n) Plattformen weiter. <a>Mehr erfahren.</a>",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
@@ -1673,9 +1657,7 @@
     "Unable to find user by email": "Kann Benutzer nicht via E-Mail-Adresse finden",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Nachrichten hier sind Ende-zu-Ende-verschlüsselt. Verifiziere %(displayName)s in deren Profil – klicke auf deren Profilbild.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Nachrichten in diesem Raum sind Ende-zu-Ende-verschlüsselt. Wenn Personen beitreten, kannst du sie in ihrem Profil verifizieren, indem du auf deren Profilbild klickst.",
-    "Ask to join": "Beitrittsanfragen",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
-    "People cannot join unless access is granted.": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
     "Upgrade room": "Raum aktualisieren",
     "Great! This passphrase looks strong enough": "Super! Diese Passphrase wirkt stark genug",
     "Other spaces you know": "Andere dir bekannte Spaces",
@@ -3356,7 +3338,25 @@
             "history_visibility_shared": "Mitglieder",
             "history_visibility_invited": "Mitglieder (ab Einladung)",
             "history_visibility_joined": "Mitglieder (ab Betreten)",
-            "history_visibility_world_readable": "Alle"
+            "history_visibility_world_readable": "Alle",
+            "join_rule_upgrade_required": "Aktualisierung erforderlich",
+            "join_rule_restricted_n_more": {
+                "other": "und %(count)s weitere",
+                "one": "und %(count)s weitere"
+            },
+            "join_rule_restricted_summary": {
+                "other": "%(count)s Spaces haben Zutritt",
+                "one": "Derzeit hat ein Space Zutritt"
+            },
+            "join_rule_restricted_description": "Das Betreten ist allen in diesen Spaces möglich. <a>Ändere, welche Spaces Zutritt haben.</a>",
+            "join_rule_restricted_description_spaces": "Spaces mit Zutritt",
+            "join_rule_restricted_description_active_space": "Finden und betreten ist Mitgliedern von <spaceName/> erlaubt. Du kannst auch weitere Spaces wählen.",
+            "join_rule_restricted_description_prompt": "Das Betreten ist allen in den gewählten Spaces möglich.",
+            "join_rule_restricted": "Spacemitglieder",
+            "join_rule_knock": "Beitrittsanfragen",
+            "join_rule_knock_description": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
+            "join_rule_restricted_upgrade_warning": "Dieser Raum ist Teil von Spaces von denen du kein Administrator bist. In diesen Räumen wird der alte Raum weiter angezeigt werden, aber Personen werden aufgefordert werden, dem neuen Raum beizutreten.",
+            "join_rule_restricted_upgrade_description": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung."
         },
         "general": {
             "publish_toggle": "Diesen Raum im Raumverzeichnis von %(domain)s veröffentlichen?",

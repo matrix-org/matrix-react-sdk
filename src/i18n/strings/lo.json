@@ -732,22 +732,6 @@
     },
     "Loading new room": "ກຳລັງໂຫຼດຫ້ອງໃໝ່",
     "Upgrading room": "ການຍົກລະດັບຫ້ອງ",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "ການຍົກລະດັບນີ້ຈະອະນຸຍາດໃຫ້ສະມາຊິກຂອງພື້ນທີ່ທີ່ເລືອກເຂົ້າມາໃນຫ້ອງນີ້ໂດຍບໍ່ມີການເຊີນ.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "ຫ້ອງນີ້ແມ່ນຢູ່ໃນບາງພື້ນທີ່ທີ່ທ່ານບໍ່ແມ່ນຜູ້ຄຸ້ມຄອງ. ໃນສະຖານທີ່ເຫຼົ່ານັ້ນ, ຫ້ອງເກົ່າຍັງຈະສະແດງຢູ່, ແຕ່ຜູ້ຄົນຈະຖືກກະຕຸ້ນໃຫ້ເຂົ້າຮ່ວມຫ້ອງໃຫມ່.",
-    "Space members": "ພຶ້ນທີ່ຂອງສະມາຊິກ",
-    "Anyone in a space can find and join. You can select multiple spaces.": "ທຸກຄົນຢູ່ໃນພື້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. ທ່ານສາມາດເລືອກຫຼາຍໄດ້ຫຼາຍພຶ້ນທີ່.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "ທຸກຄົນໃນ <spaceName/> ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. ທ່ານສາມາດເລືອກບ່ອນອື່ນໄດ້ຄືກັນ.",
-    "Spaces with access": "ພຶ້ນທີ່ ທີ່ມີການເຂົ້າເຖິງ",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "ທຸກຄົນຢູ່ໃນພື້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. <a>ແກ້ໄຂພື້ນທີ່ໃດທີ່ສາມາດເຂົ້າເຖິງທີ່ນີ້.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "ໃນປັດຈຸບັນ, ມີການເຂົ້າເຖິງພື້ນທີ່",
-        "other": "ໃນປັດຈຸບັນ, %(count)s ມີການເຂົ້າເຖິງພື້ນທີ່"
-    },
-    "& %(count)s more": {
-        "one": "& %(count)s ເພີ່ມເຕີມ",
-        "other": "&%(count)s ເພີ່ມເຕີມ"
-    },
-    "Upgrade required": "ຕ້ອງການບົກລະດັບ",
     "The integration manager is offline or it cannot reach your homeserver.": "ຜູ້ຈັດການການເຊື່ອມໂຍງແມ່ນອອບໄລນ໌ຫຼືບໍ່ສາມາດເຂົ້າຫາ homeserver ຂອງທ່ານໄດ້.",
     "Cannot connect to integration manager": "ບໍ່ສາມາດເຊື່ອມຕໍ່ກັບຕົວຈັດການການເຊື່ອມໂຍງໄດ້",
     "Failed to set display name": "ກຳນົດການສະເເດງຊື່ບໍ່ສຳເລັດ",
@@ -2780,7 +2764,23 @@
             "history_visibility_shared": "(ນັບແຕ່ຊ່ວງເວລາຂອງການເລືອກນີ້) ສຳລັບສະມາຊິກເທົ່ານັ້ນ",
             "history_visibility_invited": "ສະເພາະສະມາຊິກເທົ່ານັ້ນ (ນັບແຕ່ພວກເຂົາຖືກເຊີນ)",
             "history_visibility_joined": "ສະເພາະສະມາຊິກເທົ່ານັ້ນ (ນັບແຕ່ພວກເຂົາເຂົ້າຮ່ວມ)",
-            "history_visibility_world_readable": "ຄົນໃດຄົນໜຶ່ງ"
+            "history_visibility_world_readable": "ຄົນໃດຄົນໜຶ່ງ",
+            "join_rule_upgrade_required": "ຕ້ອງການບົກລະດັບ",
+            "join_rule_restricted_n_more": {
+                "one": "& %(count)s ເພີ່ມເຕີມ",
+                "other": "&%(count)s ເພີ່ມເຕີມ"
+            },
+            "join_rule_restricted_summary": {
+                "one": "ໃນປັດຈຸບັນ, ມີການເຂົ້າເຖິງພື້ນທີ່",
+                "other": "ໃນປັດຈຸບັນ, %(count)s ມີການເຂົ້າເຖິງພື້ນທີ່"
+            },
+            "join_rule_restricted_description": "ທຸກຄົນຢູ່ໃນພື້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. <a>ແກ້ໄຂພື້ນທີ່ໃດທີ່ສາມາດເຂົ້າເຖິງທີ່ນີ້.</a>",
+            "join_rule_restricted_description_spaces": "ພຶ້ນທີ່ ທີ່ມີການເຂົ້າເຖິງ",
+            "join_rule_restricted_description_active_space": "ທຸກຄົນໃນ <spaceName/> ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. ທ່ານສາມາດເລືອກບ່ອນອື່ນໄດ້ຄືກັນ.",
+            "join_rule_restricted_description_prompt": "ທຸກຄົນຢູ່ໃນພື້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມໄດ້. ທ່ານສາມາດເລືອກຫຼາຍໄດ້ຫຼາຍພຶ້ນທີ່.",
+            "join_rule_restricted": "ພຶ້ນທີ່ຂອງສະມາຊິກ",
+            "join_rule_restricted_upgrade_warning": "ຫ້ອງນີ້ແມ່ນຢູ່ໃນບາງພື້ນທີ່ທີ່ທ່ານບໍ່ແມ່ນຜູ້ຄຸ້ມຄອງ. ໃນສະຖານທີ່ເຫຼົ່ານັ້ນ, ຫ້ອງເກົ່າຍັງຈະສະແດງຢູ່, ແຕ່ຜູ້ຄົນຈະຖືກກະຕຸ້ນໃຫ້ເຂົ້າຮ່ວມຫ້ອງໃຫມ່.",
+            "join_rule_restricted_upgrade_description": "ການຍົກລະດັບນີ້ຈະອະນຸຍາດໃຫ້ສະມາຊິກຂອງພື້ນທີ່ທີ່ເລືອກເຂົ້າມາໃນຫ້ອງນີ້ໂດຍບໍ່ມີການເຊີນ."
         },
         "general": {
             "publish_toggle": "ເຜີຍແຜ່ຫ້ອງນີ້ຕໍ່ສາທາລະນະຢູ່ໃນຄຳນຳຫ້ອງຂອງ %(domain)s ບໍ?",

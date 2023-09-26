@@ -835,22 +835,6 @@
     },
     "Loading new room": "Wczytywanie nowego pokoju",
     "Upgrading room": "Aktualizowanie pokoju",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "To ulepszenie pozwoli członkom wybranych przestrzeni uzyskać dostęp do tego pokoju bez zaproszenia.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ten pokój znajduje się w przestrzeniach, w których nie masz uprawnień administratora. W tych przestrzeniach stary pokój wciąż będzie wyświetlany, lecz ludzie otrzymają propozycję dołączenia do nowego.",
-    "Space members": "Członkowie przestrzeni",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Każdy w przestrzeni może znaleźć i dołączyć. Możesz wybrać wiele przestrzeni.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Każdy w <spaceName/> może znaleźć i dołączyć. Możesz też wybrać inne przestrzenie.",
-    "Spaces with access": "Przestrzenie z dostępem",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Każdy w przestrzeni może znaleźć i dołączyć. <a>Kliknij tu, aby ustawić które przestrzenie mają dostęp.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "Obecnie jedna przestrzeń ma dostęp",
-        "other": "Obecnie %(count)s przestrzeni ma dostęp"
-    },
-    "& %(count)s more": {
-        "one": "i %(count)s więcej",
-        "other": "i %(count)s więcej"
-    },
-    "Upgrade required": "Aktualizacja wymagana",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
@@ -1644,8 +1628,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
     "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
     "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
-    "Ask to join": "Poproś o dołączenie",
-    "People cannot join unless access is granted.": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Aktualizacja:</strong>Uprościliśmy Ustawienia powiadomień, aby łatwiej je nawigować. Niektóre ustawienia niestandardowe nie są już tu widoczne, lecz wciąż aktywne. Jeśli kontynuujesz, niektóre Twoje ustawienia mogą się zmienić. <a>Dowiedz się więcej</a>",
     "Mentions and Keywords only": "Wyłącznie wzmianki i słowa kluczowe",
     "Play a sound for": "Odtwórz dźwięk dla",
@@ -3338,7 +3320,25 @@
             "history_visibility_shared": "Tylko członkowie (od momentu włączenia tej opcji)",
             "history_visibility_invited": "Tylko członkowie (od kiedy zostali zaproszeni)",
             "history_visibility_joined": "Tylko członkowie (od kiedy dołączyli)",
-            "history_visibility_world_readable": "Każdy"
+            "history_visibility_world_readable": "Każdy",
+            "join_rule_upgrade_required": "Aktualizacja wymagana",
+            "join_rule_restricted_n_more": {
+                "one": "i %(count)s więcej",
+                "other": "i %(count)s więcej"
+            },
+            "join_rule_restricted_summary": {
+                "one": "Obecnie jedna przestrzeń ma dostęp",
+                "other": "Obecnie %(count)s przestrzeni ma dostęp"
+            },
+            "join_rule_restricted_description": "Każdy w przestrzeni może znaleźć i dołączyć. <a>Kliknij tu, aby ustawić które przestrzenie mają dostęp.</a>",
+            "join_rule_restricted_description_spaces": "Przestrzenie z dostępem",
+            "join_rule_restricted_description_active_space": "Każdy w <spaceName/> może znaleźć i dołączyć. Możesz też wybrać inne przestrzenie.",
+            "join_rule_restricted_description_prompt": "Każdy w przestrzeni może znaleźć i dołączyć. Możesz wybrać wiele przestrzeni.",
+            "join_rule_restricted": "Członkowie przestrzeni",
+            "join_rule_knock": "Poproś o dołączenie",
+            "join_rule_knock_description": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
+            "join_rule_restricted_upgrade_warning": "Ten pokój znajduje się w przestrzeniach, w których nie masz uprawnień administratora. W tych przestrzeniach stary pokój wciąż będzie wyświetlany, lecz ludzie otrzymają propozycję dołączenia do nowego.",
+            "join_rule_restricted_upgrade_description": "To ulepszenie pozwoli członkom wybranych przestrzeni uzyskać dostęp do tego pokoju bez zaproszenia."
         },
         "general": {
             "publish_toggle": "Czy opublikować ten pokój dla ogółu w spisie pokojów domeny %(domain)s?",

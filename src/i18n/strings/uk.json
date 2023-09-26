@@ -703,16 +703,6 @@
     "Delete all": "Видалити всі",
     "Some of your messages have not been sent": "Деякі з ваших повідомлень не надіслано",
     "Back up your keys before signing out to avoid losing them.": "Створіть резервну копію ключів перед виходом, щоб не втратити їх.",
-    "This upgrade will allow members of selected spaces access to this room without an invite.": "Це поліпшення дозволить учасникам обраних просторів доступитися до цієї кімнати без запрошення.",
-    "Space members": "Учасники простору",
-    "Anyone in a space can find and join. You can select multiple spaces.": "Будь-хто у просторі може знайти та приєднатися. Можна вибрати кілька просторів.",
-    "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Будь-хто у <spaceName/> може знайти та приєднатися. Ви можете вибрати інші простори.",
-    "Spaces with access": "Простори з доступом",
-    "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Будь-хто у просторі може знайти та приєднатися. <a>Укажіть, які простори можуть отримати доступ сюди.</a>",
-    "Currently, %(count)s spaces have access": {
-        "one": "На разі простір має доступ",
-        "other": "На разі доступ мають %(count)s просторів"
-    },
     "contact the administrators of identity server <idserver />": "зв'язатися з адміністратором сервера ідентифікації <idserver />",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "перевірити плагіни браузера на наявність будь-чого, що може заблокувати сервер ідентифікації (наприклад, Privacy Badger)",
     "Disconnect from the identity server <idserver />?": "Від'єднатися від сервера ідентифікації <idserver />?",
@@ -722,11 +712,6 @@
     "Not a valid identity server (status code %(code)s)": "Хибний сервер ідентифікації (код статусу %(code)s)",
     "Identity server URL must be HTTPS": "URL-адреса сервера ідентифікації повинна починатися з HTTPS",
     "Backup version:": "Версія резервної копії:",
-    "& %(count)s more": {
-        "one": "і ще %(count)s",
-        "other": "і ще %(count)s"
-    },
-    "Upgrade required": "Потрібне поліпшення",
     "Create a space": "Створити простір",
     "Address": "Адреса",
     "Cancel All": "Скасувати все",
@@ -1161,7 +1146,6 @@
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Радимо вилучити адреси е-пошти й номери телефонів із сервера ідентифікації, перш ніж від'єднатися.",
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Сервер ідентифікації <idserver /> досі <b>поширює ваші особисті дані</b>.",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Слід <b>вилучити ваші особисті дані</b> з сервера ідентифікації <idserver />, перш ніж від'єднатися. На жаль, сервер ідентифікації <idserver /> зараз офлайн чи недоступний.",
-    "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
     "Failed to re-authenticate due to a homeserver problem": "Не вдалося перезайти через проблему з домашнім сервером",
     "Resetting your verification keys cannot be undone. After resetting, you won't have access to old encrypted messages, and any friends who have previously verified you will see security warnings until you re-verify with them.": "Скидання ключів звірки неможливо скасувати. Після скидання, ви втратите доступ до старих зашифрованих повідомлень, а всі друзі, які раніше вас звіряли, бачитимуть застереження безпеки, поки ви не проведете звірку з ними знову.",
     "I'll verify later": "Звірю пізніше",
@@ -1642,7 +1626,6 @@
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "You do not have permission to invite users": "У вас немає дозволу запрошувати користувачів",
-    "Ask to join": "Запит на приєднання",
     "Mentions and Keywords only": "Лише згадки та ключові слова",
     "This setting will be applied by default to all your rooms.": "Цей параметр буде застосовано усталеним до всіх ваших кімнат.",
     "Play a sound for": "Відтворювати звук про",
@@ -1669,7 +1652,6 @@
     "Messages sent by bots": "Повідомлення від ботів",
     "New room activity, upgrades and status messages occur": "Нова діяльність у кімнаті, поліпшення та повідомлення про стан",
     "Unable to find user by email": "Не вдалося знайти користувача за адресою електронної пошти",
-    "People cannot join unless access is granted.": "Люди не можуть приєднатися, якщо їм не надано доступ.",
     "<strong>Update:</strong>We’ve simplified Notifications Settings to make options easier to find. Some custom settings you’ve chosen in the past are not shown here, but they’re still active. If you proceed, some of your settings may change. <a>Learn more</a>": "<strong>Оновлення:</strong>Ми спростили налаштування сповіщень, щоб полегшити пошук потрібних опцій. Деякі налаштування, які ви вибрали раніше, тут не показано, але вони залишаються активними. Якщо ви продовжите, деякі з ваших налаштувань можуть змінитися. <a>Докладніше</a>",
     "Show a badge <badge/> when keywords are used in a room.": "Показувати значок <badge/>, коли в кімнаті вжито ключові слова.",
     "Email Notifications": "Сповіщення е-поштою",
@@ -3351,7 +3333,25 @@
             "history_visibility_shared": "Лише учасники (від часу вибору цієї опції)",
             "history_visibility_invited": "Лише учасники (від часу їхнього запрошення)",
             "history_visibility_joined": "Лише учасники (від часу приєднання)",
-            "history_visibility_world_readable": "Кожний"
+            "history_visibility_world_readable": "Кожний",
+            "join_rule_upgrade_required": "Потрібне поліпшення",
+            "join_rule_restricted_n_more": {
+                "one": "і ще %(count)s",
+                "other": "і ще %(count)s"
+            },
+            "join_rule_restricted_summary": {
+                "one": "На разі простір має доступ",
+                "other": "На разі доступ мають %(count)s просторів"
+            },
+            "join_rule_restricted_description": "Будь-хто у просторі може знайти та приєднатися. <a>Укажіть, які простори можуть отримати доступ сюди.</a>",
+            "join_rule_restricted_description_spaces": "Простори з доступом",
+            "join_rule_restricted_description_active_space": "Будь-хто у <spaceName/> може знайти та приєднатися. Ви можете вибрати інші простори.",
+            "join_rule_restricted_description_prompt": "Будь-хто у просторі може знайти та приєднатися. Можна вибрати кілька просторів.",
+            "join_rule_restricted": "Учасники простору",
+            "join_rule_knock": "Запит на приєднання",
+            "join_rule_knock_description": "Люди не можуть приєднатися, якщо їм не надано доступ.",
+            "join_rule_restricted_upgrade_warning": "Ця кімната належить до просторів, які ви не адмініструєте. Ці простори показуватимуть стару кімнату, але пропонуватимуть людям приєднатись до нової.",
+            "join_rule_restricted_upgrade_description": "Це поліпшення дозволить учасникам обраних просторів доступитися до цієї кімнати без запрошення."
         },
         "general": {
             "publish_toggle": "Опублікувати цю кімнату для всіх у каталозі кімнат %(domain)s?",
