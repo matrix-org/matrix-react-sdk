@@ -1,6 +1,5 @@
 {
     "Create new room": "إنشاء غرفة جديدة",
-    "Failed to change password. Is your password correct?": "فشلت عملية تعديل الكلمة السرية. هل كلمتك السرية صحيحة ؟",
     "Send": "إرسال",
     "Unavailable": "غير متوفر",
     "All Rooms": "كل الغُرف",
@@ -205,13 +204,7 @@
     "Encrypted by an unverified session": "مشفرة باتصال لم يتم التحقق منه",
     "Ignored users": "المستخدمون المتجاهَلون",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
-    "Discovery": "الاكتشاف",
     "Deactivate account": "تعطيل الحساب",
-    "Deactivate Account": "تعطيل الحساب",
-    "Account management": "إدارة الحساب",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "وافق على شروط خدمة خادم الهوية %(serverName)s لتكون قابلاً للاكتشاف عن طريق عنوان البريد الإلكتروني أو رقم الهاتف.",
-    "Phone numbers": "أرقام الهواتف",
-    "Email addresses": "عنوان البريد الإلكتروني",
     "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
     "Backup version:": "نسخة الاحتياطي:",
     "This backup is trusted because it has been restored on this session": "هذا الاحتياطي موثوق به لأنه تمت استعادته في هذا الاتصال",
@@ -801,7 +794,14 @@
             "add_msisdn_dialog_title": "أضِف رقم الهاتف",
             "name_placeholder": "لا اسم ظاهر",
             "error_saving_profile_title": "تعذر حفظ ملفك الشخصي",
-            "error_saving_profile": "تعذر إتمام العملية"
+            "error_saving_profile": "تعذر إتمام العملية",
+            "error_password_change_403": "فشلت عملية تعديل الكلمة السرية. هل كلمتك السرية صحيحة ؟",
+            "emails_heading": "عنوان البريد الإلكتروني",
+            "msisdns_heading": "أرقام الهواتف",
+            "discovery_needs_terms": "وافق على شروط خدمة خادم الهوية %(serverName)s لتكون قابلاً للاكتشاف عن طريق عنوان البريد الإلكتروني أو رقم الهاتف.",
+            "deactivate_section": "تعطيل الحساب",
+            "account_management_section": "إدارة الحساب",
+            "discovery_section": "الاكتشاف"
         }
     },
     "devtools": {

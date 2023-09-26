@@ -138,11 +138,6 @@
     "Phone Number": "फ़ोन नंबर",
     "Room information": "रूम जानकारी",
     "Room Addresses": "रूम का पता",
-    "Failed to change password. Is your password correct?": "पासवर्ड बदलने में विफल। क्या आपका पासवर्ड सही है?",
-    "Email addresses": "ईमेल पता",
-    "Phone numbers": "फोन नंबर",
-    "Account management": "खाता प्रबंधन",
-    "Deactivate Account": "खाता निष्क्रिय करें",
     "Scissors": "कैंची",
     "Ignored users": "अनदेखी उपयोगकर्ताओं",
     "Missing media permissions, click the button below to request.": "मीडिया अनुमतियाँ गुम, अनुरोध करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
@@ -456,7 +451,12 @@
             "add_msisdn_confirm_button": "फ़ोन नंबर जोड़ने की पुष्टि करें",
             "add_msisdn_confirm_body": "इस फ़ोन नंबर को जोड़ने की पुष्टि करने के लिए नीचे दिए गए बटन पर क्लिक करें।",
             "add_msisdn_dialog_title": "फोन नंबर डालें",
-            "name_placeholder": "कोई प्रदर्शन नाम नहीं"
+            "name_placeholder": "कोई प्रदर्शन नाम नहीं",
+            "error_password_change_403": "पासवर्ड बदलने में विफल। क्या आपका पासवर्ड सही है?",
+            "emails_heading": "ईमेल पता",
+            "msisdns_heading": "फोन नंबर",
+            "deactivate_section": "खाता निष्क्रिय करें",
+            "account_management_section": "खाता प्रबंधन"
         }
     },
     "timeline": {

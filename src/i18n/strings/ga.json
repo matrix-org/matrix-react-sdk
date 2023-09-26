@@ -206,7 +206,6 @@
     "Lock": "Glasáil",
     "Unencrypted": "Gan chriptiú",
     "Italics": "Iodálach",
-    "Discovery": "Aimsiú",
     "Success!": "Rath!",
     "Home": "Tús",
     "Removing…": "ag Baint…",
@@ -333,10 +332,6 @@
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Deactivate Account": "Cuir cuntas as feidhm",
-    "Account management": "Bainistíocht cuntais",
-    "Phone numbers": "Uimhreacha guthán",
-    "Email addresses": "Seoltaí r-phost",
     "Phone Number": "Uimhir Fóin",
     "Verification code": "Cód fíoraithe",
     "Results": "Torthaí",
@@ -369,7 +364,6 @@
     "Failed to mute user": "Níor ciúnaíodh an úsáideoir",
     "Failed to load timeline position": "Níor lódáladh áit amlíne",
     "Failed to forget room %(errCode)s": "Níor dhearnadh dearmad ar an seomra %(errCode)s",
-    "Failed to change password. Is your password correct?": "Níor éiríodh leis do phasfhocal a hathrú. An bhfuil do phasfhocal ceart?",
     "Failed to ban user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
     "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
     "Enter passphrase": "Iontráil pasfrása",
@@ -596,7 +590,13 @@
             "add_msisdn_confirm_sso_button": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
             "add_msisdn_confirm_button": "Deimhnigh an uimhir ghutháin nua",
             "add_msisdn_confirm_body": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
-            "add_msisdn_dialog_title": "Cuir uimhir ghutháin"
+            "add_msisdn_dialog_title": "Cuir uimhir ghutháin",
+            "error_password_change_403": "Níor éiríodh leis do phasfhocal a hathrú. An bhfuil do phasfhocal ceart?",
+            "emails_heading": "Seoltaí r-phost",
+            "msisdns_heading": "Uimhreacha guthán",
+            "deactivate_section": "Cuir cuntas as feidhm",
+            "account_management_section": "Bainistíocht cuntais",
+            "discovery_section": "Aimsiú"
         }
     },
     "devtools": {

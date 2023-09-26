@@ -15,14 +15,12 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Are you sure you want to leave the room '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "Are you sure you want to reject the invitation?",
     "Custom level": "Custom level",
-    "Deactivate Account": "Deactivate Account",
     "Decrypt %(text)s": "Decrypt %(text)s",
     "Default": "Default",
     "Download %(text)s": "Download %(text)s",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
     "Failed to ban user": "Failed to ban user",
-    "Failed to change password. Is your password correct?": "Failed to change password. Is your password correct?",
     "Failed to forget room %(errCode)s": "Failed to forget room %(errCode)s",
     "Failed to load timeline position": "Failed to load timeline position",
     "Failed to mute user": "Failed to mute user",
@@ -284,7 +282,9 @@
             "add_msisdn_confirm_button": "Confirm adding phone number",
             "add_msisdn_confirm_body": "Click the button below to confirm adding this phone number.",
             "add_msisdn_dialog_title": "Add Phone Number",
-            "name_placeholder": "No display name"
+            "name_placeholder": "No display name",
+            "error_password_change_403": "Failed to change password. Is your password correct?",
+            "deactivate_section": "Deactivate Account"
         }
     },
     "timeline": {

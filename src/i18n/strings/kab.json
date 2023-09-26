@@ -151,8 +151,6 @@
     "Umbrella": "Tasiwant",
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
-    "Account management": "Asefrek n umiḍan",
-    "Deactivate Account": "Sens amiḍan",
     "Deactivate account": "Sens amiḍan",
     "Ignored users": "Iseqdacen yettunfen",
     "Voice & Video": "Ameslaw & Tavidyut",
@@ -348,9 +346,6 @@
     "Unable to create key backup": "Yegguma ad yernu uḥraz n tsarut",
     "This session is encrypting history using the new recovery method.": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
     "Start using Key Backup": "Bdu aseqdec n uḥraz n tsarut",
-    "Failed to change password. Is your password correct?": "Asnifel n wawal uffir ur yeddi ara. Awal-ik·im d ameɣtu?",
-    "Email addresses": "Tansiwin n yimayl",
-    "Phone numbers": "Uṭṭunen n tiliɣri",
     "%(count)s verified sessions": {
         "other": "%(count)s isenqed tiɣimiyin",
         "one": "1 n tɣimit i yettwasneqden"
@@ -384,7 +379,6 @@
     "Your keys are being backed up (the first backup could take a few minutes).": "Tisura-ik·im la ttwaḥrazent (aḥraz amezwaru yezmer ad yeṭṭef kra n tesdidin).",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
-    "Discovery": "Tagrut",
     "Missing media permissions, click the button below to request.": "Ulac tisirag n umidyat, sit ɣef tqeffalt ddaw i usentem.",
     "Request media permissions": "Suter tisirag n umidyat",
     "No Audio Outputs detected": "Ulac tuffɣiwin n umeslaw i d-yettwafen",
@@ -571,7 +565,6 @@
     "Sent messages will be stored until your connection has returned.": "Iznan yettwaznen ad ttwakelsen alamma tuɣal-d tuqqna.",
     "You seem to be uploading files, are you sure you want to quit?": "Aql-ak·akem tessalayeḍ-d ifuyla, tebɣiḍ stidet ad teffɣeḍ?",
     "Server may be unavailable, overloaded, or search timed out :(": "Aqeddac yezmer ulac-it, iɛedda aɛebbi i ilaqen neɣ yekfa wakud n unadi:(",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Qbel tiwtilin n umeẓlu n uqeddac n timagit (%(serverName)s) i wakken ad tsirgeḍ iman-ik·im ad d-tettwafeḍ s yimayl neɣ s wuṭṭun n tiliɣri.",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Tella-d tuccḍa mi ara nettbeddil isutar n tezmert n uswis n texxamt. Ḍmen tesɛiḍ tisirag i iwulmen syen ɛreḍ tikkelt-nniḍen.",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Tella-d tuccḍa mi ara nettbeddil tazmert n uswir n useqdac. Senqed ma tesɛiḍ tisirag i iwulmen syen ales tikkelt-nniḍen.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Nuzen-ak·am-n imayl i wakken ad tesneqdeḍ tansa-inek·inem. Ttxil-k·m ḍfer iwellihen yellan deg-s syen sit ɣef tqeffalt ddaw.",
@@ -1346,7 +1339,14 @@
             "add_msisdn_dialog_title": "Rnu uṭṭun n tilifun",
             "name_placeholder": "Ulac meffer isem",
             "error_saving_profile_title": "Yecceḍ usekles n umaɣnu-ik•im",
-            "error_saving_profile": "Tamahilt ur tezmir ara ad tettwasmed"
+            "error_saving_profile": "Tamahilt ur tezmir ara ad tettwasmed",
+            "error_password_change_403": "Asnifel n wawal uffir ur yeddi ara. Awal-ik·im d ameɣtu?",
+            "emails_heading": "Tansiwin n yimayl",
+            "msisdns_heading": "Uṭṭunen n tiliɣri",
+            "discovery_needs_terms": "Qbel tiwtilin n umeẓlu n uqeddac n timagit (%(serverName)s) i wakken ad tsirgeḍ iman-ik·im ad d-tettwafeḍ s yimayl neɣ s wuṭṭun n tiliɣri.",
+            "deactivate_section": "Sens amiḍan",
+            "account_management_section": "Asefrek n umiḍan",
+            "discovery_section": "Tagrut"
         }
     },
     "devtools": {

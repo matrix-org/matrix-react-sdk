@@ -18,11 +18,9 @@
     "Are you sure?": "คุณแน่ใจหรือไม่?",
     "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
-    "Deactivate Account": "ปิดการใช้งานบัญชี",
     "Email address": "ที่อยู่อีเมล",
     "Error decrypting attachment": "การถอดรหัสไฟล์แนบผิดพลาด",
     "Failed to ban user": "การแบนผู้ใช้ล้มเหลว",
-    "Failed to change password. Is your password correct?": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
     "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
@@ -374,7 +372,9 @@
             "add_msisdn_confirm_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
             "add_msisdn_confirm_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
             "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์",
-            "name_placeholder": "ไม่มีชื่อที่แสดง"
+            "name_placeholder": "ไม่มีชื่อที่แสดง",
+            "error_password_change_403": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
+            "deactivate_section": "ปิดการใช้งานบัญชี"
         }
     },
     "timeline": {

@@ -1,6 +1,5 @@
 {
     "Send": "Изпрати",
-    "Failed to change password. Is your password correct?": "Неуспешна промяна. Правилно ли сте въвели Вашата парола?",
     "Sun": "нд.",
     "Mon": "пн.",
     "Tue": "вт.",
@@ -94,7 +93,6 @@
         "other": "И %(count)s други..."
     },
     "Confirm Removal": "Потвърдете премахването",
-    "Deactivate Account": "Затвори акаунта",
     "Verification Pending": "Очакване на потвърждение",
     "An error has occurred.": "Възникна грешка.",
     "Unable to restore session": "Неуспешно възстановяване на сесията",
@@ -238,9 +236,6 @@
     "Phone Number": "Телефонен номер",
     "Room information": "Информация за стаята",
     "Room Addresses": "Адреси на стаята",
-    "Email addresses": "Имейл адреси",
-    "Phone numbers": "Телефонни номера",
-    "Account management": "Управление на акаунта",
     "Ignored users": "Игнорирани потребители",
     "Missing media permissions, click the button below to request.": "Липсва достъп до медийните устройства. Кликнете бутона по-долу за да поискате такъв.",
     "Request media permissions": "Поискай достъп до медийните устройства",
@@ -402,7 +397,6 @@
     "Clear personal data": "Изчисти личните данни",
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
-    "Discovery": "Откриване",
     "Deactivate account": "Деактивиране на акаунт",
     "Unable to revoke sharing for email address": "Неуспешно оттегляне на споделянето на имейл адреса",
     "Unable to share email address": "Неуспешно споделяне на имейл адрес",
@@ -415,7 +409,6 @@
     "Remove %(phone)s?": "Премахни %(phone)s?",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Беше изпратено SMS съобщение към +%(msisdn)s. Въведете съдържащият се код за потвърждение.",
     "Command Help": "Помощ за команди",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Приемете условията за ползване на сървъра за самоличност (%(serverName)s) за да бъдете откриваеми по имейл адрес или телефонен номер.",
     "Error changing power level": "Грешка при промяната на нивото на достъп",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Възникна грешка при промяната на нивото на достъп на потребителя. Уверете се, че имате необходимите привилегии и опитайте пак.",
     "Deactivate user?": "Деактивиране на потребителя?",
@@ -1396,7 +1389,14 @@
             "add_msisdn_dialog_title": "Добави телефонен номер",
             "name_placeholder": "Няма име",
             "error_saving_profile_title": "Неуспешно запазване на профила ви",
-            "error_saving_profile": "Операцията не можа да бъде завършена"
+            "error_saving_profile": "Операцията не можа да бъде завършена",
+            "error_password_change_403": "Неуспешна промяна. Правилно ли сте въвели Вашата парола?",
+            "emails_heading": "Имейл адреси",
+            "msisdns_heading": "Телефонни номера",
+            "discovery_needs_terms": "Приемете условията за ползване на сървъра за самоличност (%(serverName)s) за да бъдете откриваеми по имейл адрес или телефонен номер.",
+            "deactivate_section": "Затвори акаунта",
+            "account_management_section": "Управление на акаунта",
+            "discovery_section": "Откриване"
         }
     },
     "devtools": {

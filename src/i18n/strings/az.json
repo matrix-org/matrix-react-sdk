@@ -52,14 +52,12 @@
     "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
-    "Deactivate Account": "Hesabı bağlamaq",
     "An error has occurred.": "Səhv oldu.",
     "Invalid Email Address": "Yanlış email",
     "Verification Pending": "Gözləmə təsdiq etmələr",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın.",
     "Unable to add email address": "Email-i əlavə etməyə müvəffəq olmur",
     "Unable to verify email address.": "Email-i yoxlamağı bacarmadı.",
-    "Failed to change password. Is your password correct?": "Şifrəni əvəz etməyi bacarmadı. Siz cari şifrə düzgün daxil etdiniz?",
     "Reject invitation": "Dəvəti rədd etmək",
     "Are you sure you want to reject the invitation?": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
     "Failed to reject invitation": "Dəvəti rədd etməyi bacarmadı",
@@ -155,7 +153,9 @@
             "msisdn_in_use": "Bu telefon nömrəsi artıq istifadə olunur",
             "add_email_dialog_title": "Emal ünvan əlavə etmək",
             "add_email_failed_verification": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
-            "add_msisdn_dialog_title": "Telefon nömrəsi əlavə etmək"
+            "add_msisdn_dialog_title": "Telefon nömrəsi əlavə etmək",
+            "error_password_change_403": "Şifrəni əvəz etməyi bacarmadı. Siz cari şifrə düzgün daxil etdiniz?",
+            "deactivate_section": "Hesabı bağlamaq"
         }
     },
     "timeline": {

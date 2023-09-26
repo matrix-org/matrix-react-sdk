@@ -8,9 +8,7 @@
     "Session ID": "Sessions ID",
     "Warning!": "Advarsel!",
     "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
-    "Deactivate Account": "Deaktiver brugerkonto",
     "Default": "Standard",
-    "Failed to change password. Is your password correct?": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
     "Failed to reject invitation": "Kunne ikke afvise invitationen",
     "Failed to unban": "Var ikke i stand til at ophæve forbuddet",
     "unknown error code": "Ukendt fejlkode",
@@ -333,7 +331,6 @@
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
     "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
-    "Your password was successfully changed.": "Din adgangskode blev ændret.",
     "Set a new custom sound": "Sæt en ny brugerdefineret lyd",
     "common": {
         "analytics": "Analyse data",
@@ -455,7 +452,10 @@
             "add_msisdn_confirm_sso_button": "Bekræft tilføjelsen af dette telefonnummer ved at bruge Single Sign On til at bevise din identitet.",
             "add_msisdn_confirm_button": "Bekræft tilføjelse af telefonnummer",
             "add_msisdn_confirm_body": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
-            "add_msisdn_dialog_title": "Tilføj telefonnummer"
+            "add_msisdn_dialog_title": "Tilføj telefonnummer",
+            "error_password_change_403": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
+            "password_change_success": "Din adgangskode blev ændret.",
+            "deactivate_section": "Deaktiver brugerkonto"
         }
     },
     "devtools": {

@@ -242,7 +242,7 @@ export default class EmailAddresses extends React.Component<IProps> {
 
         return (
             <SettingsSubsection
-                heading={_t("Email addresses")}
+                heading={_t("settings|general|emails_heading")}
                 description={
                     (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
                 }

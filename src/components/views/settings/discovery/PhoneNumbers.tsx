@@ -253,7 +253,7 @@ export default class PhoneNumbers extends React.Component<IProps> {
         return (
             <SettingsSubsection
                 data-testid="mx_DiscoveryPhoneNumbers"
-                heading={_t("Phone numbers")}
+                heading={_t("settings|general|msisdns_heading")}
                 description={description}
                 stretchContent
             >

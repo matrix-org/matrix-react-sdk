@@ -93,7 +93,6 @@
         "other": "E %(count)s máis..."
     },
     "Confirm Removal": "Confirma a retirada",
-    "Deactivate Account": "Desactivar conta",
     "An error has occurred.": "Algo fallou.",
     "Unable to restore session": "Non se puido restaurar a sesión",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
@@ -124,7 +123,6 @@
         "one": "Subindo %(filename)s e %(count)s máis"
     },
     "Uploading %(filename)s": "Subindo %(filename)s",
-    "Failed to change password. Is your password correct?": "Fallo ao cambiar o contrasinal. É correcto o contrasinal?",
     "Unable to remove contact information": "Non se puido eliminar a información do contacto",
     "No Microphones detected": "Non se detectaron micrófonos",
     "No Webcams detected": "Non se detectaron cámaras",
@@ -196,7 +194,6 @@
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Your password has been reset.": "Restableceuse o contrasinal.",
-    "Discovery": "Descubrir",
     "Deactivate account": "Desactivar conta",
     "Room %(name)s": "Sala %(name)s",
     "Direct Messages": "Mensaxes Directas",
@@ -298,10 +295,6 @@
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
     "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
-    "Email addresses": "Enderezos de email",
-    "Phone numbers": "Número de teléfono",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Acepta os Termos do Servizo do servidor (%(serverName)s) para permitir que te atopen polo enderezo de email ou número de teléfono.",
-    "Account management": "Xestión da conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "Ignored users": "Usuarias ignoradas",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas.",
@@ -1377,7 +1370,6 @@
         "one": "Visto por %(count)s persoa",
         "other": "Visto por %(count)s persoas"
     },
-    "Your password was successfully changed.": "Cambiouse correctamente o contrasinal.",
     "An error occurred while stopping your live location": "Algo fallou ao deter a compartición da localización en directo",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e máis",
@@ -1397,7 +1389,6 @@
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
     "Joining…": "Entrando…",
     "Read receipts": "Resgados de lectura",
-    "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
     "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
     "Start a group chat": "Inicia un chat en grupo",
@@ -2165,7 +2156,16 @@
             "add_msisdn_dialog_title": "Engadir novo Número",
             "name_placeholder": "Sen nome público",
             "error_saving_profile_title": "Non se gardaron os cambios",
-            "error_saving_profile": "Non se puido realizar a acción"
+            "error_saving_profile": "Non se puido realizar a acción",
+            "error_password_change_403": "Fallo ao cambiar o contrasinal. É correcto o contrasinal?",
+            "password_change_success": "Cambiouse correctamente o contrasinal.",
+            "emails_heading": "Enderezos de email",
+            "msisdns_heading": "Número de teléfono",
+            "discovery_needs_terms": "Acepta os Termos do Servizo do servidor (%(serverName)s) para permitir que te atopen polo enderezo de email ou número de teléfono.",
+            "deactivate_section": "Desactivar conta",
+            "account_management_section": "Xestión da conta",
+            "deactivate_warning": "A desactivación da conta é unha acción permanente — coidado!",
+            "discovery_section": "Descubrir"
         },
         "sidebar": {
             "title": "Barra lateral",

@@ -1,6 +1,5 @@
 {
     "Create new room": "Sortu gela berria",
-    "Failed to change password. Is your password correct?": "Pasahitza aldatzean huts egin du. Zuzena da pasahitza?",
     "Failed to forget room %(errCode)s": "Huts egin du %(errCode)s gela ahaztean",
     "unknown error code": "errore kode ezezaguna",
     "Historical": "Historiala",
@@ -34,7 +33,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "Ziur '%(roomName)s' gelatik atera nahi duzula?",
     "Are you sure you want to reject the invitation?": "Ziur gonbidapena baztertu nahi duzula?",
     "Custom level": "Maila pertsonalizatua",
-    "Deactivate Account": "Itxi kontua",
     "Decrypt %(text)s": "Deszifratu %(text)s",
     "Default": "Lehenetsia",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
@@ -283,9 +281,6 @@
     "Join millions for free on the largest public server": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
     "Couldn't load page": "Ezin izan da orria kargatu",
     "Room Addresses": "Gelaren helbideak",
-    "Email addresses": "E-mail helbideak",
-    "Phone numbers": "Telefono zenbakiak",
-    "Account management": "Kontuen kudeaketa",
     "Ignored users": "Ezikusitako erabiltzaileak",
     "Voice & Video": "Ahotsa eta bideoa",
     "Main address": "Helbide nagusia",
@@ -401,7 +396,6 @@
     "Failed to re-authenticate due to a homeserver problem": "Berriro autentifikatzean huts egin du hasiera-zerbitzariaren arazo bat dela eta",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
-    "Discovery": "Aurkitzea",
     "Deactivate account": "Desaktibatu kontua",
     "Unable to revoke sharing for email address": "Ezin izan da partekatzea indargabetu e-mail helbidearentzat",
     "Unable to share email address": "Ezin izan da e-mail helbidea partekatu",
@@ -418,7 +412,6 @@
     "Deactivate user": "Desaktibatu erabiltzailea",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Lotu e-mail hau zure kontuarekin gonbidapenak zuzenean %(brand)s-en jasotzeko.",
     "This invite to %(roomName)s was sent to %(email)s": "%(roomName)s gelara gonbidapen hau %(email)s helbidera bidali da",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Onartu %(serverName)s identitate-zerbitzariaren erabilera baldintzak besteek zu e-mail helbidea edo telefonoa erabiliz aurkitzea ahalbidetzeko.",
     "Error changing power level requirement": "Errorea botere-maila eskaria aldatzean",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "Errore bat gertatu da gelaren botere-maila eskariak aldatzean. Baieztatu baimen bahikoa duzula eta saiatu berriro.",
     "Error changing power level": "Errorea botere-maila aldatzean",
@@ -1036,7 +1029,14 @@
             "add_msisdn_confirm_button": "Berretsi telefono zenbakia gehitzea",
             "add_msisdn_confirm_body": "Sakatu beheko botoia telefono zenbaki hau gehitzea berresteko.",
             "add_msisdn_dialog_title": "Gehitu telefono zenbakia",
-            "name_placeholder": "Pantaila izenik ez"
+            "name_placeholder": "Pantaila izenik ez",
+            "error_password_change_403": "Pasahitza aldatzean huts egin du. Zuzena da pasahitza?",
+            "emails_heading": "E-mail helbideak",
+            "msisdns_heading": "Telefono zenbakiak",
+            "discovery_needs_terms": "Onartu %(serverName)s identitate-zerbitzariaren erabilera baldintzak besteek zu e-mail helbidea edo telefonoa erabiliz aurkitzea ahalbidetzeko.",
+            "deactivate_section": "Itxi kontua",
+            "account_management_section": "Kontuen kudeaketa",
+            "discovery_section": "Aurkitzea"
         }
     },
     "devtools": {

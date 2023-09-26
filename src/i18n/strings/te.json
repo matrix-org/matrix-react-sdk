@@ -10,7 +10,6 @@
     "Are you sure you want to leave the room '%(roomName)s'?": "మీరు ఖచ్చితంగా గది '%(roomName)s' వదిలివేయాలనుకుంటున్నారా?",
     "Are you sure you want to reject the invitation?": "మీరు ఖచ్చితంగా ఆహ్వానాన్ని తిరస్కరించాలనుకుంటున్నారా?",
     "Custom level": "అనుకూల స్థాయి",
-    "Deactivate Account": "ఖాతాను డీయాక్టివేట్ చేయండి",
     "Default": "డిఫాల్ట్",
     "Sun": "ఆదివారం",
     "Mon": "సోమవారం",
@@ -115,7 +114,8 @@
             "email_address_in_use": "ఈ ఇమెయిల్ అడ్రస్ ఇప్పటికే వాడుకం లో ఉంది",
             "msisdn_in_use": "ఈ ఫోన్ నంబర్ ఇప్పటికే వాడుకం లో ఉంది",
             "confirm_adding_email_title": "ఈమెయిల్ చేర్చుటకు ధ్రువీకరించు",
-            "add_email_failed_verification": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా"
+            "add_email_failed_verification": "ఇమెయిల్ అడ్రస్ ని నిరూపించలేక పోయాము. ఈమెయిల్ లో వచ్చిన లింక్ ని నొక్కారా",
+            "deactivate_section": "ఖాతాను డీయాక్టివేట్ చేయండి"
         }
     },
     "timeline": {

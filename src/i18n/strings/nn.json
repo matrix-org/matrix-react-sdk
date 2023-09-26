@@ -114,7 +114,6 @@
     "Changelog": "Endringslogg",
     "not specified": "Ikkje spesifisert",
     "Confirm Removal": "Godkjenn Fjerning",
-    "Deactivate Account": "Avliv Brukaren",
     "An error has occurred.": "Noko gjekk gale.",
     "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
     "Send Logs": "Send Loggar",
@@ -129,7 +128,6 @@
     "Unable to add email address": "Klarte ikkje å leggja epostadressa til",
     "Unable to verify email address.": "Klarte ikkje å stadfesta epostadressa.",
     "This will allow you to reset your password and receive notifications.": "Dette tillèt deg å attendestilla passordet ditt og å få varsel.",
-    "Failed to change password. Is your password correct?": "Fekk ikkje til å skifta passord. Er passordet rett?",
     "Share Room": "Del Rom",
     "Link to most recent message": "Lenk til den nyaste meldinga",
     "Share User": "Del Brukar",
@@ -216,8 +214,6 @@
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
-    "Email addresses": "E-postadresser",
-    "Phone numbers": "Telefonnummer",
     "Error changing power level requirement": "Feil under endring av krav for tilgangsnivå",
     "Error changing power level": "Feil under endring av tilgangsnivå",
     "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.": "Ein feil skjedde under endring av tilgangsnivå. Sjekk at du har lov til dette, deretter prøv på nytt.",
@@ -659,7 +655,11 @@
             "add_msisdn_confirm_button": "Stadfest tilleggjing av telefonnummeret",
             "add_msisdn_confirm_body": "Trykk på knappen nedanfor for å legge til dette telefonnummeret.",
             "add_msisdn_dialog_title": "Legg til telefonnummer",
-            "name_placeholder": "Ingen visningsnamn"
+            "name_placeholder": "Ingen visningsnamn",
+            "error_password_change_403": "Fekk ikkje til å skifta passord. Er passordet rett?",
+            "emails_heading": "E-postadresser",
+            "msisdns_heading": "Telefonnummer",
+            "deactivate_section": "Avliv Brukaren"
         },
         "sidebar": {
             "title": "Sidestolpe"

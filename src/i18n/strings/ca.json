@@ -3,7 +3,6 @@
     "No Webcams detected": "No s'ha detectat cap càmera web",
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
-    "Failed to change password. Is your password correct?": "S'ha produït un error en canviar la contrasenya. És correcta la teva contrasenya?",
     "unknown error code": "codi d'error desconegut",
     "Rooms": "Sales",
     "Warning!": "Avís!",
@@ -97,7 +96,6 @@
         "other": "I %(count)s més..."
     },
     "Confirm Removal": "Confirmeu l'eliminació",
-    "Deactivate Account": "Desactivar el compte",
     "An error has occurred.": "S'ha produït un error.",
     "Unable to restore session": "No s'ha pogut restaurar la sessió",
     "Invalid Email Address": "El correu electrònic no és vàlid",
@@ -158,8 +156,6 @@
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
     "Invite anyway": "Convidar igualment",
-    "Email addresses": "Adreces de correu electrònic",
-    "Phone numbers": "Números de telèfon",
     "Phone Number": "Número de telèfon",
     "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
     "Upload Error": "Error de pujada",
@@ -351,7 +347,11 @@
             "add_msisdn_confirm_button": "Confirma l'addició del número de telèfon",
             "add_msisdn_confirm_body": "Fes clic al botó de sota per confirmar l'addició d'aquest número de telèfon.",
             "add_msisdn_dialog_title": "Afegeix número de telèfon",
-            "name_placeholder": "Sense nom visible"
+            "name_placeholder": "Sense nom visible",
+            "error_password_change_403": "S'ha produït un error en canviar la contrasenya. És correcta la teva contrasenya?",
+            "emails_heading": "Adreces de correu electrònic",
+            "msisdns_heading": "Números de telèfon",
+            "deactivate_section": "Desactivar el compte"
         }
     },
     "devtools": {

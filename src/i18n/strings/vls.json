@@ -111,11 +111,6 @@
     "Incorrect verification code": "Onjuste verificoasjecode",
     "Verification code": "Verificoasjecode",
     "Phone Number": "Telefongnumero",
-    "Failed to change password. Is your password correct?": "Wyzign van ’t paswoord es mislukt. Es je paswoord wel juste?",
-    "Email addresses": "E-mailadressn",
-    "Phone numbers": "Telefongnumero’s",
-    "Account management": "Accountbeheer",
-    "Deactivate Account": "Account deactiveern",
     "Unignore": "Nie mi negeern",
     "Ignored users": "Genegeerde gebruukers",
     "Missing media permissions, click the button below to request.": "Mediatoestemmiengn ountbreekn, klikt ip de knop hierounder vo deze an te vroagn.",
@@ -402,7 +397,6 @@
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
     "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
     "Clear personal data": "Persoonlike gegeevns wissn",
-    "Discovery": "Ountdekkienge",
     "Deactivate account": "Account deactiveern",
     "Unable to revoke sharing for email address": "Kostege ’t deeln vo dat e-mailadresse hier nie intrekkn",
     "Unable to share email address": "Kostege ’t e-mailadresse nie deeln",
@@ -629,7 +623,13 @@
             "email_address_in_use": "Dat e-mailadresse hier es al in gebruuk",
             "msisdn_in_use": "Dezen telefongnumero es al in gebruuk",
             "add_email_failed_verification": "Kostege ’t e-mailadresse nie verifieern: zorgt dervoor da je de koppelienge in den e-mail èt angeklikt",
-            "name_placeholder": "Geen weergavenoame"
+            "name_placeholder": "Geen weergavenoame",
+            "error_password_change_403": "Wyzign van ’t paswoord es mislukt. Es je paswoord wel juste?",
+            "emails_heading": "E-mailadressn",
+            "msisdns_heading": "Telefongnumero’s",
+            "deactivate_section": "Account deactiveern",
+            "account_management_section": "Accountbeheer",
+            "discovery_section": "Ountdekkienge"
         }
     },
     "devtools": {

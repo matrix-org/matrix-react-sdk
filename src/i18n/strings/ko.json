@@ -12,7 +12,6 @@
     "Default": "기본",
     "Email address": "이메일 주소",
     "Failed to forget room %(errCode)s": "%(errCode)s 방 지우기에 실패함",
-    "Failed to change password. Is your password correct?": "비밀번호를 바꾸지 못했습니다. 이 비밀번호가 맞나요?",
     "%(items)s and %(lastItem)s": "%(items)s님과 %(lastItem)s님",
     "and %(count)s others...": {
         "one": "외 한 명...",
@@ -20,7 +19,6 @@
     },
     "Are you sure you want to reject the invitation?": "초대를 거절하시겠어요?",
     "Custom level": "맞춤 등급",
-    "Deactivate Account": "계정 비활성화",
     "Decrypt %(text)s": "%(text)s 복호화",
     "Download %(text)s": "%(text)s 다운로드",
     "Enter passphrase": "암호 입력",
@@ -262,11 +260,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
     "Back up your keys before signing out to avoid losing them.": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
     "Start using Key Backup": "키 백업 시작",
-    "Email addresses": "이메일 주소",
-    "Phone numbers": "전화번호",
-    "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "이메일 주소나 전화번호로 자신을 발견할 수 있도록 ID 서버 (%(serverName)s) 서비스 약관에 동의하세요.",
-    "Account management": "계정 관리",
-    "Discovery": "탐색",
     "Deactivate account": "계정 비활성화",
     "Ignored users": "무시한 사용자",
     "Missing media permissions, click the button below to request.": "미디어 권한이 없습니다, 권한 요청을 보내려면 아래 버튼을 클릭하세요.",
@@ -537,7 +530,6 @@
     "Australia": "호주",
     "Afghanistan": "아프가니스탄",
     "United States": "미국",
-    "Deactivating your account is a permanent action — be careful!": "계정을 비활성화 하는 것은 취소할 수 없습니다. 조심하세요!",
     "Room info": "방 정보",
     "common": {
         "analytics": "정보 분석",
@@ -826,7 +818,15 @@
             "add_email_dialog_title": "이메일 주소 추가",
             "add_email_failed_verification": "이메일 주소를 인증하지 못했습니다. 메일에 나온 주소를 눌렀는지 확인해 보세요",
             "add_msisdn_dialog_title": "전화번호 추가",
-            "name_placeholder": "표시 이름 없음"
+            "name_placeholder": "표시 이름 없음",
+            "error_password_change_403": "비밀번호를 바꾸지 못했습니다. 이 비밀번호가 맞나요?",
+            "emails_heading": "이메일 주소",
+            "msisdns_heading": "전화번호",
+            "discovery_needs_terms": "이메일 주소나 전화번호로 자신을 발견할 수 있도록 ID 서버 (%(serverName)s) 서비스 약관에 동의하세요.",
+            "deactivate_section": "계정 비활성화",
+            "account_management_section": "계정 관리",
+            "deactivate_warning": "계정을 비활성화 하는 것은 취소할 수 없습니다. 조심하세요!",
+            "discovery_section": "탐색"
         },
         "sidebar": {
             "title": "사이드바",
