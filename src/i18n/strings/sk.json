@@ -442,8 +442,6 @@
     "Discovery options will appear once you have added an email above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní e-mailovej adresy vyššie.",
     "Discovery options will appear once you have added a phone number above.": "Možnosti nastavenia verejného profilu sa objavia po pridaní telefónneho čísla vyššie.",
     "No recently visited rooms": "Žiadne nedávno navštívené miestnosti",
-    "Hide advanced": "Skryť pokročilé možnosti",
-    "Show advanced": "Ukázať pokročilé možnosti",
     "Explore rooms": "Preskúmať miestnosti",
     "Italics": "Kurzíva",
     "Zimbabwe": "Zimbabwe",
@@ -716,8 +714,6 @@
     "@mentions & keywords": "@zmienky a kľúčové slová",
     "Mentions & keywords": "Zmienky a kľúčové slová",
     "Global": "Celosystémové",
-    "Access": "Prístup",
-    "Invite people": "Pozvať ľudí",
     "Room options": "Možnosti miestnosti",
     "Search for spaces": "Hľadať priestory",
     "Updating spaces... (%(progress)s out of %(count)s)": {
@@ -755,11 +751,8 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Začnite s niekým konverzáciu pomocou jeho mena alebo používateľského mena (ako napr. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Začnite s niekým konverzáciu pomocou jeho mena, e-mailovej adresy alebo používateľského mena (ako napr. <userId/>).",
     "Direct Messages": "Priame správy",
-    "You can change these anytime.": "Tieto môžete kedykoľvek zmeniť.",
     "Private space (invite only)": "Súkromný priestor (len pre pozvaných)",
     "Public space": "Verejný priestor",
-    "Recommended for public spaces.": "Odporúča sa pre verejné priestory.",
-    "This may be useful for public spaces.": "To môže byť užitočné pre verejné priestory.",
     "Rooms and spaces": "Miestnosti a priestory",
     "You have no ignored users.": "Nemáte žiadnych ignorovaných používateľov.",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
@@ -812,7 +805,6 @@
     "MB": "MB",
     "Results": "Výsledky",
     "Decrypting": "Dešifrovanie",
-    "Visibility": "Viditeľnosť",
     "Sent": "Odoslané",
     "Sending": "Odosielanie",
     "Avatar": "Obrázok",
@@ -876,7 +868,6 @@
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "Ktokoľvek v <spaceName/> môže nájsť a pripojiť sa. Môžete vybrať aj iné priestory.",
     "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>": "Každý v priestore môže nájsť a pripojiť sa. <a>Upravte, ktoré priestory sem môžu mať prístup.</a>",
     "Anyone in a space can find and join. You can select multiple spaces.": "Každý, kto sa nachádza v priestore, môže nájsť a pripojiť sa. Môžete vybrať viacero priestorov.",
-    "Decide who can view and join %(spaceName)s.": "Určite, kto môže zobrazovať a pripájať sa k %(spaceName)s.",
     "Local Addresses": "Lokálne adresy",
     "This space has no local addresses": "Tento priestor nemá žiadne lokálne adresy",
     "No other published addresses yet, add one below": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
@@ -984,7 +975,6 @@
     "Leave space": "Opustiť priestor",
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
-    "Leave Space": "Opustiť priestor",
     "Preparing to download logs": "Príprava na prevzatie záznamov",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "Táto miestnosť nepremosťuje správy so žiadnymi platformami. <a>Viac informácií</a>",
     "Backup key cached:": "Záložný kľúč v medzipamäti:",
@@ -1046,7 +1036,6 @@
         "other": "Momentálne ste pripojení k %(count)s miestnostiam",
         "one": "Momentálne ste pripojení k %(count)s miestnosti"
     },
-    "Show all rooms": "Zobraziť všetky miestnosti",
     "Forget this room": "Zabudnúť túto miestnosť",
     "Message preview": "Náhľad správy",
     "%(roomName)s can't be previewed. Do you want to join it?": "Nie je možné zobraziť náhľad miestnosti %(roomName)s. Chcete sa k nej pripojiť?",
@@ -1055,8 +1044,6 @@
         "one": "Zobraziť %(count)s ďalší náhľad",
         "other": "Zobraziť %(count)s ďalších náhľadov"
     },
-    "Allow people to preview your space before they join.": "Umožnite ľuďom prezrieť si váš priestor predtým, ako sa k vám pripoja.",
-    "Preview Space": "Prehľad priestoru",
     "Start new chat": "Spustiť novú konverzáciu",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "View in room": "Zobraziť v miestnosti",
@@ -1134,14 +1121,10 @@
     },
     "Failed to start livestream": "Nepodarilo sa spustiť livestream",
     "Unable to start audio streaming.": "Nie je možné spustiť streamovanie zvuku.",
-    "Save Changes": "Uložiť zmeny",
-    "Edit settings relating to your space.": "Upravte nastavenia týkajúce sa vášho priestoru.",
-    "Failed to save space settings.": "Nepodarilo sa uložiť nastavenia priestoru.",
     "Create a new room": "Vytvoriť novú miestnosť",
     "Space selection": "Výber priestoru",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Túto zmenu nebudete môcť vrátiť späť, pretože sa degradujete, a ak ste posledným privilegovaným používateľom v priestore, nebude možné získať oprávnenia späť.",
     "Suggested Rooms": "Navrhované miestnosti",
-    "Share invite link": "Zdieľať odkaz na pozvánku",
     "Other rooms in %(spaceName)s": "Ostatné miestnosti v %(spaceName)s",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Pri vytváraní tejto adresy došlo k chybe. Je možné, že ju server nepovoľuje alebo došlo k dočasnému zlyhaniu.",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
@@ -1317,12 +1300,7 @@
         "one": "V súčasnosti má priestor prístup",
         "other": "V súčasnosti má prístup %(count)s priestorov"
     },
-    "Failed to update the visibility of this space": "Nepodarilo sa aktualizovať viditeľnosť tohto priestoru",
-    "Guests can join a space without having an account.": "Hostia sa môžu pripojiť k priestoru bez toho, aby mali konto.",
     "Enable guest access": "Zapnúť prístup pre hostí",
-    "Failed to update the history visibility of this space": "Nepodarilo sa aktualizovať viditeľnosť histórie tohto priestoru",
-    "Failed to update the guest access of this space": "Nepodarilo sa aktualizovať hosťovský prístup do tohto priestoru",
-    "Invite with email or username": "Pozvať pomocou e-mailu alebo používateľského mena",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
@@ -1655,7 +1633,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Zálohovanie %(sessionsRemaining)s kľúčov…",
     "Connecting to integration manager…": "Pripájanie k správcovi integrácie…",
     "Saving…": "Ukladanie…",
-    "Creating…": "Vytváranie…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Secure Backup successful": "Bezpečné zálohovanie bolo úspešné",
     "Your keys are now being backed up from this device.": "Kľúče sa teraz zálohujú z tohto zariadenia.",
@@ -1956,7 +1933,9 @@
         "exit_fullscreeen": "Ukončiť režim celej obrazovky",
         "enter_fullscreen": "Prejsť na celú obrazovku",
         "unban": "Povoliť vstup",
-        "click_to_copy": "Kliknutím skopírujete"
+        "click_to_copy": "Kliknutím skopírujete",
+        "hide_advanced": "Skryť pokročilé možnosti",
+        "show_advanced": "Ukázať pokročilé možnosti"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -2571,11 +2550,12 @@
             "metaspaces_subsection": "Priestory na zobrazenie",
             "metaspaces_description": "Priestory sú spôsoby zoskupovania miestností a ľudí. Popri priestoroch, v ktorých sa nachádzate, môžete použiť aj niektoré predpripravené priestory.",
             "metaspaces_home_description": "Domov je užitočný na získanie prehľadu o všetkom.",
-            "metaspaces_home_all_rooms": "Zobrazte všetky miestnosti v časti Domov, aj keď sú v priestore.",
             "metaspaces_favourites_description": "Zoskupte všetky vaše obľúbené miestnosti a ľudí na jednom mieste.",
             "metaspaces_people_description": "Zoskupte všetkých ľudí na jednom mieste.",
             "metaspaces_orphans": "Miestnosti mimo priestoru",
-            "metaspaces_orphans_description": "Zoskupte všetky miestnosti, ktoré nie sú súčasťou priestoru, na jednom mieste."
+            "metaspaces_orphans_description": "Zoskupte všetky miestnosti, ktoré nie sú súčasťou priestoru, na jednom mieste.",
+            "metaspaces_home_all_rooms_description": "Zobrazte všetky miestnosti v časti Domov, aj keď sú v priestore.",
+            "metaspaces_home_all_rooms": "Zobraziť všetky miestnosti"
         }
     },
     "devtools": {
@@ -3388,7 +3368,11 @@
             "default_url_previews_off": "Náhľady URL adries sú predvolene zakázané pre členov tejto miestnosti.",
             "url_preview_encryption_warning": "Náhľady URL adries sú v šifrovaných miestnostiach ako je táto predvolene zakázané, aby ste si mohli byť istí, že obsah odkazov z vašej konverzácii nebude zaznamenaný na vašom domovskom serveri počas ich generovania.",
             "url_preview_explainer": "Ak niekto vo svojej správe pošle URL adresu, môže byť zobrazený jej náhľad obsahujúci názov, popis a obrázok z cieľovej web stránky.",
-            "url_previews_section": "Náhľady URL adries"
+            "url_previews_section": "Náhľady URL adries",
+            "error_save_space_settings": "Nepodarilo sa uložiť nastavenia priestoru.",
+            "description_space": "Upravte nastavenia týkajúce sa vášho priestoru.",
+            "save": "Uložiť zmeny",
+            "leave_space": "Opustiť priestor"
         },
         "advanced": {
             "unfederated": "Táto miestnosť nie je prístupná zo vzdialených Matrix serverov",
@@ -3402,7 +3386,22 @@
             "room_version": "Verzia miestnosti:"
         },
         "delete_avatar_label": "Vymazať obrázok",
-        "upload_avatar_label": "Nahrať obrázok"
+        "upload_avatar_label": "Nahrať obrázok",
+        "visibility": {
+            "error_update_guest_access": "Nepodarilo sa aktualizovať hosťovský prístup do tohto priestoru",
+            "error_update_history_visibility": "Nepodarilo sa aktualizovať viditeľnosť histórie tohto priestoru",
+            "guest_access_explainer": "Hostia sa môžu pripojiť k priestoru bez toho, aby mali konto.",
+            "guest_access_explainer_public_space": "To môže byť užitočné pre verejné priestory.",
+            "title": "Viditeľnosť",
+            "error_failed_save": "Nepodarilo sa aktualizovať viditeľnosť tohto priestoru",
+            "history_visibility_anyone_space": "Prehľad priestoru",
+            "history_visibility_anyone_space_description": "Umožnite ľuďom prezrieť si váš priestor predtým, ako sa k vám pripoja.",
+            "history_visibility_anyone_space_recommendation": "Odporúča sa pre verejné priestory."
+        },
+        "access": {
+            "title": "Prístup",
+            "description_space": "Určite, kto môže zobrazovať a pripájať sa k %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3910,7 +3909,10 @@
             "manage_and_explore": "Spravovať a preskúmať miestnosti"
         },
         "share_public": "Zdieľajte svoj verejný priestor",
-        "search_children": "Hľadať %(spaceName)s"
+        "search_children": "Hľadať %(spaceName)s",
+        "invite_link": "Zdieľať odkaz na pozvánku",
+        "invite": "Pozvať ľudí",
+        "invite_description": "Pozvať pomocou e-mailu alebo používateľského mena"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -4003,7 +4005,9 @@
         "setup_rooms_private_description": "Pre každú z nich vytvoríme miestnosti.",
         "address_placeholder": "napr. moj-priestor",
         "address_label": "Adresa",
-        "label": "Vytvoriť priestor"
+        "label": "Vytvoriť priestor",
+        "add_details_prompt_2": "Tieto môžete kedykoľvek zmeniť.",
+        "creating": "Vytváranie…"
     },
     "user_menu": {
         "switch_theme_light": "Prepnúť na svetlý režim",

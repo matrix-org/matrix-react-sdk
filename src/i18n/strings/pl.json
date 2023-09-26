@@ -362,8 +362,6 @@
     "Add a new server": "Dodaj nowy serwer",
     "Enter the name of a new server you want to explore.": "Wpisz nazwę nowego serwera, którego chcesz przeglądać.",
     "Server name": "Nazwa serwera",
-    "Hide advanced": "Ukryj zaawansowane",
-    "Show advanced": "Pokaż zaawansowane",
     "Recent Conversations": "Najnowsze rozmowy",
     "Upload files (%(current)s of %(total)s)": "Prześlij pliki (%(current)s z %(total)s)",
     "Upload files": "Prześlij pliki",
@@ -881,27 +879,7 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s lub %(copyButton)s",
     "Space options": "Opcje przestrzeni",
-    "Recommended for public spaces.": "Zalecane dla publicznych przestrzeni.",
-    "Allow people to preview your space before they join.": "Pozwól ludziom na podgląd twojej przestrzeni zanim dołączą.",
-    "Preview Space": "Podgląd przestrzeni",
-    "Failed to update the visibility of this space": "Nie udało się zaktualizować widoczności tej przestrzeni",
-    "Decide who can view and join %(spaceName)s.": "Zdecyduj kto może wyświetlić i dołączyć do %(spaceName)s.",
-    "Access": "Dostęp",
-    "Visibility": "Widoczność",
-    "This may be useful for public spaces.": "Może to być przydatne dla publicznych przestrzeni.",
-    "Guests can join a space without having an account.": "Goście mogą dołączyć do przestrzeni bez posiadania konta.",
-    "Failed to update the guest access of this space": "Nie udało się zaktualizować dostępu dla gości do tej przestrzeni",
     "Enable guest access": "Włącz dostęp dla gości",
-    "Failed to update the history visibility of this space": "Nie udało się zaktualizować widoczności historii dla tej przestrzeni",
-    "Leave Space": "Opuść przestrzeń",
-    "Save Changes": "Zapisz zmiany",
-    "Edit settings relating to your space.": "Edytuj ustawienia powiązane z twoją przestrzenią.",
-    "Failed to save space settings.": "Nie udało się zapisać ustawień przestrzeni.",
-    "Invite with email or username": "Zaproś przy użyciu adresu email lub nazwy użytkownika",
-    "Invite people": "Zaproś ludzi",
-    "Share invite link": "Udostępnij link zaproszenia",
-    "Show all rooms": "Pokaż wszystkie pokoje",
-    "You can change these anytime.": "Możesz to zmienić w każdej chwili.",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
     "Address": "Adres",
@@ -974,7 +952,6 @@
     "Error changing password": "Wystąpił błąd podczas zmiany hasła",
     "Search users in this room…": "Szukaj użytkowników w tym pokoju…",
     "Saving…": "Zapisywanie…",
-    "Creating…": "Tworzenie…",
     "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "Your account details are managed separately at <code>%(hostname)s</code>.": "Twoje dane konta są zarządzane oddzielnie na <code>%(hostname)s</code>.",
     "Your password was successfully changed.": "Twoje hasło zostało pomyślnie zmienione.",
@@ -1945,7 +1922,9 @@
         "exit_fullscreeen": "Wyjdź z trybu pełnoekranowego",
         "enter_fullscreen": "Otwórz w trybie pełnoekranowym",
         "unban": "Odbanuj",
-        "click_to_copy": "Kliknij aby skopiować"
+        "click_to_copy": "Kliknij aby skopiować",
+        "hide_advanced": "Ukryj zaawansowane",
+        "show_advanced": "Pokaż zaawansowane"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -2560,11 +2539,12 @@
             "metaspaces_subsection": "Wyświetlanie przestrzeni",
             "metaspaces_description": "Przestrzenie to sposób grupowania pokoi i osób. Oprócz przestrzeni, w których się znajdujesz, możesz też skorzystać z gotowych grupowań.",
             "metaspaces_home_description": "Strona główna to przydatne miejsce dla podsumowania wszystkiego.",
-            "metaspaces_home_all_rooms": "Pokaż wszystkie swoje pokoje na głównej, nawet jeśli znajdują się w przestrzeni.",
             "metaspaces_favourites_description": "Pogrupuj wszystkie swoje ulubione pokoje i osoby w jednym miejscu.",
             "metaspaces_people_description": "Pogrupuj wszystkie osoby w jednym miejscu.",
             "metaspaces_orphans": "Pokoje poza przestrzenią",
-            "metaspaces_orphans_description": "Pogrupuj wszystkie pokoje, które nie są częścią przestrzeni, w jednym miejscu."
+            "metaspaces_orphans_description": "Pogrupuj wszystkie pokoje, które nie są częścią przestrzeni, w jednym miejscu.",
+            "metaspaces_home_all_rooms_description": "Pokaż wszystkie swoje pokoje na głównej, nawet jeśli znajdują się w przestrzeni.",
+            "metaspaces_home_all_rooms": "Pokaż wszystkie pokoje"
         }
     },
     "devtools": {
@@ -3375,7 +3355,11 @@
             "default_url_previews_off": "Podglądy linków są domyślnie wyłączone dla uczestników tego pokoju.",
             "url_preview_encryption_warning": "W zaszyfrowanych pokojach, takich jak ten, podgląd adresów URL jest domyślnie wyłączony, aby upewnić się, że serwer (w którym generowane są podglądy) nie może zbierać informacji o linkach widocznych w tym pokoju.",
             "url_preview_explainer": "Gdy ktoś umieści URL w wiadomości, można wyświetlić podgląd adresu URL, aby podać więcej informacji o tym łączu, takich jak tytuł, opis i obraz ze strony internetowej.",
-            "url_previews_section": "Podglądy linków"
+            "url_previews_section": "Podglądy linków",
+            "error_save_space_settings": "Nie udało się zapisać ustawień przestrzeni.",
+            "description_space": "Edytuj ustawienia powiązane z twoją przestrzenią.",
+            "save": "Zapisz zmiany",
+            "leave_space": "Opuść przestrzeń"
         },
         "advanced": {
             "unfederated": "Ten pokój nie jest dostępny na zdalnych serwerach Matrix",
@@ -3389,7 +3373,22 @@
             "room_version": "Wersja pokoju:"
         },
         "delete_avatar_label": "Usuń awatar",
-        "upload_avatar_label": "Prześlij awatar"
+        "upload_avatar_label": "Prześlij awatar",
+        "visibility": {
+            "error_update_guest_access": "Nie udało się zaktualizować dostępu dla gości do tej przestrzeni",
+            "error_update_history_visibility": "Nie udało się zaktualizować widoczności historii dla tej przestrzeni",
+            "guest_access_explainer": "Goście mogą dołączyć do przestrzeni bez posiadania konta.",
+            "guest_access_explainer_public_space": "Może to być przydatne dla publicznych przestrzeni.",
+            "title": "Widoczność",
+            "error_failed_save": "Nie udało się zaktualizować widoczności tej przestrzeni",
+            "history_visibility_anyone_space": "Podgląd przestrzeni",
+            "history_visibility_anyone_space_description": "Pozwól ludziom na podgląd twojej przestrzeni zanim dołączą.",
+            "history_visibility_anyone_space_recommendation": "Zalecane dla publicznych przestrzeni."
+        },
+        "access": {
+            "title": "Dostęp",
+            "description_space": "Zdecyduj kto może wyświetlić i dołączyć do %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3896,7 +3895,10 @@
             "manage_and_explore": "Zarządzaj i odkrywaj pokoje"
         },
         "share_public": "Zaproś do swojej publicznej przestrzeni",
-        "search_children": "Przeszukaj %(spaceName)s"
+        "search_children": "Przeszukaj %(spaceName)s",
+        "invite_link": "Udostępnij link zaproszenia",
+        "invite": "Zaproś ludzi",
+        "invite_description": "Zaproś przy użyciu adresu email lub nazwy użytkownika"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -3989,7 +3991,9 @@
         "setup_rooms_private_description": "Utworzymy pokój dla każdego z nich.",
         "address_placeholder": "np. moja-przestrzen",
         "address_label": "Adres",
-        "label": "Utwórz przestrzeń"
+        "label": "Utwórz przestrzeń",
+        "add_details_prompt_2": "Możesz to zmienić w każdej chwili.",
+        "creating": "Tworzenie…"
     },
     "user_menu": {
         "switch_theme_light": "Przełącz na tryb jasny",

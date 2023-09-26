@@ -162,8 +162,6 @@
     "Notes": "Notlar",
     "Removing…": "Siliniyor…",
     "Clear all data": "Bütün verileri sil",
-    "Hide advanced": "Gelişmiş gizle",
-    "Show advanced": "Gelişmiş göster",
     "Incompatible Database": "Uyumsuz Veritabanı",
     "Filter results": "Sonuçları filtrele",
     "Integrations are disabled": "Bütünleştirmeler kapatılmış",
@@ -896,12 +894,6 @@
     "Suggested Rooms": "Önerilen Odalar",
     "View message": "Mesajı görüntüle",
     "Your message was sent": "Mesajınız gönderildi",
-    "Visibility": "Görünürlük",
-    "Save Changes": "Değişiklikleri Kaydet",
-    "Invite with email or username": "E-posta veya kullanıcı adı ile davet et",
-    "Invite people": "İnsanları davet et",
-    "Share invite link": "Davet bağlantısını paylaş",
-    "You can change these anytime.": "Bunları istediğiniz zaman değiştirebilirsiniz.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Botları, görsel bileşenleri ve çıkartma paketlerini yönetmek için bir entegrasyon yöneticisi kullanın.",
     "Identity server (%(server)s)": "(%(server)s) Kimlik Sunucusu",
     "Could not connect to identity server": "Kimlik Sunucusuna bağlanılamadı",
@@ -1055,7 +1047,9 @@
         "submit": "Gönder",
         "send_report": "Rapor gönder",
         "unban": "Yasağı Kaldır",
-        "click_to_copy": "Kopyalamak için tıklayın"
+        "click_to_copy": "Kopyalamak için tıklayın",
+        "hide_advanced": "Gelişmiş gizle",
+        "show_advanced": "Gelişmiş göster"
     },
     "a11y": {
         "user_menu": "Kullanıcı menüsü",
@@ -1776,7 +1770,8 @@
             "user_url_previews_default_on": "URL önizlemelerini varsayılan olarak <a>etkinleştirdiniz</a>.",
             "user_url_previews_default_off": "URL önizlemelerini varsayılan olarak <a> devre dışı </a> bıraktınız.",
             "default_url_previews_off": "URL ön izlemeleri, bu odadaki kullanıcılar için varsayılan olarak devre dışı bıraktırılmıştır.",
-            "url_previews_section": "URL önizlemeleri"
+            "url_previews_section": "URL önizlemeleri",
+            "save": "Değişiklikleri Kaydet"
         },
         "advanced": {
             "unfederated": "Bu oda uzak Matrix Sunucuları tarafından erişilebilir değil",
@@ -1785,7 +1780,10 @@
             "room_version_section": "Oda sürümü",
             "room_version": "Oda versiyonu:"
         },
-        "upload_avatar_label": "Avatar yükle"
+        "upload_avatar_label": "Avatar yükle",
+        "visibility": {
+            "title": "Görünürlük"
+        }
     },
     "encryption": {
         "verification": {
@@ -2150,7 +2148,10 @@
     "space": {
         "context_menu": {
             "explore": "Odaları keşfet"
-        }
+        },
+        "invite_link": "Davet bağlantısını paylaş",
+        "invite": "İnsanları davet et",
+        "invite_description": "E-posta veya kullanıcı adı ile davet et"
     },
     "terms": {
         "integration_manager": "Botları, köprüleri, görsel bileşenleri ve çıkartma paketlerini kullan",
@@ -2240,5 +2241,8 @@
     "lightbox": {
         "rotate_left": "Sola Döndür",
         "rotate_right": "Sağa Döndür"
+    },
+    "create_space": {
+        "add_details_prompt_2": "Bunları istediğiniz zaman değiştirebilirsiniz."
     }
 }

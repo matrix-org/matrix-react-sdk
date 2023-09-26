@@ -465,30 +465,9 @@
     "Upgrading room": "Αναβάθμιση δωματίου",
     "Space members": "Μέλη χώρου",
     "Space options": "Επιλογές χώρου",
-    "Recommended for public spaces.": "Προτείνεται για δημόσιους χώρους.",
-    "Preview Space": "Προεπισκόπηση Χώρου",
-    "Failed to update the visibility of this space": "Αποτυχία ενημέρωσης της ορατότητας αυτού του χώρου",
-    "Decide who can view and join %(spaceName)s.": "Αποφασίστε ποιος μπορεί να δει και να συμμετάσχει %(spaceName)s.",
-    "Access": "Πρόσβαση",
-    "Visibility": "Ορατότητα",
-    "This may be useful for public spaces.": "Αυτό μπορεί να είναι χρήσιμο για δημόσιους χώρους.",
-    "Guests can join a space without having an account.": "Οι επισκέπτες μπορούν να εγγραφούν σε ένα χώρο χωρίς να έχουν λογαριασμό.",
     "Enable guest access": "Ενεργοποίηση πρόσβασης επισκέπτη",
-    "Hide advanced": "Απόκρυψη προχωρημένων",
-    "Show advanced": "Εμφάνιση προχωρημένων",
-    "Failed to update the guest access of this space": "Αποτυχία ενημέρωσης της πρόσβασης επισκέπτη σε αυτόν τον χώρο",
-    "Failed to update the history visibility of this space": "Αποτυχία ενημέρωσης της ορατότητας του ιστορικού αυτού του χώρου",
-    "Leave Space": "Αποχώρηση από τον Χώρο",
-    "Save Changes": "Αποθήκευση Αλλαγών",
-    "Edit settings relating to your space.": "Επεξεργαστείτε τις ρυθμίσεις που σχετίζονται με τον χώρο σας.",
     "General": "Γενικά",
-    "Failed to save space settings.": "Αποτυχία αποθήκευσης ρυθμίσεων χώρου.",
-    "Invite with email or username": "Πρόσκληση με email ή όνομα χρήστη",
-    "Share invite link": "Κοινή χρήση συνδέσμου πρόσκλησης",
-    "Show all rooms": "Εμφάνιση όλων των δωματίων",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Ο διαχειριστής του διακομιστή σας έχει απενεργοποιήσει την κρυπτογράφηση από άκρο σε άκρο από προεπιλογή σε ιδιωτικά δωμάτια & άμεσα μηνύματα.",
-    "Allow people to preview your space before they join.": "Επιτρέψτε στους χρήστες να κάνουν προεπισκόπηση του χώρου σας προτού να εγγραφούν.",
-    "Invite people": "Προσκαλέστε άτομα",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
     "Themes": "Θέματα",
@@ -562,7 +541,6 @@
     "Keyword": "Λέξη-κλειδί",
     "Jump to first invite.": "Μετάβαση στην πρώτη πρόσκληση.",
     "Jump to first unread room.": "Μετάβαση στο πρώτο μη αναγνωσμένο δωμάτιο.",
-    "You can change these anytime.": "Μπορείτε να τα αλλάξετε ανά πάσα στιγμή.",
     "To join a space you'll need an invite.": "Για να συμμετάσχετε σε ένα χώρο θα χρειαστείτε μια πρόσκληση.",
     "Create a space": "Δημιουργήστε ένα χώρο",
     "Address": "Διεύθυνση",
@@ -1693,7 +1671,9 @@
         "send_report": "Αποστολή αναφοράς",
         "clear": "Καθαρισμός",
         "unban": "Άρση αποκλεισμού",
-        "click_to_copy": "Κλικ για αντιγραφή"
+        "click_to_copy": "Κλικ για αντιγραφή",
+        "hide_advanced": "Απόκρυψη προχωρημένων",
+        "show_advanced": "Εμφάνιση προχωρημένων"
     },
     "a11y": {
         "user_menu": "Μενού χρήστη",
@@ -2092,11 +2072,12 @@
             "metaspaces_subsection": "Χώροι για εμφάνιση",
             "metaspaces_description": "Οι Χώροι είναι ένας τρόπος ομαδοποίησης δωματίων και ατόμων. Εκτός από τους χώρους στους οποίους βρίσκεστε, μπορείτε να χρησιμοποιήσετε και κάποιους προκατασκευασμένους.",
             "metaspaces_home_description": "Ο Αρχικός χώρος είναι χρήσιμος για να έχετε μια επισκόπηση των πάντων.",
-            "metaspaces_home_all_rooms": "Εμφάνιση όλων των δωματίων σας στην Αρχική, ακόμα κι αν βρίσκονται σε ένα χώρο.",
             "metaspaces_favourites_description": "Ομαδοποιήστε όλα τα αγαπημένα σας δωμάτια και άτομα σε ένα μέρος.",
             "metaspaces_people_description": "Ομαδοποιήστε όλα τα άτομα σας σε ένα μέρος.",
             "metaspaces_orphans": "Δωμάτια εκτός χώρου",
-            "metaspaces_orphans_description": "Ομαδοποιήστε σε ένα μέρος όλα τα δωμάτιά σας που δεν αποτελούν μέρος ενός χώρου."
+            "metaspaces_orphans_description": "Ομαδοποιήστε σε ένα μέρος όλα τα δωμάτιά σας που δεν αποτελούν μέρος ενός χώρου.",
+            "metaspaces_home_all_rooms_description": "Εμφάνιση όλων των δωματίων σας στην Αρχική, ακόμα κι αν βρίσκονται σε ένα χώρο.",
+            "metaspaces_home_all_rooms": "Εμφάνιση όλων των δωματίων"
         }
     },
     "devtools": {
@@ -2810,7 +2791,11 @@
             "default_url_previews_off": "Η προεπισκόπηση διευθύνσεων URL είναι απενεργοποιημένη από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο.",
             "url_preview_encryption_warning": "Σε κρυπτογραφημένα δωμάτια, όπως αυτό, οι προεπισκόπηση URL είναι απενεργοποιημένη από προεπιλογή για να διασφαλιστεί ότι ο κεντρικός σας διακομιστής (όπου δημιουργείται μια προεπισκόπηση) δεν μπορεί να συγκεντρώσει πληροφορίες σχετικά με συνδέσμους που βλέπετε σε αυτό το δωμάτιο.",
             "url_preview_explainer": "Όταν κάποιος εισάγει μια διεύθυνση URL στο μήνυμά του, μπορεί να εμφανιστεί μια προεπισκόπηση του URL για να δώσει περισσότερες πληροφορίες σχετικά με αυτόν τον σύνδεσμο, όπως τον τίτλο, την περιγραφή και μια εικόνα από τον ιστότοπο.",
-            "url_previews_section": "Προεπισκόπηση συνδέσμων"
+            "url_previews_section": "Προεπισκόπηση συνδέσμων",
+            "error_save_space_settings": "Αποτυχία αποθήκευσης ρυθμίσεων χώρου.",
+            "description_space": "Επεξεργαστείτε τις ρυθμίσεις που σχετίζονται με τον χώρο σας.",
+            "save": "Αποθήκευση Αλλαγών",
+            "leave_space": "Αποχώρηση από τον Χώρο"
         },
         "advanced": {
             "unfederated": "Αυτό το δωμάτιο δεν είναι προσβάσιμο από απομακρυσμένους διακομιστές Matrix",
@@ -2823,7 +2808,22 @@
             "room_version": "Έκδοση δωματίου:"
         },
         "delete_avatar_label": "Διαγραφή avatar",
-        "upload_avatar_label": "Αποστολή προσωπικής εικόνας"
+        "upload_avatar_label": "Αποστολή προσωπικής εικόνας",
+        "visibility": {
+            "error_update_guest_access": "Αποτυχία ενημέρωσης της πρόσβασης επισκέπτη σε αυτόν τον χώρο",
+            "error_update_history_visibility": "Αποτυχία ενημέρωσης της ορατότητας του ιστορικού αυτού του χώρου",
+            "guest_access_explainer": "Οι επισκέπτες μπορούν να εγγραφούν σε ένα χώρο χωρίς να έχουν λογαριασμό.",
+            "guest_access_explainer_public_space": "Αυτό μπορεί να είναι χρήσιμο για δημόσιους χώρους.",
+            "title": "Ορατότητα",
+            "error_failed_save": "Αποτυχία ενημέρωσης της ορατότητας αυτού του χώρου",
+            "history_visibility_anyone_space": "Προεπισκόπηση Χώρου",
+            "history_visibility_anyone_space_description": "Επιτρέψτε στους χρήστες να κάνουν προεπισκόπηση του χώρου σας προτού να εγγραφούν.",
+            "history_visibility_anyone_space_recommendation": "Προτείνεται για δημόσιους χώρους."
+        },
+        "access": {
+            "title": "Πρόσβαση",
+            "description_space": "Αποφασίστε ποιος μπορεί να δει και να συμμετάσχει %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3265,7 +3265,10 @@
             "manage_and_explore": "Διαχειριστείτε και εξερευνήστε δωμάτια"
         },
         "share_public": "Μοιραστείτε τον δημόσιο χώρο σας",
-        "search_children": "Αναζήτηση %(spaceName)s"
+        "search_children": "Αναζήτηση %(spaceName)s",
+        "invite_link": "Κοινή χρήση συνδέσμου πρόσκλησης",
+        "invite": "Προσκαλέστε άτομα",
+        "invite_description": "Πρόσκληση με email ή όνομα χρήστη"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3345,7 +3348,8 @@
         "setup_rooms_private_description": "Θα δημιουργήσουμε δωμάτια για καθένα από αυτά.",
         "address_placeholder": "π.χ. ο-χώρος-μου",
         "address_label": "Διεύθυνση",
-        "label": "Δημιουργήστε ένα χώρο"
+        "label": "Δημιουργήστε ένα χώρο",
+        "add_details_prompt_2": "Μπορείτε να τα αλλάξετε ανά πάσα στιγμή."
     },
     "user_menu": {
         "switch_theme_light": "Αλλαγή σε φωτεινό",

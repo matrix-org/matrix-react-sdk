@@ -351,10 +351,8 @@
     "Notification targets": "Spriocanna fógraí",
     "Results": "Torthaí",
     "Decrypting": "Ag Díchriptiú",
-    "Access": "Rochtain",
     "Global": "Uilíoch",
     "Keyword": "Eochairfhocal",
-    "Visibility": "Léargas",
     "Address": "Seoladh",
     "Sent": "Seolta",
     "Sending": "Ag Seoladh",
@@ -747,6 +745,12 @@
         "advanced": {
             "room_version_section": "Leagan seomra",
             "room_version": "Leagan seomra:"
+        },
+        "visibility": {
+            "title": "Léargas"
+        },
+        "access": {
+            "title": "Rochtain"
         }
     },
     "encryption": {

@@ -287,7 +287,6 @@
     "Discovery options will appear once you have added an email above.": "As opções de descoberta vão aparecer assim que adicione um e-mail acima.",
     "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.": "Enviámos-lhe um email para confirmar o seu endereço. Por favor siga as instruções no email e depois clique no botão abaixo.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>.",
-    "Invite with email or username": "Convidar com email ou nome de utilizador",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de email, nome de utilizador (como <userId/>) ou <a>partilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, email ou nome de utilizador (como <userId/>) ou <a>partilhe esta sala</a>.",
     "<userName/> invited you": "<userName/> convidou-o",
@@ -795,7 +794,8 @@
     "space": {
         "context_menu": {
             "explore": "Explorar rooms"
-        }
+        },
+        "invite_description": "Convidar com email ou nome de utilizador"
     },
     "room_settings": {
         "permissions": {

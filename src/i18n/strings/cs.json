@@ -426,8 +426,6 @@
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Dejte nám vědět, prosím, co se pokazilo nebo vytvořte issue na GitHubu, kde problém popište.",
     "Removing…": "Odstaňování…",
     "Clear all data": "Smazat všechna data",
-    "Hide advanced": "Skrýt pokročilé možnosti",
-    "Show advanced": "Zobrazit pokročilé možnosti",
     "Your homeserver doesn't seem to support this feature.": "Váš domovský server asi tuto funkci nepodporuje.",
     "Message edits": "Úpravy zpráv",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
@@ -1049,9 +1047,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Tento prostor není veřejný. Bez pozvánky se nebudete moci znovu připojit.",
     "Failed to start livestream": "Nepodařilo spustit živý přenos",
     "Unable to start audio streaming.": "Nelze spustit streamování zvuku.",
-    "Leave Space": "Opustit prostor",
-    "Edit settings relating to your space.": "Upravte nastavení týkající se vašeho prostoru.",
-    "Failed to save space settings.": "Nastavení prostoru se nepodařilo uložit.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
     "Create a new room": "Vytvořit novou místnost",
@@ -1064,10 +1059,7 @@
     "Your message was sent": "Zpráva byla odeslána",
     "Space options": "Nastavení prostoru",
     "Leave space": "Opusit prostor",
-    "Invite people": "Pozvat lidi",
-    "Share invite link": "Sdílet odkaz na pozvánku",
     "Create a space": "Vytvořit prostor",
-    "Save Changes": "Uložit změny",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
     "Private space": "Soukromý prostor",
     "Public space": "Veřejný prostor",
@@ -1080,8 +1072,6 @@
     },
     "You don't have permission": "Nemáte povolení",
     "Invite to %(roomName)s": "Pozvat do %(roomName)s",
-    "Invite with email or username": "Pozvěte e-mailem nebo uživatelským jménem",
-    "You can change these anytime.": "Tyto údaje můžete kdykoli změnit.",
     "Edit devices": "Upravit zařízení",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, kterou znáte, se již připojila",
@@ -1153,17 +1143,7 @@
     "Published addresses can be used by anyone on any server to join your space.": "Zveřejněné adresy může použít kdokoli na jakémkoli serveru, aby se připojil k vašemu prostoru.",
     "This space has no local addresses": "Tento prostor nemá žádné místní adresy",
     "Space information": "Informace o prostoru",
-    "Recommended for public spaces.": "Doporučeno pro veřejné prostory.",
-    "Allow people to preview your space before they join.": "Umožněte lidem prohlédnout si váš prostor ještě předtím, než se připojí.",
-    "Preview Space": "Nahlédnout do prostoru",
-    "Decide who can view and join %(spaceName)s.": "Rozhodněte, kdo může prohlížet a připojovat se k %(spaceName)s.",
-    "This may be useful for public spaces.": "To může být užitečné pro veřejné prostory.",
-    "Guests can join a space without having an account.": "Hosté se mohou připojit k prostoru, aniž by měli účet.",
     "Enable guest access": "Povolit přístup hostům",
-    "Failed to update the history visibility of this space": "Nepodařilo se aktualizovat viditelnost historie tohoto prostoru",
-    "Failed to update the guest access of this space": "Nepodařilo se aktualizovat přístup hosta do tohoto prostoru",
-    "Failed to update the visibility of this space": "Nepodařilo se aktualizovat viditelnost tohoto prostoru",
-    "Visibility": "Viditelnost",
     "Address": "Adresa",
     "Unnamed audio": "Nepojmenovaný audio soubor",
     "Error processing audio message": "Došlo k chybě při zpracovávání hlasové zprávy",
@@ -1207,7 +1187,6 @@
         "one": "Zobrazit %(count)s další náhled",
         "other": "Zobrazit %(count)s dalších náhledů"
     },
-    "Access": "Přístup",
     "Space members": "Členové prostoru",
     "Anyone in a space can find and join. You can select multiple spaces.": "Každý, kdo se nachází v prostoru, ho může najít a připojit se k němu. Můžete vybrat více prostorů.",
     "Spaces with access": "Prostory s přístupem",
@@ -1239,7 +1218,6 @@
     "Create a new space": "Vytvořit nový prostor",
     "Want to add a new space instead?": "Chcete místo toho přidat nový prostor?",
     "Decrypting": "Dešifrování",
-    "Show all rooms": "Zobrazit všechny místnosti",
     "Missed call": "Zmeškaný hovor",
     "Call declined": "Hovor odmítnut",
     "Stop recording": "Zastavit nahrávání",
@@ -1653,7 +1631,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Zálohování %(sessionsRemaining)s klíčů…",
     "Connecting to integration manager…": "Připojování ke správci integrací…",
     "Saving…": "Ukládání…",
-    "Creating…": "Vytváření…",
     "Starting export process…": "Zahájení procesu exportu…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Zadejte bezpečnostní frázi, kterou znáte jen vy, protože slouží k ochraně vašich dat. V zájmu bezpečnosti byste neměli heslo k účtu používat opakovaně.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Pokračujte pouze v případě, že jste si jisti, že jste ztratili všechna ostatní zařízení a bezpečnostní klíč.",
@@ -1961,7 +1938,9 @@
         "exit_fullscreeen": "Ukončení režimu celé obrazovky",
         "enter_fullscreen": "Vstup do režimu celé obrazovky",
         "unban": "Zrušit vykázání",
-        "click_to_copy": "Kliknutím zkopírujte"
+        "click_to_copy": "Kliknutím zkopírujte",
+        "hide_advanced": "Skrýt pokročilé možnosti",
+        "show_advanced": "Zobrazit pokročilé možnosti"
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka",
@@ -2576,11 +2555,12 @@
             "metaspaces_subsection": "Prostory pro zobrazení",
             "metaspaces_description": "Prostory jsou způsob seskupování místností a osob. Vedle prostorů, ve kterých se nacházíte, můžete použít i některé předpřipravené.",
             "metaspaces_home_description": "Domov je užitečný pro získání přehledu o všem.",
-            "metaspaces_home_all_rooms": "Zobrazit všechny místnosti v Domovu, i když jsou v prostoru.",
             "metaspaces_favourites_description": "Seskupte všechny své oblíbené místnosti a osoby na jednom místě.",
             "metaspaces_people_description": "Seskupte všechny své kontakty na jednom místě.",
             "metaspaces_orphans": "Místnosti mimo prostor",
-            "metaspaces_orphans_description": "Seskupte všechny místnosti, které nejsou součástí prostoru, na jednom místě."
+            "metaspaces_orphans_description": "Seskupte všechny místnosti, které nejsou součástí prostoru, na jednom místě.",
+            "metaspaces_home_all_rooms_description": "Zobrazit všechny místnosti v Domovu, i když jsou v prostoru.",
+            "metaspaces_home_all_rooms": "Zobrazit všechny místnosti"
         }
     },
     "devtools": {
@@ -3393,7 +3373,11 @@
             "default_url_previews_off": "Ve výchozím nastavení jsou náhledy URL adres zakázané pro členy této místnosti.",
             "url_preview_encryption_warning": "V šifrovaných místnostech, jako je tato, jsou URL náhledy ve výchozím nastavení vypnuté, aby bylo možné zajistit, že váš domovský server neshromažďuje informace o odkazech, které v této místnosti vidíte.",
             "url_preview_explainer": "Když někdo ve zprávě pošle URL adresu, může být zobrazen její náhled obsahující informace jako titulek, popis a obrázek z cílové stránky.",
-            "url_previews_section": "Náhledy webových adres"
+            "url_previews_section": "Náhledy webových adres",
+            "error_save_space_settings": "Nastavení prostoru se nepodařilo uložit.",
+            "description_space": "Upravte nastavení týkající se vašeho prostoru.",
+            "save": "Uložit změny",
+            "leave_space": "Opustit prostor"
         },
         "advanced": {
             "unfederated": "Tato místnost není přístupná vzdáleným Matrix serverům",
@@ -3407,7 +3391,22 @@
             "room_version": "Verze místnosti:"
         },
         "delete_avatar_label": "Smazat avatar",
-        "upload_avatar_label": "Nahrát avatar"
+        "upload_avatar_label": "Nahrát avatar",
+        "visibility": {
+            "error_update_guest_access": "Nepodařilo se aktualizovat přístup hosta do tohoto prostoru",
+            "error_update_history_visibility": "Nepodařilo se aktualizovat viditelnost historie tohoto prostoru",
+            "guest_access_explainer": "Hosté se mohou připojit k prostoru, aniž by měli účet.",
+            "guest_access_explainer_public_space": "To může být užitečné pro veřejné prostory.",
+            "title": "Viditelnost",
+            "error_failed_save": "Nepodařilo se aktualizovat viditelnost tohoto prostoru",
+            "history_visibility_anyone_space": "Nahlédnout do prostoru",
+            "history_visibility_anyone_space_description": "Umožněte lidem prohlédnout si váš prostor ještě předtím, než se připojí.",
+            "history_visibility_anyone_space_recommendation": "Doporučeno pro veřejné prostory."
+        },
+        "access": {
+            "title": "Přístup",
+            "description_space": "Rozhodněte, kdo může prohlížet a připojovat se k %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3915,7 +3914,10 @@
             "manage_and_explore": "Spravovat a prozkoumat místnosti"
         },
         "share_public": "Sdílejte svůj veřejný prostor",
-        "search_children": "Hledat %(spaceName)s"
+        "search_children": "Hledat %(spaceName)s",
+        "invite_link": "Sdílet odkaz na pozvánku",
+        "invite": "Pozvat lidi",
+        "invite_description": "Pozvěte e-mailem nebo uživatelským jménem"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
@@ -4008,7 +4010,9 @@
         "setup_rooms_private_description": "Pro každého z nich vytvoříme místnost.",
         "address_placeholder": "např. můj-prostor",
         "address_label": "Adresa",
-        "label": "Vytvořit prostor"
+        "label": "Vytvořit prostor",
+        "add_details_prompt_2": "Tyto údaje můžete kdykoli změnit.",
+        "creating": "Vytváření…"
     },
     "user_menu": {
         "switch_theme_light": "Přepnout do světlého režimu",

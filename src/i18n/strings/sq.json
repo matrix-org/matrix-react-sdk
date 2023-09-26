@@ -473,8 +473,6 @@
     "Verify the link in your inbox": "Verifikoni lidhjen te mesazhet tuaj",
     "e.g. my-room": "p.sh., dhoma-ime",
     "Close dialog": "Mbylle dialogun",
-    "Hide advanced": "Fshihi të mëtejshmet",
-    "Show advanced": "Shfaqi të mëtejshmet",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Përpara shkëputjes, duhet <b>të hiqni të dhënat tuaja personale</b> nga shërbyesi i identiteteve <idserver />. Mjerisht, shërbyesi i identiteteve <idserver /> hëpërhë është jashtë funksionimi dhe s’mund të kapet.",
     "You should:": "Duhet:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "të kontrolloni shtojcat e shfletuesit tuaj për çfarëdo që mund të bllokojë shërbyesin e identiteteve (bie fjala, Privacy Badger)",
@@ -1047,10 +1045,6 @@
     "Are you sure you want to leave the space '%(spaceName)s'?": "Jeni i sigurt se doni të dilni nga hapësira '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Kjo hapësirë s’është publike. S’do të jeni në gjendje të rihyni në të pa një ftesë.",
     "Unable to start audio streaming.": "S’arrihet të niset transmetim audio.",
-    "Save Changes": "Ruaji Ndryshimet",
-    "Leave Space": "Braktiseni Hapësirën",
-    "Edit settings relating to your space.": "Përpunoni rregullime që lidhen me hapësirën tuaj.",
-    "Failed to save space settings.": "S’u arrit të ruhen rregullime hapësire.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Create a new room": "Krijoni dhomë të re",
@@ -1063,8 +1057,6 @@
     "Your message was sent": "Mesazhi juaj u dërgua",
     "Space options": "Mundësi Hapësire",
     "Leave space": "Braktiseni hapësirën",
-    "Invite people": "Ftoni njerëz",
-    "Share invite link": "Jepuni lidhje ftese",
     "Create a space": "Krijoni një hapësirë",
     "Private space": "Hapësirë private",
     "Public space": "Hapësirë publike",
@@ -1081,8 +1073,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, njoftoni një të metë.",
     "Invite to %(roomName)s": "Ftojeni te %(roomName)s",
     "Edit devices": "Përpunoni pajisje",
-    "Invite with email or username": "Ftoni përmes email-i ose emri përdoruesi",
-    "You can change these anytime.": "Këto mund t’i ndryshoni në çfarëdo kohe.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Verifikoni identitetin tuaj që të hyhet në mesazhe të fshehtëzuar dhe t’u provoni të tjerëve identitetin tuaj.",
     "Avatar": "Avatar",
     "Consult first": "Konsultohu së pari",
@@ -1148,17 +1138,7 @@
     "Published addresses can be used by anyone on any server to join your space.": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në hapësirën tuaj.",
     "This space has no local addresses": "Kjo hapësirë s’ka adresa vendore",
     "Space information": "Hollësi hapësire",
-    "Recommended for public spaces.": "E rekomanduar për hapësira publike.",
-    "Allow people to preview your space before they join.": "Lejojini personat të parashohin hapësirën tuaj para se të hyjnë në të.",
-    "Preview Space": "Parashiheni Hapësirën",
-    "Decide who can view and join %(spaceName)s.": "Vendosni se cilët mund të shohin dhe marrin pjesë te %(spaceName)s.",
-    "Visibility": "Dukshmëri",
-    "This may be useful for public spaces.": "Kjo mund të jetë e dobishme për hapësira publike.",
-    "Guests can join a space without having an account.": "Mysafirët mund të hyjnë në një hapësirë pa pasur llogari.",
     "Enable guest access": "Lejo hyrje si vizitor",
-    "Failed to update the history visibility of this space": "S’arrihet të përditësohet dukshmëria e historikut të kësaj hapësire",
-    "Failed to update the guest access of this space": "S’arrihet të përditësohet hyrja e mysafirëve të kësaj hapësire",
-    "Failed to update the visibility of this space": "S’arrihet të përditësohet dukshmëria e kësaj hapësire",
     "Address": "Adresë",
     "Unnamed audio": "Audio pa emër",
     "Sent": "U dërgua",
@@ -1200,7 +1180,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
     "Select spaces": "Përzgjidhni hapësira",
     "Public room": "Dhomë publike",
-    "Access": "Hyrje",
     "Space members": "Anëtarë hapësire",
     "Anyone in a space can find and join. You can select multiple spaces.": "Mund të përzgjidhni një hapësirë që mund të gjejë dhe hyjë. Mund të përzgjidhni disa hapësira.",
     "Spaces with access": "Hapësira me hyrje",
@@ -1235,7 +1214,6 @@
     "Want to add a new space instead?": "Në vend të kësaj, doni të shtoni një hapësirë të re?",
     "Add existing space": "Shtoni hapësirë ekzistuese",
     "Decrypting": "Po shfshehtëzohet",
-    "Show all rooms": "Shfaq krejt dhomat",
     "Missed call": "Thirrje e humbur",
     "Call declined": "Thirrja u hodh poshtë",
     "Stop recording": "Ndale regjistrimin",
@@ -1655,7 +1633,6 @@
     "This session is backing up your keys.": "Kjo sesion po bën kopjeruajtje të kyçeve tuaja.",
     "Connecting to integration manager…": "Po lidhet me përgjegjës integrimesh…",
     "Saving…": "Po ruhet…",
-    "Creating…": "Po krijohet…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Loading polls": "Po ngarkohen pyetësorë",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
@@ -1907,7 +1884,9 @@
         "exit_fullscreeen": "Dil nga mënyra “Sa krejt ekrani”",
         "enter_fullscreen": "Kalo në mënyrën “Sa krejt ekrani”",
         "unban": "Hiqja dëbimin",
-        "click_to_copy": "Klikoni që të kopjohet"
+        "click_to_copy": "Klikoni që të kopjohet",
+        "hide_advanced": "Fshihi të mëtejshmet",
+        "show_advanced": "Shfaqi të mëtejshmet"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -2508,11 +2487,12 @@
             "metaspaces_subsection": "Hapësira për shfaqje",
             "metaspaces_description": "Hapësirat janë mënyra për të grupuar dhoma dhe njerëz. Tok me hapësirat ku gjendeni, mundeni të përdorni edhe disa të krijuara paraprakisht.",
             "metaspaces_home_description": "Kreu është i dobishëm për të pasur një përmbledhje të gjithçkaje.",
-            "metaspaces_home_all_rooms": "Shfaqni krejt dhomat tuaja te Kreu, edhe nëse gjenden në një hapësirë.",
             "metaspaces_favourites_description": "Gruponi në një vend krejt dhomat tuaja të parapëlqyera dhe personat e parapëlqyer.",
             "metaspaces_people_description": "Gruponi krejt personat tuaj në një vend.",
             "metaspaces_orphans": "Dhoma jashtë një hapësire",
-            "metaspaces_orphans_description": "Gruponi në një vend krejt dhomat tuaja që s’janë pjesë e një hapësire."
+            "metaspaces_orphans_description": "Gruponi në një vend krejt dhomat tuaja që s’janë pjesë e një hapësire.",
+            "metaspaces_home_all_rooms_description": "Shfaqni krejt dhomat tuaja te Kreu, edhe nëse gjenden në një hapësirë.",
+            "metaspaces_home_all_rooms": "Shfaq krejt dhomat"
         }
     },
     "devtools": {
@@ -3297,7 +3277,11 @@
             "default_url_previews_off": "Për pjesëmarrësit në këtë dhomë paraparja e URL-ve është e çaktivizuar, si parazgjedhje.",
             "url_preview_encryption_warning": "Në dhoma të fshehtëzuara, si kjo, paraparja e URL-ve është e çaktivizuar, si parazgjedhje, për të garantuar që shërbyesi juaj home (ku edhe prodhohen paraparjet) të mos grumbullojë të dhëna rreth lidhjesh që shihni në këtë dhomë.",
             "url_preview_explainer": "Kur dikush vë një URL në mesazh, për të dhënë rreth lidhjes më tepër të dhëna, të tilla si titulli, përshkrimi dhe një figurë e sajtit, do të shfaqet një paraparje e URL-së.",
-            "url_previews_section": "Paraparje URL-sh"
+            "url_previews_section": "Paraparje URL-sh",
+            "error_save_space_settings": "S’u arrit të ruhen rregullime hapësire.",
+            "description_space": "Përpunoni rregullime që lidhen me hapësirën tuaj.",
+            "save": "Ruaji Ndryshimet",
+            "leave_space": "Braktiseni Hapësirën"
         },
         "advanced": {
             "unfederated": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
@@ -3311,7 +3295,22 @@
             "room_version": "Version dhome:"
         },
         "delete_avatar_label": "Fshije avatarin",
-        "upload_avatar_label": "Ngarkoni avatar"
+        "upload_avatar_label": "Ngarkoni avatar",
+        "visibility": {
+            "error_update_guest_access": "S’arrihet të përditësohet hyrja e mysafirëve të kësaj hapësire",
+            "error_update_history_visibility": "S’arrihet të përditësohet dukshmëria e historikut të kësaj hapësire",
+            "guest_access_explainer": "Mysafirët mund të hyjnë në një hapësirë pa pasur llogari.",
+            "guest_access_explainer_public_space": "Kjo mund të jetë e dobishme për hapësira publike.",
+            "title": "Dukshmëri",
+            "error_failed_save": "S’arrihet të përditësohet dukshmëria e kësaj hapësire",
+            "history_visibility_anyone_space": "Parashiheni Hapësirën",
+            "history_visibility_anyone_space_description": "Lejojini personat të parashohin hapësirën tuaj para se të hyjnë në të.",
+            "history_visibility_anyone_space_recommendation": "E rekomanduar për hapësira publike."
+        },
+        "access": {
+            "title": "Hyrje",
+            "description_space": "Vendosni se cilët mund të shohin dhe marrin pjesë te %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3811,7 +3810,10 @@
             "manage_and_explore": "Administroni & eksploroni dhoma"
         },
         "share_public": "Ndani me të tjerët hapësirën tuaj publike",
-        "search_children": "Kërko te %(spaceName)s"
+        "search_children": "Kërko te %(spaceName)s",
+        "invite_link": "Jepuni lidhje ftese",
+        "invite": "Ftoni njerëz",
+        "invite_description": "Ftoni përmes email-i ose emri përdoruesi"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -3902,7 +3904,9 @@
         "setup_rooms_private_description": "Do të krijojmë dhoma për çdo prej tyre.",
         "address_placeholder": "p.sh., hapësira-ime",
         "address_label": "Adresë",
-        "label": "Krijoni një hapësirë"
+        "label": "Krijoni një hapësirë",
+        "add_details_prompt_2": "Këto mund t’i ndryshoni në çfarëdo kohe.",
+        "creating": "Po krijohet…"
     },
     "user_menu": {
         "switch_theme_light": "Kalo nën mënyrën e çelët",

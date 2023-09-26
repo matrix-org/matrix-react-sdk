@@ -472,8 +472,6 @@
     "Explore rooms": "방 검색",
     "Verify the link in your inbox": "메일함에 있는 링크로 확인",
     "e.g. my-room": "예: my-room",
-    "Hide advanced": "고급 숨기기",
-    "Show advanced": "고급 보이기",
     "Close dialog": "대화 상자 닫기",
     "Show image": "이미지 보이기",
     "Your email address hasn't been verified yet": "이메일 주소가 아직 확인되지 않았습니다",
@@ -520,13 +518,7 @@
     "Get notified for every message": "모든 메세지 알림을 받습니다",
     "You won't get any notifications": "어떤 알람도 받지 않습니다",
     "Space members": "스페이스 멤버 목록",
-    "Decide who can view and join %(spaceName)s.": "누가 %(spaceName)s를 보거나 참여할 수 있는지 설정합니다.",
-    "Access": "접근",
-    "Recommended for public spaces.": "공개 스페이스에 권장 합니다.",
-    "Allow people to preview your space before they join.": "스페이스에 참여하기 전에 미리볼 수 있도록 허용합니다.",
-    "Preview Space": "스페이스 미리보기",
     "Anyone in <spaceName/> can find and join. You can select other spaces too.": "<spaceName/>에 소속된 누구나 찾고 참여할 수 있습니다. 다른 스페이스도 선택 가능합니다.",
-    "Visibility": "가시성",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
     "Search for rooms": "방 검색",
@@ -544,7 +536,6 @@
     "Private space": "비공개 스페이스",
     "Rooms and spaces": "방 및 스페이스 목록",
     "Leave all rooms": "모든 방에서 떠나기",
-    "Show all rooms": "모든 방 목록 보기",
     "Create a new space": "새로운 스페이스 만들기",
     "Create a space": "스페이스 만들기",
     "Export chat": "대화 내보내기",
@@ -725,7 +716,9 @@
         "submit": "제출",
         "send_report": "신고 보내기",
         "clear": "지우기",
-        "unban": "출입 금지 풀기"
+        "unban": "출입 금지 풀기",
+        "hide_advanced": "고급 숨기기",
+        "show_advanced": "고급 보이기"
     },
     "labs": {
         "pinning": "메시지 고정",
@@ -874,7 +867,8 @@
             "add_msisdn_dialog_title": "전화번호 추가"
         },
         "sidebar": {
-            "title": "사이드바"
+            "title": "사이드바",
+            "metaspaces_home_all_rooms": "모든 방 목록 보기"
         }
     },
     "devtools": {
@@ -1228,7 +1222,17 @@
             "room_version": "방 버전:"
         },
         "delete_avatar_label": "아바타 삭제",
-        "upload_avatar_label": "아바타 업로드"
+        "upload_avatar_label": "아바타 업로드",
+        "visibility": {
+            "title": "가시성",
+            "history_visibility_anyone_space": "스페이스 미리보기",
+            "history_visibility_anyone_space_description": "스페이스에 참여하기 전에 미리볼 수 있도록 허용합니다.",
+            "history_visibility_anyone_space_recommendation": "공개 스페이스에 권장 합니다."
+        },
+        "access": {
+            "title": "접근",
+            "description_space": "누가 %(spaceName)s를 보거나 참여할 수 있는지 설정합니다."
+        }
     },
     "encryption": {
         "verification": {

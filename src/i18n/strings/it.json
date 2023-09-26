@@ -473,8 +473,6 @@
     "Verify the link in your inbox": "Verifica il link nella tua posta in arrivo",
     "e.g. my-room": "es. mia-stanza",
     "Close dialog": "Chiudi finestra",
-    "Hide advanced": "Nascondi avanzate",
-    "Show advanced": "Mostra avanzate",
     "Explore rooms": "Esplora stanze",
     "Show image": "Mostra immagine",
     "Your email address hasn't been verified yet": "Il tuo indirizzo email non è ancora stato verificato",
@@ -1050,10 +1048,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Questo spazio non è pubblico. Non potrai rientrare senza un invito.",
     "Failed to start livestream": "Impossibile avviare lo stream in diretta",
     "Unable to start audio streaming.": "Impossibile avviare lo streaming audio.",
-    "Save Changes": "Salva modifiche",
-    "Leave Space": "Esci dallo spazio",
-    "Edit settings relating to your space.": "Modifica le impostazioni relative al tuo spazio.",
-    "Failed to save space settings.": "Impossibile salvare le impostazioni dello spazio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Create a new room": "Crea nuova stanza",
@@ -1066,8 +1060,6 @@
     "Your message was sent": "Il tuo messaggio è stato inviato",
     "Space options": "Opzioni dello spazio",
     "Leave space": "Esci dallo spazio",
-    "Invite people": "Invita persone",
-    "Share invite link": "Condividi collegamento di invito",
     "Create a space": "Crea uno spazio",
     "Private space": "Spazio privato",
     "Public space": "Spazio pubblico",
@@ -1082,8 +1074,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Solitamente ciò influisce solo su come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, segnala un errore.",
     "Invite to %(roomName)s": "Invita in %(roomName)s",
     "Edit devices": "Modifica dispositivi",
-    "Invite with email or username": "Invita con email o nome utente",
-    "You can change these anytime.": "Puoi cambiarli in qualsiasi momento.",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
@@ -1148,11 +1138,6 @@
     "Please provide an address": "Inserisci un indirizzo",
     "This space has no local addresses": "Questo spazio non ha indirizzi locali",
     "Space information": "Informazioni spazio",
-    "Preview Space": "Anteprima spazio",
-    "Decide who can view and join %(spaceName)s.": "Decidi chi può vedere ed entrare in %(spaceName)s.",
-    "Visibility": "Visibilità",
-    "This may be useful for public spaces.": "Può tornare utile per gli spazi pubblici.",
-    "Guests can join a space without having an account.": "Gli ospiti possono entrare in uno spazio senza avere un account.",
     "Enable guest access": "Attiva accesso ospiti",
     "Address": "Indirizzo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
@@ -1160,11 +1145,6 @@
     "To publish an address, it needs to be set as a local address first.": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
     "Published addresses can be used by anyone on any server to join your room.": "Gli indirizzi pubblicati possono essere usati da chiunque su tutti i server per entrare nella tua stanza.",
     "Published addresses can be used by anyone on any server to join your space.": "Gli indirizzi pubblicati possono essere usati da chiunque su tutti i server per entrare nel tuo spazio.",
-    "Recommended for public spaces.": "Consigliato per gli spazi pubblici.",
-    "Allow people to preview your space before they join.": "Permetti a chiunque di vedere l'anteprima dello spazio prima di unirsi.",
-    "Failed to update the history visibility of this space": "Aggiornamento visibilità cronologia dello spazio fallito",
-    "Failed to update the guest access of this space": "Aggiornamento accesso ospiti dello spazio fallito",
-    "Failed to update the visibility of this space": "Aggiornamento visibilità dello spazio fallito",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "I gestori di integrazione ricevono dati di configurazione e possono modificare widget, inviare inviti alla stanza, assegnare permessi a tuo nome.",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "Usa un gestore di integrazioni per gestire bot, widget e pacchetti di adesivi.",
@@ -1205,7 +1185,6 @@
     "Their device couldn't start the camera or microphone": "Il suo dispositivo non ha potuto avviare la fotocamera o il microfono",
     "Connection failed": "Connessione fallita",
     "Could not connect media": "Connessione del media fallita",
-    "Access": "Accesso",
     "Space members": "Membri dello spazio",
     "Anyone in a space can find and join. You can select multiple spaces.": "Chiunque in uno spazio può trovare ed entrare. Puoi selezionare più spazi.",
     "Spaces with access": "Spazi con accesso",
@@ -1238,7 +1217,6 @@
     "Create a new space": "Crea un nuovo spazio",
     "Want to add a new space instead?": "Vuoi piuttosto aggiungere un nuovo spazio?",
     "Add existing space": "Aggiungi spazio esistente",
-    "Show all rooms": "Mostra tutte le stanze",
     "Decrypting": "Decifrazione",
     "Missed call": "Chiamata persa",
     "Call declined": "Chiamata rifiutata",
@@ -1655,7 +1633,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Backup di %(sessionsRemaining)s chiavi…",
     "Connecting to integration manager…": "Connessione al gestore di integrazioni…",
     "Saving…": "Salvataggio…",
-    "Creating…": "Creazione…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Secure Backup successful": "Backup Sicuro completato",
     "Your keys are now being backed up from this device.": "Viene ora fatto il backup delle tue chiavi da questo dispositivo.",
@@ -1961,7 +1938,9 @@
         "exit_fullscreeen": "Esci da schermo intero",
         "enter_fullscreen": "Attiva schermo intero",
         "unban": "Togli ban",
-        "click_to_copy": "Clicca per copiare"
+        "click_to_copy": "Clicca per copiare",
+        "hide_advanced": "Nascondi avanzate",
+        "show_advanced": "Mostra avanzate"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -2576,11 +2555,12 @@
             "metaspaces_subsection": "Spazi da mostrare",
             "metaspaces_description": "Gli spazi sono modi per raggruppare stanze e persone. Oltre agli spazi in cui sei, puoi usarne anche altri di preimpostati.",
             "metaspaces_home_description": "La pagina principale è utile per avere una panoramica generale.",
-            "metaspaces_home_all_rooms": "Mostra tutte le tue stanze nella pagina principale, anche se sono in uno spazio.",
             "metaspaces_favourites_description": "Raggruppa tutte le tue stanze e persone preferite in un unico posto.",
             "metaspaces_people_description": "Raggruppa tutte le tue persone in un unico posto.",
             "metaspaces_orphans": "Stanze fuori da uno spazio",
-            "metaspaces_orphans_description": "Raggruppa tutte le tue stanze che non fanno parte di uno spazio in un unico posto."
+            "metaspaces_orphans_description": "Raggruppa tutte le tue stanze che non fanno parte di uno spazio in un unico posto.",
+            "metaspaces_home_all_rooms_description": "Mostra tutte le tue stanze nella pagina principale, anche se sono in uno spazio.",
+            "metaspaces_home_all_rooms": "Mostra tutte le stanze"
         }
     },
     "devtools": {
@@ -3393,7 +3373,11 @@
             "default_url_previews_off": "Le anteprime degli URL sono inattive in modo predefinito per i partecipanti di questa stanza.",
             "url_preview_encryption_warning": "Nelle stanze criptate, come questa, le anteprime degli URL sono disattivate in modo predefinito per garantire che il tuo homeserver (dove vengono generate le anteprime) non possa raccogliere informazioni sui collegamenti che vedi in questa stanza.",
             "url_preview_explainer": "Quando qualcuno inserisce un URL nel proprio messaggio, è possibile mostrare un'anteprima dell'URL per fornire maggiori informazioni su quel collegamento, come il titolo, la descrizione e un'immagine dal sito web.",
-            "url_previews_section": "Anteprime URL"
+            "url_previews_section": "Anteprime URL",
+            "error_save_space_settings": "Impossibile salvare le impostazioni dello spazio.",
+            "description_space": "Modifica le impostazioni relative al tuo spazio.",
+            "save": "Salva modifiche",
+            "leave_space": "Esci dallo spazio"
         },
         "advanced": {
             "unfederated": "Questa stanza non è accessibile da server di Matrix remoti",
@@ -3407,7 +3391,22 @@
             "room_version": "Versione stanza:"
         },
         "delete_avatar_label": "Elimina avatar",
-        "upload_avatar_label": "Invia avatar"
+        "upload_avatar_label": "Invia avatar",
+        "visibility": {
+            "error_update_guest_access": "Aggiornamento accesso ospiti dello spazio fallito",
+            "error_update_history_visibility": "Aggiornamento visibilità cronologia dello spazio fallito",
+            "guest_access_explainer": "Gli ospiti possono entrare in uno spazio senza avere un account.",
+            "guest_access_explainer_public_space": "Può tornare utile per gli spazi pubblici.",
+            "title": "Visibilità",
+            "error_failed_save": "Aggiornamento visibilità dello spazio fallito",
+            "history_visibility_anyone_space": "Anteprima spazio",
+            "history_visibility_anyone_space_description": "Permetti a chiunque di vedere l'anteprima dello spazio prima di unirsi.",
+            "history_visibility_anyone_space_recommendation": "Consigliato per gli spazi pubblici."
+        },
+        "access": {
+            "title": "Accesso",
+            "description_space": "Decidi chi può vedere ed entrare in %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3915,7 +3914,10 @@
             "manage_and_explore": "Gestisci ed esplora le stanze"
         },
         "share_public": "Condividi il tuo spazio pubblico",
-        "search_children": "Cerca %(spaceName)s"
+        "search_children": "Cerca %(spaceName)s",
+        "invite_link": "Condividi collegamento di invito",
+        "invite": "Invita persone",
+        "invite_description": "Invita con email o nome utente"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -4008,7 +4010,9 @@
         "setup_rooms_private_description": "Creeremo stanze per ognuno di essi.",
         "address_placeholder": "es. mio-spazio",
         "address_label": "Indirizzo",
-        "label": "Crea uno spazio"
+        "label": "Crea uno spazio",
+        "add_details_prompt_2": "Puoi cambiarli in qualsiasi momento.",
+        "creating": "Creazione…"
     },
     "user_menu": {
         "switch_theme_light": "Passa alla modalità chiara",

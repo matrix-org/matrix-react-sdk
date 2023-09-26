@@ -317,7 +317,6 @@
     "Show image": "Показати зображення",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
     "Add an Integration": "Додати інтеграцію",
-    "Show advanced": "Показати розширені",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -593,7 +592,6 @@
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
     "Share room": "Поділитись кімнатою",
-    "Invite people": "Запросити людей",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "Погодьтесь з Умовами надання послуг сервера ідентифікації (%(serverName)s), щоб дозволити знаходити вас за адресою електронної пошти або за номером телефону.",
     "The identity server you have chosen does not have any terms of service.": "Вибраний вами сервер ідентифікації не містить жодних умов користування.",
     "Terms of service not accepted or the identity server is invalid.": "Умови користування не прийнято або сервер ідентифікації недійсний.",
@@ -627,7 +625,6 @@
     "Share User": "Поділитися користувачем",
     "Unable to share phone number": "Не вдалося надіслати телефонний номер",
     "Unable to share email address": "Не вдалося надіслати адресу е-пошти",
-    "Share invite link": "Надіслати запрошувальне посилання",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Захистіться від втрати доступу до зашифрованих повідомлень і даних створенням резервної копії ключів шифрування на своєму сервері.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
@@ -764,25 +761,7 @@
     },
     "Upgrade required": "Потрібне поліпшення",
     "Space options": "Параметри простору",
-    "Recommended for public spaces.": "Рекомендовано для загальнодоступних просторів.",
-    "Allow people to preview your space before they join.": "Дозвольте людям переглядати ваш простір, перш ніж вони приєднаються.",
-    "Preview Space": "Попередній перегляд простору",
-    "Failed to update the visibility of this space": "Не вдалось оновити видимість цього простору",
-    "Decide who can view and join %(spaceName)s.": "Визначте хто може переглядати та приєднатися до %(spaceName)s.",
-    "Visibility": "Видимість",
-    "This may be useful for public spaces.": "Це може бути корисним для загальнодоступних просторів.",
-    "Guests can join a space without having an account.": "Гості можуть приєднатися до простору без облікового запису.",
     "Enable guest access": "Увімкнути гостьовий доступ",
-    "Hide advanced": "Сховати розширені",
-    "Failed to update the history visibility of this space": "Не вдалося оновити видимість історії цього простору",
-    "Failed to update the guest access of this space": "Не вдалося оновити гостьовий доступ до цього простору",
-    "Leave Space": "Вийти з простору",
-    "Save Changes": "Зберегти зміни",
-    "Edit settings relating to your space.": "Змінити налаштування, що стосуються вашого простору.",
-    "Failed to save space settings.": "Не вдалося зберегти налаштування простору.",
-    "Invite with email or username": "Запросити за допомогою е-пошти або імені користувача",
-    "Show all rooms": "Показати всі кімнати",
-    "You can change these anytime.": "Ви можете змінити це будь-коли.",
     "Create a space": "Створити простір",
     "Address": "Адреса",
     "Cancel All": "Скасувати все",
@@ -891,7 +870,6 @@
     "Verification code": "Код перевірки",
     "Verify the link in your inbox": "Перевірте посилання у теці «Вхідні»",
     "Unable to verify email address.": "Не вдалося перевірити адресу е-пошти.",
-    "Access": "Доступ",
     "Unknown failure": "Невідомий збій",
     "Failed to update the join rules": "Не вдалося оновити правила приєднання",
     "Browse": "Огляд",
@@ -1655,7 +1633,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Резервне копіювання %(sessionsRemaining)s ключів…",
     "Connecting to integration manager…": "Під'єднання до менеджера інтеграцій…",
     "Saving…": "Збереження…",
-    "Creating…": "Створення…",
     "Starting export process…": "Початок процесу експорту…",
     "Secure Backup successful": "Безпечне резервне копіювання виконано успішно",
     "Your keys are now being backed up from this device.": "На цьому пристрої створюється резервна копія ваших ключів.",
@@ -1956,7 +1933,9 @@
         "exit_fullscreeen": "Вийти з повноекранного режиму",
         "enter_fullscreen": "Перейти у повноекранний режим",
         "unban": "Розблокувати",
-        "click_to_copy": "Клацніть, щоб скопіювати"
+        "click_to_copy": "Клацніть, щоб скопіювати",
+        "hide_advanced": "Сховати розширені",
+        "show_advanced": "Показати розширені"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -2571,11 +2550,12 @@
             "metaspaces_subsection": "Показувати такі простори",
             "metaspaces_description": "Простори — це спосіб групування кімнат і людей. Окрім просторів, до яких ви приєдналися, ви також можете використовувати деякі вбудовані.",
             "metaspaces_home_description": "Домівка надає загальний огляд усього.",
-            "metaspaces_home_all_rooms": "Показати всі кімнати в домівці, навіть ті, що належать до просторів.",
             "metaspaces_favourites_description": "Групуйте всі свої улюблені кімнати та людей в одному місці.",
             "metaspaces_people_description": "Групуйте всіх своїх людей в одному місці.",
             "metaspaces_orphans": "Кімнати без просторів",
-            "metaspaces_orphans_description": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці."
+            "metaspaces_orphans_description": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці.",
+            "metaspaces_home_all_rooms_description": "Показати всі кімнати в домівці, навіть ті, що належать до просторів.",
+            "metaspaces_home_all_rooms": "Показати всі кімнати"
         }
     },
     "devtools": {
@@ -3388,7 +3368,11 @@
             "default_url_previews_off": "Попередній перегляд URL-адрес типово вимкнений для учасників цієї кімнати.",
             "url_preview_encryption_warning": "У кімнатах з шифруванням, як у цій, попередній перегляд посилань усталено вимкнено. Це робиться, щоб гарантувати, що ваш домашній сервер (на якому генеруються перегляди) не матиме змоги збирати дані щодо посилань, які ви бачите у цій кімнаті.",
             "url_preview_explainer": "Коли хтось додає URL-адресу у повідомлення, можливо автоматично показувати для цієї URL-адресу попередній перегляд його заголовку, опису й зображення.",
-            "url_previews_section": "Попередній перегляд URL-адрес"
+            "url_previews_section": "Попередній перегляд URL-адрес",
+            "error_save_space_settings": "Не вдалося зберегти налаштування простору.",
+            "description_space": "Змінити налаштування, що стосуються вашого простору.",
+            "save": "Зберегти зміни",
+            "leave_space": "Вийти з простору"
         },
         "advanced": {
             "unfederated": "Ця кімната недоступна для віддалених серверів Matrix",
@@ -3402,7 +3386,22 @@
             "room_version": "Версія кімнати:"
         },
         "delete_avatar_label": "Видалити аватар",
-        "upload_avatar_label": "Вивантажити аватар"
+        "upload_avatar_label": "Вивантажити аватар",
+        "visibility": {
+            "error_update_guest_access": "Не вдалося оновити гостьовий доступ до цього простору",
+            "error_update_history_visibility": "Не вдалося оновити видимість історії цього простору",
+            "guest_access_explainer": "Гості можуть приєднатися до простору без облікового запису.",
+            "guest_access_explainer_public_space": "Це може бути корисним для загальнодоступних просторів.",
+            "title": "Видимість",
+            "error_failed_save": "Не вдалось оновити видимість цього простору",
+            "history_visibility_anyone_space": "Попередній перегляд простору",
+            "history_visibility_anyone_space_description": "Дозвольте людям переглядати ваш простір, перш ніж вони приєднаються.",
+            "history_visibility_anyone_space_recommendation": "Рекомендовано для загальнодоступних просторів."
+        },
+        "access": {
+            "title": "Доступ",
+            "description_space": "Визначте хто може переглядати та приєднатися до %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3910,7 +3909,10 @@
             "manage_and_explore": "Керування і перегляд кімнат"
         },
         "share_public": "Поділитися своїм загальнодоступним простором",
-        "search_children": "Пошук %(spaceName)s"
+        "search_children": "Пошук %(spaceName)s",
+        "invite_link": "Надіслати запрошувальне посилання",
+        "invite": "Запросити людей",
+        "invite_description": "Запросити за допомогою е-пошти або імені користувача"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -4003,7 +4005,9 @@
         "setup_rooms_private_description": "Ми створимо кімнати для кожного з них.",
         "address_placeholder": "наприклад, мій-простір",
         "address_label": "Адреса",
-        "label": "Створити простір"
+        "label": "Створити простір",
+        "add_details_prompt_2": "Ви можете змінити це будь-коли.",
+        "creating": "Створення…"
     },
     "user_menu": {
         "switch_theme_light": "Світла тема",

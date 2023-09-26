@@ -820,31 +820,10 @@
     "Space options": "Tùy chọn space",
     "Jump to first invite.": "Chuyển đến lời mời đầu tiên.",
     "Jump to first unread room.": "Chuyển đến phòng chưa đọc đầu tiên.",
-    "Recommended for public spaces.": "Được đề xuất cho space công cộng.",
-    "Allow people to preview your space before they join.": "Cho phép mọi người xem trước space của bạn trước khi tham gia.",
-    "Preview Space": "Xem trước space",
-    "Failed to update the visibility of this space": "Không cập nhật được khả năng hiển thị của space này",
-    "Decide who can view and join %(spaceName)s.": "Lựa chọn ai được xem và tham gia %(spaceName)s.",
-    "Visibility": "Hiển thị",
-    "Show advanced": "Hiện nâng cao",
-    "This may be useful for public spaces.": "Điều này có thể hữu ích cho space công cộng.",
-    "Guests can join a space without having an account.": "Khách có thể tham gia space mà không cần có tài khoản.",
     "Enable guest access": "Bật quyền truy cập của khách",
-    "Hide advanced": "Ẩn nâng cao",
-    "Failed to update the history visibility of this space": "Không cập nhật được chế độ hiển thị lịch sử của space này",
-    "Failed to update the guest access of this space": "Không cập nhật được quyền truy cập của khách vào space này",
-    "Leave Space": "Rời khỏi Space",
-    "Save Changes": "Lưu thay đổi",
-    "Edit settings relating to your space.": "Chỉnh sửa cài đặt liên quan đến space của bạn.",
     "General": "Tổng quát",
-    "Failed to save space settings.": "Không thể lưu cài đặt space.",
-    "Invite with email or username": "Mời bằng thư điện tử hoặc tên người dùng",
-    "Invite people": "Mời mọi người",
-    "Share invite link": "Chia sẻ liên kết mời",
     "Spaces": "Không gian",
-    "Show all rooms": "Hiển thị tất cả các phòng",
     "Home": "Nhà",
-    "You can change these anytime.": "Bạn có thể thay đổi những điều này bất cứ lúc nào.",
     "To join a space you'll need an invite.": "Để tham gia vào một space, bạn sẽ cần một lời mời.",
     "Create a space": "Tạo một Space",
     "Address": "Địa chỉ",
@@ -968,7 +947,6 @@
     "Your email address hasn't been verified yet": "Địa chỉ thư điện tử của bạn chưa được xác minh",
     "Unable to share email address": "Không thể chia sẻ địa chỉ thư điện tử",
     "Unable to revoke sharing for email address": "Không thể thu hồi chia sẻ cho địa chỉ thư điện tử",
-    "Access": "Truy cập",
     "Unknown failure": "Thất bại không xác định",
     "Failed to update the join rules": "Cập nhật quy tắc tham gia thất bại",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
@@ -1407,7 +1385,6 @@
     "This session is backing up your keys.": "Phiên này đang sao lưu các khóa.",
     "Add privileged users": "Thêm người dùng quyền lực",
     "Saving…": "Đang lưu…",
-    "Creating…": "Đang tạo…",
     "Secure Backup successful": "Sao lưu bảo mật thành công",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
@@ -1790,7 +1767,9 @@
         "exit_fullscreeen": "Thoát toàn màn hình",
         "enter_fullscreen": "Vào toàn màn hình",
         "unban": "Bỏ cấm",
-        "click_to_copy": "Bấm để sao chép"
+        "click_to_copy": "Bấm để sao chép",
+        "hide_advanced": "Ẩn nâng cao",
+        "show_advanced": "Hiện nâng cao"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -2371,11 +2350,12 @@
             "metaspaces_subsection": "Space để hiển thị",
             "metaspaces_description": "Không gian là cách để nhóm phòng và người. Bên cạnh các không gian bạn đang ở, bạn cũng có thể sử dụng một số không gian đã được xây dựng sẵn.",
             "metaspaces_home_description": "Home rất hữu ích để có cái nhìn tổng quan về mọi thứ.",
-            "metaspaces_home_all_rooms": "Hiển thị tất cả các phòng trong Home, ngay cả nếu chúng ở trong space.",
             "metaspaces_favourites_description": "Nhóm tất cả các phòng và người mà bạn yêu thích ở một nơi.",
             "metaspaces_people_description": "Đưa tất cả mọi người vào một chỗ.",
             "metaspaces_orphans": "Các phòng bên ngoài một space",
-            "metaspaces_orphans_description": "Nhóm tất cả các phòng của bạn mà không phải là một phần của không gian ở một nơi."
+            "metaspaces_orphans_description": "Nhóm tất cả các phòng của bạn mà không phải là một phần của không gian ở một nơi.",
+            "metaspaces_home_all_rooms_description": "Hiển thị tất cả các phòng trong Home, ngay cả nếu chúng ở trong space.",
+            "metaspaces_home_all_rooms": "Hiển thị tất cả các phòng"
         }
     },
     "devtools": {
@@ -3130,7 +3110,11 @@
             "default_url_previews_off": "Xem trước URL bị tắt theo mặc định đối với những người tham gia trong phòng này.",
             "url_preview_encryption_warning": "Trong các phòng được mã hóa, như phòng này, tính năng xem trước URL bị tắt theo mặc định để đảm bảo rằng máy chủ của bạn (nơi tạo bản xem trước) không thể thu thập thông tin về các liên kết mà bạn nhìn thấy trong phòng này.",
             "url_preview_explainer": "Khi ai đó đặt URL trong tin nhắn của họ, bản xem trước URL có thể được hiển thị để cung cấp thêm thông tin về liên kết đó như tiêu đề, mô tả và hình ảnh từ trang web.",
-            "url_previews_section": "Xem trước URL"
+            "url_previews_section": "Xem trước URL",
+            "error_save_space_settings": "Không thể lưu cài đặt space.",
+            "description_space": "Chỉnh sửa cài đặt liên quan đến space của bạn.",
+            "save": "Lưu thay đổi",
+            "leave_space": "Rời khỏi Space"
         },
         "advanced": {
             "unfederated": "Phòng này không thể truy cập từ xa bằng máy chủ Matrix",
@@ -3144,7 +3128,22 @@
             "room_version": "Phiên bản phòng:"
         },
         "delete_avatar_label": "Xoá ảnh đại diện",
-        "upload_avatar_label": "Tải lên hình đại diện"
+        "upload_avatar_label": "Tải lên hình đại diện",
+        "visibility": {
+            "error_update_guest_access": "Không cập nhật được quyền truy cập của khách vào space này",
+            "error_update_history_visibility": "Không cập nhật được chế độ hiển thị lịch sử của space này",
+            "guest_access_explainer": "Khách có thể tham gia space mà không cần có tài khoản.",
+            "guest_access_explainer_public_space": "Điều này có thể hữu ích cho space công cộng.",
+            "title": "Hiển thị",
+            "error_failed_save": "Không cập nhật được khả năng hiển thị của space này",
+            "history_visibility_anyone_space": "Xem trước space",
+            "history_visibility_anyone_space_description": "Cho phép mọi người xem trước space của bạn trước khi tham gia.",
+            "history_visibility_anyone_space_recommendation": "Được đề xuất cho space công cộng."
+        },
+        "access": {
+            "title": "Truy cập",
+            "description_space": "Lựa chọn ai được xem và tham gia %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3629,7 +3628,10 @@
             "manage_and_explore": "Quản lý và khám phá phòng"
         },
         "share_public": "Chia sẻ space công cộng của bạn",
-        "search_children": "Tìm kiếm %(spaceName)s"
+        "search_children": "Tìm kiếm %(spaceName)s",
+        "invite_link": "Chia sẻ liên kết mời",
+        "invite": "Mời mọi người",
+        "invite_description": "Mời bằng thư điện tử hoặc tên người dùng"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3713,7 +3715,9 @@
         "setup_rooms_private_heading": "Nhóm của bạn đang thực hiện các dự án nào?",
         "address_placeholder": "ví dụ như my-space",
         "address_label": "Địa chỉ",
-        "label": "Tạo một Space"
+        "label": "Tạo một Space",
+        "add_details_prompt_2": "Bạn có thể thay đổi những điều này bất cứ lúc nào.",
+        "creating": "Đang tạo…"
     },
     "user_menu": {
         "switch_theme_light": "Chuyển sang chế độ ánh sáng",

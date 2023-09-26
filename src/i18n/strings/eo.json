@@ -496,8 +496,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. <default>Uzu la norman (%(defaultIdentityServerName)s)</default> aŭ administru per <settings>Agordoj</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. Administru per <settings>Agordoj</settings>.",
     "Close dialog": "Fermi interagujon",
-    "Hide advanced": "Kaŝi specialajn",
-    "Show advanced": "Montri specialajn",
     "Command Help": "Helpo pri komando",
     "Jump to first unread room.": "Salti al unua nelegita ĉambro.",
     "Jump to first invite.": "Salti al unua invito.",
@@ -1059,10 +1057,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Ĉi tiu aro ne estas publika. Vi ne povos re-aliĝi sen invito.",
     "Failed to start livestream": "Malsukcesis komenci tujelsendon",
     "Unable to start audio streaming.": "Ne povas komenci sonelsendon.",
-    "Save Changes": "Konservi ŝanĝojn",
-    "Leave Space": "Forlasi aron",
-    "Edit settings relating to your space.": "Redaktu agordojn pri via aro.",
-    "Failed to save space settings.": "Malsukcesis konservi agordojn de aro.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite to %(roomName)s": "Inviti al %(roomName)s",
@@ -1075,10 +1069,6 @@
     "Invite to this space": "Inviti al ĉi tiu aro",
     "Your message was sent": "Via mesaĝo sendiĝis",
     "Leave space": "Forlasi aron",
-    "Invite with email or username": "Inviti per retpoŝtadreso aŭ uzantonomo",
-    "Invite people": "Inviti personojn",
-    "Share invite link": "Diskonigi invitan ligilon",
-    "You can change these anytime.": "Vi povas ŝanĝi ĉi tiujn kiam ajn vi volas.",
     "Create a space": "Krei aron",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
     "You don't have permission": "Vi ne rajtas",
@@ -1144,16 +1134,7 @@
     "Identity server (%(server)s)": "Identiga servilo (%(server)s)",
     "Could not connect to identity server": "Ne povis konektiĝi al identiga servilo",
     "Not a valid identity server (status code %(code)s)": "Nevalida identiga servilo (statkodo %(code)s)",
-    "Preview Space": "Antaŭrigardi aron",
-    "Decide who can view and join %(spaceName)s.": "Decidu, kiu povas rigardi kaj aliĝi aron %(spaceName)s.",
-    "Visibility": "Videbleco",
-    "This may be useful for public spaces.": "Tio povas esti utila por publikaj aroj.",
-    "Guests can join a space without having an account.": "Gastoj povas aliĝi al aro sen konto.",
     "Enable guest access": "Ŝalti aliron de gastoj",
-    "Failed to update the history visibility of this space": "Malsukcesis ĝisdatigi videblecon de historio de ĉi tiu aro",
-    "Failed to update the guest access of this space": "Malsukcesis ĝisdatigi aliron de gastoj al ĉi tiu aro",
-    "Failed to update the visibility of this space": "Malsukcesis ĝisdatigi la videblecon de ĉi tiu aro",
-    "Show all rooms": "Montri ĉiujn ĉambrojn",
     "Address": "Adreso",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
     "Stop recording": "Malŝalti registradon",
@@ -1162,7 +1143,6 @@
         "one": "Montri %(count)s alian antaŭrigardon",
         "other": "Montri %(count)s aliajn antaŭrigardojn"
     },
-    "Access": "Aliro",
     "Space members": "Aranoj",
     "Anyone in a space can find and join. You can select multiple spaces.": "Ĉiu en aro povas trovi kaj aliĝi. Vi povas elekti plurajn arojn.",
     "Spaces with access": "Aroj kun aliro",
@@ -1184,8 +1164,6 @@
     "Global": "Ĉie",
     "New keyword": "Nova ĉefvorto",
     "Keyword": "Ĉefvorto",
-    "Recommended for public spaces.": "Rekomendita por publikaj aroj.",
-    "Allow people to preview your space before they join.": "Povigi personojn antaŭrigardi vian aron antaŭ aliĝo.",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -1487,7 +1465,9 @@
         "exit_fullscreeen": "Eliru plenekrano",
         "enter_fullscreen": "Plenekrano",
         "unban": "Malforbari",
-        "click_to_copy": "Klaku por kopii"
+        "click_to_copy": "Klaku por kopii",
+        "hide_advanced": "Kaŝi specialajn",
+        "show_advanced": "Montri specialajn"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -1862,7 +1842,8 @@
             "add_msisdn_dialog_title": "Aldoni telefonnumeron"
         },
         "sidebar": {
-            "title": "Flanka kolumno"
+            "title": "Flanka kolumno",
+            "metaspaces_home_all_rooms": "Montri ĉiujn ĉambrojn"
         }
     },
     "devtools": {
@@ -2490,7 +2471,11 @@
             "default_url_previews_off": "Antaŭrigardoj de URL-oj estas implicite malŝaltitaj por anoj de tiu ĉi ĉambro.",
             "url_preview_encryption_warning": "En ĉifritaj ĉambroj, kiel ĉi tiu, antaŭrigardoj al URL-oj estas implicite malŝaltitaj por certigi, ke via hejmservilo (kie la antaŭrigardoj estas generataj) ne povas kolekti informojn pri ligiloj en ĉi tiu ĉambro.",
             "url_preview_explainer": "Kiam iu metas URL-on en sian mesaĝon, antaŭrigardo al tiu URL povas montriĝi, por doni pliajn informojn pri tiu ligilo, kiel ekzemple la titolon, priskribon, kaj bildon el la retejo.",
-            "url_previews_section": "Antaŭrigardoj al retpaĝoj"
+            "url_previews_section": "Antaŭrigardoj al retpaĝoj",
+            "error_save_space_settings": "Malsukcesis konservi agordojn de aro.",
+            "description_space": "Redaktu agordojn pri via aro.",
+            "save": "Konservi ŝanĝojn",
+            "leave_space": "Forlasi aron"
         },
         "advanced": {
             "unfederated": "Ĉi tiu ĉambro ne atingeblas por foraj serviloj de Matrix",
@@ -2500,7 +2485,22 @@
             "room_version": "Ĉambra versio:"
         },
         "delete_avatar_label": "Forigi profilbildon",
-        "upload_avatar_label": "Alŝuti profilbildon"
+        "upload_avatar_label": "Alŝuti profilbildon",
+        "visibility": {
+            "error_update_guest_access": "Malsukcesis ĝisdatigi aliron de gastoj al ĉi tiu aro",
+            "error_update_history_visibility": "Malsukcesis ĝisdatigi videblecon de historio de ĉi tiu aro",
+            "guest_access_explainer": "Gastoj povas aliĝi al aro sen konto.",
+            "guest_access_explainer_public_space": "Tio povas esti utila por publikaj aroj.",
+            "title": "Videbleco",
+            "error_failed_save": "Malsukcesis ĝisdatigi la videblecon de ĉi tiu aro",
+            "history_visibility_anyone_space": "Antaŭrigardi aron",
+            "history_visibility_anyone_space_description": "Povigi personojn antaŭrigardi vian aron antaŭ aliĝo.",
+            "history_visibility_anyone_space_recommendation": "Rekomendita por publikaj aroj."
+        },
+        "access": {
+            "title": "Aliro",
+            "description_space": "Decidu, kiu povas rigardi kaj aliĝi aron %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -2943,7 +2943,10 @@
             "manage_and_explore": "Administri kaj esplori ĉambrojn"
         },
         "share_public": "Diskonigu vian publikan aron",
-        "search_children": "Serĉi je %(spaceName)s"
+        "search_children": "Serĉi je %(spaceName)s",
+        "invite_link": "Diskonigi invitan ligilon",
+        "invite": "Inviti personojn",
+        "invite_description": "Inviti per retpoŝtadreso aŭ uzantonomo"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -3018,7 +3021,8 @@
         "setup_rooms_description": "Vi povas aldoni pliajn poste, inkluzive tiujn, kiuj jam ekzistas.",
         "address_placeholder": "ekz. mia-aro",
         "address_label": "Adreso",
-        "label": "Krei aron"
+        "label": "Krei aron",
+        "add_details_prompt_2": "Vi povas ŝanĝi ĉi tiujn kiam ajn vi volas."
     },
     "user_menu": {
         "switch_theme_light": "Ŝalti helan reĝimon",

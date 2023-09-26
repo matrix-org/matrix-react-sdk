@@ -322,7 +322,7 @@ const SpaceCreateMenu: React.FC<{
                         : _t("create_space|private_heading")}
                 </h2>
                 <p>
-                    {_t("create_space|add_details_prompt")} {_t("You can change these anytime.")}
+                    {_t("create_space|add_details_prompt")} {_t("create_space|add_details_prompt_2")}
                 </p>
 
                 <SpaceCreateForm
@@ -341,7 +341,7 @@ const SpaceCreateMenu: React.FC<{
                 />
 
                 <AccessibleButton kind="primary" onClick={onSpaceCreateClick} disabled={busy}>
-                    {busy ? _t("Creating…") : _t("action|create")}
+                    {busy ? _t("create_space|creating") : _t("action|create")}
                 </AccessibleButton>
             </React.Fragment>
         );

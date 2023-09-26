@@ -603,8 +603,6 @@
     "Clear all data in this session?": "Rensa all data i den här sessionen?",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Rensning av all data från den här sessionen är permanent. Krypterade meddelande kommer att förloras om inte deras nycklar har säkerhetskopierats.",
     "Clear all data": "Rensa all data",
-    "Hide advanced": "Dölj avancerat",
-    "Show advanced": "Visa avancerat",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "För att undvika att förlora din chatthistorik måste du exportera dina rumsnycklar innan du loggar ut. Du behöver gå tillbaka till den nyare versionen av %(brand)s för att göra detta",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du har tidigare använt en nyare version av %(brand)s med den här sessionen. Om du vill använda den här versionen igen med totalsträckskryptering behöver du logga ut och logga in igen.",
     "Incompatible Database": "Inkompatibel databas",
@@ -1049,10 +1047,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Det här utrymmet är inte offentligt. Du kommer inte kunna gå med igen utan en inbjudan.",
     "Failed to start livestream": "Misslyckades att starta livestream",
     "Unable to start audio streaming.": "Kunde inte starta ljudströmning.",
-    "Save Changes": "Spara ändringar",
-    "Leave Space": "Lämna utrymmet",
-    "Edit settings relating to your space.": "Redigera inställningar relaterat till ditt utrymme.",
-    "Failed to save space settings.": "Misslyckades att spara utrymmesinställningar.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>), eller <a>dela det här utrymmet</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>), eller <a>dela det här rummet</a>.",
     "Create a new room": "Skapa ett nytt rum",
@@ -1065,8 +1059,6 @@
     "Your message was sent": "Ditt meddelande skickades",
     "Space options": "Utrymmesalternativ",
     "Leave space": "Lämna utrymmet",
-    "Invite people": "Bjud in folk",
-    "Share invite link": "Skapa inbjudningslänk",
     "Create a space": "Skapa ett utrymme",
     "Private space": "Privat utrymme",
     "Public space": "Offentligt utrymme",
@@ -1081,8 +1073,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Detta påverkar normalt bara hur rummet hanteras på serven. Om du upplever problem med din %(brand)s, vänligen rapportera en bugg.",
     "Invite to %(roomName)s": "Bjud in till %(roomName)s",
     "Edit devices": "Redigera enheter",
-    "Invite with email or username": "Bjud in med e-postadress eller användarnamn",
-    "You can change these anytime.": "Du kan ändra dessa när som helst.",
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
@@ -1153,10 +1143,6 @@
     "Could not connect to identity server": "Kunde inte ansluta till identitetsservern",
     "Not a valid identity server (status code %(code)s)": "Inte en giltig identitetsserver (statuskod %(code)s)",
     "Identity server URL must be HTTPS": "URL för identitetsserver måste vara HTTPS",
-    "Failed to update the history visibility of this space": "Misslyckades att uppdatera historiksynlighet för det här utrymmet",
-    "Failed to update the guest access of this space": "Misslyckades att uppdatera gäståtkomst för det här utrymmet",
-    "Failed to update the visibility of this space": "Misslyckades att uppdatera synligheten för det här utrymmet",
-    "Show all rooms": "Visa alla rum",
     "Address": "Adress",
     "Space information": "Utrymmesinfo",
     "There was an error loading your notification settings.": "Ett fel inträffade när dina aviseringsinställningar laddades.",
@@ -1164,13 +1150,6 @@
     "Global": "Globalt",
     "New keyword": "Nytt nyckelord",
     "Keyword": "Nyckelord",
-    "Recommended for public spaces.": "Rekommenderas för offentliga utrymmen.",
-    "Allow people to preview your space before they join.": "Låt personer förhandsgranska ditt utrymme innan de går med.",
-    "Preview Space": "Förhandsgranska utrymme",
-    "Decide who can view and join %(spaceName)s.": "Bestäm vem kan se och gå med i %(spaceName)s.",
-    "Visibility": "Synlighet",
-    "This may be useful for public spaces.": "Det här kan vara användbart för ett offentligt utrymme.",
-    "Guests can join a space without having an account.": "Gäster kan gå med i ett utrymme utan att ha ett konto.",
     "Enable guest access": "Aktivera gäståtkomst",
     "Stop recording": "Stoppa inspelning",
     "Send voice message": "Skicka röstmeddelande",
@@ -1178,7 +1157,6 @@
         "one": "Visa %(count)s annan förhandsgranskning",
         "other": "Visa %(count)s andra förhandsgranskningar"
     },
-    "Access": "Åtkomst",
     "Space members": "Utrymmesmedlemmar",
     "Anyone in a space can find and join. You can select multiple spaces.": "Vem som helst i ett utrymme kan hitta och gå med. Du kan välja flera utrymmen.",
     "Spaces with access": "Utrymmen med åtkomst",
@@ -1657,7 +1635,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Säkerhetskopierar %(sessionsRemaining)s nycklar …",
     "Connecting to integration manager…": "Kontaktar integrationshanteraren …",
     "Saving…": "Sparar …",
-    "Creating…": "Skapar …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "An error occurred when updating your notification preferences. Please try to toggle your option again.": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
@@ -1913,7 +1890,9 @@
         "exit_fullscreeen": "Gå ur fullskärm",
         "enter_fullscreen": "Gå till fullskärm",
         "unban": "Avblockera",
-        "click_to_copy": "Klicka för att kopiera"
+        "click_to_copy": "Klicka för att kopiera",
+        "hide_advanced": "Dölj avancerat",
+        "show_advanced": "Visa avancerat"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -2528,11 +2507,12 @@
             "metaspaces_subsection": "Utrymmen att visa",
             "metaspaces_description": "Utrymmen är sätt att gruppera rum och personer. Utöver utrymmena du är med i så kan du använda några färdiggjorda också.",
             "metaspaces_home_description": "Hem är användbar för att få en översikt över allt.",
-            "metaspaces_home_all_rooms": "Visa alla dina rum i Hem, även om de är i ett utrymme.",
             "metaspaces_favourites_description": "Gruppera alla dina favoritrum och -personer på ett ställe.",
             "metaspaces_people_description": "Gruppera alla dina personer på ett ställe.",
             "metaspaces_orphans": "Rum utanför ett utrymme",
-            "metaspaces_orphans_description": "Gruppera alla dina rum som inte är en del av ett utrymme på ett ställe."
+            "metaspaces_orphans_description": "Gruppera alla dina rum som inte är en del av ett utrymme på ett ställe.",
+            "metaspaces_home_all_rooms_description": "Visa alla dina rum i Hem, även om de är i ett utrymme.",
+            "metaspaces_home_all_rooms": "Visa alla rum"
         }
     },
     "devtools": {
@@ -3330,7 +3310,11 @@
             "default_url_previews_off": "URL-förhandsgranskning är inaktiverat som förval för deltagare i detta rum.",
             "url_preview_encryption_warning": "I krypterade rum, som detta, är URL-förhandsgranskning inaktiverad som förval för att säkerställa att din hemserver (där förhandsgranskningar genereras) inte kan samla information om länkar du ser i rummet.",
             "url_preview_explainer": "När någon lägger en URL i sitt meddelande, kan URL-förhandsgranskning ge mer information om länken, såsom titel, beskrivning, och en bild från webbplatsen.",
-            "url_previews_section": "URL-förhandsgranskning"
+            "url_previews_section": "URL-förhandsgranskning",
+            "error_save_space_settings": "Misslyckades att spara utrymmesinställningar.",
+            "description_space": "Redigera inställningar relaterat till ditt utrymme.",
+            "save": "Spara ändringar",
+            "leave_space": "Lämna utrymmet"
         },
         "advanced": {
             "unfederated": "Detta rum är inte tillgängligt för externa Matrix-servrar",
@@ -3344,7 +3328,22 @@
             "room_version": "Rumsversion:"
         },
         "delete_avatar_label": "Radera avatar",
-        "upload_avatar_label": "Ladda upp avatar"
+        "upload_avatar_label": "Ladda upp avatar",
+        "visibility": {
+            "error_update_guest_access": "Misslyckades att uppdatera gäståtkomst för det här utrymmet",
+            "error_update_history_visibility": "Misslyckades att uppdatera historiksynlighet för det här utrymmet",
+            "guest_access_explainer": "Gäster kan gå med i ett utrymme utan att ha ett konto.",
+            "guest_access_explainer_public_space": "Det här kan vara användbart för ett offentligt utrymme.",
+            "title": "Synlighet",
+            "error_failed_save": "Misslyckades att uppdatera synligheten för det här utrymmet",
+            "history_visibility_anyone_space": "Förhandsgranska utrymme",
+            "history_visibility_anyone_space_description": "Låt personer förhandsgranska ditt utrymme innan de går med.",
+            "history_visibility_anyone_space_recommendation": "Rekommenderas för offentliga utrymmen."
+        },
+        "access": {
+            "title": "Åtkomst",
+            "description_space": "Bestäm vem kan se och gå med i %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3850,7 +3849,10 @@
             "manage_and_explore": "Hantera och utforska rum"
         },
         "share_public": "Dela ditt offentliga utrymme",
-        "search_children": "Sök i %(spaceName)s"
+        "search_children": "Sök i %(spaceName)s",
+        "invite_link": "Skapa inbjudningslänk",
+        "invite": "Bjud in folk",
+        "invite_description": "Bjud in med e-postadress eller användarnamn"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -3943,7 +3945,9 @@
         "setup_rooms_private_description": "Vi kommer skapa rum för var och en av dem.",
         "address_placeholder": "t.ex. mitt-utrymme",
         "address_label": "Adress",
-        "label": "Skapa ett utrymme"
+        "label": "Skapa ett utrymme",
+        "add_details_prompt_2": "Du kan ändra dessa när som helst.",
+        "creating": "Skapar …"
     },
     "user_menu": {
         "switch_theme_light": "Byt till ljust läge",

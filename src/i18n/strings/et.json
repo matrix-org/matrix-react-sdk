@@ -153,8 +153,6 @@
     "No more results": "Rohkem otsingutulemusi pole",
     "Are you sure?": "Kas sa oled kindel?",
     "Jump to read receipt": "Hüppa lugemisteatise juurde",
-    "Hide advanced": "Peida lisaseadistused",
-    "Show advanced": "Näita lisaseadistusi",
     "Server did not require any authentication": "Server ei nõudnud mitte mingisugust autentimist",
     "Recent Conversations": "Hiljutised vestlused",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver on saavutanud igakuise aktiivsete kasutajate piiri. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
@@ -1046,10 +1044,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "See ei ole avalik kogukonnakeskus. Ilma kutseta sa ei saa uuesti liituda.",
     "Failed to start livestream": "Videovoo käivitamine ei õnnestu",
     "Unable to start audio streaming.": "Audiovoo käivitamine ei õnnestu.",
-    "Save Changes": "Salvesta muutused",
-    "Leave Space": "Lahku kogukonnakeskusest",
-    "Edit settings relating to your space.": "Muuda oma kogukonnakeskuse seadistusi.",
-    "Failed to save space settings.": "Kogukonnakeskuse seadistuste salvestamine ei õnnestunud.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
     "Create a new room": "Loo uus jututuba",
@@ -1062,15 +1056,11 @@
     "Your message was sent": "Sinu sõnum sai saadetud",
     "Space options": "Kogukonnakeskus eelistused",
     "Leave space": "Lahku kogukonnakeskusest",
-    "Invite people": "Kutsu teisi kasutajaid",
-    "Share invite link": "Jaga kutse linki",
     "Create a space": "Loo kogukonnakeskus",
     "%(count)s members": {
         "other": "%(count)s liiget",
         "one": "%(count)s liige"
     },
-    "You can change these anytime.": "Sa võid neid alati muuta.",
-    "Invite with email or username": "Kutsu e-posti aadressi või kasutajanime alusel",
     "Edit devices": "Muuda seadmeid",
     "Invite to %(roomName)s": "Kutsu jututuppa %(roomName)s",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "See tavaliselt mõjutab vaid viisi, kuidas server jututuba teenindab. Kui sul tekib %(brand)s kasutamisel vigu, siis palun anna sellest meile teada.",
@@ -1145,23 +1135,13 @@
     "Search for rooms or people": "Otsi jututubasid või inimesi",
     "Sent": "Saadetud",
     "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
-    "Visibility": "Nähtavus",
-    "This may be useful for public spaces.": "Seda saad kasutada näiteks avalike kogukonnakeskuste puhul.",
-    "Guests can join a space without having an account.": "Külalised võivad liituda kogukonnakeskusega ilma kasutajakontota.",
     "Enable guest access": "Luba ligipääs külalistele",
-    "Failed to update the history visibility of this space": "Ei õnnestunud selle kogukonnakekuse ajaloo loetavust uuendada",
-    "Failed to update the guest access of this space": "Ei õnnestunud selle kogukonnakekuse külaliste ligipääsureegleid uuendada",
-    "Failed to update the visibility of this space": "Kogukonnakeskuse nähtavust ei õnnestunud uuendada",
     "Address": "Aadress",
     "To publish an address, it needs to be set as a local address first.": "Aadressi avaldamiseks peab ta esmalt olema määratud kohalikuks aadressiks.",
     "Published addresses can be used by anyone on any server to join your room.": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu jututoaga.",
     "Published addresses can be used by anyone on any server to join your space.": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu kogukonnakeskusega.",
     "This space has no local addresses": "Sellel kogukonnakeskusel puuduvad kohalikud aadressid",
     "Space information": "Kogukonnakeskuse teave",
-    "Recommended for public spaces.": "Soovitame avalike kogukonnakeskuste puhul.",
-    "Allow people to preview your space before they join.": "Luba huvilistel enne liitumist näha kogukonnakeskuse eelvaadet.",
-    "Preview Space": "Kogukonnakeskuse eelvaade",
-    "Decide who can view and join %(spaceName)s.": "Otsusta kes saada näha ja liituda %(spaceName)s kogukonnaga.",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Selleks et teised kasutajad saaks seda kogukonda leida oma koduserveri kaudu (%(localDomain)s) seadista talle aadressid",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
     "Please provide an address": "Palun sisesta aadress",
@@ -1202,10 +1182,8 @@
     "Spaces with access": "Ligipääsuga kogukonnakeskused",
     "Anyone in a space can find and join. You can select multiple spaces.": "Kõik kogukonnakeskuse liikmed saavad leida ja liituda. Sa võid valida ka mitu kogukonnakeskust.",
     "Space members": "Kogukonnakeskuse liikmed",
-    "Access": "Ligipääs",
     "Leave %(spaceName)s": "Lahku %(spaceName)s kogukonnakeskusest",
     "Decrypting": "Dekrüptin sisu",
-    "Show all rooms": "Näita kõiki jututubasid",
     "You won't be able to rejoin unless you are re-invited.": "Ilma uue kutseta sa ei saa uuesti liituda.",
     "Want to add a new space instead?": "Kas sa selle asemel soovid lisada uut kogukonnakeskust?",
     "Create a new space": "Loo uus kogukonnakeskus",
@@ -1655,7 +1633,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Varundan %(sessionsRemaining)s krüptovõtmeid…",
     "Connecting to integration manager…": "Ühendamisel lõiminguhalduriga…",
     "Saving…": "Salvestame…",
-    "Creating…": "Loome…",
     "Starting export process…": "Alustame eksportimist…",
     "Secure Backup successful": "Krüptovõtmete varundus õnnestus",
     "Your keys are now being backed up from this device.": "Sinu krüptovõtmed on parasjagu sellest seadmest varundamisel.",
@@ -1956,7 +1933,9 @@
         "exit_fullscreeen": "Lülita täisekraanivaade välja",
         "enter_fullscreen": "Lülita täisekraanivaade sisse",
         "unban": "Taasta ligipääs",
-        "click_to_copy": "Kopeerimiseks klõpsa"
+        "click_to_copy": "Kopeerimiseks klõpsa",
+        "hide_advanced": "Peida lisaseadistused",
+        "show_advanced": "Näita lisaseadistusi"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -2571,11 +2550,12 @@
             "metaspaces_subsection": "Näidatavad kogukonnakeskused",
             "metaspaces_description": "Kogukonnakeskused on kasutajate ja jututubade koondamise viis. Lisaks kogukonnakeskustele, mille liiga sa oled, võid sa kasutada ka eelseadistatud kogukonnakeskusi.",
             "metaspaces_home_description": "Avalehelt saad kõigest hea ülevaate.",
-            "metaspaces_home_all_rooms": "Näita kõiki oma jututubasid avalehel ka siis kui nad on osa mõnest kogukonnast.",
             "metaspaces_favourites_description": "Koonda oma olulised sõbrad ning lemmikjututoad ühte kohta.",
             "metaspaces_people_description": "Koonda oma olulised sõbrad ühte kohta.",
             "metaspaces_orphans": "Jututoad väljaspool seda kogukonda",
-            "metaspaces_orphans_description": "Koonda ühte kohta kõik oma jututoad, mis ei kuulu mõnda kogukonda."
+            "metaspaces_orphans_description": "Koonda ühte kohta kõik oma jututoad, mis ei kuulu mõnda kogukonda.",
+            "metaspaces_home_all_rooms_description": "Näita kõiki oma jututubasid avalehel ka siis kui nad on osa mõnest kogukonnast.",
+            "metaspaces_home_all_rooms": "Näita kõiki jututubasid"
         }
     },
     "devtools": {
@@ -3388,7 +3368,11 @@
             "default_url_previews_off": "URL'ide eelvaated on vaikimisi lülitatud välja selles jututoas osalejate jaoks.",
             "url_preview_encryption_warning": "Krüptitud jututubades, nagu see praegune, URL'ide eelvaated ei ole vaikimisi kasutusel. See tagab, et sinu koduserver (kus eelvaated luuakse) ei saaks koguda teavet viidete kohta, mida sa siin jututoas näed.",
             "url_preview_explainer": "Kui keegi lisab oma sõnumisse URL'i, siis võidakse näidata selle URL'i eelvaadet, mis annab lisateavet tema kohta, nagu näiteks pealkiri, kirjeldus ja kuidas ta välja näeb.",
-            "url_previews_section": "URL'ide eelvaated"
+            "url_previews_section": "URL'ide eelvaated",
+            "error_save_space_settings": "Kogukonnakeskuse seadistuste salvestamine ei õnnestunud.",
+            "description_space": "Muuda oma kogukonnakeskuse seadistusi.",
+            "save": "Salvesta muutused",
+            "leave_space": "Lahku kogukonnakeskusest"
         },
         "advanced": {
             "unfederated": "See jututuba ei ole leitav teiste Matrix'i serverite jaoks",
@@ -3402,7 +3386,22 @@
             "room_version": "Jututoa versioon:"
         },
         "delete_avatar_label": "Kustuta tunnuspilt",
-        "upload_avatar_label": "Laadi üles profiilipilt ehk avatar"
+        "upload_avatar_label": "Laadi üles profiilipilt ehk avatar",
+        "visibility": {
+            "error_update_guest_access": "Ei õnnestunud selle kogukonnakekuse külaliste ligipääsureegleid uuendada",
+            "error_update_history_visibility": "Ei õnnestunud selle kogukonnakekuse ajaloo loetavust uuendada",
+            "guest_access_explainer": "Külalised võivad liituda kogukonnakeskusega ilma kasutajakontota.",
+            "guest_access_explainer_public_space": "Seda saad kasutada näiteks avalike kogukonnakeskuste puhul.",
+            "title": "Nähtavus",
+            "error_failed_save": "Kogukonnakeskuse nähtavust ei õnnestunud uuendada",
+            "history_visibility_anyone_space": "Kogukonnakeskuse eelvaade",
+            "history_visibility_anyone_space_description": "Luba huvilistel enne liitumist näha kogukonnakeskuse eelvaadet.",
+            "history_visibility_anyone_space_recommendation": "Soovitame avalike kogukonnakeskuste puhul."
+        },
+        "access": {
+            "title": "Ligipääs",
+            "description_space": "Otsusta kes saada näha ja liituda %(spaceName)s kogukonnaga."
+        }
     },
     "encryption": {
         "verification": {
@@ -3910,7 +3909,10 @@
             "manage_and_explore": "Halda ja uuri jututubasid"
         },
         "share_public": "Jaga oma avalikku kogukonnakeskust",
-        "search_children": "Otsi %(spaceName)s kogukonnast"
+        "search_children": "Otsi %(spaceName)s kogukonnast",
+        "invite_link": "Jaga kutse linki",
+        "invite": "Kutsu teisi kasutajaid",
+        "invite_description": "Kutsu e-posti aadressi või kasutajanime alusel"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -4003,7 +4005,9 @@
         "setup_rooms_private_description": "Loome siis igaühe jaoks oma jututoa.",
         "address_placeholder": "näiteks minu kogukond",
         "address_label": "Aadress",
-        "label": "Loo kogukonnakeskus"
+        "label": "Loo kogukonnakeskus",
+        "add_details_prompt_2": "Sa võid neid alati muuta.",
+        "creating": "Loome…"
     },
     "user_menu": {
         "switch_theme_light": "Kasuta heledat teemat",

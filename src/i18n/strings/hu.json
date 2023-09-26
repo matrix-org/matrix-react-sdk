@@ -473,8 +473,6 @@
     "Explore rooms": "Szobák felderítése",
     "Verify the link in your inbox": "Ellenőrizd a hivatkozást a bejövő leveleid között",
     "e.g. my-room": "pl.: szobam",
-    "Hide advanced": "Speciális beállítások elrejtése",
-    "Show advanced": "Speciális beállítások megjelenítése",
     "Close dialog": "Ablak bezárása",
     "Show image": "Kép megjelenítése",
     "Your email address hasn't been verified yet": "Az e-mail-címe még nincs ellenőrizve",
@@ -1050,10 +1048,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Ez a tér nem nyilvános. Kilépés után csak újabb meghívóval lehet újra belépni.",
     "Failed to start livestream": "Az élő adás indítása sikertelen",
     "Unable to start audio streaming.": "A hang folyam indítása sikertelen.",
-    "Save Changes": "Változtatások mentése",
-    "Leave Space": "Tér elhagyása",
-    "Edit settings relating to your space.": "A tér beállításainak szerkesztése.",
-    "Failed to save space settings.": "A tér beállításának mentése sikertelen.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevével, felhasználói nevével (pl. <userId/>) vagy <a>oszd meg ezt a teret</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a teret</a>.",
     "Create a new room": "Új szoba készítése",
@@ -1066,8 +1060,6 @@
     "Your message was sent": "Üzenet elküldve",
     "Space options": "Tér beállításai",
     "Leave space": "Tér elhagyása",
-    "Invite people": "Emberek meghívása",
-    "Share invite link": "Meghívási hivatkozás megosztása",
     "Create a space": "Tér létrehozása",
     "Private space": "Privát tér",
     "Public space": "Nyilvános tér",
@@ -1082,8 +1074,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ez általában a szoba kiszolgálóoldali kezelésében jelent változást. Ha a(z) %(brand)s kliensben tapasztal problémát, akkor küldjön egy hibajelentést.",
     "Invite to %(roomName)s": "Meghívás ide: %(roomName)s",
     "Edit devices": "Eszközök szerkesztése",
-    "Invite with email or username": "Meghívás e-mail-címmel vagy felhasználónévvel",
-    "You can change these anytime.": "Ezeket bármikor megváltoztathatja.",
     "Verify your identity to access encrypted messages and prove your identity to others.": "Ellenőrizze a személyazonosságát, hogy hozzáférjen a titkosított üzeneteihez és másoknak is bizonyítani tudja személyazonosságát.",
     "Avatar": "Profilkép",
     "Reset event store": "Az eseménytároló alaphelyzetbe állítása",
@@ -1150,20 +1140,10 @@
     "To publish an address, it needs to be set as a local address first.": "A cím publikálásához először helyi címet kell beállítani.",
     "Published addresses can be used by anyone on any server to join your space.": "A nyilvánosságra hozott címet bárki bármelyik szerverről használhatja a térbe való belépéshez.",
     "Published addresses can be used by anyone on any server to join your room.": "A nyilvánosságra hozott címet bárki bármelyik szerverről használhatja a szobához való belépéshez.",
-    "Failed to update the history visibility of this space": "A tér régi üzeneteinek láthatóságának frissítése sikertelen",
-    "Failed to update the guest access of this space": "A tér vendéghozzáférésének frissítése sikertelen",
     "Please provide an address": "Kérem adja meg a címet",
     "This space has no local addresses": "Ennek a térnek nincs helyi címe",
     "Space information": "Tér információi",
-    "Recommended for public spaces.": "A nyilvános terekhez ajánlott.",
-    "Allow people to preview your space before they join.": "A tér előnézetének engedélyezése a belépés előtt.",
-    "Preview Space": "Tér előnézete",
-    "Decide who can view and join %(spaceName)s.": "Döntse el, hogy ki láthatja, és léphet be ide: %(spaceName)s.",
-    "Visibility": "Láthatóság",
-    "This may be useful for public spaces.": "A nyilvános tereknél ez hasznos lehet.",
-    "Guests can join a space without having an account.": "A vendégek fiók nélkül is beléphetnek a térbe.",
     "Enable guest access": "Vendéghozzáférés engedélyezése",
-    "Failed to update the visibility of this space": "A tér láthatóságának frissítése sikertelen",
     "Address": "Cím",
     "Unnamed audio": "Névtelen hang",
     "Error processing audio message": "Hiba a hangüzenet feldolgozásánál",
@@ -1198,7 +1178,6 @@
     "Connection failed": "Kapcsolódás sikertelen",
     "Could not connect media": "Média kapcsolat nem hozható létre",
     "Call back": "Visszahívás",
-    "Access": "Hozzáférés",
     "Space members": "Tértagság",
     "Anyone in a space can find and join. You can select multiple spaces.": "A téren bárki megtalálhatja és beléphet. Több teret is kiválaszthat.",
     "Spaces with access": "Terek hozzáféréssel",
@@ -1233,7 +1212,6 @@
     "Add existing space": "Meglévő tér hozzáadása",
     "Add space": "Tér hozzáadása",
     "These are likely ones other room admins are a part of.": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai.",
-    "Show all rooms": "Minden szoba megjelenítése",
     "Leave %(spaceName)s": "Kilép innen: %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ön az adminisztrátora néhány szobának vagy térnek amiből ki szeretne lépni. Ha kilép belőlük akkor azok adminisztrátor nélkül maradnak.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ön az egyetlen adminisztrátora a térnek. Ha kilép, senki nem tudja irányítani.",
@@ -1657,7 +1635,6 @@
     "Backing up %(sessionsRemaining)s keys…": "%(sessionsRemaining)s kulcs biztonsági mentése…",
     "This session is backing up your keys.": "Ez a munkamenet elmenti a kulcsait.",
     "Connecting to integration manager…": "Kapcsolódás az integrációkezelőhöz…",
-    "Creating…": "Létrehozás…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Loading polls": "Szavazások betöltése",
     "Ended a poll": "Lezárta a szavazást",
@@ -1906,7 +1883,9 @@
         "exit_fullscreeen": "Kilépés a teljes képernyőből",
         "enter_fullscreen": "Teljes képernyőre váltás",
         "unban": "Kitiltás visszavonása",
-        "click_to_copy": "Másolás kattintással"
+        "click_to_copy": "Másolás kattintással",
+        "hide_advanced": "Speciális beállítások elrejtése",
+        "show_advanced": "Speciális beállítások megjelenítése"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -2511,11 +2490,12 @@
             "metaspaces_subsection": "Megjelenítendő terek",
             "metaspaces_description": "A terek a szobák és emberek csoportosítási módjainak egyike. Azokon kívül, amelyekben benne van, használhat néhány előre meghatározottat is.",
             "metaspaces_home_description": "A Kezdőlap áttekintést adhat mindenről.",
-            "metaspaces_home_all_rooms": "Minden szoba megjelenítése a Kezdőlapon, akkor is ha egy tér része.",
             "metaspaces_favourites_description": "Csoportosítsa az összes kedvenc szobáját és ismerősét egy helyre.",
             "metaspaces_people_description": "Csoportosítsa az összes ismerősét egy helyre.",
             "metaspaces_orphans": "Téren kívüli szobák",
-            "metaspaces_orphans_description": "Csoportosítsa egy helyre az összes olyan szobát, amely nem egy tér része."
+            "metaspaces_orphans_description": "Csoportosítsa egy helyre az összes olyan szobát, amely nem egy tér része.",
+            "metaspaces_home_all_rooms_description": "Minden szoba megjelenítése a Kezdőlapon, akkor is ha egy tér része.",
+            "metaspaces_home_all_rooms": "Minden szoba megjelenítése"
         }
     },
     "devtools": {
@@ -3304,7 +3284,11 @@
             "default_url_previews_off": "Az URL előnézet alapértelmezetten tiltva van a szobában jelenlévőknek.",
             "url_preview_encryption_warning": "A titkosított szobákban, mint például ez is, az URL előnézet alapértelmezetten ki van kapcsolva, hogy biztosított legyen, hogy a Matrix szerver (ahol az előnézet készül) ne tudjon információt gyűjteni arról, hogy milyen linkeket látsz ebben a szobában.",
             "url_preview_explainer": "Ha valaki URL linket helyez az üzenetébe, lehetőség van egy előnézet megjelenítésére amivel további információt kaphatunk a linkről, mint cím, leírás és a weboldal képe.",
-            "url_previews_section": "URL előnézet"
+            "url_previews_section": "URL előnézet",
+            "error_save_space_settings": "A tér beállításának mentése sikertelen.",
+            "description_space": "A tér beállításainak szerkesztése.",
+            "save": "Változtatások mentése",
+            "leave_space": "Tér elhagyása"
         },
         "advanced": {
             "unfederated": "Ez a szoba távoli Matrix-kiszolgálóról nem érhető el",
@@ -3318,7 +3302,22 @@
             "room_version": "Szoba verziója:"
         },
         "delete_avatar_label": "Profilkép törlése",
-        "upload_avatar_label": "Profilkép feltöltése"
+        "upload_avatar_label": "Profilkép feltöltése",
+        "visibility": {
+            "error_update_guest_access": "A tér vendéghozzáférésének frissítése sikertelen",
+            "error_update_history_visibility": "A tér régi üzeneteinek láthatóságának frissítése sikertelen",
+            "guest_access_explainer": "A vendégek fiók nélkül is beléphetnek a térbe.",
+            "guest_access_explainer_public_space": "A nyilvános tereknél ez hasznos lehet.",
+            "title": "Láthatóság",
+            "error_failed_save": "A tér láthatóságának frissítése sikertelen",
+            "history_visibility_anyone_space": "Tér előnézete",
+            "history_visibility_anyone_space_description": "A tér előnézetének engedélyezése a belépés előtt.",
+            "history_visibility_anyone_space_recommendation": "A nyilvános terekhez ajánlott."
+        },
+        "access": {
+            "title": "Hozzáférés",
+            "description_space": "Döntse el, hogy ki láthatja, és léphet be ide: %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3820,7 +3819,10 @@
             "manage_and_explore": "Szobák kezelése és felderítése"
         },
         "share_public": "Nyilvános tér megosztása",
-        "search_children": "Keresés: %(spaceName)s"
+        "search_children": "Keresés: %(spaceName)s",
+        "invite_link": "Meghívási hivatkozás megosztása",
+        "invite": "Emberek meghívása",
+        "invite_description": "Meghívás e-mail-címmel vagy felhasználónévvel"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -3913,7 +3915,9 @@
         "setup_rooms_private_description": "Mindenhez készítünk egy szobát.",
         "address_placeholder": "például sajat-ter",
         "address_label": "Cím",
-        "label": "Tér létrehozása"
+        "label": "Tér létrehozása",
+        "add_details_prompt_2": "Ezeket bármikor megváltoztathatja.",
+        "creating": "Létrehozás…"
     },
     "user_menu": {
         "switch_theme_light": "Világos módra váltás",

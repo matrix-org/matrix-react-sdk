@@ -260,8 +260,6 @@
         "other": "Og %(count)s til..."
     },
     "Logs sent": "Loggbøkene ble sendt",
-    "Hide advanced": "Skjul avansert",
-    "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
     "Export room keys": "Eksporter romnøkler",
@@ -425,7 +423,6 @@
     "Unable to revoke sharing for phone number": "Klarte ikke trekke tilbake deling for telefonnummer",
     "Unable to revoke sharing for email address": "Klarte ikke å trekke tilbake deling for denne e-postadressen",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
-    "Invite people": "Inviter personer",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -476,14 +473,11 @@
     "No results found": "Ingen resultater ble funnet",
     "Public space": "Offentlig område",
     "Private space": "Privat område",
-    "Leave Space": "Forlat området",
-    "Save Changes": "Lagre endringer",
     "You don't have permission": "Du har ikke tillatelse",
     "%(count)s rooms": {
         "other": "%(count)s rom",
         "one": "%(count)s rom"
     },
-    "Share invite link": "Del invitasjonslenke",
     "Leave space": "Forlat området",
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
@@ -747,7 +741,6 @@
     "Connection failed": "Tilkobling mislyktes",
     "Global": "Globalt",
     "Keyword": "Nøkkelord",
-    "Visibility": "Synlighet",
     "Address": "Adresse",
     "Corn": "Mais",
     "Cloud": "Sky",
@@ -917,7 +910,9 @@
         "submit": "Send",
         "send_report": "Send inn rapport",
         "unban": "Opphev utestengelse",
-        "click_to_copy": "Klikk for å kopiere"
+        "click_to_copy": "Klikk for å kopiere",
+        "hide_advanced": "Skjul avansert",
+        "show_advanced": "Vis avansert"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -1468,14 +1463,19 @@
             "default_url_previews_off": "URL-forhåndsvisninger er skrudd av som standard for deltakerene i dette rommet.",
             "url_preview_encryption_warning": "I krypterte rom som denne, er URL-forhåndsvisninger skrudd av som standard for å sikre at hjemmetjeneren din (der forhåndsvisningene blir generert) ikke kan samle inn informasjon om lenkene som du ser i dette rommet.",
             "url_preview_explainer": "Når noen legger til en URL i meldingene deres, kan en URL-forhåndsvisning bli vist for å gi mere informasjonen om den lenken, f.eks. tittelen, beskrivelsen, og et bilde fra nettstedet.",
-            "url_previews_section": "URL-forhåndsvisninger"
+            "url_previews_section": "URL-forhåndsvisninger",
+            "save": "Lagre endringer",
+            "leave_space": "Forlat området"
         },
         "advanced": {
             "room_version_section": "Romversjon",
             "room_version": "Romversjon:"
         },
         "delete_avatar_label": "Slett profilbilde",
-        "upload_avatar_label": "Last opp en avatar"
+        "upload_avatar_label": "Last opp en avatar",
+        "visibility": {
+            "title": "Synlighet"
+        }
     },
     "encryption": {
         "verification": {
@@ -1703,7 +1703,9 @@
         "suggested": "Anbefalte",
         "context_menu": {
             "explore": "Se alle rom"
-        }
+        },
+        "invite_link": "Del invitasjonslenke",
+        "invite": "Inviter personer"
     },
     "room": {
         "drop_file_prompt": "Slipp ned en fil her for å laste opp",

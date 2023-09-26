@@ -358,30 +358,8 @@
     "Space options": "ຕົວເລືອກພື້ນທີ່",
     "Jump to first invite.": "ໄປຫາຄຳເຊີນທຳອິດ.",
     "Jump to first unread room.": "ໄປຫາຫ້ອງທໍາອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
-    "Recommended for public spaces.": "ແນະນຳສຳລັບສະຖານທີ່ສາທາລະນະ.",
-    "Allow people to preview your space before they join.": "ອະນຸຍາດໃຫ້ຄົນເບິ່ງຕົວຢ່າງພື້ນທີ່ຂອງທ່ານກ່ອນທີ່ເຂົາເຈົ້າເຂົ້າຮ່ວມ.",
-    "Preview Space": "ເບິ່ງຕົວຢ່າງພື້ນທີ່",
-    "Failed to update the visibility of this space": "ອັບເດດການເບິ່ງເຫັນພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
-    "Decide who can view and join %(spaceName)s.": "ຕັດສິນໃຈວ່າໃຜສາມາດເບິ່ງ ແລະ ເຂົ້າຮ່ວມ %(spaceName)s.",
-    "Access": "ການເຂົ້າເຖິງ",
-    "Visibility": "ການເບິ່ງເຫັນ",
-    "This may be useful for public spaces.": "ນີ້ອາດຈະເປັນປະໂຫຍດສໍາລັບສະຖານທີ່ສາທາລະນະ.",
     "Enable guest access": "ເປີດໃຊ້ການເຂົ້າເຖິງແຂກ/ຜູ້ຖືກເຊີນ",
-    "Guests can join a space without having an account.": "ແຂກສາມາດເຂົ້າຮ່ວມພື້ນທີ່ໄດ້ໂດຍບໍ່ຕ້ອງມີບັນຊີ.",
-    "Show advanced": "ສະແດງຂັ້ນສູງ",
-    "Hide advanced": "ເຊື່ອງຂັ້ນສູງ",
-    "Failed to update the history visibility of this space": "ການອັບເດດປະຫວັດການເບິ່ງເຫັນຂອງພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
-    "Failed to update the guest access of this space": "ການອັບເດດການເຂົ້າເຖິງຂອງແຂກຂອງພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
-    "Leave Space": "ອອກຈາກພື້ນທີ່",
-    "Save Changes": "ບັນທຶກການປ່ຽນແປງ",
-    "Edit settings relating to your space.": "ແກ້ໄຂການຕັ້ງຄ່າທີ່ກ່ຽວຂ້ອງກັບພື້ນທີ່ຂອງທ່ານ.",
     "General": "ທົ່ວໄປ",
-    "Failed to save space settings.": "ບັນທຶກການຕັ້ງຄ່າພື້ນທີ່ບໍ່ສຳເລັດ.",
-    "Invite with email or username": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້",
-    "Invite people": "ເຊີນຜູ້ຄົນ",
-    "Share invite link": "ແບ່ງປັນລິ້ງເຊີນ",
-    "Show all rooms": "ສະແດງຫ້ອງທັງໝົດ",
-    "You can change these anytime.": "ທ່ານສາມາດປ່ຽນສິ່ງເຫຼົ່ານີ້ໄດ້ທຸກເວລາ.",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
     "Address": "ທີ່ຢູ່",
@@ -1702,7 +1680,9 @@
         "send_report": "ສົ່ງບົດລາຍງານ",
         "clear": "ຈະແຈ້ງ",
         "unban": "ຍົກເລີກການຫ້າມ",
-        "click_to_copy": "ກົດເພື່ອສຳເນົາ"
+        "click_to_copy": "ກົດເພື່ອສຳເນົາ",
+        "hide_advanced": "ເຊື່ອງຂັ້ນສູງ",
+        "show_advanced": "ສະແດງຂັ້ນສູງ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -2093,11 +2073,12 @@
             "metaspaces_subsection": "ພຶ້ນທີ່ຈະສະແດງ",
             "metaspaces_description": "ພຶ້ນທີ່ເປັນຊ່ອງທາງໃນການຈັດກຸ່ມຫ້ອງ ແລະ ຄົນ. ຄຽງຄູ່ກັບສະຖານທີ່ທີ່ທ່ານຢູ່ໃນ, ທ່ານສາມາດນໍາໃຊ້ບາງບ່ອນທີ່ສ້າງຂຶ້ນກ່ອນໄດ້ເຊັ່ນກັນ.",
             "metaspaces_home_description": "ຫນ້າHome ເປັນປະໂຫຍດສໍາລັບການເບິ່ງລາຍການລວມທັງໝົດ.",
-            "metaspaces_home_all_rooms": "ສະແດງຫ້ອງທັງໝົດຂອງທ່ານໃນໜ້າຫຼັກ, ເຖິງແມ່ນວ່າພວກມັນຢູ່ໃນບ່ອນໃດນຶ່ງກໍ່ຕາມ.",
             "metaspaces_favourites_description": "ຈັດກຸ່ມຫ້ອງ ແລະ ຄົນທີ່ທ່ານມັກທັງໝົດຢູ່ບ່ອນດຽວ.",
             "metaspaces_people_description": "ຈັດກຸ່ມຄົນທັງໝົດຂອງເຈົ້າຢູ່ບ່ອນດຽວ.",
             "metaspaces_orphans": "ຫ້ອງຢູ່ນອກພື້ນທີ່",
-            "metaspaces_orphans_description": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ."
+            "metaspaces_orphans_description": "ຈັດກຸ່ມຫ້ອງທັງໝົດຂອງທ່ານທີ່ບໍ່ໄດ້ເປັນສ່ວນໜຶ່ງຂອງພື້ນທີ່ຢູ່ໃນບ່ອນດຽວກັນ.",
+            "metaspaces_home_all_rooms_description": "ສະແດງຫ້ອງທັງໝົດຂອງທ່ານໃນໜ້າຫຼັກ, ເຖິງແມ່ນວ່າພວກມັນຢູ່ໃນບ່ອນໃດນຶ່ງກໍ່ຕາມ.",
+            "metaspaces_home_all_rooms": "ສະແດງຫ້ອງທັງໝົດ"
         }
     },
     "devtools": {
@@ -2816,7 +2797,11 @@
             "default_url_previews_off": "ການສະແດງຕົວຢ່າງ URL ຖືກປິດການນຳໃຊ້ໂດຍຄ່າເລີ່ມຕົ້ນສຳລັບຜູ້ເຂົ້າຮ່ວມໃນຫ້ອງນີ້.",
             "url_preview_encryption_warning": "ໃນຫ້ອງທີ່ເຂົ້າລະຫັດ, ເຊັ່ນດຽວກັບ, ການສະແດງຕົວຢ່າງ URLໄດ້ປິດໃຊ້ງານໂດຍຄ່າເລີ່ມຕົ້ນເພື່ອຮັບປະກັນວ່າ homeserver ຂອງທ່ານ (ບ່ອນສະແດງຕົວຢ່າງ) ບໍ່ສາມາດລວບລວມຂໍ້ມູນກ່ຽວກັບການເຊື່ອມຕໍ່ທີ່ທ່ານເຫັນຢູ່ໃນຫ້ອງນີ້.",
             "url_preview_explainer": "ເມື່ອຜູ້ໃດຜູ້ນຶ່ງໃສ່ URL ໃນຂໍ້ຄວາມຂອງພວກເຂົາ, ການສະແດງຕົວຢ່າງ URL ສາມາດສະແດງເພື່ອໃຫ້ຂໍ້ມູນເພີ່ມເຕີມກ່ຽວກັບການເຊື່ອມຕໍ່ນັ້ນເຊັ່ນຫົວຂໍ້, ຄໍາອະທິບາຍແລະຮູບພາບຈາກເວັບໄຊທ໌.",
-            "url_previews_section": "ຕົວຢ່າງ URL"
+            "url_previews_section": "ຕົວຢ່າງ URL",
+            "error_save_space_settings": "ບັນທຶກການຕັ້ງຄ່າພື້ນທີ່ບໍ່ສຳເລັດ.",
+            "description_space": "ແກ້ໄຂການຕັ້ງຄ່າທີ່ກ່ຽວຂ້ອງກັບພື້ນທີ່ຂອງທ່ານ.",
+            "save": "ບັນທຶກການປ່ຽນແປງ",
+            "leave_space": "ອອກຈາກພື້ນທີ່"
         },
         "advanced": {
             "unfederated": "ຫ້ອງນີ້ບໍ່ສາມາດເຂົ້າເຖິງໄດ້ໂດຍເຊີບເວີ Matrix ໄລຍະໄກ",
@@ -2829,7 +2814,22 @@
             "room_version": "ເວີຊັ້ນຫ້ອງ:"
         },
         "delete_avatar_label": "ລືບອາວາຕ້າ",
-        "upload_avatar_label": "ອັບໂຫຼດອາວາຕ້າ"
+        "upload_avatar_label": "ອັບໂຫຼດອາວາຕ້າ",
+        "visibility": {
+            "error_update_guest_access": "ການອັບເດດການເຂົ້າເຖິງຂອງແຂກຂອງພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
+            "error_update_history_visibility": "ການອັບເດດປະຫວັດການເບິ່ງເຫັນຂອງພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
+            "guest_access_explainer": "ແຂກສາມາດເຂົ້າຮ່ວມພື້ນທີ່ໄດ້ໂດຍບໍ່ຕ້ອງມີບັນຊີ.",
+            "guest_access_explainer_public_space": "ນີ້ອາດຈະເປັນປະໂຫຍດສໍາລັບສະຖານທີ່ສາທາລະນະ.",
+            "title": "ການເບິ່ງເຫັນ",
+            "error_failed_save": "ອັບເດດການເບິ່ງເຫັນພື້ນທີ່ນີ້ບໍ່ສຳເລັດ",
+            "history_visibility_anyone_space": "ເບິ່ງຕົວຢ່າງພື້ນທີ່",
+            "history_visibility_anyone_space_description": "ອະນຸຍາດໃຫ້ຄົນເບິ່ງຕົວຢ່າງພື້ນທີ່ຂອງທ່ານກ່ອນທີ່ເຂົາເຈົ້າເຂົ້າຮ່ວມ.",
+            "history_visibility_anyone_space_recommendation": "ແນະນຳສຳລັບສະຖານທີ່ສາທາລະນະ."
+        },
+        "access": {
+            "title": "ການເຂົ້າເຖິງ",
+            "description_space": "ຕັດສິນໃຈວ່າໃຜສາມາດເບິ່ງ ແລະ ເຂົ້າຮ່ວມ %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3277,7 +3277,10 @@
             "manage_and_explore": "ຈັດການ ແລະ ສຳຫຼວດຫ້ອງ"
         },
         "share_public": "ແບ່ງປັນພື້ນທີ່ສາທາລະນະຂອງທ່ານ",
-        "search_children": "ຊອກຫາ %(spaceName)s"
+        "search_children": "ຊອກຫາ %(spaceName)s",
+        "invite_link": "ແບ່ງປັນລິ້ງເຊີນ",
+        "invite": "ເຊີນຜູ້ຄົນ",
+        "invite_description": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3360,7 +3363,8 @@
         "setup_rooms_private_description": "ພວກເຮົາຈະສ້າງແຕ່ລະຫ້ອງ.",
         "address_placeholder": "ຕົວຢ່າງ: ພື້ນທີ່ຂອງຂ້ອຍ",
         "address_label": "ທີ່ຢູ່",
-        "label": "ສ້າງພື້ນທີ່"
+        "label": "ສ້າງພື້ນທີ່",
+        "add_details_prompt_2": "ທ່ານສາມາດປ່ຽນສິ່ງເຫຼົ່ານີ້ໄດ້ທຸກເວລາ."
     },
     "user_menu": {
         "switch_theme_light": "ສະຫຼັບໄປໂໝດແສງ",

@@ -276,8 +276,6 @@
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
     "e.g. my-room": "piem., mana-istaba",
     "Room address": "Istabas adrese",
-    "Show advanced": "Rādīt papildu iestatījumus",
-    "Hide advanced": "Slēpt papildu iestatījumus",
     "Add a new server": "Pievienot jaunu serveri",
     "Your homeserver": "Jūsu bāzes serveris",
     "Your server": "Jūsu serveris",
@@ -412,7 +410,6 @@
         "one": "%(count)s dalībnieks",
         "other": "%(count)s dalībnieki"
     },
-    "Save Changes": "Saglabāt izmaiņas",
     "Upload files": "Failu augšupielāde",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Šie faili <b>pārsniedz</b> augšupielādes izmēra ierobežojumu %(limit)s.",
     "Upload files (%(current)s of %(total)s)": "Failu augšupielāde (%(current)s no %(total)s)",
@@ -677,15 +674,11 @@
         "one": "Rādīt %(count)s citu priekšskatījumu",
         "other": "Rādīt %(count)s citus priekšskatījumus"
     },
-    "Access": "Piekļuve",
     "Enter a new identity server": "Ievadiet jaunu identitāšu serveri",
     "Mentions & keywords": "Pieminēšana un atslēgvārdi",
     "New keyword": "Jauns atslēgvārds",
     "Keyword": "Atslēgvārds",
-    "Decide who can view and join %(spaceName)s.": "Nosakiet, kas var skatīt un pievienoties %(spaceName)s.",
     "Enable guest access": "Iespējot piekļuvi viesiem",
-    "Invite people": "Uzaicināt cilvēkus",
-    "Show all rooms": "Rādīt visas istabas",
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -750,7 +743,6 @@
     },
     "Files": "Faili",
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
-    "You can change these anytime.": "Jebkurā laikā varat to mainīt.",
     "Join public room": "Pievienoties publiskai istabai",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "Šī istabā atrodas dažās vietās, kurās jūs neesat administrators. Šajās vietās vecā istaba joprojām būs redzama, bet cilvēki tiks aicināti pievienoties jaunajai istabai.",
@@ -777,7 +769,6 @@
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Savienojiet iestatījumos šo e-pasta adresi ar savu kontu, lai uzaicinājumus saņemtu tieši %(brand)s.",
     "If you can't see who you're looking for, send them your invite link.": "Ja neredzat meklēto personu, nosūtiet tai uzaicinājuma saiti.",
     "Copy invite link": "Kopēt uzaicinājuma saiti",
-    "Share invite link": "Dalīties ar uzaicinājuma saiti",
     "Some results may be hidden for privacy": "Daži rezultāti var būt slēpti dēļ privātuma",
     "Some results may be hidden": "Atsevišķi rezultāti var būt slēpti",
     "Add new server…": "Pievienot jaunu serveri…",
@@ -921,7 +912,9 @@
         "submit": "Iesniegt",
         "send_report": "Nosūtīt ziņojumu",
         "clear": "Notīrīt",
-        "unban": "Atcelt pieejas liegumu"
+        "unban": "Atcelt pieejas liegumu",
+        "hide_advanced": "Slēpt papildu iestatījumus",
+        "show_advanced": "Rādīt papildu iestatījumus"
     },
     "a11y": {
         "user_menu": "Lietotāja izvēlne",
@@ -1119,6 +1112,9 @@
             "add_msisdn_confirm_button": "Apstiprināt tālruņa numura pievienošanu",
             "add_msisdn_confirm_body": "Jānospiež zemāk esošā poga, lai apstiprinātu šī tālruņa numura pievienošanu.",
             "add_msisdn_dialog_title": "Pievienot tālruņa numuru"
+        },
+        "sidebar": {
+            "metaspaces_home_all_rooms": "Rādīt visas istabas"
         }
     },
     "devtools": {
@@ -1603,14 +1599,19 @@
             "default_url_previews_off": "ULR priekšskatījumi šīs istabas dalībniekiem pēc noklusējuma ir atspējoti.",
             "url_preview_encryption_warning": "Šifrētās istabās, ieskaitot arī šo, URL priekšskatījumi pēc noklusējuma ir atspējoti, lai nodrošinātu, ka jūsu bāzes serveris, kurā notiek priekšskatījumu ģenerēšana, nevar apkopot informāciju par saitēm, kuras redzat šajā istabā.",
             "url_preview_explainer": "Kad kāds savā ziņā ievieto URL, priekšskatījums ar virsrakstu, aprakstu un vietnes attēlu var tikt parādīts, tādējādi sniedzot vairāk informācijas par šo vietni.",
-            "url_previews_section": "URL priekšskatījumi"
+            "url_previews_section": "URL priekšskatījumi",
+            "save": "Saglabāt izmaiņas"
         },
         "advanced": {
             "unfederated": "Šī istaba nav pieejama no citiem Matrix serveriem",
             "room_version_section": "Istabas versija",
             "room_version": "Istabas versija:"
         },
-        "upload_avatar_label": "Augšupielādēt avataru"
+        "upload_avatar_label": "Augšupielādēt avataru",
+        "access": {
+            "title": "Piekļuve",
+            "description_space": "Nosakiet, kas var skatīt un pievienoties %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -1882,7 +1883,9 @@
         "context_menu": {
             "explore": "Pārlūkot istabas"
         },
-        "share_public": "Dalīties ar jūsu publisko vietu"
+        "share_public": "Dalīties ar jūsu publisko vietu",
+        "invite_link": "Dalīties ar uzaicinājuma saiti",
+        "invite": "Uzaicināt cilvēkus"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",
@@ -1914,7 +1917,8 @@
         "setup_rooms_community_description": "Izveidojam katram no tiem savu istabu!",
         "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem.",
         "address_label": "Adrese",
-        "label": "Izveidot vietu"
+        "label": "Izveidot vietu",
+        "add_details_prompt_2": "Jebkurā laikā varat to mainīt."
     },
     "user_menu": {
         "switch_theme_light": "Pārslēgt gaišo režīmu",

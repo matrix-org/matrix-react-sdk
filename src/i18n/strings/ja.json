@@ -223,8 +223,6 @@
     "Browse": "参照",
     "Email Address": "メールアドレス",
     "Main address": "メインアドレス",
-    "Hide advanced": "高度な設定を非表示にする",
-    "Show advanced": "高度な設定を表示",
     "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
     "Error changing power level requirement": "必要な権限レベルを変更する際にエラーが発生しました",
     "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.": "ルームで必要な権限レベルを変更する際にエラーが発生しました。必要な権限があることを確認したうえで、もう一度やり直してください。",
@@ -843,17 +841,12 @@
     "Your message was sent": "メッセージが送信されました",
     "Space options": "スペースのオプション",
     "Leave space": "スペースから退出",
-    "Invite people": "連絡先を招待",
-    "Share invite link": "招待リンクを共有",
     "Create a space": "スペースを作成",
     "Edit devices": "端末を編集",
     "You have no ignored users.": "無視しているユーザーはいません。",
-    "Save Changes": "変更を保存",
-    "Edit settings relating to your space.": "スペースの設定を変更します。",
     "Spaces": "スペース",
     "Invite to %(roomName)s": "%(roomName)sに招待",
     "Private space": "非公開スペース",
-    "Leave Space": "スペースから退出",
     "Are you sure you want to leave the space '%(spaceName)s'?": "このスペース「%(spaceName)s」から退出してよろしいですか？",
     "This space is not public. You will not be able to rejoin without an invite.": "このスペースは公開されていません。再度参加するには、招待が必要です。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "このルームの参加者はあなただけです。退出すると、今後あなたを含めて誰もこのルームに参加できなくなります。",
@@ -861,7 +854,6 @@
         "one": "ルームを追加しています…",
         "other": "ルームを追加しています…（計%(count)s個のうち%(progress)s個）"
     },
-    "You can change these anytime.": "ここで入力した情報はいつでも編集できます。",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "インテグレーションマネージャーは設定データを受け取り、ユーザーの代わりにウィジェットの変更や、ルームへの招待の送信、権限レベルの設定を行うことができます。",
     "Use an integration manager to manage bots, widgets, and sticker packs.": "インテグレーションマネージャーを使用すると、ボット、ウィジェット、ステッカーパックを管理できます。",
     "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, and sticker packs.": "インテグレーションマネージャー<b>（%(serverName)s）</b> を使用すると、ボット、ウィジェット、ステッカーパックを管理できます。",
@@ -869,7 +861,6 @@
     "Could not connect to identity server": "IDサーバーに接続できませんでした",
     "Not a valid identity server (status code %(code)s)": "有効なIDサーバーではありません（ステータスコード %(code)s）",
     "Identity server URL must be HTTPS": "IDサーバーのURLはHTTPSスキーマである必要があります",
-    "Failed to save space settings.": "スペースの設定を保存できませんでした。",
     "Mentions & keywords": "メンションとキーワード",
     "Global": "全体",
     "New keyword": "新しいキーワード",
@@ -884,7 +875,6 @@
     "Add space": "スペースを追加",
     "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Show all rooms": "全てのルームを表示",
     "Home options": "ホームのオプション",
     "Files": "ファイル",
     "Export chat": "チャットをエクスポート",
@@ -1021,7 +1011,6 @@
     "To publish an address, it needs to be set as a local address first.": "アドレスを公開するには、まずローカルアドレスに設定する必要があります。",
     "Published addresses can be used by anyone on any server to join your room.": "公開アドレスを設定すると、どのサーバーのユーザーでも、あなたのルームに参加できるようになります。",
     "Published addresses can be used by anyone on any server to join your space.": "公開アドレスを設定すると、どのサーバーのユーザーでも、あなたのスペースに参加できるようになります。",
-    "Access": "アクセス",
     "Missed call": "不在着信",
     "Call back": "かけ直す",
     "Search for rooms or people": "ルームと連絡先を検索",
@@ -1126,22 +1115,12 @@
     "Get notified for every message": "全てのメッセージを通知",
     "You won't get any notifications": "通知を送信しません",
     "Get notifications as set up in your <a>settings</a>": "<a>設定</a>に従って通知",
-    "Failed to update the guest access of this space": "ゲストのアクセスの更新に失敗しました",
-    "Failed to update the history visibility of this space": "このスペースの履歴の見え方の更新に失敗しました",
-    "Invite with email or username": "メールアドレスまたはユーザー名で招待",
-    "Guests can join a space without having an account.": "ゲストはアカウントを使用せずに参加できます。",
-    "Visibility": "見え方",
-    "Recommended for public spaces.": "公開のスペースでは許可することを推奨します。",
-    "Allow people to preview your space before they join.": "参加する前にスペースのプレビューを閲覧することを許可。",
-    "Preview Space": "スペースのプレビュー",
     "Recently viewed": "最近表示したルーム",
     "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "このルームはどのプラットフォームにもメッセージをブリッジしていません。<a>詳細</a>",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
     "Enable guest access": "ゲストによるアクセスを有効にする",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
-    "This may be useful for public spaces.": "公開のスペースに適しているかもしれません。",
-    "Decide who can view and join %(spaceName)s.": "%(spaceName)sを表示、参加できる範囲を設定してください。",
     "Space information": "スペースの情報",
     "Retry all": "全て再試行",
     "You can select all or individual messages to retry or delete": "全てのメッセージ、あるいは個別のメッセージを選択して、再送を試みるか削除することができます",
@@ -1275,7 +1254,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "マイクにアクセスできませんでした。ブラウザーの設定を確認して、もう一度やり直してください。",
     "Unable to access your microphone": "マイクを使用できません",
     "There was an error loading your notification settings.": "通知設定を読み込む際にエラーが発生しました。",
-    "Failed to update the visibility of this space": "このスペースの見え方の更新に失敗しました",
     "Unable to set up secret storage": "機密ストレージを設定できません",
     "Save your Security Key": "セキュリティーキーを保存",
     "Confirm Security Phrase": "セキュリティーフレーズを確認",
@@ -1651,7 +1629,6 @@
     "Backing up %(sessionsRemaining)s keys…": "%(sessionsRemaining)s個の鍵をバックアップしています…",
     "Connecting to integration manager…": "インテグレーションマネージャーに接続しています…",
     "Saving…": "保存しています…",
-    "Creating…": "作成しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "Secure Backup successful": "セキュアバックアップに成功しました",
     "Your keys are now being backed up from this device.": "鍵はこの端末からバックアップされています。",
@@ -1855,7 +1832,9 @@
         "exit_fullscreeen": "フルスクリーンを解除",
         "enter_fullscreen": "フルスクリーンにする",
         "unban": "ブロックを解除",
-        "click_to_copy": "クリックでコピー"
+        "click_to_copy": "クリックでコピー",
+        "hide_advanced": "高度な設定を非表示にする",
+        "show_advanced": "高度な設定を表示"
     },
     "a11y": {
         "user_menu": "ユーザーメニュー",
@@ -2444,11 +2423,12 @@
             "metaspaces_subsection": "表示するスペース",
             "metaspaces_description": "スペースは、ルームや連絡先をまとめる方法です。いくつかの構築済スペースと、参加済のスペースを使用できます。",
             "metaspaces_home_description": "ホームは全体を把握するのに便利です。",
-            "metaspaces_home_all_rooms": "他のスペースに存在するルームを含めて、全てのルームをホームに表示。",
             "metaspaces_favourites_description": "お気に入りのルームと連絡先をまとめる。",
             "metaspaces_people_description": "全ての連絡先を一箇所にまとめる。",
             "metaspaces_orphans": "スペース外のルーム",
-            "metaspaces_orphans_description": "スペースに含まれない全てのルームを一箇所にまとめる。"
+            "metaspaces_orphans_description": "スペースに含まれない全てのルームを一箇所にまとめる。",
+            "metaspaces_home_all_rooms_description": "他のスペースに存在するルームを含めて、全てのルームをホームに表示。",
+            "metaspaces_home_all_rooms": "全てのルームを表示"
         }
     },
     "devtools": {
@@ -3220,7 +3200,11 @@
             "default_url_previews_off": "このルームの参加者には、既定でURLプレビューが無効です。",
             "url_preview_encryption_warning": "このルームを含めて、暗号化されたルームでは、あなたのホームサーバー（これがプレビューを作成します）によるリンクの情報の収集を防ぐため、URLプレビューは既定で無効になっています。",
             "url_preview_explainer": "メッセージにURLが含まれる場合、タイトル、説明、ウェブサイトの画像などがURLプレビューとして表示されます。",
-            "url_previews_section": "URLプレビュー"
+            "url_previews_section": "URLプレビュー",
+            "error_save_space_settings": "スペースの設定を保存できませんでした。",
+            "description_space": "スペースの設定を変更します。",
+            "save": "変更を保存",
+            "leave_space": "スペースから退出"
         },
         "advanced": {
             "unfederated": "このルームはリモートのMatrixサーバーからアクセスできません",
@@ -3234,7 +3218,22 @@
             "room_version": "ルームのバージョン："
         },
         "delete_avatar_label": "アバターを削除",
-        "upload_avatar_label": "アバターをアップロード"
+        "upload_avatar_label": "アバターをアップロード",
+        "visibility": {
+            "error_update_guest_access": "ゲストのアクセスの更新に失敗しました",
+            "error_update_history_visibility": "このスペースの履歴の見え方の更新に失敗しました",
+            "guest_access_explainer": "ゲストはアカウントを使用せずに参加できます。",
+            "guest_access_explainer_public_space": "公開のスペースに適しているかもしれません。",
+            "title": "見え方",
+            "error_failed_save": "このスペースの見え方の更新に失敗しました",
+            "history_visibility_anyone_space": "スペースのプレビュー",
+            "history_visibility_anyone_space_description": "参加する前にスペースのプレビューを閲覧することを許可。",
+            "history_visibility_anyone_space_recommendation": "公開のスペースでは許可することを推奨します。"
+        },
+        "access": {
+            "title": "アクセス",
+            "description_space": "%(spaceName)sを表示、参加できる範囲を設定してください。"
+        }
     },
     "encryption": {
         "verification": {
@@ -3725,7 +3724,10 @@
             "manage_and_explore": "ルームの管理および探索"
         },
         "share_public": "公開スペースを共有",
-        "search_children": "%(spaceName)sを検索"
+        "search_children": "%(spaceName)sを検索",
+        "invite_link": "招待リンクを共有",
+        "invite": "連絡先を招待",
+        "invite_description": "メールアドレスまたはユーザー名で招待"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",
@@ -3817,7 +3819,9 @@
         "setup_rooms_private_description": "それぞれのプロジェクトにルームを作りましょう。",
         "address_placeholder": "例：my-space",
         "address_label": "アドレス",
-        "label": "スペースを作成"
+        "label": "スペースを作成",
+        "add_details_prompt_2": "ここで入力した情報はいつでも編集できます。",
+        "creating": "作成しています…"
     },
     "user_menu": {
         "switch_theme_light": "ライトテーマに切り替える",

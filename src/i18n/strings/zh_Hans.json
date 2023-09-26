@@ -583,8 +583,6 @@
     "Clear all data in this session?": "是否清除此会话中的所有数据？",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "清除此会话中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
     "Clear all data": "清除所有数据",
-    "Hide advanced": "隐藏高级",
-    "Show advanced": "显示高级",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "你曾在此会话中使用了一个更新版本的 %(brand)s。要再使用此版本并使用端到端加密，你需要登出再重新登录。",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "通过单点登录证明你的身份并确认停用你的账户。",
     "Are you sure you want to deactivate your account? This is irreversible.": "你确定要停用你的账户吗？此操作不可逆。",
@@ -781,7 +779,6 @@
     "United States": "美国",
     "United Kingdom": "英国",
     "Room settings": "房间设置",
-    "Share invite link": "分享邀请链接",
     "Dial pad": "拨号盘",
     "%(count)s members": {
         "one": "%(count)s 位成员",
@@ -790,8 +787,6 @@
     "Enter Security Key": "输入安全密钥",
     "Invalid Security Key": "安全密钥无效",
     "Wrong Security Key": "安全密钥错误",
-    "Save Changes": "保存修改",
-    "Leave Space": "离开空间",
     "Transfer": "传输",
     "Reason (optional)": "理由（可选）",
     "Create a new room": "创建新房间",
@@ -904,7 +899,6 @@
     "Decline All": "全部拒绝",
     "This widget would like to:": "此挂件想要：",
     "Approve widget permissions": "批准挂件权限",
-    "Failed to save space settings.": "空间设置保存失败。",
     "Modal Widget": "模态框挂件（Modal Widget）",
     "Set my room layout for everyone": "将我的房间布局设置给所有人",
     "Edit widgets, bridges & bots": "编辑挂件、桥接和机器人",
@@ -915,15 +909,12 @@
     "Video conference updated by %(senderName)s": "由 %(senderName)s 更新的视频会议",
     "Video conference started by %(senderName)s": "由 %(senderName)s 发起的视频会议",
     "Widgets": "挂件",
-    "You can change these anytime.": "你随时可以更改它们。",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite by email": "通过邮箱邀请",
     "Edit devices": "编辑设备",
     "Suggested Rooms": "建议的房间",
     "Recently visited rooms": "最近访问的房间",
-    "Invite with email or username": "使用邮箱或者用户名邀请",
-    "Invite people": "邀请人们",
     "Zimbabwe": "津巴布韦",
     "Zambia": "赞比亚",
     "Western Sahara": "西撒哈拉",
@@ -1058,7 +1049,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘记或丢失了所有恢复方式？<a>全部重置</a>",
     "Remember this": "记住",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "挂件将会验证你的用户 ID，但将无法为你执行动作：",
-    "Edit settings relating to your space.": "编辑关于你的空间的设置。",
     "Reset event store": "重置活动存储",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果这样做，请注意你的消息并不会被删除，但在重新建立索引时，搜索体验可能会降低片刻",
     "You most likely do not want to reset your event index store": "你大概率不想重置你的活动缩影存储",
@@ -1153,17 +1143,7 @@
     "Published addresses can be used by anyone on any server to join your space.": "任何服务器上的人均可通过公布的地址加入你的空间。",
     "This space has no local addresses": "此空间没有本地地址",
     "Space information": "空间信息",
-    "Recommended for public spaces.": "建议用于公开空间。",
-    "Allow people to preview your space before they join.": "允许人们在加入前预览你的空间。",
-    "Preview Space": "预览空间",
-    "Decide who can view and join %(spaceName)s.": "决定谁可以查看和加入 %(spaceName)s。",
-    "Visibility": "可见性",
-    "This may be useful for public spaces.": "这可能对公开空间有所帮助。",
-    "Guests can join a space without having an account.": "游客无需账户即可加入空间。",
     "Enable guest access": "启用游客访问权限",
-    "Failed to update the history visibility of this space": "更新此空间的历史记录可见性失败",
-    "Failed to update the guest access of this space": "更新此空间的游客访问权限失败",
-    "Failed to update the visibility of this space": "更新此空间的可见性失败",
     "Address": "地址",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "集成管理器接收配置数据，并可以以你的名义修改挂件、发送房间邀请及设置权力级别。",
@@ -1179,7 +1159,6 @@
     "Global": "全局",
     "New keyword": "新的关键词",
     "Keyword": "关键词",
-    "Show all rooms": "显示所有房间",
     "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
@@ -1231,7 +1210,6 @@
         "one": "显示 %(count)s 个其他预览",
         "other": "显示 %(count)s 个其他预览"
     },
-    "Access": "访问",
     "Space members": "空间成员",
     "Anyone in a space can find and join. You can select multiple spaces.": "空间中的任何人都可以找到并加入。你可以选择多个空间。",
     "Spaces with access": "可访问的空间",
@@ -1759,7 +1737,9 @@
         "exit_fullscreeen": "退出全屏",
         "enter_fullscreen": "进入全屏",
         "unban": "解除封禁",
-        "click_to_copy": "点击复制"
+        "click_to_copy": "点击复制",
+        "hide_advanced": "隐藏高级",
+        "show_advanced": "显示高级"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -2292,11 +2272,12 @@
             "metaspaces_subsection": "要显示的空间",
             "metaspaces_description": "空间是将房间和人分组的方式。除了你所在的空间，你也可以使用预建的空间。",
             "metaspaces_home_description": "对于了解所有事情的概况来说，主页很有用。",
-            "metaspaces_home_all_rooms": "在主页展示你所有的房间，即使它们是在一个空间里。",
             "metaspaces_favourites_description": "将所有你最爱的房间和人集中在一处。",
             "metaspaces_people_description": "将你所有的联系人集中一处。",
             "metaspaces_orphans": "空间之外的房间",
-            "metaspaces_orphans_description": "将所有你那些不属于某个空间的房间集中一处。"
+            "metaspaces_orphans_description": "将所有你那些不属于某个空间的房间集中一处。",
+            "metaspaces_home_all_rooms_description": "在主页展示你所有的房间，即使它们是在一个空间里。",
+            "metaspaces_home_all_rooms": "显示所有房间"
         }
     },
     "devtools": {
@@ -3037,7 +3018,11 @@
             "default_url_previews_off": "已对此房间的参与者默认禁用URL预览。",
             "url_preview_encryption_warning": "在加密的房间中，比如此房间，URL预览默认是禁用的，以确保你的家服务器（生成预览的地方）无法收集与你在此房间中看到的链接有关的信息。",
             "url_preview_explainer": "当有人在他们的消息里放置URL时，可显示URL预览以给出更多有关链接的信息，如其网站的标题、描述以及图片。",
-            "url_previews_section": "URL预览"
+            "url_previews_section": "URL预览",
+            "error_save_space_settings": "空间设置保存失败。",
+            "description_space": "编辑关于你的空间的设置。",
+            "save": "保存修改",
+            "leave_space": "离开空间"
         },
         "advanced": {
             "unfederated": "此房间无法被远程 Matrix 服务器访问",
@@ -3050,7 +3035,22 @@
             "room_version": "房间版本："
         },
         "delete_avatar_label": "删除头像",
-        "upload_avatar_label": "上传头像"
+        "upload_avatar_label": "上传头像",
+        "visibility": {
+            "error_update_guest_access": "更新此空间的游客访问权限失败",
+            "error_update_history_visibility": "更新此空间的历史记录可见性失败",
+            "guest_access_explainer": "游客无需账户即可加入空间。",
+            "guest_access_explainer_public_space": "这可能对公开空间有所帮助。",
+            "title": "可见性",
+            "error_failed_save": "更新此空间的可见性失败",
+            "history_visibility_anyone_space": "预览空间",
+            "history_visibility_anyone_space_description": "允许人们在加入前预览你的空间。",
+            "history_visibility_anyone_space_recommendation": "建议用于公开空间。"
+        },
+        "access": {
+            "title": "访问",
+            "description_space": "决定谁可以查看和加入 %(spaceName)s。"
+        }
     },
     "encryption": {
         "verification": {
@@ -3515,7 +3515,10 @@
             "manage_and_explore": "管理并探索房间"
         },
         "share_public": "分享你的公共空间",
-        "search_children": "搜索 %(spaceName)s"
+        "search_children": "搜索 %(spaceName)s",
+        "invite_link": "分享邀请链接",
+        "invite": "邀请人们",
+        "invite_description": "使用邮箱或者用户名邀请"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3603,7 +3606,8 @@
         "setup_rooms_private_heading": "你的团队正在进行什么项目?",
         "address_placeholder": "例如：my-space",
         "address_label": "地址",
-        "label": "创建空间"
+        "label": "创建空间",
+        "add_details_prompt_2": "你随时可以更改它们。"
     },
     "user_menu": {
         "switch_theme_light": "切换到浅色模式",

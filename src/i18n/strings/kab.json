@@ -649,8 +649,6 @@
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Clear all data in this session?": "Sfeḍ akk isefka seg tɣimit-a?",
-    "Hide advanced": "Ffer talqayt",
-    "Show advanced": "Sken talqayt",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ma yella tgiḍ aya war ma tebniḍ, tzemreḍ ad tsewleḍ iznan uffiren deg tɣimit-a ayen ara yalsen awgelhen n umazray n yiznan n texxamt-a s tarrayt n tririt tamaynut.",
@@ -1130,7 +1128,9 @@
         "mention": "Abdar",
         "submit": "Azen",
         "send_report": "Azen aneqqis",
-        "unban": "Asefsex n tigtin"
+        "unban": "Asefsex n tigtin",
+        "hide_advanced": "Ffer talqayt",
+        "show_advanced": "Sken talqayt"
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac",

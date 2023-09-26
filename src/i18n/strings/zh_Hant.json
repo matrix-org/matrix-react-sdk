@@ -472,8 +472,6 @@
     "Share this email in Settings to receive invites directly in %(brand)s.": "在設定中分享此電子郵件以直接在 %(brand)s 中接收邀請。",
     "Explore rooms": "探索聊天室",
     "e.g. my-room": "例如：my-room",
-    "Hide advanced": "隱藏進階設定",
-    "Show advanced": "顯示進階設定",
     "Close dialog": "關閉對話框",
     "Show image": "顯示圖片",
     "Your email address hasn't been verified yet": "您的電子郵件地址尚未被驗證",
@@ -1050,10 +1048,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "此聊天空間並非公開。在無邀請的情況下，您將無法重新加入。",
     "Failed to start livestream": "無法開始直播",
     "Unable to start audio streaming.": "無法開始音訊串流。",
-    "Save Changes": "儲存變更",
-    "Leave Space": "離開聊天空間",
-    "Edit settings relating to your space.": "編輯您的聊天空間的設定。",
-    "Failed to save space settings.": "無法儲存聊天空間設定。",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
     "Create a new room": "建立新聊天室",
@@ -1066,8 +1060,6 @@
     "Your message was sent": "您的訊息已傳送",
     "Space options": "聊天空間選項",
     "Leave space": "離開聊天空間",
-    "Invite people": "邀請夥伴",
-    "Share invite link": "分享邀請連結",
     "Create a space": "建立聊天空間",
     "Private space": "私密聊天空間",
     "Public space": "公開聊天空間",
@@ -1082,8 +1074,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "這通常只影響伺服器如何處理聊天室。如果您的 %(brand)s 遇到問題，請回報錯誤。",
     "Invite to %(roomName)s": "邀請加入 %(roomName)s",
     "Edit devices": "編輯裝置",
-    "Invite with email or username": "使用電子郵件或使用者名稱邀請",
-    "You can change these anytime.": "您隨時可以變更這些。",
     "Verify your identity to access encrypted messages and prove your identity to others.": "驗證您的身分來存取已加密的訊息並對其他人證明您的身分。",
     "%(count)s people you know have already joined": {
         "other": "%(count)s 個您認識的人已加入",
@@ -1153,17 +1143,7 @@
     "Published addresses can be used by anyone on any server to join your space.": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天空間。",
     "This space has no local addresses": "此聊天空間沒有本機位址",
     "Space information": "聊天空間資訊",
-    "Recommended for public spaces.": "給公開聊天空間的推薦。",
-    "Allow people to preview your space before they join.": "允許人們在加入前預覽您的聊天空間。",
-    "Preview Space": "預覽聊天空間",
-    "Decide who can view and join %(spaceName)s.": "決定誰可以檢視並加入 %(spaceName)s。",
-    "Visibility": "能見度",
-    "This may be useful for public spaces.": "這可能對公開聊天空間很有用。",
-    "Guests can join a space without having an account.": "訪客無需帳號即可加入聊天空間。",
     "Enable guest access": "允許訪客存取",
-    "Failed to update the history visibility of this space": "無法更新此聊天空間紀錄的能見度",
-    "Failed to update the guest access of this space": "無法更新此聊天空間的訪客存取權限",
-    "Failed to update the visibility of this space": "無法更新此聊天空間的能見度",
     "Address": "位址",
     "Unnamed audio": "未命名的音訊",
     "Error processing audio message": "處理音訊訊息時出現問題",
@@ -1206,7 +1186,6 @@
     "Select spaces": "選取聊天空間",
     "You're removing all spaces. Access will default to invite only": "您將取消所有聊天空間。存取權限將會預設為邀請制",
     "Public room": "公開聊天室",
-    "Access": "存取",
     "Space members": "聊天空間成員",
     "Anyone in a space can find and join. You can select multiple spaces.": "空間中的任何人都可以找到並加入。您可以選取多個空間。",
     "Spaces with access": "可存取的聊天空間",
@@ -1239,7 +1218,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
     "You won't be able to rejoin unless you are re-invited.": "您將無法重新加入，除非您再次被邀請。",
     "Decrypting": "正在解密",
-    "Show all rooms": "顯示所有聊天室",
     "Missed call": "未接來電",
     "Call declined": "已拒絕通話",
     "Stop recording": "停止錄製",
@@ -1655,7 +1633,6 @@
     "Backing up %(sessionsRemaining)s keys…": "正在備份 %(sessionsRemaining)s 把金鑰…",
     "Connecting to integration manager…": "正在連線至整合管理員…",
     "Saving…": "正在儲存…",
-    "Creating…": "正在建立…",
     "Starting export process…": "正在開始匯出流程…",
     "Secure Backup successful": "安全備份成功",
     "Your keys are now being backed up from this device.": "您已備份此裝置的金鑰。",
@@ -1956,7 +1933,9 @@
         "exit_fullscreeen": "離開全螢幕",
         "enter_fullscreen": "進入全螢幕",
         "unban": "解除封鎖",
-        "click_to_copy": "點擊複製"
+        "click_to_copy": "點擊複製",
+        "hide_advanced": "隱藏進階設定",
+        "show_advanced": "顯示進階設定"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -2571,11 +2550,12 @@
             "metaspaces_subsection": "要顯示的聊天空間",
             "metaspaces_description": "聊天空間是將聊天室與夥伴們分組的方式。除了您所在的聊天空間之外，還可以使用一些預設分類。",
             "metaspaces_home_description": "首頁對於取得所有內容的概覽很有用。",
-            "metaspaces_home_all_rooms": "將您所有的聊天室顯示在首頁，即便它們位於同一個聊天空間。",
             "metaspaces_favourites_description": "將所有您最喜愛的聊天室與夥伴集中在同一個地方。",
             "metaspaces_people_description": "將您所有的夥伴集中在同一個地方。",
             "metaspaces_orphans": "聊天空間外的聊天室",
-            "metaspaces_orphans_description": "將所有不屬於某個聊天空間的聊天室集中在同一個地方。"
+            "metaspaces_orphans_description": "將所有不屬於某個聊天空間的聊天室集中在同一個地方。",
+            "metaspaces_home_all_rooms_description": "將您所有的聊天室顯示在首頁，即便它們位於同一個聊天空間。",
+            "metaspaces_home_all_rooms": "顯示所有聊天室"
         }
     },
     "devtools": {
@@ -3388,7 +3368,11 @@
             "default_url_previews_off": "此聊天室已預設對參與者停用網址預覽。",
             "url_preview_encryption_warning": "在加密的聊天室中（這個就是），會預設停用網址預覽以確保您的家伺服器（產生預覽資訊的地方）無法透過這個聊天室收集您看到的連結的相關資訊。",
             "url_preview_explainer": "當某人在他們的訊息中放置網址時，可以顯示如標題、描述與網頁上的圖片等等來給您更多關於該連結的資訊。",
-            "url_previews_section": "網址預覽"
+            "url_previews_section": "網址預覽",
+            "error_save_space_settings": "無法儲存聊天空間設定。",
+            "description_space": "編輯您的聊天空間的設定。",
+            "save": "儲存變更",
+            "leave_space": "離開聊天空間"
         },
         "advanced": {
             "unfederated": "此聊天室無法被遠端的 Matrix 伺服器存取",
@@ -3402,7 +3386,22 @@
             "room_version": "聊天室版本："
         },
         "delete_avatar_label": "刪除大頭照",
-        "upload_avatar_label": "上傳大頭照"
+        "upload_avatar_label": "上傳大頭照",
+        "visibility": {
+            "error_update_guest_access": "無法更新此聊天空間的訪客存取權限",
+            "error_update_history_visibility": "無法更新此聊天空間紀錄的能見度",
+            "guest_access_explainer": "訪客無需帳號即可加入聊天空間。",
+            "guest_access_explainer_public_space": "這可能對公開聊天空間很有用。",
+            "title": "能見度",
+            "error_failed_save": "無法更新此聊天空間的能見度",
+            "history_visibility_anyone_space": "預覽聊天空間",
+            "history_visibility_anyone_space_description": "允許人們在加入前預覽您的聊天空間。",
+            "history_visibility_anyone_space_recommendation": "給公開聊天空間的推薦。"
+        },
+        "access": {
+            "title": "存取",
+            "description_space": "決定誰可以檢視並加入 %(spaceName)s。"
+        }
     },
     "encryption": {
         "verification": {
@@ -3910,7 +3909,10 @@
             "manage_and_explore": "管理與探索聊天室"
         },
         "share_public": "分享您的公開聊天空間",
-        "search_children": "搜尋 %(spaceName)s"
+        "search_children": "搜尋 %(spaceName)s",
+        "invite_link": "分享邀請連結",
+        "invite": "邀請夥伴",
+        "invite_description": "使用電子郵件或使用者名稱邀請"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -4003,7 +4005,9 @@
         "setup_rooms_private_description": "我們將為每個主題建立聊天室。",
         "address_placeholder": "例如：my-space",
         "address_label": "位址",
-        "label": "建立聊天空間"
+        "label": "建立聊天空間",
+        "add_details_prompt_2": "您隨時可以變更這些。",
+        "creating": "正在建立…"
     },
     "user_menu": {
         "switch_theme_light": "切換至淺色模式",

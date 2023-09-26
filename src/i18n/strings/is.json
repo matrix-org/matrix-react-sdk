@@ -127,7 +127,6 @@
     "Add room": "Bæta við spjallrás",
     "Room information": "Upplýsingar um spjallrás",
     "Room options": "Valkostir spjallrásar",
-    "Invite people": "Bjóða fólki",
     "Finland": "Finnland",
     "Norway": "Noreg",
     "Denmark": "Danmörk",
@@ -475,7 +474,6 @@
     "Room Name": "Heiti spjallrásar",
     "<userName/> invited you": "<userName/> bauð þér",
     "<userName/> wants to chat": "<userName/> langar til að spjalla",
-    "Invite with email or username": "Bjóða með tölvupóstfangi eða notandanafni",
     "Go to Settings": "Fara í stillingar",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
     "Success!": "Tókst!",
@@ -593,10 +591,6 @@
     "Upgrade required": "Uppfærsla er nauðsynleg",
     "Display Name": "Birtingarnafn",
     "Space options": "Valkostir svæðis",
-    "Preview Space": "Forskoða svæði",
-    "Visibility": "Sýnileiki",
-    "Leave Space": "Yfirgefa svæði",
-    "Save Changes": "Vista breytingar",
     "Address": "Vistfang",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -641,7 +635,6 @@
     "Room Addresses": "Vistföng spjallrása",
     "Loading new room": "Hleð inn nýrri spjallrás",
     "Upgrading room": "Uppfæri spjallrás",
-    "Show all rooms": "Sýna allar spjallrásir",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Private space": "Einkasvæði",
@@ -687,13 +680,7 @@
     "View in room": "Skoða á spjallrás",
     "Set up": "Setja upp",
     "Failed to set display name": "Mistókst að stilla birtingarnafn",
-    "Show advanced": "Birta ítarlegt",
-    "Hide advanced": "Fela ítarlegt",
-    "Edit settings relating to your space.": "Breyta stillingum viðkomandi svæðinu þínu.",
-    "Failed to save space settings.": "Mistókst að vista stillingar svæðis.",
-    "Share invite link": "Deila boðstengli",
     "Copy link to thread": "Afrita tengil á spjallþráð",
-    "You can change these anytime.": "Þú getur breytt þessu hvenær sem er.",
     "Create a space": "Búa til svæði",
     "Guitar": "Gítar",
     "Ball": "Bolti",
@@ -731,7 +718,6 @@
         "other": "og %(count)s til viðbótar"
     },
     "No display name": "Ekkert birtingarnafn",
-    "Access": "Aðgangur",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -1044,7 +1030,6 @@
     "Add existing room": "Bæta við fyrirliggjandi spjallrás",
     "Disconnect from the identity server <current /> and connect to <new /> instead?": "Aftengjast frá auðkennisþjóninum <current /> og tengjast í staðinn við <new />?",
     "Checking server": "Athuga með þjón",
-    "Decide who can view and join %(spaceName)s.": "Veldu hverjir geta skoðað og tekið þátt í %(spaceName)s.",
     "Verification Request": "Beiðni um sannvottun",
     "Save your Security Key": "Vista öryggislykilinn þinn",
     "Set a Security Phrase": "Setja öryggisfrasa",
@@ -1149,13 +1134,6 @@
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Þetta boð í %(roomName)s var sent til %(email)s sem er ekki tengt notandaaðgangnum þínum",
     "Unnamed audio": "Nafnlaust hljóð",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-    "Recommended for public spaces.": "Mælt með fyrir opinber almenningssvæði.",
-    "Allow people to preview your space before they join.": "Bjóddu fólki að forskoða svæðið þitt áður en þau geta tekið þátt.",
-    "Failed to update the visibility of this space": "Mistókst að uppfæra sýnileika þessa svæðis",
-    "This may be useful for public spaces.": "Þetta getur hentað fyrir opinber almenningssvæði.",
-    "Guests can join a space without having an account.": "Gestir geta tekið þátt í svæði án þess að vera með notandaaðgang.",
-    "Failed to update the history visibility of this space": "Mistókst að uppfæra sýnileika atvikaferils þessa svæðis",
-    "Failed to update the guest access of this space": "Mistókst að uppfæra gestaaðgang þessa svæðis",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Unable to set up secret storage": "Tókst ekki að setja upp leynigeymslu",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Tryggðu þig gegn því að missa aðgang að dulrituðum skilaboðum og gögnum með því að taka öryggisafrit af dulritunarlyklunum á netþjóninum þinum.",
@@ -1626,7 +1604,9 @@
         "exit_fullscreeen": "Fara úr fullskjásstillingu",
         "enter_fullscreen": "Fara í fullskjásstillingu",
         "unban": "Afbanna",
-        "click_to_copy": "Smelltu til að afrita"
+        "click_to_copy": "Smelltu til að afrita",
+        "hide_advanced": "Fela ítarlegt",
+        "show_advanced": "Birta ítarlegt"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -2163,11 +2143,12 @@
             "metaspaces_subsection": "Svæði sem á að birta",
             "metaspaces_description": "Svæði eru leið til að hópa fólk og spjallrásir. Auk svæðanna sem þú ert á, geturðu líka notað nokkur forútbúin svæði.",
             "metaspaces_home_description": "Forsíðan nýtist til að hafa yfirsýn yfir allt.",
-            "metaspaces_home_all_rooms": "Birtu allar spjallrásirnar þínar á forsíðunni, jafnvel þótt þær tilheyri svæði.",
             "metaspaces_favourites_description": "Hópaðu allar eftirlætisspjallrásir og fólk á einum stað.",
             "metaspaces_people_description": "Hópaðu allt fólk á einum stað.",
             "metaspaces_orphans": "Spjallrásir utan svæðis",
-            "metaspaces_orphans_description": "Hópaðu allar spjallrásir sem ekki eru hluti af svæðum á einum stað."
+            "metaspaces_orphans_description": "Hópaðu allar spjallrásir sem ekki eru hluti af svæðum á einum stað.",
+            "metaspaces_home_all_rooms_description": "Birtu allar spjallrásirnar þínar á forsíðunni, jafnvel þótt þær tilheyri svæði.",
+            "metaspaces_home_all_rooms": "Sýna allar spjallrásir"
         }
     },
     "devtools": {
@@ -2871,7 +2852,11 @@
             "default_url_previews_on": "Forskoðun vefslóða er sjálfgefið virk fyrir þátttakendur í þessari spjallrás.",
             "default_url_previews_off": "Forskoðun vefslóða er sjálfgefið óvirk fyrir þátttakendur í þessari spjallrás.",
             "url_preview_encryption_warning": "Í dulrituðum spjallrásum, eins og þessari, er sjálfgefið slökkt á forskoðun vefslóða til að tryggja að heimaþjónn þinn (þar sem forskoðunin myndast) geti ekki safnað upplýsingum um tengla sem þú sérð í þessari spjallrás.",
-            "url_previews_section": "Forskoðun vefslóða"
+            "url_previews_section": "Forskoðun vefslóða",
+            "error_save_space_settings": "Mistókst að vista stillingar svæðis.",
+            "description_space": "Breyta stillingum viðkomandi svæðinu þínu.",
+            "save": "Vista breytingar",
+            "leave_space": "Yfirgefa svæði"
         },
         "advanced": {
             "unfederated": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
@@ -2884,7 +2869,22 @@
             "room_version": "Útgáfa spjallrásar:"
         },
         "delete_avatar_label": "Eyða auðkennismynd",
-        "upload_avatar_label": "Senda inn auðkennismynd"
+        "upload_avatar_label": "Senda inn auðkennismynd",
+        "visibility": {
+            "error_update_guest_access": "Mistókst að uppfæra gestaaðgang þessa svæðis",
+            "error_update_history_visibility": "Mistókst að uppfæra sýnileika atvikaferils þessa svæðis",
+            "guest_access_explainer": "Gestir geta tekið þátt í svæði án þess að vera með notandaaðgang.",
+            "guest_access_explainer_public_space": "Þetta getur hentað fyrir opinber almenningssvæði.",
+            "title": "Sýnileiki",
+            "error_failed_save": "Mistókst að uppfæra sýnileika þessa svæðis",
+            "history_visibility_anyone_space": "Forskoða svæði",
+            "history_visibility_anyone_space_description": "Bjóddu fólki að forskoða svæðið þitt áður en þau geta tekið þátt.",
+            "history_visibility_anyone_space_recommendation": "Mælt með fyrir opinber almenningssvæði."
+        },
+        "access": {
+            "title": "Aðgangur",
+            "description_space": "Veldu hverjir geta skoðað og tekið þátt í %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3338,7 +3338,10 @@
             "manage_and_explore": "Sýsla með og kanna spjallrásir"
         },
         "share_public": "Deildu opinbera svæðinu þínu",
-        "search_children": "Leita í %(spaceName)s"
+        "search_children": "Leita í %(spaceName)s",
+        "invite_link": "Deila boðstengli",
+        "invite": "Bjóða fólki",
+        "invite_description": "Bjóða með tölvupóstfangi eða notandanafni"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3415,7 +3418,8 @@
         "setup_rooms_community_description": "Búum til spjallrás fyrir hvern og einn þeirra.",
         "address_placeholder": "t.d. mitt-svæði",
         "address_label": "Vistfang",
-        "label": "Búa til svæði"
+        "label": "Búa til svæði",
+        "add_details_prompt_2": "Þú getur breytt þessu hvenær sem er."
     },
     "user_menu": {
         "switch_theme_light": "Skiptu yfir í ljósan ham",

@@ -192,6 +192,17 @@
         "all_rooms_home_description": "All rooms you're in will appear in Home.",
         "start_automatically": "Start automatically after system login",
         "warn_quit": "Warn before quitting",
+        "sidebar": {
+            "metaspaces_home_all_rooms": "Show all rooms",
+            "title": "Sidebar",
+            "metaspaces_subsection": "Spaces to show",
+            "metaspaces_home_description": "Home is useful for getting an overview of everything.",
+            "metaspaces_home_all_rooms_description": "Show all your rooms in Home, even if they're in a space.",
+            "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
+            "metaspaces_people_description": "Group all your people in one place.",
+            "metaspaces_orphans": "Rooms outside of a space",
+            "metaspaces_orphans_description": "Group all your rooms that aren't part of a space in one place."
+        },
         "keyboard": {
             "title": "Keyboard"
         },
@@ -288,16 +299,6 @@
             "other_sessions_heading": "Other sessions",
             "security_recommendations": "Security recommendations",
             "security_recommendations_description": "Improve your account security by following these recommendations."
-        },
-        "sidebar": {
-            "title": "Sidebar",
-            "metaspaces_subsection": "Spaces to show",
-            "metaspaces_home_description": "Home is useful for getting an overview of everything.",
-            "metaspaces_home_all_rooms": "Show all your rooms in Home, even if they're in a space.",
-            "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
-            "metaspaces_people_description": "Group all your people in one place.",
-            "metaspaces_orphans": "Rooms outside of a space",
-            "metaspaces_orphans_description": "Group all your rooms that aren't part of a space in one place."
         }
     },
     "auth": {
@@ -477,6 +478,8 @@
         "expand": "Expand",
         "collapse": "Collapse",
         "click_to_copy": "Click to copy",
+        "hide_advanced": "Hide advanced",
+        "show_advanced": "Show advanced",
         "apply": "Apply",
         "remove": "Remove",
         "reset": "Reset",
@@ -1620,6 +1623,9 @@
     "space": {
         "share_public": "Share your public space",
         "search_children": "Search %(spaceName)s",
+        "invite_link": "Share invite link",
+        "invite": "Invite people",
+        "invite_description": "Invite with email or username",
         "context_menu": {
             "devtools_open_timeline": "See room timeline (devtools)",
             "home": "Space home",
@@ -1881,6 +1887,35 @@
         },
         "delete_avatar_label": "Delete avatar",
         "upload_avatar_label": "Upload avatar",
+        "general": {
+            "error_save_space_settings": "Failed to save space settings.",
+            "description_space": "Edit settings relating to your space.",
+            "save": "Save Changes",
+            "leave_space": "Leave Space",
+            "publish_toggle": "Publish this room to the public in %(domain)s's room directory?",
+            "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
+            "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
+            "default_url_previews_on": "URL previews are enabled by default for participants in this room.",
+            "default_url_previews_off": "URL previews are disabled by default for participants in this room.",
+            "url_preview_encryption_warning": "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.",
+            "url_preview_explainer": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
+            "url_previews_section": "URL Previews"
+        },
+        "visibility": {
+            "error_update_guest_access": "Failed to update the guest access of this space",
+            "error_update_history_visibility": "Failed to update the history visibility of this space",
+            "guest_access_explainer": "Guests can join a space without having an account.",
+            "guest_access_explainer_public_space": "This may be useful for public spaces.",
+            "title": "Visibility",
+            "error_failed_save": "Failed to update the visibility of this space",
+            "history_visibility_anyone_space": "Preview Space",
+            "history_visibility_anyone_space_description": "Allow people to preview your space before they join.",
+            "history_visibility_anyone_space_recommendation": "Recommended for public spaces."
+        },
+        "access": {
+            "title": "Access",
+            "description_space": "Decide who can view and join %(spaceName)s."
+        },
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers",
             "room_upgrade_warning": "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.",
@@ -1931,16 +1966,6 @@
             "permissions_section": "Permissions",
             "permissions_section_description_space": "Select the roles required to change various parts of the space",
             "permissions_section_description_room": "Select the roles required to change various parts of the room"
-        },
-        "general": {
-            "publish_toggle": "Publish this room to the public in %(domain)s's room directory?",
-            "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
-            "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
-            "default_url_previews_on": "URL previews are enabled by default for participants in this room.",
-            "default_url_previews_off": "URL previews are disabled by default for participants in this room.",
-            "url_preview_encryption_warning": "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.",
-            "url_preview_explainer": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
-            "url_previews_section": "URL Previews"
         }
     },
     "devtools": {
@@ -2179,6 +2204,8 @@
         "public_heading": "Your public space",
         "private_heading": "Your private space",
         "add_details_prompt": "Add some details to help people recognise it.",
+        "add_details_prompt_2": "You can change these anytime.",
+        "creating": "Creating…",
         "failed_create_initial_rooms": "Failed to create initial space rooms",
         "skip_action": "Skip for now",
         "creating_rooms": "Creating rooms…",
@@ -2205,34 +2232,11 @@
         "setup_rooms_private_heading": "What projects are your team working on?",
         "setup_rooms_private_description": "We'll create rooms for each of them."
     },
-    "You can change these anytime.": "You can change these anytime.",
-    "Creating…": "Creating…",
-    "Show all rooms": "Show all rooms",
     "Spaces": "Spaces",
-    "Share invite link": "Share invite link",
-    "Invite people": "Invite people",
-    "Invite with email or username": "Invite with email or username",
-    "Failed to save space settings.": "Failed to save space settings.",
     "General": "General",
-    "Edit settings relating to your space.": "Edit settings relating to your space.",
     "Saving…": "Saving…",
-    "Save Changes": "Save Changes",
-    "Leave Space": "Leave Space",
-    "Failed to update the guest access of this space": "Failed to update the guest access of this space",
-    "Failed to update the history visibility of this space": "Failed to update the history visibility of this space",
-    "Hide advanced": "Hide advanced",
-    "Show advanced": "Show advanced",
     "Enable guest access": "Enable guest access",
-    "Guests can join a space without having an account.": "Guests can join a space without having an account.",
-    "This may be useful for public spaces.": "This may be useful for public spaces.",
     "Address": "Address",
-    "Visibility": "Visibility",
-    "Access": "Access",
-    "Decide who can view and join %(spaceName)s.": "Decide who can view and join %(spaceName)s.",
-    "Failed to update the visibility of this space": "Failed to update the visibility of this space",
-    "Preview Space": "Preview Space",
-    "Allow people to preview your space before they join.": "Allow people to preview your space before they join.",
-    "Recommended for public spaces.": "Recommended for public spaces.",
     "Jump to first unread room.": "Jump to first unread room.",
     "Jump to first invite.": "Jump to first invite.",
     "Space options": "Space options",

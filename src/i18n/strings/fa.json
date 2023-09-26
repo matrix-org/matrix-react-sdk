@@ -332,7 +332,6 @@
     "Remember my selection for this widget": "انتخاب من برای این ابزارک را بخاطر بسپار",
     "I don't want my encrypted messages": "پیام‌های رمزشده‌ی خود را نمی‌خواهم",
     "Upgrade this room to version %(version)s": "این اتاق را به نسخه %(version)s ارتقا دهید",
-    "Failed to save space settings.": "تنظیمات فضای کاری ذخیره نشد.",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
     "This widget would like to:": "این ابزارک تمایل دارد:",
     "Unable to set up keys": "تنظیم کلیدها امکان پذیر نیست",
@@ -391,8 +390,6 @@
     "Share Room Message": "به اشتراک گذاشتن پیام اتاق",
     "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
     "Consult first": "ابتدا مشورت کنید",
-    "Save Changes": "ذخیره تغییرات",
-    "Leave Space": "ترک فضای کاری",
     "Remember this": "این را به یاد داشته باش",
     "Decline All": "رد کردن همه",
     "Modal Widget": "ابزارک کمکی",
@@ -1002,10 +999,6 @@
     "Add existing room": "اضافه‌کردن اتاق موجود",
     "Create new room": "ایجاد اتاق جدید",
     "Leave space": "ترک محیط",
-    "Invite with email or username": "دعوت با ایمیل یا نام‌کاربری",
-    "Invite people": "دعوت کاربران",
-    "Share invite link": "به اشتراک‌گذاری لینک دعوت",
-    "You can change these anytime.": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید.",
     "Couldn't load page": "نمایش صفحه امکان‌پذیر نبود",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "This room is public": "این اتاق عمومی است",
@@ -1050,8 +1043,6 @@
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
     "Phone numbers": "شماره تلفن",
     "Email addresses": "آدرس ایمیل",
-    "Show advanced": "نمایش بخش پیشرفته",
-    "Hide advanced": "پنهان‌کردن بخش پیشرفته",
     "Manage integrations": "مدیریت پکپارچه‌سازی‌ها",
     "Enter a new identity server": "یک سرور هویت‌سنجی جدید وارد کنید",
     "Do not use an identity server": "از سرور هویت‌سنجی استفاده نکن",
@@ -1083,7 +1074,6 @@
     "Your browser likely removed this data when running low on disk space.": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "برخی از داده‌های نشست ، از جمله کلیدهای رمزنگاری پیام‌ها موجود نیست. برای برطرف کردن این مشکل از برنامه خارج شده و مجددا وارد شوید و از کلیدها را از نسخه‌ی پشتیبان بازیابی نمائيد.",
     "To help us prevent this in future, please <a>send us logs</a>.": "برای کمک به ما در جلوگیری از این امر در آینده ، لطفا <a>لاگ‌ها را برای ما ارسال کنید</a>.",
-    "Edit settings relating to your space.": "تنظیمات مربوط به فضای کاری خود را ویرایش کنید.",
     "This will allow you to reset your password and receive notifications.": "با این کار می‌توانید گذرواژه خود را تغییر داده و اعلان‌ها را دریافت کنید.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "لطفاً ایمیل خود را بررسی کرده و روی لینکی که برایتان ارسال شده، کلیک کنید. پس از انجام این کار، روی ادامه کلیک کنید.",
     "Verification Pending": "در انتظار تائید",
@@ -1324,7 +1314,9 @@
         "exit_fullscreeen": "خروج از نمایش تمام صفحه",
         "enter_fullscreen": "نمایش تمام صفحه",
         "unban": "رفع تحریم",
-        "click_to_copy": "برای گرفتن رونوشت کلیک کنید"
+        "click_to_copy": "برای گرفتن رونوشت کلیک کنید",
+        "hide_advanced": "پنهان‌کردن بخش پیشرفته",
+        "show_advanced": "نمایش بخش پیشرفته"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -1657,7 +1649,7 @@
         "sidebar": {
             "title": "نوارکناری",
             "metaspaces_home_description": "خانه برای داشتن یک نمای کلی از همه چیز مفید است.",
-            "metaspaces_home_all_rooms": "تمامی اتاق ها را در صفحه ی خانه نمایش بده، حتی آنهایی که در یک فضا هستند."
+            "metaspaces_home_all_rooms_description": "تمامی اتاق ها را در صفحه ی خانه نمایش بده، حتی آنهایی که در یک فضا هستند."
         }
     },
     "devtools": {
@@ -2204,7 +2196,11 @@
             "default_url_previews_off": "پیش نمایش URL به طور پیش فرض برای شرکت کنندگان در این اتاق غیرفعال است.",
             "url_preview_encryption_warning": "در اتاق های رمزگذاری شده، مانند این اتاق، پیش نمایش URL به طور پیش فرض غیرفعال است تا اطمینان حاصل شود که سرور شما (جایی که پیش نمایش ها ایجاد می شود) نمی تواند اطلاعات مربوط به پیوندهایی را که در این اتاق مشاهده می کنید جمع آوری کند.",
             "url_preview_explainer": "هنگامی که فردی یک URL را در پیام خود قرار می دهد، می توان با مشاهده پیش نمایش آن URL، اطلاعات بیشتری در مورد آن پیوند مانند عنوان ، توضیحات و یک تصویر از وب سایت دریافت کرد.",
-            "url_previews_section": "پیش‌نمایش URL"
+            "url_previews_section": "پیش‌نمایش URL",
+            "error_save_space_settings": "تنظیمات فضای کاری ذخیره نشد.",
+            "description_space": "تنظیمات مربوط به فضای کاری خود را ویرایش کنید.",
+            "save": "ذخیره تغییرات",
+            "leave_space": "ترک فضای کاری"
         },
         "advanced": {
             "unfederated": "این اتاق توسط سرورهای ماتریکس در دسترس نیست",
@@ -2619,7 +2615,10 @@
             "explore": "جستجو در اتاق ها",
             "manage_and_explore": "مدیریت و جستجوی اتاق‌ها"
         },
-        "share_public": "محیط عمومی خود را به اشتراک بگذارید"
+        "share_public": "محیط عمومی خود را به اشتراک بگذارید",
+        "invite_link": "به اشتراک‌گذاری لینک دعوت",
+        "invite": "دعوت کاربران",
+        "invite_description": "دعوت با ایمیل یا نام‌کاربری"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
@@ -2690,7 +2689,8 @@
         "setup_rooms_community_heading": "برخی از مواردی که می خواهید درباره‌ی آن‌ها در %(spaceName)s بحث کنید، چیست؟",
         "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
         "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود.",
-        "label": "ساختن یک محیط"
+        "label": "ساختن یک محیط",
+        "add_details_prompt_2": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید."
     },
     "user_menu": {
         "switch_theme_light": "انتخاب حالت روشن",

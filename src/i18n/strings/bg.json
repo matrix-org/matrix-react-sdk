@@ -473,8 +473,6 @@
     "Explore rooms": "Открий стаи",
     "Verify the link in your inbox": "Потвърдете линка във вашата пощенска кутия",
     "e.g. my-room": "например my-room",
-    "Hide advanced": "Скрий разширени настройки",
-    "Show advanced": "Покажи разширени настройки",
     "Close dialog": "Затвори прозореца",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Би било добре да <b>премахнете личните си данни</b> от сървъра за самоличност <idserver /> преди прекъсване на връзката. За съжаление, сървърът за самоличност <idserver /> в момента не е достъпен.",
     "You should:": "Ще е добре да:",
@@ -1011,11 +1009,7 @@
     "Space options": "Опции на пространството",
     "Add existing room": "Добави съществуваща стая",
     "Leave space": "Напусни пространство",
-    "Invite with email or username": "Покани чрез имейл или потребителско име",
-    "Invite people": "Покани хора",
-    "Share invite link": "Сподели връзка с покана",
     "Create a space": "Създаване на пространство",
-    "You can change these anytime.": "Можете да ги промените по всяко време.",
     "unknown person": "",
     "Spaces": "Пространства",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
@@ -1172,7 +1166,9 @@
         "submit": "Изпрати",
         "send_report": "Изпрати доклад",
         "unban": "Отблокирай",
-        "click_to_copy": "Натиснете за копиране"
+        "click_to_copy": "Натиснете за копиране",
+        "hide_advanced": "Скрий разширени настройки",
+        "show_advanced": "Покажи разширени настройки"
     },
     "a11y": {
         "user_menu": "Потребителско меню",
@@ -2166,7 +2162,8 @@
         "public_heading": "Вашето публично пространство",
         "private_heading": "Вашето лично пространство",
         "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят.",
-        "label": "Създаване на пространство"
+        "label": "Създаване на пространство",
+        "add_details_prompt_2": "Можете да ги промените по всяко време."
     },
     "user_menu": {
         "switch_theme_light": "Смени на светъл режим",
@@ -2207,7 +2204,10 @@
             "explore": "Открий стаи",
             "manage_and_explore": "Управление и откриване на стаи"
         },
-        "share_public": "Споделете публичното си място"
+        "share_public": "Споделете публичното си място",
+        "invite_link": "Сподели връзка с покана",
+        "invite": "Покани хора",
+        "invite_description": "Покани чрез имейл или потребителско име"
     },
     "terms": {
         "integration_manager": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",

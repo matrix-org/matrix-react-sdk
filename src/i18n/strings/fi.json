@@ -475,8 +475,6 @@
     "Jump to first invite.": "Siirry ensimmäiseen kutsuun.",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "Tekstiviesti on lähetetty numeroon +%(msisdn)s. Syötä siinä oleva varmistuskoodi.",
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
-    "Hide advanced": "Piilota lisäasetukset",
-    "Show advanced": "Näytä lisäasetukset",
     "Your email address hasn't been verified yet": "Sähköpostiosoitettasi ei ole vielä varmistettu",
     "Verify the link in your inbox": "Varmista sähköpostiisi saapunut linkki",
     "Message Actions": "Viestitoiminnot",
@@ -1006,16 +1004,12 @@
     },
     "You don't have permission": "Sinulla ei ole lupaa",
     "Remember this": "Muista tämä",
-    "Save Changes": "Tallenna muutokset",
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
     "Suggested Rooms": "Ehdotetut huoneet",
     "Add existing room": "Lisää olemassa oleva huone",
     "Your message was sent": "Viestisi lähetettiin",
-    "Invite people": "Kutsu ihmisiä",
-    "Share invite link": "Jaa kutsulinkki",
-    "You can change these anytime.": "Voit muuttaa näitä koska tahansa.",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
     "Sending": "Lähetetään",
@@ -1095,23 +1089,14 @@
         "other": "& %(count)s lisää"
     },
     "Space options": "Avaruuden valinnat",
-    "Recommended for public spaces.": "Suositeltu julkisiin avaruuksiin.",
-    "Guests can join a space without having an account.": "Vieraat voivat liittyä avaruuteen ilman tiliä.",
     "Enable guest access": "Ota käyttöön vieraiden pääsy",
-    "Failed to save space settings.": "Avaruuden asetusten tallentaminen epäonnistui.",
-    "Decide who can view and join %(spaceName)s.": "Päätä ketkä voivat katsella avaruutta %(spaceName)s ja liittyä siihen.",
     "Space information": "Avaruuden tiedot",
-    "Allow people to preview your space before they join.": "Salli ihmisten esikatsella avaruuttasi ennen liittymistä.",
-    "Preview Space": "Esikatsele avaruutta",
     "Space visibility": "Avaruuden näkyvyys",
-    "Visibility": "Näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
     "You are about to leave <spaceName/>.": "Olet aikeissa poistua avaruudesta <spaceName/>.",
     "Leave %(spaceName)s": "Poistu avaruudesta %(spaceName)s",
-    "Leave Space": "Poistu avaruudesta",
-    "Edit settings relating to your space.": "Muokkaa avaruuteesi liittyviä asetuksia.",
     "Add space": "Lisää avaruus",
     "Want to add an existing space instead?": "Haluatko sen sijaan lisätä olemassa olevan avaruuden?",
     "Add a space to a space you manage.": "Lisää avaruus hallitsemaasi avaruuteen.",
@@ -1130,7 +1115,6 @@
     "Keyword": "Avainsana",
     "Mentions & keywords": "Maininnat ja avainsanat",
     "Spaces": "Avaruudet",
-    "Show all rooms": "Näytä kaikki huoneet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "Address": "Osoite",
     "Create a new space": "Luo uusi avaruus",
@@ -1146,8 +1130,6 @@
     "Call back": "Soita takaisin",
     "Role in <RoomName/>": "Rooli huoneessa <RoomName/>",
     "There was an error loading your notification settings.": "Virhe ladatessa ilmoitusasetuksia.",
-    "This may be useful for public spaces.": "Tämä voi olla hyödyllinen julkisille avaruuksille.",
-    "Invite with email or username": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
     "View in room": "Näytä huoneessa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
@@ -1210,9 +1192,6 @@
         "one": "Tällä hetkellä yhdellä avaruudella on pääsyoikeus",
         "other": "Tällä hetkellä %(count)s avaruudella on pääsyoikeus"
     },
-    "Failed to update the visibility of this space": "Avaruuden näkyvyyden muuttaminen epäonnistui",
-    "Failed to update the history visibility of this space": "Historian näkyvyysasetusten muuttaminen epäonnistui",
-    "Failed to update the guest access of this space": "Vieraiden pääsyasetusten muuttaminen epäonnistui",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -1273,7 +1252,6 @@
     "Voice Message": "Ääniviesti",
     "Hide stickers": "Piilota tarrat",
     "Get notified for every message": "Vastaanota ilmoitus joka viestistä",
-    "Access": "Pääsy",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
@@ -1519,7 +1497,6 @@
     "Create a link": "Luo linkki",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "Saving…": "Tallennetaan…",
-    "Creating…": "Luodaan…",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Suojaudu salattuihin viesteihin ja tietoihin pääsyn menettämiseltä varmuuskopioimalla salausavaimesi palvelimellesi.",
@@ -1771,7 +1748,9 @@
         "exit_fullscreeen": "Poistu koko näytön tilasta",
         "enter_fullscreen": "Siirry koko näytön tilaan",
         "unban": "Poista porttikielto",
-        "click_to_copy": "Kopioi napsauttamalla"
+        "click_to_copy": "Kopioi napsauttamalla",
+        "hide_advanced": "Piilota lisäasetukset",
+        "show_advanced": "Näytä lisäasetukset"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -2334,11 +2313,12 @@
             "metaspaces_subsection": "Näytettävät avaruudet",
             "metaspaces_description": "Avaruudet ovat uusi tapa ryhmitellä huoneita ja ihmisiä. Voit käyttää esiluotuja avaruuksia niiden avaruuksien lisäksi, joissa jo olet.",
             "metaspaces_home_description": "Koti on hyödyllinen, sillä sieltä näet yleisnäkymän kaikkeen.",
-            "metaspaces_home_all_rooms": "Näytä kaikki huoneesi etusivulla, vaikka ne olisivat jossain muussa avaruudessa.",
             "metaspaces_favourites_description": "Ryhmitä kaikki suosimasi huoneet ja henkilöt yhteen paikkaan.",
             "metaspaces_people_description": "Ryhmitä kaikki ihmiset yhteen paikkaan.",
             "metaspaces_orphans": "Huoneet, jotka eivät kuulu mihinkään avaruuteen",
-            "metaspaces_orphans_description": "Ryhmitä kaikki huoneesi, jotka eivät ole osa avaruutta, yhteen paikkaan."
+            "metaspaces_orphans_description": "Ryhmitä kaikki huoneesi, jotka eivät ole osa avaruutta, yhteen paikkaan.",
+            "metaspaces_home_all_rooms_description": "Näytä kaikki huoneesi etusivulla, vaikka ne olisivat jossain muussa avaruudessa.",
+            "metaspaces_home_all_rooms": "Näytä kaikki huoneet"
         }
     },
     "devtools": {
@@ -3065,7 +3045,11 @@
             "default_url_previews_off": "URL-esikatselut ovat oletuksena pois päältä tämän huoneen jäsenillä.",
             "url_preview_encryption_warning": "Salatuissa huoneissa, kuten tässä, osoitteiden esikatselut ovat oletuksena pois käytöstä, jotta kotipalvelimesi (missä osoitteiden esikatselut luodaan) ei voi kerätä tietoa siitä, mitä linkkejä näet tässä huoneessa.",
             "url_preview_explainer": "Kun joku asettaa osoitteen linkiksi viestiinsä, URL-esikatselu voi näyttää tietoja linkistä kuten otsikon, kuvauksen ja kuvan verkkosivulta.",
-            "url_previews_section": "URL-esikatselut"
+            "url_previews_section": "URL-esikatselut",
+            "error_save_space_settings": "Avaruuden asetusten tallentaminen epäonnistui.",
+            "description_space": "Muokkaa avaruuteesi liittyviä asetuksia.",
+            "save": "Tallenna muutokset",
+            "leave_space": "Poistu avaruudesta"
         },
         "advanced": {
             "unfederated": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
@@ -3078,7 +3062,22 @@
             "room_version": "Huoneen versio:"
         },
         "delete_avatar_label": "Poista avatar",
-        "upload_avatar_label": "Lähetä profiilikuva"
+        "upload_avatar_label": "Lähetä profiilikuva",
+        "visibility": {
+            "error_update_guest_access": "Vieraiden pääsyasetusten muuttaminen epäonnistui",
+            "error_update_history_visibility": "Historian näkyvyysasetusten muuttaminen epäonnistui",
+            "guest_access_explainer": "Vieraat voivat liittyä avaruuteen ilman tiliä.",
+            "guest_access_explainer_public_space": "Tämä voi olla hyödyllinen julkisille avaruuksille.",
+            "title": "Näkyvyys",
+            "error_failed_save": "Avaruuden näkyvyyden muuttaminen epäonnistui",
+            "history_visibility_anyone_space": "Esikatsele avaruutta",
+            "history_visibility_anyone_space_description": "Salli ihmisten esikatsella avaruuttasi ennen liittymistä.",
+            "history_visibility_anyone_space_recommendation": "Suositeltu julkisiin avaruuksiin."
+        },
+        "access": {
+            "title": "Pääsy",
+            "description_space": "Päätä ketkä voivat katsella avaruutta %(spaceName)s ja liittyä siihen."
+        }
     },
     "encryption": {
         "verification": {
@@ -3528,7 +3527,10 @@
             "manage_and_explore": "Hallitse ja selaa huoneita"
         },
         "share_public": "Jaa julkinen avaruutesi",
-        "search_children": "Etsi %(spaceName)s"
+        "search_children": "Etsi %(spaceName)s",
+        "invite_link": "Jaa kutsulinkki",
+        "invite": "Kutsu ihmisiä",
+        "invite_description": "Kutsu sähköpostiosoitteella tai käyttäjänimellä"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3611,7 +3613,9 @@
         "setup_rooms_private_description": "Luomme huoneet jokaiselle niistä.",
         "address_placeholder": "esim. minun-space",
         "address_label": "Osoite",
-        "label": "Luo avaruus"
+        "label": "Luo avaruus",
+        "add_details_prompt_2": "Voit muuttaa näitä koska tahansa.",
+        "creating": "Luodaan…"
     },
     "user_menu": {
         "switch_theme_light": "Vaihda vaaleaan teemaan",

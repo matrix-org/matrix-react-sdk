@@ -435,8 +435,6 @@
     "Removing…": "Removendo…",
     "Clear all data in this session?": "Limpar todos os dados nesta sessão?",
     "Clear all data": "Limpar todos os dados",
-    "Hide advanced": "Esconder configurações avançadas",
-    "Show advanced": "Mostrar configurações avançadas",
     "Are you sure you want to deactivate your account? This is irreversible.": "Tem certeza de que deseja desativar sua conta? Isso é irreversível.",
     "Confirm account deactivation": "Confirmar desativação da conta",
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
@@ -1049,11 +1047,7 @@
     },
     "Are you sure you want to leave the space '%(spaceName)s'?": "Tem certeza de que deseja sair desse espaço '%(spaceName)s'?",
     "This space is not public. You will not be able to rejoin without an invite.": "Este espaço não é público. Você não poderá entrar novamente sem um convite.",
-    "Save Changes": "Salvar alterações",
     "Leave space": "Sair do espaço",
-    "Leave Space": "Sair desse espaço",
-    "Edit settings relating to your space.": "Editar configurações relacionadas ao seu espaço.",
-    "Failed to save space settings.": "Falha ao salvar as configurações desse espaço.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Create a new room": "Criar uma nova sala",
@@ -1061,8 +1055,6 @@
     "Invite to this space": "Convidar para este espaço",
     "Your message was sent": "A sua mensagem foi enviada",
     "Space options": "Opções do espaço",
-    "Invite people": "Convidar pessoas",
-    "Share invite link": "Compartilhar link de convite",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.": "O gerenciador de integrações recebe dados de configuração e pode modificar widgets, enviar convites para salas e definir níveis de permissão em seu nome.",
@@ -1077,7 +1069,6 @@
     "Unable to access your microphone": "Não foi possível acessar seu microfone",
     "View message": "Ver mensagem",
     "Failed to send": "Falhou a enviar",
-    "Access": "Acesso",
     "Space members": "Membros do espaço",
     "Spaces with access": "Espaço com acesso",
     "& %(count)s more": {
@@ -1091,23 +1082,10 @@
     "Global": "Global",
     "New keyword": "Nova palavra-chave",
     "Keyword": "Palavra-chave",
-    "Recommended for public spaces.": "Recomendado para espaços públicos.",
-    "Preview Space": "Previsualizar o Espaço",
-    "Visibility": "Visibilidade",
-    "This may be useful for public spaces.": "Isso pode ser útil para espaços públicos.",
     "Enable guest access": "Habilitar acesso a convidados",
-    "Invite with email or username": "Convidar com email ou nome de usuário",
-    "Show all rooms": "Mostrar todas as salas",
-    "You can change these anytime.": "Você pode mudá-los a qualquer instante.",
     "Address": "Endereço",
     "There was an error loading your notification settings.": "Um erro ocorreu ao carregar suas configurações de notificação.",
     "Anyone in a space can find and join. You can select multiple spaces.": "Qualquer um em um espaço pode encontrar e se juntar. Você pode selecionar múltiplos espaços.",
-    "Allow people to preview your space before they join.": "Permite que pessoas vejam seu espaço antes de entrarem.",
-    "Failed to update the visibility of this space": "Falha ao atualizar a visibilidade deste espaço",
-    "Decide who can view and join %(spaceName)s.": "Decide quem pode ver e se juntar a %(spaceName)s.",
-    "Guests can join a space without having an account.": "Convidados podem se juntar a um espaço sem ter uma conta.",
-    "Failed to update the history visibility of this space": "Falha ao atualizar a visibilidade do histórico deste espaço",
-    "Failed to update the guest access of this space": "Falha ao atualizar o acesso de convidados a este espaço",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
     "Search for rooms or people": "Procurar por salas ou pessoas",
@@ -1483,7 +1461,9 @@
         "exit_fullscreeen": "Sair da tela cheia",
         "enter_fullscreen": "Entrar em tela cheia",
         "unban": "Remover banimento",
-        "click_to_copy": "Clique para copiar"
+        "click_to_copy": "Clique para copiar",
+        "hide_advanced": "Esconder configurações avançadas",
+        "show_advanced": "Mostrar configurações avançadas"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1882,8 +1862,9 @@
             "title": "Barra lateral",
             "metaspaces_subsection": "Espaços para mostrar",
             "metaspaces_home_description": "A página inicial é útil para obter uma visão geral de tudo.",
-            "metaspaces_home_all_rooms": "Mostre todas as suas salas no Início, mesmo que elas estejam em um espaço.",
-            "metaspaces_orphans": "Salas fora de um espaço"
+            "metaspaces_orphans": "Salas fora de um espaço",
+            "metaspaces_home_all_rooms_description": "Mostre todas as suas salas no Início, mesmo que elas estejam em um espaço.",
+            "metaspaces_home_all_rooms": "Mostrar todas as salas"
         }
     },
     "devtools": {
@@ -2515,7 +2496,11 @@
             "default_url_previews_off": "Pré-visualizações de links estão desativadas por padrão para participantes desta sala.",
             "url_preview_encryption_warning": "Em salas criptografadas, como esta, as pré-visualizações de links estão desativadas por padrão para garantir que o seu servidor local (onde as visualizações são geradas) não possa coletar informações sobre os links que você vê nesta sala.",
             "url_preview_explainer": "Quando alguém inclui um link em uma mensagem, a pré-visualização do link pode ser exibida para fornecer mais informações sobre esse link, como o título, a descrição e uma imagem do site.",
-            "url_previews_section": "Pré-visualização de links"
+            "url_previews_section": "Pré-visualização de links",
+            "error_save_space_settings": "Falha ao salvar as configurações desse espaço.",
+            "description_space": "Editar configurações relacionadas ao seu espaço.",
+            "save": "Salvar alterações",
+            "leave_space": "Sair desse espaço"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos",
@@ -2525,7 +2510,22 @@
             "room_version": "Versão da sala:"
         },
         "delete_avatar_label": "Remover foto de perfil",
-        "upload_avatar_label": "Enviar uma foto de perfil"
+        "upload_avatar_label": "Enviar uma foto de perfil",
+        "visibility": {
+            "error_update_guest_access": "Falha ao atualizar o acesso de convidados a este espaço",
+            "error_update_history_visibility": "Falha ao atualizar a visibilidade do histórico deste espaço",
+            "guest_access_explainer": "Convidados podem se juntar a um espaço sem ter uma conta.",
+            "guest_access_explainer_public_space": "Isso pode ser útil para espaços públicos.",
+            "title": "Visibilidade",
+            "error_failed_save": "Falha ao atualizar a visibilidade deste espaço",
+            "history_visibility_anyone_space": "Previsualizar o Espaço",
+            "history_visibility_anyone_space_description": "Permite que pessoas vejam seu espaço antes de entrarem.",
+            "history_visibility_anyone_space_recommendation": "Recomendado para espaços públicos."
+        },
+        "access": {
+            "title": "Acesso",
+            "description_space": "Decide quem pode ver e se juntar a %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -2918,7 +2918,10 @@
             "explore": "Explorar salas"
         },
         "share_public": "Compartilhar o seu espaço público",
-        "search_children": "Pesquisar %(spaceName)s"
+        "search_children": "Pesquisar %(spaceName)s",
+        "invite_link": "Compartilhar link de convite",
+        "invite": "Convidar pessoas",
+        "invite_description": "Convidar com email ou nome de usuário"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -2968,7 +2971,8 @@
         "invite_teammates_by_username": "Convidar por nome de usuário",
         "address_placeholder": "e.g. meu-espaco",
         "address_label": "Endereço",
-        "label": "Criar um espaço"
+        "label": "Criar um espaço",
+        "add_details_prompt_2": "Você pode mudá-los a qualquer instante."
     },
     "user_menu": {
         "switch_theme_light": "Alternar para o modo claro",

@@ -327,8 +327,6 @@
     "This client does not support end-to-end encryption.": "Denne klienten støttar ikkje ende-til-ende kryptering.",
     "Add a new server": "Legg til ein ny tenar",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte.",
-    "Hide advanced": "Gøym avanserte alternativ",
-    "Show advanced": "Vis avanserte alternativ",
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
@@ -491,7 +489,9 @@
         "refresh": "Hent fram på nytt",
         "mention": "Nemn",
         "submit": "Send inn",
-        "unban": "Slepp inn att"
+        "unban": "Slepp inn att",
+        "hide_advanced": "Gøym avanserte alternativ",
+        "show_advanced": "Vis avanserte alternativ"
     },
     "labs": {
         "pinning": "Meldingsfesting",

@@ -547,8 +547,6 @@
     "Clear all data in this session?": "¿Baleirar todos os datos desta sesión?",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "O baleirado dos datos da sesión é permanente. As mensaxes cifradas perderánse a menos que as súas chaves estiveren nunha copia de apoio.",
     "Clear all data": "Eliminar todos os datos",
-    "Hide advanced": "Ocultar Avanzado",
-    "Show advanced": "Mostrar Avanzado",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder o historial da conversa, debes exportar as chaves da sala antes de saír. Necesitarás volver á nova versión de %(brand)s para facer esto",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Xa utilizaches unha versión máis nova de %(brand)s nesta sesión. Para usar esta versión novamente con cifrado extremo-a-extremo tes que saír e volver a acceder.",
     "Incompatible Database": "Base de datos non compatible",
@@ -1050,10 +1048,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Este espazo non é público. Non poderás volver a unirte sen un convite.",
     "Failed to start livestream": "Fallou o inicio da emisión en directo",
     "Unable to start audio streaming.": "Non se puido iniciar a retransmisión de audio.",
-    "Save Changes": "Gardar cambios",
-    "Leave Space": "Deixar o Espazo",
-    "Edit settings relating to your space.": "Editar os axustes relativos ao teu espazo.",
-    "Failed to save space settings.": "Fallo ao gardar os axustes do espazo.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
     "Create a new room": "Crear unha nova sala",
@@ -1066,8 +1060,6 @@
     "Your message was sent": "Enviouse a túa mensaxe",
     "Space options": "Opcións do Espazo",
     "Leave space": "Saír do espazo",
-    "Invite people": "Convidar persoas",
-    "Share invite link": "Compartir ligazón do convite",
     "Create a space": "Crear un espazo",
     "Private space": "Espazo privado",
     "Public space": "Espazo público",
@@ -1082,8 +1074,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Normalmente esto só afecta a como se xestiona a sala no servidor. Se tes problemas co teu %(brand)s, informa do fallo.",
     "Invite to %(roomName)s": "Convidar a %(roomName)s",
     "Edit devices": "Editar dispositivos",
-    "Invite with email or username": "Convida con email ou nome de usuaria",
-    "You can change these anytime.": "Poderás cambialo en calquera momento.",
     "We couldn't create your DM.": "Non puidemos crear o teu MD.",
     "Invited people will be able to read old messages.": "As persoas convidadas poderán ler as mensaxes antigas.",
     "Reset event store?": "Restablecer almacenaxe do evento?",
@@ -1172,17 +1162,7 @@
     "Global": "Global",
     "New keyword": "Nova palabra chave",
     "Keyword": "Palabra chave",
-    "Recommended for public spaces.": "Recomendado para espazos públicos.",
-    "Allow people to preview your space before they join.": "Permitir que sexa visible o espazo antes de unirte a el.",
-    "Preview Space": "Vista previa do Espazo",
-    "Decide who can view and join %(spaceName)s.": "Decidir quen pode ver e unirse a %(spaceName)s.",
-    "Visibility": "Visibilidade",
-    "This may be useful for public spaces.": "Esto podería ser útil para espazos públicos.",
-    "Guests can join a space without having an account.": "As convidadas poden unirse ao espazo sen ter unha conta.",
     "Enable guest access": "Activar acceso de convidadas",
-    "Failed to update the history visibility of this space": "Fallou a actualización da visibilidade do historial do espazo",
-    "Failed to update the guest access of this space": "Fallou a actualización do acceso de convidadas ao espazo",
-    "Failed to update the visibility of this space": "Fallou a actualización da visibilidade do espazo",
     "Address": "Enderezo",
     "Unable to copy a link to the room to the clipboard.": "Non se copiou a ligazón da sala ao portapapeis.",
     "Unable to copy room link": "Non se puido copiar ligazón da sala",
@@ -1205,7 +1185,6 @@
     "Select spaces": "Elixe espazos",
     "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
     "Public room": "Sala pública",
-    "Access": "Acceder",
     "Space members": "Membros do espazo",
     "Anyone in a space can find and join. You can select multiple spaces.": "Calquera nun espazo pode atopar e unirse. Podes elexir múltiples espazos.",
     "Spaces with access": "Espazos con acceso",
@@ -1239,7 +1218,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
     "You won't be able to rejoin unless you are re-invited.": "Non poderás volver a unirte se non te volven a convidar.",
     "Decrypting": "Descifrando",
-    "Show all rooms": "Mostar tódalas salas",
     "Missed call": "Chamada perdida",
     "Call declined": "Chamada rexeitada",
     "Stop recording": "Deter a gravación",
@@ -1757,7 +1735,9 @@
         "exit_fullscreeen": "Saír de pantalla completa",
         "enter_fullscreen": "Ir a pantalla completa",
         "unban": "Non bloquear",
-        "click_to_copy": "Click para copiar"
+        "click_to_copy": "Click para copiar",
+        "hide_advanced": "Ocultar Avanzado",
+        "show_advanced": "Mostrar Avanzado"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -2261,11 +2241,12 @@
             "metaspaces_subsection": "Espazos a mostrar",
             "metaspaces_description": "Os Espazos son xeitos de agrupar salas e persoas. Xunto cos espazos nos que estás, tamén podes usar algún dos prestablecidos.",
             "metaspaces_home_description": "O Inicio é útil para ter unha visión xeral do que acontece.",
-            "metaspaces_home_all_rooms": "Mostra tódalas túas salas en Inicio, incluso se están nun espazo.",
             "metaspaces_favourites_description": "Agrupa tódalas túas salas favoritas e persoas nun só lugar.",
             "metaspaces_people_description": "Agrupa tódalas persoas nun só lugar.",
             "metaspaces_orphans": "Salas fóra dun espazo",
-            "metaspaces_orphans_description": "Agrupa nun só lugar tódalas túas salas que non forman parte dun espazo."
+            "metaspaces_orphans_description": "Agrupa nun só lugar tódalas túas salas que non forman parte dun espazo.",
+            "metaspaces_home_all_rooms_description": "Mostra tódalas túas salas en Inicio, incluso se están nun espazo.",
+            "metaspaces_home_all_rooms": "Mostar tódalas salas"
         }
     },
     "devtools": {
@@ -2992,7 +2973,11 @@
             "default_url_previews_off": "As vistas previas de URL están desactivadas por defecto para as participantes desta sala.",
             "url_preview_encryption_warning": "Nas salas cifradas, como é esta, está desactivado por defecto a previsualización das URL co fin de asegurarse de que o servidor local (que é onde se gardan as previsualizacións) non poida recoller información sobre das ligazóns que se ven nesta sala.",
             "url_preview_explainer": "Cando alguén pon unha URL na mensaxe, esta previsualízarase para que así se coñezan xa cousas delas como o título, a descrición ou as imaxes que inclúe ese sitio web.",
-            "url_previews_section": "Vista previa de URL"
+            "url_previews_section": "Vista previa de URL",
+            "error_save_space_settings": "Fallo ao gardar os axustes do espazo.",
+            "description_space": "Editar os axustes relativos ao teu espazo.",
+            "save": "Gardar cambios",
+            "leave_space": "Deixar o Espazo"
         },
         "advanced": {
             "unfederated": "Esta sala non é accesible por servidores Matrix remotos",
@@ -3005,7 +2990,22 @@
             "room_version": "Versión da sala:"
         },
         "delete_avatar_label": "Eliminar avatar",
-        "upload_avatar_label": "Subir avatar"
+        "upload_avatar_label": "Subir avatar",
+        "visibility": {
+            "error_update_guest_access": "Fallou a actualización do acceso de convidadas ao espazo",
+            "error_update_history_visibility": "Fallou a actualización da visibilidade do historial do espazo",
+            "guest_access_explainer": "As convidadas poden unirse ao espazo sen ter unha conta.",
+            "guest_access_explainer_public_space": "Esto podería ser útil para espazos públicos.",
+            "title": "Visibilidade",
+            "error_failed_save": "Fallou a actualización da visibilidade do espazo",
+            "history_visibility_anyone_space": "Vista previa do Espazo",
+            "history_visibility_anyone_space_description": "Permitir que sexa visible o espazo antes de unirte a el.",
+            "history_visibility_anyone_space_recommendation": "Recomendado para espazos públicos."
+        },
+        "access": {
+            "title": "Acceder",
+            "description_space": "Decidir quen pode ver e unirse a %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3447,7 +3447,10 @@
             "manage_and_explore": "Xestionar e explorar salas"
         },
         "share_public": "Comparte o teu espazo público",
-        "search_children": "Buscar %(spaceName)s"
+        "search_children": "Buscar %(spaceName)s",
+        "invite_link": "Compartir ligazón do convite",
+        "invite": "Convidar persoas",
+        "invite_description": "Convida con email ou nome de usuaria"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3536,7 +3539,8 @@
         "setup_rooms_private_description": "Imos crear salas para cada un deles.",
         "address_placeholder": "ex. o-meu-espazo",
         "address_label": "Enderezo",
-        "label": "Crear un espazo"
+        "label": "Crear un espazo",
+        "add_details_prompt_2": "Poderás cambialo en calquera momento."
     },
     "user_menu": {
         "switch_theme_light": "Cambiar a decorado claro",

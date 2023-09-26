@@ -475,8 +475,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
     "Close dialog": "Itxi elkarrizketa-koadroa",
-    "Hide advanced": "Ezkutatu aurreratua",
-    "Show advanced": "Erakutsi aurreratua",
     "Explore rooms": "Arakatu gelak",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Zure <b>datu pribatuak kendu</b> beharko zenituzke <idserver /> identitate-zerbitzaritik deskonektatu aurretik. Zoritxarrez <idserver /> identitate-zerbitzaria lineaz kanpo dago eta ezin da atzitu.",
     "You should:": "Hau egin beharko zenuke:",
@@ -831,7 +829,9 @@
         "mention": "Aipatu",
         "submit": "Bidali",
         "send_report": "Bidali salaketa",
-        "unban": "Debekua kendu"
+        "unban": "Debekua kendu",
+        "hide_advanced": "Ezkutatu aurreratua",
+        "show_advanced": "Erakutsi aurreratua"
     },
     "a11y": {
         "user_menu": "Erabiltzailea-menua",

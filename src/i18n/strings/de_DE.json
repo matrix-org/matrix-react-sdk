@@ -421,7 +421,6 @@
     "%(name)s declined": "%(name)s hat abgelehnt",
     "%(name)s cancelled": "%(name)s hat abgebrochen",
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
-    "Hide advanced": "Erweiterte Einstellungen ausblenden",
     "Session name": "Sitzungsname",
     "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "Aktualisiere diese Sitzung, um mit ihr andere Sitzungen verifizieren zu können, damit sie Zugang zu verschlüsselten Nachrichten erhalten und für andere als vertrauenswürdig markiert werden.",
     "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
@@ -462,7 +461,6 @@
     "e.g. my-room": "z. B. mein-raum",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Verwende einen Identitäts-Server, um per E-Mail einzuladen. <default>Nutze den Standardidentitäts-Server (%(defaultIdentityServerName)s)</default> oder konfiguriere einen in den <settings>Einstellungen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Verwende einen Identitäts-Server, um per E-Mail-Adresse einladen zu können. Lege einen in den <settings>Einstellungen</settings> fest.",
-    "Show advanced": "Erweiterte Einstellungen",
     "Session key": "Sitzungsschlüssel",
     "Recent Conversations": "Letzte Unterhaltungen",
     "Not Trusted": "Nicht vertraut",
@@ -1046,13 +1044,10 @@
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
     },
-    "Save Changes": "Speichern",
     "Create a new room": "Neuen Raum erstellen",
     "Suggested Rooms": "Vorgeschlagene Räume",
     "Add existing room": "Existierenden Raum hinzufügen",
-    "Share invite link": "Einladungslink teilen",
     "Create a space": "Neuen Space erstellen",
-    "Invite people": "Personen einladen",
     "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
     "Invite to this space": "In diesen Space einladen",
@@ -1067,18 +1062,14 @@
     "Are you sure you want to leave the space '%(spaceName)s'?": "Bist du sicher, dass du den Space „%(spaceName)s“ verlassen möchtest?",
     "Failed to start livestream": "Livestream konnte nicht gestartet werden",
     "Unable to start audio streaming.": "Audiostream kann nicht gestartet werden.",
-    "Leave Space": "Space verlassen",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, erstelle bitte einen Fehlerbericht.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename, E-Mail-Adresse oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite to %(roomName)s": "In %(roomName)s einladen",
     "Spaces": "Spaces",
-    "Invite with email or username": "Personen mit E-Mail oder Benutzernamen einladen",
-    "You can change these anytime.": "Du kannst diese jederzeit ändern.",
     "You may want to try a different search or check for typos.": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
     "You don't have permission": "Du hast dazu keine Berechtigung",
     "This space is not public. You will not be able to rejoin without an invite.": "Du wirst diesen privaten Space nur mit einer Einladung wieder betreten können.",
-    "Failed to save space settings.": "Spaceeinstellungen konnten nicht gespeichert werden.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Das Entfernen von Rechten kann nicht rückgängig gemacht werden. Falls sie dir niemand anderer zurückgeben kann, kannst du sie nie wieder erhalten.",
     "Edit devices": "Sitzungen anzeigen",
     "We couldn't create your DM.": "Wir konnten deine Direktnachricht nicht erstellen.",
@@ -1096,7 +1087,6 @@
     "You most likely do not want to reset your event index store": "Es ist wahrscheinlich, dass du den Ereignis-Indexspeicher nicht zurück setzen möchtest",
     "Reset event store": "Ereignisspeicher zurück setzen",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Du bist die einzige Person im Raum. Sobald du ihn verlässt, wird niemand mehr hineingelangen, auch du nicht.",
-    "Edit settings relating to your space.": "Einstellungen vom Space bearbeiten.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, beginnst du ohne verifizierte Sitzungen und Benutzende von Neuem und siehst eventuell keine alten Nachrichten.",
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
@@ -1152,17 +1142,7 @@
     "Published addresses can be used by anyone on any server to join your space.": "Veröffentlichte Adressen erlauben jedem, den Space zu betreten.",
     "This space has no local addresses": "Dieser Space hat keine lokale Adresse",
     "Space information": "Information über den Space",
-    "Recommended for public spaces.": "Empfohlen für öffentliche Spaces.",
-    "Allow people to preview your space before they join.": "Personen können den Space vor dem Betreten erkunden.",
-    "Preview Space": "Space-Vorschau erlauben",
-    "Decide who can view and join %(spaceName)s.": "Konfiguriere, wer %(spaceName)s sehen und betreten kann.",
-    "Visibility": "Sichtbarkeit",
-    "This may be useful for public spaces.": "Sinnvoll für öffentliche Spaces.",
-    "Guests can join a space without having an account.": "Gäste ohne Konto können den Space betreten.",
     "Enable guest access": "Gastzutritt",
-    "Failed to update the history visibility of this space": "Verlaufssichtbarkeit des Space konnte nicht geändert werden",
-    "Failed to update the guest access of this space": "Gastzutritt zum Space konnte nicht geändert werden",
-    "Failed to update the visibility of this space": "Sichtbarkeit des Space konnte nicht geändert werden",
     "Address": "Adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "Unnamed audio": "Unbenannte Audiodatei",
@@ -1204,7 +1184,6 @@
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
     "Stop recording": "Aufnahme beenden",
     "Send voice message": "Sprachnachricht senden",
-    "Access": "Zutritt",
     "Space members": "Spacemitglieder",
     "Anyone in a space can find and join. You can select multiple spaces.": "Das Betreten ist allen in den gewählten Spaces möglich.",
     "Spaces with access": "Spaces mit Zutritt",
@@ -1219,7 +1198,6 @@
     },
     "Upgrade required": "Aktualisierung erforderlich",
     "This upgrade will allow members of selected spaces access to this room without an invite.": "Diese Aktualisierung gewährt Mitgliedern der ausgewählten Spaces Zugang zu diesem Raum ohne Einladung.",
-    "Show all rooms": "Alle Räume anzeigen",
     "Public room": "Öffentlicher Raum",
     "Add space": "Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
@@ -1653,7 +1631,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Sichere %(sessionsRemaining)s Schlüssel …",
     "Connecting to integration manager…": "Verbinde mit Integrationsassistent …",
     "Saving…": "Speichere …",
-    "Creating…": "Erstelle …",
     "Starting export process…": "Beginne Exportvorgang …",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Gib eine nur dir bekannte Sicherheitsphrase ein, die dem Schutz deiner Daten dient. Um die Sicherheit zu gewährleisten, sollte dies nicht dein Kontopasswort sein.",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
@@ -1961,7 +1938,9 @@
         "exit_fullscreeen": "Vollbild verlassen",
         "enter_fullscreen": "Vollbild",
         "unban": "Verbannung aufheben",
-        "click_to_copy": "Klicken um zu kopieren"
+        "click_to_copy": "Klicken um zu kopieren",
+        "hide_advanced": "Erweiterte Einstellungen ausblenden",
+        "show_advanced": "Erweiterte Einstellungen"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -2576,11 +2555,12 @@
             "metaspaces_subsection": "Anzuzeigende Spaces",
             "metaspaces_description": "Mit Spaces kannst du deine Unterhaltungen organisieren. Neben Spaces, in denen du dich befindest, kannst du dir auch dynamische anzeigen lassen.",
             "metaspaces_home_description": "Die Startseite bietet dir einen Überblick über deine Unterhaltungen.",
-            "metaspaces_home_all_rooms": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
             "metaspaces_favourites_description": "Gruppiere all deine favorisierten Unterhaltungen an einem Ort.",
             "metaspaces_people_description": "Gruppiere all deine Direktnachrichten an einem Ort.",
             "metaspaces_orphans": "Räume außerhalb von Spaces",
-            "metaspaces_orphans_description": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort."
+            "metaspaces_orphans_description": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort.",
+            "metaspaces_home_all_rooms_description": "Alle Räume auf der Startseite anzeigen, auch wenn sie Teil eines Space sind.",
+            "metaspaces_home_all_rooms": "Alle Räume anzeigen"
         }
     },
     "devtools": {
@@ -3393,7 +3373,11 @@
             "default_url_previews_off": "URL-Vorschau ist für Mitglieder des Raumes standardmäßig deaktiviert.",
             "url_preview_encryption_warning": "In verschlüsselten Räumen wie diesem ist die Linkvorschau standardmäßig deaktiviert, damit dein Heim-Server (der die Vorschau erzeugt) keine Informationen über Links in diesem Raum erhält.",
             "url_preview_explainer": "Die URL-Vorschau kann Informationen wie den Titel, die Beschreibung sowie ein Vorschaubild der Website enthalten.",
-            "url_previews_section": "URL-Vorschau"
+            "url_previews_section": "URL-Vorschau",
+            "error_save_space_settings": "Spaceeinstellungen konnten nicht gespeichert werden.",
+            "description_space": "Einstellungen vom Space bearbeiten.",
+            "save": "Speichern",
+            "leave_space": "Space verlassen"
         },
         "advanced": {
             "unfederated": "Dieser Raum ist von Personen auf anderen Matrix-Servern nicht betretbar",
@@ -3407,7 +3391,22 @@
             "room_version": "Raumversion:"
         },
         "delete_avatar_label": "Avatar löschen",
-        "upload_avatar_label": "Profilbild hochladen"
+        "upload_avatar_label": "Profilbild hochladen",
+        "visibility": {
+            "error_update_guest_access": "Gastzutritt zum Space konnte nicht geändert werden",
+            "error_update_history_visibility": "Verlaufssichtbarkeit des Space konnte nicht geändert werden",
+            "guest_access_explainer": "Gäste ohne Konto können den Space betreten.",
+            "guest_access_explainer_public_space": "Sinnvoll für öffentliche Spaces.",
+            "title": "Sichtbarkeit",
+            "error_failed_save": "Sichtbarkeit des Space konnte nicht geändert werden",
+            "history_visibility_anyone_space": "Space-Vorschau erlauben",
+            "history_visibility_anyone_space_description": "Personen können den Space vor dem Betreten erkunden.",
+            "history_visibility_anyone_space_recommendation": "Empfohlen für öffentliche Spaces."
+        },
+        "access": {
+            "title": "Zutritt",
+            "description_space": "Konfiguriere, wer %(spaceName)s sehen und betreten kann."
+        }
     },
     "encryption": {
         "verification": {
@@ -3915,7 +3914,10 @@
             "manage_and_explore": "Räume erkunden und verwalten"
         },
         "share_public": "Teile deinen öffentlichen Space mit der Welt",
-        "search_children": "%(spaceName)s durchsuchen"
+        "search_children": "%(spaceName)s durchsuchen",
+        "invite_link": "Einladungslink teilen",
+        "invite": "Personen einladen",
+        "invite_description": "Personen mit E-Mail oder Benutzernamen einladen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -4008,7 +4010,9 @@
         "setup_rooms_private_description": "Wir werden für jedes einen Raum erstellen.",
         "address_placeholder": "z. B. mein-space",
         "address_label": "Adresse",
-        "label": "Neuen Space erstellen"
+        "label": "Neuen Space erstellen",
+        "add_details_prompt_2": "Du kannst diese jederzeit ändern.",
+        "creating": "Erstelle …"
     },
     "user_menu": {
         "switch_theme_light": "Zum hellen Thema wechseln",

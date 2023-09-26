@@ -429,8 +429,6 @@
     "Deactivate account": "Nonaktifkan akun",
     "Disconnect anyway": "Lepaskan hubungan saja",
     "Checking server": "Memeriksa server",
-    "Show advanced": "Tampilkan lanjutan",
-    "Hide advanced": "Sembunyikan lanjutan",
     "Upload Error": "Kesalahan saat Mengunggah",
     "Cancel All": "Batalkan Semua",
     "Upload all": "Unggah semua",
@@ -498,10 +496,8 @@
     "Decrypting": "Mendekripsi",
     "Downloading": "Mengunduh",
     "Forget room": "Lupakan ruangan",
-    "Access": "Akses",
     "Global": "Global",
     "Keyword": "Kata kunci",
-    "Visibility": "Visibilitas",
     "Address": "Alamat",
     "Avatar": "Avatar",
     "Hold": "Jeda",
@@ -576,25 +572,7 @@
     "Space options": "Opsi space",
     "Jump to first invite.": "Pergi ke undangan pertama.",
     "Jump to first unread room.": "Pergi ke ruangan yang belum dibaca.",
-    "Recommended for public spaces.": "Direkomendasikan untuk space publik.",
-    "Allow people to preview your space before they join.": "Memungkinkan orang-orang untuk memperlihatkan space Anda sebelum mereka bergabung.",
-    "Preview Space": "Tampilkan Space",
-    "Failed to update the visibility of this space": "Gagal untuk memperbarui visibilitas untuk space ini",
-    "Decide who can view and join %(spaceName)s.": "Putuskan siapa yang dapat melihat dan bergabung dengan %(spaceName)s.",
-    "This may be useful for public spaces.": "Ini mungkin berguna untuk space publik.",
-    "Guests can join a space without having an account.": "Tamu dapat bergabung sebuah space tanpa harus mempunyai akun.",
     "Enable guest access": "Aktifkan akses tamu",
-    "Failed to update the history visibility of this space": "Gagal untuk memperbarui visibilitas riwayat untuk space ini",
-    "Failed to update the guest access of this space": "Gagal untuk memperbarui akses tamu untuk space ini",
-    "Leave Space": "Tinggalkan Space",
-    "Save Changes": "Simpan Perubahan",
-    "Edit settings relating to your space.": "Edit pengaturan yang berkaitan dengan space Anda.",
-    "Failed to save space settings.": "Gagal untuk menyimpan pengaturan space.",
-    "Invite with email or username": "Undang dengan email atau nama pengguna",
-    "Invite people": "Undang pengguna",
-    "Share invite link": "Bagikan tautan undangan",
-    "Show all rooms": "Tampilkan semua ruangan",
-    "You can change these anytime.": "Anda dapat mengubahnya kapan saja.",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
     "Create a space": "Buat space",
     "IRC display name width": "Lebar nama tampilan IRC",
@@ -1654,7 +1632,6 @@
     "Backing up %(sessionsRemaining)s keys…": "Mencadangkan %(sessionsRemaining)s kunci…",
     "Connecting to integration manager…": "Menghubungkan ke pengelola integrasi…",
     "Saving…": "Menyimpan…",
-    "Creating…": "Membuat…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Enter a Security Phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "Masukkan frasa keamanan yang hanya Anda tahu, yang digunakan untuk mengamankan data Anda. Supaya aman, jangan menggunakan ulang kata sandi akun Anda.",
     "Secure Backup successful": "Pencadangan Aman berhasil",
@@ -1961,7 +1938,9 @@
         "exit_fullscreeen": "Keluar dari layar penuh",
         "enter_fullscreen": "Masuki layar penuh",
         "unban": "Hilangkan Cekalan",
-        "click_to_copy": "Klik untuk menyalin"
+        "click_to_copy": "Klik untuk menyalin",
+        "hide_advanced": "Sembunyikan lanjutan",
+        "show_advanced": "Tampilkan lanjutan"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -2576,11 +2555,12 @@
             "metaspaces_subsection": "Space yang ditampilkan",
             "metaspaces_description": "Space adalah cara untuk mengelompokkan ruangan dan orang. Di sampingnya space yang Anda berada, Anda dapat menggunakan space yang sudah dibuat.",
             "metaspaces_home_description": "Beranda berguna untuk mendapatkan ikhtisar tentang semuanya.",
-            "metaspaces_home_all_rooms": "Tampilkan semua ruangan di Beranda, walaupun mereka berada di sebuah space.",
             "metaspaces_favourites_description": "Kelompokkan semua ruangan dan orang favorit Anda di satu tempat.",
             "metaspaces_people_description": "Kelompokkan semua orang di satu tempat.",
             "metaspaces_orphans": "Ruangan yang tidak berada di sebuah space",
-            "metaspaces_orphans_description": "Kelompokkan semua ruangan yang tidak ada di sebuah space di satu tempat."
+            "metaspaces_orphans_description": "Kelompokkan semua ruangan yang tidak ada di sebuah space di satu tempat.",
+            "metaspaces_home_all_rooms_description": "Tampilkan semua ruangan di Beranda, walaupun mereka berada di sebuah space.",
+            "metaspaces_home_all_rooms": "Tampilkan semua ruangan"
         }
     },
     "devtools": {
@@ -3393,7 +3373,11 @@
             "default_url_previews_off": "Tampilan URL dinonaktifkan secara bawaan untuk anggota di ruangan ini.",
             "url_preview_encryption_warning": "Di ruangan terenkripsi, seperti ruangan ini, tampilan URL dinonaktifkan secara bawaan untuk memastikan homeserver Anda (di mana tampilannya dibuat) tidak mendapatkan informasi tentang tautan yang Anda lihat di ruangan ini.",
             "url_preview_explainer": "Ketika seseorang menambahkan URL di pesannya, sebuah tampilan URL dapat ditampilkan untuk memberikan informasi lainnya tentang tautan itu seperti judul, deskripsi, dan sebuah gambar dari website.",
-            "url_previews_section": "Tampilan URL"
+            "url_previews_section": "Tampilan URL",
+            "error_save_space_settings": "Gagal untuk menyimpan pengaturan space.",
+            "description_space": "Edit pengaturan yang berkaitan dengan space Anda.",
+            "save": "Simpan Perubahan",
+            "leave_space": "Tinggalkan Space"
         },
         "advanced": {
             "unfederated": "Ruangan ini tidak dapat diakses oleh pengguna Matrix jarak jauh",
@@ -3407,7 +3391,22 @@
             "room_version": "Versi ruangan:"
         },
         "delete_avatar_label": "Hapus avatar",
-        "upload_avatar_label": "Unggah avatar"
+        "upload_avatar_label": "Unggah avatar",
+        "visibility": {
+            "error_update_guest_access": "Gagal untuk memperbarui akses tamu untuk space ini",
+            "error_update_history_visibility": "Gagal untuk memperbarui visibilitas riwayat untuk space ini",
+            "guest_access_explainer": "Tamu dapat bergabung sebuah space tanpa harus mempunyai akun.",
+            "guest_access_explainer_public_space": "Ini mungkin berguna untuk space publik.",
+            "title": "Visibilitas",
+            "error_failed_save": "Gagal untuk memperbarui visibilitas untuk space ini",
+            "history_visibility_anyone_space": "Tampilkan Space",
+            "history_visibility_anyone_space_description": "Memungkinkan orang-orang untuk memperlihatkan space Anda sebelum mereka bergabung.",
+            "history_visibility_anyone_space_recommendation": "Direkomendasikan untuk space publik."
+        },
+        "access": {
+            "title": "Akses",
+            "description_space": "Putuskan siapa yang dapat melihat dan bergabung dengan %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3915,7 +3914,10 @@
             "manage_and_explore": "Kelola & jelajahi ruangan"
         },
         "share_public": "Bagikan space publik Anda",
-        "search_children": "Cari %(spaceName)s"
+        "search_children": "Cari %(spaceName)s",
+        "invite_link": "Bagikan tautan undangan",
+        "invite": "Undang pengguna",
+        "invite_description": "Undang dengan email atau nama pengguna"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -4008,7 +4010,9 @@
         "setup_rooms_private_description": "Kami akan membuat ruangan untuk masing-masing.",
         "address_placeholder": "mis. space-saya",
         "address_label": "Alamat",
-        "label": "Buat space"
+        "label": "Buat space",
+        "add_details_prompt_2": "Anda dapat mengubahnya kapan saja.",
+        "creating": "Membuat…"
     },
     "user_menu": {
         "switch_theme_light": "Ubah ke mode terang",

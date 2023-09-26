@@ -231,8 +231,6 @@
     "Enter a server name": "Įveskite serverio pavadinimą",
     "Enter the name of a new server you want to explore.": "Įveskite naujo, norimo žvalgyti serverio pavadinimą.",
     "Server name": "Serverio pavadinimas",
-    "Hide advanced": "Paslėpti išplėstinius",
-    "Show advanced": "Rodyti išplėstinius",
     "Session name": "Seanso pavadinimas",
     "Session key": "Seanso raktas",
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
@@ -708,7 +706,6 @@
     "Verification Request": "Patikrinimo Užklausa",
     "Be found by phone or email": "Tapkite randami telefonu arba el. paštu",
     "Find others by phone or email": "Ieškokite kitų telefonu arba el. paštu",
-    "Save Changes": "Išsaugoti Pakeitimus",
     "Link to selected message": "Nuoroda į pasirinktą pranešimą",
     "Share User": "Dalintis Vartotoju",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Patikrinkite savo el. laišką ir spustelėkite jame esančią nuorodą. Kai tai padarysite, spauskite tęsti.",
@@ -831,12 +828,9 @@
         "other": "& %(count)s daugiau"
     },
     "Upgrade required": "Reikalingas atnaujinimas",
-    "Decide who can view and join %(spaceName)s.": "Nuspręskite kas gali peržiūrėti ir prisijungti prie %(spaceName)s.",
-    "Visibility": "Matomumas",
     "Jump to first unread room.": "Peršokti į pirmą neperskaitytą kambarį.",
     "Jump to first invite.": "Peršokti iki pirmo pakvietimo.",
     "Enable guest access": "Įjungti svečių prieigą",
-    "Invite people": "Pakviesti žmonių",
     "Address": "Adresas",
     "Their device couldn't start the camera or microphone": "Jų įrenginys negalėjo įjungti kameros arba mikrofono",
     "Connection failed": "Nepavyko prisijungti",
@@ -990,8 +984,6 @@
         "other": "Šiuo metu %(count)s erdvės turi prieigą"
     },
     "Space options": "Erdvės parinktys",
-    "Recommended for public spaces.": "Rekomenduojama viešosiose erdvėse.",
-    "Allow people to preview your space before they join.": "Leisti žmonėms peržiūrėti jūsų erdvę prieš prisijungiant.",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
@@ -1000,20 +992,6 @@
     "Moderation": "Moderavimas",
     "Spaces": "Erdvės",
     "Messaging": "Žinučių siuntimas",
-    "Preview Space": "Peržiūrėti erdvę",
-    "Failed to update the visibility of this space": "Nepavyko atnaujinti šios erdvės matomumo",
-    "Access": "Prieiga",
-    "This may be useful for public spaces.": "Tai gali būti naudinga viešosiose erdvėse.",
-    "Guests can join a space without having an account.": "Svečiai gali prisijungti prie erdvės neturėdami paskyros.",
-    "Failed to update the history visibility of this space": "Nepavyko atnaujinti šios erdvės istorijos matomumo",
-    "Failed to update the guest access of this space": "Nepavyko atnaujinti šios erdvės svečių prieigos",
-    "Leave Space": "Palikti erdvę",
-    "Edit settings relating to your space.": "Redaguoti su savo erdve susijusius nustatymus.",
-    "Failed to save space settings.": "Nepavyko išsaugoti erdvės nustatymų.",
-    "Invite with email or username": "Pakviesti su el. paštu arba naudotojo vardu",
-    "Share invite link": "Bendrinti pakvietimo nuorodą",
-    "Show all rooms": "Rodyti visus kambarius",
-    "You can change these anytime.": "Jūs tai galite pakeisti bet kada.",
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
     "Create a space": "Sukurti erdvę",
     "Space selection": "Erdvės pasirinkimas",
@@ -1269,7 +1247,9 @@
         "submit": "Pateikti",
         "send_report": "Siųsti pranešimą",
         "unban": "Atblokuoti",
-        "click_to_copy": "Spustelėkite kad nukopijuoti"
+        "click_to_copy": "Spustelėkite kad nukopijuoti",
+        "hide_advanced": "Paslėpti išplėstinius",
+        "show_advanced": "Rodyti išplėstinius"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1678,11 +1658,12 @@
             "metaspaces_subsection": "Kurias erdves rodyti",
             "metaspaces_description": "Erdvės - tai kambarių ir žmonių grupavimo būdai. Kartu su erdvėmis kuriose esate, galite naudoti ir kai kurias iš anksto sukurtas erdves.",
             "metaspaces_home_description": "Pradžia yra naudinga norint apžvelgti viską.",
-            "metaspaces_home_all_rooms": "Rodyti visus savo kambarius pradžioje, net jei jie yra erdvėje.",
             "metaspaces_favourites_description": "Sugrupuokite visus mėgstamus kambarius ir žmones vienoje vietoje.",
             "metaspaces_people_description": "Sugrupuokite visus savo žmones vienoje vietoje.",
             "metaspaces_orphans": "Kambariai nepriklausantys erdvei",
-            "metaspaces_orphans_description": "Sugrupuokite visus kambarius, kurie nėra erdvės dalis, į vieną vietą."
+            "metaspaces_orphans_description": "Sugrupuokite visus kambarius, kurie nėra erdvės dalis, į vieną vietą.",
+            "metaspaces_home_all_rooms_description": "Rodyti visus savo kambarius pradžioje, net jei jie yra erdvėje.",
+            "metaspaces_home_all_rooms": "Rodyti visus kambarius"
         }
     },
     "devtools": {
@@ -2226,7 +2207,11 @@
             "default_url_previews_off": "URL nuorodų peržiūros šio kambario dalyviams yra išjungtos kaip numatytosios.",
             "url_preview_encryption_warning": "Šifruotuose kambariuose, tokiuose kaip šis, URL nuorodų peržiūros pagal numatymą yra išjungtos, kad būtų užtikrinta, jog jūsų serveris (kur yra generuojamos peržiūros) negali rinkti informacijos apie jūsų šiame kambaryje peržiūrėtas nuorodas.",
             "url_preview_explainer": "Kai kas nors į savo žinutę įtraukia URL, gali būti rodoma URL peržiūra, suteikianti daugiau informacijos apie tą nuorodą, tokios kaip pavadinimas, aprašymas ir vaizdas iš svetainės.",
-            "url_previews_section": "URL nuorodų peržiūros"
+            "url_previews_section": "URL nuorodų peržiūros",
+            "error_save_space_settings": "Nepavyko išsaugoti erdvės nustatymų.",
+            "description_space": "Redaguoti su savo erdve susijusius nustatymus.",
+            "save": "Išsaugoti Pakeitimus",
+            "leave_space": "Palikti erdvę"
         },
         "advanced": {
             "unfederated": "Šis kambarys nėra pasiekiamas nuotoliniams Matrix serveriams",
@@ -2239,7 +2224,22 @@
             "room_version": "Kambario versija:"
         },
         "delete_avatar_label": "Ištrinti avatarą",
-        "upload_avatar_label": "Įkelti pseudoportretą"
+        "upload_avatar_label": "Įkelti pseudoportretą",
+        "visibility": {
+            "error_update_guest_access": "Nepavyko atnaujinti šios erdvės svečių prieigos",
+            "error_update_history_visibility": "Nepavyko atnaujinti šios erdvės istorijos matomumo",
+            "guest_access_explainer": "Svečiai gali prisijungti prie erdvės neturėdami paskyros.",
+            "guest_access_explainer_public_space": "Tai gali būti naudinga viešosiose erdvėse.",
+            "title": "Matomumas",
+            "error_failed_save": "Nepavyko atnaujinti šios erdvės matomumo",
+            "history_visibility_anyone_space": "Peržiūrėti erdvę",
+            "history_visibility_anyone_space_description": "Leisti žmonėms peržiūrėti jūsų erdvę prieš prisijungiant.",
+            "history_visibility_anyone_space_recommendation": "Rekomenduojama viešosiose erdvėse."
+        },
+        "access": {
+            "title": "Prieiga",
+            "description_space": "Nuspręskite kas gali peržiūrėti ir prisijungti prie %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -2603,7 +2603,8 @@
         "add_details_prompt": "Pridėkite šiek tiek detalių, kad žmonės galėtų ją atpažinti.",
         "address_placeholder": "pvz., mano-erdvė",
         "address_label": "Adresas",
-        "label": "Sukurti erdvę"
+        "label": "Sukurti erdvę",
+        "add_details_prompt_2": "Jūs tai galite pakeisti bet kada."
     },
     "room": {
         "drop_file_prompt": "Norėdami įkelti, vilkite failą čia",
@@ -2655,7 +2656,10 @@
             "explore": "Žvalgyti kambarius",
             "manage_and_explore": "Valdyti & tyrinėti kambarius"
         },
-        "search_children": "Ieškoti %(spaceName)s"
+        "search_children": "Ieškoti %(spaceName)s",
+        "invite_link": "Bendrinti pakvietimo nuorodą",
+        "invite": "Pakviesti žmonių",
+        "invite_description": "Pakviesti su el. paštu arba naudotojo vardu"
     },
     "terms": {
         "integration_manager": "Naudoti botus, tiltus, valdiklius ir lipdukų pakuotes",

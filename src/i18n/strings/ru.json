@@ -472,8 +472,6 @@
     "Show image": "Показать изображение",
     "e.g. my-room": "например, моя-комната",
     "Close dialog": "Закрыть диалог",
-    "Hide advanced": "Скрыть дополнительные настройки",
-    "Show advanced": "Показать дополнительные настройки",
     "Command Help": "Помощь команды",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивация этого пользователя приведет к его выходу из системы и запрету повторного входа. Кроме того, они оставит все комнаты, в которых он участник. Это действие безповоротно. Вы уверены, что хотите деактивировать этого пользователя?",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Приглашение в %(roomName)s было отправлено на %(email)s, но этот адрес не связан с вашей учётной записью",
@@ -1054,10 +1052,6 @@
     "This space is not public. You will not be able to rejoin without an invite.": "Это пространство не публично. Вы не сможете вновь войти без приглашения.",
     "Unable to start audio streaming.": "Невозможно запустить аудио трансляцию.",
     "Failed to start livestream": "Не удалось запустить прямую трансляцию",
-    "Save Changes": "Сохранить изменения",
-    "Leave Space": "Покинуть пространство",
-    "Edit settings relating to your space.": "Редактировать настройки, относящиеся к вашему пространству.",
-    "Failed to save space settings.": "Не удалось сохранить настройки пространства.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Обычно это только влияет на то, как комната обрабатывается на сервере. Если у вас проблемы с вашим %(brand)s, сообщите об ошибке.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этим пространством</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, учётную запись (как <userId/>) или <a>поделитесь этим пространством</a>.",
@@ -1073,10 +1067,6 @@
     "Your message was sent": "Ваше сообщение было отправлено",
     "Space options": "Настройки пространства",
     "Leave space": "Покинуть пространство",
-    "Invite with email or username": "Пригласить по электронной почте или имени пользователя",
-    "Invite people": "Пригласить людей",
-    "Share invite link": "Поделиться ссылкой на приглашение",
-    "You can change these anytime.": "Вы можете изменить их в любое время.",
     "Create a space": "Создать пространство",
     "Private space": "Приватное пространство",
     "Public space": "Публичное пространство",
@@ -1209,7 +1199,6 @@
         "other": "Показать %(count)s других предварительных просмотров"
     },
     "Failed to send": "Не удалось отправить",
-    "Access": "Доступ",
     "Space members": "Участники пространства",
     "Anyone in a space can find and join. You can select multiple spaces.": "Любой человек в пространстве может найти и присоединиться. Вы можете выбрать несколько пространств.",
     "Spaces with access": "Пространства с доступом",
@@ -1230,18 +1219,7 @@
     "Global": "Глобально",
     "New keyword": "Новое ключевое слово",
     "Keyword": "Ключевое слово",
-    "Recommended for public spaces.": "Рекомендуется для публичных пространств.",
-    "Allow people to preview your space before they join.": "Дайте людям возможность предварительно ознакомиться с вашим пространством, прежде чем они присоединятся к нему.",
-    "Preview Space": "Предварительный просмотр пространства",
-    "Decide who can view and join %(spaceName)s.": "Определите, кто может просматривать и присоединяться к %(spaceName)s.",
-    "Visibility": "Видимость",
-    "This may be useful for public spaces.": "Это может быть полезно для публичных пространств.",
-    "Guests can join a space without having an account.": "Гости могут присоединиться к пространству, не имея учётной записи.",
     "Enable guest access": "Включить гостевой доступ",
-    "Failed to update the history visibility of this space": "Не удалось обновить видимость истории этого пространства",
-    "Failed to update the guest access of this space": "Не удалось обновить гостевой доступ к этому пространству",
-    "Failed to update the visibility of this space": "Не удалось обновить видимость этого пространства",
-    "Show all rooms": "Показать все комнаты",
     "Address": "Адрес",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
@@ -1805,7 +1783,9 @@
         "exit_fullscreeen": "Выйти из полноэкранного режима",
         "enter_fullscreen": "Перейти в полноэкранный режим",
         "unban": "Разблокировать",
-        "click_to_copy": "Нажмите, чтобы скопировать"
+        "click_to_copy": "Нажмите, чтобы скопировать",
+        "hide_advanced": "Скрыть дополнительные настройки",
+        "show_advanced": "Показать дополнительные настройки"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -2376,11 +2356,12 @@
             "metaspaces_subsection": "Пространства для показа",
             "metaspaces_description": "Пространства — это способ группировки комнат и людей. Наряду с пространствами, в которых вы находитесь, вы также можете использовать некоторые предварительно созданные пространства.",
             "metaspaces_home_description": "Раздел \"Главная\" полезен для получения общего вида.",
-            "metaspaces_home_all_rooms": "Показать все комнаты на Главной, даже если они находятся в пространстве.",
             "metaspaces_favourites_description": "Сгруппируйте все свои любимые комнаты и людей в одном месте.",
             "metaspaces_people_description": "Сгруппируйте всех своих людей в одном месте.",
             "metaspaces_orphans": "Комнаты без пространства",
-            "metaspaces_orphans_description": "Сгруппируйте все комнаты, которые не являются частью пространства, в одном месте."
+            "metaspaces_orphans_description": "Сгруппируйте все комнаты, которые не являются частью пространства, в одном месте.",
+            "metaspaces_home_all_rooms_description": "Показать все комнаты на Главной, даже если они находятся в пространстве.",
+            "metaspaces_home_all_rooms": "Показать все комнаты"
         }
     },
     "devtools": {
@@ -3135,7 +3116,11 @@
             "default_url_previews_off": "Предпросмотр ссылок по умолчанию выключен для участников этой комнаты.",
             "url_preview_encryption_warning": "В зашифрованных комнатах, подобных этой, предварительный просмотр URL-адресов отключен по умолчанию, чтобы гарантировать, что ваш сервер (где создаются предварительные просмотры) не может собирать информацию о ссылках, которые вы видите в этой комнате.",
             "url_preview_explainer": "Когда кто-то вставляет URL-адрес в свое сообщение, то можно просмотреть его, чтобы получить дополнительную информацию об этой ссылке, такую как название, описание и изображение с веб-сайта.",
-            "url_previews_section": "Предпросмотр содержимого ссылок"
+            "url_previews_section": "Предпросмотр содержимого ссылок",
+            "error_save_space_settings": "Не удалось сохранить настройки пространства.",
+            "description_space": "Редактировать настройки, относящиеся к вашему пространству.",
+            "save": "Сохранить изменения",
+            "leave_space": "Покинуть пространство"
         },
         "advanced": {
             "unfederated": "Это комната недоступна из других серверов Matrix",
@@ -3148,7 +3133,22 @@
             "room_version": "Версия комнаты:"
         },
         "delete_avatar_label": "Удалить аватар",
-        "upload_avatar_label": "Загрузить аватар"
+        "upload_avatar_label": "Загрузить аватар",
+        "visibility": {
+            "error_update_guest_access": "Не удалось обновить гостевой доступ к этому пространству",
+            "error_update_history_visibility": "Не удалось обновить видимость истории этого пространства",
+            "guest_access_explainer": "Гости могут присоединиться к пространству, не имея учётной записи.",
+            "guest_access_explainer_public_space": "Это может быть полезно для публичных пространств.",
+            "title": "Видимость",
+            "error_failed_save": "Не удалось обновить видимость этого пространства",
+            "history_visibility_anyone_space": "Предварительный просмотр пространства",
+            "history_visibility_anyone_space_description": "Дайте людям возможность предварительно ознакомиться с вашим пространством, прежде чем они присоединятся к нему.",
+            "history_visibility_anyone_space_recommendation": "Рекомендуется для публичных пространств."
+        },
+        "access": {
+            "title": "Доступ",
+            "description_space": "Определите, кто может просматривать и присоединяться к %(spaceName)s."
+        }
     },
     "encryption": {
         "verification": {
@@ -3618,7 +3618,10 @@
             "manage_and_explore": "Управление и список комнат"
         },
         "share_public": "Поделитесь своим публичным пространством",
-        "search_children": "Поиск %(spaceName)s"
+        "search_children": "Поиск %(spaceName)s",
+        "invite_link": "Поделиться ссылкой на приглашение",
+        "invite": "Пригласить людей",
+        "invite_description": "Пригласить по электронной почте или имени пользователя"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3708,7 +3711,8 @@
         "setup_rooms_private_description": "Мы создадим комнаты для каждого из них.",
         "address_placeholder": "например, my-space",
         "address_label": "Адрес",
-        "label": "Создать пространство"
+        "label": "Создать пространство",
+        "add_details_prompt_2": "Вы можете изменить их в любое время."
     },
     "user_menu": {
         "switch_theme_light": "Переключить в светлый режим",

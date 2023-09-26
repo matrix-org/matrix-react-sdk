@@ -61,7 +61,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
             ),
             new Tab(
                 SpaceSettingsTab.Visibility,
-                _td("Visibility"),
+                _td("room_settings|visibility|title"),
                 "mx_SpaceSettingsDialog_visibilityIcon",
                 <SpaceSettingsVisibilityTab matrixClient={cli} space={space} closeSettingsFn={onFinished} />,
             ),

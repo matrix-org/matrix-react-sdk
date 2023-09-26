@@ -101,7 +101,7 @@ export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextM
             <IconizedContextMenuOptionList first>
                 <IconizedContextMenuCheckbox
                     iconClassName="mx_SpacePanel_noIcon"
-                    label={_t("Show all rooms")}
+                    label={_t("settings|sidebar|metaspaces_home_all_rooms")}
                     active={allRoomsInHome}
                     onClick={() => {
                         onFinished();
