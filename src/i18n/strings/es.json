@@ -741,10 +741,6 @@
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
     "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
     "Set up Secure Backup": "Configurar copia de seguridad segura",
-    "Set up Secure Messages": "Configurar mensajes seguros",
-    "Recovery Method Removed": "Método de recuperación eliminado",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Si hizo esto accidentalmente, puede configurar Mensajes seguros en esta sesión que volverá a cifrar el historial de mensajes de esta sesión con un nuevo método de recuperación.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no eliminó el método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración.",
     "This version of %(brand)s does not support searching encrypted messages": "Esta versión de %(brand)s no puede buscar mensajes cifrados",
     "Video conference ended by %(senderName)s": "Videoconferencia terminada por %(senderName)s",
     "Join the conference from the room information card on the right": "Únete a la conferencia desde el panel de información de la sala de la derecha",
@@ -761,7 +757,6 @@
     "Show Widgets": "Mostrar accesorios",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sesión ha detectado que tu frase de seguridad y clave para mensajes seguros ha sido eliminada.",
     "Zimbabwe": "Zimbabue",
     "Yemen": "Yemen",
     "Wallis & Futuna": "Wallis y Futuna",
@@ -1868,7 +1863,8 @@
         "all_rooms": "Todas las salas",
         "deselect_all": "Deseleccionar todo",
         "select_all": "Seleccionar todo",
-        "go_to_settings": "Ir a la configuración"
+        "go_to_settings": "Ir a la configuración",
+        "setup_secure_messages": "Configurar mensajes seguros"
     },
     "action": {
         "continue": "Continuar",
@@ -3379,6 +3375,12 @@
             "description_1": "Se ha detectado una nueva frase de seguridad y clave para mensajes seguros.",
             "description_2": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
             "warning": "Si no configuró el nuevo método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración."
+        },
+        "recovery_method_removed": {
+            "title": "Método de recuperación eliminado",
+            "description_1": "Esta sesión ha detectado que tu frase de seguridad y clave para mensajes seguros ha sido eliminada.",
+            "description_2": "Si hizo esto accidentalmente, puede configurar Mensajes seguros en esta sesión que volverá a cifrar el historial de mensajes de esta sesión con un nuevo método de recuperación.",
+            "warning": "Si no eliminó el método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración."
         }
     },
     "emoji": {

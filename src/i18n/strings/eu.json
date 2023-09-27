@@ -231,7 +231,6 @@
     "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
     "Set up": "Ezarri",
     "General failure": "Hutsegite orokorra",
-    "Set up Secure Messages": "Ezarri mezu seguruak",
     "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
     "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
     "The following users may not exist": "Hurrengo erabiltzaileak agian ez dira existitzen",
@@ -300,7 +299,6 @@
     "Main address": "Helbide nagusia",
     "Your password has been reset.": "Zure pasahitza berrezarri da.",
     "Create account": "Sortu kontua",
-    "Recovery Method Removed": "Berreskuratze metodoa kendu da",
     "Missing media permissions, click the button below to request.": "Multimedia baimenak falda dira, sakatu beheko botoia baimenak eskatzeko.",
     "Request media permissions": "Eskatu multimedia baimenak",
     "Start using Key Backup": "Hasi gakoen babes-kopia egiten",
@@ -341,7 +339,6 @@
     "You'll lose access to your encrypted messages": "Zure zifratutako mezuetara sarbidea galduko duzu",
     "Are you sure you want to sign out?": "Ziur saioa amaitu nahi duzula?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ez baduzu berreskuratze metodoa kendu, agian erasotzaile bat zure mezuen historialera sarbidea lortu nahi du. Aldatu kontuaren pasahitza eta ezarri berreskuratze metodo berri bat berehala ezarpenetan.",
     "Scissors": "Artaziak",
     "Accept all %(invitedRooms)s invites": "Onartu %(invitedRooms)s gelako gonbidapen guztiak",
     "Error updating main address": "Errorea helbide nagusia eguneratzean",
@@ -615,7 +612,6 @@
     "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
     "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
     "Mark all as read": "Markatu denak irakurrita gisa",
     "Scroll to most recent messages": "Korritu azken mezuetara",
@@ -777,7 +773,8 @@
         "on": "Bai",
         "off": "Ez",
         "all_rooms": "Gela guztiak",
-        "go_to_settings": "Joan ezarpenetara"
+        "go_to_settings": "Joan ezarpenetara",
+        "setup_secure_messages": "Ezarri mezu seguruak"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1535,6 +1532,11 @@
             "title": "Berreskuratze metodo berria",
             "description_2": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
             "warning": "Ez baduzu berreskuratze sistema berria ezarri, erasotzaile bat zure kontua atzitzen saiatzen egon daiteke. Aldatu zure kontuaren pasahitza eta ezarri berreskuratze metodo berria berehala ezarpenetan."
+        },
+        "recovery_method_removed": {
+            "title": "Berreskuratze metodoa kendu da",
+            "description_2": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
+            "warning": "Ez baduzu berreskuratze metodoa kendu, agian erasotzaile bat zure mezuen historialera sarbidea lortu nahi du. Aldatu kontuaren pasahitza eta ezarri berreskuratze metodo berri bat berehala ezarpenetan."
         }
     },
     "emoji": {

@@ -1002,10 +1002,6 @@
     "An error has occurred.": "קרתה שגיאה.",
     "Transfer": "לְהַעֲבִיר",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "אם לא הסרת את שיטת השחזור, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
-    "Recovery Method Removed": "שיטת השחזור הוסרה",
-    "Set up Secure Messages": "הגדר הודעות מאובטחות",
     "Unknown error": "שגיאה לא ידועה",
     "Create account": "חשבון משתמש חדש",
     "General failure": "שגיאה כללית",
@@ -1365,7 +1361,8 @@
         "all_rooms": "כל החדרים",
         "deselect_all": "הסר סימון מהכל",
         "select_all": "בחר הכל",
-        "go_to_settings": "עבור להגדרות"
+        "go_to_settings": "עבור להגדרות",
+        "setup_secure_messages": "הגדר הודעות מאובטחות"
     },
     "action": {
         "continue": "המשך",
@@ -2482,6 +2479,11 @@
             "title": "שיטת שחזור חדשה",
             "description_2": "הפעלה זו היא הצפנת היסטוריה בשיטת השחזור החדשה.",
             "warning": "אם לא הגדרת את שיטת השחזור החדשה, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות."
+        },
+        "recovery_method_removed": {
+            "title": "שיטת השחזור הוסרה",
+            "description_2": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
+            "warning": "אם לא הסרת את שיטת השחזור, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות."
         }
     },
     "emoji": {

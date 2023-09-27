@@ -86,7 +86,7 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
                     {newMethodDetected}
                     {hackWarning}
                     <DialogButtons
-                        primaryButton={_t("Set up Secure Messages")}
+                        primaryButton={_t("common|setup_secure_messages")}
                         onPrimaryButtonClick={this.onSetupClick}
                         cancelButton={_t("common|go_to_settings")}
                         onCancel={this.onGoToSettingsClick}

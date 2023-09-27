@@ -232,7 +232,6 @@
     "Set up": "設定",
     "Invalid identity server discovery response": "身份伺服器探索回應無效",
     "General failure": "一般錯誤",
-    "Set up Secure Messages": "設定安全訊息",
     "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
     "The following users may not exist": "以下的使用者可能不存在",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
@@ -266,8 +265,6 @@
     "Email (optional)": "電子郵件（選擇性）",
     "Join millions for free on the largest public server": "在最大的公開伺服器上，免費與數百萬人一起交流",
     "Create account": "建立帳號",
-    "Recovery Method Removed": "已移除復原方法",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果您沒有移除復原方法，攻擊者可能會試圖存取您的帳號。請立刻在設定中變更您帳號的密碼並設定新的復原方式。",
     "Dog": "狗",
     "Cat": "貓",
     "Lion": "獅",
@@ -604,7 +601,6 @@
     "The encryption used by this room isn't supported.": "不支援此聊天室使用的加密。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "驗證此裝置，並標記為可受信任。由您將裝置標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "驗證此裝置將會將其標記為受信任，且已驗證您的使用者將會信任此裝置。",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果您不小心這樣做了，您可以在此工作階段上設定安全訊息，這將會以新的復原方法重新加密此工作階段的訊息歷史。",
     "You have not verified this user.": "您尚未驗證此使用者。",
     "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
@@ -1046,7 +1042,6 @@
     "A call can only be transferred to a single user.": "一個通話只能轉接給ㄧ個使用者。",
     "Open dial pad": "開啟撥號鍵盤",
     "Dial pad": "撥號鍵盤",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "此工作階段偵測到您的安全密語以及安全訊息金鑰已被移除。",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "透過輸入您的安全金鑰來存取您的安全訊息歷史並設定安全訊息。",
     "Not a valid Security Key": "不是有效的安全金鑰",
@@ -1947,7 +1942,8 @@
         "all_rooms": "所有聊天室",
         "deselect_all": "取消選取",
         "select_all": "全部選取",
-        "go_to_settings": "前往設定"
+        "go_to_settings": "前往設定",
+        "setup_secure_messages": "設定安全訊息"
     },
     "action": {
         "continue": "繼續",
@@ -3542,6 +3538,12 @@
             "description_1": "偵測到新的安全密語以及安全訊息金鑰。",
             "description_2": "此工作階段正在使用新的復原方法加密歷史。",
             "warning": "如果您沒有設定新的復原方法，攻擊者可能會嘗試存取您的帳號。在設定中立刻變更您的密碼並設定新的復原方法。"
+        },
+        "recovery_method_removed": {
+            "title": "已移除復原方法",
+            "description_1": "此工作階段偵測到您的安全密語以及安全訊息金鑰已被移除。",
+            "description_2": "如果您不小心這樣做了，您可以在此工作階段上設定安全訊息，這將會以新的復原方法重新加密此工作階段的訊息歷史。",
+            "warning": "如果您沒有移除復原方法，攻擊者可能會試圖存取您的帳號。請立刻在設定中變更您帳號的密碼並設定新的復原方式。"
         }
     },
     "emoji": {

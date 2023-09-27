@@ -1089,7 +1089,6 @@
     "Quick settings": "クイック設定",
     "Invite anyway": "招待",
     "Invite anyway and never warn me again": "招待し、再び警告しない",
-    "Recovery Method Removed": "復元方法を削除しました",
     "Remove from room": "ルームから追放",
     "Failed to remove user": "ユーザーの追放に失敗しました",
     "Information": "情報",
@@ -1299,7 +1298,6 @@
     "The beginning of the room": "ルームの先頭",
     "Jump to date": "日付に移動",
     "Incoming Verification Request": "認証のリクエストが届いています",
-    "Set up Secure Messages": "セキュアメッセージを設定",
     "Start audio stream": "音声ストリーミングを開始",
     "Failed to start livestream": "ライブストリームの開始に失敗しました",
     "Unable to start audio streaming.": "音声ストリーミングを開始できません。",
@@ -1368,7 +1366,6 @@
     "Error downloading audio": "音声をダウンロードする際にエラーが発生しました",
     "Share entire screen": "全画面を共有",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s個のリアクションを再送信",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "復元方法を削除しなかった場合、攻撃者があなたのアカウントにアクセスしようとしている可能性があります。設定画面でアカウントのパスワードを至急変更し、新しい復元方法を設定してください。",
     "Your browser likely removed this data when running low on disk space.": "ディスクの空き容量が少なかったため、ブラウザーはこのデータを削除しました。",
     "You are about to leave <spaceName/>.": "<spaceName/>から退出しようとしています。",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "あなたは、退出しようとしているいくつかのルームとスペースの唯一の管理者です。退出すると、誰もそれらを管理できなくなります。",
@@ -1392,8 +1389,6 @@
     "They won't be able to access whatever you're not an admin of.": "あなたが管理者でない場所にアクセスすることができなくなります。",
     "Failed to update the join rules": "参加のルールの更新に失敗しました",
     "They'll still be able to access whatever you're not an admin of.": "あなたが管理者ではないスペースやルームには、引き続きアクセスできます。",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "偶然削除してしまった場合は、このセッションで、メッセージの暗号化を設定することができます。設定すると、新しい復元方法でセッションのデータを改めて暗号化します。",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
         "other": "%(count)s人の知人が既に参加しています"
@@ -1836,7 +1831,8 @@
         "all_rooms": "全てのルーム",
         "deselect_all": "全ての選択を解除",
         "select_all": "全て選択",
-        "go_to_settings": "設定を開く"
+        "go_to_settings": "設定を開く",
+        "setup_secure_messages": "セキュアメッセージを設定"
     },
     "action": {
         "continue": "続行",
@@ -3360,6 +3356,12 @@
             "description_1": "新しいセキュリティーフレーズと、セキュアメッセージの鍵が検出されました。",
             "description_2": "このセッションでは新しい復元方法で履歴を暗号化しています。",
             "warning": "新しい復元方法を設定しなかった場合、攻撃者がアカウントへアクセスしようとしている可能性があります。設定画面ですぐにアカウントのパスワードを変更し、新しい復元方法を設定してください。"
+        },
+        "recovery_method_removed": {
+            "title": "復元方法を削除しました",
+            "description_1": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
+            "description_2": "偶然削除してしまった場合は、このセッションで、メッセージの暗号化を設定することができます。設定すると、新しい復元方法でセッションのデータを改めて暗号化します。",
+            "warning": "復元方法を削除しなかった場合、攻撃者があなたのアカウントにアクセスしようとしている可能性があります。設定画面でアカウントのパスワードを至急変更し、新しい復元方法を設定してください。"
         }
     },
     "emoji": {

@@ -45,11 +45,6 @@
     "No recent messages by %(user)s found": "Không tìm thấy tin nhắn gần đây của %(user)s",
     "Failed to ban user": "Đã có lỗi khi chặn người dùng",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bạn có chắc chắn muốn rời khỏi phòng '%(roomName)s' không?",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nếu bạn không xóa phương pháp khôi phục, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nếu bạn vô tình làm điều này, bạn có thể Cài đặt Tin nhắn được bảo toàn trên phiên này. Tính năng này sẽ mã hóa lại lịch sử tin nhắn của phiên này bằng một phương pháp khôi phục mới.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
-    "Recovery Method Removed": "Phương thức Khôi phục đã bị xóa",
-    "Set up Secure Messages": "Cài đặt Tin nhắn được bảo toàn",
     "Unknown error": "Lỗi không thể nhận biết",
     "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
@@ -1781,7 +1776,8 @@
         "all_rooms": "Tất cả các phòng",
         "deselect_all": "Bỏ chọn tất cả",
         "select_all": "Chọn tất cả",
-        "go_to_settings": "Đi tới Cài đặt"
+        "go_to_settings": "Đi tới Cài đặt",
+        "setup_secure_messages": "Cài đặt Tin nhắn được bảo toàn"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -3279,6 +3275,12 @@
             "description_1": "Đã phát hiện thấy Cụm từ bảo mật và khóa mới cho Tin nhắn an toàn.",
             "description_2": "Phiên này đang mã hóa lịch sử bằng phương pháp khôi phục mới.",
             "warning": "Nếu bạn không đặt phương pháp khôi phục mới, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt."
+        },
+        "recovery_method_removed": {
+            "title": "Phương thức Khôi phục đã bị xóa",
+            "description_1": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
+            "description_2": "Nếu bạn vô tình làm điều này, bạn có thể Cài đặt Tin nhắn được bảo toàn trên phiên này. Tính năng này sẽ mã hóa lại lịch sử tin nhắn của phiên này bằng một phương pháp khôi phục mới.",
+            "warning": "Nếu bạn không xóa phương pháp khôi phục, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt."
         }
     },
     "emoji": {

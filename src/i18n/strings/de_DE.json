@@ -234,7 +234,6 @@
     "Invalid homeserver discovery response": "Ungültige Antwort beim Aufspüren des Heim-Servers",
     "Invalid identity server discovery response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
     "General failure": "Allgemeiner Fehler",
-    "Set up Secure Messages": "Richte sichere Nachrichten ein",
     "The following users may not exist": "Eventuell existieren folgende Benutzer nicht",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
     "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
@@ -338,8 +337,6 @@
     "Couldn't load page": "Konnte Seite nicht laden",
     "Your password has been reset.": "Dein Passwort wurde zurückgesetzt.",
     "Create account": "Konto anlegen",
-    "Recovery Method Removed": "Wiederherstellungsmethode gelöscht",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Wenn du die Wiederherstellungsmethode nicht gelöscht hast, kann ein Angreifer versuchen, Zugang zu deinem Konto zu bekommen. Ändere dein Passwort und richte sofort eine neue Wiederherstellungsmethode in den Einstellungen ein.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Bulk options": "Sammeloptionen",
     "Join millions for free on the largest public server": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
@@ -676,7 +673,6 @@
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
     "Unable to revoke sharing for email address": "Dem Teilen der E-Mail-Adresse kann nicht widerrufen werden",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Es gab einen Fehler beim Ändern des Raumalias. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Wenn du dies versehentlich getan hast, kannst du in dieser Sitzung \"sichere Nachrichten\" einrichten, die den Nachrichtenverlauf dieser Sitzung mit einer neuen Wiederherstellungsmethode erneut verschlüsseln.",
     "You've successfully verified your device!": "Du hast dein Gerät erfolgreich verifiziert!",
     "To continue, use Single Sign On to prove your identity.": "Zum Fortfahren, nutze „Single Sign-On“ um deine Identität zu bestätigen.",
     "Confirm to continue": "Bestätige um fortzufahren",
@@ -1057,7 +1053,6 @@
     "Open dial pad": "Wähltastatur öffnen",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sichere deine Schlüssel mit deinen Kontodaten, für den Fall, dass du den Zugriff auf deine Sitzungen verlierst. Deine Schlüssel werden mit einem eindeutigen Sicherheitsschlüssel geschützt.",
     "Dial pad": "Wähltastatur",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deine Sicherheitsphrase eingibst.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Wenn du deinen Sicherheitsschlüssel vergessen hast, kannst du <button>neue Wiederherstellungsoptionen einrichten</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deinen Sicherheitsschlüssel eingibst.",
@@ -1951,7 +1946,8 @@
         "all_rooms": "Alle Räume",
         "deselect_all": "Alle abwählen",
         "select_all": "Alle auswählen",
-        "go_to_settings": "Gehe zu Einstellungen"
+        "go_to_settings": "Gehe zu Einstellungen",
+        "setup_secure_messages": "Richte sichere Nachrichten ein"
     },
     "action": {
         "continue": "Fortfahren",
@@ -3547,6 +3543,12 @@
             "description_1": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
             "description_2": "Diese Sitzung verschlüsselt den Verlauf mit der neuen Wiederherstellungsmethode.",
             "warning": "Wenn du die neue Wiederherstellungsmethode nicht festgelegt hast, versucht ein Angreifer möglicherweise, auf dein Konto zuzugreifen. Ändere dein Kontopasswort und lege sofort eine neue Wiederherstellungsmethode in den Einstellungen fest."
+        },
+        "recovery_method_removed": {
+            "title": "Wiederherstellungsmethode gelöscht",
+            "description_1": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
+            "description_2": "Wenn du dies versehentlich getan hast, kannst du in dieser Sitzung \"sichere Nachrichten\" einrichten, die den Nachrichtenverlauf dieser Sitzung mit einer neuen Wiederherstellungsmethode erneut verschlüsseln.",
+            "warning": "Wenn du die Wiederherstellungsmethode nicht gelöscht hast, kann ein Angreifer versuchen, Zugang zu deinem Konto zu bekommen. Ändere dein Passwort und richte sofort eine neue Wiederherstellungsmethode in den Einstellungen ein."
         }
     },
     "emoji": {

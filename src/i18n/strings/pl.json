@@ -1004,7 +1004,6 @@
     "Destroy cross-signing keys?": "Zniszczyć klucze weryfikacji krzyżowej?",
     "a device cross-signing signature": "sygnatura weryfikacji krzyżowej urządzenia",
     "a new cross-signing key signature": "nowa sygnatura kluczu weryfikacji krzyżowej",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Ta sesja wykryła, że Twoja fraza bezpieczeństwa i klucz dla bezpiecznych wiadomości zostały usunięte.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Jeśli zapomniałeś swojego klucza bezpieczeństwa, możesz <button>skonfigurować nowe opcje odzyskiwania</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Uzyskaj dostęp do historii bezpiecznych wiadomości i skonfiguruj bezpieczne wiadomości, wprowadzając swój klucz bezpieczeństwa.",
     "Not a valid Security Key": "Nieprawidłowy klucz bezpieczeństwa",
@@ -1757,10 +1756,6 @@
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "Kopia zapasowa nie mogła zostać rozszyfrowana za pomocą tego Hasła bezpieczeństwa: upewnij się, że wprowadzono prawidłowe Hasło bezpieczeństwa.",
     "Incorrect Security Phrase": "Nieprawidłowe hasło bezpieczeństwa",
     "Spotlight": "Centrum uwagi",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jeśli nie usunąłeś metody odzyskiwania, atakujący może próbować dostać się na Twoje konto. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
-    "Recovery Method Removed": "Usunięto metodę odzyskiwania",
-    "Set up Secure Messages": "Skonfiguruj bezpieczne wiadomości",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
     "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
@@ -1934,7 +1929,8 @@
         "all_rooms": "Wszystkie pokoje",
         "deselect_all": "Odznacz wszystkie",
         "select_all": "Zaznacz wszystkie",
-        "go_to_settings": "Przejdź do ustawień"
+        "go_to_settings": "Przejdź do ustawień",
+        "setup_secure_messages": "Skonfiguruj bezpieczne wiadomości"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -3527,6 +3523,12 @@
             "description_1": "Wykryto nową frazę bezpieczeństwa i klucz dla bezpiecznych wiadomości.",
             "description_2": "Ta sesja szyfruję historię za pomocą nowej metody odzyskiwania.",
             "warning": "Jeżeli nie ustawiłeś nowej metody odzyskiwania, atakujący może uzyskać dostęp do Twojego konta. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach."
+        },
+        "recovery_method_removed": {
+            "title": "Usunięto metodę odzyskiwania",
+            "description_1": "Ta sesja wykryła, że Twoja fraza bezpieczeństwa i klucz dla bezpiecznych wiadomości zostały usunięte.",
+            "description_2": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
+            "warning": "Jeśli nie usunąłeś metody odzyskiwania, atakujący może próbować dostać się na Twoje konto. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach."
         }
     },
     "emoji": {

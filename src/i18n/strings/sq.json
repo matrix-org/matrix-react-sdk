@@ -230,7 +230,6 @@
     "Invalid homeserver discovery response": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
     "Set up": "Rregulloje",
     "Invalid identity server discovery response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
-    "Set up Secure Messages": "Rregulloni Mesazhi të Sigurt",
     "Unable to load commit detail: %(msg)s": "S’arrihet të ngarkohen hollësi depozitimi: %(msg)s",
     "The following users may not exist": "Përdoruesit vijues mund të mos ekzistojnë",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "S’arrihet të gjenden profile për ID-të Matrix të treguara më poshtë - do të donit të ftohet, sido qoftë?",
@@ -266,8 +265,6 @@
     "Join millions for free on the largest public server": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
     "General failure": "Dështim i përgjithshëm",
     "Create account": "Krijoni llogari",
-    "Recovery Method Removed": "U hoq Metodë Rimarrje",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nëse metodën e re të rimarrjeve s’e keni hequr ju, dikush mund të jetë duke u rrekur të hyjë në llogarinë tuaj. Ndryshoni menjëherë fjalëkalimin e llogarisë tuaj, te Rregullimet, dhe caktoni një metodë të re rimarrjesh.",
     "Dog": "Qen",
     "Cat": "Mace",
     "Lion": "Luan",
@@ -603,7 +600,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verifikimi i këtij përdoruesi do t’i vërë shenjë sesionit të tij si të besuar dhe sesionit tuaj si të besuar për ta.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Që t’i vihet shenjë si e besuar, verifikojeni këtë pajisje. Besimi i kësaj pajisjeje ju jep juve dhe përdoruesve të tjerë ca qetësi më tepër, kur përdoren mesazhe të fshehtëzuar skaj-më-skaj.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verifikimi i kësaj pajisjeje do të t’i vërë shenjë si të besuar dhe përdoruesit që janë verifikuar me ju do ta besojnë këtë pajisje.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nëse këtë e keni bërë pa dashje, mund të ujdisni Mesazhe të Sigurt në këtë sesion, gjë që do të sjellë rifshehtëzimin e historikut të mesazheve të sesionit me një metodë të re rimarrjesh.",
     "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
     "Clear cross-signing keys": "Spastro kyçe <em>cross-signing</em>",
@@ -1044,7 +1040,6 @@
     "Open dial pad": "Hap butona numrash",
     "Dial pad": "Butona numrash",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Ky sesion ka pikasur se Fraza e Sigurisë dhe kyçi juaj për Mesazhe të Sigurt janë hequr.",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Hyni te historiku i mesazheve tuaj të siguruar dhe rregulloni shkëmbim mesazhesh të sigurt duke dhënë Kyçin tuaj të Sigurisë.",
     "Not a valid Security Key": "Kyç Sigurie jo i vlefshëm",
     "This looks like a valid Security Key!": "Ky duket si Kyç i vlefshëm Sigurie!",
@@ -1896,7 +1891,8 @@
         "all_rooms": "Krejt dhomat",
         "deselect_all": "Shpërzgjidhi krejt",
         "select_all": "Përzgjidhi krejt",
-        "go_to_settings": "Kalo te Rregullimet"
+        "go_to_settings": "Kalo te Rregullimet",
+        "setup_secure_messages": "Rregulloni Mesazhi të Sigurt"
     },
     "action": {
         "continue": "Vazhdo",
@@ -3446,6 +3442,12 @@
             "description_1": "Janë pikasur një Frazë e re Sigurie dhe kyç i ri për Mesazhe të Sigurt.",
             "description_2": "Ky sesion e fshehtëzon historikun duke përdorur metodë të re rimarrjesh.",
             "warning": "Nëse metodën e re të rimarrjeve s’e keni caktuar ju, dikush mund të jetë duke u rrekur të hyjë në llogarinë tuaj. Ndryshoni menjëherë fjalëkalimin e llogarisë tuaj, te Rregullimet, dhe caktoni një metodë të re rimarrjesh."
+        },
+        "recovery_method_removed": {
+            "title": "U hoq Metodë Rimarrje",
+            "description_1": "Ky sesion ka pikasur se Fraza e Sigurisë dhe kyçi juaj për Mesazhe të Sigurt janë hequr.",
+            "description_2": "Nëse këtë e keni bërë pa dashje, mund të ujdisni Mesazhe të Sigurt në këtë sesion, gjë që do të sjellë rifshehtëzimin e historikut të mesazheve të sesionit me një metodë të re rimarrjesh.",
+            "warning": "Nëse metodën e re të rimarrjeve s’e keni hequr ju, dikush mund të jetë duke u rrekur të hyjë në llogarinë tuaj. Ndryshoni menjëherë fjalëkalimin e llogarisë tuaj, te Rregullimet, dhe caktoni një metodë të re rimarrjesh."
         }
     },
     "emoji": {

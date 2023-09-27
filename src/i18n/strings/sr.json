@@ -508,9 +508,6 @@
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ако нисте ви уклонили начин опоравка, нападач можда покушава да приступи вашем налогу. Промените своју лозинку и поставите нови начин опоравка у поставкама, одмах.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте то случајно учинили, безбедне поруке можете подесити у овој сесији, која ће поново шифровати историју порука сесије помоћу новог начина опоравка.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Сесија је открила да су ваша безбедносна фраза и кључ за безбедне поруке уклоњени.",
     "Hide sessions": "Сакриј сесије",
     "Room settings": "Поставке собе",
     "Not encrypted": "Није шифровано",
@@ -1261,7 +1258,12 @@
         "bootstrap_title": "Постављам кључеве",
         "export_unsupported": "Ваш прегледач не подржава потребна криптографска проширења",
         "import_invalid_keyfile": "Није исправана %(brand)s кључ-датотека",
-        "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?"
+        "import_invalid_passphrase": "Провера идентитета није успела: нетачна лозинка?",
+        "recovery_method_removed": {
+            "description_1": "Сесија је открила да су ваша безбедносна фраза и кључ за безбедне поруке уклоњени.",
+            "description_2": "Ако сте то случајно учинили, безбедне поруке можете подесити у овој сесији, која ће поново шифровати историју порука сесије помоћу новог начина опоравка.",
+            "warning": "Ако нисте ви уклонили начин опоравка, нападач можда покушава да приступи вашем налогу. Промените своју лозинку и поставите нови начин опоравка у поставкама, одмах."
+        }
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",

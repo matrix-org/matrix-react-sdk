@@ -234,7 +234,6 @@
     "Invalid homeserver discovery response": "Resposta de descoberta de homeserver inválida",
     "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
     "General failure": "Falha geral",
-    "Set up Secure Messages": "Configurar mensagens seguras",
     "The following users may not exist": "Os seguintes usuários podem não existir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Não é possível encontrar perfis para os IDs da Matrix listados abaixo - você gostaria de convidá-los mesmo assim?",
     "Invite anyway and never warn me again": "Convide mesmo assim e nunca mais me avise",
@@ -411,7 +410,6 @@
     "Create account": "Criar conta",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
     "Forget Room": "Esquecer Sala",
     "Favourited": "Favoritado",
     "You cancelled verifying %(name)s": "Você cancelou a confirmação de %(name)s",
@@ -540,7 +538,6 @@
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "All settings": "Todas as configurações",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações.",
     "None": "Nenhuma",
     "Message search": "Pesquisa de mensagens",
     "Set a new custom sound": "Definir um novo som personalizado",
@@ -763,7 +760,6 @@
     "A connection error occurred while trying to contact the server.": "Um erro ocorreu na conexão do Element com o servidor.",
     "Unable to set up keys": "Não foi possível configurar as chaves",
     "Failed to get autodiscovery configuration from server": "Houve uma falha para obter do servidor a configuração de encontrar contatos",
-    "Recovery Method Removed": "Opção de recuperação removida",
     "You can only pin up to %(count)s widgets": {
         "other": "Você pode fixar até %(count)s widgets"
     },
@@ -1041,7 +1037,6 @@
     "Reason (optional)": "Motivo (opcional)",
     "Hold": "Pausar",
     "Resume": "Retomar",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sessão detectou que a sua Frase de Segurança e a chave para mensagens seguras foram removidas.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Acesse o seu histórico de mensagens seguras e configure as mensagens seguras, ao inserir a sua Chave de Segurança.",
     "Not a valid Security Key": "Chave de Segurança inválida",
@@ -1461,7 +1456,8 @@
         "all_rooms": "Todas as salas",
         "deselect_all": "Desmarcar todos",
         "select_all": "Selecionar tudo",
-        "go_to_settings": "Ir para as configurações"
+        "go_to_settings": "Ir para as configurações",
+        "setup_secure_messages": "Configurar mensagens seguras"
     },
     "action": {
         "continue": "Continuar",
@@ -2630,6 +2626,12 @@
             "description_1": "Uma nova Frase de Segurança e uma nova chave para mensagens seguras foram detectadas.",
             "description_2": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
             "warning": "Se você não definiu a nova opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina uma nova opção de recuperação imediatamente nas Configurações."
+        },
+        "recovery_method_removed": {
+            "title": "Opção de recuperação removida",
+            "description_1": "Esta sessão detectou que a sua Frase de Segurança e a chave para mensagens seguras foram removidas.",
+            "description_2": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
+            "warning": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações."
         }
     },
     "emoji": {

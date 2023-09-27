@@ -234,7 +234,6 @@
     "Invalid identity server discovery response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
     "General failure": "Обща грешка",
     "Unable to load commit detail: %(msg)s": "Неуспешно зареждане на информация за commit: %(msg)s",
-    "Set up Secure Messages": "Настрой Защитени Съобщения",
     "The following users may not exist": "Следните потребители може да не съществуват",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не бяга открити профили за изброените по-долу Matrix идентификатори. Желаете ли да ги поканите въпреки това?",
     "Invite anyway and never warn me again": "Покани въпреки това и не питай отново",
@@ -267,8 +266,6 @@
     "Email (optional)": "Имейл (незадължително)",
     "Join millions for free on the largest public server": "Присъединете се безплатно към милиони други на най-големия публичен сървър",
     "Create account": "Създай акаунт",
-    "Recovery Method Removed": "Методът за възстановяване беше премахнат",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ако не сте премахнали метода за възстановяване, е възможно нападател да се опитва да получи достъп до акаунта Ви. Променете паролата на акаунта и настройте нов метод за възстановяване веднага от Настройки.",
     "Dog": "Куче",
     "Cat": "Котка",
     "Lion": "Лъв",
@@ -700,7 +697,6 @@
     "All settings": "Всички настройки",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
     "Click the button below to confirm setting up encryption.": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
     "No recently visited rooms": "Няма наскоро-посетени стаи",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
     "Message preview": "Преглед на съобщението",
@@ -780,7 +776,6 @@
     "Your server isn't responding to some <a>requests</a>.": "Сървърът ви не отговаря на някои <a>заявки</a>.",
     "Enable desktop notifications": "Включете уведомления на работния плот",
     "Don't miss a reply": "Не пропускайте отговор",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Тази сесия откри, че вашата фраза за сигурност и ключ за защитени съобщения бяха премахнати.",
     "Anguilla": "Ангила",
     "British Indian Ocean Territory": "Британска територия в Индийския океан",
     "Pitcairn Islands": "острови Питкерн",
@@ -1119,7 +1114,8 @@
         "on": "Вкл.",
         "off": "Изкл.",
         "all_rooms": "Всички стаи",
-        "go_to_settings": "Отиди в Настройки"
+        "go_to_settings": "Отиди в Настройки",
+        "setup_secure_messages": "Настрой Защитени Съобщения"
     },
     "action": {
         "continue": "Продължи",
@@ -1973,6 +1969,12 @@
             "description_1": "Новa фраза за сигурност и ключ за защитени съобщения бяха открити.",
             "description_2": "Тази сесия шифрова историята използвайки новия метод за възстановяване.",
             "warning": "Ако не сте настройвали новия метод за възстановяване, вероятно някой се опитва да проникне в акаунта Ви. Веднага променете паролата на акаунта си и настройте нов метод за възстановяване от Настройки."
+        },
+        "recovery_method_removed": {
+            "title": "Методът за възстановяване беше премахнат",
+            "description_1": "Тази сесия откри, че вашата фраза за сигурност и ключ за защитени съобщения бяха премахнати.",
+            "description_2": "Ако сте направили това без да искате, може да настройте защитени съобщения за тази сесия, което ще зашифрова наново историята на съобщенията използвайки новия метод за възстановяване.",
+            "warning": "Ако не сте премахнали метода за възстановяване, е възможно нападател да се опитва да получи достъп до акаунта Ви. Променете паролата на акаунта и настройте нов метод за възстановяване веднага от Настройки."
         }
     },
     "emoji": {

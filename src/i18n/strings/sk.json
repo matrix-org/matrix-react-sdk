@@ -237,7 +237,6 @@
     "Invalid homeserver discovery response": "Neplatná odpoveď pri zisťovaní domovského servera",
     "Invalid identity server discovery response": "Neplatná odpoveď pri zisťovaní servera totožností",
     "General failure": "Všeobecná chyba",
-    "Set up Secure Messages": "Nastavenie zabezpečených správ",
     "Dog": "Pes",
     "Cat": "Mačka",
     "Lion": "Lev",
@@ -347,8 +346,6 @@
     "Could not load user profile": "Nie je možné načítať profil používateľa",
     "Your password has been reset.": "Vaše heslo bolo obnovené.",
     "Create account": "Vytvoriť účet",
-    "Recovery Method Removed": "Odstránený spôsob obnovenia",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Accept <policyLink /> to continue:": "Ak chcete pokračovať, musíte prijať <policyLink />:",
     "Checking server": "Kontrola servera",
     "Terms of service not accepted or the identity server is invalid.": "Neprijali ste Podmienky poskytovania služby alebo to nie je správny server.",
@@ -1092,7 +1089,6 @@
     "Allow people to preview your space before they join.": "Umožnite ľuďom prezrieť si váš priestor predtým, ako sa k vám pripoja.",
     "Preview Space": "Prehľad priestoru",
     "Start new chat": "Spustiť novú konverzáciu",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
     "View in room": "Zobraziť v miestnosti",
     "Loading new room": "Načítanie novej miestnosti",
     "& %(count)s more": {
@@ -1266,7 +1262,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ste si istí, že chcete ukončiť túto anketu? Zobrazia sa konečné výsledky ankety a ľudia nebudú môcť už hlasovať.",
     "Can't find this server or its room list": "Nemôžeme nájsť tento server alebo jeho zoznam miestností",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Overením tohto zariadenia ho označíte ako dôveryhodné a používatelia, ktorí vás overili, budú tomuto zariadeniu dôverovať.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ak ste to urobili omylom, môžete v tejto relácii nastaviť Zabezpečené správy, ktoré znovu zašifrujú históriu správ tejto relácie pomocou novej metódy obnovy.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
     "Clear all data in this session?": "Vymazať všetky údaje v tejto relácii?",
@@ -1947,7 +1942,8 @@
         "all_rooms": "Všetky miestnosti",
         "deselect_all": "Zrušiť výber všetkých",
         "select_all": "Vybrať všetky",
-        "go_to_settings": "Otvoriť nastavenia"
+        "go_to_settings": "Otvoriť nastavenia",
+        "setup_secure_messages": "Nastavenie zabezpečených správ"
     },
     "action": {
         "continue": "Pokračovať",
@@ -3542,6 +3538,12 @@
             "description_1": "Bola zistená nová bezpečnostná fráza a kľúč pre zabezpečené správy.",
             "description_2": "Táto relácia šifruje históriu pomocou novej metódy obnovy.",
             "warning": "Ak ste si nenastavili nový spôsob obnovenia, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach."
+        },
+        "recovery_method_removed": {
+            "title": "Odstránený spôsob obnovenia",
+            "description_1": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
+            "description_2": "Ak ste to urobili omylom, môžete v tejto relácii nastaviť Zabezpečené správy, ktoré znovu zašifrujú históriu správ tejto relácie pomocou novej metódy obnovy.",
+            "warning": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach."
         }
     },
     "emoji": {

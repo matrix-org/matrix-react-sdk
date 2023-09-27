@@ -215,9 +215,6 @@
     "General failure": "Generell feil",
     "Create account": "Lag konto",
     "Set up": "Sett opp",
-    "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
-    "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
     "Verify this session": "Stadfest denne økta",
     "Encryption upgrade available": "Kryptering kan oppgraderast",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
@@ -449,7 +446,8 @@
         "feedback": "Tilbakemeldingar",
         "on": "På",
         "off": "Av",
-        "go_to_settings": "Gå til innstillingar"
+        "go_to_settings": "Gå til innstillingar",
+        "setup_secure_messages": "Sett opp sikre meldingar (Secure Messages)"
     },
     "action": {
         "continue": "Fortset",
@@ -1220,6 +1218,10 @@
         "new_recovery_method_detected": {
             "title": "Ny gjenopprettingsmetode",
             "warning": "Har du ikkje satt opp den nye gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din.  Endre ditt kontopassord og sett opp gjenoppretting umiddelbart under instillingane."
+        },
+        "recovery_method_removed": {
+            "title": "Gjenopprettingsmetode fjerna",
+            "warning": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar."
         }
     },
     "poll": {

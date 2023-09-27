@@ -398,9 +398,6 @@
     "Create account": "Account anmoakn",
     "Session ID": "Sessie-ID",
     "Set up": "Instelln",
-    "Set up Secure Messages": "Beveiligde berichtn instelln",
-    "Recovery Method Removed": "Herstelmethode verwyderd",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "A je de herstelmethode nie è verwyderd, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn.",
     "Uploaded sound": "Ipgeloadn-geluud",
     "Sounds": "Geluudn",
     "Notification sound": "Meldiengsgeluud",
@@ -482,7 +479,8 @@
         "integration_manager": "Integroasjebeheerder",
         "on": "An",
         "off": "Uut",
-        "go_to_settings": "Goa noa d’instelliengn"
+        "go_to_settings": "Goa noa d’instelliengn",
+        "setup_secure_messages": "Beveiligde berichtn instelln"
     },
     "action": {
         "continue": "Verdergoan",
@@ -975,6 +973,10 @@
         "new_recovery_method_detected": {
             "title": "Nieuwe herstelmethode",
             "warning": "A je gy deze nieuwe herstelmethode nie èt ingesteld, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn."
+        },
+        "recovery_method_removed": {
+            "title": "Herstelmethode verwyderd",
+            "warning": "A je de herstelmethode nie è verwyderd, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn."
         }
     },
     "auth": {

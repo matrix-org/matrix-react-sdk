@@ -298,7 +298,6 @@
     "Warning!": "Hoiatus!",
     "Close dialog": "Sulge dialoog",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Meeldetuletus: sinu brauser ei ole toetatud ja seega rakenduse kasutuskogemus võib olla ennustamatu.",
-    "Set up Secure Messages": "Võta kasutusele krüptitud sõnumid",
     "You seem to be in a call, are you sure you want to quit?": "Tundub, et sul parasjagu on kõne pooleli. Kas sa kindlasti soovid väljuda?",
     "Failed to reject invite": "Kutse tagasilükkamine ei õnnestunud",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid sul ei ole õigusi selle sõnumi nägemiseks.",
@@ -701,9 +700,6 @@
     "You are not currently using an identity server. To discover and be discoverable by existing contacts you know, add one below.": "Sa hetkel ei kasuta isikutuvastusserverit. Et olla leitav ja ise leida sinule teadaolevaid inimesi seadista ta alljärgnevalt.",
     "Jump to first unread room.": "Siirdu esimesse lugemata jututuppa.",
     "Jump to first invite.": "Siirdu esimese kutse juurde.",
-    "Recovery Method Removed": "Taastemeetod on eemaldatud",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Kui sa tegid seda juhuslikult, siis sa võid selles sessioonis uuesti seadistada sõnumite krüptimise, mille tulemusel krüptime uuesti kõik sõnumid ja loome uue taastamise meetodi.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Kui sa ei ole ise taastamise meetodeid eemaldanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod.",
     "Reason": "Põhjus",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "Ära usalda risttunnustamist ning verifitseeri kasutaja iga sessioon eraldi.",
     "Connect this session to Key Backup": "Seo see sessioon krüptovõtmete varundusega",
@@ -1062,7 +1058,6 @@
     "Invalid Security Key": "Vigane turvavõti",
     "Wrong Security Key": "Vale turvavõti",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Selleks puhuks, kui sa kaotad ligipääsu kõikidele oma sessioonidele, tee varukoopia oma krüptovõtmetest ja kasutajakonto seadistustest. Unikaalse turvavõtmega tagad selle, et sinu varukoopia on kaitstud.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Oleme tuvastanud, et selles sessioonis ei leidu turvafraasi ega krüptitud sõnumite turvavõtit.",
     "Set my room layout for everyone": "Kasuta minu jututoa paigutust kõigi jaoks",
     "Remember this": "Jäta see meelde",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
@@ -1947,7 +1942,8 @@
         "all_rooms": "Kõik jututoad",
         "deselect_all": "Eemalda kõik valikud",
         "select_all": "Vali kõik",
-        "go_to_settings": "Ava seadistused"
+        "go_to_settings": "Ava seadistused",
+        "setup_secure_messages": "Võta kasutusele krüptitud sõnumid"
     },
     "action": {
         "continue": "Jätka",
@@ -3542,6 +3538,12 @@
             "description_1": "Tuvastasin krüptitud sõnumite uue turvafraasi ja turvavõtme.",
             "description_2": "See sessioon krüptib ajalugu kasutades uut taastamise meetodit.",
             "warning": "Kui sa ei ole ise uusi taastamise meetodeid lisanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod."
+        },
+        "recovery_method_removed": {
+            "title": "Taastemeetod on eemaldatud",
+            "description_1": "Oleme tuvastanud, et selles sessioonis ei leidu turvafraasi ega krüptitud sõnumite turvavõtit.",
+            "description_2": "Kui sa tegid seda juhuslikult, siis sa võid selles sessioonis uuesti seadistada sõnumite krüptimise, mille tulemusel krüptime uuesti kõik sõnumid ja loome uue taastamise meetodi.",
+            "warning": "Kui sa ei ole ise taastamise meetodeid eemaldanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod."
         }
     },
     "emoji": {

@@ -354,9 +354,6 @@
     "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
     "Set up": "Ota käyttöön",
-    "Set up Secure Messages": "Ota käyttöön salatut viestit",
-    "Recovery Method Removed": "Palautustapa poistettu",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jos et poistanut palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi.",
     "Join the conversation with an account": "Liity keskusteluun tilin avulla",
     "Sign Up": "Rekisteröidy",
     "Reason: %(reason)s": "Syy: %(reason)s",
@@ -1764,7 +1761,8 @@
         "all_rooms": "Kaikki huoneet",
         "deselect_all": "Älä valitse mitään",
         "select_all": "Valitse kaikki",
-        "go_to_settings": "Siirry asetuksiin"
+        "go_to_settings": "Siirry asetuksiin",
+        "setup_secure_messages": "Ota käyttöön salatut viestit"
     },
     "action": {
         "continue": "Jatka",
@@ -3204,6 +3202,10 @@
             "title": "Uusi palautustapa",
             "description_2": "Tämä istunto salaa historiansa käyttäen uutta palautustapaa.",
             "warning": "Jos et ottanut käyttöön uutta palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi."
+        },
+        "recovery_method_removed": {
+            "title": "Palautustapa poistettu",
+            "warning": "Jos et poistanut palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi."
         }
     },
     "emoji": {

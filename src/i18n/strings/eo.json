@@ -398,9 +398,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vi ne povas sendi mesaĝojn ĝis vi tralegos kaj konsentos <consentLink>niajn uzokondiĉojn</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis rimedan limon. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
-    "Set up Secure Messages": "Agordi Sekurajn mesaĝojn",
-    "Recovery Method Removed": "Rehava metodo foriĝis",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se vi ne forigis la rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj.",
     "Unable to load key backup status": "Ne povas enlegi staton de ŝlosila savkopio",
     "Demote yourself?": "Ĉu malrangaltigi vin mem?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Vi ne povos malfari tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta povohava uzanto en la ĉambro, estos neeble vian povon rehavi.",
@@ -620,7 +617,6 @@
     "Verification Request": "Kontrolpeto",
     "Remove for everyone": "Forigi por ĉiuj",
     "Country Dropdown": "Landa falmenuo",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se vi faris tion akcidente, vi povas agordi Sekurajn mesaĝojn en ĉi tiu salutaĵo, kio reĉifros la historion de mesaj de ĉi tiu salutaĵo kun nova rehava metodo.",
     "Scroll to most recent messages": "Rulumi al plej freŝaj mesaĝoj",
     "Local address": "Loka adreso",
     "Published Addresses": "Publikigitaj adresoj",
@@ -1031,7 +1027,6 @@
         "one": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj.",
         "other": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj."
     },
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Tiu ĉi salutaĵo trovis, ke viaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj foriĝis.",
     "Hold": "Paŭzigi",
     "Resume": "Daŭrigi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
@@ -1442,7 +1437,8 @@
         "on": "Jes",
         "off": "Ne",
         "all_rooms": "Ĉiuj ĉambroj",
-        "go_to_settings": "Iri al agordoj"
+        "go_to_settings": "Iri al agordoj",
+        "setup_secure_messages": "Agordi Sekurajn mesaĝojn"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2603,6 +2599,12 @@
             "description_1": "Novaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj troviĝis.",
             "description_2": "Ĉi tiu salutaĵo nun ĉifras historion kun la nova rehava metodo.",
             "warning": "Se vi ne agordis la novan rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj."
+        },
+        "recovery_method_removed": {
+            "title": "Rehava metodo foriĝis",
+            "description_1": "Tiu ĉi salutaĵo trovis, ke viaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj foriĝis.",
+            "description_2": "Se vi faris tion akcidente, vi povas agordi Sekurajn mesaĝojn en ĉi tiu salutaĵo, kio reĉifros la historion de mesaj de ĉi tiu salutaĵo kun nova rehava metodo.",
+            "warning": "Se vi ne forigis la rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj."
         }
     },
     "emoji": {

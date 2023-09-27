@@ -738,11 +738,6 @@
     "Forget Room": "ລືມຫ້ອງ",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s ຖືກສົ່ງຄືນໃນຂະນະທີ່ພະຍາຍາມເຂົ້າເຖິງຫ້ອງ ຫຼື ພື້ນທີ່. ຖ້າຫາກທ່ານຄິດວ່າທ່ານກໍາລັງເຫັນຂໍ້ຄວາມນີ້ຜິດພາດ, ກະລຸນາ <issueLink>ສົ່ງບົດລາຍງານ bug</issueLink>.",
     "Try again later, or ask a room or space admin to check if you have access.": "ລອງໃໝ່ໃນພາຍຫຼັງ, ຫຼື ຂໍໃຫ້ຜູ້ຄຸ້ມຄອງຫ້ອງ ຫຼື ຜູ້ຄຸ້ມຄອງພື້ນທີ່ກວດເບິ່ງວ່າທ່ານມີການເຂົ້າເຖິງ ຫຼື ບໍ່.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "ຖ້າທ່ານບໍ່ໄດ້ລືບຂະບວນການກູ້ຄືນ, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະ ກຳນົດຂະບວນການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "ຖ້າທ່ານດຳເນີນການສິ່ງນີ້ໂດຍບໍ່ໄດ້ຕັ້ງໃຈ, ທ່ານສາມາດຕັ້ງຄ່າຄວາມປອດໄພຂອງຂໍ້ຄວາມ ໃນລະບົບນີ້ ເຊິ່ງຈະມີການເຂົ້າລະຫັດປະຫວັດຂໍ້ຄວາມຂອງລະບົບນີ້ຄືນໃໝ່ດ້ວຍຂະບວນການກູ້ຂໍ້ມູນໃໝ່.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "ລະບົບນີ້ໄດ້ກວດພົບປະໂຫຍກຄວາມປອດໄພ ແລະ ກະແຈຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານໄດ້ຖືກເອົາອອກແລ້ວ.",
-    "Recovery Method Removed": "ວິທີລົບຂະບວນການກູ້ຄືນ",
-    "Set up Secure Messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ",
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Create account": "ສ້າງບັນຊີ",
@@ -1679,7 +1674,8 @@
         "all_rooms": "ຫ້ອງທັງໝົດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
         "select_all": "ເລືອກທັງຫມົດ",
-        "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ"
+        "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ",
+        "setup_secure_messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2952,6 +2948,12 @@
             "description_1": "ກວດພົບປະໂຫຍກຄວາມປອດໄພໃໝ່ ແລະ ກະແຈສຳລັບຂໍ້ຄວາມທີ່ປອດໄພຖືກກວດພົບ.",
             "description_2": "ລະບົບນີ້ກຳລັງເຂົ້າລະຫັດປະຫວັດໂດຍໃຊ້ວິທີການກູ້ຂໍ້ມູນໃໝ່.",
             "warning": "ຖ້າທ່ານບໍ່ໄດ້ກຳນົດວິທີການກູ້ຄືນໃໝ່, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະກຳນົດ ວິທີການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ."
+        },
+        "recovery_method_removed": {
+            "title": "ວິທີລົບຂະບວນການກູ້ຄືນ",
+            "description_1": "ລະບົບນີ້ໄດ້ກວດພົບປະໂຫຍກຄວາມປອດໄພ ແລະ ກະແຈຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານໄດ້ຖືກເອົາອອກແລ້ວ.",
+            "description_2": "ຖ້າທ່ານດຳເນີນການສິ່ງນີ້ໂດຍບໍ່ໄດ້ຕັ້ງໃຈ, ທ່ານສາມາດຕັ້ງຄ່າຄວາມປອດໄພຂອງຂໍ້ຄວາມ ໃນລະບົບນີ້ ເຊິ່ງຈະມີການເຂົ້າລະຫັດປະຫວັດຂໍ້ຄວາມຂອງລະບົບນີ້ຄືນໃໝ່ດ້ວຍຂະບວນການກູ້ຂໍ້ມູນໃໝ່.",
+            "warning": "ຖ້າທ່ານບໍ່ໄດ້ລືບຂະບວນການກູ້ຄືນ, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະ ກຳນົດຂະບວນການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ."
         }
     },
     "emoji": {

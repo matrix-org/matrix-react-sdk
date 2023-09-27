@@ -649,7 +649,6 @@
     "Join the conference from the room information card on the right": "Taka þátt í fjarfundinum á upplýsingaspjaldi spjallrásaarinnar til hægri",
     "Join the conference at the top of this room": "Taka þátt í fjarfundinum efst í þessari spjallrás",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
-    "Set up Secure Messages": "Setja upp örugg skilaboð",
     "Permission Required": "Krafist er heimildar",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
@@ -1141,7 +1140,6 @@
     "Error updating main address": "Villa við uppfærslu á aðalvistfangi",
     "Failed to revoke invite": "Mistókst að afturkalla boð",
     "Forget this room": "Gleyma þessari spjallrás",
-    "Recovery Method Removed": "Endurheimtuaðferð fjarlægð",
     "Skip verification for now": "Sleppa sannvottun í bili",
     "Verify this device": "Sannreyna þetta tæki",
     "Search names and descriptions": "Leita í nöfnum og lýsingum",
@@ -1623,7 +1621,8 @@
         "all_rooms": "Allar spjallrásir",
         "deselect_all": "Afvelja allt",
         "select_all": "Velja allt",
-        "go_to_settings": "Fara í stillingar"
+        "go_to_settings": "Fara í stillingar",
+        "setup_secure_messages": "Setja upp örugg skilaboð"
     },
     "action": {
         "continue": "Halda áfram",
@@ -3008,6 +3007,9 @@
         "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
         "new_recovery_method_detected": {
             "title": "Ný endurheimtuaðferð"
+        },
+        "recovery_method_removed": {
+            "title": "Endurheimtuaðferð fjarlægð"
         }
     },
     "emoji": {

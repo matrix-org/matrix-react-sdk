@@ -411,7 +411,6 @@
     "Switch theme": "Bytt tema",
     "All settings": "Alle innstillinger",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
-    "Set up Secure Messages": "Sett opp sikre meldinger",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
     "Room options": "Rominnstillinger",
@@ -865,7 +864,8 @@
         "on": "På",
         "off": "Av",
         "all_rooms": "Alle rom",
-        "go_to_settings": "Gå til Innstillinger"
+        "go_to_settings": "Gå til Innstillinger",
+        "setup_secure_messages": "Sett opp sikre meldinger"
     },
     "action": {
         "continue": "Fortsett",

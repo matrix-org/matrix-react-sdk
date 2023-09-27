@@ -108,7 +108,6 @@
     "Pencil": "Akeryun",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
-    "Set up Secure Messages": "Sbadu iznan iɣelsanen",
     "Logs sent": "Iɣmisen ttewaznen",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(count)s others": {
@@ -126,7 +125,6 @@
     "Connect this session to Key Backup": "Qqen tiɣimit-a ɣer uḥraz n tsarut",
     "Confirm encryption setup": "Sentem asebded n uwgelhen",
     "Click the button below to confirm setting up encryption.": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen.",
-    "Recovery Method Removed": "Tarrayt n ujebber tettwakkes",
     "Dog": "Aqjun",
     "Horse": "Aεewdiw",
     "Pig": "Ilef",
@@ -606,7 +604,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
     "Invalid identity server discovery response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
     "Identity server URL does not appear to be a valid identity server": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "Click the link in the email you received to verify and then click continue again.": "Sit ɣef useɣwen yella deg yimayl i teṭṭfeḍ i usenqed syen sit tikkelt tayeḍ ad tkemmleḍ.",
     "Discovery options will appear once you have added an email above.": "Tixtiṛiyin n usnirem ad d-banent akken ara ternuḍ imayl s ufella.",
     "Discovery options will appear once you have added a phone number above.": "Tixtiṛiyin n usnirem ad d-banent akken ara ternuḍ uṭṭun n tilifun s ufella.",
@@ -675,7 +672,6 @@
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
     "Set up Secure Backup": "Sebadu aḥraz aɣelsan",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ma yella tgiḍ aya war ma tebniḍ, tzemreḍ ad tsewleḍ iznan uffiren deg tɣimit-a ayen ara yalsen awgelhen n umazray n yiznan n texxamt-a s tarrayt n tririt tamaynut.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Ur tettizmireḍ ara ad tesfesxeḍ asnifel-a acku tettṣubbuḍ deg usellun-unek·inem, ma yella d kečč·kemm i d aseqdac aneglam n texxamt-a, d awezɣi ad d-terreḍ ula d yiwet n tseglut.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Aql-ak·akem ad tettuwellheḍ ɣer usmel n wis tlata i wakken ad tizmireḍ ad tsestbeḍ amiḍan-ik·im i useqdec d %(integrationsUrl)s. Tebɣiḍ ad tkemmleḍ?",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "D awezɣi ad d-naf imuɣna n yisulay Matrix i d-yettwabdaren ddaw - tebɣiḍ ad ten-id-tnecdeḍ ɣas akken?",
@@ -1072,7 +1068,8 @@
         "on": "Yermed",
         "off": "Insa",
         "all_rooms": "Akk tixxamin",
-        "go_to_settings": "Ddu ɣer yiɣewwaren"
+        "go_to_settings": "Ddu ɣer yiɣewwaren",
+        "setup_secure_messages": "Sbadu iznan iɣelsanen"
     },
     "action": {
         "continue": "Kemmel",
@@ -1894,6 +1891,11 @@
             "title": "Tarrayt tamaynut n ujebber",
             "description_2": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
             "warning": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren."
+        },
+        "recovery_method_removed": {
+            "title": "Tarrayt n ujebber tettwakkes",
+            "description_2": "Ma yella tgiḍ aya war ma tebniḍ, tzemreḍ ad tsewleḍ iznan uffiren deg tɣimit-a ayen ara yalsen awgelhen n umazray n yiznan n texxamt-a s tarrayt n tririt tamaynut.",
+            "warning": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren."
         }
     },
     "emoji": {

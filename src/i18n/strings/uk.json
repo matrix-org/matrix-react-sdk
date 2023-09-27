@@ -302,8 +302,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "Something went wrong!": "Щось пішло не так!",
     "expand": "розгорнути",
-    "Set up Secure Messages": "Налаштувати захищені повідомлення",
-    "Recovery Method Removed": "Відновлювальний засіб було видалено",
     "Upgrade public room": "Поліпшити відкриту кімнату",
     "IRC display name width": "Ширина псевдоніма IRC",
     "Securely cache encrypted messages locally for them to appear in search results.": "Безпечно локально кешувати зашифровані повідомлення щоб вони з'являлись у результатах пошуку.",
@@ -1310,9 +1308,6 @@
     "Server did not return valid authentication information.": "Сервер надав хибні дані розпізнання.",
     "Server did not require any authentication": "Сервер не попросив увійти",
     "Add a space to a space you manage.": "Додайте простір до іншого простору, яким ви керуєте.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Якщо ви не видаляли способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Якщо це ненароком зробили ви, налаштуйте захищені повідомлення для цього сеансу, щоб повторно зашифрувати історію листування цього сеансу з новим способом відновлення.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Цей сеанс виявив, що ваша фраза безпеки й ключ до захищених повідомлень були видалені.",
     "Your password has been reset.": "Ваш пароль скинуто.",
     "New passwords must match each other.": "Нові паролі мають збігатися.",
     "Really reset verification keys?": "Точно скинути ключі звірки?",
@@ -1947,7 +1942,8 @@
         "all_rooms": "Усі кімнати",
         "deselect_all": "Скасувати вибір",
         "select_all": "Вибрати всі",
-        "go_to_settings": "Перейти до налаштувань"
+        "go_to_settings": "Перейти до налаштувань",
+        "setup_secure_messages": "Налаштувати захищені повідомлення"
     },
     "action": {
         "continue": "Продовжити",
@@ -3542,6 +3538,12 @@
             "description_1": "Виявлено зміну фрази безпеки й ключа до захищених повідомлень.",
             "description_2": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
             "warning": "Якщо ви не встановлювали нового способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях."
+        },
+        "recovery_method_removed": {
+            "title": "Відновлювальний засіб було видалено",
+            "description_1": "Цей сеанс виявив, що ваша фраза безпеки й ключ до захищених повідомлень були видалені.",
+            "description_2": "Якщо це ненароком зробили ви, налаштуйте захищені повідомлення для цього сеансу, щоб повторно зашифрувати історію листування цього сеансу з новим способом відновлення.",
+            "warning": "Якщо ви не видаляли способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях."
         }
     },
     "emoji": {

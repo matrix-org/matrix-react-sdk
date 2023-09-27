@@ -667,7 +667,8 @@
         "room_name": "Room name",
         "thread": "Thread",
         "accessibility": "Accessibility",
-        "go_to_settings": "Go to Settings"
+        "go_to_settings": "Go to Settings",
+        "setup_secure_messages": "Set up Secure Messages"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
@@ -1002,6 +1003,12 @@
             "description_1": "A new Security Phrase and key for Secure Messages have been detected.",
             "description_2": "This session is encrypting history using the new recovery method.",
             "warning": "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
+        },
+        "recovery_method_removed": {
+            "title": "Recovery Method Removed",
+            "description_1": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",
+            "description_2": "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.",
+            "warning": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
         }
     },
     "slash_command": {
@@ -3866,10 +3873,5 @@
     "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
     "General failure": "General failure",
-    "Set up Secure Messages": "Set up Secure Messages",
-    "Recovery Method Removed": "Recovery Method Removed",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
     "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
 }

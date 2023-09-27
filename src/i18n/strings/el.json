@@ -1391,7 +1391,6 @@
     "Dial pad": "Πληκτρολόγιο κλήσης",
     "Transfer": "Μεταφορά",
     "Sent": "Απεσταλμένα",
-    "Recovery Method Removed": "Η Μέθοδος Ανάκτησης Καταργήθηκε",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "General failure": "Γενική αποτυχία",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
@@ -1516,10 +1515,6 @@
     "Failed to get autodiscovery configuration from server": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
     "Hold": "Αναμονή",
     "These are likely ones other room admins are a part of.": "Πιθανότατα αυτά είναι μέρος στα οποία συμμετέχουν και άλλοι διαχειριστές δωματίου.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Εάν δεν καταργήσατε τη μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Εάν το κάνατε κατά λάθος, μπορείτε να ρυθμίσετε τα Ασφαλή Μηνύματα σε αυτήν τη συνεδρία, τα οποία θα κρυπτογραφούν εκ νέου το ιστορικό μηνυμάτων αυτής της συνεδρίας με μια νέα μέθοδο ανάκτησης.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Αυτή η συνεδρία εντόπισε ότι η φράση ασφαλείας σας και το κλειδί για τα ασφαλή μηνύματα σας έχουν αφαιρεθεί.",
-    "Set up Secure Messages": "Ρύθμιση ασφαλών μηνυμάτων",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
     "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
@@ -1662,7 +1657,8 @@
         "all_rooms": "Όλα τα δωμάτια",
         "deselect_all": "Αποεπιλογή όλων",
         "select_all": "Επιλογή όλων",
-        "go_to_settings": "Μετάβαση στις Ρυθμίσεις"
+        "go_to_settings": "Μετάβαση στις Ρυθμίσεις",
+        "setup_secure_messages": "Ρύθμιση ασφαλών μηνυμάτων"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2944,6 +2940,12 @@
             "description_1": "Εντοπίστηκε νέα φράση ασφαλείας και κλειδί για ασφαλή μηνύματα.",
             "description_2": "Αυτή η συνεδρία κρυπτογραφεί το ιστορικό χρησιμοποιώντας τη νέα μέθοδο ανάκτησης.",
             "warning": "Εάν δεν έχετε ορίσει τη νέα μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις."
+        },
+        "recovery_method_removed": {
+            "title": "Η Μέθοδος Ανάκτησης Καταργήθηκε",
+            "description_1": "Αυτή η συνεδρία εντόπισε ότι η φράση ασφαλείας σας και το κλειδί για τα ασφαλή μηνύματα σας έχουν αφαιρεθεί.",
+            "description_2": "Εάν το κάνατε κατά λάθος, μπορείτε να ρυθμίσετε τα Ασφαλή Μηνύματα σε αυτήν τη συνεδρία, τα οποία θα κρυπτογραφούν εκ νέου το ιστορικό μηνυμάτων αυτής της συνεδρίας με μια νέα μέθοδο ανάκτησης.",
+            "warning": "Εάν δεν καταργήσατε τη μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις."
         }
     },
     "emoji": {

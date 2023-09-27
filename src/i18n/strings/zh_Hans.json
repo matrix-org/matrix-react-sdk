@@ -344,9 +344,6 @@
     "Invalid identity server discovery response": "无效的身份服务器搜索响应",
     "General failure": "一般错误",
     "Create account": "创建账户",
-    "Set up Secure Messages": "设置安全消息",
-    "Recovery Method Removed": "恢复方式已移除",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果你没有移除此恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新的恢复方式。",
     "Accept all %(invitedRooms)s invites": "接受所有 %(invitedRooms)s 邀请",
     "Power level": "权力级别",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
@@ -717,7 +714,6 @@
     "Identity server URL does not appear to be a valid identity server": "身份服务器链接不像是有效的身份服务器",
     "Confirm encryption setup": "确认加密设置",
     "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
     "IRC display name width": "IRC 显示名称宽度",
     "well formed": "格式正确",
     "This session is <b>not backing up your keys</b>, but you do have an existing backup you can restore from and add to going forward.": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
@@ -1068,7 +1064,6 @@
     "Guernsey": "根西岛",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "无法访问秘密存储。请确认你输入了正确的安全短语。",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "无法使用此安全密钥解密备份：请检查你输入的安全密钥是否正确。",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "此会话已检测到你的安全短语和安全消息密钥被移除。",
     "You can select all or individual messages to retry or delete": "你可以选择全部或单独的消息来重试或删除",
     "Sending": "正在发送",
     "Delete all": "删除全部",
@@ -1743,7 +1738,8 @@
         "all_rooms": "所有房间",
         "deselect_all": "取消全选",
         "select_all": "全选",
-        "go_to_settings": "打开设置"
+        "go_to_settings": "打开设置",
+        "setup_secure_messages": "设置安全消息"
     },
     "action": {
         "continue": "继续",
@@ -3176,6 +3172,12 @@
             "description_1": "检测到新的安全短语和安全消息密钥。",
             "description_2": "此会话正在使用新的恢复方法加密历史。",
             "warning": "如果你没有设置新恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新恢复方式。"
+        },
+        "recovery_method_removed": {
+            "title": "恢复方式已移除",
+            "description_1": "此会话已检测到你的安全短语和安全消息密钥被移除。",
+            "description_2": "如果你出于意外这样做了，你可以在此会话上设置安全消息，以使用新的加密方式重新加密此会话的消息历史。",
+            "warning": "如果你没有移除此恢复方式，可能有攻击者正试图侵入你的账户。请立即更改你的账户密码并在设置中设定一个新的恢复方式。"
         }
     },
     "emoji": {

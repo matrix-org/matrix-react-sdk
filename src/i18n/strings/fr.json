@@ -233,7 +233,6 @@
     "Set up": "Configurer",
     "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",
     "General failure": "Erreur générale",
-    "Set up Secure Messages": "Configurer les messages sécurisés",
     "Unable to load commit detail: %(msg)s": "Impossible de charger les détails de l’envoi : %(msg)s",
     "The following users may not exist": "Les utilisateurs suivants pourraient ne pas exister",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même les inviter ?",
@@ -267,8 +266,6 @@
     "Email (optional)": "E-mail (facultatif)",
     "Join millions for free on the largest public server": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
     "Create account": "Créer un compte",
-    "Recovery Method Removed": "Méthode de récupération supprimée",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si vous n’avez pas supprimé la méthode de récupération, un attaquant peut être en train d’essayer d’accéder à votre compte. Modifiez le mot de passe de votre compte et configurez une nouvelle méthode de récupération dans les réglages.",
     "Dog": "Chien",
     "Cat": "Chat",
     "Lion": "Lion",
@@ -606,7 +603,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet appareil le marquera comme fiable. Faire confiance à cette appareil vous permettra à vous et aux autres utilisateurs d’être tranquilles lors de l’utilisation de messages chiffrés.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Vérifier cet appareil le marquera comme fiable, et les utilisateurs qui ont vérifié avec vous feront confiance à cet appareil.",
     "You have not verified this user.": "Vous n’avez pas vérifié cet utilisateur.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Si vous l’avez fait accidentellement, vous pouvez configurer les messages sécurisés sur cette session ce qui re-chiffrera l’historique des messages de cette session avec une nouvelle méthode de récupération.",
     "Destroy cross-signing keys?": "Détruire les clés de signature croisée ?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La suppression des clés de signature croisée est permanente. Tous ceux que vous avez vérifié vont voir des alertes de sécurité. Il est peu probable que ce soit ce que vous voulez faire, sauf si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
     "Clear cross-signing keys": "Vider les clés de signature croisée",
@@ -1035,7 +1031,6 @@
     "Server Options": "Options serveur",
     "Enable desktop notifications": "Activer les notifications sur le bureau",
     "Don't miss a reply": "Ne ratez pas une réponse",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Cette session a détecté que votre phrase secrète et clé de sécurité pour les messages sécurisés ont été supprimées.",
     "Hold": "Mettre en pause",
     "Resume": "Reprendre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si vous avez oublié votre clé de sécurité, vous pouvez <button>définir de nouvelles options de récupération</button>",
@@ -1947,7 +1942,8 @@
         "all_rooms": "Tous les salons",
         "deselect_all": "Tout désélectionner",
         "select_all": "Tout sélectionner",
-        "go_to_settings": "Aller aux paramètres"
+        "go_to_settings": "Aller aux paramètres",
+        "setup_secure_messages": "Configurer les messages sécurisés"
     },
     "action": {
         "continue": "Continuer",
@@ -3542,6 +3538,12 @@
             "description_1": "Une nouvelle phrase secrète et clé de sécurité pour les messages sécurisés ont été détectées.",
             "description_2": "Cette session chiffre l’historique en utilisant la nouvelle méthode de récupération.",
             "warning": "Si vous n’avez pas activé de nouvelle méthode de récupération, un attaquant essaye peut-être d’accéder à votre compte. Changez immédiatement le mot de passe de votre compte et configurez une nouvelle méthode de récupération dans les paramètres."
+        },
+        "recovery_method_removed": {
+            "title": "Méthode de récupération supprimée",
+            "description_1": "Cette session a détecté que votre phrase secrète et clé de sécurité pour les messages sécurisés ont été supprimées.",
+            "description_2": "Si vous l’avez fait accidentellement, vous pouvez configurer les messages sécurisés sur cette session ce qui re-chiffrera l’historique des messages de cette session avec une nouvelle méthode de récupération.",
+            "warning": "Si vous n’avez pas supprimé la méthode de récupération, un attaquant peut être en train d’essayer d’accéder à votre compte. Modifiez le mot de passe de votre compte et configurez une nouvelle méthode de récupération dans les réglages."
         }
     },
     "emoji": {

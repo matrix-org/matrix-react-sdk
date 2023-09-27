@@ -347,9 +347,6 @@
     "General failure": "Algemene fout",
     "Create account": "Registeren",
     "Set up": "Instellen",
-    "Set up Secure Messages": "Beveiligde berichten instellen",
-    "Recovery Method Removed": "Herstelmethode verwijderd",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Als je de herstelmethode niet hebt verwijderd, is het mogelijk dat er een aanvaller toegang tot jouw account probeert te verkrijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Deze kamer draait op kamerversie <roomVersion />, die door deze homeserver als <i>onstabiel</i> is gemarkeerd.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgraden zal de huidige versie van deze kamer sluiten, en onder dezelfde naam een geüpgraded versie starten.",
     "Failed to revoke invite": "Intrekken van uitnodiging is mislukt",
@@ -617,7 +614,6 @@
     "Country Dropdown": "Landselectie",
     "Jump to first unread room.": "Ga naar het eerste ongelezen kamer.",
     "Jump to first invite.": "Ga naar de eerste uitnodiging.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
     "Mark all as read": "Alles markeren als gelezen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "New login. Was this you?": "Nieuwe login gevonden. Was jij dat?",
@@ -978,7 +974,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Your firewall or anti-virus is blocking the request.": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Deze sessie heeft ontdekt dat je veiligheidswachtwoord en -sleutel voor versleutelde berichten zijn verwijderd.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
     "Secret storage:": "Sleutelopslag:",
     "Switch theme": "Thema wisselen",
@@ -1778,7 +1773,8 @@
         "all_rooms": "Alle kamers",
         "deselect_all": "Allemaal deselecteren",
         "select_all": "Allemaal selecteren",
-        "go_to_settings": "Ga naar instellingen"
+        "go_to_settings": "Ga naar instellingen",
+        "setup_secure_messages": "Beveiligde berichten instellen"
     },
     "action": {
         "continue": "Doorgaan",
@@ -3205,6 +3201,12 @@
             "description_1": "Er is een nieuwe veiligheidswachtwoord en -sleutel voor versleutelde berichten gedetecteerd.",
             "description_2": "Deze sessie versleutelt je geschiedenis aan de hand van de nieuwe herstelmethode.",
             "warning": "Als je deze nieuwe herstelmethode niet hebt ingesteld, is het mogelijk dat een aanvaller toegang tot jouw account probeert te krijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in."
+        },
+        "recovery_method_removed": {
+            "title": "Herstelmethode verwijderd",
+            "description_1": "Deze sessie heeft ontdekt dat je veiligheidswachtwoord en -sleutel voor versleutelde berichten zijn verwijderd.",
+            "description_2": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
+            "warning": "Als je de herstelmethode niet hebt verwijderd, is het mogelijk dat er een aanvaller toegang tot jouw account probeert te verkrijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in."
         }
     },
     "emoji": {

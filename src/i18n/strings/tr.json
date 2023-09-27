@@ -222,7 +222,6 @@
         "other": "%(items)s ve diğer %(count)s",
         "one": "%(items)s ve bir diğeri"
     },
-    "Recovery Method Removed": "Kurtarma Yöntemi Silindi",
     "Robot": "Robot",
     "Hat": "Şapka",
     "Glasses": "Gözlük",
@@ -441,7 +440,6 @@
     "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
-    "Set up Secure Messages": "Güvenli Mesajları Ayarla",
     "Other users may not trust it": "Diğer kullanıcılar güvenmeyebilirler",
     "Later": "Sonra",
     "Show more": "Daha fazla göster",
@@ -1010,7 +1008,8 @@
         "on": "Açık",
         "off": "Kapalı",
         "all_rooms": "Tüm odalar",
-        "go_to_settings": "Ayarlara Git"
+        "go_to_settings": "Ayarlara Git",
+        "setup_secure_messages": "Güvenli Mesajları Ayarla"
     },
     "action": {
         "continue": "Devam Et",
@@ -1863,6 +1862,9 @@
         "import_invalid_passphrase": "Kimlik doğrulama denetimi başarısız oldu : yanlış şifre ?",
         "new_recovery_method_detected": {
             "title": "Yeni Kurtarma Yöntemi"
+        },
+        "recovery_method_removed": {
+            "title": "Kurtarma Yöntemi Silindi"
         }
     },
     "emoji": {

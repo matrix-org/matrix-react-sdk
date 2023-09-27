@@ -737,11 +737,6 @@
     "Your display name": "نام نمایشی شما",
     "Any of the following data may be shared:": "هر یک از داده های زیر ممکن است به اشتراک گذاشته شود:",
     "Cancel search": "لغو جستجو",
-    "Set up Secure Messages": "پیام‌رسانی امن را تنظیم کنید",
-    "Recovery Method Removed": "روش بازیابی حذف شد",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "اگر این کار را به صورت تصادفی انجام دادید، می‌توانید سازوکار پیام امن را برای این نشست تنظیم کرده که باعث می‌شود تمام تاریخچه‌ی این نشست با استفاده از یک روش جدیدِ بازیابی، مجددا رمزشود.",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید.",
     "Something went wrong!": "مشکلی پیش آمد!",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
     "Can't load this message": "بارگیری این پیام امکان پذیر نیست",
@@ -1284,7 +1279,8 @@
         "on": "روشن",
         "off": "خاموش",
         "all_rooms": "همه اتاق‌ها",
-        "go_to_settings": "برو به تنظیمات"
+        "go_to_settings": "برو به تنظیمات",
+        "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید"
     },
     "action": {
         "continue": "ادامه",
@@ -2315,6 +2311,12 @@
             "description_1": "یک عبارت امنیتی و کلید جدید برای پیام‌رسانی امن شناسایی شد.",
             "description_2": "این نشست تاریخچه‌ی پیام‌های رمزشده را با استفاده از روش جدیدِ بازیابی، رمز می‌کند.",
             "warning": "اگر روش بازیابی جدیدی را تنظیم نکرده‌اید، ممکن است حمله‌کننده‌ای تلاش کند به حساب کاربری شما دسترسی پیدا کند. لطفا گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش جدیدِ بازیابی در بخش تنظیمات انتخاب کنید."
+        },
+        "recovery_method_removed": {
+            "title": "روش بازیابی حذف شد",
+            "description_1": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
+            "description_2": "اگر این کار را به صورت تصادفی انجام دادید، می‌توانید سازوکار پیام امن را برای این نشست تنظیم کرده که باعث می‌شود تمام تاریخچه‌ی این نشست با استفاده از یک روش جدیدِ بازیابی، مجددا رمزشود.",
+            "warning": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید."
         }
     },
     "emoji": {

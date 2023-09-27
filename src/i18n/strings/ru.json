@@ -243,8 +243,6 @@
     "Unable to restore backup": "Невозможно восстановить резервную копию",
     "No backup found!": "Резервных копий не найдено!",
     "Email (optional)": "Адрес электронной почты (не обязательно)",
-    "Set up Secure Messages": "Настроить безопасные сообщения",
-    "Recovery Method Removed": "Метод восстановления удален",
     "Dog": "Собака",
     "Cat": "Кошка",
     "Lion": "Лев",
@@ -405,7 +403,6 @@
     "Notification sound": "Звук уведомления",
     "Set a new custom sound": "Установка нового пользовательского звука",
     "Browse": "Просматривать",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Если вы не убрали метод восстановления, злоумышленник может получить доступ к вашей учётной записи. Смените пароль учётной записи и сразу задайте новый способ восстановления в настройках.",
     "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
@@ -728,7 +725,6 @@
     "Switch theme": "Сменить тему",
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
-    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
     "Explore public rooms": "Просмотреть публичные комнаты",
     "Preparing to download logs": "Подготовка к загрузке журналов",
     "Set up Secure Backup": "Настроить безопасное резервное копирование",
@@ -1045,7 +1041,6 @@
     "A call can only be transferred to a single user.": "Вызов может быть передан только одному пользователю.",
     "Open dial pad": "Открыть панель набора номера",
     "Dial pad": "Панель набора номера",
-    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Этот сеанс обнаружил, что ваши секретная фраза и ключ безопасности для защищенных сообщений были удалены.",
     "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Получите доступ к своей истории защищенных сообщений и настройте безопасный обмен сообщениями, введя ключ безопасности.",
@@ -1794,7 +1789,8 @@
         "all_rooms": "Все комнаты",
         "deselect_all": "Отменить выбор",
         "select_all": "Выбрать все",
-        "go_to_settings": "Перейти в настройки"
+        "go_to_settings": "Перейти в настройки",
+        "setup_secure_messages": "Настроить безопасные сообщения"
     },
     "action": {
         "continue": "Продолжить",
@@ -3278,6 +3274,12 @@
             "description_1": "Обнаружены новая секретная фраза и ключ безопасности для защищенных сообщений.",
             "description_2": "Этот сеанс шифрует историю с помощью нового метода восстановления.",
             "warning": "Если вы не задали новый способ восстановления, злоумышленник может получить доступ к вашей учётной записи. Смените пароль учётной записи и сразу же задайте новый способ восстановления в настройках."
+        },
+        "recovery_method_removed": {
+            "title": "Метод восстановления удален",
+            "description_1": "Этот сеанс обнаружил, что ваши секретная фраза и ключ безопасности для защищенных сообщений были удалены.",
+            "description_2": "Если вы сделали это по ошибке, вы можете настроить защищённые сообщения в этом сеансе, что снова зашифрует историю сообщений в этом сеансе с помощью нового метода восстановления.",
+            "warning": "Если вы не убрали метод восстановления, злоумышленник может получить доступ к вашей учётной записи. Смените пароль учётной записи и сразу задайте новый способ восстановления в настройках."
         }
     },
     "emoji": {
