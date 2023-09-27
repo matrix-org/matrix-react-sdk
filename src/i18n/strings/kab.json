@@ -108,8 +108,6 @@
     "Pencil": "Akeryun",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
-    "New Recovery Method": "Tarrayt tamaynut n ujebber",
-    "Go to Settings": "Ddu ɣer yiɣewwaren",
     "Set up Secure Messages": "Sbadu iznan iɣelsanen",
     "Logs sent": "Iɣmisen ttewaznen",
     "Not Trusted": "Ur yettwattkal ara",
@@ -390,7 +388,6 @@
     "Verify your other session using one of the options below.": "Senqed tiɣimiyin-ik·im tiyaḍ s useqdec yiwet seg textiṛiyin ddaw.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeqqen ɣer tɣimit tamaynut war ma isenqed-itt:",
     "Ask this user to verify their session, or manually verify it below.": "Suter deg useqdac-a ad isenqed tiɣimit-is, neɣ senqed-itt ddaw s ufus.",
-    "This session is encrypting history using the new recovery method.": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
     "Secret storage public key:": "Tasarut tazayezt n uḥraz uffir:",
     "Unable to load key backup status": "Asali n waddad n uḥraz n tsarut ur yeddi ara",
     "not stored": "ur yettusekles ara",
@@ -609,7 +606,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
     "Invalid identity server discovery response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
     "Identity server URL does not appear to be a valid identity server": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren.",
     "Click the link in the email you received to verify and then click continue again.": "Sit ɣef useɣwen yella deg yimayl i teṭṭfeḍ i usenqed syen sit tikkelt tayeḍ ad tkemmleḍ.",
     "Discovery options will appear once you have added an email above.": "Tixtiṛiyin n usnirem ad d-banent akken ara ternuḍ imayl s ufella.",
@@ -1075,7 +1071,8 @@
         "preview_message": "Kečč·kemm. Ulac win i ak·akem-yifen!",
         "on": "Yermed",
         "off": "Insa",
-        "all_rooms": "Akk tixxamin"
+        "all_rooms": "Akk tixxamin",
+        "go_to_settings": "Ddu ɣer yiɣewwaren"
     },
     "action": {
         "continue": "Kemmel",
@@ -1892,7 +1889,12 @@
         "bootstrap_title": "Asebded n tsura",
         "export_unsupported": "Iminig-ik·im ur issefrak ara iseɣzaf n uwgelhen yettusran",
         "import_invalid_keyfile": "Afaylu n tsarut %(brand)s d arameɣtu",
-        "import_invalid_passphrase": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?"
+        "import_invalid_passphrase": "Asenqed n usesteb ur yeddi ara: awal uffir d arameɣtu?",
+        "new_recovery_method_detected": {
+            "title": "Tarrayt tamaynut n ujebber",
+            "description_2": "Tiɣimit-a, amazray-ines awgelhen yesseqdac tarrayt n uɛeddi tamaynut.",
+            "warning": "Ma yella ur tesbaduḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren."
+        }
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",

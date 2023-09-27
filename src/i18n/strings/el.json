@@ -1310,8 +1310,6 @@
     "Match system": "Ταίριασμα με του συστήματος",
     "Spanner": "Γερμανικό κλειδί",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "Το %(brand)s είναι πειραματικό σε πρόγραμμα περιήγησης για κινητά. Για καλύτερη εμπειρία και τις πιο πρόσφατες δυνατότητες, χρησιμοποιήστε τη δωρεάν εφαρμογή μας για κινητά.",
-    "Go to Settings": "Μετάβαση στις Ρυθμίσεις",
-    "New Recovery Method": "Νέα Μέθοδος Ανάκτησης",
     "Create account": "Δημιουργία λογαριασμού",
     "Your password has been reset.": "Ο κωδικός πρόσβασής σας επαναφέρθηκε.",
     "Skip verification for now": "Παράβλεψη επαλήθευσης προς το παρόν",
@@ -1394,7 +1392,6 @@
     "Transfer": "Μεταφορά",
     "Sent": "Απεσταλμένα",
     "Recovery Method Removed": "Η Μέθοδος Ανάκτησης Καταργήθηκε",
-    "This session is encrypting history using the new recovery method.": "Αυτή η συνεδρία κρυπτογραφεί το ιστορικό χρησιμοποιώντας τη νέα μέθοδο ανάκτησης.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "General failure": "Γενική αποτυχία",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Δεν μπορείτε να στείλετε μηνύματα μέχρι να ελέγξετε και να συμφωνήσετε με τους <consentLink>όρους και τις προϋποθέσεις μας</consentLink>.",
@@ -1523,8 +1520,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Εάν το κάνατε κατά λάθος, μπορείτε να ρυθμίσετε τα Ασφαλή Μηνύματα σε αυτήν τη συνεδρία, τα οποία θα κρυπτογραφούν εκ νέου το ιστορικό μηνυμάτων αυτής της συνεδρίας με μια νέα μέθοδο ανάκτησης.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Αυτή η συνεδρία εντόπισε ότι η φράση ασφαλείας σας και το κλειδί για τα ασφαλή μηνύματα σας έχουν αφαιρεθεί.",
     "Set up Secure Messages": "Ρύθμιση ασφαλών μηνυμάτων",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Εάν δεν έχετε ορίσει τη νέα μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Εντοπίστηκε νέα φράση ασφαλείας και κλειδί για ασφαλή μηνύματα.",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
     "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
@@ -1666,7 +1661,8 @@
         "off": "Ανενεργό",
         "all_rooms": "Όλα τα δωμάτια",
         "deselect_all": "Αποεπιλογή όλων",
-        "select_all": "Επιλογή όλων"
+        "select_all": "Επιλογή όλων",
+        "go_to_settings": "Μετάβαση στις Ρυθμίσεις"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2942,7 +2938,13 @@
         "bootstrap_title": "Ρύθμιση κλειδιών",
         "export_unsupported": "Ο περιηγητής σας δεν υποστηρίζει τα απαιτούμενα πρόσθετα κρυπτογράφησης",
         "import_invalid_keyfile": "Μη έγκυρο αρχείο κλειδιού %(brand)s",
-        "import_invalid_passphrase": "Αποτυχία ελέγχου πιστοποίησης: λανθασμένος κωδικός πρόσβασης;"
+        "import_invalid_passphrase": "Αποτυχία ελέγχου πιστοποίησης: λανθασμένος κωδικός πρόσβασης;",
+        "new_recovery_method_detected": {
+            "title": "Νέα Μέθοδος Ανάκτησης",
+            "description_1": "Εντοπίστηκε νέα φράση ασφαλείας και κλειδί για ασφαλή μηνύματα.",
+            "description_2": "Αυτή η συνεδρία κρυπτογραφεί το ιστορικό χρησιμοποιώντας τη νέα μέθοδο ανάκτησης.",
+            "warning": "Εάν δεν έχετε ορίσει τη νέα μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις."
+        }
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",

@@ -234,10 +234,7 @@
     "Invalid homeserver discovery response": "Ungültige Antwort beim Aufspüren des Heim-Servers",
     "Invalid identity server discovery response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
     "General failure": "Allgemeiner Fehler",
-    "New Recovery Method": "Neue Wiederherstellungsmethode",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Wenn du die neue Wiederherstellungsmethode nicht festgelegt hast, versucht ein Angreifer möglicherweise, auf dein Konto zuzugreifen. Ändere dein Kontopasswort und lege sofort eine neue Wiederherstellungsmethode in den Einstellungen fest.",
     "Set up Secure Messages": "Richte sichere Nachrichten ein",
-    "Go to Settings": "Gehe zu Einstellungen",
     "The following users may not exist": "Eventuell existieren folgende Benutzer nicht",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
     "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
@@ -677,7 +674,6 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Um diesen Raum zu aktualisieren, muss die aktuelle Instanz des Raums geschlossen und an ihrer Stelle ein neuer Raum erstellt werden. Um den Raummitgliedern die bestmögliche Erfahrung zu bieten, werden wir:",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Eine Raumaktualisierung ist ein komplexer Vorgang, der üblicherweise empfohlen wird, wenn ein Raum aufgrund von Fehlern, fehlenden Funktionen oder Sicherheitslücken instabil ist.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
-    "This session is encrypting history using the new recovery method.": "Diese Sitzung verschlüsselt den Verlauf mit der neuen Wiederherstellungsmethode.",
     "Unable to revoke sharing for email address": "Dem Teilen der E-Mail-Adresse kann nicht widerrufen werden",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Es gab einen Fehler beim Ändern des Raumalias. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Wenn du dies versehentlich getan hast, kannst du in dieser Sitzung \"sichere Nachrichten\" einrichten, die den Nachrichtenverlauf dieser Sitzung mit einer neuen Wiederherstellungsmethode erneut verschlüsseln.",
@@ -1062,7 +1058,6 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Sichere deine Schlüssel mit deinen Kontodaten, für den Fall, dass du den Zugriff auf deine Sitzungen verlierst. Deine Schlüssel werden mit einem eindeutigen Sicherheitsschlüssel geschützt.",
     "Dial pad": "Wähltastatur",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deine Sicherheitsphrase eingibst.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Wenn du deinen Sicherheitsschlüssel vergessen hast, kannst du <button>neue Wiederherstellungsoptionen einrichten</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deinen Sicherheitsschlüssel eingibst.",
@@ -1955,7 +1950,8 @@
         "off": "Aus",
         "all_rooms": "Alle Räume",
         "deselect_all": "Alle abwählen",
-        "select_all": "Alle auswählen"
+        "select_all": "Alle auswählen",
+        "go_to_settings": "Gehe zu Einstellungen"
     },
     "action": {
         "continue": "Fortfahren",
@@ -3545,7 +3541,13 @@
         "bootstrap_title": "Schlüssel werden eingerichtet",
         "export_unsupported": "Dein Browser unterstützt die benötigten Verschlüsselungserweiterungen nicht",
         "import_invalid_keyfile": "Keine gültige %(brand)s-Schlüsseldatei",
-        "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?"
+        "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?",
+        "new_recovery_method_detected": {
+            "title": "Neue Wiederherstellungsmethode",
+            "description_1": "Eine neue Sicherheitsphrase und ein neuer Schlüssel für sichere Nachrichten wurden erkannt.",
+            "description_2": "Diese Sitzung verschlüsselt den Verlauf mit der neuen Wiederherstellungsmethode.",
+            "warning": "Wenn du die neue Wiederherstellungsmethode nicht festgelegt hast, versucht ein Angreifer möglicherweise, auf dein Konto zuzugreifen. Ändere dein Kontopasswort und lege sofort eine neue Wiederherstellungsmethode in den Einstellungen fest."
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",

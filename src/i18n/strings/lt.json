@@ -209,7 +209,6 @@
     "Failed to change power level": "Nepavyko pakeisti galios lygio",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs paaukštinate vartotoją, suteikdami tokį patį galios lygį, kokį turite jūs.",
     "Email (optional)": "El. paštas (neprivaloma)",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jei jūs nenustatėte naujo paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą.",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jei jūs nepašalinote paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą.",
     "Direct Messages": "Privačios žinutės",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Nustatykite adresus šiam kambariui, kad vartotojai galėtų surasti šį kambarį per jūsų serverį (%(localDomain)s)",
@@ -481,8 +480,6 @@
     "Notes": "Pastabos",
     "Integrations are disabled": "Integracijos yra išjungtos",
     "Integrations not allowed": "Integracijos neleidžiamos",
-    "New Recovery Method": "Naujas atgavimo metodas",
-    "This session is encrypting history using the new recovery method.": "Šis seansas šifruoja istoriją naudodamas naują atgavimo metodą.",
     "Recovery Method Removed": "Atgavimo Metodas Pašalintas",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
     "All settings": "Visi nustatymai",
@@ -672,7 +669,6 @@
     "Brazil": "Brazilija",
     "Belgium": "Belgija",
     "Bangladesh": "Bangladešas",
-    "Go to Settings": "Eiti į Nustatymus",
     "Any of the following data may be shared:": "Gali būti dalijamasi bet kuriais toliau nurodytais duomenimis:",
     "Cancel search": "Atšaukti paiešką",
     "Can't load this message": "Nepavyko įkelti šios žinutės",
@@ -1260,7 +1256,8 @@
         "off": "Išjungta",
         "all_rooms": "Visi kambariai",
         "deselect_all": "Nuimti pasirinkimą nuo visko",
-        "select_all": "Pasirinkti viską"
+        "select_all": "Pasirinkti viską",
+        "go_to_settings": "Eiti į Nustatymus"
     },
     "action": {
         "continue": "Tęsti",
@@ -2348,7 +2345,12 @@
         "bootstrap_title": "Raktų nustatymas",
         "export_unsupported": "Jūsų naršyklė nepalaiko reikalingų kriptografijos plėtinių",
         "import_invalid_keyfile": "Negaliojantis %(brand)s rakto failas",
-        "import_invalid_passphrase": "Autentifikavimo patikra nepavyko: neteisingas slaptažodis?"
+        "import_invalid_passphrase": "Autentifikavimo patikra nepavyko: neteisingas slaptažodis?",
+        "new_recovery_method_detected": {
+            "title": "Naujas atgavimo metodas",
+            "description_2": "Šis seansas šifruoja istoriją naudodamas naują atgavimo metodą.",
+            "warning": "Jei jūs nenustatėte naujo paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą."
+        }
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",

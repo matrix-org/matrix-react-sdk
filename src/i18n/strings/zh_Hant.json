@@ -232,10 +232,7 @@
     "Set up": "設定",
     "Invalid identity server discovery response": "身份伺服器探索回應無效",
     "General failure": "一般錯誤",
-    "New Recovery Method": "新復原方法",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "如果您沒有設定新的復原方法，攻擊者可能會嘗試存取您的帳號。在設定中立刻變更您的密碼並設定新的復原方法。",
     "Set up Secure Messages": "設定安全訊息",
-    "Go to Settings": "前往設定",
     "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
     "The following users may not exist": "以下的使用者可能不存在",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
@@ -603,7 +600,6 @@
     "Session name": "工作階段名稱",
     "Session key": "工作階段金鑰",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "驗證此使用者將會把他們的工作階段標記為受信任，並同時為他們標記您的工作階段為可信任。",
-    "This session is encrypting history using the new recovery method.": "此工作階段正在使用新的復原方法加密歷史。",
     "Encryption not enabled": "加密未啟用",
     "The encryption used by this room isn't supported.": "不支援此聊天室使用的加密。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "驗證此裝置，並標記為可受信任。由您將裝置標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
@@ -1051,7 +1047,6 @@
     "Open dial pad": "開啟撥號鍵盤",
     "Dial pad": "撥號鍵盤",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "此工作階段偵測到您的安全密語以及安全訊息金鑰已被移除。",
-    "A new Security Phrase and key for Secure Messages have been detected.": "偵測到新的安全密語以及安全訊息金鑰。",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "透過輸入您的安全金鑰來存取您的安全訊息歷史並設定安全訊息。",
     "Not a valid Security Key": "不是有效的安全金鑰",
@@ -1951,7 +1946,8 @@
         "off": "關閉",
         "all_rooms": "所有聊天室",
         "deselect_all": "取消選取",
-        "select_all": "全部選取"
+        "select_all": "全部選取",
+        "go_to_settings": "前往設定"
     },
     "action": {
         "continue": "繼續",
@@ -3540,7 +3536,13 @@
         "bootstrap_title": "正在產生金鑰",
         "export_unsupported": "您的瀏覽器不支援需要的加密擴充",
         "import_invalid_keyfile": "不是有效的 %(brand)s 金鑰檔案",
-        "import_invalid_passphrase": "無法檢查認證：密碼錯誤？"
+        "import_invalid_passphrase": "無法檢查認證：密碼錯誤？",
+        "new_recovery_method_detected": {
+            "title": "新復原方法",
+            "description_1": "偵測到新的安全密語以及安全訊息金鑰。",
+            "description_2": "此工作階段正在使用新的復原方法加密歷史。",
+            "warning": "如果您沒有設定新的復原方法，攻擊者可能會嘗試存取您的帳號。在設定中立刻變更您的密碼並設定新的復原方法。"
+        }
     },
     "emoji": {
         "category_frequently_used": "經常使用",

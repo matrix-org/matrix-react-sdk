@@ -729,10 +729,6 @@
     "Confirm encryption setup": "Bekräfta krypteringsinställning",
     "Click the button below to confirm setting up encryption.": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
     "Set up Secure Backup": "Ställ in säker säkerhetskopiering",
-    "New Recovery Method": "Ny återställningsmetod",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Om du inte har ställt in den nya återställningsmetoden kan en angripare försöka komma åt ditt konto. Byt ditt kontolösenord och ställ in en ny återställningsmetod omedelbart i inställningarna.",
-    "This session is encrypting history using the new recovery method.": "Den här sessionen krypterar historik med den nya återställningsmetoden.",
-    "Go to Settings": "Gå till inställningarna",
     "Set up Secure Messages": "Ställ in säkra meddelanden",
     "Recovery Method Removed": "Återställningsmetod borttagen",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Om du gjorde det av misstag kan du ställa in säkra meddelanden på den här sessionen som krypterar sessionens meddelandehistorik igen med en ny återställningsmetod.",
@@ -1058,7 +1054,6 @@
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Säkerhetskopiera dina krypteringsnycklar med din kontodata ifall du skulle förlora åtkomst till dina sessioner. Dina nycklar kommer att säkras med en unik säkerhetsnyckel.",
     "Use app for a better experience": "Använd appen för en bättre upplevelse",
     "Use app": "Använd app",
-    "A new Security Phrase and key for Secure Messages have been detected.": "En ny säkerhetsfras och -nyckel för säkra meddelanden har detekterats.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Den här sessionen har detekterat att din säkerhetsfras och -nyckel för säkra meddelanden har tagits bort.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
     "Security Key mismatch": "Säkerhetsnyckeln matchade inte",
@@ -1910,7 +1905,8 @@
         "off": "Av",
         "all_rooms": "Alla rum",
         "deselect_all": "Välj bort alla",
-        "select_all": "Välj alla"
+        "select_all": "Välj alla",
+        "go_to_settings": "Gå till inställningarna"
     },
     "action": {
         "continue": "Fortsätt",
@@ -3481,7 +3477,13 @@
         "bootstrap_title": "Sätter upp nycklar",
         "export_unsupported": "Din webbläsare stödjer inte nödvändiga kryptografitillägg",
         "import_invalid_keyfile": "Inte en giltig %(brand)s-nyckelfil",
-        "import_invalid_passphrase": "Autentiseringskontroll misslyckades: felaktigt lösenord?"
+        "import_invalid_passphrase": "Autentiseringskontroll misslyckades: felaktigt lösenord?",
+        "new_recovery_method_detected": {
+            "title": "Ny återställningsmetod",
+            "description_1": "En ny säkerhetsfras och -nyckel för säkra meddelanden har detekterats.",
+            "description_2": "Den här sessionen krypterar historik med den nya återställningsmetoden.",
+            "warning": "Om du inte har ställt in den nya återställningsmetoden kan en angripare försöka komma åt ditt konto. Byt ditt kontolösenord och ställ in en ny återställningsmetod omedelbart i inställningarna."
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",

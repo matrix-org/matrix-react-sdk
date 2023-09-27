@@ -1381,11 +1381,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Sesi ini telah mendeteksi bahwa Frasa Keamanan dan kunci untuk Pesan Aman Anda telah dihapus.",
     "Recovery Method Removed": "Metode Pemulihan Dihapus",
     "Set up Secure Messages": "Siapkan Pesan Aman",
-    "Go to Settings": "Pergi ke Pengaturan",
-    "This session is encrypting history using the new recovery method.": "Sesi ini mengenkripsi riwayat menggunakan metode pemulihan yang baru.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jika Anda tidak menyetel metode pemulihan yang baru, sebuah penyerang mungkin mencoba mengakses akun Anda. Ubah kata sandi akun Anda dan segera tetapkan metode pemulihan yang baru di Pengaturan.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Sebuah Frasa Keamanan dan kunci untuk Pesan Aman telah terdeteksi.",
-    "New Recovery Method": "Metode Pemulihan Baru",
     "Sorry, your vote was not registered. Please try again.": "Maaf, suara Anda tidak didaftarkan. Silakan coba lagi.",
     "Vote not registered": "Suara tidak didaftarkan",
     "Developer": "Pengembang",
@@ -1955,7 +1950,8 @@
         "off": "Mati",
         "all_rooms": "Semua ruangan",
         "deselect_all": "Batalkan semua pilihan",
-        "select_all": "Pilih semua"
+        "select_all": "Pilih semua",
+        "go_to_settings": "Pergi ke Pengaturan"
     },
     "action": {
         "continue": "Lanjut",
@@ -3545,7 +3541,13 @@
         "bootstrap_title": "Menyiapkan kunci",
         "export_unsupported": "Browser Anda tidak mendukung ekstensi kriptografi yang dibutuhkan",
         "import_invalid_keyfile": "Bukan keyfile %(brand)s yang absah",
-        "import_invalid_passphrase": "Pemeriksaan autentikasi gagal: kata sandi salah?"
+        "import_invalid_passphrase": "Pemeriksaan autentikasi gagal: kata sandi salah?",
+        "new_recovery_method_detected": {
+            "title": "Metode Pemulihan Baru",
+            "description_1": "Sebuah Frasa Keamanan dan kunci untuk Pesan Aman telah terdeteksi.",
+            "description_2": "Sesi ini mengenkripsi riwayat menggunakan metode pemulihan yang baru.",
+            "warning": "Jika Anda tidak menyetel metode pemulihan yang baru, sebuah penyerang mungkin mencoba mengakses akun Anda. Ubah kata sandi akun Anda dan segera tetapkan metode pemulihan yang baru di Pengaturan."
+        }
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",

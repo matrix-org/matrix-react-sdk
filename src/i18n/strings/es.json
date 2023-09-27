@@ -677,7 +677,6 @@
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
     "Your homeserver has exceeded one of its resource limits.": "Tú servidor ha excedido el limite de sus recursos.",
     "Contact your <a>server admin</a>.": "Contacta con el <a>administrador del servidor</a>.",
-    "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
     "Change notification settings": "Cambiar los ajustes de notificaciones",
     "Your server isn't responding to some <a>requests</a>.": "Tú servidor no esta respondiendo a ciertas <a>solicitudes</a>.",
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "El administrador de tu servidor base ha desactivado el cifrado de extremo a extremo en salas privadas y mensajes directos.",
@@ -742,9 +741,6 @@
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
     "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
     "Set up Secure Backup": "Configurar copia de seguridad segura",
-    "New Recovery Method": "Nuevo método de recuperación",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Si no configuró el nuevo método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración.",
-    "Go to Settings": "Ir a la configuración",
     "Set up Secure Messages": "Configurar mensajes seguros",
     "Recovery Method Removed": "Método de recuperación eliminado",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Si hizo esto accidentalmente, puede configurar Mensajes seguros en esta sesión que volverá a cifrar el historial de mensajes de esta sesión con un nuevo método de recuperación.",
@@ -765,7 +761,6 @@
     "Show Widgets": "Mostrar accesorios",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Se ha detectado una nueva frase de seguridad y clave para mensajes seguros.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sesión ha detectado que tu frase de seguridad y clave para mensajes seguros ha sido eliminada.",
     "Zimbabwe": "Zimbabue",
     "Yemen": "Yemen",
@@ -1872,7 +1867,8 @@
         "off": "Apagado",
         "all_rooms": "Todas las salas",
         "deselect_all": "Deseleccionar todo",
-        "select_all": "Seleccionar todo"
+        "select_all": "Seleccionar todo",
+        "go_to_settings": "Ir a la configuración"
     },
     "action": {
         "continue": "Continuar",
@@ -3377,7 +3373,13 @@
         "bootstrap_title": "Configurando claves",
         "export_unsupported": "Su navegador no soporta las extensiones de criptografía requeridas",
         "import_invalid_keyfile": "No es un archivo de claves de %(brand)s válido",
-        "import_invalid_passphrase": "La verificación de autenticación falló: ¿contraseña incorrecta?"
+        "import_invalid_passphrase": "La verificación de autenticación falló: ¿contraseña incorrecta?",
+        "new_recovery_method_detected": {
+            "title": "Nuevo método de recuperación",
+            "description_1": "Se ha detectado una nueva frase de seguridad y clave para mensajes seguros.",
+            "description_2": "Esta sesión está cifrando el historial usando el nuevo método de recuperación.",
+            "warning": "Si no configuró el nuevo método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración."
+        }
     },
     "emoji": {
         "category_frequently_used": "Frecuente",

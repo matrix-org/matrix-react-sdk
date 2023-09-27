@@ -367,7 +367,6 @@
     "Removing…": "Forigante…",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Go to Settings": "Iri al agordoj",
     "No Audio Outputs detected": "Neniu soneligo troviĝis",
     "The conversation continues here.": "La interparolo daŭras ĉi tie.",
     "This room has been replaced and is no longer active.": "Ĉi tiu ĉambro estas anstataŭita, kaj ne plu aktivas.",
@@ -399,8 +398,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vi ne povas sendi mesaĝojn ĝis vi tralegos kaj konsentos <consentLink>niajn uzokondiĉojn</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis rimedan limon. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
-    "New Recovery Method": "Nova rehava metodo",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se vi ne agordis la novan rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj.",
     "Set up Secure Messages": "Agordi Sekurajn mesaĝojn",
     "Recovery Method Removed": "Rehava metodo foriĝis",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se vi ne forigis la rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj.",
@@ -623,7 +620,6 @@
     "Verification Request": "Kontrolpeto",
     "Remove for everyone": "Forigi por ĉiuj",
     "Country Dropdown": "Landa falmenuo",
-    "This session is encrypting history using the new recovery method.": "Ĉi tiu salutaĵo nun ĉifras historion kun la nova rehava metodo.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se vi faris tion akcidente, vi povas agordi Sekurajn mesaĝojn en ĉi tiu salutaĵo, kio reĉifros la historion de mesaj de ĉi tiu salutaĵo kun nova rehava metodo.",
     "Scroll to most recent messages": "Rulumi al plej freŝaj mesaĝoj",
     "Local address": "Loka adreso",
@@ -1036,7 +1032,6 @@
         "other": "Sekure kaŝmemori ĉifritajn mesaĝojn loke por ke ili aperu inter serĉrezultoj, uzante %(size)s por deponi mesaĝojn el %(rooms)s ĉambroj."
     },
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Tiu ĉi salutaĵo trovis, ke viaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj foriĝis.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Novaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj troviĝis.",
     "Hold": "Paŭzigi",
     "Resume": "Daŭrigi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
@@ -1446,7 +1441,8 @@
         "orphan_rooms": "Aliaj ĉambroj",
         "on": "Jes",
         "off": "Ne",
-        "all_rooms": "Ĉiuj ĉambroj"
+        "all_rooms": "Ĉiuj ĉambroj",
+        "go_to_settings": "Iri al agordoj"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -2601,7 +2597,13 @@
         "bootstrap_title": "Agordo de klavoj",
         "export_unsupported": "Via foliumilo ne subtenas la bezonatajn ĉifrajn kromprogramojn",
         "import_invalid_keyfile": "Nevalida ŝlosila dosiero de %(brand)s",
-        "import_invalid_passphrase": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?"
+        "import_invalid_passphrase": "Aŭtentikiga kontrolo malsukcesis: ĉu pro malĝusta pasvorto?",
+        "new_recovery_method_detected": {
+            "title": "Nova rehava metodo",
+            "description_1": "Novaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj troviĝis.",
+            "description_2": "Ĉi tiu salutaĵo nun ĉifras historion kun la nova rehava metodo.",
+            "warning": "Se vi ne agordis la novan rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj."
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",

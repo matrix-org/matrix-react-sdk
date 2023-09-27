@@ -237,10 +237,7 @@
     "Invalid homeserver discovery response": "Neplatná odpoveď pri zisťovaní domovského servera",
     "Invalid identity server discovery response": "Neplatná odpoveď pri zisťovaní servera totožností",
     "General failure": "Všeobecná chyba",
-    "New Recovery Method": "Nový spôsob obnovy",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ak ste si nenastavili nový spôsob obnovenia, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach.",
     "Set up Secure Messages": "Nastavenie zabezpečených správ",
-    "Go to Settings": "Otvoriť nastavenia",
     "Dog": "Pes",
     "Cat": "Mačka",
     "Lion": "Lev",
@@ -1047,7 +1044,6 @@
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Ktokoľvek bude môcť nájsť tento priestor a pripojiť sa k nemu, nielen členovia <SpaceName/>.",
     "Any of the following data may be shared:": "Zdieľané môžu byť niektoré z nasledujúcich údajov:",
     "An unknown error occurred": "Vyskytla sa neznáma chyba",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Bola zistená nová bezpečnostná fráza a kľúč pre zabezpečené správy.",
     "Almost there! Is %(displayName)s showing the same shield?": "Už je to takmer hotové! Zobrazuje sa %(displayName)s rovnaký štít?",
     "Add space": "Pridať priestor",
     "Add reaction": "Pridať reakciu",
@@ -1271,7 +1267,6 @@
     "Can't find this server or its room list": "Nemôžeme nájsť tento server alebo jeho zoznam miestností",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Overením tohto zariadenia ho označíte ako dôveryhodné a používatelia, ktorí vás overili, budú tomuto zariadeniu dôverovať.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ak ste to urobili omylom, môžete v tejto relácii nastaviť Zabezpečené správy, ktoré znovu zašifrujú históriu správ tejto relácie pomocou novej metódy obnovy.",
-    "This session is encrypting history using the new recovery method.": "Táto relácia šifruje históriu pomocou novej metódy obnovy.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
     "Clear all data in this session?": "Vymazať všetky údaje v tejto relácii?",
@@ -1951,7 +1946,8 @@
         "off": "Zakázané",
         "all_rooms": "Všetky miestnosti",
         "deselect_all": "Zrušiť výber všetkých",
-        "select_all": "Vybrať všetky"
+        "select_all": "Vybrať všetky",
+        "go_to_settings": "Otvoriť nastavenia"
     },
     "action": {
         "continue": "Pokračovať",
@@ -3540,7 +3536,13 @@
         "bootstrap_title": "Príprava kľúčov",
         "export_unsupported": "Váš prehliadač nepodporuje požadované kryptografické rozšírenia",
         "import_invalid_keyfile": "Toto nie je správny súbor s kľúčmi %(brand)s",
-        "import_invalid_passphrase": "Kontrola overenia zlyhala: Nesprávne heslo?"
+        "import_invalid_passphrase": "Kontrola overenia zlyhala: Nesprávne heslo?",
+        "new_recovery_method_detected": {
+            "title": "Nový spôsob obnovy",
+            "description_1": "Bola zistená nová bezpečnostná fráza a kľúč pre zabezpečené správy.",
+            "description_2": "Táto relácia šifruje históriu pomocou novej metódy obnovy.",
+            "warning": "Ak ste si nenastavili nový spôsob obnovenia, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach."
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",

@@ -249,7 +249,6 @@
     "Voice & Video": "Ääni ja video",
     "No Audio Outputs detected": "Äänen ulostuloja ei havaittu",
     "Audio Output": "Äänen ulostulo",
-    "Go to Settings": "Siirry asetuksiin",
     "Create account": "Luo tili",
     "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
@@ -355,8 +354,6 @@
     "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
     "Set up": "Ota käyttöön",
-    "New Recovery Method": "Uusi palautustapa",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jos et ottanut käyttöön uutta palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi.",
     "Set up Secure Messages": "Ota käyttöön salatut viestit",
     "Recovery Method Removed": "Palautustapa poistettu",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jos et poistanut palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi.",
@@ -1017,7 +1014,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa",
     "A browser extension is preventing the request.": "Selainlaajennus estää pyynnön.",
     "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
-    "This session is encrypting history using the new recovery method.": "Tämä istunto salaa historiansa käyttäen uutta palautustapaa.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
     "Open dial pad": "Avaa näppäimistö",
@@ -1767,7 +1763,8 @@
         "off": "Ei päällä",
         "all_rooms": "Kaikki huoneet",
         "deselect_all": "Älä valitse mitään",
-        "select_all": "Valitse kaikki"
+        "select_all": "Valitse kaikki",
+        "go_to_settings": "Siirry asetuksiin"
     },
     "action": {
         "continue": "Jatka",
@@ -3202,7 +3199,12 @@
         "bootstrap_title": "Otetaan avaimet käyttöön",
         "export_unsupported": "Selaimesi ei tue vaadittuja kryptografisia laajennuksia",
         "import_invalid_keyfile": "Ei kelvollinen %(brand)s-avaintiedosto",
-        "import_invalid_passphrase": "Autentikointi epäonnistui: virheellinen salasana?"
+        "import_invalid_passphrase": "Autentikointi epäonnistui: virheellinen salasana?",
+        "new_recovery_method_detected": {
+            "title": "Uusi palautustapa",
+            "description_2": "Tämä istunto salaa historiansa käyttäen uutta palautustapaa.",
+            "warning": "Jos et ottanut käyttöön uutta palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi."
+        }
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",

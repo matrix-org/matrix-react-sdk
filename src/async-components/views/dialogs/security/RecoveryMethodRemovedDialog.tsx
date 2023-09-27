@@ -69,7 +69,7 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
                     <DialogButtons
                         primaryButton={_t("Set up Secure Messages")}
                         onPrimaryButtonClick={this.onSetupClick}
-                        cancelButton={_t("Go to Settings")}
+                        cancelButton={_t("common|go_to_settings")}
                         onCancel={this.onGoToSettingsClick}
                     />
                 </div>

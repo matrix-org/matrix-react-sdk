@@ -208,7 +208,6 @@
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
-    "Go to Settings": "Przejdź do ustawień",
     "I don't want my encrypted messages": "Nie chcę moich zaszyfrowanych wiadomości",
     "You'll lose access to your encrypted messages": "Utracisz dostęp do zaszyfrowanych wiadomości",
     "Dog": "Pies",
@@ -423,7 +422,6 @@
     },
     "Switch theme": "Przełącz motyw",
     "All settings": "Wszystkie ustawienia",
-    "New Recovery Method": "Nowy sposób odzyskiwania",
     "Join millions for free on the largest public server": "Dołącz do milionów za darmo na największym publicznym serwerze",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Ci użytkownicy mogą nie istnieć lub są nieprawidłowi, i nie mogą zostać zaproszeni: %(csvNames)s",
     "Failed to find the following users": "Nie udało się znaleźć tych użytkowników",
@@ -1007,7 +1005,6 @@
     "a device cross-signing signature": "sygnatura weryfikacji krzyżowej urządzenia",
     "a new cross-signing key signature": "nowa sygnatura kluczu weryfikacji krzyżowej",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Ta sesja wykryła, że Twoja fraza bezpieczeństwa i klucz dla bezpiecznych wiadomości zostały usunięte.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Wykryto nową frazę bezpieczeństwa i klucz dla bezpiecznych wiadomości.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Jeśli zapomniałeś swojego klucza bezpieczeństwa, możesz <button>skonfigurować nowe opcje odzyskiwania</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Uzyskaj dostęp do historii bezpiecznych wiadomości i skonfiguruj bezpieczne wiadomości, wprowadzając swój klucz bezpieczeństwa.",
     "Not a valid Security Key": "Nieprawidłowy klucz bezpieczeństwa",
@@ -1764,8 +1761,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
     "Recovery Method Removed": "Usunięto metodę odzyskiwania",
     "Set up Secure Messages": "Skonfiguruj bezpieczne wiadomości",
-    "This session is encrypting history using the new recovery method.": "Ta sesja szyfruję historię za pomocą nowej metody odzyskiwania.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jeżeli nie ustawiłeś nowej metody odzyskiwania, atakujący może uzyskać dostęp do Twojego konta. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
     "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
@@ -1938,7 +1933,8 @@
         "off": "Wyłącz",
         "all_rooms": "Wszystkie pokoje",
         "deselect_all": "Odznacz wszystkie",
-        "select_all": "Zaznacz wszystkie"
+        "select_all": "Zaznacz wszystkie",
+        "go_to_settings": "Przejdź do ustawień"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -3525,7 +3521,13 @@
         "bootstrap_title": "Konfigurowanie kluczy",
         "export_unsupported": "Twoja przeglądarka nie wspiera wymaganych rozszerzeń kryptograficznych",
         "import_invalid_keyfile": "Niepoprawny plik klucza %(brand)s",
-        "import_invalid_passphrase": "Próba autentykacji nieudana: nieprawidłowe hasło?"
+        "import_invalid_passphrase": "Próba autentykacji nieudana: nieprawidłowe hasło?",
+        "new_recovery_method_detected": {
+            "title": "Nowy sposób odzyskiwania",
+            "description_1": "Wykryto nową frazę bezpieczeństwa i klucz dla bezpiecznych wiadomości.",
+            "description_2": "Ta sesja szyfruję historię za pomocą nowej metody odzyskiwania.",
+            "warning": "Jeżeli nie ustawiłeś nowej metody odzyskiwania, atakujący może uzyskać dostęp do Twojego konta. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach."
+        }
     },
     "emoji": {
         "category_frequently_used": "Często używane",

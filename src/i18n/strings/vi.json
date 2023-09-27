@@ -50,11 +50,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
     "Recovery Method Removed": "Phương thức Khôi phục đã bị xóa",
     "Set up Secure Messages": "Cài đặt Tin nhắn được bảo toàn",
-    "Go to Settings": "Đi tới Cài đặt",
-    "This session is encrypting history using the new recovery method.": "Phiên này đang mã hóa lịch sử bằng phương pháp khôi phục mới.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nếu bạn không đặt phương pháp khôi phục mới, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Đã phát hiện thấy Cụm từ bảo mật và khóa mới cho Tin nhắn an toàn.",
-    "New Recovery Method": "Phương pháp Khôi phục mới",
     "Unknown error": "Lỗi không thể nhận biết",
     "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
@@ -1785,7 +1780,8 @@
         "off": "Tắt",
         "all_rooms": "Tất cả các phòng",
         "deselect_all": "Bỏ chọn tất cả",
-        "select_all": "Chọn tất cả"
+        "select_all": "Chọn tất cả",
+        "go_to_settings": "Đi tới Cài đặt"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -3277,7 +3273,13 @@
         "bootstrap_title": "Đang thiết lập khóa bảo mật",
         "export_unsupported": "Trình duyệt của bạn không hỗ trợ chức năng mã hóa",
         "import_invalid_keyfile": "Tệp khóa %(brand)s không hợp lệ",
-        "import_invalid_passphrase": "Kiểm tra đăng nhập thất bại: sai mật khẩu?"
+        "import_invalid_passphrase": "Kiểm tra đăng nhập thất bại: sai mật khẩu?",
+        "new_recovery_method_detected": {
+            "title": "Phương pháp Khôi phục mới",
+            "description_1": "Đã phát hiện thấy Cụm từ bảo mật và khóa mới cho Tin nhắn an toàn.",
+            "description_2": "Phiên này đang mã hóa lịch sử bằng phương pháp khôi phục mới.",
+            "warning": "Nếu bạn không đặt phương pháp khôi phục mới, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt."
+        }
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",

@@ -666,7 +666,8 @@
         "support": "Support",
         "room_name": "Room name",
         "thread": "Thread",
-        "accessibility": "Accessibility"
+        "accessibility": "Accessibility",
+        "go_to_settings": "Go to Settings"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
@@ -995,7 +996,13 @@
         },
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
-        "verification_requested_toast_title": "Verification requested"
+        "verification_requested_toast_title": "Verification requested",
+        "new_recovery_method_detected": {
+            "title": "New Recovery Method",
+            "description_1": "A new Security Phrase and key for Secure Messages have been detected.",
+            "description_2": "This session is encrypting history using the new recovery method.",
+            "warning": "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
+        }
     },
     "slash_command": {
         "spoiler": "Sends the given message as a spoiler",
@@ -3859,11 +3866,6 @@
     "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
     "General failure": "General failure",
-    "New Recovery Method": "New Recovery Method",
-    "A new Security Phrase and key for Secure Messages have been detected.": "A new Security Phrase and key for Secure Messages have been detected.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",
-    "This session is encrypting history using the new recovery method.": "This session is encrypting history using the new recovery method.",
-    "Go to Settings": "Go to Settings",
     "Set up Secure Messages": "Set up Secure Messages",
     "Recovery Method Removed": "Recovery Method Removed",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",

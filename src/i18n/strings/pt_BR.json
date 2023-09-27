@@ -234,10 +234,7 @@
     "Invalid homeserver discovery response": "Resposta de descoberta de homeserver inválida",
     "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
     "General failure": "Falha geral",
-    "New Recovery Method": "Nova opção de recuperação",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se você não definiu a nova opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina uma nova opção de recuperação imediatamente nas Configurações.",
     "Set up Secure Messages": "Configurar mensagens seguras",
-    "Go to Settings": "Ir para as configurações",
     "The following users may not exist": "Os seguintes usuários podem não existir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Não é possível encontrar perfis para os IDs da Matrix listados abaixo - você gostaria de convidá-los mesmo assim?",
     "Invite anyway and never warn me again": "Convide mesmo assim e nunca mais me avise",
@@ -414,7 +411,6 @@
     "Create account": "Criar conta",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
-    "This session is encrypting history using the new recovery method.": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
     "Forget Room": "Esquecer Sala",
     "Favourited": "Favoritado",
@@ -1046,7 +1042,6 @@
     "Hold": "Pausar",
     "Resume": "Retomar",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sessão detectou que a sua Frase de Segurança e a chave para mensagens seguras foram removidas.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Uma nova Frase de Segurança e uma nova chave para mensagens seguras foram detectadas.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Acesse o seu histórico de mensagens seguras e configure as mensagens seguras, ao inserir a sua Chave de Segurança.",
     "Not a valid Security Key": "Chave de Segurança inválida",
@@ -1465,7 +1460,8 @@
         "off": "Desativado",
         "all_rooms": "Todas as salas",
         "deselect_all": "Desmarcar todos",
-        "select_all": "Selecionar tudo"
+        "select_all": "Selecionar tudo",
+        "go_to_settings": "Ir para as configurações"
     },
     "action": {
         "continue": "Continuar",
@@ -2628,7 +2624,13 @@
         "bootstrap_title": "Configurar chaves",
         "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
         "import_invalid_keyfile": "Não é um arquivo de chave válido do %(brand)s",
-        "import_invalid_passphrase": "Falha ao checar a autenticação: senha incorreta?"
+        "import_invalid_passphrase": "Falha ao checar a autenticação: senha incorreta?",
+        "new_recovery_method_detected": {
+            "title": "Nova opção de recuperação",
+            "description_1": "Uma nova Frase de Segurança e uma nova chave para mensagens seguras foram detectadas.",
+            "description_2": "Esta sessão está criptografando o histórico de mensagens usando a nova opção de recuperação.",
+            "warning": "Se você não definiu a nova opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina uma nova opção de recuperação imediatamente nas Configurações."
+        }
     },
     "emoji": {
         "category_frequently_used": "Mais usados",

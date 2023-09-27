@@ -729,9 +729,6 @@
     "This widget may use cookies.": "این ابزارک ممکن است از کوکی استفاده کند.",
     "Widgets do not use message encryption.": "ابزارک ها از رمزگذاری پیام استفاده نمی کنند.",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s به اشتراک بگذارد.",
-    "New Recovery Method": "روش بازیابی جدید",
-    "A new Security Phrase and key for Secure Messages have been detected.": "یک عبارت امنیتی و کلید جدید برای پیام‌رسانی امن شناسایی شد.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "اگر روش بازیابی جدیدی را تنظیم نکرده‌اید، ممکن است حمله‌کننده‌ای تلاش کند به حساب کاربری شما دسترسی پیدا کند. لطفا گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش جدیدِ بازیابی در بخش تنظیمات انتخاب کنید.",
     "Widget ID": "شناسه ابزارک",
     "Room ID": "شناسه اتاق",
     "%(brand)s URL": "آدرس %(brand)s",
@@ -739,9 +736,7 @@
     "Your user ID": "شناسه کاربری شما",
     "Your display name": "نام نمایشی شما",
     "Any of the following data may be shared:": "هر یک از داده های زیر ممکن است به اشتراک گذاشته شود:",
-    "This session is encrypting history using the new recovery method.": "این نشست تاریخچه‌ی پیام‌های رمزشده را با استفاده از روش جدیدِ بازیابی، رمز می‌کند.",
     "Cancel search": "لغو جستجو",
-    "Go to Settings": "برو به تنظیمات",
     "Set up Secure Messages": "پیام‌رسانی امن را تنظیم کنید",
     "Recovery Method Removed": "روش بازیابی حذف شد",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
@@ -1288,7 +1283,8 @@
         "orphan_rooms": "دیگر اتاق ها",
         "on": "روشن",
         "off": "خاموش",
-        "all_rooms": "همه اتاق‌ها"
+        "all_rooms": "همه اتاق‌ها",
+        "go_to_settings": "برو به تنظیمات"
     },
     "action": {
         "continue": "ادامه",
@@ -2313,7 +2309,13 @@
         "bootstrap_title": "تنظیم کلیدها",
         "export_unsupported": "مرورگر شما از افزونه‌های رمزنگاری مورد نیاز پشتیبانی نمی‌کند",
         "import_invalid_keyfile": "فایل کلید %(brand)s معتبر نیست",
-        "import_invalid_passphrase": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟"
+        "import_invalid_passphrase": "احراز هویت موفقیت‌آمیز نبود: گذرواژه نادرست است؟",
+        "new_recovery_method_detected": {
+            "title": "روش بازیابی جدید",
+            "description_1": "یک عبارت امنیتی و کلید جدید برای پیام‌رسانی امن شناسایی شد.",
+            "description_2": "این نشست تاریخچه‌ی پیام‌های رمزشده را با استفاده از روش جدیدِ بازیابی، رمز می‌کند.",
+            "warning": "اگر روش بازیابی جدیدی را تنظیم نکرده‌اید، ممکن است حمله‌کننده‌ای تلاش کند به حساب کاربری شما دسترسی پیدا کند. لطفا گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش جدیدِ بازیابی در بخش تنظیمات انتخاب کنید."
+        }
     },
     "emoji": {
         "category_frequently_used": "متداول",

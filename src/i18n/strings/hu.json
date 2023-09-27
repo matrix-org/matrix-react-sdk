@@ -233,10 +233,7 @@
     "Set up": "Beállítás",
     "Invalid identity server discovery response": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
     "General failure": "Általános hiba",
-    "New Recovery Method": "Új helyreállítási mód",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ha nem Ön állította be az új helyreállítási módot, akkor lehet, hogy egy támadó próbálja elérni a fiókját. Változtassa meg a fiókja jelszavát, és amint csak lehet, állítsa be az új helyreállítási eljárást a Beállításokban.",
     "Set up Secure Messages": "Biztonságos Üzenetek beállítása",
-    "Go to Settings": "Irány a Beállítások",
     "Unable to load commit detail: %(msg)s": "A véglegesítés részleteinek betöltése sikertelen: %(msg)s",
     "The following users may not exist": "Az alábbi felhasználók lehet, hogy nem léteznek",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Az alábbi Matrix ID-koz nem sikerül megtalálni a profilokat - így is meghívod őket?",
@@ -609,7 +606,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "A felhasználó ellenőrzése által az ő munkamenete megbízhatónak lesz jelölve, és a te munkameneted is megbízhatónak lesz jelölve nála.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Eszköz ellenőrzése és beállítás megbízhatóként. Az eszközben való megbízás megnyugtató lehet, ha végpontok közötti titkosítást használsz.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Az eszköz ellenőrzése megbízhatónak fogja jelezni az eszközt és azok a felhasználók, akik téged ellenőriztek, megbíznak majd ebben az eszközödben.",
-    "This session is encrypting history using the new recovery method.": "Ez a munkamenet az új helyreállítási móddal titkosítja a régi üzeneteket.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Ha véletlenül tette, akkor beállíthatja a biztonságos üzeneteket ebben a munkamenetben, ami újra titkosítja a régi üzeneteket a helyreállítási móddal.",
     "Not Trusted": "Nem megbízható",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) új munkamenetbe lépett be, anélkül, hogy ellenőrizte volna:",
@@ -1051,7 +1047,6 @@
     "Open dial pad": "Számlap megnyitása",
     "Dial pad": "Tárcsázó számlap",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "A munkamenet észrevette, hogy a biztonságos üzenetek biztonsági jelmondata és kulcsa törölve lett.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "A biztonságos üzenetekhez új biztonsági jelmondat és kulcs lett észlelve.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ha elfelejtette a biztonsági kulcsot, <button>állítson be új helyreállítási lehetőséget</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "A biztonsági kulcs megadásával hozzáférhet a régi biztonságos üzeneteihez és beállíthatja a biztonságos üzenetküldést.",
     "Not a valid Security Key": "Érvénytelen biztonsági kulcs",
@@ -1899,7 +1894,8 @@
         "off": "Ki",
         "all_rooms": "Összes szoba",
         "deselect_all": "Semmit nem jelöl ki",
-        "select_all": "Mindet kijelöli"
+        "select_all": "Mindet kijelöli",
+        "go_to_settings": "Irány a Beállítások"
     },
     "action": {
         "continue": "Folytatás",
@@ -3451,7 +3447,13 @@
         "bootstrap_title": "Kulcsok beállítása",
         "export_unsupported": "A böngészője nem támogatja a szükséges titkosítási kiterjesztéseket",
         "import_invalid_keyfile": "Nem érvényes %(brand)s kulcsfájl",
-        "import_invalid_passphrase": "Hitelesítési ellenőrzés sikertelen: hibás jelszó?"
+        "import_invalid_passphrase": "Hitelesítési ellenőrzés sikertelen: hibás jelszó?",
+        "new_recovery_method_detected": {
+            "title": "Új helyreállítási mód",
+            "description_1": "A biztonságos üzenetekhez új biztonsági jelmondat és kulcs lett észlelve.",
+            "description_2": "Ez a munkamenet az új helyreállítási móddal titkosítja a régi üzeneteket.",
+            "warning": "Ha nem Ön állította be az új helyreállítási módot, akkor lehet, hogy egy támadó próbálja elérni a fiókját. Változtassa meg a fiókja jelszavát, és amint csak lehet, állítsa be az új helyreállítási eljárást a Beállításokban."
+        }
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",

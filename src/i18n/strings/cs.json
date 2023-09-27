@@ -328,12 +328,9 @@
     "Failed to decrypt %(failedCount)s sessions!": "Nepovedlo se rozšifrovat %(failedCount)s sezení!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Uporoznění</b>: záloha by měla být prováděna na důvěryhodném počítači.",
     "Recovery Method Removed": "Záloha klíčů byla odstraněna",
-    "Go to Settings": "Přejít do nastavení",
     "Set up Secure Messages": "Nastavit bezpečné obnovení zpráv",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Pokud jste způsob obnovy neodstranili vy, mohou se pokoušet k vašemu účtu dostat útočníci. Změňte si raději ihned heslo a nastavte nový způsob obnovy v Nastavení.",
     "Set up": "Nastavit",
-    "New Recovery Method": "Nový způsob obnovy",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Pokud jste nenastavili nový způsob obnovy vy, mohou se pokoušet k vašemu účtu dostat útočníci. Změňte si raději ihned heslo a nastavte nový způsob obnovy v Nastavení.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Na adrese %(host)s už jste použili %(brand)s se zapnutou volbou načítání členů místností až při prvním zobrazení. V této verzi je načítání členů až při prvním zobrazení vypnuté. Protože je s tímto nastavením lokální vyrovnávací paměť nekompatibilní, %(brand)s potřebuje znovu synchronizovat údaje z vašeho účtu.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
     "This homeserver would like to make sure you are not a robot.": "Domovský server se potřebuje přesvědčit, že nejste robot.",
@@ -617,7 +614,6 @@
     "Verify by scanning": "Ověřte naskenováním",
     "You declined": "Odmítli jste",
     "%(name)s declined": "%(name)s odmítl(a)",
-    "This session is encrypting history using the new recovery method.": "Tato relace šifruje historii zpráv s podporou nového způsobu obnovení.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Pokud se vám to stalo neúmyslně, můžete znovu nastavit zálohu zpráv pro tuto relaci. To znovu zašifruje historii zpráv novým způsobem.",
     "Your homeserver does not support cross-signing.": "Váš domovský server nepodporuje křížové podepisování.",
     "Accepting…": "Přijímání…",
@@ -1058,7 +1054,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Vstupte do historie zabezpečených zpráv a nastavte zabezpečené zprávy zadáním bezpečnostní fráze.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nelze získat přístup k zabezpečenému úložišti. Ověřte, zda jste zadali správnou bezpečnostní frázi.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Tato relace zjistila, že byla odstraněna vaše bezpečnostní fráze a klíč pro zabezpečené zprávy.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Byla zjištěna nová bezpečnostní fráze a klíč pro zabezpečené zprávy.",
     "This looks like a valid Security Key!": "Vypadá to jako platný bezpečnostní klíč!",
     "Invalid Security Key": "Neplatný bezpečnostní klíč",
     "Not a valid Security Key": "Neplatný bezpečnostní klíč",
@@ -1955,7 +1950,8 @@
         "off": "Vypnout",
         "all_rooms": "Všechny místnosti",
         "deselect_all": "Zrušit výběr všech",
-        "select_all": "Vybrat všechny"
+        "select_all": "Vybrat všechny",
+        "go_to_settings": "Přejít do nastavení"
     },
     "action": {
         "continue": "Pokračovat",
@@ -3545,7 +3541,13 @@
         "bootstrap_title": "Příprava klíčů",
         "export_unsupported": "Váš prohlížeč nepodporuje požadovaná kryptografická rozšíření",
         "import_invalid_keyfile": "Neplatný soubor s klíčem %(brand)s",
-        "import_invalid_passphrase": "Kontrola ověření selhala: špatné heslo?"
+        "import_invalid_passphrase": "Kontrola ověření selhala: špatné heslo?",
+        "new_recovery_method_detected": {
+            "title": "Nový způsob obnovy",
+            "description_1": "Byla zjištěna nová bezpečnostní fráze a klíč pro zabezpečené zprávy.",
+            "description_2": "Tato relace šifruje historii zpráv s podporou nového způsobu obnovení.",
+            "warning": "Pokud jste nenastavili nový způsob obnovy vy, mohou se pokoušet k vašemu účtu dostat útočníci. Změňte si raději ihned heslo a nastavte nový způsob obnovy v Nastavení."
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",

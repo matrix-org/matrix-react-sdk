@@ -289,7 +289,6 @@
     "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "Go to Settings": "Gå til Innstillinger",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
     "Remove %(email)s?": "Vil du fjerne %(email)s?",
@@ -534,7 +533,6 @@
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
-    "New Recovery Method": "Ny gjenopprettingsmetode",
     "Use app": "Bruk app",
     "Use app for a better experience": "Bruk appen for en bedre opplevelse",
     "This address is already in use": "Denne adressen er allerede i bruk",
@@ -866,7 +864,8 @@
         "preview_message": "Hei der. Du er fantastisk!",
         "on": "På",
         "off": "Av",
-        "all_rooms": "Alle rom"
+        "all_rooms": "Alle rom",
+        "go_to_settings": "Gå til Innstillinger"
     },
     "action": {
         "continue": "Fortsett",
@@ -1535,7 +1534,10 @@
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
-        "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil"
+        "import_invalid_keyfile": "Ikke en gyldig %(brand)s-nøkkelfil",
+        "new_recovery_method_detected": {
+            "title": "Ny gjenopprettingsmetode"
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",

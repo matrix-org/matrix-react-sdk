@@ -484,7 +484,6 @@
     "<userName/> invited you": "<userName/> bauð þér",
     "<userName/> wants to chat": "<userName/> langar til að spjalla",
     "Invite with email or username": "Bjóða með tölvupóstfangi eða notandanafni",
-    "Go to Settings": "Fara í stillingar",
     "Create account": "Stofna notandaaðgang",
     "Your password has been reset.": "Lykilorðið þitt hefur verið endursett.",
     "Results": "Niðurstöður",
@@ -1181,7 +1180,6 @@
     "Reason: %(reason)s": "Ástæða: %(reason)s",
     "%(spaceName)s menu": "Valmynd %(spaceName)s",
     "wait and try again later": "bíða og reyna aftur síðar",
-    "New Recovery Method": "Ný endurheimtuaðferð",
     "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
     "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
     "Joining": "Geng í hópinn",
@@ -1624,7 +1622,8 @@
         "off": "Slökkt",
         "all_rooms": "Allar spjallrásir",
         "deselect_all": "Afvelja allt",
-        "select_all": "Velja allt"
+        "select_all": "Velja allt",
+        "go_to_settings": "Fara í stillingar"
     },
     "action": {
         "continue": "Halda áfram",
@@ -3006,7 +3005,10 @@
         "bootstrap_title": "Set upp dulritunarlykla",
         "export_unsupported": "Vafrinn þinn styður ekki nauðsynlegar dulritunarviðbætur",
         "import_invalid_keyfile": "Er ekki gild %(brand)s lykilskrá",
-        "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?"
+        "import_invalid_passphrase": "Sannvottun auðkenningar mistókst: er lykilorðið rangt?",
+        "new_recovery_method_detected": {
+            "title": "Ný endurheimtuaðferð"
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft notað",

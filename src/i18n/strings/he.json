@@ -1006,10 +1006,6 @@
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
     "Recovery Method Removed": "שיטת השחזור הוסרה",
     "Set up Secure Messages": "הגדר הודעות מאובטחות",
-    "Go to Settings": "עבור להגדרות",
-    "This session is encrypting history using the new recovery method.": "הפעלה זו היא הצפנת היסטוריה בשיטת השחזור החדשה.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "אם לא הגדרת את שיטת השחזור החדשה, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות.",
-    "New Recovery Method": "שיטת שחזור חדשה",
     "Unknown error": "שגיאה לא ידועה",
     "Create account": "חשבון משתמש חדש",
     "General failure": "שגיאה כללית",
@@ -1368,7 +1364,8 @@
         "off": "ללא",
         "all_rooms": "כל החדרים",
         "deselect_all": "הסר סימון מהכל",
-        "select_all": "בחר הכל"
+        "select_all": "בחר הכל",
+        "go_to_settings": "עבור להגדרות"
     },
     "action": {
         "continue": "המשך",
@@ -2480,7 +2477,12 @@
         "bootstrap_title": "מגדיר מפתחות",
         "export_unsupported": "הדפדפן שלכם אינו תומך בהצפנה הדרושה",
         "import_invalid_keyfile": "קובץ מפתח של %(brand)s אינו תקין",
-        "import_invalid_passphrase": "האימות שלכם נכשל: סיסמא שגויה?"
+        "import_invalid_passphrase": "האימות שלכם נכשל: סיסמא שגויה?",
+        "new_recovery_method_detected": {
+            "title": "שיטת שחזור חדשה",
+            "description_2": "הפעלה זו היא הצפנת היסטוריה בשיטת השחזור החדשה.",
+            "warning": "אם לא הגדרת את שיטת השחזור החדשה, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות."
+        }
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",

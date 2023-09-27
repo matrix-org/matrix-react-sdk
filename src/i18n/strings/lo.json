@@ -743,11 +743,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "ລະບົບນີ້ໄດ້ກວດພົບປະໂຫຍກຄວາມປອດໄພ ແລະ ກະແຈຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານໄດ້ຖືກເອົາອອກແລ້ວ.",
     "Recovery Method Removed": "ວິທີລົບຂະບວນການກູ້ຄືນ",
     "Set up Secure Messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ",
-    "Go to Settings": "ໄປທີ່ການຕັ້ງຄ່າ",
-    "This session is encrypting history using the new recovery method.": "ລະບົບນີ້ກຳລັງເຂົ້າລະຫັດປະຫວັດໂດຍໃຊ້ວິທີການກູ້ຂໍ້ມູນໃໝ່.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "ຖ້າທ່ານບໍ່ໄດ້ກຳນົດວິທີການກູ້ຄືນໃໝ່, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະກຳນົດ ວິທີການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "ກວດພົບປະໂຫຍກຄວາມປອດໄພໃໝ່ ແລະ ກະແຈສຳລັບຂໍ້ຄວາມທີ່ປອດໄພຖືກກວດພົບ.",
-    "New Recovery Method": "ວິທີການກູ້ຄືນໃຫມ່",
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Create account": "ສ້າງບັນຊີ",
@@ -1683,7 +1678,8 @@
         "off": "ປິດ",
         "all_rooms": "ຫ້ອງທັງໝົດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
-        "select_all": "ເລືອກທັງຫມົດ"
+        "select_all": "ເລືອກທັງຫມົດ",
+        "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2950,7 +2946,13 @@
         "bootstrap_title": "ການຕັ້ງຄ່າກະແຈ",
         "export_unsupported": "ບຣາວເຊີຂອງທ່ານບໍ່ຮອງຮັບການເພິ່ມເຂົ້າລະຫັດລັບທີ່ຕ້ອງການ",
         "import_invalid_keyfile": "ບໍ່ແມ່ນ %(brand)s ຟຮາຍຫຼັກ ທີ່ຖືກຕ້ອງ",
-        "import_invalid_passphrase": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?"
+        "import_invalid_passphrase": "ການກວດສອບຄວາມຖືກຕ້ອງບໍ່ສຳເລັດ: ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ?",
+        "new_recovery_method_detected": {
+            "title": "ວິທີການກູ້ຄືນໃຫມ່",
+            "description_1": "ກວດພົບປະໂຫຍກຄວາມປອດໄພໃໝ່ ແລະ ກະແຈສຳລັບຂໍ້ຄວາມທີ່ປອດໄພຖືກກວດພົບ.",
+            "description_2": "ລະບົບນີ້ກຳລັງເຂົ້າລະຫັດປະຫວັດໂດຍໃຊ້ວິທີການກູ້ຂໍ້ມູນໃໝ່.",
+            "warning": "ຖ້າທ່ານບໍ່ໄດ້ກຳນົດວິທີການກູ້ຄືນໃໝ່, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະກຳນົດ ວິທີການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ."
+        }
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",

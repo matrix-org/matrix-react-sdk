@@ -198,7 +198,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
     "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
     "All settings": "Усі налаштування",
-    "Go to Settings": "Перейти до налаштувань",
     "Dog": "Пес",
     "Cat": "Кіт",
     "Lion": "Лев",
@@ -303,8 +302,6 @@
     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.": "Адміністратором вашого сервера було вимкнено автоматичне наскрізне шифрування у приватних кімнатах і особистих повідомленнях.",
     "Something went wrong!": "Щось пішло не так!",
     "expand": "розгорнути",
-    "New Recovery Method": "Новий метод відновлення",
-    "This session is encrypting history using the new recovery method.": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
     "Set up Secure Messages": "Налаштувати захищені повідомлення",
     "Recovery Method Removed": "Відновлювальний засіб було видалено",
     "Upgrade public room": "Поліпшити відкриту кімнату",
@@ -1316,8 +1313,6 @@
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Якщо ви не видаляли способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Якщо це ненароком зробили ви, налаштуйте захищені повідомлення для цього сеансу, щоб повторно зашифрувати історію листування цього сеансу з новим способом відновлення.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Цей сеанс виявив, що ваша фраза безпеки й ключ до захищених повідомлень були видалені.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Якщо ви не встановлювали нового способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Виявлено зміну фрази безпеки й ключа до захищених повідомлень.",
     "Your password has been reset.": "Ваш пароль скинуто.",
     "New passwords must match each other.": "Нові паролі мають збігатися.",
     "Really reset verification keys?": "Точно скинути ключі звірки?",
@@ -1951,7 +1946,8 @@
         "off": "Вимкнено",
         "all_rooms": "Усі кімнати",
         "deselect_all": "Скасувати вибір",
-        "select_all": "Вибрати всі"
+        "select_all": "Вибрати всі",
+        "go_to_settings": "Перейти до налаштувань"
     },
     "action": {
         "continue": "Продовжити",
@@ -3540,7 +3536,13 @@
         "bootstrap_title": "Налаштовування ключів",
         "export_unsupported": "Ваш браузер не підтримує необхідних криптографічних функцій",
         "import_invalid_keyfile": "Файл ключа %(brand)s некоректний",
-        "import_invalid_passphrase": "Помилка автентифікації: неправильний пароль?"
+        "import_invalid_passphrase": "Помилка автентифікації: неправильний пароль?",
+        "new_recovery_method_detected": {
+            "title": "Новий метод відновлення",
+            "description_1": "Виявлено зміну фрази безпеки й ключа до захищених повідомлень.",
+            "description_2": "Цей сеанс зашифровує історію новим відновлювальним засобом.",
+            "warning": "Якщо ви не встановлювали нового способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях."
+        }
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",

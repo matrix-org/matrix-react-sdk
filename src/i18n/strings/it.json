@@ -234,10 +234,7 @@
     "Invalid identity server discovery response": "Risposta non valida cercando server di identità",
     "General failure": "Guasto generale",
     "Unable to load commit detail: %(msg)s": "Caricamento dettagli del commit fallito: %(msg)s",
-    "New Recovery Method": "Nuovo metodo di recupero",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non hai impostato il nuovo metodo di recupero, un aggressore potrebbe tentare di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni.",
     "Set up Secure Messages": "Imposta i messaggi sicuri",
-    "Go to Settings": "Vai alle impostazioni",
     "The following users may not exist": "I seguenti utenti potrebbero non esistere",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque invitarli?",
     "Invite anyway and never warn me again": "Invitali lo stesso e non avvisarmi più",
@@ -609,7 +606,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "La verifica di questo utente contrassegnerà come fidata la sua sessione a te e viceversa.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica questo dispositivo per segnarlo come fidato. Fidarsi di questo dispositivo offre a te e agli altri utenti una maggiore tranquillità nell'uso di messaggi cifrati end-to-end.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "La verifica di questo dispositivo lo segnerà come fidato e gli utenti che si sono verificati con te si fideranno di questo dispositivo.",
-    "This session is encrypting history using the new recovery method.": "Questa sessione sta cifrando la cronologia usando il nuovo metodo di recupero.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se l'hai fatto accidentalmente, puoi configurare Messaggi Sicuri su questa sessione che cripterà nuovamente la cronologia dei messaggi con un nuovo metodo di recupero.",
     "Not Trusted": "Non fidato",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ha fatto l'accesso con una nuova sessione senza verificarla:",
@@ -1051,7 +1047,6 @@
     "Open dial pad": "Apri tastierino",
     "Dial pad": "Tastierino",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Questa sessione ha rilevato che la tua password di sicurezza e la chiave per i messaggi sicuri sono state rimosse.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Sono state rilevate una nuova password di sicurezza e una chiave per i messaggi sicuri.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se hai dimenticato la tua chiave di sicurezza puoi <button>impostare nuove opzioni di recupero</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accedi alla cronologia sicura dei messaggi e imposta la messaggistica sicura inserendo la tua chiave di sicurezza.",
     "Not a valid Security Key": "Chiave di sicurezza non valida",
@@ -1955,7 +1950,8 @@
         "off": "Spento",
         "all_rooms": "Tutte le stanze",
         "deselect_all": "Deseleziona tutti",
-        "select_all": "Seleziona tutti"
+        "select_all": "Seleziona tutti",
+        "go_to_settings": "Vai alle impostazioni"
     },
     "action": {
         "continue": "Continua",
@@ -3545,7 +3541,13 @@
         "bootstrap_title": "Configurazione chiavi",
         "export_unsupported": "Il tuo browser non supporta l'estensione crittografica richiesta",
         "import_invalid_keyfile": "Non è una chiave di %(brand)s valida",
-        "import_invalid_passphrase": "Controllo di autenticazione fallito: password sbagliata?"
+        "import_invalid_passphrase": "Controllo di autenticazione fallito: password sbagliata?",
+        "new_recovery_method_detected": {
+            "title": "Nuovo metodo di recupero",
+            "description_1": "Sono state rilevate una nuova password di sicurezza e una chiave per i messaggi sicuri.",
+            "description_2": "Questa sessione sta cifrando la cronologia usando il nuovo metodo di recupero.",
+            "warning": "Se non hai impostato il nuovo metodo di recupero, un aggressore potrebbe tentare di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni."
+        }
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",

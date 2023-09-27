@@ -298,7 +298,6 @@
     "Warning!": "Hoiatus!",
     "Close dialog": "Sulge dialoog",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Meeldetuletus: sinu brauser ei ole toetatud ja seega rakenduse kasutuskogemus võib olla ennustamatu.",
-    "Go to Settings": "Ava seadistused",
     "Set up Secure Messages": "Võta kasutusele krüptitud sõnumid",
     "You seem to be in a call, are you sure you want to quit?": "Tundub, et sul parasjagu on kõne pooleli. Kas sa kindlasti soovid väljuda?",
     "Failed to reject invite": "Kutse tagasilükkamine ei õnnestunud",
@@ -710,13 +709,10 @@
     "Connect this session to Key Backup": "Seo see sessioon krüptovõtmete varundusega",
     "not stored": "ei ole salvestatud",
     "Using an identity server is optional. If you choose not to use an identity server, you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Isikutuvastusserveri kasutamine ei ole kohustuslik. Kui sa seda ei tee, siis sa ei ole leitav teiste kasutajate poolt ega sulle ei saa telefoninumbri või e-posti aadressi alusel kutset saata. Küll aga saab kutset saata Matrix'i kasutajatunnuse alusel.",
-    "New Recovery Method": "Uus taastamise meetod",
-    "This session is encrypting history using the new recovery method.": "See sessioon krüptib ajalugu kasutades uut taastamise meetodit.",
     "Notification targets": "Teavituste eesmärgid",
     "Disconnecting from your identity server will mean you won't be discoverable by other users and you won't be able to invite others by email or phone.": "Isikutuvastusserveri kasutamise lõpetamine tähendab, et sa ei ole leitav teiste kasutajate poolt ega sulle ei saa telefoninumbri või e-posti aadressi alusel kutset saata. Küll aga saab kutset saata Matrix'i kasutajatunnuse alusel.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Selleks, et sa ei kaotaks oma vestluste ajalugu, pead sa eksportima jututoa krüptovõtmed enne välja logimist. Küll, aga pead sa selleks kasutama %(brand)s uuemat versiooni",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Sa oled selle sessiooni jaoks varem kasutanud %(brand)s'i uuemat versiooni. Selle versiooni kasutamiseks läbiva krüptimisega, pead sa esmalt logima välja ja siis uuesti logima tagasi sisse.",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Kui sa ei ole ise uusi taastamise meetodeid lisanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod.",
     "Connect this session to key backup before signing out to avoid losing any keys that may only be on this session.": "Enne väljalogimist seo see sessioon krüptovõtmete varundusega. Kui sa seda ei tee, siis võid kaotada võtmed, mida kasutatakse vaid siin sessioonis.",
     "Change notification settings": "Muuda teavituste seadistusi",
     "Your server isn't responding to some <a>requests</a>.": "Sinu koduserver ei vasta mõnedele <a>päringutele</a>.",
@@ -1067,7 +1063,6 @@
     "Wrong Security Key": "Vale turvavõti",
     "Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.": "Selleks puhuks, kui sa kaotad ligipääsu kõikidele oma sessioonidele, tee varukoopia oma krüptovõtmetest ja kasutajakonto seadistustest. Unikaalse turvavõtmega tagad selle, et sinu varukoopia on kaitstud.",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Oleme tuvastanud, et selles sessioonis ei leidu turvafraasi ega krüptitud sõnumite turvavõtit.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Tuvastasin krüptitud sõnumite uue turvafraasi ja turvavõtme.",
     "Set my room layout for everyone": "Kasuta minu jututoa paigutust kõigi jaoks",
     "Remember this": "Jäta see meelde",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
@@ -1951,7 +1946,8 @@
         "off": "Välja lülitatud",
         "all_rooms": "Kõik jututoad",
         "deselect_all": "Eemalda kõik valikud",
-        "select_all": "Vali kõik"
+        "select_all": "Vali kõik",
+        "go_to_settings": "Ava seadistused"
     },
     "action": {
         "continue": "Jätka",
@@ -3540,7 +3536,13 @@
         "bootstrap_title": "Võtame krüptovõtmed kasutusele",
         "export_unsupported": "Sinu brauser ei toeta vajalikke krüptoteeke",
         "import_invalid_keyfile": "See ei ole sobilik võtmefail %(brand)s'i jaoks",
-        "import_invalid_passphrase": "Autentimine ebaõnnestus: kas salasõna pole õige?"
+        "import_invalid_passphrase": "Autentimine ebaõnnestus: kas salasõna pole õige?",
+        "new_recovery_method_detected": {
+            "title": "Uus taastamise meetod",
+            "description_1": "Tuvastasin krüptitud sõnumite uue turvafraasi ja turvavõtme.",
+            "description_2": "See sessioon krüptib ajalugu kasutades uut taastamise meetodit.",
+            "warning": "Kui sa ei ole ise uusi taastamise meetodeid lisanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod."
+        }
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",

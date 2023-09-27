@@ -215,9 +215,6 @@
     "General failure": "Generell feil",
     "Create account": "Lag konto",
     "Set up": "Sett opp",
-    "New Recovery Method": "Ny gjenopprettingsmetode",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Har du ikkje satt opp den nye gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din.  Endre ditt kontopassord og sett opp gjenoppretting umiddelbart under instillingane.",
-    "Go to Settings": "Gå til innstillingar",
     "Set up Secure Messages": "Sett opp sikre meldingar (Secure Messages)",
     "Recovery Method Removed": "Gjenopprettingsmetode fjerna",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar.",
@@ -451,7 +448,8 @@
         "identity_server": "Identitetstenar",
         "feedback": "Tilbakemeldingar",
         "on": "På",
-        "off": "Av"
+        "off": "Av",
+        "go_to_settings": "Gå til innstillingar"
     },
     "action": {
         "continue": "Fortset",
@@ -1218,7 +1216,11 @@
         "bootstrap_title": "Setter opp nøklar",
         "export_unsupported": "Nettlesaren din støttar ikkje dei naudsynte kryptografiske utvidingane",
         "import_invalid_keyfile": "Ikkje ei gyldig %(brand)s-nykelfil",
-        "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?"
+        "import_invalid_passphrase": "Authentiseringsforsøk mislukkast: feil passord?",
+        "new_recovery_method_detected": {
+            "title": "Ny gjenopprettingsmetode",
+            "warning": "Har du ikkje satt opp den nye gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din.  Endre ditt kontopassord og sett opp gjenoppretting umiddelbart under instillingane."
+        }
     },
     "poll": {
         "create_poll_title": "Opprett røysting",

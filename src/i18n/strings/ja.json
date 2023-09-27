@@ -1131,7 +1131,6 @@
     "Unable to copy a link to the room to the clipboard.": "ルームのリンクをクリップボードにコピーできませんでした。",
     "Unable to copy room link": "ルームのリンクをコピーできません",
     "The server is offline.": "サーバーはオフラインです。",
-    "New Recovery Method": "新しい復元方法",
     "No answer": "応答がありません",
     "Almost there! Is your other device showing the same shield?": "あと少しです！ あなたの他の端末は同じ盾マークを表示していますか？",
     "Delete all": "全て削除",
@@ -1139,8 +1138,6 @@
     "Results": "結果",
     "Could not load user profile": "ユーザーのプロフィールを読み込めませんでした",
     "Device verified": "端末が認証されました",
-    "This session is encrypting history using the new recovery method.": "このセッションでは新しい復元方法で履歴を暗号化しています。",
-    "Go to Settings": "設定を開く",
     "%(count)s rooms": {
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
@@ -1177,7 +1174,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "以下のMatrix IDのプロフィールを発見できません。招待しますか？",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "新しい復元方法を設定しなかった場合、攻撃者がアカウントへアクセスしようとしている可能性があります。設定画面ですぐにアカウントのパスワードを変更し、新しい復元方法を設定してください。",
     "General failure": "一般エラー",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s個のセッションの復号化に失敗しました！",
     "No backup found!": "バックアップがありません！",
@@ -1255,7 +1251,6 @@
     "You cancelled verification on your other device.": "他の端末で認証がキャンセルされました。",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
     "Search %(spaceName)s": "%(spaceName)sを検索",
-    "A new Security Phrase and key for Secure Messages have been detected.": "新しいセキュリティーフレーズと、セキュアメッセージの鍵が検出されました。",
     "a new cross-signing key signature": "新しいクロス署名鍵の署名",
     "a device cross-signing signature": "端末のクロス署名",
     "A connection error occurred while trying to contact the server.": "サーバーに接続する際にエラーが発生しました。",
@@ -1840,7 +1835,8 @@
         "off": "オフ",
         "all_rooms": "全てのルーム",
         "deselect_all": "全ての選択を解除",
-        "select_all": "全て選択"
+        "select_all": "全て選択",
+        "go_to_settings": "設定を開く"
     },
     "action": {
         "continue": "続行",
@@ -3358,7 +3354,13 @@
         "bootstrap_title": "鍵のセットアップ",
         "export_unsupported": "お使いのブラウザーは、必要な暗号化拡張機能をサポートしていません",
         "import_invalid_keyfile": "有効な%(brand)sキーファイルではありません",
-        "import_invalid_passphrase": "認証に失敗しました：間違ったパスワード？"
+        "import_invalid_passphrase": "認証に失敗しました：間違ったパスワード？",
+        "new_recovery_method_detected": {
+            "title": "新しい復元方法",
+            "description_1": "新しいセキュリティーフレーズと、セキュアメッセージの鍵が検出されました。",
+            "description_2": "このセッションでは新しい復元方法で履歴を暗号化しています。",
+            "warning": "新しい復元方法を設定しなかった場合、攻撃者がアカウントへアクセスしようとしている可能性があります。設定画面ですぐにアカウントのパスワードを変更し、新しい復元方法を設定してください。"
+        }
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",

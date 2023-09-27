@@ -700,10 +700,6 @@
     "Create account": "Crea unha conta",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
     "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
-    "New Recovery Method": "Novo Método de Recuperación",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Se non configuras o novo método de recuperación, un atacante podería intentar o acceso á túa conta. Cambia inmediatamente o contrasinal da conta e configura un novo método de recuperación nos Axustes.",
-    "This session is encrypting history using the new recovery method.": "Esta sesión está cifrando o historial usando o novo método de recuperación.",
-    "Go to Settings": "Ir a Axustes",
     "Set up Secure Messages": "Configurar Mensaxes Seguras",
     "Recovery Method Removed": "Método de Recuperación eliminado",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Se fixeches esto sen querer, podes configurar Mensaxes Seguras nesta sesión e volverá a cifrar as mensaxes da sesión cun novo método de recuperación.",
@@ -1051,7 +1047,6 @@
     "Open dial pad": "Abrir marcador",
     "Dial pad": "Marcador",
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Esta sesión detectou que se eliminaron a túa Frase de Seguridade e chave para Mensaxes Seguras.",
-    "A new Security Phrase and key for Secure Messages have been detected.": "Detectouse unha nova Frase de Seguridade e chave para as Mensaxes Seguras.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accede ao teu historial de mensaxes seguras e asegura a comunicación escribindo a Chave de Seguridade.",
     "Not a valid Security Key": "Chave de Seguridade non válida",
@@ -1736,7 +1731,8 @@
         "off": "Off",
         "all_rooms": "Todas as salas",
         "deselect_all": "Retirar selección a todos",
-        "select_all": "Seleccionar todos"
+        "select_all": "Seleccionar todos",
+        "go_to_settings": "Ir a Axustes"
     },
     "action": {
         "continue": "Continuar",
@@ -3128,7 +3124,13 @@
         "bootstrap_title": "Configurando as chaves",
         "export_unsupported": "O seu navegador non soporta as extensións de criptografía necesarias",
         "import_invalid_keyfile": "Non é un ficheiro de chaves %(brand)s válido",
-        "import_invalid_passphrase": "Fallou a comprobación de autenticación: contrasinal incorrecto?"
+        "import_invalid_passphrase": "Fallou a comprobación de autenticación: contrasinal incorrecto?",
+        "new_recovery_method_detected": {
+            "title": "Novo Método de Recuperación",
+            "description_1": "Detectouse unha nova Frase de Seguridade e chave para as Mensaxes Seguras.",
+            "description_2": "Esta sesión está cifrando o historial usando o novo método de recuperación.",
+            "warning": "Se non configuras o novo método de recuperación, un atacante podería intentar o acceso á túa conta. Cambia inmediatamente o contrasinal da conta e configura un novo método de recuperación nos Axustes."
+        }
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",

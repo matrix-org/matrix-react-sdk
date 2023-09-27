@@ -231,12 +231,9 @@
     "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
     "Set up": "Ezarri",
     "General failure": "Hutsegite orokorra",
-    "New Recovery Method": "Berreskuratze metodo berria",
     "Set up Secure Messages": "Ezarri mezu seguruak",
-    "Go to Settings": "Joan ezarpenetara",
     "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
     "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
-    "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Ez baduzu berreskuratze sistema berria ezarri, erasotzaile bat zure kontua atzitzen saiatzen egon daiteke. Aldatu zure kontuaren pasahitza eta ezarri berreskuratze metodo berria berehala ezarpenetan.",
     "The following users may not exist": "Hurrengo erabiltzaileak agian ez dira existitzen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ezin izan dira behean zerrendatutako Matrix ID-een profilak, berdin gonbidatu nahi dituzu?",
     "Invite anyway and never warn me again": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
@@ -618,7 +615,6 @@
     "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
     "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
-    "This session is encrypting history using the new recovery method.": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
     "Mark all as read": "Markatu denak irakurrita gisa",
@@ -780,7 +776,8 @@
         "preview_message": "Aupa txo. Onena zara!",
         "on": "Bai",
         "off": "Ez",
-        "all_rooms": "Gela guztiak"
+        "all_rooms": "Gela guztiak",
+        "go_to_settings": "Joan ezarpenetara"
     },
     "action": {
         "continue": "Jarraitu",
@@ -1533,7 +1530,12 @@
         "bootstrap_title": "Gakoak ezartzen",
         "export_unsupported": "Zure nabigatzaileak ez ditu onartzen beharrezkoak diren kriptografia gehigarriak",
         "import_invalid_keyfile": "Ez da baliozko %(brand)s gako-fitxategia",
-        "import_invalid_passphrase": "Autentifikazio errorea: pasahitz okerra?"
+        "import_invalid_passphrase": "Autentifikazio errorea: pasahitz okerra?",
+        "new_recovery_method_detected": {
+            "title": "Berreskuratze metodo berria",
+            "description_2": "Saio honek historiala zifratzen du berreskuratze metodo berria erabiliz.",
+            "warning": "Ez baduzu berreskuratze sistema berria ezarri, erasotzaile bat zure kontua atzitzen saiatzen egon daiteke. Aldatu zure kontuaren pasahitza eta ezarri berreskuratze metodo berria berehala ezarpenetan."
+        }
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
