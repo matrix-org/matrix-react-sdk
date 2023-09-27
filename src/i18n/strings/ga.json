@@ -6,7 +6,6 @@
     "An error has occurred.": "D’imigh earráid éigin.",
     "A new password must be entered.": "Caithfear focal faire nua a iontráil.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
-    "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Transfer": "Aistrigh",
     "Hold": "Fan",
@@ -218,7 +217,6 @@
     "Monday": "Dé Luain",
     "Sunday": "Dé Domhnaigh",
     "Search…": "Cuardaigh…",
-    "Re-join": "Téigh ar ais isteach",
     "%(duration)sd": "%(duration)sl",
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
@@ -856,7 +854,9 @@
         },
         "header": {
             "forget_room_button": "Déan dearmad ar an seomra"
-        }
+        },
+        "rejoin_button": "Téigh ar ais isteach",
+        "invite_reject_ignore": "Diúltaigh ⁊ Neamaird do úsáideoir"
     },
     "labs_mjolnir": {
         "ban_reason": "Neamhairde/Tachta",

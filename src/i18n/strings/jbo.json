@@ -105,8 +105,6 @@
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Ok": "je'e",
-    "<userName/> wants to chat": ".i la'o zoi. <userName/> .zoi kaidji le ka tavla do",
-    "<userName/> invited you": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do",
     "Messages in this room are end-to-end encrypted.": ".i ro zilbe'i be fo le cei'i cu mifra",
     "Messages in this room are not end-to-end encrypted.": ".i na pa zilbe'i be fo le cei'i cu mifra",
     "%(count)s verified sessions": {
@@ -516,7 +514,9 @@
     "room": {
         "error_join_incompatible_version_2": ".i .e'o ko tavla lo admine be le samtcise'u",
         "invite_this_room": "nu friti le ka ziljmina le se zilbe'i",
-        "join_button_account": "nu co'a na'o jaspu"
+        "join_button_account": "nu co'a na'o jaspu",
+        "dm_invite_subtitle": ".i la'o zoi. <userName/> .zoi kaidji le ka tavla do",
+        "invite_subtitle": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do"
     },
     "notifications": {
         "class_other": "drata",

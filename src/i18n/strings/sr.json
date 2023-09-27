@@ -161,7 +161,6 @@
     "Encrypted by an unverified session": "Шифровано од стране непотврђене сесије",
     "Scroll to most recent messages": "Пребаци на најновије поруке",
     "Direct Messages": "Директне поруке",
-    "Start chatting": "Започни ћаскање",
     "Room Name": "Назив собе",
     "Room Topic": "Тема собе",
     "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
@@ -519,9 +518,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
     "You can also set up Secure Backup & manage your keys in Settings.": "Такође можете да подесите Сигурносну копију и управљате својим тастерима у подешавањима.",
     "Go to Settings": "Идите на подешавања",
-    "Share this email in Settings to receive invites directly in %(brand)s.": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
-    "Use an identity server in Settings to receive invites directly in %(brand)s.": "Користите сервер за идентитет у Подешавањима за директно примање позивница %(brand)s.",
-    "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
     "You'll need to authenticate with the server to confirm the upgrade.": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу.",
     "Restore your key backup to upgrade your encryption": "Вратите сигурносну копију кључа да бисте надоградили шифровање",
     "Enter your account password to confirm the upgrade:": "Унесите лозинку за налог да бисте потврдили надоградњу:",
@@ -1437,7 +1433,11 @@
         "header": {
             "forget_room_button": "Заборави собу"
         },
-        "forget_room": "Заборави ову собу"
+        "forget_room": "Заборави ову собу",
+        "link_email_to_receive_3pid_invite": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
+        "3pid_invite_no_is_subtitle": "Користите сервер за идентитет у Подешавањима за директно примање позивница %(brand)s.",
+        "invite_email_mismatch_suggestion": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
+        "dm_invite_action": "Започни ћаскање"
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",

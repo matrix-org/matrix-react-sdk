@@ -173,7 +173,6 @@
     "Remove recent messages by %(user)s": "Dzēst nesenās ziņas no %(user)s",
     "Remove recent messages": "Dzēst nesenās ziņas",
     "Banana": "Banāns",
-    "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s liedza jums pieeju %(roomName)s",
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
@@ -188,8 +187,6 @@
     "Security Phrase": "Slepenā frāze",
     "Join millions for free on the largest public server": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
     "Server Options": "Servera parametri",
-    "<userName/> invited you": "<userName/> uzaicināja jūs",
-    "<userName/> wants to chat": "<userName/> vēlas sarakstīties",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
@@ -245,9 +242,6 @@
     "Invalid Security Key": "Kļūdaina drošības atslēga",
     "Wrong Security Key": "Nepareiza drošības atslēga",
     "Security Key": "Drošības atslēga",
-    "Start chatting": "Uzsākt saraksti",
-    "Reject & Ignore user": "Noraidīt un ignorēt lietotāju",
-    "Do you want to chat with %(user)s?": "Vai vēlaties sarakstīties ar %(user)s?",
     "Confirm Security Phrase": "Apstipriniet slepeno frāzi",
     "Safeguard against losing access to encrypted messages & data by backing up encryption keys on your server.": "Nodrošinieties pret piekļuves zaudēšanu šifrētām ziņām un datiem, dublējot šifrēšanas atslēgas savā serverī.",
     "Use a secret phrase only you know, and optionally save a Security Key to use for backup.": "Izmantojiet tikai jums zināmu slepeno frāzi un pēc izvēles saglabājiet drošības atslēgu, lai to izmantotu dublēšanai.",
@@ -334,8 +328,6 @@
     "You don't have permission to delete the address.": "Jums nav atļaujas dzēst adresi.",
     "Add some now": "Pievienot kādu tagad",
     "You don't currently have any stickerpacks enabled": "Neviena uzlīmju paka nav iespējota",
-    "This invite to %(roomName)s was sent to %(email)s": "Šis uzaicinājums uz %(roomName)s tika nosūtīts %(email)s",
-    "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Šis uzaicinājums uz %(roomName)s tika nosūtīts %(email)s, kas nav saistīts ar jūsu kontu",
     "Your message was sent": "Jūsu ziņa ir nosūtīta",
     "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(count)s people you know have already joined": {
@@ -600,7 +592,6 @@
     "Show image": "Rādīt attēlu",
     "Call back": "Atzvanīt",
     "Call declined": "Zvans noraidīts",
-    "Join the discussion": "Pievienoties diskusijai",
     "Corn": "Kukurūza",
     "Final result based on %(count)s votes": {
         "one": "Gala rezultāts pamatojoties uz %(count)s balss",
@@ -678,7 +669,6 @@
     "Public rooms": "Publiskas istabas",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ja nevarat atrast meklēto istabu, palūdziet uzaicinājumu vai izveidojiet jaunu istabu.",
     "If you can't see who you're looking for, send them your invite link below.": "Ja neredzat meklēto personu, nosūtiet tai uzaicinājuma saiti zemāk.",
-    "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Savienojiet iestatījumos šo e-pasta adresi ar savu kontu, lai uzaicinājumus saņemtu tieši %(brand)s.",
     "If you can't see who you're looking for, send them your invite link.": "Ja neredzat meklēto personu, nosūtiet tai uzaicinājuma saiti.",
     "Copy invite link": "Kopēt uzaicinājuma saiti",
     "Some results may be hidden for privacy": "Daži rezultāti var būt slēpti dēļ privātuma",
@@ -1947,7 +1937,17 @@
         "header": {
             "forget_room_button": "Aizmirst istabu"
         },
-        "forget_room": "Aizmirst šo istabu"
+        "forget_room": "Aizmirst šo istabu",
+        "banned_from_room_by": "%(memberName)s liedza jums pieeju %(roomName)s",
+        "join_the_discussion": "Pievienoties diskusijai",
+        "3pid_invite_email_not_found_account_room": "Šis uzaicinājums uz %(roomName)s tika nosūtīts %(email)s, kas nav saistīts ar jūsu kontu",
+        "link_email_to_receive_3pid_invite": "Savienojiet iestatījumos šo e-pasta adresi ar savu kontu, lai uzaicinājumus saņemtu tieši %(brand)s.",
+        "invite_sent_to_email_room": "Šis uzaicinājums uz %(roomName)s tika nosūtīts %(email)s",
+        "dm_invite_title": "Vai vēlaties sarakstīties ar %(user)s?",
+        "dm_invite_subtitle": "<userName/> vēlas sarakstīties",
+        "dm_invite_action": "Uzsākt saraksti",
+        "invite_subtitle": "<userName/> uzaicināja jūs",
+        "invite_reject_ignore": "Noraidīt un ignorēt lietotāju"
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",

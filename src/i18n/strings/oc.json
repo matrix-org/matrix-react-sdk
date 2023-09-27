@@ -2,12 +2,6 @@
     "Admin Tools": "Aisinas d’administrator",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
-    "Do you want to chat with %(user)s?": "Volètz charrar amb %(user)s ?",
-    "<userName/> wants to chat": "<userName/> vòl charrar",
-    "Start chatting": "Començar de charrar",
-    "Do you want to join %(roomName)s?": "Volètz rejonher %(roomName)s ?",
-    "<userName/> invited you": "<userName/> vos convidèt",
-    "Reject & Ignore user": "Regetar e ignorar",
     "%(roomName)s does not exist.": "%(roomName)s existís pas.",
     "This Room": "Aquesta sala",
     "All Rooms": "Totas les salas",
@@ -400,7 +394,13 @@
         "invite_this_room": "Convidar a aquesta sala",
         "join_button_account": "S’inscriure",
         "kick_reason": "Rason : %(reason)s",
-        "forget_room": "Oblidar aquesta sala"
+        "forget_room": "Oblidar aquesta sala",
+        "dm_invite_title": "Volètz charrar amb %(user)s ?",
+        "dm_invite_subtitle": "<userName/> vòl charrar",
+        "dm_invite_action": "Començar de charrar",
+        "invite_title": "Volètz rejonher %(roomName)s ?",
+        "invite_subtitle": "<userName/> vos convidèt",
+        "invite_reject_ignore": "Regetar e ignorar"
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",
