@@ -48,8 +48,6 @@
         "one": "(~%(count)s rezulto)"
     },
     "Join Room": "Aliĝi al ĉambro",
-    "%(roomName)s does not exist.": "%(roomName)s ne ekzistas.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s ne estas atingebla nun.",
     "unknown error code": "nekonata kodo de eraro",
     "Failed to forget room %(errCode)s": "Malsukcesis forgesi ĉambron %(errCode)s",
     "Jump to first unread message.": "Salti al unua nelegita mesaĝo.",
@@ -232,8 +230,6 @@
     "Edit message": "Redakti mesaĝon",
     "This room has already been upgraded.": "Ĉi tiu ĉambro jam gradaltiĝis.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ĉi tiu ĉambro uzas ĉambran version <roomVersion />, kiun la hejmservilo markis kiel <i>nestabilan</i>.",
-    "You're previewing %(roomName)s. Want to join it?": "Vi antaŭrigardas ĉambron %(roomName)s. Ĉu vi volas aliĝi?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "Vi ne povas antaŭrigardi ĉambron %(roomName)s. Ĉu vi al ĝi volas aliĝi?",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
     "You don't currently have any stickerpacks enabled": "Vi havas neniujn ŝaltitajn glumarkarojn",
     "Add some now": "Iujn aldoni",
@@ -3033,7 +3029,11 @@
         "dm_invite_action": "Ekbabili",
         "invite_title": "Ĉu vi volas aliĝi al %(roomName)s?",
         "invite_subtitle": "<userName/> vin invitis",
-        "invite_reject_ignore": "Rifuzi kaj malatenti uzanton"
+        "invite_reject_ignore": "Rifuzi kaj malatenti uzanton",
+        "peek_join_prompt": "Vi antaŭrigardas ĉambron %(roomName)s. Ĉu vi volas aliĝi?",
+        "no_peek_join_prompt": "Vi ne povas antaŭrigardi ĉambron %(roomName)s. Ĉu vi al ĝi volas aliĝi?",
+        "not_found_title_name": "%(roomName)s ne ekzistas.",
+        "inaccessible_name": "%(roomName)s ne estas atingebla nun."
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",

@@ -153,7 +153,6 @@
         "other": "(~%(count)s igmaḍ)"
     },
     "Join Room": "Rnu ɣer texxamt",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s ulac anekcum ɣer-s akka tura.",
     "This Room": "Taxxamt-a",
     "Search…": "Nadi…",
     "Add some now": "Rnu kra tura",
@@ -271,7 +270,6 @@
     "Guitar": "Tagitaṛt",
     "Trumpet": "Lɣiḍa",
     "Bell": "Anayna",
-    "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
     "All Rooms": "Akk tixxamin",
     "Error creating address": "Tuccḍa deg tmerna n tensa",
     "Error removing address": "Tuccḍa deg tukksa n tensa",
@@ -358,8 +356,6 @@
     "Share room": "Bḍu taxxamt",
     "Create new room": "Rnu taxxamt tamaynut",
     "unknown error code": "tangalt n tuccḍa tarussint",
-    "You're previewing %(roomName)s. Want to join it?": "Tessenqadeḍ %(roomName)s. Tebɣiḍ ad ternuḍ ɣur-s?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s ur tezmir ara ad tettwasenqed. Tebɣiḍ ad ternuḍ ɣer-s?",
     "This room has already been upgraded.": "Taxxamt-a tettuleqqam yakan.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Taxxamt-a tesedday lqem n texxamt <roomVersion />, i yecreḍ uqeddac-a agejdan <i>ur yerkid ara</i>.",
     "Only room administrators will see this warning": "Ala inedbalen kan n texxamt ara iwalin tuccḍa-a",
@@ -2088,7 +2084,11 @@
         "dm_invite_action": "Bdu adiwenni",
         "invite_title": "Tebɣiḍ ad tettekkiḍ deg %(roomName)s?",
         "invite_subtitle": "<userName/> inced-ik·im",
-        "invite_reject_ignore": "Agi & Zgel aseqdac"
+        "invite_reject_ignore": "Agi & Zgel aseqdac",
+        "peek_join_prompt": "Tessenqadeḍ %(roomName)s. Tebɣiḍ ad ternuḍ ɣur-s?",
+        "no_peek_join_prompt": "%(roomName)s ur tezmir ara ad tettwasenqed. Tebɣiḍ ad ternuḍ ɣer-s?",
+        "not_found_title_name": "%(roomName)s ulac-it.",
+        "inaccessible_name": "%(roomName)s ulac anekcum ɣer-s akka tura."
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",

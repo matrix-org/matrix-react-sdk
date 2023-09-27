@@ -37,8 +37,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "사용자를 자신과 같은 권한 등급으로 올리는 것은 취소할 수 없습니다.",
     "Reject invitation": "초대 거절",
     "Return to login screen": "로그인 화면으로 돌아가기",
-    "%(roomName)s does not exist.": "%(roomName)s은 없는 방이에요.",
-    "%(roomName)s is not accessible at this time.": "현재는 %(roomName)s에 들어갈 수 없습니다.",
     "Search failed": "검색 실패함",
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
     "Session ID": "세션 ID",
@@ -231,8 +229,6 @@
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
     "Edit message": "메시지 편집",
-    "You're previewing %(roomName)s. Want to join it?": "%(roomName)s 방을 미리 보고 있습니다. 참가하겠습니까?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s 방을 미리 볼 수 없습니다. 참가하겠습니까?",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
     "This room has already been upgraded.": "이 방은 이미 업그레이드됬습니다.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "이 방은 방 버전 <roomVersion />에서 실행 중이고, 이 홈서버가 <i>불안정</i>으로 표시됩니다.",
@@ -1446,7 +1442,11 @@
         "invite_email_mismatch_suggestion": "설정에서 이 이메일을 공유해서 %(brand)s에서 직접 초대를 받을 수 있습니다.",
         "dm_invite_title": "%(user)s님과 대화하겠습니까?",
         "invite_title": "%(roomName)s 방에 참가하겠습니까?",
-        "invite_subtitle": "<userName/>님이 당신을 초대함"
+        "invite_subtitle": "<userName/>님이 당신을 초대함",
+        "peek_join_prompt": "%(roomName)s 방을 미리 보고 있습니다. 참가하겠습니까?",
+        "no_peek_join_prompt": "%(roomName)s 방을 미리 볼 수 없습니다. 참가하겠습니까?",
+        "not_found_title_name": "%(roomName)s은 없는 방이에요.",
+        "inaccessible_name": "현재는 %(roomName)s에 들어갈 수 없습니다."
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",

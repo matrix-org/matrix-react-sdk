@@ -128,8 +128,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "Share room": "Del rommet",
-    "%(roomName)s does not exist.": "%(roomName)s eksisterer ikke.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s er ikke tilgjengelig for øyeblikket.",
     "This Room": "Dette rommet",
     "Main address": "Hovedadresse",
     "not specified": "ikke spesifisert",
@@ -255,7 +253,6 @@
     "That matches!": "Det samsvarer!",
     "That doesn't match.": "Det samsvarer ikke.",
     "Go back to set it again.": "Gå tilbake for å velge på nytt.",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
     "Messages in this room are end-to-end encrypted.": "Meldinger i dette rommet er start-til-slutt-kryptert.",
     "Messages in this room are not end-to-end encrypted.": "Meldinger i dette rommet er ikke start-til-slutt-kryptert.",
     "Use a different passphrase?": "Vil du bruke en annen passfrase?",
@@ -1705,7 +1702,10 @@
         "dm_invite_action": "Begynn å chatte",
         "invite_title": "Vil du bli med i %(roomName)s?",
         "invite_subtitle": "<userName/> inviterte deg",
-        "invite_reject_ignore": "Avslå og ignorer brukeren"
+        "invite_reject_ignore": "Avslå og ignorer brukeren",
+        "no_peek_join_prompt": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
+        "not_found_title_name": "%(roomName)s eksisterer ikke.",
+        "inaccessible_name": "%(roomName)s er ikke tilgjengelig for øyeblikket."
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"

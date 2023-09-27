@@ -49,8 +49,6 @@
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Приступи соби",
-    "%(roomName)s does not exist.": "Соба %(roomName)s не постоји.",
-    "%(roomName)s is not accessible at this time.": "Соба %(roomName)s није доступна у овом тренутку.",
     "unknown error code": "непознати код грешке",
     "Failed to forget room %(errCode)s": "Нисам успео да заборавим собу %(errCode)s",
     "Jump to first unread message.": "Скочи на прву непрочитану поруку.",
@@ -1437,7 +1435,9 @@
         "link_email_to_receive_3pid_invite": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
         "3pid_invite_no_is_subtitle": "Користите сервер за идентитет у Подешавањима за директно примање позивница %(brand)s.",
         "invite_email_mismatch_suggestion": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
-        "dm_invite_action": "Започни ћаскање"
+        "dm_invite_action": "Започни ћаскање",
+        "not_found_title_name": "Соба %(roomName)s не постоји.",
+        "inaccessible_name": "Соба %(roomName)s није доступна у овом тренутку."
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",

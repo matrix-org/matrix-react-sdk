@@ -50,8 +50,6 @@
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Присъединяване към стаята",
-    "%(roomName)s does not exist.": "%(roomName)s не съществува.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s не е достъпна към този момент.",
     "Jump to first unread message.": "Отиди до първото непрочетено съобщение.",
     "not specified": "неопределен",
     "This room has no local addresses": "Тази стая няма локални адреси",
@@ -312,8 +310,6 @@
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
-    "You're previewing %(roomName)s. Want to join it?": "Предварителен преглед на %(roomName)s. Желаете ли да се влезете?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s не може да бъде прегледана предварително. Желаете ли да се влезете?",
     "This room has already been upgraded.": "Тази стая вече е била обновена.",
     "edited": "редактирано",
     "Edit message": "Редактирай съобщението",
@@ -2159,7 +2155,11 @@
         "dm_invite_action": "Започни чат",
         "invite_title": "Желаете ли да се присъедините към %(roomName)s?",
         "invite_subtitle": "<userName/> ви покани",
-        "invite_reject_ignore": "Откажи и игнорирай потребителя"
+        "invite_reject_ignore": "Откажи и игнорирай потребителя",
+        "peek_join_prompt": "Предварителен преглед на %(roomName)s. Желаете ли да се влезете?",
+        "no_peek_join_prompt": "%(roomName)s не може да бъде прегледана предварително. Желаете ли да се влезете?",
+        "not_found_title_name": "%(roomName)s не съществува.",
+        "inaccessible_name": "%(roomName)s не е достъпна към този момент."
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",

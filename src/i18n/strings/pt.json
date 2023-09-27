@@ -90,13 +90,11 @@
     },
     "Uploading %(filename)s": "Enviando o arquivo %(filename)s",
     "Admin Tools": "Ferramentas de Administração",
-    "%(roomName)s does not exist.": "%(roomName)s não existe.",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
     "Home": "Início",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
     "AM": "AM",
     "PM": "PM",
     "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
@@ -776,7 +774,9 @@
             "forget_room_button": "Esquecer sala"
         },
         "dm_invite_subtitle": "<userName/> quer falar",
-        "invite_subtitle": "<userName/> convidou-o"
+        "invite_subtitle": "<userName/> convidou-o",
+        "not_found_title_name": "%(roomName)s não existe.",
+        "inaccessible_name": "%(roomName)s não está acessível neste momento."
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para poder usar esta funcionalidade",

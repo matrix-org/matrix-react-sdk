@@ -33,8 +33,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
     "Reject invitation": "Daveti Reddet",
     "Return to login screen": "Giriş ekranına dön",
-    "%(roomName)s does not exist.": "%(roomName)s mevcut değil.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
     "Search failed": "Arama başarısız",
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Session ID": "Oturum ID",
@@ -259,7 +257,6 @@
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
     "Share room": "Oda paylaş",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
     "This room has already been upgraded.": "Bu ıda zaten güncellenmiş.",
     "Only room administrators will see this warning": "Bu uyarıyı sadece oda yöneticileri görür",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
@@ -291,7 +288,6 @@
     "Demote yourself?": "Kendinin rütbeni düşür?",
     "Demote": "Rütbe Düşür",
     "Remove recent messages": "Son mesajları sil",
-    "You're previewing %(roomName)s. Want to join it?": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
     "You don't currently have any stickerpacks enabled": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
     "Room Topic": "Oda Başlığı",
     "And %(count)s more...": {
@@ -2110,7 +2106,11 @@
         "dm_invite_action": "Sohbet başlat",
         "invite_title": "%(roomName)s odasına katılmak ister misin?",
         "invite_subtitle": "<userName/> davet etti",
-        "invite_reject_ignore": "Kullanıcı Reddet & Yoksay"
+        "invite_reject_ignore": "Kullanıcı Reddet & Yoksay",
+        "peek_join_prompt": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
+        "no_peek_join_prompt": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
+        "not_found_title_name": "%(roomName)s mevcut değil.",
+        "inaccessible_name": "%(roomName)s şu anda erişilebilir değil."
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",

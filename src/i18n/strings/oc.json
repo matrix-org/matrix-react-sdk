@@ -2,7 +2,6 @@
     "Admin Tools": "Aisinas d’administrator",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
-    "%(roomName)s does not exist.": "%(roomName)s existís pas.",
     "This Room": "Aquesta sala",
     "All Rooms": "Totas les salas",
     "Search…": "Cercar…",
@@ -400,7 +399,8 @@
         "dm_invite_action": "Començar de charrar",
         "invite_title": "Volètz rejonher %(roomName)s ?",
         "invite_subtitle": "<userName/> vos convidèt",
-        "invite_reject_ignore": "Regetar e ignorar"
+        "invite_reject_ignore": "Regetar e ignorar",
+        "not_found_title_name": "%(roomName)s existís pas."
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",

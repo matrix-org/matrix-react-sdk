@@ -91,8 +91,6 @@
     },
     "Create new room": "Criar nova sala",
     "Admin Tools": "Ferramentas de administração",
-    "%(roomName)s does not exist.": "%(roomName)s não existe.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
@@ -383,8 +381,6 @@
     "Email (optional)": "E-mail (opcional)",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
-    "You're previewing %(roomName)s. Want to join it?": "Você está visualizando %(roomName)s. Deseja participar?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s não pode ser visualizado. Deseja participar?",
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "Clear personal data": "Limpar dados pessoais",
@@ -2981,7 +2977,11 @@
         "dm_invite_action": "Começar a conversa",
         "invite_title": "Deseja se juntar a %(roomName)s?",
         "invite_subtitle": "<userName/> convidou você",
-        "invite_reject_ignore": "Recusar e bloquear usuário"
+        "invite_reject_ignore": "Recusar e bloquear usuário",
+        "peek_join_prompt": "Você está visualizando %(roomName)s. Deseja participar?",
+        "no_peek_join_prompt": "%(roomName)s não pode ser visualizado. Deseja participar?",
+        "not_found_title_name": "%(roomName)s não existe.",
+        "inaccessible_name": "%(roomName)s não está acessível neste momento."
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",

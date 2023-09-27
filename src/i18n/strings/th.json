@@ -70,7 +70,6 @@
     },
     "A new password must be entered.": "กรุณากรอกรหัสผ่านใหม่",
     "Custom level": "กำหนดระดับเอง",
-    "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
     "Enter passphrase": "กรอกรหัสผ่าน",
     "Verification Pending": "รอการตรวจสอบ",
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
@@ -543,7 +542,8 @@
         "invite_this_room": "เชิญเข้าห้องนี้",
         "header": {
             "forget_room_button": "ลืมห้อง"
-        }
+        },
+        "not_found_title_name": "ไม่มีห้อง %(roomName)s อยู่จริง"
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",

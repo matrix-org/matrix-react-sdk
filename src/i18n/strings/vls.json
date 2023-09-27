@@ -120,10 +120,6 @@
     },
     "Join Room": "Gesprek toetreedn",
     "Share room": "Gesprek deeln",
-    "You're previewing %(roomName)s. Want to join it?": "Je bekykt %(roomName)s. Wil je deran deelneemn?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s ku nie bekeekn wordn. Wil je deran deelneemn?",
-    "%(roomName)s does not exist.": "%(roomName)s bestoa nie.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s es vo de moment nie toegankelik.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Dit gesprek actualiseern goat de huudige instantie van ’t gesprek sluutn, en e geactualiseerde versie ounder dezelfste noame anmoakn.",
     "This room has already been upgraded.": "Dit gesprek es al ipgewoardeerd gewist.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dit gesprek droait ip groepsgespreksversie <roomVersion />, da deur deze thuusserver als <i>ounstabiel</i> gemarkeerd gewist es.",
@@ -1081,7 +1077,11 @@
         "join_the_discussion": "Neemt deel an ’t gesprek",
         "dm_invite_title": "Wil j’e gesprek beginn me %(user)s?",
         "invite_title": "Wil je %(roomName)s toetreedn?",
-        "invite_subtitle": "<userName/> èt joun uutgenodigd"
+        "invite_subtitle": "<userName/> èt joun uutgenodigd",
+        "peek_join_prompt": "Je bekykt %(roomName)s. Wil je deran deelneemn?",
+        "no_peek_join_prompt": "%(roomName)s ku nie bekeekn wordn. Wil je deran deelneemn?",
+        "not_found_title_name": "%(roomName)s bestoa nie.",
+        "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik."
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",

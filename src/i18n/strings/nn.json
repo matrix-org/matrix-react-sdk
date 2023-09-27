@@ -53,8 +53,6 @@
     },
     "Join Room": "Bli med i rom",
     "Share room": "Del rom",
-    "%(roomName)s does not exist.": "%(roomName)s eksisterar ikkje.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s er ikkje tilgjengeleg no.",
     "unknown error code": "ukjend feilkode",
     "Failed to forget room %(errCode)s": "Fekk ikkje til å gløyma rommet %(errCode)s",
     "Search…": "Søk…",
@@ -197,8 +195,6 @@
     "Failed to deactivate user": "Fekk ikkje til å deaktivere brukaren",
     "Remove recent messages": "Fjern nyare meldingar",
     "Direct Messages": "Folk",
-    "You're previewing %(roomName)s. Want to join it?": "Du førehandsviser %(roomName)s. Ynskjer du å bli med ?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
     "Failed to revoke invite": "Fekk ikkje til å trekke invitasjonen",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
     "Revoke invite": "Trekk invitasjon",
@@ -1148,7 +1144,11 @@
         "dm_invite_action": "Start chatting",
         "invite_title": "Ynskjer du å bli med i %(roomName)s?",
         "invite_subtitle": "<userName/> inviterte deg",
-        "invite_reject_ignore": "Avslå og ignorer brukar"
+        "invite_reject_ignore": "Avslå og ignorer brukar",
+        "peek_join_prompt": "Du førehandsviser %(roomName)s. Ynskjer du å bli med ?",
+        "no_peek_join_prompt": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
+        "not_found_title_name": "%(roomName)s eksisterar ikkje.",
+        "inaccessible_name": "%(roomName)s er ikkje tilgjengeleg no."
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",

@@ -88,8 +88,6 @@
     "Admin Tools": "Admin Tools",
     "Create new room": "Create new room",
     "Home": "Home",
-    "%(roomName)s does not exist.": "%(roomName)s does not exist.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s is not accessible at this time.",
     "Uploading %(filename)s": "Uploading %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Uploading %(filename)s and %(count)s other",
@@ -494,7 +492,9 @@
         "invite_this_room": "Invite to this room",
         "header": {
             "forget_room_button": "Forget room"
-        }
+        },
+        "not_found_title_name": "%(roomName)s does not exist.",
+        "inaccessible_name": "%(roomName)s is not accessible at this time."
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",

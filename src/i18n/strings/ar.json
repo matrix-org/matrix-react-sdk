@@ -132,10 +132,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "هذه الغرفة تشغل إصدار الغرفة <roomVersion /> ، والذي عده الخادم الوسيط هذا بأنه<i> غير مستقر </i>.",
     "This room has already been upgraded.": "سبق وأن تمت ترقية هذه الغرفة.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
-    "%(roomName)s is not accessible at this time.": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
-    "%(roomName)s does not exist.": "الغرفة %(roomName)s ليست موجودة.",
-    "%(roomName)s can't be previewed. Do you want to join it?": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
-    "You're previewing %(roomName)s. Want to join it?": "أنت تعاين %(roomName)s. تريد الانضمام إليها؟",
     "unknown error code": "رمز خطأٍ غير معروف",
     "Join Room": "انضم للغرفة",
     "(~%(count)s results)": {
@@ -1419,7 +1415,11 @@
         "dm_invite_action": "ابدأ المحادثة",
         "invite_title": "هل تريد أن تنضم إلى %(roomName)s؟",
         "invite_subtitle": "<userName/> دعاك",
-        "invite_reject_ignore": "رفض الدعوة وتجاهل الداعي"
+        "invite_reject_ignore": "رفض الدعوة وتجاهل الداعي",
+        "peek_join_prompt": "أنت تعاين %(roomName)s. تريد الانضمام إليها؟",
+        "no_peek_join_prompt": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
+        "not_found_title_name": "الغرفة %(roomName)s ليست موجودة.",
+        "inaccessible_name": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي."
     },
     "space": {
         "context_menu": {

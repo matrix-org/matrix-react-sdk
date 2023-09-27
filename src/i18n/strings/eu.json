@@ -39,8 +39,6 @@
     "not specified": "zehaztu gabe",
     "No more results": "Emaitza gehiagorik ez",
     "Reject invitation": "Baztertu gonbidapena",
-    "%(roomName)s does not exist.": "Ez dago %(roomName)s izeneko gela.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s ez dago eskuragarri orain.",
     "Search failed": "Bilaketak huts egin du",
     "Server may be unavailable, overloaded, or search timed out :(": "Zerbitzaria eskuraezin edo gainezka egon daiteke, edo bilaketaren denbora muga gainditu da :(",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Gela honen denbora-lerroko puntu zehatz bat kargatzen saiatu zara, baina ez duzu mezu zehatz hori ikusteko baimenik.",
@@ -292,8 +290,6 @@
     "Revoke invite": "Indargabetu gonbidapena",
     "Invited by %(sender)s": "%(sender)s erabiltzaileak gonbidatuta",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
-    "You're previewing %(roomName)s. Want to join it?": "%(roomName)s aurreikusten ari zara. Elkartu nahi duzu?",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s ezin da aurreikusi. Elkartu nahi duzu?",
     "This room has already been upgraded.": "Gela hau dagoeneko eguneratu da.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Gela honek <roomVersion /> bertsioa du, eta hasiera-zerbitzariak<i>ez egonkor</i> gisa markatu du.",
     "edited": "editatua",
@@ -1686,7 +1682,11 @@
         "dm_invite_action": "Hasi txateatzen",
         "invite_title": "%(roomName)s gelara elkartu nahi duzu?",
         "invite_subtitle": "<userName/> erabiltzaileak gonbidatu zaitu",
-        "invite_reject_ignore": "Ukatu eta ezikusi erabiltzailea"
+        "invite_reject_ignore": "Ukatu eta ezikusi erabiltzailea",
+        "peek_join_prompt": "%(roomName)s aurreikusten ari zara. Elkartu nahi duzu?",
+        "no_peek_join_prompt": "%(roomName)s ezin da aurreikusi. Elkartu nahi duzu?",
+        "not_found_title_name": "Ez dago %(roomName)s izeneko gela.",
+        "inaccessible_name": "%(roomName)s ez dago eskuragarri orain."
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",

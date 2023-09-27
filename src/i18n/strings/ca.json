@@ -53,8 +53,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Entra a la sala",
-    "%(roomName)s does not exist.": "La sala %(roomName)s no existeix.",
-    "%(roomName)s is not accessible at this time.": "La sala %(roomName)s no és accessible en aquest moment.",
     "Jump to first unread message.": "Salta al primer missatge no llegit.",
     "not specified": "sense especificar",
     "This room has no local addresses": "Aquesta sala no té adreces locals",
@@ -706,7 +704,9 @@
         },
         "link_email_to_receive_3pid_invite": "Per rebre invitacions directament a %(brand)s, enllaça aquest correu electrònic amb el teu compte a Configuració.",
         "3pid_invite_no_is_subtitle": "Per rebre invitacions directament a %(brand)s, utilitza un servidor d'identitat a Configuració.",
-        "invite_email_mismatch_suggestion": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració."
+        "invite_email_mismatch_suggestion": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
+        "not_found_title_name": "La sala %(roomName)s no existeix.",
+        "inaccessible_name": "La sala %(roomName)s no és accessible en aquest moment."
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",

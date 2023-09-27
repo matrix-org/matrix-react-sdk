@@ -31,8 +31,6 @@
     "Reject invitation": "Noraidīt uzaicinājumu",
     "Return to login screen": "Atgriezties uz pierakstīšanās lapu",
     "This will allow you to reset your password and receive notifications.": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus.",
-    "%(roomName)s does not exist.": "%(roomName)s neeksistē.",
-    "%(roomName)s is not accessible at this time.": "%(roomName)s šobrīd nav pieejama.",
     "Uploading %(filename)s": "Tiek augšupielādēts %(filename)s",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Tiek augšupielādēts %(filename)s un %(count)s citi",
@@ -299,7 +297,6 @@
     "Demote": "Pazemināt",
     "Demote yourself?": "Pazemināt sevi?",
     "Accepting…": "Akceptē…",
-    "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -1947,7 +1944,10 @@
         "dm_invite_subtitle": "<userName/> vēlas sarakstīties",
         "dm_invite_action": "Uzsākt saraksti",
         "invite_subtitle": "<userName/> uzaicināja jūs",
-        "invite_reject_ignore": "Noraidīt un ignorēt lietotāju"
+        "invite_reject_ignore": "Noraidīt un ignorēt lietotāju",
+        "no_peek_join_prompt": "%(roomName)s priekšskatījums nav pieejams. Vai vēlaties tai pievienoties?",
+        "not_found_title_name": "%(roomName)s neeksistē.",
+        "inaccessible_name": "%(roomName)s šobrīd nav pieejama."
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",

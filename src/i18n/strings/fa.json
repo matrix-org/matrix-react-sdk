@@ -625,10 +625,6 @@
     "Room avatar": "آواتار اتاق",
     "Room Topic": "موضوع اتاق",
     "Room Name": "نام اتاق",
-    "%(roomName)s is not accessible at this time.": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
-    "%(roomName)s does not exist.": "%(roomName)s وجود ندارد.",
-    "%(roomName)s can't be previewed. Do you want to join it?": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
-    "You're previewing %(roomName)s. Want to join it?": "شما در حال پیش نمایش %(roomName)s هستید. می خواهید به آن بپیوندید؟",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
     "Join Room": "به اتاق بپیوندید",
     "(~%(count)s results)": {
@@ -2700,7 +2696,11 @@
         "dm_invite_action": "گپ زدن را شروع کن",
         "invite_title": "آیا می خواهید ب %(roomName)s بپیوندید؟",
         "invite_subtitle": "<userName/> شما را دعوت کرد",
-        "invite_reject_ignore": "رد کردن و نادیده گرفتن کاربر"
+        "invite_reject_ignore": "رد کردن و نادیده گرفتن کاربر",
+        "peek_join_prompt": "شما در حال پیش نمایش %(roomName)s هستید. می خواهید به آن بپیوندید؟",
+        "no_peek_join_prompt": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
+        "not_found_title_name": "%(roomName)s وجود ندارد.",
+        "inaccessible_name": "در حال حاضر %(roomName)s قابل دسترسی نیست."
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
