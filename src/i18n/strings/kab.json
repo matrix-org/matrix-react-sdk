@@ -97,7 +97,6 @@
     "Session key": "Tasarut n tɣimit",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ma ulac aɣilif, senqed imayl-ik/im syen sit ɣef useɣwen i yellan. Akken ara yemmed waya, sit ad tkemmleḍ.",
     "This will allow you to reset your password and receive notifications.": "Ayagi ad ak(akem)-yeǧǧ ad twennzeḍ awal-ik/im uffir yerna ad d-tremseḍ ilɣa.",
-    "Enter passphrase": "Sekcem tafyirt tuffirt",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -127,10 +126,6 @@
     "Delete Backup": "Kkes aḥraz",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
     "Connect this session to Key Backup": "Qqen tiɣimit-a ɣer uḥraz n tsarut",
-    "Passphrases must match": "Tifyar tuffirin ilaq ad mṣadant",
-    "Passphrase must not be empty": "Tafyirt tuffirt ur ilaq ara ad ilint d tilmawin",
-    "Export room keys": "Sifeḍ tisura n texxamt",
-    "Confirm passphrase": "Sentem tafyirt tuffirt",
     "Import room keys": "Kter tisura n texxamt",
     "File to import": "Afaylu i uktar",
     "Confirm encryption setup": "Sentem asebded n uwgelhen",
@@ -711,7 +706,6 @@
     "If they don't match, the security of your communication may be compromised.": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker.",
     "Your homeserver doesn't seem to support this feature.": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a.",
     "Create a new room with the same name, description and avatar": "Rnu taxxamt tamaynut s yisem-nni, aglam-nni d uvaṭar-nni",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Akala-a ad ak·am-imudd tisirag ad d-tsifḍeḍ tisura i d-tremseḍ deg texxamin yettwawgelhen i ufaylu adigan. Syen tzemreḍ ad tketreḍ afaylu deg umsaɣ-nniḍen n Matrix ɣer sdat, ihi amsaɣ-a mazal-it yezmer ad yekkes awgelhen i yiznan-a.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Akala-a ad ak·am-yefk tizirag ad tketreḍ tisura tiwgelhanin i d-tsifḍeḍ uqbel seg umsaɣ-nniḍen n Matrix. Syen ad tizmireḍ ad tekkseḍ awgelhen i yal izen iwumi yezmer umsaɣ-nniḍen ad as-t-yekkes.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Afaylu n usifeḍ ad yettummesten s tefyirt tuffirt. Ilaq ad teskecmeḍ tafyirt tuffirt da, i wakken ad tekkseḍ awgelhen i ufaylu.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Ur tettizmireḍ ara ad tesfesxeḍ asnifel-a acku tessebɣaseḍ aseqdac ad yesɛu aswir n tezmert am kečč·kemm.",
@@ -1439,6 +1433,14 @@
                 "title_save_key": "Sekles tasarut-ik·im n tɣellist",
                 "unable_to_setup": "Asbadu n uklas uffir d awezɣi"
             }
+        },
+        "key_export_import": {
+            "export_title": "Sifeḍ tisura n texxamt",
+            "export_description_1": "Akala-a ad ak·am-imudd tisirag ad d-tsifḍeḍ tisura i d-tremseḍ deg texxamin yettwawgelhen i ufaylu adigan. Syen tzemreḍ ad tketreḍ afaylu deg umsaɣ-nniḍen n Matrix ɣer sdat, ihi amsaɣ-a mazal-it yezmer ad yekkes awgelhen i yiznan-a.",
+            "enter_passphrase": "Sekcem tafyirt tuffirt",
+            "confirm_passphrase": "Sentem tafyirt tuffirt",
+            "phrase_cannot_be_empty": "Tafyirt tuffirt ur ilaq ara ad ilint d tilmawin",
+            "phrase_must_match": "Tifyar tuffirin ilaq ad mṣadant"
         }
     },
     "devtools": {

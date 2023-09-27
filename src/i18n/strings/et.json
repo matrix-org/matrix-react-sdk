@@ -422,7 +422,6 @@
     "Notification sound": "Teavitusheli",
     "Set a new custom sound": "Seadista uus kohandatud heli",
     "Permission Required": "Vaja on täiendavaid õigusi",
-    "Enter passphrase": "Sisesta paroolifraas",
     "Enter a server name": "Sisesta serveri nimi",
     "Looks good": "Tundub õige",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posti teel kutse saatmiseks kasuta isikutuvastusserverit. Võid kasutada <default>vaikimisi serverit (%(defaultIdentityServerName)s)</default> või määrata muud serverid <settings>seadistustes</settings>.",
@@ -644,11 +643,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
     "Invalid identity server discovery response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
     "Invalid base_url for m.identity_server": "m.identity_server'i kehtetu base_url",
-    "Passphrases must match": "Paroolifraasid ei klapi omavahel",
-    "Passphrase must not be empty": "Paroolifraas ei tohi olla tühi",
-    "Export room keys": "Ekspordi jututoa võtmed",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Selle toiminguga on sul võimalik saabunud krüptitud sõnumite võtmed eksportida sinu kontrollitavasse kohalikku faili. Seetõttu on sul tulevikus võimalik importida need võtmed mõnda teise Matrix'i klienti ning seeläbi muuta saabunud krüptitud sõnumid ka seal loetavaks.",
-    "Confirm passphrase": "Sisesta paroolifraas veel üks kord",
     "Import room keys": "Impordi jututoa võtmed",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Selle toiminguga saad importida krüptimisvõtmed, mis sa viimati olid teisest Matrix'i kliendist eksportinud. Seejärel on võimalik dekrüptida ka siin kõik need samad sõnumid, mida see teine klient suutis dekrüptida.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Ekspordifail on turvatud paroolifraasiga ning alljärgnevalt peaksid dekrüptimiseks sisestama selle paroolifraasi.",
@@ -1852,8 +1846,6 @@
     "Quick Actions": "Kiirtoimingud",
     "Mark all messages as read": "Märgi kõik sõnumid loetuks",
     "Reset to default settings": "Lähtesta kõik seadistused",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Kes iganes saab kätte selle ekspordifaili, saab ka lugeda sinu krüptitud sõnumeid, seega ole hoolikas selle faili talletamisel. Andmaks lisakihi turvalisust, peaksid sa alljärgnevalt sisestama unikaalse paroolifraasi, millega krüptitakse eksporditavad andmed. Faili hilisem importimine õnnestub vaid sama paroolifraasi sisestamisel.",
-    "Great! This passphrase looks strong enough": "Suurepärane! See paroolifraas on piisavalt kange",
     "Other spaces you know": "Muud kogukonnad, mida sa tead",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Selle jututoa vestluste lugemiseks ja nendega liitumiseks on sul vaja luba. Vastava päringu võid saata alljärgnevalt.",
     "Message (optional)": "Sõnum (kui soovid lisada)",
@@ -2692,6 +2684,16 @@
                 "title_save_key": "Salvesta turvavõti",
                 "unable_to_setup": "Turvahoidla kasutuselevõtmine ei õnnestu"
             }
+        },
+        "key_export_import": {
+            "export_title": "Ekspordi jututoa võtmed",
+            "export_description_1": "Selle toiminguga on sul võimalik saabunud krüptitud sõnumite võtmed eksportida sinu kontrollitavasse kohalikku faili. Seetõttu on sul tulevikus võimalik importida need võtmed mõnda teise Matrix'i klienti ning seeläbi muuta saabunud krüptitud sõnumid ka seal loetavaks.",
+            "export_description_2": "Kes iganes saab kätte selle ekspordifaili, saab ka lugeda sinu krüptitud sõnumeid, seega ole hoolikas selle faili talletamisel. Andmaks lisakihi turvalisust, peaksid sa alljärgnevalt sisestama unikaalse paroolifraasi, millega krüptitakse eksporditavad andmed. Faili hilisem importimine õnnestub vaid sama paroolifraasi sisestamisel.",
+            "enter_passphrase": "Sisesta paroolifraas",
+            "phrase_strong_enough": "Suurepärane! See paroolifraas on piisavalt kange",
+            "confirm_passphrase": "Sisesta paroolifraas veel üks kord",
+            "phrase_cannot_be_empty": "Paroolifraas ei tohi olla tühi",
+            "phrase_must_match": "Paroolifraasid ei klapi omavahel"
         }
     },
     "devtools": {

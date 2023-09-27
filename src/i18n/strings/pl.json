@@ -49,7 +49,6 @@
     "Default": "Zwykły",
     "Download %(text)s": "Pobierz %(text)s",
     "Email address": "Adres e-mail",
-    "Enter passphrase": "Wpisz frazę",
     "Error decrypting attachment": "Błąd odszyfrowywania załącznika",
     "Failed to ban user": "Nie udało się zbanować użytkownika",
     "Failed to change power level": "Nie udało się zmienić poziomu mocy",
@@ -116,13 +115,8 @@
         "one": "(~%(count)s wynik)",
         "other": "(~%(count)s wyników)"
     },
-    "Passphrases must match": "Hasła szyfrujące muszą być identyczne",
-    "Passphrase must not be empty": "Hasło szyfrujące nie może być puste",
-    "Export room keys": "Eksportuj klucze pokoju",
-    "Confirm passphrase": "Potwierdź hasło szyfrujące",
     "Import room keys": "Importuj klucze pokoju",
     "File to import": "Plik do importu",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ten proces pozwala na eksport kluczy do wiadomości otrzymanych w zaszyfrowanych pokojach do pliku lokalnego. Wtedy będzie można importować plik do innego klienta Matrix w przyszłości, tak aby ów klient także mógł rozszyfrować te wiadomości.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ten proces pozwala na import zaszyfrowanych kluczy, które wcześniej zostały eksportowane z innego klienta Matrix. Będzie można odszyfrować każdą wiadomość, którą ów inny klient mógł odszyfrować.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportowany plik będzie chroniony hasłem szyfrującym. Aby odszyfrować plik, wpisz hasło szyfrujące tutaj.",
     "Reject all %(invitedRooms)s invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
@@ -1842,11 +1836,9 @@
     "Your profile picture URL": "URL Twojego zdjęcia profilowego",
     "Reset to default settings": "Resetuj do ustawień domyślnych",
     "Unable to find user by email": "Nie udało się znaleźć użytkownika za pomocą e-maila",
-    "Great! This passphrase looks strong enough": "Świetnie! To hasło wygląda na wystarczająco silne",
     "New room activity, upgrades and status messages occur": "Pojawiła się nowa aktywność pokoju, aktualizacje i status wiadomości",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Wiadomości tutaj są szyfrowane end-to-end. Aby zweryfikować profil %(displayName)s - kliknij na zdjęcie profilowe.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Wiadomości w tym pokoju są szyfrowane end-to-end. Możesz zweryfikować osoby, które dołączą klikając na ich zdjęcie profilowe.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Eksportowany plik zezwoli każdemu, kto go odczyta na szyfrowanie i rozszyfrowanie wiadomości, które widzisz. By usprawnić proces, wprowadź hasło poniżej, które posłuży do szyfrowania eksportowanych danych. Importowanie danych będzie możliwe wyłącznie za pomocą tego hasła.",
     "Applied by default to all rooms on all devices.": "Zastosowano domyślnie do wszystkich pokoi na każdym urządzeniu.",
     "Show a badge <badge/> when keywords are used in a room.": "Wyświetl plakietkę <badge/>, gdy słowa kluczowe są używane w pokoju.",
     "Notify when someone mentions using @displayname or %(mxid)s": "Powiadom mnie, gdy ktoś użyje wzmianki @displayname lub %(mxid)s",
@@ -2679,6 +2671,16 @@
                 "title_save_key": "Zapisz swój klucz bezpieczeństwa",
                 "unable_to_setup": "Nie można ustawić sekretnego magazynu"
             }
+        },
+        "key_export_import": {
+            "export_title": "Eksportuj klucze pokoju",
+            "export_description_1": "Ten proces pozwala na eksport kluczy do wiadomości otrzymanych w zaszyfrowanych pokojach do pliku lokalnego. Wtedy będzie można importować plik do innego klienta Matrix w przyszłości, tak aby ów klient także mógł rozszyfrować te wiadomości.",
+            "export_description_2": "Eksportowany plik zezwoli każdemu, kto go odczyta na szyfrowanie i rozszyfrowanie wiadomości, które widzisz. By usprawnić proces, wprowadź hasło poniżej, które posłuży do szyfrowania eksportowanych danych. Importowanie danych będzie możliwe wyłącznie za pomocą tego hasła.",
+            "enter_passphrase": "Wpisz frazę",
+            "phrase_strong_enough": "Świetnie! To hasło wygląda na wystarczająco silne",
+            "confirm_passphrase": "Potwierdź hasło szyfrujące",
+            "phrase_cannot_be_empty": "Hasło szyfrujące nie może być puste",
+            "phrase_must_match": "Hasła szyfrujące muszą być identyczne"
         }
     },
     "devtools": {

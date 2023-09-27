@@ -89,14 +89,8 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Connectivity to the server has been lost.": "La connexion au serveur a été perdue.",
     "Sent messages will be stored until your connection has returned.": "Les messages envoyés seront stockés jusqu’à ce que votre connexion revienne.",
-    "Passphrases must match": "Les phrases secrètes doivent être identiques",
-    "Passphrase must not be empty": "Le mot de passe ne peut pas être vide",
-    "Export room keys": "Exporter les clés de salon",
-    "Enter passphrase": "Saisir le mot de passe",
-    "Confirm passphrase": "Confirmer le mot de passe",
     "Import room keys": "Importer les clés de salon",
     "File to import": "Fichier à importer",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ce processus vous permet d’exporter dans un fichier local les clés pour les messages que vous avez reçus dans des salons chiffrés. Il sera ensuite possible d’importer ce fichier dans un autre client Matrix, afin de permettre à ce client de pouvoir déchiffrer ces messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
     "Reject all %(invitedRooms)s invites": "Rejeter la totalité des %(invitedRooms)s invitations",
@@ -1829,7 +1823,6 @@
     "Show message preview in desktop notification": "Afficher l’aperçu du message dans la notification de bureau",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Les messages ici sont chiffrés de bout en bout. Quand les gens viennent, vous pouvez les vérifier dans leur profil, tapez simplement sur leur image de profil.",
     "Note that removing room changes like this could undo the change.": "Notez bien que la suppression de modification du salon comme celui-ci peut annuler ce changement.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Le fichier exporté permettra à tous ceux qui peuvent le lire de déchiffrer tous les messages chiffrés auxquels vous avez accès, vous devez donc être vigilant et le stocker dans un endroit sûr. Afin de protéger ce fichier, saisissez ci-dessous une phrase secrète unique qui sera utilisée uniquement pour chiffrer les données exportées. Seule l’utilisation de la même phrase secrète permettra de déchiffrer et importer les données.",
     "Quick Actions": "Actions rapides",
     "Unable to find user by email": "Impossible de trouver un utilisateur avec son courriel",
     "Your profile picture URL": "Votre URL d’image de profil",
@@ -1853,7 +1846,6 @@
     "Show a badge <badge/> when keywords are used in a room.": "Affiche un badge <badge/> quand des mots-clés sont utilisés dans un salon.",
     "Notify when someone uses a keyword": "Notifie lorsque quelqu'un utilise un mot-clé",
     "Mark all messages as read": "Marquer tous les messages comme lus",
-    "Great! This passphrase looks strong enough": "Super ! Cette phrase secrète a l’air assez robuste",
     "Other spaces you know": "Autres espaces que vous connaissez",
     "Ask to join?": "Demander à venir ?",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Vous avez besoin d’une autorisation pour accéder à ce salon afin de voir et participer à la conversation. Vous pouvez envoyer une demande d’accès ci-dessous.",
@@ -2692,6 +2684,16 @@
                 "title_save_key": "Sauvegarder votre clé de sécurité",
                 "unable_to_setup": "Impossible de configurer le coffre secret"
             }
+        },
+        "key_export_import": {
+            "export_title": "Exporter les clés de salon",
+            "export_description_1": "Ce processus vous permet d’exporter dans un fichier local les clés pour les messages que vous avez reçus dans des salons chiffrés. Il sera ensuite possible d’importer ce fichier dans un autre client Matrix, afin de permettre à ce client de pouvoir déchiffrer ces messages.",
+            "export_description_2": "Le fichier exporté permettra à tous ceux qui peuvent le lire de déchiffrer tous les messages chiffrés auxquels vous avez accès, vous devez donc être vigilant et le stocker dans un endroit sûr. Afin de protéger ce fichier, saisissez ci-dessous une phrase secrète unique qui sera utilisée uniquement pour chiffrer les données exportées. Seule l’utilisation de la même phrase secrète permettra de déchiffrer et importer les données.",
+            "enter_passphrase": "Saisir le mot de passe",
+            "phrase_strong_enough": "Super ! Cette phrase secrète a l’air assez robuste",
+            "confirm_passphrase": "Confirmer le mot de passe",
+            "phrase_cannot_be_empty": "Le mot de passe ne peut pas être vide",
+            "phrase_must_match": "Les phrases secrètes doivent être identiques"
         }
     },
     "devtools": {

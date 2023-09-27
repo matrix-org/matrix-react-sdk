@@ -146,12 +146,6 @@
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
     "Return to login screen": "Reiri al saluta paĝo",
     "Session ID": "Identigilo de salutaĵo",
-    "Passphrases must match": "Pasfrazoj devas akordi",
-    "Passphrase must not be empty": "Pasfrazoj maldevas esti malplenaj",
-    "Export room keys": "Elporti ĉambrajn ŝlosilojn",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tio ĉi permesos al vi elporti al loka dosiero ŝlosilojn por la mesaĝoj ricevitaj en ĉifritaj ĉambroj. Poste vi povos enporti la dosieron en alian klienton de Matrix, por povigi ĝin malĉifri tiujn mesaĝojn.",
-    "Enter passphrase": "Enigu pasfrazon",
-    "Confirm passphrase": "Konfirmu pasfrazon",
     "Import room keys": "Enporti ĉambrajn ŝlosilojn",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tio ĉi permesos al vi enporti ĉifrajn ŝlosilojn, kiujn vi antaŭe elportis el alia kliento de Matrix. Poste vi povos malĉifri la samajn mesaĝojn, kiujn la alia kliento povis.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "La elportita dosiero estos protektata de pasfrazo. Por malĉifri ĝin, enigu la pasfrazon ĉi tien.",
@@ -1942,6 +1936,14 @@
                 "title_save_key": "Konservi vian Sekurecan ŝlosilon",
                 "unable_to_setup": "Ne povas starigi sekretan deponejon"
             }
+        },
+        "key_export_import": {
+            "export_title": "Elporti ĉambrajn ŝlosilojn",
+            "export_description_1": "Tio ĉi permesos al vi elporti al loka dosiero ŝlosilojn por la mesaĝoj ricevitaj en ĉifritaj ĉambroj. Poste vi povos enporti la dosieron en alian klienton de Matrix, por povigi ĝin malĉifri tiujn mesaĝojn.",
+            "enter_passphrase": "Enigu pasfrazon",
+            "confirm_passphrase": "Konfirmu pasfrazon",
+            "phrase_cannot_be_empty": "Pasfrazoj maldevas esti malplenaj",
+            "phrase_must_match": "Pasfrazoj devas akordi"
         }
     },
     "devtools": {

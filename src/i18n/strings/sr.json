@@ -152,12 +152,6 @@
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
     "Session ID": "ИД сесије",
-    "Passphrases must match": "Фразе се морају подударати",
-    "Passphrase must not be empty": "Фразе не смеју бити празне",
-    "Export room keys": "Извези кључеве собе",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ова радња вам омогућава да извезете кључеве за примљене поруке у шифрованим собама у локалну датотеку. Онда ћете моћи да увезете датотеку у други Матрикс клијент, у будућности, тако да ће тај клијент моћи да дешифрује ове поруке.",
-    "Enter passphrase": "Унеси фразу",
-    "Confirm passphrase": "Потврди фразу",
     "Import room keys": "Увези кључеве собе",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ова радња вам омогућава да увезете кључеве за шифровање које сте претходно извезли из другог Матрикс клијента. Након тога ћете моћи да дешифрујете било коју поруку коју је други клијент могао да дешифрује.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Извезена датотека ће бити заштићена са фразом. Требало би да унесете фразу овде, да бисте дешифровали датотеку.",
@@ -898,6 +892,14 @@
                 "requires_server_authentication": "Да бисте потврдили надоградњу, мораћете да се пријавите на серверу.",
                 "settings_reminder": "Такође можете да подесите Сигурносну копију и управљате својим тастерима у подешавањима."
             }
+        },
+        "key_export_import": {
+            "export_title": "Извези кључеве собе",
+            "export_description_1": "Ова радња вам омогућава да извезете кључеве за примљене поруке у шифрованим собама у локалну датотеку. Онда ћете моћи да увезете датотеку у други Матрикс клијент, у будућности, тако да ће тај клијент моћи да дешифрује ове поруке.",
+            "enter_passphrase": "Унеси фразу",
+            "confirm_passphrase": "Потврди фразу",
+            "phrase_cannot_be_empty": "Фразе не смеју бити празне",
+            "phrase_must_match": "Фразе се морају подударати"
         }
     },
     "devtools": {

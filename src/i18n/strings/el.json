@@ -44,7 +44,6 @@
     "Search failed": "Η αναζήτηση απέτυχε",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Admin Tools": "Εργαλεία διαχειριστή",
-    "Enter passphrase": "Εισαγωγή συνθηματικού",
     "Failed to set display name": "Δεν ήταν δυνατό ο ορισμός του ονόματος εμφάνισης",
     "Home": "Αρχική",
     "Profile": "Προφίλ",
@@ -85,10 +84,6 @@
         "one": "(~%(count)s αποτέλεσμα)",
         "other": "(~%(count)s αποτελέσματα)"
     },
-    "Passphrases must match": "Δεν ταιριάζουν τα συνθηματικά",
-    "Passphrase must not be empty": "Το συνθηματικό δεν πρέπει να είναι κενό",
-    "Export room keys": "Εξαγωγή κλειδιών δωματίου",
-    "Confirm passphrase": "Επιβεβαίωση συνθηματικού",
     "Import room keys": "Εισαγωγή κλειδιών δωματίου",
     "File to import": "Αρχείο για εισαγωγή",
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
@@ -125,7 +120,6 @@
     "Failed to load timeline position": "Δεν ήταν δυνατή η φόρτωση της θέσης του χρονολόγιου",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν καταφέρατε να το βρείτε.",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Αυτή η διαδικασία σας επιτρέπει να εξαγάγετε τα κλειδιά για τα μηνύματα που έχετε λάβει σε κρυπτογραφημένα δωμάτια σε ένα τοπικό αρχείο. Στη συνέχεια, θα μπορέσετε να εισάγετε το αρχείο σε άλλο πρόγραμμα του Matrix, έτσι ώστε το πρόγραμμα να είναι σε θέση να αποκρυπτογραφήσει αυτά τα μηνύματα.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Αυτή η διαδικασία σας επιτρέπει να εισαγάγετε κλειδιά κρυπτογράφησης που έχετε προηγουμένως εξάγει από άλλο πρόγραμμα του Matrix. Στη συνέχεια, θα μπορέσετε να αποκρυπτογραφήσετε τυχόν μηνύματα που το άλλο πρόγραμμα θα μπορούσε να αποκρυπτογραφήσει.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Το αρχείο εξαγωγής θα είναι προστατευμένο με συνθηματικό. Θα χρειαστεί να πληκτρολογήσετε το συνθηματικό εδώ για να αποκρυπτογραφήσετε το αρχείο.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
@@ -2185,6 +2179,14 @@
                 "title_save_key": "Αποθηκεύστε το κλειδί ασφαλείας σας",
                 "unable_to_setup": "Δεν είναι δυνατή η ρύθμιση του μυστικού χώρου αποθήκευσης"
             }
+        },
+        "key_export_import": {
+            "export_title": "Εξαγωγή κλειδιών δωματίου",
+            "export_description_1": "Αυτή η διαδικασία σας επιτρέπει να εξαγάγετε τα κλειδιά για τα μηνύματα που έχετε λάβει σε κρυπτογραφημένα δωμάτια σε ένα τοπικό αρχείο. Στη συνέχεια, θα μπορέσετε να εισάγετε το αρχείο σε άλλο πρόγραμμα του Matrix, έτσι ώστε το πρόγραμμα να είναι σε θέση να αποκρυπτογραφήσει αυτά τα μηνύματα.",
+            "enter_passphrase": "Εισαγωγή συνθηματικού",
+            "confirm_passphrase": "Επιβεβαίωση συνθηματικού",
+            "phrase_cannot_be_empty": "Το συνθηματικό δεν πρέπει να είναι κενό",
+            "phrase_must_match": "Δεν ταιριάζουν τα συνθηματικά"
         }
     },
     "devtools": {

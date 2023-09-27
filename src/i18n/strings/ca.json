@@ -144,8 +144,6 @@
     },
     "Uploading %(filename)s": "Pujant %(filename)s",
     "Session ID": "ID de la sessió",
-    "Export room keys": "Exporta les claus de la sala",
-    "Confirm passphrase": "Introduïu una contrasenya",
     "Import room keys": "Importa les claus de la sala",
     "Sunday": "Diumenge",
     "Notification targets": "Objectius de les notificacions",
@@ -376,6 +374,10 @@
             "setup_secure_backup": {
                 "settings_reminder": "També pots configurar la còpia de seguretat segura i gestionar les teves claus a Configuració."
             }
+        },
+        "key_export_import": {
+            "export_title": "Exporta les claus de la sala",
+            "confirm_passphrase": "Introduïu una contrasenya"
         }
     },
     "devtools": {

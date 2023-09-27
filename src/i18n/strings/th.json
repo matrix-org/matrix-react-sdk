@@ -82,8 +82,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Export room keys": "ส่งออกกุณแจห้อง",
-    "Confirm passphrase": "ยืนยันรหัสผ่าน",
     "Import room keys": "นำเข้ากุณแจห้อง",
     "File to import": "ไฟล์ที่จะนำเข้า",
     "Confirm Removal": "ยืนยันการลบ",
@@ -97,7 +95,6 @@
     "Custom level": "กำหนดระดับเอง",
     "No display name": "ไม่มีชื่อที่แสดง",
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
-    "Enter passphrase": "กรอกรหัสผ่าน",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
     "Verification Pending": "รอการตรวจสอบ",
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
@@ -382,6 +379,11 @@
             "add_msisdn_confirm_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
             "add_msisdn_confirm_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
             "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์"
+        },
+        "key_export_import": {
+            "export_title": "ส่งออกกุณแจห้อง",
+            "enter_passphrase": "กรอกรหัสผ่าน",
+            "confirm_passphrase": "ยืนยันรหัสผ่าน"
         }
     },
     "timeline": {

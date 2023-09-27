@@ -55,7 +55,6 @@
     "Email address": "E-mailadres",
     "Custom level": "Aangepast niveau",
     "Default": "Standaard",
-    "Enter passphrase": "Wachtwoord invoeren",
     "Error decrypting attachment": "Fout bij het ontsleutelen van de bijlage",
     "Failed to ban user": "Verbannen van persoon is mislukt",
     "Failed to change power level": "Wijzigen van machtsniveau is mislukt",
@@ -111,13 +110,8 @@
         "one": "(~%(count)s resultaat)",
         "other": "(~%(count)s resultaten)"
     },
-    "Passphrases must match": "Wachtwoorden moeten overeenkomen",
-    "Passphrase must not be empty": "Wachtwoord mag niet leeg zijn",
-    "Export room keys": "Kamersleutels exporteren",
-    "Confirm passphrase": "Wachtwoord bevestigen",
     "Import room keys": "Kamersleutels importeren",
     "File to import": "In te lezen bestand",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Hiermee kan je de sleutels van je ontvangen berichten in versleutelde kamers naar een lokaal bestand wegschrijven. Als je dat bestand dan in een andere Matrix-cliënt inleest kan het ook die berichten ontcijferen.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee kan je vanuit een andere Matrix-cliënt weggeschreven versleutelingssleutels inlezen, zodat je alle berichten die de andere cliënt kon ontcijferen ook hier kan lezen.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Het weggeschreven bestand is beveiligd met een wachtwoord. Voer dat wachtwoord hier in om het bestand te ontsleutelen.",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s de uitnodigingen weigeren",
@@ -2432,6 +2426,14 @@
                 "title_save_key": "Jouw veiligheidssleutel opslaan",
                 "unable_to_setup": "Kan sleutelopslag niet instellen"
             }
+        },
+        "key_export_import": {
+            "export_title": "Kamersleutels exporteren",
+            "export_description_1": "Hiermee kan je de sleutels van je ontvangen berichten in versleutelde kamers naar een lokaal bestand wegschrijven. Als je dat bestand dan in een andere Matrix-cliënt inleest kan het ook die berichten ontcijferen.",
+            "enter_passphrase": "Wachtwoord invoeren",
+            "confirm_passphrase": "Wachtwoord bevestigen",
+            "phrase_cannot_be_empty": "Wachtwoord mag niet leeg zijn",
+            "phrase_must_match": "Wachtwoorden moeten overeenkomen"
         }
     },
     "devtools": {

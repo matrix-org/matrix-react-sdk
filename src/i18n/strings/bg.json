@@ -150,16 +150,10 @@
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
     "Return to login screen": "Връщане към страницата за влизане в профила",
     "Session ID": "Идентификатор на сесията",
-    "Passphrases must match": "Паролите трябва да съвпадат",
-    "Passphrase must not be empty": "Паролата не трябва да е празна",
-    "Export room keys": "Експортиране на ключове за стаята",
-    "Enter passphrase": "Въведи парола",
-    "Confirm passphrase": "Потвърди парола",
     "Import room keys": "Импортиране на ключове за стая",
     "File to import": "Файл за импортиране",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "На път сте да бъдете отведени до друг сайт, където можете да удостоверите профила си за използване с %(integrationsUrl)s. Искате ли да продължите?",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Този процес Ви позволява да експортирате във файл ключовете за съобщения в шифровани стаи. Така ще можете да импортирате файла в друг Matrix клиент, така че той също да може да разшифрова такива съобщения.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Този процес позволява да импортирате ключове за шифроване, които преди сте експортирали от друг Matrix клиент. Тогава ще можете да разшифровате всяко съобщение, което другият клиент може да разшифрова.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Експортираният файл може да бъде предпазен с парола. Трябва да въведете парола тук, за да разшифровате файла.",
     "You don't currently have any stickerpacks enabled": "В момента нямате включени пакети със стикери",
@@ -1501,6 +1495,14 @@
                 "title_save_key": "Запази ключа за сигурност",
                 "unable_to_setup": "Неуспешна настройка на секретно складиране"
             }
+        },
+        "key_export_import": {
+            "export_title": "Експортиране на ключове за стаята",
+            "export_description_1": "Този процес Ви позволява да експортирате във файл ключовете за съобщения в шифровани стаи. Така ще можете да импортирате файла в друг Matrix клиент, така че той също да може да разшифрова такива съобщения.",
+            "enter_passphrase": "Въведи парола",
+            "confirm_passphrase": "Потвърди парола",
+            "phrase_cannot_be_empty": "Паролата не трябва да е празна",
+            "phrase_must_match": "Паролите трябва да съвпадат"
         }
     },
     "devtools": {

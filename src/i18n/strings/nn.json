@@ -188,10 +188,6 @@
     "New passwords must match each other.": "Dei nye passorda må vera like.",
     "Return to login screen": "Gå attende til innlogging",
     "Session ID": "Økt-ID",
-    "Passphrases must match": "Passfrasane må vere identiske",
-    "Passphrase must not be empty": "Passfrasefeltet kan ikkje stå tomt",
-    "Enter passphrase": "Skriv inn passfrase",
-    "Confirm passphrase": "Stadfest passfrase",
     "Jump to read receipt": "Hopp til lesen-lappen",
     "Filter room members": "Filtrer rommedlemmar",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du held på å verta teken til ei tredje-partisside so du kan godkjenna brukaren din til bruk med %(integrationsUrl)s. Vil du gå fram?",
@@ -202,10 +198,8 @@
     "Filter results": "Filtrer resultat",
     "Server may be unavailable, overloaded, or search timed out :(": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :(",
     "Profile": "Brukar",
-    "Export room keys": "Eksporter romnøklar",
     "Import room keys": "Importer romnøklar",
     "File to import": "Fil til import",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Dette tillèt deg å henta nøklane for meldingar du har sendt i krypterte rom ut til ei lokal fil. Då kan du importera fila i ein annan Matrix-klient i framtida, slik at den klienten òg kan dekryptera meldingane.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dette tillèt deg å importere krypteringsnøklar som du tidlegare har eksportert frå ein annan Matrix-klient. Du har deretter moglegheit for å dekryptere alle meldingane som den andre klienten kunne dekryptere.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Den eksporterte fila vil bli verna med ein passfrase. Du bør skriva passfrasen her, for å dekryptere fila.",
     "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
@@ -713,6 +707,14 @@
                 "set_phrase_again": "Gå tilbake for å sette den på nytt.",
                 "unable_to_setup": "Oppsett av hemmeleg lager feila"
             }
+        },
+        "key_export_import": {
+            "export_title": "Eksporter romnøklar",
+            "export_description_1": "Dette tillèt deg å henta nøklane for meldingar du har sendt i krypterte rom ut til ei lokal fil. Då kan du importera fila i ein annan Matrix-klient i framtida, slik at den klienten òg kan dekryptera meldingane.",
+            "enter_passphrase": "Skriv inn passfrase",
+            "confirm_passphrase": "Stadfest passfrase",
+            "phrase_cannot_be_empty": "Passfrasefeltet kan ikkje stå tomt",
+            "phrase_must_match": "Passfrasane må vere identiske"
         }
     },
     "devtools": {

@@ -45,7 +45,6 @@
     "Default": "Výchozí",
     "Download %(text)s": "Stáhnout %(text)s",
     "Email address": "E-mailová adresa",
-    "Enter passphrase": "Zadejte přístupovou frázi",
     "Error decrypting attachment": "Chyba při dešifrování přílohy",
     "Failed to ban user": "Nepodařilo se vykázat uživatele",
     "Failed to mute user": "Ztlumení uživatele se nezdařilo",
@@ -118,11 +117,6 @@
     "Banned by %(displayName)s": "Vykázán(a) uživatelem %(displayName)s",
     "Add an Integration": "Přidat začlenění",
     "File to import": "Soubor k importu",
-    "Passphrases must match": "Přístupové fráze se musí shodovat",
-    "Passphrase must not be empty": "Přístupová fráze nesmí být prázdná",
-    "Export room keys": "Exportovat klíče místnosti",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tento proces vám umožňuje exportovat do souboru klíče ke zprávám, které jste dostali v šifrovaných místnostech. Když pak tento soubor importujete do jiného Matrix klienta, všechny tyto zprávy bude možné opět dešifrovat.",
-    "Confirm passphrase": "Potvrďte přístupovou frázi",
     "Import room keys": "Importovat klíče místnosti",
     "Restricted": "Omezené",
     "%(duration)ss": "%(duration)ss",
@@ -1817,7 +1811,6 @@
     "You do not have permission to invite users": "Nemáte oprávnění zvát uživatele",
     "Your language": "Váš jazyk",
     "Your device ID": "ID vašeho zařízení",
-    "Great! This passphrase looks strong enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
     "Ask to join": "Požádat o vstup",
     "Email summary": "E-mailový souhrn",
@@ -1842,7 +1835,6 @@
     "Receive an email summary of missed notifications": "Přijímat e-mailový souhrn zmeškaných oznámení",
     "Are you sure you wish to remove (delete) this event?": "Opravdu chcete tuto událost odstranit (smazat)?",
     "Upgrade room": "Aktualizovat místnost",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Exportovaný soubor umožní komukoli, kdo si jej přečte, dešifrovat všechny šifrované zprávy, které vidíte, takže byste měli dbát na jeho zabezpečení. K tomu vám pomůže níže uvedená jedinečná přístupová fráze, která bude použita pouze k zašifrování exportovaných dat. Importovat data bude možné pouze pomocí stejné přístupové fráze.",
     "Mentions and Keywords only": "Pouze zmínky a klíčová slova",
     "This setting will be applied by default to all your rooms.": "Toto nastavení se ve výchozím stavu použije pro všechny vaše místnosti.",
     "Mentions and Keywords": "Zmínky a klíčová slova",
@@ -2697,6 +2689,16 @@
                 "title_save_key": "Uložte svůj bezpečnostní klíč",
                 "unable_to_setup": "Nepovedlo se nastavit bezpečné úložiště"
             }
+        },
+        "key_export_import": {
+            "export_title": "Exportovat klíče místnosti",
+            "export_description_1": "Tento proces vám umožňuje exportovat do souboru klíče ke zprávám, které jste dostali v šifrovaných místnostech. Když pak tento soubor importujete do jiného Matrix klienta, všechny tyto zprávy bude možné opět dešifrovat.",
+            "export_description_2": "Exportovaný soubor umožní komukoli, kdo si jej přečte, dešifrovat všechny šifrované zprávy, které vidíte, takže byste měli dbát na jeho zabezpečení. K tomu vám pomůže níže uvedená jedinečná přístupová fráze, která bude použita pouze k zašifrování exportovaných dat. Importovat data bude možné pouze pomocí stejné přístupové fráze.",
+            "enter_passphrase": "Zadejte přístupovou frázi",
+            "phrase_strong_enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
+            "confirm_passphrase": "Potvrďte přístupovou frázi",
+            "phrase_cannot_be_empty": "Přístupová fráze nesmí být prázdná",
+            "phrase_must_match": "Přístupové fráze se musí shodovat"
         }
     },
     "devtools": {

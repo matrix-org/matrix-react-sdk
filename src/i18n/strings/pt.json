@@ -89,14 +89,8 @@
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
     "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
     "Warning!": "Atenção!",
-    "Passphrases must match": "As frases-passe devem coincidir",
-    "Passphrase must not be empty": "A frase-passe não pode estar vazia",
-    "Export room keys": "Exportar chaves de sala",
-    "Enter passphrase": "Introduza a frase-passe",
-    "Confirm passphrase": "Confirmar frase-passe",
     "Import room keys": "Importar chaves de sala",
     "File to import": "Arquivo para importar",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O ficheiro de exportação será protegido com uma frase-passe. Deve introduzir a frase-passe aqui, para desencriptar o ficheiro.",
     "Reject all %(invitedRooms)s invites": "Rejeitar todos os %(invitedRooms)s convites",
     "Confirm Removal": "Confirmar Remoção",
@@ -573,6 +567,14 @@
             "add_msisdn_confirm_button": "Confirme que quer adicionar o número de telefone",
             "add_msisdn_confirm_body": "Pressione o botão abaixo para confirmar a adição este número de telefone.",
             "add_msisdn_dialog_title": "Adicione número de telefone"
+        },
+        "key_export_import": {
+            "export_title": "Exportar chaves de sala",
+            "export_description_1": "Este processo permite que você exporte as chaves para mensagens que você recebeu em salas criptografadas para um arquivo local. Você poderá então importar o arquivo para outro cliente Matrix no futuro, de modo que este cliente também poderá descriptografar suas mensagens.",
+            "enter_passphrase": "Introduza a frase-passe",
+            "confirm_passphrase": "Confirmar frase-passe",
+            "phrase_cannot_be_empty": "A frase-passe não pode estar vazia",
+            "phrase_must_match": "As frases-passe devem coincidir"
         }
     },
     "devtools": {

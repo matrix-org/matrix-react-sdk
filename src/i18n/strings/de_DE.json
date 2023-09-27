@@ -88,11 +88,6 @@
     "Email address": "E-Mail-Adresse",
     "Error decrypting attachment": "Fehler beim Entschlüsseln des Anhangs",
     "Invalid file%(extra)s": "Ungültige Datei%(extra)s",
-    "Passphrases must match": "Passphrases müssen übereinstimmen",
-    "Passphrase must not be empty": "Passphrase darf nicht leer sein",
-    "Export room keys": "Raum-Schlüssel exportieren",
-    "Enter passphrase": "Passphrase eingeben",
-    "Confirm passphrase": "Passphrase bestätigen",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Die exportierte Datei ist mit einer Passphrase geschützt. Du kannst die Passphrase hier eingeben, um die Datei zu entschlüsseln.",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s Einladungen ablehnen",
     "Confirm Removal": "Entfernen bestätigen",
@@ -102,7 +97,6 @@
     "Error decrypting video": "Videoentschlüsselung fehlgeschlagen",
     "Import room keys": "Raum-Schlüssel importieren",
     "File to import": "Zu importierende Datei",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Dieser Prozess erlaubt es dir, die Schlüssel für die in verschlüsselten Räumen empfangenen Nachrichten in eine lokale Datei zu exportieren. In Zukunft wird es möglich sein, diese Datei in eine andere Matrix-Anwendung zu importieren, sodass diese die Nachrichten ebenfalls entschlüsseln kann.",
     "Add an Integration": "Eine Integration hinzufügen",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dieser Prozess erlaubt es dir, die zuvor von einer anderen Matrix-Anwendung exportierten Verschlüsselungs-Schlüssel zu importieren. Danach kannst du alle Nachrichten entschlüsseln, die auch bereits auf der anderen Anwendung entschlüsselt werden konnten.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
@@ -1850,10 +1844,8 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Nachrichten in diesem Raum sind Ende-zu-Ende-verschlüsselt. Wenn Personen beitreten, kannst du sie in ihrem Profil verifizieren, indem du auf deren Profilbild klickst.",
     "Your profile picture URL": "Deine Profilbild-URL",
     "Ask to join": "Beitrittsanfragen",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
     "People cannot join unless access is granted.": "Personen können den Raum nur betreten, wenn sie Zutritt erhalten.",
     "Upgrade room": "Raum aktualisieren",
-    "Great! This passphrase looks strong enough": "Super! Diese Passphrase wirkt stark genug",
     "Other spaces you know": "Andere dir bekannte Spaces",
     "Ask to join %(roomName)s?": "Beitrittsanfrage für %(roomName)s stellen?",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "Du benötigst eine Beitrittsberechtigung, um den Raum betrachten oder an der Unterhaltung teilnehmen zu können. Du kannst nachstehend eine Beitrittsanfrage stellen.",
@@ -2697,6 +2689,16 @@
                 "title_save_key": "Sicherungsschlüssel sichern",
                 "unable_to_setup": "Sicherer Speicher kann nicht eingerichtet werden"
             }
+        },
+        "key_export_import": {
+            "export_title": "Raum-Schlüssel exportieren",
+            "export_description_1": "Dieser Prozess erlaubt es dir, die Schlüssel für die in verschlüsselten Räumen empfangenen Nachrichten in eine lokale Datei zu exportieren. In Zukunft wird es möglich sein, diese Datei in eine andere Matrix-Anwendung zu importieren, sodass diese die Nachrichten ebenfalls entschlüsseln kann.",
+            "export_description_2": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
+            "enter_passphrase": "Passphrase eingeben",
+            "phrase_strong_enough": "Super! Diese Passphrase wirkt stark genug",
+            "confirm_passphrase": "Passphrase bestätigen",
+            "phrase_cannot_be_empty": "Passphrase darf nicht leer sein",
+            "phrase_must_match": "Passphrases müssen übereinstimmen"
         }
     },
     "devtools": {

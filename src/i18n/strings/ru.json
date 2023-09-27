@@ -94,14 +94,8 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
     "You seem to be in a call, are you sure you want to quit?": "Звонок не завершён. Уверены, что хотите выйти?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Вы не сможете отменить это действие, так как этот пользователь получит уровень прав, равный вашему.",
-    "Passphrases must match": "Мнемонические фразы должны совпадать",
-    "Passphrase must not be empty": "Мнемоническая фраза не может быть пустой",
-    "Export room keys": "Экспорт ключей комнаты",
-    "Enter passphrase": "Введите мнемоническую фразу",
-    "Confirm passphrase": "Подтвердите мнемоническую фразу",
     "Import room keys": "Импорт ключей комнаты",
     "File to import": "Файл для импорта",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Этот процесс позволяет вам экспортировать ключи для сообщений, которые вы получили в комнатах с шифрованием, в локальный файл. Вы сможете импортировать эти ключи в другой клиент Matrix чтобы расшифровать эти сообщения.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
     "Reject all %(invitedRooms)s invites": "Отклонить все %(invitedRooms)s приглашения",
@@ -2488,6 +2482,14 @@
                 "title_save_key": "Сохраните свой ключ безопасности",
                 "unable_to_setup": "Невозможно настроить секретное хранилище"
             }
+        },
+        "key_export_import": {
+            "export_title": "Экспорт ключей комнаты",
+            "export_description_1": "Этот процесс позволяет вам экспортировать ключи для сообщений, которые вы получили в комнатах с шифрованием, в локальный файл. Вы сможете импортировать эти ключи в другой клиент Matrix чтобы расшифровать эти сообщения.",
+            "enter_passphrase": "Введите мнемоническую фразу",
+            "confirm_passphrase": "Подтвердите мнемоническую фразу",
+            "phrase_cannot_be_empty": "Мнемоническая фраза не может быть пустой",
+            "phrase_must_match": "Мнемонические фразы должны совпадать"
         }
     },
     "devtools": {

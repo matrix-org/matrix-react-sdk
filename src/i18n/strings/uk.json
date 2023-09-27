@@ -121,7 +121,6 @@
     "Upload avatar": "Вивантажити аватар",
     "Failed to reject invitation": "Не вдалось відхилити запрошення",
     "This room is not public. You will not be able to rejoin without an invite.": "Ця кімната не загальнодоступна. Ви не зможете повторно приєднатися без запрошення.",
-    "Enter passphrase": "Введіть парольну фразу",
     "Verify this session": "Звірити цей сеанс",
     "Later": "Пізніше",
     "Account management": "Керування обліковим записом",
@@ -1178,7 +1177,6 @@
     "Recent searches": "Недавні пошуки",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
     "Import room keys": "Імпортувати ключі кімнат",
-    "Confirm passphrase": "Підтвердьте парольну фразу",
     "Could not load user profile": "Не вдалося звантажити профіль користувача",
     "Skip verification for now": "На разі пропустити звірку",
     "Failed to load timeline position": "Не вдалося завантажити позицію стрічки",
@@ -1324,8 +1322,6 @@
     "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "Цей сеанс виявив, що ваша фраза безпеки й ключ до захищених повідомлень були видалені.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Якщо ви не встановлювали нового способу відновлення, ймовірно хтось намагається зламати ваш обліковий запис. Негайно змініть пароль до свого облікового запису й встановіть новий спосіб відновлення в налаштуваннях.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Виявлено зміну фрази безпеки й ключа до захищених повідомлень.",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Це дає змогу експортувати в локальний файл ключі до повідомлень, отриманих вами в зашифрованих кімнатах. Тоді ви зможете імпортувати файл до іншого клієнта Matrix у майбутньому, і той клієнт також зможе розшифрувати ці повідомлення.",
-    "Export room keys": "Експортувати ключі кімнат",
     "Your password has been reset.": "Ваш пароль скинуто.",
     "New passwords must match each other.": "Нові паролі мають збігатися.",
     "Really reset verification keys?": "Точно скинути ключі звірки?",
@@ -1430,8 +1426,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Не вдалося надіслати повідомлення, бо домашній сервер перевищив ліміт ресурсів. <a>Зв'яжіться з адміністратором сервісу,</a> щоб продовжити використання.",
     "Failed to find the following users": "Не вдалося знайти таких користувачів",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Не вдалося надіслати повідомлення, бо домашній сервер перевищив свій ліміт активних користувачів за місяць. <a>Зв'яжіться з адміністратором сервісу,</a> щоб продовжити використання.",
-    "Passphrase must not be empty": "Парольна фраза обов'язкова",
-    "Passphrases must match": "Парольні фрази мають збігатися",
     "Sections to show": "Показувані розділи",
     "Recent changes that have not yet been received": "Останні зміни, котрі ще не отримано",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
@@ -1832,7 +1826,6 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Повідомлення в цій кімнаті наскрізно зашифровані. Коли люди приєднуються, ви можете перевірити їх у їхньому профілі, просто торкнувшись зображення профілю.",
     "Are you sure you wish to remove (delete) this event?": "Ви впевнені, що хочете вилучити (видалити) цю подію?",
     "Upgrade room": "Поліпшити кімнату",
-    "Great! This passphrase looks strong enough": "Чудово! Цю парольна фраза видається достатньо надійною",
     "Email summary": "Зведення електронною поштою",
     "People, Mentions and Keywords": "Люди, згадки та ключові слова",
     "Show message preview in desktop notification": "Показувати попередній перегляд повідомлень у сповіщеннях комп'ютера",
@@ -1853,7 +1846,6 @@
     "Your profile picture URL": "URL-адреса зображення вашого профілю",
     "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.": "Виберіть, на які адреси ви хочете отримувати зведення. Керуйте адресами в <button>Загальних</button> налаштуваннях.",
     "Note that removing room changes like this could undo the change.": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Експортований файл дозволить будь-кому, хто зможе його прочитати, розшифрувати будь-які зашифровані повідомлення, які ви бачите, тому ви повинні бути обережними, щоб зберегти його в безпеці. Щоб зробити це, вам слід ввести унікальну парольну фразу нижче, яка буде використовуватися тільки для шифрування експортованих даних. Імпортувати дані можна буде лише за допомогою тієї ж самої парольної фрази.",
     "Other spaces you know": "Інші відомі вам простори",
     "You need an invite to access this room.": "Для доступу до цієї кімнати потрібне запрошення.",
     "Failed to cancel": "Не вдалося скасувати",
@@ -2692,6 +2684,16 @@
                 "title_save_key": "Збережіть свій ключ безпеки",
                 "unable_to_setup": "Не вдалося налаштувати таємне сховище"
             }
+        },
+        "key_export_import": {
+            "export_title": "Експортувати ключі кімнат",
+            "export_description_1": "Це дає змогу експортувати в локальний файл ключі до повідомлень, отриманих вами в зашифрованих кімнатах. Тоді ви зможете імпортувати файл до іншого клієнта Matrix у майбутньому, і той клієнт також зможе розшифрувати ці повідомлення.",
+            "export_description_2": "Експортований файл дозволить будь-кому, хто зможе його прочитати, розшифрувати будь-які зашифровані повідомлення, які ви бачите, тому ви повинні бути обережними, щоб зберегти його в безпеці. Щоб зробити це, вам слід ввести унікальну парольну фразу нижче, яка буде використовуватися тільки для шифрування експортованих даних. Імпортувати дані можна буде лише за допомогою тієї ж самої парольної фрази.",
+            "enter_passphrase": "Введіть парольну фразу",
+            "phrase_strong_enough": "Чудово! Цю парольна фраза видається достатньо надійною",
+            "confirm_passphrase": "Підтвердьте парольну фразу",
+            "phrase_cannot_be_empty": "Парольна фраза обов'язкова",
+            "phrase_must_match": "Парольні фрази мають збігатися"
         }
     },
     "devtools": {

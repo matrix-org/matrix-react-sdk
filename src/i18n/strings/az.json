@@ -79,7 +79,6 @@
     "A new password must be entered.": "Yeni parolu daxil edin.",
     "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
     "Return to login screen": "Girişin ekranına qayıtmaq",
-    "Confirm passphrase": "Şifrəni təsdiqləyin",
     "Permission Required": "İzn tələb olunur",
     "Send": "Göndər",
     "PM": "24:00",
@@ -160,6 +159,9 @@
             "add_email_dialog_title": "Emal ünvan əlavə etmək",
             "add_email_failed_verification": "Email-i yoxlamağı bacarmadı: əmin olun ki, siz məktubda istinaddakı ünvana keçdiniz",
             "add_msisdn_dialog_title": "Telefon nömrəsi əlavə etmək"
+        },
+        "key_export_import": {
+            "confirm_passphrase": "Şifrəni təsdiqləyin"
         }
     },
     "timeline": {

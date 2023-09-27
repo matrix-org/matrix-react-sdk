@@ -138,12 +138,6 @@
     "New passwords must match each other.": "Obe nové heslá musia byť zhodné.",
     "Return to login screen": "Vrátiť sa na prihlasovaciu obrazovku",
     "Session ID": "ID relácie",
-    "Passphrases must match": "Prístupové frázy sa musia zhodovať",
-    "Passphrase must not be empty": "Prístupová fráza nesmie byť prázdna",
-    "Export room keys": "Exportovať kľúče miestností",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Tento proces vás prevedie exportom kľúčov určených na dešifrovanie správ, ktoré ste dostali v šifrovaných miestnostiach do lokálneho súboru. Tieto kľúče zo súboru môžete neskôr importovať do iného Matrix klienta, aby ste v ňom mohli dešifrovať vaše šifrované správy.",
-    "Enter passphrase": "Zadajte prístupovú frázu",
-    "Confirm passphrase": "Potvrďte prístupovú frázu",
     "Import room keys": "Importovať kľúče miestností",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás prevedie importom šifrovacích kľúčov, ktoré ste si v minulosti exportovali v inom Matrix klientovi. Po úspešnom importe budete v tomto klientovi môcť dešifrovať všetky správy, ktoré ste mohli dešifrovať v spomínanom klientovi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Exportovaný súbor bude chránený prístupovou frázou. Tu by ste mali zadať prístupovú frázu, aby ste súbor dešifrovali.",
@@ -1852,8 +1846,6 @@
     "Quick Actions": "Rýchle akcie",
     "Mark all messages as read": "Označiť všetky správy ako prečítané",
     "Reset to default settings": "Obnoviť predvolené nastavenia",
-    "Great! This passphrase looks strong enough": "Skvelé! Táto bezpečnostná fráza vyzerá dostatočne silná",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Exportovaný súbor umožní každému, kto si ho môže prečítať, dešifrovať všetky zašifrované správy, ktoré môžete vidieť, preto by ste mali dbať na jeho zabezpečenie. Na pomoc by ste mali nižšie zadať jedinečnú prístupovú frázu, ktorá sa použije len na zašifrovanie exportovaných údajov. Údaje bude možné importovať len pomocou rovnakej prístupovej frázy.",
     "Other spaces you know": "Ďalšie priestory, ktoré poznáte",
     "Request access": "Požiadať o prístup",
     "Request to join sent": "Žiadosť o pripojenie odoslaná",
@@ -2692,6 +2684,16 @@
                 "title_save_key": "Uložte svoj bezpečnostný kľúč",
                 "unable_to_setup": "Nie je možné nastaviť tajné úložisko"
             }
+        },
+        "key_export_import": {
+            "export_title": "Exportovať kľúče miestností",
+            "export_description_1": "Tento proces vás prevedie exportom kľúčov určených na dešifrovanie správ, ktoré ste dostali v šifrovaných miestnostiach do lokálneho súboru. Tieto kľúče zo súboru môžete neskôr importovať do iného Matrix klienta, aby ste v ňom mohli dešifrovať vaše šifrované správy.",
+            "export_description_2": "Exportovaný súbor umožní každému, kto si ho môže prečítať, dešifrovať všetky zašifrované správy, ktoré môžete vidieť, preto by ste mali dbať na jeho zabezpečenie. Na pomoc by ste mali nižšie zadať jedinečnú prístupovú frázu, ktorá sa použije len na zašifrovanie exportovaných údajov. Údaje bude možné importovať len pomocou rovnakej prístupovej frázy.",
+            "enter_passphrase": "Zadajte prístupovú frázu",
+            "phrase_strong_enough": "Skvelé! Táto bezpečnostná fráza vyzerá dostatočne silná",
+            "confirm_passphrase": "Potvrďte prístupovú frázu",
+            "phrase_cannot_be_empty": "Prístupová fráza nesmie byť prázdna",
+            "phrase_must_match": "Prístupové frázy sa musia zhodovať"
         }
     },
     "devtools": {

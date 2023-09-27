@@ -173,7 +173,7 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
                             </div>
                             <div className="mx_E2eKeysDialog_inputRow">
                                 <Field
-                                    label={_t("Enter passphrase")}
+                                    label={_t("settings|key_export_import|enter_passphrase")}
                                     value={this.state.passphrase}
                                     onChange={this.onPassphraseChange}
                                     size={64}

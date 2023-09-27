@@ -756,11 +756,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         return (
             <div>
-                <p>
-                    {_t(
-                        "settings|key_backup|setup_secure_backup|security_key_safety_reminder",
-                    )}
-                </p>
+                <p>{_t("settings|key_backup|setup_secure_backup|security_key_safety_reminder")}</p>
                 <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
                     <div className="mx_CreateSecretStorageDialog_recoveryKeyContainer">
                         <div className="mx_CreateSecretStorageDialog_recoveryKey">

@@ -38,16 +38,11 @@
     "No Microphones detected": "Micrófono no detectado",
     "No Webcams detected": "Cámara no detectada",
     "Custom level": "Nivel personalizado",
-    "Enter passphrase": "Introducir frase de contraseña",
     "Home": "Inicio",
     "Invited": "Invitado",
     "Jump to first unread message.": "Ir al primer mensaje no leído.",
     "Something went wrong!": "¡Algo ha fallado!",
     "Create new room": "Crear una nueva sala",
-    "Passphrases must match": "Las contraseñas deben coincidir",
-    "Passphrase must not be empty": "La contraseña no puede estar en blanco",
-    "Export room keys": "Exportar claves de sala",
-    "Confirm passphrase": "Confirmar frase de contraseña",
     "Import room keys": "Importar claves de sala",
     "File to import": "Fichero a importar",
     "Reject all %(invitedRooms)s invites": "Rechazar todas las invitaciones a %(invitedRooms)s",
@@ -205,7 +200,6 @@
     "Sent messages will be stored until your connection has returned.": "Los mensajes enviados se almacenarán hasta que vuelva la conexión.",
     "No Audio Outputs detected": "No se han detectado salidas de sonido",
     "Audio Output": "Salida de sonido",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Este proceso te permite exportar las claves para los mensajes que has recibido en salas cifradas a un archivo local. En el futuro, podrás importar el archivo a otro cliente de Matrix, para que ese cliente también sea capaz de descifrar estos mensajes.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este proceso te permite importar claves de cifrado que hayas exportado previamente desde otro cliente de Matrix. Así, podrás descifrar cualquier mensaje que el otro cliente pudiera descifrar.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "El archivo exportado estará protegido con una contraseña. Deberías ingresar la contraseña aquí para descifrar el archivo.",
     "Only room administrators will see this warning": "Sólo los administradores de la sala verán esta advertencia",
@@ -2580,6 +2574,14 @@
                 "title_save_key": "Guarde su llave de seguridad",
                 "unable_to_setup": "No se puede configurar el almacenamiento secreto"
             }
+        },
+        "key_export_import": {
+            "export_title": "Exportar claves de sala",
+            "export_description_1": "Este proceso te permite exportar las claves para los mensajes que has recibido en salas cifradas a un archivo local. En el futuro, podrás importar el archivo a otro cliente de Matrix, para que ese cliente también sea capaz de descifrar estos mensajes.",
+            "enter_passphrase": "Introducir frase de contraseña",
+            "confirm_passphrase": "Confirmar frase de contraseña",
+            "phrase_cannot_be_empty": "La contraseña no puede estar en blanco",
+            "phrase_must_match": "Las contraseñas deben coincidir"
         }
     },
     "devtools": {

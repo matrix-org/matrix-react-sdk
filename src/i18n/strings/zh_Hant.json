@@ -51,7 +51,6 @@
     "No Webcams detected": "未偵測到網路攝影機",
     "Are you sure you want to leave the room '%(roomName)s'?": "您確定要離開聊天室「%(roomName)s」嗎？",
     "Custom level": "自訂等級",
-    "Enter passphrase": "輸入安全密語",
     "Failed to change power level": "無法變更權限等級",
     "Home": "首頁",
     "Invited": "已邀請",
@@ -111,13 +110,8 @@
         "one": "（~%(count)s 結果）",
         "other": "（~%(count)s 結果）"
     },
-    "Passphrases must match": "安全密語必須相符",
-    "Passphrase must not be empty": "安全密語不能為空",
-    "Export room keys": "匯出聊天室金鑰",
-    "Confirm passphrase": "確認安全密語",
     "Import room keys": "匯入聊天室金鑰",
     "File to import": "要匯入的檔案",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "這個過程讓您可以匯出您在加密聊天室裡收到訊息的金鑰到一個本機檔案。您將可以在未來匯入檔案到其他的 Matrix 客戶端，這樣客戶端就可以解密此訊息。",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
     "Reject all %(invitedRooms)s invites": "拒絕所有 %(invitedRooms)s 邀請",
@@ -1833,7 +1827,6 @@
     "Notify when someone mentions using @room": "當有人使用 @room 提及時通知",
     "Reset to default settings": "重設為預設設定",
     "Upgrade room": "升級聊天室",
-    "Great! This passphrase looks strong enough": "很好！此密碼看起來夠強",
     "Messages sent by bots": "由機器人傳送的訊息",
     "Show a badge <badge/> when keywords are used in a room.": "聊天室中使用關鍵字時，顯示徽章 <badge/>。",
     "Notify when someone mentions using @displayname or %(mxid)s": "當有人使用 @displayname 或 %(mxid)s 提及時通知",
@@ -1853,7 +1846,6 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "此聊天室中的訊息為端到端加密。當人們加入時，您可以在他們的個人檔案中驗證他們，點擊他們的個人檔案就可以了。",
     "Your profile picture URL": "您的個人檔案圖片 URL",
     "Are you sure you wish to remove (delete) this event?": "您真的想要移除（刪除）此活動嗎？",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "匯出的檔案將允許任何可以讀取該檔案的人解密您可以看到的任何加密訊息，因此您應該小心確保其安全。為了協助解決此問題，您應該在下面輸入一個唯一的密碼，該密碼僅用於加密匯出的資料。只能使用相同的密碼匯入資料。",
     "Other spaces you know": "您知道的其他空間",
     "You need to be granted access to this room in order to view or participate in the conversation. You can send a request to join below.": "您需要被授予存取此聊天室的權限才能檢視或參與對話。您可以在下面傳送加入請求。",
     "You need an invite to access this room.": "您需要邀請才能存取此聊天室。",
@@ -2692,6 +2684,16 @@
                 "title_save_key": "儲存您的安全金鑰",
                 "unable_to_setup": "無法設定秘密資訊儲存空間"
             }
+        },
+        "key_export_import": {
+            "export_title": "匯出聊天室金鑰",
+            "export_description_1": "這個過程讓您可以匯出您在加密聊天室裡收到訊息的金鑰到一個本機檔案。您將可以在未來匯入檔案到其他的 Matrix 客戶端，這樣客戶端就可以解密此訊息。",
+            "export_description_2": "匯出的檔案將允許任何可以讀取該檔案的人解密您可以看到的任何加密訊息，因此您應該小心確保其安全。為了協助解決此問題，您應該在下面輸入一個唯一的密碼，該密碼僅用於加密匯出的資料。只能使用相同的密碼匯入資料。",
+            "enter_passphrase": "輸入安全密語",
+            "phrase_strong_enough": "很好！此密碼看起來夠強",
+            "confirm_passphrase": "確認安全密語",
+            "phrase_cannot_be_empty": "安全密語不能為空",
+            "phrase_must_match": "安全密語必須相符"
         }
     },
     "devtools": {

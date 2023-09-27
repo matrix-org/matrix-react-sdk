@@ -704,8 +704,6 @@
     "Encrypted by a deleted session": "با یک نشست حذف شده رمزگذاری شده است",
     "Unencrypted": "رمزگذاری نشده",
     "Encrypted by an unverified session": "توسط یک نشست تأیید نشده رمزگذاری شده است",
-    "Export room keys": "استخراج کلیدهای اتاق",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "این فرآیند به شما این امکان را می‌دهد تا کلیدهایی را که برای رمزگشایی پیام‌هایتان در اتاق‌های رمزشده نیاز دارید، در قالب یک فایل محلی استخراج کنید. بعد از آن می‌توانید این فایل را در هر کلاینت دیگری وارد (Import) کرده و قادر به رمزگشایی و مشاهده‌ی پیام‌های رمزشده‌ی مذکور باشید.",
     "Language Dropdown": "منو زبان",
     "View message": "مشاهده پیام",
     "Information": "اطلاعات",
@@ -722,8 +720,6 @@
     },
     "expand": "گشودن",
     "collapse": "بستن",
-    "Enter passphrase": "عبارت امنیتی را وارد کنید",
-    "Confirm passphrase": "عبارت امنیتی را تائید کنید",
     "This version of %(brand)s does not support searching encrypted messages": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند",
     "Import room keys": "واردکردن (Import) کلیدهای اتاق",
     "This version of %(brand)s does not support viewing some encrypted files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
@@ -868,8 +864,6 @@
     },
     "Securely cache encrypted messages locally for them to appear in search results.": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
     "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.": "به صورت جداگانه هر نشستی که با بقیه‌ی کاربران دارید را تائید کنید تا به عنوان نشست قابل اعتماد نشانه‌گذاری شود، با این کار می‌توانید به دستگاه‌های امضاء متقابل اعتماد نکنید.",
-    "Passphrases must match": "عبارات‌های امنیتی باید مطابقت داشته باشند",
-    "Passphrase must not be empty": "عبارت امنیتی نمی‌تواند خالی باشد",
     "Unknown error": "خطای ناشناخته",
     "Show more": "نمایش بیشتر",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "آدرس‌های این اتاق را تنظیم کنید تا کاربران بتوانند این اتاق را از طریق سرور شما پیدا کنند (%(localDomain)s)",
@@ -1735,6 +1729,14 @@
                 "title_save_key": "کلید امنیتی خود را ذخیره کنید",
                 "unable_to_setup": "تنظیم حافظه‌ی پنهان امکان پذیر نیست"
             }
+        },
+        "key_export_import": {
+            "export_title": "استخراج کلیدهای اتاق",
+            "export_description_1": "این فرآیند به شما این امکان را می‌دهد تا کلیدهایی را که برای رمزگشایی پیام‌هایتان در اتاق‌های رمزشده نیاز دارید، در قالب یک فایل محلی استخراج کنید. بعد از آن می‌توانید این فایل را در هر کلاینت دیگری وارد (Import) کرده و قادر به رمزگشایی و مشاهده‌ی پیام‌های رمزشده‌ی مذکور باشید.",
+            "enter_passphrase": "عبارت امنیتی را وارد کنید",
+            "confirm_passphrase": "عبارت امنیتی را تائید کنید",
+            "phrase_cannot_be_empty": "عبارت امنیتی نمی‌تواند خالی باشد",
+            "phrase_must_match": "عبارات‌های امنیتی باید مطابقت داشته باشند"
         }
     },
     "devtools": {

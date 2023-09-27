@@ -25,7 +25,6 @@
     "Default": "Alapértelmezett",
     "Download %(text)s": "%(text)s letöltése",
     "Email address": "E-mail-cím",
-    "Enter passphrase": "Jelmondat megadása",
     "Error decrypting attachment": "Csatolmány visszafejtése sikertelen",
     "Failed to ban user": "A felhasználót nem sikerült kizárni",
     "Failed to change power level": "A hozzáférési szint megváltoztatása sikertelen",
@@ -111,10 +110,6 @@
         "one": "(~%(count)s db eredmény)",
         "other": "(~%(count)s db eredmény)"
     },
-    "Passphrases must match": "A jelmondatoknak meg kell egyezniük",
-    "Passphrase must not be empty": "A jelmondat nem lehet üres",
-    "Export room keys": "Szoba kulcsok mentése",
-    "Confirm passphrase": "Jelmondat megerősítése",
     "Import room keys": "Szoba kulcsok betöltése",
     "File to import": "Fájl betöltése",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "A kimentett fájl jelmondattal van védve. A kibontáshoz add meg a jelmondatot.",
@@ -127,7 +122,6 @@
     "Add an Integration": "Integráció hozzáadása",
     "Something went wrong!": "Valami rosszul sikerült.",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Ezzel a folyamattal kimentheted a titkosított szobák üzeneteihez tartozó kulcsokat egy helyi fájlba. Ez után be tudod tölteni ezt a fájlt egy másik Matrix kliensbe, így az a kliens is vissza tudja fejteni az üzeneteket.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?",
@@ -2627,6 +2621,14 @@
                 "title_save_key": "Mentse el a biztonsági kulcsát",
                 "unable_to_setup": "A biztonsági tárolót nem sikerült beállítani"
             }
+        },
+        "key_export_import": {
+            "export_title": "Szoba kulcsok mentése",
+            "export_description_1": "Ezzel a folyamattal kimentheted a titkosított szobák üzeneteihez tartozó kulcsokat egy helyi fájlba. Ez után be tudod tölteni ezt a fájlt egy másik Matrix kliensbe, így az a kliens is vissza tudja fejteni az üzeneteket.",
+            "enter_passphrase": "Jelmondat megadása",
+            "confirm_passphrase": "Jelmondat megerősítése",
+            "phrase_cannot_be_empty": "A jelmondat nem lehet üres",
+            "phrase_must_match": "A jelmondatoknak meg kell egyezniük"
         }
     },
     "devtools": {

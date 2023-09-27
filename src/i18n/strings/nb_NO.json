@@ -290,10 +290,8 @@
     "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "Export room keys": "Eksporter romnøkler",
     "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
-    "Enter passphrase": "Skriv inn passordfrase",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
     "Remove %(email)s?": "Vil du fjerne %(email)s?",
@@ -366,9 +364,6 @@
     "Could not load user profile": "Klarte ikke å laste inn brukerprofilen",
     "A new password must be entered.": "Et nytt passord må bli skrevet inn.",
     "New passwords must match each other.": "De nye passordene må samsvare med hverandre.",
-    "Passphrases must match": "Passfrasene må samsvare",
-    "Passphrase must not be empty": "Passfrasen kan ikke være tom",
-    "Confirm passphrase": "Bekreft passfrasen",
     "Other users may not trust it": "Andre brukere kan kanskje mistro den",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
     "Messages in this room are end-to-end encrypted.": "Meldinger i dette rommet er start-til-slutt-kryptert.",
@@ -1176,6 +1171,13 @@
                 "confirm_security_phrase": "Bekreft sikkerhetsfrasen din",
                 "title_upgrade_encryption": "Oppgrader krypteringen din"
             }
+        },
+        "key_export_import": {
+            "export_title": "Eksporter romnøkler",
+            "enter_passphrase": "Skriv inn passordfrase",
+            "confirm_passphrase": "Bekreft passfrasen",
+            "phrase_cannot_be_empty": "Passfrasen kan ikke være tom",
+            "phrase_must_match": "Passfrasene må samsvare"
         }
     },
     "devtools": {

@@ -59,13 +59,7 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Tệp xuất sẽ được bảo vệ bằng cụm mật khẩu. Bạn nên nhập cụm mật khẩu vào đây để giải mã tệp.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Quá trình này cho phép bạn nhập các khóa mã hóa mà bạn đã xuất trước đó từ một ứng dụng khách Matrix khác. Sau đó, bạn sẽ có thể giải mã bất kỳ thông báo nào mà ứng dụng khách khác có thể giải mã.",
     "Import room keys": "Nhập các mã khoá phòng",
-    "Confirm passphrase": "Xác nhận cụm mật khẩu",
-    "Enter passphrase": "Nhập cụm mật khẩu",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Quá trình này cho phép bạn xuất khóa cho các tin nhắn bạn đã nhận được trong các phòng được mã hóa sang một tệp cục bộ. Sau đó, bạn sẽ có thể nhập tệp vào ứng dụng khách Matrix khác trong tương lai, do đó ứng dụng khách đó cũng sẽ có thể giải mã các thông báo này.",
-    "Export room keys": "Xuất các mã khoá phòng",
     "Unknown error": "Lỗi không thể nhận biết",
-    "Passphrase must not be empty": "Cụm mật khẩu không được để trống",
-    "Passphrases must match": "Cụm mật khẩu phải khớp",
     "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
     "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
@@ -2487,6 +2481,14 @@
                 "title_save_key": "Lưu Khóa Bảo mật của bạn",
                 "unable_to_setup": "Không thể thiết lập bộ nhớ bí mật"
             }
+        },
+        "key_export_import": {
+            "export_title": "Xuất các mã khoá phòng",
+            "export_description_1": "Quá trình này cho phép bạn xuất khóa cho các tin nhắn bạn đã nhận được trong các phòng được mã hóa sang một tệp cục bộ. Sau đó, bạn sẽ có thể nhập tệp vào ứng dụng khách Matrix khác trong tương lai, do đó ứng dụng khách đó cũng sẽ có thể giải mã các thông báo này.",
+            "enter_passphrase": "Nhập cụm mật khẩu",
+            "confirm_passphrase": "Xác nhận cụm mật khẩu",
+            "phrase_cannot_be_empty": "Cụm mật khẩu không được để trống",
+            "phrase_must_match": "Cụm mật khẩu phải khớp"
         }
     },
     "devtools": {

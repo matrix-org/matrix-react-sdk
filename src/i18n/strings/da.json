@@ -79,7 +79,6 @@
     },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
-    "Enter passphrase": "Indtast kodeord",
     "Verify this session": "Verificér denne session",
     "Encryption upgrade available": "Opgradering af kryptering tilgængelig",
     "Explore rooms": "Udforsk rum",
@@ -468,6 +467,9 @@
             "add_msisdn_confirm_button": "Bekræft tilføjelse af telefonnummer",
             "add_msisdn_confirm_body": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
             "add_msisdn_dialog_title": "Tilføj telefonnummer"
+        },
+        "key_export_import": {
+            "enter_passphrase": "Indtast kodeord"
         }
     },
     "devtools": {

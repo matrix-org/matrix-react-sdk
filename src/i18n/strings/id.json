@@ -500,8 +500,6 @@
     "Join Room": "Bergabung dengan Ruangan",
     "Upload avatar": "Unggah avatar",
     "Report": "Laporkan",
-    "Confirm passphrase": "Konfirmasi frasa sandi",
-    "Enter passphrase": "Masukkan frasa sandi",
     "Unknown error": "Kesalahan tidak diketahui",
     "Results": "Hasil",
     "Joined": "Tergabung",
@@ -1392,10 +1390,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "File yang diekspor akan dilindungi dengan sebuah frasa sandi. Anda harus memasukkan frasa sandinya di sini untuk mendekripsi filenya.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Proses ini memungkinkan Anda untuk mengimpor kunci enkripsi yang sebelumnya telah Anda ekspor dari klien Matrix lain. Anda kemudian akan dapat mendekripsi pesan apa saja yang dapat didekripsi oleh klien lain.",
     "Import room keys": "Impor kunci ruangan",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Proses ini memungkinkan Anda untuk mengekspor kunci untuk pesan yang Anda terima di ruangan terenkripsi ke file lokal. Anda kemudian dapat mengimpor file ke klien Matrix lain di masa mendatang, sehingga klien juga dapat mendekripsi pesan ini.",
-    "Export room keys": "Ekspor kunci ruangan",
-    "Passphrase must not be empty": "Frasa sandi harus tidak kosong",
-    "Passphrases must match": "Frasa sandi harus cocok",
     "Sorry, your vote was not registered. Please try again.": "Maaf, suara Anda tidak didaftarkan. Silakan coba lagi.",
     "Vote not registered": "Suara tidak didaftarkan",
     "Developer": "Pengembang",
@@ -1852,8 +1846,6 @@
     "Unable to find user by email": "Tidak dapat mencari pengguna dengan surel",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Pesan-pesan di ruangan ini dienkripsi secara ujung ke ujung. Ketika orang-orang bergabung, Anda dapat memverifikasi mereka di profil mereka dengan mengetuk pada foto profil mereka.",
     "Upgrade room": "Tingkatkan ruangan",
-    "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
-    "Great! This passphrase looks strong enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
     "Other spaces you know": "Space lainnya yang Anda tahu",
     "Request to join sent": "Permintaan untuk bergabung terkirim",
     "Ask to join %(roomName)s?": "Tanyakan untuk bergabung ke %(roomName)s?",
@@ -2697,6 +2689,16 @@
                 "title_save_key": "Simpan Kunci Keamanan Anda",
                 "unable_to_setup": "Tidak dapat menyiapkan penyimpanan rahasia"
             }
+        },
+        "key_export_import": {
+            "export_title": "Ekspor kunci ruangan",
+            "export_description_1": "Proses ini memungkinkan Anda untuk mengekspor kunci untuk pesan yang Anda terima di ruangan terenkripsi ke file lokal. Anda kemudian dapat mengimpor file ke klien Matrix lain di masa mendatang, sehingga klien juga dapat mendekripsi pesan ini.",
+            "export_description_2": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
+            "enter_passphrase": "Masukkan frasa sandi",
+            "phrase_strong_enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
+            "confirm_passphrase": "Konfirmasi frasa sandi",
+            "phrase_cannot_be_empty": "Frasa sandi harus tidak kosong",
+            "phrase_must_match": "Frasa sandi harus cocok"
         }
     },
     "devtools": {

@@ -98,9 +98,6 @@
     "New passwords must match each other.": "Nýju lykilorðin verða að vera þau sömu.",
     "Return to login screen": "Fara aftur í innskráningargluggann",
     "Session ID": "Auðkenni setu",
-    "Export room keys": "Flytja út dulritunarlykla spjallrásar",
-    "Enter passphrase": "Settu inn lykilfrasann",
-    "Confirm passphrase": "Staðfestu lykilfrasa",
     "Import room keys": "Flytja inn dulritunarlykla spjallrásar",
     "File to import": "Skrá til að flytja inn",
     "Delete Widget": "Eyða viðmótshluta",
@@ -129,8 +126,6 @@
     "<not supported>": "<ekki stutt>",
     "No Microphones detected": "Engir hljóðnemar fundust",
     "No Webcams detected": "Engar vefmyndavélar fundust",
-    "Passphrases must match": "Lykilfrasar verða að stemma",
-    "Passphrase must not be empty": "Lykilfrasi má ekki vera auður",
     "Explore rooms": "Kanna spjallrásir",
     "Add room": "Bæta við spjallrás",
     "Room information": "Upplýsingar um spjallrás",
@@ -2277,6 +2272,13 @@
                 "title_save_key": "Vista öryggislykilinn þinn",
                 "unable_to_setup": "Tókst ekki að setja upp leynigeymslu"
             }
+        },
+        "key_export_import": {
+            "export_title": "Flytja út dulritunarlykla spjallrásar",
+            "enter_passphrase": "Settu inn lykilfrasann",
+            "confirm_passphrase": "Staðfestu lykilfrasa",
+            "phrase_cannot_be_empty": "Lykilfrasi má ekki vera auður",
+            "phrase_must_match": "Lykilfrasar verða að stemma"
         }
     },
     "devtools": {

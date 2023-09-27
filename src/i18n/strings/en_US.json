@@ -99,14 +99,8 @@
     "Connectivity to the server has been lost.": "Connectivity to the server has been lost.",
     "Sent messages will be stored until your connection has returned.": "Sent messages will be stored until your connection has returned.",
     "Banned by %(displayName)s": "Banned by %(displayName)s",
-    "Passphrases must match": "Passphrases must match",
-    "Passphrase must not be empty": "Passphrase must not be empty",
-    "Export room keys": "Export room keys",
-    "Enter passphrase": "Enter passphrase",
-    "Confirm passphrase": "Confirm passphrase",
     "Import room keys": "Import room keys",
     "File to import": "File to import",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
     "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
@@ -295,6 +289,14 @@
             "add_msisdn_confirm_button": "Confirm adding phone number",
             "add_msisdn_confirm_body": "Click the button below to confirm adding this phone number.",
             "add_msisdn_dialog_title": "Add Phone Number"
+        },
+        "key_export_import": {
+            "export_title": "Export room keys",
+            "export_description_1": "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.",
+            "enter_passphrase": "Enter passphrase",
+            "confirm_passphrase": "Confirm passphrase",
+            "phrase_cannot_be_empty": "Passphrase must not be empty",
+            "phrase_must_match": "Passphrases must match"
         }
     },
     "timeline": {

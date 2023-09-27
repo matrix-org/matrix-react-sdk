@@ -15,7 +15,6 @@
     "Default": "Noklusējuma",
     "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email address": "Epasta adrese",
-    "Enter passphrase": "Ievadiet frāzveida paroli",
     "Error decrypting attachment": "Kļūda atšifrējot pielikumu",
     "Failed to ban user": "Neizdevās nobanot/bloķēt (liegt pieeju) lietotāju",
     "Failed to change password. Is your password correct?": "Neizdevās nomainīt paroli. Vai tā ir pareiza?",
@@ -110,13 +109,8 @@
     "Dec": "Dec.",
     "Connectivity to the server has been lost.": "Savienojums ar serveri pārtrūka.",
     "Sent messages will be stored until your connection has returned.": "Sūtītās ziņas tiks saglabātas līdz brīdim, kad savienojums tiks atjaunots.",
-    "Passphrases must match": "Frāzveida parolēm ir jāsakrīt",
-    "Passphrase must not be empty": "Frāzveida parole nevar būt tukša",
-    "Export room keys": "Eksportēt istabas atslēgas",
-    "Confirm passphrase": "Apstipriniet frāzveida paroli",
     "Import room keys": "Importēt istabas atslēgas",
     "File to import": "Importējamais fails",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Šī darbība ļauj Tev uz lokālo failu eksportēt atslēgas priekš tām ziņām, kuras Tu saņēmi šifrētās istabās. Tu varēsi importēt šo failu citā Matrix klientā, lai tajā būtu iespējams lasīt šīs ziņas atšifrētas.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
     "Confirm Removal": "Apstipriniet dzēšanu",
@@ -1165,6 +1159,14 @@
                 "title_confirm_phrase": "Apstipriniet slepeno frāzi",
                 "title_save_key": "Saglabājiet savu drošības atslēgu"
             }
+        },
+        "key_export_import": {
+            "export_title": "Eksportēt istabas atslēgas",
+            "export_description_1": "Šī darbība ļauj Tev uz lokālo failu eksportēt atslēgas priekš tām ziņām, kuras Tu saņēmi šifrētās istabās. Tu varēsi importēt šo failu citā Matrix klientā, lai tajā būtu iespējams lasīt šīs ziņas atšifrētas.",
+            "enter_passphrase": "Ievadiet frāzveida paroli",
+            "confirm_passphrase": "Apstipriniet frāzveida paroli",
+            "phrase_cannot_be_empty": "Frāzveida parole nevar būt tukša",
+            "phrase_must_match": "Frāzveida parolēm ir jāsakrīt"
         }
     },
     "devtools": {

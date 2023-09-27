@@ -23,9 +23,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
     "This room has no local addresses": "Gela honek ez du tokiko helbiderik",
     "Session ID": "Saioaren IDa",
-    "Export room keys": "Esportatu gelako gakoak",
-    "Enter passphrase": "Idatzi pasaesaldia",
-    "Confirm passphrase": "Berretsi pasaesaldia",
     "Import room keys": "Inportatu gelako gakoak",
     "Moderator": "Moderatzailea",
     "Admin Tools": "Administrazio-tresnak",
@@ -111,10 +108,7 @@
         "one": "(~%(count)s emaitza)",
         "other": "(~%(count)s emaitza)"
     },
-    "Passphrases must match": "Pasaesaldiak bat etorri behar dira",
-    "Passphrase must not be empty": "Pasaesaldia ezin da hutsik egon",
     "File to import": "Inportatu beharreko fitxategia",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "Prozesu honek zifratutako gelatan jaso dituzun mezuentzako gakoak tokiko fitxategi batera esportatzea ahalbidetzen dizu. Fitxategia beste Matrix bezero batean inportatu dezakezu, bezero hori ere mezuak deszifratzeko gai izan dadin.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Prozesu honek aurretik beste Matrix bezero batetik esportatu dituzun zifratze gakoak inportatzea ahalbidetzen dizu. Gero beste bezeroak deszifratu zitzakeen mezuak deszifratu ahal izango dituzu.",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Esportatutako fitxategia pasaesaldi batez babestuko da. Pasaesaldia bertan idatzi behar duzu, fitxategia deszifratzeko.",
     "Confirm Removal": "Berretsi kentzea",
@@ -1120,6 +1114,14 @@
                 "title_upgrade_encryption": "Eguneratu zure zifratzea",
                 "unable_to_setup": "Ezin izan da biltegi sekretua ezarri"
             }
+        },
+        "key_export_import": {
+            "export_title": "Esportatu gelako gakoak",
+            "export_description_1": "Prozesu honek zifratutako gelatan jaso dituzun mezuentzako gakoak tokiko fitxategi batera esportatzea ahalbidetzen dizu. Fitxategia beste Matrix bezero batean inportatu dezakezu, bezero hori ere mezuak deszifratzeko gai izan dadin.",
+            "enter_passphrase": "Idatzi pasaesaldia",
+            "confirm_passphrase": "Berretsi pasaesaldia",
+            "phrase_cannot_be_empty": "Pasaesaldia ezin da hutsik egon",
+            "phrase_must_match": "Pasaesaldiak bat etorri behar dira"
         }
     },
     "devtools": {

@@ -752,13 +752,7 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "ໄຟລ໌ທີສົ່ງອອກຈະຖືກປ້ອງກັນດ້ວຍປະໂຫຍກລະຫັດຜ່ານ. ທ່ານຄວນໃສ່ລະຫັດຜ່ານທີ່ນີ້, ເພື່ອຖອດລະຫັດໄຟລ໌.",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "ຂະບວນການນີ້ອະນຸຍາດໃຫ້ທ່ານນໍາເຂົ້າລະຫັດ ທີ່ທ່ານໄດ້ສົ່ງອອກຜ່ານມາຈາກລູກຄ້າ Matrix ອື່ນ. ຈາກນັ້ນທ່ານຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມໃດໆທີ່ລູກຄ້າອື່ນສາມາດຖອດລະຫັດໄດ້.",
     "Import room keys": "ນຳເຂົ້າກະແຈຫ້ອງ",
-    "Confirm passphrase": "ຢືນຢັນລະຫັດຜ່ານ",
-    "Enter passphrase": "ໃສ່ລະຫັດຜ່ານ",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "ຂະບວນການນີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກລະຫັດສໍາລັບຂໍ້ຄວາມທີ່ທ່ານໄດ້ຮັບໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດໄປຫາໄຟລ໌ໃນຊ່ອງເກັບຂໍ້ມູນ. ຫຼັງຈາກນັ້ນທ່ານຈະສາມາດນໍາເຂົ້າໄຟລ໌ເຂົ້າໄປໃນລູກຄ້າ Matrix ອື່ນໃນອະນາຄົດ, ດັ່ງນັ້ນລູກຄ້ານັ້ນຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມເຫຼົ່ານີ້ໄດ້.",
-    "Export room keys": "ສົ່ງກະແຈຫ້ອງອອກ",
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
-    "Passphrase must not be empty": "ຂໍ້ຄວາມລະຫັດຜ່ານຈະຕ້ອງບໍ່ຫວ່າງເປົ່າ",
-    "Passphrases must match": "ປະໂຫຍກຕ້ອງກົງກັນ",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Create account": "ສ້າງບັນຊີ",
     "Updating spaces... (%(progress)s out of %(count)s)": {
@@ -2193,6 +2187,14 @@
                 "title_save_key": "ບັນທຶກກະແຈຄວາມປອດໄພຂອງທ່ານ",
                 "unable_to_setup": "ບໍ່ສາມາດກຳນົດບ່ອນເກັບຂໍ້ມູນລັບໄດ້"
             }
+        },
+        "key_export_import": {
+            "export_title": "ສົ່ງກະແຈຫ້ອງອອກ",
+            "export_description_1": "ຂະບວນການນີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກລະຫັດສໍາລັບຂໍ້ຄວາມທີ່ທ່ານໄດ້ຮັບໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດໄປຫາໄຟລ໌ໃນຊ່ອງເກັບຂໍ້ມູນ. ຫຼັງຈາກນັ້ນທ່ານຈະສາມາດນໍາເຂົ້າໄຟລ໌ເຂົ້າໄປໃນລູກຄ້າ Matrix ອື່ນໃນອະນາຄົດ, ດັ່ງນັ້ນລູກຄ້ານັ້ນຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມເຫຼົ່ານີ້ໄດ້.",
+            "enter_passphrase": "ໃສ່ລະຫັດຜ່ານ",
+            "confirm_passphrase": "ຢືນຢັນລະຫັດຜ່ານ",
+            "phrase_cannot_be_empty": "ຂໍ້ຄວາມລະຫັດຜ່ານຈະຕ້ອງບໍ່ຫວ່າງເປົ່າ",
+            "phrase_must_match": "ປະໂຫຍກຕ້ອງກົງກັນ"
         }
     },
     "devtools": {

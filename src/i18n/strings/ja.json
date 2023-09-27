@@ -219,12 +219,6 @@
     "New passwords must match each other.": "新しいパスワードは互いに一致する必要があります。",
     "Return to login screen": "ログイン画面に戻る",
     "Session ID": "セッションID",
-    "Passphrases must match": "パスフレーズが一致していません",
-    "Passphrase must not be empty": "パスフレーズには1文字以上が必要です",
-    "Export room keys": "ルームの暗号鍵をエクスポート",
-    "This process allows you to export the keys for messages you have received in encrypted rooms to a local file. You will then be able to import the file into another Matrix client in the future, so that client will also be able to decrypt these messages.": "このプロセスでは、暗号化されたルームで受信したメッセージの鍵をローカルファイルにエクスポートできます。その後、クライアントがこれらのメッセージを復号化できるように、鍵のファイルを別のMatrixクライアントにインポートすることができます。",
-    "Enter passphrase": "パスフレーズを入力",
-    "Confirm passphrase": "パスフレーズを確認",
     "Import room keys": "ルームの鍵をインポート",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "このプロセスでは、以前に別のMatrixクライアントからエクスポートした暗号鍵をインポートできます。これにより、他のクライアントが解読できる全てのメッセージを解読することができます。",
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "エクスポートされたファイルはパスフレーズで保護されています。ファイルを復号化するには、パスフレーズを以下に入力してください。",
@@ -2551,6 +2545,14 @@
                 "title_save_key": "セキュリティーキーを保存",
                 "unable_to_setup": "機密ストレージを設定できません"
             }
+        },
+        "key_export_import": {
+            "export_title": "ルームの暗号鍵をエクスポート",
+            "export_description_1": "このプロセスでは、暗号化されたルームで受信したメッセージの鍵をローカルファイルにエクスポートできます。その後、クライアントがこれらのメッセージを復号化できるように、鍵のファイルを別のMatrixクライアントにインポートすることができます。",
+            "enter_passphrase": "パスフレーズを入力",
+            "confirm_passphrase": "パスフレーズを確認",
+            "phrase_cannot_be_empty": "パスフレーズには1文字以上が必要です",
+            "phrase_must_match": "パスフレーズが一致していません"
         }
     },
     "devtools": {
