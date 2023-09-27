@@ -65,7 +65,9 @@ exports[`LogoutDialog Prompts user to connect backup if there is a backup on the
           </button>
         </span>
       </div>
-      <details>
+      <details
+        class="mx_LogoutDialog_ExportKeyAdvanced"
+      >
         <summary>
           Advanced
         </summary>
@@ -150,7 +152,9 @@ exports[`LogoutDialog Prompts user to set up backup if there is no backup on the
           </button>
         </span>
       </div>
-      <details>
+      <details
+        class="mx_LogoutDialog_ExportKeyAdvanced"
+      >
         <summary>
           Advanced
         </summary>
