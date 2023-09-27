@@ -30,12 +30,8 @@
     "Send": "Senda",
     "Are you sure?": "Ertu viss?",
     "Admin Tools": "Kerfisstjóratól",
-    "Invited": "Boðið",
-    "Filter room members": "Sía meðlimi spjallrásar",
-    "You do not have permission to post to this room": "Þú hefur ekki heimild til að senda skilaboð á þessa spjallrás",
     "Unnamed room": "Nafnlaus spjallrás",
     "Join Room": "Taka þátt í spjallrás",
-    "Forget room": "Gleyma spjallrás",
     "Rooms": "Spjallrásir",
     "Low priority": "Lítill forgangur",
     "Historical": "Ferilskráning",
@@ -106,7 +102,6 @@
     "Passphrases must match": "Lykilfrasar verða að stemma",
     "Passphrase must not be empty": "Lykilfrasi má ekki vera auður",
     "Add room": "Bæta við spjallrás",
-    "Room options": "Valkostir spjallrásar",
     "Finland": "Finnland",
     "Norway": "Noreg",
     "Denmark": "Danmörk",
@@ -140,7 +135,6 @@
     "Remove recent messages": "Fjarlægja nýleg skilaboð",
     "Remove recent messages by %(user)s": "Fjarlægja nýleg skilaboð frá %(user)s",
     "Messages in this room are not end-to-end encrypted.": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
-    "Italics": "Skáletrað",
     "Removing…": "Er að fjarlægja…",
     "edited": "breytti",
     "Re-join": "Taka þátt aftur",
@@ -524,10 +518,6 @@
     "Join public room": "Taka þátt í almenningsspjallrás",
     "Recently viewed": "Nýlega skoðað",
     "View message": "Sjá skilaboð",
-    "Insert link": "Setja inn tengil",
-    "Poll": "Könnun",
-    "Voice Message": "Talskilaboð",
-    "Hide stickers": "Fela límmerki",
     "Failed to send": "Mistókst að senda",
     "Your message was sent": "Skilaboðin þín voru send",
     "Deactivate account": "Gera notandaaðgang óvirkann",
@@ -561,7 +551,6 @@
     "Join the conference at the top of this room": "Taka þátt í fjarfundinum efst í þessari spjallrás",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
     "Set up Secure Messages": "Setja upp örugg skilaboð",
-    "Permission Required": "Krafist er heimildar",
     "Upgrade your encryption": "Uppfærðu dulritunina þína",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
@@ -592,13 +581,10 @@
     "Published Addresses": "Birt vistföng",
     "This room has no local addresses": "Þessi spjallrás er ekki með nein staðvær vistföng",
     "Suggested Rooms": "Tillögur að spjallrásum",
-    "Show Widgets": "Sýna viðmótshluta",
-    "Hide Widgets": "Fela viðmótshluta",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
     },
-    "You do not have permission to start polls in this room.": "Þú hefur ekki aðgangsheimildir til að hefja kannanir á þessari spjallrás.",
     "Send voice message": "Senda talskilaboð",
     "and %(count)s others...": {
         "one": "og einn í viðbót...",
@@ -632,7 +618,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
     "Start using Key Backup": "Byrja að nota öryggisafrit dulritunarlykla",
     "No votes cast": "Engin atkvæði greidd",
-    "This room has been replaced and is no longer active.": "Þessari spjallrás hefur verið skipt út og er hún ekki lengur virk.",
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
@@ -813,8 +798,6 @@
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "Call declined": "Símtali hafnað",
-    "The conversation continues here.": "Samtalið heldur áfram hér.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (með völd sem %(powerLevelNumber)s)",
     "Message Actions": "Aðgerðir skilaboða",
     "From a thread": "Úr spjallþræði",
     "Someone is using an unknown session": "Einhver er að nota óþekkta setu",
@@ -1148,7 +1131,6 @@
     "View live location": "Skoða staðsetningu í rauntíma",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "To view %(roomName)s, you need an invite": "Til að skoða %(roomName)s þarftu boð",
-    "Video call (Jitsi)": "Myndsímtal (Jitsi)",
     "Seen by %(count)s people": {
         "one": "Séð af %(count)s aðila",
         "other": "Séð af %(count)s aðilum"
@@ -1188,11 +1170,6 @@
     "Text": "Texti",
     "Create a link": "Búa til tengil",
     "Edit link": "Breyta tengli",
-    "View chat timeline": "Skoða tímalínu spjalls",
-    "Close call": "Loka samtali",
-    "Change layout": "Breyta framsetningu",
-    "Spotlight": "Í kastljósi",
-    "Freedom": "Frelsi",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
@@ -1204,9 +1181,6 @@
     "This invite was sent to %(email)s which is not associated with your account": "Þetta boð var sent til %(email)s sem er ekki tengt notandaaðgangnum þínum",
     "You can still join here.": "Þú getur samt tekið þátt hér.",
     "Join the room to participate": "Taka þátt í spjallrás",
-    "Video call (%(brand)s)": "Myndsímtal (%(brand)s)",
-    "Show formatting": "Sýna sniðmótun",
-    "Hide formatting": "Fela sniðmótun",
     "This message could not be decrypted": "Þessi skilaboð er ekki hægt að afkóða",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
@@ -1600,7 +1574,20 @@
             "space_a11y": "Orðaklárun svæða",
             "user_description": "Notendur",
             "user_a11y": "Orðaklárun notanda"
-        }
+        },
+        "room_upgraded_link": "Samtalið heldur áfram hér.",
+        "room_upgraded_notice": "Þessari spjallrás hefur verið skipt út og er hún ekki lengur virk.",
+        "no_perms_notice": "Þú hefur ekki heimild til að senda skilaboð á þessa spjallrás",
+        "send_button_voice_message": "Senda talskilaboð",
+        "close_sticker_picker": "Fela límmerki",
+        "voice_message_button": "Talskilaboð",
+        "poll_button_no_perms_title": "Krafist er heimildar",
+        "poll_button_no_perms_description": "Þú hefur ekki aðgangsheimildir til að hefja kannanir á þessari spjallrás.",
+        "poll_button": "Könnun",
+        "mode_plain": "Fela sniðmótun",
+        "mode_rich_text": "Sýna sniðmótun",
+        "format_italics": "Skáletrað",
+        "format_insert_link": "Setja inn tengil"
     },
     "Link": "Tengill",
     "Code": "Kóði",
@@ -3436,9 +3423,22 @@
             "copy_link": "Afrita tengil spjallrásar",
             "low_priority": "Lítill forgangur",
             "forget": "Gleyma spjallrás",
-            "mark_read": "Merkja sem lesið"
+            "mark_read": "Merkja sem lesið",
+            "title": "Valkostir spjallrásar"
         },
-        "invite_this_room": "Bjóða inn á þessa spjallrás"
+        "invite_this_room": "Bjóða inn á þessa spjallrás",
+        "header": {
+            "video_call_button_jitsi": "Myndsímtal (Jitsi)",
+            "video_call_button_ec": "Myndsímtal (%(brand)s)",
+            "video_call_ec_layout_freedom": "Frelsi",
+            "video_call_ec_layout_spotlight": "Í kastljósi",
+            "video_call_ec_change_layout": "Breyta framsetningu",
+            "forget_room_button": "Gleyma spjallrás",
+            "hide_widgets_button": "Fela viðmótshluta",
+            "show_widgets_button": "Sýna viðmótshluta",
+            "close_call_button": "Loka samtali",
+            "video_room_view_chat_button": "Skoða tímalínu spjalls"
+        }
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3637,5 +3637,10 @@
         "description_optional": "Að nota auðkennisþjón er valkvætt. Ef þú velur að nota ekki auðkennisþjón, munu aðrir notendur ekki geta fundið þig og þú munt ekki geta boðið öðrum með símanúmeri eða tölvupósti.",
         "do_not_use": "Ekki nota auðkennisþjón",
         "url_field_label": "Settu inn nýjan auðkennisþjón"
+    },
+    "member_list": {
+        "invited_list_heading": "Boðið",
+        "filter_placeholder": "Sía meðlimi spjallrásar",
+        "power_label": "%(userName)s (með völd sem %(powerLevelNumber)s)"
     }
 }

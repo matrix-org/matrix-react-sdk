@@ -1,8 +1,6 @@
 {
-    "Invited": "招待済",
     "Low priority": "低優先度",
     "Create new room": "新しいルームを作成",
-    "Filter room members": "ルームのメンバーを絞り込む",
     "Are you sure?": "よろしいですか？",
     "unknown error code": "不明なエラーコード",
     "Failed to forget room %(errCode)s": "ルームの履歴を消去するのに失敗しました %(errCode)s",
@@ -29,7 +27,6 @@
     "Preparing to send logs": "ログを送信する準備をしています",
     "Logs sent": "ログが送信されました",
     "Thank you!": "ありがとうございます！",
-    "Permission Required": "権限が必要です",
     "Sun": "日",
     "Mon": "月",
     "Tue": "火",
@@ -71,10 +68,6 @@
         "other": "他%(count)s人…",
         "one": "他1人…"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s（権限レベル：%(powerLevelNumber)s）",
-    "This room has been replaced and is no longer active.": "このルームは置き換えられており、アクティブではありません。",
-    "The conversation continues here.": "こちらから継続中の会話を確認。",
-    "You do not have permission to post to this room": "このルームに投稿する権限がありません",
     "%(duration)ss": "%(duration)s秒",
     "%(duration)sm": "%(duration)s分",
     "%(duration)sh": "%(duration)s時",
@@ -85,7 +78,6 @@
         "one": "（〜%(count)s件）"
     },
     "Join Room": "ルームに参加",
-    "Forget room": "ルームを消去",
     "Share room": "ルームを共有",
     "Failed to ban user": "ユーザーをブロックできませんでした",
     "%(roomName)s does not exist.": "%(roomName)sは存在しません。",
@@ -217,7 +209,6 @@
     "Clear all data": "全てのデータを消去",
     "Message edits": "メッセージの編集履歴",
     "Sign out and remove encryption keys?": "サインアウトして、暗号鍵を削除しますか？",
-    "Italics": "斜字体",
     "Local address": "ローカルアドレス",
     "Email (optional)": "電子メール（任意）",
     "Not Trusted": "信頼されていません",
@@ -252,7 +243,6 @@
     "Switch theme": "テーマを切り替える",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
-    "Room options": "ルームの設定",
     "Unencrypted": "暗号化されていません",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
     "Scroll to most recent messages": "最新のメッセージを表示",
@@ -442,8 +432,6 @@
     "South Korea": "韓国",
     "South Georgia & South Sandwich Islands": "南ジョージア&南サンドイッチ諸島",
     "Open dial pad": "ダイヤルパッドを開く",
-    "Show Widgets": "ウィジェットを表示",
-    "Hide Widgets": "ウィジェットを非表示にする",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "この暗号化されたメッセージの真正性はこの端末では保証できません。",
     "Edit message": "メッセージを編集",
     "Someone is using an unknown session": "誰かが不明なセッションを使用しています",
@@ -733,12 +721,7 @@
     "Failed to send": "送信に失敗しました",
     "Close dialog": "ダイアログを閉じる",
     "Preparing to download logs": "ログのダウンロードを準備しています",
-    "Hide stickers": "ステッカーを表示しない",
     "Send voice message": "音声メッセージを送信",
-    "You do not have permission to start polls in this room.": "このルームでアンケートを開始する権限がありません。",
-    "Voice Message": "音声メッセージ",
-    "Poll": "アンケート",
-    "Insert link": "リンクを挿入",
     "Reason (optional)": "理由（任意）",
     "Copy link to thread": "スレッドへのリンクをコピー",
     "Create a new space": "新しいスペースを作成",
@@ -1228,7 +1211,6 @@
     "Friends and family": "友達と家族",
     "Joining…": "参加しています…",
     "Show Labs settings": "ラボの設定を表示",
-    "Video call (Jitsi)": "ビデオ通話（Jitsi）",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
@@ -1252,7 +1234,6 @@
     "To join, please enable video rooms in Labs first": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
     "To view %(roomName)s, you need an invite": "%(roomName)sを見るには招待が必要です",
     "There's no preview, would you like to join?": "プレビューはありませんが、参加しますか？",
-    "Video call (%(brand)s)": "ビデオ通話（%(brand)s）",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
     "Reset event store?": "イベントストアをリセットしますか？",
@@ -1262,16 +1243,12 @@
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
     "Stop and close": "停止して閉じる",
     "Saved Items": "保存済み項目",
-    "View chat timeline": "チャットのタイムラインを表示",
-    "Spotlight": "スポットライト",
     "Read receipts": "開封確認メッセージ",
     "Seen by %(count)s people": {
         "one": "%(count)s人が閲覧済",
         "other": "%(count)s人が閲覧済"
     },
     "%(members)s and %(last)s": "%(members)sと%(last)s",
-    "Hide formatting": "フォーマットを表示しない",
-    "Show formatting": "フォーマットを表示",
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)sに更新",
     "Unsent": "未送信",
     "Not all selected were added": "選択されたもの全てが追加されてはいません",
@@ -1285,11 +1262,9 @@
     "To view, please enable video rooms in Labs first": "表示するには、まずラボのビデオ通話ルームを有効にしてください",
     "Are you sure you're at the right place?": "正しい場所にいますか？",
     "Text": "テキスト",
-    "Freedom": "自由",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
-    "Change layout": "レイアウトを変更",
     "Create a link": "リンクを作成",
     "Edit link": "リンクを編集",
     "Unable to decrypt message": "メッセージを復号化できません",
@@ -1304,7 +1279,6 @@
     "Message pending moderation": "保留中のメッセージのモデレート",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Send email": "電子メールを送信",
-    "Close call": "通話を終了",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
@@ -1831,7 +1805,20 @@
             "space_a11y": "スペースの自動補完",
             "user_description": "ユーザー",
             "user_a11y": "ユーザーの自動補完"
-        }
+        },
+        "room_upgraded_link": "こちらから継続中の会話を確認。",
+        "room_upgraded_notice": "このルームは置き換えられており、アクティブではありません。",
+        "no_perms_notice": "このルームに投稿する権限がありません",
+        "send_button_voice_message": "音声メッセージを送信",
+        "close_sticker_picker": "ステッカーを表示しない",
+        "voice_message_button": "音声メッセージ",
+        "poll_button_no_perms_title": "権限が必要です",
+        "poll_button_no_perms_description": "このルームでアンケートを開始する権限がありません。",
+        "poll_button": "アンケート",
+        "mode_plain": "フォーマットを表示しない",
+        "mode_rich_text": "フォーマットを表示",
+        "format_italics": "斜字体",
+        "format_insert_link": "リンクを挿入"
     },
     "Link": "リンク",
     "Code": "コード",
@@ -3839,9 +3826,22 @@
             "copy_link": "ルームのリンクをコピー",
             "low_priority": "低優先度",
             "forget": "ルームを消去",
-            "mark_read": "既読にする"
+            "mark_read": "既読にする",
+            "title": "ルームの設定"
         },
-        "invite_this_room": "このルームに招待"
+        "invite_this_room": "このルームに招待",
+        "header": {
+            "video_call_button_jitsi": "ビデオ通話（Jitsi）",
+            "video_call_button_ec": "ビデオ通話（%(brand)s）",
+            "video_call_ec_layout_freedom": "自由",
+            "video_call_ec_layout_spotlight": "スポットライト",
+            "video_call_ec_change_layout": "レイアウトを変更",
+            "forget_room_button": "ルームを消去",
+            "hide_widgets_button": "ウィジェットを非表示にする",
+            "show_widgets_button": "ウィジェットを表示",
+            "close_call_button": "通話を終了",
+            "video_room_view_chat_button": "チャットのタイムラインを表示"
+        }
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
@@ -4049,5 +4049,10 @@
         "description_optional": "IDサーバーの使用は任意です。IDサーバーを使用しない場合、他のユーザーによって見つけられず、また、メールアドレスや電話で他のユーザーを招待することもできません。",
         "do_not_use": "IDサーバーを使用しない",
         "url_field_label": "新しいIDサーバーを入力"
+    },
+    "member_list": {
+        "invited_list_heading": "招待済",
+        "filter_placeholder": "ルームのメンバーを絞り込む",
+        "power_label": "%(userName)s（権限レベル：%(powerLevelNumber)s）"
     }
 }

@@ -18,11 +18,8 @@
     "Failed to ban user": "การแบนผู้ใช้ล้มเหลว",
     "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
     "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
-    "Filter room members": "กรองสมาชิกห้อง",
-    "Forget room": "ลืมห้อง",
     "Historical": "ประวัติแชทเก่า",
     "Invalid file%(extra)s": "ไฟล์ %(extra)s ไม่ถูกต้อง",
-    "Invited": "เชิญแล้ว",
     "Join Room": "เข้าร่วมห้อง",
     "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
     "Moderator": "ผู้ช่วยดูแล",
@@ -78,7 +75,6 @@
     "Custom level": "กำหนดระดับเอง",
     "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
     "Enter passphrase": "กรอกรหัสผ่าน",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
     "Verification Pending": "รอการตรวจสอบ",
     "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
     "Error decrypting video": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ",
@@ -105,7 +101,6 @@
     "A connection error occurred while trying to contact the server.": "เกิดข้อผิดพลาดในการเชื่อมต่อขณะพยายามติดต่อกับเซิร์ฟเวอร์.",
     "Your area is experiencing difficulties connecting to the internet.": "พื้นที่ของคุณประสบปัญหาในการเชื่อมต่ออินเทอร์เน็ต.",
     "The server has denied your request.": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ.",
-    "Permission Required": "ต้องได้รับอนุญาต",
     "Session ID": "รหัสเซสชัน",
     "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
     "Deactivate user": "ปิดใช้งานผู้ใช้",
@@ -265,7 +260,8 @@
         "autocomplete": {
             "command_description": "คำสั่ง",
             "user_description": "ผู้ใช้"
-        }
+        },
+        "poll_button_no_perms_title": "ต้องได้รับอนุญาต"
     },
     "Link": "ลิงค์",
     "Code": "โค้ด",
@@ -544,7 +540,10 @@
             "favourite": "รายการโปรด",
             "low_priority": "ความสำคัญต่ำ"
         },
-        "invite_this_room": "เชิญเข้าห้องนี้"
+        "invite_this_room": "เชิญเข้าห้องนี้",
+        "header": {
+            "forget_room_button": "ลืมห้อง"
+        }
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
@@ -596,5 +595,10 @@
     },
     "encryption": {
         "not_supported": "<ไม่รองรับ>"
+    },
+    "member_list": {
+        "invited_list_heading": "เชิญแล้ว",
+        "filter_placeholder": "กรองสมาชิกห้อง",
+        "power_label": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)"
     }
 }

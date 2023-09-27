@@ -12,7 +12,6 @@
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Saturday": "Lørdag",
-    "Permission Required": "Tillatelse kreves",
     "Send": "Send",
     "Sun": "Søn",
     "Mon": "Man",
@@ -74,8 +73,6 @@
     "Folder": "Mappe",
     "Are you sure?": "Er du sikker?",
     "Admin Tools": "Adminverktøy",
-    "Invited": "Invitert",
-    "Italics": "Kursiv",
     "Direct Messages": "Direktemeldinger",
     "Rooms": "Rom",
     "Sign Up": "Registrer deg",
@@ -132,7 +129,6 @@
     "%(duration)sh": "%(duration)st",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
-    "Forget room": "Glem rommet",
     "Share room": "Del rommet",
     "Low priority": "Lavprioritet",
     "Historical": "Historisk",
@@ -193,7 +189,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
     "Share Link to User": "Del en lenke til brukeren",
-    "Filter room members": "Filtrer rommets medlemmer",
     "Replying": "Svarer på",
     "Start chatting": "Begynn å chatte",
     "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
@@ -247,8 +242,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (styrkenivå %(powerLevelNumber)s)",
-    "The conversation continues here.": "Samtalen fortsetter her.",
     "Reason: %(reason)s": "Årsak: %(reason)s",
     "You were banned from %(roomName)s by %(memberName)s": "Du ble bannlyst fra %(roomName)s av %(memberName)s",
     "Do you want to chat with %(user)s?": "Vil du prate med %(user)s?",
@@ -328,7 +321,6 @@
     "Set up Secure Messages": "Sett opp sikre meldinger",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
-    "Room options": "Rominnstillinger",
     "Your messages are not secure": "Dine meldinger er ikke sikre",
     "Edited at %(date)s": "Redigert den %(date)s",
     "Click to view edits": "Klikk for å vise redigeringer",
@@ -450,8 +442,6 @@
     "You cancelled verification.": "Du avbrøt verifiseringen.",
     "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
     "Failed to deactivate user": "Mislyktes i å deaktivere brukeren",
-    "Show Widgets": "Vis moduler",
-    "Hide Widgets": "Skjul moduler",
     "Dial pad": "Nummerpanel",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
@@ -899,7 +889,10 @@
             "emoji_a11y": "Auto-fullfør emojier",
             "@room_description": "Varsle hele rommet",
             "user_description": "Brukere"
-        }
+        },
+        "room_upgraded_link": "Samtalen fortsetter her.",
+        "poll_button_no_perms_title": "Tillatelse kreves",
+        "format_italics": "Kursiv"
     },
     "Code": "Kode",
     "power_level": {
@@ -1704,9 +1697,15 @@
             "unfavourite": "Favorittmerket",
             "favourite": "Favoritt",
             "low_priority": "Lav Prioritet",
-            "forget": "Glem rommet"
+            "forget": "Glem rommet",
+            "title": "Rominnstillinger"
         },
-        "invite_this_room": "Inviter til dette rommet"
+        "invite_this_room": "Inviter til dette rommet",
+        "header": {
+            "forget_room_button": "Glem rommet",
+            "hide_widgets_button": "Skjul moduler",
+            "show_widgets_button": "Vis moduler"
+        }
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"
@@ -1805,5 +1804,10 @@
         "use_im": "Bruk en integreringsbehandler til å behandle botter, moduler, og klistremerkepakker.",
         "manage_title": "Behandle integreringer",
         "explainer": "Integreringsbehandlere mottar oppsettsdata, og kan endre på moduler, sende rominvitasjoner, og bestemme styrkenivåer på dine vegne."
+    },
+    "member_list": {
+        "invited_list_heading": "Invitert",
+        "filter_placeholder": "Filtrer rommets medlemmer",
+        "power_label": "%(userName)s (styrkenivå %(powerLevelNumber)s)"
     }
 }

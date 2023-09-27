@@ -19,12 +19,9 @@
     "Failed to mute user": "Neizdevās apklusināt lietotāju",
     "Failed to reject invite": "Neizdevās noraidīt uzaicinājumu",
     "Failed to reject invitation": "Neizdevās noraidīt uzaicinājumu",
-    "Filter room members": "Atfiltrēt istabas dalībniekus",
-    "Forget room": "Aizmirst istabu",
     "Historical": "Bijušie",
     "Home": "Mājup",
     "Invalid file%(extra)s": "Nederīgs fails %(extra)s",
-    "Invited": "Uzaicināts/a",
     "Join Room": "Pievienoties istabai",
     "Jump to first unread message.": "Pāriet uz pirmo neizlasīto ziņu.",
     "Low priority": "Zema prioritāte",
@@ -43,7 +40,6 @@
         "one": "Tiek augšupielādēts %(filename)s un %(count)s citi",
         "other": "Tiek augšupielādēts %(filename)s un %(count)s citi"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tiesību līmenis %(powerLevelNumber)s)",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -63,7 +59,6 @@
     "Create new room": "Izveidot jaunu istabu",
     "Verification Pending": "Gaida verifikāciju",
     "Warning!": "Brīdinājums!",
-    "You do not have permission to post to this room": "Tev nav vajadzīgo atļauju, lai rakstītu ziņas šajā istabā",
     "You seem to be in a call, are you sure you want to quit?": "Izskatās, ka atrodies zvana režīmā. Vai tiešām vēlies iziet?",
     "You seem to be uploading files, are you sure you want to quit?": "Izskatās, ka šobrīd notiek failu augšupielāde. Vai tiešām vēlaties iziet?",
     "Sun": "Sv.",
@@ -147,7 +142,6 @@
     "Logs sent": "Logfaili nosūtīti",
     "Yesterday": "Vakardien",
     "Thank you!": "Tencinam!",
-    "Permission Required": "Nepieciešama atļauja",
     "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
     "Start Verification": "Uzsākt verifikāciju",
     "Hide verified sessions": "Slēpt verificētas sesijas",
@@ -172,7 +166,6 @@
     },
     "Encryption not enabled": "Šifrēšana nav iespējota",
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
-    "Room options": "Istabas opcijas",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
     "This room is end-to-end encrypted": "Šajā istabā tiek veikta pilnīga šifrēšana",
@@ -628,7 +621,6 @@
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
     "Sorry, you can't edit a poll after votes have been cast.": "Atvainojiet, aptauju nevar rediģēt pēc tam, kad balsis jau ir nodotas.",
-    "You do not have permission to start polls in this room.": "Jums nav atļaujas uzsākt aptaujas šajā istabā.",
     "Results will be visible when the poll is ended": "Rezultāti būs redzami, kad aptauja būs pabeigta",
     "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
     "The poll has ended. No votes were cast.": "Aptauja ir beigusies. Balsis netika nodotas.",
@@ -636,7 +628,6 @@
     "Failed to end poll": "Neizdevās pārtraukt aptauju",
     "Can't edit poll": "Nevar rediģēt aptauju",
     "End Poll": "Pārtraukt aptauju",
-    "Poll": "Aptauja",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "You need to have the right permissions in order to share locations in this room.": "Jums ir jābūt pietiekāmām piekļuves tiesībām, lai kopīgotu atrašanās vietas šajā istabā.",
     "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
@@ -661,7 +652,6 @@
     "We were unable to access your microphone. Please check your browser settings and try again.": "Mēs nevarējām piekļūt jūsu mikrofonam. Lūdzu, pārbaudiet pārlūkprogrammas iestatījumus un mēģiniet vēlreiz.",
     "Unable to access your microphone": "Nevar piekļūt mikrofonam",
     "Error processing voice message": "Balss ziņas apstrādes kļūda",
-    "Voice Message": "Balss ziņa",
     "Nothing pinned, yet": "Vēl nekas nav piesprausts",
     "Pinned messages": "Piespraustās ziņas",
     "Pinned": "Piesprausts",
@@ -900,7 +890,13 @@
             "room_a11y": "Istabu automātiska pabeigšana",
             "user_description": "Lietotāji",
             "user_a11y": "Lietotāju automātiska pabeigšana"
-        }
+        },
+        "no_perms_notice": "Tev nav vajadzīgo atļauju, lai rakstītu ziņas šajā istabā",
+        "send_button_voice_message": "Sūtīt balss ziņu",
+        "voice_message_button": "Balss ziņa",
+        "poll_button_no_perms_title": "Nepieciešama atļauja",
+        "poll_button_no_perms_description": "Jums nav atļaujas uzsākt aptaujas šajā istabā.",
+        "poll_button": "Aptauja"
     },
     "Code": "Kods",
     "power_level": {
@@ -1945,9 +1941,13 @@
             "unfavourite": "Izlasē",
             "favourite": "Izlase",
             "low_priority": "Zema prioritāte",
-            "forget": "Aizmirst istabu"
+            "forget": "Aizmirst istabu",
+            "title": "Istabas opcijas"
         },
-        "invite_this_room": "Uzaicināt uz šo istabu"
+        "invite_this_room": "Uzaicināt uz šo istabu",
+        "header": {
+            "forget_room_button": "Aizmirst istabu"
+        }
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",
@@ -2060,5 +2060,10 @@
     },
     "integration_manager": {
         "manage_title": "Pārvaldīt integrācijas"
+    },
+    "member_list": {
+        "invited_list_heading": "Uzaicināts/a",
+        "filter_placeholder": "Atfiltrēt istabas dalībniekus",
+        "power_label": "%(userName)s (tiesību līmenis %(powerLevelNumber)s)"
     }
 }

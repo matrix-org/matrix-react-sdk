@@ -81,7 +81,6 @@ interface IState {
 
 export const TAG_ORDER: TagID[] = [
     DefaultTagID.Invite,
-    DefaultTagID.SavedItems,
     DefaultTagID.Favourite,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
@@ -379,11 +378,6 @@ const TAG_AESTHETICS: TagAestheticsMap = {
     },
     [DefaultTagID.Favourite]: {
         sectionLabel: _td("common|favourites"),
-        isInvite: false,
-        defaultHidden: false,
-    },
-    [DefaultTagID.SavedItems]: {
-        sectionLabel: _td("Saved Items"),
         isInvite: false,
         defaultHidden: false,
     },

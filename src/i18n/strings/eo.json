@@ -38,10 +38,6 @@
         "other": "kaj %(count)s aliaj…",
         "one": "kaj unu alia…"
     },
-    "Invited": "Invititaj",
-    "Filter room members": "Filtri ĉambranojn",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (povnivelo je %(powerLevelNumber)s)",
-    "You do not have permission to post to this room": "Mankas al vi permeso afiŝi en tiu ĉambro",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -52,7 +48,6 @@
         "one": "(~%(count)s rezulto)"
     },
     "Join Room": "Aliĝi al ĉambro",
-    "Forget room": "Forgesi ĉambron",
     "Rooms": "Ĉambroj",
     "Low priority": "Malpli gravaj",
     "Historical": "Estintaj",
@@ -144,7 +139,6 @@
     "Logs sent": "Protokolo sendiĝis",
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
-    "Permission Required": "Necesas permeso",
     "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
     "Dog": "Hundo",
     "Cat": "Kato",
@@ -308,8 +302,6 @@
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
     "Go to Settings": "Iri al agordoj",
-    "The conversation continues here.": "La interparolo daŭras ĉi tie.",
-    "This room has been replaced and is no longer active.": "Ĉi tiu ĉambro estas anstataŭita, kaj ne plu aktivas.",
     "Only room administrators will see this warning": "Nur administrantoj de ĉambro vidos ĉi tiun averton",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ne povas enlegi la responditan okazon; aŭ ĝi ne ekzistas, aŭ vi ne rajtas vidi ĝin.",
     "Clear all data": "Vakigi ĉiujn datumojn",
@@ -374,7 +366,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Malaktivigo de ĉi tiu uzanto adiaŭigos ĝin, kaj malebligos, ke ĝi resalutu. Plie, ĝi foriros de ĉiuj enataj ĉambroj. Tiu ago ne povas malfariĝi. Ĉu vi certe volas malaktivigi ĉi tiun uzanton?",
     "Deactivate user": "Malaktivigi uzanton",
     "Remove recent messages": "Forigi freŝajn mesaĝojn",
-    "Italics": "Kursive",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Provu rulumi supren tra la historio por kontroli, ĉu ne estas iuj pli fruaj.",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "Ĉi tiu invito al %(roomName)s sendiĝis al %(email)s, kiu ne estas ligita al via konto",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Ligu ĉi tiun retpoŝtadreson al via konto en Agordoj por ricevadi invitojn rekte per %(brand)s.",
@@ -565,7 +556,6 @@
     "Ok": "Bone",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
     "Message preview": "Antaŭrigardo al mesaĝo",
-    "Room options": "Elektebloj pri ĉambro",
     "Wrong file type": "Neĝusta dosiertipo",
     "Looks good!": "Ŝajnas bona!",
     "Security Phrase": "Sekureca frazo",
@@ -619,8 +609,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Vi povas fiksi maksimume %(count)s fenestraĵojn"
     },
-    "Show Widgets": "Montri fenestraĵojn",
-    "Hide Widgets": "Kaŝi fenestraĵojn",
     "Backup version:": "Repaŝa versio:",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
@@ -1073,7 +1061,6 @@
     "Results will be visible when the poll is ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos",
     "Sorry, you can't edit a poll after votes have been cast.": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
     "Can't edit poll": "Ne povas redakti balotenketon",
-    "Poll": "Balotenketo",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
@@ -1428,7 +1415,14 @@
             "space_a11y": "Memaga finfaro de aro",
             "user_description": "Uzantoj",
             "user_a11y": "Memkompletigo de uzantoj"
-        }
+        },
+        "room_upgraded_link": "La interparolo daŭras ĉi tie.",
+        "room_upgraded_notice": "Ĉi tiu ĉambro estas anstataŭita, kaj ne plu aktivas.",
+        "no_perms_notice": "Mankas al vi permeso afiŝi en tiu ĉambro",
+        "send_button_voice_message": "Sendi voĉmesaĝon",
+        "poll_button_no_perms_title": "Necesas permeso",
+        "poll_button": "Balotenketo",
+        "format_italics": "Kursive"
     },
     "Code": "Kodo",
     "power_level": {
@@ -3032,9 +3026,15 @@
             "unfavourite": "Elstarigita",
             "favourite": "Elstarigi",
             "low_priority": "Malalta prioritato",
-            "forget": "Forgesi ĉambron"
+            "forget": "Forgesi ĉambron",
+            "title": "Elektebloj pri ĉambro"
         },
-        "invite_this_room": "Inviti al ĉi tiu ĉambro"
+        "invite_this_room": "Inviti al ĉi tiu ĉambro",
+        "header": {
+            "forget_room_button": "Forgesi ĉambron",
+            "hide_widgets_button": "Kaŝi fenestraĵojn",
+            "show_widgets_button": "Montri fenestraĵojn"
+        }
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3222,5 +3222,10 @@
         "description_optional": "Vi ne devas uzi identigan servilon. Se vi tion elektos, vi ne povos troviĝi de aliaj uzantoj, kaj vi ne povos memage inviti ilin per retpoŝto aŭ telefono.",
         "do_not_use": "Ne uzi identigan servilon",
         "url_field_label": "Enigi novan identigan servilon"
+    },
+    "member_list": {
+        "invited_list_heading": "Invititaj",
+        "filter_placeholder": "Filtri ĉambranojn",
+        "power_label": "%(userName)s (povnivelo je %(powerLevelNumber)s)"
     }
 }

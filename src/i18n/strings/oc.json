@@ -1,6 +1,5 @@
 {
     "Admin Tools": "Aisinas d’administrator",
-    "Invited": "Convidat",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
     "Rooms": "Salas",
@@ -61,7 +60,6 @@
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
     "Unencrypted": "Pas chifrat",
-    "Italics": "Italicas",
     "Historical": "Istoric",
     "Sign Up": "S’inscriure",
     "Demote": "Retrogradar",
@@ -225,7 +223,8 @@
         "autocomplete": {
             "command_description": "Comandas",
             "user_description": "Utilizaires"
-        }
+        },
+        "format_italics": "Italicas"
     },
     "power_level": {
         "default": "Predefinit",
@@ -406,5 +405,8 @@
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",
         "rotate_right": "Pivotar cap a drecha"
+    },
+    "member_list": {
+        "invited_list_heading": "Convidat"
     }
 }

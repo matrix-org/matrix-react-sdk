@@ -1,5 +1,4 @@
 {
-    "Permission Required": "Tasiregt tlaq",
     "Sun": "Iṭij",
     "Mon": "Ari",
     "Tue": "Ara",
@@ -150,16 +149,12 @@
         "other": "d %(count)s wiyaḍ...",
         "one": "d wayeḍ-nniḍen..."
     },
-    "Filter room members": "Sizdeg iɛeggalen n texxamt",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (i iǧehden %(powerLevelNumber)s",
-    "Italics": "Uknan",
     "Replying": "Tiririt",
     "(~%(count)s results)": {
         "one": "(~%(count)s igmaḍ)",
         "other": "(~%(count)s igmaḍ)"
     },
     "Join Room": "Rnu ɣer texxamt",
-    "Forget room": "Tettuḍ taxxamt",
     "Rooms": "Timɣiwent",
     "Join the conversation with an account": "Ttekki deg udiwenni s umiḍan",
     "Re-join": "Ales attekki",
@@ -288,7 +283,6 @@
     "Forget this room": "Ttu taxxamt-a",
     "Reject & Ignore user": "Agi & Zgel aseqdac",
     "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
-    "Room options": "Tixtiṛiyin n texxamt",
     "All Rooms": "Akk tixxamin",
     "Error creating address": "Tuccḍa deg tmerna n tensa",
     "Error removing address": "Tuccḍa deg tukksa n tensa",
@@ -367,10 +361,6 @@
     "Encrypted by an unverified session": "Yettuwgelhen s tɣimit ur nettwasenqed ara",
     "Unencrypted": "Ur yettwawgelhen ara",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
-    "Invited": "Yettwancad",
-    "The conversation continues here.": "Adiwenni yettkemmil dagi.",
-    "This room has been replaced and is no longer active.": "Taxxamt-a ad tettusmelsi, dayen d tarurmidt.",
-    "You do not have permission to post to this room": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -1088,7 +1078,12 @@
             "room_a11y": "Asmad awurman n texxamt",
             "user_description": "Iseqdacen",
             "user_a11y": "Asmad awurman n useqdac"
-        }
+        },
+        "room_upgraded_link": "Adiwenni yettkemmil dagi.",
+        "room_upgraded_notice": "Taxxamt-a ad tettusmelsi, dayen d tarurmidt.",
+        "no_perms_notice": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
+        "poll_button_no_perms_title": "Tasiregt tlaq",
+        "format_italics": "Uknan"
     },
     "Code": "Tangalt",
     "power_level": {
@@ -2087,9 +2082,13 @@
             "unfavourite": "Yettusmenyaf",
             "favourite": "Asmenyif",
             "low_priority": "Tazwart taddayt",
-            "forget": "Tettuḍ taxxamt"
+            "forget": "Tettuḍ taxxamt",
+            "title": "Tixtiṛiyin n texxamt"
         },
-        "invite_this_room": "Nced-d ɣer texxamt-a"
+        "invite_this_room": "Nced-d ɣer texxamt-a",
+        "header": {
+            "forget_room_button": "Tettuḍ taxxamt"
+        }
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",
@@ -2223,5 +2222,10 @@
         "description_optional": "Aseqdec n uqeddac n timagit d afrayan. Ma yella tferneḍ ur tesseqdaceḍ ara aqeddac n timagit, dayen ur tettuɣaleḍ ara ad tettwafeḍ sɣur iseqdac wiyaḍ rnu ur tettizmireḍ ara ad d-necdeḍ s yimayl neɣ s tiliɣri.",
         "do_not_use": "Ur seqdac ara aqeddac n timagt",
         "url_field_label": "Sekcem aqeddac n timagit amaynut"
+    },
+    "member_list": {
+        "invited_list_heading": "Yettwancad",
+        "filter_placeholder": "Sizdeg iɛeggalen n texxamt",
+        "power_label": "%(userName)s (i iǧehden %(powerLevelNumber)s"
     }
 }

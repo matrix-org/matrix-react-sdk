@@ -39,10 +39,6 @@
         "other": "и %(count)s других...",
         "one": "и још један други..."
     },
-    "Invited": "Позван",
-    "Filter room members": "Филтрирај чланове собе",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (снага %(powerLevelNumber)s)",
-    "You do not have permission to post to this room": "Немате овлашћење за писање у овој соби",
     "%(duration)ss": "%(duration)sс",
     "%(duration)sm": "%(duration)sм",
     "%(duration)sh": "%(duration)sч",
@@ -54,7 +50,6 @@
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Приступи соби",
-    "Forget room": "Заборави собу",
     "Rooms": "Собе",
     "Low priority": "Ниска важност",
     "Historical": "Историја",
@@ -160,7 +155,6 @@
     "Share User": "Подели корисника",
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
-    "Permission Required": "Неопходна је дозвола",
     "This event could not be displayed": "Овај догађај не може бити приказан",
     "Demote yourself?": "Рашчињавате себе?",
     "Demote": "Рашчини",
@@ -173,7 +167,6 @@
     "Direct Messages": "Директне поруке",
     "Forget this room": "Заборави ову собу",
     "Start chatting": "Започни ћаскање",
-    "Room options": "Опције собе",
     "Room Name": "Назив собе",
     "Room Topic": "Тема собе",
     "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
@@ -711,7 +704,9 @@
             "@room_description": "Обавести све у соби",
             "notification_description": "Собно обавештење",
             "user_description": "Корисници"
-        }
+        },
+        "no_perms_notice": "Немате овлашћење за писање у овој соби",
+        "poll_button_no_perms_title": "Неопходна је дозвола"
     },
     "Code": "Код",
     "power_level": {
@@ -1436,9 +1431,13 @@
         "context_menu": {
             "favourite": "Омиљено",
             "low_priority": "Најмања важност",
-            "forget": "Заборави собу"
+            "forget": "Заборави собу",
+            "title": "Опције собе"
         },
-        "invite_this_room": "Позови у ову собу"
+        "invite_this_room": "Позови у ову собу",
+        "header": {
+            "forget_room_button": "Заборави собу"
+        }
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
@@ -1521,5 +1520,10 @@
     },
     "integration_manager": {
         "error_connecting_heading": "Не могу се повезати на управника уградњи"
+    },
+    "member_list": {
+        "invited_list_heading": "Позван",
+        "filter_placeholder": "Филтрирај чланове собе",
+        "power_label": "%(userName)s (снага %(powerLevelNumber)s)"
     }
 }

@@ -5,7 +5,6 @@
     "All Rooms": "كل الغُرف",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
-    "Permission Required": "التصريح مطلوب",
     "Sun": "الأحد",
     "Mon": "الإثنين",
     "Tue": "الثلاثاء",
@@ -133,7 +132,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "هذه الغرفة تشغل إصدار الغرفة <roomVersion /> ، والذي عده الخادم الوسيط هذا بأنه<i> غير مستقر </i>.",
     "This room has already been upgraded.": "سبق وأن تمت ترقية هذه الغرفة.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
-    "Room options": "خيارات الغرفة",
     "%(roomName)s is not accessible at this time.": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
     "%(roomName)s does not exist.": "الغرفة %(roomName)s ليست موجودة.",
     "%(roomName)s can't be previewed. Do you want to join it?": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
@@ -164,9 +162,6 @@
     "Low priority": "أولوية منخفضة",
     "Add room": "أضف غرفة",
     "Rooms": "الغرف",
-    "Show Widgets": "إظهار عناصر الواجهة",
-    "Hide Widgets": "إخفاء عناصر الواجهة",
-    "Forget room": "انسَ الغرفة",
     "Join Room": "انضم للغرفة",
     "(~%(count)s results)": {
         "one": "(~%(count)s نتيجة)",
@@ -178,13 +173,6 @@
     "%(duration)sh": "%(duration)sس",
     "%(duration)sm": "%(duration)sد",
     "%(duration)ss": "%(duration)sث",
-    "Italics": "مائل",
-    "You do not have permission to post to this room": "ليس لديك إذن للنشر في هذه الغرفة",
-    "This room has been replaced and is no longer active.": "تم استبدال هذه الغرفة ولم تعد نشطة.",
-    "The conversation continues here.": "تستمر المحادثة هنا.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (قوة %(powerLevelNumber)s)",
-    "Filter room members": "تصفية أعضاء الغرفة",
-    "Invited": "مدعو",
     "and %(count)s others...": {
         "one": "وواحدة أخرى...",
         "other": "و %(count)s أخر..."
@@ -575,7 +563,12 @@
         "placeholder_reply_encrypted": "أرسل جواباً مشفراً …",
         "placeholder_reply": "أرسل جواباً …",
         "placeholder_encrypted": "أرسل رسالة مشفرة …",
-        "placeholder": "أرسل رسالة …"
+        "placeholder": "أرسل رسالة …",
+        "room_upgraded_link": "تستمر المحادثة هنا.",
+        "room_upgraded_notice": "تم استبدال هذه الغرفة ولم تعد نشطة.",
+        "no_perms_notice": "ليس لديك إذن للنشر في هذه الغرفة",
+        "poll_button_no_perms_title": "التصريح مطلوب",
+        "format_italics": "مائل"
     },
     "power_level": {
         "default": "المبدئي",
@@ -1418,9 +1411,15 @@
             "unfavourite": "فُضلت",
             "favourite": "تفضيل",
             "low_priority": "أولوية منخفضة",
-            "forget": "انسَ الغرفة"
+            "forget": "انسَ الغرفة",
+            "title": "خيارات الغرفة"
         },
-        "invite_this_room": "ادع لهذه الغرفة"
+        "invite_this_room": "ادع لهذه الغرفة",
+        "header": {
+            "forget_room_button": "انسَ الغرفة",
+            "hide_widgets_button": "إخفاء عناصر الواجهة",
+            "show_widgets_button": "إظهار عناصر الواجهة"
+        }
     },
     "space": {
         "context_menu": {
@@ -1533,5 +1532,10 @@
         "description_optional": "استخدام خادم الهوية اختياري. إذا اخترت عدم استخدام خادم هوية ، فلن يتمكن المستخدمون الآخرون من اكتشافك ولن تتمكن من دعوة الآخرين عبر البريد الإلكتروني أو الهاتف.",
         "do_not_use": "لا تستخدم خادم هوية",
         "url_field_label": "أدخل خادم هوية جديدًا"
+    },
+    "member_list": {
+        "invited_list_heading": "مدعو",
+        "filter_placeholder": "تصفية أعضاء الغرفة",
+        "power_label": "%(userName)s (قوة %(powerLevelNumber)s)"
     }
 }

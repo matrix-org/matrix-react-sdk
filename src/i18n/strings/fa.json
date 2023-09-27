@@ -20,8 +20,6 @@
     "Yesterday": "دیروز",
     "Ok": "تأیید",
     "Set up": "برپایی",
-    "Forget room": "فراموش کردن اتاق",
-    "Filter room members": "فیلتر کردن اعضای اتاق",
     "Failed to ban user": "کاربر مسدود نشد",
     "Error decrypting attachment": "خطا در رمزگشایی پیوست",
     "Email address": "آدرس ایمیل",
@@ -58,7 +56,6 @@
     "Tue": "سه‌شنبه",
     "Mon": "دوشنبه",
     "Sun": "یکشنبه",
-    "Permission Required": "اجازه نیاز است",
     "Moderator": "معاون",
     "Restricted": "ممنوع",
     "Zimbabwe": "زیمبابوه",
@@ -659,8 +656,6 @@
     "Add room": "افزودن اتاق",
     "Rooms": "اتاق‌ها",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
-    "Show Widgets": "نمایش ابزارک‌ها",
-    "Hide Widgets": "پنهان‌کردن ابزارک‌ها",
     "Join Room": "به اتاق بپیوندید",
     "(~%(count)s results)": {
         "one": "(~%(count)s نتیجه)",
@@ -671,12 +666,6 @@
     "%(duration)sh": "%(duration)s ساعت",
     "%(duration)sm": "%(duration)s دقیقه",
     "%(duration)ss": "%(duration)s ثانیه",
-    "Italics": "مورب",
-    "You do not have permission to post to this room": "شما اجازه ارسال در این اتاق را ندارید",
-    "This room has been replaced and is no longer active.": "این اتاق جایگزین شده‌است و دیگر فعال نیست.",
-    "The conversation continues here.": "گفتگو در اینجا ادامه دارد.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (سطح قدرت %(powerLevelNumber)s)",
-    "Invited": "دعوت شد",
     "and %(count)s others...": {
         "one": "و یکی دیگر ...",
         "other": "و %(count)s مورد دیگر ..."
@@ -802,7 +791,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
     "This room has already been upgraded.": "این اتاق قبلاً ارتقا یافته است.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
-    "Room options": "تنظیمات اتاق",
     "Create a space": "ساختن یک محیط",
     "Folder": "پوشه",
     "Headphones": "هدفون",
@@ -993,7 +981,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
     "Close sidebar": "بستن نوارکناری",
-    "Hide stickers": "پنهان سازی استیکرها",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
@@ -1310,7 +1297,13 @@
             "space_a11y": "تکمیل خودکار فضای کاری",
             "user_description": "کاربران",
             "user_a11y": "تکمیل خودکار کاربر"
-        }
+        },
+        "room_upgraded_link": "گفتگو در اینجا ادامه دارد.",
+        "room_upgraded_notice": "این اتاق جایگزین شده‌است و دیگر فعال نیست.",
+        "no_perms_notice": "شما اجازه ارسال در این اتاق را ندارید",
+        "close_sticker_picker": "پنهان سازی استیکرها",
+        "poll_button_no_perms_title": "اجازه نیاز است",
+        "format_italics": "مورب"
     },
     "Code": "کد",
     "power_level": {
@@ -2699,9 +2692,15 @@
             "unfavourite": "مورد علاقه",
             "favourite": "علاقه‌مندی‌ها",
             "low_priority": "کم اهمیت",
-            "forget": "اتاق را فراموش کن"
+            "forget": "اتاق را فراموش کن",
+            "title": "تنظیمات اتاق"
         },
-        "invite_this_room": "دعوت به این گپ"
+        "invite_this_room": "دعوت به این گپ",
+        "header": {
+            "forget_room_button": "فراموش کردن اتاق",
+            "hide_widgets_button": "پنهان‌کردن ابزارک‌ها",
+            "show_widgets_button": "نمایش ابزارک‌ها"
+        }
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2883,5 +2882,10 @@
         "description_optional": "استفاده از سرور هویت‌سنجی اختیاری است. اگر تصمیم بگیرید از سرور هویت‌سنجی استفاده نکنید، شما با استفاده از آدرس ایمیل و شماره تلفن قابل یافته‌شدن و دعوت‌شدن توسط سایر کاربران نخواهید بود.",
         "do_not_use": "از سرور هویت‌سنجی استفاده نکن",
         "url_field_label": "یک سرور هویت‌سنجی جدید وارد کنید"
+    },
+    "member_list": {
+        "invited_list_heading": "دعوت شد",
+        "filter_placeholder": "فیلتر کردن اعضای اتاق",
+        "power_label": "%(userName)s (سطح قدرت %(powerLevelNumber)s)"
     }
 }

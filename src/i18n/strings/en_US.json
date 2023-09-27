@@ -22,11 +22,8 @@
     "Failed to mute user": "Failed to mute user",
     "Failed to reject invite": "Failed to reject invite",
     "Failed to reject invitation": "Failed to reject invitation",
-    "Filter room members": "Filter room members",
-    "Forget room": "Forget room",
     "Historical": "Historical",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
-    "Invited": "Invited",
     "Join Room": "Join Room",
     "Jump to first unread message.": "Jump to first unread message.",
     "Low priority": "Low priority",
@@ -47,7 +44,6 @@
     "unknown error code": "unknown error code",
     "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
-    "You do not have permission to post to this room": "You do not have permission to post to this room",
     "You seem to be in a call, are you sure you want to quit?": "You seem to be in a call, are you sure you want to quit?",
     "You seem to be uploading files, are you sure you want to quit?": "You seem to be uploading files, are you sure you want to quit?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
@@ -102,7 +98,6 @@
         "one": "Uploading %(filename)s and %(count)s other",
         "other": "Uploading %(filename)s and %(count)s others"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "(~%(count)s results)": {
         "one": "(~%(count)s result)",
         "other": "(~%(count)s results)"
@@ -125,7 +120,6 @@
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
     "Thursday": "Thursday",
     "Yesterday": "Yesterday",
-    "Permission Required": "Permission Required",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Restricted",
     "Spanner": "Wrench",
@@ -484,7 +478,9 @@
         "autocomplete": {
             "command_description": "Commands",
             "user_description": "Users"
-        }
+        },
+        "no_perms_notice": "You do not have permission to post to this room",
+        "poll_button_no_perms_title": "Permission Required"
     },
     "room": {
         "drop_file_prompt": "Drop file here to upload",
@@ -495,7 +491,10 @@
             "favourite": "Favorite",
             "low_priority": "Low Priority"
         },
-        "invite_this_room": "Invite to this room"
+        "invite_this_room": "Invite to this room",
+        "header": {
+            "forget_room_button": "Forget room"
+        }
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",
@@ -594,5 +593,10 @@
         "class_other": "Other",
         "default": "Default",
         "all_messages": "All messages"
+    },
+    "member_list": {
+        "invited_list_heading": "Invited",
+        "filter_placeholder": "Filter room members",
+        "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "Permission Required": "Yêu cầu Cấp quyền",
     "Send": "Gửi",
     "Sun": "Chủ Nhật",
     "Mon": "Thứ Hai",
@@ -616,7 +615,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Phòng này đang chạy phiên bản phòng <roomVersion /> mà máy chủ này đã đánh dấu là không ổn định <i>unstable</i>.",
     "This room has already been upgraded.": "Phòng này đã được nâng cấp.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
-    "Room options": "Tùy chọn phòng",
     "%(roomName)s is not accessible at this time.": "Không thể truy cập %(roomName)s vào lúc này.",
     "%(roomName)s does not exist.": "%(roomName)s không tồn tại.",
     "%(roomName)s can't be previewed. Do you want to join it?": "Không thể xem trước %(roomName)s. Bạn có muốn tham gia nó không?",
@@ -649,9 +647,6 @@
     "Create new room": "Tạo phòng mới",
     "Add room": "Thêm phòng",
     "Rooms": "Phòng",
-    "Show Widgets": "Hiển thị widget",
-    "Hide Widgets": "Ẩn widget",
-    "Forget room": "Quên phòng",
     "Join Room": "Vào phòng",
     "(~%(count)s results)": {
         "one": "(~%(count)s kết quả)",
@@ -665,11 +660,6 @@
     "%(duration)ss": "%(duration)ss",
     "View message": "Xem tin nhăn",
     "Message didn't send. Click for info.": "Tin nhắn chưa gửi. Nhấn để biết thông tin.",
-    "Insert link": "Chèn liên kết",
-    "Italics": "In nghiêng",
-    "You do not have permission to post to this room": "Bạn không có quyền đăng lên phòng này",
-    "This room has been replaced and is no longer active.": "Phòng này đã được thay thế và không còn hoạt động nữa.",
-    "The conversation continues here.": "Cuộc trò chuyện tiếp tục tại đây.",
     "Send voice message": "Gửi tin nhắn thoại",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
@@ -790,9 +780,6 @@
     "Lion": "Sư tử",
     "Cat": "Con mèo",
     "Dog": "Chó",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (chỉ số %(powerLevelNumber)s)",
-    "Filter room members": "Lọc thành viên phòng",
-    "Invited": "Đã mời",
     "and %(count)s others...": {
         "one": "và một cái khác…",
         "other": "và %(count)s khác…"
@@ -1131,7 +1118,6 @@
     },
     "Join public room": "Tham gia vào phòng công cộng",
     "Recently viewed": "Được xem gần đây",
-    "You do not have permission to start polls in this room.": "Bạn không có quyền để bắt đầu các cuộc thăm dò trong phòng này.",
     "Reply in thread": "Trả lời theo chủ đề",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
@@ -1196,7 +1182,6 @@
     "Confirm new password": "Xác nhận mật khẩu mới",
     "%(members)s and more": "%(members)s và nhiều người khác",
     "Read receipts": "Thông báo đã đọc",
-    "Hide stickers": "Ẩn thẻ (sticker)",
     "This room or space does not exist.": "Phòng này hay space này không tồn tại.",
     "Messages in this chat will be end-to-end encrypted.": "Tin nhắn trong phòng này sẽ được mã hóa đầu-cuối.",
     "Failed to remove user": "Không thể loại bỏ người dùng",
@@ -1215,10 +1200,7 @@
         "other": "%(count)s người tham gia"
     },
     "You were removed from %(roomName)s by %(memberName)s": "Bạn đã bị loại khỏi %(roomName)s bởi %(memberName)s",
-    "Voice Message": "Tin nhắn thoại",
-    "Show formatting": "Hiện định dạng",
     "You were removed by %(memberName)s": "Bạn đã bị loại bởi %(memberName)s",
-    "Formatting": "Định dạng",
     "You were banned by %(memberName)s": "Bạn đã bị cấm bởi %(memberName)s",
     "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
@@ -1234,11 +1216,8 @@
     "Invites by email can only be sent one at a time": "Chỉ có thể gửi một thư điện tử mời mỗi lần",
     "Please only proceed if you're sure you've lost all of your other devices and your Security Key.": "Chỉ tiếp tục nếu bạn chắc chắn là mình đã mất mọi thiết bị khác và khóa bảo mật.",
     "Room info": "Thông tin phòng",
-    "You do not have permission to invite users": "Bạn không có quyền mời người khác",
     "Remove them from everything I'm able to": "Loại bỏ khỏi mọi phòng mà tôi có thể",
-    "Hide formatting": "Ẩn định dạng",
     "The beginning of the room": "Bắt đầu phòng",
-    "Poll": "Bỏ phiếu",
     "Joining…": "Đang tham gia…",
     "Pinned": "Đã ghim",
     "Open room": "Mở phòng",
@@ -1250,11 +1229,9 @@
     "Create a link": "Tạo liên kết",
     "Text": "Chữ",
     "Error starting verification": "Lỗi khi bắt đầu xác thực",
-    "Video call (Jitsi)": "Cuộc gọi truyền hình (Jitsi)",
     "Encrypting your message…": "Đang mã hóa tin nhắn…",
     "Sending your message…": "Đang gửi tin nhắn…",
     "This message could not be decrypted": "Không giải mã được tin nhắn",
-    "Video call (%(brand)s)": "Cuộc gọi truyền hình (%(brand)s)",
     "Something went wrong with your invite.": "Đã xảy ra sự cố với lời mời của bạn.",
     "Remove from space": "Loại bỏ khỏi space",
     "Loading preview": "Đang tải xem trước",
@@ -1265,7 +1242,6 @@
     },
     "Joining space…": "Đang tham gia space…",
     "Joining room…": "Đang tham gia phòng…",
-    "View chat timeline": "Xem dòng tin nhắn",
     "There's no preview, would you like to join?": "Không xem trước được, bạn có muốn tham gia?",
     "Disinvite from space": "Hủy lời mời vào space",
     "You can still join here.": "Bạn vẫn có thể tham gia.",
@@ -1306,7 +1282,6 @@
     "Show Labs settings": "Hiện các cài đặt thử nghiệm",
     "Message pending moderation: %(reason)s": "Tin nhắn chờ duyệt: %(reason)s",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
-    "Freedom": "Tự do",
     "Video call ended": "Cuộc gọi truyền hình đã kết thúc",
     "We were unable to start a chat with the other user.": "Chúng tôi không thể bắt đầu cuộc trò chuyện với người kia.",
     "View poll in timeline": "Xem cuộc bỏ phiếu trong dòng thời gian",
@@ -1334,7 +1309,6 @@
     "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "Declining…": "Đang từ chối…",
-    "Close call": "Đóng cuộc gọi",
     "common": {
         "about": "Giới thiệu",
         "analytics": "Về dữ liệu phân tích",
@@ -1737,7 +1711,21 @@
             "space_a11y": "Space tự động hoàn thành",
             "user_description": "Người dùng",
             "user_a11y": "Người dùng tự động hoàn thành"
-        }
+        },
+        "room_upgraded_link": "Cuộc trò chuyện tiếp tục tại đây.",
+        "room_upgraded_notice": "Phòng này đã được thay thế và không còn hoạt động nữa.",
+        "no_perms_notice": "Bạn không có quyền đăng lên phòng này",
+        "send_button_voice_message": "Gửi tin nhắn thoại",
+        "close_sticker_picker": "Ẩn thẻ (sticker)",
+        "voice_message_button": "Tin nhắn thoại",
+        "poll_button_no_perms_title": "Yêu cầu Cấp quyền",
+        "poll_button_no_perms_description": "Bạn không có quyền để bắt đầu các cuộc thăm dò trong phòng này.",
+        "poll_button": "Bỏ phiếu",
+        "mode_plain": "Ẩn định dạng",
+        "mode_rich_text": "Hiện định dạng",
+        "formatting_toolbar_label": "Định dạng",
+        "format_italics": "In nghiêng",
+        "format_insert_link": "Chèn liên kết"
     },
     "Link": "Liên kết",
     "Code": "Mã",
@@ -3739,9 +3727,20 @@
             "forget": "Quên phòng",
             "mark_read": "Đánh dấu đã đọc",
             "notifications_default": "Theo cài đặt mặc định",
-            "notifications_mute": "Tắt tiếng phòng"
+            "notifications_mute": "Tắt tiếng phòng",
+            "title": "Tùy chọn phòng"
         },
-        "invite_this_room": "Mời vào phòng này"
+        "invite_this_room": "Mời vào phòng này",
+        "header": {
+            "video_call_button_jitsi": "Cuộc gọi truyền hình (Jitsi)",
+            "video_call_button_ec": "Cuộc gọi truyền hình (%(brand)s)",
+            "video_call_ec_layout_freedom": "Tự do",
+            "forget_room_button": "Quên phòng",
+            "hide_widgets_button": "Ẩn widget",
+            "show_widgets_button": "Hiển thị widget",
+            "close_call_button": "Đóng cuộc gọi",
+            "video_room_view_chat_button": "Xem dòng tin nhắn"
+        }
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3954,5 +3953,11 @@
         "description_optional": "Sử dụng máy chủ định danh là tùy chọn. Nếu bạn chọn không sử dụng máy chủ định danh, bạn sẽ không thể bị phát hiện bởi những người dùng khác và bạn sẽ không thể mời người khác qua thư điện tử hoặc số điện thoại.",
         "do_not_use": "Không sử dụng máy chủ nhận dạng",
         "url_field_label": "Nhập một máy chủ nhận dạng mới"
+    },
+    "member_list": {
+        "invite_button_no_perms_tooltip": "Bạn không có quyền mời người khác",
+        "invited_list_heading": "Đã mời",
+        "filter_placeholder": "Lọc thành viên phòng",
+        "power_label": "%(userName)s (chỉ số %(powerLevelNumber)s)"
     }
 }

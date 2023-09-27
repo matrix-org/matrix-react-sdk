@@ -51,7 +51,6 @@
     "Timor-Leste": "טמור-לסטה",
     "St. Martin": "סיינט מרטין",
     "Oman": "אומן",
-    "Permission Required": "הרשאה דרושה",
     "American Samoa": "סמואה האמריקאית",
     "Algeria": "אלג'ריה",
     "Albania": "אלבניה",
@@ -569,16 +568,12 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
     "This room has already been upgraded.": "החדר הזה כבר שודרג.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
-    "Room options": "אפשרויות חדר",
     "Sign Up": "הרשמה",
     "Join the conversation with an account": "הצטרף לשיחה עם חשבון",
     "Historical": "היסטוריה",
     "Low priority": "עדיפות נמוכה",
     "Create new room": "צור חדר חדש",
     "Add room": "הוסף חדר",
-    "Show Widgets": "הצג ישומונים",
-    "Hide Widgets": "הסתר ישומונים",
-    "Forget room": "שכח חדר",
     "Join Room": "הצטרף אל חדר",
     "(~%(count)s results)": {
         "one": "(תוצאת %(count)s)",
@@ -589,13 +584,6 @@
     "%(duration)sh": "%(duration)s (שעות)",
     "%(duration)sm": "%(duration)s (דקות)",
     "%(duration)ss": "(שניות) %(duration)s",
-    "Italics": "נטוי",
-    "You do not have permission to post to this room": "אין לך הרשאה לפרסם בחדר זה",
-    "This room has been replaced and is no longer active.": "חדר זה הוחלף ואינו פעיל יותר.",
-    "The conversation continues here.": "השיחה נמשכת כאן.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (רמת הרשאה %(powerLevelNumber)s)",
-    "Filter room members": "סינון חברי חדר",
-    "Invited": "מוזמן",
     "and %(count)s others...": {
         "one": "ועוד אחד אחר...",
         "other": "ו %(count)s אחרים..."
@@ -914,7 +902,6 @@
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
-    "Voice Message": "הודעה קולית",
     "Send voice message": "שלח הודעה קולית",
     "Your message was sent": "ההודעה שלך נשלחה",
     "Copy link to thread": "העתק קישור לשרשור",
@@ -926,8 +913,6 @@
     "Results will be visible when the poll is ended": "תוצאות יהיו זמינות כאשר הסקר יסתיים",
     "Sorry, you can't edit a poll after votes have been cast.": "סליחה, אתם לא יכולים לערוך את שאלות הסקר לאחר שבוצעו הצבעות.",
     "Can't edit poll": "לא ניתן לערוךסקר",
-    "Poll": "סקר",
-    "You do not have permission to start polls in this room.": "אין לכם הרשאה להתחיל סקר בחדר זה.",
     "Preserve system messages": "שמור את הודעות המערכת",
     "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
@@ -1336,7 +1321,16 @@
             "space_a11y": "השלמה אוטומטית של חלל העבודה",
             "user_description": "משתמשים",
             "user_a11y": "השלמה אוטומטית למשתמשים"
-        }
+        },
+        "room_upgraded_link": "השיחה נמשכת כאן.",
+        "room_upgraded_notice": "חדר זה הוחלף ואינו פעיל יותר.",
+        "no_perms_notice": "אין לך הרשאה לפרסם בחדר זה",
+        "send_button_voice_message": "שלח הודעה קולית",
+        "voice_message_button": "הודעה קולית",
+        "poll_button_no_perms_title": "הרשאה דרושה",
+        "poll_button_no_perms_description": "אין לכם הרשאה להתחיל סקר בחדר זה.",
+        "poll_button": "סקר",
+        "format_italics": "נטוי"
     },
     "Code": "קוד",
     "power_level": {
@@ -2851,9 +2845,15 @@
             "favourite": "מועדף",
             "copy_link": "העתק קישור לחדר",
             "low_priority": "עדיפות נמוכה",
-            "forget": "שכח חדר"
+            "forget": "שכח חדר",
+            "title": "אפשרויות חדר"
         },
-        "invite_this_room": "הזמן לחדר זה"
+        "invite_this_room": "הזמן לחדר זה",
+        "header": {
+            "forget_room_button": "שכח חדר",
+            "hide_widgets_button": "הסתר ישומונים",
+            "show_widgets_button": "הצג ישומונים"
+        }
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
@@ -3030,5 +3030,10 @@
         "description_optional": "השימוש בשרת זהות הוא אופציונלי. אם תבחר לא להשתמש בשרת זהות, משתמשים אחרים לא יוכלו לגלות ולא תוכל להזמין אחרים בדוא\"ל או בטלפון.",
         "do_not_use": "אל תשתמש בשרת הזדהות",
         "url_field_label": "הכנס שרת הזדהות חדש"
+    },
+    "member_list": {
+        "invited_list_heading": "מוזמן",
+        "filter_placeholder": "סינון חברי חדר",
+        "power_label": "%(userName)s (רמת הרשאה %(powerLevelNumber)s)"
     }
 }

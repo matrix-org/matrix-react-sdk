@@ -1,5 +1,4 @@
 {
-    "Permission Required": ".i lo nu curmi cu sarcu",
     "Send": "nu zilbe'i",
     "Sun": "jy. dy. ze",
     "Mon": "jy. dy. pa",
@@ -402,7 +401,8 @@
         "placeholder": "nu pa notci cu zilbe'i",
         "autocomplete": {
             "user_description": "pilno"
-        }
+        },
+        "poll_button_no_perms_title": ".i lo nu curmi cu sarcu"
     },
     "room_settings": {
         "permissions": {

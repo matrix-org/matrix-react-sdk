@@ -45,11 +45,8 @@
     "Failed to mute user": "Nie udało się wyciszyć użytkownika",
     "Failed to reject invite": "Nie udało się odrzucić zaproszenia",
     "Failed to reject invitation": "Nie udało się odrzucić zaproszenia",
-    "Filter room members": "Filtruj członków pokoju",
-    "Forget room": "Zapomnij pokój",
     "Home": "Strona główna",
     "Invalid file%(extra)s": "Nieprawidłowy plik %(extra)s",
-    "Invited": "Zaproszeni",
     "Join Room": "Dołącz do pokoju",
     "Jump to first unread message.": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
     "Low priority": "Niski priorytet",
@@ -75,9 +72,7 @@
         "one": "Przesyłanie %(filename)s oraz %(count)s innych",
         "other": "Przesyłanie %(filename)s oraz %(count)s innych"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (moc uprawnień administratorskich %(powerLevelNumber)s)",
     "Verification Pending": "Oczekiwanie weryfikacji",
-    "You do not have permission to post to this room": "Nie masz uprawnień do pisania w tym pokoju",
     "You seem to be in a call, are you sure you want to quit?": "Wygląda na to, że prowadzisz z kimś rozmowę; jesteś pewien że chcesz wyjść?",
     "You seem to be uploading files, are you sure you want to quit?": "Wygląda na to, że jesteś w trakcie przesyłania plików; jesteś pewien, że chcesz wyjść?",
     "Connectivity to the server has been lost.": "Połączenie z serwerem zostało utracone.",
@@ -157,10 +152,7 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Ten pokój nie jest publiczny. Nie będziesz w stanie do niego dołączyć bez zaproszenia.",
     "Demote yourself?": "Zdegradować siebie?",
     "Demote": "Degraduj",
-    "Permission Required": "Wymagane Uprawnienia",
     "This event could not be displayed": "Ten event nie może zostać wyświetlony",
-    "This room has been replaced and is no longer active.": "Ten pokój został zamieniony i nie jest już aktywny.",
-    "The conversation continues here.": "Konwersacja jest kontynuowana tutaj.",
     "You don't currently have any stickerpacks enabled": "Nie masz obecnie włączonych żadnych pakietów naklejek",
     "Updating %(brand)s": "Aktualizowanie %(brand)s",
     "Only room administrators will see this warning": "Tylko administratorzy pokojów widzą to ostrzeżenie",
@@ -308,7 +300,6 @@
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Italics": "Kursywa",
     "Reason: %(reason)s": "Powód: %(reason)s",
     "Reject & Ignore user": "Odrzuć i zignoruj użytkownika",
     "Show image": "Pokaż obraz",
@@ -348,7 +339,6 @@
     "Messages in this room are not end-to-end encrypted.": "Wiadomości w tym pokoju nie są szyfrowane end-to-end.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy lub nazwy użytkownika (np. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy, adresu e-mail lub nazwy użytkownika (np. <userId/>).",
-    "Room options": "Ustawienia pokoju",
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
     "Use the <a>Desktop app</a> to search encrypted messages": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
     "Ok": "OK",
@@ -612,8 +602,6 @@
     "Martinique": "Martynika",
     "Start chatting": "Rozpocznij rozmowę",
     "<userName/> wants to chat": "<userName/> chce porozmawiać",
-    "Hide Widgets": "Ukryj widżety",
-    "Show Widgets": "Pokaż widżety",
     "Not Trusted": "Nie zaufany",
     "Ask this user to verify their session, or manually verify it below.": "Poproś go/ją o zweryfikowanie tej sesji bądź zweryfikuj ją osobiście poniżej.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s zalogował się do nowej sesji bez zweryfikowania jej:",
@@ -746,8 +734,6 @@
     "Send voice message": "Wyślij wiadomość głosową",
     "Unpin this widget to view it in this panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
     "Location": "Lokalizacja",
-    "Poll": "Ankieta",
-    "Voice Message": "Wiadomość głosowa",
     "Join public room": "Dołącz do publicznego pokoju",
     "Seen by %(count)s people": {
         "one": "Odczytane przez %(count)s osobę",
@@ -800,12 +786,6 @@
     "Home options": "Opcje głównej",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
     "Sign out of all devices": "Wyloguj się z wszystkich urządzeń",
-    "Insert link": "Wprowadź link",
-    "Formatting": "Formatowanie",
-    "Show formatting": "Pokaż formatowanie",
-    "Hide formatting": "Ukryj formatowanie",
-    "You do not have permission to start polls in this room.": "Nie posiadasz uprawnień, aby rozpocząć ankiety w tym pokoju.",
-    "Hide stickers": "Ukryj naklejki",
     "%(count)s participants": {
         "one": "1 uczestnik",
         "other": "%(count)s uczestników"
@@ -866,12 +846,6 @@
     "Add space": "Dodaj przestrzeń",
     "Suggested Rooms": "Sugerowane pokoje",
     "Saved Items": "Przedmioty zapisane",
-    "View chat timeline": "Wyświetl oś czasu czatu",
-    "Close call": "Zamknij połączenie",
-    "Change layout": "Zmień układ",
-    "Freedom": "Wolność",
-    "Video call (%(brand)s)": "Rozmowa wideo (%(brand)s)",
-    "Video call (Jitsi)": "Rozmowa wideo (Jitsi)",
     "Recently viewed": "Ostatnio wyświetlane",
     "Read receipts": "Czytaj potwierdzenia",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
@@ -928,7 +902,6 @@
     "Yours, or the other users' internet connection": "Połączenie internetowe Twoje lub innych użytkowników",
     "The homeserver the user you're verifying is connected to": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
     "Message didn't send. Click for info.": "Nie wysłano wiadomości. Kliknij po więcej informacji.",
-    "You do not have permission to invite users": "Nie posiadasz uprawnień, aby zapraszać użytkowników",
     "You cancelled": "Anulowałeś",
     "You accepted": "Zaakceptowałeś",
     "%(name)s accepted": "%(name)s zaakceptował",
@@ -1393,7 +1366,6 @@
     "Keys restored": "Klucze przywrócone",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "Kopia zapasowa nie mogła zostać rozszyfrowana za pomocą tego Hasła bezpieczeństwa: upewnij się, że wprowadzono prawidłowe Hasło bezpieczeństwa.",
     "Incorrect Security Phrase": "Nieprawidłowe hasło bezpieczeństwa",
-    "Spotlight": "Centrum uwagi",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jeśli nie usunąłeś metody odzyskiwania, atakujący może próbować dostać się na Twoje konto. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach.",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
     "Recovery Method Removed": "Usunięto metodę odzyskiwania",
@@ -1903,7 +1875,21 @@
             "space_a11y": "Przerwa autouzupełniania",
             "user_description": "Użytkownicy",
             "user_a11y": "Autouzupełnianie użytkowników"
-        }
+        },
+        "room_upgraded_link": "Konwersacja jest kontynuowana tutaj.",
+        "room_upgraded_notice": "Ten pokój został zamieniony i nie jest już aktywny.",
+        "no_perms_notice": "Nie masz uprawnień do pisania w tym pokoju",
+        "send_button_voice_message": "Wyślij wiadomość głosową",
+        "close_sticker_picker": "Ukryj naklejki",
+        "voice_message_button": "Wiadomość głosowa",
+        "poll_button_no_perms_title": "Wymagane Uprawnienia",
+        "poll_button_no_perms_description": "Nie posiadasz uprawnień, aby rozpocząć ankiety w tym pokoju.",
+        "poll_button": "Ankieta",
+        "mode_plain": "Ukryj formatowanie",
+        "mode_rich_text": "Pokaż formatowanie",
+        "formatting_toolbar_label": "Formatowanie",
+        "format_italics": "Kursywa",
+        "format_insert_link": "Wprowadź link"
     },
     "Link": "Link",
     "Code": "Kod",
@@ -4015,9 +4001,22 @@
             "forget": "Zapomnij pokój",
             "mark_read": "Oznacz jako przeczytane",
             "notifications_default": "Dopasuj z ustawieniami domyślnymi",
-            "notifications_mute": "Wycisz pokój"
+            "notifications_mute": "Wycisz pokój",
+            "title": "Ustawienia pokoju"
         },
-        "invite_this_room": "Zaproś do tego pokoju"
+        "invite_this_room": "Zaproś do tego pokoju",
+        "header": {
+            "video_call_button_jitsi": "Rozmowa wideo (Jitsi)",
+            "video_call_button_ec": "Rozmowa wideo (%(brand)s)",
+            "video_call_ec_layout_freedom": "Wolność",
+            "video_call_ec_layout_spotlight": "Centrum uwagi",
+            "video_call_ec_change_layout": "Zmień układ",
+            "forget_room_button": "Zapomnij pokój",
+            "hide_widgets_button": "Ukryj widżety",
+            "show_widgets_button": "Pokaż widżety",
+            "close_call_button": "Zamknij połączenie",
+            "video_room_view_chat_button": "Wyświetl oś czasu czatu"
+        }
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4233,5 +4232,11 @@
         "description_optional": "Używanie serwera tożsamości jest opcjonalne. Jeżeli postanowisz nie używać serwera tożsamości, pozostali użytkownicy nie będą w stanie Cię odnaleźć ani nie będziesz mógł zaprosić innych po adresie e-mail czy numerze telefonu.",
         "do_not_use": "Nie używaj serwera tożsamości",
         "url_field_label": "Wprowadź nowy serwer tożsamości"
+    },
+    "member_list": {
+        "invite_button_no_perms_tooltip": "Nie posiadasz uprawnień, aby zapraszać użytkowników",
+        "invited_list_heading": "Zaproszeni",
+        "filter_placeholder": "Filtruj członków pokoju",
+        "power_label": "%(userName)s (moc uprawnień administratorskich %(powerLevelNumber)s)"
     }
 }

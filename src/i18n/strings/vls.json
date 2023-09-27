@@ -1,5 +1,4 @@
 {
-    "Permission Required": "Toestemmienge vereist",
     "Send": "Verstuurn",
     "Sun": "Zun",
     "Mon": "Moa",
@@ -110,12 +109,6 @@
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
     },
-    "Invited": "Uutgenodigd",
-    "Filter room members": "Gespreksleedn filtern",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (macht %(powerLevelNumber)s)",
-    "The conversation continues here.": "’t Gesprek goat hier verder.",
-    "This room has been replaced and is no longer active.": "Dit gesprek is vervangn gewist en is nie langer actief.",
-    "You do not have permission to post to this room": "J’èt geen toestemmienge voor in dit gesprek te postn",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
@@ -127,7 +120,6 @@
         "one": "(~%(count)s resultoat)"
     },
     "Join Room": "Gesprek toetreedn",
-    "Forget room": "Gesprek vergeetn",
     "Share room": "Gesprek deeln",
     "Rooms": "Gesprekkn",
     "Low priority": "Leige prioriteit",
@@ -488,7 +480,11 @@
             "@room_description": "Loat dit an gans ’t groepsgesprek weetn",
             "notification_description": "Groepsgespreksmeldienge",
             "user_description": "Gebruukers"
-        }
+        },
+        "room_upgraded_link": "’t Gesprek goat hier verder.",
+        "room_upgraded_notice": "Dit gesprek is vervangn gewist en is nie langer actief.",
+        "no_perms_notice": "J’èt geen toestemmienge voor in dit gesprek te postn",
+        "poll_button_no_perms_title": "Toestemmienge vereist"
     },
     "Code": "Code",
     "power_level": {
@@ -1082,7 +1078,10 @@
             "favourite": "Favoriet",
             "low_priority": "Leige prioriteit"
         },
-        "invite_this_room": "Uutnodign in dit gesprek"
+        "invite_this_room": "Uutnodign in dit gesprek",
+        "header": {
+            "forget_room_button": "Gesprek vergeetn"
+        }
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1190,5 +1189,10 @@
         "description_disconnected": "Je makt vo de moment geen gebruuk van een identiteitsserver. Voegt der hierounder één toe vo deur je contactn gevoundn te kunn wordn en von hunder te kunn viendn.",
         "disconnect_warning": "De verbindienge me jen identiteitsserver verbreekn goat dervoorn zorgn da je nie mi deur andere gebruukers gevoundn goa kunn wordn, en dat andere menschn je nie via e-mail of telefong goan kunn uutnodign.",
         "url_field_label": "Gift e nieuwen identiteitsserver in"
+    },
+    "member_list": {
+        "invited_list_heading": "Uutgenodigd",
+        "filter_placeholder": "Gespreksleedn filtern",
+        "power_label": "%(userName)s (macht %(powerLevelNumber)s)"
     }
 }

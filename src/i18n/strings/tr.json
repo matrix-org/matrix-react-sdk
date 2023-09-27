@@ -22,12 +22,9 @@
     "Failed to mute user": "Kullanıcıyı sessize almak başarısız oldu",
     "Failed to reject invite": "Daveti reddetme başarısız oldu",
     "Failed to reject invitation": "Davetiyeyi reddetme başarısız oldu",
-    "Filter room members": "Oda üyelerini Filtrele",
-    "Forget room": "Odayı Unut",
     "Historical": "Tarihi",
     "Home": "Ev",
     "Invalid file%(extra)s": "Geçersiz dosya %(extra)s'ı",
-    "Invited": "Davet Edildi",
     "Join Room": "Odaya Katıl",
     "Jump to first unread message.": "İlk okunmamış iletiye atla.",
     "Low priority": "Düşük öncelikli",
@@ -53,10 +50,8 @@
         "one": "%(filename)s ve %(count)s kadarı yükleniyor",
         "other": "%(filename)s ve %(count)s kadarları yükleniyor"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (güç %(powerLevelNumber)s)",
     "Verification Pending": "Bekleyen doğrulama",
     "Warning!": "Uyarı!",
-    "You do not have permission to post to this room": "Bu odaya göndermeye izniniz yok",
     "You seem to be in a call, are you sure you want to quit?": "Bir çağrıda gözüküyorsunuz , çıkmak istediğinizden emin misiniz ?",
     "You seem to be uploading files, are you sure you want to quit?": "Dosya yüklüyorsunuz gibi görünüyor , çıkmak istediğinizden emin misiniz ?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Kullanıcıyı sizinle aynı güç seviyesine yükseltirken , bu değişikliği geri alamazsınız.",
@@ -123,7 +118,6 @@
     "Thursday": "Perşembe",
     "Search…": "Arama…",
     "Yesterday": "Dün",
-    "Permission Required": "İzin Gerekli",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
     "expand": "genişlet",
@@ -264,7 +258,6 @@
     "Deactivate user": "Kullanıcıyı pasifleştir",
     "Failed to deactivate user": "Kullanıcı pasifleştirme başarısız",
     "Share Link to User": "Kullanıcıya Link Paylaş",
-    "Italics": "Eğik",
     "%(duration)ss": "%(duration)ssn",
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
@@ -314,10 +307,8 @@
     "Demote yourself?": "Kendinin rütbeni düşür?",
     "Demote": "Rütbe Düşür",
     "Remove recent messages": "Son mesajları sil",
-    "The conversation continues here.": "Sohbet buradan devam ediyor.",
     "You can only join it with a working invite.": "Sadece çalışan bir davet ile katılınabilir.",
     "Try to join anyway": "Katılmak için yinede deneyin",
-    "This room has been replaced and is no longer active.": "Bu oda değiştirildi ve artık aktif değil.",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s tarafından %(roomName)s odası size yasaklandı",
     "Something went wrong with your invite to %(roomName)s": "%(roomName)s odasına davet işleminizde birşeyler yanlış gitti",
     "This invite to %(roomName)s was sent to %(email)s": "%(roomName)s odası daveti %(email)s adresine gönderildi",
@@ -683,8 +674,6 @@
     "You don't have permission to delete the address.": "Bu adresi silmeye yetkiniz yok.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
     "Error creating address": "Adres oluşturulurken hata",
-    "Show Widgets": "Widgetları Göster",
-    "Hide Widgets": "Widgetları gizle",
     "Scroll to most recent messages": "En son mesajlara git",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
     "Australia": "Avustralya",
@@ -728,7 +717,6 @@
     "Information": "Bilgi",
     "Accepting…": "Kabul ediliyor…",
     "Room avatar": "Oda avatarı",
-    "Room options": "Oda ayarları",
     "Open dial pad": "Arama tuşlarını aç",
     "Back up your keys before signing out to avoid losing them.": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
     "Enter a server name": "Sunucu adı girin",
@@ -994,7 +982,12 @@
             "room_a11y": "Otomatik Oda Tamamlama",
             "user_description": "Kullanıcılar",
             "user_a11y": "Kullanıcı Otomatik Tamamlama"
-        }
+        },
+        "room_upgraded_link": "Sohbet buradan devam ediyor.",
+        "room_upgraded_notice": "Bu oda değiştirildi ve artık aktif değil.",
+        "no_perms_notice": "Bu odaya göndermeye izniniz yok",
+        "poll_button_no_perms_title": "İzin Gerekli",
+        "format_italics": "Eğik"
     },
     "Code": "Kod",
     "power_level": {
@@ -2109,9 +2102,15 @@
             "unfavourite": "Beğenilenler",
             "favourite": "Favori",
             "low_priority": "Düşük Öncelikli",
-            "forget": "Odayı unut"
+            "forget": "Odayı unut",
+            "title": "Oda ayarları"
         },
-        "invite_this_room": "Bu odaya davet et"
+        "invite_this_room": "Bu odaya davet et",
+        "header": {
+            "forget_room_button": "Odayı Unut",
+            "hide_widgets_button": "Widgetları gizle",
+            "show_widgets_button": "Widgetları Göster"
+        }
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
@@ -2257,5 +2256,10 @@
         "description_optional": "Bir kimlik sunucusu kullanmak isteğe bağlıdır. Eğer bir tane kullanmak istemezseniz başkaları tarafından bulunamayabilir ve başkalarını e-posta adresi ya da telefon numarası ile davet edemeyebilirsiniz.",
         "do_not_use": "Bir kimlik sunucu kullanma",
         "url_field_label": "Yeni bir kimlik sunucu gir"
+    },
+    "member_list": {
+        "invited_list_heading": "Davet Edildi",
+        "filter_placeholder": "Oda üyelerini Filtrele",
+        "power_label": "%(userName)s (güç %(powerLevelNumber)s)"
     }
 }

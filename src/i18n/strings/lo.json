@@ -196,7 +196,6 @@
     "Tue": "ວັນອັງຄານ",
     "Mon": "ວັນຈັນ",
     "Sun": "ວັນອາທິດ",
-    "Permission Required": "ຕ້ອງການອະນຸຍາດ",
     "Moderator": "ຜູ້ດຳເນິນລາຍການ",
     "Restricted": "ຖືກຈຳກັດ",
     "Zimbabwe": "ຊິມບັບເວ",
@@ -323,7 +322,6 @@
     "Umbrella": "ຄັນຮົ່ມ",
     "Thumbs up": "ຍົກໂປ້",
     "Santa": "ຊານຕາ",
-    "Italics": "ໂຕໜັງສືອຽງ",
     "Home options": "ຕົວເລືອກໜ້າຫຼັກ",
     "%(spaceName)s menu": "ເມນູ %(spaceName)s",
     "Currently removing messages in %(count)s rooms": {
@@ -1220,9 +1218,6 @@
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
     "Scroll to most recent messages": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
-    "Filter room members": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
-    "Invited": "ເຊີນ",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -1260,10 +1255,6 @@
     "Ban from room": "ຫ້າມອອກຈາກຫ້ອງ",
     "Unban from room": "ຫ້າມຈາກຫ້ອງ",
     "Ban from space": "ພື້ນທີ່ຫ້າມຈາກ",
-    "Show Widgets": "ສະແດງ Widgets",
-    "Hide Widgets": "ເຊື່ອງ Widgets",
-    "Forget room": "ລືມຫ້ອງ",
-    "Room options": "ຕົວເລືອກຫ້ອງ",
     "Join Room": "ເຂົ້າຮ່ວມຫ້ອງ",
     "(~%(count)s results)": {
         "one": "(~%(count)sຜົນຮັບ)",
@@ -1272,15 +1263,7 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)s",
-    "Insert link": "ໃສ່ລິ້ງ",
-    "Poll": "ການສໍາຫລວດ",
-    "You do not have permission to start polls in this room.": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເລີ່ມແບບສຳຫຼວດຢູ່ໃນຫ້ອງນີ້.",
-    "Voice Message": "ຂໍ້ຄວາມສຽງ",
-    "Hide stickers": "ເຊື່ອງສະຕິກເກີ",
     "Send voice message": "ສົ່ງຂໍ້ຄວາມສຽງ",
-    "You do not have permission to post to this room": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ໂພສໃສ່ຫ້ອງນີ້",
-    "This room has been replaced and is no longer active.": "ຫ້ອງນີ້ໄດ້ໍປ່ຽນແທນ ແລະບໍ່ມີການເຄື່ອນໄຫວອີກຕໍ່ໄປ.",
-    "The conversation continues here.": "ການສົນທະນາສືບຕໍ່ຢູ່ທີ່ນີ້.",
     "and %(count)s others...": {
         "one": "ແລະ ອີກອັນນຶ່ງ...",
         "other": "ແລະ %(count)s ຜູ້ອຶ່ນ..."
@@ -1647,7 +1630,18 @@
             "space_a11y": "ການເພິ່ມຂໍ້ຄວາມອັດຕະໂນມັດໃນພື້ນທີ່",
             "user_description": "ຜູ້ໃຊ້",
             "user_a11y": "ການຕຶ້ມຂໍ້ມູນອັດຕະໂນມັດຊື່ຜູ້ໃຊ້"
-        }
+        },
+        "room_upgraded_link": "ການສົນທະນາສືບຕໍ່ຢູ່ທີ່ນີ້.",
+        "room_upgraded_notice": "ຫ້ອງນີ້ໄດ້ໍປ່ຽນແທນ ແລະບໍ່ມີການເຄື່ອນໄຫວອີກຕໍ່ໄປ.",
+        "no_perms_notice": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ໂພສໃສ່ຫ້ອງນີ້",
+        "send_button_voice_message": "ສົ່ງຂໍ້ຄວາມສຽງ",
+        "close_sticker_picker": "ເຊື່ອງສະຕິກເກີ",
+        "voice_message_button": "ຂໍ້ຄວາມສຽງ",
+        "poll_button_no_perms_title": "ຕ້ອງການອະນຸຍາດ",
+        "poll_button_no_perms_description": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເລີ່ມແບບສຳຫຼວດຢູ່ໃນຫ້ອງນີ້.",
+        "poll_button": "ການສໍາຫລວດ",
+        "format_italics": "ໂຕໜັງສືອຽງ",
+        "format_insert_link": "ໃສ່ລິ້ງ"
     },
     "Code": "ລະຫັດ",
     "power_level": {
@@ -3379,9 +3373,15 @@
             "mentions_only": "ກ່າວເຖິງເທົ່ານັ້ນ",
             "copy_link": "ສຳເນົາລິ້ງຫ້ອງ",
             "low_priority": "ຄວາມສຳຄັນຕໍ່າ",
-            "forget": "ລືມຫ້ອງ"
+            "forget": "ລືມຫ້ອງ",
+            "title": "ຕົວເລືອກຫ້ອງ"
         },
-        "invite_this_room": "ເຊີນເຂົ້າຫ້ອງນີ້"
+        "invite_this_room": "ເຊີນເຂົ້າຫ້ອງນີ້",
+        "header": {
+            "forget_room_button": "ລືມຫ້ອງ",
+            "hide_widgets_button": "ເຊື່ອງ Widgets",
+            "show_widgets_button": "ສະແດງ Widgets"
+        }
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3564,5 +3564,10 @@
         "description_optional": "ການນໍາໃຊ້ຕົວເຊີບເວີເປັນທາງເລືອກ. ຖ້າທ່ານເລືອກທີ່ຈະບໍ່ໃຊ້ຕົວເຊີບເວີ, ທ່ານຈະບໍ່ຖືກຄົ້ນພົບໂດຍຜູ້ໃຊ້ອື່ນ ແລະ ທ່ານຈະບໍ່ສາມາດເຊີນຜູ້ອື່ນໂດຍອີເມລ໌ຫຼືໂທລະສັບ.",
         "do_not_use": "ກະລຸນນາຢ່າໃຊ້ເຊີບເວີລະບຸຕົວຕົນ",
         "url_field_label": "ໃສ່ເຊີບເວີໃໝ່"
+    },
+    "member_list": {
+        "invited_list_heading": "ເຊີນ",
+        "filter_placeholder": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
+        "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     }
 }

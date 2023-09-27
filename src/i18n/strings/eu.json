@@ -13,8 +13,6 @@
     "Jump to first unread message.": "Jauzi irakurri gabeko lehen mezura.",
     "Warning!": "Abisua!",
     "Connectivity to the server has been lost.": "Zerbitzariarekin konexioa galdu da.",
-    "You do not have permission to post to this room": "Ez duzu gela honetara mezuak bidaltzeko baimenik",
-    "Filter room members": "Iragazi gelako kideak",
     "Verification Pending": "Egiaztaketa egiteke",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
     "This room has no local addresses": "Gela honek ez du tokiko helbiderik",
@@ -39,9 +37,7 @@
     "Failed to mute user": "Huts egin du erabiltzailea mututzean",
     "Failed to reject invite": "Huts egin du gonbidapena baztertzean",
     "Failed to reject invitation": "Huts egin du gonbidapena baztertzean",
-    "Forget room": "Ahaztu gela",
     "Invalid file%(extra)s": "Fitxategi %(extra)s baliogabea",
-    "Invited": "Gonbidatuta",
     "New passwords must match each other.": "Pasahitz berriak berdinak izan behar dira.",
     "not specified": "zehaztu gabe",
     "No more results": "Emaitza gehiagorik ez",
@@ -57,7 +53,6 @@
         "one": "%(filename)s eta beste %(count)s igotzen",
         "other": "%(filename)s eta beste %(count)s igotzen"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (power %(powerLevelNumber)s)",
     "You seem to be in a call, are you sure you want to quit?": "Badirudi dei batean zaudela, ziur irten nahi duzula?",
     "You seem to be uploading files, are you sure you want to quit?": "Badirudi fitxategiak iotzen zaudela, ziur irten nahi duzula?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Ezin izango duzu hau atzera bota erabiltzailea zure botere maila berera igotzen ari zarelako.",
@@ -163,10 +158,7 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ezin duzu mezurik bidali <consentLink>gure termino eta baldintzak</consentLink> irakurri eta onartu arte.",
     "Demote yourself?": "Jaitsi zure burua mailaz?",
     "Demote": "Jaitzi mailaz",
-    "Permission Required": "Baimena beharrezkoa",
     "This event could not be displayed": "Ezin izan da gertakari hau bistaratu",
-    "This room has been replaced and is no longer active.": "Gela hau ordeztu da eta ez dago aktibo jada.",
-    "The conversation continues here.": "Elkarrizketak hemen darrai.",
     "Only room administrators will see this warning": "Gelaren administratzaileek besterik ez dute abisu hau ikusiko",
     "Failed to upgrade room": "Huts egin du gela eguneratzea",
     "The room upgrade could not be completed": "Ezin izan da gelaren eguneraketa osatu",
@@ -377,7 +369,6 @@
     },
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Erabiltzailea desaktibatzean saioa itxiko zaio eta ezin izango du berriro hasi. Gainera, dauden gela guztietatik aterako da. Ekintza hau ezin da aurreko egoera batera ekarri. Ziur erabiltzaile hau desaktibatu nahi duzula?",
     "Remove recent messages": "Kendu azken mezuak",
-    "Italics": "Etzana",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "%(roomName)s gelarako gonbidapena zure kontuarekin lotuta ez dagoen %(email)s helbidera bidali da",
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Erabili identitate zerbitzari bat ezarpenetan gonbidapenak zuzenean %(brand)s-en jasotzeko.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Partekatu e-mail hau ezarpenetan gonbidapenak zuzenean %(brand)s-en jasotzeko.",
@@ -552,7 +543,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
     "Message preview": "Mezu-aurrebista",
-    "Room options": "Gelaren aukerak",
     "Error creating address": "Errorea helbidea sortzean",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Errorea gertatu da helbidea sortzean. Agian ez du zerbitzariak onartzen edo behin behineko arazo bat egon da.",
     "You don't have permission to delete the address.": "Ez duzu helbidea ezabatzeko baimenik.",
@@ -795,7 +785,12 @@
             "room_a11y": "Gela osatze automatikoa",
             "user_description": "Erabiltzaileak",
             "user_a11y": "Erabiltzaile osatze automatikoa"
-        }
+        },
+        "room_upgraded_link": "Elkarrizketak hemen darrai.",
+        "room_upgraded_notice": "Gela hau ordeztu da eta ez dago aktibo jada.",
+        "no_perms_notice": "Ez duzu gela honetara mezuak bidaltzeko baimenik",
+        "poll_button_no_perms_title": "Baimena beharrezkoa",
+        "format_italics": "Etzana"
     },
     "Code": "Kodea",
     "power_level": {
@@ -1685,9 +1680,13 @@
         "context_menu": {
             "favourite": "Gogokoa",
             "low_priority": "Lehentasun baxua",
-            "forget": "Ahaztu gela"
+            "forget": "Ahaztu gela",
+            "title": "Gelaren aukerak"
         },
-        "invite_this_room": "Gonbidatu gela honetara"
+        "invite_this_room": "Gonbidatu gela honetara",
+        "header": {
+            "forget_room_button": "Ahaztu gela"
+        }
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
@@ -1839,5 +1838,10 @@
         "description_optional": "Identitate-zerbitzari bat erabiltzea aukerazkoa da. Identitate-zerbitzari bat ez erabiltzea erabakitzen baduzu, ezin izango zaituztete e-mail edo telefonoa erabilita aurkitu eta ezin izango dituzu besteak e-mail edo telefonoa erabiliz gonbidatu.",
         "do_not_use": "Ez erabili identitate-zerbitzaririk",
         "url_field_label": "Sartu identitate-zerbitzari berri bat"
+    },
+    "member_list": {
+        "invited_list_heading": "Gonbidatuta",
+        "filter_placeholder": "Iragazi gelako kideak",
+        "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     }
 }

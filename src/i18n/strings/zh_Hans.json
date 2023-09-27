@@ -9,8 +9,6 @@
     "Failed to mute user": "禁言用户失败",
     "Failed to reject invite": "拒绝邀请失败",
     "Failed to reject invitation": "拒绝邀请失败",
-    "Filter room members": "过滤房间成员",
-    "Forget room": "忘记房间",
     "Historical": "历史",
     "Invalid file%(extra)s": "无效文件 %(extra)s",
     "Return to login screen": "返回登录页面",
@@ -34,7 +32,6 @@
     "Custom level": "自定义级别",
     "Enter passphrase": "输入口令词组",
     "Home": "主页",
-    "Invited": "已邀请",
     "Moderator": "协管员",
     "not specified": "未指定",
     "Create new room": "创建新房间",
@@ -58,7 +55,6 @@
     "AM": "上午",
     "PM": "下午",
     "%(roomName)s is not accessible at this time.": "%(roomName)s 此时无法访问。",
-    "You do not have permission to post to this room": "你没有在此房间发送消息的权限",
     "You seem to be in a call, are you sure you want to quit?": "你似乎正在通话，确定要退出吗？",
     "You seem to be uploading files, are you sure you want to quit?": "你似乎正在上传文件，确定要退出吗？",
     "Error decrypting image": "解密图像时出错",
@@ -106,7 +102,6 @@
     "You don't currently have any stickerpacks enabled": "你目前未启用任何贴纸包",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "如果你是房间中最后一位拥有权限的用户，在你降低自己的权限等级后将无法撤销此修改，你将无法重新获得权限。",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "你将无法撤回此修改，因为此用户的权力级别将与你相同。",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s（权力 %(powerLevelNumber)s）",
     "%(duration)ss": "%(duration)s 秒",
     "%(duration)sm": "%(duration)s 分钟",
     "%(duration)sh": "%(duration)s 小时",
@@ -149,7 +144,6 @@
     },
     "Demote yourself?": "是否降低你自己的权限？",
     "Demote": "降权",
-    "Permission Required": "需要权限",
     "This event could not be displayed": "无法显示此事件",
     "Share Link to User": "分享链接给其他用户",
     "Share room": "分享房间",
@@ -165,8 +159,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "此房间不是公开房间。如果没有成员邀请，你将无法重新加入。",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "在你查看并同意 <consentLink>我们的条款与要求</consentLink> 之前，你不能发送任何消息。",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
-    "This room has been replaced and is no longer active.": "此房间已被取代，且不再活跃。",
-    "The conversation continues here.": "对话在这里继续。",
     "Only room administrators will see this warning": "此警告仅房间管理员可见",
     "Failed to upgrade room": "房间升级失败",
     "The room upgrade could not be completed": "房间可能没有完整地升级",
@@ -331,7 +323,6 @@
     "Encrypted by a deleted session": "由已删除的会话加密",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "此加密消息的真实性无法在此设备上保证。",
     "Scroll to most recent messages": "滚动到最近的消息",
-    "Italics": "斜体",
     "Join the conversation with an account": "使用一个账户加入对话",
     "Sign Up": "注册",
     "Reason: %(reason)s": "原因：%(reason)s",
@@ -355,7 +346,6 @@
     "You're previewing %(roomName)s. Want to join it?": "你正在预览 %(roomName)s。想加入吗？",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s 不能被预览。你想加入吗？",
     "Add room": "添加房间",
-    "Room options": "房间选项",
     "This room is public": "此房间为公共的",
     "This room has already been upgraded.": "此房间已经被升级。",
     "Failed to connect to integration manager": "连接至集成管理器失败",
@@ -670,8 +660,6 @@
     "Information": "信息",
     "Not encrypted": "未加密",
     "Open dial pad": "打开拨号键盘",
-    "Show Widgets": "显示挂件",
-    "Hide Widgets": "隐藏挂件",
     "Your message was sent": "消息已发送",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
@@ -1092,7 +1080,6 @@
     },
     "View in room": "在房间内查看",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
-    "Insert link": "插入链接",
     "Joined": "已加入",
     "Joining": "加入中",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "将您的安全密钥存放在安全的地方，例如密码管理器或保险箱，因为它用于保护您的加密数据。",
@@ -1104,7 +1091,6 @@
     "Yours, or the other users' session": "你或其他用户的会话",
     "Yours, or the other users' internet connection": "你或其他用户的互联网连接",
     "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
-    "You do not have permission to start polls in this room.": "你无权在此房间启动投票。",
     "Copy link to thread": "复制到消息列的链接",
     "Thread options": "消息列选项",
     "Reply in thread": "在消息列中回复",
@@ -1207,9 +1193,6 @@
     },
     "%(members)s and %(last)s": "%(members)s和%(last)s",
     "%(members)s and more": "%(members)s和更多",
-    "Poll": "投票",
-    "Voice Message": "语音消息",
-    "Hide stickers": "隐藏贴纸",
     "From a thread": "来自消息列",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "若你找不到要找的房间，请请求邀请或创建新房间。",
     "Device verified": "设备已验证",
@@ -1327,10 +1310,8 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s或%(copyButton)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "Video call (Jitsi)": "视频通话（Jitsi）",
     "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
-    "Change layout": "更改布局",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -1725,7 +1706,18 @@
             "space_a11y": "空间自动完成",
             "user_description": "用户",
             "user_a11y": "用户自动补全"
-        }
+        },
+        "room_upgraded_link": "对话在这里继续。",
+        "room_upgraded_notice": "此房间已被取代，且不再活跃。",
+        "no_perms_notice": "你没有在此房间发送消息的权限",
+        "send_button_voice_message": "发送语音消息",
+        "close_sticker_picker": "隐藏贴纸",
+        "voice_message_button": "语音消息",
+        "poll_button_no_perms_title": "需要权限",
+        "poll_button_no_perms_description": "你无权在此房间启动投票。",
+        "poll_button": "投票",
+        "format_italics": "斜体",
+        "format_insert_link": "插入链接"
     },
     "Code": "代码",
     "power_level": {
@@ -3625,9 +3617,17 @@
             "mentions_only": "仅提及",
             "copy_link": "复制房间链接",
             "low_priority": "低优先级",
-            "forget": "忘记房间"
+            "forget": "忘记房间",
+            "title": "房间选项"
         },
-        "invite_this_room": "邀请到此房间"
+        "invite_this_room": "邀请到此房间",
+        "header": {
+            "video_call_button_jitsi": "视频通话（Jitsi）",
+            "video_call_ec_change_layout": "更改布局",
+            "forget_room_button": "忘记房间",
+            "hide_widgets_button": "隐藏挂件",
+            "show_widgets_button": "显示挂件"
+        }
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3834,5 +3834,10 @@
         "description_optional": "使用身份服务器是可选的。如果你选择不使用身份服务器，你将不能被别的用户发现，也不能用邮箱或电话邀请别人。",
         "do_not_use": "不使用身份服务器",
         "url_field_label": "输入一个新的身份服务器"
+    },
+    "member_list": {
+        "invited_list_heading": "已邀请",
+        "filter_placeholder": "过滤房间成员",
+        "power_label": "%(userName)s（权力 %(powerLevelNumber)s）"
     }
 }

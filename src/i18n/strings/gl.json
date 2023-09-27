@@ -38,10 +38,6 @@
         "other": "e %(count)s outras...",
         "one": "e outra máis..."
     },
-    "Invited": "Convidada",
-    "Filter room members": "Filtrar os participantes da conversa",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (permiso %(powerLevelNumber)s)",
-    "You do not have permission to post to this room": "Non ten permiso para comentar nesta sala",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -53,7 +49,6 @@
         "one": "(~%(count)s resultado)"
     },
     "Join Room": "Unirse a sala",
-    "Forget room": "Esquecer sala",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Non poderá desfacer este cambio xa que está a diminuír a súa autoridade, se é a única persoa con autorización na sala será imposible volver a obter privilexios.",
     "Rooms": "Salas",
     "Low priority": "Baixa prioridade",
@@ -160,7 +155,6 @@
     "Share User": "Compartir usuaria",
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
-    "Permission Required": "Precísanse permisos",
     "This event could not be displayed": "Non se puido amosar este evento",
     "Demote yourself?": "Baixarse a ti mesma de rango?",
     "Demote": "Baixar de rango",
@@ -285,9 +279,6 @@
     "Unencrypted": "Non cifrada",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Scroll to most recent messages": "Ir ás mensaxes máis recentes",
-    "The conversation continues here.": "A conversa continúa aquí.",
-    "This room has been replaced and is no longer active.": "Esta sala foi substituída e xa non está activa.",
-    "Italics": "Cursiva",
     "Reason: %(reason)s": "Razón: %(reason)s",
     "Forget this room": "Esquecer sala",
     "You were banned from %(roomName)s by %(memberName)s": "Foches bloqueada en %(roomName)s por %(memberName)s",
@@ -304,7 +295,6 @@
     "Reject & Ignore user": "Rexeitar e Ignorar usuaria",
     "Message preview": "Vista previa da mensaxe",
     "Add room": "Engadir sala",
-    "Room options": "Opcións da Sala",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
     "This room has already been upgraded.": "Esta sala xa foi actualizada.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A sala está usando a versión <roomVersion />, que este servidor considera como <i>non estable</i>.",
@@ -620,8 +610,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Só podes fixar ata %(count)s widgets"
     },
-    "Show Widgets": "Mostrar Widgets",
-    "Hide Widgets": "Agochar Widgets",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -1092,7 +1080,6 @@
     },
     "View in room": "Ver na sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
-    "Insert link": "Escribir ligazón",
     "Joined": "Unícheste",
     "Joining": "Uníndote",
     "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verfica tódalas usuarias para ter certeza de que é segura.",
@@ -1102,7 +1089,6 @@
     "Yours, or the other users' session": "Túas, ou da sesión doutras persoas",
     "Yours, or the other users' internet connection": "Da túa, ou da conexión a internet doutras persoas",
     "The homeserver the user you're verifying is connected to": "O servidor ao que está conectado a persoa que estás verificando",
-    "You do not have permission to start polls in this room.": "Non tes permiso para publicar enquisas nesta sala.",
     "Reply in thread": "Responder nun fío",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Garda a túa Chave de Seguridade nun lugar seguro, como un xestor de contrasinais ou caixa forte, xa que vai protexer os teus datos cifrados.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Imos crear unha Chave de Seguridade para que a gardes nun lugar seguro, como nun xestor de contrasinais ou caixa forte.",
@@ -1178,9 +1164,6 @@
     "Remove from %(roomName)s": "Eliminar de %(roomName)s",
     "To proceed, please accept the verification request on your other device.": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
     "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s sacoute da sala %(roomName)s",
-    "Poll": "Enquisa",
-    "Voice Message": "Mensaxe de voz",
-    "Hide stickers": "Agochar adhesivos",
     "From a thread": "Desde un fío",
     "Wait!": "Agarda!",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
@@ -1721,7 +1704,18 @@
             "space_a11y": "Autocompletado do espazo",
             "user_description": "Usuarias",
             "user_a11y": "Autocompletados de Usuaria"
-        }
+        },
+        "room_upgraded_link": "A conversa continúa aquí.",
+        "room_upgraded_notice": "Esta sala foi substituída e xa non está activa.",
+        "no_perms_notice": "Non ten permiso para comentar nesta sala",
+        "send_button_voice_message": "Enviar mensaxe de voz",
+        "close_sticker_picker": "Agochar adhesivos",
+        "voice_message_button": "Mensaxe de voz",
+        "poll_button_no_perms_title": "Precísanse permisos",
+        "poll_button_no_perms_description": "Non tes permiso para publicar enquisas nesta sala.",
+        "poll_button": "Enquisa",
+        "format_italics": "Cursiva",
+        "format_insert_link": "Escribir ligazón"
     },
     "Code": "Código",
     "power_level": {
@@ -3556,9 +3550,15 @@
             "mentions_only": "Só mencións",
             "copy_link": "Copiar ligazón á sala",
             "low_priority": "Baixa prioridade",
-            "forget": "Esquecer sala"
+            "forget": "Esquecer sala",
+            "title": "Opcións da Sala"
         },
-        "invite_this_room": "Convidar a esta sala"
+        "invite_this_room": "Convidar a esta sala",
+        "header": {
+            "forget_room_button": "Esquecer sala",
+            "hide_widgets_button": "Agochar Widgets",
+            "show_widgets_button": "Mostrar Widgets"
+        }
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3763,5 +3763,10 @@
         "description_optional": "Usar un servidor de identidade é optativo. Se escolles non usar un, non poderás ser atopado por outras usuarias e non poderás convidar a outras polo seu email ou teléfono.",
         "do_not_use": "Non usar un servidor de identidade",
         "url_field_label": "Escribe o novo servidor de identidade"
+    },
+    "member_list": {
+        "invited_list_heading": "Convidada",
+        "filter_placeholder": "Filtrar os participantes da conversa",
+        "power_label": "%(userName)s (permiso %(powerLevelNumber)s)"
     }
 }

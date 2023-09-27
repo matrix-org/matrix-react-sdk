@@ -44,10 +44,6 @@
         "other": "i %(count)s altres...",
         "one": "i un altre..."
     },
-    "Invited": "Convidat",
-    "Filter room members": "Filtra els membres de la sala",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (autoritat %(powerLevelNumber)s)",
-    "You do not have permission to post to this room": "No tens permís per enviar res en aquesta sala",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -59,7 +55,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Entra a la sala",
-    "Forget room": "Oblida la sala",
     "Low priority": "Baixa prioritat",
     "Historical": "Històric",
     "%(roomName)s does not exist.": "La sala %(roomName)s no existeix.",
@@ -136,7 +131,6 @@
     "Logs sent": "Logs enviats",
     "Yesterday": "Ahir",
     "Thank you!": "Gràcies!",
-    "Permission Required": "Es necessita permís",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
     "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
     "Invite anyway": "Convidar igualment",
@@ -573,7 +567,9 @@
     "Other": "Altres",
     "composer": {
         "placeholder_reply_encrypted": "Envia una resposta xifrada…",
-        "placeholder_encrypted": "Envia un missatge xifrat…"
+        "placeholder_encrypted": "Envia un missatge xifrat…",
+        "no_perms_notice": "No tens permís per enviar res en aquesta sala",
+        "poll_button_no_perms_title": "Es necessita permís"
     },
     "room_settings": {
         "permissions": {
@@ -707,7 +703,10 @@
             "favourite": "Favorit",
             "low_priority": "Baixa prioritat"
         },
-        "invite_this_room": "Convida a aquesta sala"
+        "invite_this_room": "Convida a aquesta sala",
+        "header": {
+            "forget_room_button": "Oblida la sala"
+        }
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -810,5 +809,10 @@
     "integration_manager": {
         "manage_title": "Gestió d'integracions",
         "explainer": "Els gestors d'integracions reben dades de configuració i poden modificar ginys, enviar invitacions a sales i establir nivells d'autoritat en nom teu."
+    },
+    "member_list": {
+        "invited_list_heading": "Convidat",
+        "filter_placeholder": "Filtra els membres de la sala",
+        "power_label": "%(userName)s (autoritat %(powerLevelNumber)s)"
     }
 }

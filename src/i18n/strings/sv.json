@@ -22,12 +22,9 @@
     "Failed to reject invitation": "Misslyckades att avböja inbjudan",
     "Admin Tools": "Admin-verktyg",
     "Enter passphrase": "Ange lösenfras",
-    "Filter room members": "Filtrera rumsmedlemmar",
-    "Forget room": "Glöm bort rum",
     "Historical": "Historiska",
     "Home": "Hem",
     "Invalid file%(extra)s": "Felaktig fil%(extra)s",
-    "Invited": "Inbjuden",
     "Join Room": "Gå med i rum",
     "Jump to first unread message.": "Hoppa till första olästa meddelandet.",
     "Low priority": "Låg prioritet",
@@ -89,7 +86,6 @@
     "Thank you!": "Tack!",
     "This room has no local addresses": "Det här rummet har inga lokala adresser",
     "Restricted": "Begränsad",
-    "You do not have permission to post to this room": "Du har inte behörighet att posta till detta rum",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -98,7 +94,6 @@
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
     },
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (behörighet %(powerLevelNumber)s)",
     "And %(count)s more...": {
         "other": "Och %(count)s till…"
     },
@@ -160,15 +155,12 @@
     "Share User": "Dela användare",
     "Share Room Message": "Dela rumsmeddelande",
     "Link to selected message": "Länk till valt meddelande",
-    "Permission Required": "Behörighet krävs",
     "This event could not be displayed": "Den här händelsen kunde inte visas",
     "Demote yourself?": "Degradera dig själv?",
     "Demote": "Degradera",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan inte skicka några meddelanden innan du granskar och godkänner <consentLink>våra villkor</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Ditt meddelande skickades inte eftersom hemservern har nått sin månatliga gräns för användaraktivitet. Vänligen <a>kontakta din serviceadministratör</a> för att fortsätta använda tjänsten.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Ditt meddelande skickades inte eftersom hemservern har överskridit en av sina resursgränser. Vänligen <a>kontakta din serviceadministratör</a> för att fortsätta använda tjänsten.",
-    "This room has been replaced and is no longer active.": "Detta rum har ersatts och är inte längre aktivt.",
-    "The conversation continues here.": "Konversationen fortsätter här.",
     "Only room administrators will see this warning": "Endast rumsadministratörer kommer att se denna varning",
     "Failed to upgrade room": "Misslyckades att uppgradera rummet",
     "The room upgrade could not be completed": "Rumsuppgraderingen kunde inte slutföras",
@@ -309,7 +301,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Vid inaktivering av användare loggas den ut och förhindras från att logga in igen. Den kommer dessutom att lämna alla rum den befinner sig i. Den här åtgärden kan inte ångras. Är du säker på att du vill inaktivera den här användaren?",
     "Deactivate user": "Inaktivera användaren",
     "Remove recent messages": "Ta bort nyliga meddelanden",
-    "Italics": "Kursiv",
     "Join the conversation with an account": "Gå med i konversationen med ett konto",
     "Sign Up": "Registrera dig",
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
@@ -401,7 +392,6 @@
     "Use an identity server in Settings to receive invites directly in %(brand)s.": "Använd en identitetsserver i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Share this email in Settings to receive invites directly in %(brand)s.": "Dela denna e-postadress i inställningarna för att motta inbjudningar direkt i %(brand)s.",
     "Reject & Ignore user": "Avvisa och ignorera användare",
-    "Room options": "Rumsinställningar",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
@@ -621,8 +611,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Du kan bara fästa upp till %(count)s widgets"
     },
-    "Show Widgets": "Visa widgets",
-    "Hide Widgets": "Dölj widgets",
     "Canada": "Kanada",
     "Cameroon": "Kamerun",
     "Cambodia": "Kambodja",
@@ -1093,7 +1081,6 @@
     "Skip verification for now": "Hoppa över verifiering för tillfället",
     "Really reset verification keys?": "Återställ verkligen verifieringsnycklar?",
     "Joined": "Gick med",
-    "Insert link": "Infoga länk",
     "Joining": "Går med",
     "Store your Security Key somewhere safe, like a password manager or a safe, as it's used to safeguard your encrypted data.": "Lagra din säkerhetsnyckel någonstans säkert, som en lösenordshanterare eller ett kassaskåp, eftersom den används för att säkra din krypterade data.",
     "We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.": "Vi kommer att generera en säkerhetsnyckel så du kan lagra någonstans säkert, som en lösenordshanterare eller ett kassaskåp.",
@@ -1106,7 +1093,6 @@
     "Yours, or the other users' session": "Din eller den andra användarens session",
     "Yours, or the other users' internet connection": "Din eller den andra användarens internetuppkoppling",
     "The homeserver the user you're verifying is connected to": "Hemservern användaren du verifierar är ansluten till",
-    "You do not have permission to start polls in this room.": "Du får inte starta omröstningar i det här rummet.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -1141,9 +1127,6 @@
     "%(spaceName)s menu": "%(spaceName)s-alternativ",
     "Join public room": "Gå med i offentligt rum",
     "Recently viewed": "Nyligen sedda",
-    "Poll": "Omröstning",
-    "Voice Message": "Röstmeddelanden",
-    "Hide stickers": "Göm dekaler",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
     "Location": "Plats",
@@ -1348,15 +1331,6 @@
     "Room info": "Rumsinfo",
     "We were unable to start a chat with the other user.": "Vi kunde inte starta en chatt med den andra användaren.",
     "Error starting verification": "Fel vid start av verifiering",
-    "View chat timeline": "Visa chattidslinje",
-    "Close call": "Stäng samtal",
-    "Change layout": "Byt utseende",
-    "Spotlight": "Rampljus",
-    "Freedom": "Frihet",
-    "Video call (%(brand)s)": "Videosamtal (%(brand)s)",
-    "Video call (Jitsi)": "Videosamtal (Jitsi)",
-    "Show formatting": "Visa formatering",
-    "Hide formatting": "Dölj formatering",
     "Too many attempts in a short time. Wait some time before trying again.": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     "We're creating a room with %(names)s": "Vi skapar ett rum med %(names)s",
@@ -1439,8 +1413,6 @@
     "Poll history": "Omröstningshistorik",
     "Search all rooms": "Sök i alla rum",
     "Search this room": "Sök i det här rummet",
-    "Formatting": "Formatering",
-    "You do not have permission to invite users": "Du är inte behörig att bjuda in användare",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -1895,7 +1867,21 @@
             "space_a11y": "Utrymmesautokomplettering",
             "user_description": "Användare",
             "user_a11y": "Autokomplettering av användare"
-        }
+        },
+        "room_upgraded_link": "Konversationen fortsätter här.",
+        "room_upgraded_notice": "Detta rum har ersatts och är inte längre aktivt.",
+        "no_perms_notice": "Du har inte behörighet att posta till detta rum",
+        "send_button_voice_message": "Skicka röstmeddelande",
+        "close_sticker_picker": "Göm dekaler",
+        "voice_message_button": "Röstmeddelanden",
+        "poll_button_no_perms_title": "Behörighet krävs",
+        "poll_button_no_perms_description": "Du får inte starta omröstningar i det här rummet.",
+        "poll_button": "Omröstning",
+        "mode_plain": "Dölj formatering",
+        "mode_rich_text": "Visa formatering",
+        "formatting_toolbar_label": "Formatering",
+        "format_italics": "Kursiv",
+        "format_insert_link": "Infoga länk"
     },
     "Link": "Länk",
     "Code": "Kod",
@@ -3972,9 +3958,22 @@
             "forget": "Glöm rum",
             "mark_read": "Markera som läst",
             "notifications_default": "Matcha förvalsinställning",
-            "notifications_mute": "Tysta rum"
+            "notifications_mute": "Tysta rum",
+            "title": "Rumsinställningar"
         },
-        "invite_this_room": "Bjud in till rummet"
+        "invite_this_room": "Bjud in till rummet",
+        "header": {
+            "video_call_button_jitsi": "Videosamtal (Jitsi)",
+            "video_call_button_ec": "Videosamtal (%(brand)s)",
+            "video_call_ec_layout_freedom": "Frihet",
+            "video_call_ec_layout_spotlight": "Rampljus",
+            "video_call_ec_change_layout": "Byt utseende",
+            "forget_room_button": "Glöm bort rum",
+            "hide_widgets_button": "Dölj widgets",
+            "show_widgets_button": "Visa widgets",
+            "close_call_button": "Stäng samtal",
+            "video_room_view_chat_button": "Visa chattidslinje"
+        }
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
@@ -4191,5 +4190,11 @@
         "description_optional": "Att använda en identitetsserver är valfritt. Om du väljer att inte använda en identitetsserver kan du inte upptäckas av andra användare och inte heller bjuda in andra via e-post eller telefon.",
         "do_not_use": "Använd inte en identitetsserver",
         "url_field_label": "Ange en ny identitetsserver"
+    },
+    "member_list": {
+        "invite_button_no_perms_tooltip": "Du är inte behörig att bjuda in användare",
+        "invited_list_heading": "Inbjuden",
+        "filter_placeholder": "Filtrera rumsmedlemmar",
+        "power_label": "%(userName)s (behörighet %(powerLevelNumber)s)"
     }
 }

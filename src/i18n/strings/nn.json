@@ -1,5 +1,4 @@
 {
-    "Permission Required": "Tillating er Naudsynt",
     "Sun": "su",
     "Mon": "må",
     "Tue": "ty",
@@ -43,9 +42,6 @@
         "other": "og %(count)s andre...",
         "one": "og ein annan..."
     },
-    "Invited": "Invitert",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)",
-    "You do not have permission to post to this room": "Du har ikkje lov til å senda meldingar i dette rommet",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
@@ -57,7 +53,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Bli med i rom",
-    "Forget room": "Gløym rom",
     "Share room": "Del rom",
     "Rooms": "Rom",
     "Low priority": "Låg prioritet",
@@ -152,7 +147,6 @@
     "Enter passphrase": "Skriv inn passfrase",
     "Confirm passphrase": "Stadfest passfrase",
     "Jump to read receipt": "Hopp til lesen-lappen",
-    "Filter room members": "Filtrer rommedlemmar",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du held på å verta teken til ei tredje-partisside so du kan godkjenna brukaren din til bruk med %(integrationsUrl)s. Vil du gå fram?",
     "Add an Integration": "Legg tillegg til",
     "Custom level": "Tilpassa nivå",
@@ -207,9 +201,6 @@
     "Deactivate user": "Deaktiver brukar",
     "Failed to deactivate user": "Fekk ikkje til å deaktivere brukaren",
     "Remove recent messages": "Fjern nyare meldingar",
-    "The conversation continues here.": "Samtalen held fram her.",
-    "This room has been replaced and is no longer active.": "Dette rommet er erstatta og er ikkje lenger aktivt.",
-    "Italics": "Kursiv",
     "Direct Messages": "Folk",
     "Join the conversation with an account": "Bli med i samtalen med ein konto",
     "Sign Up": "Registrer deg",
@@ -308,8 +299,6 @@
     "The poll has ended. No votes were cast.": "Røystinga er ferdig. Ingen røyster vart mottekne.",
     "Sorry, you can't edit a poll after votes have been cast.": "Beklagar, du kan ikkje endra ei røysting som er i gang.",
     "Can't edit poll": "Røystinga kan ikkje endrast",
-    "Poll": "Røysting",
-    "You do not have permission to start polls in this room.": "Du har ikkje lov til å starte nye røystingar i dette rommet.",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
     "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
     "Close sidebar": "Lat att sidestolpen",
@@ -464,7 +453,14 @@
             "@room_description": "Varsle heile rommet",
             "notification_description": "Romvarsel",
             "user_description": "Brukarar"
-        }
+        },
+        "room_upgraded_link": "Samtalen held fram her.",
+        "room_upgraded_notice": "Dette rommet er erstatta og er ikkje lenger aktivt.",
+        "no_perms_notice": "Du har ikkje lov til å senda meldingar i dette rommet",
+        "poll_button_no_perms_title": "Tillating er Naudsynt",
+        "poll_button_no_perms_description": "Du har ikkje lov til å starte nye røystingar i dette rommet.",
+        "poll_button": "Røysting",
+        "format_italics": "Kursiv"
     },
     "Code": "Kode",
     "power_level": {
@@ -1149,7 +1145,10 @@
             "favourite": "Yndling",
             "low_priority": "Lågrett"
         },
-        "invite_this_room": "Inviter til dette rommet"
+        "invite_this_room": "Inviter til dette rommet",
+        "header": {
+            "forget_room_button": "Gløym rom"
+        }
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1285,5 +1284,10 @@
         "disconnect_warning": "Ved å fjerne koplinga mot din identitetstenar, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan heller ikkje invitera andre med e-post eller telefonnummer.",
         "description_optional": "Å bruka ein identitetstenar er frivillig. Om du vel å ikkje bruka dette, vil ikkje brukaren din bli oppdaga av andre brukarar, og du kan ikkje invitera andre med e-post eller telefonnummer.",
         "url_field_label": "Skriv inn ein ny identitetstenar"
+    },
+    "member_list": {
+        "invited_list_heading": "Invitert",
+        "filter_placeholder": "Filtrer rommedlemmar",
+        "power_label": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)"
     }
 }

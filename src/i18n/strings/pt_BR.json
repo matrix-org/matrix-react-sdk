@@ -2,8 +2,6 @@
     "A new password must be entered.": "Uma nova senha precisa ser inserida.",
     "Are you sure you want to reject the invitation?": "Tem certeza de que deseja recusar o convite?",
     "Failed to reject invitation": "Falha ao tentar recusar o convite",
-    "Filter room members": "Pesquisar participantes da sala",
-    "Forget room": "Esquecer sala",
     "Historical": "Histórico",
     "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
@@ -15,7 +13,6 @@
     "Session ID": "Identificador de sessão",
     "unknown error code": "código de erro desconhecido",
     "Verification Pending": "Confirmação pendente",
-    "You do not have permission to post to this room": "Você não tem permissão para digitar nesta sala",
     "Sun": "Dom",
     "Mon": "Seg",
     "Tue": "Ter",
@@ -87,7 +84,6 @@
     "Add an Integration": "Adicionar uma integração",
     "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
-    "Invited": "Convidada(o)",
     "Are you sure you want to leave the room '%(roomName)s'?": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
     "Custom level": "Nível personalizado",
     "Home": "Home",
@@ -100,7 +96,6 @@
     "Admin Tools": "Ferramentas de administração",
     "%(roomName)s does not exist.": "%(roomName)s não existe.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s não está acessível neste momento.",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (nível de permissão %(powerLevelNumber)s)",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
@@ -144,11 +139,8 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
-    "Permission Required": "Permissão necessária",
     "This event could not be displayed": "Este evento não pôde ser exibido",
     "Share Link to User": "Compartilhar este usuário",
-    "This room has been replaced and is no longer active.": "Esta sala foi substituída e não está mais ativa.",
-    "The conversation continues here.": "A conversa continua aqui.",
     "Share room": "Compartilhar sala",
     "Set up": "Configurar",
     "Only room administrators will see this warning": "Somente administradores de sala verão esse alerta",
@@ -378,7 +370,6 @@
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
     "Add room": "Adicionar sala",
-    "Room options": "Opções da Sala",
     "This room is public": "Esta sala é pública",
     "This room has already been upgraded.": "Esta sala já foi atualizada.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Esta sala está executando a versão <roomVersion />, que este servidor marcou como <i>instável</i>.",
@@ -431,7 +422,6 @@
     "Everyone in this room is verified": "Todos nesta sala estão confirmados",
     "Edit message": "Editar mensagem",
     "Scroll to most recent messages": "Ir para as mensagens recentes",
-    "Italics": "Itálico",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
     "Failed to revoke invite": "Falha ao revogar o convite",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
@@ -619,8 +609,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "Você pode fixar até %(count)s widgets"
     },
-    "Show Widgets": "Mostrar widgets",
-    "Hide Widgets": "Esconder widgets",
     "Modal Widget": "Popup do widget",
     "Data on this screen is shared with %(widgetDomain)s": "Dados nessa tela são compartilhados com %(widgetDomain)s",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, e-mail ou nome de usuário (por exemplo: <userId/>) ou <a>compartilhe esta sala</a>.",
@@ -1052,8 +1040,6 @@
     },
     "Join public room": "Entrar na sala pública",
     "Recently viewed": "Visualizado recentemente",
-    "Insert link": "Inserir link",
-    "You do not have permission to start polls in this room.": "Você não tem permissão para iniciar enquetes nesta sala.",
     "Reply in thread": "Responder no tópico",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -1400,7 +1386,15 @@
             "room_a11y": "Preenchimento automático de sala",
             "user_description": "Usuários",
             "user_a11y": "Preenchimento automático de usuário"
-        }
+        },
+        "room_upgraded_link": "A conversa continua aqui.",
+        "room_upgraded_notice": "Esta sala foi substituída e não está mais ativa.",
+        "no_perms_notice": "Você não tem permissão para digitar nesta sala",
+        "send_button_voice_message": "Enviar uma mensagem de voz",
+        "poll_button_no_perms_title": "Permissão necessária",
+        "poll_button_no_perms_description": "Você não tem permissão para iniciar enquetes nesta sala.",
+        "format_italics": "Itálico",
+        "format_insert_link": "Inserir link"
     },
     "Link": "Ligação",
     "Code": "Código",
@@ -2980,9 +2974,15 @@
             "favourite": "Favoritar",
             "copy_link": "Copiar link da sala",
             "low_priority": "Baixa prioridade",
-            "forget": "Esquecer Sala"
+            "forget": "Esquecer Sala",
+            "title": "Opções da Sala"
         },
-        "invite_this_room": "Convidar para esta sala"
+        "invite_this_room": "Convidar para esta sala",
+        "header": {
+            "forget_room_button": "Esquecer sala",
+            "hide_widgets_button": "Esconder widgets",
+            "show_widgets_button": "Mostrar widgets"
+        }
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -3163,5 +3163,10 @@
         "description_optional": "Usar um servidor de identidade é opcional. Se você optar por não usar um servidor de identidade, não poderá ser descoberto por outros usuários e não poderá convidar outras pessoas por e-mail ou por número de celular.",
         "do_not_use": "Não usar um servidor de identidade",
         "url_field_label": "Digite um novo servidor de identidade"
+    },
+    "member_list": {
+        "invited_list_heading": "Convidada(o)",
+        "filter_placeholder": "Pesquisar participantes da sala",
+        "power_label": "%(userName)s (nível de permissão %(powerLevelNumber)s)"
     }
 }
