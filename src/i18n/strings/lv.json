@@ -109,10 +109,6 @@
     "Dec": "Dec.",
     "Connectivity to the server has been lost.": "Savienojums ar serveri pārtrūka.",
     "Sent messages will be stored until your connection has returned.": "Sūtītās ziņas tiks saglabātas līdz brīdim, kad savienojums tiks atjaunots.",
-    "Import room keys": "Importēt istabas atslēgas",
-    "File to import": "Importējamais fails",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
     "Confirm Removal": "Apstipriniet dzēšanu",
     "Unknown error": "Nezināma kļūda",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
@@ -1166,7 +1162,11 @@
             "enter_passphrase": "Ievadiet frāzveida paroli",
             "confirm_passphrase": "Apstipriniet frāzveida paroli",
             "phrase_cannot_be_empty": "Frāzveida parole nevar būt tukša",
-            "phrase_must_match": "Frāzveida parolēm ir jāsakrīt"
+            "phrase_must_match": "Frāzveida parolēm ir jāsakrīt",
+            "import_title": "Importēt istabas atslēgas",
+            "import_description_1": "Šis process ļaus Tev importēt šifrēšanas atslēgas, kuras Tu iepriekš eksportēji no cita Matrix klienta. Tas ļaus Tev atšifrēt čata vēsturi.",
+            "import_description_2": "Eksporta fails būs aizsargāts ar frāzveida paroli. Tā ir jāievada šeit, lai atšifrētu failu.",
+            "file_to_import": "Importējamais fails"
         }
     },
     "devtools": {

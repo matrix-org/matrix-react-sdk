@@ -721,17 +721,13 @@
     "expand": "گشودن",
     "collapse": "بستن",
     "This version of %(brand)s does not support searching encrypted messages": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند",
-    "Import room keys": "واردکردن (Import) کلیدهای اتاق",
     "This version of %(brand)s does not support viewing some encrypted files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "این فرآیند به شما اجازه می‌دهد تا کلیدهای امنیتی را وارد (Import) کنید، کلیدهایی که قبلا از کلاینت‌های دیگر خود استخراج (Export) کرده‌اید. پس از آن شما می‌توانید هر پیامی را که کلاینت دیگر قادر به رمزگشایی آن بوده را، رمزگشایی و مشاهده کنید.",
     "Use the <a>Desktop app</a> to search encrypted messages": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Use the <a>Desktop app</a> to see all encrypted files": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Widget added by": "ابزارک اضافه شده توسط",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "فایل استخراج‌شده با یک عبارت امنیتی محافظت می‌شود. برای رمزگشایی فایل باید عبارت امنیتی را وارد کنید.",
     "Popout widget": "بیرون انداختن ابزارک",
     "This widget may use cookies.": "این ابزارک ممکن است از کوکی استفاده کند.",
     "Widgets do not use message encryption.": "ابزارک ها از رمزگذاری پیام استفاده نمی کنند.",
-    "File to import": "فایل برای واردکردن (Import)",
     "Using this widget may share data <helpIcon /> with %(widgetDomain)s.": "استفاده از این ابزارک ممکن است داده‌هایی <helpIcon /> را با %(widgetDomain)s به اشتراک بگذارد.",
     "New Recovery Method": "روش بازیابی جدید",
     "A new Security Phrase and key for Secure Messages have been detected.": "یک عبارت امنیتی و کلید جدید برای پیام‌رسانی امن شناسایی شد.",
@@ -1736,7 +1732,11 @@
             "enter_passphrase": "عبارت امنیتی را وارد کنید",
             "confirm_passphrase": "عبارت امنیتی را تائید کنید",
             "phrase_cannot_be_empty": "عبارت امنیتی نمی‌تواند خالی باشد",
-            "phrase_must_match": "عبارات‌های امنیتی باید مطابقت داشته باشند"
+            "phrase_must_match": "عبارات‌های امنیتی باید مطابقت داشته باشند",
+            "import_title": "واردکردن (Import) کلیدهای اتاق",
+            "import_description_1": "این فرآیند به شما اجازه می‌دهد تا کلیدهای امنیتی را وارد (Import) کنید، کلیدهایی که قبلا از کلاینت‌های دیگر خود استخراج (Export) کرده‌اید. پس از آن شما می‌توانید هر پیامی را که کلاینت دیگر قادر به رمزگشایی آن بوده را، رمزگشایی و مشاهده کنید.",
+            "import_description_2": "فایل استخراج‌شده با یک عبارت امنیتی محافظت می‌شود. برای رمزگشایی فایل باید عبارت امنیتی را وارد کنید.",
+            "file_to_import": "فایل برای واردکردن (Import)"
         }
     },
     "devtools": {

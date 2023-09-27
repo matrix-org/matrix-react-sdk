@@ -144,7 +144,6 @@
     },
     "Uploading %(filename)s": "Pujant %(filename)s",
     "Session ID": "ID de la sessió",
-    "Import room keys": "Importa les claus de la sala",
     "Sunday": "Diumenge",
     "Notification targets": "Objectius de les notificacions",
     "Today": "Avui",
@@ -377,7 +376,8 @@
         },
         "key_export_import": {
             "export_title": "Exporta les claus de la sala",
-            "confirm_passphrase": "Introduïu una contrasenya"
+            "confirm_passphrase": "Introduïu una contrasenya",
+            "import_title": "Importa les claus de la sala"
         }
     },
     "devtools": {

@@ -1010,10 +1010,6 @@
     "This session is encrypting history using the new recovery method.": "הפעלה זו היא הצפנת היסטוריה בשיטת השחזור החדשה.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "אם לא הגדרת את שיטת השחזור החדשה, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות.",
     "New Recovery Method": "שיטת שחזור חדשה",
-    "File to import": "קובץ ליבא",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "קובץ הייצוא יהיה מוגן באמצעות משפט סיסמה. עליך להזין כאן את משפט הסיסמה כדי לפענח את הקובץ.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "תהליך זה מאפשר לך לייבא מפתחות הצפנה שייצאת בעבר מלקוח מטריקס אחר. לאחר מכן תוכל לפענח את כל ההודעות שהלקוח האחר יכול לפענח.",
-    "Import room keys": "יבא מפתחות חדר",
     "Unknown error": "שגיאה לא ידועה",
     "Create account": "חשבון משתמש חדש",
     "General failure": "שגיאה כללית",
@@ -1846,7 +1842,11 @@
             "enter_passphrase": "הזן ביטוי סיסמה",
             "confirm_passphrase": "אשר ביטוי",
             "phrase_cannot_be_empty": "ביטוי הסיסמה לא יכול להיות ריק",
-            "phrase_must_match": "ביטויי סיסמה חייבים להתאים"
+            "phrase_must_match": "ביטויי סיסמה חייבים להתאים",
+            "import_title": "יבא מפתחות חדר",
+            "import_description_1": "תהליך זה מאפשר לך לייבא מפתחות הצפנה שייצאת בעבר מלקוח מטריקס אחר. לאחר מכן תוכל לפענח את כל ההודעות שהלקוח האחר יכול לפענח.",
+            "import_description_2": "קובץ הייצוא יהיה מוגן באמצעות משפט סיסמה. עליך להזין כאן את משפט הסיסמה כדי לפענח את הקובץ.",
+            "file_to_import": "קובץ ליבא"
         }
     },
     "devtools": {

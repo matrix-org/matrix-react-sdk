@@ -397,10 +397,6 @@
     "General failure": "Algemene foute",
     "Create account": "Account anmoakn",
     "Session ID": "Sessie-ID",
-    "Import room keys": "Gesprekssleuters importeern",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee ku je de versleuteriengssleuters da j’uut een andere Matrix-cliënt had geëxporteerd importeern, zoda j’alle berichtn da ’t ander programma kostege ountsleutern ook hier goa kunn leezn.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "’t Geëxporteerd bestand is beveiligd met e paswoord. Gift da paswoord hier in vo ’t bestand t’ountsleutern.",
-    "File to import": "T’importeern bestand",
     "Set up": "Instelln",
     "New Recovery Method": "Nieuwe herstelmethode",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "A je gy deze nieuwe herstelmethode nie èt ingesteld, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn.",
@@ -665,7 +661,11 @@
             "enter_passphrase": "Gif ’t paswoord in",
             "confirm_passphrase": "Bevestig ’t paswoord",
             "phrase_cannot_be_empty": "Paswoord meug nie leeg zyn",
-            "phrase_must_match": "Paswoordn moetn overeenkommn"
+            "phrase_must_match": "Paswoordn moetn overeenkommn",
+            "import_title": "Gesprekssleuters importeern",
+            "import_description_1": "Hiermee ku je de versleuteriengssleuters da j’uut een andere Matrix-cliënt had geëxporteerd importeern, zoda j’alle berichtn da ’t ander programma kostege ountsleutern ook hier goa kunn leezn.",
+            "import_description_2": "’t Geëxporteerd bestand is beveiligd met e paswoord. Gift da paswoord hier in vo ’t bestand t’ountsleutern.",
+            "file_to_import": "T’importeern bestand"
         }
     },
     "devtools": {

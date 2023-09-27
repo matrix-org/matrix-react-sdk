@@ -152,10 +152,6 @@
     "New passwords must match each other.": "Нове лозинке се морају подударати.",
     "Return to login screen": "Врати ме на екран за пријаву",
     "Session ID": "ИД сесије",
-    "Import room keys": "Увези кључеве собе",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ова радња вам омогућава да увезете кључеве за шифровање које сте претходно извезли из другог Матрикс клијента. Након тога ћете моћи да дешифрујете било коју поруку коју је други клијент могао да дешифрује.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Извезена датотека ће бити заштићена са фразом. Требало би да унесете фразу овде, да бисте дешифровали датотеку.",
-    "File to import": "Датотека за увоз",
     "Sunday": "Недеља",
     "Notification targets": "Циљеви обавештења",
     "Today": "Данас",
@@ -899,7 +895,11 @@
             "enter_passphrase": "Унеси фразу",
             "confirm_passphrase": "Потврди фразу",
             "phrase_cannot_be_empty": "Фразе не смеју бити празне",
-            "phrase_must_match": "Фразе се морају подударати"
+            "phrase_must_match": "Фразе се морају подударати",
+            "import_title": "Увези кључеве собе",
+            "import_description_1": "Ова радња вам омогућава да увезете кључеве за шифровање које сте претходно извезли из другог Матрикс клијента. Након тога ћете моћи да дешифрујете било коју поруку коју је други клијент могао да дешифрује.",
+            "import_description_2": "Извезена датотека ће бити заштићена са фразом. Требало би да унесете фразу овде, да бисте дешифровали датотеку.",
+            "file_to_import": "Датотека за увоз"
         }
     },
     "devtools": {

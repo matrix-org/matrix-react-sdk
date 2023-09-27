@@ -89,9 +89,6 @@
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
     "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
     "Warning!": "Atenção!",
-    "Import room keys": "Importar chaves de sala",
-    "File to import": "Arquivo para importar",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O ficheiro de exportação será protegido com uma frase-passe. Deve introduzir a frase-passe aqui, para desencriptar o ficheiro.",
     "Reject all %(invitedRooms)s invites": "Rejeitar todos os %(invitedRooms)s convites",
     "Confirm Removal": "Confirmar Remoção",
     "Unknown error": "Erro desconhecido",
@@ -100,7 +97,6 @@
     "Error decrypting image": "Erro ao descriptografar a imagem",
     "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Invited": "Convidada(o)",
     "No Microphones detected": "Não foi detetado nenhum microfone",
@@ -574,7 +570,11 @@
             "enter_passphrase": "Introduza a frase-passe",
             "confirm_passphrase": "Confirmar frase-passe",
             "phrase_cannot_be_empty": "A frase-passe não pode estar vazia",
-            "phrase_must_match": "As frases-passe devem coincidir"
+            "phrase_must_match": "As frases-passe devem coincidir",
+            "import_title": "Importar chaves de sala",
+            "import_description_1": "Este processo faz com que você possa importar as chaves de criptografia que tinha previamente exportado de outro cliente Matrix. Você poderá então descriptografar todas as mensagens que o outro cliente pôde criptografar.",
+            "import_description_2": "O ficheiro de exportação será protegido com uma frase-passe. Deve introduzir a frase-passe aqui, para desencriptar o ficheiro.",
+            "file_to_import": "Arquivo para importar"
         }
     },
     "devtools": {

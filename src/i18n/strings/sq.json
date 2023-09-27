@@ -126,9 +126,6 @@
     "Profile": "Profil",
     "Return to login screen": "Kthehuni te skena e hyrjeve",
     "Session ID": "ID sesioni",
-    "Import room keys": "Importo kyçe dhome",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ky proces ju lejon të importoni kyçe fshehtëzimi që keni eksportuar më parë nga një tjetër klient Matrix. Mandej do të jeni në gjendje të shfshehtëzoni çfarëdo mesazhesh që mund të shfshehtëzojë ai klient tjetër.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Kartela e eksportit është e mbrojtur me një frazëkalim. Që të shfshehtëzoni kartelën, duhet ta jepni frazëkalimin këtu.",
     "Failed to ban user": "S’u arrit të dëbohej përdoruesi",
     "Failed to mute user": "S’u arrit t’i hiqej zëri përdoruesit",
     "Failed to change power level": "S’u arrit të ndryshohej shkalla e pushtetit",
@@ -145,7 +142,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "U provua të ngarkohej një pikë të dhënë prej rrjedhës kohore në këtë dhomë, por s’u arrit të gjendej.",
     "Failed to load timeline position": "S’u arrit të ngarkohej pozicion rrjedhe kohore",
     "Unable to remove contact information": "S’arrihet të hiqen të dhëna kontakti",
-    "File to import": "Kartelë për importim",
     "Failed to set display name": "S’u arrit të caktohej emër ekrani",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (pushtet %(powerLevelNumber)si)",
     "(~%(count)s results)": {
@@ -2625,7 +2621,11 @@
             "enter_passphrase": "Jepni frazëkalimin",
             "confirm_passphrase": "Ripohoni frazëkalimin",
             "phrase_cannot_be_empty": "Frazëkalimi s’mund të jetë i zbrazët",
-            "phrase_must_match": "Frazëkalimet duhet të përputhen"
+            "phrase_must_match": "Frazëkalimet duhet të përputhen",
+            "import_title": "Importo kyçe dhome",
+            "import_description_1": "Ky proces ju lejon të importoni kyçe fshehtëzimi që keni eksportuar më parë nga një tjetër klient Matrix. Mandej do të jeni në gjendje të shfshehtëzoni çfarëdo mesazhesh që mund të shfshehtëzojë ai klient tjetër.",
+            "import_description_2": "Kartela e eksportit është e mbrojtur me një frazëkalim. Që të shfshehtëzoni kartelën, duhet ta jepni frazëkalimin këtu.",
+            "file_to_import": "Kartelë për importim"
         }
     },
     "devtools": {

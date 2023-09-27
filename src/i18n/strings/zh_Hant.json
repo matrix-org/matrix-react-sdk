@@ -110,10 +110,6 @@
         "one": "（~%(count)s 結果）",
         "other": "（~%(count)s 結果）"
     },
-    "Import room keys": "匯入聊天室金鑰",
-    "File to import": "要匯入的檔案",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
     "Reject all %(invitedRooms)s invites": "拒絕所有 %(invitedRooms)s 邀請",
     "Confirm Removal": "確認刪除",
     "Unknown error": "未知的錯誤",
@@ -2693,7 +2689,11 @@
             "phrase_strong_enough": "很好！此密碼看起來夠強",
             "confirm_passphrase": "確認安全密語",
             "phrase_cannot_be_empty": "安全密語不能為空",
-            "phrase_must_match": "安全密語必須相符"
+            "phrase_must_match": "安全密語必須相符",
+            "import_title": "匯入聊天室金鑰",
+            "import_description_1": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
+            "import_description_2": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
+            "file_to_import": "要匯入的檔案"
         }
     },
     "devtools": {

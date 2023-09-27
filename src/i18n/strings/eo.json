@@ -146,10 +146,6 @@
     "New passwords must match each other.": "Novaj pasvortoj devas akordi.",
     "Return to login screen": "Reiri al saluta paĝo",
     "Session ID": "Identigilo de salutaĵo",
-    "Import room keys": "Enporti ĉambrajn ŝlosilojn",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tio ĉi permesos al vi enporti ĉifrajn ŝlosilojn, kiujn vi antaŭe elportis el alia kliento de Matrix. Poste vi povos malĉifri la samajn mesaĝojn, kiujn la alia kliento povis.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "La elportita dosiero estos protektata de pasfrazo. Por malĉifri ĝin, enigu la pasfrazon ĉi tien.",
-    "File to import": "Enportota dosiero",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Forigo de fenestraĵo efektiviĝos por ĉiuj uzantoj en ĉi tiu ĉambro. Ĉu vi certe volas ĝin forigi?",
     "Replying": "Respondante",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -1943,7 +1939,11 @@
             "enter_passphrase": "Enigu pasfrazon",
             "confirm_passphrase": "Konfirmu pasfrazon",
             "phrase_cannot_be_empty": "Pasfrazoj maldevas esti malplenaj",
-            "phrase_must_match": "Pasfrazoj devas akordi"
+            "phrase_must_match": "Pasfrazoj devas akordi",
+            "import_title": "Enporti ĉambrajn ŝlosilojn",
+            "import_description_1": "Tio ĉi permesos al vi enporti ĉifrajn ŝlosilojn, kiujn vi antaŭe elportis el alia kliento de Matrix. Poste vi povos malĉifri la samajn mesaĝojn, kiujn la alia kliento povis.",
+            "import_description_2": "La elportita dosiero estos protektata de pasfrazo. Por malĉifri ĝin, enigu la pasfrazon ĉi tien.",
+            "file_to_import": "Enportota dosiero"
         }
     },
     "devtools": {

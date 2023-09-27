@@ -23,7 +23,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
     "This room has no local addresses": "Gela honek ez du tokiko helbiderik",
     "Session ID": "Saioaren IDa",
-    "Import room keys": "Inportatu gelako gakoak",
     "Moderator": "Moderatzailea",
     "Admin Tools": "Administrazio-tresnak",
     "No Microphones detected": "Ez da mikrofonorik atzeman",
@@ -108,9 +107,6 @@
         "one": "(~%(count)s emaitza)",
         "other": "(~%(count)s emaitza)"
     },
-    "File to import": "Inportatu beharreko fitxategia",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Prozesu honek aurretik beste Matrix bezero batetik esportatu dituzun zifratze gakoak inportatzea ahalbidetzen dizu. Gero beste bezeroak deszifratu zitzakeen mezuak deszifratu ahal izango dituzu.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Esportatutako fitxategia pasaesaldi batez babestuko da. Pasaesaldia bertan idatzi behar duzu, fitxategia deszifratzeko.",
     "Confirm Removal": "Berretsi kentzea",
     "Unknown error": "Errore ezezaguna",
     "Unable to restore session": "Ezin izan da saioa berreskuratu",
@@ -1121,7 +1117,11 @@
             "enter_passphrase": "Idatzi pasaesaldia",
             "confirm_passphrase": "Berretsi pasaesaldia",
             "phrase_cannot_be_empty": "Pasaesaldia ezin da hutsik egon",
-            "phrase_must_match": "Pasaesaldiak bat etorri behar dira"
+            "phrase_must_match": "Pasaesaldiak bat etorri behar dira",
+            "import_title": "Inportatu gelako gakoak",
+            "import_description_1": "Prozesu honek aurretik beste Matrix bezero batetik esportatu dituzun zifratze gakoak inportatzea ahalbidetzen dizu. Gero beste bezeroak deszifratu zitzakeen mezuak deszifratu ahal izango dituzu.",
+            "import_description_2": "Esportatutako fitxategia pasaesaldi batez babestuko da. Pasaesaldia bertan idatzi behar duzu, fitxategia deszifratzeko.",
+            "file_to_import": "Inportatu beharreko fitxategia"
         }
     },
     "devtools": {

@@ -138,10 +138,6 @@
     "New passwords must match each other.": "Obe nové heslá musia byť zhodné.",
     "Return to login screen": "Vrátiť sa na prihlasovaciu obrazovku",
     "Session ID": "ID relácie",
-    "Import room keys": "Importovať kľúče miestností",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás prevedie importom šifrovacích kľúčov, ktoré ste si v minulosti exportovali v inom Matrix klientovi. Po úspešnom importe budete v tomto klientovi môcť dešifrovať všetky správy, ktoré ste mohli dešifrovať v spomínanom klientovi.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Exportovaný súbor bude chránený prístupovou frázou. Tu by ste mali zadať prístupovú frázu, aby ste súbor dešifrovali.",
-    "File to import": "Importovať zo súboru",
     "Restricted": "Obmedzené",
     "Send": "Odoslať",
     "%(duration)ss": "%(duration)ss",
@@ -2693,7 +2689,11 @@
             "phrase_strong_enough": "Skvelé! Táto bezpečnostná fráza vyzerá dostatočne silná",
             "confirm_passphrase": "Potvrďte prístupovú frázu",
             "phrase_cannot_be_empty": "Prístupová fráza nesmie byť prázdna",
-            "phrase_must_match": "Prístupové frázy sa musia zhodovať"
+            "phrase_must_match": "Prístupové frázy sa musia zhodovať",
+            "import_title": "Importovať kľúče miestností",
+            "import_description_1": "Tento proces vás prevedie importom šifrovacích kľúčov, ktoré ste si v minulosti exportovali v inom Matrix klientovi. Po úspešnom importe budete v tomto klientovi môcť dešifrovať všetky správy, ktoré ste mohli dešifrovať v spomínanom klientovi.",
+            "import_description_2": "Exportovaný súbor bude chránený prístupovou frázou. Tu by ste mali zadať prístupovú frázu, aby ste súbor dešifrovali.",
+            "file_to_import": "Importovať zo súboru"
         }
     },
     "devtools": {

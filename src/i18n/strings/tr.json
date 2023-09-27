@@ -110,10 +110,6 @@
         "other": "(~%(count)s sonuçlar)"
     },
     "Create new room": "Yeni Oda Oluştur",
-    "Import room keys": "Oda anahtarlarını içe aktar",
-    "File to import": "Alınacak Dosya",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
     "Reject all %(invitedRooms)s invites": "Tüm %(invitedRooms)s davetlerini reddet",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unknown error": "Bilinmeyen Hata",
@@ -1381,7 +1377,11 @@
             "enter_passphrase": "Şifre deyimi Girin",
             "confirm_passphrase": "Şifreyi onayla",
             "phrase_cannot_be_empty": "Şifrenin boş olmaması gerekir",
-            "phrase_must_match": "Şifrenin eşleşmesi gerekir"
+            "phrase_must_match": "Şifrenin eşleşmesi gerekir",
+            "import_title": "Oda anahtarlarını içe aktar",
+            "import_description_1": "Bu işlem , geçmişte başka Matrix istemcisinden dışa aktardığınız şifreleme anahtarlarınızı içe aktarmanızı sağlar . Böylece diğer istemcinin çözebileceği tüm iletilerin şifresini çözebilirsiniz.",
+            "import_description_2": "Dışa aktarma dosyası bir şifre ile korunacaktır . Dosyanın şifresini çözmek için buraya şifre girmelisiniz.",
+            "file_to_import": "Alınacak Dosya"
         }
     },
     "devtools": {

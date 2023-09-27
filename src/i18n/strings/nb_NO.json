@@ -243,7 +243,6 @@
     "Search failed": "Søket mislyktes",
     "No more results": "Ingen flere resultater",
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
-    "File to import": "Filen som skal importeres",
     "Verify this session": "Verifiser denne økten",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(count)s others": {
@@ -290,7 +289,6 @@
     "Show advanced": "Vis avansert",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "Import room keys": "Importer romnøkler",
     "Go to Settings": "Gå til Innstillinger",
     "Delete Backup": "Slett sikkerhetskopien",
     "Restore from Backup": "Gjenopprett fra sikkerhetskopi",
@@ -1177,7 +1175,9 @@
             "enter_passphrase": "Skriv inn passordfrase",
             "confirm_passphrase": "Bekreft passfrasen",
             "phrase_cannot_be_empty": "Passfrasen kan ikke være tom",
-            "phrase_must_match": "Passfrasene må samsvare"
+            "phrase_must_match": "Passfrasene må samsvare",
+            "import_title": "Importer romnøkler",
+            "file_to_import": "Filen som skal importeres"
         }
     },
     "devtools": {

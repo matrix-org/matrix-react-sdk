@@ -155,8 +155,6 @@
     "Delete Widget": "Radera widget",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "Att radera en widget tar bort den för alla användare i rummet. Är du säker på att du vill radera den?",
     "This room is not public. You will not be able to rejoin without an invite.": "Det här rummet är inte offentligt. Du kommer inte kunna gå med igen utan en inbjudan.",
-    "Import room keys": "Importera rumsnycklar",
-    "File to import": "Fil att importera",
     "Replying": "Svarar",
     "Banned by %(displayName)s": "Bannad av %(displayName)s",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
@@ -186,8 +184,6 @@
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
     "Popout widget": "Poppa ut widget",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Denna process möjliggör import av krypteringsnycklar som tidigare exporterats från en annan Matrix-klient. Du kommer då kunna avkryptera alla meddelanden som den andra klienten kunde avkryptera.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Den exporterade filen kommer vara skyddad med en lösenfras. Du måste ange lösenfrasen här, för att avkryptera filen.",
     "Share Link to User": "Dela länk till användare",
     "Share room": "Dela rum",
     "Share Room": "Dela rum",
@@ -2649,7 +2645,11 @@
             "enter_passphrase": "Ange lösenfras",
             "confirm_passphrase": "Bekräfta lösenfrasen",
             "phrase_cannot_be_empty": "Lösenfrasen får inte vara tom",
-            "phrase_must_match": "Lösenfraser måste matcha"
+            "phrase_must_match": "Lösenfraser måste matcha",
+            "import_title": "Importera rumsnycklar",
+            "import_description_1": "Denna process möjliggör import av krypteringsnycklar som tidigare exporterats från en annan Matrix-klient. Du kommer då kunna avkryptera alla meddelanden som den andra klienten kunde avkryptera.",
+            "import_description_2": "Den exporterade filen kommer vara skyddad med en lösenfras. Du måste ange lösenfrasen här, för att avkryptera filen.",
+            "file_to_import": "Fil att importera"
         }
     },
     "devtools": {

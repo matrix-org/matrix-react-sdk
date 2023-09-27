@@ -107,9 +107,6 @@
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
     "Session ID": "Seanso ID",
-    "Import room keys": "Importuoti kambario raktus",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportavimo failas bus apsaugotas slaptafraze. Norėdami iššifruoti failą, čia turėtumėte įvesti slaptafrazę.",
-    "File to import": "Failas, kurį importuoti",
     "This event could not be displayed": "Nepavyko parodyti šio įvykio",
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
     "Invited": "Pakviesta",
@@ -1772,7 +1769,10 @@
             "enter_passphrase": "Įveskite slaptafrazę",
             "confirm_passphrase": "Patvirtinkite slaptafrazę",
             "phrase_cannot_be_empty": "Slaptafrazė negali būti tuščia",
-            "phrase_must_match": "Slaptafrazės privalo sutapti"
+            "phrase_must_match": "Slaptafrazės privalo sutapti",
+            "import_title": "Importuoti kambario raktus",
+            "import_description_2": "Eksportavimo failas bus apsaugotas slaptafraze. Norėdami iššifruoti failą, čia turėtumėte įvesti slaptafrazę.",
+            "file_to_import": "Failas, kurį importuoti"
         }
     },
     "devtools": {

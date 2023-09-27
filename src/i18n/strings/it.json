@@ -151,10 +151,6 @@
     "New passwords must match each other.": "Le nuove password devono coincidere.",
     "Return to login screen": "Torna alla schermata di accesso",
     "Session ID": "ID sessione",
-    "Import room keys": "Importa chiavi della stanza",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Questa procedura ti permette di importare le chiavi di crittografia precedentemente esportate da un altro client Matrix. Potrai poi decifrare tutti i messaggi che quel client poteva decifrare.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Il file esportato sarà protetto da una password. Dovresti inserire la password qui, per decifrarlo.",
-    "File to import": "File da importare",
     "You don't currently have any stickerpacks enabled": "Non hai ancora alcun pacchetto di adesivi attivato",
     "Sunday": "Domenica",
     "Notification targets": "Obiettivi di notifica",
@@ -2698,7 +2694,11 @@
             "phrase_strong_enough": "Ottimo! Questa password sembra abbastanza robusta",
             "confirm_passphrase": "Conferma password",
             "phrase_cannot_be_empty": "La password non può essere vuota",
-            "phrase_must_match": "Le password devono coincidere"
+            "phrase_must_match": "Le password devono coincidere",
+            "import_title": "Importa chiavi della stanza",
+            "import_description_1": "Questa procedura ti permette di importare le chiavi di crittografia precedentemente esportate da un altro client Matrix. Potrai poi decifrare tutti i messaggi che quel client poteva decifrare.",
+            "import_description_2": "Il file esportato sarà protetto da una password. Dovresti inserire la password qui, per decifrarlo.",
+            "file_to_import": "File da importare"
         }
     },
     "devtools": {

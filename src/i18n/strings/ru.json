@@ -94,10 +94,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
     "You seem to be in a call, are you sure you want to quit?": "Звонок не завершён. Уверены, что хотите выйти?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Вы не сможете отменить это действие, так как этот пользователь получит уровень прав, равный вашему.",
-    "Import room keys": "Импорт ключей комнаты",
-    "File to import": "Файл для импорта",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
     "Reject all %(invitedRooms)s invites": "Отклонить все %(invitedRooms)s приглашения",
     "Confirm Removal": "Подтвердите удаление",
     "Unknown error": "Неизвестная ошибка",
@@ -2489,7 +2485,11 @@
             "enter_passphrase": "Введите мнемоническую фразу",
             "confirm_passphrase": "Подтвердите мнемоническую фразу",
             "phrase_cannot_be_empty": "Мнемоническая фраза не может быть пустой",
-            "phrase_must_match": "Мнемонические фразы должны совпадать"
+            "phrase_must_match": "Мнемонические фразы должны совпадать",
+            "import_title": "Импорт ключей комнаты",
+            "import_description_1": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
+            "import_description_2": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
+            "file_to_import": "Файл для импорта"
         }
     },
     "devtools": {

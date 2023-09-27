@@ -748,10 +748,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "ຖ້າທ່ານບໍ່ໄດ້ກຳນົດວິທີການກູ້ຄືນໃໝ່, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະກຳນົດ ວິທີການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ.",
     "A new Security Phrase and key for Secure Messages have been detected.": "ກວດພົບປະໂຫຍກຄວາມປອດໄພໃໝ່ ແລະ ກະແຈສຳລັບຂໍ້ຄວາມທີ່ປອດໄພຖືກກວດພົບ.",
     "New Recovery Method": "ວິທີການກູ້ຄືນໃຫມ່",
-    "File to import": "ໄຟລ໌ທີ່ຈະນໍາເຂົ້າ",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "ໄຟລ໌ທີສົ່ງອອກຈະຖືກປ້ອງກັນດ້ວຍປະໂຫຍກລະຫັດຜ່ານ. ທ່ານຄວນໃສ່ລະຫັດຜ່ານທີ່ນີ້, ເພື່ອຖອດລະຫັດໄຟລ໌.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "ຂະບວນການນີ້ອະນຸຍາດໃຫ້ທ່ານນໍາເຂົ້າລະຫັດ ທີ່ທ່ານໄດ້ສົ່ງອອກຜ່ານມາຈາກລູກຄ້າ Matrix ອື່ນ. ຈາກນັ້ນທ່ານຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມໃດໆທີ່ລູກຄ້າອື່ນສາມາດຖອດລະຫັດໄດ້.",
-    "Import room keys": "ນຳເຂົ້າກະແຈຫ້ອງ",
     "Unknown error": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Create account": "ສ້າງບັນຊີ",
@@ -2194,7 +2190,11 @@
             "enter_passphrase": "ໃສ່ລະຫັດຜ່ານ",
             "confirm_passphrase": "ຢືນຢັນລະຫັດຜ່ານ",
             "phrase_cannot_be_empty": "ຂໍ້ຄວາມລະຫັດຜ່ານຈະຕ້ອງບໍ່ຫວ່າງເປົ່າ",
-            "phrase_must_match": "ປະໂຫຍກຕ້ອງກົງກັນ"
+            "phrase_must_match": "ປະໂຫຍກຕ້ອງກົງກັນ",
+            "import_title": "ນຳເຂົ້າກະແຈຫ້ອງ",
+            "import_description_1": "ຂະບວນການນີ້ອະນຸຍາດໃຫ້ທ່ານນໍາເຂົ້າລະຫັດ ທີ່ທ່ານໄດ້ສົ່ງອອກຜ່ານມາຈາກລູກຄ້າ Matrix ອື່ນ. ຈາກນັ້ນທ່ານຈະສາມາດຖອດລະຫັດຂໍ້ຄວາມໃດໆທີ່ລູກຄ້າອື່ນສາມາດຖອດລະຫັດໄດ້.",
+            "import_description_2": "ໄຟລ໌ທີສົ່ງອອກຈະຖືກປ້ອງກັນດ້ວຍປະໂຫຍກລະຫັດຜ່ານ. ທ່ານຄວນໃສ່ລະຫັດຜ່ານທີ່ນີ້, ເພື່ອຖອດລະຫັດໄຟລ໌.",
+            "file_to_import": "ໄຟລ໌ທີ່ຈະນໍາເຂົ້າ"
         }
     },
     "devtools": {

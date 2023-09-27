@@ -110,9 +110,6 @@
         "one": "(~%(count)s db eredmény)",
         "other": "(~%(count)s db eredmény)"
     },
-    "Import room keys": "Szoba kulcsok betöltése",
-    "File to import": "Fájl betöltése",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "A kimentett fájl jelmondattal van védve. A kibontáshoz add meg a jelmondatot.",
     "Reject all %(invitedRooms)s invites": "Mind a(z) %(invitedRooms)s meghívó elutasítása",
     "Confirm Removal": "Törlés megerősítése",
     "Unknown error": "Ismeretlen hiba",
@@ -122,7 +119,6 @@
     "Add an Integration": "Integráció hozzáadása",
     "Something went wrong!": "Valami rosszul sikerült.",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?",
     "Delete widget": "Kisalkalmazás törlése",
@@ -2628,7 +2624,11 @@
             "enter_passphrase": "Jelmondat megadása",
             "confirm_passphrase": "Jelmondat megerősítése",
             "phrase_cannot_be_empty": "A jelmondat nem lehet üres",
-            "phrase_must_match": "A jelmondatoknak meg kell egyezniük"
+            "phrase_must_match": "A jelmondatoknak meg kell egyezniük",
+            "import_title": "Szoba kulcsok betöltése",
+            "import_description_1": "Ezzel a folyamattal lehetőséged van betölteni a titkosítási kulcsokat amiket egy másik Matrix kliensből mentettél ki. Ez után minden üzenetet vissza tudsz fejteni amit a másik kliens tudott.",
+            "import_description_2": "A kimentett fájl jelmondattal van védve. A kibontáshoz add meg a jelmondatot.",
+            "file_to_import": "Fájl betöltése"
         }
     },
     "devtools": {

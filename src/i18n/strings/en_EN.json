@@ -316,7 +316,11 @@
             "phrase_strong_enough": "Great! This passphrase looks strong enough",
             "confirm_passphrase": "Confirm passphrase",
             "phrase_cannot_be_empty": "Passphrase must not be empty",
-            "phrase_must_match": "Passphrases must match"
+            "phrase_must_match": "Passphrases must match",
+            "import_title": "Import room keys",
+            "import_description_1": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
+            "import_description_2": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
+            "file_to_import": "File to import"
         }
     },
     "auth": {
@@ -3855,10 +3859,6 @@
     "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
     "General failure": "General failure",
-    "Import room keys": "Import room keys",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
-    "File to import": "File to import",
     "New Recovery Method": "New Recovery Method",
     "A new Security Phrase and key for Secure Messages have been detected.": "A new Security Phrase and key for Secure Messages have been detected.",
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.",

@@ -89,10 +89,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Connectivity to the server has been lost.": "La connexion au serveur a été perdue.",
     "Sent messages will be stored until your connection has returned.": "Les messages envoyés seront stockés jusqu’à ce que votre connexion revienne.",
-    "Import room keys": "Importer les clés de salon",
-    "File to import": "Fichier à importer",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
     "Reject all %(invitedRooms)s invites": "Rejeter la totalité des %(invitedRooms)s invitations",
     "Confirm Removal": "Confirmer la suppression",
     "Unknown error": "Erreur inconnue",
@@ -2693,7 +2689,11 @@
             "phrase_strong_enough": "Super ! Cette phrase secrète a l’air assez robuste",
             "confirm_passphrase": "Confirmer le mot de passe",
             "phrase_cannot_be_empty": "Le mot de passe ne peut pas être vide",
-            "phrase_must_match": "Les phrases secrètes doivent être identiques"
+            "phrase_must_match": "Les phrases secrètes doivent être identiques",
+            "import_title": "Importer les clés de salon",
+            "import_description_1": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
+            "import_description_2": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
+            "file_to_import": "Fichier à importer"
         }
     },
     "devtools": {

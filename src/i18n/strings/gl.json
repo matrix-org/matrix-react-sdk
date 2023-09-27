@@ -150,10 +150,6 @@
     "New passwords must match each other.": "Os novos contrasinais deben ser coincidentes.",
     "Return to login screen": "Volver a pantalla de acceso",
     "Session ID": "ID de sesión",
-    "Import room keys": "Importar chaves de sala",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este proceso permíteche importar chaves de cifrado que exportaches doutro cliente Matrix. Así poderás descifrar calquera mensaxe que o outro cliente puidese cifrar.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "O ficheiro exportado estará protexido con unha frase de paso. Debe introducir aquí esa frase de paso para descifrar o ficheiro.",
-    "File to import": "Ficheiro a importar",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala non é pública. Non poderá volver a ela sen un convite.",
     "You don't currently have any stickerpacks enabled": "Non ten paquetes de iconas activados",
@@ -2363,7 +2359,11 @@
             "enter_passphrase": "Introduza a frase de paso",
             "confirm_passphrase": "Confirma a frase de paso",
             "phrase_cannot_be_empty": "A frase de paso non pode quedar baldeira",
-            "phrase_must_match": "As frases de paso deben coincidir"
+            "phrase_must_match": "As frases de paso deben coincidir",
+            "import_title": "Importar chaves de sala",
+            "import_description_1": "Este proceso permíteche importar chaves de cifrado que exportaches doutro cliente Matrix. Así poderás descifrar calquera mensaxe que o outro cliente puidese cifrar.",
+            "import_description_2": "O ficheiro exportado estará protexido con unha frase de paso. Debe introducir aquí esa frase de paso para descifrar o ficheiro.",
+            "file_to_import": "Ficheiro a importar"
         }
     },
     "devtools": {

@@ -643,10 +643,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
     "Invalid identity server discovery response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
     "Invalid base_url for m.identity_server": "m.identity_server'i kehtetu base_url",
-    "Import room keys": "Impordi jututoa võtmed",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Selle toiminguga saad importida krüptimisvõtmed, mis sa viimati olid teisest Matrix'i kliendist eksportinud. Seejärel on võimalik dekrüptida ka siin kõik need samad sõnumid, mida see teine klient suutis dekrüptida.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Ekspordifail on turvatud paroolifraasiga ning alljärgnevalt peaksid dekrüptimiseks sisestama selle paroolifraasi.",
-    "File to import": "Imporditav fail",
     "Confirm encryption setup": "Krüptimise seadistuse kinnitamine",
     "Click the button below to confirm setting up encryption.": "Kinnitamaks, et soovid krüptimist seadistada, klõpsi järgnevat nuppu.",
     "Favourited": "Märgitud lemmikuks",
@@ -2693,7 +2689,11 @@
             "phrase_strong_enough": "Suurepärane! See paroolifraas on piisavalt kange",
             "confirm_passphrase": "Sisesta paroolifraas veel üks kord",
             "phrase_cannot_be_empty": "Paroolifraas ei tohi olla tühi",
-            "phrase_must_match": "Paroolifraasid ei klapi omavahel"
+            "phrase_must_match": "Paroolifraasid ei klapi omavahel",
+            "import_title": "Impordi jututoa võtmed",
+            "import_description_1": "Selle toiminguga saad importida krüptimisvõtmed, mis sa viimati olid teisest Matrix'i kliendist eksportinud. Seejärel on võimalik dekrüptida ka siin kõik need samad sõnumid, mida see teine klient suutis dekrüptida.",
+            "import_description_2": "Ekspordifail on turvatud paroolifraasiga ning alljärgnevalt peaksid dekrüptimiseks sisestama selle paroolifraasi.",
+            "file_to_import": "Imporditav fail"
         }
     },
     "devtools": {

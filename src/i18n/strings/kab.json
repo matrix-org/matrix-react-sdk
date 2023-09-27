@@ -126,8 +126,6 @@
     "Delete Backup": "Kkes aḥraz",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
     "Connect this session to Key Backup": "Qqen tiɣimit-a ɣer uḥraz n tsarut",
-    "Import room keys": "Kter tisura n texxamt",
-    "File to import": "Afaylu i uktar",
     "Confirm encryption setup": "Sentem asebded n uwgelhen",
     "Click the button below to confirm setting up encryption.": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen.",
     "Recovery Method Removed": "Tarrayt n ujebber tettwakkes",
@@ -706,8 +704,6 @@
     "If they don't match, the security of your communication may be compromised.": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker.",
     "Your homeserver doesn't seem to support this feature.": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a.",
     "Create a new room with the same name, description and avatar": "Rnu taxxamt tamaynut s yisem-nni, aglam-nni d uvaṭar-nni",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Akala-a ad ak·am-yefk tizirag ad tketreḍ tisura tiwgelhanin i d-tsifḍeḍ uqbel seg umsaɣ-nniḍen n Matrix. Syen ad tizmireḍ ad tekkseḍ awgelhen i yal izen iwumi yezmer umsaɣ-nniḍen ad as-t-yekkes.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Afaylu n usifeḍ ad yettummesten s tefyirt tuffirt. Ilaq ad teskecmeḍ tafyirt tuffirt da, i wakken ad tekkseḍ awgelhen i ufaylu.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Ur tettizmireḍ ara ad tesfesxeḍ asnifel-a acku tessebɣaseḍ aseqdac ad yesɛu aswir n tezmert am kečč·kemm.",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Asemmet n useqdac-a ad t-isuffeɣ yerna ur as-yettaǧǧa ara ad yales ad yeqqen. Daɣen, ad ffɣen akk seg texxamin ideg llan. Tigawt-a dayen ur tettwasefsax ara. S tidet tebɣiḍ ad tsemmteḍ aseqdac-a?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
@@ -1440,7 +1436,11 @@
             "enter_passphrase": "Sekcem tafyirt tuffirt",
             "confirm_passphrase": "Sentem tafyirt tuffirt",
             "phrase_cannot_be_empty": "Tafyirt tuffirt ur ilaq ara ad ilint d tilmawin",
-            "phrase_must_match": "Tifyar tuffirin ilaq ad mṣadant"
+            "phrase_must_match": "Tifyar tuffirin ilaq ad mṣadant",
+            "import_title": "Kter tisura n texxamt",
+            "import_description_1": "Akala-a ad ak·am-yefk tizirag ad tketreḍ tisura tiwgelhanin i d-tsifḍeḍ uqbel seg umsaɣ-nniḍen n Matrix. Syen ad tizmireḍ ad tekkseḍ awgelhen i yal izen iwumi yezmer umsaɣ-nniḍen ad as-t-yekkes.",
+            "import_description_2": "Afaylu n usifeḍ ad yettummesten s tefyirt tuffirt. Ilaq ad teskecmeḍ tafyirt tuffirt da, i wakken ad tekkseḍ awgelhen i ufaylu.",
+            "file_to_import": "Afaylu i uktar"
         }
     },
     "devtools": {

@@ -115,10 +115,6 @@
         "one": "(~%(count)s wynik)",
         "other": "(~%(count)s wyników)"
     },
-    "Import room keys": "Importuj klucze pokoju",
-    "File to import": "Plik do importu",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Ten proces pozwala na import zaszyfrowanych kluczy, które wcześniej zostały eksportowane z innego klienta Matrix. Będzie można odszyfrować każdą wiadomość, którą ów inny klient mógł odszyfrować.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Eksportowany plik będzie chroniony hasłem szyfrującym. Aby odszyfrować plik, wpisz hasło szyfrujące tutaj.",
     "Reject all %(invitedRooms)s invites": "Odrzuć wszystkie zaproszenia do %(invitedRooms)s",
     "Confirm Removal": "Potwierdź usunięcie",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
@@ -2680,7 +2676,11 @@
             "phrase_strong_enough": "Świetnie! To hasło wygląda na wystarczająco silne",
             "confirm_passphrase": "Potwierdź hasło szyfrujące",
             "phrase_cannot_be_empty": "Hasło szyfrujące nie może być puste",
-            "phrase_must_match": "Hasła szyfrujące muszą być identyczne"
+            "phrase_must_match": "Hasła szyfrujące muszą być identyczne",
+            "import_title": "Importuj klucze pokoju",
+            "import_description_1": "Ten proces pozwala na import zaszyfrowanych kluczy, które wcześniej zostały eksportowane z innego klienta Matrix. Będzie można odszyfrować każdą wiadomość, którą ów inny klient mógł odszyfrować.",
+            "import_description_2": "Eksportowany plik będzie chroniony hasłem szyfrującym. Aby odszyfrować plik, wpisz hasło szyfrujące tutaj.",
+            "file_to_import": "Plik do importu"
         }
     },
     "devtools": {

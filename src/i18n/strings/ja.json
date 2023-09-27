@@ -219,10 +219,6 @@
     "New passwords must match each other.": "新しいパスワードは互いに一致する必要があります。",
     "Return to login screen": "ログイン画面に戻る",
     "Session ID": "セッションID",
-    "Import room keys": "ルームの鍵をインポート",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "このプロセスでは、以前に別のMatrixクライアントからエクスポートした暗号鍵をインポートできます。これにより、他のクライアントが解読できる全てのメッセージを解読することができます。",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "エクスポートされたファイルはパスフレーズで保護されています。ファイルを復号化するには、パスフレーズを以下に入力してください。",
-    "File to import": "インポートするファイル",
     "Unignore": "無視を解除",
     "Room Name": "ルーム名",
     "Phone numbers": "電話番号",
@@ -2552,7 +2548,11 @@
             "enter_passphrase": "パスフレーズを入力",
             "confirm_passphrase": "パスフレーズを確認",
             "phrase_cannot_be_empty": "パスフレーズには1文字以上が必要です",
-            "phrase_must_match": "パスフレーズが一致していません"
+            "phrase_must_match": "パスフレーズが一致していません",
+            "import_title": "ルームの鍵をインポート",
+            "import_description_1": "このプロセスでは、以前に別のMatrixクライアントからエクスポートした暗号鍵をインポートできます。これにより、他のクライアントが解読できる全てのメッセージを解読することができます。",
+            "import_description_2": "エクスポートされたファイルはパスフレーズで保護されています。ファイルを復号化するには、パスフレーズを以下に入力してください。",
+            "file_to_import": "インポートするファイル"
         }
     },
     "devtools": {

@@ -110,10 +110,6 @@
         "one": "(~%(count)s resultaat)",
         "other": "(~%(count)s resultaten)"
     },
-    "Import room keys": "Kamersleutels importeren",
-    "File to import": "In te lezen bestand",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Hiermee kan je vanuit een andere Matrix-cliënt weggeschreven versleutelingssleutels inlezen, zodat je alle berichten die de andere cliënt kon ontcijferen ook hier kan lezen.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Het weggeschreven bestand is beveiligd met een wachtwoord. Voer dat wachtwoord hier in om het bestand te ontsleutelen.",
     "Reject all %(invitedRooms)s invites": "Alle %(invitedRooms)s de uitnodigingen weigeren",
     "Confirm Removal": "Verwijdering bevestigen",
     "Unknown error": "Onbekende fout",
@@ -2433,7 +2429,11 @@
             "enter_passphrase": "Wachtwoord invoeren",
             "confirm_passphrase": "Wachtwoord bevestigen",
             "phrase_cannot_be_empty": "Wachtwoord mag niet leeg zijn",
-            "phrase_must_match": "Wachtwoorden moeten overeenkomen"
+            "phrase_must_match": "Wachtwoorden moeten overeenkomen",
+            "import_title": "Kamersleutels importeren",
+            "import_description_1": "Hiermee kan je vanuit een andere Matrix-cliënt weggeschreven versleutelingssleutels inlezen, zodat je alle berichten die de andere cliënt kon ontcijferen ook hier kan lezen.",
+            "import_description_2": "Het weggeschreven bestand is beveiligd met een wachtwoord. Voer dat wachtwoord hier in om het bestand te ontsleutelen.",
+            "file_to_import": "In te lezen bestand"
         }
     },
     "devtools": {

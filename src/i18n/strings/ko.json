@@ -38,7 +38,6 @@
     "Forget room": "방 지우기",
     "Historical": "기록",
     "Home": "홈",
-    "Import room keys": "방 키 가져오기",
     "Incorrect verification code": "맞지 않은 인증 코드",
     "Invalid Email Address": "잘못된 이메일 주소",
     "Invalid file%(extra)s": "잘못된 파일%(extra)s",
@@ -111,12 +110,9 @@
         "one": "(~%(count)s개의 결과)",
         "other": "(~%(count)s개의 결과)"
     },
-    "File to import": "가져올 파일",
     "Reject all %(invitedRooms)s invites": "모든 %(invitedRooms)s개의 초대를 거절",
     "Confirm Removal": "삭제 확인",
     "Unknown error": "알 수 없는 오류",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "이 과정으로 다른 Matrix 클라이언트에서 내보낸 암호화 키를 가져올 수 있습니다. 그런 다음 이전 클라이언트에서 복호화할 수 있는 모든 메시지를 복호화할 수 있습니다.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "내보낸 파일이 암호로 보호되어 있습니다. 파일을 복호화하려면, 여기에 암호를 입력해야 합니다.",
     "Unable to restore session": "세션을 복구할 수 없음",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "이전에 최근 버전의 %(brand)s을 썼다면, 세션이 이 버전과 맞지 않을 것입니다. 창을 닫고 최근 버전으로 돌아가세요.",
     "Error decrypting image": "사진 복호화 중 오류",
@@ -919,7 +915,11 @@
             "enter_passphrase": "암호 입력",
             "confirm_passphrase": "암호 확인",
             "phrase_cannot_be_empty": "암호를 입력해야 함",
-            "phrase_must_match": "암호가 일치해야 함"
+            "phrase_must_match": "암호가 일치해야 함",
+            "import_title": "방 키 가져오기",
+            "import_description_1": "이 과정으로 다른 Matrix 클라이언트에서 내보낸 암호화 키를 가져올 수 있습니다. 그런 다음 이전 클라이언트에서 복호화할 수 있는 모든 메시지를 복호화할 수 있습니다.",
+            "import_description_2": "내보낸 파일이 암호로 보호되어 있습니다. 파일을 복호화하려면, 여기에 암호를 입력해야 합니다.",
+            "file_to_import": "가져올 파일"
         }
     },
     "devtools": {

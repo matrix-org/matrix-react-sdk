@@ -116,8 +116,6 @@
     "Search failed": "Vyhledávání selhalo",
     "Banned by %(displayName)s": "Vykázán(a) uživatelem %(displayName)s",
     "Add an Integration": "Přidat začlenění",
-    "File to import": "Soubor k importu",
-    "Import room keys": "Importovat klíče místnosti",
     "Restricted": "Omezené",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -146,8 +144,6 @@
     "Failed to load timeline position": "Nepodařilo se načíst pozici na časové ose",
     "Reject all %(invitedRooms)s invites": "Odmítnutí všech %(invitedRooms)s pozvání",
     "Profile": "Profil",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
     "Send": "Odeslat",
     "collapse": "sbalit",
     "expand": "rozbalit",
@@ -2698,7 +2694,11 @@
             "phrase_strong_enough": "Skvělé! Tato bezpečnostní fráze vypadá dostatečně silná",
             "confirm_passphrase": "Potvrďte přístupovou frázi",
             "phrase_cannot_be_empty": "Přístupová fráze nesmí být prázdná",
-            "phrase_must_match": "Přístupové fráze se musí shodovat"
+            "phrase_must_match": "Přístupové fráze se musí shodovat",
+            "import_title": "Importovat klíče místnosti",
+            "import_description_1": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
+            "import_description_2": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
+            "file_to_import": "Soubor k importu"
         }
     },
     "devtools": {

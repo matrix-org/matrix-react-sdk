@@ -1386,10 +1386,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jika Anda tidak menyetel metode pemulihan yang baru, sebuah penyerang mungkin mencoba mengakses akun Anda. Ubah kata sandi akun Anda dan segera tetapkan metode pemulihan yang baru di Pengaturan.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Sebuah Frasa Keamanan dan kunci untuk Pesan Aman telah terdeteksi.",
     "New Recovery Method": "Metode Pemulihan Baru",
-    "File to import": "File untuk diimpor",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "File yang diekspor akan dilindungi dengan sebuah frasa sandi. Anda harus memasukkan frasa sandinya di sini untuk mendekripsi filenya.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Proses ini memungkinkan Anda untuk mengimpor kunci enkripsi yang sebelumnya telah Anda ekspor dari klien Matrix lain. Anda kemudian akan dapat mendekripsi pesan apa saja yang dapat didekripsi oleh klien lain.",
-    "Import room keys": "Impor kunci ruangan",
     "Sorry, your vote was not registered. Please try again.": "Maaf, suara Anda tidak didaftarkan. Silakan coba lagi.",
     "Vote not registered": "Suara tidak didaftarkan",
     "Developer": "Pengembang",
@@ -2698,7 +2694,11 @@
             "phrase_strong_enough": "Hebat! Frasa keamanan ini kelihatannya kuat",
             "confirm_passphrase": "Konfirmasi frasa sandi",
             "phrase_cannot_be_empty": "Frasa sandi harus tidak kosong",
-            "phrase_must_match": "Frasa sandi harus cocok"
+            "phrase_must_match": "Frasa sandi harus cocok",
+            "import_title": "Impor kunci ruangan",
+            "import_description_1": "Proses ini memungkinkan Anda untuk mengimpor kunci enkripsi yang sebelumnya telah Anda ekspor dari klien Matrix lain. Anda kemudian akan dapat mendekripsi pesan apa saja yang dapat didekripsi oleh klien lain.",
+            "import_description_2": "File yang diekspor akan dilindungi dengan sebuah frasa sandi. Anda harus memasukkan frasa sandinya di sini untuk mendekripsi filenya.",
+            "file_to_import": "File untuk diimpor"
         }
     },
     "devtools": {

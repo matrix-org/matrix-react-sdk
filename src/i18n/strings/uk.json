@@ -50,7 +50,6 @@
     "Thank you!": "Дякуємо!",
     "Reject all %(invitedRooms)s invites": "Відхилити запрошення до усіх %(invitedRooms)s",
     "Profile": "Профіль",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
     "Warning!": "Увага!",
     "Sun": "нд",
     "Mon": "пн",
@@ -764,7 +763,6 @@
     "Spaces": "Простори",
     "Custom level": "Власний рівень",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
-    "File to import": "Файл для імпорту",
     "Return to login screen": "Повернутися на сторінку входу",
     "Switch theme": "Змінити тему",
     "<inviter/> invites you": "<inviter/> запрошує вас",
@@ -1175,8 +1173,6 @@
     "Other searches": "Інші пошуки",
     "To search messages, look for this icon at the top of a room <icon/>": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
     "Recent searches": "Недавні пошуки",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
-    "Import room keys": "Імпортувати ключі кімнат",
     "Could not load user profile": "Не вдалося звантажити профіль користувача",
     "Skip verification for now": "На разі пропустити звірку",
     "Failed to load timeline position": "Не вдалося завантажити позицію стрічки",
@@ -2693,7 +2689,11 @@
             "phrase_strong_enough": "Чудово! Цю парольна фраза видається достатньо надійною",
             "confirm_passphrase": "Підтвердьте парольну фразу",
             "phrase_cannot_be_empty": "Парольна фраза обов'язкова",
-            "phrase_must_match": "Парольні фрази мають збігатися"
+            "phrase_must_match": "Парольні фрази мають збігатися",
+            "import_title": "Імпортувати ключі кімнат",
+            "import_description_1": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
+            "import_description_2": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
+            "file_to_import": "Файл для імпорту"
         }
     },
     "devtools": {

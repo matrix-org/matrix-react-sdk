@@ -99,10 +99,6 @@
     "Connectivity to the server has been lost.": "Connectivity to the server has been lost.",
     "Sent messages will be stored until your connection has returned.": "Sent messages will be stored until your connection has returned.",
     "Banned by %(displayName)s": "Banned by %(displayName)s",
-    "Import room keys": "Import room keys",
-    "File to import": "File to import",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
     "Reject all %(invitedRooms)s invites": "Reject all %(invitedRooms)s invites",
     "Confirm Removal": "Confirm Removal",
     "Unknown error": "Unknown error",
@@ -296,7 +292,11 @@
             "enter_passphrase": "Enter passphrase",
             "confirm_passphrase": "Confirm passphrase",
             "phrase_cannot_be_empty": "Passphrase must not be empty",
-            "phrase_must_match": "Passphrases must match"
+            "phrase_must_match": "Passphrases must match",
+            "import_title": "Import room keys",
+            "import_description_1": "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.",
+            "import_description_2": "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.",
+            "file_to_import": "File to import"
         }
     },
     "timeline": {

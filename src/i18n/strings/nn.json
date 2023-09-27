@@ -198,10 +198,6 @@
     "Filter results": "Filtrer resultat",
     "Server may be unavailable, overloaded, or search timed out :(": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :(",
     "Profile": "Brukar",
-    "Import room keys": "Importer romnøklar",
-    "File to import": "Fil til import",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Dette tillèt deg å importere krypteringsnøklar som du tidlegare har eksportert frå ein annan Matrix-klient. Du har deretter moglegheit for å dekryptere alle meldingane som den andre klienten kunne dekryptere.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Den eksporterte fila vil bli verna med ein passfrase. Du bør skriva passfrasen her, for å dekryptere fila.",
     "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
     "Explore rooms": "Utforsk romma",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
@@ -714,7 +710,11 @@
             "enter_passphrase": "Skriv inn passfrase",
             "confirm_passphrase": "Stadfest passfrase",
             "phrase_cannot_be_empty": "Passfrasefeltet kan ikkje stå tomt",
-            "phrase_must_match": "Passfrasane må vere identiske"
+            "phrase_must_match": "Passfrasane må vere identiske",
+            "import_title": "Importer romnøklar",
+            "import_description_1": "Dette tillèt deg å importere krypteringsnøklar som du tidlegare har eksportert frå ein annan Matrix-klient. Du har deretter moglegheit for å dekryptere alle meldingane som den andre klienten kunne dekryptere.",
+            "import_description_2": "Den eksporterte fila vil bli verna med ein passfrase. Du bør skriva passfrasen her, for å dekryptere fila.",
+            "file_to_import": "Fil til import"
         }
     },
     "devtools": {

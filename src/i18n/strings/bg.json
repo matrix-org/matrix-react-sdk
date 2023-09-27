@@ -150,12 +150,8 @@
     "New passwords must match each other.": "Новите пароли трябва да съвпадат една с друга.",
     "Return to login screen": "Връщане към страницата за влизане в профила",
     "Session ID": "Идентификатор на сесията",
-    "Import room keys": "Импортиране на ключове за стая",
-    "File to import": "Файл за импортиране",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "На път сте да бъдете отведени до друг сайт, където можете да удостоверите профила си за използване с %(integrationsUrl)s. Искате ли да продължите?",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Този процес позволява да импортирате ключове за шифроване, които преди сте експортирали от друг Matrix клиент. Тогава ще можете да разшифровате всяко съобщение, което другият клиент може да разшифрова.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Експортираният файл може да бъде предпазен с парола. Трябва да въведете парола тук, за да разшифровате файла.",
     "You don't currently have any stickerpacks enabled": "В момента нямате включени пакети със стикери",
     "Sunday": "Неделя",
     "Notification targets": "Устройства, получаващи известия",
@@ -1502,7 +1498,11 @@
             "enter_passphrase": "Въведи парола",
             "confirm_passphrase": "Потвърди парола",
             "phrase_cannot_be_empty": "Паролата не трябва да е празна",
-            "phrase_must_match": "Паролите трябва да съвпадат"
+            "phrase_must_match": "Паролите трябва да съвпадат",
+            "import_title": "Импортиране на ключове за стая",
+            "import_description_1": "Този процес позволява да импортирате ключове за шифроване, които преди сте експортирали от друг Matrix клиент. Тогава ще можете да разшифровате всяко съобщение, което другият клиент може да разшифрова.",
+            "import_description_2": "Експортираният файл може да бъде предпазен с парола. Трябва да въведете парола тук, за да разшифровате файла.",
+            "file_to_import": "Файл за импортиране"
         }
     },
     "devtools": {

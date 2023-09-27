@@ -98,8 +98,6 @@
     "New passwords must match each other.": "Nýju lykilorðin verða að vera þau sömu.",
     "Return to login screen": "Fara aftur í innskráningargluggann",
     "Session ID": "Auðkenni setu",
-    "Import room keys": "Flytja inn dulritunarlykla spjallrásar",
-    "File to import": "Skrá til að flytja inn",
     "Delete Widget": "Eyða viðmótshluta",
     "Delete widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
@@ -487,7 +485,6 @@
     "<userName/> wants to chat": "<userName/> langar til að spjalla",
     "Invite with email or username": "Bjóða með tölvupóstfangi eða notandanafni",
     "Go to Settings": "Fara í stillingar",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
     "Create account": "Stofna notandaaðgang",
     "Your password has been reset.": "Lykilorðið þitt hefur verið endursett.",
     "Results": "Niðurstöður",
@@ -2278,7 +2275,10 @@
             "enter_passphrase": "Settu inn lykilfrasann",
             "confirm_passphrase": "Staðfestu lykilfrasa",
             "phrase_cannot_be_empty": "Lykilfrasi má ekki vera auður",
-            "phrase_must_match": "Lykilfrasar verða að stemma"
+            "phrase_must_match": "Lykilfrasar verða að stemma",
+            "import_title": "Flytja inn dulritunarlykla spjallrásar",
+            "import_description_2": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
+            "file_to_import": "Skrá til að flytja inn"
         }
     },
     "devtools": {

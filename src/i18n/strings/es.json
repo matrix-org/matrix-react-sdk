@@ -43,8 +43,6 @@
     "Jump to first unread message.": "Ir al primer mensaje no leído.",
     "Something went wrong!": "¡Algo ha fallado!",
     "Create new room": "Crear una nueva sala",
-    "Import room keys": "Importar claves de sala",
-    "File to import": "Fichero a importar",
     "Reject all %(invitedRooms)s invites": "Rechazar todas las invitaciones a %(invitedRooms)s",
     "Unknown error": "Error desconocido",
     "Unable to restore session": "No se puede recuperar la sesión",
@@ -200,8 +198,6 @@
     "Sent messages will be stored until your connection has returned.": "Los mensajes enviados se almacenarán hasta que vuelva la conexión.",
     "No Audio Outputs detected": "No se han detectado salidas de sonido",
     "Audio Output": "Salida de sonido",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Este proceso te permite importar claves de cifrado que hayas exportado previamente desde otro cliente de Matrix. Así, podrás descifrar cualquier mensaje que el otro cliente pudiera descifrar.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "El archivo exportado estará protegido con una contraseña. Deberías ingresar la contraseña aquí para descifrar el archivo.",
     "Only room administrators will see this warning": "Sólo los administradores de la sala verán esta advertencia",
     "Upgrade Room Version": "Actualizar Versión de la Sala",
     "Create a new room with the same name, description and avatar": "Crear una sala nueva con el mismo nombre, descripción y avatar",
@@ -2581,7 +2577,11 @@
             "enter_passphrase": "Introducir frase de contraseña",
             "confirm_passphrase": "Confirmar frase de contraseña",
             "phrase_cannot_be_empty": "La contraseña no puede estar en blanco",
-            "phrase_must_match": "Las contraseñas deben coincidir"
+            "phrase_must_match": "Las contraseñas deben coincidir",
+            "import_title": "Importar claves de sala",
+            "import_description_1": "Este proceso te permite importar claves de cifrado que hayas exportado previamente desde otro cliente de Matrix. Así, podrás descifrar cualquier mensaje que el otro cliente pudiera descifrar.",
+            "import_description_2": "El archivo exportado estará protegido con una contraseña. Deberías ingresar la contraseña aquí para descifrar el archivo.",
+            "file_to_import": "Fichero a importar"
         }
     },
     "devtools": {

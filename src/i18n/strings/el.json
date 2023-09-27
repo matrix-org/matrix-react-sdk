@@ -84,8 +84,6 @@
         "one": "(~%(count)s αποτέλεσμα)",
         "other": "(~%(count)s αποτελέσματα)"
     },
-    "Import room keys": "Εισαγωγή κλειδιών δωματίου",
-    "File to import": "Αρχείο για εισαγωγή",
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
     "Unknown error": "Άγνωστο σφάλμα",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
@@ -120,8 +118,6 @@
     "Failed to load timeline position": "Δεν ήταν δυνατή η φόρτωση της θέσης του χρονολόγιου",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν καταφέρατε να το βρείτε.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Αυτή η διαδικασία σας επιτρέπει να εισαγάγετε κλειδιά κρυπτογράφησης που έχετε προηγουμένως εξάγει από άλλο πρόγραμμα του Matrix. Στη συνέχεια, θα μπορέσετε να αποκρυπτογραφήσετε τυχόν μηνύματα που το άλλο πρόγραμμα θα μπορούσε να αποκρυπτογραφήσει.",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Το αρχείο εξαγωγής θα είναι προστατευμένο με συνθηματικό. Θα χρειαστεί να πληκτρολογήσετε το συνθηματικό εδώ για να αποκρυπτογραφήσετε το αρχείο.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Θα μεταφερθείτε σε έναν ιστότοπου τρίτου για να πραγματοποιηθεί η πιστοποίηση του λογαριασμού σας με το %(integrationsUrl)s. Θα θέλατε να συνεχίσετε;",
     "This will allow you to reset your password and receive notifications.": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις.",
@@ -2186,7 +2182,11 @@
             "enter_passphrase": "Εισαγωγή συνθηματικού",
             "confirm_passphrase": "Επιβεβαίωση συνθηματικού",
             "phrase_cannot_be_empty": "Το συνθηματικό δεν πρέπει να είναι κενό",
-            "phrase_must_match": "Δεν ταιριάζουν τα συνθηματικά"
+            "phrase_must_match": "Δεν ταιριάζουν τα συνθηματικά",
+            "import_title": "Εισαγωγή κλειδιών δωματίου",
+            "import_description_1": "Αυτή η διαδικασία σας επιτρέπει να εισαγάγετε κλειδιά κρυπτογράφησης που έχετε προηγουμένως εξάγει από άλλο πρόγραμμα του Matrix. Στη συνέχεια, θα μπορέσετε να αποκρυπτογραφήσετε τυχόν μηνύματα που το άλλο πρόγραμμα θα μπορούσε να αποκρυπτογραφήσει.",
+            "import_description_2": "Το αρχείο εξαγωγής θα είναι προστατευμένο με συνθηματικό. Θα χρειαστεί να πληκτρολογήσετε το συνθηματικό εδώ για να αποκρυπτογραφήσετε το αρχείο.",
+            "file_to_import": "Αρχείο για εισαγωγή"
         }
     },
     "devtools": {

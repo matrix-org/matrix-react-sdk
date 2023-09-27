@@ -58,8 +58,6 @@
     "Reject invitation": "拒绝邀请",
     "Warning!": "警告！",
     "Connectivity to the server has been lost.": "到服务器的连接已经丢失。",
-    "Import room keys": "导入房间密钥",
-    "File to import": "要导入的文件",
     "Unknown error": "未知错误",
     "Unable to restore session": "无法恢复会话",
     "Delete widget": "删除挂件",
@@ -147,8 +145,6 @@
         "one": "正在上传 %(filename)s 与其他 %(count)s 个文件"
     },
     "Uploading %(filename)s": "正在上传 %(filename)s",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "导出文件受口令词组保护。你应该在此输入口令词组以解密此文件。",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "尝试加载此房间的时间线的特定时间点，但是无法找到。",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "删除挂件时将为房间中的所有成员删除。你确定要删除此挂件吗？",
     "Sunday": "星期日",
@@ -2401,7 +2397,11 @@
             "enter_passphrase": "输入口令词组",
             "confirm_passphrase": "确认口令词组",
             "phrase_cannot_be_empty": "口令词组不能为空",
-            "phrase_must_match": "口令词组必须匹配"
+            "phrase_must_match": "口令词组必须匹配",
+            "import_title": "导入房间密钥",
+            "import_description_1": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
+            "import_description_2": "导出文件受口令词组保护。你应该在此输入口令词组以解密此文件。",
+            "file_to_import": "要导入的文件"
         }
     },
     "devtools": {

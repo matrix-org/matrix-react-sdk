@@ -55,10 +55,6 @@
     "If you didn't set the new recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Nếu bạn không đặt phương pháp khôi phục mới, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt.",
     "A new Security Phrase and key for Secure Messages have been detected.": "Đã phát hiện thấy Cụm từ bảo mật và khóa mới cho Tin nhắn an toàn.",
     "New Recovery Method": "Phương pháp Khôi phục mới",
-    "File to import": "Tệp để nhập",
-    "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Tệp xuất sẽ được bảo vệ bằng cụm mật khẩu. Bạn nên nhập cụm mật khẩu vào đây để giải mã tệp.",
-    "This process allows you to import encryption keys that you had previously exported from another Matrix client. You will then be able to decrypt any messages that the other client could decrypt.": "Quá trình này cho phép bạn nhập các khóa mã hóa mà bạn đã xuất trước đó từ một ứng dụng khách Matrix khác. Sau đó, bạn sẽ có thể giải mã bất kỳ thông báo nào mà ứng dụng khách khác có thể giải mã.",
-    "Import room keys": "Nhập các mã khoá phòng",
     "Unknown error": "Lỗi không thể nhận biết",
     "Create account": "Tạo tài khoản",
     "General failure": "Thất bại chung",
@@ -2488,7 +2484,11 @@
             "enter_passphrase": "Nhập cụm mật khẩu",
             "confirm_passphrase": "Xác nhận cụm mật khẩu",
             "phrase_cannot_be_empty": "Cụm mật khẩu không được để trống",
-            "phrase_must_match": "Cụm mật khẩu phải khớp"
+            "phrase_must_match": "Cụm mật khẩu phải khớp",
+            "import_title": "Nhập các mã khoá phòng",
+            "import_description_1": "Quá trình này cho phép bạn nhập các khóa mã hóa mà bạn đã xuất trước đó từ một ứng dụng khách Matrix khác. Sau đó, bạn sẽ có thể giải mã bất kỳ thông báo nào mà ứng dụng khách khác có thể giải mã.",
+            "import_description_2": "Tệp xuất sẽ được bảo vệ bằng cụm mật khẩu. Bạn nên nhập cụm mật khẩu vào đây để giải mã tệp.",
+            "file_to_import": "Tệp để nhập"
         }
     },
     "devtools": {
