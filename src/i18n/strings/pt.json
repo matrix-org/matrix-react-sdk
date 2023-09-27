@@ -2,14 +2,11 @@
     "A new password must be entered.": "Deve ser introduzida uma nova palavra-passe.",
     "Are you sure you want to reject the invitation?": "Você tem certeza que deseja rejeitar este convite?",
     "Failed to reject invitation": "Falha ao tentar rejeitar convite",
-    "Historical": "Histórico",
-    "Low priority": "Baixa prioridade",
     "Moderator": "Moderador/a",
     "New passwords must match each other.": "Novas palavras-passe devem coincidir.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "Reject invitation": "Rejeitar convite",
     "Return to login screen": "Retornar à tela de login",
-    "Rooms": "Salas",
     "Session ID": "Identificador de sessão",
     "unknown error code": "código de erro desconhecido",
     "Verification Pending": "Verificação pendente",
@@ -410,7 +407,10 @@
         "copied": "Copiado!",
         "advanced": "Avançado",
         "profile": "Perfil",
-        "authentication": "Autenticação"
+        "authentication": "Autenticação",
+        "rooms": "Salas",
+        "low_priority": "Baixa prioridade",
+        "historical": "Histórico"
     },
     "action": {
         "continue": "Continuar",

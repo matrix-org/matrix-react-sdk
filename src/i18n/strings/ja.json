@@ -1,10 +1,8 @@
 {
-    "Low priority": "低優先度",
     "Create new room": "新しいルームを作成",
     "Are you sure?": "よろしいですか？",
     "unknown error code": "不明なエラーコード",
     "Failed to forget room %(errCode)s": "ルームの履歴を消去するのに失敗しました %(errCode)s",
-    "Rooms": "ルーム",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
     "All Rooms": "全てのルーム",
@@ -72,7 +70,6 @@
     "%(duration)sm": "%(duration)s分",
     "%(duration)sh": "%(duration)s時",
     "%(duration)sd": "%(duration)s日",
-    "Replying": "以下に返信",
     "(~%(count)s results)": {
         "other": "（〜%(count)s件）",
         "one": "（〜%(count)s件）"
@@ -88,7 +85,6 @@
     "Jump to first unread message.": "最初の未読メッセージに移動。",
     "not specified": "指定なし",
     "This room has no local addresses": "このルームにはローカルアドレスがありません",
-    "Historical": "履歴",
     "Error decrypting attachment": "添付ファイルを復号化する際にエラーが発生しました",
     "Decrypt %(text)s": "%(text)sを復号化",
     "Download %(text)s": "%(text)sをダウンロード",
@@ -184,7 +180,6 @@
     "Room Topic": "ルームのトピック",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Remove recent messages": "最近のメッセージを削除",
-    "Add room": "ルームを追加",
     "Back up your keys before signing out to avoid losing them.": "鍵を失くさないよう、サインアウトする前にバックアップしてください。",
     "Start using Key Backup": "鍵のバックアップを使用開始",
     "Edited at %(date)s. Click to view edits.": "%(date)sに編集済。クリックすると変更履歴を表示。",
@@ -276,7 +271,6 @@
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "あなたのメッセージは保護されています。メッセージのロックを解除するための固有の鍵は、あなたと受信者だけが持っています。",
     "%(name)s wants to verify": "%(name)sが認証を要求しています",
     "You sent a verification request": "認証リクエストを送信しました",
-    "Forget this room": "このルームを消去",
     "Recently Direct Messaged": "最近ダイレクトメッセージで会話したユーザー",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、メールアドレス、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
@@ -313,9 +307,6 @@
     "Something went wrong with your invite to %(roomName)s": "%(roomName)sへの招待に問題が発生しました",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)sにより%(roomName)sからブロックされました",
     "Re-join": "再参加",
-    "Reason: %(reason)s": "理由：%(reason)s",
-    "Sign Up": "サインアップ",
-    "Join the conversation with an account": "アカウントで会話に参加",
     "Set up": "設定",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
@@ -695,7 +686,6 @@
     "Error removing address": "アドレスを削除する際にエラーが発生しました",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "アドレスを削除する際にエラーが発生しました。既にルームが存在しないか、一時的なエラーが発生しました。",
     "You don't have permission to delete the address.": "アドレスを削除する権限がありません。",
-    "Suggested Rooms": "おすすめのルーム",
     "Your message was sent": "メッセージが送信されました",
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
@@ -712,10 +702,8 @@
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Rooms and spaces": "ルームとスペース",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
-    "Add space": "スペースを追加",
     "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Home options": "ホームのオプション",
     "Files": "ファイル",
     "Export chat": "チャットをエクスポート",
     "Failed to send": "送信に失敗しました",
@@ -817,10 +805,8 @@
     "Upgrade public room": "公開ルームをアップグレード",
     "Upgrade private room": "非公開のルームをアップグレード",
     "Can't find this server or its room list": "このサーバーまたはそのルーム一覧が見つかりません",
-    "Join public room": "公開ルームに参加",
     "Be found by phone or email": "自分を電話番号か電子メールで見つけられるようにする",
     "Find others by phone or email": "知人を電話番号か電子メールで探す",
-    "You were removed from %(roomName)s by %(memberName)s": "%(memberName)sにより%(roomName)sから追放されました",
     "Invite by email": "電子メールで招待",
     "Start a conversation with someone using their name or username (like <userId/>).": "名前かユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "名前、メールアドレス、ユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
@@ -941,7 +927,6 @@
     "Verify other device": "他の端末を認証",
     "Upload Error": "アップロードエラー",
     "View in room": "ルーム内で表示",
-    "Message didn't send. Click for info.": "メッセージが送信されませんでした。クリックすると詳細を表示します。",
     "Thread options": "スレッドの設定",
     "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを閲覧できるようになります。",
     "Clear personal data": "個人データを消去",
@@ -1065,7 +1050,6 @@
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "Signature upload failed": "署名のアップロードに失敗しました",
     "toggle event": "イベントを切り替える",
-    "%(spaceName)s menu": "%(spaceName)sのメニュー",
     "Search spaces": "スペースを検索",
     "Unnamed audio": "名前のない音声",
     "Other searches": "その他の検索",
@@ -1085,10 +1069,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "アップロードしようとしているファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "a new master key signature": "新しいマスターキーの署名",
     "Search names and descriptions": "名前と説明文を検索",
-    "Currently joining %(count)s rooms": {
-        "one": "現在%(count)s個のルームに参加しています",
-        "other": "現在%(count)s個のルームに参加しています"
-    },
     "Error downloading audio": "音声をダウンロードする際にエラーが発生しました",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s個のリアクションを再送信",
     "Enter your account password to confirm the upgrade:": "アップグレードを承認するには、アカウントのパスワードを入力してください：",
@@ -1181,9 +1161,6 @@
     "Confirm this user's session by comparing the following with their User Settings:": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
     "Confirm by comparing the following with the User Settings in your other session:": "他のセッションのユーザー設定で、以下を比較して承認してください：",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
-    "Loading preview": "プレビューを読み込んでいます",
-    "You were removed by %(memberName)s": "%(memberName)sにより追放されました",
-    "Forget this space": "このスペースの履歴を消去",
     "You were banned by %(memberName)s": "%(memberName)sによりブロックされました",
     "Something went wrong with your invite.": "招待に問題が発生しました。",
     "This invite was sent to %(email)s which is not associated with your account": "この招待は、アカウントに関連付けられていないメールアドレス %(email)s に送信されました",
@@ -1209,7 +1186,6 @@
     "Modal Widget": "モーダルウィジェット",
     "You will no longer be able to log in": "ログインできなくなります",
     "Friends and family": "友達と家族",
-    "Joining…": "参加しています…",
     "Show Labs settings": "ラボの設定を表示",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
     "%(count)s Members": {
@@ -1243,11 +1219,6 @@
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
     "Stop and close": "停止して閉じる",
     "Saved Items": "保存済み項目",
-    "Read receipts": "開封確認メッセージ",
-    "Seen by %(count)s people": {
-        "one": "%(count)s人が閲覧済",
-        "other": "%(count)s人が閲覧済"
-    },
     "%(members)s and %(last)s": "%(members)sと%(last)s",
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)sに更新",
     "Unsent": "未送信",
@@ -1306,10 +1277,6 @@
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Sign out of all devices": "全ての端末からサインアウト",
     "Confirm new password": "新しいパスワードを確認",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "現在%(count)s個のルームのメッセージを削除しています",
-        "other": "現在%(count)s個のルームのメッセージを削除しています"
-    },
     "Review and approve the sign in": "サインインを確認して承認",
     "By approving access for this device, it will have full access to your account.": "この端末へのアクセスを許可すると、あなたのアカウントに完全にアクセスできるようになります。",
     "The other device isn't signed in.": "もう一方の端末はサインインしていません。",
@@ -1336,7 +1303,6 @@
     "Invalid homeserver discovery response": "ホームサーバーのディスカバリー（発見）に関する不正な応答です",
     "Failed to get autodiscovery configuration from server": "自動発見の設定をサーバーから取得できませんでした",
     "Ignore %(user)s": "%(user)sを無視",
-    "Join the room to participate": "ルームに参加",
     "Consult first": "初めに相談",
     "We'll help you get connected.": "みんなと繋がる手助けをいたします。",
     "Who will you chat to the most?": "誰と最もよく会話しますか？",
@@ -1385,9 +1351,6 @@
     "Checking…": "確認しています…",
     "Waiting for partner to confirm…": "相手の承認を待機しています…",
     "Adding…": "追加しています…",
-    "Rejecting invite…": "招待を拒否しています…",
-    "Joining room…": "ルームに参加しています…",
-    "Joining space…": "スペースに参加しています…",
     "Encrypting your message…": "メッセージを暗号化しています…",
     "Sending your message…": "メッセージを送信しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
@@ -1503,7 +1466,10 @@
         "video_room": "ビデオ通話ルーム",
         "public_space": "公開スペース",
         "private_space": "非公開スペース",
-        "private_room": "非公開ルーム"
+        "private_room": "非公開ルーム",
+        "rooms": "ルーム",
+        "low_priority": "低優先度",
+        "historical": "履歴"
     },
     "action": {
         "continue": "続行",
@@ -1818,7 +1784,8 @@
         "mode_plain": "フォーマットを表示しない",
         "mode_rich_text": "フォーマットを表示",
         "format_italics": "斜字体",
-        "format_insert_link": "リンクを挿入"
+        "format_insert_link": "リンクを挿入",
+        "replying_title": "以下に返信"
     },
     "Link": "リンク",
     "Code": "コード",
@@ -2797,7 +2764,12 @@
                 "other": "他%(count)s個のプレビューを表示"
             },
             "close": "プレビューを閉じる"
-        }
+        },
+        "read_receipt_title": {
+            "one": "%(count)s人が閲覧済",
+            "other": "%(count)s人が閲覧済"
+        },
+        "read_receipts_label": "開封確認メッセージ"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3425,7 +3397,21 @@
         "failed_remove_tag": "ルームからタグ %(tagName)s を削除できませんでした",
         "failed_add_tag": "ルームにタグ %(tagName)s を追加できませんでした",
         "breadcrumbs_label": "最近訪れたルーム",
-        "breadcrumbs_empty": "最近訪れたルームはありません"
+        "breadcrumbs_empty": "最近訪れたルームはありません",
+        "add_room_label": "ルームを追加",
+        "suggested_rooms_heading": "おすすめのルーム",
+        "add_space_label": "スペースを追加",
+        "join_public_room_label": "公開ルームに参加",
+        "joining_rooms_status": {
+            "one": "現在%(count)s個のルームに参加しています",
+            "other": "現在%(count)s個のルームに参加しています"
+        },
+        "redacting_messages_status": {
+            "one": "現在%(count)s個のルームのメッセージを削除しています",
+            "other": "現在%(count)s個のルームのメッセージを削除しています"
+        },
+        "space_menu_label": "%(spaceName)sのメニュー",
+        "home_menu_label": "ホームのオプション"
     },
     "report_content": {
         "missing_reason": "報告する理由を記入してください。",
@@ -3841,7 +3827,20 @@
             "show_widgets_button": "ウィジェットを表示",
             "close_call_button": "通話を終了",
             "video_room_view_chat_button": "チャットのタイムラインを表示"
-        }
+        },
+        "joining_space": "スペースに参加しています…",
+        "joining_room": "ルームに参加しています…",
+        "joining": "参加しています…",
+        "rejecting": "招待を拒否しています…",
+        "join_title": "ルームに参加",
+        "join_title_account": "アカウントで会話に参加",
+        "join_button_account": "サインアップ",
+        "loading_preview": "プレビューを読み込んでいます",
+        "kicked_from_room_by": "%(memberName)sにより%(roomName)sから追放されました",
+        "kicked_by": "%(memberName)sにより追放されました",
+        "kick_reason": "理由：%(reason)s",
+        "forget_space": "このスペースの履歴を消去",
+        "forget_room": "このルームを消去"
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
@@ -3991,7 +3990,8 @@
         "all_messages_description": "全てのメッセージを通知",
         "mentions_and_keywords": "メンションとキーワード",
         "mentions_and_keywords_description": "メンションと、<a>設定</a>したキーワードのみを通知",
-        "mute_description": "通知を送信しません"
+        "mute_description": "通知を送信しません",
+        "message_didnt_send": "メッセージが送信されませんでした。クリックすると詳細を表示します。"
     },
     "mobile_guide": {
         "toast_title": "より良い体験のためにアプリケーションを使用",

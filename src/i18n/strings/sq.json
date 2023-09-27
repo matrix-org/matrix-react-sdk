@@ -49,7 +49,6 @@
     "Thursday": "E enjte",
     "Logs sent": "Regjistrat u dërguan",
     "Yesterday": "Dje",
-    "Rooms": "Dhoma",
     "PM": "PM",
     "AM": "AM",
     "not specified": "e papërcaktuar",
@@ -66,7 +65,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
-    "Low priority": "Me përparësi të ulët",
     "%(roomName)s does not exist.": "%(roomName)s s’ekziston.",
     "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
     "Add an Integration": "Shtoni një Integrim",
@@ -105,7 +103,6 @@
     "The export file will be protected with a passphrase. You should enter the passphrase here, to decrypt the file.": "Kartela e eksportit është e mbrojtur me një frazëkalim. Që të shfshehtëzoni kartelën, duhet ta jepni frazëkalimin këtu.",
     "Failed to ban user": "S’u arrit të dëbohej përdoruesi",
     "Failed to mute user": "S’u arrit t’i hiqej zëri përdoruesit",
-    "Replying": "Po përgjigjet",
     "Jump to first unread message.": "Hidhu te mesazhi i parë i palexuar.",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
@@ -175,7 +172,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Mesazhi juaj s’u dërgua, ngaqë ky shërbyes Home ka mbërritur në Kufirin Mujor të Përdoruesve Aktivë. Ju lutemi, që të vazhdoni ta përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Mesazhi juaj s’u dërgua, ngaqë ky shërbyes Home ka tejkaluar kufirin e një burimi. Ju lutemi, që të vazhdoni ta përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "U provua të ngarkohej një pikë e caktuar në kronologjinë e kësaj dhome, por nuk keni leje për ta parë mesazhin në fjalë.",
-    "Historical": "Të dikurshme",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Që të shmanget humbja e historikut të fjalosjes tuaj, duhet të eksportoni kyçet e dhomës tuaj përpara se të dilni nga llogari. Që ta bëni këtë, duhe të riktheheni te versioni më i ri i %(brand)s-it",
     "Incompatible Database": "Bazë të dhënash e Papërputhshme",
     "Continue With Encryption Disabled": "Vazhdo Me Fshehtëzimin të Çaktivizuar",
@@ -289,10 +285,6 @@
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
     "Could not load user profile": "S’u ngarkua dot profili i përdoruesit",
     "Power level": "Shkallë pushteti",
-    "Join the conversation with an account": "Merrni pjesë në bisedë me një llogari",
-    "Sign Up": "Regjistrohuni",
-    "Reason: %(reason)s": "Arsye: %(reason)s",
-    "Forget this room": "Harroje këtë dhomë",
     "Re-join": "Rihyni",
     "You were banned from %(roomName)s by %(memberName)s": "Jeni dëbuar prej %(roomName)s nga %(memberName)s",
     "Join the discussion": "Merrni pjesë në diskutim",
@@ -318,7 +310,6 @@
     "Upload Error": "Gabim Ngarkimi",
     "Remember my selection for this widget": "Mbaje mend përzgjedhjen time për këtë widget",
     "Some characters not allowed": "Disa shenja nuk lejohen",
-    "Add room": "Shtoni dhomë",
     "Failed to get autodiscovery configuration from server": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
     "Invalid base_url for m.homeserver": "Parametër base_url i pavlefshëm për m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
@@ -910,7 +901,6 @@
     "Create a new room": "Krijoni dhomë të re",
     "Space selection": "Përzgjedhje hapësire",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, teksa zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te hapësira, s’do të jetë e mundur të rifitoni privilegjet.",
-    "Suggested Rooms": "Roma të Këshilluara",
     "Your message was sent": "Mesazhi juaj u dërgua",
     "Leave space": "Braktiseni hapësirën",
     "Create a space": "Krijoni një hapësirë",
@@ -972,10 +962,6 @@
     "No microphone found": "S’u gjet mikrofon",
     "We were unable to access your microphone. Please check your browser settings and try again.": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
     "Unable to access your microphone": "S’arrihet të përdoret mikrofoni juaj",
-    "Currently joining %(count)s rooms": {
-        "one": "Aktualisht duke hyrë në %(count)s dhomë",
-        "other": "Aktualisht duke hyrë në %(count)s dhoma"
-    },
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -1014,7 +1000,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
     "Select spaces": "Përzgjidhni hapësira",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
-    "Add space": "Shtoni hapësirë",
     "Leave %(spaceName)s": "Braktise %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jeni përgjegjësi i vetëm i kësaj hapësire. Braktisja e saj do të thotë se askush s’ka kontroll mbi të.",
@@ -1043,7 +1028,6 @@
     "Thumbs up": "Thumbs up",
     "Some encryption parameters have been changed.": "Janë ndryshuar disa parametra fshehtëzimi.",
     "Role in <RoomName/>": "Rol në <RoomName/>",
-    "Message didn't send. Click for info.": "Mesazhi s’u dërgua. Klikoni për hollësi.",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
     "You are about to leave <spaceName/>.": "Ju ndan një hap nga braktisja e <spaceName/>.",
@@ -1119,9 +1103,6 @@
     "Messaging": "Shkëmbim mesazhes",
     "Spaces you know that contain this space": "Hapësira që e dini se përmbajnë këtë hapësirë",
     "Chat": "Fjalosje",
-    "Home options": "Mundësi kreu",
-    "%(spaceName)s menu": "Menu %(spaceName)s",
-    "Join public room": "Hyni në dhomë publike",
     "Recently viewed": "Parë së fundi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit.",
     "End Poll": "Përfundoje Pyetësorin",
@@ -1170,7 +1151,6 @@
     "Remove them from specific things I'm able to": "Hiqi prej gjërash të caktuara ku mundem ta bëj këtë",
     "Remove them from everything I'm able to": "Hiqi prej gjithçkaje ku mundem ta bëj këtë",
     "Remove from %(roomName)s": "Hiqe nga %(roomName)s",
-    "You were removed from %(roomName)s by %(memberName)s": "U hoqët %(roomName)s nga %(memberName)s",
     "Message pending moderation": "Mesazh në pritje të moderimit",
     "Message pending moderation: %(reason)s": "Mesazh në pritje të moderimit: %(reason)s",
     "Pick a date to jump to": "Zgjidhni një datë ku të kalohet",
@@ -1207,10 +1187,6 @@
         "other": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë për këdo te biseda. Doni të vazhdohet?",
         "one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
     },
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Aktualisht po hiqen mesazhe në %(count)s dhomë",
-        "other": "Aktualisht po hiqen mesazhe në %(count)s dhoma"
-    },
     "Unsent": "Të padërguar",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s erdhi teksa provohej të hyhej në dhomë ose hapësirë. Nëse mendoni se po e shihni gabimisht këtë mesazh, ju lutemi, <issueLink>parashtroni një njoftim të mete</issueLink>.",
@@ -1225,9 +1201,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "U mor si përgjigje një gabim (%(errcode)s), teksa provohej të kontrollohej vlefshmëria e ftesës tuaj. Mund të provonit t’i kaloni këto hollësi personit që ju ftoi.",
     "Something went wrong with your invite.": "Diç shkoi ters me ftesën tuaj.",
     "You were banned by %(memberName)s": "U dëbuat nga %(memberName)s",
-    "Forget this space": "Harroje këtë hapësirë",
-    "You were removed by %(memberName)s": "U hoqët nga %(memberName)s",
-    "Loading preview": "Po ngarkohet paraparje",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
     "%(count)s participants": {
         "one": "1 pjesëmarrës",
@@ -1282,14 +1255,8 @@
     "Disinvite from room": "Hiqi ftesën për këtë dhomë",
     "Remove from space": "Hiqe prej hapësire",
     "Disinvite from space": "Hiqi ftesën për këtë hapësirë",
-    "Joining…": "Po hyhet…",
     "Show Labs settings": "Shfaq rregullime për Labs",
     "To view %(roomName)s, you need an invite": "Që të shihni %(roomName)s, ju duhet një ftesë",
-    "Read receipts": "Dëftesa leximi",
-    "Seen by %(count)s people": {
-        "one": "Parë nga %(count)s person",
-        "other": "Parë nga %(count)s vetë"
-    },
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -1312,7 +1279,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Mesazhet në këtë fjalosje do të jenë të fshehtëzuar skaj-më-skaj.",
     "To join, please enable video rooms in Labs first": "Për t’u bërë pjesë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
     "To view, please enable video rooms in Labs first": "Për të parë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
-    "Join the room to participate": "Që të merrni pjesë, hyni në dhomë",
     "Saved Items": "Zëra të Ruajtur",
     "Completing set up of your new device": "Po plotësohet ujdisja e pajisjes tuaj të re",
     "Devices connected": "Pajisje të lidhura",
@@ -1385,9 +1351,6 @@
     "Waiting for partner to confirm…": "Po pritet ripohimi nga partneri…",
     "Adding…": "Po shtohet…",
     "Declining…": "Po hidhet poshtë…",
-    "Rejecting invite…": "Po hidhet poshtë ftesa…",
-    "Joining room…": "Po hyhet në dhomë…",
-    "Joining space…": "Po hyhet në hapësirë…",
     "Encrypting your message…": "Po fshehtëzohet meszhi juaj…",
     "Sending your message…": "Po dërgohet mesazhi juaj…",
     "Starting export process…": "Po niset procesi i eksportimit…",
@@ -1543,7 +1506,10 @@
         "video_room": "Dhomë me video",
         "public_space": "Hapësirë publike",
         "private_space": "Hapësirë private",
-        "private_room": "Dhomë private"
+        "private_room": "Dhomë private",
+        "rooms": "Dhoma",
+        "low_priority": "Me përparësi të ulët",
+        "historical": "Të dikurshme"
     },
     "action": {
         "continue": "Vazhdo",
@@ -1867,7 +1833,8 @@
         "mode_rich_text": "Shfaq formatim",
         "formatting_toolbar_label": "Formatim",
         "format_italics": "Të pjerrëta",
-        "format_insert_link": "Futni lidhje"
+        "format_insert_link": "Futni lidhje",
+        "replying_title": "Po përgjigjet"
     },
     "Link": "Lidhje",
     "Code": "Kod",
@@ -2862,7 +2829,12 @@
                 "other": "Shfaq %(count)s paraparje të tjera"
             },
             "close": "Mbylle paraparjen"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Parë nga %(count)s person",
+            "other": "Parë nga %(count)s vetë"
+        },
+        "read_receipts_label": "Dëftesa leximi"
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3506,7 +3478,21 @@
         "failed_remove_tag": "S’u arrit të hiqej etiketa %(tagName)s nga dhoma",
         "failed_add_tag": "S’u arrit të shtohej në dhomë etiketa %(tagName)s",
         "breadcrumbs_label": "Dhoma të vizituara së fundi",
-        "breadcrumbs_empty": "S’ka dhoma të vizituara së fundi"
+        "breadcrumbs_empty": "S’ka dhoma të vizituara së fundi",
+        "add_room_label": "Shtoni dhomë",
+        "suggested_rooms_heading": "Roma të Këshilluara",
+        "add_space_label": "Shtoni hapësirë",
+        "join_public_room_label": "Hyni në dhomë publike",
+        "joining_rooms_status": {
+            "one": "Aktualisht duke hyrë në %(count)s dhomë",
+            "other": "Aktualisht duke hyrë në %(count)s dhoma"
+        },
+        "redacting_messages_status": {
+            "one": "Aktualisht po hiqen mesazhe në %(count)s dhomë",
+            "other": "Aktualisht po hiqen mesazhe në %(count)s dhoma"
+        },
+        "space_menu_label": "Menu %(spaceName)s",
+        "home_menu_label": "Mundësi kreu"
     },
     "report_content": {
         "missing_reason": "Ju lutemi, plotësoni arsyen pse po raportoni.",
@@ -3930,7 +3916,20 @@
             "show_widgets_button": "Shfaqi Widget-et",
             "close_call_button": "Mbylli krejt",
             "video_room_view_chat_button": "Shihni rrjedhë kohore fjalosjeje"
-        }
+        },
+        "joining_space": "Po hyhet në hapësirë…",
+        "joining_room": "Po hyhet në dhomë…",
+        "joining": "Po hyhet…",
+        "rejecting": "Po hidhet poshtë ftesa…",
+        "join_title": "Që të merrni pjesë, hyni në dhomë",
+        "join_title_account": "Merrni pjesë në bisedë me një llogari",
+        "join_button_account": "Regjistrohuni",
+        "loading_preview": "Po ngarkohet paraparje",
+        "kicked_from_room_by": "U hoqët %(roomName)s nga %(memberName)s",
+        "kicked_by": "U hoqët nga %(memberName)s",
+        "kick_reason": "Arsye: %(reason)s",
+        "forget_space": "Harroje këtë hapësirë",
+        "forget_room": "Harroje këtë dhomë"
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",
@@ -4084,7 +4083,8 @@
         "all_messages_description": "Merrni njoftim për çdo mesazh",
         "mentions_and_keywords": "@përmendje & fjalëkyçe",
         "mentions_and_keywords_description": "Merrni njoftime vetëm për përmendje dhe fjalëkyçe që keni ujdisur te <a>rregullimet</a> tuaja",
-        "mute_description": "S’do të merrni ndonjë njoftim"
+        "mute_description": "S’do të merrni ndonjë njoftim",
+        "message_didnt_send": "Mesazhi s’u dërgua. Klikoni për hollësi."
     },
     "mobile_guide": {
         "toast_title": "Për një punim më të mirë, përdorni aplikacionin",

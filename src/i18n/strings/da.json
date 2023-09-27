@@ -1,7 +1,4 @@
 {
-    "Rooms": "Rum",
-    "Low priority": "Lav prioritet",
-    "Historical": "Historisk",
     "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
     "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
     "Session ID": "Sessions ID",
@@ -343,7 +340,10 @@
         "off": "Slukket",
         "advanced": "Avanceret",
         "profile": "Profil",
-        "user_avatar": "Profil billede"
+        "user_avatar": "Profil billede",
+        "rooms": "Rum",
+        "low_priority": "Lav prioritet",
+        "historical": "Historisk"
     },
     "action": {
         "continue": "Fortsæt",

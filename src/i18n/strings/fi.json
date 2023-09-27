@@ -24,7 +24,6 @@
     "Failed to reject invitation": "Kutsun hylkääminen epäonnistui",
     "Join Room": "Liity huoneeseen",
     "Jump to first unread message.": "Hyppää ensimmäiseen lukemattomaan viestiin.",
-    "Low priority": "Matala prioriteetti",
     "Moderator": "Valvoja",
     "New passwords must match each other.": "Uusien salasanojen on vastattava toisiaan.",
     "not specified": "ei määritetty",
@@ -33,7 +32,6 @@
     "No more results": "Ei enempää tuloksia",
     "Reject invitation": "Hylkää kutsu",
     "Return to login screen": "Palaa kirjautumissivulle",
-    "Rooms": "Huoneet",
     "Search failed": "Haku epäonnistui",
     "Session ID": "Istuntotunniste",
     "This room has no local addresses": "Tällä huoneella ei ole paikallista osoitetta",
@@ -42,7 +40,6 @@
         "one": "Lähetetään %(filename)s ja %(count)s muuta",
         "other": "Lähetetään %(filename)s ja %(count)s muuta"
     },
-    "Historical": "Vanhat",
     "Home": "Etusivu",
     "Invalid file%(extra)s": "Virheellinen tiedosto%(extra)s",
     "Warning!": "Varoitus!",
@@ -245,7 +242,6 @@
     "Demote yourself?": "Alenna itsesi?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Et voi perua tätä muutosta, koska olet alentamassa itseäsi. Jos olet viimeinen oikeutettu henkilö tässä huoneessa, oikeuksia ei voi enää saada takaisin.",
     "Demote": "Alenna",
-    "Replying": "Vastataan",
     "Only room administrators will see this warning": "Vain huoneen ylläpitäjät näkevät tämän varoituksen",
     "Add some now": "Lisää muutamia",
     "Error updating main address": "Pääosoitteen päivityksessä tapahtui virhe",
@@ -299,10 +295,6 @@
     "Set up Secure Messages": "Ota käyttöön salatut viestit",
     "Recovery Method Removed": "Palautustapa poistettu",
     "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "Jos et poistanut palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi.",
-    "Join the conversation with an account": "Liity keskusteluun tilin avulla",
-    "Sign Up": "Rekisteröidy",
-    "Reason: %(reason)s": "Syy: %(reason)s",
-    "Forget this room": "Unohda tämä huone",
     "Re-join": "Liity uudelleen",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s antoi sinulle porttikiellon huoneeseen %(roomName)s",
     "Something went wrong with your invite to %(roomName)s": "Jotain meni vikaan kutsussasi huoneeseen %(roomName)s",
@@ -337,7 +329,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
     "Edit message": "Muokkaa viestiä",
     "Notes": "Huomautukset",
-    "Add room": "Lisää huone",
     "Edited at %(date)s. Click to view edits.": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset.",
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
@@ -868,7 +859,6 @@
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
-    "Suggested Rooms": "Ehdotetut huoneet",
     "Your message was sent": "Viestisi lähetettiin",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
@@ -937,7 +927,6 @@
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
     "You are about to leave <spaceName/>.": "Olet aikeissa poistua avaruudesta <spaceName/>.",
     "Leave %(spaceName)s": "Poistu avaruudesta %(spaceName)s",
-    "Add space": "Lisää avaruus",
     "Want to add an existing space instead?": "Haluatko sen sijaan lisätä olemassa olevan avaruuden?",
     "Add a space to a space you manage.": "Lisää avaruus hallitsemaasi avaruuteen.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Kuka tahansa voi löytää tämän avaruuden ja liittyä siihen, ei pelkästään avaruuden <SpaceName/> jäsenet.",
@@ -995,7 +984,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Et voi perua tätä muutosta, koska olet alentamassa itseäsi. Jos olet viimeinen oikeutettu henkilö tässä avaruudessa, oikeuksia ei voi enää saada takaisin.",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "Aseta osoitteita tälle avaruudelle, jotta käyttäjät löytävät tämän avaruuden kotipalvelimeltasi (%(localDomain)s)",
     "This space has no local addresses": "Tällä avaruudella ei ole paikallista osoitetta",
-    "%(spaceName)s menu": "%(spaceName)s-valikko",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -1040,13 +1028,6 @@
     "Yours, or the other users' internet connection": "Sinun tai toisen osapuolen internet-yhteys",
     "To publish an address, it needs to be set as a local address first.": "Osoitteen julkaisemiseksi se täytyy ensin asettaa paikalliseksi osoitteeksi.",
     "Published addresses can be used by anyone on any server to join your room.": "Julkaistujen osoitteiden avulla kuka tahansa millä tahansa palvelimella voi liittyä huoneeseesi.",
-    "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s poisti sinut huoneesta %(roomName)s",
-    "Currently joining %(count)s rooms": {
-        "one": "Liitytään parhaillaan %(count)s huoneeseen",
-        "other": "Liitytään parhaillaan %(count)s huoneeseen"
-    },
-    "Join public room": "Liity julkiseen huoneeseen",
-    "Message didn't send. Click for info.": "Viestiä ei lähetetty. Lisätietoa napsauttamalla.",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
@@ -1076,12 +1057,6 @@
     "There's no preview, would you like to join?": "Esikatselua ei ole. Haluaisitko liittyä?",
     "This invite was sent to %(email)s": "Tämä kutsu lähetettiin osoitteeseen %(email)s",
     "You were banned by %(memberName)s": "%(memberName)s antoi sinulle porttikiellon",
-    "You were removed by %(memberName)s": "%(memberName)s poisti sinut",
-    "Loading preview": "Ladataan esikatselua",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Poistetaan parhaillaan viestejä yhdessä huoneessa",
-        "other": "Poistetaan parhaillaan viestejä %(count)s huoneesta"
-    },
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Your new device is now verified. Other users will see it as trusted.": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
@@ -1122,16 +1097,10 @@
     "Call declined": "Puhelu hylätty",
     "Ban from room": "Anna porttikielto huoneeseen",
     "Unban from room": "Poista porttikielto huoneeseen",
-    "Joining…": "Liitytään…",
     "To view %(roomName)s, you need an invite": "Huoneen %(roomName)s katseluun tarvitaan kutsu",
     "You can still join here.": "Voit edelleen liittyä tänne.",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Kutsusi validointiyritys palautti virheen (%(errcode)s). Voit koettaa välittää tämän tiedon ihmiselle, joka kutsui sinut.",
     "Something went wrong with your invite.": "Kutsussasi meni jotain vikaan.",
-    "Read receipts": "Lukukuittaukset",
-    "Seen by %(count)s people": {
-        "one": "Nähnyt yksi ihminen",
-        "other": "Nähnyt %(count)s ihmistä"
-    },
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Developer": "Kehittäjä",
     "Close sidebar": "Sulje sivupalkki",
@@ -1152,7 +1121,6 @@
     "Set my room layout for everyone": "Aseta minun huoneen asettelu kaikille",
     "Open thread": "Avaa ketju",
     "This room or space does not exist.": "Tätä huonetta tai avaruutta ei ole olemassa.",
-    "Forget this space": "Unohda tämä avaruus",
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Copy link to thread": "Kopioi linkki ketjuun",
@@ -1226,10 +1194,8 @@
     "Video call ended": "Videopuhelu päättyi",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Room info": "Huoneen tiedot",
-    "Join the room to participate": "Liity huoneeseen osallistuaksesi",
     "Search for": "Etsittävät kohteet",
     "To join, please enable video rooms in Labs first": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
-    "Home options": "Etusivun valinnat",
     "Show Labs settings": "Näytä laboratorion asetukset",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -1299,11 +1265,8 @@
     "Ignore %(user)s": "Sivuuta %(user)s",
     "Poll history": "Kyselyhistoria",
     "Edit link": "Muokkaa linkkiä",
-    "Rejecting invite…": "Hylätään kutsua…",
-    "Joining room…": "Liitytään huoneeseen…",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "Encrypting your message…": "Salataan viestiäsi…",
-    "Joining space…": "Liitytään avaruuteen…",
     "Sending your message…": "Lähetetään viestiäsi…",
     "Error details": "Virheen tiedot",
     "common": {
@@ -1417,7 +1380,10 @@
         "video_room": "Videohuone",
         "public_space": "Julkinen avaruus",
         "private_space": "Yksityinen avaruus",
-        "private_room": "Yksityinen huone"
+        "private_room": "Yksityinen huone",
+        "rooms": "Huoneet",
+        "low_priority": "Matala prioriteetti",
+        "historical": "Vanhat"
     },
     "action": {
         "continue": "Jatka",
@@ -1723,7 +1689,8 @@
         "mode_rich_text": "Näytä muotoilu",
         "formatting_toolbar_label": "Muotoilu",
         "format_italics": "Kursivoitu",
-        "format_insert_link": "Lisää linkki"
+        "format_insert_link": "Lisää linkki",
+        "replying_title": "Vastataan"
     },
     "Link": "Linkki",
     "Code": "Koodi",
@@ -2642,7 +2609,12 @@
                 "other": "Näytä %(count)s muuta esikatselua"
             },
             "close": "Sulje esikatselu"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Nähnyt yksi ihminen",
+            "other": "Nähnyt %(count)s ihmistä"
+        },
+        "read_receipts_label": "Lukukuittaukset"
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3265,7 +3237,21 @@
         "failed_remove_tag": "Tagin %(tagName)s poistaminen huoneesta epäonnistui",
         "failed_add_tag": "Tagin %(tagName)s lisääminen huoneeseen epäonnistui",
         "breadcrumbs_label": "Hiljattain vieraillut huoneet",
-        "breadcrumbs_empty": "Ei hiljattain vierailtuja huoneita"
+        "breadcrumbs_empty": "Ei hiljattain vierailtuja huoneita",
+        "add_room_label": "Lisää huone",
+        "suggested_rooms_heading": "Ehdotetut huoneet",
+        "add_space_label": "Lisää avaruus",
+        "join_public_room_label": "Liity julkiseen huoneeseen",
+        "joining_rooms_status": {
+            "one": "Liitytään parhaillaan %(count)s huoneeseen",
+            "other": "Liitytään parhaillaan %(count)s huoneeseen"
+        },
+        "redacting_messages_status": {
+            "one": "Poistetaan parhaillaan viestejä yhdessä huoneessa",
+            "other": "Poistetaan parhaillaan viestejä %(count)s huoneesta"
+        },
+        "space_menu_label": "%(spaceName)s-valikko",
+        "home_menu_label": "Etusivun valinnat"
     },
     "report_content": {
         "missing_reason": "Kerro miksi teet ilmoitusta.",
@@ -3637,7 +3623,20 @@
             "show_widgets_button": "Näytä sovelmat",
             "close_call_button": "Lopeta puhelu",
             "video_room_view_chat_button": "Näytä keskustelun aikajana"
-        }
+        },
+        "joining_space": "Liitytään avaruuteen…",
+        "joining_room": "Liitytään huoneeseen…",
+        "joining": "Liitytään…",
+        "rejecting": "Hylätään kutsua…",
+        "join_title": "Liity huoneeseen osallistuaksesi",
+        "join_title_account": "Liity keskusteluun tilin avulla",
+        "join_button_account": "Rekisteröidy",
+        "loading_preview": "Ladataan esikatselua",
+        "kicked_from_room_by": "%(memberName)s poisti sinut huoneesta %(roomName)s",
+        "kicked_by": "%(memberName)s poisti sinut",
+        "kick_reason": "Syy: %(reason)s",
+        "forget_space": "Unohda tämä avaruus",
+        "forget_room": "Unohda tämä huone"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3789,7 +3788,8 @@
         "all_messages_description": "Vastaanota ilmoitus joka viestistä",
         "mentions_and_keywords": "@maininnat & asiasanat",
         "mentions_and_keywords_description": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
-        "mute_description": "Et saa ilmoituksia"
+        "mute_description": "Et saa ilmoituksia",
+        "message_didnt_send": "Viestiä ei lähetetty. Lisätietoa napsauttamalla."
     },
     "mobile_guide": {
         "toast_title": "Parempi kokemus sovelluksella",

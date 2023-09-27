@@ -43,16 +43,12 @@
     "%(duration)sm": "%(duration)sм",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
-    "Replying": "Одговара",
     "Unnamed room": "Неименована соба",
     "(~%(count)s results)": {
         "other": "(~%(count)s резултата)",
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Приступи соби",
-    "Rooms": "Собе",
-    "Low priority": "Ниска важност",
-    "Historical": "Историја",
     "%(roomName)s does not exist.": "Соба %(roomName)s не постоји.",
     "%(roomName)s is not accessible at this time.": "Соба %(roomName)s није доступна у овом тренутку.",
     "unknown error code": "непознати код грешке",
@@ -165,7 +161,6 @@
     "Encrypted by an unverified session": "Шифровано од стране непотврђене сесије",
     "Scroll to most recent messages": "Пребаци на најновије поруке",
     "Direct Messages": "Директне поруке",
-    "Forget this room": "Заборави ову собу",
     "Start chatting": "Започни ћаскање",
     "Room Name": "Назив собе",
     "Room Topic": "Тема собе",
@@ -605,7 +600,10 @@
         "profile": "Профил",
         "display_name": "Прикажи име",
         "user_avatar": "Слика профила",
-        "authentication": "Идентификација"
+        "authentication": "Идентификација",
+        "rooms": "Собе",
+        "low_priority": "Ниска важност",
+        "historical": "Историја"
     },
     "action": {
         "continue": "Настави",
@@ -706,7 +704,8 @@
             "user_description": "Корисници"
         },
         "no_perms_notice": "Немате овлашћење за писање у овој соби",
-        "poll_button_no_perms_title": "Неопходна је дозвола"
+        "poll_button_no_perms_title": "Неопходна је дозвола",
+        "replying_title": "Одговара"
     },
     "Code": "Код",
     "power_level": {
@@ -1437,7 +1436,8 @@
         "invite_this_room": "Позови у ову собу",
         "header": {
             "forget_room_button": "Заборави собу"
-        }
+        },
+        "forget_room": "Заборави ову собу"
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",

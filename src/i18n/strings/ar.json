@@ -154,21 +154,12 @@
     "Something went wrong with your invite to %(roomName)s": "حدث خطأ في دعوتك إلى %(roomName)s",
     "You were banned from %(roomName)s by %(memberName)s": "لقد حُظِرت من غرفة %(roomName)s من قِبَل %(memberName)s",
     "Re-join": "أعِد الانضمام",
-    "Forget this room": "انسَ هذه الغرفة",
-    "Reason: %(reason)s": "السبب: %(reason)s",
-    "Sign Up": "سجل",
-    "Join the conversation with an account": "انضم للمحادثة بحساب",
-    "Historical": "تاريخي",
-    "Low priority": "أولوية منخفضة",
-    "Add room": "أضف غرفة",
-    "Rooms": "الغرف",
     "Join Room": "انضم للغرفة",
     "(~%(count)s results)": {
         "one": "(~%(count)s نتيجة)",
         "other": "(~%(count)s نتائج)"
     },
     "Unnamed room": "غرفة بلا اسم",
-    "Replying": "الرد",
     "%(duration)sd": "%(duration)sي",
     "%(duration)sh": "%(duration)sس",
     "%(duration)sm": "%(duration)sد",
@@ -477,7 +468,10 @@
         "profile": "الملف الشخصي",
         "display_name": "الاسم الظاهر",
         "user_avatar": "الصورة الشخصية",
-        "authentication": "المصادقة"
+        "authentication": "المصادقة",
+        "rooms": "الغرف",
+        "low_priority": "أولوية منخفضة",
+        "historical": "تاريخي"
     },
     "action": {
         "continue": "واصِل",
@@ -568,7 +562,8 @@
         "room_upgraded_notice": "تم استبدال هذه الغرفة ولم تعد نشطة.",
         "no_perms_notice": "ليس لديك إذن للنشر في هذه الغرفة",
         "poll_button_no_perms_title": "التصريح مطلوب",
-        "format_italics": "مائل"
+        "format_italics": "مائل",
+        "replying_title": "الرد"
     },
     "power_level": {
         "default": "المبدئي",
@@ -1224,7 +1219,8 @@
         },
         "show_less": "أظهر أقل",
         "notification_options": "خيارات الإشعارات",
-        "breadcrumbs_empty": "لا توجد غرف تمت زيارتها مؤخرًا"
+        "breadcrumbs_empty": "لا توجد غرف تمت زيارتها مؤخرًا",
+        "add_room_label": "أضف غرفة"
     },
     "a11y": {
         "n_unread_messages_mentions": {
@@ -1419,7 +1415,11 @@
             "forget_room_button": "انسَ الغرفة",
             "hide_widgets_button": "إخفاء عناصر الواجهة",
             "show_widgets_button": "إظهار عناصر الواجهة"
-        }
+        },
+        "join_title_account": "انضم للمحادثة بحساب",
+        "join_button_account": "سجل",
+        "kick_reason": "السبب: %(reason)s",
+        "forget_room": "انسَ هذه الغرفة"
     },
     "space": {
         "context_menu": {

@@ -1,7 +1,4 @@
 {
-    "Rooms": "Räume",
-    "Low priority": "Niedrige Priorität",
-    "Historical": "Archiv",
     "New passwords must match each other.": "Die neuen Passwörter müssen identisch sein.",
     "A new password must be entered.": "Es muss ein neues Passwort eingegeben werden.",
     "Session ID": "Sitzungs-ID",
@@ -117,7 +114,6 @@
     "Send": "Senden",
     "collapse": "Verbergen",
     "expand": "Erweitern",
-    "Replying": "Antwortet",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du wirst nicht in der Lage sein, die Änderung zurückzusetzen, da du dich degradierst. Wenn du der letze Nutzer mit Berechtigungen bist, wird es unmöglich sein die Privilegien zurückzubekommen.",
     "<a>In reply to</a> <pill>": "<a>Als Antwort auf</a> <pill>",
@@ -292,9 +288,6 @@
     "Power level": "Berechtigungsstufe",
     "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "Could not load user profile": "Konnte Nutzerprofil nicht laden",
-    "Sign Up": "Registrieren",
-    "Reason: %(reason)s": "Grund: %(reason)s",
-    "Forget this room": "Diesen Raum entfernen",
     "Do you want to join %(roomName)s?": "Möchtest du %(roomName)s betreten?",
     "<userName/> invited you": "<userName/> hat dich eingeladen",
     "edited": "bearbeitet",
@@ -303,7 +296,6 @@
     "Upload all": "Alle hochladen",
     "Cancel All": "Alle abbrechen",
     "Upload Error": "Fehler beim Hochladen",
-    "Add room": "Raum hinzufügen",
     "Failed to revoke invite": "Einladung konnte nicht zurückgezogen werden",
     "Revoke invite": "Einladung zurückziehen",
     "Invited by %(sender)s": "%(sender)s eingeladen",
@@ -389,7 +381,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Beim Deaktivieren wirst du abgemeldet und ein erneutes Anmelden verhindert. Zusätzlich wirst du aus allen Räumen entfernt. Diese Aktion kann nicht rückgängig gemacht werden. Bist du sicher, dass du dieses Konto deaktivieren willst?",
     "Deactivate user": "Konto deaktivieren",
     "Failed to deactivate user": "Benutzer konnte nicht deaktiviert werden",
-    "Join the conversation with an account": "An Unterhaltung mit einem Konto teilnehmen",
     "Re-join": "Erneut betreten",
     "You were banned from %(roomName)s by %(memberName)s": "Du wurdest von %(memberName)s aus %(roomName)s verbannt",
     "Something went wrong with your invite to %(roomName)s": "Bei deiner Einladung zu %(roomName)s ist ein Fehler aufgetreten",
@@ -905,7 +896,6 @@
         "one": "%(count)s Mitglied"
     },
     "Create a new room": "Neuen Raum erstellen",
-    "Suggested Rooms": "Vorgeschlagene Räume",
     "Create a space": "Neuen Space erstellen",
     "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
@@ -976,10 +966,6 @@
     "Add reaction": "Reaktion hinzufügen",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
-    "Currently joining %(count)s rooms": {
-        "one": "Betrete %(count)s Raum",
-        "other": "Betrete %(count)s Räume"
-    },
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
     "Or send invite link": "Oder versende einen Einladungslink",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Sofern du die Berechtigung hast, öffne das Menü einer Nachricht und wähle <b>Anheften</b>, ⁣ um sie hier aufzubewahren.",
@@ -1018,7 +1004,6 @@
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
     "Stop recording": "Aufnahme beenden",
     "Send voice message": "Sprachnachricht senden",
-    "Add space": "Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
     "Search spaces": "Spaces durchsuchen",
     "Select spaces": "Spaces wählen",
@@ -1047,7 +1032,6 @@
     "Leave all rooms": "Alle Räume verlassen",
     "Don't leave any rooms": "Keine Räume und Subspaces verlassen",
     "Some encryption parameters have been changed.": "Einige Verschlüsselungsoptionen wurden geändert.",
-    "Message didn't send. Click for info.": "Nachricht nicht gesendet. Klicke für Details.",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
         "other": "%(count)s Antworten"
@@ -1096,8 +1080,6 @@
         "other": "%(count)s Stimmen"
     },
     "Chat": "Unterhaltung",
-    "%(spaceName)s menu": "%(spaceName)s-Menü",
-    "Join public room": "Öffentlichen Raum betreten",
     "Recently viewed": "Kürzlich besucht",
     "Developer": "Entwickler",
     "Experimental": "Experimentell",
@@ -1145,7 +1127,6 @@
     "Unban them from everything I'm able to": "Überall wo ich die Rechte dazu habe, entbannen",
     "Messaging": "Kommunikation",
     "Close this widget to view it in this panel": "Widget schließen und in diesem Panel anzeigen",
-    "Home options": "Startseiteneinstellungen",
     "Unpin this widget to view it in this panel": "Widget nicht mehr anheften und in diesem Panel anzeigen",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
@@ -1156,7 +1137,6 @@
     "Remove from room": "Aus Raum entfernen",
     "Failed to remove user": "Fehler beim entfernen des Nutzers",
     "Remove from %(roomName)s": "Aus %(roomName)s entfernen",
-    "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s hat dich aus %(roomName)s entfernt",
     "From a thread": "Aus einem Thread",
     "Remove them from specific things I'm able to": "Person aus gewählten, mir möglichen, Bereichen entfernen",
     "Remove them from everything I'm able to": "Person aus allen, mir möglichen Bereichen entfernen",
@@ -1208,10 +1188,6 @@
         "other": "Du bist gerade dabei, %(count)s Nachrichten von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?"
     },
     "%(displayName)s's live location": "Echtzeit-Standort von %(displayName)s",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Entferne Nachrichten in %(count)s Raum",
-        "other": "Entferne Nachrichten in %(count)s Räumen"
-    },
     "View live location": "Echtzeit-Standort anzeigen",
     "Ban from room": "Bannen",
     "Unban from room": "Entbannen",
@@ -1235,13 +1211,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Beim Überprüfen der Einladung gab es den Fehler %(errcode)s. Du kannst diese Info der Person, die dich eingeladen hat weitergeben, eventuell kann dies ihr helfen.",
     "Something went wrong with your invite.": "Bei der Einladung ist etwas schiefgelaufen.",
     "You were banned by %(memberName)s": "Du wurdest von %(memberName)s gebannt",
-    "Forget this space": "Diesen Space vergessen",
-    "You were removed by %(memberName)s": "Du wurdest von %(memberName)s entfernt",
-    "Loading preview": "Lade Vorschau",
-    "Seen by %(count)s people": {
-        "one": "Von %(count)s Person gesehen",
-        "other": "Von %(count)s Personen gesehen"
-    },
     "%(members)s and %(last)s": "%(members)s und %(last)s",
     "%(members)s and more": "%(members)s und weitere",
     "View List": "Liste Anzeigen",
@@ -1303,7 +1272,6 @@
     "Who will you chat to the most?": "Mit wem wirst du am meisten schreiben?",
     "We're creating a room with %(names)s": "Wir erstellen einen Raum mit %(names)s",
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Unterhaltung werden Ende-zu-Ende-verschlüsselt.",
-    "Joining…": "Betrete …",
     "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "To view, please enable video rooms in Labs first": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
     "Online community members": "Online Community-Mitglieder",
@@ -1321,8 +1289,6 @@
     "You're in": "Los gehts",
     "Choose a locale": "Wähle ein Gebietsschema",
     "Saved Items": "Gespeicherte Elemente",
-    "Read receipts": "Lesebestätigungen",
-    "Join the room to participate": "Betrete den Raum, um teilzunehmen",
     "%(downloadButton)s or %(copyButton)s": "%(downloadButton)s oder %(copyButton)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "Video call ended": "Videoanruf beendet",
@@ -1383,9 +1349,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktiviere „%(manageIntegrations)s“ in den Einstellungen, um dies zu tun.",
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
-    "Rejecting invite…": "Lehne Einladung ab …",
-    "Joining room…": "Betrete Raum …",
-    "Joining space…": "Betrete Space …",
     "Encrypting your message…": "Verschlüssele deine Nachricht …",
     "Sending your message…": "Sende deine Nachricht …",
     "Starting export process…": "Beginne Exportvorgang …",
@@ -1436,7 +1399,6 @@
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
     "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
-    "Unable to find user by email": "Kann Benutzer nicht via E-Mail-Adresse finden",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Nachrichten hier sind Ende-zu-Ende-verschlüsselt. Verifiziere %(displayName)s in deren Profil – klicke auf deren Profilbild.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Nachrichten in diesem Raum sind Ende-zu-Ende-verschlüsselt. Wenn Personen beitreten, kannst du sie in ihrem Profil verifizieren, indem du auf deren Profilbild klickst.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Die exportierte Datei erlaubt Unbefugten, jede Nachricht zu entschlüsseln, sei also vorsichtig und halte sie versteckt. Um dies zu verhindern, empfiehlt es sich eine einzigartige Passphrase unten einzugeben, die nur für das Entschlüsseln der exportierten Datei genutzt wird. Es ist nur möglich, diese Datei mit der selben Passphrase zu importieren.",
@@ -1563,7 +1525,10 @@
         "video_room": "Videoraum",
         "public_space": "Öffentlicher Space",
         "private_space": "Privater Space",
-        "private_room": "Privater Raum"
+        "private_room": "Privater Raum",
+        "rooms": "Räume",
+        "low_priority": "Niedrige Priorität",
+        "historical": "Archiv"
     },
     "action": {
         "continue": "Fortfahren",
@@ -1899,7 +1864,8 @@
         "mode_rich_text": "Formatierung anzeigen",
         "formatting_toolbar_label": "Formatierung",
         "format_italics": "Kursiv",
-        "format_insert_link": "Link einfügen"
+        "format_insert_link": "Link einfügen",
+        "replying_title": "Antwortet"
     },
     "Link": "Link",
     "Code": "Code",
@@ -2944,7 +2910,12 @@
                 "other": "%(count)s weitere Vorschauen zeigen"
             },
             "close": "Vorschau schließen"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Von %(count)s Person gesehen",
+            "other": "Von %(count)s Personen gesehen"
+        },
+        "read_receipts_label": "Lesebestätigungen"
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3606,7 +3577,21 @@
         "failed_remove_tag": "Entfernen der Raum-Kennzeichnung %(tagName)s fehlgeschlagen",
         "failed_add_tag": "Fehler beim Hinzufügen des \"%(tagName)s\"-Tags an dem Raum",
         "breadcrumbs_label": "Kürzlich besuchte Räume",
-        "breadcrumbs_empty": "Keine kürzlich besuchten Räume"
+        "breadcrumbs_empty": "Keine kürzlich besuchten Räume",
+        "add_room_label": "Raum hinzufügen",
+        "suggested_rooms_heading": "Vorgeschlagene Räume",
+        "add_space_label": "Space hinzufügen",
+        "join_public_room_label": "Öffentlichen Raum betreten",
+        "joining_rooms_status": {
+            "one": "Betrete %(count)s Raum",
+            "other": "Betrete %(count)s Räume"
+        },
+        "redacting_messages_status": {
+            "one": "Entferne Nachrichten in %(count)s Raum",
+            "other": "Entferne Nachrichten in %(count)s Räumen"
+        },
+        "space_menu_label": "%(spaceName)s-Menü",
+        "home_menu_label": "Startseiteneinstellungen"
     },
     "report_content": {
         "missing_reason": "Bitte gib an, weshalb du einen Fehler meldest.",
@@ -4039,7 +4024,21 @@
             "show_widgets_button": "Widgets anzeigen",
             "close_call_button": "Anruf schließen",
             "video_room_view_chat_button": "Nachrichtenverlauf anzeigen"
-        }
+        },
+        "error_3pid_invite_email_lookup": "Kann Benutzer nicht via E-Mail-Adresse finden",
+        "joining_space": "Betrete Space …",
+        "joining_room": "Betrete Raum …",
+        "joining": "Betrete …",
+        "rejecting": "Lehne Einladung ab …",
+        "join_title": "Betrete den Raum, um teilzunehmen",
+        "join_title_account": "An Unterhaltung mit einem Konto teilnehmen",
+        "join_button_account": "Registrieren",
+        "loading_preview": "Lade Vorschau",
+        "kicked_from_room_by": "%(memberName)s hat dich aus %(roomName)s entfernt",
+        "kicked_by": "Du wurdest von %(memberName)s entfernt",
+        "kick_reason": "Grund: %(reason)s",
+        "forget_space": "Diesen Space vergessen",
+        "forget_room": "Diesen Raum entfernen"
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4198,7 +4197,8 @@
         "mentions_and_keywords": "@Erwähnungen und Schlüsselwörter",
         "mentions_and_keywords_description": "Nur bei Erwähnungen und Schlüsselwörtern benachrichtigen, die du in den <a>Einstellungen</a> konfigurieren kannst",
         "mute_description": "Du wirst keine Benachrichtigungen erhalten",
-        "email_pusher_app_display_name": "E-Mail-Benachrichtigungen"
+        "email_pusher_app_display_name": "E-Mail-Benachrichtigungen",
+        "message_didnt_send": "Nachricht nicht gesendet. Klicke für Details."
     },
     "mobile_guide": {
         "toast_title": "Nutze die App für eine bessere Erfahrung",

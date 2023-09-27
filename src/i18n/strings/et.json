@@ -17,7 +17,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
     "Direct Messages": "Isiklikud sõnumid",
-    "Rooms": "Jututoad",
     "Do you want to chat with %(user)s?": "Kas sa soovid vestelda %(user)s'ga?",
     "<userName/> wants to chat": "<userName/> soovib vestelda",
     "All Rooms": "Kõik jututoad",
@@ -109,7 +108,6 @@
     "%(duration)sm": "%(duration)s minut(it)",
     "%(duration)sh": "%(duration)s tund(i)",
     "%(duration)sd": "%(duration)s päev(a)",
-    "Replying": "Vastan",
     "Unnamed room": "Nimeta jututuba",
     "(~%(count)s results)": {
         "other": "(~%(count)s tulemust)",
@@ -117,8 +115,6 @@
     },
     "Join Room": "Liitu jututoaga",
     "Share room": "Jaga jututuba",
-    "Low priority": "Vähetähtis",
-    "Historical": "Ammune",
     "New published address (e.g. #alias:server)": "Uus avaldatud aadess (näiteks #alias:server)",
     "e.g. my-room": "näiteks minu-jututuba",
     "Can't find this server or its room list": "Ei leia seda serverit ega tema jututubade loendit",
@@ -144,7 +140,6 @@
     "Server did not require any authentication": "Server ei nõudnud mitte mingisugust autentimist",
     "Recent Conversations": "Hiljutised vestlused",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver on saavutanud igakuise aktiivsete kasutajate piiri. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
-    "Add room": "Lisa jututuba",
     "This room is end-to-end encrypted": "See jututuba on läbivalt krüptitud",
     "Everyone in this room is verified": "Kõik kasutajad siin nututoas on verifitseeritud",
     "Edit message": "Muuda sõnumit",
@@ -266,10 +261,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Jututoa lisaaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
     "Main address": "Põhiaadress",
     "not specified": "määratlemata",
-    "Join the conversation with an account": "Liitu vestlusega kasutades oma kontot",
-    "Sign Up": "Registreeru",
-    "Reason: %(reason)s": "Põhjus: %(reason)s",
-    "Forget this room": "Unusta see jututuba",
     "Re-join": "Liitu uuesti",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s keelas sulle ligipääsu jututuppa %(roomName)s",
     "Something went wrong with your invite to %(roomName)s": "Midagi läks viltu sinu kutsega %(roomName)s jututuppa",
@@ -909,7 +900,6 @@
     "Create a new room": "Loo uus jututuba",
     "Space selection": "Kogukonnakeskuse valik",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Kuna sa vähendad enda õigusi, siis sul ei pruugi hiljem olla võimalik seda muutust tagasi pöörata. Kui sa juhtumisi oled viimane haldusõigustega kasutaja kogukonnakeskuses, siis hiljem on võimatu samu õigusi tagasi saada.",
-    "Suggested Rooms": "Soovitatud jututoad",
     "Your message was sent": "Sinu sõnum sai saadetud",
     "Leave space": "Lahku kogukonnakeskusest",
     "Create a space": "Loo kogukonnakeskus",
@@ -976,10 +966,6 @@
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Add reaction": "Lisa reaktsioon",
-    "Currently joining %(count)s rooms": {
-        "other": "Parasjagu liitun %(count)s jututoaga",
-        "one": "Parasjagu liitun %(count)s jututoaga"
-    },
     "Or send invite link": "Või saada kutse link",
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Kui sul on vastavad õigused olemas, siis ava sõnumi juuresolev menüü ning püsisõnumi tekitamiseks vali <b>Klammerda</b>.",
     "Pinned messages": "Klammerdatud sõnumid",
@@ -1033,7 +1019,6 @@
     "Missed call": "Vastamata kõne",
     "Send voice message": "Saada häälsõnum",
     "Stop recording": "Lõpeta salvestamine",
-    "Add space": "Lisa kogukonnakeskus",
     "Unknown failure: %(reason)s": "Tundmatu viga: %(reason)s",
     "Rooms and spaces": "Jututoad ja kogukonnad",
     "Results": "Tulemused",
@@ -1046,7 +1031,6 @@
     "Could not connect media": "Meediaseadme ühendamine ei õnnestunud",
     "Some encryption parameters have been changed.": "Mõned krüptimise parameetrid on muutunud.",
     "Role in <RoomName/>": "Roll jututoas <RoomName/>",
-    "Message didn't send. Click for info.": "Sõnum jäi saatmata. Lisateabe saamiseks klõpsi.",
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
     "Would you like to leave the rooms in this space?": "Kas sa soovid lahkuda ka selle kogukonna jututubadest?",
     "You are about to leave <spaceName/>.": "Sa oled lahkumas <spaceName/> kogukonnast.",
@@ -1118,9 +1102,6 @@
     "Messaging": "Sõnumisuhtlus",
     "Moderation": "Modereerimine",
     "Spaces you know that contain this space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
-    "Home options": "Avalehe valikud",
-    "%(spaceName)s menu": "%(spaceName)s menüü",
-    "Join public room": "Liitu avaliku jututoaga",
     "Recently viewed": "Hiljuti vaadatud",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
@@ -1171,7 +1152,6 @@
     "Remove them from specific things I'm able to": "Eemalda kasutaja valitud kohtadest, kust ma saan",
     "Remove them from everything I'm able to": "Eemalda kasutaja kõikjalt, kust ma saan",
     "Remove from %(roomName)s": "Eemalda %(roomName)s jututoast",
-    "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s eemaldas sind %(roomName)s jututoast",
     "Message pending moderation": "Sõnum on modereerimise ootel",
     "Message pending moderation: %(reason)s": "Sõnum on modereerimise ootel: %(reason)s",
     "Pick a date to jump to": "Vali kuupäev, mida soovid vaadata",
@@ -1202,10 +1182,6 @@
     "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
     "%(displayName)s's live location": "%(displayName)s asukoht reaalajas",
-    "Currently removing messages in %(count)s rooms": {
-        "other": "Kustutame sõnumeid %(count)s jututoas",
-        "one": "Kustutame sõnumeid %(count)s jututoas"
-    },
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
         "other": "Sa oled kustutamas %(count)s sõnumit kasutajalt %(user)s. Sellega kustutatakse nad püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?",
         "one": "Sa oled kustutamas %(count)s sõnumi kasutajalt %(user)s. Sellega kustutatakse ta püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?"
@@ -1226,9 +1202,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Sinu kutse kontrollimisel tekkis viga (%(errcode)s). Kui saad, siis edasta see teave kutsujale.",
     "Something went wrong with your invite.": "Sinu kutsega läks midagi valesti.",
     "You were banned by %(memberName)s": "%(memberName)s keelas sulle ligipääsu",
-    "Forget this space": "Unusta see kogukond",
-    "You were removed by %(memberName)s": "%(memberName)s eemaldas sinu liikmelisuse",
-    "Loading preview": "Laadin eelvaadet",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
         "one": "1 osaleja",
@@ -1262,10 +1235,6 @@
     "Hide my messages from new joiners": "Peida minu sõnumid uute liitujate eest",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Nii nagu e-posti puhul, on sinu vanad sõnumid on jätkuvalt loetavad nendele kasutajate, kes nad saanud on. Kas sa soovid peita oma sõnumid nende kasutaja eest, kes jututubadega hiljem liituvad?",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sa oled kõikidest seadmetest välja logitud ning enam ei saa tõuketeavitusi. Nende taaskuvamiseks logi sisse igas oma soovitud seadmetes.",
-    "Seen by %(count)s people": {
-        "one": "Seda nägi %(count)s lugeja",
-        "other": "Seda nägid %(count)s lugejat"
-    },
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Kui sa soovid ligipääsu varasematele krüptitud vestlustele, palun seadista võtmete varundus või enne jätkamist ekspordi mõnest seadmest krüptovõtmed.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Kõikide sinu seadmete võrgust välja logimine kustutab ka nendes salvestatud krüptovõtmed ja sellega muutuvad ka krüptitud vestlused loetamatuteks.",
     "An error occurred while stopping your live location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
@@ -1283,8 +1252,6 @@
     "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
     "Unread email icon": "Lugemata e-kirja ikoon",
-    "Joining…": "Liitun…",
-    "Read receipts": "Lugemisteatised",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa.",
     "Remove search filter for %(filter)s": "Eemalda otsingufilter „%(filter)s“",
     "Start a group chat": "Alusta rühmavestlust",
@@ -1307,7 +1274,6 @@
     "Show spaces": "Näita kogukondi",
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
-    "Join the room to participate": "Osalemiseks liitu jututoaga",
     "Stop and close": "Peata ja sulge",
     "Online community members": "Võrgupõhise kogukonna liikmed",
     "Coworkers and teams": "Kolleegid ja töörühmad",
@@ -1385,9 +1351,6 @@
     "Checking…": "Kontrollin…",
     "Waiting for partner to confirm…": "Ootan teise osapoole kinnitust…",
     "Adding…": "Lisan…",
-    "Rejecting invite…": "Hülgan kutset…",
-    "Joining room…": "Liitun jututoaga…",
-    "Joining space…": "Liitun kogukonnaga…",
     "Encrypting your message…": "Krüptin sinu sõnumit…",
     "Sending your message…": "Saadan sinu sõnumit…",
     "Starting export process…": "Alustame eksportimist…",
@@ -1436,7 +1399,6 @@
     "Waiting for users to join %(brand)s": "Kasutajate liitumise ootel %(brand)s'ga",
     "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
     "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
-    "Unable to find user by email": "E-posti aadressi alusel ei õnnestu kasutajat leida",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Sõnumid siin vestluses on läbivalt krüptitud. Klõpsides tunnuspilti saad verifitseerida kasutaja %(displayName)s.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Sõnumid siin jututoas on läbivalt krüptitud. Kui uued kasutajad liituvad, siis klõpsides nende tunnuspilti saad neid verifitseerida.",
     "Upgrade room": "Uuenda jututoa versiooni",
@@ -1563,7 +1525,10 @@
         "video_room": "Videotuba",
         "public_space": "Avalik kogukonnakeskus",
         "private_space": "Privaatne kogukonnakeskus",
-        "private_room": "Omavaheline jututuba"
+        "private_room": "Omavaheline jututuba",
+        "rooms": "Jututoad",
+        "low_priority": "Vähetähtis",
+        "historical": "Ammune"
     },
     "action": {
         "continue": "Jätka",
@@ -1898,7 +1863,8 @@
         "mode_rich_text": "Näita vormingut",
         "formatting_toolbar_label": "Vormindame andmeid",
         "format_italics": "Kaldkiri",
-        "format_insert_link": "Lisa link"
+        "format_insert_link": "Lisa link",
+        "replying_title": "Vastan"
     },
     "Link": "Link",
     "Code": "Kood",
@@ -2943,7 +2909,12 @@
                 "one": "Näita veel %(count)s eelvaadet"
             },
             "close": "Sulge eelvaade"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Seda nägi %(count)s lugeja",
+            "other": "Seda nägid %(count)s lugejat"
+        },
+        "read_receipts_label": "Lugemisteatised"
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -3599,7 +3570,21 @@
         "failed_remove_tag": "Sildi %(tagName)s eemaldamine jututoast ebaõnnestus",
         "failed_add_tag": "Sildi %(tagName)s lisamine jututoale ebaõnnestus",
         "breadcrumbs_label": "Hiljuti külastatud jututoad",
-        "breadcrumbs_empty": "Hiljuti külastatud jututubasid ei leidu"
+        "breadcrumbs_empty": "Hiljuti külastatud jututubasid ei leidu",
+        "add_room_label": "Lisa jututuba",
+        "suggested_rooms_heading": "Soovitatud jututoad",
+        "add_space_label": "Lisa kogukonnakeskus",
+        "join_public_room_label": "Liitu avaliku jututoaga",
+        "joining_rooms_status": {
+            "other": "Parasjagu liitun %(count)s jututoaga",
+            "one": "Parasjagu liitun %(count)s jututoaga"
+        },
+        "redacting_messages_status": {
+            "other": "Kustutame sõnumeid %(count)s jututoas",
+            "one": "Kustutame sõnumeid %(count)s jututoas"
+        },
+        "space_menu_label": "%(spaceName)s menüü",
+        "home_menu_label": "Avalehe valikud"
     },
     "report_content": {
         "missing_reason": "Palun kirjelda veateate põhjust.",
@@ -4032,7 +4017,21 @@
             "show_widgets_button": "Näita vidinaid",
             "close_call_button": "Lõpeta kõne",
             "video_room_view_chat_button": "Vaata vestluse ajajoont"
-        }
+        },
+        "error_3pid_invite_email_lookup": "E-posti aadressi alusel ei õnnestu kasutajat leida",
+        "joining_space": "Liitun kogukonnaga…",
+        "joining_room": "Liitun jututoaga…",
+        "joining": "Liitun…",
+        "rejecting": "Hülgan kutset…",
+        "join_title": "Osalemiseks liitu jututoaga",
+        "join_title_account": "Liitu vestlusega kasutades oma kontot",
+        "join_button_account": "Registreeru",
+        "loading_preview": "Laadin eelvaadet",
+        "kicked_from_room_by": "%(memberName)s eemaldas sind %(roomName)s jututoast",
+        "kicked_by": "%(memberName)s eemaldas sinu liikmelisuse",
+        "kick_reason": "Põhjus: %(reason)s",
+        "forget_space": "Unusta see kogukond",
+        "forget_room": "Unusta see jututuba"
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -4191,7 +4190,8 @@
         "mentions_and_keywords": "@mainimiste ja võtmesõnade puhul",
         "mentions_and_keywords_description": "Soovin teavitusi sellisena mainimiste ja võtmesõnade puhul, nagu ma neid olen <a>seadistanud</a>",
         "mute_description": "Sa ei saa üldse teavitusi",
-        "email_pusher_app_display_name": "E-posti teel saadetavad teavitused"
+        "email_pusher_app_display_name": "E-posti teel saadetavad teavitused",
+        "message_didnt_send": "Sõnum jäi saatmata. Lisateabe saamiseks klõpsi."
     },
     "mobile_guide": {
         "toast_title": "Rakendusega saad Matrix'is suhelda parimal viisil",

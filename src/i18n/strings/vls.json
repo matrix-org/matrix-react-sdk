@@ -113,7 +113,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
     "%(duration)sd": "%(duration)sd",
-    "Replying": "An ’t beantwoordn",
     "Unnamed room": "Noamloos gesprek",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultoatn)",
@@ -121,13 +120,6 @@
     },
     "Join Room": "Gesprek toetreedn",
     "Share room": "Gesprek deeln",
-    "Rooms": "Gesprekkn",
-    "Low priority": "Leige prioriteit",
-    "Historical": "Historisch",
-    "Join the conversation with an account": "Neemt deel an ’t gesprek met een account",
-    "Sign Up": "Registreern",
-    "Reason: %(reason)s": "Reden: %(reason)s",
-    "Forget this room": "Dit gesprek vergeetn",
     "Re-join": "Were toetreedn",
     "You were banned from %(roomName)s by %(memberName)s": "Je zyt uut %(roomName)s verbann gewist deur %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "’t Es etwa misgegoan me jen uutnodigienge voor %(roomName)s",
@@ -289,7 +281,6 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver e systeembronlimiet overschreedn ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
     "Connectivity to the server has been lost.": "De verbindienge me de server is verbrookn.",
     "Sent messages will be stored until your connection has returned.": "Verstuurde berichtn goan ipgesloagn wordn toutda je verbindienge hersteld is.",
-    "Add room": "Gesprek toevoegn",
     "You seem to be uploading files, are you sure you want to quit?": "’t Ziet er noar uut da je bestandn an ’t iploadn zyt, zy je zeker da je wilt afsluutn?",
     "You seem to be in a call, are you sure you want to quit?": "’t Ziet er noar uut da je nog in gesprek zyt, zy je zeker da je wilt afsluutn?",
     "Search failed": "Zoekn mislukt",
@@ -401,7 +392,10 @@
         "profile": "Profiel",
         "display_name": "Weergavenoame",
         "user_avatar": "Profielfoto",
-        "authentication": "Authenticoasje"
+        "authentication": "Authenticoasje",
+        "rooms": "Gesprekkn",
+        "low_priority": "Leige prioriteit",
+        "historical": "Historisch"
     },
     "action": {
         "continue": "Verdergoan",
@@ -484,7 +478,8 @@
         "room_upgraded_link": "’t Gesprek goat hier verder.",
         "room_upgraded_notice": "Dit gesprek is vervangn gewist en is nie langer actief.",
         "no_perms_notice": "J’èt geen toestemmienge voor in dit gesprek te postn",
-        "poll_button_no_perms_title": "Toestemmienge vereist"
+        "poll_button_no_perms_title": "Toestemmienge vereist",
+        "replying_title": "An ’t beantwoordn"
     },
     "Code": "Code",
     "power_level": {
@@ -1063,7 +1058,8 @@
     },
     "room_list": {
         "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
-        "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt"
+        "failed_add_tag": "Toevoegn van %(tagName)s-label an gesprek is mislukt",
+        "add_room_label": "Gesprek toevoegn"
     },
     "room": {
         "drop_file_prompt": "Versleep ’t bestand noar hier vo ’t ip te loaden",
@@ -1081,7 +1077,11 @@
         "invite_this_room": "Uutnodign in dit gesprek",
         "header": {
             "forget_room_button": "Gesprek vergeetn"
-        }
+        },
+        "join_title_account": "Neemt deel an ’t gesprek met een account",
+        "join_button_account": "Registreern",
+        "kick_reason": "Reden: %(reason)s",
+        "forget_room": "Dit gesprek vergeetn"
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",

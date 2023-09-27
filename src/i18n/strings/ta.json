@@ -19,7 +19,6 @@
     "Today": "இன்று",
     "Yesterday": "நேற்று",
     "Thank you!": "உங்களுக்கு நன்றி",
-    "Rooms": "அறைகள்",
     "Server may be unavailable, overloaded, or you hit a bug.": "",
     "Sun": "ஞாயிறு",
     "Mon": "திங்கள்",
@@ -52,7 +51,8 @@
         "mute": "முடக்கு",
         "warning": "எச்சரிக்கை",
         "on": "மீது",
-        "off": "அமை"
+        "off": "அமை",
+        "rooms": "அறைகள்"
     },
     "action": {
         "continue": "தொடரவும்",

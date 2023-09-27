@@ -16,9 +16,7 @@
     "Failed to reject invite": "Échec du rejet de l’invitation",
     "Failed to reject invitation": "Échec du rejet de l’invitation",
     "An error has occurred.": "Une erreur est survenue.",
-    "Historical": "Historique",
     "Join Room": "Rejoindre le salon",
-    "Low priority": "Priorité basse",
     "Moderator": "Modérateur",
     "New passwords must match each other.": "Les nouveaux mots de passe doivent être identiques.",
     "not specified": "non spécifié",
@@ -30,7 +28,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Veuillez consulter vos e-mails et cliquer sur le lien que vous avez reçu. Puis cliquez sur continuer.",
     "Reject invitation": "Rejeter l’invitation",
     "Return to login screen": "Retourner à l’écran de connexion",
-    "Rooms": "Salons",
     "Search failed": "Échec de la recherche",
     "Server may be unavailable, overloaded, or search timed out :(": "Le serveur semble être inaccessible, surchargé ou la recherche a expiré :(",
     "Session ID": "Identifiant de session",
@@ -118,7 +115,6 @@
     "collapse": "réduire",
     "Send": "Envoyer",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Vous ne pourrez pas annuler cette modification car vous vous rétrogradez. Si vous êtes le dernier utilisateur privilégié de ce salon, il sera impossible de récupérer les privilèges.",
-    "Replying": "Répond",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "This room is not public. You will not be able to rejoin without an invite.": "Ce salon n’est pas public. Vous ne pourrez pas y revenir sans invitation.",
     "<a>In reply to</a> <pill>": "<a>En réponse à</a> <pill>",
@@ -316,10 +312,6 @@
     },
     "Cancel All": "Tout annuler",
     "Upload Error": "Erreur d’envoi",
-    "Join the conversation with an account": "Rejoindre la conversation avec un compte",
-    "Sign Up": "S’inscrire",
-    "Reason: %(reason)s": "Motif : %(reason)s",
-    "Forget this room": "Oublier ce salon",
     "Re-join": "Revenir",
     "You were banned from %(roomName)s by %(memberName)s": "Vous avez été banni de %(roomName)s par %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "Une erreur est survenue avec votre invitation à %(roomName)s",
@@ -339,7 +331,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "L’URL du serveur d’accueil ne semble pas être un serveur d’accueil Matrix valide",
     "Invalid base_url for m.identity_server": "base_url pour m.identity_server non valide",
     "Identity server URL does not appear to be a valid identity server": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
-    "Add room": "Ajouter un salon",
     "Edit message": "Modifier le message",
     "Upload all": "Tout envoyer",
     "Edited at %(date)s. Click to view edits.": "Modifié le %(date)s. Cliquer pour voir les modifications.",
@@ -912,7 +903,6 @@
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
     "Create a new room": "Créer un nouveau salon",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vous ne pourrez pas annuler ce changement puisque vous vous rétrogradez. Si vous êtes le dernier utilisateur a privilèges de cet espace, il deviendra impossible d’en reprendre contrôle.",
-    "Suggested Rooms": "Salons recommandés",
     "Your message was sent": "Votre message a été envoyé",
     "Leave space": "Quitter l’espace",
     "Create a space": "Créer un espace",
@@ -976,10 +966,6 @@
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Add reaction": "Ajouter une réaction",
-    "Currently joining %(count)s rooms": {
-        "one": "Vous êtes en train de rejoindre %(count)s salon",
-        "other": "Vous êtes en train de rejoindre %(count)s salons"
-    },
     "Or send invite link": "Ou envoyer le lien d’invitation",
     "Some suggestions may be hidden for privacy.": "Certaines suggestions pourraient être masquées pour votre confidentialité.",
     "Search for rooms or people": "Rechercher des salons ou des gens",
@@ -1015,7 +1001,6 @@
     "Unable to copy room link": "Impossible de copier le lien du salon",
     "Error downloading audio": "Erreur lors du téléchargement de l’audio",
     "Unnamed audio": "Audio sans nom",
-    "Add space": "Ajouter un espace",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Veuillez notez que la mise-à-jour va créer une nouvelle version de ce salon</b>. Tous les messages actuels resteront dans ce salon archivé.",
     "Automatically invite members from this room to the new one": "Inviter automatiquement les membres de ce salon dans le nouveau",
     "These are likely ones other room admins are a part of.": "Ces autres administrateurs du salon en font probablement partie.",
@@ -1046,7 +1031,6 @@
     "Results": "Résultats",
     "Some encryption parameters have been changed.": "Certains paramètres de chiffrement ont été changés.",
     "Role in <RoomName/>": "Rôle dans <RoomName/>",
-    "Message didn't send. Click for info.": "Le message n’a pas été envoyé. Cliquer pour plus d’info.",
     "To join a space you'll need an invite.": "Vous avez besoin d’une invitation pour rejoindre un espace.",
     "Would you like to leave the rooms in this space?": "Voulez-vous quitter les salons de cet espace ?",
     "You are about to leave <spaceName/>.": "Vous êtes sur le point de quitter <spaceName/>.",
@@ -1110,9 +1094,6 @@
     "Sorry, your vote was not registered. Please try again.": "Désolé, votre vote n’a pas été enregistré. Veuillez réessayer.",
     "Vote not registered": "Vote non enregistré",
     "Chat": "Conversation privée",
-    "Home options": "Options de l’accueil",
-    "%(spaceName)s menu": "Menu %(spaceName)s",
-    "Join public room": "Rejoindre le salon public",
     "Recently viewed": "Affiché récemment",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
@@ -1172,7 +1153,6 @@
     "Failed to remove user": "Échec de l’expulsion de l’utilisateur",
     "Remove them from specific things I'm able to": "Les expulser de certains endroits où j’ai le droit de le faire",
     "Remove them from everything I'm able to": "Les expulser de partout où j’ai le droit de le faire",
-    "You were removed from %(roomName)s by %(memberName)s": "Vous avez été expulsé(e) de %(roomName)s par %(memberName)s",
     "Remove from %(roomName)s": "Expulser de %(roomName)s",
     "Pick a date to jump to": "Choisissez vers quelle date aller",
     "Jump to date": "Aller à la date",
@@ -1210,10 +1190,6 @@
     },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Vous pouvez utiliser l’option de serveur personnalisé pour vous connecter à d'autres serveurs Matrix en spécifiant une URL de serveur d'accueil différente. Cela vous permet d’utiliser %(brand)s avec un compte Matrix existant sur un serveur d’accueil différent.",
     "%(displayName)s's live location": "Position en direct de %(displayName)s",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Actuellement en train de supprimer les messages dans %(count)s salon",
-        "other": "Actuellement en train de supprimer les messages dans %(count)s salons"
-    },
     "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
     "%(featureName)s Beta feedback": "Commentaires sur la bêta de %(featureName)s",
     "%(count)s participants": {
@@ -1232,9 +1208,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Une erreur (%(errcode)s) s’est produite en essayant de valider votre invitation. Vous pouvez essayer de transmettre cette information à la personne qui vous a invité(e).",
     "Something went wrong with your invite.": "Quelque chose s’est mal passé avec votre invitation.",
     "You were banned by %(memberName)s": "Vous avez été banni par %(memberName)s",
-    "Forget this space": "Oublier cet espace",
-    "You were removed by %(memberName)s": "Vous avez été retiré par %(memberName)s",
-    "Loading preview": "Chargement de l’aperçu",
     "View live location": "Voir la position en direct",
     "Ban from room": "Bannir du salon",
     "Unban from room": "Révoquer le bannissement du salon",
@@ -1264,10 +1237,6 @@
     "Disinvite from room": "Désinviter du salon",
     "Remove from space": "Supprimer de l’espace",
     "Disinvite from space": "Désinviter de l’espace",
-    "Seen by %(count)s people": {
-        "one": "Vu par %(count)s personne",
-        "other": "Vu par %(count)s personnes"
-    },
     "%(members)s and more": "%(members)s et plus",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Votre message n’a pas été envoyé car ce serveur d’accueil a été bloqué par son administrateur. Veuillez <a>contacter l’administrateur de votre service</a> pour continuer à l’utiliser.",
     "An error occurred while stopping your live location": "Une erreur s’est produite lors de l’arrêt de votre position en continu",
@@ -1283,8 +1252,6 @@
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
-    "Joining…": "En train de rejoindre…",
-    "Read receipts": "Accusés de réception",
     "Remove search filter for %(filter)s": "Supprimer le filtre de recherche pour %(filter)s",
     "Start a group chat": "Démarrer une conversation de groupe",
     "Other options": "Autres options",
@@ -1307,7 +1274,6 @@
     "Show spaces": "Afficher les espaces",
     "Show rooms": "Afficher les salons",
     "Explore public spaces in the new search dialog": "Explorer les espaces publics dans la nouvelle fenêtre de recherche",
-    "Join the room to participate": "Rejoindre le salon pour participer",
     "Stop and close": "Arrêter et fermer",
     "Online community members": "Membres de la communauté en ligne",
     "Coworkers and teams": "Collègues et équipes",
@@ -1385,9 +1351,6 @@
     "Checking…": "Vérification…",
     "Waiting for partner to confirm…": "Attente de la confirmation du partenaire…",
     "Adding…": "Ajout…",
-    "Rejecting invite…": "Rejet de l’invitation…",
-    "Joining room…": "Entrée dans le salon…",
-    "Joining space…": "Entrée dans l’espace…",
     "Encrypting your message…": "Chiffrement de votre message…",
     "Sending your message…": "Envoi de votre message…",
     "Starting export process…": "Démarrage du processus d’export…",
@@ -1438,7 +1401,6 @@
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Les messages ici sont chiffrés de bout en bout. Quand les gens viennent, vous pouvez les vérifier dans leur profil, tapez simplement sur leur image de profil.",
     "Note that removing room changes like this could undo the change.": "Notez bien que la suppression de modification du salon comme celui-ci peut annuler ce changement.",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Le fichier exporté permettra à tous ceux qui peuvent le lire de déchiffrer tous les messages chiffrés auxquels vous avez accès, vous devez donc être vigilant et le stocker dans un endroit sûr. Afin de protéger ce fichier, saisissez ci-dessous une phrase secrète unique qui sera utilisée uniquement pour chiffrer les données exportées. Seule l’utilisation de la même phrase secrète permettra de déchiffrer et importer les données.",
-    "Unable to find user by email": "Impossible de trouver un utilisateur avec son courriel",
     "Are you sure you wish to remove (delete) this event?": "Êtes-vous sûr de vouloir supprimer cet évènement ?",
     "Upgrade room": "Mettre à niveau le salon",
     "Great! This passphrase looks strong enough": "Super ! Cette phrase secrète a l’air assez robuste",
@@ -1563,7 +1525,10 @@
         "video_room": "Salon vidéo",
         "public_space": "Espace public",
         "private_space": "Espace privé",
-        "private_room": "Salon privé"
+        "private_room": "Salon privé",
+        "rooms": "Salons",
+        "low_priority": "Priorité basse",
+        "historical": "Historique"
     },
     "action": {
         "continue": "Continuer",
@@ -1898,7 +1863,8 @@
         "mode_rich_text": "Afficher le formatage",
         "formatting_toolbar_label": "Formatage",
         "format_italics": "Italique",
-        "format_insert_link": "Insérer un lien"
+        "format_insert_link": "Insérer un lien",
+        "replying_title": "Répond"
     },
     "Link": "Lien",
     "Code": "Code",
@@ -2943,7 +2909,12 @@
                 "other": "Afficher %(count)s autres aperçus"
             },
             "close": "Fermer l’aperçu"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Vu par %(count)s personne",
+            "other": "Vu par %(count)s personnes"
+        },
+        "read_receipts_label": "Accusés de réception"
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -3599,7 +3570,21 @@
         "failed_remove_tag": "Échec de la suppression de l’étiquette %(tagName)s du salon",
         "failed_add_tag": "Échec de l’ajout de l’étiquette %(tagName)s au salon",
         "breadcrumbs_label": "Salons visités récemment",
-        "breadcrumbs_empty": "Aucun salon visité récemment"
+        "breadcrumbs_empty": "Aucun salon visité récemment",
+        "add_room_label": "Ajouter un salon",
+        "suggested_rooms_heading": "Salons recommandés",
+        "add_space_label": "Ajouter un espace",
+        "join_public_room_label": "Rejoindre le salon public",
+        "joining_rooms_status": {
+            "one": "Vous êtes en train de rejoindre %(count)s salon",
+            "other": "Vous êtes en train de rejoindre %(count)s salons"
+        },
+        "redacting_messages_status": {
+            "one": "Actuellement en train de supprimer les messages dans %(count)s salon",
+            "other": "Actuellement en train de supprimer les messages dans %(count)s salons"
+        },
+        "space_menu_label": "Menu %(spaceName)s",
+        "home_menu_label": "Options de l’accueil"
     },
     "report_content": {
         "missing_reason": "Dites-nous pourquoi vous envoyez un signalement.",
@@ -4032,7 +4017,21 @@
             "show_widgets_button": "Afficher les widgets",
             "close_call_button": "Terminer l’appel",
             "video_room_view_chat_button": "Afficher la chronologie du chat"
-        }
+        },
+        "error_3pid_invite_email_lookup": "Impossible de trouver un utilisateur avec son courriel",
+        "joining_space": "Entrée dans l’espace…",
+        "joining_room": "Entrée dans le salon…",
+        "joining": "En train de rejoindre…",
+        "rejecting": "Rejet de l’invitation…",
+        "join_title": "Rejoindre le salon pour participer",
+        "join_title_account": "Rejoindre la conversation avec un compte",
+        "join_button_account": "S’inscrire",
+        "loading_preview": "Chargement de l’aperçu",
+        "kicked_from_room_by": "Vous avez été expulsé(e) de %(roomName)s par %(memberName)s",
+        "kicked_by": "Vous avez été retiré par %(memberName)s",
+        "kick_reason": "Motif : %(reason)s",
+        "forget_space": "Oublier cet espace",
+        "forget_room": "Oublier ce salon"
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
@@ -4191,7 +4190,8 @@
         "mentions_and_keywords": "@mentions et mots-clés",
         "mentions_and_keywords_description": "Recevoir des notifications uniquement pour les mentions et mot-clés comme défini dans vos <a>paramètres</a>",
         "mute_description": "Vous n’aurez aucune notification",
-        "email_pusher_app_display_name": "Notifications par courriel"
+        "email_pusher_app_display_name": "Notifications par courriel",
+        "message_didnt_send": "Le message n’a pas été envoyé. Cliquer pour plus d’info."
     },
     "mobile_guide": {
         "toast_title": "Utilisez une application pour une meilleure expérience",

@@ -74,8 +74,6 @@
     "Are you sure?": "Er du sikker?",
     "Admin Tools": "Adminverktøy",
     "Direct Messages": "Direktemeldinger",
-    "Rooms": "Rom",
-    "Sign Up": "Registrer deg",
     "All Rooms": "Alle rom",
     "Search…": "Søk …",
     "Download %(text)s": "Last ned %(text)s",
@@ -130,9 +128,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "Share room": "Del rommet",
-    "Low priority": "Lavprioritet",
-    "Historical": "Historisk",
-    "Forget this room": "Glem dette rommet",
     "Re-join": "Bli med igjen",
     "Join the discussion": "Bli med i diskusjonen",
     "<userName/> wants to chat": "<userName/> ønsker å chatte",
@@ -173,7 +168,6 @@
     "No backup found!": "Ingen sikkerhetskopier ble funnet!",
     "Country Dropdown": "Nedfallsmeny over land",
     "Email (optional)": "E-post (valgfritt)",
-    "Add room": "Legg til et rom",
     "Search failed": "Søket mislyktes",
     "No more results": "Ingen flere resultater",
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
@@ -189,7 +183,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
     "Share Link to User": "Del en lenke til brukeren",
-    "Replying": "Svarer på",
     "Start chatting": "Begynn å chatte",
     "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
     "Add some now": "Legg til noen nå",
@@ -242,7 +235,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "Reason: %(reason)s": "Årsak: %(reason)s",
     "You were banned from %(roomName)s by %(memberName)s": "Du ble bannlyst fra %(roomName)s av %(memberName)s",
     "Do you want to chat with %(user)s?": "Vil du prate med %(user)s?",
     "Do you want to join %(roomName)s?": "Vil du bli med i %(roomName)s?",
@@ -387,7 +379,6 @@
     "Invite to %(roomName)s": "Inviter til %(roomName)s",
     "Resume": "Fortsett",
     "Avatar": "Profilbilde",
-    "Suggested Rooms": "Foreslåtte rom",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmer"
@@ -731,7 +722,10 @@
         "user_avatar": "Profilbilde",
         "authentication": "Autentisering",
         "public_space": "Offentlig område",
-        "private_space": "Privat område"
+        "private_space": "Privat område",
+        "rooms": "Rom",
+        "low_priority": "Lavprioritet",
+        "historical": "Historisk"
     },
     "action": {
         "continue": "Fortsett",
@@ -892,7 +886,8 @@
         },
         "room_upgraded_link": "Samtalen fortsetter her.",
         "poll_button_no_perms_title": "Tillatelse kreves",
-        "format_italics": "Kursiv"
+        "format_italics": "Kursiv",
+        "replying_title": "Svarer på"
     },
     "Code": "Kode",
     "power_level": {
@@ -1563,7 +1558,9 @@
         "notification_options": "Varselsinnstillinger",
         "failed_remove_tag": "Kunne ikke fjerne tagg %(tagName)s fra rommet",
         "failed_add_tag": "Kunne ikke legge til tagg %(tagName)s til rom",
-        "breadcrumbs_label": "Nylig besøkte rom"
+        "breadcrumbs_label": "Nylig besøkte rom",
+        "add_room_label": "Legg til et rom",
+        "suggested_rooms_heading": "Foreslåtte rom"
     },
     "onboarding": {
         "has_avatar_label": "Flott, det vil hjelp folk å ha tillit til at det er deg",
@@ -1705,7 +1702,10 @@
             "forget_room_button": "Glem rommet",
             "hide_widgets_button": "Skjul moduler",
             "show_widgets_button": "Vis moduler"
-        }
+        },
+        "join_button_account": "Registrer deg",
+        "kick_reason": "Årsak: %(reason)s",
+        "forget_room": "Glem dette rommet"
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"

@@ -219,9 +219,6 @@
     "Sunday": "Dé Domhnaigh",
     "Search…": "Cuardaigh…",
     "Re-join": "Téigh ar ais isteach",
-    "Historical": "Stairiúil",
-    "Rooms": "Seomraí",
-    "Replying": "Ag freagairt",
     "%(duration)sd": "%(duration)sl",
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
@@ -329,7 +326,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "Rooms and spaces": "Seomraí agus spásanna",
-    "Low priority": "Tosaíocht íseal",
     "Share room": "Roinn seomra",
     "Join Room": "Téigh isteach an seomra",
     "(~%(count)s results)": {
@@ -416,7 +412,10 @@
         "profile": "Próifíl",
         "display_name": "Ainm Taispeána",
         "user_avatar": "Pictiúr próifíle",
-        "authentication": "Fíordheimhniú"
+        "authentication": "Fíordheimhniú",
+        "rooms": "Seomraí",
+        "low_priority": "Tosaíocht íseal",
+        "historical": "Stairiúil"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -529,7 +528,8 @@
             "user_description": "Úsáideoirí"
         },
         "poll_button_no_perms_title": "Is Teastáil Cead",
-        "format_italics": "Iodálach"
+        "format_italics": "Iodálach",
+        "replying_title": "Ag freagairt"
     },
     "Code": "Cód",
     "power_level": {

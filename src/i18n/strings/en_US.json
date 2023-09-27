@@ -22,11 +22,9 @@
     "Failed to mute user": "Failed to mute user",
     "Failed to reject invite": "Failed to reject invite",
     "Failed to reject invitation": "Failed to reject invitation",
-    "Historical": "Historical",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Join Room": "Join Room",
     "Jump to first unread message.": "Jump to first unread message.",
-    "Low priority": "Low priority",
     "Moderator": "Moderator",
     "New passwords must match each other.": "New passwords must match each other.",
     "not specified": "not specified",
@@ -34,7 +32,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "Reject invitation": "Reject invitation",
     "Return to login screen": "Return to login screen",
-    "Rooms": "Rooms",
     "Search failed": "Search failed",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Session ID": "Session ID",
@@ -153,7 +150,10 @@
         "off": "Off",
         "advanced": "Advanced",
         "profile": "Profile",
-        "authentication": "Authentication"
+        "authentication": "Authentication",
+        "rooms": "Rooms",
+        "low_priority": "Low priority",
+        "historical": "Historical"
     },
     "action": {
         "continue": "Continue",

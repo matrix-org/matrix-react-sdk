@@ -28,8 +28,6 @@
     "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
     "Are you sure?": "Siz əminsiniz?",
     "Join Room": "Otağa girmək",
-    "Low priority": "Əhəmiyyətsizlər",
-    "Historical": "Arxiv",
     "unknown error code": "naməlum səhv kodu",
     "Failed to forget room %(errCode)s": "Otağı unutmağı bacarmadı: %(errCode)s",
     "Sunday": "Bazar",
@@ -77,7 +75,9 @@
         "on": "Qoşmaq",
         "advanced": "Təfərrüatlar",
         "profile": "Profil",
-        "authentication": "Müəyyənləşdirilmə"
+        "authentication": "Müəyyənləşdirilmə",
+        "low_priority": "Əhəmiyyətsizlər",
+        "historical": "Arxiv"
     },
     "action": {
         "continue": "Davam etmək",

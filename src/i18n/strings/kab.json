@@ -41,7 +41,6 @@
     "Folder": "Akaram",
     "Show more": "Sken-d ugar",
     "Warning!": "Ɣur-k·m!",
-    "Sign Up": "Jerred",
     "Are you sure?": "Tebɣiḍ s tidet?",
     "Sunday": "Acer",
     "Monday": "Arim",
@@ -149,20 +148,16 @@
         "other": "d %(count)s wiyaḍ...",
         "one": "d wayeḍ-nniḍen..."
     },
-    "Replying": "Tiririt",
     "(~%(count)s results)": {
         "one": "(~%(count)s igmaḍ)",
         "other": "(~%(count)s igmaḍ)"
     },
     "Join Room": "Rnu ɣer texxamt",
-    "Rooms": "Timɣiwent",
-    "Join the conversation with an account": "Ttekki deg udiwenni s umiḍan",
     "Re-join": "Ales attekki",
     "Try to join anyway": "Ɣas akken ɛreḍ ad tettekkiḍ",
     "Join the discussion": "Ttekki deg udiwenni",
     "Start chatting": "Bdu adiwenni",
     "%(roomName)s is not accessible at this time.": "%(roomName)s ulac anekcum ɣer-s akka tura.",
-    "Add room": "Rnu taxxamt",
     "This Room": "Taxxamt-a",
     "Search…": "Nadi…",
     "Add some now": "Rnu kra tura",
@@ -280,7 +275,6 @@
     "Guitar": "Tagitaṛt",
     "Trumpet": "Lɣiḍa",
     "Bell": "Anayna",
-    "Forget this room": "Ttu taxxamt-a",
     "Reject & Ignore user": "Agi & Zgel aseqdac",
     "%(roomName)s does not exist.": "%(roomName)s ulac-it.",
     "All Rooms": "Akk tixxamin",
@@ -368,9 +362,6 @@
     "Unnamed room": "Taxxamt war isem",
     "Share room": "Bḍu taxxamt",
     "Create new room": "Rnu taxxamt tamaynut",
-    "Low priority": "Tazwart taddayt",
-    "Historical": "Amazray",
-    "Reason: %(reason)s": "Taɣzint: %(reason)s",
     "You were banned from %(roomName)s by %(memberName)s": "Tettwaɛezleḍ-d seg %(roomName)s sɣur %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "Yella wayen ur nteddu ara akken ilaq d tinubga-ik·im ɣer %(roomName)s",
     "unknown error code": "tangalt n tuccḍa tarussint",
@@ -910,7 +901,10 @@
         "profile": "Amaɣnu",
         "display_name": "Sken isem",
         "user_avatar": "Tugna n umaɣnu",
-        "authentication": "Asesteb"
+        "authentication": "Asesteb",
+        "rooms": "Timɣiwent",
+        "low_priority": "Tazwart taddayt",
+        "historical": "Amazray"
     },
     "action": {
         "continue": "Kemmel",
@@ -1083,7 +1077,8 @@
         "room_upgraded_notice": "Taxxamt-a ad tettusmelsi, dayen d tarurmidt.",
         "no_perms_notice": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
         "poll_button_no_perms_title": "Tasiregt tlaq",
-        "format_italics": "Uknan"
+        "format_italics": "Uknan",
+        "replying_title": "Tiririt"
     },
     "Code": "Tangalt",
     "power_level": {
@@ -1929,7 +1924,8 @@
         "notification_options": "Tixtiṛiyin n wulɣu",
         "failed_remove_tag": "Tukksa n tebzimt %(tagName)s seg texxamt ur yeddi ara",
         "failed_add_tag": "Timerna n tebzimt %(tagName)s ɣer texxamt ur yeddi ara",
-        "breadcrumbs_empty": "Ulac taxxamt yemmeẓren melmi kan"
+        "breadcrumbs_empty": "Ulac taxxamt yemmeẓren melmi kan",
+        "add_room_label": "Rnu taxxamt"
     },
     "report_content": {
         "missing_reason": "Ttxil-k·m ini-aɣ-d ayɣer i d-tettazneḍ alɣu.",
@@ -2088,7 +2084,11 @@
         "invite_this_room": "Nced-d ɣer texxamt-a",
         "header": {
             "forget_room_button": "Tettuḍ taxxamt"
-        }
+        },
+        "join_title_account": "Ttekki deg udiwenni s umiḍan",
+        "join_button_account": "Jerred",
+        "kick_reason": "Taɣzint: %(reason)s",
+        "forget_room": "Ttu taxxamt-a"
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",

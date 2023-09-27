@@ -14,12 +14,10 @@
     "Failed to mute user": "無法將使用者設為靜音",
     "Failed to reject invite": "無法拒絕邀請",
     "Failed to reject invitation": "無法拒絕邀請",
-    "Historical": "歷史",
     "Invalid file%(extra)s": "不存在的文件 %(extra)s",
     "Join Room": "加入聊天室",
     "Jump to first unread message.": "跳到第一則未讀訊息。",
     "Return to login screen": "返回到登入畫面",
-    "Rooms": "聊天室",
     "Search failed": "無法搜尋",
     "Server may be unavailable, overloaded, or search timed out :(": "伺服器可能無法使用、超載，或搜尋時間過長 :(",
     "Session ID": "工作階段 ID",
@@ -37,7 +35,6 @@
     "Custom level": "自訂等級",
     "Enter passphrase": "輸入安全密語",
     "Home": "首頁",
-    "Low priority": "低優先度",
     "Moderator": "版主",
     "New passwords must match each other.": "新密碼必須互相相符。",
     "not specified": "未指定",
@@ -111,7 +108,6 @@
     "%(duration)sm": "%(duration)s 分鐘",
     "%(duration)sh": "%(duration)s 小時",
     "%(duration)sd": "%(duration)s 天",
-    "Replying": "正在回覆",
     "Unnamed room": "未命名的聊天室",
     "Delete Widget": "刪除小工具",
     "collapse": "收折",
@@ -315,10 +311,6 @@
     },
     "Cancel All": "全部取消",
     "Upload Error": "上傳錯誤",
-    "Join the conversation with an account": "加入與某個帳號的對話",
-    "Sign Up": "註冊",
-    "Reason: %(reason)s": "理由：%(reason)s",
-    "Forget this room": "忘記此聊天室",
     "Re-join": "重新加入",
     "You were banned from %(roomName)s by %(memberName)s": "您已被 %(memberName)s 從 %(roomName)s 封鎖",
     "Something went wrong with your invite to %(roomName)s": "您的 %(roomName)s 邀請出了點問題",
@@ -334,7 +326,6 @@
     "edited": "已編輯",
     "Edit message": "編輯訊息",
     "Some characters not allowed": "不允許某些字元",
-    "Add room": "新增聊天室",
     "Failed to get autodiscovery configuration from server": "無法從伺服器取得自動探索設定",
     "Invalid base_url for m.homeserver": "無效的 m.homeserver base_url",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "家伺服器網址似乎不是有效的 Matrix 家伺服器",
@@ -913,7 +904,6 @@
     "Create a new room": "建立新聊天室",
     "Space selection": "選取聊天空間",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "如果您將自己降級，將無法撤銷此變更，而且如果您是空間中的最後一個特殊權限使用者，將無法再取得這類特殊權限。",
-    "Suggested Rooms": "建議的聊天室",
     "Your message was sent": "您的訊息已傳送",
     "Leave space": "離開聊天空間",
     "Create a space": "建立聊天空間",
@@ -976,10 +966,6 @@
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
     "Add reaction": "新增反應",
-    "Currently joining %(count)s rooms": {
-        "one": "目前正在加入 %(count)s 個聊天室",
-        "other": "目前正在加入 %(count)s 個聊天室"
-    },
     "Or send invite link": "或傳送邀請連結",
     "Some suggestions may be hidden for privacy.": "出於隱私考量，可能會隱藏一些建議。",
     "Search for rooms or people": "搜尋聊天室或夥伴",
@@ -1031,7 +1017,6 @@
     "Create a new space": "建立新聊天空間",
     "Want to add a new space instead?": "想要新增聊天空間？",
     "Add existing space": "新增既有的聊天空間",
-    "Add space": "新增聊天空間",
     "Leave %(spaceName)s": "離開 %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
@@ -1046,7 +1031,6 @@
     "Results": "結果",
     "Some encryption parameters have been changed.": "部份加密參數已變更。",
     "Role in <RoomName/>": "<RoomName/> 中的角色",
-    "Message didn't send. Click for info.": "訊息未傳送。點擊以取得更多資訊。",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "Would you like to leave the rooms in this space?": "您想要離開此聊天空間中的聊天室嗎？",
     "You are about to leave <spaceName/>.": "您將要離開 <spaceName/>。",
@@ -1119,9 +1103,6 @@
     "Messaging": "訊息傳遞",
     "Spaces you know that contain this space": "您知道的包含此聊天空間的聊天空間",
     "Chat": "聊天",
-    "Home options": "家選項",
-    "%(spaceName)s menu": "%(spaceName)s 選單",
-    "Join public room": "加入公開聊天室",
     "Recently viewed": "最近檢視過",
     "%(count)s votes cast. Vote to see the results": {
         "one": "已投 %(count)s 票。投票後即可檢視結果",
@@ -1171,7 +1152,6 @@
     "Remove them from specific things I'm able to": "從我有權限的特定地方移除",
     "Remove them from everything I'm able to": "從我有權限的所有地方移除",
     "Remove from %(roomName)s": "從 %(roomName)s 移除",
-    "You were removed from %(roomName)s by %(memberName)s": "您已被 %(memberName)s 從 %(roomName)s 中移除",
     "Message pending moderation": "待審核的訊息",
     "Message pending moderation: %(reason)s": "待審核的訊息：%(reason)s",
     "Pick a date to jump to": "挑選要跳至的日期",
@@ -1208,10 +1188,6 @@
         "other": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？"
     },
     "%(displayName)s's live location": "%(displayName)s 的即時位置",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "目前正在移除 %(count)s 個聊天室中的訊息",
-        "other": "目前正在移除 %(count)s 個聊天室中的訊息"
-    },
     "Unsent": "未傳送",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "嘗試存取聊天室或聊天空間時發生錯誤 %(errcode)s。若您認為到這個訊息是個錯誤，請<issueLink>遞交錯誤回報</issueLink>。",
@@ -1226,9 +1202,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "嘗試驗證您的邀請時發生錯誤 (%(errcode)s)。您可以嘗試傳遞此資訊給邀請您的人。",
     "Something went wrong with your invite.": "您的邀請出了點問題。",
     "You were banned by %(memberName)s": "您已被 %(memberName)s 封鎖",
-    "Forget this space": "忘記此聊天空間",
-    "You were removed by %(memberName)s": "您已被 %(memberName)s 移除",
-    "Loading preview": "正在載入預覽",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "%(featureName)s Beta feedback": "%(featureName)s Beta 測試回饋",
     "%(count)s participants": {
@@ -1264,10 +1237,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "您已登出所有裝置，並將不再收到推送通知。要重新啟用通知，請在每台裝置上重新登入。",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "若您想在加密聊天室中保留對聊天紀錄的存取權限，請設定金鑰備份或從您的其他裝置之一匯出您的訊息金鑰，然後再繼續。",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "登出您的裝置將會刪除儲存在其上的訊息加密金鑰，讓加密的聊天紀錄變為無法讀取。",
-    "Seen by %(count)s people": {
-        "one": "已被 %(count)s 個人看過",
-        "other": "已被 %(count)s 個人看過"
-    },
     "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
@@ -1283,8 +1252,6 @@
     "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
     "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
     "Unread email icon": "未讀電子郵件圖示",
-    "Joining…": "正在加入…",
-    "Read receipts": "讀取回條",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
     "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
     "Start a group chat": "開始群組聊天",
@@ -1307,7 +1274,6 @@
     "Show spaces": "顯示聊天空間",
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
-    "Join the room to participate": "加入聊天室以參與",
     "Stop and close": "停止並關閉",
     "Online community members": "線上社群成員",
     "Coworkers and teams": "同事與團隊",
@@ -1385,9 +1351,6 @@
     "Checking…": "正在檢查…",
     "Waiting for partner to confirm…": "正在等待夥伴確認…",
     "Adding…": "正在新增…",
-    "Rejecting invite…": "正在回絕邀請…",
-    "Joining room…": "正在加入聊天室…",
-    "Joining space…": "正在加入聊天空間…",
     "Encrypting your message…": "正在加密您的訊息…",
     "Sending your message…": "正在傳送您的訊息…",
     "Starting export process…": "正在開始匯出流程…",
@@ -1437,7 +1400,6 @@
     "Upgrade room": "升級聊天室",
     "Great! This passphrase looks strong enough": "很好！此密碼看起來夠強",
     "Note that removing room changes like this could undo the change.": "請注意，像這樣移除聊天是變更可能會還原變更。",
-    "Unable to find user by email": "無法透過電子郵件找到使用者",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "此處的訊息為端到端加密。請在其個人檔案中驗證 %(displayName)s - 點擊其個人檔案圖片。",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "此聊天室中的訊息為端到端加密。當人們加入時，您可以在他們的個人檔案中驗證他們，點擊他們的個人檔案就可以了。",
     "Are you sure you wish to remove (delete) this event?": "您真的想要移除（刪除）此活動嗎？",
@@ -1563,7 +1525,10 @@
         "video_room": "視訊聊天室",
         "public_space": "公開聊天空間",
         "private_space": "私密聊天空間",
-        "private_room": "私密聊天室"
+        "private_room": "私密聊天室",
+        "rooms": "聊天室",
+        "low_priority": "低優先度",
+        "historical": "歷史"
     },
     "action": {
         "continue": "繼續",
@@ -1898,7 +1863,8 @@
         "mode_rich_text": "顯示格式",
         "formatting_toolbar_label": "格式化",
         "format_italics": "斜體",
-        "format_insert_link": "插入連結"
+        "format_insert_link": "插入連結",
+        "replying_title": "正在回覆"
     },
     "Link": "連結",
     "Code": "代碼",
@@ -2943,7 +2909,12 @@
                 "other": "顯示 %(count)s 個其他預覽"
             },
             "close": "關閉預覽"
-        }
+        },
+        "read_receipt_title": {
+            "one": "已被 %(count)s 個人看過",
+            "other": "已被 %(count)s 個人看過"
+        },
+        "read_receipts_label": "讀取回條"
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3599,7 +3570,21 @@
         "failed_remove_tag": "無法從聊天室移除標籤 %(tagName)s",
         "failed_add_tag": "無法新增標籤 %(tagName)s 到聊天室",
         "breadcrumbs_label": "最近造訪過的聊天室",
-        "breadcrumbs_empty": "沒有最近造訪過的聊天室"
+        "breadcrumbs_empty": "沒有最近造訪過的聊天室",
+        "add_room_label": "新增聊天室",
+        "suggested_rooms_heading": "建議的聊天室",
+        "add_space_label": "新增聊天空間",
+        "join_public_room_label": "加入公開聊天室",
+        "joining_rooms_status": {
+            "one": "目前正在加入 %(count)s 個聊天室",
+            "other": "目前正在加入 %(count)s 個聊天室"
+        },
+        "redacting_messages_status": {
+            "one": "目前正在移除 %(count)s 個聊天室中的訊息",
+            "other": "目前正在移除 %(count)s 個聊天室中的訊息"
+        },
+        "space_menu_label": "%(spaceName)s 選單",
+        "home_menu_label": "家選項"
     },
     "report_content": {
         "missing_reason": "請填寫為什麼您要回報。",
@@ -4032,7 +4017,21 @@
             "show_widgets_button": "顯示小工具",
             "close_call_button": "關閉通話",
             "video_room_view_chat_button": "檢視聊天時間軸"
-        }
+        },
+        "error_3pid_invite_email_lookup": "無法透過電子郵件找到使用者",
+        "joining_space": "正在加入聊天空間…",
+        "joining_room": "正在加入聊天室…",
+        "joining": "正在加入…",
+        "rejecting": "正在回絕邀請…",
+        "join_title": "加入聊天室以參與",
+        "join_title_account": "加入與某個帳號的對話",
+        "join_button_account": "註冊",
+        "loading_preview": "正在載入預覽",
+        "kicked_from_room_by": "您已被 %(memberName)s 從 %(roomName)s 中移除",
+        "kicked_by": "您已被 %(memberName)s 移除",
+        "kick_reason": "理由：%(reason)s",
+        "forget_space": "忘記此聊天空間",
+        "forget_room": "忘記此聊天室"
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",
@@ -4191,7 +4190,8 @@
         "mentions_and_keywords": "@提及與關鍵字",
         "mentions_and_keywords_description": "僅在提及您與您在<a>設定</a>中列出的關鍵字時收到通知",
         "mute_description": "不會收到任何通知",
-        "email_pusher_app_display_name": "電子郵件通知"
+        "email_pusher_app_display_name": "電子郵件通知",
+        "message_didnt_send": "訊息未傳送。點擊以取得更多資訊。"
     },
     "mobile_guide": {
         "toast_title": "使用應用程式以取得更好的體驗",

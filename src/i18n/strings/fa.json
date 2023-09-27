@@ -646,22 +646,12 @@
     "Something went wrong with your invite to %(roomName)s": "در دعوت شما به %(roomName)s مشکلی پیش آمده است",
     "You were banned from %(roomName)s by %(memberName)s": "شما از %(roomName)s توسط %(memberName)s محروم شدید",
     "Re-join": "دوباره بپیوندید",
-    "Forget this room": "فراموش کردن این اتاق",
-    "Reason: %(reason)s": "دلیل: %(reason)s",
-    "Sign Up": "ثبت نام",
-    "Join the conversation with an account": "پیوستن به گفتگو با یک حساب کاربری",
-    "Suggested Rooms": "اتاق‌های پیشنهادی",
-    "Historical": "تاریخی",
-    "Low priority": "اولویت کم",
-    "Add room": "افزودن اتاق",
-    "Rooms": "اتاق‌ها",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
     "Join Room": "به اتاق بپیوندید",
     "(~%(count)s results)": {
         "one": "(~%(count)s نتیجه)",
         "other": "(~%(count)s نتیجه)"
     },
-    "Replying": "پاسخ دادن",
     "%(duration)sd": "%(duration)s روز",
     "%(duration)sh": "%(duration)s ساعت",
     "%(duration)sm": "%(duration)s دقیقه",
@@ -1072,7 +1062,10 @@
         "user_avatar": "تصویر پروفایل",
         "authentication": "احراز هویت",
         "public_space": "محیط عمومی",
-        "private_space": "محیط خصوصی"
+        "private_space": "محیط خصوصی",
+        "rooms": "اتاق‌ها",
+        "low_priority": "اولویت کم",
+        "historical": "تاریخی"
     },
     "action": {
         "continue": "ادامه",
@@ -1303,7 +1296,8 @@
         "no_perms_notice": "شما اجازه ارسال در این اتاق را ندارید",
         "close_sticker_picker": "پنهان سازی استیکرها",
         "poll_button_no_perms_title": "اجازه نیاز است",
-        "format_italics": "مورب"
+        "format_italics": "مورب",
+        "replying_title": "پاسخ دادن"
     },
     "Code": "کد",
     "power_level": {
@@ -2362,7 +2356,9 @@
         "failed_remove_tag": "خطا در حذف کلیدواژه‌ی %(tagName)s از گپ",
         "failed_add_tag": "در افزودن تگ %(tagName)s موفقیت‌آمیز نبود",
         "breadcrumbs_label": "اتاق‌هایی که به تازگی بازدید کرده‌اید",
-        "breadcrumbs_empty": "اخیراً از اتاقی بازدید نشده است"
+        "breadcrumbs_empty": "اخیراً از اتاقی بازدید نشده است",
+        "add_room_label": "افزودن اتاق",
+        "suggested_rooms_heading": "اتاق‌های پیشنهادی"
     },
     "report_content": {
         "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
@@ -2700,7 +2696,11 @@
             "forget_room_button": "فراموش کردن اتاق",
             "hide_widgets_button": "پنهان‌کردن ابزارک‌ها",
             "show_widgets_button": "نمایش ابزارک‌ها"
-        }
+        },
+        "join_title_account": "پیوستن به گفتگو با یک حساب کاربری",
+        "join_button_account": "ثبت نام",
+        "kick_reason": "دلیل: %(reason)s",
+        "forget_room": "فراموش کردن این اتاق"
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",

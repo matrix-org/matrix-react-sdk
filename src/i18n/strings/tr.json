@@ -22,12 +22,10 @@
     "Failed to mute user": "Kullanıcıyı sessize almak başarısız oldu",
     "Failed to reject invite": "Daveti reddetme başarısız oldu",
     "Failed to reject invitation": "Davetiyeyi reddetme başarısız oldu",
-    "Historical": "Tarihi",
     "Home": "Ev",
     "Invalid file%(extra)s": "Geçersiz dosya %(extra)s'ı",
     "Join Room": "Odaya Katıl",
     "Jump to first unread message.": "İlk okunmamış iletiye atla.",
-    "Low priority": "Düşük öncelikli",
     "Moderator": "Moderatör",
     "New passwords must match each other.": "Yeni şifreler birbirleriyle eşleşmelidir.",
     "not specified": "Belirtilmemiş",
@@ -37,7 +35,6 @@
     "Return to login screen": "Giriş ekranına dön",
     "%(roomName)s does not exist.": "%(roomName)s mevcut değil.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s şu anda erişilebilir değil.",
-    "Rooms": "Odalar",
     "Search failed": "Arama başarısız",
     "Server may be unavailable, overloaded, or search timed out :(": "Sunucu kullanılamıyor , aşırı yüklenmiş veya arama zaman aşımına uğramış olabilir :(",
     "Session ID": "Oturum ID",
@@ -177,7 +174,6 @@
     "Email (optional)": "E-posta (opsiyonel)",
     "Couldn't load page": "Sayfa yüklenemiyor",
     "Verification Request": "Doğrulama Talebi",
-    "Add room": "Oda ekle",
     "Could not load user profile": "Kullanıcı profili yüklenemedi",
     "Your password has been reset.": "Parolanız sıfırlandı.",
     "General failure": "Genel başarısızlık",
@@ -262,12 +258,7 @@
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
-    "Replying": "Cevap yazıyor",
     "Share room": "Oda paylaş",
-    "Join the conversation with an account": "Konuşmaya bir hesapla katıl",
-    "Sign Up": "Kayıt Ol",
-    "Reason: %(reason)s": "Sebep: %(reason)s",
-    "Forget this room": "Bu odayı unut",
     "Re-join": "Yeniden katıl",
     "Join the discussion": "Tartışmaya katıl",
     "Do you want to chat with %(user)s?": "%(user)s ile sohbet etmek ister misin?",
@@ -751,7 +742,6 @@
     "Edit devices": "Cihazları düzenle",
     "We didn't find a microphone on your device. Please check your settings and try again.": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin.",
     "No microphone found": "Mikrofon bulunamadı",
-    "Suggested Rooms": "Önerilen Odalar",
     "View message": "Mesajı görüntüle",
     "Your message was sent": "Mesajınız gönderildi",
     "common": {
@@ -826,7 +816,10 @@
         "profile": "Profil",
         "display_name": "Ekran Adı",
         "user_avatar": "Profil resmi",
-        "authentication": "Doğrulama"
+        "authentication": "Doğrulama",
+        "rooms": "Odalar",
+        "low_priority": "Düşük öncelikli",
+        "historical": "Tarihi"
     },
     "action": {
         "continue": "Devam Et",
@@ -987,7 +980,8 @@
         "room_upgraded_notice": "Bu oda değiştirildi ve artık aktif değil.",
         "no_perms_notice": "Bu odaya göndermeye izniniz yok",
         "poll_button_no_perms_title": "İzin Gerekli",
-        "format_italics": "Eğik"
+        "format_italics": "Eğik",
+        "replying_title": "Cevap yazıyor"
     },
     "Code": "Kod",
     "power_level": {
@@ -1897,7 +1891,9 @@
         "failed_remove_tag": "Odadan %(tagName)s etiketi kaldırılamadı",
         "failed_add_tag": "%(tagName)s etiketi odaya eklenemedi",
         "breadcrumbs_label": "En son ziyaret edilmiş odalar",
-        "breadcrumbs_empty": "Yakında ziyaret edilen oda yok"
+        "breadcrumbs_empty": "Yakında ziyaret edilen oda yok",
+        "add_room_label": "Oda ekle",
+        "suggested_rooms_heading": "Önerilen Odalar"
     },
     "report_content": {
         "missing_reason": "Lütfen neden raporlama yaptığınızı belirtin.",
@@ -2110,7 +2106,11 @@
             "forget_room_button": "Odayı Unut",
             "hide_widgets_button": "Widgetları gizle",
             "show_widgets_button": "Widgetları Göster"
-        }
+        },
+        "join_title_account": "Konuşmaya bir hesapla katıl",
+        "join_button_account": "Kayıt Ol",
+        "kick_reason": "Sebep: %(reason)s",
+        "forget_room": "Bu odayı unut"
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",

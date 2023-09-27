@@ -49,7 +49,6 @@
     "Invalid file%(extra)s": "Nieprawidłowy plik %(extra)s",
     "Join Room": "Dołącz do pokoju",
     "Jump to first unread message.": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
-    "Low priority": "Niski priorytet",
     "Moderator": "Moderator",
     "New passwords must match each other.": "Nowe hasła muszą się zgadzać.",
     "not specified": "nieokreślony",
@@ -59,10 +58,8 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
     "Reject invitation": "Odrzuć zaproszenie",
     "Return to login screen": "Wróć do ekranu logowania",
-    "Historical": "Historyczne",
     "%(roomName)s does not exist.": "%(roomName)s nie istnieje.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s nie jest dostępny w tym momencie.",
-    "Rooms": "Pokoje",
     "Search failed": "Wyszukiwanie nie powiodło się",
     "Server may be unavailable, overloaded, or search timed out :(": "Serwer może być niedostępny, przeciążony, lub upłynął czas wyszukiwania :(",
     "Session ID": "Identyfikator sesji",
@@ -138,7 +135,6 @@
     "<a>In reply to</a> <pill>": "<a>W odpowiedzi do</a> <pill>",
     "Jump to read receipt": "Przeskocz do potwierdzenia odczytu",
     "Share Link to User": "Udostępnij link użytkownika",
-    "Replying": "Odpowiadanie",
     "Share room": "Udostępnij pokój",
     "Clear Storage and Sign Out": "Wyczyść pamięć i wyloguj się",
     "Send Logs": "Wyślij dzienniki",
@@ -225,8 +221,6 @@
     "Anchor": "Kotwica",
     "Headphones": "Słuchawki",
     "Folder": "Folder",
-    "Join the conversation with an account": "Przyłącz się do rozmowy przy użyciu konta",
-    "Sign Up": "Zarejestruj się",
     "Join the discussion": "Dołącz do dyskusji",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)s nie może być wyświetlony. Chcesz do niego dołączyć?",
     "Main address": "Główny adres",
@@ -250,7 +244,6 @@
     "Back up your keys before signing out to avoid losing them.": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
     "Deactivate account": "Dezaktywuj konto",
-    "Add room": "Dodaj pokój",
     "Try to join anyway": "Spróbuj dołączyć mimo tego",
     "This invite to %(roomName)s was sent to %(email)s which is not associated with your account": "To zaproszenie do %(roomName)s zostało wysłane na adres %(email)s, który nie jest przypisany do Twojego konta",
     "Link this email with your account in Settings to receive invites directly in %(brand)s.": "Połącz ten adres e-mail z Twoim kontem w Ustawieniach, aby otrzymywać zaproszenia bezpośrednio w %(brand)s.",
@@ -300,7 +293,6 @@
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Reason: %(reason)s": "Powód: %(reason)s",
     "Reject & Ignore user": "Odrzuć i zignoruj użytkownika",
     "Show image": "Pokaż obraz",
     "Upload completed": "Przesyłanie zakończone",
@@ -332,7 +324,6 @@
     "Messages in this room are end-to-end encrypted.": "Wiadomości w tym pokoju są szyfrowane end-to-end.",
     "Sign in with SSO": "Zaloguj się z SSO",
     "Add widgets, bridges & bots": "Dodaj widżety, mostki i boty",
-    "Forget this room": "Zapomnij o tym pokoju",
     "No other published addresses yet, add one below": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
     "Other published addresses:": "Inne opublikowane adresy:",
     "Room settings": "Ustawienia pokoju",
@@ -734,11 +725,6 @@
     "Send voice message": "Wyślij wiadomość głosową",
     "Unpin this widget to view it in this panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
     "Location": "Lokalizacja",
-    "Join public room": "Dołącz do publicznego pokoju",
-    "Seen by %(count)s people": {
-        "one": "Odczytane przez %(count)s osobę",
-        "other": "Odczytane przez %(count)s osób"
-    },
     "Export chat": "Eksportuj czat",
     "Files": "Pliki",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
@@ -783,7 +769,6 @@
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "Failed to re-authenticate due to a homeserver problem": "Nie udało się uwierzytelnić ponownie z powodu błędu serwera domowego",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
-    "Home options": "Opcje głównej",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
     "Sign out of all devices": "Wyloguj się z wszystkich urządzeń",
     "%(count)s participants": {
@@ -825,29 +810,8 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Wystąpił błąd (%(errcode)s) podczas próby weryfikacji zaproszenia. Spróbuj skontaktować się z osobą, od której otrzymano zaproszenie.",
     "Something went wrong with your invite.": "Coś poszło nie tak z Twoim zaproszeniem.",
     "You were banned by %(memberName)s": "Zostałeś zbanowany przez %(memberName)s",
-    "Forget this space": "Zapomnij tą przestrzeń",
-    "You were removed by %(memberName)s": "Zostałeś usunięty przez %(memberName)s",
-    "You were removed from %(roomName)s by %(memberName)s": "Zostałeś usunięty z %(roomName)s przez %(memberName)s",
-    "Loading preview": "Wczytywanie podglądu",
-    "Join the room to participate": "Dołącz do pokoju, aby uczestniczyć",
-    "Rejecting invite…": "Odrzucanie zaproszenia…",
-    "Joining…": "Dołączanie…",
-    "Joining room…": "Dołączanie do pokoju…",
-    "Joining space…": "Dołączanie do przestrzeni…",
-    "%(spaceName)s menu": "menu %(spaceName)s",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Aktualnie usuwanie wiadomości z %(count)s pokoju",
-        "other": "Aktualnie usuwanie wiadomości z %(count)s pokoi"
-    },
-    "Currently joining %(count)s rooms": {
-        "one": "Aktualnie dołączanie do %(count)s pokoju",
-        "other": "Aktualnie dołączanie do %(count)s pokoi"
-    },
-    "Add space": "Dodaj przestrzeń",
-    "Suggested Rooms": "Sugerowane pokoje",
     "Saved Items": "Przedmioty zapisane",
     "Recently viewed": "Ostatnio wyświetlane",
-    "Read receipts": "Czytaj potwierdzenia",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
     "View message": "Wyświetl wiadomość",
@@ -901,7 +865,6 @@
     "Yours, or the other users' session": "Sesja Twoja lub innych użytkowników",
     "Yours, or the other users' internet connection": "Połączenie internetowe Twoje lub innych użytkowników",
     "The homeserver the user you're verifying is connected to": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
-    "Message didn't send. Click for info.": "Nie wysłano wiadomości. Kliknij po więcej informacji.",
     "You cancelled": "Anulowałeś",
     "You accepted": "Zaakceptowałeś",
     "%(name)s accepted": "%(name)s zaakceptował",
@@ -1437,7 +1400,6 @@
     "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
     "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
     "Other spaces you know": "Inne przestrzenie, które znasz",
-    "Unable to find user by email": "Nie udało się znaleźć użytkownika za pomocą e-maila",
     "Great! This passphrase looks strong enough": "Świetnie! To hasło wygląda na wystarczająco silne",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Wiadomości tutaj są szyfrowane end-to-end. Aby zweryfikować profil %(displayName)s - kliknij na zdjęcie profilowe.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Wiadomości w tym pokoju są szyfrowane end-to-end. Możesz zweryfikować osoby, które dołączą klikając na ich zdjęcie profilowe.",
@@ -1554,7 +1516,10 @@
         "video_room": "Pokój wideo",
         "public_space": "Przestrzeń publiczna",
         "private_space": "Przestrzeń prywatna",
-        "private_room": "Pokój prywatny"
+        "private_room": "Pokój prywatny",
+        "rooms": "Pokoje",
+        "low_priority": "Niski priorytet",
+        "historical": "Historyczne"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1889,7 +1854,8 @@
         "mode_rich_text": "Pokaż formatowanie",
         "formatting_toolbar_label": "Formatowanie",
         "format_italics": "Kursywa",
-        "format_insert_link": "Wprowadź link"
+        "format_insert_link": "Wprowadź link",
+        "replying_title": "Odpowiadanie"
     },
     "Link": "Link",
     "Code": "Kod",
@@ -2930,7 +2896,12 @@
                 "other": "Pokaż %(count)s innych podglądów"
             },
             "close": "Zamknij podgląd"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Odczytane przez %(count)s osobę",
+            "other": "Odczytane przez %(count)s osób"
+        },
+        "read_receipts_label": "Czytaj potwierdzenia"
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -3585,7 +3556,21 @@
         "failed_remove_tag": "Nie udało się usunąć tagu %(tagName)s z pokoju",
         "failed_add_tag": "Nie można dodać tagu %(tagName)s do pokoju",
         "breadcrumbs_label": "Ostatnio odwiedzane pokoje",
-        "breadcrumbs_empty": "Brak ostatnio odwiedzonych pokojów"
+        "breadcrumbs_empty": "Brak ostatnio odwiedzonych pokojów",
+        "add_room_label": "Dodaj pokój",
+        "suggested_rooms_heading": "Sugerowane pokoje",
+        "add_space_label": "Dodaj przestrzeń",
+        "join_public_room_label": "Dołącz do publicznego pokoju",
+        "joining_rooms_status": {
+            "one": "Aktualnie dołączanie do %(count)s pokoju",
+            "other": "Aktualnie dołączanie do %(count)s pokoi"
+        },
+        "redacting_messages_status": {
+            "one": "Aktualnie usuwanie wiadomości z %(count)s pokoju",
+            "other": "Aktualnie usuwanie wiadomości z %(count)s pokoi"
+        },
+        "space_menu_label": "menu %(spaceName)s",
+        "home_menu_label": "Opcje głównej"
     },
     "report_content": {
         "missing_reason": "Wypełnij, dlaczego dokonujesz zgłoszenia.",
@@ -4016,7 +4001,21 @@
             "show_widgets_button": "Pokaż widżety",
             "close_call_button": "Zamknij połączenie",
             "video_room_view_chat_button": "Wyświetl oś czasu czatu"
-        }
+        },
+        "error_3pid_invite_email_lookup": "Nie udało się znaleźć użytkownika za pomocą e-maila",
+        "joining_space": "Dołączanie do przestrzeni…",
+        "joining_room": "Dołączanie do pokoju…",
+        "joining": "Dołączanie…",
+        "rejecting": "Odrzucanie zaproszenia…",
+        "join_title": "Dołącz do pokoju, aby uczestniczyć",
+        "join_title_account": "Przyłącz się do rozmowy przy użyciu konta",
+        "join_button_account": "Zarejestruj się",
+        "loading_preview": "Wczytywanie podglądu",
+        "kicked_from_room_by": "Zostałeś usunięty z %(roomName)s przez %(memberName)s",
+        "kicked_by": "Zostałeś usunięty przez %(memberName)s",
+        "kick_reason": "Powód: %(reason)s",
+        "forget_space": "Zapomnij tą przestrzeń",
+        "forget_room": "Zapomnij o tym pokoju"
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4173,7 +4172,8 @@
         "mentions_and_keywords": "@wzmianki & słowa kluczowe",
         "mentions_and_keywords_description": "Otrzymuj powiadomienia tylko z wzmiankami i słowami kluczowymi zgodnie z Twoimi <a>ustawieniami</a>",
         "mute_description": "Nie otrzymasz żadnych powiadomień",
-        "email_pusher_app_display_name": "Powiadomienia e-mail"
+        "email_pusher_app_display_name": "Powiadomienia e-mail",
+        "message_didnt_send": "Nie wysłano wiadomości. Kliknij po więcej informacji."
     },
     "mobile_guide": {
         "toast_title": "Użyj aplikacji by mieć lepsze doświadczenie",

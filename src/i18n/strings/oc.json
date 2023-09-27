@@ -2,10 +2,6 @@
     "Admin Tools": "Aisinas d’administrator",
     "Unnamed room": "Sala sens nom",
     "Share room": "Partejar la sala",
-    "Rooms": "Salas",
-    "Low priority": "Febla prioritat",
-    "Reason: %(reason)s": "Rason : %(reason)s",
-    "Forget this room": "Oblidar aquesta sala",
     "Do you want to chat with %(user)s?": "Volètz charrar amb %(user)s ?",
     "<userName/> wants to chat": "<userName/> vòl charrar",
     "Start chatting": "Començar de charrar",
@@ -60,8 +56,6 @@
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
     "Unencrypted": "Pas chifrat",
-    "Historical": "Istoric",
-    "Sign Up": "S’inscriure",
     "Demote": "Retrogradar",
     "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
@@ -130,7 +124,10 @@
         "general": "General",
         "profile": "Perfil",
         "display_name": "Nom d'afichatge",
-        "authentication": "Autentificacion"
+        "authentication": "Autentificacion",
+        "rooms": "Salas",
+        "low_priority": "Febla prioritat",
+        "historical": "Istoric"
     },
     "action": {
         "continue": "Contunhar",
@@ -400,7 +397,10 @@
             "favourite": "Favorit",
             "low_priority": "Prioritat bassa"
         },
-        "invite_this_room": "Convidar a aquesta sala"
+        "invite_this_room": "Convidar a aquesta sala",
+        "join_button_account": "S’inscriure",
+        "kick_reason": "Rason : %(reason)s",
+        "forget_room": "Oblidar aquesta sala"
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",

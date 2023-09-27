@@ -5,9 +5,7 @@
     "Email address": "Alamat email",
     "Download %(text)s": "Unduh %(text)s",
     "Failed to reject invitation": "Gagal menolak undangan",
-    "Low priority": "Prioritas rendah",
     "Return to login screen": "Kembali ke halaman masuk",
-    "Rooms": "Ruangan",
     "Search failed": "Pencarian gagal",
     "Session ID": "ID Sesi",
     "unknown error code": "kode kesalahan tidak diketahui",
@@ -319,7 +317,6 @@
     "%(duration)sh": "%(duration)sj",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)sd",
-    "Historical": "Riwayat",
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
     "Resume": "Lanjutkan",
@@ -394,7 +391,6 @@
     "Cat": "Kucing",
     "Dog": "Anjing",
     "Demote": "Turunkan",
-    "Replying": "Membalas",
     "Deactivate user?": "Nonaktifkan pengguna?",
     "Deactivate account": "Nonaktifkan akun",
     "Upload Error": "Kesalahan saat Mengunggah",
@@ -403,9 +399,6 @@
     "Upload files": "Unggah file",
     "Power level": "Tingkat daya",
     "Revoke invite": "Hapus undangan",
-    "Reason: %(reason)s": "Alasan: %(reason)s",
-    "Sign Up": "Daftar",
-    "Add room": "Tambahkan ruangan",
     "Edit message": "Edit pesan",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
@@ -540,12 +533,8 @@
     "You can only join it with a working invite.": "Anda hanya dapat bergabung dengan undangan yang dapat dipakai.",
     "Something went wrong with your invite to %(roomName)s": "Ada sesuatu yang salah dengan undangan Anda ke %(roomName)s",
     "You were banned from %(roomName)s by %(memberName)s": "Anda telah dicekal dari %(roomName)s oleh %(memberName)s",
-    "Forget this room": "Lupakan ruangan ini",
-    "Join the conversation with an account": "Bergabung obrolan dengan sebuah akun",
-    "Suggested Rooms": "Ruangan yang Disarankan",
     "Create new room": "Buat ruangan baru",
     "View message": "Tampilkan pesan",
-    "Message didn't send. Click for info.": "Pesan tidak terkirim. Klik untuk informasi.",
     "Send voice message": "Kirim sebuah pesan suara",
     "and %(count)s others...": {
         "one": "dan satu lainnya...",
@@ -815,10 +804,6 @@
     "Skip verification for now": "Lewatkan verifikasi untuk sementara",
     "Really reset verification keys?": "Benar-benar ingin mengatur ulang kunci-kunci verifikasi?",
     "Could not load user profile": "Tidak dapat memuat profil pengguna",
-    "Currently joining %(count)s rooms": {
-        "one": "Saat ini bergabung dengan %(count)s ruangan",
-        "other": "Saat ini bergabung dengan %(count)s ruangan"
-    },
     "Switch theme": "Ubah tema",
     "Uploading %(filename)s and %(count)s others": {
         "one": "Mengunggah %(filename)s dan %(count)s lainnya",
@@ -865,7 +850,6 @@
     "Failed to start livestream": "Gagal untuk memulai siaran langsung",
     "Copy link to thread": "Salin tautan ke utasan",
     "Thread options": "Opsi utasan",
-    "Add space": "Tambahkan space",
     "Forget": "Lupakan",
     "View in room": "Tampilkan di ruangan",
     "Resend %(unsentCount)s reaction(s)": "Kirim ulang %(unsentCount)s reaksi",
@@ -1119,9 +1103,6 @@
     "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "Jika Anda batalkan sekarang, Anda mungkin kehilangan pesan & data terenkripsi jika Anda kehilangan akses ke login Anda.",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
     "Chat": "Obrolan",
-    "Home options": "Opsi Beranda",
-    "%(spaceName)s menu": "Menu %(spaceName)s",
-    "Join public room": "Bergabung dengan ruangan publik",
     "Recently viewed": "Baru saja dilihat",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s suara. Vote untuk melihat hasilnya",
@@ -1167,7 +1148,6 @@
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "From a thread": "Dari sebuah utasan",
     "Remove from %(roomName)s": "Keluarkan dari %(roomName)s",
-    "You were removed from %(roomName)s by %(memberName)s": "Anda telah dikeluarkan dari %(roomName)s oleh %(memberName)s",
     "Remove from room": "Keluarkan dari ruangan",
     "Failed to remove user": "Gagal untuk mengeluarkan pengguna",
     "Remove them from specific things I'm able to": "Keluarkan dari hal-hal spesifik yang saya bisa",
@@ -1208,10 +1188,6 @@
         "one": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
         "other": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?"
     },
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Saat ini menghapus pesan-pesan di %(count)s ruangan",
-        "other": "Saat ini menghapus pesan-pesan di %(count)s ruangan"
-    },
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
     "Unsent": "Belum dikirim",
     "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s didapatkan saat mencoba mengakses ruangan atau space. Jika Anda pikir Anda melihat pesan ini secara tidak benar, silakan <issueLink>kirim sebuah laporan kutu</issueLink>.",
@@ -1226,9 +1202,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Sebuah kesalahan (%(errcode)s) telah diberikan saat mencoba untuk memvalidasikan undangan. Anda bisa saja dapat memberikan informasi ini ke orang yang mengundang Anda.",
     "Something went wrong with your invite.": "Terjadi kesalahan dengan undangan Anda.",
     "You were banned by %(memberName)s": "Anda telah dicekal oleh %(memberName)s",
-    "Forget this space": "Lupakan space ini",
-    "You were removed by %(memberName)s": "Anda telah dikeluarkan oleh %(memberName)s",
-    "Loading preview": "Memuat tampilan",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
         "one": "1 perserta",
@@ -1264,10 +1237,6 @@
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Anda telah dikeluarkan dari semua perangkat Anda dan tidak akan dapat notifikasi. Untuk mengaktifkan ulang notifikasi, masuk ulang pada setiap perangkat.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda, siapkan Cadangan Kunci atau ekspor kunci-kunci pesan Anda dari salah satu perangkat Anda yang lain sebelum melanjutkan.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Mengeluarkan perangkat Anda akan menghapus kunci enkripsi pesan pada perangkat, dan membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
-    "Seen by %(count)s people": {
-        "one": "Dilihat oleh %(count)s orang",
-        "other": "Dilihat oleh %(count)s orang"
-    },
     "An error occurred while stopping your live location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
     "%(members)s and %(last)s": "%(members)s dan %(last)s",
     "%(members)s and more": "%(members)s dan lainnya",
@@ -1283,8 +1252,6 @@
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Unread email icon": "Ikon email belum dibaca",
-    "Joining…": "Bergabung…",
-    "Read receipts": "Laporan dibaca",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
     "Remove search filter for %(filter)s": "Hapus saringan pencarian untuk %(filter)s",
     "Start a group chat": "Mulai sebuah grup obrolan",
@@ -1307,7 +1274,6 @@
     "Show spaces": "Tampilkan space",
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
-    "Join the room to participate": "Bergabung dengan ruangan ini untuk berpartisipasi",
     "Stop and close": "Berhenti dan tutup",
     "Online community members": "Anggota komunitas daring",
     "Coworkers and teams": "Teman kerja dan tim",
@@ -1384,9 +1350,6 @@
     "Checking…": "Memeriksa…",
     "Waiting for partner to confirm…": "Menunggu pengguna untuk konfirmasi…",
     "Adding…": "Menambahkan…",
-    "Rejecting invite…": "Menolak undangan…",
-    "Joining room…": "Bergabung dengan ruangan…",
-    "Joining space…": "Bergabung dengan space…",
     "Encrypting your message…": "Mengenkripsi pesan Anda…",
     "Sending your message…": "Mengirim pesan Anda…",
     "Starting export process…": "Memulai proses pengeksporan…",
@@ -1437,7 +1400,6 @@
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Pesan-pesan di sini dienkripsi secara ujung ke ujung. Verifikasi %(displayName)s di profilnya — ketuk pada profilnya.",
-    "Unable to find user by email": "Tidak dapat mencari pengguna dengan surel",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Pesan-pesan di ruangan ini dienkripsi secara ujung ke ujung. Ketika orang-orang bergabung, Anda dapat memverifikasi mereka di profil mereka dengan mengetuk pada foto profil mereka.",
     "Upgrade room": "Tingkatkan ruangan",
     "The exported file will allow anyone who can read it to decrypt any encrypted messages that you can see, so you should be careful to keep it secure. To help with this, you should enter a unique passphrase below, which will only be used to encrypt the exported data. It will only be possible to import the data by using the same passphrase.": "Berkas yang diekspor akan memungkinkan siapa saja yang dapat membacanya untuk mendekripsi semua pesan terenkripsi yang dapat Anda lihat, jadi Anda harus berhati-hati untuk menjaganya tetap aman. Untuk mengamankannya, Anda harus memasukkan frasa sandi di bawah ini, yang akan digunakan untuk mengenkripsi data yang diekspor. Impor data hanya dapat dilakukan dengan menggunakan frasa sandi yang sama.",
@@ -1563,7 +1525,10 @@
         "video_room": "Ruangan video",
         "public_space": "Space publik",
         "private_space": "Space pribadi",
-        "private_room": "Ruangan privat"
+        "private_room": "Ruangan privat",
+        "rooms": "Ruangan",
+        "low_priority": "Prioritas rendah",
+        "historical": "Riwayat"
     },
     "action": {
         "continue": "Lanjut",
@@ -1899,7 +1864,8 @@
         "mode_rich_text": "Tampilkan formatting",
         "formatting_toolbar_label": "Format",
         "format_italics": "Miring",
-        "format_insert_link": "Tambahkan tautan"
+        "format_insert_link": "Tambahkan tautan",
+        "replying_title": "Membalas"
     },
     "Link": "Tautan",
     "Code": "Kode",
@@ -2944,7 +2910,12 @@
                 "other": "Tampilkan %(count)s tampilan lainnya"
             },
             "close": "Tutup tampilan"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Dilihat oleh %(count)s orang",
+            "other": "Dilihat oleh %(count)s orang"
+        },
+        "read_receipts_label": "Laporan dibaca"
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -3606,7 +3577,21 @@
         "failed_remove_tag": "Gagal menghapus tanda %(tagName)s dari ruangan",
         "failed_add_tag": "Gagal menambahkan tag %(tagName)s ke ruangan",
         "breadcrumbs_label": "Ruangan yang baru saja dilihat",
-        "breadcrumbs_empty": "Tidak ada ruangan yang baru saja dilihat"
+        "breadcrumbs_empty": "Tidak ada ruangan yang baru saja dilihat",
+        "add_room_label": "Tambahkan ruangan",
+        "suggested_rooms_heading": "Ruangan yang Disarankan",
+        "add_space_label": "Tambahkan space",
+        "join_public_room_label": "Bergabung dengan ruangan publik",
+        "joining_rooms_status": {
+            "one": "Saat ini bergabung dengan %(count)s ruangan",
+            "other": "Saat ini bergabung dengan %(count)s ruangan"
+        },
+        "redacting_messages_status": {
+            "one": "Saat ini menghapus pesan-pesan di %(count)s ruangan",
+            "other": "Saat ini menghapus pesan-pesan di %(count)s ruangan"
+        },
+        "space_menu_label": "Menu %(spaceName)s",
+        "home_menu_label": "Opsi Beranda"
     },
     "report_content": {
         "missing_reason": "Mohon isi kenapa Anda melaporkan.",
@@ -4039,7 +4024,21 @@
             "show_widgets_button": "Tampilkan Widget",
             "close_call_button": "Tutup panggilan",
             "video_room_view_chat_button": "Tampilkan lini masa obrolan"
-        }
+        },
+        "error_3pid_invite_email_lookup": "Tidak dapat mencari pengguna dengan surel",
+        "joining_space": "Bergabung dengan space…",
+        "joining_room": "Bergabung dengan ruangan…",
+        "joining": "Bergabung…",
+        "rejecting": "Menolak undangan…",
+        "join_title": "Bergabung dengan ruangan ini untuk berpartisipasi",
+        "join_title_account": "Bergabung obrolan dengan sebuah akun",
+        "join_button_account": "Daftar",
+        "loading_preview": "Memuat tampilan",
+        "kicked_from_room_by": "Anda telah dikeluarkan dari %(roomName)s oleh %(memberName)s",
+        "kicked_by": "Anda telah dikeluarkan oleh %(memberName)s",
+        "kick_reason": "Alasan: %(reason)s",
+        "forget_space": "Lupakan space ini",
+        "forget_room": "Lupakan ruangan ini"
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4198,7 +4197,8 @@
         "mentions_and_keywords": "@sebutan & kata kunci",
         "mentions_and_keywords_description": "Dapatkan notifikasi hanya dengan sebutan dan kata kunci yang diatur di <a>pengaturan</a> Anda",
         "mute_description": "Anda tidak akan mendapatkan notifikasi apa pun",
-        "email_pusher_app_display_name": "Notifikasi Surel"
+        "email_pusher_app_display_name": "Notifikasi Surel",
+        "message_didnt_send": "Pesan tidak terkirim. Klik untuk informasi."
     },
     "mobile_guide": {
         "toast_title": "Gunakan aplikasi untuk pengalaman yang lebih baik",

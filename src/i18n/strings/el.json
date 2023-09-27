@@ -19,14 +19,11 @@
     "Failed to mute user": "Δεν ήταν δυνατή η σίγαση του χρήστη",
     "Failed to reject invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
     "Failed to reject invitation": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
-    "Historical": "Ιστορικό",
     "Jump to first unread message.": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα.",
-    "Low priority": "Χαμηλής προτεραιότητας",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "New passwords must match each other.": "Οι νέοι κωδικοί πρόσβασης πρέπει να ταιριάζουν.",
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
-    "Rooms": "Δωμάτια",
     "Search failed": "Η αναζήτηση απέτυχε",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Admin Tools": "Εργαλεία διαχειριστή",
@@ -387,7 +384,6 @@
         "other": "%(spaceName)s και άλλα %(count)s",
         "one": "%(spaceName)s και %(count)s άλλο"
     },
-    "Message didn't send. Click for info.": "Το μήνυμα δεν στάλθηκε. Κάντε κλικ για πληροφορίες.",
     "Send voice message": "Στείλτε φωνητικό μήνυμα",
     "Scroll to most recent messages": "Κύλιση στα πιο πρόσφατα μηνύματα",
     "Failed to send": "Αποτυχία αποστολής",
@@ -488,13 +484,6 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Λυπούμαστε, δεν μπορείτε να επεξεργαστείτε μια δημοσκόπηση μετά την ψηφοφορία.",
     "Can't edit poll": "Αδυναμία επεξεργασίας δημοσκόπησης",
     "You sent a verification request": "Στείλατε ένα αίτημα επαλήθευσης",
-    "Forget this room": "Ξεχάστε αυτό το δωμάτιο",
-    "Reason: %(reason)s": "Αιτία: %(reason)s",
-    "Sign Up": "Εγγραφή",
-    "Join the conversation with an account": "Συμμετοχή στη συζήτηση με λογιαριασμό",
-    "Add space": "Προσθήκη χώρου",
-    "Suggested Rooms": "Προτεινόμενα δωμάτια",
-    "Add room": "Προσθήκη δωματίου",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "View message": "Προβολή μηνύματος",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Η αυθεντικότητα αυτού του κρυπτογραφημένου μηνύματος δεν είναι εγγυημένη σε αυτήν τη συσκευή.",
@@ -546,18 +535,6 @@
     "Email (optional)": "Email (προαιρετικό)",
     "You were banned from %(roomName)s by %(memberName)s": "Έχετε αποκλειστεί από το %(roomName)s από τον %(memberName)s",
     "Re-join": "Επανασύνδεση",
-    "You were removed from %(roomName)s by %(memberName)s": "Αφαιρεθήκατε από το %(roomName)s από τον %(memberName)s",
-    "%(spaceName)s menu": "%(spaceName)s μενού",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Αυτήν τη στιγμή γίνεται κατάργηση μηνυμάτων σε %(count)s δωμάτιο",
-        "other": "Αυτήν τη στιγμή γίνεται κατάργηση μηνυμάτων σε %(count)s δωμάτια"
-    },
-    "Currently joining %(count)s rooms": {
-        "one": "Αυτήν τη στιγμή συμμετέχετε σε%(count)sδωμάτιο",
-        "other": "Αυτήν τη στιγμή συμμετέχετε σε %(count)s δωμάτια"
-    },
-    "Join public room": "Εγγραφείτε στο δημόσιο δωμάτιο",
-    "Replying": "Απαντώντας",
     "A connection error occurred while trying to contact the server.": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
     "Your area is experiencing difficulties connecting to the internet.": "Η περιοχή σας αντιμετωπίζει δυσκολίες σύνδεσης στο διαδίκτυο.",
     "The server has denied your request.": "Ο διακομιστής απέρριψε το αίτημά σας.",
@@ -983,7 +960,6 @@
     "Demote yourself?": "Υποβιβάστε τον εαυτό σας;",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Η αναβάθμιση αυτού του δωματίου θα τερματίσει το δωμάτιο και θα δημιουργήσει ένα αναβαθμισμένο δωμάτιο με το ίδιο όνομα.",
     "You can only join it with a working invite.": "Μπορείτε να συμμετάσχετε μόνο με ενεργή πρόσκληση.",
-    "Home options": "Επιλογές αρχικής",
     "Spanner": "Γερμανικό κλειδί",
     "Go to Settings": "Μετάβαση στις Ρυθμίσεις",
     "New Recovery Method": "Νέα Μέθοδος Ανάκτησης",
@@ -1171,9 +1147,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Επιστράφηκε ένα σφάλμα (%(errcode)s) κατά την προσπάθεια επικύρωσης της πρόσκλησής σας. Θα μπορούσατε να διαβιβάστε αυτή την πληροφορία στο άτομο που σας προσκάλεσε.",
     "Something went wrong with your invite.": "Κάτι πήγε στραβά με την πρόσκλησή σας.",
     "You were banned by %(memberName)s": "Αποκλειστήκατε από %(memberName)s",
-    "Forget this space": "Ξεχάστε αυτόν τον χώρο",
-    "You were removed by %(memberName)s": "Αφαιρεθήκατε από %(memberName)s",
-    "Loading preview": "Φόρτωση προεπισκόπησης",
     "Set up": "Εγκατάσταση",
     "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
@@ -1264,15 +1237,10 @@
         "one": "1 συμμετέχων",
         "other": "%(count)s συμμετέχοντες"
     },
-    "Joining…": "Συμμετοχή…",
     "Show Labs settings": "Εμφάνιση ρυθμίσεων Labs",
     "To join, please enable video rooms in Labs first": "Για να συμμετέχετε, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
     "To view, please enable video rooms in Labs first": "Για προβολή, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
     "To view %(roomName)s, you need an invite": "Για να δείτε το %(roomName)s, χρειάζεστε μια πρόσκληση",
-    "Seen by %(count)s people": {
-        "one": "Αναγνώστηκε από %(count)s άτομο",
-        "other": "Αναγνώστηκε από %(count)s άτομα"
-    },
     "common": {
         "about": "Σχετικά με",
         "analytics": "Αναλυτικά δεδομένα",
@@ -1370,7 +1338,10 @@
         "video_room": "Δωμάτια βίντεο",
         "public_space": "Δημόσιος χώρος",
         "private_space": "Ιδιωτικός χώρος",
-        "private_room": "Ιδιωτικό δωμάτιο"
+        "private_room": "Ιδιωτικό δωμάτιο",
+        "rooms": "Δωμάτια",
+        "low_priority": "Χαμηλής προτεραιότητας",
+        "historical": "Ιστορικό"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1638,7 +1609,8 @@
         "poll_button_no_perms_description": "Δεν έχετε άδεια να ξεκινήσετε ψηφοφορίες σε αυτήν την αίθουσα.",
         "poll_button": "Ψηφοφορία",
         "format_italics": "Πλάγια",
-        "format_insert_link": "Εισαγωγή συνδέσμου"
+        "format_insert_link": "Εισαγωγή συνδέσμου",
+        "replying_title": "Απαντώντας"
     },
     "Code": "Κωδικός",
     "power_level": {
@@ -2425,6 +2397,10 @@
                 "one": "Εμφάνιση%(count)s άλλων προεπισκοπήσεων"
             },
             "close": "Κλείσιμο προεπισκόπησης"
+        },
+        "read_receipt_title": {
+            "one": "Αναγνώστηκε από %(count)s άτομο",
+            "other": "Αναγνώστηκε από %(count)s άτομα"
         }
     },
     "slash_command": {
@@ -2994,7 +2970,21 @@
         "failed_remove_tag": "Δεν ήταν δυνατή η διαγραφή της ετικέτας %(tagName)s από το δωμάτιο",
         "failed_add_tag": "Δεν ήταν δυνατή η προσθήκη της ετικέτας %(tagName)s στο δωμάτιο",
         "breadcrumbs_label": "Δωμάτια που επισκεφτήκατε πρόσφατα",
-        "breadcrumbs_empty": "Δεν υπάρχουν δωμάτια που επισκεφτήκατε πρόσφατα"
+        "breadcrumbs_empty": "Δεν υπάρχουν δωμάτια που επισκεφτήκατε πρόσφατα",
+        "add_room_label": "Προσθήκη δωματίου",
+        "suggested_rooms_heading": "Προτεινόμενα δωμάτια",
+        "add_space_label": "Προσθήκη χώρου",
+        "join_public_room_label": "Εγγραφείτε στο δημόσιο δωμάτιο",
+        "joining_rooms_status": {
+            "one": "Αυτήν τη στιγμή συμμετέχετε σε%(count)sδωμάτιο",
+            "other": "Αυτήν τη στιγμή συμμετέχετε σε %(count)s δωμάτια"
+        },
+        "redacting_messages_status": {
+            "one": "Αυτήν τη στιγμή γίνεται κατάργηση μηνυμάτων σε %(count)s δωμάτιο",
+            "other": "Αυτήν τη στιγμή γίνεται κατάργηση μηνυμάτων σε %(count)s δωμάτια"
+        },
+        "space_menu_label": "%(spaceName)s μενού",
+        "home_menu_label": "Επιλογές αρχικής"
     },
     "report_content": {
         "missing_reason": "Παρακαλώ πείτε μας γιατί κάνετε αναφορά.",
@@ -3365,7 +3355,16 @@
             "forget_room_button": "Αγνόηση δωματίου",
             "hide_widgets_button": "Απόκρυψη μικροεφαρμογών",
             "show_widgets_button": "Εμφάνιση μικροεφαρμογών"
-        }
+        },
+        "joining": "Συμμετοχή…",
+        "join_title_account": "Συμμετοχή στη συζήτηση με λογιαριασμό",
+        "join_button_account": "Εγγραφή",
+        "loading_preview": "Φόρτωση προεπισκόπησης",
+        "kicked_from_room_by": "Αφαιρεθήκατε από το %(roomName)s από τον %(memberName)s",
+        "kicked_by": "Αφαιρεθήκατε από %(memberName)s",
+        "kick_reason": "Αιτία: %(reason)s",
+        "forget_space": "Ξεχάστε αυτόν τον χώρο",
+        "forget_room": "Ξεχάστε αυτό το δωμάτιο"
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
@@ -3491,7 +3490,8 @@
         "all_messages_description": "Λάβετε ειδοποιήσεις για κάθε μήνυμα",
         "mentions_and_keywords": "@αναφορές & λέξεις-κλειδιά",
         "mentions_and_keywords_description": "Λάβετε ειδοποιήσεις μόνο με αναφορές και λέξεις-κλειδιά όπως έχουν ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
-        "mute_description": "Δεν θα λαμβάνετε ειδοποιήσεις"
+        "mute_description": "Δεν θα λαμβάνετε ειδοποιήσεις",
+        "message_didnt_send": "Το μήνυμα δεν στάλθηκε. Κάντε κλικ για πληροφορίες."
     },
     "mobile_guide": {
         "toast_title": "Χρησιμοποιήστε την εφαρμογή για καλύτερη εμπειρία",

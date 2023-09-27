@@ -12,7 +12,6 @@
     "Unnamed room": "Kambarys be pavadinimo",
     "Saturday": "Šeštadienis",
     "Monday": "Pirmadienis",
-    "Rooms": "Kambariai",
     "Failed to forget room %(errCode)s": "Nepavyko pamiršti kambario %(errCode)s",
     "Wednesday": "Trečiadienis",
     "Send": "Siųsti",
@@ -122,7 +121,6 @@
     },
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "Historical": "Istoriniai",
     "Set up": "Nustatyti",
     "Preparing to send logs": "Ruošiamasi išsiųsti žurnalus",
     "Incompatible Database": "Nesuderinama duomenų bazė",
@@ -197,7 +195,6 @@
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
     "You'll lose access to your encrypted messages": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "Add room": "Sukurti kambarį",
     "This room is end-to-end encrypted": "Šis kambarys visapusiškai užšifruotas",
     "Messages in this room are end-to-end encrypted.": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
     "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
@@ -336,7 +333,6 @@
     "Reject invitation": "Atmesti pakvietimą",
     "You can only join it with a working invite.": "Jūs galite prisijungti tik su veikiančiu pakvietimu.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "Low priority": "Žemo prioriteto",
     "New published address (e.g. #alias:server)": "Naujas paskelbtas adresas (pvz.: #pavadinimas:server)",
     "Waiting for %(displayName)s to accept…": "Laukiama kol %(displayName)s sutiks…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
@@ -406,7 +402,6 @@
     "Join the discussion": "Prisijungti prie diskusijos",
     "Try to join anyway": "Vis tiek bandyti prisijungti",
     "Re-join": "Prisijungti iš naujo",
-    "Join the conversation with an account": "Prisijunkite prie pokalbio su paskyra",
     "Join Room": "Prisijungti prie kambario",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Jūs ignoravote šį vartotoją, todėl jo žinutė yra paslėpta. <a>Rodyti vistiek.</a>",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
@@ -430,7 +425,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)s atnaujino video konferenciją",
     "Video conference ended by %(senderName)s": "%(senderName)s užbaigė video konferenciją",
     "Backup version:": "Atsarginės kopijos versija:",
-    "Forget this room": "Pamiršti šį kambarį",
     "This homeserver would like to make sure you are not a robot.": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
@@ -476,7 +470,6 @@
     "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "Reason (optional)": "Priežastis (nebūtina)",
-    "Reason: %(reason)s": "Priežastis: %(reason)s",
     "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
     "Server Options": "Serverio Parinktys",
     "Your homeserver": "Jūsų serveris",
@@ -772,7 +765,6 @@
         "other": "%(count)s dalyviai"
     },
     "Joined": "Prisijungta",
-    "Joining…": "Prisijungiama…",
     "Show Labs settings": "Rodyti laboratorijų nustatymus",
     "To join, please enable video rooms in Labs first": "Norint prisijungti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
     "To view, please enable video rooms in Labs first": "Norint peržiūrėti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
@@ -813,41 +805,15 @@
     "Russia": "Rusija",
     "Poland": "Lenkija",
     "Lithuania": "Lietuva",
-    "Forget this space": "Pamiršti šią erdvę",
-    "You were removed by %(memberName)s": "Jus pašalino %(memberName)s",
-    "You were removed from %(roomName)s by %(memberName)s": "Jus iš %(roomName)s pašalino %(memberName)s",
-    "Loading preview": "Įkeliama peržiūra",
-    "Sign Up": "Registruotis",
-    "Join the room to participate": "Prisijunkite prie kambario ir dalyvaukite",
-    "Home options": "Pradžios parinktys",
-    "%(spaceName)s menu": "%(spaceName)s meniu",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Šiuo metu šalinamos žinutės iš %(count)s kambario",
-        "other": "Šiuo metu šalinamos žinutės iš %(count)s kambarių"
-    },
-    "Currently joining %(count)s rooms": {
-        "one": "Šiuo metu prisijungiama prie %(count)s kambario",
-        "other": "Šiuo metu prisijungiama prie %(count)s kambarių"
-    },
-    "Join public room": "Prisijungti prie viešo kambario",
-    "Add space": "Pridėti erdvę",
-    "Suggested Rooms": "Siūlomi kambariai",
     "Saved Items": "Išsaugoti daiktai",
     "%(count)s members": {
         "one": "%(count)s narys",
         "other": "%(count)s nariai"
     },
-    "Replying": "Atsakoma",
     "Recently viewed": "Neseniai peržiūrėti",
-    "Read receipts": "Skaitymo kvitai",
-    "Seen by %(count)s people": {
-        "one": "Matė %(count)s žmogus",
-        "other": "Matė %(count)s žmonės"
-    },
     "%(members)s and %(last)s": "%(members)s ir %(last)s",
     "%(members)s and more": "%(members)s ir daugiau",
     "View message": "Žiūrėti žinutę",
-    "Message didn't send. Click for info.": "Žinutė nebuvo išsiųsta. Spustelėkite norėdami gauti informacijos.",
     "Send voice message": "Siųsti balso žinutę",
     "Scroll to most recent messages": "Slinkite prie naujausių žinučių",
     "Failed to send": "Nepavyko išsiųsti",
@@ -952,7 +918,10 @@
         "video_room": "Vaizdo kambarys",
         "public_space": "Vieša erdvė",
         "private_space": "Privati erdvė",
-        "private_room": "Privatus kambarys"
+        "private_room": "Privatus kambarys",
+        "rooms": "Kambariai",
+        "low_priority": "Žemo prioriteto",
+        "historical": "Istoriniai"
     },
     "action": {
         "continue": "Tęsti",
@@ -1157,7 +1126,8 @@
         "poll_button_no_perms_description": "Jūs neturite leidimo pradėti apklausas šiame kambaryje.",
         "poll_button": "Apklausa",
         "format_italics": "Kursyvas",
-        "format_insert_link": "Įterpti nuorodą"
+        "format_insert_link": "Įterpti nuorodą",
+        "replying_title": "Atsakoma"
     },
     "Code": "Kodas",
     "power_level": {
@@ -1860,7 +1830,12 @@
                 "other": "Rodyti %(count)s kitas peržiūras"
             },
             "close": "Uždaryti peržiūrą"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Matė %(count)s žmogus",
+            "other": "Matė %(count)s žmonės"
+        },
+        "read_receipts_label": "Skaitymo kvitai"
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -2368,7 +2343,21 @@
         "notification_options": "Pranešimų parinktys",
         "failed_remove_tag": "Nepavyko pašalinti žymos %(tagName)s iš kambario",
         "breadcrumbs_label": "Neseniai lankyti kambariai",
-        "breadcrumbs_empty": "Nėra neseniai lankytų kambarių"
+        "breadcrumbs_empty": "Nėra neseniai lankytų kambarių",
+        "add_room_label": "Sukurti kambarį",
+        "suggested_rooms_heading": "Siūlomi kambariai",
+        "add_space_label": "Pridėti erdvę",
+        "join_public_room_label": "Prisijungti prie viešo kambario",
+        "joining_rooms_status": {
+            "one": "Šiuo metu prisijungiama prie %(count)s kambario",
+            "other": "Šiuo metu prisijungiama prie %(count)s kambarių"
+        },
+        "redacting_messages_status": {
+            "one": "Šiuo metu šalinamos žinutės iš %(count)s kambario",
+            "other": "Šiuo metu šalinamos žinutės iš %(count)s kambarių"
+        },
+        "space_menu_label": "%(spaceName)s meniu",
+        "home_menu_label": "Pradžios parinktys"
     },
     "report_content": {
         "missing_reason": "Įrašykite kodėl pranešate.",
@@ -2606,7 +2595,17 @@
             "forget_room_button": "Pamiršti kambarį",
             "hide_widgets_button": "Slėpti Valdiklius",
             "show_widgets_button": "Rodyti Valdiklius"
-        }
+        },
+        "joining": "Prisijungiama…",
+        "join_title": "Prisijunkite prie kambario ir dalyvaukite",
+        "join_title_account": "Prisijunkite prie pokalbio su paskyra",
+        "join_button_account": "Registruotis",
+        "loading_preview": "Įkeliama peržiūra",
+        "kicked_from_room_by": "Jus iš %(roomName)s pašalino %(memberName)s",
+        "kicked_by": "Jus pašalino %(memberName)s",
+        "kick_reason": "Priežastis: %(reason)s",
+        "forget_space": "Pamiršti šią erdvę",
+        "forget_room": "Pamiršti šį kambarį"
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2715,7 +2714,8 @@
         "all_messages_description": "Būkite pranešti apie kiekvieną žinutę",
         "mentions_and_keywords": "@paminėjimai & raktažodžiai",
         "mentions_and_keywords_description": "Gaukite pranešimus tik apie paminėjimus ir raktinius žodžius, kaip nustatyta jūsų <a>nustatymuose</a>",
-        "mute_description": "Negausite jokių pranešimų"
+        "mute_description": "Negausite jokių pranešimų",
+        "message_didnt_send": "Žinutė nebuvo išsiųsta. Spustelėkite norėdami gauti informacijos."
     },
     "mobile_guide": {
         "toast_title": "Naudokite programėlę geresnei patirčiai",

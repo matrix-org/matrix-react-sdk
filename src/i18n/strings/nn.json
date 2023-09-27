@@ -46,7 +46,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
     "%(duration)sd": "%(duration)sd",
-    "Replying": "Svarar",
     "Unnamed room": "Rom utan namn",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultat)",
@@ -54,9 +53,6 @@
     },
     "Join Room": "Bli med i rom",
     "Share room": "Del rom",
-    "Rooms": "Rom",
-    "Low priority": "Låg prioritet",
-    "Historical": "Historiske",
     "%(roomName)s does not exist.": "%(roomName)s eksisterar ikkje.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s er ikkje tilgjengeleg no.",
     "unknown error code": "ukjend feilkode",
@@ -162,7 +158,6 @@
     "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Denne meldingen vart ikkje send fordi heimetenaren har nådd grensa for tilgjengelege systemressursar. Kontakt <a>systemadministratoren</a> for å vidare nytta denne tenesta.",
-    "Add room": "Legg til rom",
     "Could not load user profile": "Klarde ikkje å laste brukarprofilen",
     "Your password has been reset.": "Passodet ditt vart nullstilt.",
     "Invalid homeserver discovery response": "Feil svar frå heimetenaren (discovery response)",
@@ -202,10 +197,6 @@
     "Failed to deactivate user": "Fekk ikkje til å deaktivere brukaren",
     "Remove recent messages": "Fjern nyare meldingar",
     "Direct Messages": "Folk",
-    "Join the conversation with an account": "Bli med i samtalen med ein konto",
-    "Sign Up": "Registrer deg",
-    "Reason: %(reason)s": "Grunn: %(reason)s",
-    "Forget this room": "Gløym dette rommet",
     "Re-join": "Bli med på nytt",
     "You were banned from %(roomName)s by %(memberName)s": "Du vart blokkert frå %(roomName)s av %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "Noko gjekk gale med invitasjonen din for %(roomName)s",
@@ -361,7 +352,10 @@
         "general": "Generelt",
         "profile": "Brukar",
         "display_name": "Visningsnamn",
-        "authentication": "Authentisering"
+        "authentication": "Authentisering",
+        "rooms": "Rom",
+        "low_priority": "Låg prioritet",
+        "historical": "Historiske"
     },
     "action": {
         "continue": "Fortset",
@@ -460,7 +454,8 @@
         "poll_button_no_perms_title": "Tillating er Naudsynt",
         "poll_button_no_perms_description": "Du har ikkje lov til å starte nye røystingar i dette rommet.",
         "poll_button": "Røysting",
-        "format_italics": "Kursiv"
+        "format_italics": "Kursiv",
+        "replying_title": "Svarar"
     },
     "Code": "Kode",
     "power_level": {
@@ -1083,7 +1078,8 @@
         "sublist_options": "Sjå alternativ",
         "show_less": "Vis mindre",
         "failed_remove_tag": "Fekk ikkje til å fjerna merket %(tagName)s frå rommet",
-        "failed_add_tag": "Fekk ikkje til å leggja merket %(tagName)s til i rommet"
+        "failed_add_tag": "Fekk ikkje til å leggja merket %(tagName)s til i rommet",
+        "add_room_label": "Legg til rom"
     },
     "a11y": {
         "n_unread_messages": {
@@ -1148,7 +1144,11 @@
         "invite_this_room": "Inviter til dette rommet",
         "header": {
             "forget_room_button": "Gløym rom"
-        }
+        },
+        "join_title_account": "Bli med i samtalen med ein konto",
+        "join_button_account": "Registrer deg",
+        "kick_reason": "Grunn: %(reason)s",
+        "forget_room": "Gløym dette rommet"
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",

@@ -123,7 +123,6 @@
     "Delete Widget": "Xóa Widget",
     "Failed to start livestream": "Không thể bắt đầu phát trực tiếp",
     "Unable to start audio streaming.": "Không thể bắt đầu phát trực tuyến âm thanh.",
-    "Add space": "Thêm space",
     "Resend %(unsentCount)s reaction(s)": "Gửi lại (các) phản ứng %(unsentCount)s",
     "Are you sure you want to reject the invitation?": "Bạn có chắc chắn muốn từ chối lời mời không?",
     "Reject invitation": "Từ chối lời mời",
@@ -637,29 +636,18 @@
     "Something went wrong with your invite to %(roomName)s": "Đã xảy ra sự cố với lời mời của bạn vào %(roomName)s",
     "You were banned from %(roomName)s by %(memberName)s": "Bạn đã bị cấm ở %(roomName)s bởi %(memberName)s",
     "Re-join": "Tham gia lại",
-    "Forget this room": "Quên phòng này đi",
-    "Reason: %(reason)s": "Lý do: %(reason)s",
-    "Sign Up": "Đăng Ký",
-    "Join the conversation with an account": "Tham gia cuộc trò chuyện bằng một tài khoản",
-    "Suggested Rooms": "Phòng được đề xuất",
-    "Historical": "Lịch sử",
-    "Low priority": "Ưu tiên thấp",
     "Create new room": "Tạo phòng mới",
-    "Add room": "Thêm phòng",
-    "Rooms": "Phòng",
     "Join Room": "Vào phòng",
     "(~%(count)s results)": {
         "one": "(~%(count)s kết quả)",
         "other": "(~%(count)s kết quả)"
     },
     "Unnamed room": "Phòng không tên",
-    "Replying": "Đang trả lời",
     "%(duration)sd": "%(duration)sd",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
     "View message": "Xem tin nhăn",
-    "Message didn't send. Click for info.": "Tin nhắn chưa gửi. Nhấn để biết thông tin.",
     "Send voice message": "Gửi tin nhắn thoại",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
@@ -1110,13 +1098,6 @@
     "Yours, or the other users' session": "Của bạn, hoặc phiên của các người dùng khác",
     "Yours, or the other users' internet connection": "Của bạn, hoặc kết nối internet của các người dùng khác",
     "The homeserver the user you're verifying is connected to": "Máy chủ nhà người dùng bạn đang xác thực được kết nối đến",
-    "Home options": "Các tùy chọn Home",
-    "%(spaceName)s menu": "%(spaceName)s menu",
-    "Currently joining %(count)s rooms": {
-        "one": "Hiện đang tham gia %(count)s phòng",
-        "other": "Hiện đang tham gia %(count)s phòng"
-    },
-    "Join public room": "Tham gia vào phòng công cộng",
     "Recently viewed": "Được xem gần đây",
     "Reply in thread": "Trả lời theo chủ đề",
     "Developer": "Nhà phát triển",
@@ -1181,17 +1162,11 @@
     "Sign out of all devices": "Đăng xuất khỏi mọi thiết bị",
     "Confirm new password": "Xác nhận mật khẩu mới",
     "%(members)s and more": "%(members)s và nhiều người khác",
-    "Read receipts": "Thông báo đã đọc",
     "This room or space does not exist.": "Phòng này hay space này không tồn tại.",
     "Messages in this chat will be end-to-end encrypted.": "Tin nhắn trong phòng này sẽ được mã hóa đầu-cuối.",
     "Failed to remove user": "Không thể loại bỏ người dùng",
     "Unban from space": "Bỏ cấm trong space",
-    "Seen by %(count)s people": {
-        "one": "Gửi bởi %(count)s người",
-        "other": "Gửi bởi %(count)s người"
-    },
     "Search all rooms": "Tìm tất cả phòng",
-    "Rejecting invite…": "Từ chối lời mời…",
     "Are you sure you're at the right place?": "Bạn có chắc là bạn đang ở đúng chỗ?",
     "To view %(roomName)s, you need an invite": "Để xem %(roomName)s, bạn cần một lời mời",
     "Disinvite from room": "Không mời vào phòng nữa",
@@ -1199,8 +1174,6 @@
         "one": "1 người tham gia",
         "other": "%(count)s người tham gia"
     },
-    "You were removed from %(roomName)s by %(memberName)s": "Bạn đã bị loại khỏi %(roomName)s bởi %(memberName)s",
-    "You were removed by %(memberName)s": "Bạn đã bị loại bởi %(memberName)s",
     "You were banned by %(memberName)s": "Bạn đã bị cấm bởi %(memberName)s",
     "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
@@ -1218,13 +1191,11 @@
     "Room info": "Thông tin phòng",
     "Remove them from everything I'm able to": "Loại bỏ khỏi mọi phòng mà tôi có thể",
     "The beginning of the room": "Bắt đầu phòng",
-    "Joining…": "Đang tham gia…",
     "Pinned": "Đã ghim",
     "Open room": "Mở phòng",
     "Send email": "Gửi thư",
     "Remove from room": "Loại bỏ khỏi phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
-    "Join the room to participate": "Tham gia phòng để tương tác",
     "Edit link": "Sửa liên kết",
     "Create a link": "Tạo liên kết",
     "Text": "Chữ",
@@ -1234,18 +1205,10 @@
     "This message could not be decrypted": "Không giải mã được tin nhắn",
     "Something went wrong with your invite.": "Đã xảy ra sự cố với lời mời của bạn.",
     "Remove from space": "Loại bỏ khỏi space",
-    "Loading preview": "Đang tải xem trước",
     "This room or space is not accessible at this time.": "Phòng hoặc space này không thể truy cập được bây giờ.",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Hiện đang xóa tin nhắn ở %(count)s phòng",
-        "other": "Hiện đang xóa tin nhắn ở %(count)s phòng"
-    },
-    "Joining space…": "Đang tham gia space…",
-    "Joining room…": "Đang tham gia phòng…",
     "There's no preview, would you like to join?": "Không xem trước được, bạn có muốn tham gia?",
     "Disinvite from space": "Hủy lời mời vào space",
     "You can still join here.": "Bạn vẫn có thể tham gia.",
-    "Forget this space": "Quên space này",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
@@ -1417,7 +1380,10 @@
         "video_room": "Phòng truyền hình",
         "public_space": "Space công cộng",
         "private_space": "Space riêng tư",
-        "private_room": "Phòng riêng tư"
+        "private_room": "Phòng riêng tư",
+        "rooms": "Phòng",
+        "low_priority": "Ưu tiên thấp",
+        "historical": "Lịch sử"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1725,7 +1691,8 @@
         "mode_rich_text": "Hiện định dạng",
         "formatting_toolbar_label": "Định dạng",
         "format_italics": "In nghiêng",
-        "format_insert_link": "Chèn liên kết"
+        "format_insert_link": "Chèn liên kết",
+        "replying_title": "Đang trả lời"
     },
     "Link": "Liên kết",
     "Code": "Mã",
@@ -2687,7 +2654,12 @@
                 "other": "Hiển thị %(count)s bản xem trước khác"
             },
             "close": "Đóng bản xem trước"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Gửi bởi %(count)s người",
+            "other": "Gửi bởi %(count)s người"
+        },
+        "read_receipts_label": "Thông báo đã đọc"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3328,7 +3300,21 @@
         "failed_remove_tag": "Không xóa được thẻ %(tagName)s khỏi phòng",
         "failed_add_tag": "Không thêm được thẻ %(tagName)s vào phòng",
         "breadcrumbs_label": "Các phòng đã ghé thăm gần đây",
-        "breadcrumbs_empty": "Không có phòng nào được truy cập gần đây"
+        "breadcrumbs_empty": "Không có phòng nào được truy cập gần đây",
+        "add_room_label": "Thêm phòng",
+        "suggested_rooms_heading": "Phòng được đề xuất",
+        "add_space_label": "Thêm space",
+        "join_public_room_label": "Tham gia vào phòng công cộng",
+        "joining_rooms_status": {
+            "one": "Hiện đang tham gia %(count)s phòng",
+            "other": "Hiện đang tham gia %(count)s phòng"
+        },
+        "redacting_messages_status": {
+            "one": "Hiện đang xóa tin nhắn ở %(count)s phòng",
+            "other": "Hiện đang xóa tin nhắn ở %(count)s phòng"
+        },
+        "space_menu_label": "%(spaceName)s menu",
+        "home_menu_label": "Các tùy chọn Home"
     },
     "report_content": {
         "missing_reason": "Vui lòng điền lý do bạn đang báo cáo.",
@@ -3740,7 +3726,20 @@
             "show_widgets_button": "Hiển thị widget",
             "close_call_button": "Đóng cuộc gọi",
             "video_room_view_chat_button": "Xem dòng tin nhắn"
-        }
+        },
+        "joining_space": "Đang tham gia space…",
+        "joining_room": "Đang tham gia phòng…",
+        "joining": "Đang tham gia…",
+        "rejecting": "Từ chối lời mời…",
+        "join_title": "Tham gia phòng để tương tác",
+        "join_title_account": "Tham gia cuộc trò chuyện bằng một tài khoản",
+        "join_button_account": "Đăng Ký",
+        "loading_preview": "Đang tải xem trước",
+        "kicked_from_room_by": "Bạn đã bị loại khỏi %(roomName)s bởi %(memberName)s",
+        "kicked_by": "Bạn đã bị loại bởi %(memberName)s",
+        "kick_reason": "Lý do: %(reason)s",
+        "forget_space": "Quên space này",
+        "forget_room": "Quên phòng này đi"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3894,7 +3893,8 @@
         "mentions_and_keywords": "@đề cập & từ khóa",
         "mentions_and_keywords_description": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
         "mute_description": "Bạn sẽ không nhận bất kỳ thông báo nào",
-        "email_pusher_app_display_name": "Thông báo qua thư điện tử"
+        "email_pusher_app_display_name": "Thông báo qua thư điện tử",
+        "message_didnt_send": "Tin nhắn chưa gửi. Nhấn để biết thông tin."
     },
     "mobile_guide": {
         "toast_title": "Sử dụng ứng dụng để có trải nghiệm tốt hơn",

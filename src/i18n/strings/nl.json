@@ -50,18 +50,15 @@
     "Failed to mute user": "Dempen van persoon is mislukt",
     "Failed to reject invite": "Weigeren van uitnodiging is mislukt",
     "Failed to reject invitation": "Weigeren van uitnodiging is mislukt",
-    "Historical": "Historisch",
     "Home": "Home",
     "Invalid file%(extra)s": "Ongeldig bestand %(extra)s",
     "Join Room": "Kamer toetreden",
     "Jump to first unread message.": "Spring naar het eerste ongelezen bericht.",
-    "Low priority": "Lage prioriteit",
     "New passwords must match each other.": "Nieuwe wachtwoorden moeten overeenkomen.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
     "Return to login screen": "Terug naar het loginscherm",
     "%(roomName)s does not exist.": "%(roomName)s bestaat niet.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s is op dit moment niet toegankelijk.",
-    "Rooms": "Kamers",
     "Search failed": "Zoeken mislukt",
     "Server may be unavailable, overloaded, or search timed out :(": "De server is misschien onbereikbaar of overbelast, of het zoeken duurde te lang :(",
     "Session ID": "Sessie-ID",
@@ -113,7 +110,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
     "%(duration)sd": "%(duration)sd",
-    "Replying": "Aan het beantwoorden",
     "Unnamed room": "Naamloze kamer",
     "collapse": "dichtvouwen",
     "expand": "uitvouwen",
@@ -316,10 +312,6 @@
     },
     "Cancel All": "Alles annuleren",
     "Upload Error": "Fout bij versturen van bestand",
-    "Join the conversation with an account": "Neem deel aan de kamer met een account",
-    "Sign Up": "Registreren",
-    "Reason: %(reason)s": "Reden: %(reason)s",
-    "Forget this room": "Deze kamer vergeten",
     "Re-join": "Opnieuw toetreden",
     "You were banned from %(roomName)s by %(memberName)s": "Je bent uit %(roomName)s verbannen door %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "Er is iets misgegaan met je uitnodiging voor %(roomName)s",
@@ -335,7 +327,6 @@
     "edited": "bewerkt",
     "Edit message": "Bericht bewerken",
     "Some characters not allowed": "Sommige tekens zijn niet toegestaan",
-    "Add room": "Kamer toevoegen",
     "Failed to get autodiscovery configuration from server": "Ophalen van auto-vindbaarheidsconfiguratie van server is mislukt",
     "Invalid base_url for m.homeserver": "Ongeldige base_url voor m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "De homeserver-URL lijkt geen geldige Matrix-homeserver",
@@ -912,7 +903,6 @@
     "Create a new room": "Nieuwe kamer aanmaken",
     "Space selection": "Space-selectie",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Je kan deze wijziging niet ongedaan maken, omdat je jezelf rechten ontneemt. Als je de laatst bevoegde persoon in de Space bent zal het onmogelijk zijn om weer rechten te krijgen.",
-    "Suggested Rooms": "Kamersuggesties",
     "Your message was sent": "Je bericht is verstuurd",
     "Leave space": "Space verlaten",
     "Create a space": "Space maken",
@@ -975,10 +965,6 @@
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
     "Add reaction": "Reactie toevoegen",
-    "Currently joining %(count)s rooms": {
-        "one": "Momenteel aan het toetreden tot %(count)s kamer",
-        "other": "Momenteel aan het toetreden tot %(count)s kamers"
-    },
     "Or send invite link": "Of verstuur je uitnodigingslink",
     "Some suggestions may be hidden for privacy.": "Sommige suggesties kunnen om privacyredenen verborgen zijn.",
     "Search for rooms or people": "Zoek naar kamers of personen",
@@ -1018,7 +1004,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Kies welke Spaces toegang hebben tot deze kamer. Als een Space is geselecteerd kunnen deze leden <RoomName/> vinden en aan deelnemen.",
     "Select spaces": "Space selecteren",
     "You're removing all spaces. Access will default to invite only": "Je verwijdert alle Spaces. De toegang zal teruggezet worden naar alleen op uitnodiging",
-    "Add space": "Space toevoegen",
     "Leave %(spaceName)s": "%(spaceName)s verlaten",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Je bent de enige beheerder van sommige kamers of Spaces die je wil verlaten. Door deze te verlaten hebben ze geen beheerder meer.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Je bent de enige beheerder van deze Space. Door het te verlaten zal er niemand meer controle over hebben.",
@@ -1046,7 +1031,6 @@
     "Results": "Resultaten",
     "Some encryption parameters have been changed.": "Enkele versleutingsparameters zijn gewijzigd.",
     "Role in <RoomName/>": "Rol in <RoomName/>",
-    "Message didn't send. Click for info.": "Bericht is niet verstuur. Klik voor meer info.",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
     "You are about to leave <spaceName/>.": "Je staat op het punt <spaceName/> te verlaten.",
@@ -1119,9 +1103,6 @@
     "Messaging": "Messaging",
     "Spaces you know that contain this space": "Spaces die je kent met deze Space",
     "Chat": "Chat",
-    "Home options": "Home-opties",
-    "%(spaceName)s menu": "%(spaceName)s-menu",
-    "Join public room": "Publieke kamer toetreden",
     "Recently viewed": "Recent bekeken",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s stem uitgebracht. Stem om de resultaten te zien",
@@ -1172,7 +1153,6 @@
     "Remove them from specific things I'm able to": "Verwijder ze van specifieke dingen die ik kan",
     "Remove them from everything I'm able to": "Verwijder ze van alles wat ik kan",
     "Remove from %(roomName)s": "Verwijderen uit %(roomName)s",
-    "You were removed from %(roomName)s by %(memberName)s": "Je bent verwijderd uit %(roomName)s door %(memberName)s",
     "From a thread": "Uit een conversatie",
     "Wait!": "Wacht!",
     "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
@@ -1226,13 +1206,6 @@
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Er is een fout (%(errcode)s) geretourneerd tijdens het valideren van je uitnodiging. Je kan proberen deze informatie door te geven aan de persoon die je hebt uitgenodigd.",
     "Something went wrong with your invite.": "Er is iets misgegaan met je uitnodiging.",
     "You were banned by %(memberName)s": "Je bent verbannen door %(memberName)s",
-    "Forget this space": "Vergeet deze space",
-    "You were removed by %(memberName)s": "Je bent verwijderd door %(memberName)s",
-    "Loading preview": "Voorbeeld laden",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Momenteel berichten in %(count)s kamer aan het verwijderen",
-        "other": "Momenteel berichten in %(count)s kamers aan het verwijderen"
-    },
     "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
     "You are sharing your live location": "Je deelt je live locatie",
     "Live location enabled": "Live locatie ingeschakeld",
@@ -1264,10 +1237,6 @@
     "You will not be able to reactivate your account": "Zal je jouw account niet kunnen heractiveren",
     "Confirm that you would like to deactivate your account. If you proceed:": "Bevestig dat je jouw account wil deactiveren. Als je doorgaat:",
     "To continue, please enter your account password:": "Voer je wachtwoord in om verder te gaan:",
-    "Seen by %(count)s people": {
-        "one": "Gezien door %(count)s persoon",
-        "other": "Gezien door %(count)s mensen"
-    },
     "An error occurred while stopping your live location": "Er is een fout opgetreden bij het stoppen van je live locatie",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is niet verzonden omdat deze server is geblokkeerd door de beheerder. Neem <a>contact op met je servicebeheerder</a> om de service te blijven gebruiken.",
     "Cameras": "Camera's",
@@ -1283,8 +1252,6 @@
     "Unread email icon": "Ongelezen e-mailpictogram",
     "An error occurred whilst sharing your live location, please try again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
     "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
-    "Joining…": "Deelnemen…",
-    "Read receipts": "Leesbevestigingen",
     "Remove search filter for %(filter)s": "Verwijder zoekfilter voor %(filter)s",
     "Start a group chat": "Start een groepsgesprek",
     "Other options": "Andere opties",
@@ -1316,7 +1283,6 @@
     "You're in": "Je bent binnen",
     "You need to have the right permissions in order to share locations in this room.": "Je dient de juiste rechten te hebben om locaties in deze ruimte te delen.",
     "You don't have permission to share locations": "Je bent niet gemachtigd om locaties te delen",
-    "Join the room to participate": "Doe mee met de kamer om deel te nemen",
     "Messages in this chat will be end-to-end encrypted.": "Berichten in deze chat worden eind-tot-eind versleuteld.",
     "Saved Items": "Opgeslagen items",
     "We're creating a room with %(names)s": "We maken een kamer aan met %(names)s",
@@ -1454,7 +1420,10 @@
         "video_room": "Video kamer",
         "public_space": "Publieke Space",
         "private_space": "Privé Space",
-        "private_room": "Privé kamer"
+        "private_room": "Privé kamer",
+        "rooms": "Kamers",
+        "low_priority": "Lage prioriteit",
+        "historical": "Historisch"
     },
     "action": {
         "continue": "Doorgaan",
@@ -1743,7 +1712,8 @@
         "poll_button": "Poll",
         "mode_rich_text": "Opmaak tonen",
         "format_italics": "Cursief",
-        "format_insert_link": "Koppeling invoegen"
+        "format_insert_link": "Koppeling invoegen",
+        "replying_title": "Aan het beantwoorden"
     },
     "Code": "Code",
     "power_level": {
@@ -2654,7 +2624,12 @@
                 "other": "%(count)s andere previews weergeven"
             },
             "close": "Voorbeeld sluiten"
-        }
+        },
+        "read_receipt_title": {
+            "one": "Gezien door %(count)s persoon",
+            "other": "Gezien door %(count)s mensen"
+        },
+        "read_receipts_label": "Leesbevestigingen"
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3254,7 +3229,21 @@
         "failed_remove_tag": "Verwijderen van %(tagName)s-label van kamer is mislukt",
         "failed_add_tag": "Toevoegen van %(tagName)s-label aan kamer is mislukt",
         "breadcrumbs_label": "Onlangs geopende kamers",
-        "breadcrumbs_empty": "Geen onlangs bezochte kamers"
+        "breadcrumbs_empty": "Geen onlangs bezochte kamers",
+        "add_room_label": "Kamer toevoegen",
+        "suggested_rooms_heading": "Kamersuggesties",
+        "add_space_label": "Space toevoegen",
+        "join_public_room_label": "Publieke kamer toetreden",
+        "joining_rooms_status": {
+            "one": "Momenteel aan het toetreden tot %(count)s kamer",
+            "other": "Momenteel aan het toetreden tot %(count)s kamers"
+        },
+        "redacting_messages_status": {
+            "one": "Momenteel berichten in %(count)s kamer aan het verwijderen",
+            "other": "Momenteel berichten in %(count)s kamers aan het verwijderen"
+        },
+        "space_menu_label": "%(spaceName)s-menu",
+        "home_menu_label": "Home-opties"
     },
     "report_content": {
         "missing_reason": "Geef aan waarom je deze melding indient.",
@@ -3650,7 +3639,17 @@
             "show_widgets_button": "Widgets tonen",
             "close_call_button": "Sluit oproep",
             "video_room_view_chat_button": "Gesprekstijdslijn bekijken"
-        }
+        },
+        "joining": "Deelnemen…",
+        "join_title": "Doe mee met de kamer om deel te nemen",
+        "join_title_account": "Neem deel aan de kamer met een account",
+        "join_button_account": "Registreren",
+        "loading_preview": "Voorbeeld laden",
+        "kicked_from_room_by": "Je bent verwijderd uit %(roomName)s door %(memberName)s",
+        "kicked_by": "Je bent verwijderd door %(memberName)s",
+        "kick_reason": "Reden: %(reason)s",
+        "forget_space": "Vergeet deze space",
+        "forget_room": "Deze kamer vergeten"
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3793,7 +3792,8 @@
         "all_messages_description": "Ontvang een melding bij elk bericht",
         "mentions_and_keywords": "@vermeldingen & trefwoorden",
         "mentions_and_keywords_description": "Krijg alleen meldingen met vermeldingen en trefwoorden zoals ingesteld in je <a>instellingen</a>",
-        "mute_description": "Je krijgt geen meldingen"
+        "mute_description": "Je krijgt geen meldingen",
+        "message_didnt_send": "Bericht is niet verstuur. Klik voor meer info."
     },
     "mobile_guide": {
         "toast_title": "Gebruik de app voor een betere ervaring",

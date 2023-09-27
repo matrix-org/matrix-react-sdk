@@ -21,7 +21,6 @@
     "Dec": "דצמבר",
     "PM": "PM",
     "AM": "AM",
-    "Rooms": "חדרים",
     "Send": "שלח",
     "unknown error code": "קוד שגיאה לא מוכר",
     "Failed to forget room %(errCode)s": "נכשל בעת בקשה לשכוח חדר %(errCode)s",
@@ -568,18 +567,12 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
     "This room has already been upgraded.": "החדר הזה כבר שודרג.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
-    "Sign Up": "הרשמה",
-    "Join the conversation with an account": "הצטרף לשיחה עם חשבון",
-    "Historical": "היסטוריה",
-    "Low priority": "עדיפות נמוכה",
     "Create new room": "צור חדר חדש",
-    "Add room": "הוסף חדר",
     "Join Room": "הצטרף אל חדר",
     "(~%(count)s results)": {
         "one": "(תוצאת %(count)s)",
         "other": "(תוצאת %(count)s)"
     },
-    "Replying": "משיבים",
     "%(duration)sd": "%(duration)s (ימים)",
     "%(duration)sh": "%(duration)s (שעות)",
     "%(duration)sm": "%(duration)s (דקות)",
@@ -634,8 +627,6 @@
     "Something went wrong with your invite to %(roomName)s": "משהו השתבש עם ההזמנה שלכם אל חדר %(roomName)s",
     "You were banned from %(roomName)s by %(memberName)s": "נחסמתם מ-%(roomName)s על ידי %(memberName)s",
     "Re-join": "הצטרפות מחדש",
-    "Forget this room": "שכח חדר זה",
-    "Reason: %(reason)s": "סיבה: %(reason)s",
     "Are you sure you want to leave the room '%(roomName)s'?": "האם אתה בטוח שברצונך לעזוב את החדר '%(roomName)s'?",
     "This room is not public. You will not be able to rejoin without an invite.": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה.",
     "Failed to reject invitation": "דחיית ההזמנה נכשלה",
@@ -983,9 +974,6 @@
     "Try again later, or ask a room or space admin to check if you have access.": "נסו שנית מאוחר יותר, בקשו ממנהל החדר או מרחב העבודה לוודא אם יש לכם גישה.",
     "This room or space is not accessible at this time.": "חדר זה או מרחב העבודה אינם זמינים כעת.",
     "This room or space does not exist.": "חדר זה או מרחב עבודה אינם קיימים.",
-    "Forget this space": "שכח את מרחב עבודה זה",
-    "%(spaceName)s menu": "תפריט %(spaceName)s",
-    "Add space": "הוסיפו מרחב עבודה",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -1098,7 +1086,10 @@
         "user_avatar": "תמונת פרופיל",
         "authentication": "אימות",
         "public_space": "מרחב עבודה ציבורי",
-        "private_space": "מרחב עבודה פרטי"
+        "private_space": "מרחב עבודה פרטי",
+        "rooms": "חדרים",
+        "low_priority": "עדיפות נמוכה",
+        "historical": "היסטוריה"
     },
     "action": {
         "continue": "המשך",
@@ -1330,7 +1321,8 @@
         "poll_button_no_perms_title": "הרשאה דרושה",
         "poll_button_no_perms_description": "אין לכם הרשאה להתחיל סקר בחדר זה.",
         "poll_button": "סקר",
-        "format_italics": "נטוי"
+        "format_italics": "נטוי",
+        "replying_title": "משיבים"
     },
     "Code": "קוד",
     "power_level": {
@@ -2539,7 +2531,10 @@
         "notification_options": "אפשרויות התרעות",
         "failed_remove_tag": "נכשל בעת נסיון הסרת תג %(tagName)s מהחדר",
         "failed_add_tag": "נכשל בעת הוספת תג %(tagName)s לחדר",
-        "breadcrumbs_empty": "אין חדרים שבקרתם בהם לאחרונה"
+        "breadcrumbs_empty": "אין חדרים שבקרתם בהם לאחרונה",
+        "add_room_label": "הוסף חדר",
+        "add_space_label": "הוסיפו מרחב עבודה",
+        "space_menu_label": "תפריט %(spaceName)s"
     },
     "report_content": {
         "missing_reason": "אנא מלאו מדוע אתם מדווחים.",
@@ -2853,7 +2848,12 @@
             "forget_room_button": "שכח חדר",
             "hide_widgets_button": "הסתר ישומונים",
             "show_widgets_button": "הצג ישומונים"
-        }
+        },
+        "join_title_account": "הצטרף לשיחה עם חשבון",
+        "join_button_account": "הרשמה",
+        "kick_reason": "סיבה: %(reason)s",
+        "forget_space": "שכח את מרחב עבודה זה",
+        "forget_room": "שכח חדר זה"
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",

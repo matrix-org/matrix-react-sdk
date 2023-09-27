@@ -18,10 +18,8 @@
     "Failed to mute user": "No se pudo silenciar al usuario",
     "Failed to reject invite": "Falló al rechazar invitación",
     "Failed to reject invitation": "Falló al rechazar la invitación",
-    "Historical": "Historial",
     "Invalid file%(extra)s": "Archivo inválido %(extra)s",
     "Join Room": "Unirme a la sala",
-    "Low priority": "Prioridad baja",
     "Admin Tools": "Herramientas de administración",
     "Custom level": "Nivel personalizado",
     "Enter passphrase": "Introducir frase de contraseña",
@@ -37,7 +35,6 @@
     "Unable to restore session": "No se puede recuperar la sesión",
     "%(roomName)s does not exist.": "%(roomName)s no existe.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s no es accesible en este momento.",
-    "Rooms": "Salas",
     "Search failed": "Falló la búsqueda",
     "Server may be unavailable, overloaded, or search timed out :(": "El servidor podría estar saturado o desconectado, o la búsqueda caducó :(",
     "Session ID": "ID de Sesión",
@@ -122,7 +119,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Replying": "Respondiendo",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
@@ -355,10 +351,6 @@
     "a device cross-signing signature": "una firma para la firma cruzada de dispositivos",
     "a key signature": "un firma de clave",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontró un error durante la carga de:",
-    "Join the conversation with an account": "Unirse a la conversación con una cuenta",
-    "Sign Up": "Registrarse",
-    "Reason: %(reason)s": "Razón: %(reason)s",
-    "Forget this room": "Olvidar esta sala",
     "Re-join": "Volver a entrar",
     "You were banned from %(roomName)s by %(memberName)s": "%(memberName)s te ha echado de %(roomName)s",
     "Something went wrong with your invite to %(roomName)s": "Algo salió a mal invitando a %(roomName)s",
@@ -499,7 +491,6 @@
     "Join millions for free on the largest public server": "Únete de forma gratuita a millones de personas en el servidor público más grande",
     "Sign in with SSO": "Ingrese con SSO",
     "Couldn't load page": "No se ha podido cargar la página",
-    "Add room": "Añadir una sala",
     "Could not load user profile": "No se pudo cargar el perfil de usuario",
     "Your password has been reset.": "Su contraseña ha sido restablecida.",
     "Invalid homeserver discovery response": "Respuesta inválida de descubrimiento de servidor base",
@@ -912,7 +903,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Create a new room": "Crear una sala nueva",
     "Space selection": "Selección de espacio",
-    "Suggested Rooms": "Salas sugeridas",
     "Your message was sent": "Mensaje enviado",
     "Leave space": "Salir del espacio",
     "Create a space": "Crear un espacio",
@@ -975,10 +965,6 @@
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
     "Add reaction": "Reaccionar",
-    "Currently joining %(count)s rooms": {
-        "one": "Entrando en %(count)s sala",
-        "other": "Entrando en %(count)s salas"
-    },
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
     "Search for rooms or people": "Busca salas o gente",
@@ -1018,7 +1004,6 @@
     "Only people invited will be able to find and join this space.": "Solo las personas invitadas podrán encontrar y unirse a este espacio.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Cualquiera podrá encontrar y unirse a este espacio, incluso si no forman parte de <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Cualquiera que forme parte de <SpaceName/> podrá encontrar y unirse.",
-    "Add space": "Añadir un espacio",
     "Spaces you know that contain this room": "Espacios que conoces que contienen esta sala",
     "Search spaces": "Buscar espacios",
     "Select spaces": "Elegir espacios",
@@ -1046,7 +1031,6 @@
     "Results": "Resultados",
     "Some encryption parameters have been changed.": "Algunos parámetros del cifrado han cambiado.",
     "Role in <RoomName/>": "Rol en <RoomName/>",
-    "Message didn't send. Click for info.": "Mensaje no enviado. Haz clic para más info.",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "Don't leave any rooms": "No salir de ninguna sala",
     "Leave all rooms": "Salir de todas las salas",
@@ -1134,9 +1118,6 @@
     "Sorry, your vote was not registered. Please try again.": "Lo sentimos, no se ha podido registrar el voto. Inténtalo otra vez.",
     "Vote not registered": "Voto no emitido",
     "Chat": "Conversación",
-    "Home options": "Opciones de la pantalla de inicio",
-    "%(spaceName)s menu": "Menú de %(spaceName)s",
-    "Join public room": "Unirse a la sala pública",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -1169,7 +1150,6 @@
     "Close this widget to view it in this panel": "Cierra este accesorio para verlo en este panel",
     "Unpin this widget to view it in this panel": "Deja de fijar este accesorio para verlo en este panel",
     "To proceed, please accept the verification request on your other device.": "Para continuar, acepta la solicitud de verificación en tu otro dispositivo.",
-    "You were removed from %(roomName)s by %(memberName)s": "%(memberName)s te ha sacado de %(roomName)s",
     "From a thread": "Desde un hilo",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
@@ -1208,10 +1188,6 @@
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
     "Preserve system messages": "Mantener mensajes del sistema",
     "%(displayName)s's live location": "Ubicación en tiempo real de %(displayName)s",
-    "Currently removing messages in %(count)s rooms": {
-        "one": "Borrando mensajes en %(count)s sala",
-        "other": "Borrando mensajes en %(count)s salas"
-    },
     "Unsent": "No enviado",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
     "%(featureName)s Beta feedback": "Danos tu opinión sobre la beta de %(featureName)s",
@@ -1226,9 +1202,6 @@
     "There's no preview, would you like to join?": "No hay previsualización. ¿Te quieres unir?",
     "You can still join here.": "Todavía puedes unirte.",
     "You were banned by %(memberName)s": "%(memberName)s te ha vetado",
-    "Forget this space": "Olvidar este espacio",
-    "You were removed by %(memberName)s": "%(memberName)s te ha sacado",
-    "Loading preview": "Cargando previsualización",
     "Live location enabled": "Ubicación en tiempo real activada",
     "Live location error": "Error en la ubicación en tiempo real",
     "Live location ended": "La ubicación en tiempo real ha terminado",
@@ -1260,10 +1233,6 @@
     "This invite was sent to %(email)s": "Esta invitación se envió a %(email)s",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.": "Ha ocurrido un error (%(errcode)s) al validar tu invitación. Puedes intentar a pasarle esta información a la persona que te ha invitado.",
     "Something went wrong with your invite.": "Ha ocurrido un error al procesar tu invitación.",
-    "Seen by %(count)s people": {
-        "one": "%(count)s persona lo ha visto",
-        "other": "%(count)s personas lo han visto"
-    },
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Si deseas mantener acceso a tu historial de conversación en salas encriptadas, configura copia de llaves o exporta tus claves de mensaje desde uno de tus otros dispositivos antes de proceder.",
     "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Cerrar sesión en tus dispositivos causará que las claves de encriptado almacenadas en ellas se eliminen, haciendo que el historial de la conversación encriptada sea imposible de leer.",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Se ha cerrado sesión en todos tus dispositivos y no recibirás más notificaciones. Para volver a habilitar las notificaciones, inicia sesión de nuevo en cada dispositivo.",
@@ -1282,9 +1251,7 @@
     "An error occurred whilst sharing your live location": "Ocurrió un error mientras se compartía tu ubicación en tiempo real",
     "Output devices": "Dispositivos de salida",
     "Input devices": "Dispositivos de entrada",
-    "Joining…": "Uniéndose…",
     "To join, please enable video rooms in Labs first": "Para unirse, por favor activa las salas de vídeo en Labs primero",
-    "Read receipts": "Acuses de recibo",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Al cerrar sesión, estas claves serán eliminadas del dispositivo. Esto significa que no podrás leer mensajes cifrados salvo que tengas sus claves en otros dispositivos, o hayas hecho una copia de seguridad usando el servidor.",
     "%(count)s Members": {
         "one": "%(count)s miembro",
@@ -1316,7 +1283,6 @@
     "Who will you chat to the most?": "¿Con quién hablarás más?",
     "You're in": "Estás en",
     "You don't have permission to share locations": "No tienes permiso para compartir ubicaciones",
-    "Join the room to participate": "Únete a la sala para participar",
     "Saved Items": "Elementos guardados",
     "Messages in this chat will be end-to-end encrypted.": "Los mensajes en esta conversación serán cifrados de extremo a extremo.",
     "Choose a locale": "Elige un idioma",
@@ -1381,9 +1347,6 @@
     "Edit link": "Editar enlace",
     "Search all rooms": "Buscar en todas las salas",
     "Search this room": "Buscar en esta sala",
-    "Rejecting invite…": "Rechazar invitación…",
-    "Joining room…": "Uniéndose a la sala…",
-    "Joining space…": "Uniéndose al espacio…",
     "Encrypting your message…": "Cifrando tu mensaje…",
     "Sending your message…": "Enviando tu mensaje…",
     "unknown": "desconocido",
@@ -1515,7 +1478,10 @@
         "video_room": "Sala de vídeo",
         "public_space": "Espacio público",
         "private_space": "Espacio privado",
-        "private_room": "Sala privada"
+        "private_room": "Sala privada",
+        "rooms": "Salas",
+        "low_priority": "Prioridad baja",
+        "historical": "Historial"
     },
     "action": {
         "continue": "Continuar",
@@ -1838,7 +1804,8 @@
         "mode_rich_text": "Mostrar formato",
         "formatting_toolbar_label": "Formato",
         "format_italics": "Cursiva",
-        "format_insert_link": "Insertar enlace"
+        "format_insert_link": "Insertar enlace",
+        "replying_title": "Respondiendo"
     },
     "Link": "Enlace",
     "Code": "Código",
@@ -2799,7 +2766,12 @@
                 "other": "Ver %(count)s otra vista previa"
             },
             "close": "Cerrar vista previa"
-        }
+        },
+        "read_receipt_title": {
+            "one": "%(count)s persona lo ha visto",
+            "other": "%(count)s personas lo han visto"
+        },
+        "read_receipts_label": "Acuses de recibo"
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",
@@ -3429,7 +3401,21 @@
         "failed_remove_tag": "Error al eliminar la etiqueta %(tagName)s de la sala",
         "failed_add_tag": "Error al añadir la etiqueta %(tagName)s a la sala",
         "breadcrumbs_label": "Salas visitadas recientemente",
-        "breadcrumbs_empty": "No hay salas visitadas recientemente"
+        "breadcrumbs_empty": "No hay salas visitadas recientemente",
+        "add_room_label": "Añadir una sala",
+        "suggested_rooms_heading": "Salas sugeridas",
+        "add_space_label": "Añadir un espacio",
+        "join_public_room_label": "Unirse a la sala pública",
+        "joining_rooms_status": {
+            "one": "Entrando en %(count)s sala",
+            "other": "Entrando en %(count)s salas"
+        },
+        "redacting_messages_status": {
+            "one": "Borrando mensajes en %(count)s sala",
+            "other": "Borrando mensajes en %(count)s salas"
+        },
+        "space_menu_label": "Menú de %(spaceName)s",
+        "home_menu_label": "Opciones de la pantalla de inicio"
     },
     "report_content": {
         "missing_reason": "Por favor, explica por qué estás denunciando.",
@@ -3844,7 +3830,20 @@
             "show_widgets_button": "Mostrar accesorios",
             "close_call_button": "Terminar llamada",
             "video_room_view_chat_button": "Ver historial del chat"
-        }
+        },
+        "joining_space": "Uniéndose al espacio…",
+        "joining_room": "Uniéndose a la sala…",
+        "joining": "Uniéndose…",
+        "rejecting": "Rechazar invitación…",
+        "join_title": "Únete a la sala para participar",
+        "join_title_account": "Unirse a la conversación con una cuenta",
+        "join_button_account": "Registrarse",
+        "loading_preview": "Cargando previsualización",
+        "kicked_from_room_by": "%(memberName)s te ha sacado de %(roomName)s",
+        "kicked_by": "%(memberName)s te ha sacado",
+        "kick_reason": "Razón: %(reason)s",
+        "forget_space": "Olvidar este espacio",
+        "forget_room": "Olvidar esta sala"
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",
@@ -3994,7 +3993,8 @@
         "all_messages_description": "Recibe notificaciones para todos los mensajes",
         "mentions_and_keywords": "@menciones y palabras clave",
         "mentions_and_keywords_description": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
-        "mute_description": "No recibirás ninguna notificación"
+        "mute_description": "No recibirás ninguna notificación",
+        "message_didnt_send": "Mensaje no enviado. Haz clic para más info."
     },
     "mobile_guide": {
         "toast_title": "Usa la aplicación para una experiencia mejor",

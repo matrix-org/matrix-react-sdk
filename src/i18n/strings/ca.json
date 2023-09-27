@@ -2,7 +2,6 @@
     "Create new room": "Crea una sala nova",
     "Failed to forget room %(errCode)s": "No s'ha pogut oblidar la sala %(errCode)s",
     "unknown error code": "codi d'error desconegut",
-    "Rooms": "Sales",
     "Warning!": "Avís!",
     "Sun": "dg.",
     "Mon": "dl.",
@@ -48,15 +47,12 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Replying": "S'està contestant",
     "Unnamed room": "Sala sense nom",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultats)",
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Entra a la sala",
-    "Low priority": "Baixa prioritat",
-    "Historical": "Històric",
     "%(roomName)s does not exist.": "La sala %(roomName)s no existeix.",
     "%(roomName)s is not accessible at this time.": "La sala %(roomName)s no és accessible en aquest moment.",
     "Jump to first unread message.": "Salta al primer missatge no llegit.",
@@ -196,7 +192,10 @@
         "off": "Apagat",
         "copied": "Copiat!",
         "advanced": "Avançat",
-        "authentication": "Autenticació"
+        "authentication": "Autenticació",
+        "rooms": "Sales",
+        "low_priority": "Baixa prioritat",
+        "historical": "Històric"
     },
     "action": {
         "continue": "Continua",
@@ -569,7 +568,8 @@
         "placeholder_reply_encrypted": "Envia una resposta xifrada…",
         "placeholder_encrypted": "Envia un missatge xifrat…",
         "no_perms_notice": "No tens permís per enviar res en aquesta sala",
-        "poll_button_no_perms_title": "Es necessita permís"
+        "poll_button_no_perms_title": "Es necessita permís",
+        "replying_title": "S'està contestant"
     },
     "room_settings": {
         "permissions": {

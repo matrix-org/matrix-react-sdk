@@ -25,7 +25,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "unknown error code": "неизвестен код за грешка",
     "Failed to forget room %(errCode)s": "Неуспешно забравяне на стаята %(errCode)s",
-    "Rooms": "Стаи",
     "Unnamed room": "Стая без име",
     "Warning!": "Внимание!",
     "PM": "PM",
@@ -46,14 +45,11 @@
     "%(duration)sm": "%(duration)sмин",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
-    "Replying": "Отговаря",
     "(~%(count)s results)": {
         "other": "(~%(count)s резултати)",
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Присъединяване към стаята",
-    "Low priority": "Нисък приоритет",
-    "Historical": "Архив",
     "%(roomName)s does not exist.": "%(roomName)s не съществува.",
     "%(roomName)s is not accessible at this time.": "%(roomName)s не е достъпна към този момент.",
     "Jump to first unread message.": "Отиди до първото непрочетено съобщение.",
@@ -316,10 +312,6 @@
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
-    "Join the conversation with an account": "Присъедини се към разговор с акаунт",
-    "Sign Up": "Регистриране",
-    "Reason: %(reason)s": "Причина: %(reason)s",
-    "Forget this room": "Пропусни тази стая",
     "Re-join": "Връщане",
     "You were banned from %(roomName)s by %(memberName)s": "Получихте забрана за %(roomName)s от %(memberName)s",
     "Something went wrong with your invite to %(roomName)s": "Нещо нежелано се случи с вашата покана към %(roomName)s",
@@ -335,7 +327,6 @@
     "edited": "редактирано",
     "Edit message": "Редактирай съобщението",
     "Some characters not allowed": "Някои символи не са позволени",
-    "Add room": "Добави стая",
     "Failed to get autodiscovery configuration from server": "Неуспешно автоматично откриване на конфигурацията за сървъра",
     "Invalid base_url for m.homeserver": "Невалиден base_url в m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver адресът не изглежда да е валиден Matrix сървър",
@@ -944,7 +935,10 @@
         "profile": "Профил",
         "display_name": "Име",
         "user_avatar": "Профилна снимка",
-        "authentication": "Автентикация"
+        "authentication": "Автентикация",
+        "rooms": "Стаи",
+        "low_priority": "Нисък приоритет",
+        "historical": "Архив"
     },
     "action": {
         "continue": "Продължи",
@@ -1123,7 +1117,8 @@
         "room_upgraded_notice": "Тази стая е била заменена и вече не е активна.",
         "no_perms_notice": "Нямате разрешение да публикувате в тази стая",
         "poll_button_no_perms_title": "Необходимо е разрешение",
-        "format_italics": "Наклонено"
+        "format_italics": "Наклонено",
+        "replying_title": "Отговаря"
     },
     "Code": "Код",
     "power_level": {
@@ -2005,7 +2000,8 @@
         "notification_options": "Настройки за уведомление",
         "failed_remove_tag": "Неуспешно премахване на %(tagName)s етикет от стаята",
         "failed_add_tag": "Неуспешно добавяне на %(tagName)s етикет в стаята",
-        "breadcrumbs_empty": "Няма наскоро-посетени стаи"
+        "breadcrumbs_empty": "Няма наскоро-посетени стаи",
+        "add_room_label": "Добави стая"
     },
     "report_content": {
         "missing_reason": "Въведете защо докладвате.",
@@ -2159,7 +2155,11 @@
             "forget_room_button": "Забрави стаята",
             "hide_widgets_button": "Скрий приспособленията",
             "show_widgets_button": "Покажи приспособленията"
-        }
+        },
+        "join_title_account": "Присъедини се към разговор с акаунт",
+        "join_button_account": "Регистриране",
+        "kick_reason": "Причина: %(reason)s",
+        "forget_room": "Пропусни тази стая"
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",

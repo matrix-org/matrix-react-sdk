@@ -745,7 +745,10 @@
         "public_space": "Public space",
         "private_space": "Private space",
         "private_room": "Private room",
+        "rooms": "Rooms",
+        "low_priority": "Low priority",
         "system_alerts": "System Alerts",
+        "historical": "Historical",
         "loading": "Loading…",
         "appearance": "Appearance",
         "stickerpack": "Stickerpack",
@@ -1424,6 +1427,11 @@
             },
             "close": "Close preview"
         },
+        "read_receipt_title": {
+            "other": "Seen by %(count)s people",
+            "one": "Seen by %(count)s person"
+        },
+        "read_receipts_label": "Read receipts",
         "reactions": {
             "label": "%(reactors)s reacted with %(content)s",
             "tooltip": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>"
@@ -1737,6 +1745,20 @@
             "unencrypted_warning": "End-to-end encryption isn't enabled"
         },
         "header_untrusted_label": "Untrusted",
+        "error_3pid_invite_email_lookup": "Unable to find user by email",
+        "joining_space": "Joining space…",
+        "joining_room": "Joining room…",
+        "joining": "Joining…",
+        "rejecting": "Rejecting invite…",
+        "join_title": "Join the room to participate",
+        "join_title_account": "Join the conversation with an account",
+        "join_button_account": "Sign Up",
+        "loading_preview": "Loading preview",
+        "kicked_from_room_by": "You were removed from %(roomName)s by %(memberName)s",
+        "kicked_by": "You were removed by %(memberName)s",
+        "kick_reason": "Reason: %(reason)s",
+        "forget_space": "Forget this space",
+        "forget_room": "Forget this room",
         "edit_topic": "Edit topic",
         "read_topic": "Click to read topic",
         "drop_file_prompt": "Drop file here to upload",
@@ -1923,7 +1945,8 @@
         "mentions_and_keywords": "@mentions & keywords",
         "mentions_and_keywords_description": "Get notified only with mentions and keywords as set up in your <a>settings</a>",
         "mute_description": "You won't get any notifications",
-        "email_pusher_app_display_name": "Email Notifications"
+        "email_pusher_app_display_name": "Email Notifications",
+        "message_didnt_send": "Message didn't send. Click for info."
     },
     "mobile_guide": {
         "toast_title": "Use app for a better experience",
@@ -2621,6 +2644,7 @@
         "format_strikethrough": "Strikethrough",
         "format_code_block": "Code block",
         "format_insert_link": "Insert link",
+        "replying_title": "Replying",
         "format_italic": "Italic",
         "format_underline": "Underline",
         "format_unordered_list": "Bulleted list",
@@ -2642,7 +2666,6 @@
             "user_a11y": "User Autocomplete"
         }
     },
-    "Message didn't send. Click for info.": "Message didn't send. Click for info.",
     "View message": "View message",
     "presence": {
         "busy": "Busy",
@@ -2658,15 +2681,23 @@
     },
     "%(members)s and more": "%(members)s and more",
     "%(members)s and %(last)s": "%(members)s and %(last)s",
-    "Seen by %(count)s people": {
-        "other": "Seen by %(count)s people",
-        "one": "Seen by %(count)s person"
-    },
-    "Read receipts": "Read receipts",
-    "Replying": "Replying",
     "room_list": {
         "breadcrumbs_label": "Recently visited rooms",
         "breadcrumbs_empty": "No recently visited rooms",
+        "add_room_label": "Add room",
+        "suggested_rooms_heading": "Suggested Rooms",
+        "add_space_label": "Add space",
+        "join_public_room_label": "Join public room",
+        "joining_rooms_status": {
+            "other": "Currently joining %(count)s rooms",
+            "one": "Currently joining %(count)s room"
+        },
+        "redacting_messages_status": {
+            "other": "Currently removing messages in %(count)s rooms",
+            "one": "Currently removing messages in %(count)s room"
+        },
+        "space_menu_label": "%(spaceName)s menu",
+        "home_menu_label": "Home options",
         "sort_unread_first": "Show rooms with unread messages first",
         "show_previews": "Show previews of messages",
         "sort_by": "Sort by",
@@ -2697,37 +2728,6 @@
         "error_no_permission_add_room": "You do not have permissions to add rooms to this space",
         "error_no_permission_add_space": "You do not have permissions to add spaces to this space"
     },
-    "Add room": "Add room",
-    "Rooms": "Rooms",
-    "Low priority": "Low priority",
-    "Historical": "Historical",
-    "Suggested Rooms": "Suggested Rooms",
-    "Add space": "Add space",
-    "Join public room": "Join public room",
-    "Currently joining %(count)s rooms": {
-        "other": "Currently joining %(count)s rooms",
-        "one": "Currently joining %(count)s room"
-    },
-    "Currently removing messages in %(count)s rooms": {
-        "other": "Currently removing messages in %(count)s rooms",
-        "one": "Currently removing messages in %(count)s room"
-    },
-    "%(spaceName)s menu": "%(spaceName)s menu",
-    "Home options": "Home options",
-    "Unable to find user by email": "Unable to find user by email",
-    "Joining space…": "Joining space…",
-    "Joining room…": "Joining room…",
-    "Joining…": "Joining…",
-    "Rejecting invite…": "Rejecting invite…",
-    "Join the room to participate": "Join the room to participate",
-    "Join the conversation with an account": "Join the conversation with an account",
-    "Sign Up": "Sign Up",
-    "Loading preview": "Loading preview",
-    "You were removed from %(roomName)s by %(memberName)s": "You were removed from %(roomName)s by %(memberName)s",
-    "You were removed by %(memberName)s": "You were removed by %(memberName)s",
-    "Reason: %(reason)s": "Reason: %(reason)s",
-    "Forget this space": "Forget this space",
-    "Forget this room": "Forget this room",
     "Re-join": "Re-join",
     "You have been denied access": "You have been denied access",
     "As you have been denied access, you cannot rejoin unless you are invited by the admin or moderator of the group.": "As you have been denied access, you cannot rejoin unless you are invited by the admin or moderator of the group.",

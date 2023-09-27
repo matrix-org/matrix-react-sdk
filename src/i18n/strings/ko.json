@@ -24,13 +24,11 @@
     "Failed to mute user": "사용자 음소거에 실패함",
     "Failed to reject invite": "초대 거부에 실패함",
     "Failed to reject invitation": "초대 거절에 실패함",
-    "Historical": "기록",
     "Home": "홈",
     "Import room keys": "방 키 가져오기",
     "Invalid file%(extra)s": "잘못된 파일%(extra)s",
     "Join Room": "방에 참가",
     "Jump to first unread message.": "읽지 않은 첫 메시지로 건너뜁니다.",
-    "Low priority": "중요하지 않음",
     "Moderator": "조정자",
     "New passwords must match each other.": "새 비밀번호는 서로 같아야 합니다.",
     "not specified": "지정되지 않음",
@@ -41,7 +39,6 @@
     "Return to login screen": "로그인 화면으로 돌아가기",
     "%(roomName)s does not exist.": "%(roomName)s은 없는 방이에요.",
     "%(roomName)s is not accessible at this time.": "현재는 %(roomName)s에 들어갈 수 없습니다.",
-    "Rooms": "방",
     "Search failed": "검색 실패함",
     "Server may be unavailable, overloaded, or search timed out :(": "서버를 쓸 수 없거나 과부하거나, 검색 시간을 초과했어요 :(",
     "Session ID": "세션 ID",
@@ -128,7 +125,6 @@
     "%(duration)sm": "%(duration)s분",
     "%(duration)sh": "%(duration)s시간",
     "%(duration)sd": "%(duration)s일",
-    "Replying": "답장 중",
     "Share Link to User": "사용자에게 링크 공유",
     "Demote": "강등",
     "Demote yourself?": "자신을 강등하시겠습니까?",
@@ -235,10 +231,6 @@
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
     "Edit message": "메시지 편집",
-    "Join the conversation with an account": "계정으로 대화에 참여",
-    "Sign Up": "등록",
-    "Reason: %(reason)s": "이유: %(reason)s",
-    "Forget this room": "이 방 지우기",
     "Re-join": "다시 참가",
     "You were banned from %(roomName)s by %(memberName)s": "%(roomName)s 방에서 %(memberName)s님에 의해 출입 금지 당했습니다",
     "Something went wrong with your invite to %(roomName)s": "%(roomName)s 방으로의 초대에 문제가 있음",
@@ -331,7 +323,6 @@
     "Join millions for free on the largest public server": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함",
     "Couldn't load page": "페이지를 불러올 수 없음",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "이 홈서버가 리소스 한도를 초과했기 때문에 메시지를 보낼 수 없었습니다. 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
-    "Add room": "방 추가",
     "Could not load user profile": "사용자 프로필을 불러올 수 없음",
     "Your password has been reset.": "비밀번호가 초기화되었습니다.",
     "Invalid homeserver discovery response": "잘못된 홈서버 검색 응답",
@@ -394,7 +385,6 @@
     "Messages in this room are end-to-end encrypted.": "이 방의 메시지는 종단간 암호화되었습니다.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "이 사용자를 무시했습니다. 사용자의 메시지는 숨겨집니다. <a>무시하고 보이기.</a>",
     "Show more": "더 보기",
-    "Join public room": "공개 방 참가하기",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
     "Search for rooms": "방 검색",
@@ -426,7 +416,6 @@
     "Some suggestions may be hidden for privacy.": "일부 추천 목록은 개인 정보 보호를 위해 보이지 않을 수 있습니다.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "이름, 이메일, 사용자명(<userId/>) 으로 대화를 시작하세요.",
     "Search names and descriptions": "이름 및 설명 검색",
-    "Add space": "스페이스 추가하기",
     "Add existing rooms": "기존 방 추가",
     "Slovakia": "슬로바키아",
     "Argentina": "아르헨티나",
@@ -515,7 +504,10 @@
         "user_avatar": "프로필 사진",
         "authentication": "인증",
         "public_space": "공개 스페이스",
-        "private_space": "비공개 스페이스"
+        "private_space": "비공개 스페이스",
+        "rooms": "방",
+        "low_priority": "중요하지 않음",
+        "historical": "기록"
     },
     "action": {
         "continue": "계속하기",
@@ -631,7 +623,8 @@
         "voice_message_button": "음성 메세지",
         "poll_button_no_perms_title": "권한 필요",
         "poll_button": "투표",
-        "format_italics": "기울게"
+        "format_italics": "기울게",
+        "replying_title": "답장 중"
     },
     "Code": "코드",
     "power_level": {
@@ -1306,7 +1299,10 @@
         "failed_remove_tag": "방에 %(tagName)s 태그 제거에 실패함",
         "failed_add_tag": "방에 %(tagName)s 태그 추가에 실패함",
         "breadcrumbs_label": "최근 방문한 방 목록",
-        "breadcrumbs_empty": "최근에 방문하지 않은 방 목록"
+        "breadcrumbs_empty": "최근에 방문하지 않은 방 목록",
+        "add_room_label": "방 추가",
+        "add_space_label": "스페이스 추가하기",
+        "join_public_room_label": "공개 방 참가하기"
     },
     "report_content": {
         "missing_reason": "왜 신고하는 지 이유를 적어주세요.",
@@ -1446,7 +1442,11 @@
         "header": {
             "forget_room_button": "방 지우기",
             "hide_widgets_button": "위젯 숨기기"
-        }
+        },
+        "join_title_account": "계정으로 대화에 참여",
+        "join_button_account": "등록",
+        "kick_reason": "이유: %(reason)s",
+        "forget_room": "이 방 지우기"
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",
