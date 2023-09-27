@@ -48,8 +48,6 @@ function makeVersions(unstableFeatures: Record<string, boolean>): IServerVersion
     };
 }
 
-const unstableName = GET_LOGIN_TOKEN_CAPABILITY.altName as string;
-
 describe("<LoginWithQRSection />", () => {
     beforeAll(() => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(makeClient({}));
@@ -69,29 +67,9 @@ describe("<LoginWithQRSection />", () => {
             expect(container).toMatchSnapshot();
         });
 
-        it("only MSC3882 r0 enabled", async () => {
-            const { container } = render(getComponent({ versions: makeVersions({ "org.matrix.msc3882": true }) }));
-            expect(container).toMatchSnapshot();
-        });
-
-        it("only MSC3882 r1 enabled", async () => {
-            const { container } = render(getComponent({ capabilities: { [unstableName]: { enabled: true } } }));
-            expect(container).toMatchSnapshot();
-        });
-
         it("only get_login_token enabled", async () => {
             const { container } = render(
                 getComponent({ capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.name]: { enabled: true } } }),
-            );
-            expect(container).toMatchSnapshot();
-        });
-
-        it("MSC3886 + MSC3882 r1 disabled", async () => {
-            const { container } = render(
-                getComponent({
-                    versions: makeVersions({ "org.matrix.msc3886": true }),
-                    capabilities: { [unstableName]: { enabled: false } },
-                }),
             );
             expect(container).toMatchSnapshot();
         });
@@ -108,32 +86,6 @@ describe("<LoginWithQRSection />", () => {
     });
 
     describe("should render panel", () => {
-        it("MSC3882 r0 + MSC3886", async () => {
-            const { container } = render(
-                getComponent({
-                    versions: makeVersions({
-                        "org.matrix.msc3882": true,
-                        "org.matrix.msc3886": true,
-                    }),
-                }),
-            );
-            expect(container).toMatchSnapshot();
-        });
-
-        it("MSC3882 r1 + MSC3886", async () => {
-            const { container } = render(
-                getComponent({
-                    versions: makeVersions({
-                        "org.matrix.msc3886": true,
-                    }),
-                    capabilities: {
-                        [unstableName]: { enabled: true },
-                    },
-                }),
-            );
-            expect(container).toMatchSnapshot();
-        });
-
         it("get_login_token + MSC3886", async () => {
             const { container } = render(
                 getComponent({
