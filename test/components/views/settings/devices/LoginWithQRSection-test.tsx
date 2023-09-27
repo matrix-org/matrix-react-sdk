@@ -48,6 +48,8 @@ function makeVersions(unstableFeatures: Record<string, boolean>): IServerVersion
     };
 }
 
+const unstableName = GET_LOGIN_TOKEN_CAPABILITY.altName as string;
+
 describe("<LoginWithQRSection />", () => {
     beforeAll(() => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(makeClient({}));
@@ -73,9 +75,7 @@ describe("<LoginWithQRSection />", () => {
         });
 
         it("only MSC3882 r1 enabled", async () => {
-            const { container } = render(
-                getComponent({ capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: true } } }),
-            );
+            const { container } = render(getComponent({ capabilities: { [unstableName]: { enabled: true } } }));
             expect(container).toMatchSnapshot();
         });
 
@@ -90,7 +90,7 @@ describe("<LoginWithQRSection />", () => {
             const { container } = render(
                 getComponent({
                     versions: makeVersions({ "org.matrix.msc3886": true }),
-                    capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: false } },
+                    capabilities: { [unstableName]: { enabled: false } },
                 }),
             );
             expect(container).toMatchSnapshot();
@@ -127,7 +127,7 @@ describe("<LoginWithQRSection />", () => {
                         "org.matrix.msc3886": true,
                     }),
                     capabilities: {
-                        [GET_LOGIN_TOKEN_CAPABILITY.altName]: { enabled: true },
+                        [unstableName]: { enabled: true },
                     },
                 }),
             );
