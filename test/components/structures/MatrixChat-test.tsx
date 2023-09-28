@@ -71,7 +71,7 @@ describe("<MatrixChat />", () => {
         setCanResetTimelineCallback: jest.fn(),
         isInitialSyncComplete: jest.fn(),
         getSyncState: jest.fn(),
-        getSsoLoginUrl: jest.fn(), 
+        getSsoLoginUrl: jest.fn(),
         getSyncStateData: jest.fn().mockReturnValue(null),
         getThirdpartyProtocols: jest.fn().mockResolvedValue({}),
         getClientWellKnown: jest.fn().mockReturnValue({}),
@@ -1126,7 +1126,6 @@ describe("<MatrixChat />", () => {
             // Ensure we don't have a client peg as we aren't logged in.
             unmockClientPeg();
 
-
             hrefSetter = jest.fn();
             const originalHref = window.location.href.toString();
             Object.defineProperty(window, "location", {
@@ -1136,7 +1135,7 @@ describe("<MatrixChat />", () => {
                     },
                     set href(href) {
                         hrefSetter(href);
-                    }
+                    },
                 },
                 writable: true,
             });
@@ -1145,11 +1144,11 @@ describe("<MatrixChat />", () => {
         it("should automatically setup and redirect to SSO login", async () => {
             getComponent({
                 initialScreenAfterLogin: {
-                    screen: 'start_sso',
-                }
+                    screen: "start_sso",
+                },
             });
             await flushPromises();
-            expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith('http://localhost/', 'sso', undefined, undefined);
+            expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith("http://localhost/", "sso", undefined, undefined);
             expect(window.localStorage.getItem(SSO_HOMESERVER_URL_KEY)).toEqual("matrix.example.com");
             expect(window.localStorage.getItem(SSO_ID_SERVER_URL_KEY)).toEqual("ident.example.com");
             expect(hrefSetter).toHaveBeenCalledWith("http://my-sso-url");
@@ -1158,11 +1157,11 @@ describe("<MatrixChat />", () => {
         it("should automatically setup and redirect to CAS login", async () => {
             getComponent({
                 initialScreenAfterLogin: {
-                    screen: 'start_cas',
-                }
+                    screen: "start_cas",
+                },
             });
             await flushPromises();
-            expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith('http://localhost/', 'cas', undefined, undefined);
+            expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith("http://localhost/", "cas", undefined, undefined);
             expect(window.localStorage.getItem(SSO_HOMESERVER_URL_KEY)).toEqual("matrix.example.com");
             expect(window.localStorage.getItem(SSO_ID_SERVER_URL_KEY)).toEqual("ident.example.com");
             expect(hrefSetter).toHaveBeenCalledWith("http://my-sso-url");
