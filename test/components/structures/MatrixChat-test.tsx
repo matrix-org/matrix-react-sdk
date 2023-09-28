@@ -1154,6 +1154,19 @@ describe("<MatrixChat />", () => {
             expect(window.localStorage.getItem(SSO_ID_SERVER_URL_KEY)).toEqual("ident.example.com");
             expect(hrefSetter).toHaveBeenCalledWith("http://my-sso-url");
         });
+
+        it("should automatically setup and redirect to CAS login", async () => {
+            getComponent({
+                initialScreenAfterLogin: {
+                    screen: 'start_cas',
+                }
+            });
+            await flushPromises();
+            expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith('http://localhost/', 'cas', undefined, undefined);
+            expect(window.localStorage.getItem(SSO_HOMESERVER_URL_KEY)).toEqual("matrix.example.com");
+            expect(window.localStorage.getItem(SSO_ID_SERVER_URL_KEY)).toEqual("ident.example.com");
+            expect(hrefSetter).toHaveBeenCalledWith("http://my-sso-url");
+        });
     });
 
     describe("Multi-tab lockout", () => {
