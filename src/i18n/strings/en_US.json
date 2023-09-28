@@ -34,7 +34,6 @@
     "Search failed": "Search failed",
     "Server may be unavailable, overloaded, or search timed out :(": "Server may be unavailable, overloaded, or search timed out :(",
     "Session ID": "Session ID",
-    "This room has no local addresses": "This room has no local addresses",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tried to load a specific point in this room's timeline, but was unable to find it.",
     "unknown error code": "unknown error code",
@@ -527,7 +526,8 @@
             "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
             "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
             "url_previews_section": "URL Previews",
-            "other_section": "Other"
+            "other_section": "Other",
+            "no_aliases_room": "This room has no local addresses"
         },
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"

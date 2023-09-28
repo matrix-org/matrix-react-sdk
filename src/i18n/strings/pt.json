@@ -52,7 +52,6 @@
     "No more results": "Não há mais resultados",
     "Search failed": "Busca falhou",
     "Server may be unavailable, overloaded, or search timed out :(": "O servidor pode estar indisponível, sobrecarregado, ou a busca ultrapassou o tempo limite :(",
-    "This room has no local addresses": "Esta sala não tem endereços locais",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Tentei carregar um ponto específico na linha do tempo desta sala, mas parece que você não tem permissões para ver a mensagem em questão.",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tentei carregar um ponto específico na linha do tempo desta sala, mas não o encontrei.",
     "You seem to be in a call, are you sure you want to quit?": "Parece que você está em uma chamada. Tem certeza que quer sair?",
@@ -810,7 +809,8 @@
             "user_url_previews_default_on": "Você <a>habilitou</a> pré-visualizações de links por padrão.",
             "user_url_previews_default_off": "Você <a>desabilitou</a> pré-visualizações de links por padrão.",
             "url_previews_section": "Pré-visualização de links",
-            "other_section": "Outros"
+            "other_section": "Outros",
+            "no_aliases_room": "Esta sala não tem endereços locais"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos"

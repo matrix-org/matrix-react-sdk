@@ -51,7 +51,6 @@
     "unknown error code": "непознати код грешке",
     "Failed to forget room %(errCode)s": "Нисам успео да заборавим собу %(errCode)s",
     "not specified": "није наведено",
-    "This room has no local addresses": "Ова соба нема локалних адреса",
     "Error decrypting attachment": "Грешка при дешифровању прилога",
     "Decrypt %(text)s": "Дешифруј %(text)s",
     "Download %(text)s": "Преузми %(text)s",
@@ -138,10 +137,7 @@
     "Join millions for free on the largest public server": "Придружите се милионима других бесплатно на највећем јавном серверу",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "Show more": "Прикажи више",
     "Direct Messages": "Директне поруке",
-    "Room Name": "Назив собе",
-    "Room Topic": "Тема собе",
     "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
     "Messages in this room are not end-to-end encrypted.": "Поруке у овој соби нису шифроване с краја на крај.",
     "%(count)s verified sessions": {
@@ -568,7 +564,8 @@
         "rooms": "Собе",
         "low_priority": "Ниска важност",
         "historical": "Историја",
-        "go_to_settings": "Идите на подешавања"
+        "go_to_settings": "Идите на подешавања",
+        "show_more": "Прикажи више"
     },
     "action": {
         "continue": "Настави",
@@ -1174,7 +1171,10 @@
             "url_previews_section": "УРЛ прегледи",
             "error_save_space_settings": "Чување подешавања простора није успело.",
             "description_space": "Уредите поставке које се односе на ваш простор.",
-            "other_section": "Остало"
+            "other_section": "Остало",
+            "no_aliases_room": "Ова соба нема локалних адреса",
+            "name_field_label": "Назив собе",
+            "topic_field_label": "Тема собе"
         },
         "advanced": {
             "unfederated": "Ова соба није доступна са удаљених Матрикс сервера"

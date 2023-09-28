@@ -1,5 +1,4 @@
 {
-    "Show more": "Taispeáin níos mó",
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
     "Are you sure you want to leave the room '%(roomName)s'?": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?",
     "Are you sure?": "An bhfuil tú cinnte?",
@@ -409,7 +408,8 @@
         "rooms": "Seomraí",
         "low_priority": "Tosaíocht íseal",
         "historical": "Stairiúil",
-        "unencrypted": "Gan chriptiú"
+        "unencrypted": "Gan chriptiú",
+        "show_more": "Taispeáin níos mó"
     },
     "action": {
         "continue": "Lean ar aghaidh",

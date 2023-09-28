@@ -121,11 +121,7 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "Share room": "Del rommet",
-    "Main address": "Hovedadresse",
     "not specified": "ikke spesifisert",
-    "Local address": "Lokal adresse",
-    "Published Addresses": "Publiserte adresser",
-    "Local Addresses": "Lokale adresser",
     "Accepting…": "Aksepterer …",
     "Hide sessions": "Skjul økter",
     "Show image": "Vis bilde",
@@ -159,17 +155,11 @@
     "Return to login screen": "Gå tilbake til påloggingsskjermen",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "Show more": "Vis mer",
     "Warning!": "Advarsel!",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Share Link to User": "Del en lenke til brukeren",
-    "No other published addresses yet, add one below": "Det er ingen publiserte adresser enda, legg til en nedenfor",
-    "New published address (e.g. #alias:server)": "Ny publisert adresse (f.eks. #alias:tjener)",
-    "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Velg adresser for dette rommet slik at brukere kan finne dette rommet gjennom hjemmetjeneren din (%(localDomain)s)",
-    "Room Name": "Rommets navn",
-    "Room Topic": "Rommets tema",
     "Encryption not enabled": "Kryptering er ikke skrudd på",
     "Create new room": "Opprett et nytt rom",
     "Language Dropdown": "Språk-nedfallsmeny",
@@ -180,7 +170,6 @@
     "Logs sent": "Loggbøkene ble sendt",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
-    "Room avatar": "Rommets avatar",
     "Start Verification": "Begynn verifisering",
     "Verify User": "Verifiser bruker",
     "%(count)s verified sessions": {
@@ -193,7 +182,6 @@
     },
     "Verify by scanning": "Verifiser med skanning",
     "Verify by emoji": "Verifiser med emoji",
-    "Message Actions": "Meldingshandlinger",
     "%(name)s accepted": "%(name)s aksepterte",
     "%(name)s declined": "%(name)s avslo",
     "%(name)s cancelled": "%(name)s avbrøt",
@@ -209,7 +197,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "Other published addresses:": "Andre publiserte adresser:",
     "Waiting for %(displayName)s to accept…": "Venter på at %(displayName)s skal akseptere …",
     "Your homeserver": "Hjemmetjeneren din",
     "Hide verified sessions": "Skjul verifiserte økter",
@@ -232,7 +219,6 @@
     "Ok": "OK",
     "Santa": "Julenisse",
     "Message preview": "Meldingsforhåndsvisning",
-    "This room has no local addresses": "Dette rommet har ikke noen lokale adresser",
     "Remove recent messages by %(user)s": "Fjern nylige meldinger fra %(user)s",
     "Remove %(count)s messages": {
         "other": "Slett %(count)s meldinger",
@@ -677,7 +663,8 @@
         "historical": "Historisk",
         "go_to_settings": "Gå til Innstillinger",
         "setup_secure_messages": "Sett opp sikre meldinger",
-        "unencrypted": "Ukryptert"
+        "unencrypted": "Ukryptert",
+        "show_more": "Vis mer"
     },
     "action": {
         "continue": "Fortsett",
@@ -1242,7 +1229,10 @@
         "url_preview": {
             "close": "Lukk forhåndsvisning"
         },
-        "send_state_sent": "Meldingen ble sendt"
+        "send_state_sent": "Meldingen ble sendt",
+        "mab": {
+            "label": "Meldingshandlinger"
+        }
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1400,7 +1390,19 @@
             "save": "Lagre endringer",
             "leave_space": "Forlat området",
             "aliases_section": "Rom-adresser",
-            "other_section": "Andre"
+            "other_section": "Andre",
+            "canonical_alias_field_label": "Hovedadresse",
+            "no_aliases_room": "Dette rommet har ikke noen lokale adresser",
+            "local_alias_field_label": "Lokal adresse",
+            "published_aliases_section": "Publiserte adresser",
+            "aliases_items_label": "Andre publiserte adresser:",
+            "aliases_no_items_label": "Det er ingen publiserte adresser enda, legg til en nedenfor",
+            "new_alias_placeholder": "Ny publisert adresse (f.eks. #alias:tjener)",
+            "local_aliases_section": "Lokale adresser",
+            "local_aliases_explainer_room": "Velg adresser for dette rommet slik at brukere kan finne dette rommet gjennom hjemmetjeneren din (%(localDomain)s)",
+            "name_field_label": "Rommets navn",
+            "topic_field_label": "Rommets tema",
+            "avatar_field_label": "Rommets avatar"
         },
         "advanced": {
             "room_version_section": "Romversjon",

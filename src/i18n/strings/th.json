@@ -122,20 +122,6 @@
     "Afghanistan": "อัฟกานิสถาน",
     "United States": "สหรัฐอเมริกา",
     "United Kingdom": "สหราชอาณาจักร",
-    "Main address": "ที่อยู่หลัก",
-    "Error removing address": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
-    "There was an error removing that address. It may no longer exist or a temporary error occurred.": "เกิดข้อผิดพลาดในการลบที่อยู่นั้น อาจไม่มีอยู่อีกต่อไปหรือเกิดข้อผิดพลาดชั่วคราว.",
-    "You don't have permission to delete the address.": "คุณไม่ได้รับอนุญาตให้ลบที่อยู่.",
-    "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "Error creating address": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
-    "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่สำรองของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลักของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "Error updating main address": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลัก",
-    "Copy link to thread": "คัดลอกลิงค์ไปยังกระทู้",
-    "View in room": "ดูในห้อง",
-    "Message Actions": "การดำเนินการกับข้อความ",
-    "Text": "ตัวอักษร",
-    "Create a link": "สร้างลิงค์",
     "%(count)s reply": {
         "one": "%(count)s ตอบ",
         "other": "%(count)s ตอบกลับ"
@@ -239,9 +225,13 @@
             "user_description": "ผู้ใช้"
         },
         "poll_button_no_perms_title": "ต้องได้รับอนุญาต",
-        "stop_voice_message": "หยุดการบันทึก"
+        "stop_voice_message": "หยุดการบันทึก",
+        "link_modal": {
+            "title_create": "สร้างลิงค์",
+            "text_field_label": "ตัวอักษร",
+            "link_field_label": "ลิงค์"
+        }
     },
-    "Link": "ลิงค์",
     "Code": "โค้ด",
     "power_level": {
         "default": "ค่าเริ่มต้น",
@@ -370,6 +360,11 @@
         },
         "context_menu": {
             "external_url": "URL ต้นฉบับ"
+        },
+        "mab": {
+            "label": "การดำเนินการกับข้อความ",
+            "view_in_room": "ดูในห้อง",
+            "copy_link_thread": "คัดลอกลิงค์ไปยังกระทู้"
         }
     },
     "slash_command": {
@@ -518,7 +513,16 @@
         },
         "general": {
             "user_url_previews_default_on": "ค่าเริ่มต้นของคุณ<a>เปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
-            "user_url_previews_default_off": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้"
+            "user_url_previews_default_off": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
+            "error_updating_canonical_alias_title": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลัก",
+            "error_updating_canonical_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลักของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_updating_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่สำรองของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_creating_alias_title": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
+            "error_creating_alias_description": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_deleting_alias_description_forbidden": "คุณไม่ได้รับอนุญาตให้ลบที่อยู่.",
+            "error_deleting_alias_description": "เกิดข้อผิดพลาดในการลบที่อยู่นั้น อาจไม่มีอยู่อีกต่อไปหรือเกิดข้อผิดพลาดชั่วคราว.",
+            "error_deleting_alias_title": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
+            "canonical_alias_field_label": "ที่อยู่หลัก"
         }
     },
     "room": {

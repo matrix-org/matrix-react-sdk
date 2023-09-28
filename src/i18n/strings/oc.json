@@ -42,7 +42,6 @@
     "Anchor": "Ancorar",
     "Headphones": "Escotadors",
     "Folder": "Dorsièr",
-    "Show more": "Ne veire mai",
     "Demote": "Retrogradar",
     "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
@@ -114,7 +113,8 @@
         "rooms": "Salas",
         "low_priority": "Febla prioritat",
         "historical": "Istoric",
-        "unencrypted": "Pas chifrat"
+        "unencrypted": "Pas chifrat",
+        "show_more": "Ne veire mai"
     },
     "action": {
         "continue": "Contunhar",
