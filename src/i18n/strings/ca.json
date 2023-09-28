@@ -38,7 +38,6 @@
     "Are you sure?": "Estàs segur?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "No podràs desfer aquest canvi ja que estàs donant a l'usuari el mateix nivell d'autoritat que el teu.",
     "Jump to read receipt": "Vés a l'últim missatge llegit",
-    "Admin Tools": "Eines d'administració",
     "and %(count)s others...": {
         "other": "i %(count)s altres...",
         "one": "i un altre..."
@@ -53,7 +52,6 @@
         "one": "(~%(count)s resultat)"
     },
     "Join Room": "Entra a la sala",
-    "Jump to first unread message.": "Salta al primer missatge no llegit.",
     "not specified": "sense especificar",
     "This room has no local addresses": "Aquesta sala no té adreces locals",
     "Error decrypting attachment": "Error desxifrant fitxer adjunt",
@@ -107,15 +105,12 @@
     "Friday": "Divendres",
     "Changelog": "Registre de canvis",
     "Failed to send logs: ": "No s'han pogut enviar els logs: ",
-    "This Room": "Aquesta sala",
     "Unavailable": "No disponible",
     "Filter results": "Resultats del filtre",
-    "Search…": "Cerca…",
     "Tuesday": "Dimarts",
     "Preparing to send logs": "Preparant l'enviament de logs",
     "Saturday": "Dissabte",
     "Monday": "Dilluns",
-    "All Rooms": "Totes les sales",
     "Wednesday": "Dimecres",
     "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
@@ -710,7 +705,13 @@
         "3pid_invite_no_is_subtitle": "Per rebre invitacions directament a %(brand)s, utilitza un servidor d'identitat a Configuració.",
         "invite_email_mismatch_suggestion": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
         "not_found_title_name": "La sala %(roomName)s no existeix.",
-        "inaccessible_name": "La sala %(roomName)s no és accessible en aquest moment."
+        "inaccessible_name": "La sala %(roomName)s no és accessible en aquest moment.",
+        "search": {
+            "this_room": "Aquesta sala",
+            "all_rooms": "Totes les sales",
+            "field_placeholder": "Cerca…"
+        },
+        "jump_read_marker": "Salta al primer missatge no llegit."
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -824,5 +825,8 @@
         "invited_list_heading": "Convidat",
         "filter_placeholder": "Filtra els membres de la sala",
         "power_label": "%(userName)s (autoritat %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "admin_tools_section": "Eines d'administració"
     }
 }

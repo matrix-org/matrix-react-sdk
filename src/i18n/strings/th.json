@@ -19,7 +19,6 @@
     "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
     "Invalid file%(extra)s": "ไฟล์ %(extra)s ไม่ถูกต้อง",
     "Join Room": "เข้าร่วมห้อง",
-    "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
     "Moderator": "ผู้ช่วยดูแล",
     "New passwords must match each other.": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
     "not specified": "ไม่ได้ระบุ",
@@ -73,15 +72,12 @@
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
     "Changelog": "บันทึกการเปลี่ยนแปลง",
-    "This Room": "ห้องนี้",
     "Unavailable": "ไม่มี",
     "Send": "ส่ง",
     "Tuesday": "วันอังคาร",
-    "Search…": "ค้นหา…",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
     "Saturday": "วันเสาร์",
     "Monday": "วันจันทร์",
-    "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
     "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
@@ -140,23 +136,10 @@
     "Message Actions": "การดำเนินการกับข้อความ",
     "Text": "ตัวอักษร",
     "Create a link": "สร้างลิงค์",
-    "Stop recording": "หยุดการบันทึก",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "เราไม่พบไมโครโฟนบนอุปกรณ์ของคุณ โปรดตรวจสอบการตั้งค่าของคุณแล้วลองอีกครั้ง.",
-    "No microphone found": "ไม่พบไมโครโฟน",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "เราไม่สามารถเข้าถึงไมโครโฟนของคุณได้ โปรดตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณแล้วลองอีกครั้ง.",
-    "Unable to access your microphone": "ไม่สามารถเข้าถึงไมโครโฟนของคุณ",
-    "Open thread": "เปิดกระทู้",
     "%(count)s reply": {
         "one": "%(count)s ตอบ",
         "other": "%(count)s ตอบกลับ"
     },
-    "Invited by %(sender)s": "ได้รับเชิญจาก %(sender)s",
-    "Revoke invite": "ยกเลิกการเชิญ",
-    "Admin Tools": "เครื่องมือผู้ดูแลระบบ",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
-    "Failed to revoke invite": "ยกเลิกคำเชิญไม่สำเร็จ",
-    "Add some now": "เพิ่มบางส่วนในขณะนี้",
-    "You don't currently have any stickerpacks enabled": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
     "Failed to connect to integration manager": "ไม่สามารถเชื่อมต่อกับตัวจัดการการรวม",
     "General failure": "ข้อผิดพลาดทั่วไป",
     "collapse": "ยุบ",
@@ -255,7 +238,8 @@
             "command_description": "คำสั่ง",
             "user_description": "ผู้ใช้"
         },
-        "poll_button_no_perms_title": "ต้องได้รับอนุญาต"
+        "poll_button_no_perms_title": "ต้องได้รับอนุญาต",
+        "stop_voice_message": "หยุดการบันทึก"
     },
     "Link": "ลิงค์",
     "Code": "โค้ด",
@@ -438,7 +422,11 @@
         "no_permission_conference_description": "คุณไม่ได้รับอนุญาตให้เริ่มการประชุมทางโทรศัพท์ในห้องนี้",
         "default_device": "อุปกรณ์เริ่มต้น",
         "no_media_perms_title": "ไม่มีสิทธิ์เข้าถึงสื่อ",
-        "no_media_perms_description": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง"
+        "no_media_perms_description": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง",
+        "unable_to_access_audio_input_title": "ไม่สามารถเข้าถึงไมโครโฟนของคุณ",
+        "unable_to_access_audio_input_description": "เราไม่สามารถเข้าถึงไมโครโฟนของคุณได้ โปรดตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณแล้วลองอีกครั้ง.",
+        "no_audio_input_title": "ไม่พบไมโครโฟน",
+        "no_audio_input_description": "เราไม่พบไมโครโฟนบนอุปกรณ์ของคุณ โปรดตรวจสอบการตั้งค่าของคุณแล้วลองอีกครั้ง."
     },
     "devtools": {
         "category_room": "ห้อง"
@@ -545,7 +533,13 @@
         "header": {
             "forget_room_button": "ลืมห้อง"
         },
-        "not_found_title_name": "ไม่มีห้อง %(roomName)s อยู่จริง"
+        "not_found_title_name": "ไม่มีห้อง %(roomName)s อยู่จริง",
+        "search": {
+            "this_room": "ห้องนี้",
+            "all_rooms": "ทุกห้อง",
+            "field_placeholder": "ค้นหา…"
+        },
+        "jump_read_marker": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน"
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
@@ -602,5 +596,19 @@
         "invited_list_heading": "เชิญแล้ว",
         "filter_placeholder": "กรองสมาชิกห้อง",
         "power_label": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
+        "empty_add_prompt": "เพิ่มบางส่วนในขณะนี้"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "ยกเลิกคำเชิญไม่สำเร็จ",
+        "error_revoke_3pid_invite_description": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
+        "admin_tools_section": "เครื่องมือผู้ดูแลระบบ",
+        "revoke_invite": "ยกเลิกการเชิญ",
+        "invited_by": "ได้รับเชิญจาก %(sender)s"
+    },
+    "threads": {
+        "open_thread": "เปิดกระทู้"
     }
 }

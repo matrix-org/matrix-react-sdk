@@ -86,7 +86,6 @@
     "Trumpet": "tabra",
     "Bell": "janbe",
     "Headphones": "selsnapra",
-    "Search…": "nu sisku",
     "Sunday": "li jy. dy. ze detri",
     "Monday": "li jy. dy. pa detri",
     "Tuesday": "li jy. dy. re detri",
@@ -115,7 +114,6 @@
         "one": ".i samtcise'u %(count)s da"
     },
     "Hide sessions": "nu ro se samtcise'u cu zilmipri",
-    "Revoke invite": "nu zukte le ka na ckaji le se friti",
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
     "Are you sure you want to sign out?": ".i xu do birti le du'u do kaidji le ka co'u se jaspu",
@@ -520,10 +518,16 @@
         "invite_this_room": "nu friti le ka ziljmina le se zilbe'i",
         "join_button_account": "nu co'a na'o jaspu",
         "dm_invite_subtitle": ".i la'o zoi. <userName/> .zoi kaidji le ka tavla do",
-        "invite_subtitle": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do"
+        "invite_subtitle": ".i la'o zoi. <userName/> .zoi friti le ka ziljmina kei do",
+        "search": {
+            "field_placeholder": "nu sisku"
+        }
     },
     "notifications": {
         "class_other": "drata",
         "default": "zmiselcu'a"
+    },
+    "user_info": {
+        "revoke_invite": "nu zukte le ka na ckaji le se friti"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "All Rooms": "सारे कमरे",
     "Sun": "रवि",
     "Mon": "सोम",
     "Tue": "मंगल",
@@ -38,7 +37,6 @@
     "Are you sure?": "क्या आपको यकीन है?",
     "Jump to read receipt": "पढ़ी हुई रसीद में कूदें",
     "Share Link to User": "उपयोगकर्ता को लिंक साझा करें",
-    "Admin Tools": "व्यवस्थापक उपकरण",
     "and %(count)s others...": {
         "other": "और %(count)s अन्य ...",
         "one": "और एक अन्य..."
@@ -672,7 +670,10 @@
     },
     "room": {
         "drop_file_prompt": "अपलोड करने के लिए यहां फ़ाइल ड्रॉप करें",
-        "error_join_incompatible_version_2": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।"
+        "error_join_incompatible_version_2": "कृपया अपने होमसर्वर व्यवस्थापक से संपर्क करें।",
+        "search": {
+            "all_rooms": "सारे कमरे"
+        }
     },
     "space": {
         "context_menu": {
@@ -763,5 +764,8 @@
         "invited_list_heading": "आमंत्रित",
         "filter_placeholder": "रूम के सदस्यों को फ़िल्टर करें",
         "power_label": "%(userName)s (शक्ति %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "admin_tools_section": "व्यवस्थापक उपकरण"
     }
 }

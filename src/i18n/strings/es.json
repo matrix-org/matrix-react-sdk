@@ -20,10 +20,8 @@
     "Failed to reject invitation": "Falló al rechazar la invitación",
     "Invalid file%(extra)s": "Archivo inválido %(extra)s",
     "Join Room": "Unirme a la sala",
-    "Admin Tools": "Herramientas de administración",
     "Custom level": "Nivel personalizado",
     "Home": "Inicio",
-    "Jump to first unread message.": "Ir al primer mensaje no leído.",
     "Create new room": "Crear una nueva sala",
     "Unable to restore session": "No se puede recuperar la sesión",
     "Search failed": "Falló la búsqueda",
@@ -78,18 +76,15 @@
     "Friday": "Viernes",
     "Changelog": "Registro de cambios",
     "Failed to send logs: ": "Error al enviar registros: ",
-    "This Room": "Esta sala",
     "Unavailable": "No disponible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
-    "Search…": "Buscar…",
     "Preparing to send logs": "Preparando para enviar registros",
     "Unnamed room": "Sala sin nombre",
     "Saturday": "Sábado",
     "Monday": "Lunes",
     "Send": "Enviar",
     "Thank you!": "¡Gracias!",
-    "All Rooms": "Todas las salas",
     "You cannot delete this message. (%(code)s)": "No puedes eliminar este mensaje. (%(code)s)",
     "Thursday": "Jueves",
     "Logs sent": "Registros enviados",
@@ -114,7 +109,6 @@
         "one": "(~%(count)s resultado)"
     },
     "Share room": "Compartir la sala",
-    "You don't currently have any stickerpacks enabled": "Actualmente no tienes ningún paquete de pegatinas activado",
     "Error decrypting image": "Error al descifrar imagen",
     "Error decrypting video": "Error al descifrar el vídeo",
     "Add an Integration": "Añadir una Integración",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "No puedes enviar ningún mensaje hasta que revises y estés de acuerdo con <consentLink>nuestros términos y condiciones</consentLink>.",
     "Connectivity to the server has been lost.": "Se ha perdido la conexión con el servidor.",
     "Sent messages will be stored until your connection has returned.": "Los mensajes enviados se almacenarán hasta que vuelva la conexión.",
-    "Only room administrators will see this warning": "Sólo los administradores de la sala verán esta advertencia",
     "Upgrade Room Version": "Actualizar Versión de la Sala",
     "Create a new room with the same name, description and avatar": "Crear una sala nueva con el mismo nombre, descripción y avatar",
     "Update any local room aliases to point to the new room": "Actualizar los alias locales de la sala para que apunten a la nueva",
@@ -219,7 +212,6 @@
     "Folder": "Carpeta",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Los mensajes cifrados son seguros con el cifrado punto a punto. Solo tú y el/los destinatario/s tiene/n las claves para leer estos mensajes.",
     "Start using Key Backup": "Comenzar a usar la copia de claves",
-    "Add some now": "Añadir alguno ahora",
     "Main address": "Dirección principal",
     "Room avatar": "Avatar de la sala",
     "Room Name": "Nombre de sala",
@@ -330,7 +322,6 @@
     "a key signature": "un firma de clave",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontró un error durante la carga de:",
     "Encrypted by a deleted session": "Cifrado por una sesión eliminada",
-    "Scroll to most recent messages": "Ir a los mensajes más recientes",
     "No recent messages by %(user)s found": "No se han encontrado mensajes recientes de %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Intente desplazarse hacia arriba en la línea de tiempo para ver si hay alguna anterior.",
     "Remove recent messages by %(user)s": "Eliminar mensajes recientes de %(user)s",
@@ -345,14 +336,7 @@
     "Failed to deactivate user": "Error en desactivar usuario",
     "Remove recent messages": "Eliminar mensajes recientes",
     "Direct Messages": "Mensajes directos",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Actualizar esta sala cerrará la instancia actual de la sala y creará una sala actualizada con el mismo nombre.",
-    "This room has already been upgraded.": "Esta sala ya ha sido actualizada.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Esta sala está ejecutando la versión de sala <roomVersion />, la cual ha sido marcado por este servidor base como <i>inestable</i>.",
     "Failed to connect to integration manager": "Error al conectarse con el administrador de integración",
-    "Failed to revoke invite": "Error al revocar la invitación",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "No se logró revocar la invitación. El servidor puede sufrir un problema temporal o usted no tiene los permisos suficientes para revocar la invitación.",
-    "Revoke invite": "Revocar invitación",
-    "Invited by %(sender)s": "Invitado por %(sender)s",
     "Error updating main address": "Error al actualizar la dirección principal",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Hubo un error al actualizar la dirección principal de la sala. Posiblemente el servidor no lo permita o se produjo un error temporal.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Hubo un error al actualizar la dirección alternativa de la sala. Posiblemente el servidor no lo permita o se produjo un error temporal.",
@@ -857,7 +841,6 @@
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
-    "View message": "Ver mensaje",
     "Including %(commaSeparatedMembers)s": "Incluyendo %(commaSeparatedMembers)s",
     "View all %(count)s members": {
         "one": "Ver 1 miembro",
@@ -871,10 +854,6 @@
     "Not all selected were added": "No se han añadido todas las seleccionadas",
     "You are not allowed to view this server's rooms list": "No tienes permiso para ver la lista de salas de este servidor",
     "Error processing voice message": "Ha ocurrido un error al procesar el mensaje de voz",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "No hemos encontrado un micrófono en tu dispositivo. Por favor, revisa tus ajustes e inténtalo de nuevo.",
-    "No microphone found": "Micrófono no detectado",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "No hemos podido acceder a tu micrófono. Por favor, comprueba los ajustes de tu navegador e inténtalo de nuevo.",
-    "Unable to access your microphone": "No se ha podido acceder a tu micrófono",
     "Search names and descriptions": "Buscar por nombre y descripción",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
@@ -938,8 +917,6 @@
     "Decrypting": "Descifrando",
     "Missed call": "Llamada perdida",
     "Call declined": "Llamada rechazada",
-    "Stop recording": "Dejar de grabar",
-    "Send voice message": "Enviar un mensaje de voz",
     "Unknown failure: %(reason)s": "Fallo desconocido: %(reason)s",
     "Rooms and spaces": "Salas y espacios",
     "Results": "Resultados",
@@ -978,7 +955,6 @@
     "Yours, or the other users' internet connection": "Tu conexión a internet o la de la otra persona",
     "The homeserver the user you're verifying is connected to": "El servidor base del usuario al que estás invitando",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
-    "Joined": "Te has unido",
     "Copy link to thread": "Copiar enlace al hilo",
     "Thread options": "Ajustes del hilo",
     "Reply in thread": "Responder en hilo",
@@ -1076,7 +1052,6 @@
     "Results will be visible when the poll is ended": "Los resultados podrán verse cuando la encuesta termine",
     "Sorry, you can't edit a poll after votes have been cast.": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
     "Can't edit poll": "Encuesta no editable",
-    "Open thread": "Abrir hilo",
     "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
     "Click": "Clic",
@@ -1132,7 +1107,6 @@
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Tu mensaje no se ha enviado porque este servidor base ha sido bloqueado por su administrador. Por favor, <a>contacta con el administrador</a> de tu servicio para seguir usándolo.",
     "Cameras": "Cámaras",
     "Open room": "Abrir sala",
-    "Show Labs settings": "Ver ajustes de los experimentos",
     "Unread email icon": "Icono de email sin leer",
     "An error occurred whilst sharing your live location, please try again": "Ha ocurrido un error al compartir tu ubicación en tiempo real. Por favor, inténtalo de nuevo",
     "An error occurred whilst sharing your live location": "Ocurrió un error mientras se compartía tu ubicación en tiempo real",
@@ -1203,7 +1177,6 @@
     "Too many attempts in a short time. Wait some time before trying again.": "Demasiados intentos en poco tiempo. Espera un poco antes de volverlo a intentar.",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ADVERTENCIA :</w> <description/>",
-    "Unable to decrypt message": "No se ha podido descifrar el mensaje",
     "We were unable to start a chat with the other user.": "No se ha podido iniciar una conversación con el otro usuario.",
     "Error starting verification": "Error al empezar la verificación",
     "Text": "Texto",
@@ -1229,8 +1202,6 @@
     "Ignore %(user)s": "Ignorar a %(user)s",
     "Poll history": "Historial de encuestas",
     "Edit link": "Editar enlace",
-    "Search all rooms": "Buscar en todas las salas",
-    "Search this room": "Buscar en esta sala",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -1365,7 +1336,9 @@
         "historical": "Historial",
         "go_to_settings": "Ir a la configuración",
         "setup_secure_messages": "Configurar mensajes seguros",
-        "unencrypted": "Sin cifrar"
+        "unencrypted": "Sin cifrar",
+        "view_message": "Ver mensaje",
+        "joined": "Te has unido"
     },
     "action": {
         "continue": "Continuar",
@@ -1690,7 +1663,9 @@
         "format_italics": "Cursiva",
         "format_insert_link": "Insertar enlace",
         "replying_title": "Respondiendo",
-        "edit_composer_label": "Editar mensaje"
+        "edit_composer_label": "Editar mensaje",
+        "send_voice_message": "Enviar un mensaje de voz",
+        "stop_voice_message": "Dejar de grabar"
     },
     "Link": "Enlace",
     "Code": "Código",
@@ -2921,7 +2896,11 @@
             "other": "%(count)s personas unidas"
         },
         "unknown_person": "persona desconocida",
-        "connecting": "Conectando"
+        "connecting": "Conectando",
+        "unable_to_access_audio_input_title": "No se ha podido acceder a tu micrófono",
+        "unable_to_access_audio_input_description": "No hemos podido acceder a tu micrófono. Por favor, comprueba los ajustes de tu navegador e inténtalo de nuevo.",
+        "no_audio_input_title": "Micrófono no detectado",
+        "no_audio_input_description": "No hemos encontrado un micrófono en tu dispositivo. Por favor, revisa tus ajustes e inténtalo de nuevo."
     },
     "Other": "Otros",
     "room_settings": {
@@ -3609,7 +3588,9 @@
         "show_all_threads": "Ver todos los hilos",
         "empty_explainer": "Los hilos ayudan a mantener tus conversaciones centradas y a que sean fáciles de seguir.",
         "empty_tip": "<b>Consejo:</b> Usa «%(replyInThread)s» mientras pasas el ratón sobre un mensaje.",
-        "empty_heading": "Organiza los temas de conversación en hilos"
+        "empty_heading": "Organiza los temas de conversación en hilos",
+        "open_thread": "Abrir hilo",
+        "unable_to_decrypt": "No se ha podido descifrar el mensaje"
     },
     "theme": {
         "light_high_contrast": "Claro con contraste alto",
@@ -3855,7 +3836,21 @@
         "inaccessible_subtitle_2": "El código de error %(errcode)s fue devuelto cuando se intentaba acceder a la sala o espacio. Si crees que este mensaje es un error, por favor, <issueLink> envía un reporte de bug </issueLink>.",
         "join_failed_needs_invite": "Para ver %(roomName)s necesitas una invitación",
         "view_failed_enable_video_rooms": "Para verla, activa las salas de vídeos en la sección de experimentos de los ajustes",
-        "join_failed_enable_video_rooms": "Para unirse, por favor activa las salas de vídeo en Labs primero"
+        "join_failed_enable_video_rooms": "Para unirse, por favor activa las salas de vídeo en Labs primero",
+        "jump_to_bottom_button": "Ir a los mensajes más recientes",
+        "show_labs_settings": "Ver ajustes de los experimentos",
+        "upgrade_warning_bar": "Actualizar esta sala cerrará la instancia actual de la sala y creará una sala actualizada con el mismo nombre.",
+        "upgrade_warning_bar_upgraded": "Esta sala ya ha sido actualizada.",
+        "upgrade_warning_bar_unstable": "Esta sala está ejecutando la versión de sala <roomVersion />, la cual ha sido marcado por este servidor base como <i>inestable</i>.",
+        "upgrade_warning_bar_admins": "Sólo los administradores de la sala verán esta advertencia",
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas las salas",
+            "field_placeholder": "Buscar…",
+            "this_room_button": "Buscar en esta sala",
+            "all_rooms_button": "Buscar en todas las salas"
+        },
+        "jump_read_marker": "Ir al primer mensaje no leído."
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",
@@ -4070,5 +4065,16 @@
         "invited_list_heading": "Invitado",
         "filter_placeholder": "Filtrar miembros de la sala",
         "power_label": "%(userName)s (nivel de permisos %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Actualmente no tienes ningún paquete de pegatinas activado",
+        "empty_add_prompt": "Añadir alguno ahora"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Error al revocar la invitación",
+        "error_revoke_3pid_invite_description": "No se logró revocar la invitación. El servidor puede sufrir un problema temporal o usted no tiene los permisos suficientes para revocar la invitación.",
+        "admin_tools_section": "Herramientas de administración",
+        "revoke_invite": "Revocar invitación",
+        "invited_by": "Invitado por %(sender)s"
     }
 }

@@ -1,6 +1,5 @@
 {
     "Home": "Domov",
-    "Jump to first unread message.": "Přejít na první nepřečtenou zprávu.",
     "Sun": "Ne",
     "Mon": "Po",
     "Tue": "Út",
@@ -65,7 +64,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
-    "Admin Tools": "Nástroje pro správce",
     "Delete Widget": "Smazat widget",
     "Error decrypting image": "Chyba při dešifrování obrázku",
     "Error decrypting video": "Chyba při dešifrování videa",
@@ -106,16 +104,13 @@
     "Today": "Dnes",
     "Friday": "Pátek",
     "Changelog": "Seznam změn",
-    "This Room": "Tato místnost",
     "Unavailable": "Nedostupné",
     "Filter results": "Filtrovat výsledky",
     "Tuesday": "Úterý",
     "Saturday": "Sobota",
     "Monday": "Pondělí",
-    "All Rooms": "Všechny místnosti",
     "You cannot delete this message. (%(code)s)": "Tuto zprávu nemůžete smazat. (%(code)s)",
     "Thursday": "Čtvrtek",
-    "Search…": "Hledat…",
     "Yesterday": "Včera",
     "Wednesday": "Středa",
     "Thank you!": "Děkujeme vám!",
@@ -125,8 +120,6 @@
     "Demote": "Degradovat",
     "Share Link to User": "Sdílet odkaz na uživatele",
     "Share room": "Sdílet místnost",
-    "Only room administrators will see this warning": "Toto upozornění uvidí jen správci místnosti",
-    "You don't currently have any stickerpacks enabled": "Momentálně nemáte aktivní žádné balíčky s nálepkami",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Není možné načíst událost, na kterou se odpovídalo. Buď neexistuje, nebo nemáte oprávnění ji zobrazit.",
     "<a>In reply to</a> <pill>": "<a>V odpovědi na</a> <pill>",
     "Preparing to send logs": "Příprava na odeslání záznamů",
@@ -224,7 +217,6 @@
     "Anchor": "Kotva",
     "Headphones": "Sluchátka",
     "Folder": "Desky",
-    "Add some now": "Přidat nějaké",
     "Main address": "Hlavní adresa",
     "The following users may not exist": "Následující uživatel možná neexistuje",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nepovedlo se najít profily následujících Matrix ID - chcete je stejně pozvat?",
@@ -260,13 +252,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Abyste po odhlášení nepřišli o přístup k historii šifrovaných konverzací, měli byste si před odhlášením exportovat šifrovací klíče místností. Prosím vraťte se k novější verzi %(brand)su a exportujte si klíče",
     "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
     "Could not load user profile": "Nepovedlo se načíst profil uživatele",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Aktualizace místnosti uzavře její aktuální verzi a vyrobí novou místnost se stejným názvem a novou verzí.",
-    "This room has already been upgraded.": "Tato místnost byla již aktualizována.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Tato místnost běží na verzi <roomVersion />, což domovský server označuje za <i>nestabilní</i>.",
-    "Failed to revoke invite": "Pozvání se nepovedlo zrušit",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Pozvání se nepovedlo zrušit. Mohlo dojít k dočasnému problému nebo na to nemáte dostatečná práva.",
-    "Revoke invite": "Zrušit pozvání",
-    "Invited by %(sender)s": "Pozván od uživatele %(sender)s",
     "edited": "upraveno",
     "Notes": "Poznámky",
     "Sign out and remove encryption keys?": "Odhlásit a odstranit šifrovací klíče?",
@@ -402,7 +387,6 @@
     "You declined": "Odmítli jste",
     "%(name)s declined": "%(name)s odmítl(a)",
     "Accepting…": "Přijímání…",
-    "Scroll to most recent messages": "Přejít na poslední zprávy",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Nepovedlo se změnit alternativní adresy místnosti. Možná to server neumožňuje a nebo je to dočasná chyba.",
     "Local address": "Lokální adresa",
     "Published Addresses": "Publikovaná adresa",
@@ -852,7 +836,6 @@
     "Reset everything": "Resetovat vše",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
-    "View message": "Zobrazit zprávu",
     "You can select all or individual messages to retry or delete": "Můžete vybrat všechny nebo jednotlivé zprávy, které chcete zkusit poslat znovu nebo odstranit",
     "Sending": "Odesílání",
     "Retry all": "Zkusit všechny znovu",
@@ -871,10 +854,6 @@
     "Not all selected were added": "Ne všechny vybrané byly přidány",
     "You are not allowed to view this server's rooms list": "Namáte oprávnění zobrazit seznam místností tohoto serveru",
     "Error processing voice message": "Chyba při zpracování hlasové zprávy",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Ve vašem zařízení nebyl nalezen žádný mikrofon. Zkontrolujte prosím nastavení a zkuste to znovu.",
-    "No microphone found": "Nebyl nalezen žádný mikrofon",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Nepodařilo se získat přístup k vašemu mikrofonu . Zkontrolujte prosím nastavení prohlížeče a zkuste to znovu.",
-    "Unable to access your microphone": "Nelze získat přístup k mikrofonu",
     "Search names and descriptions": "Hledat názvy a popisy",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
@@ -938,8 +917,6 @@
     "Decrypting": "Dešifrování",
     "Missed call": "Zmeškaný hovor",
     "Call declined": "Hovor odmítnut",
-    "Stop recording": "Zastavit nahrávání",
-    "Send voice message": "Odeslat hlasovou zprávu",
     "Unknown failure: %(reason)s": "Neznámá chyba: %(reason)s",
     "Rooms and spaces": "Místnosti a prostory",
     "Results": "Výsledky",
@@ -972,7 +949,6 @@
     },
     "View in room": "Zobrazit v místnosti",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadejte bezpečnostní frázi nebo <button>použijte bezpečnostní klíč</button> pro pokračování.",
-    "Joined": "Připojeno",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte přístup ke svému účtu a šifrovací klíče uložené v této relaci. Bez nich nebudete moci číst všechny své zabezpečené zprávy v žádné relaci.",
     "Joining": "Připojování",
     "If you can't see who you're looking for, send them your invite link below.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku níže.",
@@ -1070,7 +1046,6 @@
     "Results will be visible when the poll is ended": "Výsledky se zobrazí po ukončení hlasování",
     "Search Dialog": "Dialogové okno hledání",
     "Pinned": "Připnuto",
-    "Open thread": "Otevřít vlákno",
     "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
     "Drop a Pin": "Zvolená poloha",
     "My live location": "Moje poloha živě",
@@ -1133,7 +1108,6 @@
     "Cameras": "Kamery",
     "Output devices": "Výstupní zařízení",
     "Input devices": "Vstupní zařízení",
-    "Show Labs settings": "Zobrazit nastavení Experimentálních funkcí",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>.",
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
@@ -1207,7 +1181,6 @@
     "We were unable to start a chat with the other user.": "Nepodařilo se zahájit chat s druhým uživatelem.",
     "Error starting verification": "Chyba při zahájení ověření",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
-    "Unable to decrypt message": "Nepodařilo se dešifrovat zprávu",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "Text": "Text",
     "Create a link": "Vytvořit odkaz",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Zahájit přímou zprávu i přesto",
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
-    "Search all rooms": "Vyhledávat ve všech místnostech",
-    "Search this room": "Vyhledávat v této místnosti",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Jakmile se pozvaní uživatelé připojí k %(brand)s, budete moci chatovat a místnost bude koncově šifrovaná",
     "Waiting for users to join %(brand)s": "Čekání na připojení uživatelů k %(brand)s",
     "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
@@ -1396,7 +1367,9 @@
         "historical": "Historické",
         "go_to_settings": "Přejít do nastavení",
         "setup_secure_messages": "Nastavit bezpečné obnovení zpráv",
-        "unencrypted": "Nezašifrované"
+        "unencrypted": "Nezašifrované",
+        "view_message": "Zobrazit zprávu",
+        "joined": "Připojeno"
     },
     "action": {
         "continue": "Pokračovat",
@@ -1734,7 +1707,9 @@
         "format_italics": "Kurzívou",
         "format_insert_link": "Vložit odkaz",
         "replying_title": "Odpovídá",
-        "edit_composer_label": "Upravit zprávu"
+        "edit_composer_label": "Upravit zprávu",
+        "send_voice_message": "Odeslat hlasovou zprávu",
+        "stop_voice_message": "Zastavit nahrávání"
     },
     "Link": "Odkaz",
     "Code": "Kód",
@@ -3065,7 +3040,11 @@
             "other": "%(count)s osob se připojilo"
         },
         "unknown_person": "neznámá osoba",
-        "connecting": "Spojování"
+        "connecting": "Spojování",
+        "unable_to_access_audio_input_title": "Nelze získat přístup k mikrofonu",
+        "unable_to_access_audio_input_description": "Nepodařilo se získat přístup k vašemu mikrofonu . Zkontrolujte prosím nastavení prohlížeče a zkuste to znovu.",
+        "no_audio_input_title": "Nebyl nalezen žádný mikrofon",
+        "no_audio_input_description": "Ve vašem zařízení nebyl nalezen žádný mikrofon. Zkontrolujte prosím nastavení a zkuste to znovu."
     },
     "Other": "Další možnosti",
     "room_settings": {
@@ -3790,7 +3769,9 @@
         "show_all_threads": "Zobrazit všechna vlákna",
         "empty_explainer": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat.",
         "empty_tip": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
-        "empty_heading": "Udržujte diskuse organizované pomocí vláken"
+        "empty_heading": "Udržujte diskuse organizované pomocí vláken",
+        "open_thread": "Otevřít vlákno",
+        "unable_to_decrypt": "Nepodařilo se dešifrovat zprávu"
     },
     "theme": {
         "light_high_contrast": "Světlý vysoký kontrast",
@@ -4050,7 +4031,21 @@
         "knock_cancel_action": "Zrušit žádost",
         "join_failed_needs_invite": "Pro zobrazení %(roomName)s potřebujete pozvánku",
         "view_failed_enable_video_rooms": "Pro zobrazení, povolte prosím nejprve video místnosti v Experimentálních funkcích",
-        "join_failed_enable_video_rooms": "Pro vstup, povolte prosím nejprve video místnosti v Experimentálních funkcích"
+        "join_failed_enable_video_rooms": "Pro vstup, povolte prosím nejprve video místnosti v Experimentálních funkcích",
+        "jump_to_bottom_button": "Přejít na poslední zprávy",
+        "show_labs_settings": "Zobrazit nastavení Experimentálních funkcí",
+        "upgrade_warning_bar": "Aktualizace místnosti uzavře její aktuální verzi a vyrobí novou místnost se stejným názvem a novou verzí.",
+        "upgrade_warning_bar_upgraded": "Tato místnost byla již aktualizována.",
+        "upgrade_warning_bar_unstable": "Tato místnost běží na verzi <roomVersion />, což domovský server označuje za <i>nestabilní</i>.",
+        "upgrade_warning_bar_admins": "Toto upozornění uvidí jen správci místnosti",
+        "search": {
+            "this_room": "Tato místnost",
+            "all_rooms": "Všechny místnosti",
+            "field_placeholder": "Hledat…",
+            "this_room_button": "Vyhledávat v této místnosti",
+            "all_rooms_button": "Vyhledávat ve všech místnostech"
+        },
+        "jump_read_marker": "Přejít na první nepřečtenou zprávu."
     },
     "file_panel": {
         "guest_note": "Pro využívání této funkce se <a>zaregistrujte</a>",
@@ -4275,5 +4270,16 @@
         "invited_list_heading": "Pozvaní",
         "filter_placeholder": "Najít člena místnosti",
         "power_label": "%(userName)s (oprávnění %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Momentálně nemáte aktivní žádné balíčky s nálepkami",
+        "empty_add_prompt": "Přidat nějaké"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Pozvání se nepovedlo zrušit",
+        "error_revoke_3pid_invite_description": "Pozvání se nepovedlo zrušit. Mohlo dojít k dočasnému problému nebo na to nemáte dostatečná práva.",
+        "admin_tools_section": "Nástroje pro správce",
+        "revoke_invite": "Zrušit pozvání",
+        "invited_by": "Pozván od uživatele %(sender)s"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "Admin Tools": "Admin Araçları",
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
     "and %(count)s others...": {
         "one": "ve bir diğeri...",
@@ -24,7 +23,6 @@
     "Home": "Ev",
     "Invalid file%(extra)s": "Geçersiz dosya %(extra)s'ı",
     "Join Room": "Odaya Katıl",
-    "Jump to first unread message.": "İlk okunmamış iletiye atla.",
     "Moderator": "Moderatör",
     "New passwords must match each other.": "Yeni şifreler birbirleriyle eşleşmelidir.",
     "not specified": "Belirtilmemiş",
@@ -90,18 +88,15 @@
     "Today": "Bugün",
     "Friday": "Cuma",
     "Changelog": "Değişiklikler",
-    "This Room": "Bu Oda",
     "Unavailable": "Kullanım dışı",
     "Tuesday": "Salı",
     "Unnamed room": "İsimsiz oda",
     "Saturday": "Cumartesi",
     "Monday": "Pazartesi",
-    "All Rooms": "Tüm Odalar",
     "Wednesday": "Çarşamba",
     "Send": "Gönder",
     "You cannot delete this message. (%(code)s)": "Bu mesajı silemezsiniz (%(code)s)",
     "Thursday": "Perşembe",
-    "Search…": "Arama…",
     "Yesterday": "Dün",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
@@ -237,13 +232,7 @@
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
     "Share room": "Oda paylaş",
-    "This room has already been upgraded.": "Bu ıda zaten güncellenmiş.",
-    "Only room administrators will see this warning": "Bu uyarıyı sadece oda yöneticileri görür",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
-    "Add some now": "Şimdi biraz ekle",
-    "Failed to revoke invite": "Davetin geri çekilmesi başarısız",
-    "Revoke invite": "Davet geri çekildi",
-    "Invited by %(sender)s": "%(sender)s tarafından davet",
     "Error updating main address": "Ana adresi güncellemede hata",
     "Main address": "Ana adres",
     "Room Name": "Oda Adı",
@@ -267,7 +256,6 @@
     "Demote yourself?": "Kendinin rütbeni düşür?",
     "Demote": "Rütbe Düşür",
     "Remove recent messages": "Son mesajları sil",
-    "You don't currently have any stickerpacks enabled": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
     "Room Topic": "Oda Başlığı",
     "And %(count)s more...": {
         "other": "ve %(count)s kez daha..."
@@ -314,7 +302,6 @@
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
@@ -610,7 +597,6 @@
     "You don't have permission to delete the address.": "Bu adresi silmeye yetkiniz yok.",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
     "Error creating address": "Adres oluşturulurken hata",
-    "Scroll to most recent messages": "En son mesajlara git",
     "Australia": "Avustralya",
     "Aruba": "Aruba",
     "Armenia": "Ermenistan",
@@ -673,15 +659,10 @@
     "Waiting for %(displayName)s to accept…": "%(displayName)s kullanıcısın onaylaması için bekleniliyor…",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Adanın alternatif adresini güncellerken bir hata oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Odanın ana adresini güncellerken bir sorun oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
     "Edit devices": "Cihazları düzenle",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin.",
-    "No microphone found": "Mikrofon bulunamadı",
-    "View message": "Mesajı görüntüle",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -760,7 +741,8 @@
         "historical": "Tarihi",
         "go_to_settings": "Ayarlara Git",
         "setup_secure_messages": "Güvenli Mesajları Ayarla",
-        "unencrypted": "Şifrelenmemiş"
+        "unencrypted": "Şifrelenmemiş",
+        "view_message": "Mesajı görüntüle"
     },
     "action": {
         "continue": "Devam Et",
@@ -1626,7 +1608,9 @@
         "no_permission_conference_description": "Bu odada bir konferans başlatmak için izniniz yok",
         "default_device": "Varsayılan Cihaz",
         "no_media_perms_title": "Medya izinleri yok",
-        "no_media_perms_description": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir"
+        "no_media_perms_description": "%(brand)s'un mikrofonunuza / web kameranıza el le erişmesine izin vermeniz gerekebilir",
+        "no_audio_input_title": "Mikrofon bulunamadı",
+        "no_audio_input_description": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin."
     },
     "Other": "Diğer",
     "room_settings": {
@@ -2122,7 +2106,18 @@
         "peek_join_prompt": "%(roomName)s odasını inceliyorsunuz. Katılmak ister misiniz?",
         "no_peek_join_prompt": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
         "not_found_title_name": "%(roomName)s mevcut değil.",
-        "inaccessible_name": "%(roomName)s şu anda erişilebilir değil."
+        "inaccessible_name": "%(roomName)s şu anda erişilebilir değil.",
+        "jump_to_bottom_button": "En son mesajlara git",
+        "upgrade_warning_bar": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
+        "upgrade_warning_bar_upgraded": "Bu ıda zaten güncellenmiş.",
+        "upgrade_warning_bar_unstable": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
+        "upgrade_warning_bar_admins": "Bu uyarıyı sadece oda yöneticileri görür",
+        "search": {
+            "this_room": "Bu Oda",
+            "all_rooms": "Tüm Odalar",
+            "field_placeholder": "Arama…"
+        },
+        "jump_read_marker": "İlk okunmamış iletiye atla."
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
@@ -2273,5 +2268,16 @@
         "invited_list_heading": "Davet Edildi",
         "filter_placeholder": "Oda üyelerini Filtrele",
         "power_label": "%(userName)s (güç %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
+        "empty_add_prompt": "Şimdi biraz ekle"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Davetin geri çekilmesi başarısız",
+        "error_revoke_3pid_invite_description": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
+        "admin_tools_section": "Admin Araçları",
+        "revoke_invite": "Davet geri çekildi",
+        "invited_by": "%(sender)s tarafından davet"
     }
 }

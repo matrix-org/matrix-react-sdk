@@ -72,10 +72,7 @@
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
     "Are you sure?": "Er du sikker?",
-    "Admin Tools": "Adminverktøy",
     "Direct Messages": "Direktemeldinger",
-    "All Rooms": "Alle rom",
-    "Search…": "Søk …",
     "Download %(text)s": "Last ned %(text)s",
     "Cancel search": "Avbryt søket",
     "collapse": "skjul",
@@ -124,7 +121,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "Share room": "Del rommet",
-    "This Room": "Dette rommet",
     "Main address": "Hovedadresse",
     "not specified": "ikke spesifisert",
     "Local address": "Lokal adresse",
@@ -168,10 +164,7 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
-    "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
     "Share Link to User": "Del en lenke til brukeren",
-    "You don't currently have any stickerpacks enabled": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
-    "Add some now": "Legg til noen nå",
     "No other published addresses yet, add one below": "Det er ingen publiserte adresser enda, legg til en nedenfor",
     "New published address (e.g. #alias:server)": "Ny publisert adresse (f.eks. #alias:tjener)",
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "Velg adresser for dette rommet slik at brukere kan finne dette rommet gjennom hjemmetjeneren din (%(localDomain)s)",
@@ -216,9 +209,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "This room has already been upgraded.": "Dette rommet har allerede blitt oppgradert.",
-    "Revoke invite": "Trekk tilbake invitasjonen",
-    "Invited by %(sender)s": "Invitert av %(sender)s",
     "Other published addresses:": "Andre publiserte adresser:",
     "Waiting for %(displayName)s to accept…": "Venter på at %(displayName)s skal akseptere …",
     "Your homeserver": "Hjemmetjeneren din",
@@ -301,8 +291,6 @@
     "Security Key mismatch": "Sikkerhetsnøkkel uoverensstemmelse",
     "Unable to load backup status": "Klarte ikke å laste sikkerhetskopi-status",
     "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nøkler gjenopprettet",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Klarte ikke å trekke tilbake invitasjonen. Tjener kan ha et forbigående problem, eller det kan hende at du ikke har tilstrekkelige rettigheter for å trekke tilbake invitasjonen.",
-    "Failed to revoke invite": "Klarte ikke å trekke tilbake invitasjon",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
@@ -1715,7 +1703,14 @@
         "invite_reject_ignore": "Avslå og ignorer brukeren",
         "no_peek_join_prompt": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
         "not_found_title_name": "%(roomName)s eksisterer ikke.",
-        "inaccessible_name": "%(roomName)s er ikke tilgjengelig for øyeblikket."
+        "inaccessible_name": "%(roomName)s er ikke tilgjengelig for øyeblikket.",
+        "jump_to_bottom_button": "Hopp bort til de nyeste meldingene",
+        "upgrade_warning_bar_upgraded": "Dette rommet har allerede blitt oppgradert.",
+        "search": {
+            "this_room": "Dette rommet",
+            "all_rooms": "Alle rom",
+            "field_placeholder": "Søk …"
+        }
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"
@@ -1819,5 +1814,16 @@
         "invited_list_heading": "Invitert",
         "filter_placeholder": "Filtrer rommets medlemmer",
         "power_label": "%(userName)s (styrkenivå %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
+        "empty_add_prompt": "Legg til noen nå"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Klarte ikke å trekke tilbake invitasjon",
+        "error_revoke_3pid_invite_description": "Klarte ikke å trekke tilbake invitasjonen. Tjener kan ha et forbigående problem, eller det kan hende at du ikke har tilstrekkelige rettigheter for å trekke tilbake invitasjonen.",
+        "admin_tools_section": "Adminverktøy",
+        "revoke_invite": "Trekk tilbake invitasjonen",
+        "invited_by": "Invitert av %(sender)s"
     }
 }

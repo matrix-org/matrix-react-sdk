@@ -2,7 +2,6 @@
     "Create new room": "إنشاء غرفة جديدة",
     "Send": "إرسال",
     "Unavailable": "غير متوفر",
-    "All Rooms": "كل الغُرف",
     "Changelog": "سِجل التغييرات",
     "Thank you!": "شكرًا !",
     "Sun": "الأحد",
@@ -117,21 +116,7 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "حدث خطأ أثناء تحديث العناوين البديلة للغرفة. قد لا يسمح به الخادم أو حدث فشل مؤقت.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "حدث خطأ أثناء تحديث العنوان الرئيسي للغرفة. قد لا يسمح به الخادم أو حدث فشل مؤقت.",
     "Error updating main address": "تعذر تحديث العنوان الرئيسي",
-    "Jump to first unread message.": "الانتقال إلى أول رسالة غير مقروءة.",
-    "Invited by %(sender)s": "دُعيت من %(sender)s",
-    "Revoke invite": "إبطال الدعوة",
-    "Admin Tools": "أدوات المدير",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "تعذر إبطال الدعوة. قد يواجه الخادم مشكلة مؤقتة أو ليس لديك صلاحيات كافية لإلغاء الدعوة.",
-    "Failed to revoke invite": "تعذر إبطال الدعوة",
-    "Add some now": "أضف البعض الآن",
-    "You don't currently have any stickerpacks enabled": "ليس لديك حاليًا أي حزم ملصقات ممكّنة",
     "Failed to connect to integration manager": "تعذر الاتصال بمدير التكامل",
-    "Search…": "بحث …",
-    "This Room": "هذه الغرفة",
-    "Only room administrators will see this warning": "لن يرى هذا التحذير سوى مديرو الغرفة",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "هذه الغرفة تشغل إصدار الغرفة <roomVersion /> ، والذي عده الخادم الوسيط هذا بأنه<i> غير مستقر </i>.",
-    "This room has already been upgraded.": "سبق وأن تمت ترقية هذه الغرفة.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
     "unknown error code": "رمز خطأٍ غير معروف",
     "Join Room": "انضم للغرفة",
     "(~%(count)s results)": {
@@ -147,7 +132,6 @@
         "one": "وواحدة أخرى...",
         "other": "و %(count)s أخر..."
     },
-    "Scroll to most recent messages": "انتقل إلى أحدث الرسائل",
     "Encrypted by a deleted session": "مشفرة باتصال محذوف",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
     "Deactivate account": "تعطيل الحساب",
@@ -1421,7 +1405,18 @@
         "peek_join_prompt": "أنت تعاين %(roomName)s. تريد الانضمام إليها؟",
         "no_peek_join_prompt": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
         "not_found_title_name": "الغرفة %(roomName)s ليست موجودة.",
-        "inaccessible_name": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي."
+        "inaccessible_name": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
+        "jump_to_bottom_button": "انتقل إلى أحدث الرسائل",
+        "upgrade_warning_bar": "ستؤدي ترقية هذه الغرفة إلى إغلاق النسخة الحالية للغرفة وإنشاء غرفة تمت ترقيتها بنفس الاسم.",
+        "upgrade_warning_bar_upgraded": "سبق وأن تمت ترقية هذه الغرفة.",
+        "upgrade_warning_bar_unstable": "هذه الغرفة تشغل إصدار الغرفة <roomVersion /> ، والذي عده الخادم الوسيط هذا بأنه<i> غير مستقر </i>.",
+        "upgrade_warning_bar_admins": "لن يرى هذا التحذير سوى مديرو الغرفة",
+        "search": {
+            "this_room": "هذه الغرفة",
+            "all_rooms": "كل الغُرف",
+            "field_placeholder": "بحث …"
+        },
+        "jump_read_marker": "الانتقال إلى أول رسالة غير مقروءة."
     },
     "space": {
         "context_menu": {
@@ -1539,5 +1534,16 @@
         "invited_list_heading": "مدعو",
         "filter_placeholder": "تصفية أعضاء الغرفة",
         "power_label": "%(userName)s (قوة %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "ليس لديك حاليًا أي حزم ملصقات ممكّنة",
+        "empty_add_prompt": "أضف البعض الآن"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "تعذر إبطال الدعوة",
+        "error_revoke_3pid_invite_description": "تعذر إبطال الدعوة. قد يواجه الخادم مشكلة مؤقتة أو ليس لديك صلاحيات كافية لإلغاء الدعوة.",
+        "admin_tools_section": "أدوات المدير",
+        "revoke_invite": "إبطال الدعوة",
+        "invited_by": "دُعيت من %(sender)s"
     }
 }

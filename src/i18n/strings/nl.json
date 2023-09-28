@@ -8,7 +8,6 @@
     "An error has occurred.": "Er is een fout opgetreden.",
     "Are you sure?": "Weet je het zeker?",
     "Are you sure you want to reject the invitation?": "Weet je zeker dat je de uitnodiging wilt weigeren?",
-    "Admin Tools": "Beheerdersgereedschap",
     "Are you sure you want to leave the room '%(roomName)s'?": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
     "Create new room": "Nieuwe kamer aanmaken",
     "Failed to forget room %(errCode)s": "Vergeten van kamer is mislukt %(errCode)s",
@@ -52,7 +51,6 @@
     "Home": "Home",
     "Invalid file%(extra)s": "Ongeldig bestand %(extra)s",
     "Join Room": "Kamer toetreden",
-    "Jump to first unread message.": "Spring naar het eerste ongelezen bericht.",
     "New passwords must match each other.": "Nieuwe wachtwoorden moeten overeenkomen.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
     "Return to login screen": "Terug naar het loginscherm",
@@ -106,19 +104,15 @@
     },
     "<a>In reply to</a> <pill>": "<a>Als antwoord op</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Dit is geen publieke kamer. Slechts op uitnodiging zal je opnieuw kunnen toetreden.",
-    "You don't currently have any stickerpacks enabled": "Je hebt momenteel geen stickerpakketten ingeschakeld",
     "Sunday": "Zondag",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
     "Changelog": "Wijzigingslogboek",
-    "This Room": "Deze kamer",
     "Unavailable": "Niet beschikbaar",
     "Filter results": "Resultaten filteren",
     "Tuesday": "Dinsdag",
-    "Search…": "Zoeken…",
     "Saturday": "Zaterdag",
     "Monday": "Maandag",
-    "All Rooms": "Alle kamers",
     "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
     "Yesterday": "Gisteren",
@@ -206,8 +200,6 @@
     "Folder": "Map",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
-    "Only room administrators will see this warning": "Enkel kamerbeheerders zullen deze waarschuwing zien",
-    "Add some now": "Voeg er nu een paar toe",
     "Error updating main address": "Fout bij bijwerken van hoofdadres",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van het hoofdadres van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
     "Main address": "Hoofdadres",
@@ -261,12 +253,6 @@
     "Invalid homeserver discovery response": "Ongeldig homeserver-vindbaarheids-antwoord",
     "Invalid identity server discovery response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
     "General failure": "Algemene fout",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Deze kamer draait op kamerversie <roomVersion />, die door deze homeserver als <i>onstabiel</i> is gemarkeerd.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgraden zal de huidige versie van deze kamer sluiten, en onder dezelfde naam een geüpgraded versie starten.",
-    "Failed to revoke invite": "Intrekken van uitnodiging is mislukt",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Kon de uitnodiging niet intrekken. De server ondervindt mogelijk een tijdelijk probleem, of je hebt niet het recht de uitnodiging in te trekken.",
-    "Revoke invite": "Uitnodiging intrekken",
-    "Invited by %(sender)s": "Uitgenodigd door %(sender)s",
     "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
     "Notes": "Opmerkingen",
     "Sign out and remove encryption keys?": "Uitloggen en versleutelingssleutels verwijderen?",
@@ -285,7 +271,6 @@
     },
     "Cancel All": "Alles annuleren",
     "Upload Error": "Fout bij versturen van bestand",
-    "This room has already been upgraded.": "Deze kamer is reeds geüpgraded.",
     "edited": "bewerkt",
     "Some characters not allowed": "Sommige tekens zijn niet toegestaan",
     "Failed to get autodiscovery configuration from server": "Ophalen van auto-vindbaarheidsconfiguratie van server is mislukt",
@@ -667,7 +652,6 @@
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het aanmaken van dit adres. Dit wordt mogelijk niet toegestaan door de server, of er is een tijdelijk probleem opgetreden.",
     "Error creating address": "Fout bij aanmaken van het adres",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van de bijnaam van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
-    "Scroll to most recent messages": "Spring naar meest recente bericht",
     "Backup version:": "Versie reservekopie:",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
@@ -852,7 +836,6 @@
     "Reset everything": "Alles opnieuw instellen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
-    "View message": "Bericht bekijken",
     "You can select all or individual messages to retry or delete": "Je kan alles selecteren of per individueel bericht opnieuw versturen of verwijderen",
     "Sending": "Wordt verstuurd",
     "Retry all": "Alles opnieuw proberen",
@@ -871,10 +854,6 @@
     "Not all selected were added": "Niet alle geselecteerden zijn toegevoegd",
     "You are not allowed to view this server's rooms list": "Je hebt geen toegang tot deze server zijn kamergids",
     "Error processing voice message": "Fout bij verwerking spraakbericht",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "We hebben geen microfoon gevonden op je apparaat. Controleer je instellingen en probeer het opnieuw.",
-    "No microphone found": "Geen microfoon gevonden",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
-    "Unable to access your microphone": "Geen toegang tot je microfoon",
     "Search names and descriptions": "In namen en omschrijvingen zoeken",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
@@ -938,8 +917,6 @@
     "Decrypting": "Ontsleutelen",
     "Missed call": "Oproep gemist",
     "Call declined": "Oproep geweigerd",
-    "Stop recording": "Opname stoppen",
-    "Send voice message": "Spraakbericht versturen",
     "Unknown failure: %(reason)s": "Onbekende fout: %(reason)s",
     "Rooms and spaces": "Kamers en Spaces",
     "Results": "Resultaten",
@@ -972,7 +949,6 @@
     },
     "Really reset verification keys?": "Echt je verificatiesleutels resetten?",
     "Skip verification for now": "Verificatie voorlopig overslaan",
-    "Joined": "Toegetreden",
     "Joining": "Toetreden",
     "Copy link to thread": "Kopieer link naar draad",
     "Thread options": "Draad opties",
@@ -1090,7 +1066,6 @@
     "Collapse quotes": "Citaten invouwen",
     "Can't create a thread from an event with an existing relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
     "Pinned": "Vastgezet",
-    "Open thread": "Open discussie",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -1132,7 +1107,6 @@
     "Output devices": "Uitvoerapparaten",
     "Input devices": "Invoer apparaten",
     "Open room": "Open kamer",
-    "Show Labs settings": "Lab instellingen weergeven",
     "%(members)s and %(last)s": "%(members)s en %(last)s",
     "%(members)s and more": "%(members)s en meer",
     "Unread email icon": "Ongelezen e-mailpictogram",
@@ -1311,7 +1285,9 @@
         "historical": "Historisch",
         "go_to_settings": "Ga naar instellingen",
         "setup_secure_messages": "Beveiligde berichten instellen",
-        "unencrypted": "Onversleuteld"
+        "unencrypted": "Onversleuteld",
+        "view_message": "Bericht bekijken",
+        "joined": "Toegetreden"
     },
     "action": {
         "continue": "Doorgaan",
@@ -1602,7 +1578,9 @@
         "format_italics": "Cursief",
         "format_insert_link": "Koppeling invoegen",
         "replying_title": "Aan het beantwoorden",
-        "edit_composer_label": "Bericht bewerken"
+        "edit_composer_label": "Bericht bewerken",
+        "send_voice_message": "Spraakbericht versturen",
+        "stop_voice_message": "Opname stoppen"
     },
     "Code": "Code",
     "power_level": {
@@ -2770,7 +2748,11 @@
             "other": "%(count)s mensen toegetreden"
         },
         "unknown_person": "onbekend persoon",
-        "connecting": "Verbinden"
+        "connecting": "Verbinden",
+        "unable_to_access_audio_input_title": "Geen toegang tot je microfoon",
+        "unable_to_access_audio_input_description": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
+        "no_audio_input_title": "Geen microfoon gevonden",
+        "no_audio_input_description": "We hebben geen microfoon gevonden op je apparaat. Controleer je instellingen en probeer het opnieuw."
     },
     "Other": "Overige",
     "room_settings": {
@@ -3427,7 +3409,8 @@
         "show_all_threads": "Threads weergeven",
         "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
         "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
-        "empty_heading": "Houd threads georganiseerd"
+        "empty_heading": "Houd threads georganiseerd",
+        "open_thread": "Open discussie"
     },
     "theme": {
         "light_high_contrast": "Lichte hoog contrast",
@@ -3661,7 +3644,19 @@
         "inaccessible_subtitle_2": "%(errcode)s is geretourneerd tijdens een poging om toegang te krijgen tot de kamer of space. Als je denkt dat je dit bericht ten onrechte ziet, <issueLink>dien dan een bugrapport in</issueLink>.",
         "join_failed_needs_invite": "Om %(roomName)s te bekijken, heb je een uitnodiging nodig",
         "view_failed_enable_video_rooms": "Schakel eerst videokamers in Labs in om te bekijken",
-        "join_failed_enable_video_rooms": "Schakel eerst videokamers in Labs in om deel te nemen"
+        "join_failed_enable_video_rooms": "Schakel eerst videokamers in Labs in om deel te nemen",
+        "jump_to_bottom_button": "Spring naar meest recente bericht",
+        "show_labs_settings": "Lab instellingen weergeven",
+        "upgrade_warning_bar": "Upgraden zal de huidige versie van deze kamer sluiten, en onder dezelfde naam een geüpgraded versie starten.",
+        "upgrade_warning_bar_upgraded": "Deze kamer is reeds geüpgraded.",
+        "upgrade_warning_bar_unstable": "Deze kamer draait op kamerversie <roomVersion />, die door deze homeserver als <i>onstabiel</i> is gemarkeerd.",
+        "upgrade_warning_bar_admins": "Enkel kamerbeheerders zullen deze waarschuwing zien",
+        "search": {
+            "this_room": "Deze kamer",
+            "all_rooms": "Alle kamers",
+            "field_placeholder": "Zoeken…"
+        },
+        "jump_read_marker": "Spring naar het eerste ongelezen bericht."
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3867,5 +3862,16 @@
         "invited_list_heading": "Uitgenodigd",
         "filter_placeholder": "Kamerleden filteren",
         "power_label": "%(userName)s (macht %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Je hebt momenteel geen stickerpakketten ingeschakeld",
+        "empty_add_prompt": "Voeg er nu een paar toe"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Intrekken van uitnodiging is mislukt",
+        "error_revoke_3pid_invite_description": "Kon de uitnodiging niet intrekken. De server ondervindt mogelijk een tijdelijk probleem, of je hebt niet het recht de uitnodiging in te trekken.",
+        "admin_tools_section": "Beheerdersgereedschap",
+        "revoke_invite": "Uitnodiging intrekken",
+        "invited_by": "Uitgenodigd door %(sender)s"
     }
 }

@@ -69,7 +69,6 @@
     "Error decrypting image": "Erreur lors du déchiffrement de l’image",
     "Error decrypting video": "Erreur lors du déchiffrement de la vidéo",
     "Add an Integration": "Ajouter une intégration",
-    "Jump to first unread message.": "Aller au premier message non lu.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Voulez-vous vraiment quitter le salon « %(roomName)s » ?",
     "Custom level": "Rang personnalisé",
@@ -87,7 +86,6 @@
     "This will allow you to reset your password and receive notifications.": "Ceci vous permettra de réinitialiser votre mot de passe et de recevoir des notifications.",
     "AM": "AM",
     "PM": "PM",
-    "Admin Tools": "Outils d’administration",
     "Unnamed room": "Salon sans nom",
     "Jump to read receipt": "Aller à l’accusé de lecture",
     "Delete Widget": "Supprimer le widget",
@@ -106,21 +104,17 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "This room is not public. You will not be able to rejoin without an invite.": "Ce salon n’est pas public. Vous ne pourrez pas y revenir sans invitation.",
     "<a>In reply to</a> <pill>": "<a>En réponse à</a> <pill>",
-    "You don't currently have any stickerpacks enabled": "Vous n'avez activé aucun jeu d’autocollants pour l’instant",
     "Sunday": "Dimanche",
     "Today": "Aujourd’hui",
     "Friday": "Vendredi",
     "Changelog": "Journal des modifications",
-    "This Room": "Ce salon",
     "Unavailable": "Indisponible",
     "Filter results": "Filtrer les résultats",
     "Tuesday": "Mardi",
-    "Search…": "Rechercher…",
     "Saturday": "Samedi",
     "Monday": "Lundi",
     "Wednesday": "Mercredi",
     "You cannot delete this message. (%(code)s)": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
-    "All Rooms": "Tous les salons",
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
     "Thank you!": "Merci !",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vous ne pouvez voir aucun message tant que vous ne lisez et n’acceptez pas nos <consentLink>conditions générales</consentLink>.",
     "Demote yourself?": "Vous rétrograder ?",
     "Demote": "Rétrograder",
-    "Only room administrators will see this warning": "Seuls les administrateurs du salon verront cet avertissement",
     "Upgrade Room Version": "Mettre à niveau la version du salon",
     "Create a new room with the same name, description and avatar": "Créer un salon avec le même nom, la même description et le même avatar",
     "Update any local room aliases to point to the new room": "Mettre à jour tous les alias du salon locaux pour qu’ils dirigent vers le nouveau salon",
@@ -160,7 +153,6 @@
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Si l’autre version de %(brand)s est encore ouverte dans un autre onglet, merci de le fermer car l’utilisation de %(brand)s sur le même hôte avec le chargement différé activé et désactivé à la fois causera des problèmes.",
     "Incompatible local cache": "Cache local incompatible",
     "Clear cache and resync": "Vider le cache et resynchroniser",
-    "Add some now": "En ajouter maintenant",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Pour éviter de perdre l’historique de vos discussions, vous devez exporter vos clés avant de vous déconnecter. Vous devez revenir à une version plus récente de %(brand)s pour pouvoir le faire",
     "Incompatible Database": "Base de données incompatible",
     "Continue With Encryption Disabled": "Continuer avec le chiffrement désactivé",
@@ -261,12 +253,6 @@
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
     "Could not load user profile": "Impossible de charger le profil de l’utilisateur",
     "Power level": "Rang",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ce salon utilise la version <roomVersion />, que ce serveur d’accueil a marqué comme <i>instable</i>.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "La mise à niveau du salon désactivera cette instance du salon et créera un salon mis à niveau avec le même nom.",
-    "Failed to revoke invite": "Échec de la révocation de l’invitation",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Impossible de révoquer l’invitation. Le serveur subit peut-être un problème temporaire ou vous n’avez pas la permission de révoquer l’invitation.",
-    "Revoke invite": "Révoquer l’invitation",
-    "Invited by %(sender)s": "Invité par %(sender)s",
     "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
     "Notes": "Notes",
     "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
@@ -285,7 +271,6 @@
     },
     "Cancel All": "Tout annuler",
     "Upload Error": "Erreur d’envoi",
-    "This room has already been upgraded.": "Ce salon a déjà été mis à niveau.",
     "edited": "modifié",
     "Some characters not allowed": "Certains caractères ne sont pas autorisés",
     "Failed to get autodiscovery configuration from server": "Échec de la découverte automatique de la configuration depuis le serveur",
@@ -405,7 +390,6 @@
     "Accepting…": "Acceptation…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pour signaler un problème de sécurité lié à Matrix, consultez <a>la politique de divulgation de sécurité</a> de Matrix.org.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Une erreur est survenue lors de la mise à jour des adresses alternatives du salon. Ce n’est peut-être pas permis par le serveur ou une défaillance temporaire est survenue.",
-    "Scroll to most recent messages": "Sauter aux messages les plus récents",
     "Local address": "Adresse locale",
     "Published Addresses": "Adresses publiées",
     "Other published addresses:": "Autres adresses publiées :",
@@ -853,7 +837,6 @@
     "Reset everything": "Tout réinitialiser",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Vous avez perdu ou oublié tous vos moyens de récupération ? <a>Tout réinitialiser</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
-    "View message": "Afficher le message",
     "You can select all or individual messages to retry or delete": "Vous pouvez choisir de renvoyer ou supprimer tous les messages ou seulement certains",
     "Sending": "Envoi",
     "Retry all": "Tout renvoyer",
@@ -872,10 +855,6 @@
     "Not all selected were added": "Toute la sélection n’a pas été ajoutée",
     "You are not allowed to view this server's rooms list": "Vous n’avez pas l’autorisation d’accéder à la liste des salons de ce serveur",
     "Error processing voice message": "Erreur lors du traitement du message vocal",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Nous n’avons pas détecté de microphone sur votre appareil. Merci de vérifier vos paramètres et de réessayer.",
-    "No microphone found": "Aucun microphone détecté",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Nous n’avons pas pu accéder à votre microphone. Merci de vérifier les paramètres de votre navigateur et de réessayer.",
-    "Unable to access your microphone": "Impossible d’accéder à votre microphone",
     "Search names and descriptions": "Rechercher par nom et description",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
@@ -937,8 +916,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Tous les membres de <SpaceName/> pourront trouver et venir.",
     "Missed call": "Appel manqué",
     "Call declined": "Appel rejeté",
-    "Stop recording": "Arrêter l’enregistrement",
-    "Send voice message": "Envoyer un message vocal",
     "Unknown failure: %(reason)s": "Erreur inconnue : %(reason)s",
     "No answer": "Pas de réponse",
     "Rooms and spaces": "Salons et espaces",
@@ -973,7 +950,6 @@
         "other": "%(count)s réponses"
     },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Récupérez l’accès à votre compte et restaurez les clés de chiffrement dans cette session. Sans elles, vous ne pourrez pas lire tous vos messages chiffrés dans toutes vos sessions.",
-    "Joined": "Rejoint",
     "Joining": "En train de rejoindre",
     "If you can't see who you're looking for, send them your invite link below.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation ci-dessous.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Dans les salons chiffrés, vérifiez tous les utilisateurs pour vous assurer qu’il est sécurisé.",
@@ -1063,7 +1039,6 @@
     "Location": "Position",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
-    "Open thread": "Ouvrir le fil de discussion",
     "Pinned": "Épinglé",
     "Results will be visible when the poll is ended": "Les résultats seront visibles lorsque le sondage sera terminé",
     "Can't edit poll": "Impossible de modifier le sondage",
@@ -1133,7 +1108,6 @@
     "Output devices": "Périphériques de sortie",
     "Input devices": "Périphériques d’entrée",
     "Open room": "Ouvrir le salon",
-    "Show Labs settings": "Afficher les réglages des expérimentations",
     "%(members)s and %(last)s": "%(members)s et %(last)s",
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
@@ -1207,7 +1181,6 @@
     "We were unable to start a chat with the other user.": "Nous n’avons pas pu démarrer une conversation avec l’autre utilisateur.",
     "Error starting verification": "Erreur en démarrant la vérification",
     "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
-    "Unable to decrypt message": "Impossible de déchiffrer le message",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "Text": "Texte",
     "Create a link": "Crée un lien",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Commencer la conversation privée quand même",
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
-    "Search all rooms": "Rechercher dans tous les salons",
-    "Search this room": "Rechercher dans ce salon",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
     "Waiting for users to join %(brand)s": "En attente de connexion des utilisateurs à %(brand)s",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their profile picture.": "Les messages ici sont chiffrés de bout en bout. Vérifiez %(displayName)s dans son profil - cliquez sur son image de profil.",
@@ -1396,7 +1367,9 @@
         "historical": "Historique",
         "go_to_settings": "Aller aux paramètres",
         "setup_secure_messages": "Configurer les messages sécurisés",
-        "unencrypted": "Non chiffré"
+        "unencrypted": "Non chiffré",
+        "view_message": "Afficher le message",
+        "joined": "Rejoint"
     },
     "action": {
         "continue": "Continuer",
@@ -1733,7 +1706,9 @@
         "format_italics": "Italique",
         "format_insert_link": "Insérer un lien",
         "replying_title": "Répond",
-        "edit_composer_label": "Modifier le message"
+        "edit_composer_label": "Modifier le message",
+        "send_voice_message": "Envoyer un message vocal",
+        "stop_voice_message": "Arrêter l’enregistrement"
     },
     "Link": "Lien",
     "Code": "Code",
@@ -3064,7 +3039,11 @@
             "other": "%(count)s personnes se sont jointes"
         },
         "unknown_person": "personne inconnue",
-        "connecting": "Connexion"
+        "connecting": "Connexion",
+        "unable_to_access_audio_input_title": "Impossible d’accéder à votre microphone",
+        "unable_to_access_audio_input_description": "Nous n’avons pas pu accéder à votre microphone. Merci de vérifier les paramètres de votre navigateur et de réessayer.",
+        "no_audio_input_title": "Aucun microphone détecté",
+        "no_audio_input_description": "Nous n’avons pas détecté de microphone sur votre appareil. Merci de vérifier vos paramètres et de réessayer."
     },
     "Other": "Autre",
     "room_settings": {
@@ -3783,7 +3762,9 @@
         "show_all_threads": "Afficher tous les fils de discussion",
         "empty_explainer": "Les fils de discussion vous permettent de recentrer vos conversations et de les rendre facile à suivre.",
         "empty_tip": "<b>Conseil :</b> Utilisez « %(replyInThread)s » en survolant un message.",
-        "empty_heading": "Garde les discussions organisées à l’aide de fils de discussion"
+        "empty_heading": "Garde les discussions organisées à l’aide de fils de discussion",
+        "open_thread": "Ouvrir le fil de discussion",
+        "unable_to_decrypt": "Impossible de déchiffrer le message"
     },
     "theme": {
         "light_high_contrast": "Contraste élevé clair",
@@ -4043,7 +4024,21 @@
         "knock_cancel_action": "Annuler la demande",
         "join_failed_needs_invite": "Pour afficher %(roomName)s, vous avez besoin d’une invitation",
         "view_failed_enable_video_rooms": "Pour afficher, veuillez d’abord activer les salons vision dans la section Expérimental",
-        "join_failed_enable_video_rooms": "Pour rejoindre, veuillez d’abord activer les salons vision dans la section Expérimental"
+        "join_failed_enable_video_rooms": "Pour rejoindre, veuillez d’abord activer les salons vision dans la section Expérimental",
+        "jump_to_bottom_button": "Sauter aux messages les plus récents",
+        "show_labs_settings": "Afficher les réglages des expérimentations",
+        "upgrade_warning_bar": "La mise à niveau du salon désactivera cette instance du salon et créera un salon mis à niveau avec le même nom.",
+        "upgrade_warning_bar_upgraded": "Ce salon a déjà été mis à niveau.",
+        "upgrade_warning_bar_unstable": "Ce salon utilise la version <roomVersion />, que ce serveur d’accueil a marqué comme <i>instable</i>.",
+        "upgrade_warning_bar_admins": "Seuls les administrateurs du salon verront cet avertissement",
+        "search": {
+            "this_room": "Ce salon",
+            "all_rooms": "Tous les salons",
+            "field_placeholder": "Rechercher…",
+            "this_room_button": "Rechercher dans ce salon",
+            "all_rooms_button": "Rechercher dans tous les salons"
+        },
+        "jump_read_marker": "Aller au premier message non lu."
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
@@ -4268,5 +4263,16 @@
         "invited_list_heading": "Invités",
         "filter_placeholder": "Filtrer les membres du salon",
         "power_label": "%(userName)s (rang %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Vous n'avez activé aucun jeu d’autocollants pour l’instant",
+        "empty_add_prompt": "En ajouter maintenant"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Échec de la révocation de l’invitation",
+        "error_revoke_3pid_invite_description": "Impossible de révoquer l’invitation. Le serveur subit peut-être un problème temporaire ou vous n’avez pas la permission de révoquer l’invitation.",
+        "admin_tools_section": "Outils d’administration",
+        "revoke_invite": "Révoquer l’invitation",
+        "invited_by": "Invité par %(sender)s"
     }
 }

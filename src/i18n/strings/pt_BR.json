@@ -48,7 +48,6 @@
     "Failed to mute user": "Não foi possível remover notificações da/do usuária/o",
     "Failed to reject invite": "Não foi possível recusar o convite",
     "Join Room": "Ingressar na sala",
-    "Jump to first unread message.": "Ir diretamente para a primeira das mensagens não lidas.",
     "not specified": "não especificado",
     "No more results": "Não há mais resultados",
     "Search failed": "Busca falhou",
@@ -80,7 +79,6 @@
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
     },
     "Create new room": "Criar nova sala",
-    "Admin Tools": "Ferramentas de administração",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
@@ -110,14 +108,11 @@
     "Today": "Hoje",
     "Friday": "Sexta-feira",
     "Changelog": "Registro de alterações",
-    "This Room": "Esta sala",
     "Unavailable": "Indisponível",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
-    "Search…": "Buscar…",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
@@ -125,11 +120,8 @@
     "Thank you!": "Obrigado!",
     "Share Link to User": "Compartilhar este usuário",
     "Share room": "Compartilhar sala",
-    "Only room administrators will see this warning": "Somente administradores de sala verão esse alerta",
-    "You don't currently have any stickerpacks enabled": "No momento, você não tem pacotes de figurinhas ativados",
     "Demote": "Reduzir privilégio",
     "Demote yourself?": "Reduzir seu próprio privilégio?",
-    "Add some now": "Adicione alguns agora",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
     "Preparing to send logs": "Preparando para enviar relatórios",
     "Logs sent": "Relatórios enviados",
@@ -253,7 +245,6 @@
     "Show more": "Mostrar mais",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Atualizar esta sala irá fechar a instância atual da sala e criar uma sala atualizada com o mesmo nome.",
     "Start Verification": "Iniciar confirmação",
     "Messages in this room are end-to-end encrypted.": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
     "Messages in this room are not end-to-end encrypted.": "As mensagens nesta sala não estão criptografadas de ponta a ponta.",
@@ -327,8 +318,6 @@
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
     "This room is public": "Esta sala é pública",
-    "This room has already been upgraded.": "Esta sala já foi atualizada.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Esta sala está executando a versão <roomVersion />, que este servidor marcou como <i>instável</i>.",
     "Local address": "Endereço local",
     "Published Addresses": "Endereços publicados",
     "Other published addresses:": "Outros endereços publicados:",
@@ -347,12 +336,7 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
-    "Scroll to most recent messages": "Ir para as mensagens recentes",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
-    "Failed to revoke invite": "Falha ao revogar o convite",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
-    "Revoke invite": "Revogar o convite",
-    "Invited by %(sender)s": "Convidado por %(sender)s",
     "Error updating main address": "Erro ao atualizar o endereço principal",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ocorreu um erro ao atualizar o endereço principal da sala. Isso pode não ser permitido pelo servidor ou houve um problema temporário.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Ocorreu um erro ao atualizar o endereço alternativo da sala. Isso pode não ser permitido pelo servidor ou houve um problema temporário.",
@@ -821,9 +805,6 @@
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "This space has no local addresses": "Este espaço não tem endereços locais",
-    "No microphone found": "Nenhum microfone encontrado",
-    "Unable to access your microphone": "Não foi possível acessar seu microfone",
-    "View message": "Ver mensagem",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
     "Search for rooms or people": "Procurar por salas ou pessoas",
@@ -882,10 +863,6 @@
     "To publish an address, it needs to be set as a local address first.": "Para publicar um endereço, ele precisa ser configurado como um endereço local primeiro.",
     "Published addresses can be used by anyone on any server to join your room.": "Endereços publicados podem ser usados por qualquer um em qualquer servidor para entrar em sua sala.",
     "Published addresses can be used by anyone on any server to join your space.": "Endereços publicados podem ser usados por qualquer um em qualquer servidor para entrar em seu espaço.",
-    "Stop recording": "Parar a gravação",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Não foi possível encontrar um microfone em seu dispositivo. Confira suas configurações e tente novamente.",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Não foi possível acessar seu microfone. Por favor, confira as configurações do seu navegador e tente novamente.",
-    "Send voice message": "Enviar uma mensagem de voz",
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Export chat": "Exportar conversa",
@@ -1070,7 +1047,8 @@
         "historical": "Histórico",
         "go_to_settings": "Ir para as configurações",
         "setup_secure_messages": "Configurar mensagens seguras",
-        "unencrypted": "Descriptografada"
+        "unencrypted": "Descriptografada",
+        "view_message": "Ver mensagem"
     },
     "action": {
         "continue": "Continuar",
@@ -1295,7 +1273,9 @@
         "format_italics": "Itálico",
         "format_insert_link": "Inserir link",
         "replying_title": "Em resposta a",
-        "edit_composer_label": "Editar mensagem"
+        "edit_composer_label": "Editar mensagem",
+        "send_voice_message": "Enviar uma mensagem de voz",
+        "stop_voice_message": "Parar a gravação"
     },
     "Link": "Ligação",
     "Code": "Código",
@@ -2270,7 +2250,11 @@
             "other": "%(count)s pessoas entraram"
         },
         "unknown_person": "pessoa desconhecida",
-        "connecting": "Conectando"
+        "connecting": "Conectando",
+        "unable_to_access_audio_input_title": "Não foi possível acessar seu microfone",
+        "unable_to_access_audio_input_description": "Não foi possível acessar seu microfone. Por favor, confira as configurações do seu navegador e tente novamente.",
+        "no_audio_input_title": "Nenhum microfone encontrado",
+        "no_audio_input_description": "Não foi possível encontrar um microfone em seu dispositivo. Confira suas configurações e tente novamente."
     },
     "Other": "Outros",
     "room_settings": {
@@ -2993,7 +2977,18 @@
         "peek_join_prompt": "Você está visualizando %(roomName)s. Deseja participar?",
         "no_peek_join_prompt": "%(roomName)s não pode ser visualizado. Deseja participar?",
         "not_found_title_name": "%(roomName)s não existe.",
-        "inaccessible_name": "%(roomName)s não está acessível neste momento."
+        "inaccessible_name": "%(roomName)s não está acessível neste momento.",
+        "jump_to_bottom_button": "Ir para as mensagens recentes",
+        "upgrade_warning_bar": "Atualizar esta sala irá fechar a instância atual da sala e criar uma sala atualizada com o mesmo nome.",
+        "upgrade_warning_bar_upgraded": "Esta sala já foi atualizada.",
+        "upgrade_warning_bar_unstable": "Esta sala está executando a versão <roomVersion />, que este servidor marcou como <i>instável</i>.",
+        "upgrade_warning_bar_admins": "Somente administradores de sala verão esse alerta",
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas as salas",
+            "field_placeholder": "Buscar…"
+        },
+        "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas."
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -3180,5 +3175,16 @@
         "invited_list_heading": "Convidada(o)",
         "filter_placeholder": "Pesquisar participantes da sala",
         "power_label": "%(userName)s (nível de permissão %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "No momento, você não tem pacotes de figurinhas ativados",
+        "empty_add_prompt": "Adicione alguns agora"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Falha ao revogar o convite",
+        "error_revoke_3pid_invite_description": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
+        "admin_tools_section": "Ferramentas de administração",
+        "revoke_invite": "Revogar o convite",
+        "invited_by": "Convidado por %(sender)s"
     }
 }

@@ -544,7 +544,7 @@ const GenericAdminToolsContainer: React.FC<{
 }> = ({ children }) => {
     return (
         <div className="mx_UserInfo_container">
-            <h3>{_t("Admin Tools")}</h3>
+            <h3>{_t("user_info|admin_tools_section")}</h3>
             <div className="mx_UserInfo_buttons">{children}</div>
         </div>
     );

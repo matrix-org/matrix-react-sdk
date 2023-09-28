@@ -36,7 +36,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kan ikkje angre denne endringa, fordi brukaren du forfremmar vil få same tilgangsnivå som du har no.",
     "Are you sure?": "Er du sikker?",
     "Share Link to User": "Del ei lenke til brukaren",
-    "Admin Tools": "Administratorverktøy",
     "and %(count)s others...": {
         "other": "og %(count)s andre...",
         "one": "og ein annan..."
@@ -54,11 +53,6 @@
     "Share room": "Del rom",
     "unknown error code": "ukjend feilkode",
     "Failed to forget room %(errCode)s": "Fekk ikkje til å gløyma rommet %(errCode)s",
-    "Search…": "Søk…",
-    "This Room": "Dette rommet",
-    "All Rooms": "Alle rom",
-    "You don't currently have any stickerpacks enabled": "Du har for tida ikkje skrudd nokre klistremerkepakkar på",
-    "Jump to first unread message.": "Hopp til den fyrste uleste meldinga.",
     "This room has no local addresses": "Dette rommet har ingen lokale adresser",
     "Sunday": "søndag",
     "Monday": "måndag",
@@ -142,7 +136,6 @@
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Klarte ikkje å lasta handlinga som vert svara til. Anten finst ho ikkje elles har du ikkje tilgang til å sjå ho.",
     "Filter results": "Filtrer resultat",
     "Server may be unavailable, overloaded, or search timed out :(": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :(",
-    "Only room administrators will see this warning": "Berre rom-administratorar vil sjå denne åtvaringa",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Denne meldingen vart ikkje send fordi heimetenaren har nådd grensa for tilgjengelege systemressursar. Kontakt <a>systemadministratoren</a> for å vidare nytta denne tenesta.",
     "Could not load user profile": "Klarde ikkje å laste brukarprofilen",
@@ -155,7 +148,6 @@
     "Invalid base_url for m.identity_server": "Feil base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil",
-    "Scroll to most recent messages": "Gå til dei nyaste meldingane",
     "No recent messages by %(user)s found": "Fann ingen nyare meldingar frå %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
     "Remove recent messages by %(user)s": "Fjern nyare meldingar frå %(user)s",
@@ -169,10 +161,6 @@
     "Failed to deactivate user": "Fekk ikkje til å deaktivere brukaren",
     "Remove recent messages": "Fjern nyare meldingar",
     "Direct Messages": "Folk",
-    "Failed to revoke invite": "Fekk ikkje til å trekke invitasjonen",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
-    "Revoke invite": "Trekk invitasjon",
-    "Invited by %(sender)s": "Invitert av %(sender)s",
     "Error updating main address": "Feil under oppdatering av hovedadresse",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Det skjedde ein feil under oppdatering av hovudadressa for rommet. Det kan hende at dette er ein mellombels feil, eller at det ikkje er tillate på tenaren.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Feil under oppdatering av alternativ adresse. Det kan hende at dette er mellombels, eller at det ikkje er tillate på tenaren.",
@@ -1147,7 +1135,15 @@
         "peek_join_prompt": "Du førehandsviser %(roomName)s. Ynskjer du å bli med ?",
         "no_peek_join_prompt": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
         "not_found_title_name": "%(roomName)s eksisterar ikkje.",
-        "inaccessible_name": "%(roomName)s er ikkje tilgjengeleg no."
+        "inaccessible_name": "%(roomName)s er ikkje tilgjengeleg no.",
+        "jump_to_bottom_button": "Gå til dei nyaste meldingane",
+        "upgrade_warning_bar_admins": "Berre rom-administratorar vil sjå denne åtvaringa",
+        "search": {
+            "this_room": "Dette rommet",
+            "all_rooms": "Alle rom",
+            "field_placeholder": "Søk…"
+        },
+        "jump_read_marker": "Hopp til den fyrste uleste meldinga."
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1301,5 +1297,15 @@
         "invited_list_heading": "Invitert",
         "filter_placeholder": "Filtrer rommedlemmar",
         "power_label": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Du har for tida ikkje skrudd nokre klistremerkepakkar på"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Fekk ikkje til å trekke invitasjonen",
+        "error_revoke_3pid_invite_description": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
+        "admin_tools_section": "Administratorverktøy",
+        "revoke_invite": "Trekk invitasjon",
+        "invited_by": "Invitert av %(sender)s"
     }
 }

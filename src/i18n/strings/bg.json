@@ -36,7 +36,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "След като си намалите нивото на достъп, няма да можете да възвърнете тази промяна. Ако сте последния потребител с привилегии в тази стая, ще бъде невъзможно да възвърнете привилегии си.",
     "Are you sure?": "Сигурни ли сте?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Няма да можете да възвърнете тази промяна, тъй като повишавате този потребител до същото ниво на достъп като Вашето.",
-    "Admin Tools": "Инструменти на администратора",
     "and %(count)s others...": {
         "other": "и %(count)s други...",
         "one": "и още един..."
@@ -50,7 +49,6 @@
         "one": "(~%(count)s резултат)"
     },
     "Join Room": "Присъединяване към стаята",
-    "Jump to first unread message.": "Отиди до първото непрочетено съобщение.",
     "not specified": "неопределен",
     "This room has no local addresses": "Тази стая няма локални адреси",
     "Error decrypting attachment": "Грешка при разшифроване на прикачен файл",
@@ -106,21 +104,17 @@
     "Session ID": "Идентификатор на сесията",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "На път сте да бъдете отведени до друг сайт, където можете да удостоверите профила си за използване с %(integrationsUrl)s. Искате ли да продължите?",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
-    "You don't currently have any stickerpacks enabled": "В момента нямате включени пакети със стикери",
     "Sunday": "Неделя",
     "Today": "Днес",
     "Friday": "Петък",
     "Changelog": "Списък на промените",
     "Failed to send logs: ": "Неуспешно изпращане на логове: ",
-    "This Room": "В тази стая",
     "Unavailable": "Не е наличен",
     "Filter results": "Филтриране на резултати",
-    "Search…": "Търсене…",
     "Tuesday": "Вторник",
     "Preparing to send logs": "Подготовка за изпращане на логове",
     "Saturday": "Събота",
     "Monday": "Понеделник",
-    "All Rooms": "Във всички стаи",
     "Wednesday": "Сряда",
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Не можете да изпращате съобщения докато не прегледате и се съгласите с <consentLink>нашите правила и условия</consentLink>.",
     "Demote yourself?": "Понижете себе си?",
     "Demote": "Понижение",
-    "Only room administrators will see this warning": "Само администратори на стаята виждат това предупреждение",
     "Upgrade Room Version": "Обнови версията на стаята",
     "Create a new room with the same name, description and avatar": "Създадем нова стая със същото име, описание и снимка",
     "Update any local room aliases to point to the new room": "Обновим всички локални адреси на стаята да сочат към новата",
@@ -160,7 +153,6 @@
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ако другата версия на %(brand)s все още е отворена в друг таб, моля затворете я. Използването на %(brand)s на един адрес във версии с постепенно и без постепенно зареждане ще причини проблеми.",
     "Incompatible local cache": "Несъвместим локален кеш",
     "Clear cache and resync": "Изчисти кеша и ресинхронизирай",
-    "Add some now": "Добави сега",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "За да избегнете загубата на чат история, трябва да експортирате ключовете на стаята преди да излезете от профила си. Ще трябва да се върнете към по-новата версия на %(brand)s за да направите това",
     "Incompatible Database": "Несъвместима база данни",
     "Continue With Encryption Disabled": "Продължи с изключено шифроване",
@@ -261,12 +253,6 @@
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
     "Could not load user profile": "Неуспешно зареждане на потребителския профил",
     "Power level": "Ниво на достъп",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
-    "Failed to revoke invite": "Неуспешно оттегляне на поканата",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Поканата не можа да бъде оттеглена. Или има временен проблем със сървъра, или нямате достатъчно права за да оттеглите поканата.",
-    "Revoke invite": "Оттегли поканата",
-    "Invited by %(sender)s": "Поканен от %(sender)s",
     "Notes": "Бележки",
     "Sign out and remove encryption keys?": "Излизане и премахване на ключовете за шифроване?",
     "To help us prevent this in future, please <a>send us logs</a>.": "За да ни помогнете да предотвратим това в бъдеще, моля <a>изпратете логове</a>.",
@@ -285,7 +271,6 @@
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
-    "This room has already been upgraded.": "Тази стая вече е била обновена.",
     "edited": "редактирано",
     "Some characters not allowed": "Някои символи не са позволени",
     "Failed to get autodiscovery configuration from server": "Неуспешно автоматично откриване на конфигурацията за сървъра",
@@ -367,7 +352,6 @@
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
-    "Scroll to most recent messages": "Отиди до най-скорошните съобщения",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Възникна грешка при обновяване на алтернативните адреси на стаята. Или не е позволено от сървъра или се е случила временна грешка.",
     "Local address": "Локален адрес",
     "Published Addresses": "Публикувани адреси",
@@ -2171,7 +2155,18 @@
         "peek_join_prompt": "Предварителен преглед на %(roomName)s. Желаете ли да се влезете?",
         "no_peek_join_prompt": "%(roomName)s не може да бъде прегледана предварително. Желаете ли да се влезете?",
         "not_found_title_name": "%(roomName)s не съществува.",
-        "inaccessible_name": "%(roomName)s не е достъпна към този момент."
+        "inaccessible_name": "%(roomName)s не е достъпна към този момент.",
+        "jump_to_bottom_button": "Отиди до най-скорошните съобщения",
+        "upgrade_warning_bar": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
+        "upgrade_warning_bar_upgraded": "Тази стая вече е била обновена.",
+        "upgrade_warning_bar_unstable": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
+        "upgrade_warning_bar_admins": "Само администратори на стаята виждат това предупреждение",
+        "search": {
+            "this_room": "В тази стая",
+            "all_rooms": "Във всички стаи",
+            "field_placeholder": "Търсене…"
+        },
+        "jump_read_marker": "Отиди до първото непрочетено съобщение."
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
@@ -2365,5 +2360,16 @@
         "invited_list_heading": "Поканен",
         "filter_placeholder": "Филтриране на членовете",
         "power_label": "%(userName)s (ниво на достъп %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "В момента нямате включени пакети със стикери",
+        "empty_add_prompt": "Добави сега"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Неуспешно оттегляне на поканата",
+        "error_revoke_3pid_invite_description": "Поканата не можа да бъде оттеглена. Или има временен проблем със сървъра, или нямате достатъчно права за да оттеглите поканата.",
+        "admin_tools_section": "Инструменти на администратора",
+        "revoke_invite": "Оттегли поканата",
+        "invited_by": "Поканен от %(sender)s"
     }
 }

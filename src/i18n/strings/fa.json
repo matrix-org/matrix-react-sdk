@@ -3,9 +3,7 @@
     "Today": "امروز",
     "Friday": "آدینه",
     "Changelog": "تغییراتِ به‌وجودآمده",
-    "This Room": "این گپ",
     "Unavailable": "غیرقابل‌دسترسی",
-    "All Rooms": "همه‌ی گپ‌ها",
     "Tuesday": "سه‌شنبه",
     "Unnamed room": "گپ نام‌گذاری نشده",
     "Saturday": "شنبه",
@@ -16,7 +14,6 @@
     "unknown error code": "کد خطای ناشناخته",
     "You cannot delete this message. (%(code)s)": "شما نمی‌توانید این پیام را پاک کنید. (%(code)s)",
     "Thursday": "پنج‌شنبه",
-    "Search…": "جستجو…",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
     "Failed to ban user": "کاربر مسدود نشد",
@@ -620,10 +617,8 @@
         "one": "و یکی دیگر ...",
         "other": "و %(count)s مورد دیگر ..."
     },
-    "Scroll to most recent messages": "به جدیدترین پیام‌ها بروید",
     "Encrypted by a deleted session": "با یک نشست حذف شده رمزگذاری شده است",
     "Language Dropdown": "منو زبان",
-    "View message": "مشاهده پیام",
     "Information": "اطلاعات",
     "%(count)s people you know have already joined": {
         "one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
@@ -682,23 +677,7 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "در به روزرسانی آدرس های جایگزین اتاق خطایی روی داد. ممکن است سرور مجاز نباشد و یا اینکه خطایی موقت رخ داده باشد.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "در به روزرسانی آدرس اصلی اتاق خطایی روی داد. ممکن است سرور مجاز نباشد و یا خطای موقتی رخ داده باشد.",
     "Error updating main address": "خطا در به روزرسانی آدرس اصلی",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "ما میکروفونی در دستگاه شما پیدا نکردیم. لطفاً تنظیمات خود را بررسی کنید و دوباره امتحان کنید.",
-    "No microphone found": "میکروفونی یافت نشد",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "ما نتوانستیم به میکروفون شما دسترسی پیدا کنیم. لطفا تنظیمات مرورگر خود را بررسی کنید و دوباره سعی کنید.",
-    "Unable to access your microphone": "دسترسی به میکروفن شما امکان پذیر نیست",
-    "Jump to first unread message.": "رفتن به اولین پیام خوانده نشده.",
-    "Invited by %(sender)s": "دعوت شده توسط %(sender)s",
-    "Revoke invite": "لغو دعوت",
-    "Admin Tools": "ابزارهای مدیریت",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "دعوت لغو نشد. ممکن است سرور با یک مشکل موقتی روبرو شده باشد و یا اینکه شما مجوز کافی برای لغو دعوت را نداشته باشید.",
-    "Failed to revoke invite": "دعوت لغو نشد",
-    "Add some now": "اکنون چندتایی اضافه کنید",
-    "You don't currently have any stickerpacks enabled": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
     "Failed to connect to integration manager": "اتصال به سیستم مدیریت ادغام انجام نشد",
-    "Only room administrators will see this warning": "فقط مدیران اتاق این هشدار را مشاهده خواهند کرد",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
-    "This room has already been upgraded.": "این اتاق قبلاً ارتقا یافته است.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
     "Create a space": "ساختن یک محیط",
     "Folder": "پوشه",
     "Headphones": "هدفون",
@@ -982,7 +961,8 @@
         "historical": "تاریخی",
         "go_to_settings": "برو به تنظیمات",
         "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید",
-        "unencrypted": "رمزگذاری نشده"
+        "unencrypted": "رمزگذاری نشده",
+        "view_message": "مشاهده پیام"
     },
     "action": {
         "continue": "ادامه",
@@ -2032,7 +2012,11 @@
         "hide_sidebar_button": "پنهان سازی نوار کناری",
         "show_sidebar_button": "نمایش نوار کناری",
         "unknown_person": "فرد ناشناس",
-        "connecting": "در حال اتصال"
+        "connecting": "در حال اتصال",
+        "unable_to_access_audio_input_title": "دسترسی به میکروفن شما امکان پذیر نیست",
+        "unable_to_access_audio_input_description": "ما نتوانستیم به میکروفون شما دسترسی پیدا کنیم. لطفا تنظیمات مرورگر خود را بررسی کنید و دوباره سعی کنید.",
+        "no_audio_input_title": "میکروفونی یافت نشد",
+        "no_audio_input_description": "ما میکروفونی در دستگاه شما پیدا نکردیم. لطفاً تنظیمات خود را بررسی کنید و دوباره امتحان کنید."
     },
     "Other": "دیگر",
     "room_settings": {
@@ -2712,7 +2696,18 @@
         "peek_join_prompt": "شما در حال پیش نمایش %(roomName)s هستید. می خواهید به آن بپیوندید؟",
         "no_peek_join_prompt": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
         "not_found_title_name": "%(roomName)s وجود ندارد.",
-        "inaccessible_name": "در حال حاضر %(roomName)s قابل دسترسی نیست."
+        "inaccessible_name": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
+        "jump_to_bottom_button": "به جدیدترین پیام‌ها بروید",
+        "upgrade_warning_bar": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
+        "upgrade_warning_bar_upgraded": "این اتاق قبلاً ارتقا یافته است.",
+        "upgrade_warning_bar_unstable": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
+        "upgrade_warning_bar_admins": "فقط مدیران اتاق این هشدار را مشاهده خواهند کرد",
+        "search": {
+            "this_room": "این گپ",
+            "all_rooms": "همه‌ی گپ‌ها",
+            "field_placeholder": "جستجو…"
+        },
+        "jump_read_marker": "رفتن به اولین پیام خوانده نشده."
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2899,5 +2894,16 @@
         "invited_list_heading": "دعوت شد",
         "filter_placeholder": "فیلتر کردن اعضای اتاق",
         "power_label": "%(userName)s (سطح قدرت %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
+        "empty_add_prompt": "اکنون چندتایی اضافه کنید"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "دعوت لغو نشد",
+        "error_revoke_3pid_invite_description": "دعوت لغو نشد. ممکن است سرور با یک مشکل موقتی روبرو شده باشد و یا اینکه شما مجوز کافی برای لغو دعوت را نداشته باشید.",
+        "admin_tools_section": "ابزارهای مدیریت",
+        "revoke_invite": "لغو دعوت",
+        "invited_by": "دعوت شده توسط %(sender)s"
     }
 }

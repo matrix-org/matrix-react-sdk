@@ -59,7 +59,6 @@
     "Email address": "Электронная почта",
     "Error decrypting attachment": "Ошибка расшифровки вложения",
     "Invalid file%(extra)s": "Недопустимый файл%(extra)s",
-    "Jump to first unread message.": "Перейти к первому непрочитанному сообщению.",
     "Server may be unavailable, overloaded, or search timed out :(": "Сервер может быть недоступен, перегружен или поиск прекращен по тайм-ауту :(",
     "Session ID": "ID сеанса",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
@@ -80,7 +79,6 @@
         "other": "Отправка %(filename)s и %(count)s других"
     },
     "Home": "Главная",
-    "Admin Tools": "Инструменты администратора",
     "(~%(count)s results)": {
         "other": "(~%(count)s результатов)",
         "one": "(~%(count)s результат)"
@@ -111,22 +109,18 @@
     "Friday": "Пятница",
     "Changelog": "История изменений",
     "Failed to send logs: ": "Не удалось отправить журналы: ",
-    "This Room": "В этой комнате",
     "Unavailable": "Недоступен",
     "Filter results": "Фильтрация результатов",
     "Tuesday": "Вторник",
-    "Search…": "Поиск…",
     "Preparing to send logs": "Подготовка к отправке журналов",
     "Saturday": "Суббота",
     "Monday": "Понедельник",
-    "All Rooms": "Везде",
     "You cannot delete this message. (%(code)s)": "Это сообщение нельзя удалить. (%(code)s)",
     "Thursday": "Четверг",
     "Logs sent": "Журналы отправлены",
     "Yesterday": "Вчера",
     "Wednesday": "Среда",
     "Thank you!": "Спасибо!",
-    "You don't currently have any stickerpacks enabled": "У вас ещё нет наклеек",
     "Send Logs": "Отправить логи",
     "Clear Storage and Sign Out": "Очистить хранилище и выйти",
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Вы не можете отправлять сообщения до тех пор, пока вы не примете <consentLink>наши правила и положения</consentLink>.",
     "Demote": "Понижение",
     "Demote yourself?": "Понизить самого себя?",
-    "Only room administrators will see this warning": "Только администраторы комнат увидят это предупреждение",
     "Upgrade Room Version": "Обновление версии комнаты",
     "Create a new room with the same name, description and avatar": "Создадим новую комнату с тем же именем, описанием и аватаром",
     "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
@@ -238,14 +231,6 @@
     "You'll lose access to your encrypted messages": "Вы потеряете доступ к вашим шифрованным сообщениям",
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же названием.",
-    "This room has already been upgraded.": "Эта комната уже была обновлена.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Версия этой комнаты — <roomVersion />, этот домашний сервер считает её <i>нестабильной</i>.",
-    "Add some now": "Добавить сейчас",
-    "Failed to revoke invite": "Не удалось отменить приглашение",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Не удалось отозвать приглашение. Возможно, на сервере возникла вре́менная проблема или у вас недостаточно прав для отзыва приглашения.",
-    "Revoke invite": "Отозвать приглашение",
-    "Invited by %(sender)s": "Приглашен %(sender)s",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "При обновлении основного адреса комнаты произошла ошибка. Возможно, это не разрешено сервером или произошел временный сбой.",
     "edited": "изменено",
     "Power level": "Уровень прав",
@@ -348,7 +333,6 @@
     "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
     "Encrypted by a deleted session": "Зашифровано удалённым сеансом",
-    "Scroll to most recent messages": "Перейти к последним сообщениям",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
     "Local address": "Локальный адрес",
     "Published Addresses": "Публичные адреса",
@@ -932,13 +916,6 @@
     "Published addresses can be used by anyone on any server to join your room.": "Опубликованные адреса могут быть использованы любым человеком на любом сервере, чтобы присоединиться к вашей комнате.",
     "Published addresses can be used by anyone on any server to join your space.": "Опубликованные адреса могут быть использованы любым человеком на любом сервере для присоединения к вашему пространству.",
     "This space has no local addresses": "У этого пространства нет локальных адресов",
-    "Stop recording": "Остановить запись",
-    "Send voice message": "Отправить голосовое сообщение",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Мы не нашли микрофон на вашем устройстве. Пожалуйста, проверьте настройки и повторите попытку.",
-    "No microphone found": "Микрофон не найден",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Мы не смогли получить доступ к вашему микрофону. Пожалуйста, проверьте настройки браузера и повторите попытку.",
-    "Unable to access your microphone": "Не удалось получить доступ к микрофону",
-    "View message": "Посмотреть сообщение",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
     "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
@@ -972,7 +949,6 @@
     },
     "View in room": "Просмотреть в комнате",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
-    "Joined": "Присоединился",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Восстановите доступ к своей учетной записи и восстановите ключи шифрования, сохранённые в этом сеансе. Без них в любом сеансе вы не сможете прочитать все свои защищённые сообщения.",
     "Device verified": "Сеанс заверен",
     "Verify this device": "Заверьте этот сеанс",
@@ -1079,7 +1055,6 @@
     "Collapse quotes": "Свернуть цитаты",
     "Can't create a thread from an event with an existing relation": "Невозможно создать обсуждение из события с существующей связью",
     "Pinned": "Закреплено",
-    "Open thread": "Открыть ветку",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
@@ -1155,7 +1130,6 @@
         "one": "1 участник",
         "other": "%(count)s участников"
     },
-    "Show Labs settings": "Показать настройки лаборатории",
     "Live location ended": "Трансляция местоположения завершена",
     "View live location": "Посмотреть трансляцию местоположения",
     "Live location enabled": "Трансляция местоположения включена",
@@ -1183,7 +1157,6 @@
     "The request was cancelled.": "Запрос был отменён.",
     "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
     "Error downloading image": "Ошибка при скачивании изображения",
-    "Unable to decrypt message": "Невозможно расшифровать сообщение",
     "Video call ended": "Видеозвонок завершён",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     "Error starting verification": "Ошибка при запуске подтверждения",
@@ -1313,7 +1286,9 @@
         "historical": "Архив",
         "go_to_settings": "Перейти в настройки",
         "setup_secure_messages": "Настроить безопасные сообщения",
-        "unencrypted": "Не зашифровано"
+        "unencrypted": "Не зашифровано",
+        "view_message": "Посмотреть сообщение",
+        "joined": "Присоединился"
     },
     "action": {
         "continue": "Продолжить",
@@ -1618,7 +1593,9 @@
         "format_italics": "Курсив",
         "format_insert_link": "Вставить ссылку",
         "replying_title": "Отвечает",
-        "edit_composer_label": "Редактировать сообщение"
+        "edit_composer_label": "Редактировать сообщение",
+        "send_voice_message": "Отправить голосовое сообщение",
+        "stop_voice_message": "Остановить запись"
     },
     "Link": "Ссылка",
     "Code": "Код",
@@ -2840,7 +2817,11 @@
             "other": "%(count)s человек(а) присоединились"
         },
         "unknown_person": "Неизвестное лицо",
-        "connecting": "Подключение"
+        "connecting": "Подключение",
+        "unable_to_access_audio_input_title": "Не удалось получить доступ к микрофону",
+        "unable_to_access_audio_input_description": "Мы не смогли получить доступ к вашему микрофону. Пожалуйста, проверьте настройки браузера и повторите попытку.",
+        "no_audio_input_title": "Микрофон не найден",
+        "no_audio_input_description": "Мы не нашли микрофон на вашем устройстве. Пожалуйста, проверьте настройки и повторите попытку."
     },
     "Other": "Другие",
     "room_settings": {
@@ -3507,7 +3488,9 @@
         "show_all_threads": "Показать все обсуждения",
         "empty_explainer": "Обсуждения помогают поддерживать и легко отслеживать тематику бесед.",
         "empty_tip": "<b>Совет:</b> Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
-        "empty_heading": "Организуйте обсуждения с помощью обсуждений"
+        "empty_heading": "Организуйте обсуждения с помощью обсуждений",
+        "open_thread": "Открыть ветку",
+        "unable_to_decrypt": "Невозможно расшифровать сообщение"
     },
     "theme": {
         "light_high_contrast": "Контрастная светлая",
@@ -3744,7 +3727,19 @@
         "inaccessible_subtitle_2": "При попытке получить доступ к комнате или пространству была возвращена ошибка %(errcode)s. Если вы думаете, что вы видите это сообщение по ошибке, пожалуйста, <issueLink>отправьте отчет об ошибке</issueLink>.",
         "join_failed_needs_invite": "Для просмотра %(roomName)s необходимо приглашение",
         "view_failed_enable_video_rooms": "Для просмотра сначала включите видеокомнаты в лаборатории",
-        "join_failed_enable_video_rooms": "Чтобы присоединиться, сначала включите видеокомнаты в лаборатории"
+        "join_failed_enable_video_rooms": "Чтобы присоединиться, сначала включите видеокомнаты в лаборатории",
+        "jump_to_bottom_button": "Перейти к последним сообщениям",
+        "show_labs_settings": "Показать настройки лаборатории",
+        "upgrade_warning_bar": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же названием.",
+        "upgrade_warning_bar_upgraded": "Эта комната уже была обновлена.",
+        "upgrade_warning_bar_unstable": "Версия этой комнаты — <roomVersion />, этот домашний сервер считает её <i>нестабильной</i>.",
+        "upgrade_warning_bar_admins": "Только администраторы комнат увидят это предупреждение",
+        "search": {
+            "this_room": "В этой комнате",
+            "all_rooms": "Везде",
+            "field_placeholder": "Поиск…"
+        },
+        "jump_read_marker": "Перейти к первому непрочитанному сообщению."
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -3955,5 +3950,16 @@
         "invited_list_heading": "Приглашены",
         "filter_placeholder": "Поиск по участникам",
         "power_label": "%(userName)s (уровень прав %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "У вас ещё нет наклеек",
+        "empty_add_prompt": "Добавить сейчас"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Не удалось отменить приглашение",
+        "error_revoke_3pid_invite_description": "Не удалось отозвать приглашение. Возможно, на сервере возникла вре́менная проблема или у вас недостаточно прав для отзыва приглашения.",
+        "admin_tools_section": "Инструменты администратора",
+        "revoke_invite": "Отозвать приглашение",
+        "invited_by": "Приглашен %(sender)s"
     }
 }

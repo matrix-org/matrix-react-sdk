@@ -48,7 +48,6 @@
     "Failed to mute user": "Não foi possível remover notificações da/do usuária/o",
     "Failed to reject invite": "Não foi possível rejeitar o convite",
     "Join Room": "Ingressar na sala",
-    "Jump to first unread message.": "Ir diretamente para a primeira das mensagens não lidas.",
     "not specified": "não especificado",
     "No more results": "Não há mais resultados",
     "Search failed": "Busca falhou",
@@ -79,7 +78,6 @@
         "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
     },
     "Uploading %(filename)s": "Enviando o arquivo %(filename)s",
-    "Admin Tools": "Ferramentas de Administração",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
@@ -92,16 +90,13 @@
     "Today": "Hoje",
     "Friday": "Sexta-feira",
     "Changelog": "Histórico de alterações",
-    "This Room": "Esta sala",
     "Unavailable": "Indisponível",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
-    "Search…": "Pesquisar…",
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
     "Send": "Enviar",
-    "All Rooms": "Todas as salas",
     "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
@@ -778,7 +773,13 @@
         "dm_invite_subtitle": "<userName/> quer falar",
         "invite_subtitle": "<userName/> convidou-o",
         "not_found_title_name": "%(roomName)s não existe.",
-        "inaccessible_name": "%(roomName)s não está acessível neste momento."
+        "inaccessible_name": "%(roomName)s não está acessível neste momento.",
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas as salas",
+            "field_placeholder": "Pesquisar…"
+        },
+        "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas."
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para poder usar esta funcionalidade",
@@ -914,5 +915,8 @@
         "invited_list_heading": "Convidada(o)",
         "filter_placeholder": "Filtrar integrantes da sala",
         "power_label": "%(userName)s (nível de permissão %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "admin_tools_section": "Ferramentas de Administração"
     }
 }

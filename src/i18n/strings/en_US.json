@@ -24,7 +24,6 @@
     "Failed to reject invitation": "Failed to reject invitation",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Join Room": "Join Room",
-    "Jump to first unread message.": "Jump to first unread message.",
     "Moderator": "Moderator",
     "New passwords must match each other.": "New passwords must match each other.",
     "not specified": "not specified",
@@ -75,7 +74,6 @@
     "Error decrypting video": "Error decrypting video",
     "Add an Integration": "Add an Integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
-    "Admin Tools": "Admin Tools",
     "Create new room": "Create new room",
     "Home": "Home",
     "Uploading %(filename)s": "Uploading %(filename)s",
@@ -92,14 +90,11 @@
     "Today": "Today",
     "Friday": "Friday",
     "Changelog": "Changelog",
-    "This Room": "This Room",
     "Unavailable": "Unavailable",
     "Tuesday": "Tuesday",
-    "Search…": "Search…",
     "Unnamed room": "Unnamed room",
     "Saturday": "Saturday",
     "Monday": "Monday",
-    "All Rooms": "All Rooms",
     "Wednesday": "Wednesday",
     "Send": "Send",
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
@@ -496,7 +491,13 @@
             "forget_room_button": "Forget room"
         },
         "not_found_title_name": "%(roomName)s does not exist.",
-        "inaccessible_name": "%(roomName)s is not accessible at this time."
+        "inaccessible_name": "%(roomName)s is not accessible at this time.",
+        "search": {
+            "this_room": "This Room",
+            "all_rooms": "All Rooms",
+            "field_placeholder": "Search…"
+        },
+        "jump_read_marker": "Jump to first unread message."
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",
@@ -600,5 +601,8 @@
         "invited_list_heading": "Invited",
         "filter_placeholder": "Filter room members",
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "admin_tools_section": "Admin Tools"
     }
 }

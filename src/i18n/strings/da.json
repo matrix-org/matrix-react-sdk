@@ -38,15 +38,12 @@
     "Today": "I dag",
     "Friday": "Fredag",
     "Changelog": "Ændringslog",
-    "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
     "Filter results": "Filtrér resultater",
-    "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
     "Send": "Send",
-    "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
@@ -853,7 +850,12 @@
             "favourite": "Favorit",
             "low_priority": "Lav prioritet"
         },
-        "invite_this_room": "Inviter til dette rum"
+        "invite_this_room": "Inviter til dette rum",
+        "search": {
+            "this_room": "Dette rum",
+            "all_rooms": "Alle rum",
+            "field_placeholder": "Søg…"
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s andre",

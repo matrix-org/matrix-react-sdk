@@ -70,7 +70,6 @@
     "Add an Integration": "Eine Integration hinzufügen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
-    "Jump to first unread message.": "Zur ersten ungelesenen Nachricht springen.",
     "Are you sure you want to leave the room '%(roomName)s'?": "Bist du sicher, dass du den Raum „%(roomName)s“ verlassen möchtest?",
     "Custom level": "Selbstdefiniertes Berechtigungslevel",
     "Uploading %(filename)s": "%(filename)s wird hochgeladen",
@@ -80,7 +79,6 @@
     },
     "Create new room": "Neuer Raum",
     "Home": "Startseite",
-    "Admin Tools": "Administrationswerkzeuge",
     "(~%(count)s results)": {
         "one": "(~%(count)s Ergebnis)",
         "other": "(~%(count)s Ergebnisse)"
@@ -106,13 +104,11 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du wirst nicht in der Lage sein, die Änderung zurückzusetzen, da du dich degradierst. Wenn du der letze Nutzer mit Berechtigungen bist, wird es unmöglich sein die Privilegien zurückzubekommen.",
     "<a>In reply to</a> <pill>": "<a>Als Antwort auf</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Dieser Raum ist nicht öffentlich. Du wirst ihn nicht ohne erneute Einladung betreten können.",
-    "You don't currently have any stickerpacks enabled": "Keine Sticker-Pakete aktiviert",
     "Sunday": "Sonntag",
     "Today": "Heute",
     "Friday": "Freitag",
     "Changelog": "Änderungsprotokoll",
     "Failed to send logs: ": "Senden von Protokolldateien fehlgeschlagen: ",
-    "This Room": "In diesem Raum",
     "Unavailable": "Nicht verfügbar",
     "Filter results": "Ergebnisse filtern",
     "Tuesday": "Dienstag",
@@ -121,9 +117,7 @@
     "Monday": "Montag",
     "Wednesday": "Mittwoch",
     "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
-    "All Rooms": "In allen Räumen",
     "Thursday": "Donnerstag",
-    "Search…": "Suchen…",
     "Logs sent": "Protokolldateien gesendet",
     "Yesterday": "Gestern",
     "Thank you!": "Danke!",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kannst keine Nachrichten senden bis du <consentLink>unsere Geschäftsbedingungen</consentLink> gelesen und akzeptiert hast.",
     "Demote yourself?": "Dein eigenes Berechtigungslevel herabsetzen?",
     "Demote": "Zurückstufen",
-    "Only room administrators will see this warning": "Nur Raumadministratoren werden diese Nachricht sehen",
     "Upgrade Room Version": "Raumversion aktualisieren",
     "Create a new room with the same name, description and avatar": "Einen neuen Raum mit demselben Namen, Beschreibung und Profilbild erstellen",
     "Update any local room aliases to point to the new room": "Alle lokalen Raumaliase aktualisieren, damit sie auf den neuen Raum zeigen",
@@ -160,7 +153,6 @@
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Wenn %(brand)s mit der alten Version in einem anderen Tab geöffnet ist, schließe dies bitte, da das parallele Nutzen von %(brand)s auf demselben Host mit aktivierten und deaktivierten verzögertem Laden, Probleme verursachen wird.",
     "Incompatible local cache": "Inkompatibler lokaler Zwischenspeicher",
     "Clear cache and resync": "Zwischenspeicher löschen und erneut synchronisieren",
-    "Add some now": "Jetzt hinzufügen",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Um zu vermeiden, dass dein Verlauf verloren geht, musst du deine Raumschlüssel exportieren, bevor du dich abmeldest. Dazu musst du auf die neuere Version von %(brand)s zurückgehen",
     "Incompatible Database": "Inkompatible Datenbanken",
     "Continue With Encryption Disabled": "Mit deaktivierter Verschlüsselung fortfahren",
@@ -266,16 +258,12 @@
     "Upload all": "Alle hochladen",
     "Cancel All": "Alle abbrechen",
     "Upload Error": "Fehler beim Hochladen",
-    "Failed to revoke invite": "Einladung konnte nicht zurückgezogen werden",
-    "Revoke invite": "Einladung zurückziehen",
-    "Invited by %(sender)s": "%(sender)s eingeladen",
     "Deactivate account": "Benutzerkonto deaktivieren",
     "Lock": "Schloss",
     "Direct Messages": "Direktnachrichten",
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
     "%(count)s verified sessions": {
         "other": "%(count)s verifizierte Sitzungen",
@@ -325,7 +313,6 @@
     "Confirm account deactivation": "Deaktivierung des Kontos bestätigen",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "Scroll to most recent messages": "Zur neusten Nachricht springen",
     "No recent messages by %(user)s found": "Keine neuen Nachrichten von %(user)s gefunden",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
@@ -333,10 +320,7 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Beim Deaktivieren wirst du abgemeldet und ein erneutes Anmelden verhindert. Zusätzlich wirst du aus allen Räumen entfernt. Diese Aktion kann nicht rückgängig gemacht werden. Bist du sicher, dass du dieses Konto deaktivieren willst?",
     "Deactivate user": "Konto deaktivieren",
     "Failed to deactivate user": "Benutzer konnte nicht deaktiviert werden",
-    "This room has already been upgraded.": "Dieser Raum wurde bereits aktualisiert.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
     "Local address": "Lokale Adresse",
     "Published Addresses": "Öffentliche Adresse",
     "Other published addresses:": "Andere öffentliche Adressen:",
@@ -852,7 +836,6 @@
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
-    "View message": "Nachricht anzeigen",
     "View all %(count)s members": {
         "other": "Alle %(count)s Mitglieder anzeigen",
         "one": "Mitglied anzeigen"
@@ -871,10 +854,6 @@
         "other": "Räume hinzufügen … (%(progress)s von %(count)s)"
     },
     "You are not allowed to view this server's rooms list": "Du darfst diese Raumliste nicht sehen",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Es konnte kein Mikrofon gefunden werden. Überprüfe deine Einstellungen und versuche es erneut.",
-    "No microphone found": "Kein Mikrofon gefunden",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Fehler beim Zugriff auf dein Mikrofon. Überprüfe deine Browsereinstellungen und versuche es nochmal.",
-    "Unable to access your microphone": "Fehler beim Zugriff auf Mikrofon",
     "Search names and descriptions": "Nach Name und Beschreibung filtern",
     "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
     "Add reaction": "Reaktion hinzufügen",
@@ -916,8 +895,6 @@
     "Add existing space": "Existierenden Space hinzufügen",
     "Decrypting": "Entschlüsseln",
     "Unknown failure: %(reason)s": "Unbekannter Fehler: %(reason)s",
-    "Stop recording": "Aufnahme beenden",
-    "Send voice message": "Sprachnachricht senden",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
     "Search spaces": "Spaces durchsuchen",
     "Select spaces": "Spaces wählen",
@@ -952,7 +929,6 @@
     },
     "Skip verification for now": "Verifizierung vorläufig überspringen",
     "Really reset verification keys?": "Willst du deine Verifizierungsschlüssel wirklich zurücksetzen?",
-    "Joined": "Beigetreten",
     "View in room": "Im Raum anzeigen",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Would you like to leave the rooms in this space?": "Willst du die Räume in diesem Space verlassen?",
@@ -1064,7 +1040,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
     "Pinned": "Angeheftet",
-    "Open thread": "Thread anzeigen",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
     "Results will be visible when the poll is ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
@@ -1160,7 +1135,6 @@
     "Who will you chat to the most?": "Mit wem wirst du am meisten schreiben?",
     "We're creating a room with %(names)s": "Wir erstellen einen Raum mit %(names)s",
     "Messages in this chat will be end-to-end encrypted.": "Nachrichten in dieser Unterhaltung werden Ende-zu-Ende-verschlüsselt.",
-    "Show Labs settings": "Zeige die \"Labor\" Einstellungen",
     "Online community members": "Online Community-Mitglieder",
     "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Start a group chat": "Gruppenunterhaltung beginnen",
@@ -1207,7 +1181,6 @@
     "Error starting verification": "Verifizierungbeginn fehlgeschlagen",
     "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
-    "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Text": "Text",
     "Create a link": "Link erstellen",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Dennoch DM beginnen",
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
-    "Search all rooms": "Alle Räume durchsuchen",
-    "Search this room": "Diesen Raum durchsuchen",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
     "Waiting for users to join %(brand)s": "Warte darauf, dass Benutzer %(brand)s beitreten",
     "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
@@ -1396,7 +1367,9 @@
         "historical": "Archiv",
         "go_to_settings": "Gehe zu Einstellungen",
         "setup_secure_messages": "Richte sichere Nachrichten ein",
-        "unencrypted": "Unverschlüsselt"
+        "unencrypted": "Unverschlüsselt",
+        "view_message": "Nachricht anzeigen",
+        "joined": "Beigetreten"
     },
     "action": {
         "continue": "Fortfahren",
@@ -1734,7 +1707,9 @@
         "format_italics": "Kursiv",
         "format_insert_link": "Link einfügen",
         "replying_title": "Antwortet",
-        "edit_composer_label": "Nachricht bearbeiten"
+        "edit_composer_label": "Nachricht bearbeiten",
+        "send_voice_message": "Sprachnachricht senden",
+        "stop_voice_message": "Aufnahme beenden"
     },
     "Link": "Link",
     "Code": "Code",
@@ -3065,7 +3040,11 @@
             "other": "%(count)s Personen beigetreten"
         },
         "unknown_person": "unbekannte Person",
-        "connecting": "Verbinden"
+        "connecting": "Verbinden",
+        "unable_to_access_audio_input_title": "Fehler beim Zugriff auf Mikrofon",
+        "unable_to_access_audio_input_description": "Fehler beim Zugriff auf dein Mikrofon. Überprüfe deine Browsereinstellungen und versuche es nochmal.",
+        "no_audio_input_title": "Kein Mikrofon gefunden",
+        "no_audio_input_description": "Es konnte kein Mikrofon gefunden werden. Überprüfe deine Einstellungen und versuche es erneut."
     },
     "Other": "Sonstiges",
     "room_settings": {
@@ -3790,7 +3769,9 @@
         "show_all_threads": "Alle Threads anzeigen",
         "empty_explainer": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
         "empty_tip": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
-        "empty_heading": "Organisiere Diskussionen mit Threads"
+        "empty_heading": "Organisiere Diskussionen mit Threads",
+        "open_thread": "Thread anzeigen",
+        "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich"
     },
     "theme": {
         "light_high_contrast": "Hell kontrastreich",
@@ -4050,7 +4031,21 @@
         "knock_cancel_action": "Anfrage abbrechen",
         "join_failed_needs_invite": "Um %(roomName)s zu betrachten, benötigst du eine Einladung",
         "view_failed_enable_video_rooms": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
-        "join_failed_enable_video_rooms": "Zum Betreten, aktiviere bitte Videoräume in den Laboreinstellungen"
+        "join_failed_enable_video_rooms": "Zum Betreten, aktiviere bitte Videoräume in den Laboreinstellungen",
+        "jump_to_bottom_button": "Zur neusten Nachricht springen",
+        "show_labs_settings": "Zeige die \"Labor\" Einstellungen",
+        "upgrade_warning_bar": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
+        "upgrade_warning_bar_upgraded": "Dieser Raum wurde bereits aktualisiert.",
+        "upgrade_warning_bar_unstable": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
+        "upgrade_warning_bar_admins": "Nur Raumadministratoren werden diese Nachricht sehen",
+        "search": {
+            "this_room": "In diesem Raum",
+            "all_rooms": "In allen Räumen",
+            "field_placeholder": "Suchen…",
+            "this_room_button": "Diesen Raum durchsuchen",
+            "all_rooms_button": "Alle Räume durchsuchen"
+        },
+        "jump_read_marker": "Zur ersten ungelesenen Nachricht springen."
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4275,5 +4270,16 @@
         "invited_list_heading": "Eingeladen",
         "filter_placeholder": "Raummitglieder filtern",
         "power_label": "%(userName)s (Berechtigungslevel %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Keine Sticker-Pakete aktiviert",
+        "empty_add_prompt": "Jetzt hinzufügen"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Einladung konnte nicht zurückgezogen werden",
+        "error_revoke_3pid_invite_description": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
+        "admin_tools_section": "Administrationswerkzeuge",
+        "revoke_invite": "Einladung zurückziehen",
+        "invited_by": "%(sender)s eingeladen"
     }
 }

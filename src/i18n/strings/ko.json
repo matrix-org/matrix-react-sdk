@@ -1,7 +1,6 @@
 {
     "Create new room": "새 방 만들기",
     "unknown error code": "알 수 없는 오류 코드",
-    "Admin Tools": "관리자 도구",
     "A new password must be entered.": "새 비밀번호를 입력해주세요.",
     "An error has occurred.": "오류가 발생했습니다.",
     "Are you sure?": "확신합니까?",
@@ -26,7 +25,6 @@
     "Home": "홈",
     "Invalid file%(extra)s": "잘못된 파일%(extra)s",
     "Join Room": "방에 참가",
-    "Jump to first unread message.": "읽지 않은 첫 메시지로 건너뜁니다.",
     "Moderator": "조정자",
     "New passwords must match each other.": "새 비밀번호는 서로 같아야 합니다.",
     "not specified": "지정되지 않음",
@@ -90,15 +88,12 @@
     "Today": "오늘",
     "Friday": "금요일",
     "Changelog": "바뀐 점",
-    "This Room": "방",
     "Unavailable": "이용할 수 없음",
     "Send": "보내기",
     "Tuesday": "화요일",
-    "Search…": "찾기…",
     "Unnamed room": "이름 없는 방",
     "Saturday": "토요일",
     "Monday": "월요일",
-    "All Rooms": "모든 방",
     "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
     "Yesterday": "어제",
@@ -119,7 +114,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "자기 자신을 강등하는 것은 되돌릴 수 없고, 자신이 마지막으로 이 방에서 특권을 가진 사용자라면 다시 특권을 얻는 건 불가능합니다.",
     "Jump to read receipt": "읽은 기록으로 건너뛰기",
     "Share room": "방 공유하기",
-    "You don't currently have any stickerpacks enabled": "현재 사용하고 있는 스티커 팩이 없음",
     "Filter results": "필터 결과",
     "Delete Widget": "위젯 삭제",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
@@ -139,7 +133,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "Only room administrators will see this warning": "방 관리자만이 이 경고를 볼 수 있음",
     "<a>In reply to</a> <pill>": "<a>관련 대화</a> <pill>",
     "Updating %(brand)s": "%(brand)s 업데이트 중",
     "Upgrade this room to version %(version)s": "이 방을 %(version)s 버전으로 업그레이드",
@@ -216,14 +209,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
-    "This room has already been upgraded.": "이 방은 이미 업그레이드됬습니다.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "이 방은 방 버전 <roomVersion />에서 실행 중이고, 이 홈서버가 <i>불안정</i>으로 표시됩니다.",
-    "Add some now": "몇 가지 추가",
-    "Failed to revoke invite": "초대 취소에 실패함",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "초대를 취소할 수 없습니다. 서버에 일시적인 문제가 발생했거나 초대를 취소할 수 있는 권한이 없습니다.",
-    "Revoke invite": "초대 취소",
-    "Invited by %(sender)s": "%(sender)s님에게 초대받음",
     "Error updating main address": "기본 주소 업데이트 중 오류",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "방의 기본 주소를 업데이트하는 중 오류가 발생했습니다. 서버가 허용하지 않거나 일시적인 오류 발생일 수 있습니다.",
     "Main address": "기본 주소",
@@ -345,7 +330,6 @@
     "Search for spaces": "스페이스 검색",
     "Recently Direct Messaged": "최근 다이렉트 메세지",
     "Recently viewed": "최근에 확인한",
-    "Scroll to most recent messages": "가장 최근 메세지로 스크롤",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
     "Unable to copy a link to the room to the clipboard.": "방 링크를 클립보드에 복사할 수 없습니다.",
     "Unable to copy room link": "방 링크를 복사할 수 없습니다",
@@ -361,7 +345,6 @@
     "Pinned messages": "고정된 메세지",
     "Pinned": "고정됨",
     "Files": "파일 목록",
-    "Send voice message": "음성 메세지 보내기",
     "Or send invite link": "또는 초대 링크 보내기",
     "Recent Conversations": "최근 대화 목록",
     "Start a conversation with someone using their name or username (like <userId/>).": "이름이나 사용자명(<userId/> 형식)을 사용하는 사람들과 대화를 시작하세요.",
@@ -581,7 +564,8 @@
         "poll_button": "투표",
         "format_italics": "기울게",
         "replying_title": "답장 중",
-        "edit_composer_label": "메시지 편집"
+        "edit_composer_label": "메시지 편집",
+        "send_voice_message": "음성 메세지 보내기"
     },
     "Code": "코드",
     "power_level": {
@@ -1458,7 +1442,18 @@
         "peek_join_prompt": "%(roomName)s 방을 미리 보고 있습니다. 참가하겠습니까?",
         "no_peek_join_prompt": "%(roomName)s 방을 미리 볼 수 없습니다. 참가하겠습니까?",
         "not_found_title_name": "%(roomName)s은 없는 방이에요.",
-        "inaccessible_name": "현재는 %(roomName)s에 들어갈 수 없습니다."
+        "inaccessible_name": "현재는 %(roomName)s에 들어갈 수 없습니다.",
+        "jump_to_bottom_button": "가장 최근 메세지로 스크롤",
+        "upgrade_warning_bar": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
+        "upgrade_warning_bar_upgraded": "이 방은 이미 업그레이드됬습니다.",
+        "upgrade_warning_bar_unstable": "이 방은 방 버전 <roomVersion />에서 실행 중이고, 이 홈서버가 <i>불안정</i>으로 표시됩니다.",
+        "upgrade_warning_bar_admins": "방 관리자만이 이 경고를 볼 수 있음",
+        "search": {
+            "this_room": "방",
+            "all_rooms": "모든 방",
+            "field_placeholder": "찾기…"
+        },
+        "jump_read_marker": "읽지 않은 첫 메시지로 건너뜁니다."
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",
@@ -1621,5 +1616,16 @@
         "invited_list_heading": "초대받음",
         "filter_placeholder": "방 구성원 필터",
         "power_label": "%(userName)s님 (권한 %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "현재 사용하고 있는 스티커 팩이 없음",
+        "empty_add_prompt": "몇 가지 추가"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "초대 취소에 실패함",
+        "error_revoke_3pid_invite_description": "초대를 취소할 수 없습니다. 서버에 일시적인 문제가 발생했거나 초대를 취소할 수 있는 권한이 없습니다.",
+        "admin_tools_section": "관리자 도구",
+        "revoke_invite": "초대 취소",
+        "invited_by": "%(sender)s님에게 초대받음"
     }
 }

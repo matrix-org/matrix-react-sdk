@@ -5,7 +5,6 @@
     "Failed to forget room %(errCode)s": "ルームの履歴を消去するのに失敗しました %(errCode)s",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
-    "All Rooms": "全てのルーム",
     "You cannot delete this message. (%(code)s)": "このメッセージを削除できません。(%(code)s）",
     "Send": "送信",
     "Sunday": "日曜日",
@@ -16,9 +15,7 @@
     "Changelog": "更新履歴",
     "Wednesday": "水曜日",
     "Tuesday": "火曜日",
-    "Search…": "検索…",
     "Saturday": "土曜日",
-    "This Room": "このルーム",
     "Failed to send logs: ": "ログの送信に失敗しました： ",
     "Unavailable": "使用できません",
     "Filter results": "結果を絞り込む",
@@ -60,7 +57,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "このユーザーにあなたと同じ権限レベルを与えようとしています。この変更は取り消せません。",
     "Jump to read receipt": "既読通知へ移動",
     "Share Link to User": "ユーザーへのリンクを共有",
-    "Admin Tools": "管理者ツール",
     "and %(count)s others...": {
         "other": "他%(count)s人…",
         "one": "他1人…"
@@ -76,10 +72,6 @@
     "Join Room": "ルームに参加",
     "Share room": "ルームを共有",
     "Failed to ban user": "ユーザーをブロックできませんでした",
-    "Only room administrators will see this warning": "この警告はルームの管理者にのみ表示されます",
-    "You don't currently have any stickerpacks enabled": "現在、ステッカーパックが有効になっていません",
-    "Add some now": "今すぐ追加",
-    "Jump to first unread message.": "最初の未読メッセージに移動。",
     "not specified": "指定なし",
     "This room has no local addresses": "このルームにはローカルアドレスがありません",
     "Error decrypting attachment": "添付ファイルを復号化する際にエラーが発生しました",
@@ -220,7 +212,6 @@
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
-    "Scroll to most recent messages": "最新のメッセージを表示",
     "Your server": "あなたのサーバー",
     "Add a new server": "新しいサーバーを追加",
     "Server name": "サーバー名",
@@ -261,13 +252,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "ルームの代替アドレスを更新する際にエラーが発生しました。サーバーで許可されていないか、一時的な障害が発生した可能性があります。",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "ルームのメインアドレスを更新する際にエラーが発生しました。サーバーで許可されていないか、一時的な障害が発生した可能性があります。",
     "Error updating main address": "メインアドレスを更新する際にエラーが発生しました",
-    "Invited by %(sender)s": "%(sender)sからの招待",
-    "Revoke invite": "招待を取り消す",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "招待を取り消すことができませんでした。サーバーで一時的な問題が発生しているか、招待を取り消すための十分な権限がありません。",
-    "Failed to revoke invite": "招待を取り消せませんでした",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "このルームはホームサーバーが<i>不安定</i>と判断したルームバージョン<roomVersion />で動作しています。",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "このルームをアップグレードすると、現在のルームの使用を終了し、アップグレードしたルームを同じ名前で作成します。",
-    "This room has already been upgraded.": "このルームは既にアップグレードされています。",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
     "Anchor": "いかり",
@@ -654,13 +638,11 @@
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Rooms and spaces": "ルームとスペース",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
-    "Joined": "参加済",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "Files": "ファイル",
     "Export chat": "チャットをエクスポート",
     "Close dialog": "ダイアログを閉じる",
     "Preparing to download logs": "ログのダウンロードを準備しています",
-    "Send voice message": "音声メッセージを送信",
     "Reason (optional)": "理由（任意）",
     "Copy link to thread": "スレッドへのリンクをコピー",
     "Create a new space": "新しいスペースを作成",
@@ -782,7 +764,6 @@
         "other": "全%(count)s人のメンバーを表示"
     },
     "Results will be visible when the poll is ended": "アンケートが終了するまで結果は表示できません",
-    "Open thread": "スレッドを開く",
     "Pinned": "固定メッセージ",
     "Signature upload success": "署名のアップロードに成功しました",
     "Cancelled signature upload": "署名のアップロードをキャンセルしました",
@@ -830,7 +811,6 @@
     "MB": "MB",
     "Failed to end poll": "アンケートの終了に失敗しました",
     "End Poll": "アンケートを終了",
-    "View message": "メッセージを表示",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "以下のMatrix IDのプロフィールを発見できません。招待しますか？",
@@ -952,11 +932,6 @@
     "Unban from %(roomName)s": "%(roomName)sからのブロックを解除",
     "Close this widget to view it in this panel": "ウィジェットを閉じて、このパネルに表示",
     "Unpin this widget to view it in this panel": "ウィジェットの固定を解除して、このパネルに表示",
-    "Stop recording": "録音を停止",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "マイクが見つかりません。設定を確認して、もう一度やり直してください。",
-    "No microphone found": "マイクが見つかりません",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "マイクにアクセスできませんでした。ブラウザーの設定を確認して、もう一度やり直してください。",
-    "Unable to access your microphone": "マイクを使用できません",
     "Error processing voice message": "音声メッセージを処理する際にエラーが発生しました",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "Signature upload failed": "署名のアップロードに失敗しました",
@@ -1079,7 +1054,6 @@
     "Modal Widget": "モーダルウィジェット",
     "You will no longer be able to log in": "ログインできなくなります",
     "Friends and family": "友達と家族",
-    "Show Labs settings": "ラボの設定を表示",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
@@ -1124,7 +1098,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "Create a link": "リンクを作成",
     "Edit link": "リンクを編集",
-    "Unable to decrypt message": "メッセージを復号化できません",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
     "An error occurred while stopping your live location, please try again": "位置情報（ライブ）を停止している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
@@ -1347,7 +1320,9 @@
         "historical": "履歴",
         "go_to_settings": "設定を開く",
         "setup_secure_messages": "セキュアメッセージを設定",
-        "unencrypted": "暗号化されていません"
+        "unencrypted": "暗号化されていません",
+        "view_message": "メッセージを表示",
+        "joined": "参加済"
     },
     "action": {
         "continue": "続行",
@@ -1664,7 +1639,9 @@
         "format_italics": "斜字体",
         "format_insert_link": "リンクを挿入",
         "replying_title": "以下に返信",
-        "edit_composer_label": "メッセージを編集"
+        "edit_composer_label": "メッセージを編集",
+        "send_voice_message": "音声メッセージを送信",
+        "stop_voice_message": "録音を停止"
     },
     "Link": "リンク",
     "Code": "コード",
@@ -2915,7 +2892,11 @@
             "other": "%(count)s人が参加しました"
         },
         "unknown_person": "不明な人間",
-        "connecting": "接続しています"
+        "connecting": "接続しています",
+        "unable_to_access_audio_input_title": "マイクを使用できません",
+        "unable_to_access_audio_input_description": "マイクにアクセスできませんでした。ブラウザーの設定を確認して、もう一度やり直してください。",
+        "no_audio_input_title": "マイクが見つかりません",
+        "no_audio_input_description": "マイクが見つかりません。設定を確認して、もう一度やり直してください。"
     },
     "Other": "その他",
     "room_settings": {
@@ -3609,7 +3590,9 @@
         "show_all_threads": "全てのスレッドを表示",
         "empty_explainer": "スレッド機能を使うと、会話のテーマを維持したり、会話を簡単に追跡したりすることができます。",
         "empty_tip": "<b>ヒント：</b>メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
-        "empty_heading": "スレッド機能を使って、会話をまとめましょう"
+        "empty_heading": "スレッド機能を使って、会話をまとめましょう",
+        "open_thread": "スレッドを開く",
+        "unable_to_decrypt": "メッセージを復号化できません"
     },
     "theme": {
         "light_high_contrast": "ライト（高コントラスト）",
@@ -3852,7 +3835,19 @@
         "inaccessible_subtitle_2": "ルームまたはスペースにアクセスする際にエラー %(errcode)s が発生しました。エラー発生時にこのメッセージが表示されているなら、<issueLink>バグレポートを送信してください</issueLink>。",
         "join_failed_needs_invite": "%(roomName)sを見るには招待が必要です",
         "view_failed_enable_video_rooms": "表示するには、まずラボのビデオ通話ルームを有効にしてください",
-        "join_failed_enable_video_rooms": "参加するには、まずラボのビデオ通話ルームを有効にしてください"
+        "join_failed_enable_video_rooms": "参加するには、まずラボのビデオ通話ルームを有効にしてください",
+        "jump_to_bottom_button": "最新のメッセージを表示",
+        "show_labs_settings": "ラボの設定を表示",
+        "upgrade_warning_bar": "このルームをアップグレードすると、現在のルームの使用を終了し、アップグレードしたルームを同じ名前で作成します。",
+        "upgrade_warning_bar_upgraded": "このルームは既にアップグレードされています。",
+        "upgrade_warning_bar_unstable": "このルームはホームサーバーが<i>不安定</i>と判断したルームバージョン<roomVersion />で動作しています。",
+        "upgrade_warning_bar_admins": "この警告はルームの管理者にのみ表示されます",
+        "search": {
+            "this_room": "このルーム",
+            "all_rooms": "全てのルーム",
+            "field_placeholder": "検索…"
+        },
+        "jump_read_marker": "最初の未読メッセージに移動。"
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
@@ -4066,5 +4061,16 @@
         "invited_list_heading": "招待済",
         "filter_placeholder": "ルームのメンバーを絞り込む",
         "power_label": "%(userName)s（権限レベル：%(powerLevelNumber)s）"
+    },
+    "stickers": {
+        "empty": "現在、ステッカーパックが有効になっていません",
+        "empty_add_prompt": "今すぐ追加"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "招待を取り消せませんでした",
+        "error_revoke_3pid_invite_description": "招待を取り消すことができませんでした。サーバーで一時的な問題が発生しているか、招待を取り消すための十分な権限がありません。",
+        "admin_tools_section": "管理者ツール",
+        "revoke_invite": "招待を取り消す",
+        "invited_by": "%(sender)sからの招待"
     }
 }

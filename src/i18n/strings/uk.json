@@ -2,7 +2,6 @@
     "Create new room": "Створити нову кімнату",
     "Failed to forget room %(errCode)s": "Не вдалось видалити кімнату %(errCode)s",
     "unknown error code": "невідомий код помилки",
-    "Admin Tools": "Засоби адміністрування",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
         "one": "і інше...",
@@ -19,7 +18,6 @@
     "Friday": "П'ятниця",
     "Changelog": "Журнал змін",
     "Failed to send logs: ": "Не вдалося надіслати журнали: ",
-    "This Room": "Ця кімната",
     "Unavailable": "Недоступний",
     "Filter results": "Відфільтрувати результати",
     "Tuesday": "Вівторок",
@@ -27,12 +25,10 @@
     "Unnamed room": "Неназвана кімната",
     "Saturday": "Субота",
     "Monday": "Понеділок",
-    "All Rooms": "Усі кімнати",
     "Wednesday": "Середа",
     "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
     "Thursday": "Четвер",
-    "Search…": "Пошук…",
     "Logs sent": "Журнали надіслані",
     "Yesterday": "Вчора",
     "Thank you!": "Дякуємо!",
@@ -195,9 +191,6 @@
     "Gift": "Подарунок",
     "Lock": "Замок",
     "This room is public": "Ця кімната загальнодоступна",
-    "Failed to revoke invite": "Не вдалось відкликати запрошення",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Не вдалось відкликати запрошення. Сервер може мати тимчасові збої або у вас немає достатніх дозволів щоб відкликати запрошення.",
-    "Revoke invite": "Відкликати запрошення",
     "Failed to upgrade room": "Не вдалось поліпшити кімнату",
     "The room upgrade could not be completed": "Поліпшення кімнати не може бути завершене",
     "Upgrade this room to version %(version)s": "Поліпшити цю кімнату до версії %(version)s",
@@ -495,7 +488,6 @@
     "Share Room": "Поділитись кімнатою",
     "Share room": "Поділитись кімнатою",
     "Join the conference from the room information card on the right": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
-    "Send voice message": "Надіслати голосове повідомлення",
     "edited": "змінено",
     "Edited at %(date)s. Click to view edits.": "Змінено %(date)s. Натисніть, щоб переглянути зміни.",
     "Edited at %(date)s": "Змінено %(date)s",
@@ -664,9 +656,6 @@
     "This space has no local addresses": "Простір не має локальних адрес",
     "not specified": "не вказано",
     "Error creating address": "Помилка створення адреси",
-    "Stop recording": "Зупинити запис",
-    "No microphone found": "Мікрофона не знайдено",
-    "Unable to access your microphone": "Не вдалося доступитися до мікрофона",
     "Join Room": "Приєднатися до кімнати",
     "(~%(count)s results)": {
         "one": "(~%(count)s результат)",
@@ -676,7 +665,6 @@
     "%(duration)sh": "%(duration)s год",
     "%(duration)sm": "%(duration)s хв",
     "%(duration)ss": "%(duration)s с",
-    "View message": "Переглянути повідомлення",
     "%(count)s reply": {
         "one": "%(count)s відповідь",
         "other": "%(count)s відповідей"
@@ -811,12 +799,7 @@
     "Update any local room aliases to point to the new room": "Направимо всі локальні псевдоніми цієї кімнати до нової",
     "Create a new room with the same name, description and avatar": "Створимо нову кімнату з такою ж назвою, описом і аватаром",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Поліпшення цієї кімнати потребує закриття наявного її примірника й створення нової кімнати натомість. Щоб забезпечити якнайкращі враження учасникам кімнати, ми:",
-    "Only room administrators will see this warning": "Лише адміністратори кімнати бачать це попередження",
-    "This room has already been upgraded.": "Ця кімната вже поліпшена.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Поліпшення цієї кімнати припинить роботу наявного її примірника й створить поліпшену кімнату з такою ж назвою.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ця кімната — версії <roomVersion />, позначена цим домашнім сервером <i>нестабільною</i>.",
     "Jump to read receipt": "Перейти до останнього прочитаного",
-    "Jump to first unread message.": "Перейти до першого непрочитаного повідомлення.",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Or send invite link": "Або надішліть запрошувальне посилання",
@@ -908,13 +891,7 @@
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Помилка створення такої адреси. Можливо, сервер цього не дозволяє або стався тимчасовий збій.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Помилка оновлення запасних адрес кімнати. Можливо, сервер цього не дозволяє або стався тимчасовий збій.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Помилка оновлення головної адреси кімнати. Можливо, сервер цього не дозволяє або стався тимчасовий збій.",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Мікрофона не знайдено. Перевірте налаштування й повторіть спробу.",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Збій доступу до вашого мікрофона. Перевірте налаштування браузера й повторіть спробу.",
-    "Invited by %(sender)s": "Запрошення від %(sender)s",
-    "Add some now": "Додайте які-небудь",
-    "You don't currently have any stickerpacks enabled": "У вас поки немає пакунків наліпок",
     "Recently viewed": "Недавно переглянуті",
-    "Scroll to most recent messages": "Перейти до найновіших повідомлень",
     "Message Actions": "Дії з повідомленням",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
@@ -999,7 +976,6 @@
     "Message preview": "Попередній перегляд повідомлення",
     "We couldn't create your DM.": "Не вдалося створити особисте повідомлення.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Звірка цього користувача позначить його сеанс довіреним вам, а ваш йому.",
-    "Joined": "Приєднано",
     "Joining": "Приєднання",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "У вас нема дозволу на перегляд повідомлення за вказаною позицією в стрічці цієї кімнати.",
@@ -1070,7 +1046,6 @@
     "Results will be visible when the poll is ended": "Результати будуть видимі після завершення опитування",
     "Search Dialog": "Вікно пошуку",
     "Pinned": "Закріплені",
-    "Open thread": "Відкрити гілку",
     "What location type do you want to share?": "Який вид місцеперебування поширити?",
     "Drop a Pin": "Маркер на карті",
     "My live location": "Змінне місцеперебування наживо",
@@ -1133,7 +1108,6 @@
     "Cameras": "Камери",
     "Output devices": "Пристрої виводу",
     "Input devices": "Пристрої вводу",
-    "Show Labs settings": "Відкрити налаштування експериментальних функцій",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею.",
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
@@ -1207,7 +1181,6 @@
     "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
     "Error starting verification": "Помилка запуску перевірки",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
-    "Unable to decrypt message": "Не вдалося розшифрувати повідомлення",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "Text": "Текст",
     "Create a link": "Створити посилання",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
-    "Search all rooms": "Вибрати всі кімнати",
-    "Search this room": "Шукати цю кімнату",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Після того, як запрошені користувачі приєднаються до %(brand)s, ви зможете спілкуватися в бесіді, а кімната буде наскрізно зашифрована",
     "Waiting for users to join %(brand)s": "Очікування приєднання користувача до %(brand)s",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their profile picture.": "Повідомлення в цій кімнаті наскрізно зашифровані. Коли люди приєднуються, ви можете перевірити їх у їхньому профілі, просто торкнувшись зображення профілю.",
@@ -1396,7 +1367,9 @@
         "historical": "Історичні",
         "go_to_settings": "Перейти до налаштувань",
         "setup_secure_messages": "Налаштувати захищені повідомлення",
-        "unencrypted": "Не зашифроване"
+        "unencrypted": "Не зашифроване",
+        "view_message": "Переглянути повідомлення",
+        "joined": "Приєднано"
     },
     "action": {
         "continue": "Продовжити",
@@ -1733,7 +1706,9 @@
         "format_italics": "Курсив",
         "format_insert_link": "Додати посилання",
         "replying_title": "Відповідання",
-        "edit_composer_label": "Редагувати повідомлення"
+        "edit_composer_label": "Редагувати повідомлення",
+        "send_voice_message": "Надіслати голосове повідомлення",
+        "stop_voice_message": "Зупинити запис"
     },
     "Link": "Посилання",
     "Code": "Код",
@@ -3064,7 +3039,11 @@
             "other": "%(count)s людей приєдналися"
         },
         "unknown_person": "невідома особа",
-        "connecting": "З'єднання"
+        "connecting": "З'єднання",
+        "unable_to_access_audio_input_title": "Не вдалося доступитися до мікрофона",
+        "unable_to_access_audio_input_description": "Збій доступу до вашого мікрофона. Перевірте налаштування браузера й повторіть спробу.",
+        "no_audio_input_title": "Мікрофона не знайдено",
+        "no_audio_input_description": "Мікрофона не знайдено. Перевірте налаштування й повторіть спробу."
     },
     "Other": "Інше",
     "room_settings": {
@@ -3783,7 +3762,9 @@
         "show_all_threads": "Показати всі гілки",
         "empty_explainer": "Гілки допомагають підтримувати розмови за темою та за ними легко стежити.",
         "empty_tip": "<b>Порада:</b> Використовуйте «%(replyInThread)s» навівши вказівник на повідомлення.",
-        "empty_heading": "Упорядкуйте обговорення за допомогою гілок"
+        "empty_heading": "Упорядкуйте обговорення за допомогою гілок",
+        "open_thread": "Відкрити гілку",
+        "unable_to_decrypt": "Не вдалося розшифрувати повідомлення"
     },
     "theme": {
         "light_high_contrast": "Контрастна світла",
@@ -4043,7 +4024,21 @@
         "knock_cancel_action": "Скасувати запит",
         "join_failed_needs_invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
         "view_failed_enable_video_rooms": "Щоб переглянути, спочатку ввімкніть відеокімнати в експериментальних функціях",
-        "join_failed_enable_video_rooms": "Щоб приєднатися, спочатку ввімкніть відеокімнати в експериментальних функціях"
+        "join_failed_enable_video_rooms": "Щоб приєднатися, спочатку ввімкніть відеокімнати в експериментальних функціях",
+        "jump_to_bottom_button": "Перейти до найновіших повідомлень",
+        "show_labs_settings": "Відкрити налаштування експериментальних функцій",
+        "upgrade_warning_bar": "Поліпшення цієї кімнати припинить роботу наявного її примірника й створить поліпшену кімнату з такою ж назвою.",
+        "upgrade_warning_bar_upgraded": "Ця кімната вже поліпшена.",
+        "upgrade_warning_bar_unstable": "Ця кімната — версії <roomVersion />, позначена цим домашнім сервером <i>нестабільною</i>.",
+        "upgrade_warning_bar_admins": "Лише адміністратори кімнати бачать це попередження",
+        "search": {
+            "this_room": "Ця кімната",
+            "all_rooms": "Усі кімнати",
+            "field_placeholder": "Пошук…",
+            "this_room_button": "Шукати цю кімнату",
+            "all_rooms_button": "Вибрати всі кімнати"
+        },
+        "jump_read_marker": "Перейти до першого непрочитаного повідомлення."
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
@@ -4268,5 +4263,16 @@
         "invited_list_heading": "Запрошено",
         "filter_placeholder": "Відфільтрувати учасників кімнати",
         "power_label": "%(userName)s (повноваження %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "У вас поки немає пакунків наліпок",
+        "empty_add_prompt": "Додайте які-небудь"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Не вдалось відкликати запрошення",
+        "error_revoke_3pid_invite_description": "Не вдалось відкликати запрошення. Сервер може мати тимчасові збої або у вас немає достатніх дозволів щоб відкликати запрошення.",
+        "admin_tools_section": "Засоби адміністрування",
+        "revoke_invite": "Відкликати запрошення",
+        "invited_by": "Запрошення від %(sender)s"
     }
 }

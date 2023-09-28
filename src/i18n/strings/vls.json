@@ -102,7 +102,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Je kut deze veranderiengn nie oungedoan moakn angezien da je de gebruuker tout ’tzelfste niveau als jen eigen promoveert.",
     "Jump to read receipt": "Noar ’t latst geleezn bericht goan",
     "Share Link to User": "Koppelienge me de gebruuker deeln",
-    "Admin Tools": "Beheerdersgereedschap",
     "and %(count)s others...": {
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
@@ -118,20 +117,6 @@
     },
     "Join Room": "Gesprek toetreedn",
     "Share room": "Gesprek deeln",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Dit gesprek actualiseern goat de huudige instantie van ’t gesprek sluutn, en e geactualiseerde versie ounder dezelfste noame anmoakn.",
-    "This room has already been upgraded.": "Dit gesprek es al ipgewoardeerd gewist.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Dit gesprek droait ip groepsgespreksversie <roomVersion />, da deur deze thuusserver als <i>ounstabiel</i> gemarkeerd gewist es.",
-    "Only room administrators will see this warning": "Alleene de gespreksbeheerders goan deze woarschuwienge zien",
-    "This Room": "Dit gesprek",
-    "All Rooms": "Alle gesprekkn",
-    "Search…": "Zoekn…",
-    "You don't currently have any stickerpacks enabled": "J’è vo de moment geen stickerpakkettn ingeschoakeld",
-    "Add some now": "Voegt der nu e poar toe",
-    "Failed to revoke invite": "Intrekkn van d’uutnodigienge is mislukt",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Kostege d’uutnodigienge nie intrekkn. De server oundervindt meuglik e tydelik probleem, of j’èt ounvoldoende rechtn vo d’uutnodigienge in te trekkn.",
-    "Revoke invite": "Uutnodigienge intrekkn",
-    "Invited by %(sender)s": "Uutgenodigd deur %(sender)s",
-    "Jump to first unread message.": "Spriengt noa ’t eeste oungeleezn bericht.",
     "Error updating main address": "Foute by ’t bywerkn van ’t hoofdadresse",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "’t Es e foute ipgetreedn by ’t bywerkn van ’t hoofdadresse van ’t gesprek. Dit wor meugliks nie toegeloatn deur de server, of der es een tydelik probleem ipgetreedn.",
     "Main address": "Hoofdadresse",
@@ -1093,7 +1078,17 @@
         "peek_join_prompt": "Je bekykt %(roomName)s. Wil je deran deelneemn?",
         "no_peek_join_prompt": "%(roomName)s ku nie bekeekn wordn. Wil je deran deelneemn?",
         "not_found_title_name": "%(roomName)s bestoa nie.",
-        "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik."
+        "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik.",
+        "upgrade_warning_bar": "Dit gesprek actualiseern goat de huudige instantie van ’t gesprek sluutn, en e geactualiseerde versie ounder dezelfste noame anmoakn.",
+        "upgrade_warning_bar_upgraded": "Dit gesprek es al ipgewoardeerd gewist.",
+        "upgrade_warning_bar_unstable": "Dit gesprek droait ip groepsgespreksversie <roomVersion />, da deur deze thuusserver als <i>ounstabiel</i> gemarkeerd gewist es.",
+        "upgrade_warning_bar_admins": "Alleene de gespreksbeheerders goan deze woarschuwienge zien",
+        "search": {
+            "this_room": "Dit gesprek",
+            "all_rooms": "Alle gesprekkn",
+            "field_placeholder": "Zoekn…"
+        },
+        "jump_read_marker": "Spriengt noa ’t eeste oungeleezn bericht."
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1206,5 +1201,16 @@
         "invited_list_heading": "Uutgenodigd",
         "filter_placeholder": "Gespreksleedn filtern",
         "power_label": "%(userName)s (macht %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "J’è vo de moment geen stickerpakkettn ingeschoakeld",
+        "empty_add_prompt": "Voegt der nu e poar toe"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Intrekkn van d’uutnodigienge is mislukt",
+        "error_revoke_3pid_invite_description": "Kostege d’uutnodigienge nie intrekkn. De server oundervindt meuglik e tydelik probleem, of j’èt ounvoldoende rechtn vo d’uutnodigienge in te trekkn.",
+        "admin_tools_section": "Beheerdersgereedschap",
+        "revoke_invite": "Uutnodigienge intrekkn",
+        "invited_by": "Uutgenodigd deur %(sender)s"
     }
 }

@@ -20,11 +20,9 @@
     "Failed to mute user": "Misslyckades att tysta användaren",
     "Failed to reject invite": "Misslyckades att avböja inbjudan",
     "Failed to reject invitation": "Misslyckades att avböja inbjudan",
-    "Admin Tools": "Admin-verktyg",
     "Home": "Hem",
     "Invalid file%(extra)s": "Felaktig fil%(extra)s",
     "Join Room": "Gå med i rum",
-    "Jump to first unread message.": "Hoppa till första olästa meddelandet.",
     "Moderator": "Moderator",
     "New passwords must match each other.": "De nya lösenorden måste matcha.",
     "not specified": "inte specificerad",
@@ -64,14 +62,11 @@
     "Today": "idag",
     "Friday": "fredag",
     "Changelog": "Ändringslogg",
-    "This Room": "Det här rummet",
     "Unavailable": "Otillgänglig",
     "Filter results": "Filtrera resultaten",
     "Tuesday": "tisdag",
-    "Search…": "Sök…",
     "Saturday": "lördag",
     "Monday": "måndag",
-    "All Rooms": "Alla rum",
     "Wednesday": "onsdag",
     "You cannot delete this message. (%(code)s)": "Du kan inte radera det här meddelandet. (%(code)s)",
     "Send": "Skicka",
@@ -127,7 +122,6 @@
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kommer inte att kunna ångra den här ändringen eftersom du degraderar dig själv. Om du är den sista privilegierade användaren i rummet blir det omöjligt att återfå behörigheter.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Du kommer inte att kunna ångra den här ändringen eftersom du höjer användaren till samma behörighetsnivå som dig själv.",
-    "You don't currently have any stickerpacks enabled": "Du har för närvarande inga dekalpaket aktiverade",
     "Error decrypting image": "Fel vid avkryptering av bild",
     "Error decrypting video": "Fel vid avkryptering av video",
     "Add an Integration": "Lägg till integration",
@@ -144,7 +138,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan inte skicka några meddelanden innan du granskar och godkänner <consentLink>våra villkor</consentLink>.",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Ditt meddelande skickades inte eftersom hemservern har nått sin månatliga gräns för användaraktivitet. Vänligen <a>kontakta din serviceadministratör</a> för att fortsätta använda tjänsten.",
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Ditt meddelande skickades inte eftersom hemservern har överskridit en av sina resursgränser. Vänligen <a>kontakta din serviceadministratör</a> för att fortsätta använda tjänsten.",
-    "Only room administrators will see this warning": "Endast rumsadministratörer kommer att se denna varning",
     "Failed to upgrade room": "Misslyckades att uppgradera rummet",
     "The room upgrade could not be completed": "Rumsuppgraderingen kunde inte slutföras",
     "Upgrade this room to version %(version)s": "Uppgradera detta rum till version %(version)s",
@@ -153,7 +146,6 @@
     "Update any local room aliases to point to the new room": "Uppdatera lokala rumsalias att peka på det nya rummet",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Hindra användare från att prata i den gamla rumsversionen och posta ett meddelande som rekommenderar användare att flytta till det nya rummet",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Sätta en länk tillbaka till det gamla rummet i början av det nya rummet så att folk kan se gamla meddelanden",
-    "Add some now": "Lägg till några nu",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Innan du skickar in loggar måste du <a>skapa ett GitHub-ärende</a> för att beskriva problemet.",
     "Updating %(brand)s": "Uppdaterar %(brand)s",
     "Dog": "Hund",
@@ -231,10 +223,6 @@
     "Invite anyway and never warn me again": "Bjud in ändå och varna mig aldrig igen",
     "Invite anyway": "Bjud in ändå",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
-    "Failed to revoke invite": "Misslyckades att återkalla inbjudan",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Kunde inte återkalla inbjudan. Servern kan ha ett tillfälligt problem eller så har du inte tillräckliga behörigheter för att återkalla inbjudan.",
-    "Revoke invite": "Återkalla inbjudan",
-    "Invited by %(sender)s": "Inbjuden av %(sender)s",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid uppdatering av rummets huvudadress. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
     "Main address": "Huvudadress",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifiera denna användare för att markera den som betrodd. Att lita på användare ger en extra sinnesfrid när man använder totalsträckskrypterade meddelanden.",
@@ -338,10 +326,6 @@
     "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
-    "Scroll to most recent messages": "Skrolla till de senaste meddelandena",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
-    "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid uppdatering av rummets alternativa adresser. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
     "Error creating address": "Fel vid skapande av adress",
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Ett fel inträffade vid skapande av adressen. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
@@ -852,7 +836,6 @@
     "Reset everything": "Återställ allt",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
-    "View message": "Visa meddelande",
     "Delete all": "Radera alla",
     "View all %(count)s members": {
         "one": "Visa 1 medlem",
@@ -875,10 +858,6 @@
     "You are not allowed to view this server's rooms list": "Du tillåts inte att se den här serverns rumslista",
     "Add reaction": "Lägg till reaktion",
     "Error processing voice message": "Fel vid hantering av röstmeddelande",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Vi kunde inte hitta en mikrofon på din enhet. Vänligen kolla dina inställningar och försök igen.",
-    "No microphone found": "Ingen mikrofon hittad",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Vi kunde inte komma åt din mikrofon. Vänligen kolla dina webbläsarinställningar och försök igen.",
-    "Unable to access your microphone": "Kan inte komma åt din mikrofon",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -889,8 +868,6 @@
     "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Om du har behörighet, öppna menyn på ett meddelande och välj <b>Fäst</b> för att fösta dem här.",
     "Nothing pinned, yet": "Inget fäst än",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Stop recording": "Stoppa inspelning",
-    "Send voice message": "Skicka röstmeddelande",
     "This space has no local addresses": "Det här utrymmet har inga lokala adresser",
     "Error processing audio message": "Fel vid hantering av ljudmeddelande",
     "Decrypting": "Avkrypterar",
@@ -972,7 +949,6 @@
     "MB": "MB",
     "Skip verification for now": "Hoppa över verifiering för tillfället",
     "Really reset verification keys?": "Återställ verkligen verifieringsnycklar?",
-    "Joined": "Gick med",
     "Joining": "Går med",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "Copy link to thread": "Kopiera länk till tråd",
@@ -1070,7 +1046,6 @@
     "Search Dialog": "Sökdialog",
     "Results will be visible when the poll is ended": "Resultat kommer att visas när omröstningen avslutas",
     "Pinned": "Fäst",
-    "Open thread": "Öppna tråd",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
@@ -1134,7 +1109,6 @@
     "Output devices": "Utgångsenheter",
     "Input devices": "Ingångsenheter",
     "Open room": "Öppna rum",
-    "Show Labs settings": "Visa experimentinställningar",
     "Unread email icon": "Oläst e-post-ikon",
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
@@ -1203,7 +1177,6 @@
     "The scanned code is invalid.": "Den skannade koden är ogiltig.",
     "The linking wasn't completed in the required time.": "Länkningen slutfördes inte inom den krävda tiden.",
     "Sign in new device": "Logga in ny enhet",
-    "Unable to decrypt message": "Kunde inte avkryptera meddelande",
     "Sign out of all devices": "Logga ut ur alla enheter",
     "Confirm new password": "Bekräfta nytt lösenord",
     "Too many attempts in a short time. Retry after %(timeout)s.": "För många försök under en kort tid. Pröva igen efter %(timeout)s.",
@@ -1249,8 +1222,6 @@
     "Active polls": "Aktiva omröstningar",
     "View poll in timeline": "Se omröstningen i tidslinjen",
     "Poll history": "Omröstningshistorik",
-    "Search all rooms": "Sök i alla rum",
-    "Search this room": "Sök i det här rummet",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -1391,7 +1362,9 @@
         "historical": "Historiska",
         "go_to_settings": "Gå till inställningarna",
         "setup_secure_messages": "Ställ in säkra meddelanden",
-        "unencrypted": "Okrypterat"
+        "unencrypted": "Okrypterat",
+        "view_message": "Visa meddelande",
+        "joined": "Gick med"
     },
     "action": {
         "continue": "Fortsätt",
@@ -1727,7 +1700,9 @@
         "format_italics": "Kursiv",
         "format_insert_link": "Infoga länk",
         "replying_title": "Svarar",
-        "edit_composer_label": "Redigera meddelande"
+        "edit_composer_label": "Redigera meddelande",
+        "send_voice_message": "Skicka röstmeddelande",
+        "stop_voice_message": "Stoppa inspelning"
     },
     "Link": "Länk",
     "Code": "Kod",
@@ -3016,7 +2991,11 @@
             "one": "%(count)s person gick med"
         },
         "unknown_person": "okänd person",
-        "connecting": "Ansluter"
+        "connecting": "Ansluter",
+        "unable_to_access_audio_input_title": "Kan inte komma åt din mikrofon",
+        "unable_to_access_audio_input_description": "Vi kunde inte komma åt din mikrofon. Vänligen kolla dina webbläsarinställningar och försök igen.",
+        "no_audio_input_title": "Ingen mikrofon hittad",
+        "no_audio_input_description": "Vi kunde inte hitta en mikrofon på din enhet. Vänligen kolla dina inställningar och försök igen."
     },
     "Other": "Annat",
     "room_settings": {
@@ -3733,7 +3712,9 @@
         "show_all_threads": "Visa alla trådar",
         "empty_explainer": "Trådar underlättar för att hålla konversationer till ämnet och gör dem lättare att följa.",
         "empty_tip": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
-        "empty_heading": "Håll diskussioner organiserade med trådar"
+        "empty_heading": "Håll diskussioner organiserade med trådar",
+        "open_thread": "Öppna tråd",
+        "unable_to_decrypt": "Kunde inte avkryptera meddelande"
     },
     "theme": {
         "light_high_contrast": "Ljust högkontrast",
@@ -3984,7 +3965,21 @@
         "inaccessible_subtitle_2": "%(errcode)s returnerades vid försök att komma åt rummet eller utrymmet. Om du tror att du ser det här meddelandet felaktigt, vänligen <issueLink>skicka en buggrapport</issueLink>.",
         "join_failed_needs_invite": "För att se %(roomName)s så behöver du en inbjudan",
         "view_failed_enable_video_rooms": "För att se, aktivera videorum i experiment först",
-        "join_failed_enable_video_rooms": "För att gå med, aktivera videorum i experiment först"
+        "join_failed_enable_video_rooms": "För att gå med, aktivera videorum i experiment först",
+        "jump_to_bottom_button": "Skrolla till de senaste meddelandena",
+        "show_labs_settings": "Visa experimentinställningar",
+        "upgrade_warning_bar": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
+        "upgrade_warning_bar_upgraded": "Det här rummet har redan uppgraderats.",
+        "upgrade_warning_bar_unstable": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
+        "upgrade_warning_bar_admins": "Endast rumsadministratörer kommer att se denna varning",
+        "search": {
+            "this_room": "Det här rummet",
+            "all_rooms": "Alla rum",
+            "field_placeholder": "Sök…",
+            "this_room_button": "Sök i det här rummet",
+            "all_rooms_button": "Sök i alla rum"
+        },
+        "jump_read_marker": "Hoppa till första olästa meddelandet."
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
@@ -4208,5 +4203,16 @@
         "invited_list_heading": "Inbjuden",
         "filter_placeholder": "Filtrera rumsmedlemmar",
         "power_label": "%(userName)s (behörighet %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Du har för närvarande inga dekalpaket aktiverade",
+        "empty_add_prompt": "Lägg till några nu"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Misslyckades att återkalla inbjudan",
+        "error_revoke_3pid_invite_description": "Kunde inte återkalla inbjudan. Servern kan ha ett tillfälligt problem eller så har du inte tillräckliga behörigheter för att återkalla inbjudan.",
+        "admin_tools_section": "Admin-verktyg",
+        "revoke_invite": "Återkalla inbjudan",
+        "invited_by": "Inbjuden av %(sender)s"
     }
 }

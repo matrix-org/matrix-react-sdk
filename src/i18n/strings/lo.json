@@ -440,7 +440,6 @@
     "Rooms and spaces": "ຫ້ອງ ແລະ ພຶ້ນທີ່",
     "Results": "ຜົນຮັບ",
     "You may want to try a different search or check for typos.": "ເຈົ້າອາດຈະຕ້ອງລອງຊອກຫາແບບອື່ນ ຫຼື ກວດເບິ່ງວ່າພິມຜິດ.",
-    "Joined": "ເຂົ້າຮ່ວມແລ້ວ",
     "You don't have permission": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ",
     "Joining": "ເຂົ້າຮ່ວມ",
     "Failed to reject invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
@@ -539,32 +538,11 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ສຳຮອງຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼືບໍ່ສຳເລັດ ຊົ່ວຄາວເກີດຂຶ້ນ.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼື ຄວາມບໍ່ສຳເລັດຊົ່ວຄາວເກີດຂຶ້ນ.",
     "Error updating main address": "ເກີດຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກ",
-    "Stop recording": "ຢຸດການບັນທຶກ",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "ພວກເຮົາບໍ່ພົບໄມໂຄຣໂຟນຢູ່ໃນອຸປະກອນຂອງທ່ານ. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ແລະ ລອງໃໝ່ອີກ.",
-    "No microphone found": "ບໍ່ພົບໄມໂຄຣໂຟນ",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "ພວກເຮົາບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
-    "Unable to access your microphone": "ບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້",
-    "Jump to first unread message.": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
-    "Open thread": "ເປີດກະທູ້",
     "%(count)s reply": {
         "one": "%(count)s ຕອບກັບ",
         "other": "%(count)s ຕອບກັບ"
     },
-    "Invited by %(sender)s": "ເຊີນໂດຍ%(sender)s",
-    "Revoke invite": "ຍົກເລີກຄຳເຊີນ",
-    "Admin Tools": "ເຄື່ອງມືຜູ້ຄຸ້ມຄອງ",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "ບໍ່ສາມາດຖອນຄຳເຊີນໄດ້. ເຊີບເວີອາດຈະປະສົບບັນຫາຊົ່ວຄາວ ຫຼື ທ່ານບໍ່ມີສິດພຽງພໍໃນການຖອນຄຳເຊີນ.",
-    "Failed to revoke invite": "ຍົກເລີກການເຊີນບໍ່ສຳເລັດ",
-    "Add some now": "ເພີ່ມບາງອັນດຽວນີ້",
-    "You don't currently have any stickerpacks enabled": "ທ່ານບໍ່ໄດ້ເປີດໃຊ້ສະຕິກເກີແພັກເກັດໃນປັດຈຸບັນ",
     "Failed to connect to integration manager": "ການເຊື່ອມຕໍ່ຕົວຈັດການການເຊື່ອມໂຍງບໍ່ສຳເລັດ",
-    "Search…": "ຊອກຫາ…",
-    "All Rooms": "ຫ້ອງທັງໝົດ",
-    "This Room": "ຫ້ອງນີ້",
-    "Only room administrators will see this warning": "ມີແຕ່ຜູ້ຄຸ້ມຄອງຫ້ອງເທົ່ານັ້ນທີ່ເຫັນຄຳເຕືອນນີ້",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "ຫ້ອງນີ້ກຳລັງດຳເນິນເວີຊັ້ນຫ້ອງ <roomVersion />, ເຊິ່ງ homeserver ນີ້ໄດ້ສ້າງເຄື່ອງໝາຍເປັນ <i>unstable</i>.",
-    "This room has already been upgraded.": "ຫ້ອງນີ້ໄດ້ຖືກປັບປຸງແລ້ວ.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "ການຍົກລະດັບຫ້ອງນີ້ຈະປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ຍົກລະດັບການສ້າງຫ້ອງທີ່ມີຊື່ດຽວກັນ.",
     "%(count)s participants": {
         "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
         "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
@@ -795,7 +773,6 @@
     "Moderation": "ປານກາງ",
     "Widgets": "ວິດເຈັດ",
     "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
-    "View message": "ເບິ່ງຂໍ້ຄວາມ",
     "What location type do you want to share?": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?",
     "Drop a Pin": "ປັກໝຸດ",
     "My live location": "ສະຖານທີ່ຂອງຂ້ອຍ",
@@ -1075,7 +1052,6 @@
     "Preparing to download logs": "ກຳລັງກະກຽມດາວໂຫຼດບັນທຶກ",
     "Failed to send logs: ": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
-    "Scroll to most recent messages": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -1121,7 +1097,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)s",
-    "Send voice message": "ສົ່ງຂໍ້ຄວາມສຽງ",
     "and %(count)s others...": {
         "one": "ແລະ ອີກອັນນຶ່ງ...",
         "other": "ແລະ %(count)s ຜູ້ອຶ່ນ..."
@@ -1133,7 +1108,6 @@
     "Cameras": "ກ້ອງ",
     "Output devices": "ອຸປະກອນຂາອອກ",
     "Input devices": "ອຸປະກອນຂາເຂົ້າ",
-    "Show Labs settings": "ໂຊການຕັ້ງຄ່າສູນທົດລອງ",
     "Unread email icon": "ໄອຄັອນເມວທີ່ຍັງບໍ່ໄດ້ຖືກອ່ານ",
     "An error occurred whilst sharing your live location, please try again": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ, ກະລຸນາລອງໃໝ່",
     "An error occurred whilst sharing your live location": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ",
@@ -1240,7 +1214,9 @@
         "historical": "ປະຫວັດ",
         "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ",
         "setup_secure_messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ",
-        "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ"
+        "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
+        "view_message": "ເບິ່ງຂໍ້ຄວາມ",
+        "joined": "ເຂົ້າຮ່ວມແລ້ວ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1502,7 +1478,9 @@
         "format_italics": "ໂຕໜັງສືອຽງ",
         "format_insert_link": "ໃສ່ລິ້ງ",
         "replying_title": "ກຳລັງຕອບກັບ",
-        "edit_composer_label": "ແກ້ໄຂຂໍ້ຄວາມ"
+        "edit_composer_label": "ແກ້ໄຂຂໍ້ຄວາມ",
+        "send_voice_message": "ສົ່ງຂໍ້ຄວາມສຽງ",
+        "stop_voice_message": "ຢຸດການບັນທຶກ"
     },
     "Code": "ລະຫັດ",
     "power_level": {
@@ -2534,7 +2512,11 @@
             "other": "%(count)s ຄົນເຂົ້າຮ່ວມ"
         },
         "unknown_person": "ຄົນທີ່ບໍ່ຮູ້",
-        "connecting": "ກຳລັງເຊື່ອມຕໍ່"
+        "connecting": "ກຳລັງເຊື່ອມຕໍ່",
+        "unable_to_access_audio_input_title": "ບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້",
+        "unable_to_access_audio_input_description": "ພວກເຮົາບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
+        "no_audio_input_title": "ບໍ່ພົບໄມໂຄຣໂຟນ",
+        "no_audio_input_description": "ພວກເຮົາບໍ່ພົບໄມໂຄຣໂຟນຢູ່ໃນອຸປະກອນຂອງທ່ານ. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ແລະ ລອງໃໝ່ອີກ."
     },
     "Other": "ອື່ນໆ",
     "room_settings": {
@@ -3172,7 +3154,8 @@
         "show_all_threads": "ສະແດງຫົວຂໍ້ທັງໝົດ",
         "empty_explainer": "ກະທູ້ຊ່ວຍໃຫ້ການສົນທະນາຂອງທ່ານຢູ່ໃນຫົວຂໍ້ ແລະ ງ່າຍຕໍ່ການຕິດຕາມ.",
         "empty_tip": "<b>ເຄັດລັບ:</b> ໃຊ້ “%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມ.",
-        "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ"
+        "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ",
+        "open_thread": "ເປີດກະທູ້"
     },
     "theme": {
         "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
@@ -3392,7 +3375,19 @@
         "inaccessible_subtitle_2": "%(errcode)s ຖືກສົ່ງຄືນໃນຂະນະທີ່ພະຍາຍາມເຂົ້າເຖິງຫ້ອງ ຫຼື ພື້ນທີ່. ຖ້າຫາກທ່ານຄິດວ່າທ່ານກໍາລັງເຫັນຂໍ້ຄວາມນີ້ຜິດພາດ, ກະລຸນາ <issueLink>ສົ່ງບົດລາຍງານ bug</issueLink>.",
         "join_failed_needs_invite": "ເພື່ອເບິ່ງ %(roomName)s, ທ່ານຕ້ອງມີບັດເຊີນ",
         "view_failed_enable_video_rooms": "ເພື່ອເບິ່ງ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
-        "join_failed_enable_video_rooms": "ເພື່ອເຂົ້າຮ່ວມ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ"
+        "join_failed_enable_video_rooms": "ເພື່ອເຂົ້າຮ່ວມ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
+        "jump_to_bottom_button": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
+        "show_labs_settings": "ໂຊການຕັ້ງຄ່າສູນທົດລອງ",
+        "upgrade_warning_bar": "ການຍົກລະດັບຫ້ອງນີ້ຈະປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ຍົກລະດັບການສ້າງຫ້ອງທີ່ມີຊື່ດຽວກັນ.",
+        "upgrade_warning_bar_upgraded": "ຫ້ອງນີ້ໄດ້ຖືກປັບປຸງແລ້ວ.",
+        "upgrade_warning_bar_unstable": "ຫ້ອງນີ້ກຳລັງດຳເນິນເວີຊັ້ນຫ້ອງ <roomVersion />, ເຊິ່ງ homeserver ນີ້ໄດ້ສ້າງເຄື່ອງໝາຍເປັນ <i>unstable</i>.",
+        "upgrade_warning_bar_admins": "ມີແຕ່ຜູ້ຄຸ້ມຄອງຫ້ອງເທົ່ານັ້ນທີ່ເຫັນຄຳເຕືອນນີ້",
+        "search": {
+            "this_room": "ຫ້ອງນີ້",
+            "all_rooms": "ຫ້ອງທັງໝົດ",
+            "field_placeholder": "ຊອກຫາ…"
+        },
+        "jump_read_marker": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ."
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3581,5 +3576,16 @@
         "invited_list_heading": "ເຊີນ",
         "filter_placeholder": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "ທ່ານບໍ່ໄດ້ເປີດໃຊ້ສະຕິກເກີແພັກເກັດໃນປັດຈຸບັນ",
+        "empty_add_prompt": "ເພີ່ມບາງອັນດຽວນີ້"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "ຍົກເລີກການເຊີນບໍ່ສຳເລັດ",
+        "error_revoke_3pid_invite_description": "ບໍ່ສາມາດຖອນຄຳເຊີນໄດ້. ເຊີບເວີອາດຈະປະສົບບັນຫາຊົ່ວຄາວ ຫຼື ທ່ານບໍ່ມີສິດພຽງພໍໃນການຖອນຄຳເຊີນ.",
+        "admin_tools_section": "ເຄື່ອງມືຜູ້ຄຸ້ມຄອງ",
+        "revoke_invite": "ຍົກເລີກຄຳເຊີນ",
+        "invited_by": "ເຊີນໂດຍ%(sender)s"
     }
 }

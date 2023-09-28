@@ -31,11 +31,8 @@
     "Friday": "E premte",
     "Changelog": "Regjistër ndryshimesh",
     "Failed to send logs: ": "S’u arrit të dërgoheshin regjistra: ",
-    "This Room": "Këtë Dhomë",
     "Unavailable": "Jo i passhëm",
-    "All Rooms": "Krejt Dhomat",
     "Filter results": "Filtroni përfundimet",
-    "Search…": "Kërkoni…",
     "Tuesday": "E martë",
     "Preparing to send logs": "Po përgatitet për dërgim regjistrash",
     "Unnamed room": "Dhomë e paemërtuar",
@@ -55,7 +52,6 @@
     "This room has no local addresses": "Kjo dhomë s’ka adresë vendore",
     "Are you sure?": "Jeni i sigurt?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, ngaqë po e promovoni përdoruesin të ketë të njëjtën shkallë pushteti si ju vetë.",
-    "Admin Tools": "Mjete Përgjegjësi",
     "and %(count)s others...": {
         "other": "dhe %(count)s të tjerë…",
         "one": "dhe një tjetër…"
@@ -93,7 +89,6 @@
     "Session ID": "ID sesioni",
     "Failed to ban user": "S’u arrit të dëbohej përdoruesi",
     "Failed to mute user": "S’u arrit t’i hiqej zëri përdoruesit",
-    "Jump to first unread message.": "Hidhu te mesazhi i parë i palexuar.",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
     "Failed to reject invitation": "S’u arrit të hidhej poshtë ftesa",
@@ -115,10 +110,8 @@
     "Error decrypting attachment": "Gabim në shfshehtëzim bashkëngjitjeje",
     "Invalid file%(extra)s": "Kartelë e pavlefshme%(extra)s",
     "You seem to be uploading files, are you sure you want to quit?": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
-    "Add some now": "Shtohen ca tani",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
-    "Only room administrators will see this warning": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
     "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
     "Updating %(brand)s": "%(brand)s-i po përditësohet",
     "Failed to upgrade room": "S’u arrit të përmirësohej dhoma",
@@ -129,7 +122,6 @@
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
     "Failed to reject invite": "S’u arrit të hidhet tej ftesa",
     "Share room": "Ndani dhomë me të tjerë",
-    "You don't currently have any stickerpacks enabled": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
@@ -258,10 +250,6 @@
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
     "Could not load user profile": "S’u ngarkua dot profili i përdoruesit",
     "Power level": "Shkallë pushteti",
-    "This room has already been upgraded.": "Kjo dhomë është përmirësuar tashmë.",
-    "Failed to revoke invite": "S’u arrit të shfuqizohej ftesa",
-    "Revoke invite": "Shfuqizoje ftesën",
-    "Invited by %(sender)s": "Ftuar nga %(sender)s",
     "edited": "e përpunuar",
     "Notes": "Shënime",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
@@ -278,9 +266,6 @@
     "Failed to get autodiscovery configuration from server": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
     "Invalid base_url for m.homeserver": "Parametër base_url i pavlefshëm për m.homeserver",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Përmirësimi i kësaj dhome do të asgjësojë instancën e tanishme të dhomës dhe do të krijojë një dhomë të përmirësuar me të njëjtin emër.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Kjo dhomë gjendet nën versionin <roomVersion /> e dhomës, të cilit shërbyesi Home i ka vënë shenjë si <i>i paqëndrueshëm</i>.",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "S’u shfuqizua dot ftesa. Shërbyesi mund të jetë duke kaluar një problem të përkohshëm ose s’keni leje të mjaftueshme për të shfuqizuar ftesën.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
     "Your browser likely removed this data when running low on disk space.": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
@@ -404,7 +389,6 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Pati një gabim gjatë përditësimit të adresave alternative të dhomës. Mund të mos lejohet nga shërbyesi pse ndodhi një gabim i përkohshëm.",
     "Local address": "Adresë vendore",
     "Published Addresses": "Adresa të Publikuara",
-    "Scroll to most recent messages": "Rrëshqit te mesazhet më të freskët",
     "Other published addresses:": "Adresa të tjera të publikuara:",
     "No other published addresses yet, add one below": "Ende pa adresa të tjera të publikuara, shtoni një më poshtë",
     "New published address (e.g. #alias:server)": "Adresë e re e publikuar (p.sh., #alias:server)",
@@ -849,7 +833,6 @@
     "Reset everything": "Kthe gjithçka te parazgjedhjet",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
-    "View message": "Shihni mesazh",
     "You can select all or individual messages to retry or delete": "Për riprovim ose fshirje mund të përzgjidhni krejt mesazhet, ose të tillë individualë",
     "Sending": "Po dërgohet",
     "Retry all": "Riprovoji krejt",
@@ -872,10 +855,6 @@
     "You are not allowed to view this server's rooms list": "S’keni leje të shihni listën e dhomave të këtij shërbyesi",
     "Add reaction": "Shtoni reagim",
     "Error processing voice message": "Gabim në përpunimin e mesazhit zanor",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "S’gjetëm mikrofon në pajisjen tuaj. Ju lutemi, kontrolloni rregullimet tuaja dhe riprovoni.",
-    "No microphone found": "S’u gjet mikrofon",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
-    "Unable to access your microphone": "S’arrihet të përdoret mikrofoni juaj",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -934,8 +913,6 @@
     "Decrypting": "Po shfshehtëzohet",
     "Missed call": "Thirrje e humbur",
     "Call declined": "Thirrja u hodh poshtë",
-    "Stop recording": "Ndale regjistrimin",
-    "Send voice message": "Dërgoni mesazh zanor",
     "Unknown failure: %(reason)s": "Dështim për arsye të panjohur: %(reason)s",
     "Rooms and spaces": "Dhoma dhe hapësira",
     "Results": "Përfundime",
@@ -969,7 +946,6 @@
     },
     "View in room": "Shiheni në dhomë",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Që të vazhdohet, jepni Frazën tuaj të Sigurisë, ose <button>përdorni Kyçin tuaj të Sigurisë</button>.",
-    "Joined": "Hyri",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
     "Joining": "Po hyhet",
     "If you can't see who you're looking for, send them your invite link below.": "Nëse s’e shihni atë që po kërkoni, dërgojini nga më poshtë një lidhje ftese.",
@@ -1069,7 +1045,6 @@
     "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
     "Search Dialog": "Dialog Kërkimi",
     "Pinned": "I fiksuar",
-    "Open thread": "Hape rrjedhën",
     "What location type do you want to share?": "Ç’lloj vendndodhjeje doni të jepet?",
     "My current location": "Vendndodhja ime e tanishme",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s s’dërgoi dot vendndodhjen tuaj. Ju lutemi, riprovoni.",
@@ -1144,7 +1119,6 @@
     "Disinvite from room": "Hiqi ftesën për këtë dhomë",
     "Remove from space": "Hiqe prej hapësire",
     "Disinvite from space": "Hiqi ftesën për këtë hapësirë",
-    "Show Labs settings": "Shfaq rregullime për Labs",
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -1206,7 +1180,6 @@
     "We were unable to start a chat with the other user.": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër.",
     "Error starting verification": "Gabim në nisje verifikimi",
     "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
-    "Unable to decrypt message": "S’arrihet të shfshehtëzohet mesazhi",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "Text": "Tekst",
     "Create a link": "Krijoni një lidhje",
@@ -1266,8 +1239,6 @@
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
-    "Search all rooms": "Kërko në krejt dhomat",
-    "Search this room": "Kërko në këtë dhomë",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
     "Waiting for users to join %(brand)s": "Po pritet që përdorues të vijnë në %(brand)s",
     "common": {
@@ -1387,7 +1358,9 @@
         "historical": "Të dikurshme",
         "go_to_settings": "Kalo te Rregullimet",
         "setup_secure_messages": "Rregulloni Mesazhi të Sigurt",
-        "unencrypted": "Të pafshehtëzuara"
+        "unencrypted": "Të pafshehtëzuara",
+        "view_message": "Shihni mesazh",
+        "joined": "Hyri"
     },
     "action": {
         "continue": "Vazhdo",
@@ -1713,7 +1686,9 @@
         "format_italics": "Të pjerrëta",
         "format_insert_link": "Futni lidhje",
         "replying_title": "Po përgjigjet",
-        "edit_composer_label": "Përpunoni mesazhin"
+        "edit_composer_label": "Përpunoni mesazhin",
+        "send_voice_message": "Dërgoni mesazh zanor",
+        "stop_voice_message": "Ndale regjistrimin"
     },
     "Link": "Lidhje",
     "Code": "Kod",
@@ -2986,7 +2961,11 @@
             "other": "Hynë %(count)s vetë"
         },
         "unknown_person": "person i panjohur",
-        "connecting": "Po lidhet"
+        "connecting": "Po lidhet",
+        "unable_to_access_audio_input_title": "S’arrihet të përdoret mikrofoni juaj",
+        "unable_to_access_audio_input_description": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
+        "no_audio_input_title": "S’u gjet mikrofon",
+        "no_audio_input_description": "S’gjetëm mikrofon në pajisjen tuaj. Ju lutemi, kontrolloni rregullimet tuaja dhe riprovoni."
     },
     "Other": "Tjetër",
     "room_settings": {
@@ -3694,7 +3673,9 @@
         "show_all_threads": "Shfaqi krejt rrjedhat",
         "empty_explainer": "Rrjedhat ndihmojnë që të mbahen bisedat tuaja brenda temës dhe të ndiqen kollaj.",
         "empty_tip": "<b>Ndihmëz:</b> Përdorni “%(replyInThread)s”, teksa kaloni kursorin sipër një mesazhi.",
-        "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha"
+        "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha",
+        "open_thread": "Hape rrjedhën",
+        "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi"
     },
     "theme": {
         "light_high_contrast": "Kontrast i fortë drite",
@@ -3941,7 +3922,21 @@
         "inaccessible_subtitle_2": "%(errcode)s erdhi teksa provohej të hyhej në dhomë ose hapësirë. Nëse mendoni se po e shihni gabimisht këtë mesazh, ju lutemi, <issueLink>parashtroni një njoftim të mete</issueLink>.",
         "join_failed_needs_invite": "Që të shihni %(roomName)s, ju duhet një ftesë",
         "view_failed_enable_video_rooms": "Për të parë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
-        "join_failed_enable_video_rooms": "Për t’u bërë pjesë, ju lutemi, së pari aktivizoni te Labs dhoma me video"
+        "join_failed_enable_video_rooms": "Për t’u bërë pjesë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
+        "jump_to_bottom_button": "Rrëshqit te mesazhet më të freskët",
+        "show_labs_settings": "Shfaq rregullime për Labs",
+        "upgrade_warning_bar": "Përmirësimi i kësaj dhome do të asgjësojë instancën e tanishme të dhomës dhe do të krijojë një dhomë të përmirësuar me të njëjtin emër.",
+        "upgrade_warning_bar_upgraded": "Kjo dhomë është përmirësuar tashmë.",
+        "upgrade_warning_bar_unstable": "Kjo dhomë gjendet nën versionin <roomVersion /> e dhomës, të cilit shërbyesi Home i ka vënë shenjë si <i>i paqëndrueshëm</i>.",
+        "upgrade_warning_bar_admins": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
+        "search": {
+            "this_room": "Këtë Dhomë",
+            "all_rooms": "Krejt Dhomat",
+            "field_placeholder": "Kërkoni…",
+            "this_room_button": "Kërko në këtë dhomë",
+            "all_rooms_button": "Kërko në krejt dhomat"
+        },
+        "jump_read_marker": "Hidhu te mesazhi i parë i palexuar."
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",
@@ -4161,5 +4156,16 @@
         "invited_list_heading": "I ftuar",
         "filter_placeholder": "Filtroni anëtarë dhome",
         "power_label": "%(userName)s (pushtet %(powerLevelNumber)si)"
+    },
+    "stickers": {
+        "empty": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
+        "empty_add_prompt": "Shtohen ca tani"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "S’u arrit të shfuqizohej ftesa",
+        "error_revoke_3pid_invite_description": "S’u shfuqizua dot ftesa. Shërbyesi mund të jetë duke kaluar një problem të përkohshëm ose s’keni leje të mjaftueshme për të shfuqizuar ftesën.",
+        "admin_tools_section": "Mjete Përgjegjësi",
+        "revoke_invite": "Shfuqizoje ftesën",
+        "invited_by": "Ftuar nga %(sender)s"
     }
 }

@@ -22,7 +22,6 @@
     "Failed to reject invite": "Kutsun hylkääminen epäonnistui",
     "Failed to reject invitation": "Kutsun hylkääminen epäonnistui",
     "Join Room": "Liity huoneeseen",
-    "Jump to first unread message.": "Hyppää ensimmäiseen lukemattomaan viestiin.",
     "Moderator": "Valvoja",
     "New passwords must match each other.": "Uusien salasanojen on vastattava toisiaan.",
     "not specified": "ei määritetty",
@@ -84,7 +83,6 @@
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Et voi kumota tätä muutosta, koska olet ylentämässä käyttäjää samalle oikeustasolle kuin itsesi.",
     "Restricted": "Rajoitettu",
     "Jump to read receipt": "Hyppää lukukuittaukseen",
-    "Admin Tools": "Ylläpitotyökalut",
     "Unnamed room": "Nimetön huone",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "And %(count)s more...": {
@@ -105,14 +103,11 @@
     "Today": "Tänään",
     "Friday": "Perjantai",
     "Changelog": "Muutosloki",
-    "This Room": "Tämä huone",
     "Unavailable": "Ei saatavilla",
     "Filter results": "Suodata tuloksia",
     "Tuesday": "Tiistai",
-    "Search…": "Haku…",
     "Saturday": "Lauantai",
     "Monday": "Maanantai",
-    "All Rooms": "Kaikki huoneet",
     "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
     "Yesterday": "Eilen",
@@ -187,7 +182,6 @@
     "Main address": "Pääosoite",
     "Link to most recent message": "Linkitä viimeisimpään viestiin",
     "Continue With Encryption Disabled": "Jatka salaus poistettuna käytöstä",
-    "You don't currently have any stickerpacks enabled": "Sinulla ei ole tarrapaketteja käytössä",
     "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
     "This homeserver would like to make sure you are not a robot.": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
@@ -227,8 +221,6 @@
     "Demote yourself?": "Alenna itsesi?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Et voi perua tätä muutosta, koska olet alentamassa itseäsi. Jos olet viimeinen oikeutettu henkilö tässä huoneessa, oikeuksia ei voi enää saada takaisin.",
     "Demote": "Alenna",
-    "Only room administrators will see this warning": "Vain huoneen ylläpitäjät näkevät tämän varoituksen",
-    "Add some now": "Lisää muutamia",
     "Error updating main address": "Pääosoitteen päivityksessä tapahtui virhe",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Huoneen pääosoitteen päivityksessä tapahtui virhe. Se ei välttämättä ole sallittua tällä palvelimella tai kyseessä on väliaikainen virhe.",
     "Power level": "Oikeuksien taso",
@@ -258,17 +250,10 @@
     "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on ylittänyt resurssirajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
     "Could not load user profile": "Käyttäjäprofiilia ei voitu ladata",
     "General failure": "Yleinen virhe",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Tämä huone pyörii versiolla <roomVersion />, jonka tämä kotipalvelin on merkannut <i>epävakaaksi</i>.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
-    "Failed to revoke invite": "Kutsun kumoaminen epäonnistui",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Kutsun kumoaminen epäonnistui. Kyseessä saattaa olla väliaikainen ongelma tai sinulla ei ole tarvittavia oikeuksia kutsun kumoamiseen.",
-    "Revoke invite": "Kumoa kutsu",
-    "Invited by %(sender)s": "Kutsuttu henkilön %(sender)s toimesta",
     "Remember my selection for this widget": "Muista valintani tälle sovelmalle",
     "Your password has been reset.": "Salasanasi on nollattu.",
     "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
-    "This room has already been upgraded.": "Tämä huone on jo päivitetty.",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
@@ -382,7 +367,6 @@
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
-    "Scroll to most recent messages": "Vieritä tuoreimpiin viesteihin",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Huoneen vaihtoehtoisten osoitteiden päivittämisessä tapahtui virhe. Palvelin ei ehkä salli sitä tai kyseessä oli tilapäinen virhe.",
     "Local address": "Paikallinen osoite",
     "Local Addresses": "Paikalliset osoitteet",
@@ -807,7 +791,6 @@
     },
     "Not all selected were added": "Kaikkia valittuja ei lisätty",
     "You are not allowed to view this server's rooms list": "Sinulla ei ole oikeuksia nähdä tämän palvelimen huoneluetteloa",
-    "View message": "Näytä viesti",
     "%(count)s people you know have already joined": {
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
@@ -818,10 +801,6 @@
     },
     "Add reaction": "Lisää reaktio",
     "Error processing voice message": "Virhe ääniviestin käsittelyssä",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Mikrofoniasi ei voitu käyttää. Tarkista selaimesi asetukset ja yritä uudelleen.",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen.",
-    "No microphone found": "Mikrofonia ei löytynyt",
-    "Unable to access your microphone": "Mikrofonia ei voi käyttää",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Rooms and spaces": "Huoneet ja avaruudet",
     "Unable to copy a link to the room to the clipboard.": "Huoneen linkin kopiointi leikepöydälle ei onnistu.",
@@ -847,8 +826,6 @@
     "No answer": "Ei vastausta",
     "Pinned messages": "Kiinnitetyt viestit",
     "Nothing pinned, yet": "Ei mitään kiinnitetty, ei vielä",
-    "Stop recording": "Pysäytä nauhoittaminen",
-    "Send voice message": "Lähetä ääniviesti",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
@@ -984,7 +961,6 @@
     "Device verified": "Laite vahvistettu",
     "Verify this device": "Vahvista tämä laite",
     "Unable to verify this device": "Tätä laitetta ei voitu vahvistaa",
-    "Joined": "Liitytty",
     "Joining": "Liitytään",
     "Wait!": "Odota!",
     "Unnamed audio": "Nimetön ääni",
@@ -1034,7 +1010,6 @@
     "Remove from space": "Poista avaruudesta",
     "Pinned": "Kiinnitetty",
     "Set my room layout for everyone": "Aseta minun huoneen asettelu kaikille",
-    "Open thread": "Avaa ketju",
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Copy link to thread": "Kopioi linkki ketjuun",
@@ -1098,7 +1073,6 @@
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Room info": "Huoneen tiedot",
     "Search for": "Etsittävät kohteet",
-    "Show Labs settings": "Näytä laboratorion asetukset",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
@@ -1114,7 +1088,6 @@
     "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
     "Confirm new password": "Vahvista uusi salasana",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
-    "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
@@ -1282,7 +1255,9 @@
         "historical": "Vanhat",
         "go_to_settings": "Siirry asetuksiin",
         "setup_secure_messages": "Ota käyttöön salatut viestit",
-        "unencrypted": "Suojaamaton"
+        "unencrypted": "Suojaamaton",
+        "view_message": "Näytä viesti",
+        "joined": "Liitytty"
     },
     "action": {
         "continue": "Jatka",
@@ -1590,7 +1565,9 @@
         "format_italics": "Kursivoitu",
         "format_insert_link": "Lisää linkki",
         "replying_title": "Vastataan",
-        "edit_composer_label": "Muokkaa viestiä"
+        "edit_composer_label": "Muokkaa viestiä",
+        "send_voice_message": "Lähetä ääniviesti",
+        "stop_voice_message": "Pysäytä nauhoittaminen"
     },
     "Link": "Linkki",
     "Code": "Koodi",
@@ -2771,7 +2748,11 @@
             "other": "%(count)s ihmistä liittyi"
         },
         "unknown_person": "tuntematon henkilö",
-        "connecting": "Yhdistetään"
+        "connecting": "Yhdistetään",
+        "unable_to_access_audio_input_title": "Mikrofonia ei voi käyttää",
+        "unable_to_access_audio_input_description": "Mikrofoniasi ei voitu käyttää. Tarkista selaimesi asetukset ja yritä uudelleen.",
+        "no_audio_input_title": "Mikrofonia ei löytynyt",
+        "no_audio_input_description": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen."
     },
     "Other": "Muut",
     "room_settings": {
@@ -3416,7 +3397,9 @@
         "show_thread_filter": "Näytä:",
         "show_all_threads": "Näytä kaikki ketjut",
         "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
-        "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa"
+        "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa",
+        "open_thread": "Avaa ketju",
+        "unable_to_decrypt": "Viestin salauksen purkaminen ei onnistu"
     },
     "theme": {
         "light_high_contrast": "Vaalea, suuri kontrasti"
@@ -3648,7 +3631,19 @@
         "inaccessible_name": "%(roomName)s ei ole saatavilla tällä hetkellä.",
         "inaccessible": "Tämä huone tai avaruus ei ole käytettävissä juuri tällä hetkellä.",
         "join_failed_needs_invite": "Huoneen %(roomName)s katseluun tarvitaan kutsu",
-        "join_failed_enable_video_rooms": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta"
+        "join_failed_enable_video_rooms": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
+        "jump_to_bottom_button": "Vieritä tuoreimpiin viesteihin",
+        "show_labs_settings": "Näytä laboratorion asetukset",
+        "upgrade_warning_bar": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
+        "upgrade_warning_bar_upgraded": "Tämä huone on jo päivitetty.",
+        "upgrade_warning_bar_unstable": "Tämä huone pyörii versiolla <roomVersion />, jonka tämä kotipalvelin on merkannut <i>epävakaaksi</i>.",
+        "upgrade_warning_bar_admins": "Vain huoneen ylläpitäjät näkevät tämän varoituksen",
+        "search": {
+            "this_room": "Tämä huone",
+            "all_rooms": "Kaikki huoneet",
+            "field_placeholder": "Haku…"
+        },
+        "jump_read_marker": "Hyppää ensimmäiseen lukemattomaan viestiin."
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3864,5 +3859,16 @@
         "invited_list_heading": "Kutsuttu",
         "filter_placeholder": "Suodata huoneen jäseniä",
         "power_label": "%(userName)s (oikeustaso %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Sinulla ei ole tarrapaketteja käytössä",
+        "empty_add_prompt": "Lisää muutamia"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Kutsun kumoaminen epäonnistui",
+        "error_revoke_3pid_invite_description": "Kutsun kumoaminen epäonnistui. Kyseessä saattaa olla väliaikainen ongelma tai sinulla ei ole tarvittavia oikeuksia kutsun kumoamiseen.",
+        "admin_tools_section": "Ylläpitotyökalut",
+        "revoke_invite": "Kumoa kutsu",
+        "invited_by": "Kutsuttu henkilön %(sender)s toimesta"
     }
 }

@@ -19,14 +19,12 @@
     "Failed to mute user": "Δεν ήταν δυνατή η σίγαση του χρήστη",
     "Failed to reject invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
     "Failed to reject invitation": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
-    "Jump to first unread message.": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα.",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "New passwords must match each other.": "Οι νέοι κωδικοί πρόσβασης πρέπει να ταιριάζουν.",
     "No more results": "Δεν υπάρχουν άλλα αποτελέσματα",
     "Search failed": "Η αναζήτηση απέτυχε",
     "Create new room": "Δημιουργία νέου δωματίου",
-    "Admin Tools": "Εργαλεία διαχειριστή",
     "Home": "Αρχική",
     "Reject invitation": "Απόρριψη πρόσκλησης",
     "Return to login screen": "Επιστροφή στην οθόνη σύνδεσης",
@@ -90,18 +88,15 @@
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
     "Changelog": "Αλλαγές",
-    "This Room": "Στο δωμάτιο",
     "Unavailable": "Μη διαθέσιμο",
     "Send": "Αποστολή",
     "Tuesday": "Τρίτη",
     "Unnamed room": "Ανώνυμο δωμάτιο",
     "Saturday": "Σάββατο",
     "Monday": "Δευτέρα",
-    "All Rooms": "Όλα τα δωμάτια",
     "Wednesday": "Τετάρτη",
     "You cannot delete this message. (%(code)s)": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
     "Thursday": "Πέμπτη",
-    "Search…": "Αναζήτηση…",
     "Yesterday": "Χθές",
     "AM": "ΠΜ",
     "PM": "ΜΜ",
@@ -372,8 +367,6 @@
         "other": "%(spaceName)s και άλλα %(count)s",
         "one": "%(spaceName)s και %(count)s άλλο"
     },
-    "Send voice message": "Στείλτε φωνητικό μήνυμα",
-    "Scroll to most recent messages": "Κύλιση στα πιο πρόσφατα μηνύματα",
     "Backup version:": "Έκδοση αντιγράφου ασφαλείας:",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
@@ -463,7 +456,6 @@
     "Can't edit poll": "Αδυναμία επεξεργασίας δημοσκόπησης",
     "You sent a verification request": "Στείλατε ένα αίτημα επαλήθευσης",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
-    "View message": "Προβολή μηνύματος",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "Message Actions": "Ενέργειες μηνυμάτων",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
@@ -672,16 +664,10 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Παρουσιάστηκε σφάλμα κατά την ενημέρωση των εναλλακτικών διευθύνσεων του δωματίου. Ενδέχεται να μην επιτρέπεται από τον διακομιστή ή να έχει παρουσιαστεί προσωρινή αποτυχία.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Παρουσιάστηκε σφάλμα κατά την ενημέρωση της κύριας διεύθυνσης του δωματίου. Ενδέχεται να μην επιτρέπεται από τον διακομιστή ή να συνέβηκε σφάλμα.",
     "Error updating main address": "Σφάλμα κατά την ενημέρωση της κύριας διεύθυνσης",
-    "Stop recording": "Διακοπή εγγραφής",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Δε βρέθηκε μικρόφωνο στη συσκευή σας. Παρακαλώ ελέγξτε τις ρυθμίσεις σας και δοκιμάστε ξανά.",
-    "Unable to access your microphone": "Αδυναμία πρόσβασης μικροφώνου",
-    "Open thread": "Άνοιγμα νήματος",
     "%(count)s reply": {
         "one": "%(count)s απάντηση",
         "other": "%(count)s απαντήσεις"
     },
-    "No microphone found": "Δε βρέθηκε μικρόφωνο",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Δεν ήταν δυνατή η πρόσβαση στο μικρόφωνο σας. Ελέγξτε τις ρυθμίσεις του προγράμματος περιήγησης σας και δοκιμάστε ξανά.",
     "MB": "MB",
     "End Poll": "Τερματισμός δημοσκόπησης",
     "Server did not require any authentication": "Ο διακομιστής δεν απαίτησε κάποιο έλεγχο ταυτότητας",
@@ -814,15 +800,6 @@
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Τα μηνύματά σας είναι ασφαλή και μόνο εσείς και ο παραλήπτης έχετε τα μοναδικά κλειδιά για να τα ξεκλειδώσετε.",
     "Start Verification": "Έναρξη επαλήθευσης",
     "Waiting for %(displayName)s to accept…": "Αναμονή αποδοχής από %(displayName)s…",
-    "Invited by %(sender)s": "Προσκεκλημένος από %(sender)s",
-    "Revoke invite": "Ανάκληση πρόσκλησης",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Δεν ήταν δυνατή η ανάκληση της πρόσκλησης. Ο διακομιστής μπορεί να αντιμετωπίζει ένα προσωρινό πρόβλημα ή δεν έχετε επαρκή δικαιώματα για να ανακαλέσετε την πρόσκληση.",
-    "Failed to revoke invite": "Αποτυχία ανάκλησης πρόσκλησης",
-    "You don't currently have any stickerpacks enabled": "Προς το παρόν δεν έχετε ενεργοποιημένο κάποιο πακέτο αυτοκόλλητων",
-    "Add some now": "Προσθέστε μερικά τώρα",
-    "Only room administrators will see this warning": "Μόνο οι διαχειριστές δωματίων θα βλέπουν αυτήν την προειδοποίηση",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Αυτό το δωμάτιο τρέχει την έκδοση <roomVersion />, την οποία ο κεντρικός διακομιστής έχει επισημάνει ως <i>ασταθής</i>.",
-    "This room has already been upgraded.": "Αυτό το δωμάτιο έχει ήδη αναβαθμιστεί.",
     "Sending": "Αποστολή",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
     "Message preview": "Προεπισκόπηση μηνύματος",
@@ -913,7 +890,6 @@
     "Remove them from specific things I'm able to": "Αφαιρέστε τους από συγκεκριμένες λειτουργίες που έχω δικαίωμα",
     "Remove them from everything I'm able to": "Αφαιρέστε τους από οτιδήποτε έχω δικαίωμα",
     "Demote yourself?": "Υποβιβάστε τον εαυτό σας;",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Η αναβάθμιση αυτού του δωματίου θα τερματίσει το δωμάτιο και θα δημιουργήσει ένα αναβαθμισμένο δωμάτιο με το ίδιο όνομα.",
     "Spanner": "Γερμανικό κλειδί",
     "Your password has been reset.": "Ο κωδικός πρόσβασής σας επαναφέρθηκε.",
     "Skip verification for now": "Παράβλεψη επαλήθευσης προς το παρόν",
@@ -1055,7 +1031,6 @@
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
     "a new master key signature": "μια νέα υπογραφή κύριου κλειδιού",
     "We couldn't create your DM.": "Δεν μπορέσαμε να δημιουργήσουμε το DM σας.",
-    "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
     "Avatar": "Avatar",
     "Forget": "Ξεχάστε",
@@ -1126,7 +1101,6 @@
         "one": "1 συμμετέχων",
         "other": "%(count)s συμμετέχοντες"
     },
-    "Show Labs settings": "Εμφάνιση ρυθμίσεων Labs",
     "common": {
         "about": "Σχετικά με",
         "analytics": "Αναλυτικά δεδομένα",
@@ -1230,7 +1204,9 @@
         "historical": "Ιστορικό",
         "go_to_settings": "Μετάβαση στις Ρυθμίσεις",
         "setup_secure_messages": "Ρύθμιση ασφαλών μηνυμάτων",
-        "unencrypted": "Μη κρυπτογραφημένο"
+        "unencrypted": "Μη κρυπτογραφημένο",
+        "view_message": "Προβολή μηνύματος",
+        "joined": "Συνδέθηκε"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1500,7 +1476,9 @@
         "format_italics": "Πλάγια",
         "format_insert_link": "Εισαγωγή συνδέσμου",
         "replying_title": "Απαντώντας",
-        "edit_composer_label": "Επεξεργασία μηνύματος"
+        "edit_composer_label": "Επεξεργασία μηνύματος",
+        "send_voice_message": "Στείλτε φωνητικό μήνυμα",
+        "stop_voice_message": "Διακοπή εγγραφής"
     },
     "Code": "Κωδικός",
     "power_level": {
@@ -2528,7 +2506,11 @@
         "screenshare_window": "Παράθυρο εφαρμογής",
         "screenshare_title": "Κοινή χρήση περιεχομένου",
         "unknown_person": "άγνωστο άτομο",
-        "connecting": "Συνδέεται"
+        "connecting": "Συνδέεται",
+        "unable_to_access_audio_input_title": "Αδυναμία πρόσβασης μικροφώνου",
+        "unable_to_access_audio_input_description": "Δεν ήταν δυνατή η πρόσβαση στο μικρόφωνο σας. Ελέγξτε τις ρυθμίσεις του προγράμματος περιήγησης σας και δοκιμάστε ξανά.",
+        "no_audio_input_title": "Δε βρέθηκε μικρόφωνο",
+        "no_audio_input_description": "Δε βρέθηκε μικρόφωνο στη συσκευή σας. Παρακαλώ ελέγξτε τις ρυθμίσεις σας και δοκιμάστε ξανά."
     },
     "Other": "Άλλα",
     "room_settings": {
@@ -3160,7 +3142,8 @@
         "empty_has_threads_tip": "Απαντήστε σε ένα νήμα εκτέλεσης που βρίσκεται σε εξέλιξη ή χρησιμοποιήστε το \"%(replyInThread)s\" όταν τοποθετείτε το δείκτη του ποντικιού πάνω από ένα μήνυμα για να ξεκινήσετε ένα νέο.",
         "show_all_threads": "Εμφάνιση όλων των νημάτων",
         "empty_explainer": "Τα νήματα σας βοηθούν να οργανώνετε και να παρακολουθείτε καλύτερα τις συνομιλίες σας.",
-        "empty_heading": "Διατηρήστε τις συζητήσεις οργανωμένες με νήματα"
+        "empty_heading": "Διατηρήστε τις συζητήσεις οργανωμένες με νήματα",
+        "open_thread": "Άνοιγμα νήματος"
     },
     "theme": {
         "light_high_contrast": "Ελαφριά υψηλή αντίθεση",
@@ -3376,7 +3359,19 @@
         "inaccessible_subtitle_2": "Το %(errcode)s επιστράφηκε κατά την προσπάθεια πρόσβασης στο δωμάτιο ή στο χώρο. Εάν πιστεύετε ότι βλέπετε αυτό το μήνυμα κατά λάθος, <issueLink>υποβάλετε μια αναφορά σφάλματος</issueLink>.",
         "join_failed_needs_invite": "Για να δείτε το %(roomName)s, χρειάζεστε μια πρόσκληση",
         "view_failed_enable_video_rooms": "Για προβολή, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
-        "join_failed_enable_video_rooms": "Για να συμμετέχετε, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs"
+        "join_failed_enable_video_rooms": "Για να συμμετέχετε, ενεργοποιήστε πρώτα τις αίθουσες βίντεο στο Labs",
+        "jump_to_bottom_button": "Κύλιση στα πιο πρόσφατα μηνύματα",
+        "show_labs_settings": "Εμφάνιση ρυθμίσεων Labs",
+        "upgrade_warning_bar": "Η αναβάθμιση αυτού του δωματίου θα τερματίσει το δωμάτιο και θα δημιουργήσει ένα αναβαθμισμένο δωμάτιο με το ίδιο όνομα.",
+        "upgrade_warning_bar_upgraded": "Αυτό το δωμάτιο έχει ήδη αναβαθμιστεί.",
+        "upgrade_warning_bar_unstable": "Αυτό το δωμάτιο τρέχει την έκδοση <roomVersion />, την οποία ο κεντρικός διακομιστής έχει επισημάνει ως <i>ασταθής</i>.",
+        "upgrade_warning_bar_admins": "Μόνο οι διαχειριστές δωματίων θα βλέπουν αυτήν την προειδοποίηση",
+        "search": {
+            "this_room": "Στο δωμάτιο",
+            "all_rooms": "Όλα τα δωμάτια",
+            "field_placeholder": "Αναζήτηση…"
+        },
+        "jump_read_marker": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα."
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
@@ -3565,5 +3560,16 @@
         "invited_list_heading": "Προσκλήθηκε",
         "filter_placeholder": "Φιλτράρισμα μελών",
         "power_label": "%(userName)s (δύναμη %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Προς το παρόν δεν έχετε ενεργοποιημένο κάποιο πακέτο αυτοκόλλητων",
+        "empty_add_prompt": "Προσθέστε μερικά τώρα"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Αποτυχία ανάκλησης πρόσκλησης",
+        "error_revoke_3pid_invite_description": "Δεν ήταν δυνατή η ανάκληση της πρόσκλησης. Ο διακομιστής μπορεί να αντιμετωπίζει ένα προσωρινό πρόβλημα ή δεν έχετε επαρκή δικαιώματα για να ανακαλέσετε την πρόσκληση.",
+        "admin_tools_section": "Εργαλεία διαχειριστή",
+        "revoke_invite": "Ανάκληση πρόσκλησης",
+        "invited_by": "Προσκεκλημένος από %(sender)s"
     }
 }

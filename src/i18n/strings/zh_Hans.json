@@ -17,8 +17,6 @@
     "A new password must be entered.": "必须输入新密码。",
     "An error has occurred.": "发生了一个错误。",
     "Join Room": "加入房间",
-    "Jump to first unread message.": "跳到第一条未读消息。",
-    "Admin Tools": "管理员工具",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
         "other": "和其他%(count)s个人……",
@@ -86,7 +84,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s %(monthName)s %(day)s，%(weekDayName)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s %(monthName)s %(day)s %(time)s，%(weekDayName)s",
     "Restricted": "受限",
-    "You don't currently have any stickerpacks enabled": "你目前未启用任何贴纸包",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "如果你是房间中最后一位拥有权限的用户，在你降低自己的权限等级后将无法撤销此修改，你将无法重新获得权限。",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "你将无法撤回此修改，因为此用户的权力级别将与你相同。",
     "%(duration)ss": "%(duration)s 秒",
@@ -106,18 +103,15 @@
     "Friday": "星期五",
     "Changelog": "更改日志",
     "Failed to send logs: ": "无法发送日志： ",
-    "This Room": "此房间",
     "Unavailable": "无法获得",
     "Filter results": "过滤结果",
     "Tuesday": "星期二",
     "Preparing to send logs": "正在准备发送日志",
     "Saturday": "星期六",
     "Monday": "星期一",
-    "All Rooms": "全部房间",
     "Wednesday": "星期三",
     "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
     "Thursday": "星期四",
-    "Search…": "搜索…",
     "Logs sent": "日志已发送",
     "Yesterday": "昨天",
     "Thank you!": "谢谢！",
@@ -142,7 +136,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "此房间不是公开房间。如果没有成员邀请，你将无法重新加入。",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "在你查看并同意 <consentLink>我们的条款与要求</consentLink> 之前，你不能发送任何消息。",
     "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
-    "Only room administrators will see this warning": "此警告仅房间管理员可见",
     "Failed to upgrade room": "房间升级失败",
     "The room upgrade could not be completed": "房间可能没有完整地升级",
     "Upgrade this room to version %(version)s": "升级此房间至版本 %(version)s",
@@ -225,7 +218,6 @@
     "Folder": "文件夹",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
     "Start using Key Backup": "开始使用密钥备份",
-    "Add some now": "立即添加",
     "Error updating main address": "更新主要地址时发生错误",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "更新房间的主要地址时发生错误。可能是此服务器不允许，也可能是出现了一个临时错误。",
     "Main address": "主要地址",
@@ -260,12 +252,6 @@
     "Invalid identity server discovery response": "无效的身份服务器搜索响应",
     "General failure": "一般错误",
     "Power level": "权力级别",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
-    "Failed to revoke invite": "撤销邀请失败",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "无法撤销邀请。此服务器可能出现了临时错误，或者你没有足够的权限来撤销邀请。",
-    "Revoke invite": "撤销邀请",
-    "Invited by %(sender)s": "被 %(sender)s 邀请",
     "Remember my selection for this widget": "记住我对此挂件的选择",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
@@ -281,9 +267,7 @@
     "Deactivate account": "停用账户",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要报告 Matrix 相关的安全问题，请阅读 Matrix.org 的<a>安全公开策略</a>。",
     "Encrypted by a deleted session": "由已删除的会话加密",
-    "Scroll to most recent messages": "滚动到最近的消息",
     "This room is public": "此房间为公共的",
-    "This room has already been upgraded.": "此房间已经被升级。",
     "Failed to connect to integration manager": "连接至集成管理器失败",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "更新此房间的备用地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
     "Error creating address": "创建地址时出现错误",
@@ -841,7 +825,6 @@
     "Not all selected were added": "并非所有选中的都被添加",
     "You are not allowed to view this server's rooms list": "你不被允许查看此服务器的房间列表",
     "Retry all": "全部重试",
-    "View message": "查看消息",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -859,10 +842,6 @@
     "You can only pin up to %(count)s widgets": {
         "other": "你仅能固定 %(count)s 个挂件"
     },
-    "We didn't find a microphone on your device. Please check your settings and try again.": "我们没能在你的设备上找到麦克风。请检查设置并重试。",
-    "No microphone found": "未找到麦克风",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "我们无法访问你的麦克风。 请检查浏览器设置并重试。",
-    "Unable to access your microphone": "无法访问你的麦克风",
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -896,7 +875,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "任何服务器上的人均可通过公布的地址加入你的空间。",
     "This space has no local addresses": "此空间没有本地地址",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
-    "Send voice message": "发送语音消息",
     "Unable to copy a link to the room to the clipboard.": "无法将房间的链接复制到剪贴板。",
     "Unable to copy room link": "无法复制房间链接",
     "Error downloading audio": "下载音频时出错",
@@ -940,7 +918,6 @@
     "No answer": "无响应",
     "Call back": "回拨",
     "Call declined": "拒绝通话",
-    "Stop recording": "停止录制",
     "Rooms and spaces": "房间与空间",
     "Results": "结果",
     "Some encryption parameters have been changed.": "一些加密参数已更改。",
@@ -972,7 +949,6 @@
     },
     "View in room": "在房间内查看",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
-    "Joined": "已加入",
     "Joining": "加入中",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，请将您的邀请链接发送给他们。",
@@ -1044,8 +1020,6 @@
         "other": "%(count)s 名参与者",
         "one": "一名参与者"
     },
-    "Open thread": "打开消息列",
-    "Show Labs settings": "显示实验室设置",
     "Add new server…": "添加新的服务器…",
     "Verify other device": "验证其他设备",
     "Unban from space": "从空间取消封锁",
@@ -1272,7 +1246,9 @@
         "historical": "历史",
         "go_to_settings": "打开设置",
         "setup_secure_messages": "设置安全消息",
-        "unencrypted": "未加密"
+        "unencrypted": "未加密",
+        "view_message": "查看消息",
+        "joined": "已加入"
     },
     "action": {
         "continue": "继续",
@@ -1576,7 +1552,9 @@
         "format_italics": "斜体",
         "format_insert_link": "插入链接",
         "replying_title": "正在回复",
-        "edit_composer_label": "编辑消息"
+        "edit_composer_label": "编辑消息",
+        "send_voice_message": "发送语音消息",
+        "stop_voice_message": "停止录制"
     },
     "Code": "代码",
     "power_level": {
@@ -2741,7 +2719,11 @@
             "other": "%(count)s个人已加入"
         },
         "unknown_person": "陌生人",
-        "connecting": "连接中"
+        "connecting": "连接中",
+        "unable_to_access_audio_input_title": "无法访问你的麦克风",
+        "unable_to_access_audio_input_description": "我们无法访问你的麦克风。 请检查浏览器设置并重试。",
+        "no_audio_input_title": "未找到麦克风",
+        "no_audio_input_description": "我们没能在你的设备上找到麦克风。请检查设置并重试。"
     },
     "Other": "其他",
     "room_settings": {
@@ -3409,7 +3391,8 @@
         "show_all_threads": "显示所有消息列",
         "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
         "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
-        "empty_heading": "用消息列使讨论井然有序"
+        "empty_heading": "用消息列使讨论井然有序",
+        "open_thread": "打开消息列"
     },
     "theme": {
         "light_high_contrast": "浅色高对比",
@@ -3638,7 +3621,19 @@
         "inaccessible_subtitle_2": "尝试访问房间或空间时返回%(errcode)s。若你认为你看到这条消息是有问题的，请<issueLink>提交bug报告</issueLink>。",
         "join_failed_needs_invite": "你需要一个邀请来查看 %(roomName)s",
         "view_failed_enable_video_rooms": "查看前请在实验室允许虚拟房间",
-        "join_failed_enable_video_rooms": "加入前请在实验室允许虚拟房间"
+        "join_failed_enable_video_rooms": "加入前请在实验室允许虚拟房间",
+        "jump_to_bottom_button": "滚动到最近的消息",
+        "show_labs_settings": "显示实验室设置",
+        "upgrade_warning_bar": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
+        "upgrade_warning_bar_upgraded": "此房间已经被升级。",
+        "upgrade_warning_bar_unstable": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
+        "upgrade_warning_bar_admins": "此警告仅房间管理员可见",
+        "search": {
+            "this_room": "此房间",
+            "all_rooms": "全部房间",
+            "field_placeholder": "搜索…"
+        },
+        "jump_read_marker": "跳到第一条未读消息。"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3851,5 +3846,16 @@
         "invited_list_heading": "已邀请",
         "filter_placeholder": "过滤房间成员",
         "power_label": "%(userName)s（权力 %(powerLevelNumber)s）"
+    },
+    "stickers": {
+        "empty": "你目前未启用任何贴纸包",
+        "empty_add_prompt": "立即添加"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "撤销邀请失败",
+        "error_revoke_3pid_invite_description": "无法撤销邀请。此服务器可能出现了临时错误，或者你没有足够的权限来撤销邀请。",
+        "admin_tools_section": "管理员工具",
+        "revoke_invite": "撤销邀请",
+        "invited_by": "被 %(sender)s 邀请"
     }
 }

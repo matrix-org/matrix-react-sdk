@@ -33,7 +33,6 @@
     "Are you sure?": "Ĉu vi certas?",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vi estas direktota al ekstera retejo por aŭtentikigi vian konton por uzo kun %(integrationsUrl)s. Ĉu vi volas daŭrigi tion?",
     "Jump to read receipt": "Salti al legokonfirmo",
-    "Admin Tools": "Estriloj",
     "and %(count)s others...": {
         "other": "kaj %(count)s aliaj…",
         "one": "kaj unu alia…"
@@ -50,7 +49,6 @@
     "Join Room": "Aliĝi al ĉambro",
     "unknown error code": "nekonata kodo de eraro",
     "Failed to forget room %(errCode)s": "Malsukcesis forgesi ĉambron %(errCode)s",
-    "Jump to first unread message.": "Salti al unua nelegita mesaĝo.",
     "not specified": "nespecifita",
     "This room has no local addresses": "Ĉi tiu ĉambro ne havas lokajn adresojn",
     "Error decrypting attachment": "Malĉifro de aldonaĵo eraris",
@@ -107,16 +105,13 @@
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
     "Changelog": "Protokolo de ŝanĝoj",
-    "This Room": "Ĉi tiu ĉambro",
     "Unavailable": "Nedisponebla",
     "Filter results": "Filtri rezultojn",
     "Tuesday": "Mardo",
-    "Search…": "Serĉi…",
     "Saturday": "Sabato",
     "Monday": "Lundo",
     "Wednesday": "Merkredo",
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
-    "All Rooms": "Ĉiuj ĉambroj",
     "Thursday": "Ĵaŭdo",
     "Yesterday": "Hieraŭ",
     "Thank you!": "Dankon!",
@@ -206,18 +201,9 @@
     "Paperclip": "Paperkuntenilo",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Ĉifritaj mesaĝoj estas sekurigitaj per tutvoja ĉifrado. Nur vi kaj la ricevonto(j) havas la ŝlosilojn necesajn por legado.",
     "This room is not public. You will not be able to rejoin without an invite.": "Ĉi tiu ĉambro ne estas publika. Vi ne povos re-aliĝi sen invito.",
-    "Revoke invite": "Nuligi inviton",
-    "Invited by %(sender)s": "Invitita de %(sender)s",
     "Error updating main address": "Ĝisdatigo de la ĉefa adreso eraris",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ĝisdatigo de la ĉefa adreso de la ĉambro eraris. Aŭ la servilo tion ne permesas, aŭ io misfunkciis.",
     "edited": "redaktita",
-    "This room has already been upgraded.": "Ĉi tiu ĉambro jam gradaltiĝis.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ĉi tiu ĉambro uzas ĉambran version <roomVersion />, kiun la hejmservilo markis kiel <i>nestabilan</i>.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
-    "You don't currently have any stickerpacks enabled": "Vi havas neniujn ŝaltitajn glumarkarojn",
-    "Add some now": "Iujn aldoni",
-    "Failed to revoke invite": "Malsukcesis senvalidigi inviton",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Ne povis senvalidigi inviton. Aŭ la servilo nun trairas problemon, aŭ vi ne havas sufiĉajn permesojn.",
     "Continue With Encryption Disabled": "Pluigi sen ĉifrado",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Kontrolu ĉi tiun uzanton por marki ĝin fidata. Fidado devas vin trankviligi dum uzado de tutvoja ĉifrado.",
     "Incoming Verification Request": "Venas kontrolpeto",
@@ -262,7 +248,6 @@
     "Removing…": "Forigante…",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Only room administrators will see this warning": "Nur administrantoj de ĉambro vidos ĉi tiun averton",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ne povas enlegi la responditan okazon; aŭ ĝi ne ekzistas, aŭ vi ne rajtas vidi ĝin.",
     "Clear all data": "Vakigi ĉiujn datumojn",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Por eviti perdon de via babila historio, vi devas elporti la ŝlosilojn de viaj ĉambroj antaŭ adiaŭo. Por tio vi bezonos reveni al la pli nova versio de %(brand)s",
@@ -405,7 +390,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vi gradaltigos ĉi tiun ĉambron de <oldVersion /> al <newVersion />.",
     "Verification Request": "Kontrolpeto",
     "Country Dropdown": "Landa falmenuo",
-    "Scroll to most recent messages": "Rulumi al plej freŝaj mesaĝoj",
     "Local address": "Loka adreso",
     "Published Addresses": "Publikigitaj adresoj",
     "Other published addresses:": "Aliaj publikigitaj adresoj:",
@@ -836,7 +820,6 @@
     "You don't have permission": "Vi ne rajtas",
     "Invited people will be able to read old messages.": "Invititoj povos legi malnovajn mesaĝojn.",
     "Add existing rooms": "Aldoni jamajn ĉambrojn",
-    "View message": "Montri mesaĝon",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
@@ -858,10 +841,6 @@
     "You are not allowed to view this server's rooms list": "Vi ne rajtas vidi liston de ĉambroj de tu ĉi servilo",
     "Add reaction": "Aldoni reagon",
     "Error processing voice message": "Eraris traktado de voĉmesaĝo",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Ni ne trovis mikrofonon en via aparato. Bonvolu kontroli viajn agordojn kaj reprovi.",
-    "No microphone found": "Neniu mikrofono troviĝis",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Ni ne povis aliri vian mikrofonon. Bonvolu kontroli la agordojn de via foliumilo kaj reprovi.",
-    "Unable to access your microphone": "Ne povas aliri vian mikrofonon",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Search names and descriptions": "Serĉi nomojn kaj priskribojn",
@@ -882,8 +861,6 @@
     "Reset event store?": "Ĉu restarigi deponejon de okazoj?",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton.",
     "This space has no local addresses": "Ĉi tiu aro ne havas lokajn adresojn",
-    "Stop recording": "Malŝalti registradon",
-    "Send voice message": "Sendi voĉmesaĝon",
     "To publish an address, it needs to be set as a local address first.": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
     "Published addresses can be used by anyone on any server to join your room.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
     "Published addresses can be used by anyone on any server to join your space.": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
@@ -1077,7 +1054,8 @@
         "historical": "Estintaj",
         "go_to_settings": "Iri al agordoj",
         "setup_secure_messages": "Agordi Sekurajn mesaĝojn",
-        "unencrypted": "Neĉifrita"
+        "unencrypted": "Neĉifrita",
+        "view_message": "Montri mesaĝon"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1316,7 +1294,9 @@
         "poll_button": "Balotenketo",
         "format_italics": "Kursive",
         "replying_title": "Respondante",
-        "edit_composer_label": "Redakti mesaĝon"
+        "edit_composer_label": "Redakti mesaĝon",
+        "send_voice_message": "Sendi voĉmesaĝon",
+        "stop_voice_message": "Malŝalti registradon"
     },
     "Code": "Kodo",
     "power_level": {
@@ -2247,7 +2227,11 @@
         "screenshare_window": "Fenestro de aplikaĵo",
         "screenshare_title": "Havigi enhavon",
         "unknown_person": "nekonata persono",
-        "connecting": "Konektante"
+        "connecting": "Konektante",
+        "unable_to_access_audio_input_title": "Ne povas aliri vian mikrofonon",
+        "unable_to_access_audio_input_description": "Ni ne povis aliri vian mikrofonon. Bonvolu kontroli la agordojn de via foliumilo kaj reprovi.",
+        "no_audio_input_title": "Neniu mikrofono troviĝis",
+        "no_audio_input_description": "Ni ne trovis mikrofonon en via aparato. Bonvolu kontroli viajn agordojn kaj reprovi."
     },
     "Other": "Alia",
     "room_settings": {
@@ -3045,7 +3029,18 @@
         "peek_join_prompt": "Vi antaŭrigardas ĉambron %(roomName)s. Ĉu vi volas aliĝi?",
         "no_peek_join_prompt": "Vi ne povas antaŭrigardi ĉambron %(roomName)s. Ĉu vi al ĝi volas aliĝi?",
         "not_found_title_name": "%(roomName)s ne ekzistas.",
-        "inaccessible_name": "%(roomName)s ne estas atingebla nun."
+        "inaccessible_name": "%(roomName)s ne estas atingebla nun.",
+        "jump_to_bottom_button": "Rulumi al plej freŝaj mesaĝoj",
+        "upgrade_warning_bar": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
+        "upgrade_warning_bar_upgraded": "Ĉi tiu ĉambro jam gradaltiĝis.",
+        "upgrade_warning_bar_unstable": "Ĉi tiu ĉambro uzas ĉambran version <roomVersion />, kiun la hejmservilo markis kiel <i>nestabilan</i>.",
+        "upgrade_warning_bar_admins": "Nur administrantoj de ĉambro vidos ĉi tiun averton",
+        "search": {
+            "this_room": "Ĉi tiu ĉambro",
+            "all_rooms": "Ĉiuj ĉambroj",
+            "field_placeholder": "Serĉi…"
+        },
+        "jump_read_marker": "Salti al unua nelegita mesaĝo."
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3239,5 +3234,16 @@
         "invited_list_heading": "Invititaj",
         "filter_placeholder": "Filtri ĉambranojn",
         "power_label": "%(userName)s (povnivelo je %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Vi havas neniujn ŝaltitajn glumarkarojn",
+        "empty_add_prompt": "Iujn aldoni"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Malsukcesis senvalidigi inviton",
+        "error_revoke_3pid_invite_description": "Ne povis senvalidigi inviton. Aŭ la servilo nun trairas problemon, aŭ vi ne havas sufiĉajn permesojn.",
+        "admin_tools_section": "Estriloj",
+        "revoke_invite": "Nuligi inviton",
+        "invited_by": "Invitita de %(sender)s"
     }
 }

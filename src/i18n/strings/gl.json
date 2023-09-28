@@ -33,7 +33,6 @@
     "Are you sure?": "Está segura?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Non poderá desfacer este cambio xa que lle estará promocionando e outorgándolle a outra persoa os mesmos permisos que os seus.",
     "Jump to read receipt": "Ir ao resgardo de lectura",
-    "Admin Tools": "Ferramentas de administración",
     "and %(count)s others...": {
         "other": "e %(count)s outras...",
         "one": "e outra máis..."
@@ -51,7 +50,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Non poderá desfacer este cambio xa que está a diminuír a súa autoridade, se é a única persoa con autorización na sala será imposible volver a obter privilexios.",
     "unknown error code": "código de fallo descoñecido",
     "Failed to forget room %(errCode)s": "Fallo ao esquecer sala %(errCode)s",
-    "Jump to first unread message.": "Ir a primeira mensaxe non lida.",
     "not specified": "non indicado",
     "This room has no local addresses": "Esta sala non ten enderezos locais",
     "Error decrypting attachment": "Fallo descifrando o anexo",
@@ -106,21 +104,17 @@
     "Session ID": "ID de sesión",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "This room is not public. You will not be able to rejoin without an invite.": "Esta sala non é pública. Non poderá volver a ela sen un convite.",
-    "You don't currently have any stickerpacks enabled": "Non ten paquetes de iconas activados",
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
     "Changelog": "Rexistro de cambios",
     "Failed to send logs: ": "Fallo ao enviar os informes: ",
-    "This Room": "Esta sala",
     "Unavailable": "Non dispoñible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
-    "Search…": "Buscar…",
     "Preparing to send logs": "Preparándose para enviar informe",
     "Saturday": "Sábado",
     "Monday": "Luns",
-    "All Rooms": "Todas as Salas",
     "Wednesday": "Mércores",
     "You cannot delete this message. (%(code)s)": "Non pode eliminar esta mensaxe. (%(code)s)",
     "Thursday": "Xoves",
@@ -241,18 +235,8 @@
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
-    "Scroll to most recent messages": "Ir ás mensaxes máis recentes",
     "Message preview": "Vista previa da mensaxe",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
-    "This room has already been upgraded.": "Esta sala xa foi actualizada.",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A sala está usando a versión <roomVersion />, que este servidor considera como <i>non estable</i>.",
-    "Only room administrators will see this warning": "Só a administración da sala pode ver este aviso",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
-    "Add some now": "Engade algún agora",
-    "Failed to revoke invite": "Fallo ao revogar o convite",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Non se revogou o convite. O servidor podería estar experimentando un problema temporal ou non tes permisos suficientes para revogar o convite.",
-    "Revoke invite": "Revogar convite",
-    "Invited by %(sender)s": "Convidada por %(sender)s",
     "Error updating main address": "Fallo ao actualizar o enderezo principal",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Algo fallou ao actualizar o enderezo principal da sala. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
     "Error creating address": "Fallo ao crear o enderezo",
@@ -853,7 +837,6 @@
     "Reset everything": "Restablecer todo",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
-    "View message": "Ver mensaxe",
     "You can select all or individual messages to retry or delete": "Podes elexir todo ou mensaxes individuais para reintentar ou eliminar",
     "Sending": "Enviando",
     "Retry all": "Reintentar todo",
@@ -872,10 +855,6 @@
     "Not all selected were added": "Non se engadiron tódolos seleccionados",
     "You are not allowed to view this server's rooms list": "Non tes permiso para ver a lista de salas deste servidor",
     "Error processing voice message": "Erro ao procesar a mensaxe de voz",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Non atopamos ningún micrófono no teu dispositivo. Comproba os axustes e proba outra vez.",
-    "No microphone found": "Non atopamos ningún micrófono",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
-    "Unable to access your microphone": "Non se puido acceder ao micrófono",
     "Search names and descriptions": "Buscar nome e descricións",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
@@ -938,8 +917,6 @@
     "Decrypting": "Descifrando",
     "Missed call": "Chamada perdida",
     "Call declined": "Chamada rexeitada",
-    "Stop recording": "Deter a gravación",
-    "Send voice message": "Enviar mensaxe de voz",
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
     "Rooms and spaces": "Salas e espazos",
     "Results": "Resultados",
@@ -972,7 +949,6 @@
     },
     "View in room": "Ver na sala",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
-    "Joined": "Unícheste",
     "Joining": "Uníndote",
     "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verfica tódalas usuarias para ter certeza de que é segura.",
     "Files": "Ficheiros",
@@ -1076,7 +1052,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non enviou a túa localización. Inténtao máis tarde.",
     "We couldn't send your location": "Non puidemos enviar a túa localización",
     "Pinned": "Fixado",
-    "Open thread": "Abrir fío",
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
@@ -1134,7 +1109,6 @@
     "Output devices": "Dispositivos de saída",
     "Input devices": "Dispositivos de entrada",
     "Open room": "Abrir sala",
-    "Show Labs settings": "Mostrar axustes en Labs",
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
@@ -1287,7 +1261,9 @@
         "historical": "Historial",
         "go_to_settings": "Ir a Axustes",
         "setup_secure_messages": "Configurar Mensaxes Seguras",
-        "unencrypted": "Non cifrada"
+        "unencrypted": "Non cifrada",
+        "view_message": "Ver mensaxe",
+        "joined": "Unícheste"
     },
     "action": {
         "continue": "Continuar",
@@ -1574,7 +1550,9 @@
         "format_italics": "Cursiva",
         "format_insert_link": "Escribir ligazón",
         "replying_title": "Respondendo",
-        "edit_composer_label": "Editar mensaxe"
+        "edit_composer_label": "Editar mensaxe",
+        "send_voice_message": "Enviar mensaxe de voz",
+        "stop_voice_message": "Deter a gravación"
     },
     "Code": "Código",
     "power_level": {
@@ -2707,7 +2685,11 @@
             "other": "%(count)s persoas uníronse"
         },
         "unknown_person": "persoa descoñecida",
-        "connecting": "Conectando"
+        "connecting": "Conectando",
+        "unable_to_access_audio_input_title": "Non se puido acceder ao micrófono",
+        "unable_to_access_audio_input_description": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
+        "no_audio_input_title": "Non atopamos ningún micrófono",
+        "no_audio_input_description": "Non atopamos ningún micrófono no teu dispositivo. Comproba os axustes e proba outra vez."
     },
     "Other": "Outro",
     "room_settings": {
@@ -3341,7 +3323,8 @@
         "show_all_threads": "Mostra tódolos temas",
         "empty_explainer": "Os fíos axúdanche a manter as conversas no tema e facilitan o seguimento.",
         "empty_tip": "<b>Truco:</b> Usa \"%(replyInThread)s\" ao poñerte enriba dunha mensaxe.",
-        "empty_heading": "Manter as conversas organizadas con fíos"
+        "empty_heading": "Manter as conversas organizadas con fíos",
+        "open_thread": "Abrir fío"
     },
     "theme": {
         "light_high_contrast": "Alto contraste claro",
@@ -3569,7 +3552,19 @@
         "inaccessible_subtitle_2": "Obtívose o erro %(errcode)s ao intentar acceder á sala ou espazo. Se cres que esta mensaxe é un erro, por favor <issueLink>envía un informe do fallo</issueLink>.",
         "join_failed_needs_invite": "Para ver %(roomName)s, precisas un convite",
         "view_failed_enable_video_rooms": "Para ver, primeiro activa as salas de vídeo en Labs",
-        "join_failed_enable_video_rooms": "Para unirte, primeiro activa as salas de vídeo en Labs"
+        "join_failed_enable_video_rooms": "Para unirte, primeiro activa as salas de vídeo en Labs",
+        "jump_to_bottom_button": "Ir ás mensaxes máis recentes",
+        "show_labs_settings": "Mostrar axustes en Labs",
+        "upgrade_warning_bar": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
+        "upgrade_warning_bar_upgraded": "Esta sala xa foi actualizada.",
+        "upgrade_warning_bar_unstable": "A sala está usando a versión <roomVersion />, que este servidor considera como <i>non estable</i>.",
+        "upgrade_warning_bar_admins": "Só a administración da sala pode ver este aviso",
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas as Salas",
+            "field_placeholder": "Buscar…"
+        },
+        "jump_read_marker": "Ir a primeira mensaxe non lida."
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3780,5 +3775,16 @@
         "invited_list_heading": "Convidada",
         "filter_placeholder": "Filtrar os participantes da conversa",
         "power_label": "%(userName)s (permiso %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Non ten paquetes de iconas activados",
+        "empty_add_prompt": "Engade algún agora"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Fallo ao revogar o convite",
+        "error_revoke_3pid_invite_description": "Non se revogou o convite. O servidor podería estar experimentando un problema temporal ou non tes permisos suficientes para revogar o convite.",
+        "admin_tools_section": "Ferramentas de administración",
+        "revoke_invite": "Revogar convite",
+        "invited_by": "Convidada por %(sender)s"
     }
 }

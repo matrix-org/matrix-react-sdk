@@ -30,18 +30,15 @@
     "Friday": "שישי",
     "Changelog": "דו\"ח שינויים",
     "Failed to send logs: ": "כשל במשלוח יומנים: ",
-    "This Room": "החדר הזה",
     "Unavailable": "לא זמין",
     "Filter results": "סנן התוצאות",
     "Tuesday": "שלישי",
     "Preparing to send logs": "מתכונן לשלוח יומנים",
     "Saturday": "שבת",
     "Monday": "שני",
-    "All Rooms": "כל החדרים",
     "Wednesday": "רביעי",
     "You cannot delete this message. (%(code)s)": "לא ניתן למחוק הודעה זו. (%(code)s)",
     "Thursday": "חמישי",
-    "Search…": "חפש…",
     "Logs sent": "יומנים נשלחו",
     "Yesterday": "אתמול",
     "Thank you!": "רב תודות!",
@@ -553,19 +550,7 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "אירעה שגיאה בעדכון הכתובות החלופיות של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "אירעה שגיאה בעדכון הכתובת הראשית של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
     "Error updating main address": "שגיאה בעדכון כתובת ראשית",
-    "Jump to first unread message.": "קפצו להודעה הראשונה שלא נקראה.",
-    "Invited by %(sender)s": "הוזמנו על ידי %(sender)s",
-    "Revoke invite": "שלול הזמנה",
-    "Admin Tools": "כלי מנהל",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "לא ניתן היה לבטל את ההזמנה. ייתכן שהשרת נתקל בבעיה זמנית או שאין לך הרשאות מספיקות לבטל את ההזמנה.",
-    "Failed to revoke invite": "ביטול ההזמנה נכשל",
-    "Add some now": "הוסף אותם כעת",
-    "You don't currently have any stickerpacks enabled": "כרגע אין לך חבילות מדבקה מופעלות",
     "Failed to connect to integration manager": "ההתחברות למנהל האינטגרציה נכשלה",
-    "Only room administrators will see this warning": "רק מנהלי חדרים יראו את האזהרה הזו",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
-    "This room has already been upgraded.": "החדר הזה כבר שודרג.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
     "Create new room": "צור חדר חדש",
     "Join Room": "הצטרף אל חדר",
     "(~%(count)s results)": {
@@ -580,7 +565,6 @@
         "one": "ועוד אחד אחר...",
         "other": "ו %(count)s אחרים..."
     },
-    "Scroll to most recent messages": "גלול להודעות האחרונות",
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
     "Cancel search": "בטל חיפוש",
     "Can't load this message": "לא ניתן לטעון הודעה זו",
@@ -812,7 +796,6 @@
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
-    "Send voice message": "שלח הודעה קולית",
     "Copy link to thread": "העתק קישור לשרשור",
     "Create a space": "צור מרחב עבודה",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
@@ -850,7 +833,6 @@
     "We're creating a room with %(names)s": "יצרנו חדר עם %(names)s",
     "Thread options": "אפשרויות שרשור",
     "Can't create a thread from an event with an existing relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
-    "Open thread": "פתיחת שרשור",
     "Reply in thread": "מענה בשרשור",
     "Verify this device": "אמתו את מכשיר זה",
     "Unable to verify this device": "לא ניתן לאמת את מכשיר זה",
@@ -867,7 +849,6 @@
     "Published addresses can be used by anyone on any server to join your space.": "כל אחד בכל שרת יכול להשתמש בכתובות שפורסמו כדי להצטרף למרחב העבודה שלכם.",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "אם ברצונכם לשמור על גישה להיסטוריית הצ'אט שלכם בחדרים מוצפנים, הגדירו גיבוי מפתחות או ייצאו את מפתחות ההודעות שלכם מאחד מהמכשירים האחרים שלכם לפני שתמשיך.",
     "Export chat": "ייצוא צ'אט",
-    "Show Labs settings": "הצג את אופציית מעבדת הפיתוח",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
@@ -1234,7 +1215,8 @@
         "poll_button": "סקר",
         "format_italics": "נטוי",
         "replying_title": "משיבים",
-        "edit_composer_label": "ערוך הודעה"
+        "edit_composer_label": "ערוך הודעה",
+        "send_voice_message": "שלח הודעה קולית"
     },
     "Code": "קוד",
     "power_level": {
@@ -2693,7 +2675,8 @@
         "show_all_threads": "הצג את כל השרשורים",
         "empty_explainer": "שרשורים עוזרים לשמור על השיחות שלכם בנושא וקל למעקב.",
         "empty_tip": "<b>טיפ:</b> השתמש ב-\"%(replyInThread)s\" כשאתם מרחפים מעל הודעה.",
-        "empty_heading": "שימרו על דיונים מאורגנים בשרשורים"
+        "empty_heading": "שימרו על דיונים מאורגנים בשרשורים",
+        "open_thread": "פתיחת שרשור"
     },
     "space": {
         "landing_welcome": "ברוכים הבאים אל <name/>",
@@ -2865,7 +2848,19 @@
         "inaccessible_subtitle_1": "נסו שנית מאוחר יותר, בקשו ממנהל החדר או מרחב העבודה לוודא אם יש לכם גישה.",
         "inaccessible_subtitle_2": "%(errcode)s הוחזר בעת ניסיון לגשת לחדר או למרחב העבודה. אם אתם חושבים שאתם רואים הודעה זו בטעות, אנא <issueLink>שילחו דוח באג</issueLink>.",
         "view_failed_enable_video_rooms": "כדי לצפות, אנא הפעל תחילה חדרי וידאו במעבדת הפיתוח",
-        "join_failed_enable_video_rooms": "כדי להצטרף, נא אפשר תחילה וידאו במעבדת הפיתוח"
+        "join_failed_enable_video_rooms": "כדי להצטרף, נא אפשר תחילה וידאו במעבדת הפיתוח",
+        "jump_to_bottom_button": "גלול להודעות האחרונות",
+        "show_labs_settings": "הצג את אופציית מעבדת הפיתוח",
+        "upgrade_warning_bar": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
+        "upgrade_warning_bar_upgraded": "החדר הזה כבר שודרג.",
+        "upgrade_warning_bar_unstable": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
+        "upgrade_warning_bar_admins": "רק מנהלי חדרים יראו את האזהרה הזו",
+        "search": {
+            "this_room": "החדר הזה",
+            "all_rooms": "כל החדרים",
+            "field_placeholder": "חפש…"
+        },
+        "jump_read_marker": "קפצו להודעה הראשונה שלא נקראה."
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
@@ -3047,5 +3042,16 @@
         "invited_list_heading": "מוזמן",
         "filter_placeholder": "סינון חברי חדר",
         "power_label": "%(userName)s (רמת הרשאה %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "כרגע אין לך חבילות מדבקה מופעלות",
+        "empty_add_prompt": "הוסף אותם כעת"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "ביטול ההזמנה נכשל",
+        "error_revoke_3pid_invite_description": "לא ניתן היה לבטל את ההזמנה. ייתכן שהשרת נתקל בבעיה זמנית או שאין לך הרשאות מספיקות לבטל את ההזמנה.",
+        "admin_tools_section": "כלי מנהל",
+        "revoke_invite": "שלול הזמנה",
+        "invited_by": "הוזמנו על ידי %(sender)s"
     }
 }

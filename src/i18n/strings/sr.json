@@ -34,7 +34,6 @@
     "Are you sure?": "Да ли сте сигурни?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
     "Jump to read receipt": "Скочи на потврду о прочитаности",
-    "Admin Tools": "Админ алатке",
     "and %(count)s others...": {
         "other": "и %(count)s других...",
         "one": "и још један други..."
@@ -51,7 +50,6 @@
     "Join Room": "Приступи соби",
     "unknown error code": "непознати код грешке",
     "Failed to forget room %(errCode)s": "Нисам успео да заборавим собу %(errCode)s",
-    "Jump to first unread message.": "Скочи на прву непрочитану поруку.",
     "not specified": "није наведено",
     "This room has no local addresses": "Ова соба нема локалних адреса",
     "Error decrypting attachment": "Грешка при дешифровању прилога",
@@ -110,20 +108,16 @@
     "Today": "Данас",
     "Friday": "Петак",
     "Changelog": "Записник о изменама",
-    "This Room": "Ова соба",
     "Unavailable": "Недоступан",
     "Filter results": "Филтрирај резултате",
-    "Search…": "Претрага…",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
     "Monday": "Понедељак",
-    "All Rooms": "Све собе",
     "Wednesday": "Среда",
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Thank you!": "Хвала вам!",
-    "You don't currently have any stickerpacks enabled": "Тренутно немате омогућено било које паковање са налепницама",
     "Preparing to send logs": "Припремам се за слање записника",
     "Logs sent": "Записници су послати",
     "Failed to send logs: ": "Нисам успео да пошаљем записнике: ",
@@ -145,7 +139,6 @@
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Show more": "Прикажи више",
-    "Scroll to most recent messages": "Пребаци на најновије поруке",
     "Direct Messages": "Директне поруке",
     "Room Name": "Назив собе",
     "Room Topic": "Тема собе",
@@ -164,8 +157,6 @@
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "General failure": "Општа грешка",
     "Light bulb": "сијалица",
-    "Failed to revoke invite": "Неуспех при отказивању позивнице",
-    "Revoke invite": "Откажи позивницу",
     "Looks good": "Изгледа добро",
     "Recent Conversations": "Недавни разговори",
     "Recently Direct Messaged": "Недавне директне поруке",
@@ -1445,7 +1436,14 @@
         "invite_email_mismatch_suggestion": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
         "dm_invite_action": "Започни ћаскање",
         "not_found_title_name": "Соба %(roomName)s не постоји.",
-        "inaccessible_name": "Соба %(roomName)s није доступна у овом тренутку."
+        "inaccessible_name": "Соба %(roomName)s није доступна у овом тренутку.",
+        "jump_to_bottom_button": "Пребаци на најновије поруке",
+        "search": {
+            "this_room": "Ова соба",
+            "all_rooms": "Све собе",
+            "field_placeholder": "Претрага…"
+        },
+        "jump_read_marker": "Скочи на прву непрочитану поруку."
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
@@ -1533,5 +1531,13 @@
         "invited_list_heading": "Позван",
         "filter_placeholder": "Филтрирај чланове собе",
         "power_label": "%(userName)s (снага %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Тренутно немате омогућено било које паковање са налепницама"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Неуспех при отказивању позивнице",
+        "admin_tools_section": "Админ алатке",
+        "revoke_invite": "Откажи позивницу"
     }
 }

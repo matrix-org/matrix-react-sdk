@@ -1,7 +1,6 @@
 {
     "Failed to forget room %(errCode)s": "A szobát nem sikerült elfelejtetni: %(errCode)s",
     "unknown error code": "ismeretlen hibakód",
-    "Admin Tools": "Admin. Eszközök",
     "Create new room": "Új szoba létrehozása",
     "%(items)s and %(lastItem)s": "%(items)s és %(lastItem)s",
     "and %(count)s others...": {
@@ -26,7 +25,6 @@
     "Home": "Kezdőlap",
     "Invalid file%(extra)s": "Hibás fájl%(extra)s",
     "Join Room": "Belépés a szobába",
-    "Jump to first unread message.": "Ugrás az első olvasatlan üzenetre.",
     "Moderator": "Moderátor",
     "New passwords must match each other.": "Az új jelszavaknak meg kell egyezniük egymással.",
     "not specified": "nincs meghatározva",
@@ -106,23 +104,19 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s. %(monthName)s %(day)s., %(weekDayName)s",
     "This room is not public. You will not be able to rejoin without an invite.": "Ez a szoba nem nyilvános. Kilépés után csak újabb meghívóval tudsz újra belépni a szobába.",
     "<a>In reply to</a> <pill>": "<a>Válasz neki</a> <pill>",
-    "You don't currently have any stickerpacks enabled": "Nincs engedélyezett matrica csomagod",
     "Sunday": "Vasárnap",
     "Today": "Ma",
     "Friday": "Péntek",
     "Changelog": "Változások",
     "Failed to send logs: ": "Hiba a napló küldésénél: ",
-    "This Room": "Ebben a szobában",
     "Unavailable": "Elérhetetlen",
     "Filter results": "Találatok szűrése",
     "Tuesday": "Kedd",
     "Preparing to send logs": "Előkészülés napló küldéshez",
     "Saturday": "Szombat",
     "Monday": "Hétfő",
-    "All Rooms": "Minden szobában",
     "You cannot delete this message. (%(code)s)": "Nem törölheted ezt az üzenetet. (%(code)s)",
     "Thursday": "Csütörtök",
-    "Search…": "Keresés…",
     "Logs sent": "Napló elküldve",
     "Yesterday": "Tegnap",
     "Wednesday": "Szerda",
@@ -142,7 +136,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Nem tudsz üzenetet küldeni amíg nem olvasod el és nem fogadod el a <consentLink>felhasználási feltételeket</consentLink>.",
     "Demote yourself?": "Lefokozod magad?",
     "Demote": "Lefokozás",
-    "Only room administrators will see this warning": "Csak a szoba adminisztrátorai látják ezt a figyelmeztetést",
     "Upgrade Room Version": "Szoba verziójának fejlesztése",
     "Create a new room with the same name, description and avatar": "Új szoba készítése ugyanazzal a névvel, leírással és profilképpel",
     "Update any local room aliases to point to the new room": "A helyi szobaálnevek frissítése, hogy az új szobára mutassanak",
@@ -160,7 +153,6 @@
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ha a másik %(brand)s verzió még fut egy másik fülön, akkor zárja be, mert ha egy gépen használja a %(brand)sot úgy, hogy az egyiken be van kapcsolva a késleltetett betöltés, a másikon pedig ki, akkor problémák adódhatnak.",
     "Incompatible local cache": "A helyi gyorsítótár nem kompatibilis ezzel a verzióval",
     "Clear cache and resync": "Gyorsítótár törlése és újraszinkronizálás",
-    "Add some now": "Adj hozzá párat",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Hogy a régi üzenetekhez továbbra is hozzáférhess kijelentkezés előtt ki kell mentened a szobák titkosító kulcsait. Ehhez a %(brand)s egy frissebb verzióját kell használnod",
     "Incompatible Database": "Nem kompatibilis adatbázis",
     "Continue With Encryption Disabled": "Folytatás a titkosítás kikapcsolásával",
@@ -261,12 +253,6 @@
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Could not load user profile": "A felhasználói profil nem tölthető be",
     "Power level": "Hozzáférési szint",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "A szoba verziója: <roomVersion />, amelyet a Matrix-kiszolgáló <i>instabilnak</i> tekint.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "A szoba fejlesztése bezárja ezt a szobát és új, frissített verzióval ugyanezen a néven létrehoz egy újat.",
-    "Failed to revoke invite": "A meghívó visszavonása sikertelen",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "A meghívót nem lehet visszavonni. Vagy a szervernek átmenetileg problémái vannak vagy nincs megfelelő jogosultságod a meghívó visszavonásához.",
-    "Revoke invite": "Meghívó visszavonása",
-    "Invited by %(sender)s": "Meghívta: %(sender)s",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
     "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
@@ -285,7 +271,6 @@
     },
     "Cancel All": "Összes megszakítása",
     "Upload Error": "Feltöltési hiba",
-    "This room has already been upgraded.": "Ez a szoba már fejlesztve van.",
     "Some characters not allowed": "Néhány karakter nem engedélyezett",
     "Failed to get autodiscovery configuration from server": "Nem sikerült lekérni az automatikus felderítés beállításait a kiszolgálóról",
     "Invalid base_url for m.homeserver": "Hibás base_url az m.homeserver -hez",
@@ -405,7 +390,6 @@
     "Accepting…": "Elfogadás…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "A szoba címének megváltoztatásakor hiba történt. Lehet, hogy a szerver nem engedélyezi vagy átmeneti hiba történt.",
-    "Scroll to most recent messages": "A legfrissebb üzenethez görget",
     "Local address": "Helyi cím",
     "Published Addresses": "Nyilvánosságra hozott cím",
     "Other published addresses:": "Másik nyilvánosságra hozott cím:",
@@ -853,7 +837,6 @@
     "Reset everything": "Minden alaphelyzetbe állítása",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
-    "View message": "Üzenet megjelenítése",
     "You can select all or individual messages to retry or delete": "Újraküldéshez vagy törléshez kiválaszthatja az üzeneteket egyenként vagy az összeset együtt",
     "Retry all": "Mind újraküldése",
     "Sending": "Küldés",
@@ -872,10 +855,6 @@
     "Not all selected were added": "Nem az összes kijelölt lett hozzáadva",
     "You are not allowed to view this server's rooms list": "Nincs joga ennek a szervernek a szobalistáját megnézni",
     "Error processing voice message": "Hiba a hangüzenet feldolgozásánál",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Nem található mikrofon. Ellenőrizze a beállításokat és próbálja újra.",
-    "No microphone found": "Nem található mikrofon",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
-    "Unable to access your microphone": "A mikrofont nem lehet használni",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "Add reaction": "Reakció hozzáadása",
     "Search names and descriptions": "Nevek és leírások keresése",
@@ -937,8 +916,6 @@
     "Decrypting": "Visszafejtés",
     "Missed call": "Nem fogadott hívás",
     "Call declined": "Hívás elutasítva",
-    "Stop recording": "Felvétel megállítása",
-    "Send voice message": "Hang üzenet küldése",
     "Unknown failure: %(reason)s": "Ismeretlen hiba: %(reason)s",
     "No answer": "Nincs válasz",
     "Rooms and spaces": "Szobák és terek",
@@ -972,7 +949,6 @@
     },
     "View in room": "Megjelenítés szobában",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Adja meg a biztonsági jelmondatot vagy <button>használja a biztonsági kulcsot</button> a folytatáshoz.",
-    "Joined": "Csatlakozott",
     "Joining": "Belépés",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
     "Copy link to thread": "Hivatkozás másolása az üzenetszálba",
@@ -1070,7 +1046,6 @@
     "Search Dialog": "Keresési párbeszédablak",
     "Results will be visible when the poll is ended": "Az eredmény a szavazás végeztével válik láthatóvá",
     "Pinned": "Kitűzött",
-    "Open thread": "Üzenetszál megnyitása",
     "What location type do you want to share?": "Milyen jellegű földrajzi helyzetet szeretne megosztani?",
     "Drop a Pin": "Hely kijelölése",
     "My live location": "Folyamatos saját földrajzi helyzet",
@@ -1137,7 +1112,6 @@
     "Output devices": "Kimeneti eszközök",
     "Input devices": "Beviteli eszközök",
     "Open room": "Szoba megnyitása",
-    "Show Labs settings": "Labor beállítások megjelenítése",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
     "Remove search filter for %(filter)s": "Keresési szűrő eltávolítása innen: %(filter)s",
     "Start a group chat": "Csoportos csevegés indítása",
@@ -1207,7 +1181,6 @@
     "<w>WARNING:</w> <description/>": "<w>FIGYELEM:</w> <description/>",
     "We were unable to start a chat with the other user.": "A beszélgetést a másik felhasználóval nem lehetett elindítani.",
     "Error starting verification": "Ellenőrzés indításakor hiba lépett fel",
-    "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Közvetlen beszélgetés indítása mindenképpen",
     "Start DM anyway and never warn me again": "Közvetlen beszélgetés indítása mindenképpen és később se figyelmeztessen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nem található fiók profil az alábbi Matrix azonosítókhoz - mégis a közvetlen csevegés elindítása mellett dönt?",
-    "Search all rooms": "Keresés az összes szobában",
-    "Search this room": "Keresés ebben a szobában",
     "common": {
         "about": "Névjegy",
         "analytics": "Analitika",
@@ -1387,7 +1358,9 @@
         "historical": "Archív",
         "go_to_settings": "Irány a Beállítások",
         "setup_secure_messages": "Biztonságos Üzenetek beállítása",
-        "unencrypted": "Titkosítatlan"
+        "unencrypted": "Titkosítatlan",
+        "view_message": "Üzenet megjelenítése",
+        "joined": "Csatlakozott"
     },
     "action": {
         "continue": "Folytatás",
@@ -1716,7 +1689,9 @@
         "format_italics": "Dőlt",
         "format_insert_link": "Link beillesztése",
         "replying_title": "Válasz",
-        "edit_composer_label": "Üzenet szerkesztése"
+        "edit_composer_label": "Üzenet szerkesztése",
+        "send_voice_message": "Hang üzenet küldése",
+        "stop_voice_message": "Felvétel megállítása"
     },
     "Link": "Hivatkozás",
     "Code": "Kód",
@@ -2994,7 +2969,11 @@
             "other": "%(count)s személy belépett"
         },
         "unknown_person": "ismeretlen személy",
-        "connecting": "Kapcsolódás"
+        "connecting": "Kapcsolódás",
+        "unable_to_access_audio_input_title": "A mikrofont nem lehet használni",
+        "unable_to_access_audio_input_description": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
+        "no_audio_input_title": "Nem található mikrofon",
+        "no_audio_input_description": "Nem található mikrofon. Ellenőrizze a beállításokat és próbálja újra."
     },
     "Other": "Egyéb",
     "room_settings": {
@@ -3704,7 +3683,9 @@
         "show_all_threads": "Minden üzenetszál megjelenítése",
         "empty_explainer": "Az üzenetszálak segítenek a különböző témájú beszélgetések figyelemmel kísérésében.",
         "empty_tip": "<b>Tipp:</b> Használja a „%(replyInThread)s” lehetőséget a szöveg fölé navigálva.",
-        "empty_heading": "Beszélgetések üzenetszálakba rendezése"
+        "empty_heading": "Beszélgetések üzenetszálakba rendezése",
+        "open_thread": "Üzenetszál megnyitása",
+        "unable_to_decrypt": "Üzenet visszafejtése sikertelen"
     },
     "theme": {
         "light_high_contrast": "Világos, nagy kontrasztú",
@@ -3953,7 +3934,21 @@
         "inaccessible_subtitle_2": "Amikor a szobát vagy teret próbáltuk elérni ezt a hibaüzenetet kaptuk: %(errcode)s. Ha úgy gondolja, hogy ez egy hiba legyen szíves<issueLink>nyisson egy hibajegyet</issueLink>.",
         "join_failed_needs_invite": "A %(roomName)s megjelenítéséhez meghívó szükséges",
         "view_failed_enable_video_rooms": "A megjelenítéshez a Laborban be kell kapcsolni a videó szobákat",
-        "join_failed_enable_video_rooms": "A belépéshez a Laborban be kell kapcsolni a videó szobákat"
+        "join_failed_enable_video_rooms": "A belépéshez a Laborban be kell kapcsolni a videó szobákat",
+        "jump_to_bottom_button": "A legfrissebb üzenethez görget",
+        "show_labs_settings": "Labor beállítások megjelenítése",
+        "upgrade_warning_bar": "A szoba fejlesztése bezárja ezt a szobát és új, frissített verzióval ugyanezen a néven létrehoz egy újat.",
+        "upgrade_warning_bar_upgraded": "Ez a szoba már fejlesztve van.",
+        "upgrade_warning_bar_unstable": "A szoba verziója: <roomVersion />, amelyet a Matrix-kiszolgáló <i>instabilnak</i> tekint.",
+        "upgrade_warning_bar_admins": "Csak a szoba adminisztrátorai látják ezt a figyelmeztetést",
+        "search": {
+            "this_room": "Ebben a szobában",
+            "all_rooms": "Minden szobában",
+            "field_placeholder": "Keresés…",
+            "this_room_button": "Keresés ebben a szobában",
+            "all_rooms_button": "Keresés az összes szobában"
+        },
+        "jump_read_marker": "Ugrás az első olvasatlan üzenetre."
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",
@@ -4172,5 +4167,16 @@
         "invited_list_heading": "Meghívva",
         "filter_placeholder": "Szoba tagság szűrése",
         "power_label": "%(userName)s (szint: %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Nincs engedélyezett matrica csomagod",
+        "empty_add_prompt": "Adj hozzá párat"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "A meghívó visszavonása sikertelen",
+        "error_revoke_3pid_invite_description": "A meghívót nem lehet visszavonni. Vagy a szervernek átmenetileg problémái vannak vagy nincs megfelelő jogosultságod a meghívó visszavonásához.",
+        "admin_tools_section": "Admin. Eszközök",
+        "revoke_invite": "Meghívó visszavonása",
+        "invited_by": "Meghívta: %(sender)s"
     }
 }

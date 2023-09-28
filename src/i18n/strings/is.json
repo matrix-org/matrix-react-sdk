@@ -29,15 +29,10 @@
     "Moderator": "Umsjónarmaður",
     "Send": "Senda",
     "Are you sure?": "Ertu viss?",
-    "Admin Tools": "Kerfisstjóratól",
     "Unnamed room": "Nafnlaus spjallrás",
     "Join Room": "Taka þátt í spjallrás",
     "unknown error code": "óþekktur villukóði",
     "Failed to forget room %(errCode)s": "Mistókst að gleyma spjallrásinni %(errCode)s",
-    "Search…": "Leita…",
-    "This Room": "Þessi spjallrás",
-    "All Rooms": "Allar spjallrásir",
-    "Jump to first unread message.": "Fara í fyrstu ólesnu skilaboðin.",
     "not specified": "ekki tilgreint",
     "Sunday": "Sunnudagur",
     "Monday": "Mánudagur",
@@ -482,10 +477,7 @@
     "Show more": "Sýna meira",
     "Local Addresses": "Staðvær vistföng",
     "Local address": "Staðvært vistfang",
-    "Stop recording": "Stöðva upptöku",
-    "No microphone found": "Enginn hljóðnemi fannst",
     "Recently viewed": "Nýlega skoðað",
-    "View message": "Sjá skilaboð",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -548,7 +540,6 @@
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
     },
-    "Send voice message": "Senda talskilaboð",
     "and %(count)s others...": {
         "one": "og einn í viðbót...",
         "other": "og %(count)s til viðbótar..."
@@ -632,7 +623,6 @@
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
     "Including you, %(commaSeparatedMembers)s": "Að þér meðtöldum, %(commaSeparatedMembers)s",
-    "Only room administrators will see this warning": "Aðeins stjórnendur spjallrásar munu sjá þessa aðvörun",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
@@ -734,7 +724,6 @@
     "This address does not point at this room": "Vistfangið beinir ekki á þessa spjallrás",
     "Please provide an address": "Gefðu upp vistfang",
     "Some characters not allowed": "Sumir stafir eru óleyfilegir",
-    "Joined": "Gekk í hópinn",
     "Enter a server name": "Settu inn nafn á þjóni",
     "e.g. my-room": "t.d. mín-spjallrás",
     "Room address": "Vistfang spjallrásar",
@@ -789,12 +778,10 @@
         "one": "%(count)s svar",
         "other": "%(count)s svör"
     },
-    "Add some now": "Bæta við núna",
     "Verification Request": "Beiðni um sannvottun",
     "Security Phrase": "Öryggisfrasi",
     "Manually export keys": "Flytja út dulritunarlykla handvirkt",
     "Incoming Verification Request": "Innkomin beiðni um sannvottun",
-    "Revoke invite": "Afturkalla boð",
     "Error downloading audio": "Villa við að sækja hljóð",
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
@@ -803,7 +790,6 @@
     "Error removing address": "Villa við að fjarlægja vistfang",
     "Error creating address": "Villa við að búa til vistfang",
     "Error updating main address": "Villa við uppfærslu á aðalvistfangi",
-    "Failed to revoke invite": "Mistókst að afturkalla boð",
     "Skip verification for now": "Sleppa sannvottun í bili",
     "Verify this device": "Sannreyna þetta tæki",
     "Search names and descriptions": "Leita í nöfnum og lýsingum",
@@ -859,10 +845,7 @@
     "One of the following may be compromised:": "Eitt af eftirfarandi gæti verið berskjaldað:",
     "No other published addresses yet, add one below": "Engin önnur birt vistföng ennþá, bættu einu við hér fyrir neðan",
     "Main address": "Aðalvistfang",
-    "Open thread": "Opna spjallþráð",
-    "Invited by %(sender)s": "Boðið af %(sender)s",
     "Unable to verify this device": "Tókst ekki að sannreyna þetta tæki",
-    "Scroll to most recent messages": "Skruna að nýjustu skilaboðunum",
     "Unnamed audio": "Nafnlaust hljóð",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
@@ -954,9 +937,6 @@
     "Remove from %(roomName)s": "Fjarlægja úr %(roomName)s",
     "Disinvite from %(roomName)s": "Afturkalla boð á %(roomName)s",
     "You don't have permission to delete the address.": "Þú hefur ekki heimild til að eyða vistfanginu.",
-    "Unable to access your microphone": "Mistókst að ná aðgangi að hljóðnema",
-    "You don't currently have any stickerpacks enabled": "Í augnablikinu ertu ekki með neina límmerkjapakka virkjaða",
-    "This room has already been upgraded.": "Þessi spjallrás hefur þegar verið uppfærð.",
     "Consult first": "Ráðfæra fyrst",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -980,7 +960,6 @@
         "other": "%(count)s þátttakendur"
     },
     "%(members)s and more": "%(members)s og fleiri",
-    "Show Labs settings": "Sýna tilraunastillingar",
     "%(members)s and %(last)s": "%(members)s og %(last)s",
     "Disinvite from space": "Afbjóða frá stað",
     "Disinvite from room": "Afbjóða úr herbergi",
@@ -1055,9 +1034,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
     "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Á dulrituðum spjallrásum er öryggi skilaboðanna þinna tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur.",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Gat ekki tengst hljóðnemanum þínum. Skoðaðu stillingar vafrans þíns og reyndu aftur.",
-    "Unable to decrypt message": "Tókst ekki að afkóða skilaboð",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -1173,7 +1149,9 @@
         "historical": "Ferilskráning",
         "go_to_settings": "Fara í stillingar",
         "setup_secure_messages": "Setja upp örugg skilaboð",
-        "unencrypted": "Ódulritað"
+        "unencrypted": "Ódulritað",
+        "view_message": "Sjá skilaboð",
+        "joined": "Gekk í hópinn"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1471,7 +1449,9 @@
         "format_italics": "Skáletrað",
         "format_insert_link": "Setja inn tengil",
         "replying_title": "Svara",
-        "edit_composer_label": "Breyta skilaboðum"
+        "edit_composer_label": "Breyta skilaboðum",
+        "send_voice_message": "Senda talskilaboð",
+        "stop_voice_message": "Stöðva upptöku"
     },
     "Link": "Tengill",
     "Code": "Kóði",
@@ -2610,7 +2590,11 @@
             "other": "%(count)s aðilar hafa tekið þátt"
         },
         "unknown_person": "óþekktur einstaklingur",
-        "connecting": "Tengist"
+        "connecting": "Tengist",
+        "unable_to_access_audio_input_title": "Mistókst að ná aðgangi að hljóðnema",
+        "unable_to_access_audio_input_description": "Gat ekki tengst hljóðnemanum þínum. Skoðaðu stillingar vafrans þíns og reyndu aftur.",
+        "no_audio_input_title": "Enginn hljóðnemi fannst",
+        "no_audio_input_description": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur."
     },
     "Other": "Annað",
     "room_settings": {
@@ -3240,7 +3224,9 @@
         "show_thread_filter": "Sýna:",
         "show_all_threads": "Birta alla spjallþræði",
         "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
-        "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum"
+        "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
+        "open_thread": "Opna spjallþráð",
+        "unable_to_decrypt": "Tókst ekki að afkóða skilaboð"
     },
     "theme": {
         "light_high_contrast": "Ljóst með mikil birtuskil",
@@ -3449,7 +3435,17 @@
         "inaccessible_name": "%(roomName)s er ekki aðgengileg í augnablikinu.",
         "inaccessible": "Þessi spjallrás eða svæði er ekki aðgengilegt í augnablikinu.",
         "inaccessible_subtitle_1": "Prófaðu aftur síðar, eða spurðu einhvern stjórnanda spjallrásar eða svæðis hvort þú hafir aðgang.",
-        "join_failed_needs_invite": "Til að skoða %(roomName)s þarftu boð"
+        "join_failed_needs_invite": "Til að skoða %(roomName)s þarftu boð",
+        "jump_to_bottom_button": "Skruna að nýjustu skilaboðunum",
+        "show_labs_settings": "Sýna tilraunastillingar",
+        "upgrade_warning_bar_upgraded": "Þessi spjallrás hefur þegar verið uppfærð.",
+        "upgrade_warning_bar_admins": "Aðeins stjórnendur spjallrásar munu sjá þessa aðvörun",
+        "search": {
+            "this_room": "Þessi spjallrás",
+            "all_rooms": "Allar spjallrásir",
+            "field_placeholder": "Leita…"
+        },
+        "jump_read_marker": "Fara í fyrstu ólesnu skilaboðin."
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3654,5 +3650,15 @@
         "invited_list_heading": "Boðið",
         "filter_placeholder": "Sía meðlimi spjallrásar",
         "power_label": "%(userName)s (með völd sem %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Í augnablikinu ertu ekki með neina límmerkjapakka virkjaða",
+        "empty_add_prompt": "Bæta við núna"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Mistókst að afturkalla boð",
+        "admin_tools_section": "Kerfisstjóratól",
+        "revoke_invite": "Afturkalla boð",
+        "invited_by": "Boðið af %(sender)s"
     }
 }

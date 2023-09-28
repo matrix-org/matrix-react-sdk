@@ -543,27 +543,7 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Đã xảy ra lỗi khi cập nhật địa chỉ thay thế của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Đã xảy ra lỗi khi cập nhật địa chỉ chính của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
     "Error updating main address": "Lỗi khi cập nhật địa chỉ chính",
-    "Stop recording": "Dừng ghi",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Chúng tôi không tìm thấy micrô trên thiết bị của bạn. Vui lòng kiểm tra các thiết lập của bạn và thử lại.",
-    "No microphone found": "Không tìm thấy micrô",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Chúng tôi không thể truy cập micrô của bạn. Xin hãy kiểm tra trình duyệt của bạn và thử lại.",
-    "Unable to access your microphone": "Không thể truy cập micrô của bạn",
-    "Jump to first unread message.": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
-    "Invited by %(sender)s": "Được %(sender)s mời",
-    "Revoke invite": "Thu hồi lời mời",
-    "Admin Tools": "Công cụ quản trị",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Không thể thu hồi lời mời. Máy chủ có thể đang gặp sự cố tạm thời hoặc bạn không có đủ quyền để thu hồi lời mời.",
-    "Failed to revoke invite": "Không thể thu hồi lời mời",
-    "Add some now": "Thêm một số ngay bây giờ",
-    "You don't currently have any stickerpacks enabled": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",
     "Failed to connect to integration manager": "Không kết nối được với trình quản lý tích hợp",
-    "Search…": "Tìm kiếm…",
-    "All Rooms": "Tất cả các phòng",
-    "This Room": "phòng này",
-    "Only room administrators will see this warning": "Chỉ quản trị viên phòng mới thấy cảnh báo này",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Phòng này đang chạy phiên bản phòng <roomVersion /> mà máy chủ này đã đánh dấu là không ổn định <i>unstable</i>.",
-    "This room has already been upgraded.": "Phòng này đã được nâng cấp.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
     "unknown error code": "mã lỗi không xác định",
     "Create new room": "Tạo phòng mới",
     "Join Room": "Vào phòng",
@@ -576,8 +556,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
-    "View message": "Xem tin nhăn",
-    "Send voice message": "Gửi tin nhắn thoại",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
     "They'll still be able to access whatever you're not an admin of.": "Họ sẽ vẫn có thể truy cập vào bất cứ gì mà bạn không phải là quản trị viên.",
@@ -699,7 +677,6 @@
         "one": "và một cái khác…",
         "other": "và %(count)s khác…"
     },
-    "Scroll to most recent messages": "Di chuyển đến các tin nhắn gần đây nhất",
     "Encrypted by a deleted session": "Được mã hóa bởi một phiên đã xóa",
     "%(count)s reply": {
         "one": "%(count)s trả lời",
@@ -968,7 +945,6 @@
     "Uploading %(filename)s": "Đang tải lên %(filename)s",
     "Rooms and spaces": "Các phòng và space",
     "Results": "Kết quả",
-    "Joined": "Đã tham gia",
     "Joining": "Đang tham gia",
     "Copy link to thread": "Sao chép liên kết vào chủ đề",
     "Thread options": "Tùy chọn theo chủ đề",
@@ -1064,7 +1040,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Tin nhắn trong phòng này sẽ được mã hóa đầu-cuối.",
     "Failed to remove user": "Không thể loại bỏ người dùng",
     "Unban from space": "Bỏ cấm trong space",
-    "Search all rooms": "Tìm tất cả phòng",
     "Disinvite from room": "Không mời vào phòng nữa",
     "%(count)s participants": {
         "one": "1 người tham gia",
@@ -1072,8 +1047,6 @@
     },
     "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "Search this room": "Tìm trong phòng này",
-    "Unable to decrypt message": "Không thể giải mã tin nhắn",
     "Poll history": "Lịch sử bỏ phiếu",
     "Ignore %(user)s": "Tảng lờ %(user)s",
     "Remove from %(roomName)s": "Loại bỏ khỏi %(roomName)s",
@@ -1128,7 +1101,6 @@
     "unavailable": "không có sẵn",
     "Error details": "Chi tiết lỗi",
     "Jump to date": "Nhảy đến ngày",
-    "Show Labs settings": "Hiện các cài đặt thử nghiệm",
     "Message pending moderation: %(reason)s": "Tin nhắn chờ duyệt: %(reason)s",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "Video call ended": "Cuộc gọi truyền hình đã kết thúc",
@@ -1272,7 +1244,9 @@
         "historical": "Lịch sử",
         "go_to_settings": "Đi tới Cài đặt",
         "setup_secure_messages": "Cài đặt Tin nhắn được bảo toàn",
-        "unencrypted": "Không được mã hóa"
+        "unencrypted": "Không được mã hóa",
+        "view_message": "Xem tin nhăn",
+        "joined": "Đã tham gia"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1582,7 +1556,9 @@
         "format_italics": "In nghiêng",
         "format_insert_link": "Chèn liên kết",
         "replying_title": "Đang trả lời",
-        "edit_composer_label": "Chỉnh sửa tin nhắn"
+        "edit_composer_label": "Chỉnh sửa tin nhắn",
+        "send_voice_message": "Gửi tin nhắn thoại",
+        "stop_voice_message": "Dừng ghi"
     },
     "Link": "Liên kết",
     "Code": "Mã",
@@ -2823,7 +2799,11 @@
             "other": "%(count)s người đã tham gia"
         },
         "unknown_person": "người không rõ",
-        "connecting": "Đang kết nối"
+        "connecting": "Đang kết nối",
+        "unable_to_access_audio_input_title": "Không thể truy cập micrô của bạn",
+        "unable_to_access_audio_input_description": "Chúng tôi không thể truy cập micrô của bạn. Xin hãy kiểm tra trình duyệt của bạn và thử lại.",
+        "no_audio_input_title": "Không tìm thấy micrô",
+        "no_audio_input_description": "Chúng tôi không tìm thấy micrô trên thiết bị của bạn. Vui lòng kiểm tra các thiết lập của bạn và thử lại."
     },
     "Other": "Khác",
     "room_settings": {
@@ -3519,7 +3499,8 @@
         "my_threads_description": "Hiển thị tất cả các chủ đề bạn đã tham gia",
         "show_thread_filter": "Hiển thị:",
         "show_all_threads": "Hiển thị tất cả chủ đề",
-        "empty_heading": "Giữ các cuộc thảo luận được tổ chức với các chủ đề này"
+        "empty_heading": "Giữ các cuộc thảo luận được tổ chức với các chủ đề này",
+        "unable_to_decrypt": "Không thể giải mã tin nhắn"
     },
     "theme": {
         "light_high_contrast": "Độ tương phản ánh sáng cao",
@@ -3751,7 +3732,21 @@
         "not_found_subtitle": "Bạn có chắc là bạn đang ở đúng chỗ?",
         "inaccessible_name": "Không thể truy cập %(roomName)s vào lúc này.",
         "inaccessible": "Phòng hoặc space này không thể truy cập được bây giờ.",
-        "join_failed_needs_invite": "Để xem %(roomName)s, bạn cần một lời mời"
+        "join_failed_needs_invite": "Để xem %(roomName)s, bạn cần một lời mời",
+        "jump_to_bottom_button": "Di chuyển đến các tin nhắn gần đây nhất",
+        "show_labs_settings": "Hiện các cài đặt thử nghiệm",
+        "upgrade_warning_bar": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
+        "upgrade_warning_bar_upgraded": "Phòng này đã được nâng cấp.",
+        "upgrade_warning_bar_unstable": "Phòng này đang chạy phiên bản phòng <roomVersion /> mà máy chủ này đã đánh dấu là không ổn định <i>unstable</i>.",
+        "upgrade_warning_bar_admins": "Chỉ quản trị viên phòng mới thấy cảnh báo này",
+        "search": {
+            "this_room": "phòng này",
+            "all_rooms": "Tất cả các phòng",
+            "field_placeholder": "Tìm kiếm…",
+            "this_room_button": "Tìm trong phòng này",
+            "all_rooms_button": "Tìm tất cả phòng"
+        },
+        "jump_read_marker": "Chuyển đến tin nhắn chưa đọc đầu tiên."
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3971,5 +3966,16 @@
         "invited_list_heading": "Đã mời",
         "filter_placeholder": "Lọc thành viên phòng",
         "power_label": "%(userName)s (chỉ số %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",
+        "empty_add_prompt": "Thêm một số ngay bây giờ"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Không thể thu hồi lời mời",
+        "error_revoke_3pid_invite_description": "Không thể thu hồi lời mời. Máy chủ có thể đang gặp sự cố tạm thời hoặc bạn không có đủ quyền để thu hồi lời mời.",
+        "admin_tools_section": "Công cụ quản trị",
+        "revoke_invite": "Thu hồi lời mời",
+        "invited_by": "Được %(sender)s mời"
     }
 }

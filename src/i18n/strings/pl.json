@@ -24,7 +24,6 @@
     "Are you sure?": "Czy jesteś pewien?",
     "unknown error code": "nieznany kod błędu",
     "Failed to forget room %(errCode)s": "Nie mogłem zapomnieć o pokoju %(errCode)s",
-    "Admin Tools": "Narzędzia Administracyjne",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "A new password must be entered.": "Musisz wprowadzić nowe hasło.",
     "An error has occurred.": "Wystąpił błąd.",
@@ -47,7 +46,6 @@
     "Home": "Strona główna",
     "Invalid file%(extra)s": "Nieprawidłowy plik %(extra)s",
     "Join Room": "Dołącz do pokoju",
-    "Jump to first unread message.": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
     "Moderator": "Moderator",
     "New passwords must match each other.": "Nowe hasła muszą się zgadzać.",
     "not specified": "nieokreślony",
@@ -98,18 +96,15 @@
     "Friday": "Piątek",
     "Changelog": "Dziennik zmian",
     "Failed to send logs: ": "Nie udało się wysłać dzienników: ",
-    "This Room": "Ten pokój",
     "Unavailable": "Niedostępny",
     "Filter results": "Filtruj wyniki",
     "Tuesday": "Wtorek",
     "Preparing to send logs": "Przygotowuję do wysłania dzienników",
     "Saturday": "Sobota",
     "Monday": "Poniedziałek",
-    "All Rooms": "Wszystkie pokoje",
     "Wednesday": "Środa",
     "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
     "Thursday": "Czwartek",
-    "Search…": "Szukaj…",
     "Logs sent": "Wysłano dzienniki",
     "Yesterday": "Wczoraj",
     "Thank you!": "Dziękujemy!",
@@ -136,16 +131,13 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Ten pokój nie jest publiczny. Nie będziesz w stanie do niego dołączyć bez zaproszenia.",
     "Demote yourself?": "Zdegradować siebie?",
     "Demote": "Degraduj",
-    "You don't currently have any stickerpacks enabled": "Nie masz obecnie włączonych żadnych pakietów naklejek",
     "Updating %(brand)s": "Aktualizowanie %(brand)s",
-    "Only room administrators will see this warning": "Tylko administratorzy pokojów widzą to ostrzeżenie",
     "Clear cache and resync": "Wyczyść pamięć podręczną i zsynchronizuj ponownie",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jeśli inna wersja %(brand)s jest nadal otwarta w innej zakładce, proszę zamknij ją, ponieważ używanie %(brand)s na tym samym komputerze z włączonym i wyłączonym jednocześnie leniwym ładowaniem będzie powodować problemy.",
     "And %(count)s more...": {
         "other": "I %(count)s więcej…"
     },
-    "Add some now": "Dodaj teraz kilka",
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
@@ -439,7 +431,6 @@
     "Close dialog": "Zamknij okno dialogowe",
     "Deactivate user": "Dezaktywuj użytkownika",
     "Deactivate user?": "Dezaktywować użytkownika?",
-    "Revoke invite": "Odwołaj zaproszenie",
     "General failure": "Ogólny błąd",
     "Removing…": "Usuwanie…",
     "Incompatible Database": "Niekompatybilna baza danych",
@@ -587,7 +578,6 @@
     "Your browser likely removed this data when running low on disk space.": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca.",
     "Missing session data": "Brakujące dane sesji",
     "Sign out and remove encryption keys?": "Wylogować się i usunąć klucze szyfrowania?",
-    "Invited by %(sender)s": "Zaproszony przez %(sender)s",
     "Could not load user profile": "Nie udało się załadować profilu",
     "Your password has been reset.": "Twoje hasło zostało zresetowane.",
     "Are you sure you want to sign out?": "Czy na pewno chcesz się wylogować?",
@@ -601,7 +591,6 @@
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
-    "Scroll to most recent messages": "Przewiń do najnowszych wiadomości",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
     "Server Options": "Opcje serwera",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ostrzeżenie</b>: kopia zapasowa klucza powinna być konfigurowana tylko z zaufanego komputera.",
@@ -660,9 +649,6 @@
         "one": "Dodawanie pokoju..."
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",
-    "Stop recording": "Skończ nagrywanie",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
-    "No microphone found": "Nie znaleziono mikrofonu",
     "We're creating a room with %(names)s": "Tworzymy pokój z %(names)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
@@ -672,7 +658,6 @@
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
-    "Send voice message": "Wyślij wiadomość głosową",
     "Unpin this widget to view it in this panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
     "Location": "Lokalizacja",
     "Export chat": "Eksportuj czat",
@@ -711,21 +696,12 @@
     },
     "Encrypted by a deleted session": "Zaszyfrowano przez usuniętą sesję",
     " in <strong>%(room)s</strong>": " w <strong>%(room)s</strong>",
-    "This room has already been upgraded.": "Ten pokój został już ulepszony.",
-    "Joined": "Dołączono",
-    "Show Labs settings": "Pokaż ustawienia laboratoriów",
     "<inviter/> invites you": "<inviter/> zaprasza cię",
     "Saved Items": "Przedmioty zapisane",
     "Recently viewed": "Ostatnio wyświetlane",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
-    "View message": "Wyświetl wiadomość",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
-    "Failed to revoke invite": "Nie udało się odwołać zaproszenia",
     "Failed to connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
-    "Search all rooms": "Wyszukaj wszystkie pokoje",
-    "Search this room": "Wyszukaj ten pokój",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Ulepszenie tego pokoju zamknie bieżącą instancję pokoju i utworzy ulepszony pokój z tą samą nazwą.",
     "Your homeserver": "Twój serwer domowy",
     "One of the following may be compromised:": "Jedno z wymienionych mogło zostać zdradzone:",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Dla dodatkowego bezpieczeństwa, zweryfikuj tego użytkownika za pomocą jednorazowego kodu na obu waszych urządzeniach.",
@@ -751,15 +727,10 @@
     "Text": "Tekst",
     "Create a link": "Utwórz link",
     "Edit link": "Edytuj link",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Nie byliśmy w stanie uzyskać dostępu do Twojego mikrofonu. Sprawdź ustawienia swojej wyszukiwarki.",
-    "Unable to access your microphone": "Nie można uzyskać dostępu do mikrofonu",
-    "Unable to decrypt message": "Nie można rozszyfrować wiadomości",
-    "Open thread": "Otwórz wątek",
     "%(count)s reply": {
         "one": "%(count)s odpowiedź",
         "other": "%(count)s odpowiedzi"
     },
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ten pokój działa na wersji <roomVersion />, którą serwer domowy oznaczył jako <i>niestabilną</i>.",
     "You can only pin up to %(count)s widgets": {
         "other": "Możesz przypiąć do %(count)s widżetów"
     },
@@ -1395,7 +1366,9 @@
         "historical": "Historyczne",
         "go_to_settings": "Przejdź do ustawień",
         "setup_secure_messages": "Skonfiguruj bezpieczne wiadomości",
-        "unencrypted": "Nieszyfrowane"
+        "unencrypted": "Nieszyfrowane",
+        "view_message": "Wyświetl wiadomość",
+        "joined": "Dołączono"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1732,7 +1705,9 @@
         "format_italics": "Kursywa",
         "format_insert_link": "Wprowadź link",
         "replying_title": "Odpowiadanie",
-        "edit_composer_label": "Edytuj wiadomość"
+        "edit_composer_label": "Edytuj wiadomość",
+        "send_voice_message": "Wyślij wiadomość głosową",
+        "stop_voice_message": "Skończ nagrywanie"
     },
     "Link": "Link",
     "Code": "Kod",
@@ -3059,7 +3034,11 @@
             "other": "%(count)s osób dołączyło"
         },
         "unknown_person": "nieznana osoba",
-        "connecting": "Łączenie"
+        "connecting": "Łączenie",
+        "unable_to_access_audio_input_title": "Nie można uzyskać dostępu do mikrofonu",
+        "unable_to_access_audio_input_description": "Nie byliśmy w stanie uzyskać dostępu do Twojego mikrofonu. Sprawdź ustawienia swojej wyszukiwarki.",
+        "no_audio_input_title": "Nie znaleziono mikrofonu",
+        "no_audio_input_description": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie."
     },
     "Other": "Inne",
     "room_settings": {
@@ -3777,7 +3756,9 @@
         "show_all_threads": "Pokaż wszystkie wątki",
         "empty_explainer": "Dzięki wątkom Twoje rozmowy są zorganizowane i łatwe do śledzenia.",
         "empty_tip": "<b>Tip:</b> Użyj “%(replyInThread)s” najeżdżając na wiadomość.",
-        "empty_heading": "Organizuj dyskusje za pomocą wątków"
+        "empty_heading": "Organizuj dyskusje za pomocą wątków",
+        "open_thread": "Otwórz wątek",
+        "unable_to_decrypt": "Nie można rozszyfrować wiadomości"
     },
     "theme": {
         "light_high_contrast": "Jasny z wysokim kontrastem",
@@ -4027,7 +4008,21 @@
         "inaccessible_subtitle_2": "Wystąpił błąd %(errcode)s podczas próby dostępu do pokoju lub przestrzeni. Jeśli widzisz tą wiadomość w błędzie, <issueLink>zgłoś ten błąd</issueLink>.",
         "join_failed_needs_invite": "Aby wyświetlić %(roomName)s, potrzebujesz zaproszenia",
         "view_failed_enable_video_rooms": "Aby wyświetlić, włącz najpierw pokoje wideo w laboratoriach",
-        "join_failed_enable_video_rooms": "Aby dołączyć, włącz najpierw pokoje wideo w laboratoriach"
+        "join_failed_enable_video_rooms": "Aby dołączyć, włącz najpierw pokoje wideo w laboratoriach",
+        "jump_to_bottom_button": "Przewiń do najnowszych wiadomości",
+        "show_labs_settings": "Pokaż ustawienia laboratoriów",
+        "upgrade_warning_bar": "Ulepszenie tego pokoju zamknie bieżącą instancję pokoju i utworzy ulepszony pokój z tą samą nazwą.",
+        "upgrade_warning_bar_upgraded": "Ten pokój został już ulepszony.",
+        "upgrade_warning_bar_unstable": "Ten pokój działa na wersji <roomVersion />, którą serwer domowy oznaczył jako <i>niestabilną</i>.",
+        "upgrade_warning_bar_admins": "Tylko administratorzy pokojów widzą to ostrzeżenie",
+        "search": {
+            "this_room": "Ten pokój",
+            "all_rooms": "Wszystkie pokoje",
+            "field_placeholder": "Szukaj…",
+            "this_room_button": "Wyszukaj ten pokój",
+            "all_rooms_button": "Wyszukaj wszystkie pokoje"
+        },
+        "jump_read_marker": "Przeskocz do pierwszej nieprzeczytanej wiadomości."
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4250,5 +4245,16 @@
         "invited_list_heading": "Zaproszeni",
         "filter_placeholder": "Filtruj członków pokoju",
         "power_label": "%(userName)s (moc uprawnień administratorskich %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Nie masz obecnie włączonych żadnych pakietów naklejek",
+        "empty_add_prompt": "Dodaj teraz kilka"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Nie udało się odwołać zaproszenia",
+        "error_revoke_3pid_invite_description": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
+        "admin_tools_section": "Narzędzia Administracyjne",
+        "revoke_invite": "Odwołaj zaproszenie",
+        "invited_by": "Zaproszony przez %(sender)s"
     }
 }

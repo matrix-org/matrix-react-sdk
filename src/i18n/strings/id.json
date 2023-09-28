@@ -30,7 +30,6 @@
     "Oct": "Okt",
     "Nov": "Nov",
     "Dec": "Des",
-    "Admin Tools": "Peralatan Admin",
     "Are you sure you want to leave the room '%(roomName)s'?": "Anda yakin ingin meninggalkan ruangan '%(roomName)s'?",
     "A new password must be entered.": "Kata sandi baru harus dimasukkan.",
     "%(items)s and %(lastItem)s": "%(items)s dan %(lastItem)s",
@@ -38,11 +37,8 @@
     "Sunday": "Minggu",
     "Today": "Hari Ini",
     "Changelog": "Changelog",
-    "This Room": "Ruangan ini",
     "Unavailable": "Tidak Tersedia",
-    "All Rooms": "Semua Ruangan",
     "Tuesday": "Selasa",
-    "Search…": "Cari…",
     "Unnamed room": "Ruang tanpa nama",
     "Friday": "Jumat",
     "Saturday": "Sabtu",
@@ -395,7 +391,6 @@
     "Upload all": "Unggah semua",
     "Upload files": "Unggah file",
     "Power level": "Tingkat daya",
-    "Revoke invite": "Hapus undangan",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
@@ -425,7 +420,6 @@
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
     "Results": "Hasil",
-    "Joined": "Tergabung",
     "Joining": "Bergabung",
     "Sent": "Terkirim",
     "MB": "MB",
@@ -488,30 +482,12 @@
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Terjadi sebuah kesalahan memperbarui alamat alternatif ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Terjadi sebuah kesalahan memperbarui alamat utama ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
     "Error updating main address": "Terjadi kesalahan memperbarui alamat utama",
-    "Stop recording": "Hentikan merekam",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "Kami tidak menemukan sebuah mikrofon di perangkat Anda. Mohon periksa pengaturan Anda dan coba lagi.",
-    "No microphone found": "Tidak ada mikrofon yang ditemukan",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "Kami tidak dapat mengakses mikrofon Anda. Mohon periksa pengaturan browser Anda dan coba lagi.",
-    "Unable to access your microphone": "Tidak dapat mengakses mikrofon Anda",
-    "Jump to first unread message.": "Pergi ke pesan pertama yang belum dibaca.",
-    "Invited by %(sender)s": "Diundang oleh %(sender)s",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Tidak dapat menghapus undangan. Server ini mungkin mengalami masalah sementara atau Anda tidak memiliki izin yang dibutuhkan untuk menghapus undangannya.",
-    "Failed to revoke invite": "Gagal untuk menghapus undangan",
-    "Add some now": "Tambahkan beberapa stiker sekarang",
-    "You don't currently have any stickerpacks enabled": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",
     "Failed to connect to integration manager": "Gagal untuk menghubung ke manajer integrasi",
-    "Only room administrators will see this warning": "Hanya administrator ruangan yang akan melihat peringatan ini",
-    "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ruangan ini berjalan dengan versi ruangan <roomVersion />, yang homeserver ini menandainya sebagai <i>tidak stabil</i>.",
-    "This room has already been upgraded.": "Ruangan ini telah ditingkatkan.",
-    "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Meningkatkan ruangan ini akan mematikan instansi ruangan saat ini dan membuat ruangan yang ditingkatkan dengan nama yang sama.",
     "Create new room": "Buat ruangan baru",
-    "View message": "Tampilkan pesan",
-    "Send voice message": "Kirim sebuah pesan suara",
     "and %(count)s others...": {
         "one": "dan satu lainnya...",
         "other": "dan %(count)s lainnya..."
     },
-    "Scroll to most recent messages": "Gulir ke pesan yang terbaru",
     "Encrypted by a deleted session": "Terenkripsi oleh sesi yang terhapus",
     "Reply in thread": "Balas di utasan",
     "Message Actions": "Aksi Pesan",
@@ -1070,7 +1046,6 @@
     "Results will be visible when the poll is ended": "Hasil akan tersedia setelah pemungutan suara berakhir",
     "Search Dialog": "Dialog Pencarian",
     "Pinned": "Disematkan",
-    "Open thread": "Buka utasan",
     "What location type do you want to share?": "Tipe lokasi apa yang Anda ingin bagikan?",
     "Drop a Pin": "Drop sebuah Pin",
     "My live location": "Lokasi langsung saya",
@@ -1133,7 +1108,6 @@
     "Cameras": "Kamera",
     "Output devices": "Perangkat keluaran",
     "Input devices": "Perangkat masukan",
-    "Show Labs settings": "Tampilkan pengaturan Uji Coba",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak dikirim karena homeserver ini telah diblokir oleh administrator. Mohon <a>hubungi administrator layanan Anda</a> untuk terus menggunakan layanan ini.",
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
@@ -1207,7 +1181,6 @@
     "We were unable to start a chat with the other user.": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain.",
     "Error starting verification": "Terjadi kesalahan memulai verifikasi",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
-    "Unable to decrypt message": "Tidak dapat mendekripsi pesan",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "Text": "Teks",
     "Create a link": "Buat sebuah tautan",
@@ -1268,8 +1241,6 @@
     "Start DM anyway": "Mulai percakapan langsung saja",
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
-    "Search all rooms": "Cari semua ruangan",
-    "Search this room": "Cari ruangan ini",
     "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
     "Waiting for users to join %(brand)s": "Menunggu pengguna untuk bergabung ke %(brand)s",
     "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
@@ -1396,7 +1367,9 @@
         "historical": "Riwayat",
         "go_to_settings": "Pergi ke Pengaturan",
         "setup_secure_messages": "Siapkan Pesan Aman",
-        "unencrypted": "Tidak Dienkripsi"
+        "unencrypted": "Tidak Dienkripsi",
+        "view_message": "Tampilkan pesan",
+        "joined": "Tergabung"
     },
     "action": {
         "continue": "Lanjut",
@@ -1734,7 +1707,9 @@
         "format_italics": "Miring",
         "format_insert_link": "Tambahkan tautan",
         "replying_title": "Membalas",
-        "edit_composer_label": "Edit pesan"
+        "edit_composer_label": "Edit pesan",
+        "send_voice_message": "Kirim sebuah pesan suara",
+        "stop_voice_message": "Hentikan merekam"
     },
     "Link": "Tautan",
     "Code": "Kode",
@@ -3065,7 +3040,11 @@
             "other": "%(count)s orang bergabung"
         },
         "unknown_person": "pengguna tidak dikenal",
-        "connecting": "Menghubungkan"
+        "connecting": "Menghubungkan",
+        "unable_to_access_audio_input_title": "Tidak dapat mengakses mikrofon Anda",
+        "unable_to_access_audio_input_description": "Kami tidak dapat mengakses mikrofon Anda. Mohon periksa pengaturan browser Anda dan coba lagi.",
+        "no_audio_input_title": "Tidak ada mikrofon yang ditemukan",
+        "no_audio_input_description": "Kami tidak menemukan sebuah mikrofon di perangkat Anda. Mohon periksa pengaturan Anda dan coba lagi."
     },
     "Other": "Lainnya",
     "room_settings": {
@@ -3790,7 +3769,9 @@
         "show_all_threads": "Tampilkan semua utasan",
         "empty_explainer": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
         "empty_tip": "<b>Tip:</b> Gunakan “%(replyInThread)s” ketika kursor di atas pesan.",
-        "empty_heading": "Buat diskusi tetap teratur dengan utasan"
+        "empty_heading": "Buat diskusi tetap teratur dengan utasan",
+        "open_thread": "Buka utasan",
+        "unable_to_decrypt": "Tidak dapat mendekripsi pesan"
     },
     "theme": {
         "light_high_contrast": "Kontras tinggi terang",
@@ -4050,7 +4031,21 @@
         "knock_cancel_action": "Batalkan permintaan",
         "join_failed_needs_invite": "Untuk menampilkan %(roomName)s, Anda perlu sebuah undangan",
         "view_failed_enable_video_rooms": "Untuk menampilkan, mohon aktifkan ruangan video dalam Uji Coba terlebih dahulu",
-        "join_failed_enable_video_rooms": "Untuk bergabung, mohon aktifkan ruangan video di Uji Coba terlebih dahulu"
+        "join_failed_enable_video_rooms": "Untuk bergabung, mohon aktifkan ruangan video di Uji Coba terlebih dahulu",
+        "jump_to_bottom_button": "Gulir ke pesan yang terbaru",
+        "show_labs_settings": "Tampilkan pengaturan Uji Coba",
+        "upgrade_warning_bar": "Meningkatkan ruangan ini akan mematikan instansi ruangan saat ini dan membuat ruangan yang ditingkatkan dengan nama yang sama.",
+        "upgrade_warning_bar_upgraded": "Ruangan ini telah ditingkatkan.",
+        "upgrade_warning_bar_unstable": "Ruangan ini berjalan dengan versi ruangan <roomVersion />, yang homeserver ini menandainya sebagai <i>tidak stabil</i>.",
+        "upgrade_warning_bar_admins": "Hanya administrator ruangan yang akan melihat peringatan ini",
+        "search": {
+            "this_room": "Ruangan ini",
+            "all_rooms": "Semua Ruangan",
+            "field_placeholder": "Cari…",
+            "this_room_button": "Cari ruangan ini",
+            "all_rooms_button": "Cari semua ruangan"
+        },
+        "jump_read_marker": "Pergi ke pesan pertama yang belum dibaca."
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4275,5 +4270,16 @@
         "invited_list_heading": "Diundang",
         "filter_placeholder": "Saring anggota ruangan",
         "power_label": "%(userName)s (tingkat daya %(powerLevelNumber)s)"
+    },
+    "stickers": {
+        "empty": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",
+        "empty_add_prompt": "Tambahkan beberapa stiker sekarang"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "Gagal untuk menghapus undangan",
+        "error_revoke_3pid_invite_description": "Tidak dapat menghapus undangan. Server ini mungkin mengalami masalah sementara atau Anda tidak memiliki izin yang dibutuhkan untuk menghapus undangannya.",
+        "admin_tools_section": "Peralatan Admin",
+        "revoke_invite": "Hapus undangan",
+        "invited_by": "Diundang oleh %(sender)s"
     }
 }
