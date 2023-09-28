@@ -128,15 +128,6 @@
     "Ask %(displayName)s to scan your code:": "اطلب من %(displayName)s مسح رمزك:",
     "Verify by scanning": "تحقق بالمسح",
     "This client does not support end-to-end encryption.": "لا يدعم هذا العميل التشفير من طرف إلى طرف.",
-    "Failed to deactivate user": "تعذر إلغاء نشاط المستخدم",
-    "Deactivate user": "إلغاء نشاط المستخدم",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "سيؤدي إلغاء نشاط هذا المستخدم إلى تسجيل خروجهم ومنعهم من تسجيل الدخول مرة أخرى. بالإضافة إلى ذلك ، سيغادرون جميع الغرف التي يتواجدون فيها. لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد أنك تريد إلغاء نشاط هذا المستخدم؟",
-    "Deactivate user?": "إلغاء نشاط المستخدم؟",
-    "Are you sure?": "هل متأكد أنت؟",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "لن تكون قادرًا على التراجع عن هذا التغيير لأنك ترقي المستخدم ليكون له نفس مستوى الطاقة لديك.",
-    "Failed to mute user": "تعذر كتم المستخدم",
-    "Failed to ban user": "تعذر حذف المستخدم",
-    "Remove recent messages": "احذف الرسائل الحديثة",
     "Remove %(count)s messages": {
         "one": "احذف رسالة واحدة",
         "other": "احذف %(count)s رسائل"
@@ -145,17 +136,10 @@
     "Remove recent messages by %(user)s": "قم بإزالة رسائل %(user)s الأخيرة",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "حاول الصعود في المخطط الزمني لمعرفة ما إذا كانت هناك سابقات.",
     "No recent messages by %(user)s found": "لم يتم العثور على رسائل حديثة من %(user)s",
-    "Demote": "تخفيض",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "لن تتمكن من التراجع عن هذا التغيير لأنك تقوم بتخفيض رتبتك ، إذا كنت آخر مستخدم ذي امتياز في الغرفة ، فسيكون من المستحيل استعادة الامتيازات.",
-    "Demote yourself?": "خفض مرتبة نفسك؟",
-    "Share Link to User": "مشاركة رابط للمستخدم",
-    "Jump to read receipt": "انتقل لإيصال قراءة",
-    "Hide sessions": "اخف الاتصالات",
     "%(count)s sessions": {
         "one": "%(count)s اتصال",
         "other": "%(count)s اتصالات"
     },
-    "Hide verified sessions": "اخف الاتصالات المحققة",
     "%(count)s verified sessions": {
         "one": "اتصال واحد محقق",
         "other": "%(count)s اتصالات محققة"
@@ -381,7 +365,8 @@
         "low_priority": "أولوية منخفضة",
         "historical": "تاريخي",
         "unencrypted": "غير مشفر",
-        "show_more": "أظهر أكثر"
+        "show_more": "أظهر أكثر",
+        "are_you_sure": "هل متأكد أنت؟"
     },
     "action": {
         "continue": "واصِل",
@@ -1540,7 +1525,22 @@
         "room_unencrypted": "الرسائل الموجودة في هذه الغرفة غير مشفرة من طرف إلى طرف.",
         "room_unencrypted_detail": "في الغرف المشفرة ، يتم تأمين رسائلك ولا يمتلك أحد سواك أنت والمتلقي المفاتيح الفريدة لفتحها.",
         "verify_button": "تحقق من المستخدم",
-        "verify_explainer": "لمزيد من الأمان ، تحقق من هذا المستخدم عن طريق التحقق من رمز لمرة واحدة على كلا الجهازين."
+        "verify_explainer": "لمزيد من الأمان ، تحقق من هذا المستخدم عن طريق التحقق من رمز لمرة واحدة على كلا الجهازين.",
+        "hide_verified_sessions": "اخف الاتصالات المحققة",
+        "hide_sessions": "اخف الاتصالات",
+        "jump_to_rr_button": "انتقل لإيصال قراءة",
+        "share_button": "مشاركة رابط للمستخدم",
+        "demote_self_confirm_title": "خفض مرتبة نفسك؟",
+        "demote_self_confirm_room": "لن تتمكن من التراجع عن هذا التغيير لأنك تقوم بتخفيض رتبتك ، إذا كنت آخر مستخدم ذي امتياز في الغرفة ، فسيكون من المستحيل استعادة الامتيازات.",
+        "demote_button": "تخفيض",
+        "redact_button": "احذف الرسائل الحديثة",
+        "error_ban_user": "تعذر حذف المستخدم",
+        "error_mute_user": "تعذر كتم المستخدم",
+        "promote_warning": "لن تكون قادرًا على التراجع عن هذا التغيير لأنك ترقي المستخدم ليكون له نفس مستوى الطاقة لديك.",
+        "deactivate_confirm_title": "إلغاء نشاط المستخدم؟",
+        "deactivate_confirm_description": "سيؤدي إلغاء نشاط هذا المستخدم إلى تسجيل خروجهم ومنعهم من تسجيل الدخول مرة أخرى. بالإضافة إلى ذلك ، سيغادرون جميع الغرف التي يتواجدون فيها. لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد أنك تريد إلغاء نشاط هذا المستخدم؟",
+        "deactivate_confirm_action": "إلغاء نشاط المستخدم",
+        "error_deactivate": "تعذر إلغاء نشاط المستخدم"
     },
     "right_panel": {
         "pinned_messages": {

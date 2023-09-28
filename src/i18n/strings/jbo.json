@@ -106,12 +106,10 @@
         "other": ".i lacri %(count)s se samtcise'u",
         "one": ".i lacri pa se samtcise'u"
     },
-    "Hide verified sessions": "nu ro se samtcise'u poi se lacri cu zilmipri",
     "%(count)s sessions": {
         "other": ".i samtcise'u %(count)s da",
         "one": ".i samtcise'u %(count)s da"
     },
-    "Hide sessions": "nu ro se samtcise'u cu zilmipri",
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
     "Are you sure you want to sign out?": ".i xu do birti le du'u do kaidji le ka co'u se jaspu",
@@ -121,7 +119,6 @@
     },
     "Are you sure you want to leave the room '%(roomName)s'?": ".i xu do birti le du'u do kaidji le ka co'u pagbu le se zilbe'i be fo la'o zoi. %(roomName)s .zoi",
     "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
-    "Share Link to User": "nu jungau pa pilno le du'u judri",
     "Share Room": "nu jungau fi le du'u ve zilbe'i",
     "Share User": "nu jungau fi le du'u pilno",
     "Share Room Message": "nu jungau fi le du'u notci",
@@ -527,7 +524,10 @@
     "user_info": {
         "revoke_invite": "nu zukte le ka na ckaji le se friti",
         "room_encrypted": ".i ro zilbe'i be fo le cei'i cu mifra",
-        "room_unencrypted": ".i na pa zilbe'i be fo le cei'i cu mifra"
+        "room_unencrypted": ".i na pa zilbe'i be fo le cei'i cu mifra",
+        "hide_verified_sessions": "nu ro se samtcise'u poi se lacri cu zilmipri",
+        "hide_sessions": "nu ro se samtcise'u cu zilmipri",
+        "share_button": "nu jungau pa pilno le du'u judri"
     },
     "right_panel": {
         "share_button": "nu jungau fi le du'u ve zilbe'i"

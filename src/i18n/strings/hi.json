@@ -28,15 +28,6 @@
     "Moderator": "मध्यस्थ",
     "Send": "भेजें",
     "Warning!": "चेतावनी!",
-    "Failed to ban user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
-    "Demote yourself?": "खुद को अवनत करें?",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "आप इस बदलाव को पूर्ववत नहीं कर पाएंगे क्योंकि आप स्वयं को अवनत कर रहे हैं, अगर आप रूम में आखिरी विशेषाधिकार प्राप्त उपयोगकर्ता हैं तो विशेषाधिकार हासिल करना असंभव होगा।",
-    "Demote": "अवनत",
-    "Failed to mute user": "उपयोगकर्ता को म्यूट करने में विफल",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "आप इस परिवर्तन को पूर्ववत नहीं कर पाएंगे क्योंकि आप उपयोगकर्ता को अपने आप से समान शक्ति स्तर रखने के लिए प्रोत्साहित कर रहे हैं।",
-    "Are you sure?": "क्या आपको यकीन है?",
-    "Jump to read receipt": "पढ़ी हुई रसीद में कूदें",
-    "Share Link to User": "उपयोगकर्ता को लिंक साझा करें",
     "and %(count)s others...": {
         "other": "और %(count)s अन्य ...",
         "one": "और एक अन्य..."
@@ -286,7 +277,8 @@
         "profile": "प्रोफाइल",
         "display_name": "प्रदर्शित होने वाला नाम",
         "user_avatar": "प्रोफ़ाइल फोटो",
-        "authentication": "प्रमाणीकरण"
+        "authentication": "प्रमाणीकरण",
+        "are_you_sure": "क्या आपको यकीन है?"
     },
     "action": {
         "continue": "आगे बढ़ें",
@@ -766,6 +758,14 @@
         "power_label": "%(userName)s (शक्ति %(powerLevelNumber)s)"
     },
     "user_info": {
-        "admin_tools_section": "व्यवस्थापक उपकरण"
+        "admin_tools_section": "व्यवस्थापक उपकरण",
+        "jump_to_rr_button": "पढ़ी हुई रसीद में कूदें",
+        "share_button": "उपयोगकर्ता को लिंक साझा करें",
+        "demote_self_confirm_title": "खुद को अवनत करें?",
+        "demote_self_confirm_room": "आप इस बदलाव को पूर्ववत नहीं कर पाएंगे क्योंकि आप स्वयं को अवनत कर रहे हैं, अगर आप रूम में आखिरी विशेषाधिकार प्राप्त उपयोगकर्ता हैं तो विशेषाधिकार हासिल करना असंभव होगा।",
+        "demote_button": "अवनत",
+        "error_ban_user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
+        "error_mute_user": "उपयोगकर्ता को म्यूट करने में विफल",
+        "promote_warning": "आप इस परिवर्तन को पूर्ववत नहीं कर पाएंगे क्योंकि आप उपयोगकर्ता को अपने आप से समान शक्ति स्तर रखने के लिए प्रोत्साहित कर रहे हैं।"
     }
 }

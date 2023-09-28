@@ -16,14 +16,12 @@
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
-    "Failed to ban user": "کاربر مسدود نشد",
     "Error decrypting attachment": "خطا در رمزگشایی پیوست",
     "Email address": "آدرس ایمیل",
     "Download %(text)s": "دانلود 2%(text)s",
     "Decrypt %(text)s": "رمزگشایی %(text)s",
     "Are you sure you want to reject the invitation?": "آیا مطمئن هستید که می خواهید دعوت را رد کنید؟",
     "Are you sure you want to leave the room '%(roomName)s'?": "آیا مطمئن هستید که می خواهید از اتاق '2%(roomName)s' خارج شوید؟",
-    "Are you sure?": "مطمئنی؟",
     "An error has occurred.": "خطایی رخ داده است.",
     "A new password must be entered.": "گذواژه جدید باید وارد شود.",
     "Home": "خانه",
@@ -545,13 +543,6 @@
     "Verify by scanning": "با اسکن تأیید کنید",
     "Edit devices": "ویرایش دستگاه‌ها",
     "This client does not support end-to-end encryption.": "این کلاینت از رمزگذاری سرتاسر پشتیبانی نمی کند.",
-    "Failed to deactivate user": "غیرفعال کردن کاربر انجام نشد",
-    "Deactivate user": "غیرفعال کردن کاربر",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "با غیرفعال کردن این کاربر، او از سیستم خارج شده و از ورود مجدد وی جلوگیری می‌شود. علاوه بر این، او تمام اتاق هایی را که در آن هست ترک می کند. این عمل قابل برگشت نیست. آیا مطمئن هستید که می خواهید این کاربر را غیرفعال کنید؟",
-    "Deactivate user?": "کاربر غیرفعال شود؟",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "شما نمی توانید این تغییر را باطل کنید زیرا در حال ارتقا سطح قدرت یک کاربر به سطح قدرت خود هستید.",
-    "Failed to mute user": "کاربر بی صدا نشد",
-    "Remove recent messages": "حذف پیام‌های اخیر",
     "Remove %(count)s messages": {
         "one": "حذف ۱ پیام",
         "other": "حذف %(count)s پیام"
@@ -560,18 +551,10 @@
     "Remove recent messages by %(user)s": "حذف پیام‌های اخیر %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "در پیام‌ها بالا بروید تا ببینید آیا موارد قدیمی وجود دارد یا خیر.",
     "No recent messages by %(user)s found": "هیچ پیام جدیدی برای %(user)s یافت نشد",
-    "Demote": "تنزل رتبه",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "شما نمی توانید این تغییر را لغو کنید زیرا در حال تنزل خود هستید، اگر آخرین کاربر ممتاز در اتاق باشید بازپس گیری امتیازات غیرممکن است.",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "شما نمی توانید این تغییر را لغو کنید زیرا در حال تنزل خود هستید، اگر آخرین کاربر ممتاز در فضای کاری باشید، بازپس گیری امتیازات غیرممکن است.",
-    "Demote yourself?": "خودتان را تنزل می‌دهید؟",
-    "Share Link to User": "اشتراک لینک برای کاربر",
-    "Jump to read receipt": "پرش به آخرین پیام خوانده شده",
-    "Hide sessions": "مخفی کردن نشست‌ها",
     "%(count)s sessions": {
         "one": "%(count)s نشست",
         "other": "%(count)s نشست"
     },
-    "Hide verified sessions": "مخفی کردن نشست‌های تأیید شده",
     "%(count)s verified sessions": {
         "one": "1 نشست تأیید شده",
         "other": "%(count)s نشست تایید شده"
@@ -920,7 +903,8 @@
         "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید",
         "unencrypted": "رمزگذاری نشده",
         "view_message": "مشاهده پیام",
-        "show_more": "نمایش بیشتر"
+        "show_more": "نمایش بیشتر",
+        "are_you_sure": "مطمئنی؟"
     },
     "action": {
         "continue": "ادامه",
@@ -2900,7 +2884,23 @@
         "room_unencrypted": "پیام های موجود در این اتاق به صورت سرتاسر رمزگذاری نشده‌اند.",
         "room_unencrypted_detail": "در اتاق‌های رمزگذاری شده، پیام‌های شما امن هستند و فقط شما و گیرنده کلیدهای منحصر به فرد برای باز کردن قفل آن‌ها را دارید.",
         "verify_button": "تأیید هویت کاربر",
-        "verify_explainer": "برای امنیت بیشتر، با بررسی کد یکبارمصرف در هر دو دستگاه، این کاربر را تأیید کنید."
+        "verify_explainer": "برای امنیت بیشتر، با بررسی کد یکبارمصرف در هر دو دستگاه، این کاربر را تأیید کنید.",
+        "hide_verified_sessions": "مخفی کردن نشست‌های تأیید شده",
+        "hide_sessions": "مخفی کردن نشست‌ها",
+        "jump_to_rr_button": "پرش به آخرین پیام خوانده شده",
+        "share_button": "اشتراک لینک برای کاربر",
+        "demote_self_confirm_title": "خودتان را تنزل می‌دهید؟",
+        "demote_self_confirm_description_space": "شما نمی توانید این تغییر را لغو کنید زیرا در حال تنزل خود هستید، اگر آخرین کاربر ممتاز در فضای کاری باشید، بازپس گیری امتیازات غیرممکن است.",
+        "demote_self_confirm_room": "شما نمی توانید این تغییر را لغو کنید زیرا در حال تنزل خود هستید، اگر آخرین کاربر ممتاز در اتاق باشید بازپس گیری امتیازات غیرممکن است.",
+        "demote_button": "تنزل رتبه",
+        "redact_button": "حذف پیام‌های اخیر",
+        "error_ban_user": "کاربر مسدود نشد",
+        "error_mute_user": "کاربر بی صدا نشد",
+        "promote_warning": "شما نمی توانید این تغییر را باطل کنید زیرا در حال ارتقا سطح قدرت یک کاربر به سطح قدرت خود هستید.",
+        "deactivate_confirm_title": "کاربر غیرفعال شود؟",
+        "deactivate_confirm_description": "با غیرفعال کردن این کاربر، او از سیستم خارج شده و از ورود مجدد وی جلوگیری می‌شود. علاوه بر این، او تمام اتاق هایی را که در آن هست ترک می کند. این عمل قابل برگشت نیست. آیا مطمئن هستید که می خواهید این کاربر را غیرفعال کنید؟",
+        "deactivate_confirm_action": "غیرفعال کردن کاربر",
+        "error_deactivate": "غیرفعال کردن کاربر انجام نشد"
     },
     "right_panel": {
         "pinned_messages": {

@@ -6,7 +6,6 @@
     },
     "A new password must be entered.": "Yeni bir şifre girilmelidir.",
     "An error has occurred.": "Bir hata oluştu.",
-    "Are you sure?": "Emin misiniz ?",
     "Are you sure you want to leave the room '%(roomName)s'?": "'%(roomName)s' odasından ayrılmak istediğinize emin misiniz ?",
     "Are you sure you want to reject the invitation?": "Daveti reddetmek istediğinizden emin misiniz ?",
     "Custom level": "Özel seviye",
@@ -14,10 +13,8 @@
     "Download %(text)s": "%(text)s metnini indir",
     "Email address": "E-posta Adresi",
     "Error decrypting attachment": "Ek şifresini çözme hatası",
-    "Failed to ban user": "Kullanıcı yasaklama(Ban) başarısız",
     "Failed to forget room %(errCode)s": "Oda unutulması başarısız oldu %(errCode)s",
     "Failed to load timeline position": "Zaman çizelgesi konumu yüklenemedi",
-    "Failed to mute user": "Kullanıcıyı sessize almak başarısız oldu",
     "Failed to reject invite": "Daveti reddetme başarısız oldu",
     "Failed to reject invitation": "Davetiyeyi reddetme başarısız oldu",
     "Home": "Ev",
@@ -45,7 +42,6 @@
     "Warning!": "Uyarı!",
     "You seem to be in a call, are you sure you want to quit?": "Bir çağrıda gözüküyorsunuz , çıkmak istediğinizden emin misiniz ?",
     "You seem to be uploading files, are you sure you want to quit?": "Dosya yüklüyorsunuz gibi görünüyor , çıkmak istediğinizden emin misiniz ?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Kullanıcıyı sizinle aynı güç seviyesine yükseltirken , bu değişikliği geri alamazsınız.",
     "Sun": "Pzt",
     "Mon": "Pazartesi",
     "Tue": "Salı",
@@ -222,16 +218,11 @@
         "one": "1 mesajı sil"
     },
     "Rooster": "Horoz",
-    "Deactivate user?": "Kullanıcıyı pasifleştir?",
-    "Deactivate user": "Kullanıcıyı pasifleştir",
-    "Failed to deactivate user": "Kullanıcı pasifleştirme başarısız",
-    "Share Link to User": "Kullanıcıya Link Paylaş",
     "%(duration)ss": "%(duration)ssn",
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
-    "Hide verified sessions": "Onaylı oturumları gizle",
     "%(count)s verified sessions": {
         "other": "%(count)s doğrulanmış oturum",
         "one": "1 doğrulanmış oturum"
@@ -247,9 +238,6 @@
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "Demote yourself?": "Kendinin rütbeni düşür?",
-    "Demote": "Rütbe Düşür",
-    "Remove recent messages": "Son mesajları sil",
     "And %(count)s more...": {
         "other": "ve %(count)s kez daha..."
     },
@@ -316,7 +304,6 @@
     "AM": "12:00",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
     "Ask this user to verify their session, or manually verify it below.": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
-    "Hide sessions": "Oturumları gizle",
     "Verify by scanning": "Taramayla doğrula",
     "Verify by emoji": "Emojiyle doğrula",
     "Verify by comparing unique emoji.": "Eşsiz emoji eşleştirme ile doğrulama.",
@@ -619,7 +606,6 @@
     "Preparing to download logs": "Loglar indirilmeye hazırlanıyor",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
     "This client does not support end-to-end encryption.": "Bu istemci uçtan uca şifrelemeyi desteklemiyor.",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Bu kullanıcı etkisizleştirmek onu bir daha oturum açmasını engeller.Ek olarak da bulundukları bütün odalardan atılırlar. Bu eylem geri dönüştürülebilir. Bu kullanıcıyı etkisizleştirmek istediğinize emin misiniz?",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
     "Remove recent messages by %(user)s": "%(user)s kullanıcısından en son iletileri kaldır",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
@@ -707,7 +693,8 @@
         "setup_secure_messages": "Güvenli Mesajları Ayarla",
         "unencrypted": "Şifrelenmemiş",
         "view_message": "Mesajı görüntüle",
-        "show_more": "Daha fazla göster"
+        "show_more": "Daha fazla göster",
+        "are_you_sure": "Emin misiniz ?"
     },
     "action": {
         "continue": "Devam Et",
@@ -2279,7 +2266,20 @@
         "room_unencrypted": "Bu odadaki iletiler uçtan uca şifreli değildir.",
         "room_unencrypted_detail": "Şifrelenmiş odalarda iletileriniz şifreledir ve yalnızca sizde ve gönderdiğiniz kullanıcılarda iletileri açmak için anahtarlar vardır.",
         "verify_button": "Kullanıcı Doğrula",
-        "verify_explainer": "Fazladan güvenlik sağlamak için bu kullanıcıyı cihazlarınızdaki tek kezlik kod ile doğrulayın."
+        "verify_explainer": "Fazladan güvenlik sağlamak için bu kullanıcıyı cihazlarınızdaki tek kezlik kod ile doğrulayın.",
+        "hide_verified_sessions": "Onaylı oturumları gizle",
+        "hide_sessions": "Oturumları gizle",
+        "share_button": "Kullanıcıya Link Paylaş",
+        "demote_self_confirm_title": "Kendinin rütbeni düşür?",
+        "demote_button": "Rütbe Düşür",
+        "redact_button": "Son mesajları sil",
+        "error_ban_user": "Kullanıcı yasaklama(Ban) başarısız",
+        "error_mute_user": "Kullanıcıyı sessize almak başarısız oldu",
+        "promote_warning": "Kullanıcıyı sizinle aynı güç seviyesine yükseltirken , bu değişikliği geri alamazsınız.",
+        "deactivate_confirm_title": "Kullanıcıyı pasifleştir?",
+        "deactivate_confirm_description": "Bu kullanıcı etkisizleştirmek onu bir daha oturum açmasını engeller.Ek olarak da bulundukları bütün odalardan atılırlar. Bu eylem geri dönüştürülebilir. Bu kullanıcıyı etkisizleştirmek istediğinize emin misiniz?",
+        "deactivate_confirm_action": "Kullanıcıyı pasifleştir",
+        "error_deactivate": "Kullanıcı pasifleştirme başarısız"
     },
     "right_panel": {
         "widgets_section": "Widgetlar",

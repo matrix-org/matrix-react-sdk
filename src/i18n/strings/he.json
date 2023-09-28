@@ -474,15 +474,6 @@
     "Ask %(displayName)s to scan your code:": "בקש מ- %(displayName)s לסרוק את הקוד שלכם:",
     "Verify by scanning": "אמת על ידי סריקה",
     "This client does not support end-to-end encryption.": "לקוח זה אינו תומך בהצפנה מקצה לקצה.",
-    "Failed to deactivate user": "השבתת משתמש נכשלה",
-    "Deactivate user?": "השבת משתמש?",
-    "Deactivate user": "השבת משתמש",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "השבתת משתמש זה תנתק אותו וימנע ממנו להתחבר חזרה. בנוסף, הם יעזבו את כל החדרים בהם הם נמצאים. לא ניתן לבטל פעולה זו. האם אתה בטוח שברצונך להשבית משתמש זה?",
-    "Are you sure?": "האם אתם בטוחים?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "לא תוכל לבטל את השינוי הזה מכיוון שאתה מקדם את המשתמש לאותה רמת ניהול כמוך.",
-    "Failed to mute user": "כשלון בהשתקת משתמש",
-    "Failed to ban user": "כשלון בחסימת משתמש",
-    "Remove recent messages": "הסר הודעות אחרונות",
     "Remove %(count)s messages": {
         "one": "הסר הודעה 1",
         "other": "הסר %(count)s הודעות"
@@ -491,17 +482,10 @@
     "Remove recent messages by %(user)s": "הסר את ההודעות האחרונות של %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "נסה לגלול למעלה בציר הזמן כדי לראות אם יש קודמים.",
     "No recent messages by %(user)s found": "לא נמצאו הודעות אחרונות של %(user)s",
-    "Demote": "הורד",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "לא תוכל לבטל את השינוי הזה מכיוון שאתה מוריד את עצמך בדרגה, אם אתה המשתמש המיועד האחרון בחדר, אי אפשר יהיה להחזיר לו הרשאות.",
-    "Demote yourself?": "להוריד את עצמך?",
-    "Share Link to User": "שתף קישור למשתמש",
-    "Jump to read receipt": "קפצו לקבלת קריאה",
-    "Hide sessions": "הסתר מושבים",
     "%(count)s sessions": {
         "one": "%(count)s מושבים",
         "other": "%(count)s מושבים"
     },
-    "Hide verified sessions": "הסתר מושבים מאומתים",
     "%(count)s verified sessions": {
         "one": "1 מושב מאומת",
         "other": "%(count)s מושבים מאומתים"
@@ -748,7 +732,6 @@
     "Device verified": "המכשיר אומת",
     "Message search initialisation failed, check <a>your settings</a> for more information": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
     "Connection failed": "החיבור נכשל",
-    "Failed to remove user": "הסרת המשתמש נכשלה",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
@@ -810,11 +793,6 @@
     "Create a new space": "הגדרת מרחב עבודה חדש",
     "Want to add a new space instead?": "רוצים להוסיף מרחב עבודה חדש במקום?",
     "Add existing space": "הוסף מרחב עבודה קיים",
-    "Ban from space": "חסום ממרחב העבודה",
-    "Unban from space": "הסר חסימה ממרחב העבודה",
-    "Remove from space": "הסר ממרחב העבודה",
-    "Disinvite from space": "בטל הזמנה ממרחב העבודה",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "לא תוכלו לבטל את השינוי הזה מכיוון שאתם מורידים לעצמכם את רמת ההרשאה, יהיה בלתי אפשרי להחזיר את ההרשאות אם אתם המשתמשים האחרונים בעלי רמת הרשאה זו במרחב עבודה זה .",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -826,7 +804,6 @@
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
     "Location": "מיקום",
     "Edit devices": "הגדרת מכשירים",
-    "Role in <RoomName/>": "תפקיד בחדר <RoomName/>",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Close sidebar": "סגור סרגל צד",
     "common": {
@@ -927,7 +904,8 @@
         "go_to_settings": "עבור להגדרות",
         "setup_secure_messages": "הגדר הודעות מאובטחות",
         "unencrypted": "לא מוצפן",
-        "show_more": "הצג יותר"
+        "show_more": "הצג יותר",
+        "are_you_sure": "האם אתם בטוחים?"
     },
     "action": {
         "continue": "המשך",
@@ -3042,7 +3020,29 @@
         "room_unencrypted": "הודעות בחדר זה אינן מוצפנות מקצה לקצה.",
         "room_unencrypted_detail": "בחדרים מוצפנים ההודעות שלכם מאובטחות ורק לכם ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
         "verify_button": "אמת משתמש",
-        "verify_explainer": "ליתר ביטחון, אמת משתמש זה על ידי בדיקת קוד חד פעמי בשני המכשירים שלך."
+        "verify_explainer": "ליתר ביטחון, אמת משתמש זה על ידי בדיקת קוד חד פעמי בשני המכשירים שלך.",
+        "hide_verified_sessions": "הסתר מושבים מאומתים",
+        "hide_sessions": "הסתר מושבים",
+        "jump_to_rr_button": "קפצו לקבלת קריאה",
+        "share_button": "שתף קישור למשתמש",
+        "demote_self_confirm_title": "להוריד את עצמך?",
+        "demote_self_confirm_description_space": "לא תוכלו לבטל את השינוי הזה מכיוון שאתם מורידים לעצמכם את רמת ההרשאה, יהיה בלתי אפשרי להחזיר את ההרשאות אם אתם המשתמשים האחרונים בעלי רמת הרשאה זו במרחב עבודה זה .",
+        "demote_self_confirm_room": "לא תוכל לבטל את השינוי הזה מכיוון שאתה מוריד את עצמך בדרגה, אם אתה המשתמש המיועד האחרון בחדר, אי אפשר יהיה להחזיר לו הרשאות.",
+        "demote_button": "הורד",
+        "disinvite_button_space": "בטל הזמנה ממרחב העבודה",
+        "kick_button_space": "הסר ממרחב העבודה",
+        "error_kicking_user": "הסרת המשתמש נכשלה",
+        "redact_button": "הסר הודעות אחרונות",
+        "unban_button_space": "הסר חסימה ממרחב העבודה",
+        "ban_button_space": "חסום ממרחב העבודה",
+        "error_ban_user": "כשלון בחסימת משתמש",
+        "error_mute_user": "כשלון בהשתקת משתמש",
+        "promote_warning": "לא תוכל לבטל את השינוי הזה מכיוון שאתה מקדם את המשתמש לאותה רמת ניהול כמוך.",
+        "deactivate_confirm_title": "השבת משתמש?",
+        "deactivate_confirm_description": "השבתת משתמש זה תנתק אותו וימנע ממנו להתחבר חזרה. בנוסף, הם יעזבו את כל החדרים בהם הם נמצאים. לא ניתן לבטל פעולה זו. האם אתה בטוח שברצונך להשבית משתמש זה?",
+        "deactivate_confirm_action": "השבת משתמש",
+        "error_deactivate": "השבתת משתמש נכשלה",
+        "role_label": "תפקיד בחדר <RoomName/>"
     },
     "right_panel": {
         "pinned_messages": {

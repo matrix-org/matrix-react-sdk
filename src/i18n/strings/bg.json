@@ -31,11 +31,6 @@
     "AM": "AM",
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
-    "Failed to ban user": "Неуспешно блокиране на потребителя",
-    "Failed to mute user": "Неуспешно заглушаване на потребителя",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "След като си намалите нивото на достъп, няма да можете да възвърнете тази промяна. Ако сте последния потребител с привилегии в тази стая, ще бъде невъзможно да възвърнете привилегии си.",
-    "Are you sure?": "Сигурни ли сте?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Няма да можете да възвърнете тази промяна, тъй като повишавате този потребител до същото ниво на достъп като Вашето.",
     "and %(count)s others...": {
         "other": "и %(count)s други...",
         "one": "и още един..."
@@ -53,7 +48,6 @@
     "Error decrypting attachment": "Грешка при разшифроване на прикачен файл",
     "Decrypt %(text)s": "Разшифровай %(text)s",
     "Download %(text)s": "Изтегли %(text)s",
-    "Jump to read receipt": "Отиди до потвърждението за прочитане",
     "Invalid file%(extra)s": "Невалиден файл%(extra)s",
     "Error decrypting image": "Грешка при разшифроване на снимка",
     "Error decrypting video": "Грешка при разшифроване на видео",
@@ -125,15 +119,12 @@
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими.",
-    "Share Link to User": "Сподели връзка с потребител",
     "Share Room": "Споделяне на стая",
     "Link to most recent message": "Създай връзка към най-новото съобщение",
     "Share User": "Споделяне на потребител",
     "Share Room Message": "Споделяне на съобщение от стая",
     "Link to selected message": "Създай връзка към избраното съобщение",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Не можете да изпращате съобщения докато не прегледате и се съгласите с <consentLink>нашите правила и условия</consentLink>.",
-    "Demote yourself?": "Понижете себе си?",
-    "Demote": "Понижение",
     "Upgrade Room Version": "Обнови версията на стаята",
     "Create a new room with the same name, description and avatar": "Създадем нова стая със същото име, описание и снимка",
     "Update any local room aliases to point to the new room": "Обновим всички локални адреси на стаята да сочат към новата",
@@ -283,9 +274,6 @@
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
     "Deactivate account": "Деактивиране на акаунт",
     "Command Help": "Помощ за команди",
-    "Deactivate user?": "Деактивиране на потребителя?",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивирането на потребителя ще ги изхвърли от профила и няма да им позволи да влязат пак. Също така, ще напуснат всички стаи, в които са. Действието е необратимо. Сигурните ли сте, че искате да деактивирате този потребител?",
-    "Deactivate user": "Деактивирай потребителя",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Използвайте сървър за самоличност за да каните по имейл. <default>Използвайте сървъра за самоличност по подразбиране (%(defaultIdentityServerName)s)</default> или настройте друг в <settings>Настройки</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Използвайте сървър за самоличност за да каните по имейл. Управлявайте в <settings>Настройки</settings>.",
     "No recent messages by %(user)s found": "Не са намерени скорошни съобщения от %(user)s",
@@ -296,10 +284,8 @@
         "other": "Премахни %(count)s съобщения",
         "one": "Премахни 1 съобщение"
     },
-    "Remove recent messages": "Премахни скорошни съобщения",
     "e.g. my-room": "например my-room",
     "Close dialog": "Затвори прозореца",
-    "Failed to deactivate user": "Неуспешно деактивиране на потребител",
     "This client does not support end-to-end encryption.": "Този клиент не поддържа шифроване от край до край.",
     "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
@@ -313,7 +299,6 @@
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "You sent a verification request": "Изпратихте заявка за потвърждение",
     "Failed to connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
-    "Hide verified sessions": "Скрий потвърдените сесии",
     "%(count)s verified sessions": {
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
@@ -344,7 +329,6 @@
         "other": "%(count)s сесии",
         "one": "%(count)s сесия"
     },
-    "Hide sessions": "Скрий сесиите",
     "Verify by scanning": "Верифицирай чрез сканиране",
     "Ask %(displayName)s to scan your code:": "Попитайте %(displayName)s да сканира вашия код:",
     "If you can't scan the code above, verify by comparing unique emoji.": "Ако не можете да сканирате кода по-горе, верифицирайте сравнявайки уникални емоджита.",
@@ -802,7 +786,8 @@
         "go_to_settings": "Отиди в Настройки",
         "setup_secure_messages": "Настрой Защитени Съобщения",
         "unencrypted": "Нешифровано",
-        "show_more": "Покажи повече"
+        "show_more": "Покажи повече",
+        "are_you_sure": "Сигурни ли сте?"
     },
     "action": {
         "continue": "Продължи",
@@ -2366,7 +2351,22 @@
         "room_unencrypted": "Съобщенията в тази стая не са шифровани от край до край.",
         "room_unencrypted_detail": "В шифровани стаи, съобщенията ви са защитени и само вие и получателят имате уникалните ключове за да ги отключите.",
         "verify_button": "Потвърди потребителя",
-        "verify_explainer": "За допълнителна сигурност, потвърдете този потребител като проверите еднократен код на устройствата ви."
+        "verify_explainer": "За допълнителна сигурност, потвърдете този потребител като проверите еднократен код на устройствата ви.",
+        "hide_verified_sessions": "Скрий потвърдените сесии",
+        "hide_sessions": "Скрий сесиите",
+        "jump_to_rr_button": "Отиди до потвърждението за прочитане",
+        "share_button": "Сподели връзка с потребител",
+        "demote_self_confirm_title": "Понижете себе си?",
+        "demote_self_confirm_room": "След като си намалите нивото на достъп, няма да можете да възвърнете тази промяна. Ако сте последния потребител с привилегии в тази стая, ще бъде невъзможно да възвърнете привилегии си.",
+        "demote_button": "Понижение",
+        "redact_button": "Премахни скорошни съобщения",
+        "error_ban_user": "Неуспешно блокиране на потребителя",
+        "error_mute_user": "Неуспешно заглушаване на потребителя",
+        "promote_warning": "Няма да можете да възвърнете тази промяна, тъй като повишавате този потребител до същото ниво на достъп като Вашето.",
+        "deactivate_confirm_title": "Деактивиране на потребителя?",
+        "deactivate_confirm_description": "Деактивирането на потребителя ще ги изхвърли от профила и няма да им позволи да влязат пак. Също така, ще напуснат всички стаи, в които са. Действието е необратимо. Сигурните ли сте, че искате да деактивирате този потребител?",
+        "deactivate_confirm_action": "Деактивирай потребителя",
+        "error_deactivate": "Неуспешно деактивиране на потребител"
     },
     "right_panel": {
         "pinned_messages": {

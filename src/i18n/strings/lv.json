@@ -2,7 +2,6 @@
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "A new password must be entered.": "Nepieciešams ievadīt jauno paroli.",
     "An error has occurred.": "Notikusi kļūda.",
-    "Are you sure?": "Vai tiešām to vēlaties?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Vai tiešām vēlaties pamest istabu: '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "Vai tiešām vēlaties noraidīt šo uzaicinājumu?",
     "Custom level": "Pielāgots līmenis",
@@ -10,11 +9,8 @@
     "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email address": "Epasta adrese",
     "Error decrypting attachment": "Kļūda atšifrējot pielikumu",
-    "Failed to ban user": "Neizdevās nobanot/bloķēt (liegt pieeju) lietotāju",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Tu nevarēsi atcelt šo darbību, jo šim lietotājam piešķir tādu pašu statusa līmeni, kāds ir Tev.",
     "Failed to forget room %(errCode)s": "Neizdevās \"aizmirst\" istabu %(errCode)s",
     "Failed to load timeline position": "Neizdevās ielādēt laikpaziņojumu pozīciju",
-    "Failed to mute user": "Neizdevās apklusināt lietotāju",
     "Failed to reject invite": "Neizdevās noraidīt uzaicinājumu",
     "Failed to reject invitation": "Neizdevās noraidīt uzaicinājumu",
     "Home": "Mājup",
@@ -89,8 +85,6 @@
     "Unnamed room": "Nenosaukta istaba",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Ierobežots",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs nevarēsiet atcelt šīs izmaiņas pēc sava statusa pazemināšanas. Gadījumā, ja esat pēdējais priviliģētais lietotājs istabā, būs neiespējami atgūt šīs privilēģijas.",
-    "Jump to read receipt": "Pāriet uz pēdējo skatīto ziņu",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)smin",
     "%(duration)sh": "%(duration)s stundas",
@@ -121,7 +115,6 @@
     "Yesterday": "Vakardien",
     "Thank you!": "Tencinam!",
     "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
-    "Hide verified sessions": "Slēpt verificētas sesijas",
     "%(count)s verified sessions": {
         "one": "1 verificēta sesija",
         "other": "%(count)s verificētas sesijas"
@@ -130,7 +123,6 @@
     "Philippines": "Filipīnas",
     "Not Trusted": "Neuzticama",
     "Direct Messages": "Tiešā sarakste",
-    "Hide sessions": "Slēpt sesijas",
     "%(count)s sessions": {
         "one": "%(count)s sesija",
         "other": "%(count)s sesijas"
@@ -141,9 +133,7 @@
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
-    "Share Link to User": "Dalīties ar saiti uz lietotāju",
     "Remove recent messages by %(user)s": "Dzēst nesenās ziņas no %(user)s",
-    "Remove recent messages": "Dzēst nesenās ziņas",
     "Banana": "Banāns",
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
@@ -235,10 +225,6 @@
     "Create a new room": "Izveidot jaunu istabu",
     "%(name)s cancelled": "%(name)s atcēla",
     "%(name)s cancelled verifying": "%(name)s atcēla verifikāciju",
-    "Deactivate user": "Deaktivizēt lietotāju",
-    "Deactivate user?": "Deaktivizēt lietotāju?",
-    "Demote": "Pazemināt",
-    "Demote yourself?": "Pazemināt sevi?",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -679,7 +665,8 @@
         "rooms": "Istabas",
         "low_priority": "Zema prioritāte",
         "historical": "Bijušie",
-        "show_more": "Rādīt vairāk"
+        "show_more": "Rādīt vairāk",
+        "are_you_sure": "Vai tiešām to vēlaties?"
     },
     "action": {
         "continue": "Turpināt",
@@ -2071,7 +2058,20 @@
         "room_unencrypted": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
         "room_unencrypted_detail": "Šifrētās istabās jūsu ziņas ir drošībā - tikai jums un saņēmējam ir unikālas atslēgas, lai ziņas atšifrētu.",
         "verify_button": "Verificēt lietotāju",
-        "verify_explainer": "Papildu drošībai verificējiet šo lietotāju, pārbaudot vienreizēju kodu abās ierīcēs."
+        "verify_explainer": "Papildu drošībai verificējiet šo lietotāju, pārbaudot vienreizēju kodu abās ierīcēs.",
+        "hide_verified_sessions": "Slēpt verificētas sesijas",
+        "hide_sessions": "Slēpt sesijas",
+        "jump_to_rr_button": "Pāriet uz pēdējo skatīto ziņu",
+        "share_button": "Dalīties ar saiti uz lietotāju",
+        "demote_self_confirm_title": "Pazemināt sevi?",
+        "demote_self_confirm_room": "Jūs nevarēsiet atcelt šīs izmaiņas pēc sava statusa pazemināšanas. Gadījumā, ja esat pēdējais priviliģētais lietotājs istabā, būs neiespējami atgūt šīs privilēģijas.",
+        "demote_button": "Pazemināt",
+        "redact_button": "Dzēst nesenās ziņas",
+        "error_ban_user": "Neizdevās nobanot/bloķēt (liegt pieeju) lietotāju",
+        "error_mute_user": "Neizdevās apklusināt lietotāju",
+        "promote_warning": "Tu nevarēsi atcelt šo darbību, jo šim lietotājam piešķir tādu pašu statusa līmeni, kāds ir Tev.",
+        "deactivate_confirm_title": "Deaktivizēt lietotāju?",
+        "deactivate_confirm_action": "Deaktivizēt lietotāju"
     },
     "right_panel": {
         "pinned_messages": {

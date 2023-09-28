@@ -8,7 +8,6 @@
     },
     "A new password must be entered.": "A new password must be entered.",
     "An error has occurred.": "An error has occurred.",
-    "Are you sure?": "Are you sure?",
     "Are you sure you want to leave the room '%(roomName)s'?": "Are you sure you want to leave the room '%(roomName)s'?",
     "Are you sure you want to reject the invitation?": "Are you sure you want to reject the invitation?",
     "Custom level": "Custom level",
@@ -16,10 +15,8 @@
     "Download %(text)s": "Download %(text)s",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
-    "Failed to ban user": "Failed to ban user",
     "Failed to forget room %(errCode)s": "Failed to forget room %(errCode)s",
     "Failed to load timeline position": "Failed to load timeline position",
-    "Failed to mute user": "Failed to mute user",
     "Failed to reject invite": "Failed to reject invite",
     "Failed to reject invitation": "Failed to reject invitation",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
@@ -41,7 +38,6 @@
     "Warning!": "Warning!",
     "You seem to be in a call, are you sure you want to quit?": "You seem to be in a call, are you sure you want to quit?",
     "You seem to be uploading files, are you sure you want to quit?": "You seem to be uploading files, are you sure you want to quit?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
     "Sun": "Sun",
     "Mon": "Mon",
     "Tue": "Tue",
@@ -135,7 +131,8 @@
         "authentication": "Authentication",
         "rooms": "Rooms",
         "low_priority": "Low priority",
-        "historical": "Historical"
+        "historical": "Historical",
+        "are_you_sure": "Are you sure?"
     },
     "action": {
         "continue": "Continue",
@@ -603,6 +600,9 @@
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     },
     "user_info": {
-        "admin_tools_section": "Admin Tools"
+        "admin_tools_section": "Admin Tools",
+        "error_ban_user": "Failed to ban user",
+        "error_mute_user": "Failed to mute user",
+        "promote_warning": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself."
     }
 }

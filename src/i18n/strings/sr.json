@@ -28,12 +28,6 @@
     "Moderator": "Модератор",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Send": "Пошаљи",
-    "Failed to ban user": "Неуспех при забрањивању приступа кориснику",
-    "Failed to mute user": "Неуспех при пригушивању корисника",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Нећете моћи да опозовете ове промене јер себи смањујете овлашћења. Ако сте последњи овлашћени корисник у соби, немогуће је да поново добијете овлашћења.",
-    "Are you sure?": "Да ли сте сигурни?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
-    "Jump to read receipt": "Скочи на потврду о прочитаности",
     "and %(count)s others...": {
         "other": "и %(count)s других...",
         "one": "и још један други..."
@@ -125,14 +119,11 @@
     "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
-    "Share Link to User": "Подели везу са корисником",
     "Share Room": "Подели собу",
     "Link to most recent message": "Веза ка најновијој поруци",
     "Share User": "Подели корисника",
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
-    "Demote yourself?": "Рашчињавате себе?",
-    "Demote": "Рашчини",
     "Join millions for free on the largest public server": "Придружите се милионима других бесплатно на највећем јавном серверу",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
@@ -141,9 +132,7 @@
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
     },
-    "Hide verified sessions": "Сакриј потврђене сесије",
     "Remove recent messages by %(user)s": "Уклони недавне поруке корисника %(user)s",
-    "Remove recent messages": "Уклони недавне поруке",
     "Encryption not enabled": "Шифровање није омогућено",
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
@@ -407,7 +396,6 @@
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
-    "Hide sessions": "Сакриј сесије",
     "Not encrypted": "Није шифровано",
     "Power level": "Ниво снаге",
     "Folder": "фасцикла",
@@ -556,7 +544,8 @@
         "low_priority": "Ниска важност",
         "historical": "Историја",
         "go_to_settings": "Идите на подешавања",
-        "show_more": "Прикажи више"
+        "show_more": "Прикажи више",
+        "are_you_sure": "Да ли сте сигурни?"
     },
     "action": {
         "continue": "Настави",
@@ -1535,7 +1524,18 @@
         "admin_tools_section": "Админ алатке",
         "revoke_invite": "Откажи позивницу",
         "room_encrypted": "Поруке у овој соби су шифроване с краја на крај.",
-        "room_unencrypted": "Поруке у овој соби нису шифроване с краја на крај."
+        "room_unencrypted": "Поруке у овој соби нису шифроване с краја на крај.",
+        "hide_verified_sessions": "Сакриј потврђене сесије",
+        "hide_sessions": "Сакриј сесије",
+        "jump_to_rr_button": "Скочи на потврду о прочитаности",
+        "share_button": "Подели везу са корисником",
+        "demote_self_confirm_title": "Рашчињавате себе?",
+        "demote_self_confirm_room": "Нећете моћи да опозовете ове промене јер себи смањујете овлашћења. Ако сте последњи овлашћени корисник у соби, немогуће је да поново добијете овлашћења.",
+        "demote_button": "Рашчини",
+        "redact_button": "Уклони недавне поруке",
+        "error_ban_user": "Неуспех при забрањивању приступа кориснику",
+        "error_mute_user": "Неуспех при пригушивању корисника",
+        "promote_warning": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви."
     },
     "right_panel": {
         "widgets_section": "Виџети",

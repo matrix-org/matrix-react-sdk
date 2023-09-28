@@ -1,7 +1,6 @@
 {
     "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
     "Are you sure you want to leave the room '%(roomName)s'?": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?",
-    "Are you sure?": "An bhfuil tú cinnte?",
     "An error has occurred.": "D’imigh earráid éigin.",
     "A new password must be entered.": "Caithfear focal faire nua a iontráil.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
@@ -217,7 +216,6 @@
     "%(duration)ss": "%(duration)ss",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
-    "Demote": "Bain ceadanna",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
     "Headphones": "Cluasáin",
@@ -312,7 +310,6 @@
     "Sending": "Ag Seoladh",
     "Avatar": "Abhatár",
     "Unnamed room": "Seomra gan ainm",
-    "Demote yourself?": "Tabhair ísliú céime duit féin?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
@@ -326,10 +323,8 @@
     "Unknown failure: %(reason)s": "Teip anaithnid: %(reason)s",
     "Failed to reject invitation": "Níorbh fhéidir an cuireadh a dhiúltú",
     "Failed to reject invite": "Níorbh fhéidir an cuireadh a dhiúltú",
-    "Failed to mute user": "Níor ciúnaíodh an úsáideoir",
     "Failed to load timeline position": "Níor lódáladh áit amlíne",
     "Failed to forget room %(errCode)s": "Níor dhearnadh dearmad ar an seomra %(errCode)s",
-    "Failed to ban user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
     "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
     "Email address": "Seoladh ríomhphoist",
     "Download %(text)s": "Íoslódáil %(text)s",
@@ -406,7 +401,8 @@
         "low_priority": "Tosaíocht íseal",
         "historical": "Stairiúil",
         "unencrypted": "Gan chriptiú",
-        "show_more": "Taispeáin níos mó"
+        "show_more": "Taispeáin níos mó",
+        "are_you_sure": "An bhfuil tú cinnte?"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -910,7 +906,11 @@
         "invited_list_heading": "Le cuireadh"
     },
     "user_info": {
-        "admin_tools_section": "Uirlisí Riaracháin"
+        "admin_tools_section": "Uirlisí Riaracháin",
+        "demote_self_confirm_title": "Tabhair ísliú céime duit féin?",
+        "demote_button": "Bain ceadanna",
+        "error_ban_user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
+        "error_mute_user": "Níor ciúnaíodh an úsáideoir"
     },
     "right_panel": {
         "widgets_section": "Giuirléidí",

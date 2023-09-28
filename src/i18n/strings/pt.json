@@ -39,13 +39,10 @@
         "other": "e %(count)s outros...",
         "one": "e um outro..."
     },
-    "Are you sure?": "Você tem certeza?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Decrypt %(text)s": "Descriptografar %(text)s",
     "Download %(text)s": "Baixar %(text)s",
-    "Failed to ban user": "Não foi possível banir o/a usuário/a",
     "Failed to load timeline position": "Não foi possível carregar a posição na linha do tempo",
-    "Failed to mute user": "Não foi possível remover notificações da/do usuária/o",
     "Failed to reject invite": "Não foi possível rejeitar o convite",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
@@ -56,7 +53,6 @@
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Tentei carregar um ponto específico na linha do tempo desta sala, mas não o encontrei.",
     "You seem to be in a call, are you sure you want to quit?": "Parece que você está em uma chamada. Tem certeza que quer sair?",
     "You seem to be uploading files, are you sure you want to quit?": "Parece que você está enviando arquivos. Tem certeza que quer sair?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Você não poderá desfazer esta mudança, pois estará dando a este(a) usuário(a) o mesmo nível de permissões que você.",
     "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de email",
     "Error decrypting attachment": "Erro ao descriptografar o anexo",
@@ -390,7 +386,8 @@
         "authentication": "Autenticação",
         "rooms": "Salas",
         "low_priority": "Baixa prioridade",
-        "historical": "Histórico"
+        "historical": "Histórico",
+        "are_you_sure": "Você tem certeza?"
     },
     "action": {
         "continue": "Continuar",
@@ -917,6 +914,9 @@
         "power_label": "%(userName)s (nível de permissão %(powerLevelNumber)s)"
     },
     "user_info": {
-        "admin_tools_section": "Ferramentas de Administração"
+        "admin_tools_section": "Ferramentas de Administração",
+        "error_ban_user": "Não foi possível banir o/a usuário/a",
+        "error_mute_user": "Não foi possível remover notificações da/do usuária/o",
+        "promote_warning": "Você não poderá desfazer esta mudança, pois estará dando a este(a) usuário(a) o mesmo nível de permissões que você."
     }
 }

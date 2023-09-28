@@ -32,12 +32,6 @@
     "Moderator": "Moderador",
     "Send": "Envia",
     "This room is not public. You will not be able to rejoin without an invite.": "Aquesta sala no és pública. No podreu tronar a entrar sense invitació.",
-    "Failed to ban user": "No s'ha pogut expulsar l'usuari",
-    "Failed to mute user": "No s'ha pogut silenciar l'usuari",
-    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "No podràs desfer aquest canvi ja que t'estàs baixant de rang, si ets l'últim usuari de la sala amb privilegis, et serà impossible recuperar-los.",
-    "Are you sure?": "Estàs segur?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "No podràs desfer aquest canvi ja que estàs donant a l'usuari el mateix nivell d'autoritat que el teu.",
-    "Jump to read receipt": "Vés a l'últim missatge llegit",
     "and %(count)s others...": {
         "other": "i %(count)s altres...",
         "one": "i un altre..."
@@ -169,7 +163,8 @@
         "rooms": "Sales",
         "low_priority": "Baixa prioritat",
         "historical": "Històric",
-        "go_to_settings": "Ves a Configuració"
+        "go_to_settings": "Ves a Configuració",
+        "are_you_sure": "Estàs segur?"
     },
     "action": {
         "continue": "Continua",
@@ -826,7 +821,12 @@
         "power_label": "%(userName)s (autoritat %(powerLevelNumber)s)"
     },
     "user_info": {
-        "admin_tools_section": "Eines d'administració"
+        "admin_tools_section": "Eines d'administració",
+        "jump_to_rr_button": "Vés a l'últim missatge llegit",
+        "demote_self_confirm_room": "No podràs desfer aquest canvi ja que t'estàs baixant de rang, si ets l'últim usuari de la sala amb privilegis, et serà impossible recuperar-los.",
+        "error_ban_user": "No s'ha pogut expulsar l'usuari",
+        "error_mute_user": "No s'ha pogut silenciar l'usuari",
+        "promote_warning": "No podràs desfer aquest canvi ja que estàs donant a l'usuari el mateix nivell d'autoritat que el teu."
     },
     "right_panel": {
         "settings_button": "Configuració de sala"
