@@ -100,7 +100,7 @@ describe("<LoginWithQRSection />", () => {
             expect(container).toMatchSnapshot();
         });
 
-        it("MSC3882 r1 + .well-known", async () => {
+        it("get_login_token + .well-known", async () => {
             const wellKnown = {
                 "io.element.rendezvous": {
                     server: "https://rz.local",
@@ -110,7 +110,7 @@ describe("<LoginWithQRSection />", () => {
             const { container } = render(
                 getComponent({
                     versions: makeVersions({}),
-                    capabilities: { [UNSTABLE_MSC3882_CAPABILITY.name]: { enabled: true } },
+                    capabilities: { [GET_LOGIN_TOKEN_CAPABILITY.name]: { enabled: true } },
                     wellKnown,
                 }),
             );
